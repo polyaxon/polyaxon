@@ -25,9 +25,9 @@ Let's create a simple polyaxonfile_notebook.yml
 ---
 version: 1
 
-kind: plugin
+kind: notebook
 
-run:
+build:
   image: python:3
   build_steps:
     - pip3 install jupyter
@@ -66,7 +66,7 @@ Since the notebook is create with polyaxonfile, it can be customized in the same
 ---
 version: 1
 
-kind: plugin
+kind: notebook
 
 environment:
   resources:
@@ -80,7 +80,7 @@ environment:
       requests: 512
       limits: 2048
 
-run:
+build:
   image: python:3
   build_steps:
     - pip3 install jupyter
@@ -139,7 +139,7 @@ For example to start tensorboard with Tensorflow 1.6, you need to define a new p
 ---
 version: 1
 
-kind: plugin
+kind: tensorboard
 
 environment:
   resources:
@@ -150,7 +150,7 @@ environment:
       requests: 512
       limits: 2048
 
-run:
+build:
   image: tensorflow/tensorflow:1.6.0-py3
 ```
 

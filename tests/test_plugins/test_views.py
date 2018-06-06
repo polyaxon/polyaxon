@@ -15,7 +15,10 @@ from dockerizer.tasks import build_project_notebook
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
-from factories.fixtures import plugin_spec_parsed_content
+from factories.fixtures import (
+    notebook_spec_parsed_content,
+    tensorboard_spec_parsed_content
+)
 from scheduler import notebook_scheduler
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
@@ -89,8 +92,9 @@ class TestStartTensorboardViewV1(BaseViewTest):
         # Starting again the tensorboard with different config
         with patch('scheduler.tasks.tensorboards.'
                    'projects_tensorboard_start.apply_async') as mock_fct:
-            resp = self.auth_client.post(self.url,
-                                         data={'config': plugin_spec_parsed_content.parsed_data})
+            resp = self.auth_client.post(
+                self.url,
+                data={'config': tensorboard_spec_parsed_content.parsed_data})
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
@@ -103,8 +107,9 @@ class TestStartTensorboardViewV1(BaseViewTest):
         self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
         with patch('scheduler.tasks.tensorboards.'
                    'projects_tensorboard_start.apply_async') as mock_fct:
-            resp = self.auth_client.post(self.url,
-                                         data={'config': plugin_spec_parsed_content.parsed_data})
+            resp = self.auth_client.post(
+                self.url,
+                data={'config': tensorboard_spec_parsed_content.parsed_data})
 
         assert mock_fct.call_count == 0
         assert resp.status_code == status.HTTP_200_OK
@@ -202,7 +207,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_build(self):
-        data = {'config': plugin_spec_parsed_content.parsed_data}
+        data = {'config': notebook_spec_parsed_content.parsed_data}
         assert self.queryset.count() == 1
         assert self.object.notebook is None
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as mock_fct:
@@ -214,7 +219,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert isinstance(self.object.notebook, NotebookJob)
 
     def test_start(self):
-        data = {'config': plugin_spec_parsed_content.parsed_data}
+        data = {'config': notebook_spec_parsed_content.parsed_data}
         assert self.queryset.count() == 1
         with patch('scheduler.tasks.notebooks.'
                    'projects_notebook_build.apply_async') as build_mock_fct:
@@ -229,7 +234,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
     def test_build_with_updated_config(self):
-        data = {'config': plugin_spec_parsed_content.parsed_data}
+        data = {'config': notebook_spec_parsed_content.parsed_data}
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
@@ -253,7 +258,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert self.object.notebook is None
 
         # Starting again the notebook with different config
-        data['config']['run']['image'] = 'image_v2'
+        data['config']['build']['image'] = 'image_v2'
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as _:  # noqa
             self.auth_client.post(self.url, data)
 
@@ -271,7 +276,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
 
     def test_start_during_build_process(self):
-        data = {'config': plugin_spec_parsed_content.parsed_data}
+        data = {'config': notebook_spec_parsed_content.parsed_data}
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as start_mock:
             resp = self.auth_client.post(self.url, data=data)
 
@@ -289,7 +294,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert start_mock.call_count == 0
 
     def test_starting_stopping_notebook_creating_new_one_create_new_job(self):
-        data = {'config': plugin_spec_parsed_content.parsed_data}
+        data = {'config': notebook_spec_parsed_content.parsed_data}
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as start_mock:
             self.auth_client.post(self.url, data=data)
 

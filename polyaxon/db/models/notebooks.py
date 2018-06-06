@@ -1,14 +1,18 @@
 import logging
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models
+from polyaxon_schemas.polyaxonfile.specification import NotebookSpecification
+from polyaxon_schemas.polyaxonfile.utils import cached_property
 
-from db.models.abstract_jobs import AbstractJobStatus
+from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
+from libs.spec_validation import validate_notebook_spec_config
 
 _logger = logging.getLogger('db.notebooks')
 
 
-class NotebookJob(PluginJobBase):
+class NotebookJob(PluginJobBase, JobMixin):
     """A model that represents the configuration for tensorboard job."""
     JOBS_NAME = 'notebooks'
 
@@ -16,6 +20,9 @@ class NotebookJob(PluginJobBase):
         'db.Project',
         on_delete=models.CASCADE,
         related_name='notebook_jobs')
+    config = JSONField(
+        help_text='The compiled polyaxonfile for the notebook job.',
+        validators=[validate_notebook_spec_config])
     status = models.OneToOneField(
         'db.NotebookJobStatus',
         related_name='+',
@@ -28,7 +35,7 @@ class NotebookJob(PluginJobBase):
         app_label = 'db'
 
     def __str__(self):
-        return '{} notebook'.format(self.project)
+        return '{}.notebooks.{}'.format(self.project.unique_name, self.sequence)
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
@@ -39,9 +46,9 @@ class NotebookJob(PluginJobBase):
 
         super(NotebookJob, self).save(*args, **kwargs)
 
-    @property
-    def unique_name(self):
-        return '{}.notebooks.{}'.format(self.project.unique_name, self.sequence)
+    @cached_property
+    def specification(self):
+        return NotebookSpecification(values=self.config)
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=NotebookJobStatus,

@@ -1,4 +1,5 @@
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, PluginSpecification
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, \
+    TensorboardSpecification, NotebookSpecification
 
 # flake8: noqa
 
@@ -7,7 +8,7 @@ experiment_group_spec_content = """---
     
     kind: group
 
-    settings:
+    hptuning:
       matrix:
         lr:
           logspace: 0.01:0.1:5
@@ -51,14 +52,16 @@ experiment_group_spec_content_2_xps = """---
     
     kind: group
       
-    settings:
+    hptuning:
       concurrency: 2
       matrix:
         lr:
           values: [0.01, 0.1]
 
-    run:
+    build:
       image: my_image
+    
+    run:
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
@@ -67,7 +70,7 @@ experiment_group_spec_content_early_stopping = """---
     
     kind: group
 
-    settings:
+    hptuning:
       concurrency: 2
       random_search:
         n_experiments: 2
@@ -81,8 +84,10 @@ experiment_group_spec_content_early_stopping = """---
         lr:
           values: [0.01, 0.1, 0.5]
 
-    run:
+    build:
       image: my_image
+    
+    run:
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
@@ -91,7 +96,7 @@ experiment_group_spec_content_hyperband = """---
 
     kind: group
 
-    settings:
+    hptuning:
       concurrency: 2
       hyperband:
         max_iter: 5
@@ -113,8 +118,10 @@ experiment_group_spec_content_hyperband = """---
         lr:
           values: [0.01, 0.1, 0.5]
 
-    run:
+    build:
       image: my_image
+    
+    run:
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
@@ -124,7 +131,7 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
 
     kind: group
 
-    settings:
+    hptuning:
       concurrency: 200
       hyperband:
         max_iter: 10
@@ -152,8 +159,10 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
         feature4: 
           range: [1, 5, 1]
 
-    run:
+    build:
       image: my_image
+    
+    run:
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
@@ -163,7 +172,7 @@ experiment_group_spec_content_bo = """---
 
     kind: group
 
-    settings:
+    hptuning:
       concurrency: 2
       bo:
         n_iterations: 5
@@ -189,8 +198,10 @@ experiment_group_spec_content_bo = """---
         lr:
           values: [0.01, 0.1, 0.5]
 
-    run:
+    build:
       image: my_image
+    
+    run:
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
@@ -240,8 +251,10 @@ exec_experiment_spec_content = """---
     
     kind: experiment
 
-    run:
+    build:
       image: my_image
+    
+    run:
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
@@ -321,16 +334,29 @@ exec_experiment_resources_content = """---
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-exec_experiment_resources_parsed_content = ExperimentSpecification.read(exec_experiment_resources_content)
+exec_experiment_resources_parsed_content = ExperimentSpecification.read(
+    exec_experiment_resources_content)
 
 
-plugin_spec_content = """---
+tensorboard_spec_content = """---
     version: 1
     
-    kind: plugin
+    kind: tensorboard
 
-    run:
+    build:
       image: my_image
 """
 
-plugin_spec_parsed_content = PluginSpecification.read(plugin_spec_content)
+tensorboard_spec_parsed_content = TensorboardSpecification.read(tensorboard_spec_content)
+
+
+notebook_spec_content = """---
+    version: 1
+
+    kind: notebook
+
+    build:
+      image: my_image
+"""
+
+notebook_spec_parsed_content = NotebookSpecification.read(notebook_spec_content)

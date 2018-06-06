@@ -65,10 +65,12 @@ environment:
   node_selectors:
     polyaxon: specific-gpu
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-gpu-py3
   build_steps:
     - pip3 install --no-cache-dir -U polyaxon-helper
+
+run:
   cmd:  python3 model.py  # Use default params
 ```
 
@@ -82,13 +84,13 @@ Notebook:
 ---
 version: 1
 
-kind: plugin
+kind: notebook
 
 environment:
   node_selectors:
     polyaxon: specific-gpu
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-gpu-py3
   build_steps:
     - pip3 install jupyter
@@ -113,10 +115,12 @@ environment:
     - index: 1
       polyaxon: specific-gpu
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1
   build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
+
+run:
   cmd:  python run.py --train-steps=400 --sync
 
 ```

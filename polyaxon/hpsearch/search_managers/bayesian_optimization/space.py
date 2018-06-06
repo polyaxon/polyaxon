@@ -7,8 +7,8 @@ _logger = logging.getLogger('polyaxon.hpsearch.search_managers')
 
 
 class SearchSpace(object):
-    def __init__(self, params_config):
-        self.params_config = params_config
+    def __init__(self, hptuning_config):
+        self.hptuning_config = hptuning_config
         self._dim = 0
         self._bounds = []
         self._features = []
@@ -66,8 +66,8 @@ class SearchSpace(object):
 
     def set_bounds(self):
         bounds = []
-        for key in sorted(self.params_config.matrix.keys()):
-            value = self.params_config.matrix[key]
+        for key in sorted(self.hptuning_config.matrix.keys()):
+            value = self.hptuning_config.matrix[key]
             self._features.append(key)
             # one hot encoding for categorical type
             if value.is_categorical:
@@ -97,7 +97,7 @@ class SearchSpace(object):
             return metrics
         y_values = []
         for value in metrics:
-            if Optimization.maximize(self.params_config.bo.metric.optimization):
+            if Optimization.maximize(self.hptuning_config.bo.metric.optimization):
                 y_values.append(float(value))
             else:
                 y_values.append(-float(value))

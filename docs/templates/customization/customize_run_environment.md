@@ -28,10 +28,12 @@ declarations:
   batch_size: 128
   lr: 0.1
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
+
+run:
   cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
@@ -50,13 +52,15 @@ declarations:
   batch_size: 128
   lr: 0.1
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
   env_vars:
     - ['MY_ENV_VAR_KEY1', 'MY_ENV_VAR_VALUE1']
     - ['MY_ENV_VAR_KEY2', 'MY_ENV_VAR_VALUE2']
+
+run:
   cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 

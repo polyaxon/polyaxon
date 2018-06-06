@@ -119,7 +119,7 @@ version: 1
 
 kind: group
 
-settings:
+hptuning:
     concurrency: 3
     matrix:
       lr:
@@ -145,9 +145,9 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content == data['content']
-        assert last_object.params is not None
-        assert last_object.params['concurrency'] == 3
-        assert last_object.params['matrix']['lr'] is not None
+        assert last_object.hptuning is not None
+        assert last_object.hptuning['concurrency'] == 3
+        assert last_object.hptuning['matrix']['lr'] is not None
 
     def test_create_without_content_passes_if_no_spec_validation_requested(self):
         data = {}
@@ -158,9 +158,9 @@ model:
         assert last_object.project == self.project
         assert last_object.content is None
 
-    def test_create_with_params(self):
+    def test_create_with_hptuning(self):
         data = {
-            'params': {
+            'hptuning': {
                 'concurrency': 3,
                 'matrix': {
                     'lr': {'values': [0.1, 0.2, 0.3]}

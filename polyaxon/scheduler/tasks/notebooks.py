@@ -28,7 +28,7 @@ def projects_notebook_build(project_id):
     build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
         user=job.user,
         project=job.project,
-        config=job.specification.run_exec,
+        config=job.specification.build,
         code_reference=job.code_reference)
 
     job.build_job = build_job

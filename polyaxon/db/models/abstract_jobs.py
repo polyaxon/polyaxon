@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.utils.functional import cached_property
 
 from constants.jobs import JobLifeCycle
 from db.models.utils import DiffModel, LastStatusMixin, StatusModel
@@ -62,6 +63,33 @@ class AbstractJob(DiffModel, LastStatusMixin):
                                         details=details)
             return True
         return False
+
+
+class JobMixin(object):
+
+    @cached_property
+    def unique_name(self):
+        return self.__str__()
+
+    @cached_property
+    def image(self):
+        return self.specification.build.image
+
+    @cached_property
+    def resources(self):
+        return self.specification.resources
+
+    @cached_property
+    def node_selectors(self):
+        return self.specification.node_selectors
+
+    @cached_property
+    def build_steps(self):
+        return self.specification.build.build_steps
+
+    @cached_property
+    def env_vars(self):
+        return self.specification.build.env_vars
 
 
 class AbstractJobStatus(StatusModel):

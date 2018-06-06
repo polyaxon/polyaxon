@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
+from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from docker_images.images_tags import LATEST_IMAGE_TAG
 from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
@@ -13,7 +13,7 @@ from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 logger = logging.getLogger('db.build_jobs')
 
 
-class BuildJob(AbstractJob):
+class BuildJob(AbstractJob, JobMixin):
     """A model that represents the configuration for build job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -55,33 +55,12 @@ class BuildJob(AbstractJob):
 
         super(BuildJob, self).save(*args, **kwargs)
 
-    @property
-    def unique_name(self):
+    def __str__(self):
         return '{}.builds.{}'.format(self.project.unique_name, self.sequence)
 
     @cached_property
     def specification(self):
         return BuildSpecification(values=self.config)
-
-    @cached_property
-    def image(self):
-        return self.specification.build.image
-
-    @cached_property
-    def build_steps(self):
-        return self.specification.build.build_steps
-
-    @cached_property
-    def resources(self):
-        return None
-
-    @cached_property
-    def node_selectors(self):
-        return None
-
-    @cached_property
-    def env_vars(self):
-        return self.specification.build.env_vars
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=BuildJobStatus,

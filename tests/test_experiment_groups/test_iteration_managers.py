@@ -94,7 +94,7 @@ class TestHyperbandIterationManagers(BaseTest):
 
         ExperimentMetric.objects.create(
             experiment_id=experiment_ids[0],
-            values={self.experiment_group.params_config.hyperband.metric.name: 0.9})
+            values={self.experiment_group.hptuning_config.hyperband.metric.name: 0.9})
         self.iteration_manager.update_iteration()
         iteration.refresh_from_db()
         assert iteration.data['experiments_metrics'] == [[experiment_ids[0], 0.9]]
@@ -158,11 +158,11 @@ class TestBOIterationManagers(BaseTest):
         for experiment_id in experiment_iter1_ids:
             ExperimentMetric.objects.create(
                 experiment_id=experiment_id,
-                values={self.experiment_group.params_config.bo.metric.name: 0.8})
+                values={self.experiment_group.hptuning_config.bo.metric.name: 0.8})
         self.iteration_manager.update_iteration()
         iteration.refresh_from_db()
         experiment_iter1_metrics = [
-            [experiment_id, 0.8] for experiment_id in experiment_iter1_ids
+            [experiment_id, 0.8] for experiment_id in reversed(experiment_iter1_ids)
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter1_metrics
 
@@ -189,11 +189,11 @@ class TestBOIterationManagers(BaseTest):
         for experiment_id in experiment_iter2_ids:
             ExperimentMetric.objects.create(
                 experiment_id=experiment_id,
-                values={self.experiment_group.params_config.bo.metric.name: 0.9})
+                values={self.experiment_group.hptuning_config.bo.metric.name: 0.9})
         self.iteration_manager.update_iteration()
         iteration.refresh_from_db()
         experiment_iter2_metrics = [
-            [experiment_id, 0.9] for experiment_id in experiment_iter2_ids
+            [experiment_id, 0.9] for experiment_id in reversed(experiment_iter2_ids)
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter2_metrics
 
@@ -220,11 +220,11 @@ class TestBOIterationManagers(BaseTest):
         for experiment_id in experiment_iter3_ids:
             ExperimentMetric.objects.create(
                 experiment_id=experiment_id,
-                values={self.experiment_group.params_config.bo.metric.name: 0.9})
+                values={self.experiment_group.hptuning_config.bo.metric.name: 0.9})
         self.iteration_manager.update_iteration()
         iteration.refresh_from_db()
         experiment_iter3_metrics = [
-            [experiment_id, 0.9] for experiment_id in experiment_iter3_ids
+            [experiment_id, 0.9] for experiment_id in reversed(experiment_iter3_ids)
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter3_metrics
 

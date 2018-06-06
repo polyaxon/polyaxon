@@ -18,10 +18,30 @@ Example:
 kine: experiment
 ```
 
-## settings
+## logging
 
-Settings defines `seed`, `concurrency`, `search algorithm`, `early_stopping`, `matrix`, and `logging`.
-In general the settings defines some values that must be unique for
+Defines the logging behavior for your execution, this subsection accepts:
+
+ * `level`: The log level.
+ * `formatter`: The log formatter regex.
+
+
+Example:
+
+```yaml
+logging:
+  level: INFO
+```
+
+```yaml
+logging:
+  level: WARNING
+```
+
+## hptuning
+
+Settings defines `seed`, `concurrency`, `search algorithm`, `early_stopping`, `matrix`.
+In general the hptuning defines some values that must be unique for
 all experiments created based on the polyaxonfile.
 
 ### seed
@@ -177,7 +197,7 @@ These values can be accessed in the following way:
 ```
 
 You can, of course, only access one generated value at a time,
-and the value is chosen directly by the algorithm doing the search defined in the `settings`.
+and the value is chosen directly by the algorithm doing the search defined in the `hptuning`.
 
 For each experiment generated during the hyperparameters search, Polyaxon will also add these values
 to your declarations, and will export them under the environment variable name `POLYAXON_DECLARATIONS`.
@@ -247,28 +267,6 @@ early_stopping:
   - metric: accuracy
     value: 0.97
     optimization: maximize
-```
-
-### logging
-
-Defines the logging behavior for your execution, this subsection accepts:
-
- * `level`: The log level.
- * `formatter`: The log formatter regex.
-
-
-Example:
-
-```yaml
-settings:
-  logging:
-    level: INFO
-```
-
-```yaml
-settings:
-  logging:
-    level: WARNING
 ```
 
 ## Environment
@@ -587,7 +585,7 @@ This section defines the following values/subsections:
  * cmd [required]: The command to run during the execution of your code.
 
 ```yaml
-run:
+build:
   image: my_image
   build_steps:
     - pip install PILLOW
@@ -595,5 +593,7 @@ run:
   env_vars:
     - [KEY1, VALUE1]
     - [KEY2, VALUE2]
+
+run:
   cmd: video_prediction_train --num_masks=1
 ```

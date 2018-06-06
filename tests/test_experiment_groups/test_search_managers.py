@@ -23,7 +23,7 @@ from hpsearch.search_managers import (
 from hpsearch.search_managers.bayesian_optimization.optimizer import BOOptimizer
 from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
 from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.hptuning import HPTuningConfig
 from tests.utils import BaseTest
 
 
@@ -34,25 +34,25 @@ class TestSearchManagers(BaseTest):
     def test_get_search_manager(self):
         # Grid search
         experiment_group = ExperimentGroupFactory()
-        assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
+        assert isinstance(get_search_algorithm_manager(experiment_group.hptuning_config),
                           GridSearchManager)
 
         # Random search
         experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_early_stopping)
-        assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
+        assert isinstance(get_search_algorithm_manager(experiment_group.hptuning_config),
                           RandomSearchManager)
 
         # Hyperband
         experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_hyperband)
-        assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
+        assert isinstance(get_search_algorithm_manager(experiment_group.hptuning_config),
                           HyperbandSearchManager)
 
         # BO
         experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_bo)
-        assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
+        assert isinstance(get_search_algorithm_manager(experiment_group.hptuning_config),
                           BOSearchManager)
 
 
@@ -61,15 +61,15 @@ class TestGridSearchManager(BaseTest):
     DISABLE_RUNNER = True
 
     def test_get_suggestions(self):
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {'feature': {'values': [1, 2, 3]}}
         })
-        manager = GridSearchManager(params_config=params_config)
+        manager = GridSearchManager(hptuning_config=hptuning_config)
         assert len(manager.get_suggestions()) == 3
 
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {
@@ -78,22 +78,22 @@ class TestGridSearchManager(BaseTest):
                 'feature3': {'range': [1, 5, 1]}
             }
         })
-        manager = GridSearchManager(params_config=params_config)
+        manager = GridSearchManager(hptuning_config=hptuning_config)
         assert len(manager.get_suggestions()) == 10
 
     def test_get_suggestions_calls_to_numpy(self):
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {'feature': {'values': [1, 2, 3]}}
         })
-        manager = GridSearchManager(params_config=params_config)
+        manager = GridSearchManager(hptuning_config=hptuning_config)
         with patch.object(MatrixConfig, 'to_numpy') as to_numpy_mock:
             manager.get_suggestions()
 
         assert to_numpy_mock.call_count == 1
 
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {
@@ -101,7 +101,7 @@ class TestGridSearchManager(BaseTest):
                 'feature2': {'logspace': '0.01:0.1:5'}
             }
         })
-        manager = GridSearchManager(params_config=params_config)
+        manager = GridSearchManager(hptuning_config=hptuning_config)
         with patch.object(MatrixConfig, 'to_numpy') as to_numpy_mock:
             manager.get_suggestions()
 
@@ -113,7 +113,7 @@ class TestRandomSearchManager(BaseTest):
     DISABLE_RUNNER = True
 
     def test_get_suggestions(self):
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'random_search': {'n_experiments': 10},
             'matrix': {
@@ -122,10 +122,10 @@ class TestRandomSearchManager(BaseTest):
                 'feature3': {'range': [1, 5, 1]}
             }
         })
-        manager = RandomSearchManager(params_config=params_config)
+        manager = RandomSearchManager(hptuning_config=hptuning_config)
         assert len(manager.get_suggestions()) == 10
 
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'random_search': {'n_experiments': 10},
             'matrix': {
@@ -134,11 +134,11 @@ class TestRandomSearchManager(BaseTest):
                 'feature3': {'qlognormal': [0, 0.5, 0.51]}
             }
         })
-        manager = RandomSearchManager(params_config=params_config)
+        manager = RandomSearchManager(hptuning_config=hptuning_config)
         assert len(manager.get_suggestions()) == 10
 
     def test_get_suggestions_calls_sample(self):
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'random_search': {'n_experiments': 1},
             'matrix': {
@@ -147,13 +147,13 @@ class TestRandomSearchManager(BaseTest):
                 'feature3': {'range': [1, 5, 1]}
             }
         })
-        manager = RandomSearchManager(params_config=params_config)
+        manager = RandomSearchManager(hptuning_config=hptuning_config)
         with patch.object(MatrixConfig, 'sample') as sample_mock:
             manager.get_suggestions()
 
         assert sample_mock.call_count == 3
 
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'random_search': {'n_experiments': 1},
             'matrix': {
@@ -163,7 +163,7 @@ class TestRandomSearchManager(BaseTest):
                 'feature4': {'range': [1, 5, 1]}
             }
         })
-        manager = RandomSearchManager(params_config=params_config)
+        manager = RandomSearchManager(hptuning_config=hptuning_config)
         with patch.object(MatrixConfig, 'sample') as sample_mock:
             manager.get_suggestions()
 
@@ -176,7 +176,7 @@ class TestHyperbandSearchManager(BaseTest):
 
     def setUp(self):
         super().setUp()
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'hyperband': {
                 'max_iter': 10,
@@ -191,9 +191,9 @@ class TestHyperbandSearchManager(BaseTest):
                 'feature3': {'range': [1, 5, 1]}
             }
         })
-        self.manager1 = HyperbandSearchManager(params_config=params_config)
+        self.manager1 = HyperbandSearchManager(hptuning_config=hptuning_config)
 
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'hyperband': {
                 'max_iter': 81,
@@ -209,7 +209,7 @@ class TestHyperbandSearchManager(BaseTest):
                 'feature4': {'range': [1, 5, 1]}
             }
         })
-        self.manager2 = HyperbandSearchManager(params_config=params_config)
+        self.manager2 = HyperbandSearchManager(hptuning_config=hptuning_config)
 
     @staticmethod
     def almost_equal(value, value_compare):
@@ -521,7 +521,7 @@ class TestHyperbandSearchManager(BaseTest):
     def test_get_suggestions(self):
         # Manager1
         experiment_group = ExperimentGroupFactory(
-            params=self.manager1.params_config.to_dict()
+            hptuning=self.manager1.hptuning_config.to_dict()
         )
         # Fake iteration
         ExperimentGroupIteration.objects.create(
@@ -577,7 +577,7 @@ class TestHyperbandSearchManager(BaseTest):
 
         # Manager2
         experiment_group = ExperimentGroupFactory(
-            params=self.manager2.params_config.to_dict()
+            hptuning=self.manager2.hptuning_config.to_dict()
         )
 
         # Fake iteration
@@ -623,7 +623,7 @@ class TestBOSearchManager(BaseTest):
 
     def setUp(self):
         super().setUp()
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'bo': {
                 'n_iterations': 5,
@@ -649,9 +649,9 @@ class TestBOSearchManager(BaseTest):
                 'feature3': {'range': [1, 5, 1]}
             }
         })
-        self.manager1 = BOSearchManager(params_config=params_config)
+        self.manager1 = BOSearchManager(hptuning_config=hptuning_config)
 
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'bo': {
                 'n_iterations': 4,
@@ -679,7 +679,7 @@ class TestBOSearchManager(BaseTest):
                 'feature5': {'values': ['a', 'b', 'c']},
             }
         })
-        self.manager2 = BOSearchManager(params_config=params_config)
+        self.manager2 = BOSearchManager(hptuning_config=hptuning_config)
 
     def test_first_get_suggestions_returns_initial_random_suggestion(self):
         assert len(self.manager1.get_suggestions()) == 5
@@ -704,7 +704,7 @@ class TestBOSearchManager(BaseTest):
 
     def test_space_search(self):
         # Space 1
-        space1 = SearchSpace(params_config=self.manager1.params_config)
+        space1 = SearchSpace(hptuning_config=self.manager1.hptuning_config)
 
         assert space1.dim == 3
         assert len(space1.bounds) == 3
@@ -734,7 +734,7 @@ class TestBOSearchManager(BaseTest):
                     np.asarray([1, 2, 3, 4]))
 
         # Space 2
-        space2 = SearchSpace(params_config=self.manager2.params_config)
+        space2 = SearchSpace(hptuning_config=self.manager2.hptuning_config)
 
         assert space2.dim == 7
         assert len(space2.bounds) == 7
@@ -772,7 +772,7 @@ class TestBOSearchManager(BaseTest):
             np.asarray([1, 2, 3, 4, 5]))
 
     def test_add_observation_to_space_search(self):
-        space1 = SearchSpace(params_config=self.manager1.params_config)
+        space1 = SearchSpace(hptuning_config=self.manager1.hptuning_config)
 
         assert space1.x == []
         assert space1.y == []
@@ -802,7 +802,7 @@ class TestBOSearchManager(BaseTest):
 
         assert np.all(space1.y == np.array([-1, -2, -3]))
 
-        space2 = SearchSpace(params_config=self.manager2.params_config)
+        space2 = SearchSpace(hptuning_config=self.manager2.hptuning_config)
 
         configs = [
             {'feature1': 1, 'feature2': 1, 'feature3': 1, 'feature4': 1, 'feature5': 'a'},
@@ -834,7 +834,7 @@ class TestBOSearchManager(BaseTest):
         assert np.all(space2.y == np.array(metrics))
 
     def test_space_get_suggestion(self):
-        space1 = SearchSpace(params_config=self.manager1.params_config)
+        space1 = SearchSpace(hptuning_config=self.manager1.hptuning_config)
 
         suggestion = space1.get_suggestion(suggestion=[1, 1, 1])
         assert suggestion == {'feature1': 1, 'feature2': 1, 'feature3': 1}
@@ -845,7 +845,7 @@ class TestBOSearchManager(BaseTest):
         suggestion = space1.get_suggestion(suggestion=[1, 1.5, 3])
         assert suggestion == {'feature1': 1, 'feature2': 1.5, 'feature3': 3}
 
-        space2 = SearchSpace(params_config=self.manager2.params_config)
+        space2 = SearchSpace(hptuning_config=self.manager2.hptuning_config)
 
         suggestion = space2.get_suggestion(suggestion=[1, 1, 1, 1, 1, 0, 0])
         assert suggestion == {'feature1': 1,
@@ -869,7 +869,7 @@ class TestBOSearchManager(BaseTest):
                               'feature5': 'b'}
 
     def test_optimizer_add_observations_calls_space_add_observations(self):
-        optimizer = BOOptimizer(params_config=self.manager1.params_config)
+        optimizer = BOOptimizer(hptuning_config=self.manager1.hptuning_config)
         with patch.object(SearchSpace, 'add_observations') as add_observations_mock:
             optimizer.add_observations(configs=[], metrics=[])
 
@@ -877,7 +877,7 @@ class TestBOSearchManager(BaseTest):
 
     def test_optimizer_get_suggestion(self):
         # Manager 1
-        optimizer1 = BOOptimizer(params_config=self.manager1.params_config)
+        optimizer1 = BOOptimizer(hptuning_config=self.manager1.hptuning_config)
         optimizer1.N_ITER = 1
         optimizer1.N_WARMUP = 1
 
@@ -906,7 +906,7 @@ class TestBOSearchManager(BaseTest):
         assert 1 <= suggestion['feature3'] <= 5
 
         # Manager 2
-        optimizer2 = BOOptimizer(params_config=self.manager2.params_config)
+        optimizer2 = BOOptimizer(hptuning_config=self.manager2.hptuning_config)
         optimizer2.N_ITER = 1
         optimizer2.N_WARMUP = 1
 
@@ -926,7 +926,7 @@ class TestBOSearchManager(BaseTest):
         assert suggestion['feature5'] in ['a', 'b', 'c']
 
     def test_concrete_example(self):
-        params_config = SettingsConfig.from_dict({
+        hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
             'bo': {
                 'n_iterations': 5,
@@ -954,7 +954,7 @@ class TestBOSearchManager(BaseTest):
                 'activation': {'values': ['relu', 'sigmoid']}
             }
         })
-        optimizer = BOOptimizer(params_config=params_config)
+        optimizer = BOOptimizer(hptuning_config=hptuning_config)
 
         configs = [
             {

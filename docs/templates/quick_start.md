@@ -72,10 +72,12 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     kind: experiment
 
-    run:
+    build:
       image: tensorflow/tensorflow:1.4.1-py3
       build_steps:
         - pip3 install polyaxon-helper
+
+    run:
       cmd: python model.py
     ```
 

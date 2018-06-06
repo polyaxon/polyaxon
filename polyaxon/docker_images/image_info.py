@@ -12,16 +12,16 @@ def get_experiment_image_info(experiment):
     """Return the image name and image tag for an experiment"""
     project_name = experiment.project.name
     experiment_spec = experiment.specification
-    if experiment_spec.run_exec.git:
+    if experiment_spec.build.git:
 
         try:
             repo = ExternalRepo.objects.get(project=experiment.project,
-                                            git_url=experiment_spec.run_exec.git)
+                                            git_url=experiment_spec.build.git)
         except ExternalRepo.DoesNotExist:
             logger.error(
                 'Something went wrong, the external repo `%s` was not found',
-                experiment_spec.run_exec.git)
-            raise ValueError('Repo was not found for `{}`.'.format(experiment_spec.run_exec.git))
+                experiment_spec.build.git)
+            raise ValueError('Repo was not found for `{}`.'.format(experiment_spec.build.git))
 
         repo_name = repo.name
     else:
@@ -36,16 +36,16 @@ def get_job_image_info(project, job):
     """Return the image name and image tag for a job"""
     project_name = project.name
     job_spec = job.specification
-    if job_spec.run_exec.git:
+    if job_spec.build.git:
 
         try:
             repo = ExternalRepo.objects.get(project=project,
-                                            git_url=job_spec.run_exec.git)
+                                            git_url=job_spec.build.git)
         except ExternalRepo.DoesNotExist:
             logger.error(
                 'Something went wrong, the external repo `%s` was not found',
-                job_spec.run_exec.git)
-            raise ValueError('Repo was not found for `{}`.'.format(job_spec.run_exec.git))
+                job_spec.build.git)
+            raise ValueError('Repo was not found for `{}`.'.format(job_spec.build.git))
 
         repo_name = repo.name
         last_commit = repo.last_commit

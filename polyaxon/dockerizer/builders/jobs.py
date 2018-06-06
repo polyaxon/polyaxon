@@ -45,10 +45,10 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
 def get_job_repo_info(project, job):
     project_name = project.name
     job_spec = job.specification
-    if job_spec.run_exec.git:  # We need to fetch the repo first
+    if job_spec.build.git:  # We need to fetch the repo first
 
         repo, is_created = ExternalRepo.objects.get_or_create(project=project,
-                                                              git_url=job_spec.run_exec.git)
+                                                              git_url=job_spec.build.git)
         if not is_created:
             # If the repo already exist, we just need to refetch it
             git.fetch(git_url=repo.git_url, repo_path=repo.path)
@@ -81,11 +81,11 @@ def build_job(project, job, job_builder, image_tag=None):
     docker_builder = job_builder(project_id=project.id,
                                  project_name=project.unique_name,
                                  repo_path=build_info['repo_path'],
-                                 from_image=job_spec.run_exec.image,
+                                 from_image=job_spec.build.image,
                                  image_name=build_info['image_name'],
                                  image_tag=image_tag or build_info['image_tag'],
-                                 build_steps=job_spec.run_exec.build_steps,
-                                 env_vars=job_spec.run_exec.env_vars)
+                                 build_steps=job_spec.build.build_steps,
+                                 env_vars=job_spec.build.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
                          registry_host=settings.REGISTRY_HOST)

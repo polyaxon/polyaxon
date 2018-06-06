@@ -1,10 +1,9 @@
 ---
 version: 1
 
-settings:
-  logging:
-    level: INFO
-    path: /mypath/project1
+logging:
+  level: INFO
+  path: /mypath/project1
 
 environment:
   n_workers: 5

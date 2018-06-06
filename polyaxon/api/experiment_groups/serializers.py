@@ -49,7 +49,7 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
-            'current_iteration', 'content', 'params', 'started_at', 'finished_at',
+            'current_iteration', 'content', 'hptuning', 'started_at', 'finished_at',
             'num_scheduled_experiments', 'num_succeeded_experiments',
             'num_failed_experiments', 'num_stopped_experiments')
 
@@ -75,10 +75,10 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
         return attrs
 
     def create(self, validated_data):
-        """Check the params or set the value from the specification."""
-        if not validated_data.get('params') and validated_data.get('content'):
+        """Check the hptuning or set the value from the specification."""
+        if not validated_data.get('hptuning') and validated_data.get('content'):
             config = validate_group_spec_content(validated_data['content'])
-            if config.settings:
-                params = config.settings.to_light_dict(exclude_attrs=['logging'])
-                validated_data['params'] = params
+            if config.hptuning:
+                hptuning = config.hptuning.to_dict()
+                validated_data['hptuning'] = hptuning
         return super(ExperimentGroupDetailSerializer, self).create(validated_data=validated_data)

@@ -25,7 +25,7 @@ class TestBuildJobModels(BaseTest):
         build_job = BuildJob.create(
             user=experiment.user,
             project=experiment.project,
-            config=experiment.specification.run_exec,
+            config=experiment.specification.build,
             code_reference=self.code_reference)
 
         assert build_job.last_status == JobLifeCycle.CREATED
@@ -37,7 +37,7 @@ class TestBuildJobModels(BaseTest):
         build_job = BuildJob.create(
             user=notebook.user,
             project=notebook.project,
-            config=notebook.specification.run_exec,
+            config=notebook.specification.build,
             code_reference=self.code_reference)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
@@ -151,7 +151,7 @@ class TestBuildJobModels(BaseTest):
         build_job = BuildJob.create(
             user=experiment.user,
             project=experiment.project,
-            config=experiment.specification.run_exec,
+            config=experiment.specification.build,
             code_reference=self.code_reference)
 
         assert build_job.last_status == JobLifeCycle.CREATED

@@ -18,10 +18,12 @@ the polyaxonfile.yml `run` section could look something like this
 ---
 ...
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
+
+run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
@@ -33,7 +35,7 @@ This declares a section to run our `train.py` file by passing two values, the `l
 Now you need to declare this values, and for that you will add 2 more sections to the polyaxonfile.yml
 
  * A [declarations section](/polyaxonfile_specification/sections#declarations), to declare a constant value for `batch_size`
- * A [settings section](/polyaxonfile_specification/sections#settings) with [matrix subsection](/polyaxonfile_specification/sections#matrix), to declare the values for `lr`
+ * A [hptuning section](/polyaxonfile_specification/sections#hptuning) with [matrix subsection](/polyaxonfile_specification/sections#matrix), to declare the values for `lr`
 
 The new `polyaxonfile.yml` after the update
 
@@ -46,15 +48,17 @@ kind: group
 declarations:
   batch_size: 128
 
-settings:
-    matrix:
-      lr:
-        logspace: 0.01:0.1:5
+hptuning:
+  matrix:
+    lr:
+      logspace: 0.01:0.1:5
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
+
+run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
@@ -149,14 +153,14 @@ Create a new file, let's call polyaxonfile_override.yml
 $ vi polyaxonfile_override.yml
 ```
 
-And past the following settings section.
+And past the following hptuning section.
 
 ```yaml
 
 ---
 version: 1
 
-settings:
+hptuning:
   concurrency: 2
   random_search:
     n_experiments: 5
@@ -192,7 +196,7 @@ Sometimes you don't wish to explore the matrix space exhaustively.
 In that case, you can define a maximum number of experiments to explore from the matrix space.
 The value must be of course less than the total number of experiments in the matrix space.
 
-In order to activate this option, you must update your polyaxonfile's `settings` section with `n_experiments`
+In order to activate this option, you must update your polyaxonfile's `hptuning` section with `n_experiments`
 
 
 ```yaml
@@ -200,7 +204,7 @@ In order to activate this option, you must update your polyaxonfile's `settings`
 ---
 version: 1
 
-settings:
+hptuning:
   concurrency: 2
   grid_search:
     n_experiments: 4
@@ -214,14 +218,14 @@ Another way to stop the search algorithm is to provide a condition for early sto
 Obviously in this case early stopping is only responsible for the number of experiments to run.
 For an early stopping related to the number of steps or epochs, you should be able to provide such logic in your code.
 
-In order to activate this option, you must update your polyaxonfile's `settings` section with `early_stopping`
+In order to activate this option, you must update your polyaxonfile's `hptuning` section with `early_stopping`
 
 ```yaml
 
 ---
 version: 1
 
-settings:
+hptuning:
   concurrency: 2
   random_search:
     n_experiments: 4

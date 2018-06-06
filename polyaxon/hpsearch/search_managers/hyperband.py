@@ -48,12 +48,12 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
 
     NAME = SearchAlgorithms.HYPERBAND
 
-    def __init__(self, params_config):
-        super(HyperbandSearchManager, self).__init__(params_config=params_config)
+    def __init__(self, hptuning_config):
+        super(HyperbandSearchManager, self).__init__(hptuning_config=hptuning_config)
         # Maximum iterations per configuration
-        self.max_iter = self.params_config.hyperband.max_iter
+        self.max_iter = self.hptuning_config.hyperband.max_iter
         # Defines configuration downsampling/elimination rate (default = 3)
-        self.eta = self.params_config.hyperband.eta
+        self.eta = self.hptuning_config.hyperband.eta
         # number of times to run hyperband (brackets)
         self.s_max = int(math.log(self.max_iter) / math.log(self.eta))
         # i.e.  # of times to repeat the outer loops over the tradeoffs `s`
@@ -121,14 +121,14 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
         n_resources = self.get_n_resources_for_iteration(
             iteration=iteration_config.iteration,
             bracket_iteration=iteration_config.bracket_iteration)
-        n_resources = self.params_config.hyperband.resource.cast_value(n_resources)
+        n_resources = self.hptuning_config.hyperband.resource.cast_value(n_resources)
         suggestion_params = {
-            self.params_config.hyperband.resource.name: n_resources
+            self.hptuning_config.hyperband.resource.name: n_resources
         }
-        return get_random_suggestions(matrix=self.params_config.matrix,
+        return get_random_suggestions(matrix=self.hptuning_config.matrix,
                                       n_suggestions=n_configs,
                                       suggestion_params=suggestion_params,
-                                      seed=self.params_config.seed)
+                                      seed=self.hptuning_config.seed)
 
     def should_reschedule(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""

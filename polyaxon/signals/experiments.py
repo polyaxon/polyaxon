@@ -49,8 +49,8 @@ def add_experiment_pre_save(sender, **kwargs):
     # if the instance has a primary key then is getting updated
     condition = (
         not instance.specification or
-        not instance.specification.run_exec or
-        instance.specification.run_exec.git or
+        not instance.specification.build or
+        instance.specification.build.git or
         instance.code_reference or
         not instance.project.has_code)
     if condition:

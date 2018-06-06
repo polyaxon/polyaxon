@@ -250,7 +250,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
 
     kind: group
 
-    settings:
+    hptuning:
       matrix:
         lr:
           linspace: '1.:3.:3'
@@ -430,8 +430,11 @@ class TestExperimentDetailViewV1(BaseViewTest):
                 gpu:
                   requests: 1
                   limits: 1
-            run:
+            
+            build:
               image: my_image
+            
+            run:
               cmd: video_prediction_train --model=DNA --num_masks=1
         """
         spec_parsed_content = ExperimentSpecification.read(spec_content)

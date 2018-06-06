@@ -15,7 +15,7 @@ class RandomSearchManager(BaseSearchAlgorithmManager):
             matrix: `dict` representing the {hyperparam: hyperparam matrix config}.
             n_suggestions: number of suggestions to make.
         """
-        matrix = self.params_config.matrix
-        n_suggestions = self.params_config.random_search.n_experiments
-        seed = self.params_config.seed
+        matrix = self.hptuning_config.matrix
+        n_suggestions = self.hptuning_config.random_search.n_experiments
+        seed = self.hptuning_config.seed
         return get_random_suggestions(matrix=matrix, n_suggestions=n_suggestions, seed=seed)

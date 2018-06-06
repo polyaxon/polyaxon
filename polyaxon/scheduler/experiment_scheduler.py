@@ -249,7 +249,7 @@ def start_experiment(experiment):
     group = experiment.experiment_group
 
     job_docker_image = None  # This will force the spawners to use the default docker image
-    if experiment.specification.run_exec:
+    if experiment.specification.build:
         try:
             image_name, image_tag = get_experiment_image_info(experiment=experiment)
         except ValueError as e:

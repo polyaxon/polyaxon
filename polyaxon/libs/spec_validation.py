@@ -8,10 +8,11 @@ from polyaxon_schemas.polyaxonfile.specification import (
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,
-    PluginSpecification,
+    NotebookSpecification,
+    TensorboardSpecification,
     JobSpecification,
 )
-from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.hptuning import HPTuningConfig
 
 
 def validate_experiment_spec_config(config, raise_for_rest=False):
@@ -40,9 +41,9 @@ def validate_group_spec_content(content, raise_for_rest=False):
     return spec
 
 
-def validate_group_params_config(config, raise_for_rest=False):
+def validate_group_hptuning_config(config, raise_for_rest=False):
     try:
-        SettingsConfig.from_dict(config)
+        HPTuningConfig.from_dict(config)
     except MarshmallowValidationError as e:
         if raise_for_rest:
             raise ValidationError(e)
@@ -50,11 +51,24 @@ def validate_group_params_config(config, raise_for_rest=False):
             raise DjangoValidationError(e)
 
 
-def validate_plugin_spec_config(config, raise_for_rest=False):
+def validate_notebook_spec_config(config, raise_for_rest=False):
     try:
-        spec = PluginSpecification.read(config)
+        spec = NotebookSpecification.read(config)
     except (PolyaxonfileError, PolyaxonConfigurationError) as e:
-        message_error = 'Received non valid plugin specification config. %s' % e
+        message_error = 'Received non valid notebook specification config. %s' % e
+        if raise_for_rest:
+            raise ValidationError(message_error)
+        else:
+            raise DjangoValidationError(message_error)
+
+    return spec
+
+
+def validate_tensorboard_spec_config(config, raise_for_rest=False):
+    try:
+        spec = TensorboardSpecification.read(config)
+    except (PolyaxonfileError, PolyaxonConfigurationError) as e:
+        message_error = 'Received non valid tensorboard specification config. %s' % e
         if raise_for_rest:
             raise ValidationError(message_error)
         else:

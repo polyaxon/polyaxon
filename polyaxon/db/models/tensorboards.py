@@ -1,20 +1,26 @@
 import logging
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
+from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
 
-from db.models.abstract_jobs import AbstractJobStatus
+from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
+from libs.spec_validation import validate_tensorboard_spec_config
 
 _logger = logging.getLogger('db.tensorboards')
 
 
-class TensorboardJob(PluginJobBase):
+class TensorboardJob(PluginJobBase, JobMixin):
     """A model that represents the configuration for tensorboard job."""
     project = models.ForeignKey(
         'db.Project',
         on_delete=models.CASCADE,
         related_name='tensorboard_jobs')
+    config = JSONField(
+        help_text='The compiled polyaxonfile for the tensorboard job.',
+        validators=[validate_tensorboard_spec_config])
     experiment_group = models.ForeignKey(
         'db.ExperimentGroup',
         on_delete=models.CASCADE,
@@ -39,7 +45,7 @@ class TensorboardJob(PluginJobBase):
         app_label = 'db'
 
     def __str__(self):
-        return self.unique_name
+        return '{}.tensorboards.{}'.format(self.project.unique_name, self.sequence)
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
@@ -50,13 +56,9 @@ class TensorboardJob(PluginJobBase):
 
         super(TensorboardJob, self).save(*args, **kwargs)
 
-    @property
-    def unique_name(self):
-        return '{}.tensorboards.{}'.format(self.project.unique_name, self.sequence)
-
     @cached_property
-    def image(self):
-        return self.specification.run_exec.image
+    def specification(self):
+        return TensorboardSpecification(values=self.config)
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=TensorboardJobStatus,

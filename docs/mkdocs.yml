@@ -101,7 +101,7 @@ pages:
   - Users: management/users.md
 - Customization:
   - Extend Polyaxon Deployments: customization/extend_deployments.md
-  - Customize Run Environment: customization/customize_run_environment.md  # settings, resources,
+  - Customize Run Environment: customization/customize_run_environment.md  # hptuning, resources,
   - Customize Node Scheduling: customization/customize_node_scheduling.md
   - Single Sign On: customization/single_sign_on.md
 - Reference Polyaxon CLI:

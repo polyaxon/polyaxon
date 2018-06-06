@@ -67,10 +67,10 @@ def get_experiment_repo_info(experiment):
     """Returns information required to create a build for an experiment."""
     project_name = experiment.project.name
     experiment_spec = experiment.specification
-    if experiment_spec.run_exec.git:  # We need to fetch the repo first
+    if experiment_spec.build.git:  # We need to fetch the repo first
 
         repo, is_created = ExternalRepo.objects.get_or_create(project=experiment.project,
-                                                              git_url=experiment_spec.run_exec.git)
+                                                              git_url=experiment_spec.build.git)
         if not is_created:
             # If the repo already exist, we just need to refetch it
             git.fetch(git_url=repo.git_url, repo_path=repo.path)
@@ -107,11 +107,11 @@ def build_experiment(experiment, image_tag=None):
     docker_builder = ExperimentDockerBuilder(experiment_name=experiment.unique_name,
                                              experiment_uuid=experiment.uuid.hex,
                                              repo_path=build_info['repo_path'],
-                                             from_image=experiment_spec.run_exec.image,
+                                             from_image=experiment_spec.build.image,
                                              image_name=build_info['image_name'],
                                              image_tag=image_tag or build_info['image_tag'],
-                                             build_steps=experiment_spec.run_exec.build_steps,
-                                             env_vars=experiment_spec.run_exec.env_vars)
+                                             build_steps=experiment_spec.build.build_steps,
+                                             env_vars=experiment_spec.build.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
                          registry_host=settings.REGISTRY_HOST)

@@ -15,10 +15,12 @@ the polyaxonfile.yml `run` section could look something like this
 ---
 ...
 
-run:
+build
   image: tensorflow/tensorflow:1.4.1-py3
-  v:
+  build_steps:
     - pip install scikit-learn
+
+run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
@@ -49,10 +51,12 @@ declarations:
   lr: 0.01
   batch_size: 128
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install -r polyaxon_requirements.txt
+
+run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
@@ -264,7 +268,7 @@ environment:
           requests: 256
           limits: 1024
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-gpu-py3  # Update the image to use GPU
 ```
 

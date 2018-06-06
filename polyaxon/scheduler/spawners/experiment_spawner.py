@@ -152,10 +152,10 @@ class ExperimentSpawner(K8SManager):
             self._delete_job(task_type=task_type, task_idx=i, has_service=has_service)
 
     def get_pod_command_args(self, task_type, task_idx):
-        if not self.spec.run_exec or not self.spec.run_exec.cmd:
+        if not self.spec.run or not self.spec.run.cmd:
             raise ValueError('The specification must contain a command.')
 
-        cmd = self.spec.run_exec.cmd.split(' ')
+        cmd = self.spec.run.cmd.split(' ')
         cmd = [c.strip().strip('\\') for c in cmd if (c and c != '\\')]
         cmd = [c for c in cmd if (c and c != '\\')]
         return cmd, []

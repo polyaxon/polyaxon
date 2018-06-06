@@ -49,7 +49,7 @@ def experiments_build(experiment_id):
         return
 
     # No need to build the image, start the experiment directly
-    if not experiment.specification.run_exec:
+    if not (experiment.specification.build and experiment.specification.run):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id})
@@ -64,7 +64,7 @@ def experiments_build(experiment_id):
     build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
         user=experiment.user,
         project=experiment.project,
-        config=experiment.specification.run_exec,
+        config=experiment.specification.run,
         code_reference=experiment.code_reference)
 
     experiment.build_job = build_job

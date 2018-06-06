@@ -14,9 +14,9 @@ from django.utils.functional import cached_property
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
-from libs.spec_validation import validate_group_params_config, validate_group_spec_content
+from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
-from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.utils import Optimization
 
 logger = logging.getLogger('db.experiment_groups')
@@ -49,11 +49,11 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         blank=True,
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_group_spec_content])
-    params = JSONField(
-        help_text='The experiment group hyper params config.',
+    hptuning = JSONField(
+        help_text='The experiment group hptuning params config.',
         null=True,
         blank=True,
-        validators=[validate_group_params_config])
+        validators=[validate_group_hptuning_config])
     code_reference = models.ForeignKey(
         'db.CodeReference',
         on_delete=models.SET_NULL,
@@ -128,8 +128,8 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         ExperimentGroupStatus.objects.create(experiment_group=self, status=status, message=message)
 
     @cached_property
-    def params_config(self):
-        return SettingsConfig.from_dict(self.params) if self.params else None
+    def hptuning_config(self):
+        return HPTuningConfig.from_dict(self.hptuning) if self.hptuning else None
 
     @cached_property
     def specification(self):
@@ -137,15 +137,15 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def concurrency(self):
-        if not self.params_config:
+        if not self.hptuning_config:
             return None
-        return self.params_config.concurrency
+        return self.hptuning_config.concurrency
 
     @cached_property
     def search_algorithm(self):
-        if not self.params_config:
+        if not self.hptuning_config:
             return None
-        return self.params_config.search_algorithm
+        return self.hptuning_config.search_algorithm
 
     @cached_property
     def has_early_stopping(self):
@@ -153,9 +153,9 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def early_stopping(self):
-        if not self.params_config:
+        if not self.hptuning_config:
             return None
-        return self.params_config.early_stopping or []
+        return self.hptuning_config.early_stopping or []
 
     @property
     def has_description(self):
@@ -261,7 +261,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
     def search_manager(self):
         from hpsearch.search_managers import get_search_algorithm_manager
 
-        return get_search_algorithm_manager(params_config=self.params_config)
+        return get_search_algorithm_manager(hptuning_config=self.hptuning_config)
 
     @cached_property
     def iteration_manager(self):

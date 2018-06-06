@@ -69,7 +69,7 @@ def build_experiment(self, experiment_id):
         return
 
     # No need to build the image, start the experiment directly
-    if not experiment.specification.run_exec:
+    if not (experiment.specification.build and experiment.specification.run):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id})

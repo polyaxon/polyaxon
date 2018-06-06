@@ -14,7 +14,7 @@ All these search algorithms run in an asynchronous way, and support concurrency 
 
 Some of these approaches are also iterative and improve based on previous experiments.
 
-In order to search a hyperparameter space, all search algorithms require a `settings` section,
+In order to search a hyperparameter space, all search algorithms require a `hptuning` section,
 they also share some subsections such as: `matrix` definition of hyperparameters, `early_stopping`, and `concurrency`.
 Each one of this algorithms has a dedicated subsection to define the required options.
 
@@ -36,17 +36,19 @@ kind: group
 declarations:
   batch_size: 128
 
-settings:
-    matrix:
-      lr:
-        logspace: 0.01:0.1:5
-      dropout:
-        values: [0.2, 0.5]
+hptuning:
+  matrix:
+    lr:
+      logspace: 0.01:0.1:5
+    dropout:
+      values: [0.2, 0.5]
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
+
+run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }} --dropout={{ dropout }}
 ```
 
@@ -67,20 +69,22 @@ kind: group
 declarations:
   batch_size: 128
 
-settings:
-    grid_search:
-      n_experiments: 4
+hptuning:
+  grid_search:
+    n_experiments: 4
 
-    matrix:
-      lr:
-        logspace: 0.01:0.1:5
-      dropout:
-        values: [0.2, 0.5]
+  matrix:
+    lr:
+      logspace: 0.01:0.1:5
+    dropout:
+      values: [0.2, 0.5]
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
+
+run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }} --dropout={{ dropout }}
 ```
 
@@ -101,34 +105,36 @@ kind: group
 declarations:
   batch_size: 128
 
-settings:
-    concurrency: 2
+hptuning:
+  concurrency: 2
 
-    random_search:
-      n_experiments: 40
+  random_search:
+    n_experiments: 40
 
-    matrix:
-      lr:
-        logspace: 0.01:0.1:5
-      dropout:
-        values: [0.2, 0.5]
-      activation:
-        pvalues: [[elu, 0.1], [relu, 0.2], [sigmoid, 0.7]]
-      param1:
-        uniform: [0, 1]
+  matrix:
+    lr:
+      logspace: 0.01:0.1:5
+    dropout:
+      values: [0.2, 0.5]
+    activation:
+      pvalues: [[elu, 0.1], [relu, 0.2], [sigmoid, 0.7]]
+    param1:
+      uniform: [0, 1]
 
-    early_stopping:
-    - metric: accuracy
-      value: 0.9
-      optimization: maximize
-    - metric: loss
-      value: 0.05
-      optimization: minimize
+  early_stopping:
+  - metric: accuracy
+    value: 0.9
+    optimization: maximize
+  - metric: loss
+    value: 0.05
+    optimization: minimize
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
+
+run:
   cmd: python3 train.py --batch-size={{ batch_size }} \
                         --lr={{ lr }} \
                         --dropout={{ dropout }} \
@@ -174,12 +180,12 @@ metric:
   optimization: maximize
 ```
 
-A complete definition of the settings section:
+A complete definition of the hptuning section:
 
 ```yaml
 ...
 
-settings:
+hptuning:
   concurrency: 2
 
   hyperband:
@@ -208,7 +214,7 @@ You can also use early stopping with hyperband:
 ```yaml
 ...
 
-settings:
+hptuning:
   concurrency: 2
 
   hyperband:
@@ -283,7 +289,7 @@ Example :
 ```yaml
 ...
 
-settings:
+hptuning:
   concurrency: 2
   bo:
     n_iterations: 15
@@ -314,7 +320,7 @@ Example with early stopping:
 ```yaml
 ...
 
-settings:
+hptuning:
   concurrency: 2
   bo:
     n_iterations: 15

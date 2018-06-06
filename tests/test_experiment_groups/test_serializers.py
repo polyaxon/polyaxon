@@ -59,7 +59,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     factory_class = ExperimentGroupFactory
     expected_keys = {
         'uuid', 'sequence', 'unique_name', 'description', 'content',
-        'params', 'project', 'project_name', 'user',
+        'hptuning', 'project', 'project_name', 'user',
         'created_at', 'updated_at', 'started_at', 'finished_at',
         'concurrency', 'num_experiments', 'last_status', 'current_iteration', 'search_algorithm',
         'num_pending_experiments', 'num_running_experiments', 'num_scheduled_experiments',

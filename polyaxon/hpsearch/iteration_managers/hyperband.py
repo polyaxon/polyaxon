@@ -9,7 +9,7 @@ _logger = logging.getLogger('polyaxon.hpsearch.iteration_manager')
 
 class HyperbandIterationManager(BaseIterationManger):
     def get_metric_name(self):
-        return self.experiment_group.params_config.hyperband.metric.name
+        return self.experiment_group.hptuning_config.hyperband.metric.name
 
     def create_iteration(self, experiment_ids=None):
         """Create an iteration for the experiment group."""
@@ -69,7 +69,7 @@ class HyperbandIterationManager(BaseIterationManger):
 
         # Order the experiments
         reverse = Optimization.maximize(
-            self.experiment_group.params_config.hyperband.metric.optimization)
+            self.experiment_group.hptuning_config.hyperband.metric.optimization)
         experiments_metrics = sorted(experiments_metrics, key=lambda x: x[1], reverse=reverse)
 
         # Keep n experiments
@@ -81,14 +81,14 @@ class HyperbandIterationManager(BaseIterationManger):
         experiments = self.experiment_group.experiments.filter(id__in=experiment_ids)
         self.create_iteration(experiment_ids=experiment_ids)
         iteration_config = self.experiment_group.iteration_config
-        params_config = self.experiment_group.params_config
+        hptuning_config = self.experiment_group.hptuning_config
         n_resources = self.experiment_group.search_manager.get_resources_for_iteration(
             iteration=iteration_config.iteration)
         resource_value = self.experiment_group.search_manager.get_n_resources(
             n_resources=n_resources, bracket_iteration=iteration_config.bracket_iteration
         )
-        resource_name = params_config.hyperband.resource.name
-        resource_value = params_config.hyperband.resource.cast_value(resource_value)
+        resource_name = hptuning_config.hyperband.resource.name
+        resource_value = hptuning_config.hyperband.resource.cast_value(resource_value)
 
         # Check if we need to resume or restart the experiments
         for experiment in experiments:
@@ -100,7 +100,7 @@ class HyperbandIterationManager(BaseIterationManger):
                 iteration_config.iteration,
                 iteration_config.bracket_iteration)
 
-            if params_config.hyperband.resume:
+            if hptuning_config.hyperband.resume:
                 experiment.resume(
                     declarations=declarations,
                     config=specification.parsed_data,

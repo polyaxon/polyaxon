@@ -33,7 +33,7 @@ from hpsearch.tasks.bo import hp_bo_start
 from hpsearch.tasks.hyperband import hp_hyperband_start
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
-from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.utils import SearchAlgorithms
 from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 from tests.utils import BaseTest, BaseViewTest
@@ -57,21 +57,21 @@ class TestExperimentGroupModel(BaseTest):
         assert delete_path.call_count == 2 + 2  # outputs + logs
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
-    def test_experiment_group_without_spec_and_params(self, _):
+    def test_experiment_group_without_spec_and_hptuning(self, _):
         # Create group without params and spec works
         project = ProjectFactory()
         experiment_group = ExperimentGroup.objects.create(
             user=project.user,
             project=project)
         assert experiment_group.specification is None
-        assert experiment_group.params is None
-        assert experiment_group.params_config is None
+        assert experiment_group.hptuning is None
+        assert experiment_group.hptuning_config is None
         assert experiment_group.concurrency is None
         assert experiment_group.search_algorithm is None
         assert experiment_group.early_stopping is None
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
-    def test_experiment_group_with_spec_create_params(self, _):
+    def test_experiment_group_with_spec_create_hptuning(self, _):
         # Create group with spec creates params
         project = ProjectFactory()
         experiment_group = ExperimentGroup.objects.create(
@@ -79,17 +79,17 @@ class TestExperimentGroupModel(BaseTest):
             project=project,
             content=experiment_group_spec_content_early_stopping)
         assert isinstance(experiment_group.specification, GroupSpecification)
-        assert experiment_group.params == experiment_group.specification.settings.to_dict()
-        assert isinstance(experiment_group.params_config, SettingsConfig)
+        assert experiment_group.hptuning == experiment_group.specification.hptuning.to_dict()
+        assert isinstance(experiment_group.hptuning_config, HPTuningConfig)
         assert experiment_group.concurrency == 2
         assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
         assert len(experiment_group.early_stopping) == 2
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
-    def test_experiment_group_with_params(self, _):
+    def test_experiment_group_with_hptuning(self, _):
         # Create group with spec creates params
         project = ProjectFactory()
-        params = {
+        hptuning = {
             'concurrency': 2,
             'random_search': {'n_experiments': 10},
             'matrix': {'lr': {'values': [1, 2, 3]}}
@@ -97,15 +97,15 @@ class TestExperimentGroupModel(BaseTest):
         experiment_group = ExperimentGroup.objects.create(
             user=project.user,
             project=project,
-            params=params)
+            hptuning=hptuning)
 
         assert experiment_group.specification is None
-        assert experiment_group.params == params
-        assert isinstance(experiment_group.params_config, SettingsConfig)
+        assert experiment_group.hptuning == hptuning
+        assert isinstance(experiment_group.hptuning_config, HPTuningConfig)
         assert experiment_group.concurrency == 2
         assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
-        assert experiment_group.params_config.random_search.n_experiments == 10
-        assert isinstance(experiment_group.params_config.matrix['lr'], MatrixConfig)
+        assert experiment_group.hptuning_config.random_search.n_experiments == 10
+        assert isinstance(experiment_group.hptuning_config.matrix['lr'], MatrixConfig)
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     def test_iteration(self, _):
@@ -136,7 +136,7 @@ class TestExperimentGroupModel(BaseTest):
         # Experiment group with early stopping
         experiment_group = ExperimentGroupFactory(
             content=None,
-            params={
+            hptuning={
                 'concurrency': 2,
                 'random_search': {'n_experiments': 10},
                 'early_stopping': [
@@ -264,11 +264,11 @@ class TestExperimentGroupModel(BaseTest):
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     def test_managers(self, _):
-        experiment_group = ExperimentGroupFactory(content=None, params=None)
+        experiment_group = ExperimentGroupFactory(content=None, hptuning=None)
         assert experiment_group.search_manager is None
 
-        # Adding params
-        experiment_group.params = {
+        # Adding hptuning
+        experiment_group.hptuning = {
             'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {'lr': {'values': [1, 2, 3]}}
@@ -278,8 +278,8 @@ class TestExperimentGroupModel(BaseTest):
         assert isinstance(experiment_group.search_manager, GridSearchManager)
         assert experiment_group.iteration_manager is None
 
-        # Adding params
-        experiment_group.params = {
+        # Adding hptuning
+        experiment_group.hptuning = {
             'concurrency': 2,
             'random_search': {'n_experiments': 10},
             'matrix': {'lr': {'values': [1, 2, 3]}}
@@ -289,8 +289,8 @@ class TestExperimentGroupModel(BaseTest):
         assert isinstance(experiment_group.search_manager, RandomSearchManager)
         assert experiment_group.iteration_manager is None
 
-        # Adding params
-        experiment_group.params = {
+        # Adding hptuning
+        experiment_group.hptuning = {
             'concurrency': 2,
             'hyperband': {
                 'max_iter': 10,
@@ -306,8 +306,8 @@ class TestExperimentGroupModel(BaseTest):
         assert isinstance(experiment_group.search_manager, HyperbandSearchManager)
         assert isinstance(experiment_group.iteration_manager, HyperbandIterationManager)
 
-        # Adding params
-        experiment_group.params = {
+        # Adding hptuning
+        experiment_group.hptuning = {
             'concurrency': 2,
             'bo': {
                 'n_iterations': 4,

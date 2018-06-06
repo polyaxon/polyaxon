@@ -30,8 +30,8 @@ def experiment_group_pre_save(sender, **kwargs):
     # Add code reference
     assign_code_reference(instance)
     # Check if params need to be set
-    if not instance.params and instance.specification:
-        instance.params = instance.specification.settings.to_dict()
+    if not instance.hptuning and instance.specification:
+        instance.hptuning = instance.specification.hptuning.to_dict()
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")

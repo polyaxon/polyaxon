@@ -4,7 +4,7 @@ from hpsearch.schemas.bayesian_optimization import BOIterationConfig
 
 class BOIterationManager(BaseIterationManger):
     def get_metric_name(self):
-        return self.experiment_group.params_config.bo.metric.name
+        return self.experiment_group.hptuning_config.bo.metric.name
 
     def create_iteration(self, experiment_ids, experiments_configs):
         """Create an iteration for the experiment group."""
