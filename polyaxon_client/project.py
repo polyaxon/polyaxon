@@ -131,7 +131,7 @@ class ProjectClient(PolyaxonClient):
                                       'start')
 
         try:
-            plugin_job_config = plugin_job_config.to_dict() if plugin_job_config else {}
+            plugin_job_config = plugin_job_config or {}
             return self.post(request_url, json_data=plugin_job_config)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while starting tensorboard')
@@ -157,7 +157,7 @@ class ProjectClient(PolyaxonClient):
                                       'start')
 
         try:
-            plugin_job_config = plugin_job_config.to_dict() if plugin_job_config else {}
+            plugin_job_config = plugin_job_config or {}
             return self.post(request_url, json_data=plugin_job_config)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while starting notebook')

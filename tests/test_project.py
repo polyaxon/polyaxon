@@ -10,7 +10,6 @@ from unittest import TestCase
 
 from polyaxon_client.project import ProjectClient
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.plugins import PluginJobConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
 faker = Faker()
@@ -260,7 +259,7 @@ class TestProjectClient(TestCase):
 
     @httpretty.activate
     def test_start_tensorboard_with_config(self):
-        obj = PluginJobConfig(config={})
+        obj = {}
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
@@ -270,7 +269,7 @@ class TestProjectClient(TestCase):
                 'project_name',
                 'tensorboard',
                 'start'),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
         result = self.client.start_tensorboard('username', 'project_name', obj)
@@ -310,7 +309,7 @@ class TestProjectClient(TestCase):
 
     @httpretty.activate
     def test_start_notebook_with_config(self):
-        obj = PluginJobConfig(config={})
+        obj = {}
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
@@ -320,7 +319,7 @@ class TestProjectClient(TestCase):
                 'project_name',
                 'notebook',
                 'start'),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
         result = self.client.start_notebook('username', 'project_name', obj)
