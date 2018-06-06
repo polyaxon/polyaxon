@@ -20,18 +20,18 @@ from polyaxon.settings import SchedulerCeleryTasks
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
 
 
-@receiver(post_save, sender=BuildJob, dispatch_uid="build_job_saved")
+@receiver(post_save, sender=BuildJob, dispatch_uid="build_set_created_status")
 @ignore_updates
 @ignore_raw
-def new_build_job(sender, **kwargs):
+def build_set_created_status(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
 
 
-@receiver(post_save, sender=BuildJobStatus, dispatch_uid="new_build_job_status_saved")
+@receiver(post_save, sender=BuildJobStatus, dispatch_uid="build_set_new_status")
 @ignore_updates
 @ignore_raw
-def new_build_job_status_saved(sender, **kwargs):
+def build_set_new_status(sender, **kwargs):
     instance = kwargs['instance']
     job = instance.job
     previous_status = job.last_status
@@ -61,19 +61,29 @@ def new_build_job_status_saved(sender, **kwargs):
                        target='project')
 
 
-@receiver(post_save, sender=BuildJobStatus, dispatch_uid="handle_new_build_job_status")
+@receiver(post_save, sender=BuildJobStatus, dispatch_uid="build_check_stop_job")
 @ignore_raw
-def handle_new_build_job_status(sender, **kwargs):
+def build_check_stop_job(sender, **kwargs):
     instance = kwargs['instance']
-    build_job = instance.job
-    if not build_job.specification:
-        return
+    build_job_id = instance.job_id
 
     if instance.status in (JobLifeCycle.FAILED, JobLifeCycle.SUCCEEDED):
-        _logger.info('The worker `%s` failed or is done, '
-                     'send signal to stop.', build_job.unique_name)
+        _logger.info('The build job  with id `%s` failed or is done, '
+                     'send signal to stop.', build_job_id)
         # Schedule stop for this experiment because other jobs may be still running
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
-            kwargs={'build_job_id': build_job.id,
+            kwargs={'build_job_id': build_job_id,
                     'update_status': False})
+
+
+@receiver(post_save, sender=BuildJobStatus, dispatch_uid="build_handle_done_status")
+@ignore_raw
+def build_handle_done_status(sender, **kwargs):
+    instance = kwargs['instance']
+    build_job_id = instance.job_id
+
+    if JobLifeCycle.is_done(instance.status):
+        celery_app.send_task(
+            SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE,
+            kwargs={'build_job_id': build_job_id})
