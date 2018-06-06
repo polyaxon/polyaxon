@@ -13,7 +13,6 @@ from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.plugins import PluginJobConfig
 
 
 def get_notebook_url(user, project_name):
@@ -87,7 +86,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
     ```
     """
     specification = None
-    plugin_job = None
+    job_config = None
     if file:
         specification = check_polyaxonfile(file, log=False).specification
 
@@ -97,11 +96,11 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
 
     if specification:
         # pylint:disable=protected-access
-        check_polyaxonfile_kind(specification=specification, kind=specification._PLUGIN)
-        plugin_job = PluginJobConfig(config=specification.parsed_data)
+        check_polyaxonfile_kind(specification=specification, kind=specification._NOTEBOOK)
+        job_config = specification.parsed_data
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
-        response = PolyaxonClients().project.start_notebook(user, project_name, plugin_job)
+        response = PolyaxonClients().project.start_notebook(user, project_name, job_config)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not start notebook project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))

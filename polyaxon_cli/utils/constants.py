@@ -25,9 +25,8 @@ version: 1
 
 kind: experiment
 
-settings:
-  logging:
-    level: INFO
+logging:
+  level: INFO
 
 model:
   # set you model
@@ -38,8 +37,10 @@ version: 1
 
 kind: experiment
 
-run:
+build:
   # image: # Image name to use
+
+run:
   # cmd: # Command to use
 """
 
