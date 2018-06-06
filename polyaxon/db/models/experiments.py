@@ -173,6 +173,11 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         return statuses
 
     @property
+    def has_running_jobs(self):
+        """"Return a boolean indicating if the experiment has any running jobs"""
+        return self.jobs.exclude(status__status__in=ExperimentLifeCycle.DONE_STATUS).exists()
+
+    @property
     def calculated_status(self):
         master_status = self.jobs.filter(role=TaskType.MASTER)[0].last_status
         calculated_status = master_status if JobLifeCycle.is_done(master_status) else None

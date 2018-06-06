@@ -221,7 +221,11 @@ def handle_new_experiment_status(sender, **kwargs):
     if not experiment.specification:
         return
 
-    if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
+    stop_condition = (
+        instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED) and
+        instance.has_running_jobs
+    )
+    if stop_condition:
         _logger.info('One of the workers failed or Master for experiment `%s` is done, '
                      'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
