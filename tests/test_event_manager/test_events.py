@@ -7,14 +7,14 @@ from event_manager.events import (
     experiment,
     experiment_group,
     experiment_job,
+    job,
     notebook,
     permission,
     project,
     repo,
     superuser,
     tensorboard,
-    user,
-    job,
+    user
 )
 from libs.json_utils import loads
 from tests.utils import BaseTest

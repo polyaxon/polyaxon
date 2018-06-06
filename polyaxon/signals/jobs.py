@@ -7,12 +7,7 @@ import auditor
 
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
-from event_manager.events.job import (
-    JOB_FAILED,
-    JOB_NEW_STATUS,
-    JOB_STOPPED,
-    JOB_SUCCEEDED
-)
+from event_manager.events.job import JOB_FAILED, JOB_NEW_STATUS, JOB_STOPPED, JOB_SUCCEEDED
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
 

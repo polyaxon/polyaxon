@@ -3,13 +3,12 @@ import logging
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.getters.build_jobs import get_valid_build_job
-from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
-
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
 
 _logger = logging.getLogger('polyaxon.scheduler.build_jobs')
