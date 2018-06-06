@@ -26,7 +26,7 @@ class TestDockerizerScheduler(BaseTest):
             with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
                 mock_start.return_value = True
                 mock_check.return_value = False
-                build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
+                _, image_exists, build_status = dockerizer_scheduler.create_build_job(
                     user=self.project.user,
                     project=self.project,
                     config={'image': 'bar:foo'},
@@ -103,7 +103,7 @@ class TestDockerizerScheduler(BaseTest):
         with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
             with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
                 mock_check.return_value = True
-                build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
+                _, image_exists, build_status = dockerizer_scheduler.create_build_job(
                     user=self.project.user,
                     project=self.project,
                     config=config,

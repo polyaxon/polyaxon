@@ -430,10 +430,10 @@ class TestExperimentDetailViewV1(BaseViewTest):
                 gpu:
                   requests: 1
                   limits: 1
-            
+
             build:
               image: my_image
-            
+
             run:
               cmd: video_prediction_train --model=DNA --num_masks=1
         """
