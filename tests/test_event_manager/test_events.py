@@ -13,7 +13,8 @@ from event_manager.events import (
     repo,
     superuser,
     tensorboard,
-    user
+    user,
+    job,
 )
 from libs.json_utils import loads
 from tests.utils import BaseTest
@@ -105,6 +106,16 @@ class TestEvents(BaseTest):
         assert notebook.NotebookNewStatusEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookFailedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSucceededEvent.get_event_subject() == 'notebook'
+
+        # Notebook
+        assert job.JobStartedEvent.get_event_subject() == 'job'
+        assert job.JobStartedTriggeredEvent.get_event_subject() == 'job'
+        assert job.JobSoppedEvent.get_event_subject() == 'job'
+        assert job.JobSoppedTriggeredEvent.get_event_subject() == 'job'
+        assert job.JobViewedEvent.get_event_subject() == 'job'
+        assert job.JobNewStatusEvent.get_event_subject() == 'job'
+        assert job.JobFailedEvent.get_event_subject() == 'job'
+        assert job.JobSucceededEvent.get_event_subject() == 'job'
 
         # BuildJob
         assert build_job.BuildJobStartedEvent.get_event_subject() == 'build_job'
@@ -238,6 +249,16 @@ class TestEvents(BaseTest):
         assert notebook.NotebookNewStatusEvent.get_event_action() is None
         assert notebook.NotebookFailedEvent.get_event_action() is None
         assert notebook.NotebookSucceededEvent.get_event_action() is None
+
+        # Notebook
+        assert job.JobStartedEvent.get_event_action() is None
+        assert job.JobStartedTriggeredEvent.get_event_action() == 'started'
+        assert job.JobSoppedEvent.get_event_action() is None
+        assert job.JobSoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert job.JobViewedEvent.get_event_action() == 'viewed'
+        assert job.JobNewStatusEvent.get_event_action() is None
+        assert job.JobFailedEvent.get_event_action() is None
+        assert job.JobSucceededEvent.get_event_action() is None
 
         # Notebook
         assert build_job.BuildJobStartedEvent.get_event_action() is None
