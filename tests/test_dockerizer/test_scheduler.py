@@ -4,9 +4,9 @@ import pytest
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
-from factories.factorycode_reference import CodeReferenceFactory
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_projects import ProjectFactory
+from factories.factorycode_reference import CodeReferenceFactory
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 from scheduler import dockerizer_scheduler
 from tests.utils import BaseTest

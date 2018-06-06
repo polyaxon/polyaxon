@@ -13,8 +13,8 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_from_app_secret
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
-from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.internal_services_env_vars import get_service_env_vars
+from scheduler.spawners.templates.resources import get_resources
 
 logger = logging.getLogger('polyaxon.spawners.spawners')
 

@@ -9,16 +9,13 @@ from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.notebooks import NotebookJob, NotebookJobStatus
-from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from db.models.projects import Project
+from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from dockerizer.tasks import build_project_notebook
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
-from factories.fixtures import (
-    notebook_spec_parsed_content,
-    tensorboard_spec_parsed_content
-)
+from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from scheduler import notebook_scheduler
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner

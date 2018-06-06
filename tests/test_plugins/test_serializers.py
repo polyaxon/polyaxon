@@ -4,7 +4,7 @@ from api.plugins.serializers import NotebookJobSerializer, TensorboardJobSeriali
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
-from factories.fixtures import tensorboard_spec_parsed_content, notebook_spec_parsed_content
+from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from tests.utils import BaseTest
 
 

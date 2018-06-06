@@ -15,8 +15,8 @@ from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
-from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.hptuning import HPTuningConfig
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 
 logger = logging.getLogger('db.experiment_groups')

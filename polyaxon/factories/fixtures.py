@@ -1,5 +1,8 @@
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, \
-    TensorboardSpecification, NotebookSpecification
+from polyaxon_schemas.polyaxonfile.specification import (
+    ExperimentSpecification,
+    NotebookSpecification,
+    TensorboardSpecification
+)
 
 # flake8: noqa
 

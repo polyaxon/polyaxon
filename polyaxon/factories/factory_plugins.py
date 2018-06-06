@@ -5,10 +5,7 @@ import factory
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
 from factories.factory_users import UserFactory
-from factories.fixtures import (
-    notebook_spec_parsed_content,
-    tensorboard_spec_parsed_content
-)
+from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 
 fake = FakerFactory.create()
 

@@ -3,11 +3,11 @@ import logging
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
-from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
 
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from libs.spec_validation import validate_tensorboard_spec_config
+from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
 
 _logger = logging.getLogger('db.tensorboards')
 

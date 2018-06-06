@@ -22,8 +22,8 @@ from hpsearch.search_managers import (
 )
 from hpsearch.search_managers.bayesian_optimization.optimizer import BOOptimizer
 from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
-from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.hptuning import HPTuningConfig
+from polyaxon_schemas.matrix import MatrixConfig
 from tests.utils import BaseTest
 
 

@@ -31,9 +31,9 @@ from hpsearch.search_managers import (
 )
 from hpsearch.tasks.bo import hp_bo_start
 from hpsearch.tasks.hyperband import hp_hyperband_start
+from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
-from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.utils import SearchAlgorithms
 from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 from tests.utils import BaseTest, BaseViewTest

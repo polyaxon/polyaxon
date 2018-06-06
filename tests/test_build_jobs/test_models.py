@@ -2,10 +2,10 @@ import pytest
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
-from factories.factorycode_reference import CodeReferenceFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
+from factories.factorycode_reference import CodeReferenceFactory
 from tests.utils import BaseTest
 
 

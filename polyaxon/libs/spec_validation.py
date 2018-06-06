@@ -4,15 +4,15 @@ from rest_framework.exceptions import ValidationError
 from django.core.exceptions import ValidationError as DjangoValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import (
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,
-    NotebookSpecification,
-    TensorboardSpecification,
     JobSpecification,
+    NotebookSpecification,
+    TensorboardSpecification
 )
-from polyaxon_schemas.hptuning import HPTuningConfig
 
 
 def validate_experiment_spec_config(config, raise_for_rest=False):

@@ -44,7 +44,7 @@ class BuildJob(AbstractJob, JobMixin):
         app_label = 'db'
 
     def __str__(self):
-        return self.unique_name
+        return '{}.builds.{}'.format(self.project.unique_name, self.sequence)
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
@@ -54,9 +54,6 @@ class BuildJob(AbstractJob, JobMixin):
                 self.sequence = last.sequence + 1
 
         super(BuildJob, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return '{}.builds.{}'.format(self.project.unique_name, self.sequence)
 
     @cached_property
     def specification(self):

@@ -2,12 +2,12 @@ import logging
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from polyaxon_schemas.polyaxonfile.specification import NotebookSpecification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
 
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from libs.spec_validation import validate_notebook_spec_config
+from polyaxon_schemas.polyaxonfile.specification import NotebookSpecification
+from polyaxon_schemas.polyaxonfile.utils import cached_property
 
 _logger = logging.getLogger('db.notebooks')
 

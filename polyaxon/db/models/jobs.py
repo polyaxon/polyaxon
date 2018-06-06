@@ -90,7 +90,7 @@ class Job(AbstractJob):
         return self.specification.build.env_vars
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
-        return self._set_status(status_model=RunJobStatus,
+        return self._set_status(status_model=JobStatus,
                                 logger=logger,
                                 status=status,
                                 message=message,
