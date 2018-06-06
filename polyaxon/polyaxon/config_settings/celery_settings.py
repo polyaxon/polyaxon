@@ -166,6 +166,11 @@ class SchedulerCeleryTasks(object):
 
     BUILD_JOBS_START = 'build_jobs_start'
     BUILD_JOBS_STOP = 'build_jobs_stop'
+    BUILD_JOBS_NOTIFY_DONE = 'build_jobs_notify_done'
+
+    JOBS_START = 'jobs_start'
+    JOBS_STOP = 'jobs_stop'
+    JOBS_NOTIFY_DONE = 'jobs_notify_done'
 
 
 class HPCeleryTasks(object):
@@ -284,6 +289,15 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.BUILD_JOBS_START:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
     SchedulerCeleryTasks.BUILD_JOBS_STOP:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+    SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+
+    SchedulerCeleryTasks.JOBS_START:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+    SchedulerCeleryTasks.JOBS_STOP:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+    SchedulerCeleryTasks.JOBS_NOTIFY_DONE:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
 
     CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES:
