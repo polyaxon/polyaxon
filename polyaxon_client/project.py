@@ -123,7 +123,7 @@ class ProjectClient(PolyaxonClient):
         # TODO
         pass
 
-    def start_tensorboard(self, username, project_name, plugin_job_config=None):
+    def start_tensorboard(self, username, project_name, job_config=None):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -131,8 +131,8 @@ class ProjectClient(PolyaxonClient):
                                       'start')
 
         try:
-            plugin_job_config = plugin_job_config or {}
-            return self.post(request_url, json_data=plugin_job_config)
+            job_config = job_config or {}
+            return self.post(request_url, json_data=job_config)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while starting tensorboard')
             return None
@@ -149,7 +149,7 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
 
-    def start_notebook(self, username, project_name, plugin_job_config=None):
+    def start_notebook(self, username, project_name, job_config=None):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -157,8 +157,8 @@ class ProjectClient(PolyaxonClient):
                                       'start')
 
         try:
-            plugin_job_config = plugin_job_config or {}
-            return self.post(request_url, json_data=plugin_job_config)
+            job_config = job_config or {}
+            return self.post(request_url, json_data=job_config)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while starting notebook')
             return None
