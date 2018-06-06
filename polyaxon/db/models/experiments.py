@@ -61,7 +61,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         related_name='experiments')
     build_job = models.ForeignKey(
         'db.BuildJob',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='+')
