@@ -13,7 +13,7 @@ from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
     get_service_env_vars,
-    get_job_env_vars, get_resources_env_vars)
+    get_job_env_vars, get_resources_env_vars, get_sidecar_env_vars)
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecar import get_sidecar_command, get_sidecar_args
@@ -108,10 +108,8 @@ class PodManager(object):
 
     def get_sidecar_container(self):
         """Pod sidecar container for task logs."""
-        env_vars = [
-            client.V1EnvVar(name='POLYAXON_POD_ID', value=self.job_name),
-            client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
-        ]
+        env_vars = get_sidecar_env_vars(job_name=self.job_name,
+                                        job_container_name=self.job_container_name)
         env_vars += get_service_env_vars(namespace=self.namespace)
         for k, v in self.sidecar_config.items():
             env_vars.append(client.V1EnvVar(name=k, value=v))

@@ -55,3 +55,10 @@ def get_resources_env_vars(resources):
     if resources.gpu and not settings.LD_LIBRARY_PATH:
         # TODO: logger.warning('`LD_LIBRARY_PATH` was not properly set.')  # Publish error
         return []
+
+
+def get_sidecar_env_vars(job_name, job_container_name):
+    return [
+        get_env_var(name='POLYAXON_POD_ID', value=job_name),
+        get_env_var(name='POLYAXON_JOB_ID', value=job_container_name),
+    ]
