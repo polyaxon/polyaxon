@@ -72,4 +72,8 @@ Spawner config
   value: {{ .Values.apps.notebook }}
 - name: POLYAXON_APP_LABELS_DOCKERIZER
   value: {{ .Values.apps.dockerizer }}
+- name: POLYAXON_APP_LABELS_EXPERIMENT
+  value: {{ .Values.apps.experiment }}
+- name: POLYAXON_APP_LABELS_JOB
+  value: {{ .Values.apps.job }}
 {{- end -}}

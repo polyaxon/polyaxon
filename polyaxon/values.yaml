@@ -444,6 +444,8 @@ apps:
   tensorboard: "polyaxon-tensorboard"
   notebook: "polyaxon-notebook"
   dockerizer: "polyaxon-dockerizer"
+  exeriment: "polyaxon-experiment"
+  job: "polyaxon-job"
 
 k8s: {}
 
