@@ -1,79 +1,78 @@
 import json
-import logging
-import uuid
 
 from kubernetes import client
 
 from django.conf import settings
 
-from libs.api import API_KEY_NAME
+from libs.paths.jobs import get_job_outputs_path, get_job_logs_path, get_job_data_path
+from libs.paths.projects import get_project_data_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.env_vars import get_from_app_secret
+from scheduler.spawners.templates.env_vars import (
+    get_env_var,
+    get_service_env_vars,
+    get_job_env_vars, get_resources_env_vars)
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
-from scheduler.spawners.templates.internal_services_env_vars import get_service_env_vars
 from scheduler.spawners.templates.resources import get_resources
-
-logger = logging.getLogger('polyaxon.spawners.spawners')
+from scheduler.spawners.templates.sidecar import get_sidecar_command, get_sidecar_args
 
 
 class PodManager(object):
     def __init__(self,
                  namespace,
                  project_name,
-                 experiment_group_name,
-                 experiment_name,
                  project_uuid,
-                 experiment_group_uuid,
-                 experiment_uuid,
+                 job_name,
+                 job_uuid,
+                 job_docker_image,
                  job_container_name=None,
-                 job_docker_image=None,
                  sidecar_container_name=None,
                  sidecar_docker_image=None,
                  role_label=None,
                  type_label=None,
                  ports=None,
                  use_sidecar=False,
-                 sidecar_config=None):
+                 sidecar_config=None,
+                 log_level=None):
         self.namespace = namespace
         self.project_name = project_name
-        self.experiment_group_name = experiment_group_name
-        self.experiment_name = experiment_name
         self.project_uuid = project_uuid
-        self.experiment_group_uuid = experiment_group_uuid
-        self.experiment_uuid = experiment_uuid
+        self.job_name = job_name
+        self.job_uuid = job_uuid
         self.job_container_name = job_container_name or settings.CONTAINER_NAME_JOB
-        self.job_docker_image = job_docker_image or settings.JOB_DOCKER_NAME
+        self.job_docker_image = job_docker_image
         self.sidecar_container_name = sidecar_container_name or settings.CONTAINER_NAME_SIDECAR
         self.sidecar_docker_image = sidecar_docker_image or settings.JOB_SIDECAR_DOCKER_IMAGE
         self.role_label = role_label or settings.ROLE_LABELS_WORKER
         self.type_label = type_label or settings.TYPE_LABELS_EXPERIMENT
-        self.ports = ports or [constants.DEFAULT_PORT]
+        self.app_label = settings.APP_LABELS_JOB
+        self.labels = self.get_labels()
+        self.pod_name = self.get_job_name()
+        self.ports = ports
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
             raise PolyaxonConfigurationError(
                 'In order to use a `sidecar_config` is required. '
                 'The `sidecar_config` must correspond to the sidecar docker image used.')
         self.sidecar_config = sidecar_config
+        self.log_level = log_level
 
-    def get_job_name(self, task_type, task_idx):
-        return constants.JOB_NAME.format(task_type=task_type,
-                                         task_idx=task_idx,
-                                         experiment_uuid=self.experiment_uuid)
+    def get_job_name(self):
+        return constants.JOB_NAME.format(name=settings.APP_LABELS_JOB, job_uuid=self.job_uuid)
 
-    def get_from_experiment_config_map(self, key_name):
-        name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
-        config_map_key_ref = client.V1ConfigMapKeySelector(name=name, key=key_name)
-        value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-        return client.V1EnvVar(name=key_name, value_from=value)
-
-    def get_from_experiment_secret(self, key_name):
-        name = constants.SECRET_NAME.format(experiment_uuid=self.experiment_uuid)
-        secret_key_ref = client.V1SecretKeySelector(name=name, key=key_name)
-        value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
-        return client.V1EnvVar(name=key_name, value_from=value)
+    def get_labels(self):
+        labels = {
+            'project_name': self.project_name,
+            'project_uuid': self.project_uuid,
+            'job_name': self.job_name,
+            'job_uuid': self.job_uuid,
+            'role': self.role_label,
+            'type': self.type_label,
+            'app': self.app_label
+        }
+        return labels
 
     def get_pod_container(self,
                           volume_mounts,
@@ -83,28 +82,19 @@ class PodManager(object):
                           resources=None):
         """Pod job container for task."""
         env_vars = get_list(env_vars)
+        env_vars += get_job_env_vars(
+            log_level=self.log_level,
+            outputs_path=get_job_outputs_path(job_name=self.job_name),
+            logs_path=get_job_logs_path(job_name=self.job_name),
+            data_path=get_job_data_path(job_name=self.job_name),
+            project_data_path=get_project_data_path(project_name=self.project_name)
+        )
         env_vars += [
-            self.get_from_experiment_config_map(constants.CONFIG_MAP_CLUSTER_KEY_NAME),
-            self.get_from_experiment_config_map(constants.CONFIG_MAP_DECLARATIONS_KEY_NAME),
-            self.get_from_experiment_config_map(constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME),
-            self.get_from_experiment_config_map(constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME),
-            self.get_from_experiment_config_map(API_KEY_NAME),
-            self.get_from_experiment_config_map(
-                constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME),
-            self.get_from_experiment_config_map(
-                constants.CONFIG_MAP_EXPERIMENT_LOGS_PATH_KEY_NAME),
-            self.get_from_experiment_config_map(
-                constants.CONFIG_MAP_EXPERIMENT_DATA_PATH_KEY_NAME),
-            get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret'),
-            get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'polyaxon-internal-secret-token')
+            get_env_var(name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME, value=json.dumps(self.labels)),
         ]
 
         if resources:
-            if resources.gpu and settings.LD_LIBRARY_PATH:
-                env_vars.append(client.V1EnvVar(name='LD_LIBRARY_PATH',
-                                                value=settings.LD_LIBRARY_PATH))
-            if resources.gpu and not settings.LD_LIBRARY_PATH:
-                logger.warning('`LD_LIBRARY_PATH` was not properly set.')  # Publish error
+            env_vars += get_resources_env_vars(resources=resources)
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
         return client.V1Container(name=self.job_container_name,
@@ -116,32 +106,27 @@ class PodManager(object):
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
 
-    def get_sidecar_container(self, task_type, task_idx, args):
+    def get_sidecar_container(self):
         """Pod sidecar container for task logs."""
-        job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
-
         env_vars = [
-            client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
-            client.V1EnvVar(name='POLYAXON_POD_ID', value=job_name),
+            client.V1EnvVar(name='POLYAXON_POD_ID', value=self.job_name),
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
         ]
-        env_vars += get_service_env_vars()
+        env_vars += get_service_env_vars(namespace=self.namespace)
         for k, v in self.sidecar_config.items():
             env_vars.append(client.V1EnvVar(name=k, value=v))
         return client.V1Container(name=self.sidecar_container_name,
                                   image=self.sidecar_docker_image,
+                                  command=get_sidecar_command(app_label=self.app_label),
                                   env=env_vars,
-                                  args=args)
+                                  args=get_sidecar_args(pod_id=self.pod_name))
 
     def get_task_pod_spec(self,
-                          task_type,
-                          task_idx,
                           volume_mounts,
                           volumes,
                           env_vars=None,
                           command=None,
                           args=None,
-                          sidecar_args=None,
                           resources=None,
                           node_selector=None,
                           restart_policy='OnFailure'):
@@ -153,15 +138,6 @@ class PodManager(object):
         volume_mounts += gpu_volume_mounts
         volumes += gpu_volumes
 
-        # Add job information
-        env_vars = get_list(env_vars)
-        env_vars.append(
-            client.V1EnvVar(
-                name=constants.CONFIG_MAP_TASK_INFO_KEY_NAME,
-                value=json.dumps({'type': task_type, 'index': task_idx})
-            )
-        )
-
         pod_container = self.get_pod_container(volume_mounts=volume_mounts,
                                                env_vars=env_vars,
                                                command=command,
@@ -170,9 +146,7 @@ class PodManager(object):
 
         containers = [pod_container]
         if self.use_sidecar:
-            sidecar_container = self.get_sidecar_container(task_type=task_type,
-                                                           task_idx=task_idx,
-                                                           args=sidecar_args)
+            sidecar_container = self.get_sidecar_container()
             containers.append(sidecar_container)
 
         if not node_selector:
@@ -187,46 +161,25 @@ class PodManager(object):
                                 volumes=volumes,
                                 node_selector=node_selector)
 
-    def get_labels(self, task_type, task_idx):
-        labels = {'project_name': self.project_name,
-                  'experiment_group_name': self.experiment_group_name,
-                  'experiment_name': self.experiment_name,
-                  'project_uuid': self.project_uuid,
-                  'experiment_uuid': self.experiment_uuid,
-                  'task_type': task_type,
-                  'task_idx': '{}'.format(task_idx),
-                  'job_uuid': uuid.uuid4().hex,
-                  'role': self.role_label,
-                  'type': self.type_label}
-        if self.experiment_group_uuid:
-            labels['experiment_group_uuid'] = self.experiment_group_uuid
-        return labels
-
     def get_pod(self,
-                task_type,
-                task_idx,
                 volume_mounts,
                 volumes,
                 env_vars=None,
                 command=None,
                 args=None,
-                sidecar_args=None,
                 resources=None,
                 node_selector=None,
                 restart_policy=None):
-        job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
-        labels = self.get_labels(task_type=task_type, task_idx=task_idx)
-        metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
+        metadata = client.V1ObjectMeta(name=self.job_name,
+                                       labels=self.labels,
+                                       namespace=self.namespace)
 
         pod_spec = self.get_task_pod_spec(
-            task_type=task_type,
-            task_idx=task_idx,
             volume_mounts=volume_mounts,
             volumes=volumes,
             env_vars=env_vars,
             command=command,
             args=args,
-            sidecar_args=sidecar_args,
             resources=resources,
             node_selector=node_selector,
             restart_policy=restart_policy)
