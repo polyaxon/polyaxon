@@ -10,7 +10,7 @@ from polyaxon.settings import EventsCeleryTasks, RoutingKeys
 
 
 class PublisherService(Service):
-    __all__ = ('publish_experiment_log', 'publish_build_job_log', 'setup')
+    __all__ = ('publish_experiment_log', 'publish_build_job_log', 'publish_job_log', 'setup')
 
     def __init__(self):
         self._logger = None
@@ -31,7 +31,7 @@ class PublisherService(Service):
         self._logger.info("Publishing log event for task: %s.%s, %s", task_type, task_idx,
                           experiment_name)
         celery_app.send_task(
-            EventsCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR,
+            EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_SIDECAR,
             kwargs={
                 'experiment_name': experiment_name,
                 'experiment_uuid': experiment_uuid,
@@ -75,6 +75,17 @@ class PublisherService(Service):
         self._logger.info("Publishing log event for task: %s", job_uuid)
         celery_app.send_task(
             EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB,
+            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_line': log_line})
+
+    def publish_job_log(self, log_line, job_uuid, job_name):
+        try:
+            log_line = log_line.decode('utf-8')
+        except AttributeError:
+            pass
+
+        self._logger.info("Publishing log event for task: %s", job_uuid)
+        celery_app.send_task(
+            EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB_SIDECAR,
             kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_line': log_line})
 
     def setup(self):
