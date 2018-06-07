@@ -65,7 +65,7 @@ def run(k8s_manager):
         job_state = get_job_state(
             event_type=event['type'],
             event=event_object,
-            job_container_names=(settings.CONTAINER_NAME_JOB,
+            job_container_names=(settings.CONTAINER_NAME_EXPERIMENT_JOB,
                                  settings.CONTAINER_NAME_PLUGIN_JOB,
                                  settings.CONTAINER_NAME_DOCKERIZER_JOB),
             experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
@@ -81,6 +81,10 @@ def run(k8s_manager):
             logger.debug(job_state)
             # Only update job containers if it's an experiment job not plugins
             experiment_job_condition = (
+                settings.CONTAINER_NAME_EXPERIMENT_JOB in job_state['details']['container_statuses']
+            )
+
+            job_condition = (
                 settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses']
             )
 
@@ -93,16 +97,25 @@ def run(k8s_manager):
             )
 
             if experiment_job_condition:
-                update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
+                update_job_containers(event_object, status, settings.CONTAINER_NAME_EXPERIMENT_JOB)
                 # Handle experiment job statuses differently than plugin job statuses
                 celery_app.send_task(
                     EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
                     kwargs={'payload': job_state})
+
+            elif job_condition:
+                update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
+                # Handle experiment job statuses differently than plugin job statuses
+                celery_app.send_task(
+                    EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES,
+                    kwargs={'payload': job_state})
+
             elif plugin_job_condition:
                 # Handle plugin job statuses
                 celery_app.send_task(
                     EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                     kwargs={'payload': job_state})
+
             elif dockerizer_job_condition:
                 # Handle dockerizer job statuses
                 celery_app.send_task(
