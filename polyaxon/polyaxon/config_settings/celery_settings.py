@@ -140,8 +140,8 @@ class EventsCeleryTasks(object):
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
     EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
     EVENTS_HANDLE_BUILD_JOB_STATUSES = 'events_handle_build_job_statuses'
-    EVENTS_HANDLE_LOGS_EXPERIMENT_SIDECAR = 'events_handle_logs_experiment_sidecar'
-    EVENTS_HANDLE_LOGS_JOB_SIDECAR = 'events_handle_logs_job_sidecar'
+    EVENTS_HANDLE_LOGS_EXPERIMENT_JOB = 'events_handle_logs_experiment_job'
+    EVENTS_HANDLE_LOGS_JOB = 'events_handle_logs_job'
     EVENTS_HANDLE_LOGS_BUILD_JOB = 'events_handle_logs_build_job'
 
 
@@ -352,9 +352,9 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES:
         {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-    EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_SIDECAR:
+    EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB:
         {'queue': CeleryQueues.LOGS_SIDECARS},
-    EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB_SIDECAR:
+    EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB:
         {'queue': CeleryQueues.LOGS_SIDECARS},
     EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB:
         {'queue': CeleryQueues.LOGS_SIDECARS},

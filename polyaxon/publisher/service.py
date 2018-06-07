@@ -34,7 +34,7 @@ class PublisherService(Service):
         self._logger.info("Publishing log event for task: %s.%s, %s", task_type, task_idx,
                           experiment_name)
         celery_app.send_task(
-            EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_SIDECAR,
+            EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB,
             kwargs={
                 'experiment_name': experiment_name,
                 'experiment_uuid': experiment_uuid,
@@ -88,7 +88,7 @@ class PublisherService(Service):
 
         self._logger.info("Publishing log event for task: %s", job_uuid)
         celery_app.send_task(
-            EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB_SIDECAR,
+            EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB,
             kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_line': log_line})
 
     def setup(self):

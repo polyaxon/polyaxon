@@ -9,11 +9,9 @@ from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.nodes import ClusterEvent
 from db.models.notebooks import NotebookJob
-from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from libs.paths.experiments import get_experiment_logs_path
 from libs.paths.jobs import get_job_logs_path
-from libs.paths.project_jobs import get_project_job_logs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks
 
@@ -128,13 +126,13 @@ def events_handle_build_job_statuses(payload):
         pass
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_SIDECAR)
-def handle_events_job_logs(experiment_name,
-                           experiment_uuid,
-                           job_uuid,
-                           log_line,
-                           task_type=None,
-                           task_idx=None):
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB)
+def events_handle_logs_experiment_job(experiment_name,
+                                      experiment_uuid,
+                                      job_uuid,
+                                      log_line,
+                                      task_type=None,
+                                      task_idx=None):
     # Must persist resources if logs according to the config
     if not Experiment.objects.filter(uuid=experiment_uuid).exists():
         return
@@ -156,8 +154,8 @@ def handle_events_job_logs(experiment_name,
         pass
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB_SIDECAR)
-def events_handle_logs_build_job(job_uuid, job_name, log_line):
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB)
+def events_handle_logs_job(job_uuid, job_name, log_line):
     # Must persist resources if logs according to the config
     if not Job.objects.filter(uuid=job_uuid).exists():
         return
@@ -184,7 +182,7 @@ def events_handle_logs_build_job(job_uuid, job_name, log_line):
         return
     _logger.debug('handling log event for %s', job_name)
     xp_logger = logging.getLogger(job_name)
-    log_path = get_project_job_logs_path(job_name)
+    log_path = get_job_logs_path(job_name)
     try:
         log_handler = logging.FileHandler(log_path)
         log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
