@@ -43,7 +43,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
             dockerfile_name=dockerfile_name)
 
     def _handle_logs(self, log_line):
-        publisher.publish_experiment_log(
+        publisher.publish_experiment_job_log(
             log_line=log_line,
             status=ExperimentLifeCycle.BUILDING,
             experiment_uuid=self.experiment_uuid,

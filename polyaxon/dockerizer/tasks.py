@@ -21,30 +21,30 @@ def build_project_notebook(project_id):
     if not project or not project.notebook:
         return None
 
-    job = project.notebook
+    notebook_job = project.notebook
 
     # Update job status to show that its building docker image
-    job.set_status(JobLifeCycle.BUILDING, message='Building container')
+    notebook_job.set_status(JobLifeCycle.BUILDING, message='Building container')
 
     # Building the docker image
     try:
         status = notebooks_builder.build_notebook_job(project=project, job=project.notebook)
     except DockerException as e:
         _logger.warning('Failed to build notebook %s', e)
-        job.set_status(
+        notebook_job.set_status(
             JobLifeCycle.FAILED,
             message='Failed to build image for notebook.')
         return
     except Repo.DoesNotExist:
         _logger.warning('No code was found for this project')
-        job.set_status(
+        notebook_job.set_status(
             JobLifeCycle.FAILED,
             message='Failed to build image for notebook.')
         return
     except Exception as e:  # Other exceptions
         _logger.warning('Failed to build notebook %s', e)
-        job.set_status(JobLifeCycle.FAILED,
-                       message='Failed to build image for notebook.')
+        notebook_job.set_status(JobLifeCycle.FAILED,
+                                message='Failed to build image for notebook.')
         return
 
     if not status:
@@ -53,7 +53,7 @@ def build_project_notebook(project_id):
     # Now we can start the notebook
     celery_app.send_task(
         SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
-        kwargs={'project_id': project_id})
+        kwargs={'notebook_job_id': notebook_job.id})
 
 
 @celery_app.task(name=DockerizerCeleryTasks.BUILD_EXPERIMENT, bind=True, max_retries=3)
