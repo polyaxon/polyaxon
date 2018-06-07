@@ -1,6 +1,7 @@
 from polyaxon_k8s.manager import K8SManager
 from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.templates import constants, services
+from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
 from scheduler.spawners.templates.sidecar import get_sidecar_args
 from scheduler.spawners.templates.volumes import get_pod_volumes
@@ -153,13 +154,7 @@ class ExperimentSpawner(K8SManager):
             self._delete_job(task_type=task_type, task_idx=i, has_service=has_service)
 
     def get_pod_command_args(self, task_type, task_idx):
-        if not self.spec.run or not self.spec.run.cmd:
-            raise ValueError('The specification must contain a command.')
-
-        cmd = self.spec.run.cmd.split(' ')
-        cmd = [c.strip().strip('\\') for c in cmd if (c and c != '\\')]
-        cmd = [c for c in cmd if (c and c != '\\')]
-        return cmd, []
+        return get_pod_command_args(run_config=self.spec.run)
 
     def create_master(self):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER, task_idx=0)
