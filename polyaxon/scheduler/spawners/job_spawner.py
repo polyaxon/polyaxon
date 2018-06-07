@@ -79,5 +79,5 @@ class JobSpawner(K8SManager):
 
         return pod_resp.to_dict()
 
-    def stop_dockerizer(self):
+    def stop_job(self):
         self.delete_pod(name=self.pod_manager.pod_name)
