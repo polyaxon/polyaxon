@@ -10,19 +10,22 @@ from polyaxon.settings import EventsCeleryTasks, RoutingKeys
 
 
 class PublisherService(Service):
-    __all__ = ('publish_experiment_log', 'publish_build_job_log', 'publish_job_log', 'setup')
+    __all__ = ('publish_experiment_job_log',
+               'publish_build_job_log',
+               'publish_job_log',
+               'setup')
 
     def __init__(self):
         self._logger = None
 
-    def publish_experiment_log(self,
-                               log_line,
-                               status,
-                               experiment_uuid,
-                               experiment_name,
-                               job_uuid,
-                               task_type=None,
-                               task_idx=None):
+    def publish_experiment_job_log(self,
+                                   log_line,
+                                   status,
+                                   experiment_uuid,
+                                   experiment_name,
+                                   job_uuid,
+                                   task_type=None,
+                                   task_idx=None):
         try:
             log_line = log_line.decode('utf-8')
         except AttributeError:
