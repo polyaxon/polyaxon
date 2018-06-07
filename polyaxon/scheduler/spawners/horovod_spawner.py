@@ -3,6 +3,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import HorovodSpecif
 from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 
+
 class HorovodSpawner(ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True

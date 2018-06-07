@@ -1,4 +1,5 @@
 import pytest
+
 from mock import patch
 
 from constants.experiments import ExperimentLifeCycle

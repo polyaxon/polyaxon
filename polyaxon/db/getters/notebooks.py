@@ -21,4 +21,3 @@ def get_valid_notebook(notebook_job_id=None, notebook_job_uuid=None):
         return None
 
     return notebook_job
-

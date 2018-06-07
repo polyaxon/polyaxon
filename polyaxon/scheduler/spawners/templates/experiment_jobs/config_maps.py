@@ -4,10 +4,7 @@ import json
 from kubernetes import client
 
 from libs.api import API_KEY_NAME, get_settings_api_url
-from libs.paths.experiments import (
-    get_experiment_logs_path,
-    get_experiment_outputs_path,
-)
+from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.paths.projects import get_project_data_path
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants

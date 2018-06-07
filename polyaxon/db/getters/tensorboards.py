@@ -22,4 +22,3 @@ def get_valid_tensorboard(tensorboard_job_id=None, tensorboard_job_uuid=None):
         return None
 
     return tensorboard_job
-
