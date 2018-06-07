@@ -9,7 +9,7 @@ from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from event_manager.events.job import JOB_FAILED, JOB_NEW_STATUS, JOB_STOPPED, JOB_SUCCEEDED
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
-from libs.paths.jobs import delete_job_logs, delete_job_outputs, create_job_logs_path
+from libs.paths.jobs import create_job_logs_path, delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
 
 logger = logging.getLogger('polyaxon.plugins')

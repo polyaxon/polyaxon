@@ -6,15 +6,17 @@ from unittest.mock import patch
 
 import pytest
 
-from events_handlers.tasks import events_handle_logs_experiment_job, events_handle_logs_job, \
-    events_handle_logs_build_job
+from events_handlers.tasks import (
+    events_handle_logs_build_job,
+    events_handle_logs_experiment_job,
+    events_handle_logs_job
+)
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from libs.paths.experiments import get_experiment_logs_path
-from polyaxon_schemas.utils import TaskType
-
 from libs.paths.jobs import get_job_logs_path
+from polyaxon_schemas.utils import TaskType
 from tests.utils import BaseTest
 
 
@@ -26,15 +28,15 @@ class BaseTestLogsHandling(BaseTest):
 
     @staticmethod
     def get_instance():
-        pass
+        return None
 
     @staticmethod
     def get_params(instance):
-        pass
+        return None
 
     @staticmethod
     def get_log_path(instance):
-        pass
+        return None
 
     @staticmethod
     def handle_event(**params):

@@ -2,7 +2,7 @@ import os
 
 from django.conf import settings
 
-from libs.paths.utils import delete_path, create_path
+from libs.paths.utils import create_path, delete_path
 
 
 def get_job_data_path(job_name):
