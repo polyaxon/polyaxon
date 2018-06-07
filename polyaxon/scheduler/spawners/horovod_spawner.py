@@ -1,12 +1,7 @@
-import logging
-
 from polyaxon_schemas.environments import HorovodClusterConfig
 from polyaxon_schemas.polyaxonfile.specification.frameworks import HorovodSpecification
 from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
-
-logger = logging.getLogger('polyaxon.spawners.horovod')
-
 
 class HorovodSpawner(ExperimentSpawner):
     MASTER_SERVICE = True

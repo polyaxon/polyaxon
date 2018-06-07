@@ -1,5 +1,3 @@
-import logging
-
 from django.conf import settings
 
 from polyaxon.utils import config
@@ -9,8 +7,6 @@ from scheduler.spawners.templates.env_vars import get_env_var
 from scheduler.spawners.templates.internal_services_env_vars import get_service_env_vars
 from scheduler.spawners.templates.project_jobs import pods
 from scheduler.spawners.templates.volumes import get_docker_volumes
-
-logger = logging.getLogger('polyaxon.spawners.dockerizer')
 
 
 class DockerizerSpawner(ProjectJobSpawner):

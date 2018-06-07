@@ -1,13 +1,9 @@
-import logging
-
 from libs.paths.experiments import get_experiment_outputs_path
 from polyaxon_schemas.environments import TensorflowClusterConfig
 from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
-
-logger = logging.getLogger('polyaxon.spawners.tensorflow')
 
 
 class TensorflowSpawner(ExperimentSpawner):
