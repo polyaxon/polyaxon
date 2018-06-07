@@ -24,10 +24,10 @@ class Command(BaseMonitorCommand):
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
         is_running, labels = monitor.can_log(k8s_manager, pod_id, log_sleep_interval)
         if not is_running:
-            monitor.logger.info('Jobs is not running anymore.')
+            monitor.logger.info('Job is not running anymore.')
             return
 
-        monitor.run_for_experiment(
+        monitor.run_for_experiment_job(
             k8s_manager=k8s_manager,
             pod_id=pod_id,
             experiment_uuid=labels.experiment_uuid.hex,

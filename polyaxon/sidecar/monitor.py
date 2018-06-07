@@ -10,27 +10,47 @@ from polyaxon_schemas.experiment import JobLabelConfig
 logger = logging.getLogger(__name__)
 
 
-def run(k8s_manager,
+def run_for_experiment_job(k8s_manager,
+                           pod_id,
+                           experiment_uuid,
+                           experiment_name,
+                           job_uuid,
+                           task_type,
+                           task_idx,
+                           container_job_name):
+    raw = k8s_manager.k8s_api.read_namespaced_pod_log(
         pod_id,
-        experiment_uuid,
-        experiment_name,
-        job_uuid,
-        task_type,
-        task_idx,
-        container_job_name):
-    raw = k8s_manager.k8s_api.read_namespaced_pod_log(pod_id,
-                                                      k8s_manager.namespace,
-                                                      container=container_job_name,
-                                                      follow=True,
-                                                      _preload_content=False)
+        k8s_manager.namespace,
+        container=container_job_name,
+        follow=True,
+        _preload_content=False)
     for log_line in raw.stream():
-        publisher.publish_experiment_log(log_line=log_line,
-                                         status=ExperimentLifeCycle.RUNNING,
-                                         experiment_uuid=experiment_uuid,
-                                         experiment_name=experiment_name,
-                                         job_uuid=job_uuid,
-                                         task_type=task_type,
-                                         task_idx=task_idx)
+        publisher.publish_experiment_job_log(
+            log_line=log_line,
+            status=ExperimentLifeCycle.RUNNING,
+            experiment_uuid=experiment_uuid,
+            experiment_name=experiment_name,
+            job_uuid=job_uuid,
+            task_type=task_type,
+            task_idx=task_idx)
+
+
+def run_for_job(k8s_manager,
+                pod_id,
+                job_name,
+                job_uuid,
+                container_job_name):
+    raw = k8s_manager.k8s_api.read_namespaced_pod_log(
+        pod_id,
+        k8s_manager.namespace,
+        container=container_job_name,
+        follow=True,
+        _preload_content=False)
+    for log_line in raw.stream():
+        publisher.publish_job_log(
+            log_line=log_line,
+            job_name=job_name,
+            job_uuid=job_uuid)
 
 
 def can_log(k8s_manager, pod_id, log_sleep_interval):
