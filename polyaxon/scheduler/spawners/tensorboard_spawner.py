@@ -53,8 +53,8 @@ class TensorboardSpawner(ProjectJobSpawner):
             node_selector=node_selectors,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
-        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.TENSORBOARD_JOB_NAME,
-                                                           job_uuid=self.job_uuid)
+        deployment_name = constants.JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME,
+                                                    job_uuid=self.job_uuid)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
@@ -93,8 +93,8 @@ class TensorboardSpawner(ProjectJobSpawner):
         return results
 
     def stop_tensorboard(self):
-        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.TENSORBOARD_JOB_NAME,
-                                                           job_uuid=self.job_uuid)
+        deployment_name = constants.JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME,
+                                                    job_uuid=self.job_uuid)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():

@@ -175,7 +175,7 @@ class ExperimentSpawner(K8SManager):
         self._delete_job(task_type=TaskType.MASTER, task_idx=0, has_service=self.MASTER_SERVICE)
 
     def create_experiment_config_map(self):
-        name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
+        name = constants.CONFIG_MAP_NAME.format(uuid=self.experiment_uuid)
         config_map = config_maps.get_config_map(
             namespace=self.namespace,
             project_name=self.project_name,
@@ -194,11 +194,11 @@ class ExperimentSpawner(K8SManager):
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)
 
     def delete_experiment_config_map(self):
-        name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
+        name = constants.CONFIG_MAP_NAME.format(uuid=self.experiment_uuid)
         self.delete_config_map(name, reraise=True)
 
     def delete_experiment_secret(self):
-        name = constants.SECRET_NAME.format(experiment_uuid=self.experiment_uuid)
+        name = constants.SECRET_NAME.format(uuid=self.experiment_uuid)
         self.delete_secret(name, reraise=True)
 
     def start_experiment(self):

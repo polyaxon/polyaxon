@@ -50,8 +50,8 @@ class NotebookSpawner(ProjectJobSpawner):
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
-        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.NOTEBOOK_JOB_NAME,
-                                                           job_uuid=self.job_uuid)
+        deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
+                                                    job_uuid=self.job_uuid)
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
@@ -129,8 +129,8 @@ class NotebookSpawner(ProjectJobSpawner):
         return results
 
     def stop_notebook(self):
-        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.NOTEBOOK_JOB_NAME,
-                                                           job_uuid=self.job_uuid)
+        deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
+                                                    job_uuid=self.job_uuid)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():
