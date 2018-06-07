@@ -566,7 +566,7 @@ def get_status_event_with_conditions(name, container_name, labels):
 
 status_experiment_job_event = get_status_event(
     name='project1-id1-spec1-xp1-master0',
-    container_name=settings.CONTAINER_NAME_JOB,
+    container_name=settings.CONTAINER_NAME_EXPERIMENT_JOB,
     labels={
         'project_name': 'mike/project1',
         'experiment_name': 'mike/project1/1',
@@ -582,7 +582,7 @@ status_experiment_job_event = get_status_event(
 
 status_experiment_job_event_with_conditions = get_status_event_with_conditions(
     name='project1-id1-spec1-xp1-master0',
-    container_name=settings.CONTAINER_NAME_JOB,
+    container_name=settings.CONTAINER_NAME_EXPERIMENT_JOB,
     labels={
         'project_name': 'mike/project1',
         'experiment_name': 'mike/project1/1',
@@ -591,6 +591,19 @@ status_experiment_job_event_with_conditions = get_status_event_with_conditions(
         'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
         'task_idx': '0',
         'task_type': 'master',
+        'role': settings.ROLE_LABELS_WORKER,
+        'type': settings.TYPE_LABELS_EXPERIMENT
+    }
+)
+
+status_job_event = get_status_event(
+    name='plxproject-project_uuid-notebook',
+    container_name=settings.CONTAINER_NAME_JOB,
+    labels={
+        'project_name': 'mike/project1',
+        'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/jobs/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
         'role': settings.ROLE_LABELS_WORKER,
         'type': settings.TYPE_LABELS_EXPERIMENT
     }
@@ -635,6 +648,19 @@ status_tensorboard_job_event = get_status_event(
         'job_name': 'mike/project1/tensorboards/1',
         'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
         'role': settings.ROLE_LABELS_DASHBOARD,
+        'type': settings.TYPE_LABELS_EXPERIMENT
+    }
+)
+
+status_job_event_with_conditions = get_status_event_with_conditions(
+    name='plxproject-project_uuid-job',
+    container_name=settings.CONTAINER_NAME_JOB,
+    labels={
+        'project_name': 'mike/project1',
+        'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/jobs/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'role': settings.ROLE_LABELS_WORKER,
         'type': settings.TYPE_LABELS_EXPERIMENT
     }
 )

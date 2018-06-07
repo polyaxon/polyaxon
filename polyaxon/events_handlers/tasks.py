@@ -6,8 +6,11 @@ from django.db import IntegrityError
 from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment
+from db.models.jobs import Job
 from db.models.nodes import ClusterEvent
+from db.models.notebooks import NotebookJob
 from db.models.projects import Project
+from db.models.tensorboards import TensorboardJob
 from libs.paths.experiments import get_experiment_logs_path
 from libs.paths.project_jobs import get_project_job_logs_path
 from polyaxon.celery_api import app as celery_app
@@ -50,29 +53,47 @@ def events_handle_experiment_job_statuses(payload):
         pass
 
 
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
+def events_handle_job_statuses(payload):
+    """Project jobs statuses"""
+    details = payload['details']
+    job_uuid = details['labels']['job_uuid']
+    job_name = details['labels']['job_name']
+    _logger.debug('handling events status for job %s', job_name)
+
+    try:
+        job = Job.objects.get(uuid=job_uuid)
+    except Job.DoesNotExist:
+        _logger.info('Job `%s` does not exist', job_name)
+        return
+
+    # Set the new status
+    try:
+        job.set_status(status=payload['status'], message=payload['message'], details=details)
+    except IntegrityError:
+        # Due to concurrency this could happen, we just ignore it
+        pass
+
+
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
 def events_handle_plugin_job_statuses(payload):
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
-    project_uuid = details['labels']['project_uuid']
-    project_name = details['labels']['project_name']
-    _logger.debug('handling events status for project %s %s', project_name, app)
+    job_uuid = details['labels']['job_uuid']
+    job_name = details['labels']['job_name']
+    _logger.debug('handling events status for job %s %s', job_name, app)
 
     try:
-        project = Project.objects.get(uuid=project_uuid)
         if app == settings.APP_LABELS_TENSORBOARD:
-            job = project.tensorboard
+            job = TensorboardJob.objects.get(uuid=job_uuid)
         elif app == settings.APP_LABELS_NOTEBOOK:
-            job = project.notebook
+            job = NotebookJob.objects.get(uuid=job_uuid)
         else:
             _logger.info('Plugin job `%s` does not exist', app)
             return
-        if job is None:
-            _logger.info('Project `%s` Job `%s` does not exist', project_name, app)
-            return
-    except Project.DoesNotExist:
-        _logger.info('Project `%s` does not exist', project_name)
+    except (NotebookJob.DoesNotExist, TensorboardJob.DoesNotExist):
+        _logger.info('`%s - %s` does not exist', app, job_name)
         return
 
     # Set the new status

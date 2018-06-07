@@ -5,15 +5,18 @@ from django.conf import settings
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_jobs import ExperimentJobStatus
+from db.models.jobs import JobStatus
 from db.models.notebooks import NotebookJobStatus
 from db.models.tensorboards import TensorboardJobStatus
 from events_handlers.tasks import (
     events_handle_build_job_statuses,
     events_handle_experiment_job_statuses,
-    events_handle_plugin_job_statuses
+    events_handle_plugin_job_statuses,
+    events_handle_job_statuses
 )
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentJobFactory
+from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from monitor_statuses.jobs import get_job_state
@@ -25,7 +28,9 @@ from tests.fixtures import (
     status_notebook_job_event,
     status_notebook_job_event_with_conditions,
     status_tensorboard_job_event,
-    status_tensorboard_job_event_with_conditions
+    status_tensorboard_job_event_with_conditions,
+    status_job_event_with_conditions,
+    status_job_event
 )
 from tests.utils import BaseTest
 
@@ -86,13 +91,26 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
 class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_experiment_job_event
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
-    CONTAINER_NAME = settings.CONTAINER_NAME_JOB
+    CONTAINER_NAME = settings.CONTAINER_NAME_EXPERIMENT_JOB
     STATUS_MODEL = ExperimentJobStatus
     STATUS_HANDLER = events_handle_experiment_job_statuses
 
     def get_job_object(self, job_state):
         job_uuid = job_state.details.labels.job_uuid.hex
         return ExperimentJobFactory(uuid=job_uuid)
+
+
+@pytest.mark.monitors_mark
+class TestEventsJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
+    EVENT = status_job_event
+    EVENT_WITH_CONDITIONS = status_job_event_with_conditions
+    CONTAINER_NAME = settings.CONTAINER_NAME_JOB
+    STATUS_MODEL = JobStatus
+    STATUS_HANDLER = events_handle_job_statuses
+
+    def get_job_object(self, job_state):
+        job_uuid = job_state.details.labels.job_uuid.hex
+        return JobFactory(uuid=job_uuid)
 
 
 @pytest.mark.monitors_mark
