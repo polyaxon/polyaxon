@@ -18,6 +18,15 @@ def get_experiment_outputs_path(experiment_name, original_name=None, cloning_str
     return os.path.join(settings.OUTPUTS_ROOT, '/'.join(values))
 
 
+def get_experiment_data_path(experiment_name):
+    values = experiment_name.split('.')
+    if len(values) == 3:
+        values.insert(2, 'independents')
+    else:
+        values.insert(2, 'groups')
+    return os.path.join(settings.DATA_ROOT, '/'.join(values))
+
+
 def get_experiment_logs_path(experiment_name):
     values = experiment_name.split('.')
     if len(values) == 3:
