@@ -34,7 +34,7 @@ def get_deployment_spec(namespace,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(name=name, job_uuid=job_uuid),
+        name=constants.JOB_NAME.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     pod_spec = get_project_pod_spec(volume_mounts=volume_mounts,
@@ -79,7 +79,7 @@ def get_deployment(namespace,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(name=name, job_uuid=job_uuid),
+        name=constants.JOB_NAME.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     spec = get_deployment_spec(namespace=namespace,

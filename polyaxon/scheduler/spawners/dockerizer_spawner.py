@@ -3,8 +3,7 @@ from django.conf import settings
 from polyaxon.utils import config
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.env_vars import get_env_var
-from scheduler.spawners.templates.internal_services_env_vars import get_service_env_vars
+from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
 from scheduler.spawners.templates.project_jobs import pods
 from scheduler.spawners.templates.volumes import get_docker_volumes
 
@@ -13,8 +12,7 @@ class DockerizerSpawner(ProjectJobSpawner):
     DOCKERIZER_JOB_NAME = 'build'
 
     def get_env_vars(self):
-        env_vars = [get_env_var(name='POLYAXON_K8S_NAMESPACE', value=self.namespace)]
-        env_vars += get_service_env_vars()
+        env_vars = get_service_env_vars(namespace=self.namespace)
         for k, v in config.get_requested_params(to_str=True).items():
             env_vars.append(get_env_var(name=k, value=v))
 

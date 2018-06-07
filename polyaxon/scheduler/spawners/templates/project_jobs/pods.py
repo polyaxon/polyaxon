@@ -95,7 +95,7 @@ def get_pod(namespace,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(name=name, job_uuid=job_uuid),
+        name=constants.JOB_NAME.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
