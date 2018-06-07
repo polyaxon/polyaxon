@@ -4,7 +4,10 @@ import json
 from kubernetes import client
 
 from libs.api import API_KEY_NAME, get_settings_api_url
-from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
+from libs.paths.experiments import (
+    get_experiment_logs_path,
+    get_experiment_outputs_path,
+)
 from libs.paths.projects import get_project_data_path
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
@@ -39,7 +42,7 @@ def get_config_map(namespace,
                    cluster_def,
                    declarations,
                    log_level):
-    name = constants.CONFIG_MAP_NAME.format(experiment_uuid=experiment_uuid)
+    name = constants.CONFIG_MAP_NAME.format(uuid=experiment_uuid)
     labels = get_map_labels(project_name,
                             experiment_group_name,
                             experiment_name,
@@ -58,9 +61,9 @@ def get_config_map(namespace,
         constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME: json.dumps(labels),
         constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME: log_level,
         API_KEY_NAME: get_settings_api_url(),
-        constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path,
-        constants.CONFIG_MAP_EXPERIMENT_LOGS_PATH_KEY_NAME: experiment_logs_path,
-        constants.CONFIG_MAP_EXPERIMENT_DATA_PATH_KEY_NAME: experiment_data_path,
+        constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path,
+        constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME: experiment_logs_path,
+        constants.CONFIG_MAP_RUN_DATA_PATH_KEY_NAME: experiment_data_path,
     }
     return client.V1ConfigMap(api_version=k8s_constants.K8S_API_VERSION_V1,
                               kind=k8s_constants.K8S_CONFIG_MAP_KIND,
@@ -76,7 +79,7 @@ def get_secret(namespace,
                experiment_group_uuid,
                experiment_uuid,
                user_token):
-    name = constants.SECRET_NAME.format(experiment_uuid=experiment_uuid)
+    name = constants.SECRET_NAME.format(uuid=experiment_uuid)
     labels = get_map_labels(project_name,
                             experiment_group_name,
                             experiment_name,
