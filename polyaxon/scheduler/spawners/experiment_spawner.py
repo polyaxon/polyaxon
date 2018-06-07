@@ -1,7 +1,7 @@
 from polyaxon_k8s.manager import K8SManager
 from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.templates import constants, services
-from scheduler.spawners.templates.experiments import config_maps, pods
+from scheduler.spawners.templates.experiment_jobs import config_maps, pods
 from scheduler.spawners.templates.volumes import get_pod_volumes
 
 
@@ -56,13 +56,21 @@ class ExperimentSpawner(K8SManager):
                                            type_label=type_label,
                                            ports=ports,
                                            use_sidecar=use_sidecar,
-                                           sidecar_config=sidecar_config)
+                                           sidecar_config=sidecar_config,
+                                           log_level=self.spec.log_level,
+                                           original_name=self.original_name,
+                                           cloning_strategy=self.cloning_strategy,
+                                           declarations=self.spec.declarations)
         self.sidecar_args_fn = sidecar_args_fn or constants.SIDECAR_ARGS_FN
         self.persist = persist
 
         super(ExperimentSpawner, self).__init__(k8s_config=k8s_config,
                                                 namespace=namespace,
                                                 in_cluster=in_cluster)
+
+        # Set the cluster_def
+        cluster_def = self.get_cluster()
+        self.pod_manager.set_cluster_def(cluster_def=cluster_def)
 
     def get_env_vars(self, task_type, task_idx):
         return None
@@ -202,14 +210,12 @@ class ExperimentSpawner(K8SManager):
         self.delete_secret(name, reraise=True)
 
     def start_experiment(self):
-        self.create_experiment_config_map()
         master_resp = self.create_master()
         return {
             TaskType.MASTER: master_resp,
         }
 
     def stop_experiment(self):
-        self.delete_experiment_config_map()
         self.delete_master()
 
     def _get_pod_address(self, host):
