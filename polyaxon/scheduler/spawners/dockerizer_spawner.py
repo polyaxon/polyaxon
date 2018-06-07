@@ -43,13 +43,13 @@ class DockerizerSpawner(ProjectJobSpawner):
             role=settings.ROLE_LABELS_WORKER,
             type=settings.TYPE_LABELS_EXPERIMENT,
             restart_policy='Never')
-        pod_name = constants.DEPLOYMENT_NAME.format(
+        pod_name = constants.JOB_NAME.format(
             job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
 
         pod_resp, _ = self.create_or_update_pod(name=pod_name, data=deployment)
         return pod_resp.to_dict()
 
     def stop_dockerizer(self):
-        pod_name = constants.DEPLOYMENT_NAME.format(job_uuid=self.job_uuid,
-                                                    name=self.DOCKERIZER_JOB_NAME)
+        pod_name = constants.JOB_NAME.format(job_uuid=self.job_uuid,
+                                             name=self.DOCKERIZER_JOB_NAME)
         self.delete_pod(name=pod_name)
