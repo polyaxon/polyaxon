@@ -42,8 +42,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
     def test_start(self):
         assert self.queryset.count() == 1
         assert self.object.tensorboard is None
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as mock_fct:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
@@ -60,8 +59,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
     def test_start_with_updated_config(self):
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as mock_fct:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
@@ -73,8 +71,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         self.object.tensorboard.delete()
 
         # Starting the tensorboard without config should pass
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as mock_fct:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
@@ -87,8 +84,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         self.object.save()
 
         # Starting again the tensorboard with different config
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as mock_fct:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
                 data={'config': tensorboard_spec_parsed_content.parsed_data})
@@ -102,8 +98,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         # Trying to start an already running job returns 200
         # Starting again the tensorboard with different config
         self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as mock_fct:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
                 data={'config': tensorboard_spec_parsed_content.parsed_data})
@@ -112,8 +107,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
 
     def test_start_during_build_process(self):
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as start_mock:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
         self.object.refresh_from_db()
         assert start_mock.call_count == 1
@@ -121,14 +115,12 @@ class TestStartTensorboardViewV1(BaseViewTest):
 
         # Check that user cannot start a new job if it's already building
         self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as start_mock:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
         assert start_mock.call_count == 0
 
     def test_starting_stopping_tensorboard_creating_new_one_create_new_job(self):
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as start_mock:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
         self.object.refresh_from_db()
         assert start_mock.call_count == 1
@@ -137,8 +129,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert TensorboardJob.objects.count() == 1
         assert TensorboardJobStatus.objects.count() == 2
 
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_start.apply_async') as start_mock:
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
         self.object.refresh_from_db()
         assert start_mock.call_count == 1
@@ -167,8 +158,7 @@ class TestStopTensorboardViewV1(BaseViewTest):
     def test_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('scheduler.tasks.tensorboards.'
-                   'projects_tensorboard_stop.apply_async') as mock_fct:
+        with patch('scheduler.tasks.tensorboards.tensorboards_stop.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
