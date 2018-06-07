@@ -15,7 +15,7 @@ def get_valid_project(project_id=None, project_uuid=None):
         else:
             project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
-        _logger.info('Project id `%s` does not exist', project_id)
+        _logger.info('Project `%s` does not exist', project_id or project_uuid)
         return None
 
     return project

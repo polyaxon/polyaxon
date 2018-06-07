@@ -15,7 +15,7 @@ def get_valid_experiment(experiment_id=None, experiment_uuid=None):
         else:
             experiment = Experiment.objects.get(id=experiment_id)
     except Experiment.DoesNotExist:
-        _logger.info('Experiment id `%s` does not exist', experiment_id)
+        _logger.info('Experiment `%s` does not exist', experiment_id or experiment_uuid)
         return None
 
     return experiment
