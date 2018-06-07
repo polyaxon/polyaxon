@@ -9,6 +9,7 @@ from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from event_manager.events.job import JOB_FAILED, JOB_NEW_STATUS, JOB_STOPPED, JOB_SUCCEEDED
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
+from libs.paths.jobs import delete_job_logs, delete_job_outputs, create_job_logs_path
 from libs.repos.utils import assign_code_reference
 
 logger = logging.getLogger('polyaxon.plugins')
@@ -27,6 +28,13 @@ def job_pre_save(sender, **kwargs):
 def job_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
+
+    # Clean outputs and logs
+    delete_job_logs(instance.unique_name)
+    delete_job_outputs(instance.unique_name)
+
+    # Create logs path
+    create_job_logs_path(instance.unique_name)
 
 
 @receiver(post_save, sender=JobStatus, dispatch_uid="job_status_post_save")

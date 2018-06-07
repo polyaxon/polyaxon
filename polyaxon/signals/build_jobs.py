@@ -17,15 +17,25 @@ from libs.decorators import ignore_raw, ignore_updates
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
+from libs.paths.jobs import create_job_logs_path
+from libs.paths.jobs import delete_job_logs, delete_job_outputs
+
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
 
 
-@receiver(post_save, sender=BuildJob, dispatch_uid="build_set_created_status")
+@receiver(post_save, sender=BuildJob, dispatch_uid="build_set_post_save")
 @ignore_updates
 @ignore_raw
-def build_set_created_status(sender, **kwargs):
+def build_set_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
+
+    # Clean outputs and logs
+    delete_job_logs(instance.unique_name)
+    delete_job_outputs(instance.unique_name)
+
+    # Create logs path
+    create_job_logs_path(instance.unique_name)
 
 
 @receiver(post_save, sender=BuildJobStatus, dispatch_uid="build_set_new_status")
