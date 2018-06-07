@@ -1,6 +1,6 @@
 ---
 name: Documentation & Setup
-about: Describe this issue template's purpose here.
+about: Unclear or missing documentation or installation step
 
 ---
 
