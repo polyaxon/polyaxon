@@ -8,10 +8,13 @@ from constants.jobs import JobLifeCycle
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 from scheduler.spawners.utils import get_job_definition
 
-logger = logging.getLogger('polyaxon.scheduler.tensorboard')
+_logger = logging.getLogger('polyaxon.scheduler.tensorboard')
 
 
 def start_tensorboard(tensorboard):
+    # Update job status to show that its started
+    tensorboard.set_status(JobLifeCycle.SCHEDULED)
+
     spawner = TensorboardSpawner(
         project_name=tensorboard.project.unique_name,
         project_uuid=tensorboard.project.uuid.hex,
@@ -26,13 +29,13 @@ def start_tensorboard(tensorboard):
                                             resources=tensorboard.resources,
                                             node_selectors=tensorboard.node_selectors)
     except ApiException as e:
-        logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
+        _logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
         tensorboard.set_status(
             JobLifeCycle.FAILED,
             message='Could not start tensorboard, encountered a Kubernetes ApiException.')
         return
     except Exception as e:
-        logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
+        _logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
         tensorboard.set_status(
             JobLifeCycle.FAILED,
             message='Could not start tensorboard encountered an {} exception.'.format(

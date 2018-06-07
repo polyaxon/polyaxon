@@ -24,7 +24,7 @@ from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
 from scheduler.spawners.utils import get_job_definition
 
-logger = logging.getLogger('polyaxon.scheduler.experiment')
+_logger = logging.getLogger('polyaxon.scheduler.experiment')
 
 
 def create_job(job_uuid, experiment, definition, role=None, resources=None):
@@ -253,14 +253,14 @@ def start_experiment(experiment):
         try:
             image_name, image_tag = get_experiment_image_info(experiment=experiment)
         except ValueError as e:
-            logger.warning('Could not start the experiment, %s', e)
+            _logger.warning('Could not start the experiment, %s', e)
             experiment.set_status(ExperimentLifeCycle.FAILED,
                                   message='External git repo was note found.')
             return
         job_docker_image = '{}:{}'.format(image_name, image_tag)
-        logger.info('Start experiment with built image `%s`', job_docker_image)
+        _logger.info('Start experiment with built image `%s`', job_docker_image)
     else:
-        logger.info('Start experiment with default image.')
+        _logger.info('Start experiment with default image.')
 
     spawner_class = get_spawner_class(experiment.specification.framework)
 
@@ -283,13 +283,13 @@ def start_experiment(experiment):
     try:
         response = spawner.start_experiment()
     except ApiException as e:
-        logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
+        _logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
         experiment.set_status(
             ExperimentLifeCycle.FAILED,
             message='Could not start the experiment, encountered a Kubernetes ApiException.')
         return
     except Exception as e:
-        logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
+        _logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
         experiment.set_status(
             ExperimentLifeCycle.FAILED,
             message='Could not start the experiment encountered an {} exception.'.format(

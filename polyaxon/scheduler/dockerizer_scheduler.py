@@ -14,7 +14,7 @@ from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.utils import get_job_definition
 
-logger = logging.getLogger('polyaxon.scheduler.dockerizer')
+_logger = logging.getLogger('polyaxon.scheduler.dockerizer')
 
 
 def check_image(build_job):
@@ -69,6 +69,9 @@ def create_build_job(user, project, config, code_reference):
 
 
 def start_dockerizer(build_job):
+    # Update job status to show that its started
+    build_job.set_status(JobLifeCycle.SCHEDULED)
+
     spawner = DockerizerSpawner(
         project_name=build_job.project.unique_name,
         project_uuid=build_job.project.uuid.hex,
@@ -84,13 +87,13 @@ def start_dockerizer(build_job):
                        instance=build_job,
                        target='project')
     except ApiException as e:
-        logger.warning('Could not start build job, please check your polyaxon spec %s', e)
+        _logger.warning('Could not start build job, please check your polyaxon spec %s', e)
         build_job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start build job, encountered a Kubernetes ApiException.')
         return False
     except Exception as e:
-        logger.warning('Could not start build job, please check your polyaxon spec %s', e)
+        _logger.warning('Could not start build job, please check your polyaxon spec %s', e)
         build_job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start build job encountered an {} exception.'.format(
