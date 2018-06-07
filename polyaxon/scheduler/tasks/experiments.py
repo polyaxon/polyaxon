@@ -16,7 +16,7 @@ _logger = logging.getLogger('polyaxon.scheduler.experiments')
 def copy_experiment(experiment):
     """If experiment is a restart, we should resume from last check point"""
     try:
-        publisher.publish_experiment_log(
+        publisher.publish_experiment_job_log(
             log_line='Copying outputs from experiment `{}` into experiment `{}`'.format(
                 experiment.original_experiment.unique_name, experiment.unique_name
             ),
@@ -28,7 +28,7 @@ def copy_experiment(experiment):
         copy_experiment_outputs(experiment.original_experiment.unique_name, experiment.unique_name)
 
     except OSError:
-        publisher.publish_experiment_log(
+        publisher.publish_experiment_job_log(
             log_line='Could not copy the outputs of experiment `{}` into experiment `{}`'.format(
                 experiment.original_experiment.unique_name, experiment.unique_name
             ),
@@ -114,8 +114,8 @@ def experiments_start(experiment_id):
 
     if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
                                               status_to=ExperimentLifeCycle.SCHEDULED):
-        _logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
-                     experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
+        _logger.info('Experiment `%s` cannot transition from `%s` to `%s`.',
+                     experiment.unique_name, experiment.last_status, ExperimentLifeCycle.SCHEDULED)
         return None
 
     # Check if we need to copy an experiment

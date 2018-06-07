@@ -2,7 +2,6 @@ import logging
 
 from constants.jobs import JobLifeCycle
 from db.getters.notebooks import get_valid_notebook
-from docker_images.image_info import get_image_info
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, notebook_scheduler
@@ -53,19 +52,12 @@ def projects_notebook_start(notebook_job_id):
         _logger.warning('Notebook does not exist anymore.')
         return None
 
-    if notebook_job.last_status == JobLifeCycle.RUNNING:
-        _logger.warning('Notebook is already running.')
-        return None
+    if not JobLifeCycle.can_transition(status_from=notebook_job.last_status,
+                                       status_to=JobLifeCycle.SCHEDULED):
+        _logger.info('Notebook `%s` cannot transition from `%s` to `%s`.',
+                     notebook_job.unique_name, notebook_job.last_status, JobLifeCycle.SCHEDULED)
 
-    try:
-        image_name, image_tag = get_image_info(build_job=notebook_job.build_job)
-    except ValueError as e:
-        _logger.warning('Could not start the notebook, %s', e)
-        return
-    job_docker_image = '{}:{}'.format(image_name, image_tag)
-    _logger.info('Start notebook with built image `%s`', job_docker_image)
-
-    notebook_scheduler.start_notebook(notebook_job, image=job_docker_image)
+    notebook_scheduler.start_notebook(notebook_job)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP, ignore_result=True)

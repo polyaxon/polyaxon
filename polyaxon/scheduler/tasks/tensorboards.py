@@ -17,9 +17,11 @@ def tensorboards_start(tensorboard_job_id):
         _logger.warning('Tensorboard does not exist anymore.')
         return None
 
-    if tensorboard.last_status == JobLifeCycle.RUNNING:
-        _logger.warning('Tensorboard is already running.')
-        return None
+    if not JobLifeCycle.can_transition(status_from=tensorboard.last_status,
+                                       status_to=JobLifeCycle.SCHEDULED):
+        _logger.info('Tensorboard `%s` cannot transition from `%s` to `%s`.',
+                     tensorboard.unique_name, tensorboard.last_status, JobLifeCycle.SCHEDULED)
+
     tensorboard_scheduler.start_tensorboard(tensorboard)
 
 
