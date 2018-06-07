@@ -89,7 +89,7 @@ def notify_build_job_succeeded(build_job):
         build_job=build_job).values_list('id', flat=True)
     for tensorboard_job_id in tensorboard_job_ids:
         celery_app.send_task(
-            SchedulerCeleryTasks.PROJECTS_TENSORBOARD_START,
+            SchedulerCeleryTasks.TENSORBOARDS_START,
             kwargs={'tensorboard_job_id': tensorboard_job_id})
 
     notebook_job_ids = NotebookJob.objects.filter(
