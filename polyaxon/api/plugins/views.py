@@ -63,8 +63,8 @@ class StartTensorboardView(CreateAPIView):
         self._create_tensorboard(obj)
         if not obj.tensorboard.is_running:
             celery_app.send_task(
-                SchedulerCeleryTasks.PROJECTS_TENSORBOARD_START,
-                kwargs={'project_id': obj.id})
+                SchedulerCeleryTasks.TENSORBOARDS_START,
+                kwargs={'tensorboard_job_id': obj.tensorboard.id})
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -81,7 +81,7 @@ class StopTensorboardView(CreateAPIView):
         obj = self.get_object()
         if obj.has_tensorboard:
             celery_app.send_task(
-                SchedulerCeleryTasks.PROJECTS_TENSORBOARD_STOP,
+                SchedulerCeleryTasks.TENSORBOARDS_STOP,
                 kwargs={'project_id': obj.id})
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=obj.tensorboard,
@@ -114,10 +114,11 @@ class StartNotebookView(CreateAPIView):
         if obj.has_notebook:
             return Response(data='Notebook is already running', status=status.HTTP_200_OK)
         self._create_notebook(obj)
-        if not obj.notebook.is_running:
+        notebook = obj.notebook
+        if not notebook.is_running:
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
-                kwargs={'project_id': obj.id})
+                kwargs={'notebook_job_id': notebook.id})
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -143,7 +144,7 @@ class StopNotebookView(CreateAPIView):
                 git.undo(obj.repo.path)
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
-                kwargs={'project_id': obj.id})
+                kwargs={'notebook_id': obj.notebook.id})
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
                            instance=obj.notebook,
                            target='project',
