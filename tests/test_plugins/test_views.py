@@ -19,7 +19,7 @@ from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_pa
 from scheduler import notebook_scheduler
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
-from scheduler.spawners.templates.constants import DEPLOYMENT_NAME
+from scheduler.spawners.templates.constants import JOB_NAME
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 from tests.utils import BaseViewTest
 
@@ -422,7 +422,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         tensorboard = TensorboardJobFactory(project=project)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = DEPLOYMENT_NAME.format(
+        deployment_name = JOB_NAME.format(
             job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
@@ -439,7 +439,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         tensorboard = TensorboardJobFactory(project=project)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = DEPLOYMENT_NAME.format(
+        deployment_name = JOB_NAME.format(
             job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
@@ -488,7 +488,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         notebook = NotebookJobFactory(project=project)
         notebook.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = DEPLOYMENT_NAME.format(
+        deployment_name = JOB_NAME.format(
             job_uuid=notebook.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
@@ -509,7 +509,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         notebook = NotebookJobFactory(project=project)
         notebook.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = DEPLOYMENT_NAME.format(
+        deployment_name = JOB_NAME.format(
             job_uuid=notebook.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
