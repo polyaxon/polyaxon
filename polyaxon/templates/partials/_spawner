@@ -14,6 +14,11 @@ Spawner config
   value: {{ .Values.nfsProvisioner.enabled | quote }}
 - name: POLYAXON_K8S_SERVICE_ACCOUNT_NAME
   value: {{ template "polyaxon.fullname" . }}-serviceaccount
+- name: POLYAXON_CONTAINER_NAME_EXPERIMENT_JOB
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-experiment-job
 - name: POLYAXON_CONTAINER_NAME_JOB
   valueFrom:
     configMapKeyRef:
