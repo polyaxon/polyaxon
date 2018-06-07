@@ -2,6 +2,7 @@ from polyaxon_k8s.manager import K8SManager
 from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
+from scheduler.spawners.templates.sidecar import get_sidecar_args
 from scheduler.spawners.templates.volumes import get_pod_volumes
 
 
@@ -30,7 +31,6 @@ class ExperimentSpawner(K8SManager):
                  ports=None,
                  use_sidecar=False,
                  sidecar_config=None,
-                 sidecar_args_fn=None,
                  persist=False):
         self.spec = spec
         self.project_name = project_name
@@ -61,7 +61,6 @@ class ExperimentSpawner(K8SManager):
                                            original_name=self.original_name,
                                            cloning_strategy=self.cloning_strategy,
                                            declarations=self.spec.declarations)
-        self.sidecar_args_fn = sidecar_args_fn or constants.SIDECAR_ARGS_FN
         self.persist = persist
 
         super(ExperimentSpawner, self).__init__(k8s_config=k8s_config,
@@ -90,13 +89,12 @@ class ExperimentSpawner(K8SManager):
                     add_service,
                     command=None,
                     args=None,
-                    sidecar_args_fn=None,
                     env_vars=None,
                     resources=None,
                     node_selector=None,
                     restart_policy='Never'):
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
-        sidecar_args = sidecar_args_fn(pod_id=job_name)
+        sidecar_args = get_sidecar_args(pod_id=job_name)
         labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
         volumes, volume_mounts = get_pod_volumes()
@@ -137,7 +135,6 @@ class ExperimentSpawner(K8SManager):
                                          task_idx=i,
                                          command=command,
                                          args=args,
-                                         sidecar_args_fn=self.sidecar_args_fn,
                                          env_vars=env_vars,
                                          resources=resources,
                                          node_selector=node_selector,
@@ -173,7 +170,6 @@ class ExperimentSpawner(K8SManager):
                                 task_idx=0,
                                 command=command,
                                 args=args,
-                                sidecar_args_fn=self.sidecar_args_fn,
                                 env_vars=env_vars,
                                 resources=resources,
                                 node_selector=node_selector,

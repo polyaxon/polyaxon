@@ -23,6 +23,7 @@ from scheduler.spawners.templates.env_vars import (
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
+from scheduler.spawners.templates.sidecar import get_sidecar_command
 
 
 class PodManager(object):
@@ -62,6 +63,7 @@ class PodManager(object):
         self.sidecar_docker_image = sidecar_docker_image or settings.JOB_SIDECAR_DOCKER_IMAGE
         self.role_label = role_label or settings.ROLE_LABELS_WORKER
         self.type_label = type_label or settings.TYPE_LABELS_EXPERIMENT
+        self.app_label = settings.APP_LABELS_EXPERIMENT
         self.ports = ports or [constants.DEFAULT_PORT]
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
@@ -160,6 +162,7 @@ class PodManager(object):
             env_vars.append(client.V1EnvVar(name=k, value=v))
         return client.V1Container(name=self.sidecar_container_name,
                                   image=self.sidecar_docker_image,
+                                  command=get_sidecar_command(app_label=self.app_label),
                                   env=env_vars,
                                   args=args)
 

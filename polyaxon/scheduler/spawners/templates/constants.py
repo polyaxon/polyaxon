@@ -19,13 +19,6 @@ SECRET_USER_TOKEN = 'POLYAXON_USER_TOKEN'  # noqa, secret
 EXPERIMENT_JOB_NAME = 'plxjob-{task_type}{task_idx}-{experiment_uuid}'
 JOB_NAME = 'plx-{name}-{job_uuid}'
 
-
-def SIDECAR_ARGS_FN(pod_id):  # noqa, uppercase function name
-    return [pod_id,
-            "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
-            "--persist=true"]
-
-
 DATA_VOLUME = 'data'
 OUTPUTS_VOLUME = 'outputs'
 REPOS_VOLUME = 'repos'
