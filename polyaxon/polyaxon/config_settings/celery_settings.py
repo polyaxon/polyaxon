@@ -158,8 +158,9 @@ class SchedulerCeleryTasks(object):
     EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
     EXPERIMENTS_GROUP_CHECK_FINISHED = 'experiments_group_check_finished'
 
-    PROJECTS_TENSORBOARD_START = 'projects_tensorboard_start'
-    PROJECTS_TENSORBOARD_STOP = 'projects_tensorboard_stop'
+    TENSORBOARDS_START = 'tensorboards_start'
+    TENSORBOARDS_STOP = 'tensorboards_stop'
+
     PROJECTS_NOTEBOOK_BUILD = 'projects_notebook_build'
     PROJECTS_NOTEBOOK_START = 'projects_notebook_start'
     PROJECTS_NOTEBOOK_STOP = 'projects_notebook_stop'
@@ -276,9 +277,9 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
 
-    SchedulerCeleryTasks.PROJECTS_TENSORBOARD_START:
+    SchedulerCeleryTasks.TENSORBOARDS_START:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
-    SchedulerCeleryTasks.PROJECTS_TENSORBOARD_STOP:
+    SchedulerCeleryTasks.TENSORBOARDS_STOP:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
     SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
