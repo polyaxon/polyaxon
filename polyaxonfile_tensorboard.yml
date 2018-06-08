@@ -1,7 +1,7 @@
 ---
 version: 1
 
-kind: plugin
+kind: tensorboard
 
-run:
+build:
   image: tensorflow/tensorflow:1.6.0-py3

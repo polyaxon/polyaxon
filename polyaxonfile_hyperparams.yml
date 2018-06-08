@@ -21,11 +21,13 @@ declarations:
   num_steps: 500
   num_epochs: 1
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - apt-get -y update && apt-get -y install git
     - pip3 install --no-cache-dir -U polyaxon-helper
+
+run:
   cmd:  python3 model.py --batch_size={{ batch_size }} \
                          --num_steps={{ num_steps }} \
                          --learning_rate={{ learning_rate }} \
