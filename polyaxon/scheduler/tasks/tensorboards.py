@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 def tensorboards_start(tensorboard_job_id):
     tensorboard = get_valid_tensorboard(tensorboard_job_id=tensorboard_job_id)
     if not tensorboard:
-        _logger.warning('Tensorboard %s does not exist anymore.' % tensorboard_job_id)
+        _logger.warning('Tensorboard %s does not exist anymore.', tensorboard_job_id)
         return None
 
     if not JobLifeCycle.can_transition(status_from=tensorboard.last_status,
