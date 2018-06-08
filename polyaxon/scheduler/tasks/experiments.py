@@ -64,7 +64,7 @@ def experiments_build(experiment_id):
     build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
         user=experiment.user,
         project=experiment.project,
-        config=experiment.specification.run,
+        config=experiment.specification.build,
         code_reference=experiment.code_reference)
 
     experiment.build_job = build_job

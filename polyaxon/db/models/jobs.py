@@ -96,22 +96,6 @@ class Job(AbstractJob):
                                 message=message,
                                 details=details)
 
-    @staticmethod
-    def create(user, project, config, code_reference, force=False):
-        build_config = BuildSpecification.create_specification(config, to_dict=False)
-        # Check if image is not using latest tag, then we can reuse a previous build
-        if not force and build_config.build.image_tag != LATEST_IMAGE_TAG:
-            job = Job.objects.filter(project=project,
-                                     config=build_config.parsed_data,
-                                     code_reference=code_reference).last()
-            if job:
-                return job
-
-        return Job.objects.create(user=user,
-                                  project=project,
-                                  config=build_config.parsed_data,
-                                  code_reference=code_reference)
-
 
 class JobStatus(AbstractJobStatus):
     """A model that represents run job status at certain time."""
