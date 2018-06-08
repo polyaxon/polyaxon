@@ -161,7 +161,7 @@ def run(containers, node, persist):
             payload = payload.to_dict()
             logger.info("Publishing resources event")
             celery_app.send_task(
-                EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE,
+                EventsCeleryTasks.EVENTS_HANDLE_RESOURCES,
                 kwargs={'payload': payload, 'persist': persist})
 
             job_uuid = payload['job_uuid']
