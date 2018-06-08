@@ -28,6 +28,7 @@ class BuildSchema(Schema):
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
     git = fields.Str(allow_none=True)
+    force = fields.Boolean(allow_none=True)
 
     class Meta:
         ordered = True
@@ -49,14 +50,15 @@ class BuildSchema(Schema):
 class BuildConfig(BaseConfig):
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
-    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'git']
+    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'git', 'force']
 
-    def __init__(self, image, build_steps=None, env_vars=None, git=None):
+    def __init__(self, image, build_steps=None, env_vars=None, git=None, force=None):
         validate_image(image)
         self.image = image
         self.build_steps = build_steps
         self.env_vars = env_vars
         self.git = git
+        self.force = force
 
     @property
     def image_tag(self):
