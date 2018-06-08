@@ -69,6 +69,9 @@ class BuildJob(AbstractJob, JobMixin):
     @staticmethod
     def create(user, project, config, code_reference, force=False):
         build_config = BuildSpecification.create_specification(config, to_dict=False)
+        if not force and build_config.build.force is not None:
+            # Set the config's force rebuild
+            force = build_config.build.force
         # Check if image is not using latest tag, then we can reuse a previous build
         if not force and build_config.build.image_tag != LATEST_IMAGE_TAG:
             job = BuildJob.objects.filter(project=project,
