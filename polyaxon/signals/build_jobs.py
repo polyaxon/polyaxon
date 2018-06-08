@@ -78,7 +78,7 @@ def build_check_stop_job(sender, **kwargs):
     if instance.status in (JobLifeCycle.FAILED, JobLifeCycle.SUCCEEDED):
         _logger.info('The build job  with id `%s` failed or is done, '
                      'send signal to stop.', build_job_id)
-        # Schedule stop for this experiment because other jobs may be still running
+        # Schedule stop for this job
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={'build_job_id': build_job_id,

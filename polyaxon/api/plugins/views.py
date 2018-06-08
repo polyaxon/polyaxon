@@ -64,7 +64,8 @@ class StartTensorboardView(CreateAPIView):
         if not obj.tensorboard.is_running:
             celery_app.send_task(
                 SchedulerCeleryTasks.TENSORBOARDS_START,
-                kwargs={'tensorboard_job_id': obj.tensorboard.id})
+                kwargs={'tensorboard_job_id': obj.tensorboard.id},
+                countdown=1)
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -118,7 +119,8 @@ class StartNotebookView(CreateAPIView):
         if not notebook.is_running:
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
-                kwargs={'notebook_job_id': notebook.id})
+                kwargs={'notebook_job_id': notebook.id},
+                countdown=1)
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -148,7 +150,8 @@ class StopNotebookView(CreateAPIView):
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
                            instance=obj.notebook,
                            target='project',
-                           actor_id=self.request.user.id)
+                           actor_id=self.request.user.id,
+                           countdown=1)
         elif obj.notebook and obj.notebook.is_running:
             obj.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
                                     message='Notebook was stopped')

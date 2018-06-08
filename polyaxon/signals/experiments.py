@@ -131,7 +131,8 @@ def new_experiment_job_status(sender, **kwargs):
 
     celery_app.send_task(
         SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
-        kwargs={'experiment_id': experiment.id})
+        kwargs={'experiment_id': experiment.id},
+        countdown=1)
 
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_saved")
