@@ -20,7 +20,7 @@ _logger = logging.getLogger(__name__)
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE)
 def handle_events_namespace(cluster_id, payload):
-    _logger.info('handling events namespace for cluster: %s', cluster_id)
+    _logger.debug('handling events namespace for cluster: %s', cluster_id)
     ClusterEvent.objects.create(cluster_id=cluster_id, **payload)
 
 
