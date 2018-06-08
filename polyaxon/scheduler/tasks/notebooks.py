@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 def projects_notebook_build(notebook_job_id):
     notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id)
     if notebook_job:
-        _logger.warning('Notebook does not exist anymore.')
+        _logger.warning('Notebook %s does not exist anymore.' % notebook_job_id)
         return None
 
     if not JobLifeCycle.can_transition(status_from=notebook_job.last_status,
@@ -49,7 +49,7 @@ def projects_notebook_build(notebook_job_id):
 def projects_notebook_start(notebook_job_id):
     notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id)
     if not notebook_job:
-        _logger.warning('Notebook does not exist anymore.')
+        _logger.warning('Notebook %s does not exist anymore.' % notebook_job_id)
         return None
 
     if not JobLifeCycle.can_transition(status_from=notebook_job.last_status,

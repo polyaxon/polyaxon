@@ -9,7 +9,7 @@ def get_valid_notebook(notebook_job_id=None, notebook_job_uuid=None):
     exists_cond = (not any([notebook_job_id, notebook_job_uuid])
                    or all([notebook_job_id, notebook_job_uuid]))
     if exists_cond:
-        raise ValueError('`get_valid_project` function expects an project id or uuid.')
+        raise ValueError('`get_valid_notebook` function expects a notebook id or uuid.')
 
     try:
         if notebook_job_uuid:
