@@ -35,6 +35,17 @@ class TestBuildConfigs(TestCase):
         config = BuildConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.image_tag == 'latest'
+        assert config.nocache is None
+
+    def test_build_nocache(self):
+        config_dict = {
+            'image': 'some_image_name',
+            'nocache': True
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag == 'latest'
+        assert config.nocache is True
 
     def test_build_from_git_repo_with_install_step_config(self):
         config_dict = {
