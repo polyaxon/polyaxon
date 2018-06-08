@@ -53,7 +53,7 @@ def create_build_job(user, project, config, code_reference):
             project=project,
             config=config,
             code_reference=code_reference,
-            force=True)
+            nocache=True)
 
     if not build_job.is_running:
         # We need to build the image first

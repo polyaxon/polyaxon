@@ -83,7 +83,7 @@ class TestBuildJobModels(BaseTest):
             project=self.project,
             config={'image': 'my_image:test'},
             code_reference=self.code_reference,
-            force=True)
+            nocache=True)
         assert BuildJobStatus.objects.count() == 2
         assert BuildJob.objects.count() == 2
         assert new_build_job != build_job

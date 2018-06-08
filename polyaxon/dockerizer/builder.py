@@ -112,7 +112,7 @@ class DockerBuilder(object):
             copy_code=self.copy_code
         )
 
-    def build(self, memory_limit=None):
+    def build(self, nocache=False, memory_limit=None):
         _logger.debug('Starting build in `%s`', self.repo_path)
         # Checkout to the correct commit
         if self.image_tag != self.LATEST_IMAGE_TAG:
@@ -138,7 +138,7 @@ class DockerBuilder(object):
             forcerm=True,
             rm=True,
             pull=True,
-            nocache=False,
+            nocache=nocache,
             container_limits=limits,
             stream=True,
         ):
@@ -220,7 +220,8 @@ def build(build_job):
         # Image already built
         docker_builder.clean()
         return True
-    if not docker_builder.build():
+    nocache = True if build_job.specification.build.nocache is True else False
+    if not docker_builder.build(nocache=nocache):
         docker_builder.clean()
         return False
     if not docker_builder.push():
