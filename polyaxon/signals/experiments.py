@@ -223,7 +223,7 @@ def handle_new_experiment_status(sender, **kwargs):
 
     stop_condition = (
         instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED) and
-        experiment.has_running_jobs
+        experiment.jobs.count() > 0
     )
     if stop_condition:
         _logger.info('One of the workers failed or Master for experiment `%s` is done, '
