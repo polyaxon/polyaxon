@@ -8,7 +8,7 @@ from django.conf import settings
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
-from docker_images.image_info import get_experiment_image_info
+from docker_images.image_info import get_image_info
 from polyaxon.utils import config
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,
@@ -251,7 +251,7 @@ def start_experiment(experiment):
     job_docker_image = None  # This will force the spawners to use the default docker image
     if experiment.specification.build:
         try:
-            image_name, image_tag = get_experiment_image_info(experiment=experiment)
+            image_name, image_tag = get_image_info(build_job=experiment.build_job)
         except ValueError as e:
             _logger.warning('Could not start the experiment, %s', e)
             experiment.set_status(ExperimentLifeCycle.FAILED,
