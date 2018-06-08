@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
 def projects_notebook_build(notebook_job_id):
     notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id)
-    if notebook_job:
+    if not notebook_job:
         _logger.warning('Notebook %s does not exist anymore.', notebook_job_id)
         return None
 
