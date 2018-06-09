@@ -188,7 +188,7 @@ def logs(ctx):
                                                             ctx.obj['job'])
 
     def message_handler(log_line):
-        Printer.log(log_line['log_line'])
+        Printer.log(log_line['log_line'], nl=True)
 
     try:
         PolyaxonClients().job.logs(user,

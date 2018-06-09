@@ -462,7 +462,7 @@ def logs(ctx, past, follow):
                 job_to_color[job_info] = color
 
             log_line = '{} -- {}'.format(Printer.add_color(job_info, color), message['log_line'])
-            Printer.log(log_line)
+            Printer.log(log_line, nl=True)
         elif status == 'Building':
             sign['current'] = (sign['values'][0]
                                if sign['current'] == sign['values'][1]

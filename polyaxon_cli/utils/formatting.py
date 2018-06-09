@@ -118,8 +118,8 @@ class Printer(object):
         click.echo(text_format.format(*values))
 
     @staticmethod
-    def log(value):
-        click.echo(value, nl=False)
+    def log(value, nl=False):
+        click.echo(value, nl=nl)
 
     @classmethod
     def resources(cls, jobs_resources):
