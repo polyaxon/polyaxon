@@ -8,10 +8,11 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from libs.paths.experiments import (
+    create_experiment_logs_path,
     create_experiment_outputs_path,
     get_experiment_logs_path,
-    get_experiment_outputs_path,
-    create_experiment_logs_path)
+    get_experiment_outputs_path
+)
 from libs.paths.projects import (
     delete_project_logs,
     delete_project_outputs,
@@ -21,8 +22,8 @@ from libs.paths.projects import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.projects_mark
-class TestProjectUtils(BaseTest):
+@pytest.mark.paths_mark
+class TestProjectPaths(BaseTest):
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()

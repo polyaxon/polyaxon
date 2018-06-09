@@ -10,8 +10,8 @@ from libs.paths.utils import copy_to_tmp_dir, get_tmp_path
 from tests.utils import BaseTest
 
 
-@pytest.mark.libs_mark
-class TestPaths(BaseTest):
+@pytest.mark.paths_mark
+class TestCopyPaths(BaseTest):
     def test_copy_repo_path_to_tmp_dir(self):
         project = ProjectFactory()
         repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,

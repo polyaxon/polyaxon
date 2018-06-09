@@ -4,17 +4,18 @@ import pytest
 
 from factories.factory_experiments import ExperimentFactory
 from libs.paths.experiments import (
+    create_experiment_logs_path,
     create_experiment_outputs_path,
     delete_experiment_logs,
     delete_experiment_outputs,
     get_experiment_logs_path,
-    get_experiment_outputs_path,
-    create_experiment_logs_path)
+    get_experiment_outputs_path
+)
 from tests.utils import BaseTest
 
 
-@pytest.mark.experiments_mark
-class TestExperimentUtils(BaseTest):
+@pytest.mark.paths_mark
+class TestExperimentPaths(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):

@@ -11,15 +11,16 @@ from libs.paths.experiment_groups import (
     get_experiment_group_outputs_path
 )
 from libs.paths.experiments import (
+    create_experiment_logs_path,
     create_experiment_outputs_path,
     get_experiment_logs_path,
-    get_experiment_outputs_path,
-    create_experiment_logs_path)
+    get_experiment_outputs_path
+)
 from tests.utils import BaseTest
 
 
-@pytest.mark.experiment_groups_mark
-class TestExperimentGroupUtils(BaseTest):
+@pytest.mark.paths_mark
+class TestExperimentGroupPaths(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):
