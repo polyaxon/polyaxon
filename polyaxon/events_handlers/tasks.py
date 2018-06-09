@@ -129,7 +129,7 @@ def events_handle_build_job_statuses(payload):
 def events_handle_logs_experiment_job(experiment_name,
                                       experiment_uuid,
                                       job_uuid,
-                                      log_line,
+                                      log_lines,
                                       task_type=None,
                                       task_idx=None):
     if not Experiment.objects.filter(uuid=experiment_uuid).exists():
@@ -137,25 +137,24 @@ def events_handle_logs_experiment_job(experiment_name,
 
     _logger.debug('handling log event for %s %s', experiment_uuid, job_uuid)
     if task_type and task_idx:
-        log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
+        log_lines = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_lines)
 
-    safe_log_experiment_job(experiment_name=experiment_name, log_line=log_line)
+    safe_log_experiment_job(experiment_name=experiment_name, log_lines=log_lines)
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB)
-def events_handle_logs_job(job_uuid, job_name, log_line):
+def events_handle_logs_job(job_uuid, job_name, log_lines):
     if not Job.objects.filter(uuid=job_uuid).exists():
         return
 
     _logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_line=log_line)
+    safe_log_job(job_name=job_name, log_lines=log_lines)
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB)
-def events_handle_logs_build_job(job_uuid, job_name, log_line):
+def events_handle_logs_build_job(job_uuid, job_name, log_lines):
     if not BuildJob.objects.filter(uuid=job_uuid).exists():
         return
 
     _logger.debug('handling log event for %s', job_name)
-    _logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_line=log_line)
+    safe_log_job(job_name=job_name, log_lines=log_lines)

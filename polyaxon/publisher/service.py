@@ -1,4 +1,5 @@
 from amqp import AMQPError
+from polyaxon_schemas.utils import to_list
 from redis import RedisError
 
 from django.conf import settings
@@ -39,7 +40,7 @@ class PublisherService(Service):
                 'experiment_name': experiment_name,
                 'experiment_uuid': experiment_uuid,
                 'job_uuid': job_uuid,
-                'log_line': log_line,
+                'log_lines': log_line,
                 'task_type': task_type,
                 'task_idx': task_idx})
         try:
@@ -69,16 +70,13 @@ class PublisherService(Service):
                 except (TimeoutError, AMQPError):
                     pass
 
-    def publish_build_job_log(self, log_line, job_uuid, job_name):
-        try:
-            log_line = log_line.decode('utf-8')
-        except AttributeError:
-            pass
+    def publish_build_job_log(self, log_lines, job_uuid, job_name):
+        log_lines = to_list(log_lines)
 
         self._logger.info("Publishing log event for task: %s", job_uuid)
         celery_app.send_task(
             EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB,
-            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_line': log_line})
+            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_lines': log_lines})
 
     def publish_job_log(self, log_line, job_uuid, job_name):
         try:
@@ -89,7 +87,7 @@ class PublisherService(Service):
         self._logger.info("Publishing log event for task: %s", job_uuid)
         celery_app.send_task(
             EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB,
-            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_line': log_line})
+            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_lines': log_line})
 
     def setup(self):
         import logging

@@ -3,10 +3,8 @@ import json
 import logging
 import os
 import stat
-import time
-
 from docker import APIClient
-from docker.errors import DockerException
+from docker.errors import DockerException, BuildError, APIError
 
 from django.conf import settings
 
@@ -76,12 +74,57 @@ class DockerBuilder(object):
         except DockerException as e:
             _logger.exception('Failed to connect to registry %s\n', e)
 
-    def _handle_logs(self, log_line):
+    def _prepare_log_lines(self, log_line):
+        raw = log_line.decode('utf-8').strip()
+        raw_lines = raw.split('\n')
+        log_lines = []
+        for raw_line in raw_lines:
+            try:
+                json_line = json.loads(raw_line)
+
+                if json_line.get('error'):
+                    raise BuildError(str(json_line.get('error', json_line)))
+                else:
+                    if json_line.get('stream'):
+                        log_lines.append('Build: {}'.format(json_line['stream'].strip()))
+                    elif json_line.get('status'):
+                        log_lines.append('Push: {} {}'.format(
+                            json_line['status'],
+                            json_line.get('progress')
+                        ))
+                    elif json_line.get('aux'):
+                        log_lines.append('Push finished: {}'.format(json_line.get('aux')))
+                    else:
+                        log_lines.append(str(json_line))
+            except json.JSONDecodeError:
+                log_lines.append('JSON decode error: {}'.format(raw_line))
+        return log_lines
+
+    def _handle_logs(self, log_lines):
         publisher.publish_build_job_log(
-            log_line=log_line,
+            log_lines=log_lines,
             job_uuid=self.job_uuid,
             job_name=self.job_name
         )
+
+    def _handle_log_stream(self, stream):
+        log_lines = []
+        try:
+            for log_line in stream:
+                log_lines += self._prepare_log_lines(log_line)
+                if len(log_lines) == 50:
+                    self._handle_logs(log_lines)
+                    log_lines = []
+            if log_lines:
+                self._handle_logs(log_lines)
+        except BuildError as e:
+            self._handle_logs('Build Error {}'.format(e))
+            return False
+        except APIError as e:
+            self._handle_logs('Build Error {}'.format(e))
+            return False
+
+        return True
 
     def _get_requirements_path(self):
         requirements_path = os.path.join(self.repo_path, 'polyaxon_requirements.txt')
@@ -130,46 +173,20 @@ class DockerBuilder(object):
         with open(self.dockerfile_path, 'w') as dockerfile:
             dockerfile.write(self.render())
 
-        for log_line in self.docker.build(
-            path=self.build_path,
-            tag=self.get_tagged_image(),
-            buildargs={},
-            decode=True,
-            forcerm=True,
-            rm=True,
-            pull=True,
-            nocache=nocache,
-            container_limits=limits,
-            stream=True,
-        ):
-            self._handle_logs(log_line)
-
-        return True
+        stream = self.docker.build(
+                path=self.build_path,
+                tag=self.get_tagged_image(),
+                forcerm=True,
+                rm=True,
+                pull=True,
+                nocache=nocache,
+                container_limits=limits,
+            )
+        return self._handle_log_stream(stream=stream)
 
     def push(self):
-        # Build a progress setup for each layer, and only emit per-layer info every 1.5s
-        layers = {}
-        last_emit_time = time.time()
-        for log_line in self.docker.push(self.image_name, tag=self.image_tag, stream=True):
-            lines = [l for l in log_line.decode('utf-8').split('\r\n') if l]
-            lines = [json.loads(l) for l in lines]
-            for progress in lines:
-                if 'error' in progress:
-                    _logger.error(progress['error'], extra=dict(phase='failed'))
-                    return
-                if 'id' not in progress:
-                    continue
-                if 'progressDetail' in progress and progress['progressDetail']:
-                    layers[progress['id']] = progress['progressDetail']
-                else:
-                    layers[progress['id']] = progress['status']
-                if time.time() - last_emit_time > 1.5:
-                    _logger.debug('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
-                    last_emit_time = time.time()
-
-                self._handle_logs(log_line)
-
-        return True
+        stream = self.docker.push(self.image_name, tag=self.image_tag, stream=True)
+        return self._handle_log_stream(stream=stream)
 
 
 def download_code(build_job, build_path, filename):

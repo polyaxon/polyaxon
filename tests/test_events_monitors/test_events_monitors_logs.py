@@ -73,7 +73,7 @@ class TestExperimentJobLogsHandling(BaseTestLogsHandling):
         return dict(experiment_name=instance.unique_name,
                     experiment_uuid=instance.uuid.hex,
                     job_uuid=uuid.uuid4().hex,
-                    log_line='First test',
+                    log_lines='First test',
                     task_type=TaskType.MASTER,
                     task_idx=0)
 
@@ -101,7 +101,7 @@ class TestJobLogsHandling(BaseTestLogsHandling):
     def get_params(instance):
         return dict(job_name=instance.unique_name,
                     job_uuid=instance.uuid.hex,
-                    log_line='First test')
+                    log_lines='First test')
 
     @staticmethod
     def get_log_path(instance):
@@ -126,7 +126,7 @@ class TestBuildJobLogsHandling(BaseTestLogsHandling):
     def get_params(instance):
         return dict(job_name=instance.unique_name,
                     job_uuid=instance.uuid.hex,
-                    log_line='First test')
+                    log_lines='First test')
 
     @staticmethod
     def get_log_path(instance):

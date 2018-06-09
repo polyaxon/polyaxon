@@ -1,7 +1,7 @@
 -r ../requirements-base.txt
 
 django-auth-ldap==1.5.0
-docker==2.6.1
+docker==3.3.0
 GitPython==2.1.7
 Jinja2==2.9.6
 pika==0.11.0
