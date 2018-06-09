@@ -4,7 +4,9 @@ import uuid
 from kubernetes import client
 
 from django.conf import settings
+from polyaxon_schemas.utils import to_list
 
+from db.models.experiments import CloningStrategy
 from libs.paths.experiments import (
     get_experiment_data_path,
     get_experiment_logs_path,
@@ -21,8 +23,10 @@ from scheduler.spawners.templates.env_vars import (
     get_resources_env_vars,
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
+from scheduler.spawners.templates.init_containers import get_output_args, InitCommands
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_container
+from scheduler.spawners.templates.volumes import get_volume
 
 
 class PodManager(object):
@@ -40,6 +44,8 @@ class PodManager(object):
                  job_docker_image=None,
                  sidecar_container_name=None,
                  sidecar_docker_image=None,
+                 init_container_name=None,
+                 init_docker_image=None,
                  role_label=None,
                  type_label=None,
                  ports=None,
@@ -60,6 +66,8 @@ class PodManager(object):
         self.job_docker_image = job_docker_image or settings.JOB_DOCKER_NAME
         self.sidecar_container_name = sidecar_container_name or settings.CONTAINER_NAME_SIDECAR
         self.sidecar_docker_image = sidecar_docker_image or settings.JOB_SIDECAR_DOCKER_IMAGE
+        self.init_container_name = init_container_name or settings.CONTAINER_NAME_INIT
+        self.init_docker_image = init_docker_image or settings.JOB_INIT_DOCKER_IMAGE
         self.role_label = role_label or settings.ROLE_LABELS_WORKER
         self.type_label = type_label or settings.TYPE_LABELS_EXPERIMENT
         self.app_label = settings.APP_LABELS_EXPERIMENT
@@ -160,6 +168,33 @@ class PodManager(object):
             sidecar_config=self.sidecar_config,
             sidecar_args=args)
 
+    def get_init_container(self):
+        """Pod init container for setting outputs path."""
+        if self.original_name is not None and self.cloning_strategy == CloningStrategy.RESUME:
+            return []
+        if self.original_name is not None and self.cloning_strategy == CloningStrategy.COPY:
+            command = InitCommands.COPY
+            original_outputs_path = get_experiment_outputs_path(experiment_name=self.original_name)
+        else:
+            command = InitCommands.CREATE
+            original_outputs_path = None
+
+        outputs_path = get_experiment_outputs_path(experiment_name=self.experiment_name)
+        outputs_volume_mount = get_volume(
+            volume=constants.OUTPUTS_VOLUME,
+            claim_name=settings.OUTPUTS_CLAIM_NAME,
+            volume_mount=settings.OUTPUTS_ROOT)
+        return [
+            client.V1Container(
+                name=self.init_container_name,
+                image=self.init_docker_image,
+                command=["/bin/sh", "-c"],
+                args=get_output_args(command=command,
+                                     outputs_path=outputs_path,
+                                     original_outputs_path=original_outputs_path),
+                volume_mounts=[outputs_volume_mount])
+        ]
+
     def get_task_pod_spec(self,
                           task_type,
                           task_idx,
@@ -210,6 +245,7 @@ class PodManager(object):
             service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
         return client.V1PodSpec(restart_policy=restart_policy,
                                 service_account_name=service_account_name,
+                                init_containers=to_list(self.get_init_container()),
                                 containers=containers,
                                 volumes=volumes,
                                 node_selector=node_selector)
