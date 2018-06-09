@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+from polyaxon_schemas.utils import to_list
 
 from polyaxon_cli.cli.experiment import get_experiment_or_local
 from polyaxon_cli.logger import clean_outputs
@@ -187,8 +188,10 @@ def logs(ctx):
                                                             ctx.obj['experiment'],
                                                             ctx.obj['job'])
 
-    def message_handler(log_line):
-        Printer.log(log_line['log_line'], nl=True)
+    def message_handler(message):
+        log_lines = to_list(message['log_lines'])
+        for log_line in log_lines:
+            Printer.log(log_line, nl=True)
 
     try:
         PolyaxonClients().job.logs(user,

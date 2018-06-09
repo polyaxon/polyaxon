@@ -7,6 +7,7 @@ import sys
 from collections import deque
 
 import click
+from polyaxon_schemas.utils import to_list
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.cli.upload import upload
@@ -451,7 +452,7 @@ def logs(ctx, past, follow):
 
     def message_handler(message):
         status = message['status']
-        log_line = message['log_line']
+        log_lines = to_list(message['log_lines'])
         if status == 'Running':
             job_info = '{}.{}'.format(message['task_type'], int(message['task_idx']) + 1)
             if job_info in job_to_color:
@@ -461,8 +462,9 @@ def logs(ctx, past, follow):
                 colors.rotate(-1)
                 job_to_color[job_info] = color
 
-            log_line = '{} -- {}'.format(Printer.add_color(job_info, color), message['log_line'])
-            Printer.log(log_line, nl=True)
+            for log_line in log_lines:
+                log_line = '{} -- {}'.format(Printer.add_color(job_info, color), log_line)
+                Printer.log(log_line, nl=True)
         elif status == 'Building':
             sign['current'] = (sign['values'][0]
                                if sign['current'] == sign['values'][1]
@@ -471,7 +473,8 @@ def logs(ctx, past, follow):
             Printer.log("{} -- creating image {}\r".format(status, sign['current']))
             sys.stdout.flush()
         else:
-            Printer.log('{} -- {}'.format(status, log_line))
+            for log_line in log_lines:
+                Printer.log('{} -- {}'.format(status, log_line), nl=True)
 
     if past:
         try:
