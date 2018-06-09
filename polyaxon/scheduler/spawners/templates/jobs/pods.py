@@ -19,7 +19,7 @@ from scheduler.spawners.templates.env_vars import (
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
-from scheduler.spawners.templates.sidecar import get_sidecar_args, get_sidecar_command
+from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_command
 
 
 class PodManager(object):
