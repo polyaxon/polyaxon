@@ -19,6 +19,7 @@ data:
   redis-sessions-url: redis://{{ template "redis.fullname" . }}:6379/5
   container-name-experiment-job: "polyaxon-experiment-job"
   container-name-sidecar: "polyaxon-job-sidecar"
+  container-name-init: "polyaxon-job-init"
   container-name-job: "polyaxon-job"
   container-name-plugin-job: "polyaxon-plugin-job"
   container-name-dockerizer-job: "polyaxon-dockerizer-job"

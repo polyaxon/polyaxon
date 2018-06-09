@@ -29,6 +29,11 @@ Spawner config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: container-name-sidecar
+- name: POLYAXON_CONTAINER_NAME_INIT
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-init
 - name: POLYAXON_CONTAINER_NAME_PLUGIN_JOB
   valueFrom:
     configMapKeyRef:
