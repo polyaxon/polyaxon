@@ -14,7 +14,7 @@ class TestBuildJobModels(BaseTest):
 
         assert build_job.dockerfile is None
 
-        build_jobs_set_dockerfile(build_job_id=build_job.id, dockerfile='dockerfile')
+        build_jobs_set_dockerfile(build_job_uuid=build_job.uuid.hex, dockerfile='dockerfile')
 
         build_job.refresh_from_db()
         assert build_job.dockerfile == 'dockerfile'

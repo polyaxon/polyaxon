@@ -184,7 +184,7 @@ class DockerBuilder(object):
             rendered_dockerfile = self.render()
             celery_app.send_task(
                 SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE,
-                kwargs={'build_job_id': self.job_uuid, 'dockerfile': rendered_dockerfile})
+                kwargs={'build_job_uuid': self.job_uuid, 'dockerfile': rendered_dockerfile})
             dockerfile.write(rendered_dockerfile)
 
         stream = self.docker.build(
