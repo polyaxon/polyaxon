@@ -17,7 +17,7 @@ def _handle_log_stream(stream, publish):
         log_lines.append(log_line.decode('utf-8').strip())
         publish_cond = (
             len(log_lines) == publisher.MESSAGES_COUNT or
-            (log_lines and time.time() - last_emit_time > publisher.MESSAGES_TIMEOUT)
+            (log_lines and time.time() - last_emit_time > publisher.MESSAGES_TIMEOUT_SHORT)
         )
         if publish_cond:
             publish(log_lines)

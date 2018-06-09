@@ -3,6 +3,7 @@ from libs.services import LazyServiceWrapper
 
 MESSAGES_COUNT = 50
 MESSAGES_TIMEOUT = 5
+MESSAGES_TIMEOUT_SHORT = 2
 
 backend = LazyServiceWrapper(
     backend_base=PublisherService,

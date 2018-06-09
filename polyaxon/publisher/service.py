@@ -48,24 +48,23 @@ class PublisherService(Service):
             self._logger.info("Streaming new log event for experiment: %s", experiment_uuid)
 
             with celery_app.producer_or_acquire(None) as producer:
-                for log_line in log_lines:
-                    try:
-                        producer.publish(
-                            {
-                                'experiment_uuid': experiment_uuid,
-                                'job_uuid': job_uuid,
-                                'log_line': log_line,
-                                'status': status,
-                                'task_type': task_type,
-                                'task_idx': task_idx
-                            },
-                            routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
-                                                          experiment_uuid,
-                                                          job_uuid),
-                            exchange=settings.INTERNAL_EXCHANGE,
-                        )
-                    except (TimeoutError, AMQPError):
-                        pass
+                try:
+                    producer.publish(
+                        {
+                            'experiment_uuid': experiment_uuid,
+                            'job_uuid': job_uuid,
+                            'log_lines': log_lines,
+                            'status': status,
+                            'task_type': task_type,
+                            'task_idx': task_idx
+                        },
+                        routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
+                                                      experiment_uuid,
+                                                      job_uuid),
+                        exchange=settings.INTERNAL_EXCHANGE,
+                    )
+                except (TimeoutError, AMQPError):
+                    pass
 
     def publish_build_job_log(self, log_lines, job_uuid, job_name):
         log_lines = to_list(log_lines)

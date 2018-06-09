@@ -219,14 +219,14 @@ class Consumer(SocketManager):
         :param pika.Spec.BasicProperties: properties
         :param str|unicode body: The message body
         """
-        _logger.debug('Received message # %s from %s: %s',
-                      basic_deliver.delivery_tag, properties.app_id, body)
+        _logger.warning('Received message # %s from %s: %s',
+                        basic_deliver.delivery_tag, properties.app_id, body)
         if self.ws and body:
             body = json.loads(body.decode('utf-8'))
-            body = json.dumps(body)
-            self.messages.append(body)
+            body = [json.dumps(b) for b in body]
+            self.messages += body
         _logger.debug('out ws : %s', len(self.ws))
-        _logger.debug('out messages : %s', len(self.messages))
+        _logger.warning('out messages : %s', len(self.messages))
         self.acknowledge_message(basic_deliver.delivery_tag)
 
     def on_cancelok(self, unused_frame):
