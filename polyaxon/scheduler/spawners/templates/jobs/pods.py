@@ -3,18 +3,18 @@ import json
 from kubernetes import client
 
 from django.conf import settings
-from polyaxon_schemas.utils import to_list
 
 from libs.paths.jobs import get_job_data_path, get_job_logs_path, get_job_outputs_path
 from libs.paths.projects import get_project_data_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.utils import to_list
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
     get_job_env_vars,
-    get_resources_env_vars,
+    get_resources_env_vars
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.init_containers import InitCommands, get_output_args

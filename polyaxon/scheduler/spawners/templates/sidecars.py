@@ -1,7 +1,8 @@
-from django.conf import settings
 from kubernetes import client
-from polyaxon_schemas.utils import to_list
 
+from django.conf import settings
+
+from polyaxon_schemas.utils import to_list
 from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
 
 
