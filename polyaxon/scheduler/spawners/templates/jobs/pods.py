@@ -137,8 +137,8 @@ class PodManager(object):
             name=self.init_container_name,
             image=self.init_docker_image,
             command=["/bin/sh", "-c"],
-            args=get_output_args(command=InitCommands.CREATE,
-                                 outputs_path=outputs_path),
+            args=to_list(get_output_args(command=InitCommands.CREATE,
+                                         outputs_path=outputs_path)),
             volume_mounts=[outputs_volume_mount])
 
     def get_task_pod_spec(self,

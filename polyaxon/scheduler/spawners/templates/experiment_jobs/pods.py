@@ -189,9 +189,9 @@ class PodManager(object):
                 name=self.init_container_name,
                 image=self.init_docker_image,
                 command=["/bin/sh", "-c"],
-                args=get_output_args(command=command,
-                                     outputs_path=outputs_path,
-                                     original_outputs_path=original_outputs_path),
+                args=to_list(get_output_args(command=command,
+                                             outputs_path=outputs_path,
+                                             original_outputs_path=original_outputs_path)),
                 volume_mounts=[outputs_volume_mount])
         ]
 
