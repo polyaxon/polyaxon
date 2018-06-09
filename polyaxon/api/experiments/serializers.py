@@ -136,7 +136,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'user', 'description', 'original_experiment', 'config', 'declarations', 'dockerfile')
+            'user', 'description', 'original_experiment', 'config', 'declarations')
 
     def get_user(self, obj):
         return obj.user.username

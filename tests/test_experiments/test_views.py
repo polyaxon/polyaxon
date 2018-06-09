@@ -158,13 +158,12 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert last_object.project == self.project
         assert last_object.config is None
 
-    def test_create_with_declarations_and_dockerfile(self):
+    def test_create_with_declarations(self):
         data = {
             'declarations': {
                 'lr': 0.1,
                 'dropout': 0.5
-            },
-            'dockerfile': 'test'
+            }
         }
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
@@ -176,7 +175,6 @@ class TestProjectExperimentListViewV1(BaseViewTest):
             'lr': 0.1,
             'dropout': 0.5
         }
-        assert last_object.dockerfile == 'test'
 
 
 @pytest.mark.experiments_mark

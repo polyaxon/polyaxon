@@ -32,6 +32,10 @@ class BuildJob(AbstractJob, JobMixin):
         blank=True,
         null=True,
         related_name='+')
+    dockerfile = models.TextField(
+        blank=True,
+        null=True,
+        help_text='The dockerfile used to create the image with this job.')
     status = models.OneToOneField(
         'db.BuildJobStatus',
         related_name='+',

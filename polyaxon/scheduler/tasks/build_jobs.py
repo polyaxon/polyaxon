@@ -129,3 +129,15 @@ def build_jobs_notify_done(build_job_id):
     # Build job Succeeded -> Start the dependent jobs
     if build_job.succeeded:
         notify_build_job_succeeded(build_job)
+
+
+@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE, ignore_result=True)
+def build_jobs_set_dockerfile(build_job_id, dockerfile):
+    build_job = get_valid_build_job(build_job_id=build_job_id)
+    if not build_job:
+        _logger.info('Something went wrong, '
+                     'the BuildJob `%s` does not exist anymore.', build_job_id)
+        return
+
+    build_job.dockerfile = dockerfile
+    build_job.save()

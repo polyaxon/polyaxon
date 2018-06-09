@@ -20,7 +20,7 @@ from libs.paths.utils import delete_path
 from libs.repos import git
 from libs.utils import get_list
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks
+from polyaxon.settings import EventsCeleryTasks, SchedulerCeleryTasks
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -181,7 +181,11 @@ class DockerBuilder(object):
 
         # Create DockerFile
         with open(self.dockerfile_path, 'w') as dockerfile:
-            dockerfile.write(self.render())
+            rendered_dockerfile = self.render()
+            celery_app.send_task(
+                SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE,
+                kwargs={'build_job_id': self.job_uuid, 'dockerfile': rendered_dockerfile})
+            dockerfile.write(rendered_dockerfile)
 
         stream = self.docker.build(
             path=self.build_path,

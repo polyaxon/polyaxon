@@ -170,6 +170,7 @@ class SchedulerCeleryTasks(object):
     BUILD_JOBS_START = 'build_jobs_start'
     BUILD_JOBS_STOP = 'build_jobs_stop'
     BUILD_JOBS_NOTIFY_DONE = 'build_jobs_notify_done'
+    BUILD_JOBS_SET_DOCKERFILE = 'build_jobs_set_dockerfile'
 
     JOBS_BUILD = 'jobs_build'
     JOBS_START = 'jobs_start'
@@ -295,6 +296,8 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.BUILD_JOBS_STOP:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
     SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+    SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
 
     SchedulerCeleryTasks.JOBS_BUILD:

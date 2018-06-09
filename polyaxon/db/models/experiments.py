@@ -72,10 +72,6 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         null=True,
         related_name='experiments',
         help_text='The experiment group that generate this experiment.')
-    dockerfile = models.TextField(
-        blank=True,
-        null=True,
-        help_text='The dockerfile used to train this experiment.')
     declarations = JSONField(
         blank=True,
         null=True,

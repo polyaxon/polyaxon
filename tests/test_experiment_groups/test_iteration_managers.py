@@ -162,7 +162,7 @@ class TestBOIterationManagers(BaseTest):
         self.iteration_manager.update_iteration()
         iteration.refresh_from_db()
         experiment_iter1_metrics = [
-            [experiment_id, 0.8] for experiment_id in reversed(experiment_iter1_ids)
+            [experiment_id, 0.8] for experiment_id in experiment_iter1_ids
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter1_metrics
 
@@ -193,7 +193,7 @@ class TestBOIterationManagers(BaseTest):
         self.iteration_manager.update_iteration()
         iteration.refresh_from_db()
         experiment_iter2_metrics = [
-            [experiment_id, 0.9] for experiment_id in reversed(experiment_iter2_ids)
+            [experiment_id, 0.9] for experiment_id in experiment_iter2_ids
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter2_metrics
 
@@ -224,7 +224,7 @@ class TestBOIterationManagers(BaseTest):
         self.iteration_manager.update_iteration()
         iteration.refresh_from_db()
         experiment_iter3_metrics = [
-            [experiment_id, 0.9] for experiment_id in reversed(experiment_iter3_ids)
+            [experiment_id, 0.9] for experiment_id in experiment_iter3_ids
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter3_metrics
 

@@ -8,7 +8,7 @@ from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 
 class ExperimentAdmin(DiffModelAdmin):
     readonly_fields = DiffModelAdmin.readonly_fields + (
-        'sequence', 'unique_name', 'last_status', 'dockerfile', 'cloning_strategy', 'declarations')
+        'sequence', 'unique_name', 'last_status', 'cloning_strategy', 'declarations')
 
 
 class ExperimentStatusAdmin(admin.ModelAdmin):
