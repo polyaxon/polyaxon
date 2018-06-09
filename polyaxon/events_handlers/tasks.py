@@ -137,7 +137,8 @@ def events_handle_logs_experiment_job(experiment_name,
 
     _logger.debug('handling log event for %s %s', experiment_uuid, job_uuid)
     if task_type and task_idx:
-        log_lines = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_lines)
+        log_lines = ['{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
+                     for log_line in log_lines]
 
     safe_log_experiment_job(experiment_name=experiment_name, log_lines=log_lines)
 
