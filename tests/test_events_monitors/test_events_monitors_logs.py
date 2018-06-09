@@ -1,4 +1,3 @@
-import logging
 import os
 import uuid
 
@@ -51,18 +50,10 @@ class BaseTestLogsHandling(BaseTest):
         # Check new log path is created
         log_path = self.get_log_path(instance)
         assert os.path.exists(log_path) is True
-
-        # Check the logger has no file handler, and one line created
-        xp_logger = logging.getLogger(instance.unique_name)
-        assert len(xp_logger.handlers) == 0  # pylint:disable=len-as-condition
         assert self.file_line_count(log_path) == 1  # pylint:disable=len-as-condition
 
-        # Calling again the task should not reuse handler, and create a new line
+        # Calling again the task should append logs
         self.handle_event(**params)
-
-        # Check the logger has no file handler, and one line created
-        xp_logger = logging.getLogger(instance.unique_name)
-        assert len(xp_logger.handlers) == 0  # pylint:disable=len-as-condition
         assert self.file_line_count(log_path) == 2
 
 

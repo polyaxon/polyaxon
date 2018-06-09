@@ -10,8 +10,7 @@ from db.models.jobs import Job
 from db.models.nodes import ClusterEvent
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
-from libs.paths.experiments import get_experiment_logs_path
-from libs.paths.jobs import get_job_logs_path
+from events_handlers.utils import safe_log_experiment_job, safe_log_job
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks
 
@@ -133,64 +132,30 @@ def events_handle_logs_experiment_job(experiment_name,
                                       log_line,
                                       task_type=None,
                                       task_idx=None):
-    # Must persist resources if logs according to the config
     if not Experiment.objects.filter(uuid=experiment_uuid).exists():
         return
+
     _logger.debug('handling log event for %s %s', experiment_uuid, job_uuid)
     if task_type and task_idx:
         log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
-    xp_logger = logging.getLogger(experiment_name)
-    log_path = get_experiment_logs_path(experiment_name)
-    try:
-        log_handler = logging.FileHandler(log_path)
-        log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-        log_handler.setFormatter(log_formatter)
-        xp_logger.addHandler(log_handler)
-        xp_logger.setLevel(logging.INFO)
-        xp_logger.info(log_line)
-        xp_logger.handlers = []
-    except OSError:
-        # TODO: retry instead?
-        pass
+
+    safe_log_experiment_job(experiment_name=experiment_name, log_line=log_line)
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB)
 def events_handle_logs_job(job_uuid, job_name, log_line):
-    # Must persist resources if logs according to the config
     if not Job.objects.filter(uuid=job_uuid).exists():
         return
+
     _logger.debug('handling log event for %s', job_name)
-    xp_logger = logging.getLogger(job_name)
-    log_path = get_job_logs_path(job_name)
-    try:
-        log_handler = logging.FileHandler(log_path)
-        log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-        log_handler.setFormatter(log_formatter)
-        xp_logger.addHandler(log_handler)
-        xp_logger.setLevel(logging.INFO)
-        xp_logger.info(log_line)
-        xp_logger.handlers = []
-    except OSError:
-        # TODO: retry instead?
-        pass
+    safe_log_job(job_name=job_name, log_line=log_line)
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB)
 def events_handle_logs_build_job(job_uuid, job_name, log_line):
-    # Must persist resources if logs according to the config
     if not BuildJob.objects.filter(uuid=job_uuid).exists():
         return
+
     _logger.debug('handling log event for %s', job_name)
-    xp_logger = logging.getLogger(job_name)
-    log_path = get_job_logs_path(job_name)
-    try:
-        log_handler = logging.FileHandler(log_path)
-        log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-        log_handler.setFormatter(log_formatter)
-        xp_logger.addHandler(log_handler)
-        xp_logger.setLevel(logging.INFO)
-        xp_logger.info(log_line)
-        xp_logger.handlers = []
-    except OSError:
-        # TODO: retry instead?
-        pass
+    _logger.debug('handling log event for %s', job_name)
+    safe_log_job(job_name=job_name, log_line=log_line)

@@ -20,7 +20,6 @@ from event_manager.events.experiment import (
 )
 from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.experiments import (
-    create_experiment_logs_path,
     delete_experiment_logs,
     delete_experiment_outputs
 )
@@ -69,9 +68,6 @@ def new_experiment(sender, **kwargs):
     # Clean outputs and logs
     delete_experiment_logs(instance.unique_name)
     delete_experiment_outputs(instance.unique_name)
-
-    # Create logs path
-    create_experiment_logs_path(instance.unique_name)
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_deleted")

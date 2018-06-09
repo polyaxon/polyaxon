@@ -13,8 +13,8 @@ from libs.paths.experiment_groups import (
 from libs.paths.experiments import (
     create_experiment_outputs_path,
     get_experiment_logs_path,
-    get_experiment_outputs_path
-)
+    get_experiment_outputs_path,
+    create_experiment_logs_path)
 from tests.utils import BaseTest
 
 
@@ -32,6 +32,7 @@ class TestExperimentGroupUtils(BaseTest):
                                        project=self.project,
                                        experiment_group=self.experiment_group)
         experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
+        create_experiment_logs_path(experiment.unique_name)
         open(experiment_logs_path, '+w')
         experiment_group_logs_path = get_experiment_group_logs_path(
             self.experiment_group.unique_name)

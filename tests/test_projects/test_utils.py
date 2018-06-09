@@ -10,8 +10,8 @@ from factories.factory_repos import RepoFactory
 from libs.paths.experiments import (
     create_experiment_outputs_path,
     get_experiment_logs_path,
-    get_experiment_outputs_path
-)
+    get_experiment_outputs_path,
+    create_experiment_logs_path)
 from libs.paths.projects import (
     delete_project_logs,
     delete_project_outputs,
@@ -32,6 +32,7 @@ class TestProjectUtils(BaseTest):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
+        create_experiment_logs_path(experiment.unique_name)
         open(experiment_logs_path, '+w')
         project_logs_path = get_project_logs_path(self.project.unique_name)
         project_repos_path = get_project_logs_path(self.project.unique_name)
@@ -48,6 +49,7 @@ class TestProjectUtils(BaseTest):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         create_experiment_outputs_path(experiment.unique_name)
+        create_experiment_logs_path(experiment.unique_name)
         experiment_outputs_path = get_experiment_outputs_path(experiment.unique_name)
         project_outputs_path = get_project_outputs_path(self.project.unique_name)
         assert os.path.exists(experiment_outputs_path) is True

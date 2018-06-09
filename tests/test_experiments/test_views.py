@@ -30,7 +30,7 @@ from factories.factory_experiments import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
-from libs.paths.experiments import get_experiment_logs_path
+from libs.paths.experiments import get_experiment_logs_path, create_experiment_logs_path
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from tests.utils import BaseViewTest
 
@@ -1164,6 +1164,7 @@ class TestExperimentLogsViewV1(BaseViewTest):
             experiment.sequence)
 
         log_path = get_experiment_logs_path(experiment.unique_name)
+        create_experiment_logs_path(experiment_name=experiment.unique_name)
         fake = Faker()
         self.logs = []
         for _ in range(self.num_log_lines):

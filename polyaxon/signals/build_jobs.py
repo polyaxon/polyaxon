@@ -14,7 +14,7 @@ from event_manager.events.build_job import (
     BUILD_JOB_SUCCEEDED
 )
 from libs.decorators import ignore_raw, ignore_updates
-from libs.paths.jobs import create_job_logs_path, delete_job_logs, delete_job_outputs
+from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -31,9 +31,6 @@ def build_set_post_save(sender, **kwargs):
     # Clean outputs and logs
     delete_job_logs(instance.unique_name)
     delete_job_outputs(instance.unique_name)
-
-    # Create logs path
-    create_job_logs_path(instance.unique_name)
 
 
 @receiver(post_save, sender=BuildJobStatus, dispatch_uid="build_set_new_status")
