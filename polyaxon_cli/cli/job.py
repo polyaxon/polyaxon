@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
-from polyaxon_schemas.utils import to_list
 
 from polyaxon_cli.cli.experiment import get_experiment_or_local
 from polyaxon_cli.logger import clean_outputs
@@ -19,6 +18,7 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_schemas.utils import to_list
 
 
 def get_job_or_local(project=None,

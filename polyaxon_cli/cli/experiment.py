@@ -7,7 +7,6 @@ import sys
 from collections import deque
 
 import click
-from polyaxon_schemas.utils import to_list
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.cli.upload import upload
@@ -24,6 +23,7 @@ from polyaxon_cli.utils.formatting import (
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.polyaxonfile import reader
+from polyaxon_schemas.utils import to_list
 
 
 def get_experiment_or_local(project=None, experiment=None):  # pylint:disable=redefined-outer-name

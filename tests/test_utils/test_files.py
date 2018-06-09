@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import tarfile
-from unittest import TestCase
-
 import os
+import tarfile
+
+from unittest import TestCase
 
 from polyaxon_cli.utils.files import create_tarfile, get_files_in_current_directory
 
