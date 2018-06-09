@@ -6,6 +6,7 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
+from polyaxon.utils import config
 from scheduler.spawners.job_spawner import JobSpawner
 from scheduler.spawners.utils import get_job_definition
 
@@ -34,7 +35,9 @@ def start_job(job):
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
         job_docker_image=job_docker_image,
-        in_cluster=True)
+        in_cluster=True,
+        use_sidecar=True,
+        sidecar_config=config.get_requested_params(to_str=True))
 
     try:
         results = spawner.start_job(resources=job.resources,
