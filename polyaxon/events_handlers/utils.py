@@ -1,9 +1,8 @@
 import fcntl
 
-from polyaxon_schemas.utils import to_list
-
 from libs.paths.experiments import create_experiment_logs_path, get_experiment_logs_path
 from libs.paths.jobs import create_job_logs_path, get_job_logs_path
+from polyaxon_schemas.utils import to_list
 
 
 def _lock_log(log_path, log_lines):

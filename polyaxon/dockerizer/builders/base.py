@@ -156,7 +156,6 @@ class BaseDockerBuilder(object):
             pull=True,
             nocache=False,
             container_limits=limits,
-            stream=True,
         ):
             self._handle_logs(log_line)
             # Check if we need to stop this process

@@ -3,8 +3,10 @@ import json
 import logging
 import os
 import stat
+import time
+
 from docker import APIClient
-from docker.errors import DockerException, BuildError, APIError
+from docker.errors import APIError, BuildError, DockerException
 
 from django.conf import settings
 
@@ -21,6 +23,10 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks
 
 _logger = logging.getLogger('polyaxon.dockerizer')
+
+
+class DockerBuilderError(Exception):
+    pass
 
 
 class DockerBuilder(object):
@@ -74,7 +80,8 @@ class DockerBuilder(object):
         except DockerException as e:
             _logger.exception('Failed to connect to registry %s\n', e)
 
-    def _prepare_log_lines(self, log_line):
+    @staticmethod
+    def _prepare_log_lines(log_line):
         raw = log_line.decode('utf-8').strip()
         raw_lines = raw.split('\n')
         log_lines = []
@@ -83,7 +90,7 @@ class DockerBuilder(object):
                 json_line = json.loads(raw_line)
 
                 if json_line.get('error'):
-                    raise BuildError(str(json_line.get('error', json_line)))
+                    raise DockerBuilderError(str(json_line.get('error', json_line)))
                 else:
                     if json_line.get('stream'):
                         log_lines.append('Build: {}'.format(json_line['stream'].strip()))
@@ -109,18 +116,21 @@ class DockerBuilder(object):
 
     def _handle_log_stream(self, stream):
         log_lines = []
+        last_emit_time = time.time()
         try:
             for log_line in stream:
                 log_lines += self._prepare_log_lines(log_line)
-                if len(log_lines) == 50:
+                publish_cond = (
+                    len(log_lines) == publisher.MESSAGES_COUNT or
+                    (log_lines and time.time() - last_emit_time > publisher.MESSAGES_TIMEOUT)
+                )
+                if publish_cond:
                     self._handle_logs(log_lines)
                     log_lines = []
+                    last_emit_time = time.time()
             if log_lines:
                 self._handle_logs(log_lines)
-        except BuildError as e:
-            self._handle_logs('Build Error {}'.format(e))
-            return False
-        except APIError as e:
+        except (BuildError, APIError, DockerBuilderError) as e:
             self._handle_logs('Build Error {}'.format(e))
             return False
 
@@ -174,14 +184,13 @@ class DockerBuilder(object):
             dockerfile.write(self.render())
 
         stream = self.docker.build(
-                path=self.build_path,
-                tag=self.get_tagged_image(),
-                forcerm=True,
-                rm=True,
-                pull=True,
-                nocache=nocache,
-                container_limits=limits,
-            )
+            path=self.build_path,
+            tag=self.get_tagged_image(),
+            forcerm=True,
+            rm=True,
+            pull=True,
+            nocache=nocache,
+            container_limits=limits)
         return self._handle_log_stream(stream=stream)
 
     def push(self):

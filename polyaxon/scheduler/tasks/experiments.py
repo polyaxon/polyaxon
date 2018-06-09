@@ -17,7 +17,7 @@ def copy_experiment(experiment):
     """If experiment is a restart, we should resume from last check point"""
     try:
         publisher.publish_experiment_job_log(
-            log_line='Copying outputs from experiment `{}` into experiment `{}`'.format(
+            log_lines='Copying outputs from experiment `{}` into experiment `{}`'.format(
                 experiment.original_experiment.unique_name, experiment.unique_name
             ),
             status=ExperimentLifeCycle.BUILDING,
@@ -29,7 +29,7 @@ def copy_experiment(experiment):
 
     except OSError:
         publisher.publish_experiment_job_log(
-            log_line='Could not copy the outputs of experiment `{}` into experiment `{}`'.format(
+            log_lines='Could not copy the outputs of experiment `{}` into experiment `{}`'.format(
                 experiment.original_experiment.unique_name, experiment.unique_name
             ),
             status=ExperimentLifeCycle.BUILDING,
