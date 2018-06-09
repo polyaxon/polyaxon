@@ -26,8 +26,8 @@ from streams.socket_manager import SocketManager
 logger = logging.getLogger('polyaxon.streams.api')
 
 SOCKET_SLEEP = 2
-MAX_RETRIES = 15
-RESOURCES_CHECK = 15
+MAX_RETRIES = 7
+RESOURCES_CHECK = 7
 CHECK_DELAY = 5
 
 app = Sanic(__name__)
