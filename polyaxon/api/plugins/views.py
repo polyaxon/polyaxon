@@ -86,8 +86,8 @@ class StopTensorboardView(CreateAPIView):
                 kwargs={
                     'project_name': obj.unique_name,
                     'project_uuid': obj.uuid.hex,
-                    'build_job_name': obj.tensorboard.unique_name,
-                    'build_job_uuid': obj.tensorboard.uuid.hex,
+                    'tensorboard_job_name': obj.tensorboard.unique_name,
+                    'tensorboard_job_uuid': obj.tensorboard.uuid.hex,
                     'update_status': True
                 })
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,

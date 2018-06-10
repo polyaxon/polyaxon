@@ -37,25 +37,27 @@ def project_pre_delete(sender, **kwargs):
 def project_stop_jobs(sender, **kwargs):
     instance = kwargs['instance']
 
-    celery_app.send_task(
-        SchedulerCeleryTasks.TENSORBOARDS_STOP,
-        kwargs={
-            'project_name': instance.unique_name,
-            'project_uuid': instance.uuid.hex,
-            'build_job_name': instance.tensorboard.unique_name,
-            'build_job_uuid': instance.tensorboard.uuid.hex,
-            'update_status': False
-        })
+    if instance.has_tensorboard:
+        celery_app.send_task(
+            SchedulerCeleryTasks.TENSORBOARDS_STOP,
+            kwargs={
+                'project_name': instance.unique_name,
+                'project_uuid': instance.uuid.hex,
+                'build_job_name': instance.tensorboard.unique_name,
+                'build_job_uuid': instance.tensorboard.uuid.hex,
+                'update_status': False
+            })
 
-    celery_app.send_task(
-        SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
-        kwargs={
-            'project_name': instance.unique_name,
-            'project_uuid': instance.uuid.hex,
-            'build_job_name': instance.notebook.unique_name,
-            'build_job_uuid': instance.notebook.uuid.hex,
-            'update_status': False
-        })
+    if instance.has_notebook:
+        celery_app.send_task(
+            SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
+            kwargs={
+                'project_name': instance.unique_name,
+                'project_uuid': instance.uuid.hex,
+                'build_job_name': instance.notebook.unique_name,
+                'build_job_uuid': instance.notebook.uuid.hex,
+                'update_status': False
+            })
 
     for build_job in instance.build_jobs.all():
         celery_app.send_task(
