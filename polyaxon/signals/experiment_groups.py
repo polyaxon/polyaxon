@@ -59,9 +59,9 @@ def experiment_group_create_experiments(sender, **kwargs):
         countdown=1)
 
 
-@receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
+@receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_delete")
 @ignore_raw
-def experiment_group_pre_deleted(sender, **kwargs):
+def experiment_group_pre_delete(sender, **kwargs):
     """Delete all group outputs."""
     instance = kwargs['instance']
 
@@ -86,18 +86,18 @@ def experiment_group_stop_experiments(sender, **kwargs):
         #  (LIVEMODEL) and send a signal to stop
 
 
-@receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
+@receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_post_delete")
 @ignore_raw
-def experiment_group_post_deleted(sender, **kwargs):
+def experiment_group_post_delete(sender, **kwargs):
     """Delete all group outputs."""
     instance = kwargs['instance']
     auditor.record(event_type=EXPERIMENT_GROUP_DELETED,
                    instance=instance)
 
 
-@receiver(post_save, sender=ExperimentGroupStatus, dispatch_uid="experiment_group_status_saved")
+@receiver(post_save, sender=ExperimentGroupStatus, dispatch_uid="experiment_group_status_post_save")
 @ignore_raw
-def new_experiment_status(sender, **kwargs):
+def experiment_group_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
     experiment_group = instance.experiment_group

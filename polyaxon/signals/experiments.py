@@ -30,7 +30,7 @@ _logger = logging.getLogger('polyaxon.signals.experiments')
 @receiver(pre_save, sender=Experiment, dispatch_uid="experiment_pre_save")
 @ignore_updates_pre
 @ignore_raw
-def add_experiment_pre_save(sender, **kwargs):
+def experiment_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     # Check if declarations need to be set
     if not instance.declarations and instance.specification:
@@ -55,10 +55,10 @@ def add_experiment_pre_save(sender, **kwargs):
     assign_code_reference(instance)
 
 
-@receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")
+@receiver(post_save, sender=Experiment, dispatch_uid="experiment_post_save")
 @ignore_updates
 @ignore_raw
-def new_experiment(sender, **kwargs):
+def experiment_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(ExperimentLifeCycle.CREATED)
 
@@ -67,9 +67,9 @@ def new_experiment(sender, **kwargs):
     delete_experiment_outputs(instance.unique_name)
 
 
-@receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_deleted")
+@receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_pre_delete")
 @ignore_raw
-def experiment_pre_deleted(sender, **kwargs):
+def experiment_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
     # Delete outputs and logs
     delete_experiment_outputs(instance.unique_name)
@@ -80,24 +80,24 @@ def experiment_pre_deleted(sender, **kwargs):
         experiment.delete()
 
 
-@receiver(post_delete, sender=Experiment, dispatch_uid="experiment_deleted")
+@receiver(post_delete, sender=Experiment, dispatch_uid="experiment_post_delete")
 @ignore_raw
-def experiment_post_deleted(sender, **kwargs):
+def experiment_post_delete(sender, **kwargs):
     instance = kwargs['instance']
     auditor.record(event_type=EXPERIMENT_DELETED, instance=instance)
 
 
-@receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
+@receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_post_save")
 @ignore_updates
 @ignore_raw
-def new_experiment_job(sender, **kwargs):
+def experiment_job_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
 
 
-@receiver(post_save, sender=ExperimentJobStatus, dispatch_uid="experiment_job_status_saved")
+@receiver(post_save, sender=ExperimentJobStatus, dispatch_uid="experiment_job_status_post_save")
 @ignore_raw
-def new_experiment_job_status(sender, **kwargs):
+def experiment_job_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
     job = instance.job
@@ -128,9 +128,9 @@ def new_experiment_job_status(sender, **kwargs):
         countdown=1)
 
 
-@receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_saved")
+@receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_post_save")
 @ignore_raw
-def new_experiment_status(sender, **kwargs):
+def experiment_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
     experiment = instance.experiment
@@ -163,10 +163,10 @@ def new_experiment_status(sender, **kwargs):
                        previous_status=previous_status)
 
 
-@receiver(post_save, sender=ExperimentMetric, dispatch_uid="experiment_metric_saved")
+@receiver(post_save, sender=ExperimentMetric, dispatch_uid="experiment_metric_post_save")
 @ignore_updates
 @ignore_raw
-def new_experiment_metric(sender, **kwargs):
+def experiment_metric_post_save(sender, **kwargs):
     instance = kwargs['instance']
     experiment = instance.experiment
     # update experiment last_metric
