@@ -105,18 +105,14 @@ def start_dockerizer(build_job):
     return True
 
 
-def stop_dockerizer(build_job, update_status=False):
+def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):
     spawner = DockerizerSpawner(
-        project_name=build_job.project.unique_name,
-        project_uuid=build_job.project.uuid.hex,
-        job_name=build_job.unique_name,
-        job_uuid=build_job.uuid.hex,
+        project_name=project_name,
+        project_uuid=project_uuid,
+        job_name=build_job_name,
+        job_uuid=build_job_uuid,
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
     spawner.stop_dockerizer()
-    if update_status:
-        # Update experiment status to show that its stopped
-        build_job.set_status(status=JobLifeCycle.STOPPED,
-                             message='BuildJob was stopped')

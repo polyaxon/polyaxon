@@ -26,14 +26,26 @@ def build_jobs_start(build_job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP, ignore_result=True)
-def build_jobs_stop(build_job_id, update_status=True):
-    build_job = get_valid_build_job(build_job_id=build_job_id)
-    if not build_job:
-        _logger.info('Something went wrong, '
-                     'the BuildJob `%s` does not exist anymore.', build_job_id)
+def build_jobs_stop(project_name, project_uuid, build_job_name, build_job_uuid, update_status=True):
+
+    dockerizer_scheduler.stop_dockerizer(
+        project_name=project_name,
+        project_uuid=project_uuid,
+        build_job_name=build_job_name,
+        build_job_uuid=build_job_uuid)
+
+    if not update_status:
         return
 
-    dockerizer_scheduler.stop_dockerizer(build_job, update_status=update_status)
+    build_job = get_valid_build_job(build_job_uuid=build_job_uuid)
+    if not build_job:
+        _logger.info('Something went wrong, '
+                     'the BuildJob `%s` does not exist anymore.', build_job_uuid)
+        return
+
+    # Update experiment status to show that its stopped
+    build_job.set_status(status=JobLifeCycle.STOPPED,
+                         message='BuildJob was stopped')
 
 
 def notify_build_job_failed(build_job):
