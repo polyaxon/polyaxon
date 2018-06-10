@@ -46,6 +46,20 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
     file = file or 'polyaxonfile.yml'
     specification = check_polyaxonfile(file, log=False).specification
 
+    spec_cond = (specification.is_experiment or
+                 specification.is_group or
+                 specification.is_job or
+                 specification.is_build)
+    if not spec_cond:
+        Printer.print_error(
+            'This command expects an experiment or a group specification,'
+            'received instead a `{}` specification'.format(specification.kind))
+        if specification.is_notebook:
+            click.echo('Please check "polyaxon notebook --help" to start a notebook.')
+        elif specification.is_tensorboard:
+            click.echo('Please check: "polyaxon tensorboard --help" to start a tensorboard.')
+        sys.exit(1)
+
     # Check if we need to upload
     if u:
         ctx.invoke(upload, async=False)
@@ -67,7 +81,7 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
         Printer.print_success('Experiment was created')
-    else:
+    elif specification.is_group:
         click.echo('Creating an experiment group with the following definition:')
         experiments_def = specification.experiments_def
         get_group_experiments_info(**experiments_def)
