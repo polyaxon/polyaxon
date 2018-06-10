@@ -40,6 +40,7 @@ def check_polyaxonfile_kind(specification, kind):
         Printer.print_error(
             'Your polyaxonfile must be of kind: `{}`, '
             'received: `{}`.'.format(kind, specification.kind))
+        sys.exit(-1)
 
 
 def get_group_experiments_info(search_algorithm, concurrency, early_stopping=False, **kwargs):
