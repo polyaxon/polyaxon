@@ -67,6 +67,17 @@ def project_stop_jobs(sender, **kwargs):
                 'build_job_uuid': build_job.uuid.hex,
                 'update_status': False
             })
+    for job in instance.jobs.all():
+        celery_app.send_task(
+            SchedulerCeleryTasks.JOBS_STOP,
+            kwargs={
+                'project_name': job.project.unique_name,
+                'project_uuid': job.project.uuid.hex,
+                'job_name': job.unique_name,
+                'job_uuid': job.uuid.hex,
+                'specification': job.specification,
+                'update_status': False
+            })
 
 
 @receiver(post_delete, sender=Project, dispatch_uid="project_deleted")

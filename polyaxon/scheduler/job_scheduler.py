@@ -60,19 +60,15 @@ def start_job(job):
     job.save()
 
 
-def stop_job(job, update_status=False):
+def stop_job(project_name, project_uuid, job_name, job_uuid, specification):
     spawner = JobSpawner(
-        project_name=job.project.unique_name,
-        project_uuid=job.project.uuid.hex,
-        job_name=job.unique_name,
-        job_uuid=job.uuid.hex,
-        spec=job.specification,
+        project_name=project_name,
+        project_uuid=project_uuid,
+        job_name=job_name,
+        job_uuid=job_uuid,
+        spec=specification,
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
     spawner.stop_job()
-    if update_status:
-        # Update experiment status to show that its stopped
-        job.set_status(status=JobLifeCycle.STOPPED,
-                       message='Job was stopped')

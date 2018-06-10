@@ -66,9 +66,21 @@ def jobs_start(job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, ignore_result=True)
-def jobs_stop(job_id):
-    job = get_valid_job(job_id=job_id)
+def jobs_stop(project_name, project_uuid, job_name, job_uuid, specification, update_status=True):
+    job_scheduler.stop_job(
+        project_name=project_name,
+        project_uuid=project_uuid,
+        job_name=job_name,
+        job_uuid=job_uuid,
+        specification=specification)
+
+    if not update_status:
+        return
+
+    job = get_valid_job(job_uuid=job_uuid)
     if not job:
         return None
 
-    job_scheduler.stop_job(job, update_status=True)
+    # Update notebook status to show that its stopped
+    job.set_status(status=JobLifeCycle.STOPPED,
+                   message='job was stopped')

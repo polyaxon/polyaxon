@@ -1,6 +1,6 @@
 import logging
 
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, pre_delete
 from django.dispatch import receiver
 
 import auditor
@@ -11,8 +11,10 @@ from event_manager.events.job import JOB_FAILED, JOB_NEW_STATUS, JOB_STOPPED, JO
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import SchedulerCeleryTasks
 
-logger = logging.getLogger('polyaxon.plugins')
+logger = logging.getLogger('polyaxon.signals.jobs')
 
 
 @receiver(pre_save, sender=Job, dispatch_uid="job_pre_save")
@@ -65,3 +67,20 @@ def job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
+
+
+@receiver(pre_delete, sender=Job, dispatch_uid="job_pre_delete")
+@ignore_raw
+def job_pre_delete(sender, **kwargs):
+    job = kwargs['instance']
+
+    celery_app.send_task(
+        SchedulerCeleryTasks.JOBS_STOP,
+        kwargs={
+            'project_name': job.project.unique_name,
+            'project_uuid': job.project.uuid.hex,
+            'job_name': job.unique_name,
+            'job_uuid': job.uuid.hex,
+            'specification': job.specification,
+            'update_status': False
+        })
