@@ -26,7 +26,7 @@ from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_container
-from scheduler.spawners.templates.volumes import get_volume
+from scheduler.spawners.templates.volumes import get_volume_mount
 
 
 class PodManager(object):
@@ -180,10 +180,9 @@ class PodManager(object):
             original_outputs_path = None
 
         outputs_path = get_experiment_outputs_path(experiment_name=self.experiment_name)
-        outputs_volume_mount = get_volume(
-            volume=constants.OUTPUTS_VOLUME,
-            claim_name=settings.OUTPUTS_CLAIM_NAME,
-            volume_mount=settings.OUTPUTS_ROOT)
+        outputs_volume_mount = get_volume_mount(
+            volume=constants.DATA_VOLUME,
+            volume_mount=settings.DATA_ROOT)
         return [
             client.V1Container(
                 name=self.init_container_name,

@@ -20,7 +20,7 @@ from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
-from scheduler.spawners.templates.volumes import get_volume
+from scheduler.spawners.templates.volumes import get_volume_mount
 
 
 class PodManager(object):
@@ -129,10 +129,9 @@ class PodManager(object):
     def get_init_container(self):
         """Pod init container for setting outputs path."""
         outputs_path = get_job_outputs_path(job_name=self.job_name)
-        outputs_volume_mount = get_volume(
-            volume=constants.OUTPUTS_VOLUME,
-            claim_name=settings.OUTPUTS_CLAIM_NAME,
-            volume_mount=settings.OUTPUTS_ROOT)
+        outputs_volume_mount = get_volume_mount(
+            volume=constants.DATA_VOLUME,
+            volume_mount=settings.DATA_ROOT)
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,
