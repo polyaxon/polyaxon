@@ -83,7 +83,13 @@ class StopTensorboardView(CreateAPIView):
         if obj.has_tensorboard:
             celery_app.send_task(
                 SchedulerCeleryTasks.TENSORBOARDS_STOP,
-                kwargs={'tensorboard_job_id': obj.tensorboard.id})
+                kwargs={
+                    'project_name': obj.unique_name,
+                    'project_uuid': obj.uuid.hex,
+                    'build_job_name': obj.tensorboard.unique_name,
+                    'build_job_uuid': obj.tensorboard.uuid.hex,
+                    'update_status': True
+                })
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=obj.tensorboard,
                            target='project',
@@ -146,7 +152,13 @@ class StopNotebookView(CreateAPIView):
                 git.undo(obj.repo.path)
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
-                kwargs={'notebook_job_id': obj.notebook.id})
+                kwargs={
+                    'project_name': obj.unique_name,
+                    'project_uuid': obj.uuid.hex,
+                    'notebook_job_name': obj.notebook.unique_name,
+                    'notebook_job_uuid': obj.notebook.uuid.hex,
+                    'update_status': True
+                })
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
                            instance=obj.notebook,
                            target='project',

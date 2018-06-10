@@ -43,7 +43,7 @@ def build_jobs_stop(project_name, project_uuid, build_job_name, build_job_uuid, 
                      'the BuildJob `%s` does not exist anymore.', build_job_uuid)
         return
 
-    # Update experiment status to show that its stopped
+    # Update build job status to show that its stopped
     build_job.set_status(status=JobLifeCycle.STOPPED,
                          message='BuildJob was stopped')
 

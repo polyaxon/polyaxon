@@ -35,11 +35,28 @@ def project_pre_delete(sender, **kwargs):
 @receiver(pre_delete, sender=Project, dispatch_uid="project_stop_jobs")
 @ignore_raw
 def project_stop_jobs(sender, **kwargs):
-    from scheduler import notebook_scheduler, tensorboard_scheduler
-
     instance = kwargs['instance']
-    tensorboard_scheduler.stop_tensorboard(instance.tensorboard, update_status=False)
-    notebook_scheduler.stop_notebook(instance.notebook, update_status=False)
+
+    celery_app.send_task(
+        SchedulerCeleryTasks.TENSORBOARDS_STOP,
+        kwargs={
+            'project_name': instance.unique_name,
+            'project_uuid': instance.uuid.hex,
+            'build_job_name': instance.tensorboard.unique_name,
+            'build_job_uuid': instance.tensorboard.uuid.hex,
+            'update_status': False
+        })
+
+    celery_app.send_task(
+        SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
+        kwargs={
+            'project_name': instance.unique_name,
+            'project_uuid': instance.uuid.hex,
+            'build_job_name': instance.notebook.unique_name,
+            'build_job_uuid': instance.notebook.uuid.hex,
+            'update_status': False
+        })
+
     for build_job in instance.build_jobs.all():
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,

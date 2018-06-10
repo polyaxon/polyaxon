@@ -46,21 +46,20 @@ def start_tensorboard(tensorboard):
     tensorboard.save()
 
 
-def stop_tensorboard(tensorboard, update_status=False):
+def stop_tensorboard(project_name,
+                     project_uuid,
+                     tensorboard_job_name,
+                     tensorboard_job_uuid):
     spawner = TensorboardSpawner(
-        project_name=tensorboard.project.unique_name,
-        project_uuid=tensorboard.project.uuid.hex,
-        job_name=tensorboard.unique_name,
-        job_uuid=tensorboard.uuid.hex,
+        project_name=project_name,
+        project_uuid=project_uuid,
+        job_name=tensorboard_job_name,
+        job_uuid=tensorboard_job_uuid,
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
     spawner.stop_tensorboard()
-    if update_status:
-        # Update experiment status to show that its stopped
-        tensorboard.set_status(status=JobLifeCycle.STOPPED,
-                               message='Tensorboard was stopped')
 
 
 def get_tensorboard_url(tensorboard):

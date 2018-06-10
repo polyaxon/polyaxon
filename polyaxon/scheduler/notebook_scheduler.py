@@ -56,21 +56,20 @@ def start_notebook(notebook):
     notebook.save()
 
 
-def stop_notebook(notebook, update_status=False):
+def stop_notebook(project_name,
+                  project_uuid,
+                  notebook_job_name,
+                  notebook_job_uuid):
     spawner = NotebookSpawner(
-        project_name=notebook.project.unique_name,
-        project_uuid=notebook.project.uuid.hex,
-        job_name=notebook.unique_name,
-        job_uuid=notebook.uuid.hex,
+        project_name=project_name,
+        project_uuid=project_uuid,
+        job_name=notebook_job_name,
+        job_uuid=notebook_job_uuid,
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
     spawner.stop_notebook()
-    if update_status:
-        # Update experiment status to show that its stopped
-        notebook.set_status(status=JobLifeCycle.STOPPED,
-                            message='Notebook was stopped')
 
 
 def get_notebook_url(notebook):

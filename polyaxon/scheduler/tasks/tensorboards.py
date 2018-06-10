@@ -25,8 +25,25 @@ def tensorboards_start(tensorboard_job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_STOP, ignore_result=True)
-def tensorboards_stop(tensorboard_job_id):
-    tensorboard = get_valid_tensorboard(tensorboard_job_id=tensorboard_job_id)
+def tensorboards_stop(project_name,
+                      project_uuid,
+                      tensorboard_job_name,
+                      tensorboard_job_uuid,
+                      update_status=True):
+    tensorboard_scheduler.stop_tensorboard(
+        project_name=project_name,
+        project_uuid=project_uuid,
+        tensorboard_job_name=tensorboard_job_name,
+        tensorboard_job_uuid=tensorboard_job_uuid
+    )
+
+    if not update_status:
+        return
+
+    tensorboard = get_valid_tensorboard(tensorboard_job_uuid=tensorboard_job_uuid)
     if not tensorboard:
         return None
-    tensorboard_scheduler.stop_tensorboard(tensorboard, update_status=True)
+
+    # Update tensorboard status to show that its stopped
+    tensorboard.set_status(status=JobLifeCycle.STOPPED,
+                           message='Tensorboard was stopped')

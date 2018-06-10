@@ -61,9 +61,24 @@ def projects_notebook_start(notebook_job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP, ignore_result=True)
-def projects_notebook_stop(notebook_job_id):
-    notebook = get_valid_notebook(notebook_job_id=notebook_job_id)
+def projects_notebook_stop(project_name,
+                           project_uuid,
+                           notebook_job_name,
+                           notebook_job_uuid,
+                           update_status=True):
+    notebook_scheduler.stop_notebook(
+        project_name=project_name,
+        project_uuid=project_uuid,
+        notebook_job_name=notebook_job_name,
+        notebook_job_uuid=notebook_job_uuid)
+
+    if not update_status:
+        return
+
+    notebook = get_valid_notebook(notebook_job_uuid=notebook_job_uuid)
     if not notebook:
         return None
 
-    notebook_scheduler.stop_notebook(notebook, update_status=True)
+    # Update notebook status to show that its stopped
+    notebook.set_status(status=JobLifeCycle.STOPPED,
+                        message='Notebook was stopped')
