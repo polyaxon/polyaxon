@@ -128,11 +128,32 @@ def experiments_start(experiment_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
-def experiments_stop(experiment_id, update_status=True):
-    experiment = get_valid_experiment(experiment_id=experiment_id)
-    if not experiment:
-        _logger.info('Something went wrong, '
-                     'the Experiment `%s` does not exist anymore.', experiment_id)
+def experiments_stop(project_name,
+                     project_uuid,
+                     experiment_name,
+                     experiment_group_name,
+                     experiment_group_uuid,
+                     experiment_uuid,
+                     specification,
+                     update_status=True):
+    experiment_scheduler.stop_experiment(
+        project_name=project_name,
+        project_uuid=project_uuid,
+        experiment_name=experiment_name,
+        experiment_group_name=experiment_group_name,
+        experiment_group_uuid=experiment_group_uuid,
+        experiment_uuid=experiment_uuid,
+        specification=specification,
+    )
+
+    if not update_status:
         return
 
-    experiment_scheduler.stop_experiment(experiment, update_status=update_status)
+    experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
+    if not experiment:
+        _logger.info('Something went wrong, '
+                     'the Experiment `%s` does not exist anymore.', experiment_uuid)
+        return
+
+    # Update experiment status to show that its stopped
+    experiment.set_status(ExperimentLifeCycle.STOPPED)

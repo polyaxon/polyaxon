@@ -194,14 +194,27 @@ def start_new_experiment(sender, **kwargs):
 @check_specification
 @ignore_raw
 def stop_running_experiment(sender, **kwargs):
-    from scheduler import experiment_scheduler
     instance = kwargs['instance']
+    if not instance.is_running or instance.jobs.count() == 0:
+        return
+
     try:
-        _ = instance.experiment_group  # noqa
+        group = instance.experiment_group
         # Delete all jobs from DB before sending a signal to k8s,
         # this way no constants will be updated in the meanwhile
         instance.jobs.all().delete()
-        experiment_scheduler.stop_experiment(instance, update_status=False)
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_STOP,
+            kwargs={
+                'project_name': instance.project.unique_name,
+                'project_uuid': instance.project.uuid.hex,
+                'experiment_name': instance.unique_name,
+                'experiment_uuid': instance.unique_name,
+                'experiment_group_name': group.unique_name if group else None,
+                'experiment_group_uuid': group.uuid.hex if group else None,
+                'specification': instance.specification,
+                'update_status': False
+            })
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass
@@ -223,7 +236,16 @@ def handle_new_experiment_status(sender, **kwargs):
         _logger.info('One of the workers failed or Master for experiment `%s` is done, '
                      'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
+        group = experiment.experiment_group
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
-            kwargs={'experiment_id': experiment.id,
-                    'update_status': False})
+            kwargs={
+                'project_name': instance.project.unique_name,
+                'project_uuid': instance.project.uuid.hex,
+                'experiment_name': instance.unique_name,
+                'experiment_uuid': instance.unique_name,
+                'experiment_group_name': group.unique_name if group else None,
+                'experiment_group_uuid': group.uuid.hex if group else None,
+                'specification': instance.specification,
+                'update_status': False
+            })

@@ -78,12 +78,8 @@ def experiment_group_stop_experiments(sender, **kwargs):
 
     instance = kwargs['instance']
     for experiment in instance.running_experiments:
-        # Delete all jobs from DB before sending a signal to k8s,
-        # this way no statuses will be updated in the meanwhile
-        experiment.jobs.all().delete()
-        # experiment_scheduler.stop_experiment(experiment, update_status=False)
-        #  TODO: we should actually just mark experiment as deleted
-        #  (LIVEMODEL) and send a signal to stop
+        # Manually delete running experiments to handle the experiments stopping correctly
+        experiment.delete()
 
 
 @receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_post_delete")

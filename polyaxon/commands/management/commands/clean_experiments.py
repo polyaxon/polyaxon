@@ -11,7 +11,16 @@ class Command(BaseCommand):
     def _clean():
         for experiment in Experiment.objects.filter(
                 status__status__in=ExperimentLifeCycle.RUNNING_STATUS):
-            experiment_scheduler.stop_experiment(experiment, update_status=True)
+            group = experiment.experiment_group
+            experiment_scheduler.stop_experiment(
+                project_name=experiment.project.unique_name,
+                project_uuid=experiment.project.uuid.hex,
+                experiment_name=experiment.unique_name,
+                experiment_uuid=experiment.unique_name,
+                experiment_group_name=group.unique_name if group else None,
+                experiment_group_uuid=group.uuid.hex if group else None,
+                specification=experiment.specification)
+            experiment.set_status(ExperimentLifeCycle.STOPPED, message='Cleanup')
 
     def handle(self, *args, **options):
         try:

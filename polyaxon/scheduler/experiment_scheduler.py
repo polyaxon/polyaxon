@@ -300,25 +300,25 @@ def start_experiment(experiment):
     handle_experiment(experiment=experiment, spawner=spawner, response=response)
 
 
-def stop_experiment(experiment, update_status=False):
-    project = experiment.project
-    group = experiment.experiment_group
+def stop_experiment(project_name,
+                    project_uuid,
+                    experiment_name,
+                    experiment_uuid,
+                    specification,
+                    experiment_group_name=None,
+                    experiment_group_uuid=None):
+    spawner_class = get_spawner_class(specification.framework)
 
-    spawner_class = get_spawner_class(experiment.specification.framework)
-
-    spawner = spawner_class(project_name=project.unique_name,
-                            experiment_name=experiment.unique_name,
-                            experiment_group_name=group.unique_name if group else None,
-                            project_uuid=project.uuid.hex,
-                            experiment_group_uuid=group.uuid.hex if group else None,
-                            experiment_uuid=experiment.uuid.hex,
-                            spec=experiment.specification,
+    spawner = spawner_class(project_name=project_name,
+                            project_uuid=project_uuid,
+                            experiment_name=experiment_name,
+                            experiment_group_name=experiment_group_name,
+                            experiment_group_uuid=experiment_group_uuid,
+                            experiment_uuid=experiment_uuid,
+                            spec=specification,
                             k8s_config=settings.K8S_CONFIG,
                             namespace=settings.K8S_NAMESPACE,
                             in_cluster=True,
                             use_sidecar=True,
                             sidecar_config=config.get_requested_params(to_str=True))
     spawner.stop_experiment()
-    if update_status:
-        # Update experiment status to show that its stopped
-        experiment.set_status(ExperimentLifeCycle.STOPPED)

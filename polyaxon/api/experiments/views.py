@@ -392,7 +392,17 @@ class ExperimentStopView(CreateAPIView):
         auditor.record(event_type=EXPERIMENT_STOPPED_TRIGGERED,
                        instance=obj,
                        actor_id=request.user.id)
+        group = obj.experiment_group
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
-            kwargs={'experiment_id': obj.id})
+            kwargs={
+                'project_name': obj.project.unique_name,
+                'project_uuid': obj.project.uuid.hex,
+                'experiment_name': obj.unique_name,
+                'experiment_uuid': obj.unique_name,
+                'experiment_group_name': group.unique_name if group else None,
+                'experiment_group_uuid': group.uuid.hex if group else None,
+                'specification': obj.specification,
+                'update_status': True
+            })
         return Response(status=status.HTTP_200_OK)

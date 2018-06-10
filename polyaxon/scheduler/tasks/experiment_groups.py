@@ -53,7 +53,16 @@ def experiments_group_stop_experiments(experiment_group_id, pending, message=Non
             if experiment.is_running:
                 celery_app.send_task(
                     SchedulerCeleryTasks.EXPERIMENTS_STOP,
-                    kwargs={'experiment_id': experiment.id})
+                    kwargs={
+                        'project_name': experiment.project.unique_name,
+                        'project_uuid': experiment.project.uuid.hex,
+                        'experiment_name': experiment.unique_name,
+                        'experiment_uuid': experiment.unique_name,
+                        'experiment_group_name': experiment_group.unique_name,
+                        'experiment_group_uuid': experiment_group.uuid.hex,
+                        'specification': experiment.specification,
+                        'update_status': True
+                    })
             else:
                 # Update experiment status to show that its stopped
                 experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
