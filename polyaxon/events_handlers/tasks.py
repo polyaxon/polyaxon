@@ -9,6 +9,7 @@ from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.nodes import ClusterEvent
 from db.models.notebooks import NotebookJob
+from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from events_handlers.utils import safe_log_experiment_job, safe_log_job
 from polyaxon.celery_api import app as celery_app
@@ -40,7 +41,13 @@ def events_handle_experiment_job_statuses(payload):
     try:
         job = ExperimentJob.objects.get(uuid=job_uuid)
     except ExperimentJob.DoesNotExist:
-        _logger.info('Job uuid`%s` does not exist', job_uuid)
+        _logger.debug('Job uuid`%s` does not exist', job_uuid)
+        return
+
+    try:
+        _ = job.experiment
+    except Experiment.DoesNotExist:
+        _logger.debug('Experiment for job `%s` does not exist anymore', job_uuid)
         return
 
     # Set the new status
@@ -57,12 +64,19 @@ def events_handle_job_statuses(payload):
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
+    project_name = details['labels']['project_name']
     _logger.debug('handling events status for job %s', job_name)
 
     try:
         job = Job.objects.get(uuid=job_uuid)
     except Job.DoesNotExist:
-        _logger.info('Job `%s` does not exist', job_name)
+        _logger.debug('Job `%s` does not exist', job_name)
+        return
+
+    try:
+        _ = job.project
+    except Project.DoesNotExist:
+        _logger.debug('Project for job `%s` does not exist', project_name)
         return
 
     # Set the new status
@@ -80,6 +94,7 @@ def events_handle_plugin_job_statuses(payload):
     app = details['labels']['app']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
+    project_name = details['labels']['project_name']
     _logger.debug('handling events status for job %s %s', job_name, app)
 
     try:
@@ -91,8 +106,13 @@ def events_handle_plugin_job_statuses(payload):
             _logger.info('Plugin job `%s` does not exist', app)
             return
     except (NotebookJob.DoesNotExist, TensorboardJob.DoesNotExist):
-        _logger.info('`%s - %s` does not exist', app, job_name)
+        _logger.debug('`%s - %s` does not exist', app, job_name)
         return
+
+    try:
+        _ = job.project
+    except Project.DoesNotExist:
+        _logger.debug('`%s` does not exist anymore', project_name)
 
     # Set the new status
     try:
@@ -109,6 +129,7 @@ def events_handle_build_job_statuses(payload):
     app = details['labels']['app']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
+    project_name = details['labels']['project_name']
     _logger.debug('handling events status for build jon %s %s', job_name, app)
 
     try:
@@ -116,6 +137,11 @@ def events_handle_build_job_statuses(payload):
     except BuildJob.DoesNotExist:
         _logger.info('Build job `%s` does not exist', job_name)
         return
+
+    try:
+        _ = build_job.project
+    except Project.DoesNotExist:
+        _logger.debug('`%s` does not exist anymore', project_name)
 
     # Set the new status
     try:
