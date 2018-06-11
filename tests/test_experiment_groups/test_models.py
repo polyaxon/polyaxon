@@ -14,8 +14,11 @@ from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration
 from db.models.experiments import Experiment, ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
-from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory, \
-    ExperimentJobFactory
+from factories.factory_experiments import (
+    ExperimentFactory,
+    ExperimentJobFactory,
+    ExperimentStatusFactory
+)
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
     experiment_group_spec_content_bo,
