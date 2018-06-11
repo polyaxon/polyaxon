@@ -30,6 +30,27 @@ class AuditorJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_created(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_CREATED,
+                       instance=self.job,
+                       target='project')
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_updated(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_UPDATED,
+                       instance=self.job,
+                       target='project',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
     def test_job_started(self, activitylogs_record, tracker_record):
         auditor.record(event_type=job_events.JOB_STARTED,
                        instance=self.job,
@@ -42,6 +63,27 @@ class AuditorJobTest(BaseTest):
     @patch('activitylogs.service.ActivityLogService.record_event')
     def test_job_started_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=job_events.JOB_STARTED_TRIGGERED,
+                       instance=self.job,
+                       target='project',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_deleted(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_DELETED,
+                       instance=self.job,
+                       target='project')
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_triggered_deleted(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_DELETED_TRIGGERED,
                        instance=self.job,
                        target='project',
                        actor_id=1)
@@ -83,7 +125,7 @@ class AuditorJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_new_status(self, activitylogs_record, tracker_record):
+    def test_job_new_status(self, activitylogs_record, tracker_record):
         auditor.record(event_type=job_events.JOB_NEW_STATUS,
                        instance=self.job,
                        target='project')
@@ -93,7 +135,7 @@ class AuditorJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_failed(self, activitylogs_record, tracker_record):
+    def test_job_failed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=job_events.JOB_FAILED,
                        instance=self.job,
                        target='project')
@@ -103,7 +145,7 @@ class AuditorJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_succeeded(self, activitylogs_record, tracker_record):
+    def test_job_succeeded(self, activitylogs_record, tracker_record):
         auditor.record(event_type=job_events.JOB_SUCCEEDED,
                        instance=self.job,
                        target='project')

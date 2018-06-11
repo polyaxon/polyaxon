@@ -9,10 +9,43 @@ BUILD_JOB_STOPPED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.STOPP
 BUILD_JOB_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
                                                 event_actions.STOPPED,
                                                 event_subjects.TRIGGER)
+BUILD_JOB_CREATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.CREATED)
 BUILD_JOB_VIEWED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.VIEWED)
+BUILD_JOB_UPDATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.UPDATED)
 BUILD_JOB_NEW_STATUS = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.NEW_STATUS)
 BUILD_JOB_FAILED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.FAILED)
 BUILD_JOB_SUCCEEDED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.SUCCEEDED)
+
+BUILD_JOB_DELETED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.DELETED)
+BUILD_JOB_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
+                                                event_actions.DELETED,
+                                                event_subjects.TRIGGER)
+
+
+class BuildJobCreatedEvent(Event):
+    event_type = BUILD_JOB_CREATED
+    actor_id = 'user.id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('created_at', is_datetime=True),
+        Attribute('has_description', attr_type=bool),
+    )
+
+
+class BuildJobUpdatedEvent(Event):
+    event_type = BUILD_JOB_UPDATED
+    actor_id = 'user.id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('created_at', is_datetime=True),
+        Attribute('has_description', attr_type=bool),
+    )
 
 
 class BuildJobStartedEvent(Event):
@@ -112,4 +145,24 @@ class BuildJobFailedEvent(Event):
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
         Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class BuildJobDeletedEvent(Event):
+    event_type = BUILD_JOB_DELETED
+    attributes = (
+        Attribute('id'),
+    )
+
+
+class BuildJobDeletedTriggeredEvent(Event):
+    event_type = BUILD_JOB_DELETED_TRIGGERED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('target'),  # project, experiment_group, experiment
+        Attribute('actor_id'),
     )

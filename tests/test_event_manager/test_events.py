@@ -108,6 +108,8 @@ class TestEvents(BaseTest):
         assert notebook.NotebookSucceededEvent.get_event_subject() == 'notebook'
 
         # Notebook
+        assert job.JobCreatedEvent.get_event_subject() == 'job'
+        assert job.JobUpdatedEvent.get_event_subject() == 'job'
         assert job.JobStartedEvent.get_event_subject() == 'job'
         assert job.JobStartedTriggeredEvent.get_event_subject() == 'job'
         assert job.JobSoppedEvent.get_event_subject() == 'job'
@@ -116,8 +118,12 @@ class TestEvents(BaseTest):
         assert job.JobNewStatusEvent.get_event_subject() == 'job'
         assert job.JobFailedEvent.get_event_subject() == 'job'
         assert job.JobSucceededEvent.get_event_subject() == 'job'
+        assert job.JobDeletedEvent.get_event_subject() == 'job'
+        assert job.JobDeletedTriggeredEvent.get_event_subject() == 'job'
 
         # BuildJob
+        assert build_job.BuildJobCreatedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobUpdatedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobStartedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobStartedTriggeredEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobSoppedEvent.get_event_subject() == 'build_job'
@@ -126,6 +132,8 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobNewStatusEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobFailedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobSucceededEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobDeletedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobDeletedTriggeredEvent.get_event_subject() == 'build_job'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
@@ -250,7 +258,9 @@ class TestEvents(BaseTest):
         assert notebook.NotebookFailedEvent.get_event_action() is None
         assert notebook.NotebookSucceededEvent.get_event_action() is None
 
-        # Notebook
+        # Job
+        assert job.JobCreatedEvent.get_event_action() == 'created'
+        assert job.JobUpdatedEvent.get_event_action() == 'updated'
         assert job.JobStartedEvent.get_event_action() is None
         assert job.JobStartedTriggeredEvent.get_event_action() == 'started'
         assert job.JobSoppedEvent.get_event_action() is None
@@ -259,8 +269,12 @@ class TestEvents(BaseTest):
         assert job.JobNewStatusEvent.get_event_action() is None
         assert job.JobFailedEvent.get_event_action() is None
         assert job.JobSucceededEvent.get_event_action() is None
+        assert job.JobDeletedEvent.get_event_action() is None
+        assert job.JobDeletedTriggeredEvent.get_event_action() == 'deleted'
 
-        # Notebook
+        # Build job
+        assert build_job.BuildJobCreatedEvent.get_event_action() == 'created'
+        assert build_job.BuildJobUpdatedEvent.get_event_action() == 'updated'
         assert build_job.BuildJobStartedEvent.get_event_action() is None
         assert build_job.BuildJobStartedTriggeredEvent.get_event_action() == 'started'
         assert build_job.BuildJobSoppedEvent.get_event_action() is None
@@ -269,6 +283,8 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobNewStatusEvent.get_event_action() is None
         assert build_job.BuildJobFailedEvent.get_event_action() is None
         assert build_job.BuildJobSucceededEvent.get_event_action() is None
+        assert build_job.BuildJobDeletedEvent.get_event_action() is None
+        assert build_job.BuildJobDeletedTriggeredEvent.get_event_action() == 'deleted'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'
