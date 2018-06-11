@@ -70,18 +70,6 @@ def experiment_group_pre_delete(sender, **kwargs):
     delete_experiment_group_logs(instance.unique_name)
 
 
-@receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_stop_experiments")
-@check_specification
-@ignore_raw
-def experiment_group_stop_experiments(sender, **kwargs):
-    """Stop all experiments before deleting the group."""
-
-    instance = kwargs['instance']
-    for experiment in instance.running_experiments:
-        # Manually delete running experiments to handle the experiments stopping correctly
-        experiment.delete()
-
-
 @receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_post_delete")
 @ignore_raw
 def experiment_group_post_delete(sender, **kwargs):

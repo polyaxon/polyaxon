@@ -200,9 +200,6 @@ def stop_running_experiment(sender, **kwargs):
 
     try:
         group = instance.experiment_group
-        # Delete all jobs from DB before sending a signal to k8s,
-        # this way no constants will be updated in the meanwhile
-        instance.jobs.all().delete()
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={
