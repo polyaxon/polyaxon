@@ -118,6 +118,9 @@ def job_pre_delete(sender, **kwargs):
     delete_job_outputs(job.unique_name)
     delete_job_logs(job.unique_name)
 
+    if not job.is_running:
+        return
+
     celery_app.send_task(
         SchedulerCeleryTasks.JOBS_STOP,
         kwargs={

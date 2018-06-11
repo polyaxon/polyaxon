@@ -21,7 +21,7 @@ class JobLifeCycle(BaseStatuses):
     """
     CREATED = 'Created'
     BUILDING = 'Building'
-    SCHEDULED = 'Scheduler'
+    SCHEDULED = 'Scheduled'
     RUNNING = 'Running'
     SUCCEEDED = 'Succeeded'
     FAILED = 'Failed'
