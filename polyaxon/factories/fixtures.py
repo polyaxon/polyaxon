@@ -379,3 +379,26 @@ job_spec_content = """---
 """
 
 job_spec_parsed_content = JobSpecification.read(job_spec_content)
+
+job_spec_resources_content = """---
+    version: 1
+
+    kind: job
+    
+    environment:
+      resources:
+        cpu:
+          requests: 1
+          limits: 1    
+        memory:
+          requests: 100
+          limits: 200
+
+    build:
+      image: my_image
+
+    run:
+      cmd: test
+"""
+
+job_spec_resources_parsed_content = JobSpecification.read(job_spec_resources_content)
