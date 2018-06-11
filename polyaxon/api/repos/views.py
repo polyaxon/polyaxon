@@ -22,7 +22,7 @@ from libs.permissions.projects import get_permissible_project
 from libs.repos import git
 from libs.repos.git import set_git_repo
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger('polyaxon.views.repos')
 
 
 class RepoDetailView(RetrieveUpdateDestroyAPIView):
@@ -85,7 +85,7 @@ class UploadFilesView(UploadView):
                                                      directory=path,
                                                      upload_filename='repo')
         except (IOError, os.error) as e:  # pragma: no cover
-            logger.warning(
+            _logger.warning(
                 'IOError while trying to save posted data (%s): %s', e.errno, e.strerror)
             return HttpResponseServerError()
 

@@ -1,4 +1,3 @@
-import logging
 import uuid
 
 from django.conf import settings
@@ -20,8 +19,6 @@ from event_manager.events.experiment import (
 from libs.spec_validation import validate_experiment_spec_config
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
-
-logger = logging.getLogger('db.experiments')
 
 
 class CloningStrategy(object):

@@ -19,7 +19,7 @@ from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 
-logger = logging.getLogger('db.experiment_groups')
+_logger = logging.getLogger('polyaxon.db.experiment_groups')
 
 
 class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
@@ -114,7 +114,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
             boolean: if the instance is updated.
         """
         if not self.STATUSES.can_transition(status_from=self.last_status, status_to=status):
-            logger.info(
+            _logger.info(
                 '`%s` tried to transition from status `%s` to non permitted status `%s`',
                 str(self), self.last_status, status)
             return False

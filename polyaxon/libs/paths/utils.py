@@ -2,7 +2,7 @@ import logging
 import os
 import shutil
 
-logger = logging.getLogger('polyaxon.libs.paths')
+_logger = logging.getLogger('polyaxon.libs.paths')
 
 
 def delete_path(path):
@@ -14,7 +14,7 @@ def delete_path(path):
         else:
             shutil.rmtree(path)
     except OSError:
-        logger.warning('Could not delete path `%s`', path)
+        _logger.warning('Could not delete path `%s`', path)
 
 
 def create_path(path):
@@ -23,7 +23,7 @@ def create_path(path):
     except FileExistsError:
         pass
     except OSError as e:
-        logger.warning('Could not create path `%s`, exception %s', path, e)
+        _logger.warning('Could not create path `%s`, exception %s', path, e)
 
 
 def get_tmp_path(path):
@@ -45,5 +45,5 @@ def copy_to_tmp_dir(path, dir_name):
     try:
         shutil.copytree(path, tmp_path)
     except FileExistsError as e:
-        logger.warning('Path already exists `%s`, exception %s', path, e)
+        _logger.warning('Path already exists `%s`, exception %s', path, e)
     return tmp_path

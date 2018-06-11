@@ -1,5 +1,3 @@
-import logging
-
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -9,8 +7,6 @@ from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from docker_images.images_tags import LATEST_IMAGE_TAG
 from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
-
-logger = logging.getLogger('db.build_jobs')
 
 
 class BuildJob(AbstractJob, JobMixin):
@@ -65,7 +61,6 @@ class BuildJob(AbstractJob, JobMixin):
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=BuildJobStatus,
-                                logger=logger,
                                 status=status,
                                 message=message,
                                 details=details)

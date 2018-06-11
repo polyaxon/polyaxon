@@ -1,4 +1,3 @@
-import logging
 import time
 
 import publisher
@@ -6,8 +5,6 @@ import publisher
 from constants.experiments import ExperimentLifeCycle
 from constants.pods import PodLifeCycle
 from polyaxon_schemas.experiment import JobLabelConfig
-
-logger = logging.getLogger(__name__)
 
 
 def _handle_log_stream(stream, publish):
@@ -79,7 +76,6 @@ def run_for_job(k8s_manager,
 def can_log(k8s_manager, pod_id, log_sleep_interval):
     status = k8s_manager.k8s_api.read_namespaced_pod_status(pod_id,
                                                             k8s_manager.namespace)
-    logger.debug(status)
     labels = status.metadata.labels
     while (status.status.phase != PodLifeCycle.RUNNING and
            status.status.phase not in PodLifeCycle.DONE_STATUS):

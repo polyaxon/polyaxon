@@ -5,7 +5,7 @@ from kubernetes import watch
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks
 
-logger = logging.getLogger('polyaxon.monitors.namespace')
+_logger = logging.getLogger('polyaxon.monitors.namespace')
 
 LEVEL_MAPPING = {
     'normal': 'info',
@@ -17,7 +17,7 @@ def run(k8s_manager, cluster):  # pylint:disable=too-many-branches
 
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_event,
                           namespace=k8s_manager.namespace):
-        logger.debug("event: %s", event)
+        _logger.debug("event: %s", event)
 
         event_type = event['type'].lower()
         event = event['object']
@@ -97,7 +97,7 @@ def run(k8s_manager, cluster):  # pylint:disable=too-many-branches
             if creation_timestamp:
                 payload['created_at'] = creation_timestamp
 
-            logger.info("Publishing event: %s", data)
+            _logger.debug("Publishing event: %s", data)
             celery_app.send_task(
                 EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE,
                 kwargs={'cluster_id': cluster.id, 'payload': payload})

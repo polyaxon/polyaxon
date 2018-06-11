@@ -15,7 +15,7 @@ from libs.blacklist import validate_blacklist_name
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
-logger = logging.getLogger('db.pipelines')
+_logger = logging.getLogger('db.pipelines')
 
 status_change = Signal(providing_args=["instance", "status"])
 
@@ -336,7 +336,7 @@ class RunModel(DiffModel, LastStatusMixin):
             boolean: if the instance is updated.
         """
         if not self.STATUSES.can_transition(status_from=self.last_status, status_to=status):
-            logger.info(
+            _logger.info(
                 '`%s` tried to transition from status `%s` to non permitted status `%s`',
                 str(self), self.last_status, status)
             return False

@@ -5,7 +5,7 @@ from django.conf import settings
 from db.models.repos import ExternalRepo
 from docker_images.images_tags import LATEST_IMAGE_TAG
 
-logger = logging.getLogger('polyaxon.dockerizer.images')
+_logger = logging.getLogger('polyaxon.dockerizer.images')
 
 
 def get_experiment_image_info(experiment):
@@ -18,7 +18,7 @@ def get_experiment_image_info(experiment):
             repo = ExternalRepo.objects.get(project=experiment.project,
                                             git_url=experiment_spec.build.git)
         except ExternalRepo.DoesNotExist:
-            logger.error(
+            _logger.error(
                 'Something went wrong, the external repo `%s` was not found',
                 experiment_spec.build.git)
             raise ValueError('Repo was not found for `{}`.'.format(experiment_spec.build.git))
@@ -42,7 +42,7 @@ def get_job_image_info(project, job):
             repo = ExternalRepo.objects.get(project=project,
                                             git_url=job_spec.build.git)
         except ExternalRepo.DoesNotExist:
-            logger.error(
+            _logger.error(
                 'Something went wrong, the external repo `%s` was not found',
                 job_spec.build.git)
             raise ValueError('Repo was not found for `{}`.'.format(job_spec.build.git))

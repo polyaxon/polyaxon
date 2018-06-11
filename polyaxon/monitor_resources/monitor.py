@@ -17,7 +17,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CronsCeleryTasks, EventsCeleryTasks
 from polyaxon_schemas.experiment import ContainerResourcesConfig
 
-logger = logging.getLogger('polyaxon.monitors.resources')
+_logger = logging.getLogger('polyaxon.monitors.resources')
 
 docker_client = docker.from_env(version="auto", timeout=10)
 
@@ -43,7 +43,7 @@ def get_container(containers, container_id):
     try:  # we check first that the container is visible in this node
         container = docker_client.containers.get(container_id)
     except NotFound:
-        logger.info("container `%s` was not found", container_id)
+        _logger.debug("container `%s` was not found", container_id)
         return None
 
     if container_id in containers:
@@ -59,24 +59,24 @@ def get_container(containers, container_id):
 def get_container_resources(node, container, gpu_resources):
     # Check if the container is running
     if container.status != ContainerStatuses.RUNNING:
-        logger.info("`%s` container is not running", container.name)
+        _logger.debug("`%s` container is not running", container.name)
         RedisJobContainers.remove_container(container.id)
         return
 
     job_uuid, experiment_uuid = RedisJobContainers.get_job(container.id)
 
     if not job_uuid:
-        logger.info("`%s` container is not recognised", container.name)
+        _logger.debug("`%s` container is not recognised", container.name)
         return
 
-    logger.info(
+    _logger.info(
         "Streaming resources for container %s in (job, experiment) (`%s`, `%s`) ",
         container.id, job_uuid, experiment_uuid)
 
     try:
         stats = container.stats(decode=True, stream=False)
     except NotFound:
-        logger.info("`%s` was not found", container.name)
+        _logger.debug("`%s` was not found", container.name)
         RedisJobContainers.remove_container(container.id)
         return
     except requests.ReadTimeout:
@@ -96,8 +96,8 @@ def get_container_resources(node, container, gpu_resources):
     percpu_usage = cpu_stats['cpu_usage']['percpu_usage']
     num_cpu_cores = len(percpu_usage)
     if num_cpu_cores >= node.cpu * 1.5:
-        logger.warning('Docker reporting num cpus `%s` and kubernetes reporting `%s`',
-                       num_cpu_cores, node.cpu)
+        _logger.warning('Docker reporting num cpus `%s` and kubernetes reporting `%s`',
+                        num_cpu_cores, node.cpu)
         num_cpu_cores = node.cpu
     cpu_percentage = 0.
     percpu_percentage = [0.] * num_cpu_cores
@@ -159,7 +159,7 @@ def run(containers, node, persist):
         payload = get_container_resources(node, containers[container_id], gpu_resources)
         if payload:
             payload = payload.to_dict()
-            logger.info("Publishing resources event")
+            _logger.debug("Publishing resources event")
             celery_app.send_task(
                 EventsCeleryTasks.EVENTS_HANDLE_RESOURCES,
                 kwargs={'payload': payload, 'persist': persist})

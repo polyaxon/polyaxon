@@ -1,5 +1,3 @@
-import logging
-
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
@@ -13,8 +11,6 @@ from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
-logger = logging.getLogger('polyaxon.signals.jobs')
 
 
 @receiver(pre_save, sender=Job, dispatch_uid="job_pre_save")

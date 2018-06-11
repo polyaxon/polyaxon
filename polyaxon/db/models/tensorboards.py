@@ -1,5 +1,3 @@
-import logging
-
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
@@ -8,8 +6,6 @@ from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from libs.spec_validation import validate_tensorboard_spec_config
 from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
-
-_logger = logging.getLogger('db.tensorboards')
 
 
 class TensorboardJob(PluginJobBase, JobMixin):
@@ -62,7 +58,6 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=TensorboardJobStatus,
-                                logger=_logger,
                                 status=status,
                                 message=message,
                                 details=details)

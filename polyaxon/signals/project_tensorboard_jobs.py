@@ -1,5 +1,3 @@
-import logging
-
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
@@ -17,8 +15,6 @@ from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
-logger = logging.getLogger('polyaxon.signals.tensorboard')
 
 
 @receiver(pre_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_pre_save")

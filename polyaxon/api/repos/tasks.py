@@ -14,7 +14,7 @@ from libs.repos import git
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import ReposCeleryTasks
 
-logger = logging.getLogger('polyaxon.tasks.repos')
+_logger = logging.getLogger('polyaxon.tasks.repos')
 
 
 @celery_app.task(name=ReposCeleryTasks.REPOS_HANDLE_FILE_UPLOAD, ignore_result=True)
@@ -26,7 +26,7 @@ def handle_new_files(user_id, repo_id, tar_file_name):
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-        logger.warning('User with id `%s` does not exist anymore.', user_id)
+        _logger.warning('User with id `%s` does not exist anymore.', user_id)
         return
 
     try:
@@ -34,7 +34,7 @@ def handle_new_files(user_id, repo_id, tar_file_name):
         # Checkout to master
         git.checkout_commit(repo.path)
     except User.DoesNotExist:
-        logger.warning('Repo with id `%s` does not exist anymore.', repo_id)
+        _logger.warning('Repo with id `%s` does not exist anymore.', repo_id)
         return
 
     # Destination files

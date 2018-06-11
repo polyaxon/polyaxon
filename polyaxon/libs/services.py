@@ -1,12 +1,9 @@
 import inspect
 import itertools
-import logging
 
 from django.utils.functional import LazyObject, empty
 
 from libs.imports import import_string
-
-logger = logging.getLogger(__name__)
 
 
 class InvalidService(Exception):

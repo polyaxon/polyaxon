@@ -9,7 +9,7 @@ import auditor
 
 from event_manager.events.user import USER_LDAP
 
-logger = logging.getLogger('polyaxon.users.auth_ldap')
+_logger = logging.getLogger('polyaxon.users.auth_ldap')
 
 
 @receiver(populate_user)
@@ -23,8 +23,8 @@ def populate_user_handler(sender, **kwargs):
         try:
             value = ldap_user.attrs['mail'][0]
         except LookupError:
-            logger.warning("%s does not have a value for the attribute %s",
-                           ldap_user.dn, 'mail')
+            _logger.warning("%s does not have a value for the attribute %s",
+                            ldap_user.dn, 'mail')
             user.email = '%s@%s' % (user.username, settings.DEFAULT_EMAIL_DOMAIN)
         else:
             user.email = value

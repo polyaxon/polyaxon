@@ -5,7 +5,7 @@ from celery import Celery, Task, states
 
 from django.apps import apps
 
-logger = logging.getLogger("polyaxon.tasks")
+_logger = logging.getLogger("polyaxon.tasks")
 
 
 STATES = states
@@ -16,7 +16,7 @@ class CeleryTask(Task):
     abstract = True
 
     def on_success(self, retval, task_id, args, kwargs):
-        logger.info("Celery task succeeded", extra={'task name': self.name})
+        _logger.info("Celery task succeeded", extra={'task name': self.name})
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         extra = {
@@ -25,10 +25,10 @@ class CeleryTask(Task):
             'task args': args,
             'task kwargs': kwargs,
         }
-        logger.error("Celery Task Failed", exc_info=einfo, extra=extra)
+        _logger.error("Celery Task Failed", exc_info=einfo, extra=extra)
 
     def on_retry(self, exc, task_id, args, kwargs, einfo):
-        logger.info("Celery task retry", extra={'task name': self.name})
+        _logger.info("Celery task retry", extra={'task name': self.name})
 
 
 # set the default Django settings module for the 'celery' program.

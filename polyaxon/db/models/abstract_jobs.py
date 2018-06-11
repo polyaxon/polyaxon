@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 from django.contrib.postgres.fields import JSONField
@@ -6,6 +7,8 @@ from django.utils.functional import cached_property
 
 from constants.jobs import JobLifeCycle
 from db.models.utils import DiffModel, LastStatusMixin, StatusModel
+
+_logger = logging.getLogger('polyaxon.db.jobs')
 
 
 class AbstractJob(DiffModel, LastStatusMixin):
@@ -46,11 +49,11 @@ class AbstractJob(DiffModel, LastStatusMixin):
             return status.created_at
         return None
 
-    def _set_status(self, status_model, logger, status, message=None, details=None):
+    def _set_status(self, status_model, status, message=None, details=None):
         current_status = self.last_status
         if self.is_done:
             # We should not update statuses anymore
-            logger.info(
+            _logger.debug(
                 'Received a new status `{}` for job `{}`. '
                 'But the job is already done with status `{}`'.format(
                     status, self.unique_name, current_status))

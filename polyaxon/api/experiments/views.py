@@ -64,7 +64,7 @@ from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
-logger = logging.getLogger("polyaxon.experiments.views")
+_logger = logging.getLogger("polyaxon.views.experiments")
 
 
 class ExperimentListView(ListAPIView):
@@ -325,7 +325,7 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
             response['Content-Disposition'] = "attachment; filename={}".format(filename)
             return response
         except FileNotFoundError:
-            logger.warning('Log file not found: log_path=%s', log_path)
+            _logger.warning('Log file not found: log_path=%s', log_path)
             return Response(status=status.HTTP_404_NOT_FOUND,
                             data='Log file not found: log_path={}'.format(log_path))
 

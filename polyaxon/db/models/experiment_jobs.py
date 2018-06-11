@@ -1,11 +1,7 @@
-import logging
-
 from django.db import models
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from polyaxon_schemas.utils import TaskType
-
-logger = logging.getLogger('db.experiments')
 
 
 class ExperimentJob(AbstractJob):
@@ -53,7 +49,6 @@ class ExperimentJob(AbstractJob):
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=ExperimentJobStatus,
-                                logger=logger,
                                 status=status,
                                 message=message,
                                 details=details)

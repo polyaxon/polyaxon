@@ -10,14 +10,14 @@ from monitor_statuses.jobs import get_job_state
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks
 
-logger = logging.getLogger('polyaxon.monitors.statuses')
+_logger = logging.getLogger('polyaxon.monitors.statuses')
 
 
 def update_job_containers(event, status, job_container_name):
     if JobLifeCycle.is_done(status):
         # Remove the job monitoring
         job_uuid = event['metadata']['labels']['job_uuid']
-        logger.info('Stop monitoring job_uuid: %s', job_uuid)
+        _logger.info('Stop monitoring job_uuid: %s', job_uuid)
         RedisJobContainers.remove_job(job_uuid)
 
     if event['status']['container_statuses'] is None:
@@ -38,8 +38,8 @@ def update_job_containers(event, status, job_container_name):
         if container_id:
             job_uuid = event['metadata']['labels']['job_uuid']
             if container_status['state']['running'] is not None:
-                logger.info('Monitoring (container_id, job_uuid): (%s, %s)',
-                            container_id, job_uuid)
+                _logger.info('Monitoring (container_id, job_uuid): (%s, %s)',
+                             container_id, job_uuid)
                 RedisJobContainers.monitor(container_id=container_id, job_uuid=job_uuid)
             else:
 
@@ -60,7 +60,7 @@ def run(k8s_manager):
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
                           namespace=k8s_manager.namespace,
                           label_selector=get_label_selector()):
-        logger.debug("Received event: %s", event['type'])
+        _logger.debug("Received event: %s", event['type'])
         event_object = event['object'].to_dict()
         job_state = get_job_state(
             event_type=event['type'],
@@ -75,10 +75,10 @@ def run(k8s_manager):
             labels = None
             if job_state.details and job_state.details.labels:
                 labels = job_state.details.labels.to_dict()
-            logger.info("Updating job container %s, %s", status, labels)
-            logger.debug(event_object)
+            _logger.info("Updating job container %s, %s", status, labels)
+            _logger.debug(event_object)
             job_state = job_state.to_dict()
-            logger.debug(job_state)
+            _logger.debug(job_state)
             # Only update job containers if it's an experiment job not plugins
             experiment_job_condition = (
                 settings.CONTAINER_NAME_EXPERIMENT_JOB in job_state['details']['container_statuses']

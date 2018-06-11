@@ -1,5 +1,3 @@
-import logging
-
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
@@ -8,8 +6,6 @@ from db.models.plugins import PluginJobBase
 from libs.spec_validation import validate_notebook_spec_config
 from polyaxon_schemas.polyaxonfile.specification import NotebookSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-
-_logger = logging.getLogger('db.notebooks')
 
 
 class NotebookJob(PluginJobBase, JobMixin):
@@ -52,7 +48,6 @@ class NotebookJob(PluginJobBase, JobMixin):
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=NotebookJobStatus,
-                                logger=_logger,
                                 status=status,
                                 message=message,
                                 details=details)

@@ -12,7 +12,7 @@ from django.conf import settings
 
 from libs.paths.utils import create_path, delete_path
 
-logger = logging.getLogger('polyaxon.repos.git')
+_logger = logging.getLogger('polyaxon.repos.git')
 
 
 def get_repos(user):
@@ -93,9 +93,9 @@ def get_committed_files(repo_path, commit):  # pylint:disable=redefined-outer-na
 
 def fetch(git_url, repo_path, overwrite=False):
     if os.path.isdir(repo_path):
-        logger.info('Current checkout path has content.')
+        _logger.info('Current checkout path has content.')
         if overwrite:
-            logger.info('Overwriting current checkout path.')
+            _logger.info('Overwriting current checkout path.')
             delete_path(repo_path)
         else:
             run_command(cmd='git fetch origin master', data=None, location=repo_path, chw=True)

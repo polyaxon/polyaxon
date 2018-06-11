@@ -23,7 +23,7 @@ from streams.authentication import authorized
 from streams.consumers import Consumer
 from streams.socket_manager import SocketManager
 
-logger = logging.getLogger('polyaxon.streams.api')
+_logger = logging.getLogger('polyaxon.streams.api')
 
 SOCKET_SLEEP = 2
 MAX_RETRIES = 7
@@ -51,13 +51,13 @@ def _get_job(experiment, job_sequence):
     try:
         job = ExperimentJob.objects.get(experiment=experiment, sequence=job_sequence)
     except (ExperimentJob.DoesNotExist, ValidationError):
-        logger.info('Job with experiment:`%s` sequence:`%s` does not exist',
-                    experiment.unique_name, job_sequence)
+        _logger.info('Job with experiment:`%s` sequence:`%s` does not exist',
+                     experiment.unique_name, job_sequence)
         raise exceptions.NotFound('Experiment was not found')
 
     if not job.is_running:
-        logger.info('Job with experiment:`%s` sequence:`%s` is not currently running',
-                    experiment.unique_name, job_sequence)
+        _logger.info('Job with experiment:`%s` sequence:`%s` is not currently running',
+                     experiment.unique_name, job_sequence)
         raise exceptions.NotFound('Job was not running')
 
     return job
@@ -66,8 +66,8 @@ def _get_job(experiment, job_sequence):
 def _get_validated_experiment(project, experiment_sequence):
     experiment = _get_experiment(project, experiment_sequence)
     if not experiment.is_running:
-        logger.info('Experiment project `%s` num `%s` is not currently running',
-                    project.name, experiment.sequence)
+        _logger.info('Experiment project `%s` num `%s` is not currently running',
+                     project.name, experiment.sequence)
         raise exceptions.NotFound('Experiment was not running')
 
     return experiment
@@ -87,7 +87,7 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
                    actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_job_resources(job_uuid=job_uuid):
-        logger.info('Job resources with uuid `%s` is now being monitored', job_name)
+        _logger.info('Job resources with uuid `%s` is now being monitored', job_name)
         RedisToStream.monitor_job_resources(job_uuid=job_uuid)
 
     if job_uuid in request.app.job_resources_ws_mangers:
@@ -99,11 +99,11 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
     def handle_job_disconnected_ws(ws):
         ws_manager.remove_sockets(ws)
         if not ws_manager.ws:
-            logger.info('Stopping resources monitor for job %s', job_name)
+            _logger.info('Stopping resources monitor for job %s', job_name)
             RedisToStream.remove_job_resources(job_uuid=job_uuid)
             request.app.job_resources_ws_mangers.pop(job_uuid, None)
 
-        logger.info('Quitting resources socket for job %s', job_name)
+        _logger.info('Quitting resources socket for job %s', job_name)
 
     ws_manager.add_socket(ws)
     should_check = 0
@@ -115,7 +115,7 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
         if should_check > RESOURCES_CHECK:
             job.refresh_from_db()
             if job.is_done:
-                logger.info('removing all socket because the job `%s` is done', job_name)
+                _logger.info('removing all socket because the job `%s` is done', job_name)
                 ws_manager.ws = set([])
                 handle_job_disconnected_ws(ws)
                 return
@@ -148,8 +148,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
                    actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_experiment_resources(experiment_uuid=experiment_uuid):
-        logger.info(
-            'Experiment resource with uuid `%s` is now being monitored', experiment_uuid)
+        _logger.info('Experiment resource with uuid `%s` is now being monitored', experiment_uuid)
         RedisToStream.monitor_experiment_resources(experiment_uuid=experiment_uuid)
 
     if experiment_uuid in request.app.experiment_resources_ws_mangers:
@@ -161,11 +160,11 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
     def handle_experiment_disconnected_ws(ws):
         ws_manager.remove_sockets(ws)
         if not ws_manager.ws:
-            logger.info('Stopping resources monitor for uuid %s', experiment_uuid)
+            _logger.info('Stopping resources monitor for uuid %s', experiment_uuid)
             RedisToStream.remove_experiment_resources(experiment_uuid=experiment_uuid)
             request.app.experiment_resources_ws_mangers.pop(experiment_uuid, None)
 
-        logger.info('Quitting resources socket for uuid %s', experiment_uuid)
+        _logger.info('Quitting resources socket for uuid %s', experiment_uuid)
 
     jobs = []
     for job in experiment.jobs.values('uuid', 'role', 'sequence'):
@@ -182,7 +181,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
         if should_check > RESOURCES_CHECK:
             experiment.refresh_from_db()
             if experiment.is_done:
-                logger.info(
+                _logger.info(
                     'removing all socket because the experiment `%s` is done', experiment_uuid)
                 ws_manager.ws = set([])
                 handle_experiment_disconnected_ws(ws)
@@ -218,14 +217,14 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
                    actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
-        logger.info('Job uuid `%s` logs is now being monitored', job_uuid)
+        _logger.info('Job uuid `%s` logs is now being monitored', job_uuid)
         RedisToStream.monitor_job_logs(job_uuid=job_uuid)
 
     # start consumer
     if job_uuid in request.app.job_logs_consumers:
         consumer = request.app.job_logs_consumers[job_uuid]
     else:
-        logger.info('Add job log consumer for %s', job_uuid)
+        _logger.info('Add job log consumer for %s', job_uuid)
         consumer = Consumer(
             routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
                                           experiment.uuid.hex,
@@ -254,19 +253,19 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
         if num_message_retries > MAX_RETRIES:
             job.refresh_from_db()
             if job.is_done:
-                logger.info('removing all socket because the job `%s` is done', job_uuid)
+                _logger.info('removing all socket because the job `%s` is done', job_uuid)
                 consumer.ws = set([])
             else:
                 num_message_retries -= CHECK_DELAY
 
         # Just to check if connection closed
         if ws._connection_lost:  # pylint:disable=protected-access
-            logger.info('Quitting logs socket for job uuid %s', job_uuid)
+            _logger.info('Quitting logs socket for job uuid %s', job_uuid)
             consumer.remove_sockets({ws, })
             should_quite = True
 
         if not consumer.ws:
-            logger.info('Stopping logs monitor for job uuid %s', job_uuid)
+            _logger.info('Stopping logs monitor for job uuid %s', job_uuid)
             RedisToStream.remove_job_logs(job_uuid=job_uuid)
             # if job_uuid in request.app.job_logs_consumers:
             #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
@@ -292,14 +291,14 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
                    actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_experiment_logs(experiment_uuid=experiment_uuid):
-        logger.info('Experiment uuid `%s` logs is now being monitored', experiment_uuid)
+        _logger.info('Experiment uuid `%s` logs is now being monitored', experiment_uuid)
         RedisToStream.monitor_experiment_logs(experiment_uuid=experiment_uuid)
 
     # start consumer
     if experiment_uuid in request.app.experiment_logs_consumers:
         consumer = request.app.experiment_logs_consumers[experiment_uuid]
     else:
-        logger.info('Add experiment log consumer for %s', experiment_uuid)
+        _logger.info('Add experiment log consumer for %s', experiment_uuid)
         consumer = Consumer(
             routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS, experiment_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, experiment_uuid))
@@ -326,7 +325,7 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
         if num_message_retries > MAX_RETRIES:
             experiment.refresh_from_db()
             if experiment.is_done:
-                logger.info(
+                _logger.info(
                     'removing all socket because the experiment `%s` is done', experiment_uuid)
                 consumer.ws = set([])
             else:
@@ -334,12 +333,12 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
 
         # Just to check if connection closed
         if ws._connection_lost:  # pylint:disable=protected-access
-            logger.info('Quitting logs socket for experiment uuid %s', experiment_uuid)
+            _logger.info('Quitting logs socket for experiment uuid %s', experiment_uuid)
             consumer.remove_sockets({ws, })
             should_quite = True
 
         if not consumer.ws:
-            logger.info('Stopping logs monitor for experiment uuid %s', experiment_uuid)
+            _logger.info('Stopping logs monitor for experiment uuid %s', experiment_uuid)
             RedisToStream.remove_experiment_logs(experiment_uuid=experiment_uuid)
             # if experiment_uuid in request.app.experiment_logs_consumers:
             #     consumer = request.app.experiment_logs_consumers.pop(experiment_uuid, None)
@@ -370,7 +369,6 @@ app.add_websocket_route(
 app.add_websocket_route(
     job_logs,
     '{}/jobs/<job_sequence>/logs'.format(WS_EXPERIMENT_URL))
-
 
 # Experiment urls
 app.add_websocket_route(
