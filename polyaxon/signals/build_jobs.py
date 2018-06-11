@@ -1,6 +1,6 @@
 import logging
 
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, post_delete
 from django.dispatch import receiver
 
 import auditor
@@ -11,8 +11,8 @@ from event_manager.events.build_job import (
     BUILD_JOB_FAILED,
     BUILD_JOB_NEW_STATUS,
     BUILD_JOB_STOPPED,
-    BUILD_JOB_SUCCEEDED
-)
+    BUILD_JOB_SUCCEEDED,
+    BUILD_JOB_DELETED)
 from libs.decorators import ignore_raw, ignore_updates
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -96,3 +96,10 @@ def build_job_pre_delete(sender, **kwargs):
             'build_job_uuid': job.uuid.hex,
             'update_status': False
         })
+
+
+@receiver(post_delete, sender=BuildJob, dispatch_uid="build_job_post_delete")
+@ignore_raw
+def build_job_post_delete(sender, **kwargs):
+    instance = kwargs['instance']
+    auditor.record(event_type=BUILD_JOB_DELETED, instance=instance)
