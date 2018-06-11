@@ -4,12 +4,13 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
+from db.models.utils import DescribableModel
 from docker_images.images_tags import LATEST_IMAGE_TAG
 from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 
 
-class BuildJob(AbstractJob, JobMixin):
+class BuildJob(AbstractJob, DescribableModel, JobMixin):
     """A model that represents the configuration for build job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

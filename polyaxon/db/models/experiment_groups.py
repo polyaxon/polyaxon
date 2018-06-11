@@ -158,10 +158,6 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         return self.hptuning_config.early_stopping or []
 
     @property
-    def has_description(self):
-        return bool(self.description)
-
-    @property
     def scheduled_experiments(self):
         return self.experiments.filter(
             status__status=ExperimentLifeCycle.SCHEDULED).distinct()

@@ -2,9 +2,10 @@ from django.conf import settings
 from django.db import models
 
 from db.models.abstract_jobs import AbstractJob
+from db.models.utils import DescribableModel
 
 
-class PluginJobBase(AbstractJob):
+class PluginJobBase(AbstractJob, DescribableModel):
     """A base model for plugin jobs."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

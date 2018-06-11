@@ -3,12 +3,13 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
+from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
+from db.models.utils import DescribableModel
 from libs.spec_validation import validate_job_spec_config
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 
 
-class Job(AbstractJob):
+class Job(AbstractJob, DescribableModel, JobMixin):
     """A model that represents the configuration for run job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -63,26 +64,6 @@ class Job(AbstractJob):
     @cached_property
     def specification(self):
         return JobSpecification(values=self.config)
-
-    @cached_property
-    def image(self):
-        return self.specification.build.image
-
-    @cached_property
-    def build_steps(self):
-        return self.specification.build.build_steps
-
-    @cached_property
-    def resources(self):
-        return None
-
-    @cached_property
-    def node_selectors(self):
-        return None
-
-    @cached_property
-    def env_vars(self):
-        return self.specification.build.env_vars
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=JobStatus,

@@ -45,7 +45,7 @@ def events_handle_experiment_job_statuses(payload):
         return
 
     try:
-        _ = job.experiment
+        job.experiment
     except Experiment.DoesNotExist:
         _logger.debug('Experiment for job `%s` does not exist anymore', job_uuid)
         return
@@ -74,7 +74,7 @@ def events_handle_job_statuses(payload):
         return
 
     try:
-        _ = job.project
+        job.project
     except Project.DoesNotExist:
         _logger.debug('Project for job `%s` does not exist', project_name)
         return
@@ -110,7 +110,7 @@ def events_handle_plugin_job_statuses(payload):
         return
 
     try:
-        _ = job.project
+        job.project
     except Project.DoesNotExist:
         _logger.debug('`%s` does not exist anymore', project_name)
 
@@ -139,7 +139,7 @@ def events_handle_build_job_statuses(payload):
         return
 
     try:
-        _ = build_job.project
+        build_job.project
     except Project.DoesNotExist:
         _logger.debug('`%s` does not exist anymore', project_name)
 

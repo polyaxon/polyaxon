@@ -10,6 +10,10 @@ class DescribableModel(models.Model):
     class Meta:
         abstract = True
 
+    @property
+    def has_description(self):
+        return bool(self.description)
+
 
 class DiffModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)

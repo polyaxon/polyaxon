@@ -135,10 +135,6 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
             return '{}.{}'.format(self.experiment_group.unique_name, self.sequence)
         return '{}.{}'.format(self.project.unique_name, self.sequence)
 
-    @property
-    def has_description(self):
-        return bool(self.description)
-
     @cached_property
     def specification(self):
         return ExperimentSpecification(values=self.config) if self.config else None
