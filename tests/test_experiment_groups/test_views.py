@@ -13,7 +13,8 @@ from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
-from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
+from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory, \
+    ExperimentJobFactory
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseViewTest
 
@@ -219,11 +220,18 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert Experiment.objects.count() == 2
-        with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
-            with patch('scheduler.experiment_scheduler.stop_experiment') as scheduler_mock:
+        experiment = ExperimentFactory(project=self.object.project,
+                                       experiment_group=self.object)
+        # Set one experiment to running with one job
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as scheduler_mock:
+            with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
                 resp = self.auth_client.delete(self.url)
-        assert scheduler_mock.call_count == 2
-        assert outputs_mock_stop.call_count == 4  # Outputs and Logs * 2
+        assert outputs_mock_stop.call_count == 6  # Outputs and Logs * 3
+        assert scheduler_mock.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert Experiment.objects.count() == 0

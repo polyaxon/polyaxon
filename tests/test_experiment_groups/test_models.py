@@ -14,7 +14,8 @@ from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration
 from db.models.experiments import Experiment, ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
-from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
+from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory, \
+    ExperimentJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
     experiment_group_spec_content_bo,
@@ -363,18 +364,24 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.running_experiments.count() == 0
         assert experiment_group.succeeded_experiments.count() == 1
 
-    def test_experiment_group_deletion_triggers_experiments_deletion(self):
+    def test_experiment_group_deletion_triggers_stopping_for_running_experiment(self):
         with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert mock_fct.call_count == 1
+        experiment = ExperimentFactory(project=experiment_group.project,
+                                       experiment_group=experiment_group)
+        # Set this experiment to scheduled
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
 
-        assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
+        assert Experiment.objects.filter(experiment_group=experiment_group).count() == 3
 
-        with patch('scheduler.experiment_scheduler.stop_experiment') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as mock_fct:
             experiment_group.delete()
 
-        assert mock_fct.call_count == 2
+        assert mock_fct.call_count == 1  # Only one experiment was stopped
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
 

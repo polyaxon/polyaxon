@@ -163,6 +163,8 @@ class TestExperimentModel(BaseTest):
         assert experiment.clones.count() == 3
 
         # Deleting a resumed experiment does not delete other experiments
+        last_resumed_experiment_new.set_status(ExperimentLifeCycle.SCHEDULED)
+        ExperimentJobFactory(experiment=last_resumed_experiment_new)
         with patch('scheduler.experiment_scheduler.stop_experiment') as mock_stop:
             last_resumed_experiment_new.delete()
         assert experiment.clones.count() == 2
@@ -172,7 +174,7 @@ class TestExperimentModel(BaseTest):
         with patch('scheduler.experiment_scheduler.stop_experiment') as mock_stop:
             experiment.delete()
         assert Experiment.objects.count() == 0
-        assert mock_stop.call_count == 3
+        assert mock_stop.call_count == 0  # No running experiment
 
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
         with patch('hpsearch.tasks.hp_create.apply_async') as mock_fct:
@@ -306,8 +308,21 @@ class TestExperimentModel(BaseTest):
             assert job.last_status == JobLifeCycle.CREATED
 
     @patch('libs.paths.experiments.delete_path')
+    def test_delete_experiment_does_not_trigger_experiment_stop_if_not_running(self, delete_path):
+        experiment = ExperimentFactory()
+        assert delete_path.call_count == 2  # outputs + logs
+        with patch('scheduler.experiment_scheduler.stop_experiment') as mock_fct:
+            experiment.delete()
+        assert delete_path.call_count == 2 + 2  # outputs + logs
+        assert mock_fct.call_count == 0
+
+    @patch('libs.paths.experiments.delete_path')
     def test_delete_experiment_triggers_experiment_stop_mocks(self, delete_path):
         experiment = ExperimentFactory()
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+
         assert delete_path.call_count == 2  # outputs + logs
         with patch('scheduler.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()

@@ -6,12 +6,21 @@ from flaky import flaky
 from rest_framework import status
 
 from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from constants.experiments import ExperimentLifeCycle
+from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
+from db.models.jobs import Job
+from db.models.notebooks import NotebookJob
 from db.models.projects import Project
+from db.models.tensorboards import TensorboardJob
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
-from factories.factory_experiments import ExperimentFactory
+from factories.factory_experiments import ExperimentFactory, ExperimentJobFactory
+from factories.factory_jobs import JobFactory
+from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseViewTest
 
@@ -201,30 +210,120 @@ class TestProjectDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url_private)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
-    def test_delete_runner(self):
+    def test_delete_triggers_stopping_of_experiment_groups(self):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
-        assert Experiment.objects.count() == 2
-        with patch('scheduler.tensorboard_scheduler.'
-                   'stop_tensorboard') as tensorboard_mock_fct:
-            with patch('scheduler.notebook_scheduler.'
-                       'stop_notebook') as notebook_mock_fct:
-                with patch('scheduler.experiment_scheduler.'
-                           'stop_experiment') as xp_mock_stop:
-                    with patch('libs.paths.projects.delete_path') as delete_path_project_mock_stop:
-                        with patch('libs.paths.experiment_groups.'
-                                   'delete_path') as delete_path_group_mock_stop:
-                            with patch('libs.paths.experiments.'
-                                       'delete_path') as delete_path_xp_mock_stop:
-                                resp = self.auth_client.delete(self.url)
-        assert xp_mock_stop.call_count == 2
-        assert tensorboard_mock_fct.call_count == 1
-        assert notebook_mock_fct.call_count == 1
-        # 2 * project + 1 repo
-        assert delete_path_project_mock_stop.call_count == 3
-        # 2 * 2 * groups
-        assert delete_path_group_mock_stop.call_count
-        assert delete_path_xp_mock_stop.call_count == 4  # 2 * 2  * groups
+        experiment_group = ExperimentGroup.objects.first()
+        # Add running experiment
+        experiment = ExperimentFactory(project=experiment_group.project,
+                                       experiment_group=experiment_group)
+        # Set one experiment to running with one job
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+
+        assert Experiment.objects.count() == 3
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as xp_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert xp_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.queryset.count() == 0
+        assert ExperimentGroup.objects.count() == 0
+        assert Experiment.objects.count() == 0
+
+        # Delete does not work for other project public and private
+        resp = self.auth_client.delete(self.url_other)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        resp = self.auth_client.delete(self.url_private)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_triggers_stopping_of_experiments(self):
+        assert self.queryset.count() == 1
+        assert ExperimentGroup.objects.count() == 2
+        # Add experiment
+        experiment = ExperimentFactory(project=self.object)
+        # Set one experiment to running with one job
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+
+        assert Experiment.objects.count() == 3
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as xp_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert xp_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.queryset.count() == 0
+        assert ExperimentGroup.objects.count() == 0
+        assert Experiment.objects.count() == 0
+
+        # Delete does not work for other project public and private
+        resp = self.auth_client.delete(self.url_other)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        resp = self.auth_client.delete(self.url_private)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_triggers_stopping_of_jobs(self):
+        assert self.queryset.count() == 1
+        for _ in range(2):
+            job = JobFactory(project=self.object)
+            job.set_status(JobLifeCycle.SCHEDULED)
+        assert Job.objects.count() == 2
+
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as job_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert job_mock_stop.call_count == 2
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.queryset.count() == 0
+        assert ExperimentGroup.objects.count() == 0
+        assert Experiment.objects.count() == 0
+
+        # Delete does not work for other project public and private
+        resp = self.auth_client.delete(self.url_other)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        resp = self.auth_client.delete(self.url_private)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_triggers_stopping_of_build_jobs(self):
+        assert self.queryset.count() == 1
+        for _ in range(2):
+            job = BuildJobFactory(project=self.object)
+            job.set_status(JobLifeCycle.SCHEDULED)
+        assert BuildJob.objects.count() == 2
+
+        with patch('scheduler.tasks.build_jobs.build_jobs_stop.apply_async') as job_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert job_mock_stop.call_count == 2
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.queryset.count() == 0
+        assert ExperimentGroup.objects.count() == 0
+        assert Experiment.objects.count() == 0
+
+        # Delete does not work for other project public and private
+        resp = self.auth_client.delete(self.url_other)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        resp = self.auth_client.delete(self.url_private)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_triggers_stopping_of_plugin_jobs(self):
+        assert self.queryset.count() == 1
+
+        notebook_job = NotebookJobFactory(project=self.object)
+        notebook_job.set_status(JobLifeCycle.SCHEDULED)
+
+        tensorboard_job = TensorboardJobFactory(project=self.object)
+        tensorboard_job.set_status(JobLifeCycle.SCHEDULED)
+
+        assert NotebookJob.objects.count() == 1
+        assert TensorboardJob.objects.count() == 1
+
+        with patch('scheduler.tasks.notebooks.'
+                   'projects_notebook_stop.apply_async') as notebook_mock_stop:
+            with patch('scheduler.tasks.tensorboards.'
+                       'tensorboards_stop.apply_async') as tensorboard_mock_stop:
+                resp = self.auth_client.delete(self.url)
+
+        assert notebook_mock_stop.call_count == 1
+        assert tensorboard_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert ExperimentGroup.objects.count() == 0
