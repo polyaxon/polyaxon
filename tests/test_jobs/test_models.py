@@ -121,7 +121,7 @@ class TestJobtModel(BaseTest):
             'status', flat=True)) == [JobLifeCycle.CREATED,
                                       JobLifeCycle.SCHEDULED]
         job.refresh_from_db()
-        assert job.last_status == JobLifeCycle.STARTING
+        assert job.last_status == JobLifeCycle.SCHEDULED
 
     @mock.patch('scheduler.job_scheduler.JobSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
@@ -213,4 +213,3 @@ class TestJobCommit(BaseViewTest):
         new_job = self.create_job(job_spec_content)
         assert new_job.code_reference.commit == new_commit[0]
         assert new_job.code_reference.repo == self.project.repo
-

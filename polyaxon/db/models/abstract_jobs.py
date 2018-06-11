@@ -55,8 +55,8 @@ class AbstractJob(DiffModel, LastStatusMixin):
             # We should not update statuses anymore
             _logger.debug(
                 'Received a new status `%s` for job `%s`. '
-                'But the job is already done with status `%s`', (
-                    status, self.unique_name, current_status))
+                'But the job is already done with status `%s`',
+                status, self.unique_name, current_status)
             return False
         if JobLifeCycle.can_transition(status_from=current_status, status_to=status):
             # Add new status to the job
