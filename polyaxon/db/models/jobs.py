@@ -7,7 +7,7 @@ from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from libs.spec_validation import validate_job_spec_config
-from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
+from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 
 logger = logging.getLogger('db.build_jobs')
 
@@ -66,7 +66,7 @@ class Job(AbstractJob):
 
     @cached_property
     def specification(self):
-        return BuildSpecification(values=self.config)
+        return JobSpecification(values=self.config)
 
     @cached_property
     def image(self):
