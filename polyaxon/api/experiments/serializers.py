@@ -118,7 +118,7 @@ class ExperimentDetailSerializer(ExperimentSerializer):
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
-            'config', 'original', 'original_experiment',
+            'original', 'original_experiment',
             'description', 'config', 'declarations', 'resources',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
@@ -144,8 +144,8 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     def validate_config(self, config):
         """We only validate the config if passed.
 
-        Also we use the GroupSpecification to check if this config was
-        intended as Group experiments.
+        Also we use the ExperimentSpecification to check if this config was
+        intended as an experiment.
         """
         # config is optional
         if not config:
@@ -153,15 +153,14 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
 
         spec = validate_experiment_spec_config(config)
 
-        if spec.is_experiment == 1:
+        if spec.is_experiment:
             # Resume normal creation
             return config
 
-        # Raise an error to tell the use to use experiment creation instead
+        # Raise an error to tell the user to use experiment creation instead
         raise ValidationError('Current experiment creation could not be performed.\n'
                               'The reason is that the specification sent correspond '
-                              'to a `{}`.\n'
-                              'Please use `create group experiment endpoint`.'.format(spec.kind))
+                              'to a `{}`.\n'.format(spec.kind))
 
     def validate(self, attrs):
         if self.initial_data.get('check_specification') and not attrs.get('config'):
