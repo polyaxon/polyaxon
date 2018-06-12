@@ -97,7 +97,7 @@ def get_container_resources(node, container, gpu_resources):
     num_cpu_cores = len(percpu_usage)
     if num_cpu_cores >= node.cpu * 1.5:
         logger.warning('Docker reporting num cpus `%s` and kubernetes reporting `%s`',
-                        num_cpu_cores, node.cpu)
+                       num_cpu_cores, node.cpu)
         num_cpu_cores = node.cpu
     cpu_percentage = 0.
     percpu_percentage = [0.] * num_cpu_cores
@@ -168,6 +168,8 @@ def run(containers, node, persist):
             # Check if we should stream the payload
             # Check if we have this container already in place
             experiment_uuid = RedisJobContainers.get_experiment_for_job(job_uuid)
-            if (RedisToStream.is_monitored_job_resources(job_uuid) or
-                    RedisToStream.is_monitored_experiment_resources(experiment_uuid)):
+            set_last_resources_cond = (
+                RedisToStream.is_monitored_job_resources(job_uuid) or
+                RedisToStream.is_monitored_experiment_resources(experiment_uuid))
+            if set_last_resources_cond:
                 RedisToStream.set_latest_job_resources(job_uuid, payload)

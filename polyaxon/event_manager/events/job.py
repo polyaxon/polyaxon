@@ -65,7 +65,6 @@ class JobStartedEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('last_status'),
     )
 
@@ -79,7 +78,6 @@ class JobStartedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('actor_id'),
         Attribute('last_status'),
     )
@@ -93,7 +91,6 @@ class JobSoppedEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
     )
@@ -108,7 +105,6 @@ class JobSoppedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('actor_id'),
         Attribute('last_status'),
     )
@@ -126,7 +122,6 @@ class JobViewedEvent(Event):
         Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('has_description', attr_type=bool),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -138,7 +133,6 @@ class JobNewStatusEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status'),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -151,7 +145,6 @@ class JobSucceededEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -164,7 +157,6 @@ class JobFailedEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -184,7 +176,6 @@ class JobDeletedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),

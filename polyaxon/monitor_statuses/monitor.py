@@ -39,7 +39,7 @@ def update_job_containers(event, status, job_container_name):
             job_uuid = event['metadata']['labels']['job_uuid']
             if container_status['state']['running'] is not None:
                 logger.info('Monitoring (container_id, job_uuid): (%s, %s)',
-                             container_id, job_uuid)
+                            container_id, job_uuid)
                 RedisJobContainers.monitor(container_id=container_id, job_uuid=job_uuid)
             else:
 

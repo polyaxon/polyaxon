@@ -41,25 +41,21 @@ def build_job_status_post_save(sender, **kwargs):
     job.save()
     auditor.record(event_type=BUILD_JOB_NEW_STATUS,
                    instance=job,
-                   previous_status=previous_status,
-                   target='project')
+                   previous_status=previous_status)
     if instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=BUILD_JOB_STOPPED,
                        instance=job,
-                       previous_status=previous_status,
-                       target='project')
+                       previous_status=previous_status)
 
     if instance.status == JobLifeCycle.FAILED:
         auditor.record(event_type=BUILD_JOB_FAILED,
                        instance=job,
-                       previous_status=previous_status,
-                       target='project')
+                       previous_status=previous_status)
 
     if instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=BUILD_JOB_SUCCEEDED,
                        instance=job,
-                       previous_status=previous_status,
-                       target='project')
+                       previous_status=previous_status)
 
     # Check if we need to schedule a job stop
     if instance.status in (JobLifeCycle.FAILED, JobLifeCycle.SUCCEEDED):

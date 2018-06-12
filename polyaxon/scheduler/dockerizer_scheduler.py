@@ -59,7 +59,6 @@ def create_build_job(user, project, config, code_reference):
         # We need to build the image first
         auditor.record(event_type=BUILD_JOB_STARTED_TRIGGERED,
                        instance=build_job,
-                       target='project',
                        actor_id=user.id)
         build_status = start_dockerizer(build_job=build_job)
     else:
@@ -84,8 +83,7 @@ def start_dockerizer(build_job):
         results = spawner.start_dockerizer(resources=build_job.resources,
                                            node_selectors=build_job.node_selectors)
         auditor.record(event_type=BUILD_JOB_STARTED,
-                       instance=build_job,
-                       target='project')
+                       instance=build_job)
     except ApiException as e:
         _logger.warning('Could not start build job, please check your polyaxon spec %s', e)
         build_job.set_status(

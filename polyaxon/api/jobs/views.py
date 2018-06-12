@@ -221,7 +221,6 @@ class JobStopView(CreateAPIView):
         obj = self.get_object()
         auditor.record(event_type=JOB_STOPPED_TRIGGERED,
                        instance=obj,
-                       target='project',
                        actor_id=request.user.id)
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_STOP,

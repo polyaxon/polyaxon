@@ -58,7 +58,6 @@ class BuildJobStartedEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -71,7 +70,6 @@ class BuildJobStartedTriggeredEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -82,7 +80,6 @@ class BuildJobSoppedEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
     )
@@ -96,7 +93,6 @@ class BuildJobSoppedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('actor_id'),
         Attribute('last_status'),
     )
@@ -112,7 +108,6 @@ class BuildJobViewedEvent(Event):
         Attribute('project.user.id'),
         Attribute('actor_id'),
         Attribute('last_status'),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -123,7 +118,6 @@ class BuildJobNewStatusEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status'),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -135,7 +129,6 @@ class BuildJobSucceededEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -147,7 +140,6 @@ class BuildJobFailedEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
@@ -166,7 +158,6 @@ class BuildJobDeletedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('actor_id'),
         Attribute('last_status'),
     )
