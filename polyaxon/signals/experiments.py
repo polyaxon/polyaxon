@@ -7,9 +7,10 @@ import auditor
 
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
+from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
-from db.models.experiments import CloningStrategy, Experiment, ExperimentMetric, ExperimentStatus
+from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from event_manager.events.experiment import (
     EXPERIMENT_DELETED,
     EXPERIMENT_FAILED,

@@ -10,6 +10,7 @@ import auditor
 
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
+from db.models.cloning_strategies import CloningStrategy
 from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
@@ -19,20 +20,6 @@ from event_manager.events.experiment import (
 from libs.spec_validation import validate_experiment_spec_config
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
-
-
-class CloningStrategy(object):
-    COPY = 'copy'
-    RESTART = 'restart'
-    RESUME = 'resume'
-
-    VALUES = {COPY, RESTART, RESUME}
-
-    CHOICES = (
-        (COPY, COPY),
-        (RESTART, RESTART),
-        (RESUME, RESUME)
-    )
 
 
 class Experiment(DiffModel, DescribableModel, LastStatusMixin):
