@@ -3,9 +3,12 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
+import auditor
+
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
 from db.models.utils import DescribableModel
+from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 
@@ -104,6 +107,41 @@ class Job(AbstractJob, DescribableModel, JobMixin):
                                 status=status,
                                 message=message,
                                 details=details)
+
+    def _clone(self,
+               cloning_strategy,
+               event_type,
+               user=None,
+               description=None,
+               config=None,
+               code_reference=None,
+               update_code_reference=False):
+        if not code_reference and not update_code_reference:
+            code_reference = self.code_reference
+        instance = Job.objects.create(
+            project=self.project,
+            user=user or self.user,
+            description=description or self.description,
+            config=config or self.config,
+            original_job=self,
+            cloning_strategy=cloning_strategy,
+            code_reference=code_reference)
+        auditor.record(event_type=event_type, instance=instance)
+        return instance
+
+    def restart(self,
+                user=None,
+                description=None,
+                config=None,
+                code_reference=None,
+                update_code_reference=False):
+        return self._clone(cloning_strategy=CloningStrategy.RESTART,
+                           event_type=JOB_RESTARTED,
+                           user=user,
+                           description=description,
+                           config=config,
+                           code_reference=code_reference,
+                           update_code_reference=update_code_reference)
 
 
 class JobStatus(AbstractJobStatus):
