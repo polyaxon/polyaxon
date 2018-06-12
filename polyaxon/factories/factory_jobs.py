@@ -2,7 +2,7 @@ from faker import Factory as FakerFactory
 
 import factory
 
-from db.models.jobs import Job
+from db.models.jobs import Job, JobStatus
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from factories.fixtures import job_spec_parsed_content
@@ -18,3 +18,10 @@ class JobFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = Job
+
+
+class JobStatusFactory(factory.DjangoModelFactory):
+    job = factory.SubFactory(JobFactory)
+
+    class Meta:
+        model = JobStatus
