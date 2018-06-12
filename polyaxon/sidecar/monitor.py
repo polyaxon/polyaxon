@@ -1,3 +1,4 @@
+import logging
 import time
 
 import publisher
@@ -5,6 +6,8 @@ import publisher
 from constants.experiments import ExperimentLifeCycle
 from constants.pods import PodLifeCycle
 from polyaxon_schemas.experiment import JobLabelConfig
+
+logger = logging.getLogger('polyaxon.monitors.sidecar')
 
 
 def _handle_log_stream(stream, publish):
