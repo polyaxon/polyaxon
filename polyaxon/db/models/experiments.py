@@ -270,7 +270,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
                experiment_group=None):
         # TODO: We need to check if this instance was stopped after it was created
         # TODO: If that's the case and no updates are passed we just resume this very same instance
-        # If the current instance is a resume of an original than we need to resume the orignal
+        # If the current instance is a resume of an original than we need to resume the original
         if self.is_resume:
             return self.original_experiment.resume(
                 user=user,
