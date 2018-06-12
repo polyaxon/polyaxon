@@ -28,7 +28,7 @@ class Command(BaseMonitorCommand):
             try:
                 return self.get_node()
             except (InterfaceError, ProgrammingError, OperationalError) as e:
-                monitor._logger.exception("Database is not synced yet %s\n", e)
+                monitor.logger.exception("Database is not synced yet %s\n", e)
                 trials += 1
                 time.sleep(log_sleep_interval * 2)
         return None
