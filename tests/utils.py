@@ -239,6 +239,14 @@ class BaseTest(TestCase):
         patcher.start()
         self.addCleanup(patcher.stop)
 
+        patcher = patch('scheduler.dockerizer_scheduler.create_build_job')
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        patcher = patch('scheduler.tasks.jobs.jobs_build.apply_async')
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
 
 class BaseViewTest(BaseTest):
     """This is the base test for all tests.
