@@ -43,12 +43,17 @@ class JobSerializer(serializers.ModelSerializer):
 
 
 class JobDetailSerializer(JobSerializer):
+    original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
 
     class Meta(JobSerializer.Meta):
         fields = JobSerializer.Meta.fields + (
-            'description', 'config', 'declarations', 'resources',
-        )
+            'original', 'original_job',
+            'description', 'config', 'resources',)
+        extra_kwargs = {'original_job': {'write_only': True}}
+
+    def get_original(self, obj):
+        return obj.original_job.unique_name if obj.original_job else None
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
@@ -59,8 +64,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = (
-            'user', 'description', 'config', 'declarations')
+        fields = ('user', 'description', 'config',)
 
     def get_user(self, obj):
         return obj.user.username

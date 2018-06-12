@@ -71,7 +71,7 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_job_deleted(self, activitylogs_record, tracker_record):
+    def test_build_job_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_DELETED,
                        target='project',
                        instance=self.build_job)
@@ -81,7 +81,7 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_job_triggered_deleted(self, activitylogs_record, tracker_record):
+    def test_build_job_triggered_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_DELETED_TRIGGERED,
                        instance=self.build_job,
                        target='project',
@@ -124,7 +124,7 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_new_status(self, activitylogs_record, tracker_record):
+    def test_build_job_new_status(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_NEW_STATUS,
                        instance=self.build_job,
                        target='project')
@@ -134,7 +134,7 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_failed(self, activitylogs_record, tracker_record):
+    def test_build_job_failed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_FAILED,
                        instance=self.build_job,
                        target='project')
@@ -144,7 +144,7 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_succeeded(self, activitylogs_record, tracker_record):
+    def test_build_job_succeeded(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_SUCCEEDED,
                        instance=self.build_job,
                        target='project')
@@ -154,9 +154,9 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_job_logs_viewed_triggered(self, activitylogs_record, tracker_record):
+    def test_build_job_logs_viewed_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_LOGS_VIEWED,
-                       instance=self.job,
+                       instance=self.build_job,
                        target='project',
                        actor_id=1)
 
@@ -165,9 +165,9 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_job_statuses_viewed_triggered(self, activitylogs_record, tracker_record):
+    def test_build_job_statuses_viewed_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_STATUSES_VIEWED,
-                       instance=self.job,
+                       instance=self.build_job,
                        target='project',
                        actor_id=1)
 

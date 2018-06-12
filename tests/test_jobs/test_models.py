@@ -20,7 +20,7 @@ from tests.utils import BaseTest, BaseViewTest
 
 
 @pytest.mark.jobs_mark
-class TestJobtModel(BaseTest):
+class TestJobModel(BaseTest):
 
     def test_create_job(self):
         job = JobFactory()
