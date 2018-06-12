@@ -20,6 +20,9 @@ BUILD_JOB_DELETED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.DELET
 BUILD_JOB_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
                                                 event_actions.DELETED,
                                                 event_subjects.TRIGGER)
+BUILD_JOB_LOGS_VIEWED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.LOGS_VIEWED)
+BUILD_JOB_STATUSES_VIEWED = '{}.{}'.format(event_subjects.BUILD_JOB,
+                                           event_actions.STATUSES_VIEWED)
 
 
 class BuildJobCreatedEvent(Event):
@@ -165,4 +168,34 @@ class BuildJobDeletedTriggeredEvent(Event):
         Attribute('project.user.id'),
         Attribute('target'),  # project, experiment_group, experiment
         Attribute('actor_id'),
+        Attribute('last_status'),
+    )
+
+
+class BuildJobLogsViewedEvent(Event):
+    event_type = BUILD_JOB_LOGS_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class BuildJobStatusesViewedEvent(Event):
+    event_type = BUILD_JOB_STATUSES_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('last_status'),
     )

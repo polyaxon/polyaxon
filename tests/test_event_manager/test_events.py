@@ -107,7 +107,7 @@ class TestEvents(BaseTest):
         assert notebook.NotebookFailedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSucceededEvent.get_event_subject() == 'notebook'
 
-        # Notebook
+        # Job
         assert job.JobCreatedEvent.get_event_subject() == 'job'
         assert job.JobUpdatedEvent.get_event_subject() == 'job'
         assert job.JobStartedEvent.get_event_subject() == 'job'
@@ -120,6 +120,9 @@ class TestEvents(BaseTest):
         assert job.JobSucceededEvent.get_event_subject() == 'job'
         assert job.JobDeletedEvent.get_event_subject() == 'job'
         assert job.JobDeletedTriggeredEvent.get_event_subject() == 'job'
+        assert job.JobLogsViewedEvent.get_event_subject() == 'job'
+        assert job.JobRestartedTriggeredEvent.get_event_subject() == 'job'
+        assert job.JobStatusesViewedEvent.get_event_subject() == 'job'
 
         # BuildJob
         assert build_job.BuildJobCreatedEvent.get_event_subject() == 'build_job'
@@ -134,6 +137,8 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobSucceededEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobDeletedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobDeletedTriggeredEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobLogsViewedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobStatusesViewedEvent.get_event_subject() == 'build_job'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
@@ -271,6 +276,9 @@ class TestEvents(BaseTest):
         assert job.JobSucceededEvent.get_event_action() is None
         assert job.JobDeletedEvent.get_event_action() is None
         assert job.JobDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert job.JobLogsViewedEvent.get_event_action() == 'logs_viewed'
+        assert job.JobRestartedTriggeredEvent.get_event_action() == 'restarted'
+        assert job.JobStatusesViewedEvent.get_event_action() == 'statuses_viewed'
 
         # Build job
         assert build_job.BuildJobCreatedEvent.get_event_action() == 'created'
@@ -285,6 +293,8 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobSucceededEvent.get_event_action() is None
         assert build_job.BuildJobDeletedEvent.get_event_action() is None
         assert build_job.BuildJobDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert build_job.BuildJobLogsViewedEvent.get_event_action() == 'logs_viewed'
+        assert build_job.BuildJobStatusesViewedEvent.get_event_action() == 'statuses_viewed'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'

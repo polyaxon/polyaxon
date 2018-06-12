@@ -152,3 +152,36 @@ class AuditorJobTest(BaseTest):
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_logs_viewed_triggered(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_LOGS_VIEWED,
+                       instance=self.job,
+                       target='project',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_restarted_triggered(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_RESTARTED_TRIGGERED,
+                       instance=self.job,
+                       target='project',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_statuses_viewed_triggered(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_STATUSES_VIEWED,
+                       instance=self.job,
+                       target='project',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
