@@ -35,7 +35,8 @@ class AbstractJob(DiffModel, LastStatusMixin):
 
     @property
     def started_at(self):
-        status = self.statuses.filter(status=JobLifeCycle.BUILDING).first()
+        status = self.statuses.filter(status__in=[JobLifeCycle.BUILDING,
+                                                  JobLifeCycle.SCHEDULED]).first()
         if not status:
             status = self.statuses.filter(status=JobLifeCycle.RUNNING).first()
         if status:
