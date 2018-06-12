@@ -14,7 +14,7 @@ from constants.urls import (
 jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
             views.JobDetailView.as_view()),
-    re_path(r'^{}/{}/job/{}/restart/?$'.format(
+    re_path(r'^{}/{}/jobs/{}/restart/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.JobRestartView.as_view()),
     re_path(r'^{}/{}/jobs/{}/statuses/?$'.format(

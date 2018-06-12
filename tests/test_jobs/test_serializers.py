@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from api.jobs.serializers import JobSerializer, JobDetailSerializer, JobStatusSerializer
+from api.jobs.serializers import JobDetailSerializer, JobSerializer, JobStatusSerializer
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory, JobStatusFactory

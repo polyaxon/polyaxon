@@ -20,13 +20,12 @@ from django.http import StreamingHttpResponse
 import auditor
 
 from api.jobs.serializers import (
-    JobSerializer,
     JobCreateSerializer,
     JobDetailSerializer,
-    JobStatusSerializer,
+    JobSerializer,
+    JobStatusSerializer
 )
 from api.utils.views import AuditorMixinView, ListCreateAPIView
-from db.models.experiments import Experiment
 from db.models.jobs import Job, JobStatus
 from event_manager.events.job import (
     JOB_CREATED,
@@ -38,19 +37,19 @@ from event_manager.events.job import (
     JOB_UPDATED,
     JOB_VIEWED
 )
-from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
+from event_manager.events.project import PROJECT_JOBS_VIEWED
 from libs.paths.jobs import get_job_logs_path
 from libs.permissions.projects import get_permissible_project
-from libs.spec_validation import validate_experiment_spec_config
+from libs.spec_validation import validate_job_spec_config
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
-_logger = logging.getLogger("polyaxon.views.experiments")
+_logger = logging.getLogger("polyaxon.views.jobs")
 
 
 class ProjectJobListView(ListCreateAPIView):
-    """List/Create an experiment under a project"""
+    """List/Create an job under a project"""
     queryset = Job.objects.all()
     serializer_class = JobSerializer
     create_serializer_class = JobCreateSerializer
@@ -58,7 +57,7 @@ class ProjectJobListView(ListCreateAPIView):
 
     def filter_queryset(self, queryset):
         project = get_permissible_project(view=self)
-        auditor.record(event_type=PROJECT_EXPERIMENTS_VIEWED,
+        auditor.record(event_type=PROJECT_JOBS_VIEWED,
                        instance=project,
                        actor_id=self.request.user.id)
         return queryset.filter(project=project)
@@ -99,7 +98,7 @@ class JobCloneView(CreateAPIView):
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))
 
-    def clone(self, obj, config, declarations, update_code_reference, description):
+    def clone(self, obj, config, update_code_reference, description):
         pass
 
     def post(self, request, *args, **kwargs):
@@ -110,13 +109,11 @@ class JobCloneView(CreateAPIView):
 
         description = None
         config = None
-        declarations = None
         update_code_reference = False
         if 'config' in request.data:
-            spec = validate_experiment_spec_config(
+            spec = validate_job_spec_config(
                 [obj.specification.parsed_data, request.data['config']], raise_for_rest=True)
             config = spec.parsed_data
-            declarations = spec.declarations
         if 'update_code' in request.data:
             try:
                 update_code_reference = to_bool(request.data['update_code'])
@@ -126,7 +123,6 @@ class JobCloneView(CreateAPIView):
             description = request.data['description']
         new_obj = self.clone(obj=obj,
                              config=config,
-                             declarations=declarations,
                              update_code_reference=update_code_reference,
                              description=description)
         serializer = self.get_serializer(new_obj)
@@ -134,16 +130,15 @@ class JobCloneView(CreateAPIView):
 
 
 class JobRestartView(JobCloneView):
-    queryset = Experiment.objects.all()
+    queryset = Job.objects.all()
     serializer_class = JobSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
     event_type = JOB_RESTARTED_TRIGGERED
 
-    def clone(self, obj, config, declarations, update_code_reference, description):
+    def clone(self, obj, config, update_code_reference, description):
         return obj.restart(user=self.request.user,
                            config=config,
-                           declarations=declarations,
                            update_code_reference=update_code_reference,
                            description=description)
 
@@ -151,13 +146,13 @@ class JobRestartView(JobCloneView):
 class JobViewMixin(object):
     """A mixin to filter by job."""
     project = None
-    experiment = None
+    job = None
 
     def get_job(self):
         # Get project and check access
         self.project = get_permissible_project(view=self)
         sequence = self.kwargs['job_sequence']
-        self.job = get_object_or_404(Experiment, project=self.project, sequence=sequence)
+        self.job = get_object_or_404(Job, project=self.project, sequence=sequence)
         return self.job
 
     def filter_queryset(self, queryset):
@@ -171,7 +166,7 @@ class JobStatusListView(JobViewMixin, ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(experiment=self.get_job())
+        serializer.save(job=self.get_job())
 
     def get(self, request, *args, **kwargs):
         response = super(JobStatusListView, self).get(request, *args, **kwargs)
@@ -226,6 +221,7 @@ class JobStopView(CreateAPIView):
         obj = self.get_object()
         auditor.record(event_type=JOB_STOPPED_TRIGGERED,
                        instance=obj,
+                       target='project',
                        actor_id=request.user.id)
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_STOP,

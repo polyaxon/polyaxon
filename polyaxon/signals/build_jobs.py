@@ -1,6 +1,6 @@
 import logging
 
-from django.db.models.signals import post_save, pre_delete, post_delete
+from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
 
 import auditor
@@ -8,11 +8,12 @@ import auditor
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from event_manager.events.build_job import (
+    BUILD_JOB_DELETED,
     BUILD_JOB_FAILED,
     BUILD_JOB_NEW_STATUS,
     BUILD_JOB_STOPPED,
-    BUILD_JOB_SUCCEEDED,
-    BUILD_JOB_DELETED)
+    BUILD_JOB_SUCCEEDED
+)
 from libs.decorators import ignore_raw, ignore_updates
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks

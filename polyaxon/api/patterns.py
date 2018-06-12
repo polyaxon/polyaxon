@@ -29,6 +29,8 @@ api_patterns += [
         ('api.nodes.urls', 'nodes'), namespace='nodes')),
     # always include project related urls last because of the used patterns
     re_path(r'', include(
+        ('api.jobs.urls', 'jobs'), namespace='jobs')),
+    re_path(r'', include(
         ('api.experiments.urls', 'experiments'), namespace='experiments')),
     re_path(r'', include(
         ('api.experiment_groups.urls', 'experiment_groups'), namespace='experiment_groups')),
