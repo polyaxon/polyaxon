@@ -107,8 +107,18 @@ class AuditorProjectTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_project_experiment_viewed(self, activitylogs_record, tracker_record):
+    def test_project_experiments_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_EXPERIMENTS_VIEWED,
+                       instance=self.project,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_project_jobs_viewed(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=project_events.PROJECT_JOBS_VIEWED,
                        instance=self.project,
                        actor_id=1)
 

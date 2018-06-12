@@ -12,6 +12,8 @@ PROJECT_SET_PUBLIC = '{}.set_public'.format(event_subjects.PROJECT)  # Not set
 PROJECT_SET_PRIVATE = '{}.set_private'.format(event_subjects.PROJECT)  # Not set
 PROJECT_EXPERIMENTS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
                                             event_actions.EXPERIMENTS_VIEWED)
+PROJECT_JOBS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
+                                     event_actions.JOBS_VIEWED)
 PROJECT_EXPERIMENT_GROUPS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
                                                   event_actions.EXPERIMENT_GROUPS_VIEWED)
 
@@ -89,6 +91,17 @@ class ProjectSetPrivateEvent(Event):
 
 class ProjectExperimentsViewedEvent(Event):
     event_type = PROJECT_EXPERIMENTS_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('is_public', attr_type=bool),
+    )
+
+
+class ProjectJobsViewedEvent(Event):
+    event_type = PROJECT_JOBS_VIEWED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

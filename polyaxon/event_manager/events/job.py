@@ -26,6 +26,8 @@ JOB_RESTARTED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
                                             event_subjects.TRIGGER)
 JOB_STATUSES_VIEWED = '{}.{}'.format(event_subjects.JOB,
                                      event_actions.STATUSES_VIEWED)
+JOB_RESTARTED = '{}.{}'.format(event_subjects.JOB,
+                               event_actions.RESTARTED)
 
 
 class JobCreatedEvent(Event):
@@ -229,5 +231,18 @@ class JobStatusesViewedEvent(Event):
         Attribute('project.user.id'),
         Attribute('user.id'),
         Attribute('actor_id'),
+        Attribute('last_status'),
+    )
+
+
+class JobRestartedEvent(Event):
+    event_type = JOB_RESTARTED
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
