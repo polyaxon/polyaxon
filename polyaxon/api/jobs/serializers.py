@@ -75,10 +75,6 @@ class JobCreateSerializer(serializers.ModelSerializer):
         Also we use the JobSpecification to check if this config was
         intended as job.
         """
-        # config is optional
-        if not config:
-            return config
-
         spec = validate_job_spec_config(config)
 
         if spec.is_job:
@@ -89,15 +85,3 @@ class JobCreateSerializer(serializers.ModelSerializer):
         raise ValidationError('Current job creation could not be performed.\n'
                               'The reason is that the specification sent correspond '
                               'to a `{}`.\n'.format(spec.kind))
-
-    def validate(self, attrs):
-        if self.initial_data.get('check_specification') and not attrs.get('config'):
-            raise ValidationError('Experiment expects a `config`.')
-        return attrs
-
-    def create(self, validated_data):
-        """Check the params or set the value from the specification."""
-        if not validated_data.get('declarations') and validated_data.get('config'):
-            config = validate_job_spec_config(validated_data['config'])
-            validated_data['declarations'] = config.declarations
-        return super(JobCreateSerializer, self).create(validated_data=validated_data)
