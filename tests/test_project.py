@@ -8,10 +8,9 @@ import uuid
 from faker import Faker
 from unittest import TestCase
 
-from polyaxon_schemas.job import JobConfig
-
 from polyaxon_client.project import ProjectClient
 from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.job import JobConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
 faker = Faker()
