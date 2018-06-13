@@ -66,7 +66,7 @@ class TestExperimentClient(TestCase):
         assert exp == result.to_dict()
 
     @httpretty.activate
-    def test_update_project(self):
+    def test_update_experiment(self):
         exp = ExperimentConfig(config={})
         httpretty.register_uri(
             httpretty.PATCH,
@@ -100,12 +100,12 @@ class TestExperimentClient(TestCase):
         assert result.status_code == 204
 
     @httpretty.activate
-    def test_get_experiment_statuses(self):
+    def test_get_experiment_statuses_and_latest_code(self):
         experiment_uuid = uuid.uuid4().hex
         exp = ExperimentStatusConfig(uuid=experiment_uuid,
-                                        experiment=experiment_uuid,
-                                        created_at=datetime.datetime.now(),
-                                        status='Running').to_dict()
+                                     experiment=experiment_uuid,
+                                     created_at=datetime.datetime.now(),
+                                     status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -126,9 +126,9 @@ class TestExperimentClient(TestCase):
     def test_get_experiment_metrics(self):
         experiment_uuid = uuid.uuid4().hex
         exp = ExperimentMetricConfig(uuid=experiment_uuid,
-                                        experiment=experiment_uuid,
-                                        created_at=datetime.datetime.now(),
-                                        values={'accuracy': 0.9}).to_dict()
+                                     experiment=experiment_uuid,
+                                     created_at=datetime.datetime.now(),
+                                     values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -149,9 +149,9 @@ class TestExperimentClient(TestCase):
     def test_create_experiment_metric(self):
         experiment_uuid = uuid.uuid4().hex
         exp = ExperimentMetricConfig(uuid=experiment_uuid,
-                                        experiment=experiment_uuid,
-                                        created_at=datetime.datetime.now(),
-                                        values={'accuracy': 0.9}).to_dict()
+                                     experiment=experiment_uuid,
+                                     created_at=datetime.datetime.now(),
+                                     values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
