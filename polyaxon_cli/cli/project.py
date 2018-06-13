@@ -343,6 +343,80 @@ def experiments(ctx, page, metrics):
 
 
 @project.command()
+@click.option('--page', type=int, help='To paginate through the list of jobs.')
+@click.pass_context
+@clean_outputs
+@clean_outputs
+def jobs(ctx, page):
+    """List jobs for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = get_project_or_local(ctx.obj['project'])
+
+    page = page or 1
+    try:
+        response = PolyaxonClients().project.list_jobs(user, project_name, page=page)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get jobs for project `{}`.'.format(project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header('Jobs for project `{}/{}`.'.format(user, project_name))
+        Printer.print_header('Navigation:')
+        dict_tabulate(meta)
+    else:
+        Printer.print_header('No jobs found for project `{}/{}`.'.format(user, project_name))
+
+    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+               for o in response['results']]
+    objects = list_dicts_to_tabulate(objects)
+    if objects:
+        Printer.print_header("Jobs:")
+        objects.pop('project_name', None)
+        dict_tabulate(objects, is_list_dict=True)
+
+
+@project.command()
+@click.option('--page', type=int, help='To paginate through the list of build jobs.')
+@click.pass_context
+@clean_outputs
+@clean_outputs
+def builds(ctx, page):
+    """List build jobs for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = get_project_or_local(ctx.obj['project'])
+
+    page = page or 1
+    try:
+        response = PolyaxonClients().project.list_builds(user, project_name, page=page)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get builds for project `{}`.'.format(project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header('Builds for project `{}/{}`.'.format(user, project_name))
+        Printer.print_header('Navigation:')
+        dict_tabulate(meta)
+    else:
+        Printer.print_header('No builds found for project `{}/{}`.'.format(user, project_name))
+
+    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+               for o in response['results']]
+    objects = list_dicts_to_tabulate(objects)
+    if objects:
+        Printer.print_header("Builds:")
+        objects.pop('project_name', None)
+        dict_tabulate(objects, is_list_dict=True)
+
+
+@project.command()
 @click.pass_context
 @clean_outputs
 def clone(ctx):
