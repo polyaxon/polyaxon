@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+from polyaxon_schemas.job import JobConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
@@ -52,7 +53,7 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
                  specification.is_build)
     if not spec_cond:
         Printer.print_error(
-            'This command expects an experiment or a group specification,'
+            'This command expects an experiment, a group, a job, or a build specification,'
             'received instead a `{}` specification'.format(specification.kind))
         if specification.is_notebook:
             click.echo('Please check "polyaxon notebook --help" to start a notebook.')
@@ -67,21 +68,22 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
 
-    if specification.is_experiment:
+    def run_experiment():
         click.echo('Creating an independent experiment.')
         experiment = ExperimentConfig(
             description=description,
             config=specification.parsed_data)
         try:
-            project_client.create_experiment(project.user,
-                                             project.name,
-                                             experiment)
+            PolyaxonClients().project.create_experiment(project.user,
+                                                        project.name,
+                                                        experiment)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create experiment.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
         Printer.print_success('Experiment was created')
-    elif specification.is_group:
+
+    def run_group():
         click.echo('Creating an experiment group with the following definition:')
         experiments_def = specification.experiments_def
         get_group_experiments_info(**experiments_def)
@@ -97,3 +99,42 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
             Printer.print_error('Could not create experiment group.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
+
+    def run_job():
+        click.echo('Creating a job.')
+        job = JobConfig(
+            description=description,
+            config=specification.parsed_data)
+        try:
+            project_client.create_job(project.user,
+                                      project.name,
+                                      job)
+            Printer.print_success('Job was created')
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not create job.')
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
+
+    def run_build():
+        click.echo('Creating a build.')
+        job = JobConfig(
+            description=description,
+            config=specification.parsed_data)
+        try:
+            project_client.create_build(project.user,
+                                        project.name,
+                                        job)
+            Printer.print_success('Build was created')
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not create build.')
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
+
+    if specification.is_experiment:
+        run_experiment()
+    elif specification.is_group:
+        run_group()
+    elif specification.is_job:
+        run_job()
+    elif specification.is_build:
+        run_build()
