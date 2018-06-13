@@ -20,11 +20,11 @@ def start_job(job):
     try:
         image_name, image_tag = get_image_info(build_job=job.build_job)
     except ValueError as e:
-        _logger.warning('Could not start the notebook, %s', e)
+        _logger.warning('Could not start the job, %s', e)
         job.set_status(JobLifeCycle.FAILED, message='External git repo was note found.')
         return
     job_docker_image = '{}:{}'.format(image_name, image_tag)
-    _logger.info('Start notebook with built image `%s`', job_docker_image)
+    _logger.info('Start job with built image `%s`', job_docker_image)
 
     spawner = JobSpawner(
         project_name=job.project.unique_name,
