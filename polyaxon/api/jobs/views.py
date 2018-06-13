@@ -228,7 +228,7 @@ class JobStopView(CreateAPIView):
                 'project_name': obj.project.unique_name,
                 'project_uuid': obj.project.uuid.hex,
                 'job_name': obj.unique_name,
-                'job_uuid': obj.unique_name,
+                'job_uuid': obj.uuid.hex,
                 'specification': obj.config,
                 'update_status': True
             })

@@ -399,7 +399,7 @@ class ExperimentStopView(CreateAPIView):
                 'project_name': obj.project.unique_name,
                 'project_uuid': obj.project.uuid.hex,
                 'experiment_name': obj.unique_name,
-                'experiment_uuid': obj.unique_name,
+                'experiment_uuid': obj.uuid.hex,
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
                 'specification': obj.config,

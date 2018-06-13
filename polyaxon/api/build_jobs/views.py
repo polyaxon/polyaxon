@@ -179,7 +179,7 @@ class BuildStopView(CreateAPIView):
                 'project_name': obj.project.unique_name,
                 'project_uuid': obj.project.uuid.hex,
                 'build_job_name': obj.unique_name,
-                'build_job_uuid': obj.unique_name,
+                'build_job_uuid': obj.uuid.hex,
                 'specification': obj.specification,
                 'update_status': True
             })

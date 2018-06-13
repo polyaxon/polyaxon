@@ -57,7 +57,7 @@ def experiments_group_stop_experiments(experiment_group_id, pending, message=Non
                         'project_name': experiment.project.unique_name,
                         'project_uuid': experiment.project.uuid.hex,
                         'experiment_name': experiment.unique_name,
-                        'experiment_uuid': experiment.unique_name,
+                        'experiment_uuid': experiment.uuid.hex,
                         'experiment_group_name': experiment_group.unique_name,
                         'experiment_group_uuid': experiment_group.uuid.hex,
                         'specification': experiment.config,
