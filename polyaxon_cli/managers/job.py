@@ -5,7 +5,7 @@ import sys
 
 from polyaxon_cli.managers.base import BaseConfigManager
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_schemas.experiment import ExperimentJobConfig
+from polyaxon_schemas.job import JobConfig
 
 
 class JobManager(BaseConfigManager):
@@ -14,7 +14,7 @@ class JobManager(BaseConfigManager):
     IS_GLOBAL = False
     IS_POLYAXON_DIR = True
     CONFIG_FILE_NAME = '.polyaxonjob'
-    CONFIG = ExperimentJobConfig
+    CONFIG = JobConfig
 
     @classmethod
     def get_config_or_raise(cls):
