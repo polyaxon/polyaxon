@@ -4,9 +4,11 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+from polyaxon_schemas.polyaxonfile import reader
 
-from polyaxon_cli.cli.experiment import get_experiment_or_local
+from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
+from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -21,25 +23,40 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 from polyaxon_schemas.utils import to_list
 
 
-def get_job_or_local(project=None,
-                     experiment=None,
-                     job=None):  # pylint:disable=redefined-outer-name
-    user, project_name, experiment = get_experiment_or_local(project, experiment)
-    job = job or JobManager.get_config_or_raise().sequence
-    return user, project_name, experiment, job
+def get_job_or_local(project=None, _job=None):
+    user, project_name = get_project_or_local(project)
+    _job = _job or JobManager.get_config_or_raise().sequence
+    return user, project_name, _job
+
+
+def get_job_details(_job):
+    if job.description:
+        Printer.print_header("Job description:")
+        click.echo('{}\n'.format(job.description))
+
+    if job.resources:
+        get_resources(job.resources.to_dict(), header="Job resources:")
+
+    response = job.to_light_dict(
+        humanize_values=True,
+        exclude_attrs=[
+            'uuid', 'config', 'project', 'description',
+            'declarations', 'resources',
+        ])
+
+    Printer.print_header("Job info:")
+    dict_tabulate(Printer.add_status_color(response))
 
 
 @click.group()
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-@click.option('--experiment', '-xp', type=int, help="The sequence number of the experiment")
 @click.option('--job', '-j', type=int, help="The job sequence.")
 @click.pass_context
 @clean_outputs
-def job(ctx, project, experiment, job):  # pylint:disable=redefined-outer-name
+def job(ctx, project, job):  # pylint:disable=redefined-outer-name
     """Commands for jobs."""
     ctx.obj = ctx.obj or {}
     ctx.obj['project'] = project
-    ctx.obj['experiment'] = experiment
     ctx.obj['job'] = job
 
 
@@ -55,7 +72,7 @@ def get(ctx):
 
     \b
     ```bash
-    $ polyaxon job --job=1 --experiment=1 get
+    $ polyaxon job --job=1 get
     ```
 
     \b
@@ -63,11 +80,9 @@ def get(ctx):
     $ polyaxon job --job=1 --project=project_name get
     ```
     """
-    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
-                                                            ctx.obj['experiment'],
-                                                            ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
     try:
-        response = PolyaxonClients().job.get_job(user, project_name, experiment, _job)
+        response = PolyaxonClients().job.get_job(user, project_name, _job)
         # Set caching only if we have an initialized project
         if ProjectManager.is_initialized():
             JobManager.set_config(response)
@@ -81,7 +96,7 @@ def get(ctx):
 
     response = Printer.add_status_color(response.to_light_dict(
         humanize_values=True,
-        exclude_attrs=['uuid', 'definition', 'experiment', 'unique_name', 'resources']
+        exclude_attrs=['uuid', 'definition', 'unique_name', 'resources']
     ))
     Printer.print_header("Job info:")
     dict_tabulate(response)
@@ -89,7 +104,171 @@ def get(ctx):
 
 @job.command()
 @click.pass_context
-def statuses(ctx):
+@clean_outputs
+def delete(ctx):
+    """Delete job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon job delete
+    ```
+    """
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    if not click.confirm("Are sure you want to delete job `{}`".format(_job)):
+        click.echo('Existing without deleting job.')
+        sys.exit(1)
+
+    try:
+        response = PolyaxonClients().job.delete_job(
+            user, project_name, _job)
+        # Purge caching
+        JobManager.purge()
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not delete job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    if response.status_code == 204:
+        Printer.print_success("Job `{}` was delete successfully".format(_job))
+
+
+@job.command()
+@click.option('--yes', '-y', is_flag=True, default=False,
+              help="Automatic yes to prompts. "
+                   "Assume \"yes\" as answer to all prompts and run non-interactively.")
+@click.pass_context
+@clean_outputs
+def stop(ctx, yes):
+    """Stop job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon job stop
+    ```
+
+    \b
+    ```bash
+    $ polyaxon job -xp 2 stop
+    ```
+    """
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    if not yes and not click.confirm("Are sure you want to stop "
+                                     "job `{}`".format(_job)):
+        click.echo('Existing without stopping job.')
+        sys.exit(0)
+
+    try:
+        PolyaxonClients().job.stop(user, project_name, _job)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not stop job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Job is being stopped.")
+
+
+@job.command()
+@click.option('--copy', '-c', is_flag=True, default=False,
+              help="To copy the job before restarting.")
+@click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
+              help="The polyaxon files to update with.")
+@click.option('-u', is_flag=True, default=False,
+              help="To upload the repo before restarting.")
+@click.pass_context
+@clean_outputs
+def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
+    """Restart job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon job --job=1 restart
+    ```
+    """
+    config = None
+    update_code = None
+    if file:
+        config = reader.read(file)
+
+    # Check if we need to upload
+    if u:
+        ctx.invoke(upload, async=False)
+        update_code = True
+
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    try:
+        if copy:
+            response = PolyaxonClients().job.copy(
+                user, project_name, _job, config=config, update_code=update_code)
+        else:
+            response = PolyaxonClients().job.restart(
+                user, project_name, _job, config=config, update_code=update_code)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not restart job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    get_job_details(response)
+
+
+@job.command()
+@click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
+              help="The polyaxon files to update with.")
+@click.option('-u', is_flag=True, default=False,
+              help="To upload the repo before resuming.")
+@click.pass_context
+@clean_outputs
+def resume(ctx, file, u):  # pylint:disable=redefined-builtin
+    """Resume job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon job --job=1 resume
+    ```
+    """
+    config = None
+    update_code = None
+    if file:
+        config = reader.read(file)
+
+    # Check if we need to upload
+    if u:
+        ctx.invoke(upload, async=False)
+        update_code = True
+
+    user, project_name, _job = get_job_or_local(ctx.obj['project'],
+                                                ctx.obj['job'])
+    try:
+        response = PolyaxonClients().job.resume(
+            user, project_name, _job, config=config, update_code=update_code)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not resume job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    get_job_details(response)
+
+
+@job.command()
+@click.option('--page', type=int, help="To paginate through the list of statuses.")
+@click.pass_context
+@clean_outputs
+def statuses(ctx, page):
     """Get job status.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -98,14 +277,13 @@ def statuses(ctx):
 
     \b
     ```bash
-    $ polyaxon job -xp 1 -j 2 statuses
+    $ polyaxon job -j 2 statuses
     ```
     """
-    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
-                                                            ctx.obj['experiment'],
-                                                            ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    page = page or 1
     try:
-        response = PolyaxonClients().job.get_statuses(user, project_name, experiment, _job)
+        response = PolyaxonClients().job.get_statuses(user, project_name, _job, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get status for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -130,6 +308,7 @@ def statuses(ctx):
 @job.command()
 @click.option('--gpu', '-g', is_flag=True, help='List job GPU resources.')
 @click.pass_context
+@clean_outputs
 def resources(ctx, gpu):
     """Get job resources.
 
@@ -149,14 +328,11 @@ def resources(ctx, gpu):
     $ polyaxon job -j 2 resources --gpu
     ```
     """
-    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
-                                                            ctx.obj['experiment'],
-                                                            ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
     try:
         message_handler = Printer.gpu_resources if gpu else Printer.resources
         PolyaxonClients().job.resources(user,
                                         project_name,
-                                        experiment,
                                         _job,
                                         message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -167,6 +343,7 @@ def resources(ctx, gpu):
 
 @job.command()
 @click.pass_context
+@clean_outputs
 def logs(ctx):
     """Get job logs.
 
@@ -176,7 +353,7 @@ def logs(ctx):
 
     \b
     ```bash
-    $ polyaxon job -xp 3 -j 2 logs
+    $ polyaxon job -j 2 logs
     ```
 
     \b
@@ -184,9 +361,7 @@ def logs(ctx):
     $ polyaxon job logs
     ```
     """
-    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
-                                                            ctx.obj['experiment'],
-                                                            ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
 
     def message_handler(message):
         log_lines = to_list(message['log_lines'])
@@ -196,7 +371,6 @@ def logs(ctx):
     try:
         PolyaxonClients().job.logs(user,
                                    project_name,
-                                   experiment,
                                    _job,
                                    message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
