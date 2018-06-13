@@ -55,19 +55,19 @@ class NotebookSpawner(ProjectJobSpawner):
         notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
 
         return [
-                "jupyter notebook "
-                "--no-browser "
-                "--port={port} "
-                "--ip=0.0.0.0 "
-                "--allow-root "
-                "--NotebookApp.token={token} "
-                "--NotebookApp.trust_xheaders=True "
-                "--NotebookApp.base_url={base_url} "
-                "--NotebookApp.notebook_dir={notebook_dir} ".format(
-                    port=self.PORT,
-                    token=notebook_token,
-                    base_url=notebook_url,
-                    notebook_dir=notebook_dir)]
+            "jupyter notebook "
+            "--no-browser "
+            "--port={port} "
+            "--ip=0.0.0.0 "
+            "--allow-root "
+            "--NotebookApp.token={token} "
+            "--NotebookApp.trust_xheaders=True "
+            "--NotebookApp.base_url={base_url} "
+            "--NotebookApp.notebook_dir={notebook_dir} ".format(
+                port=self.PORT,
+                token=notebook_token,
+                base_url=notebook_url,
+                notebook_dir=notebook_dir)]
 
     def start_notebook(self, image, resources=None, node_selectors=None):
         ports = [self.request_notebook_port()]
