@@ -7,9 +7,9 @@ from polyaxon_cli.managers.experiment_job import ExperimentJobManager
 from polyaxon_schemas.experiment import ExperimentJobConfig
 
 
-class TestJobManager(TestCase):
+class TestExperimentJobManager(TestCase):
     def test_default_props(self):
         assert ExperimentJobManager.IS_GLOBAL is False
         assert ExperimentJobManager.IS_POLYAXON_DIR is True
-        assert ExperimentJobManager.CONFIG_FILE_NAME == '.polyaxonjob'
+        assert ExperimentJobManager.CONFIG_FILE_NAME == '.polyaxonxpjob'
         assert ExperimentJobManager.CONFIG == ExperimentJobConfig

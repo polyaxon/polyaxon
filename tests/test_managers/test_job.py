@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from polyaxon_cli.managers.job import JobManager
-from polyaxon_schemas.experiment import ExperimentJobConfig
+from polyaxon_schemas.job import JobConfig
 
 
 class TestJobManager(TestCase):
@@ -12,4 +12,4 @@ class TestJobManager(TestCase):
         assert JobManager.IS_GLOBAL is False
         assert JobManager.IS_POLYAXON_DIR is True
         assert JobManager.CONFIG_FILE_NAME == '.polyaxonjob'
-        assert JobManager.CONFIG == ExperimentJobConfig
+        assert JobManager.CONFIG == JobConfig
