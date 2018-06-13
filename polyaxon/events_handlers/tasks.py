@@ -64,7 +64,7 @@ def events_handle_job_statuses(payload):
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
-    project_name = details['labels']['project_name']
+    project_name = details['labels'].get('project_name')
     _logger.debug('handling events status for job %s', job_name)
 
     try:
@@ -94,7 +94,7 @@ def events_handle_plugin_job_statuses(payload):
     app = details['labels']['app']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
-    project_name = details['labels']['project_name']
+    project_name = details['labels'].get('project_name')
     _logger.debug('handling events status for job %s %s', job_name, app)
 
     try:
@@ -129,7 +129,7 @@ def events_handle_build_job_statuses(payload):
     app = details['labels']['app']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
-    project_name = details['labels']['project_name']
+    project_name = details['labels'].get('project_name')
     _logger.debug('handling events status for build jon %s %s', job_name, app)
 
     try:
