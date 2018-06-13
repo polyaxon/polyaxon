@@ -6,7 +6,7 @@ from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_schemas.experiment import ExperimentJobConfig, ExperimentJobStatusConfig
 
 
-class JobClient(PolyaxonClient):
+class ExperimentJobClient(PolyaxonClient):
     """Client to get jobs from the server"""
     ENDPOINT = "/"
 

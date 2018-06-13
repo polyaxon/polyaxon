@@ -9,15 +9,15 @@ import uuid
 from faker import Faker
 from unittest import TestCase
 
-from polyaxon_client.jobs import JobClient
+from polyaxon_client.experiment_job import ExperimentJobClient
 from polyaxon_schemas.experiment import ExperimentJobConfig, ExperimentJobStatusConfig
 
 faker = Faker()
 
 
-class TestJobClient(TestCase):
+class TestExperimentJobClient(TestCase):
     def setUp(self):
-        self.client = JobClient(host='localhost',
+        self.client = ExperimentJobClient(host='localhost',
                                 http_port=8000,
                                 ws_port=1337,
                                 version='v1',
@@ -35,9 +35,9 @@ class TestJobClient(TestCase):
                                   definition={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            JobClient._build_url(
+            ExperimentJobClient._build_url(
                 self.client.base_url,
-                JobClient.ENDPOINT,
+                ExperimentJobClient.ENDPOINT,
                 'username',
                 'project_name',
                 'experiments',
@@ -59,9 +59,9 @@ class TestJobClient(TestCase):
                                         status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            JobClient._build_url(
+            ExperimentJobClient._build_url(
                 self.client.base_url,
-                JobClient.ENDPOINT,
+                ExperimentJobClient.ENDPOINT,
                 'username',
                 'project_name',
                 'experiments',
