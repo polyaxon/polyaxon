@@ -6,8 +6,11 @@ import pytest
 
 from rest_framework import status
 
-from api.build_jobs.serializers import BuildJobSerializer, BuildJobStatusSerializer, \
-    BuildJobDetailSerializer
+from api.build_jobs.serializers import (
+    BuildJobDetailSerializer,
+    BuildJobSerializer,
+    BuildJobStatusSerializer
+)
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.build_jobs import BuildJob, BuildJobStatus
@@ -134,8 +137,8 @@ class TestBuildListViewV1(BaseViewTest):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.url = '/{}/{}/{}/builds/'.format(API_V1,
-                                            self.project.user,
-                                            self.project.name)
+                                              self.project.user,
+                                              self.project.name)
         self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
 
@@ -185,9 +188,9 @@ class TestBuildDetailViewV1(BaseViewTest):
         project = ProjectFactory(user=self.auth_client.user)
         self.object = self.factory_class(project=project)
         self.url = '/{}/{}/{}/builds/{}/'.format(API_V1,
-                                               project.user.username,
-                                               project.name,
-                                               self.object.sequence)
+                                                 project.user.username,
+                                                 project.name,
+                                                 self.object.sequence)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -216,9 +219,9 @@ class TestBuildDetailViewV1(BaseViewTest):
         project = ProjectFactory(user=self.auth_client.user)
         exp = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
         url = '/{}/{}/{}/builds/{}/'.format(API_V1,
-                                          project.user.username,
-                                          project.name,
-                                          exp.sequence)
+                                            project.user.username,
+                                            project.name,
+                                            exp.sequence)
 
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
@@ -263,9 +266,9 @@ class TestBuildStatusListViewV1(BaseViewTest):
                 project = ProjectFactory(user=self.auth_client.user)
                 self.job = BuildJobFactory(project=project)
         self.url = '/{}/{}/{}/builds/{}/statuses/'.format(API_V1,
-                                                        project.user.username,
-                                                        project.name,
-                                                        self.job.sequence)
+                                                          project.user.username,
+                                                          project.name,
+                                                          self.job.sequence)
         self.objects = [self.factory_class(job=self.job,
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]

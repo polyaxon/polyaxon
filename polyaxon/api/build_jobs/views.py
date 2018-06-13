@@ -39,10 +39,9 @@ from event_manager.events.build_job import (
 from event_manager.events.project import PROJECT_BUILDS_VIEWED
 from libs.paths.jobs import get_job_logs_path
 from libs.permissions.projects import get_permissible_project
+from libs.repos.utils import get_project_latest_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
-from libs.repos.utils import get_project_latest_code_reference
 
 _logger = logging.getLogger("polyaxon.views.builds")
 

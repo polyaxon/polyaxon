@@ -2,10 +2,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
+from api.build_jobs import views as builds_views
 from api.experiment_groups import views as groups_views
 from api.experiments import views as experiments_views
 from api.jobs import views as jobs_views
-from api.build_jobs import views as builds_views
 from api.projects import views
 from constants.urls import NAME_PATTERN, USERNAME_PATTERN
 
