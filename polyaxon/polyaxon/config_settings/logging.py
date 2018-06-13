@@ -30,7 +30,7 @@ LOGGING = {
     },
     'handlers': {
         'logfile': {
-            'level': 'INFO',
+            'level': 'INFO' if config.is_staging_env else 'WARNING',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '{}/polyaxon_{}.log'.format(LOG_DIRECTORY, os.getpid()),
             'maxBytes': 1024 * 1024 * 8,  # 8 MByte
@@ -38,7 +38,7 @@ LOGGING = {
             'formatter': 'standard',
         },
         'console': {
-            'level': 'INFO',
+            'level': 'INFO' if config.is_staging_env else 'WARNING',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
@@ -51,20 +51,20 @@ LOGGING = {
         'polyaxon.streams': {
             'handlers': ['console', ],
             'propagate': True,
-            'level': 'INFO',
+            'level': 'INFO' if config.is_staging_env else 'WARNING',
         },
         'polyaxon.monitors': {
             'handlers': ['console', ],
             'propagate': True,
-            'level': 'INFO',
+            'level': 'INFO' if config.is_staging_env else 'WARNING',
         },
         'polyaxon.dockerizer': {
             'handlers': ['console', ],
             'propagate': True,
-            'level': 'INFO',
+            'level': 'INFO' if config.is_staging_env else 'WARNING',
         },
         'django.request': {
-            'level': 'DEBUG',
+            'level': 'INFO' if config.is_staging_env else 'WARNING',
             'propagate': True,
             'handlers': ['console', ],
         },
