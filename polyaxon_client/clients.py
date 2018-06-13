@@ -2,19 +2,19 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.auth import AuthClient
+from polyaxon_client.build_job import BuildJobClient
 from polyaxon_client.cluster import ClusterClient
 from polyaxon_client.experiment import ExperimentClient
 from polyaxon_client.experiment_group import ExperimentGroupClient
 from polyaxon_client.experiment_job import ExperimentJobClient
 from polyaxon_client.job import JobClient
-from polyaxon_client.build_job import BuildJobClient
 from polyaxon_client.project import ProjectClient
 from polyaxon_client.user import UserClient
 from polyaxon_client.version import VersionClient
 
 
 class PolyaxonClients(object):
-    def __init__(self, host, http_port, ws_port, use_https, token):
+    def __init__(self, host, token, http_port=80, ws_port=80, use_https=False):
         self._updated = False
         self._host = host
         self._http_port = http_port
@@ -136,7 +136,7 @@ class PolyaxonClients(object):
 
     @property
     def job(self):
-        if self._job_client:
+        if not self._job_client:
             self._job_client = JobClient(**self.params)
         return self._job_client
 
