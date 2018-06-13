@@ -278,7 +278,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_200_OK
-        assert self.object.stopped_experiments.count() == 2
+        assert self.object.stopped_experiments.count() == 3
 
     def test_stop_pending(self):
         data = {'pending': True}

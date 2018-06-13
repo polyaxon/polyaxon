@@ -437,13 +437,17 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
+        experiment = ExperimentFactory(experiment_group=experiment_group)
+        ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
 
         assert mock_fct.call_count == 1
         assert experiment_group.pending_experiments.count() == 2
+        assert experiment_group.running_experiments.count() == 1
 
         experiments_group_stop_experiments(experiment_group_id=experiment_group.id, pending=True)
 
         assert experiment_group.pending_experiments.count() == 0
+        assert experiment_group.running_experiments.count() == 1
 
     def test_stop_all_experiments(self):
         with patch('hpsearch.tasks.random.hp_random_search_start.apply_async') as mock_fct:
@@ -465,9 +469,9 @@ class TestExperimentGroupModel(BaseTest):
                                                pending=False)
 
         assert experiment_group.pending_experiments.count() == 0
-        assert experiment_group.running_experiments.count() == 1
-        assert spawner_mock_fct.call_count == 1  # Should be stopped with ths function
-        assert experiment_group.stopped_experiments.count() == 2
+        assert experiment_group.running_experiments.count() == 0
+        assert spawner_mock_fct.call_count == 1  # Should be stopped with this function
+        assert experiment_group.stopped_experiments.count() == 3
 
     def test_stopping_group_stops_iteration(self):
         # Fake reschedule
