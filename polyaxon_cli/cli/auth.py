@@ -46,7 +46,7 @@ def login(token, username, password):
             return
     else:
         if not token:
-            token_url = "{}/app/auth/login?next=/app/token".format(auth_client.http_host)
+            token_url = "{}/app/token".format(auth_client.http_host)
             click.confirm('Authentication token page will now open in your browser. Continue?',
                           abort=True, default=True)
 
