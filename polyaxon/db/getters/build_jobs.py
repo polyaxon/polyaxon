@@ -15,7 +15,7 @@ def get_valid_build_job(build_job_id=None, build_job_uuid=None):
         else:
             build_job = BuildJob.objects.get(id=build_job_id)
     except BuildJob.DoesNotExist:
-        _logger.info('Build job `%s` does not exist', build_job_id or build_job_uuid)
+        _logger.debug('Build job `%s` does not exist', build_job_id or build_job_uuid)
         return None
 
     return build_job

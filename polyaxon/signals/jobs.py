@@ -90,9 +90,9 @@ def job_status_post_save(sender, **kwargs):
         return
 
     if instance.status in (JobLifeCycle.FAILED, JobLifeCycle.SUCCEEDED):
-        _logger.debug('One of the workers failed or Master for experiment `%s` is done, '
-                      'send signal to other workers to stop.', job.unique_name)
-        # Schedule stop for this experiment because other jobs may be still running
+        _logger.debug('The build job  `%s` failed or is done, '
+                      'send signal to stop.', job.unique_name)
+        # Schedule stop for this job because
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_STOP,
             kwargs={
