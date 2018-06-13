@@ -4,11 +4,10 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
-from polyaxon_schemas.polyaxonfile import reader
 
 from polyaxon_cli.cli.project import get_project_or_local
-from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.cli.upload import upload
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -20,6 +19,7 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.utils import to_list
 
 
