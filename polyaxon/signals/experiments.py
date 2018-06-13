@@ -238,12 +238,12 @@ def handle_new_experiment_status(sender, **kwargs):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={
-                'project_name': instance.project.unique_name,
-                'project_uuid': instance.project.uuid.hex,
-                'experiment_name': instance.unique_name,
-                'experiment_uuid': instance.unique_name,
+                'project_name': experiment.project.unique_name,
+                'project_uuid': experiment.project.uuid.hex,
+                'experiment_name': experiment.unique_name,
+                'experiment_uuid': experiment.unique_name,
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
-                'specification': instance.specification,
+                'specification': experiment.specification,
                 'update_status': False
             })
