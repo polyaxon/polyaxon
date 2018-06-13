@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.clients import PolyaxonClients as BasePolyaxonClients
-
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.config import GlobalConfigManager
+from polyaxon_client.clients import PolyaxonClients as BasePolyaxonClients
 
 
 class PolyaxonClients(BasePolyaxonClients):
