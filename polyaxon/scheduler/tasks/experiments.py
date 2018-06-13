@@ -1,5 +1,7 @@
 import logging
 
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
+
 import publisher
 
 from constants.experiments import ExperimentLifeCycle
@@ -136,6 +138,7 @@ def experiments_stop(project_name,
                      experiment_uuid,
                      specification,
                      update_status=True):
+    specification = ExperimentSpecification.read(specification)
     experiment_scheduler.stop_experiment(
         project_name=project_name,
         project_uuid=project_uuid,

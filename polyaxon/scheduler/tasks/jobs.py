@@ -1,5 +1,7 @@
 import logging
 
+from polyaxon_schemas.polyaxonfile.specification import JobSpecification
+
 from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from polyaxon.celery_api import app as celery_app
@@ -67,6 +69,7 @@ def jobs_start(job_id):
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, ignore_result=True)
 def jobs_stop(project_name, project_uuid, job_name, job_uuid, specification, update_status=True):
+    specification = JobSpecification.read(specification)
     job_scheduler.stop_job(
         project_name=project_name,
         project_uuid=project_uuid,

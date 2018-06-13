@@ -210,7 +210,7 @@ def stop_running_experiment(sender, **kwargs):
                 'experiment_uuid': instance.unique_name,
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
-                'specification': instance.specification,
+                'specification': instance.config,
                 'update_status': False
             })
     except ExperimentGroup.DoesNotExist:
@@ -244,6 +244,6 @@ def handle_new_experiment_status(sender, **kwargs):
                 'experiment_uuid': experiment.unique_name,
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
-                'specification': experiment.specification,
+                'specification': experiment.config,
                 'update_status': False
             })

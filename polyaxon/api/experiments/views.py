@@ -402,7 +402,7 @@ class ExperimentStopView(CreateAPIView):
                 'experiment_uuid': obj.unique_name,
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
-                'specification': obj.specification,
+                'specification': obj.config,
                 'update_status': True
             })
         return Response(status=status.HTTP_200_OK)
