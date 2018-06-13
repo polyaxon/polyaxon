@@ -43,11 +43,11 @@ class TestJobConfigs(TestCase):
         config_dict.pop('project')
         config_dict.pop('updated_at')
         config_dict.pop('project_name')
+        config_dict.pop('definition')
         config_to_dict.pop('is_done')
         config_to_dict.pop('is_running')
         config_to_dict.pop('sequence')
         config_to_dict.pop('total_run')
-        config_to_dict.pop('resources')
         config_to_dict.pop('user')
         assert config_to_dict == config_dict
 

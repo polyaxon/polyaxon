@@ -45,8 +45,8 @@ class JobConfig(BaseConfig):
     SCHEMA = JobSchema
     IDENTIFIER = 'Job'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'sequence', 'unique_name', 'user', 'experiment_group_name', 'last_status', 'definition',
-        'created_at', 'started_at', 'finished_at', 'total_run', 'is_done', 'is_running', 'resources'
+        'sequence', 'unique_name', 'user', 'experiment_group_name', 'last_status',
+        'created_at', 'started_at', 'finished_at', 'total_run', 'is_done', 'is_running'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
