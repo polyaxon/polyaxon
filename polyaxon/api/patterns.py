@@ -31,7 +31,7 @@ api_patterns += [
     re_path(r'', include(
         ('api.jobs.urls', 'jobs'), namespace='jobs')),
     re_path(r'', include(
-        ('api.builds.urls', 'builds'), namespace='builds')),
+        ('api.build_jobs.urls', 'builds'), namespace='builds')),
     re_path(r'', include(
         ('api.experiments.urls', 'experiments'), namespace='experiments')),
     re_path(r'', include(

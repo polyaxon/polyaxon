@@ -2,8 +2,8 @@ from polyaxon_schemas.polyaxonfile.specification import (
     ExperimentSpecification,
     JobSpecification,
     NotebookSpecification,
-    TensorboardSpecification
-)
+    TensorboardSpecification,
+    BuildSpecification)
 
 # flake8: noqa
 
@@ -380,6 +380,7 @@ job_spec_content = """---
 
 job_spec_parsed_content = JobSpecification.read(job_spec_content)
 
+
 job_spec_resources_content = """---
     version: 1
 
@@ -402,3 +403,15 @@ job_spec_resources_content = """---
 """
 
 job_spec_resources_parsed_content = JobSpecification.read(job_spec_resources_content)
+
+build_spec_content = """---
+    version: 1
+
+    kind: build
+
+    build:
+      image: my_image
+      build_steps: ['step1', 'step2']
+"""
+
+build_spec_parsed_content = BuildSpecification.read(build_spec_content)

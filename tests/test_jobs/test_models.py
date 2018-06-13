@@ -124,7 +124,7 @@ class TestJobModel(BaseTest):
         assert job.last_status == JobLifeCycle.SCHEDULED
 
     @mock.patch('scheduler.job_scheduler.JobSpawner')
-    def test_create_experiment_with_resources_spec(self, spawner_mock):
+    def test_create_job_with_resources_spec(self, spawner_mock):
         config = JobSpecification.read(job_spec_resources_content)
         mock_instance = spawner_mock.return_value
         mock_instance.start_job.return_value = {'pod': 'pod_content'}

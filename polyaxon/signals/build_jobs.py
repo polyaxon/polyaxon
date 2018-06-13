@@ -18,6 +18,8 @@ from libs.decorators import ignore_raw, ignore_updates
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
+from libs.paths.jobs import delete_job_outputs, delete_job_logs
+
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
 
 
@@ -83,6 +85,13 @@ def build_job_status_post_save(sender, **kwargs):
 @ignore_raw
 def build_job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
+
+    # Delete outputs and logs
+    delete_job_outputs(job.unique_name)
+    delete_job_logs(job.unique_name)
+
+    if not job.is_running:
+        return
 
     celery_app.send_task(
         SchedulerCeleryTasks.BUILD_JOBS_STOP,

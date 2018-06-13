@@ -1,7 +1,10 @@
+from unittest.mock import patch
+
 import pytest
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
@@ -17,6 +20,16 @@ class TestBuildJobModels(BaseTest):
         super().setUp()
         self.project = ProjectFactory()
         self.code_reference = CodeReferenceFactory()
+
+    def test_build_job_creation_triggers_status_creation_mock(self):
+        with patch.object(BuildJob, 'set_status') as mock_fct:
+            BuildJobFactory()
+        assert mock_fct.call_count == 1
+
+    def test_build_job_creation_triggers_status_creation(self):
+        job = BuildJobFactory()
+        assert BuildJobStatus.objects.filter(job=job).count() == 1
+        assert job.last_status == JobLifeCycle.CREATED
 
     def test_create_build_job_from_experiment(self):
         assert BuildJobStatus.objects.count() == 0

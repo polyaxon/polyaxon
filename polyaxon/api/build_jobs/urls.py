@@ -13,19 +13,19 @@ from constants.urls import (
 
 build_jobs_urlpatterns = [
     re_path(r'^{}/{}/builds/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
-            views.BuildJobDetailView.as_view()),
+            views.BuildDetailView.as_view()),
     re_path(r'^{}/{}/builds/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, JOB_SEQUENCE_PATTERN),
-        views.BuildJobStatusListView.as_view()),
+        views.BuildStatusListView.as_view()),
     re_path(r'^{}/{}/builds/{}/statuses/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, JOB_SEQUENCE_PATTERN, UUID_PATTERN),
-        views.BuildJobStatusDetailView.as_view()),
+        views.BuildStatusDetailView.as_view()),
     re_path(r'^{}/{}/builds/{}/logs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, JOB_SEQUENCE_PATTERN),
-        views.BuildJobLogsView.as_view()),
+        views.BuildLogsView.as_view()),
     re_path(
         r'^{}/{}/builds/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
-        views.BuildJobStopView.as_view()),
+        views.BuildStopView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(build_jobs_urlpatterns)
