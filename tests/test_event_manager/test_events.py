@@ -164,6 +164,8 @@ class TestEvents(BaseTest):
         assert project.ProjectSetPrivateEvent.get_event_subject() == 'project'
         assert project.ProjectExperimentsViewedEvent.get_event_subject() == 'project'
         assert project.ProjectExperimentGroupsViewedEvent.get_event_subject() == 'project'
+        assert project.ProjectJobsViewedEvent.get_event_subject() == 'project'
+        assert project.ProjectBuildsViewedEvent.get_event_subject() == 'project'
 
         # Repo
         assert repo.RepoCreatedEvent.get_event_subject() == 'repo'
@@ -321,6 +323,8 @@ class TestEvents(BaseTest):
         assert project.ProjectExperimentsViewedEvent.get_event_action() == 'experiments_viewed'
         assert (project.ProjectExperimentGroupsViewedEvent.get_event_action() ==
                 'experiment_groups_viewed')
+        assert project.ProjectJobsViewedEvent.get_event_action() == 'jobs_viewed'
+        assert project.ProjectBuildsViewedEvent.get_event_action() == 'builds_viewed'
 
         # Repo
         assert repo.RepoCreatedEvent.get_event_action() == 'created'
