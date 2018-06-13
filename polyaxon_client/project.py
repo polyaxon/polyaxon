@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import Mapping
+
+from polyaxon_schemas.job import JobConfig
+
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_schemas.experiment import ExperimentConfig
@@ -87,6 +91,12 @@ class ProjectClient(PolyaxonClient):
             return []
 
     def create_experiment_group(self, username, project_name, experiment_group_config):
+        if isinstance(experiment_group_config, Mapping):
+            experiment_group_config = ExperimentGroupConfig.from_dict(experiment_group_config)
+        elif not isinstance(experiment_group_config, ExperimentGroupConfig):
+            raise PolyaxonException('create_experiment_group received an invalid '
+                                    'experiment_group_config.')
+
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'groups')
 
@@ -110,13 +120,72 @@ class ProjectClient(PolyaxonClient):
             return []
 
     def create_experiment(self, username, project_name, experiment_config):
+        if isinstance(experiment_config, Mapping):
+            experiment_config = ExperimentConfig.from_dict(experiment_config)
+        elif not isinstance(experiment_config, ExperimentConfig):
+            raise PolyaxonException('create_experiment received an invalid experiment_config.')
+
         request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
             response = self.post(request_url, json_data=experiment_config.to_dict())
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while creating experiment group')
+            self.handle_exception(e=e, log_message='Error while creating experiment.')
+            return None
+
+    def list_jobs(self, username, project_name, page=1):
+        """Fetch list of jobs related to this project."""
+        request_url = self._build_url(
+            self._get_http_url(), username, project_name, 'jobs')
+
+        try:
+            response = self.get(request_url, params=self.get_page(page=page))
+            return self.prepare_list_results(response.json(), page, JobConfig)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving jobs')
+            return []
+
+    def create_job(self, username, project_name, job_config):
+        if isinstance(job_config, Mapping):
+            job_config = JobConfig.from_dict(job_config)
+        elif not isinstance(job_config, JobConfig):
+            raise PolyaxonException('create_job received an invalid job_config.')
+
+        request_url = self._build_url(self._get_http_url(), username, project_name, 'jobs')
+
+        try:
+            response = self.post(request_url, json_data=job_config.to_dict())
+            return JobConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while creating job')
+            return None
+
+    def list_builds(self, username, project_name, page=1):
+        """Fetch list of build jobs related to this project."""
+        request_url = self._build_url(
+            self._get_http_url(), username, project_name, 'builds')
+
+        try:
+            response = self.get(request_url, params=self.get_page(page=page))
+            return self.prepare_list_results(response.json(), page, JobConfig)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving build jobs')
+            return []
+
+    def create_build(self, username, project_name, build_config):
+        if isinstance(build_config, Mapping):
+            build_config = JobConfig.from_dict(build_config)
+        elif not isinstance(build_config, JobConfig):
+            raise PolyaxonException('create_build received an invalid build_config.')
+
+        request_url = self._build_url(self._get_http_url(), username, project_name, 'builds')
+
+        try:
+            response = self.post(request_url, json_data=build_config.to_dict())
+            return JobConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while creating build job')
             return None
 
     def clone_repo(self, username, project_name):

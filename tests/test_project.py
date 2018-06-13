@@ -8,6 +8,8 @@ import uuid
 from faker import Faker
 from unittest import TestCase
 
+from polyaxon_schemas.job import JobConfig
+
 from polyaxon_client.project import ProjectClient
 from polyaxon_schemas.experiment import ExperimentConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
@@ -185,6 +187,21 @@ class TestProjectClient(TestCase):
         result = self.client.create_experiment_group('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
 
+        # Test create with dict
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'groups'),
+            body=json.dumps(obj.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.create_experiment_group('user', 'project', obj.to_dict())
+        assert result.to_dict() == obj.to_dict()
+
     @httpretty.activate
     def test_list_experiments(self):
         project_uuid = uuid.uuid4().hex
@@ -239,6 +256,161 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
         result = self.client.create_experiment('user', 'project', obj)
+        assert result.to_dict() == obj.to_dict()
+
+        # Test create experiment with dict
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'experiments'),
+            body=json.dumps(obj.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.create_experiment('user', 'project', obj.to_dict())
+        assert result.to_dict() == obj.to_dict()
+
+    @httpretty.activate
+    def test_list_jobs(self):
+        project_uuid = uuid.uuid4().hex
+        xp_uuid = uuid.uuid4().hex
+        xps = [JobConfig(config={}, uuid=xp_uuid, project=project_uuid).to_dict()
+               for _ in range(10)]
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'jobs'),
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_jobs('user', 'project')
+        assert len(response['results']) == 10
+
+        # pagination
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'jobs') + '?offset=2',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_jobs('user', 'project', page=2)
+        assert len(response['results']) == 10
+
+    @httpretty.activate
+    def test_create_job(self):
+        project_uuid = uuid.uuid4().hex
+        obj = JobConfig(project=project_uuid, config={})
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'jobs'),
+            body=json.dumps(obj.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.create_job('user', 'project', obj)
+        assert result.to_dict() == obj.to_dict()
+
+        # Test create experiment with dict
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'jobs'),
+            body=json.dumps(obj.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.create_job('user', 'project', obj.to_dict())
+        assert result.to_dict() == obj.to_dict()
+
+    @httpretty.activate
+    def test_list_builds(self):
+        project_uuid = uuid.uuid4().hex
+        xp_uuid = uuid.uuid4().hex
+        xps = [JobConfig(config={}, uuid=xp_uuid, project=project_uuid).to_dict()
+               for _ in range(10)]
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'builds'),
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_builds('user', 'project')
+        assert len(response['results']) == 10
+
+        # pagination
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'builds') + '?offset=2',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_builds('user', 'project', page=2)
+        assert len(response['results']) == 10
+
+    @httpretty.activate
+    def test_create_build(self):
+        project_uuid = uuid.uuid4().hex
+        obj = JobConfig(project=project_uuid, config={})
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'builds'),
+            body=json.dumps(obj.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.create_build('user', 'project', obj)
+        assert result.to_dict() == obj.to_dict()
+
+        # Test create experiment with dict
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'builds'),
+            body=json.dumps(obj.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.create_build('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
