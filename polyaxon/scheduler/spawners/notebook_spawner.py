@@ -43,36 +43,18 @@ class NotebookSpawner(ProjectJobSpawner):
             port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
         return port
 
-    def start_notebook(self, image, resources=None, node_selectors=None):
-        ports = [self.request_notebook_port()]
-        target_ports = [self.PORT]
-        volumes, volume_mounts = get_pod_volumes()
-        code_volume, code_volume_mount = self.get_notebook_code_volume()
-        volumes.append(code_volume)
-        volume_mounts.append(code_volume_mount)
-        deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
-                                                    job_uuid=self.job_uuid)
+    def get_notebook_args(self, deployment_name, ports):
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
             job_name=self.NOTEBOOK_JOB_NAME,
             deployment_name=deployment_name,
             port=ports[0])
+
         notebook_dir = get_project_repos_path(self.project_name)
         notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
-        deployment = deployments.get_deployment(
-            namespace=self.namespace,
-            app=settings.APP_LABELS_NOTEBOOK,
-            name=self.NOTEBOOK_JOB_NAME,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
-            job_name=self.job_name,
-            job_uuid=self.job_uuid,
-            volume_mounts=volume_mounts,
-            volumes=volumes,
-            image=image,
-            command=["/bin/sh", "-c"],
-            args=[
+
+        return [
                 "jupyter notebook "
                 "--no-browser "
                 "--port={port} "
@@ -85,7 +67,30 @@ class NotebookSpawner(ProjectJobSpawner):
                     port=self.PORT,
                     token=notebook_token,
                     base_url=notebook_url,
-                    notebook_dir=notebook_dir)],
+                    notebook_dir=notebook_dir)]
+
+    def start_notebook(self, image, resources=None, node_selectors=None):
+        ports = [self.request_notebook_port()]
+        target_ports = [self.PORT]
+        volumes, volume_mounts = get_pod_volumes()
+        code_volume, code_volume_mount = self.get_notebook_code_volume()
+        volumes.append(code_volume)
+        volume_mounts.append(code_volume_mount)
+        deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
+                                                    job_uuid=self.job_uuid)
+        deployment = deployments.get_deployment(
+            namespace=self.namespace,
+            app=settings.APP_LABELS_NOTEBOOK,
+            name=self.NOTEBOOK_JOB_NAME,
+            project_name=self.project_name,
+            project_uuid=self.project_uuid,
+            job_name=self.job_name,
+            job_uuid=self.job_uuid,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            image=image,
+            command=["/bin/sh", "-c"],
+            args=self.get_notebook_args(deployment_name=deployment_name, ports=ports),
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
