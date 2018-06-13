@@ -5,7 +5,6 @@ import os
 from wsgiref.util import FileWrapper
 
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
     RetrieveAPIView,
