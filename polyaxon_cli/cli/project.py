@@ -292,8 +292,9 @@ def groups(ctx, page):
         Printer.print_header('No experiment groups found for project `{}/{}`.'.format(
             user, project_name))
 
-    objects = list_dicts_to_tabulate([o.to_light_dict(humanize_values=True)
-                                      for o in response['results']])
+    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+               for o in response['results']]
+    objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiment groups:")
         objects.pop('project', None)
