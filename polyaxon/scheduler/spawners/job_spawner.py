@@ -7,6 +7,8 @@ from scheduler.spawners.templates.volumes import get_pod_volumes
 
 
 class JobSpawner(K8SManager):
+    JOB_NAME = 'job'
+
     def __init__(self,
                  project_name,
                  project_uuid,
@@ -32,6 +34,7 @@ class JobSpawner(K8SManager):
         self.job_name = job_name
         self.job_uuid = job_uuid
         self.pod_manager = pods.PodManager(namespace=namespace,
+                                           name=self.JOB_NAME,
                                            project_name=self.project_name,
                                            project_uuid=self.project_uuid,
                                            job_name=job_name,

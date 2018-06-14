@@ -26,6 +26,7 @@ from scheduler.spawners.templates.volumes import get_volume_mount
 class PodManager(object):
     def __init__(self,
                  namespace,
+                 name,
                  project_name,
                  project_uuid,
                  job_name,
@@ -43,6 +44,7 @@ class PodManager(object):
                  sidecar_config=None,
                  log_level=None):
         self.namespace = namespace
+        self.name = name
         self.project_name = project_name
         self.project_uuid = project_uuid
         self.job_name = job_name
@@ -68,7 +70,7 @@ class PodManager(object):
         self.log_level = log_level
 
     def get_k8s_job_name(self):
-        return constants.JOB_NAME.format(name=settings.APP_LABELS_JOB, job_uuid=self.job_uuid)
+        return constants.JOB_NAME.format(name=self.name, job_uuid=self.job_uuid)
 
     def get_labels(self):
         labels = {

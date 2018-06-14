@@ -31,5 +31,5 @@ class Command(BaseMonitorCommand):
                             pod_id=pod_id,
                             job_name=labels.job_name,
                             job_uuid=labels.job_uuid.hex,
-                            container_job_name=settings.CONTAINER_NAME_EXPERIMENT_JOB)
+                            container_job_name=settings.CONTAINER_NAME_JOB)
         monitor.logger.info('Finished logging')
