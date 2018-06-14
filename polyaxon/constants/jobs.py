@@ -48,9 +48,12 @@ class JobLifeCycle(BaseStatuses):
     DONE_STATUS = {FAILED, STOPPED, SUCCEEDED}
     FAILED_STATUS = {FAILED, }
 
+    # A job can go from scheduled to building the reason is that 2 phases of building can happen:
+    # 1. Docker image building
+    # 2. Kubernetes building phase
     TRANSITION_MATRIX = {
         CREATED: {None, },
-        BUILDING: {CREATED, },
+        BUILDING: {CREATED, SCHEDULED},
         SCHEDULED: {CREATED, BUILDING},
         RUNNING: {CREATED, SCHEDULED, BUILDING, UNKNOWN},
         SUCCEEDED: {CREATED, RUNNING, UNKNOWN, },
