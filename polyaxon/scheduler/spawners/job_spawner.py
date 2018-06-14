@@ -75,9 +75,9 @@ class JobSpawner(K8SManager):
             resources=resources,
             node_selector=node_selectors,
             restart_policy='Never')
-        pod_resp, _ = self.create_or_update_pod(name=self.pod_manager.job_name, data=pod)
+        pod_resp, _ = self.create_or_update_pod(name=self.pod_manager.k8s_job_name, data=pod)
 
         return pod_resp.to_dict()
 
     def stop_job(self):
-        self.delete_pod(name=self.pod_manager.pod_name)
+        self.delete_pod(name=self.pod_manager.k8s_job_name)
