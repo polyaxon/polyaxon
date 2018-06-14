@@ -9,11 +9,12 @@ from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from event_manager.events.build_job import (
     BUILD_JOB_DELETED,
+    BUILD_JOB_DONE,
     BUILD_JOB_FAILED,
     BUILD_JOB_NEW_STATUS,
     BUILD_JOB_STOPPED,
-    BUILD_JOB_SUCCEEDED,
-    BUILD_JOB_DONE)
+    BUILD_JOB_SUCCEEDED
+)
 from libs.decorators import ignore_raw, ignore_updates
 from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from polyaxon.celery_api import app as celery_app

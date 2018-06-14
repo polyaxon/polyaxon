@@ -13,12 +13,13 @@ from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from event_manager.events.experiment import (
     EXPERIMENT_DELETED,
+    EXPERIMENT_DONE,
     EXPERIMENT_FAILED,
     EXPERIMENT_NEW_METRIC,
     EXPERIMENT_NEW_STATUS,
     EXPERIMENT_STOPPED,
-    EXPERIMENT_SUCCEEDED,
-    EXPERIMENT_DONE)
+    EXPERIMENT_SUCCEEDED
+)
 from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.experiments import delete_experiment_logs, delete_experiment_outputs
 from libs.repos.utils import assign_code_reference

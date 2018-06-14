@@ -9,11 +9,12 @@ from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from event_manager.events.job import (
     JOB_DELETED,
+    JOB_DONE,
     JOB_FAILED,
     JOB_NEW_STATUS,
     JOB_STOPPED,
-    JOB_SUCCEEDED,
-    JOB_DONE)
+    JOB_SUCCEEDED
+)
 from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
