@@ -18,7 +18,8 @@ class TestExperimentGroupSerializer(BaseTest):
     factory_class = ExperimentGroupFactory
     expected_keys = {
         'uuid', 'sequence', 'unique_name', 'description', 'project', 'project_name',
-        'user', 'created_at', 'updated_at', 'concurrency', 'num_experiments', 'last_status',
+        'user', 'created_at', 'updated_at', 'concurrency', 'num_experiments',
+        'last_status', 'is_running', 'is_done',
         'search_algorithm', 'num_pending_experiments', 'num_running_experiments', }
 
     def setUp(self):
@@ -60,7 +61,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     expected_keys = {
         'uuid', 'sequence', 'unique_name', 'description', 'content',
         'hptuning', 'project', 'project_name', 'user',
-        'created_at', 'updated_at', 'started_at', 'finished_at',
+        'created_at', 'updated_at', 'started_at', 'finished_at', 'is_running', 'is_done',
         'concurrency', 'num_experiments', 'last_status', 'current_iteration', 'search_algorithm',
         'num_pending_experiments', 'num_running_experiments', 'num_scheduled_experiments',
         'num_succeeded_experiments', 'num_failed_experiments', 'num_stopped_experiments'}
