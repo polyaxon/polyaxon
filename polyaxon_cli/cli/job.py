@@ -373,7 +373,7 @@ def logs(ctx, past, follow):
     if past:
         try:
             response = PolyaxonClients().job.logs(
-                user, project_name, job, stream=False)
+                user, project_name, _job, stream=False)
             for log_line in response.content.decode().split('\n'):
                 Printer.log(log_line, nl=True)
 
