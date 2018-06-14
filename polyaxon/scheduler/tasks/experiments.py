@@ -5,7 +5,7 @@ import publisher
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
 from db.models.experiments import ExperimentMetric
-from libs.paths.experiments import copy_experiment_outputs, create_experiment_outputs_path
+from libs.paths.experiments import copy_experiment_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
