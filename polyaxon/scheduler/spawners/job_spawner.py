@@ -66,7 +66,7 @@ class JobSpawner(K8SManager):
         volumes, volume_mounts = get_pod_volumes()
         command, args = self.get_pod_command_args()
         env_vars = self.get_env_vars()
-        pod_resp = self.pod_manager.get_pod(
+        pod = self.pod_manager.get_pod(
             volume_mounts=volume_mounts,
             volumes=volumes,
             env_vars=env_vars,
@@ -75,6 +75,7 @@ class JobSpawner(K8SManager):
             resources=resources,
             node_selector=node_selectors,
             restart_policy='Never')
+        pod_resp, _ = self.create_or_update_pod(name=self.pod_manager.job_name, data=pod)
 
         return pod_resp.to_dict()
 
