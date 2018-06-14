@@ -28,6 +28,8 @@ class ExperimentGroupSchema(Schema):
     num_failed_experiments = fields.Int(allow_none=True)
     num_stopped_experiments = fields.Int(allow_none=True)
     last_status = fields.Str(allow_none=True)
+    is_running = fields.Bool(allow_none=True)
+    is_done = fields.Bool(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
     class Meta:
@@ -69,6 +71,8 @@ class ExperimentGroupConfig(BaseConfig):
                  num_failed_experiments=None,
                  num_stopped_experiments=None,
                  last_status=None,
+                 is_running=None,
+                 is_done=None,
                  created_at=None,
                  updated_at=None,
                  concurrency=None,
@@ -90,6 +94,8 @@ class ExperimentGroupConfig(BaseConfig):
         self.num_stopped_experiments = num_stopped_experiments
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
+        self.is_running = is_running
+        self.is_done = is_done
         self.last_status = last_status
         self.concurrency = concurrency
         self.experiments = experiments
