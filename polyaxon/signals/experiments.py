@@ -63,9 +63,10 @@ def experiment_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(ExperimentLifeCycle.CREATED)
 
-    # Clean outputs and logs
-    delete_experiment_logs(instance.unique_name)
-    delete_experiment_outputs(instance.unique_name)
+    if instance.is_independent:
+        # Clean outputs and logs
+        delete_experiment_logs(instance.unique_name)
+        delete_experiment_outputs(instance.unique_name)
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_pre_delete")
