@@ -63,7 +63,7 @@ def _get_job(experiment, job_sequence):
     return job
 
 
-def _get_validated_experiment(project, experiment_sequence):
+def _get_running_experiment(project, experiment_sequence):
     experiment = _get_experiment(project, experiment_sequence)
     if not experiment.is_running:
         _logger.info('Experiment project `%s` num `%s` is not currently running',
@@ -78,7 +78,7 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_validated_experiment(project, experiment_sequence)
+    experiment = _get_running_experiment(project, experiment_sequence)
     job = _get_job(experiment, job_sequence)
     job_uuid = job.uuid.hex
     job_name = '{}.{}'.format(job.role, job.sequence)
@@ -141,7 +141,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_validated_experiment(project, experiment_sequence)
+    experiment = _get_running_experiment(project, experiment_sequence)
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_RESOURCES_VIEWED,
                    instance=experiment,
@@ -209,7 +209,7 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_validated_experiment(project, experiment_sequence)
+    experiment = _get_running_experiment(project, experiment_sequence)
     job = _get_job(experiment, job_sequence)
     job_uuid = job.uuid.hex
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
@@ -284,7 +284,7 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_validated_experiment(project, experiment_sequence)
+    experiment = _get_running_experiment(project, experiment_sequence)
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
                    instance=experiment,
