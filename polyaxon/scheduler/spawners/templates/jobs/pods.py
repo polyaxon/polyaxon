@@ -109,7 +109,7 @@ class PodManager(object):
                                   image=self.job_docker_image,
                                   command=command,
                                   args=args,
-                                  ports=ports,
+                                  ports=ports or None,
                                   env=env_vars,
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
