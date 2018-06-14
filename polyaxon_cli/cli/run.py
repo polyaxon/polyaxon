@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
-from polyaxon_schemas.job import JobConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
@@ -14,6 +13,7 @@ from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.job import JobConfig
 from polyaxon_schemas.project import ExperimentGroupConfig
 
 

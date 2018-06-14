@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-INIT_COMMAND = "`polyaxon init PROJECT_NAME [--run|--model]`"
+INIT_COMMAND = "`polyaxon init PROJECT_NAME [--run | --model]`"
 
 DEFAULT_IGNORE_LIST = """
 .git
