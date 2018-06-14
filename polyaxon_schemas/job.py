@@ -107,7 +107,7 @@ class JobStatusSchema(Schema):
     created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)
-    details = fields.Str(allow_none=True)
+    details = fields.Dict(allow_none=True)
 
     class Meta:
         ordered = True
