@@ -153,4 +153,4 @@ class JobStatus(AbstractJobStatus):
 
     class Meta(AbstractJobStatus.Meta):
         app_label = 'db'
-        verbose_name_plural = 'Run Job Statuses'
+        verbose_name_plural = 'Job Statuses'
