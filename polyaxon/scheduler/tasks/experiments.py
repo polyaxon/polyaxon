@@ -120,12 +120,6 @@ def experiments_start(experiment_id):
                      experiment.unique_name, experiment.last_status, ExperimentLifeCycle.SCHEDULED)
         return None
 
-    # Check if we need to copy an experiment
-    if experiment.is_copy:
-        copy_experiment(experiment)
-    else:
-        create_experiment_outputs_path(experiment.unique_name)
-
     experiment_scheduler.start_experiment(experiment)
 
 
