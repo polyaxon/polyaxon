@@ -45,7 +45,7 @@ class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'user', 'unique_name', 'user', 'concurrency', 'num_experiments',
+        'sequence', 'unique_name', 'user', 'concurrency', 'num_experiments',
         'num_pending_experiments', 'num_running_experiments', 'created_at'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
