@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import click
 
 from polyaxon_cli.cli.auth import login, logout, whoami
+from polyaxon_cli.cli.build import build
 from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.cluster import cluster
 from polyaxon_cli.cli.config import config
@@ -56,6 +57,7 @@ cli.add_command(check)
 cli.add_command(init)
 cli.add_command(cluster)
 cli.add_command(project)
+cli.add_command(build)
 cli.add_command(tensorboard)
 cli.add_command(notebook)
 cli.add_command(group)

@@ -342,9 +342,11 @@ def resources(ctx, gpu):
 
 
 @job.command()
+@click.option('--past', is_flag=True, help="Show the past logs.")
+@click.option('--follow', is_flag=True, default=False, help="Stream logs after showing past logs.")
 @click.pass_context
 @clean_outputs
-def logs(ctx):
+def logs(ctx, past, follow):
     """Get job logs.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -367,6 +369,20 @@ def logs(ctx):
         log_lines = to_list(message['log_lines'])
         for log_line in log_lines:
             Printer.log(log_line, nl=True)
+
+    if past:
+        try:
+            response = PolyaxonClients().job.logs(
+                user, project_name, job, stream=False)
+            for log_line in response.content.decode().split('\n'):
+                Printer.log(log_line, nl=True)
+
+            if not follow:
+                return
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not get logs for job `{}`.'.format(job))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
 
     try:
         PolyaxonClients().job.logs(user,
