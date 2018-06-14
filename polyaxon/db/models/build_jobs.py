@@ -43,6 +43,8 @@ class BuildJob(AbstractJob, DescribableModel, JobMixin):
 
     class Meta:
         app_label = 'db'
+        ordering = ['sequence']
+        unique_together = (('project', 'sequence'),)
 
     def __str__(self):
         return '{}.builds.{}'.format(self.project.unique_name, self.sequence)
