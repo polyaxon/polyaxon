@@ -12,7 +12,7 @@ def get_experiment_outputs_path(experiment_name, original_name=None, cloning_str
     if original_name is not None and cloning_strategy == CloningStrategy.RESUME:
         values = original_name.split('.')
     if len(values) == 3:
-        values.insert(2, 'independents')
+        values.insert(2, 'experiments')
     else:
         values.insert(2, 'groups')
     return os.path.join(settings.OUTPUTS_ROOT, '/'.join(values))
@@ -21,7 +21,7 @@ def get_experiment_outputs_path(experiment_name, original_name=None, cloning_str
 def get_experiment_data_path(experiment_name):
     values = experiment_name.split('.')
     if len(values) == 3:
-        values.insert(2, 'independents')
+        values.insert(2, 'experiments')
     else:
         values.insert(2, 'groups')
     return os.path.join(settings.DATA_ROOT, '/'.join(values))
@@ -30,7 +30,7 @@ def get_experiment_data_path(experiment_name):
 def get_experiment_logs_path(experiment_name):
     values = experiment_name.split('.')
     if len(values) == 3:
-        values.insert(2, 'independents')
+        values.insert(2, 'experiments')
     else:
         values.insert(2, 'groups')
     return os.path.join(settings.LOGS_ROOT, '/'.join(values))
@@ -49,7 +49,7 @@ def delete_experiment_outputs(experiment_name):
 def create_experiment_path(experiment_name, path):
     values = experiment_name.split('.')
     if len(values) == 3:
-        values.insert(2, 'independents')
+        values.insert(2, 'experiments')
     else:
         values.insert(2, 'groups')
 

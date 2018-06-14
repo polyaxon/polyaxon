@@ -5,15 +5,15 @@ Polyaxon creates a couple of paths for every experiment on the volumes provided 
 
 For example, all logs related to an experiment are saved on the logs volume, on:
 
- * Independent experiment: `/[LOGS MOUNT PATH]/username/project_name/independents/experiment_sequence`
- * Group experiment: `/[LOGS MOUNT PATH]/username/project_name/group_sequence/experiment_sequence`
+ * Independent experiment: `/[LOGS MOUNT PATH]/username/project_name/experiments/experiment_sequence`
+ * Group experiment: `/[LOGS MOUNT PATH]/username/project_name/groups/group_sequence/experiment_sequence`
 
 The logs are anything that user outputs to the console during the training/execution of the code.
 
 Same as logs, the outputs are saved on the outputs volume, on:
 
- * Independent experiment: `/[OUTPUTS MOUNT PATH]/username/project_name/independents/experiment_sequence`
- * Group experiment: `/[OUTPUTS MOUNT PATH]/username/project_name/group_sequence/experiment_sequence`
+ * Independent experiment: `/[OUTPUTS MOUNT PATH]/username/project_name/experiments/experiment_sequence`
+ * Group experiment: `/[OUTPUTS MOUNT PATH]/username/project_name/groups/group_sequence/experiment_sequence`
 
 You don't need to figure out this path or hardcode them manually,
 Polyaxon will provide an environment variable for the outputs `POLYAXON_OUTPUTS_PATH`

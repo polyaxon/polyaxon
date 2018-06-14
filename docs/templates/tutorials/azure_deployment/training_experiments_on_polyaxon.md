@@ -73,7 +73,7 @@ Before we can train our experiments we need to deploy Polyaxon.
     $ polyaxon experiment -xp 1 logs
 
       Building -- creating image -
-      master.1 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/independents/1', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
+      master.1 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/experiments/1', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
       master.1 --   force_gpu_compatible: true
       master.1 -- }
     ```
@@ -108,7 +108,7 @@ Before we can train our experiments we need to deploy Polyaxon.
       worker.1 -- INFO:tensorflow:image after unit resnet/tower_0/stage_1/residual_v1_3/: (?, 16, 16, 32)
       worker.1 -- INFO:tensorflow:image after unit resnet/tower_0/stage_1/residual_v1_4/: (?, 16, 16, 32)
       worker.1 -- INFO:tensorflow:image after unit resnet/tower_0/stage_1/residual_v1_5/: (?, 16, 16, 32)
-      worker.3 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/independents/2', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
+      worker.3 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/experiments/2', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
       worker.3 --   force_gpu_compatible: true
       worker.1 -- INFO:tensorflow:image after unit resnet/tower_0/stage_1/residual_v1_6/: (?, 16, 16, 32)
       worker.3 -- }
@@ -117,7 +117,7 @@ Before we can train our experiments we need to deploy Polyaxon.
       worker.3 --   per_process_gpu_memory_fraction: 1.0
       worker.3 -- }
       worker.3 -- , '_num_worker_replicas': 0, '_task_id': 0, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_evaluation_master': '', '_keep_checkpoint_every_n_hours': 10000, '_master': '', '_log_step_count_steps': 100}
-      master.1 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/independents/2', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
+      master.1 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/experiments/2', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
       master.1 --   force_gpu_compatible: true
       master.1 -- }
       ...
@@ -166,7 +166,7 @@ Before we can train our experiments we need to deploy Polyaxon.
     ```bash
     $ polyaxon experiment -xp 3 logs
 
-    master.1 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/independents/3', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
+    master.1 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/experiments/3', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
     master.1 --   force_gpu_compatible: true
     master.1 -- }
     master.1 -- allow_soft_placement: true
