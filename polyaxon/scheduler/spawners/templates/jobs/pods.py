@@ -57,7 +57,7 @@ class PodManager(object):
         self.type_label = type_label or settings.TYPE_LABELS_EXPERIMENT
         self.app_label = settings.APP_LABELS_JOB
         self.labels = self.get_labels()
-        self.pod_name = self.get_job_name()
+        self.k8s_job_name = self.get_k8s_job_name()
         self.ports = to_list(ports) if ports else []
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
@@ -67,7 +67,7 @@ class PodManager(object):
         self.sidecar_config = sidecar_config
         self.log_level = log_level
 
-    def get_job_name(self):
+    def get_k8s_job_name(self):
         return constants.JOB_NAME.format(name=settings.APP_LABELS_JOB, job_uuid=self.job_uuid)
 
     def get_labels(self):
@@ -117,14 +117,14 @@ class PodManager(object):
     def get_sidecar_container(self):
         """Pod sidecar container for job logs."""
         return get_sidecar_container(
-            job_name=self.job_name,
+            job_name=self.k8s_job_name,
             job_container_name=self.job_container_name,
             sidecar_container_name=self.sidecar_container_name,
             sidecar_docker_image=self.sidecar_docker_image,
             namespace=self.namespace,
             app_label=self.app_label,
             sidecar_config=self.sidecar_config,
-            sidecar_args=get_sidecar_args(pod_id=self.pod_name))
+            sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name))
 
     def get_init_container(self):
         """Pod init container for setting outputs path."""
@@ -190,7 +190,7 @@ class PodManager(object):
                 resources=None,
                 node_selector=None,
                 restart_policy=None):
-        metadata = client.V1ObjectMeta(name=self.job_name,
+        metadata = client.V1ObjectMeta(name=self.k8s_job_name,
                                        labels=self.labels,
                                        namespace=self.namespace)
 
