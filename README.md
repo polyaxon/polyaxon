@@ -81,7 +81,7 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
 
     ```bash
     # Start Polyaxon dashboard
-    $ polyaxon dashboad
+    $ polyaxon dashboard
 
     Dashboard page will now open in your browser. Continue? [Y/n]: y
     ```
