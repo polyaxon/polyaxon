@@ -47,7 +47,8 @@ class ExperimentGroupConfig(BaseConfig):
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
         'sequence', 'unique_name', 'user', 'concurrency', 'num_experiments',
-        'num_pending_experiments', 'num_running_experiments', 'created_at', 'last_status'
+        'num_pending_experiments', 'num_running_experiments', 'created_at',
+        'is_done', 'is_running', 'last_status'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
