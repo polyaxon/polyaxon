@@ -58,7 +58,7 @@ class PodManager(object):
         self.app_label = settings.APP_LABELS_JOB
         self.labels = self.get_labels()
         self.pod_name = self.get_job_name()
-        self.ports = ports
+        self.ports = to_list(ports) if ports else []
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
             raise PolyaxonConfigurationError(
