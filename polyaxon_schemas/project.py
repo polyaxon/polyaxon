@@ -27,6 +27,7 @@ class ExperimentGroupSchema(Schema):
     num_succeeded_experiments = fields.Int(allow_none=True)
     num_failed_experiments = fields.Int(allow_none=True)
     num_stopped_experiments = fields.Int(allow_none=True)
+    last_status = fields.Str(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
     class Meta:
@@ -46,7 +47,7 @@ class ExperimentGroupConfig(BaseConfig):
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
         'sequence', 'unique_name', 'user', 'concurrency', 'num_experiments',
-        'num_pending_experiments', 'num_running_experiments', 'created_at'
+        'num_pending_experiments', 'num_running_experiments', 'created_at', 'last_status'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
@@ -66,6 +67,7 @@ class ExperimentGroupConfig(BaseConfig):
                  num_succeeded_experiments=None,
                  num_failed_experiments=None,
                  num_stopped_experiments=None,
+                 last_status=None,
                  created_at=None,
                  updated_at=None,
                  concurrency=None,
@@ -87,6 +89,7 @@ class ExperimentGroupConfig(BaseConfig):
         self.num_stopped_experiments = num_stopped_experiments
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
+        self.last_status = last_status
         self.concurrency = concurrency
         self.experiments = experiments
 

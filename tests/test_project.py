@@ -87,6 +87,7 @@ class TestProjectConfigs(TestCase):
                        'num_experiments': 0,
                        'created_at': local_now().isoformat(),
                        'updated_at': local_now().isoformat(),
+                       'last_status': None,
                        'experiments': [
                            ExperimentConfig(config={},
                                             uuid=uuid_value,
