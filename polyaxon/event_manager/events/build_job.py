@@ -15,6 +15,7 @@ BUILD_JOB_UPDATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.UPDAT
 BUILD_JOB_NEW_STATUS = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.NEW_STATUS)
 BUILD_JOB_FAILED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.FAILED)
 BUILD_JOB_SUCCEEDED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.SUCCEEDED)
+BUILD_JOB_DONE = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.DONE)
 
 BUILD_JOB_DELETED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.DELETED)
 BUILD_JOB_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
@@ -123,6 +124,18 @@ class BuildJobNewStatusEvent(Event):
 
 class BuildJobSucceededEvent(Event):
     event_type = BUILD_JOB_SUCCEEDED
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
+    )
+
+
+class BuildJobDoneEvent(Event):
+    event_type = BUILD_JOB_DONE
+    event_type = BUILD_JOB_DONE
     attributes = (
         Attribute('id'),
         Attribute('user.id'),

@@ -25,6 +25,8 @@ EXPERIMENT_SUCCEEDED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                       event_actions.SUCCEEDED)
 EXPERIMENT_FAILED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                    event_actions.FAILED)
+EXPERIMENT_DONE = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                 event_actions.DONE)
 EXPERIMENT_RESOURCES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                              event_actions.RESOURCES_VIEWED)
 EXPERIMENT_LOGS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
@@ -217,6 +219,17 @@ class ExperimentSucceededEvent(Event):
 
 class ExperimentFailedEvent(Event):
     event_type = EXPERIMENT_FAILED
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('previous_status', is_required=False),
+    )
+
+
+class ExperimentDoneEvent(Event):
+    event_type = EXPERIMENT_DONE
     attributes = (
         Attribute('id'),
         Attribute('sequence'),

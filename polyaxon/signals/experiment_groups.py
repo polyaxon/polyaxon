@@ -8,7 +8,7 @@ from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_CREATED,
     EXPERIMENT_GROUP_DELETED,
-    EXPERIMENT_GROUP_FINISHED,
+    EXPERIMENT_GROUP_DONE,
     EXPERIMENT_GROUP_NEW_STATUS,
     EXPERIMENT_GROUP_STOPPED
 )
@@ -101,6 +101,6 @@ def experiment_group_status_post_save(sender, **kwargs):
                        previous_status=previous_status)
 
     if ExperimentGroupLifeCycle.is_done(instance.status):
-        auditor.record(event_type=EXPERIMENT_GROUP_FINISHED,
+        auditor.record(event_type=EXPERIMENT_GROUP_DONE,
                        instance=experiment_group,
                        previous_status=previous_status)

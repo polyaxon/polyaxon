@@ -143,6 +143,15 @@ class AuditorJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_done(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=job_events.JOB_DONE,
+                       instance=self.job)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
     def test_job_logs_viewed_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=job_events.JOB_LOGS_VIEWED,
                        instance=self.job,

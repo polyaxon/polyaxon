@@ -12,8 +12,8 @@ from event_manager.events.job import (
     JOB_FAILED,
     JOB_NEW_STATUS,
     JOB_STOPPED,
-    JOB_SUCCEEDED
-)
+    JOB_SUCCEEDED,
+    JOB_DONE)
 from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
@@ -80,8 +80,12 @@ def job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status)
 
-    if instance.status == JobLifeCycle.STOPPED:
+    if instance.status == JobLifeCycle.SUCCEEDED:
         auditor.record(event_type=JOB_SUCCEEDED,
+                       instance=job,
+                       previous_status=previous_status)
+    if JobLifeCycle.is_done(instance.status):
+        auditor.record(event_type=JOB_DONE,
                        instance=job,
                        previous_status=previous_status)
 

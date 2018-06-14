@@ -87,10 +87,9 @@ class AuditorExperimentGroupTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_group_finished(self, activitylogs_record, tracker_record):
-        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_FINISHED,
-                       instance=self.experiment_group,
-                       actor_id=1)
+    def test_experiment_group_done(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_DONE,
+                       instance=self.experiment_group)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0

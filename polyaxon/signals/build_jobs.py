@@ -12,8 +12,8 @@ from event_manager.events.build_job import (
     BUILD_JOB_FAILED,
     BUILD_JOB_NEW_STATUS,
     BUILD_JOB_STOPPED,
-    BUILD_JOB_SUCCEEDED
-)
+    BUILD_JOB_SUCCEEDED,
+    BUILD_JOB_DONE)
 from libs.decorators import ignore_raw, ignore_updates
 from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from polyaxon.celery_api import app as celery_app
@@ -53,7 +53,7 @@ def build_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status)
 
-    if instance.status == JobLifeCycle.STOPPED:
+    if instance.status == JobLifeCycle.SUCCEEDED:
         auditor.record(event_type=BUILD_JOB_SUCCEEDED,
                        instance=job,
                        previous_status=previous_status)
@@ -75,6 +75,9 @@ def build_job_status_post_save(sender, **kwargs):
 
     # handle done status
     if JobLifeCycle.is_done(instance.status):
+        auditor.record(event_type=BUILD_JOB_DONE,
+                       instance=job,
+                       previous_status=previous_status)
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE,
             kwargs={'build_job_id': job.id})

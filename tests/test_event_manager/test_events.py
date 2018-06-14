@@ -44,6 +44,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentNewMetricEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentSucceededEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentFailedEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentDoneEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentResourcesViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentLogsViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentStatusesViewedEvent.get_event_subject() == 'experiment'
@@ -68,7 +69,7 @@ class TestEvents(BaseTest):
                 'experiment_group')
         assert (experiment_group.ExperimentGroupResumedEvent.get_event_subject() ==
                 'experiment_group')
-        assert (experiment_group.ExperimentGroupFinishedEvent.get_event_subject() ==
+        assert (experiment_group.ExperimentGroupDoneEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupNewStatusEvent.get_event_subject() ==
                 'experiment_group')
@@ -118,6 +119,7 @@ class TestEvents(BaseTest):
         assert job.JobNewStatusEvent.get_event_subject() == 'job'
         assert job.JobFailedEvent.get_event_subject() == 'job'
         assert job.JobSucceededEvent.get_event_subject() == 'job'
+        assert job.JobDoneEvent.get_event_subject() == 'job'
         assert job.JobDeletedEvent.get_event_subject() == 'job'
         assert job.JobDeletedTriggeredEvent.get_event_subject() == 'job'
         assert job.JobLogsViewedEvent.get_event_subject() == 'job'
@@ -136,6 +138,7 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobNewStatusEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobFailedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobSucceededEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobDoneEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobDeletedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobDeletedTriggeredEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobLogsViewedEvent.get_event_subject() == 'build_job'
@@ -217,6 +220,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentNewMetricEvent.get_event_action() is None
         assert experiment.ExperimentSucceededEvent.get_event_action() is None
         assert experiment.ExperimentFailedEvent.get_event_action() is None
+        assert experiment.ExperimentDoneEvent.get_event_action() is None
         assert experiment.ExperimentResourcesViewedEvent.get_event_action() == 'resources_viewed'
         assert experiment.ExperimentLogsViewedEvent.get_event_action() == 'logs_viewed'
         assert experiment.ExperimentStatusesViewedEvent.get_event_action() == 'statuses_viewed'
@@ -235,7 +239,7 @@ class TestEvents(BaseTest):
         assert experiment_group.ExperimentGroupViewedEvent.get_event_action() == 'viewed'
         assert experiment_group.ExperimentGroupStoppedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupResumedEvent.get_event_action() is None
-        assert experiment_group.ExperimentGroupFinishedEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupDoneEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupNewStatusEvent.get_event_action() is None
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_action() ==
                 'experiments_viewed')
@@ -277,6 +281,7 @@ class TestEvents(BaseTest):
         assert job.JobNewStatusEvent.get_event_action() is None
         assert job.JobFailedEvent.get_event_action() is None
         assert job.JobSucceededEvent.get_event_action() is None
+        assert job.JobDoneEvent.get_event_action() is None
         assert job.JobDeletedEvent.get_event_action() is None
         assert job.JobDeletedTriggeredEvent.get_event_action() == 'deleted'
         assert job.JobLogsViewedEvent.get_event_action() == 'logs_viewed'
@@ -295,6 +300,7 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobNewStatusEvent.get_event_action() is None
         assert build_job.BuildJobFailedEvent.get_event_action() is None
         assert build_job.BuildJobSucceededEvent.get_event_action() is None
+        assert build_job.BuildJobDoneEvent.get_event_action() is None
         assert build_job.BuildJobDeletedEvent.get_event_action() is None
         assert build_job.BuildJobDeletedTriggeredEvent.get_event_action() == 'deleted'
         assert build_job.BuildJobLogsViewedEvent.get_event_action() == 'logs_viewed'

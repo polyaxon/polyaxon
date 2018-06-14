@@ -17,8 +17,8 @@ from event_manager.events.experiment import (
     EXPERIMENT_NEW_METRIC,
     EXPERIMENT_NEW_STATUS,
     EXPERIMENT_STOPPED,
-    EXPERIMENT_SUCCEEDED
-)
+    EXPERIMENT_SUCCEEDED,
+    EXPERIMENT_DONE)
 from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.experiments import delete_experiment_logs, delete_experiment_outputs
 from libs.repos.utils import assign_code_reference
@@ -161,6 +161,11 @@ def experiment_status_post_save(sender, **kwargs):
 
     if instance.status == ExperimentLifeCycle.STOPPED:
         auditor.record(event_type=EXPERIMENT_STOPPED,
+                       instance=experiment,
+                       previous_status=previous_status)
+
+    if ExperimentLifeCycle.is_done(instance.status):
+        auditor.record(event_type=EXPERIMENT_DONE,
                        instance=experiment,
                        previous_status=previous_status)
 

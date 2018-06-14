@@ -15,6 +15,7 @@ JOB_UPDATED = '{}.{}'.format(event_subjects.JOB, event_actions.UPDATED)
 JOB_NEW_STATUS = '{}.{}'.format(event_subjects.JOB, event_actions.NEW_STATUS)
 JOB_FAILED = '{}.{}'.format(event_subjects.JOB, event_actions.FAILED)
 JOB_SUCCEEDED = '{}.{}'.format(event_subjects.JOB, event_actions.SUCCEEDED)
+JOB_DONE = '{}.{}'.format(event_subjects.JOB, event_actions.DONE)
 
 JOB_DELETED = '{}.{}'.format(event_subjects.JOB, event_actions.DELETED)
 JOB_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
@@ -150,6 +151,18 @@ class JobSucceededEvent(Event):
 
 class JobFailedEvent(Event):
     event_type = JOB_FAILED
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
+    )
+
+
+class JobDoneEvent(Event):
+    event_type = JOB_DONE
     attributes = (
         Attribute('id'),
         Attribute('sequence'),

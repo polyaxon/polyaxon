@@ -13,8 +13,8 @@ EXPERIMENT_GROUP_STOPPED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.STOPPED)
 EXPERIMENT_GROUP_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.RESUMED)
-EXPERIMENT_GROUP_FINISHED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
-                                           event_actions.FINISHED)
+EXPERIMENT_GROUP_DONE = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                       event_actions.DONE)
 EXPERIMENT_GROUP_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                              event_actions.NEW_STATUS)
 EXPERIMENT_GROUP_EXPERIMENTS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
@@ -139,8 +139,8 @@ class ExperimentGroupResumedEvent(Event):
     )
 
 
-class ExperimentGroupFinishedEvent(Event):
-    event_type = EXPERIMENT_GROUP_FINISHED
+class ExperimentGroupDoneEvent(Event):
+    event_type = EXPERIMENT_GROUP_DONE
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
