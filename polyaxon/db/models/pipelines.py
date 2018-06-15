@@ -5,7 +5,6 @@ from celery.result import AsyncResult
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
-from django.core.validators import validate_slug
 from django.db import models
 from django.dispatch import Signal
 
@@ -18,7 +17,6 @@ from db.models.utils import (
     SequenceModel,
     StatusModel
 )
-from libs.blacklist import validate_blacklist_name
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
