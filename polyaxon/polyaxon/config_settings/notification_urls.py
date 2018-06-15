@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 CLUSTER_NOTIFICATION_URL = config.notification_url
 

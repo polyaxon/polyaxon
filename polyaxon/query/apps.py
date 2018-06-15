@@ -6,6 +6,6 @@ class QueryConfig(AppConfig):
     verbose_name = 'Query'
 
     def ready(self):
-        from polyaxon.utils import config
+        from polyaxon.config_manager import config
 
         config.setup_query_service()

@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars

@@ -6,6 +6,6 @@ class AuditorConfig(AppConfig):
     verbose_name = 'auditor'
 
     def ready(self):
-        from polyaxon.utils import config
+        from polyaxon.config_manager import config
 
         config.setup_auditor_services()

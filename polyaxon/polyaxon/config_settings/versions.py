@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 CLI_MIN_VERSION = config.get_string('POLYAXON_CLI_MIN_VERSION',
                                     is_optional=True,

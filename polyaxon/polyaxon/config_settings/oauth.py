@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 
 class OAUTH_PROVIDERS(object):  # noqa

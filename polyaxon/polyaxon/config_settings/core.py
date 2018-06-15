@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 DEBUG = config.is_debug_mode
 POLYAXON_SERVICE = config.service

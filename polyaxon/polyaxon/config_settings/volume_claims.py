@@ -1,6 +1,6 @@
 import json
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 UPLOAD_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_UPLOAD')
 DATA_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_DATA')

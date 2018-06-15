@@ -1,4 +1,4 @@
-from polyaxon.utils import ROOT_DIR, config
+from polyaxon.config_manager import ROOT_DIR, config
 
 MEDIA_ROOT = config.get_string('POLYAXON_MEDIA_ROOT')
 MEDIA_URL = config.get_string('POLYAXON_MEDIA_URL')

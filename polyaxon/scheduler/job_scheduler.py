@@ -6,7 +6,7 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 from scheduler.spawners.job_spawner import JobSpawner
 from scheduler.spawners.utils import get_job_definition
 

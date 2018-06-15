@@ -1,4 +1,4 @@
-from polyaxon.utils import ROOT_DIR, config
+from polyaxon.config_manager import ROOT_DIR, config
 
 if config.is_monolith_service or config.is_api_service:
     LIST_TEMPLATE_CONTEXT_PROCESSORS = [

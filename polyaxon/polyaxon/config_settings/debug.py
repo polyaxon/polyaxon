@@ -1,6 +1,6 @@
 import sys
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 from .apps import INSTALLED_APPS
 from .middlewares import MIDDLEWARE

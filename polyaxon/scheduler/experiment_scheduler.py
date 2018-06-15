@@ -9,7 +9,7 @@ from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from docker_images.image_info import get_image_info
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,
     MXNetSpecification,

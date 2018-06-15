@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 API_KEY_NAME = 'POLYAXON_API'
 

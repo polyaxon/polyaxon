@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars

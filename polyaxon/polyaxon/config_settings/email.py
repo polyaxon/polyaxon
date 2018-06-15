@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 email_from = config.get_string('POLYAXON_EMAIL_FROM')
 email_host = config.get_string('POLYAXON_EMAIL_HOST')

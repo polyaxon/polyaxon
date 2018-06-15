@@ -1,7 +1,7 @@
 import json
 import os
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 # dirs
 DIRS_DOCKER = config.get_string('POLYAXON_DIRS_DOCKER')

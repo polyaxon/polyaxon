@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 REGISTRATION_SUPERUSER_VALIDATION_WORKFLOW = '0'
 EMAIL_VALIDATION_WORKFLOW = '1'

@@ -1,4 +1,4 @@
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 REGISTRY_USER = config.get_string('POLYAXON_REGISTRY_USER', is_optional=True)
 REGISTRY_PASSWORD = config.get_string('POLYAXON_REGISTRY_PASSWORD', is_optional=True)

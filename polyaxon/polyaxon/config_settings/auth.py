@@ -3,7 +3,7 @@ import json
 import django_auth_ldap.config as django_auth_ldap_config
 import ldap
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 DEFAULT_EMAIL_DOMAIN = 'local_polyaxon.com'
 

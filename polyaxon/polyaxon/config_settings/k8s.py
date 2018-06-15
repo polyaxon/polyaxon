@@ -2,7 +2,7 @@ import urllib3
 
 from kubernetes import client
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 POLYAXON_K8S_APP_NAME = config.get_string('POLYAXON_K8S_APP_NAME')
 POLYAXON_K8S_API_HOST = config.get_string('POLYAXON_K8S_API_HOST')

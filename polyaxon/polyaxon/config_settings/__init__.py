@@ -10,7 +10,7 @@ from .redis_settings import *
 from .tracker import *
 from .versions import *
 
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 
 # Service configs
 if config.is_monolith_service:

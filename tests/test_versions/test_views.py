@@ -4,7 +4,7 @@ from rest_framework import status
 
 from constants.urls import API_V1
 from db.models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion
-from polyaxon.utils import config
+from polyaxon.config_manager import config
 from tests.utils import BaseViewTest
 
 

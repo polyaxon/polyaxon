@@ -1,6 +1,6 @@
 import os
 
-from polyaxon.utils import ROOT_DIR, config
+from polyaxon.config_manager import ROOT_DIR, config
 
 LOG_DIRECTORY = ROOT_DIR.child('logs')
 if not os.path.exists(LOG_DIRECTORY):
