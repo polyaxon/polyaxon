@@ -169,34 +169,23 @@ class SettingConfig(object):
 
     @property
     def notification_url(self):
-        notification = (
-            'aHR0cHM6Ly93d3cuZ29vZ2xlLWFuYWx5d'
-            'Gljcy5jb20vY29sbGVjdD92PTEmdGlkPV'
-            'VBLTg5NDkzMzMxLTE=')
-        return self._decode(notification)
+        notification = None
+        return self._decode(notification) if notification else None
 
     @property
     def platform_dns(self):
-        dns = (
-            'aHR0cHM6Ly82YzhhNDU1ZmU4NTA0NzM3ODV'
-            'mZGRkYTEyN2IxMTNhYzpjYzFiOWQxNzQ4ZD'
-            'I0Mzg5OGNmZjE1ZDIxNjY5NTI2OUBzZW50c'
-            'nkuaW8vMTE5NDk2OQ==')
-        return self._decode(dns)
+        dns = None
+        return self._decode(dns) if dns else None
 
     @property
     def cli_dns(self):
-        dns = (
-            'aHR0cHM6Ly84MTc4MjEwYjY4NDU0OGE1Yjk2'
-            'YjgxMzFmYTY0NWM5ZTozY2IwZGI1OTY5NDU0'
-            'NjNkYTUzMmUzNmRiZTQ4NjFmNUBzZW50cnku'
-            'aW8vMTE5NzQxNg==')
-        return dns
+        dns = None
+        return dns if dns else None
 
     @property
     def tracker_key(self):
-        key = 'VXdvYlBQOUdoT2wzMmNoWkhtVDl4R05venk1ZWFVb1o='
-        return self._decode(key)
+        key = None
+        return self._decode(key) if key else None
 
     def get_requested_params(self, include_secrets=False, include_locals=False, to_str=False):
         params = {}
