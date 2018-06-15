@@ -156,6 +156,12 @@ class SettingConfig(object):
         publisher.validate()
         publisher.setup()
 
+    def setup_query_service(self):
+        import publisher
+
+        publisher.validate()
+        publisher.setup()
+
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
         config = reader.read(config_values)  # pylint:disable=redefined-outer-name
