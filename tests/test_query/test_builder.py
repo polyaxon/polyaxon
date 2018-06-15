@@ -18,8 +18,10 @@ class TestEqualityCondition(BaseTest):
     DISABLE_RUNNER = True
 
     def test_equality_operators(self):
-        assert EqualityCondition._eq_operator('field', 'value') == Q(field='value')
-        assert EqualityCondition._neq_operator('field', 'value') == ~Q(field='value')
+        op = EqualityCondition._eq_operator('field', 'value')  # pylint:disable=protected-access
+        assert op == Q(field='value')
+        op = EqualityCondition._neq_operator('field', 'value')  # pylint:disable=protected-access
+        assert op == ~Q(field='value')
 
     def test_equality_apply(self):
         eq_cond = EqualityCondition(op='eq')
@@ -55,10 +57,14 @@ class TestComparisonCondition(BaseTest):
     DISABLE_RUNNER = True
 
     def test_comparison_operators(self):
-        assert ComparisonCondition._lt_operator('field', 'value') == Q(field__lt='value')
-        assert ComparisonCondition._gt_operator('field', 'value') == Q(field__gt='value')
-        assert ComparisonCondition._lte_operator('field', 'value') == Q(field__lte='value')
-        assert ComparisonCondition._gte_operator('field', 'value') == Q(field__gte='value')
+        op = ComparisonCondition._lt_operator('field', 'value')  # pylint:disable=protected-access
+        assert op == Q(field__lt='value')
+        op = ComparisonCondition._gt_operator('field', 'value')  # pylint:disable=protected-access
+        assert op == Q(field__gt='value')
+        op = ComparisonCondition._lte_operator('field', 'value')  # pylint:disable=protected-access
+        assert op == Q(field__lte='value')
+        op = ComparisonCondition._gte_operator('field', 'value')  # pylint:disable=protected-access
+        assert op == Q(field__gte='value')
 
     def test_comparison_apply(self):
         ExperimentMetricFactory(values={'loss': 0.1, 'step': 1})
@@ -187,25 +193,28 @@ class TestDateTimeCondition(BaseTest):
 
     def test_range_operators(self):
         with self.assertRaises(AssertionError):
-            DateTimeCondition._range_operator('field', 'value')
+            DateTimeCondition._range_operator('field', 'value')  # pylint:disable=protected-access
 
         with self.assertRaises(AssertionError):
-            DateTimeCondition._nrange_operator('field', 'value')
+            DateTimeCondition._nrange_operator('field', 'value')  # pylint:disable=protected-access
 
         with self.assertRaises(ConditionException):
-            DateTimeCondition._range_operator('field', ('v1', 'v2'))
+            DateTimeCondition._range_operator(  # pylint:disable=protected-access
+                'field', ('v1', 'v2'))
 
         with self.assertRaises(ConditionException):
-            DateTimeCondition._nrange_operator('field', ('v1', '2010-01-01'))
+            DateTimeCondition._nrange_operator(  # pylint:disable=protected-access
+                'field', ('v1', '2010-01-01'))
 
         with self.assertRaises(ConditionException):
-            DateTimeCondition._nrange_operator('field', ('2010-01-01', 'v2'))
+            DateTimeCondition._nrange_operator(  # pylint:disable=protected-access
+                'field', ('2010-01-01', 'v2'))
 
-        assert DateTimeCondition._range_operator(
+        assert DateTimeCondition._range_operator(  # pylint:disable=protected-access
             'field', ('2010-01-01', '2010-01-01')) == Q(
             field__range=(DateTimeFormatter.extract('2010-01-01'),
                           DateTimeFormatter.extract('2010-01-01')))
-        assert DateTimeCondition._nrange_operator(
+        assert DateTimeCondition._nrange_operator(  # pylint:disable=protected-access
             'field', ('2010-01-01 10:10', '2010-01-01')) == ~Q(
             field__range=(DateTimeFormatter.extract('2010-01-01 10:10'),
                           DateTimeFormatter.extract('2010-01-01')))
@@ -375,8 +384,10 @@ class TestValueCondition(BaseTest):
     DISABLE_RUNNER = True
 
     def test_value_operators(self):
-        assert ValueCondition._in_operator('field', ['v1', 'v2']) == Q(field__in=['v1', 'v2'])
-        assert ValueCondition._nin_operator('field', ['v1', 'v2']) == ~Q(field__in=['v1', 'v2'])
+        op = ValueCondition._in_operator('field', ['v1', 'v2'])  # pylint:disable=protected-access
+        assert op == Q(field__in=['v1', 'v2'])
+        op = ValueCondition._nin_operator('field', ['v1', 'v2'])  # pylint:disable=protected-access
+        assert op == ~Q(field__in=['v1', 'v2'])
 
     def test_range_apply(self):
         ExperimentFactory(declarations={'rate': 1, 'loss': 'foo'})
