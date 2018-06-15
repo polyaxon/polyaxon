@@ -102,8 +102,7 @@ class BuildViewMixin(object):
     def get_job(self):
         # Get project and check access
         self.project = get_permissible_project(view=self)
-        id = self.kwargs['job_id']
-        self.job = get_object_or_404(BuildJob, project=self.project, id=id)
+        self.job = get_object_or_404(BuildJob, project=self.project, id=self.kwargs['job_id'])
         return self.job
 
     def filter_queryset(self, queryset):

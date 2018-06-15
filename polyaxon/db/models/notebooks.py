@@ -3,7 +3,6 @@ from django.db import models
 
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
-from db.models.utils import NameableModel
 from libs.spec_validation import validate_notebook_spec_config
 from polyaxon_schemas.polyaxonfile.specification import NotebookSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property

@@ -111,10 +111,9 @@ class GroupExperimentListView(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_group(self):
-        id = self.kwargs['id']
         # Get project and check permissions
         project = get_permissible_project(view=self)
-        group = get_object_or_404(ExperimentGroup, project=project, id=id)
+        group = get_object_or_404(ExperimentGroup, project=project, id=self.kwargs['id'])
         auditor.record(event_type=EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
                        instance=group,
                        actor_id=self.request.user.id)
@@ -236,8 +235,8 @@ class ExperimentViewMixin(object):
     def get_experiment(self):
         # Get project and check access
         self.project = get_permissible_project(view=self)
-        id = self.kwargs['experiment_id']
-        self.experiment = get_object_or_404(Experiment, project=self.project, id=id)
+        experiment_id = self.kwargs['experiment_id']
+        self.experiment = get_object_or_404(Experiment, project=self.project, id=experiment_id)
         return self.experiment
 
     def filter_queryset(self, queryset):
@@ -339,8 +338,8 @@ class ExperimentJobViewMixin(object):
     def get_experiment(self):
         # Get project and check access
         self.project = get_permissible_project(view=self)
-        id = self.kwargs['experiment_id']
-        self.experiment = get_object_or_404(Experiment, project=self.project, id=id)
+        experiment_id = self.kwargs['experiment_id']
+        self.experiment = get_object_or_404(Experiment, project=self.project, id=experiment_id)
         return self.experiment
 
     def get_job(self):
