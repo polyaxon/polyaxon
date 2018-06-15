@@ -10,8 +10,14 @@ from django.db import models
 from django.dispatch import Signal
 
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel, \
-    NameableModel, SequenceModel
+from db.models.utils import (
+    DescribableModel,
+    DiffModel,
+    LastStatusMixin,
+    NameableModel,
+    SequenceModel,
+    StatusModel
+)
 from libs.blacklist import validate_blacklist_name
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals

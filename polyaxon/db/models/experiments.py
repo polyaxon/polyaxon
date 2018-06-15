@@ -11,8 +11,14 @@ import auditor
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.cloning_strategies import CloningStrategy
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel, \
-    NameableModel, SequenceModel
+from db.models.utils import (
+    DescribableModel,
+    DiffModel,
+    LastStatusMixin,
+    NameableModel,
+    SequenceModel,
+    StatusModel
+)
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
     EXPERIMENT_RESTARTED,
