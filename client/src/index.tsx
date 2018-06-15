@@ -9,7 +9,6 @@ import configureRaven from './configureRaven';
 
 const store = configureStore();
 configureRaven();
-
 ReactDOM.render(
   <Provider store={store}>
       <App />

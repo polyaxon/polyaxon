@@ -1,7 +1,7 @@
 export class JobModel {
   public uuid: string;
   public unique_name: string;
-  public sequence: number;
+  public id: number;
   public role: string;
   public last_status: string;
   public experiment_name: string;

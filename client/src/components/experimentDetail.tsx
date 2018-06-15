@@ -69,7 +69,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
               </LinkContainer>
               }
               <span className="title">
-                Experiment {experiment.sequence}
+                Experiment {experiment.id}
               </span>
             </span>
             <div className="meta-description">

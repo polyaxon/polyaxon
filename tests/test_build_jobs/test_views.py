@@ -192,7 +192,7 @@ class TestBuildDetailViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/builds/{}/'.format(API_V1,
                                                  project.user.username,
                                                  project.name,
-                                                 self.object.sequence)
+                                                 self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -223,7 +223,7 @@ class TestBuildDetailViewV1(BaseViewTest):
         url = '/{}/{}/{}/builds/{}/'.format(API_V1,
                                             project.user.username,
                                             project.name,
-                                            exp.sequence)
+                                            exp.id)
 
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
@@ -270,7 +270,7 @@ class TestBuildStatusListViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/builds/{}/statuses/'.format(API_V1,
                                                           project.user.username,
                                                           project.name,
-                                                          self.job.sequence)
+                                                          self.job.id)
         self.objects = [self.factory_class(job=self.job,
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -344,7 +344,7 @@ class TestBuildStatusDetailViewV1(BaseViewTest):
             API_V1,
             self.job.project.user.username,
             self.job.project.name,
-            self.job.sequence,
+            self.job.id,
             self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
@@ -379,7 +379,7 @@ class TestStopBuildViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.object.sequence)
+            self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_stop(self):
@@ -406,7 +406,7 @@ class TestBuildLogsViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            job.sequence)
+            job.id)
 
         log_path = get_job_logs_path(job.unique_name)
         create_job_logs_path(job_name=job.unique_name)

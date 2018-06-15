@@ -28,7 +28,7 @@ class BuildJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = BuildJob
         fields = (
-            'uuid', 'unique_name', 'user', 'sequence', 'description', 'created_at', 'updated_at',
+            'id', 'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
             'last_status', 'started_at', 'finished_at', 'is_running', 'is_done',
             'project', 'project_name',)
 

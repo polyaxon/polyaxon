@@ -104,10 +104,10 @@ export function fetchGroups(projectUniqueName: string, currentPage?: number): an
   };
 }
 
-export function fetchGroup(user: string, projectName: string, groupSequence: number): any {
+export function fetchGroup(user: string, projectName: string, groupId: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
-    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/groups/` + `${groupSequence}`, {
+    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/groups/` + `${groupId}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

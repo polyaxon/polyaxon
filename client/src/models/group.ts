@@ -2,7 +2,7 @@ export class GroupModel {
   public uuid: string;
   public unique_name: string;
   public description: string;
-  public sequence: number;
+  public id: number;
   public num_experiments: number;
   public project_name: string;
   public user: string;

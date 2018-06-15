@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from polyaxon_schemas.utils import TaskType
@@ -28,19 +29,10 @@ class ExperimentJob(AbstractJob):
 
     class Meta:
         app_label = 'db'
-        unique_together = (('experiment', 'sequence'),)
 
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        filter_query = ExperimentJob.sequence_objects.filter(experiment=self.experiment)
-        self._set_sequence(filter_query=filter_query)
-        super(ExperimentJob, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.unique_name
-
-    @property
+    @cached_property
     def unique_name(self):
-        return '{}.{}.{}'.format(self.experiment.unique_name, self.sequence, self.role)
+        return '{}.{}.{}'.format(self.experiment.unique_name, self.id, self.role)
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=ExperimentJobStatus,

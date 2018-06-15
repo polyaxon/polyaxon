@@ -10,7 +10,7 @@ from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 
 
-class BuildJob(AbstractJob, DescribableModel, NameableModel, JobMixin):
+class BuildJob(AbstractJob, NameableModel, DescribableModel, JobMixin):
     """A model that represents the configuration for build job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -43,16 +43,11 @@ class BuildJob(AbstractJob, DescribableModel, NameableModel, JobMixin):
 
     class Meta:
         app_label = 'db'
-        unique_together = (('project', 'sequence'), ('project', 'name'),)
+        unique_together = (('project', 'name'),)
 
-    def __str__(self):
-        return '{}.builds.{}'.format(self.project.unique_name, self.sequence)
-
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        filter_query = BuildJob.sequence_objects.filter(project=self.project)
-        self._set_sequence(filter_query=filter_query)
-        self._set_name(unique_name=self.unique_name)
-        super(BuildJob, self).save(*args, **kwargs)
+    @cached_property
+    def unique_name(self):
+        return '{}.builds.{}'.format(self.project.unique_name, self.id)
 
     @cached_property
     def specification(self):

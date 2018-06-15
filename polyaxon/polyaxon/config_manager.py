@@ -3,7 +3,11 @@ import os
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
+import rncryptor
+
 from unipath import Path
+
+from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile import reader
 
@@ -167,25 +171,41 @@ class SettingConfig(object):
         config = reader.read(config_values)  # pylint:disable=redefined-outer-name
         return cls(**config) if config else None
 
-    @property
+    @cached_property
     def notification_url(self):
-        notification = None
-        return self._decode(notification) if notification else None
+        value = self.get_string(
+            '_POLYAXON_NOTIFICATION',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decode(self._decrypt(value)) if value else None
 
-    @property
+    @cached_property
     def platform_dns(self):
-        dns = None
-        return self._decode(dns) if dns else None
+        value = self.get_string(
+            '_POLYAXON_PLATFORM_DNS',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decode(self._decrypt(value)) if value else None
 
-    @property
+    @cached_property
     def cli_dns(self):
-        dns = None
-        return dns if dns else None
+        value = self.get_string(
+            '_POLYAXON_CLI_DNS',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decrypt(value) if value else None
 
-    @property
+    @cached_property
     def tracker_key(self):
-        key = None
-        return self._decode(key) if key else None
+        value = self.get_string(
+            '_POLYAXON_TRACKER_KEY',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decode(self._decode(value)) if value else None
 
     def get_requested_params(self, include_secrets=False, include_locals=False, to_str=False):
         params = {}
@@ -389,6 +409,9 @@ class SettingConfig(object):
     @staticmethod
     def _encode(value):
         return base64.b64encode(value.encode('utf-8')).decode('utf-8')
+
+    def _decrypt(self, value):
+        return rncryptor.decrypt(value, self._PASS)
 
 
 config_values = [

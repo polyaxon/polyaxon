@@ -1,15 +1,24 @@
 import datetime
 
 import pytest
+
 from django.db.models import Q
 
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import Experiment, ExperimentMetric
-from factories.factory_experiments import ExperimentMetricFactory, ExperimentStatusFactory, \
-    ExperimentFactory
+from factories.factory_experiments import (
+    ExperimentFactory,
+    ExperimentMetricFactory,
+    ExperimentStatusFactory
+)
 from libs.date_utils import DateTimeFormatter
-from query.builder import EqualityCondition, ComparisonCondition, DateTimeCondition, \
-    ConditionException, ValueCondition
+from query.builder import (
+    ComparisonCondition,
+    ConditionException,
+    DateTimeCondition,
+    EqualityCondition,
+    ValueCondition
+)
 from tests.utils import BaseTest
 
 

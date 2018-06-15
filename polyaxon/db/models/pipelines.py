@@ -9,14 +9,7 @@ from django.db import models
 from django.dispatch import Signal
 
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
-from db.models.utils import (
-    DescribableModel,
-    DiffModel,
-    LastStatusMixin,
-    NameableModel,
-    SequenceModel,
-    StatusModel
-)
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, NameableModel, StatusModel
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
@@ -81,7 +74,7 @@ class ExecutableModel(models.Model):
         abstract = True
 
 
-class Pipeline(DiffModel, NameableModel, DescribableModel, SequenceModel, ExecutableModel):
+class Pipeline(DiffModel, NameableModel, DescribableModel, ExecutableModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
     A Pipeline is a collection / namespace of operations with directional dependencies.
@@ -119,17 +112,11 @@ class Pipeline(DiffModel, NameableModel, DescribableModel, SequenceModel, Execut
 
     class Meta:
         app_label = 'db'
-        unique_together = (('project', 'sequence'), ('project', 'name'),)
-
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        filter_query = Pipeline.sequence_objects.filter(project=self.project)
-        self._set_sequence(filter_query=filter_query)
-        self._set_name(unique_name=self.unique_name)
-        super(Pipeline, self).save(*args, **kwargs)
+        unique_together = (('project', 'name'),)
 
     @property
     def unique_name(self):
-        return '{}.pipelines.{}'.format(self.project.unique_name, self.sequence)
+        return '{}.pipelines.{}'.format(self.project.unique_name, self.id)
 
     @property
     def dag(self):
@@ -232,6 +219,10 @@ class Operation(DiffModel, NameableModel, DescribableModel, ExecutableModel):
     class Meta:
         app_label = 'db'
         unique_together = (('pipeline', 'name'),)
+
+    @property
+    def unique_name(self):
+        return '{}.ops.{}'.format(self.pipeline.unique_name, self.id)
 
     def get_countdown(self, retries):
         """Calculate the countdown for a celery task retry."""

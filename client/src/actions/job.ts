@@ -89,12 +89,12 @@ export function receiveJobsActionCreator(jobs: JobModel[]): ReceiveJobsAction {
   };
 }
 
-export function fetchJobs(projectUniqueName: string, experimentSequence: number, currentPage?: number): any {
+export function fetchJobs(projectUniqueName: string, experimentId: number, currentPage?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestJobsActionCreator());
     paginationActions.paginateJob(dispatch, currentPage);
     let jobsUrl =
-      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs';
+      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentId + '/jobs';
     let offset = getOffset(currentPage);
     if (offset != null) {
       jobsUrl += url.format({query: {offset: offset}});
@@ -112,11 +112,11 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number,
   };
 }
 
-export function fetchJob(user: string, projectName: string, experimentSequence: number, jobSequence: number): any {
+export function fetchJob(user: string, projectName: string, experimentId: number, jobId: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestJobActionCreator());
     return fetch(
-      BASE_API_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobSequence, {
+      BASE_API_URL + `/${user}/${projectName}` + '/experiments/' + experimentId + '/jobs/' + jobId, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

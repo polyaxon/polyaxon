@@ -14,9 +14,9 @@ function Routes() {
   let tokenRoute = '/app/token';
   let projectDetailRoute = '/app/:user/:projectName/';
   let projectsRoute = '/app/:user/';
-  let experimentDetailRoute = '/app/:user/:projectName/experiments/:experimentSequence/';
-  let groupDetailRoute = '/app/:user/:projectName/groups/:groupSequence/';
-  let jobDetailRoute = '/app/:user/:projectName/experiments/:experimentSequence/jobs/:jobSequence/';
+  let experimentDetailRoute = '/app/:user/:projectName/experiments/:experimentId/';
+  let groupDetailRoute = '/app/:user/:projectName/groups/:groupId/';
+  let jobDetailRoute = '/app/:user/:projectName/experiments/:experimentId/jobs/:jobId/';
 
   /**
    * in the future if we want to reactivate login redirection we can do something like this:

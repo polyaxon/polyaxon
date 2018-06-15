@@ -45,7 +45,7 @@ class ExperimentGroupDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     get_event = EXPERIMENT_GROUP_VIEWED
     update_event = EXPERIMENT_GROUP_UPDATED
     delete_event = EXPERIMENT_GROUP_DELETED_TRIGGERED
@@ -64,7 +64,7 @@ class ExperimentGroupStopView(CreateAPIView):
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
     permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))

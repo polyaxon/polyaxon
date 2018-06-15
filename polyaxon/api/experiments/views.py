@@ -111,10 +111,10 @@ class GroupExperimentListView(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_group(self):
-        sequence = self.kwargs['sequence']
+        id = self.kwargs['id']
         # Get project and check permissions
         project = get_permissible_project(view=self)
-        group = get_object_or_404(ExperimentGroup, project=project, sequence=sequence)
+        group = get_object_or_404(ExperimentGroup, project=project, id=id)
         auditor.record(event_type=EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
                        instance=group,
                        actor_id=self.request.user.id)
@@ -129,7 +129,7 @@ class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentDetailSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     instance = None
     get_event = EXPERIMENT_VIEWED
     update_event = EXPERIMENT_UPDATED
@@ -143,7 +143,7 @@ class ExperimentCloneView(CreateAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     event_type = None
 
     def filter_queryset(self, queryset):
@@ -187,7 +187,7 @@ class ExperimentRestartView(ExperimentCloneView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     event_type = EXPERIMENT_RESTARTED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
@@ -202,7 +202,7 @@ class ExperimentResumeView(ExperimentCloneView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     event_type = EXPERIMENT_RESUMED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
@@ -217,7 +217,7 @@ class ExperimentCopyView(ExperimentCloneView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     event_type = EXPERIMENT_COPIED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
@@ -236,8 +236,8 @@ class ExperimentViewMixin(object):
     def get_experiment(self):
         # Get project and check access
         self.project = get_permissible_project(view=self)
-        sequence = self.kwargs['experiment_sequence']
-        self.experiment = get_object_or_404(Experiment, project=self.project, sequence=sequence)
+        id = self.kwargs['experiment_id']
+        self.experiment = get_object_or_404(Experiment, project=self.project, id=id)
         return self.experiment
 
     def filter_queryset(self, queryset):
@@ -301,7 +301,7 @@ class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpd
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobDetailSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     get_event = EXPERIMENT_JOB_VIEWED
 
 
@@ -339,14 +339,14 @@ class ExperimentJobViewMixin(object):
     def get_experiment(self):
         # Get project and check access
         self.project = get_permissible_project(view=self)
-        sequence = self.kwargs['experiment_sequence']
-        self.experiment = get_object_or_404(Experiment, project=self.project, sequence=sequence)
+        id = self.kwargs['experiment_id']
+        self.experiment = get_object_or_404(Experiment, project=self.project, id=id)
         return self.experiment
 
     def get_job(self):
-        job_sequence = self.kwargs['sequence']
+        job_id = self.kwargs['id']
         self.job = get_object_or_404(ExperimentJob,
-                                     sequence=job_sequence,
+                                     id=job_id,
                                      experiment=self.get_experiment())
         return self.job
 
@@ -382,7 +382,7 @@ class ExperimentStopView(CreateAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))

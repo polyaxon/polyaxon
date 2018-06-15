@@ -6,7 +6,6 @@
         "uuid": "2312009c-8762-4793-9d3e-6ea328e04be2",
         "name": "minikube",
         "cluster": 1,
-        "sequence": 1,
         "hostname": "minikube",
         "role": "Master",
         "docker_version": "Unknown",

@@ -18,7 +18,7 @@ Options:
 option | type | description
 -------|------|------------
   -p, --project | TEXT | The project name, e.g. 'mnist' or 'adam/mnist'.
-  -g, --group | INTEGER | The group sequence number.
+  -g, --group | INTEGER | The group id number.
   --help |  | Show this message and exit.
 
 
@@ -99,7 +99,7 @@ option | type | description
 
 Stop [all | pending] experiments in the group
 
-Usage: 
+Usage:
 
 ```bash
 polyaxon group stop [OPTIONS]

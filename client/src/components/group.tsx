@@ -20,7 +20,7 @@ function Group({group, onDelete}: Props) {
   return (
     <div className="row">
       <div className="col-md-10 block">
-        <LinkContainer to={getGroupUrl(values[0], values[1], group.sequence)}>
+        <LinkContainer to={getGroupUrl(values[0], values[1], group.id)}>
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
             {group.unique_name}

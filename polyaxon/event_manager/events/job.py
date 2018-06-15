@@ -49,7 +49,6 @@ class JobUpdatedEvent(Event):
     actor_id = 'user.id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -62,7 +61,6 @@ class JobStartedEvent(Event):
     event_type = JOB_STARTED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -75,7 +73,6 @@ class JobStartedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -88,7 +85,6 @@ class JobSoppedEvent(Event):
     event_type = JOB_STOPPED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -102,7 +98,6 @@ class JobSoppedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -116,7 +111,6 @@ class JobViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -130,7 +124,6 @@ class JobNewStatusEvent(Event):
     event_type = JOB_NEW_STATUS
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status'),
@@ -141,7 +134,6 @@ class JobSucceededEvent(Event):
     event_type = JOB_SUCCEEDED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status'),
@@ -153,7 +145,6 @@ class JobFailedEvent(Event):
     event_type = JOB_FAILED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status'),
@@ -165,7 +156,6 @@ class JobDoneEvent(Event):
     event_type = JOB_DONE
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status'),
@@ -185,7 +175,6 @@ class JobDeletedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -200,7 +189,6 @@ class JobLogsViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -215,7 +203,6 @@ class JobRestartedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -230,7 +217,6 @@ class JobStatusesViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -243,7 +229,6 @@ class JobRestartedEvent(Event):
     event_type = JOB_RESTARTED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),

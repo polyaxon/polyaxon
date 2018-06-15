@@ -52,7 +52,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
                 </span>
               </LinkContainer>
               <span className="title">
-                Group {group.sequence}
+                Group {group.id}
               </span>
             </span>
             <div className="meta-description">
@@ -129,7 +129,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
             </div>
           </div>
           <h4 className="polyaxon-header">Experiments</h4>
-          <Experiments user={group.user} projectName={group.project_name} groupSequence={group.sequence}/>
+          <Experiments user={group.user} projectName={group.project_name} groupId={group.id}/>
         </div>
       </div>
     );

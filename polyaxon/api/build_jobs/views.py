@@ -84,7 +84,7 @@ class BuildDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     queryset = BuildJob.objects.all()
     serializer_class = BuildJobDetailSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
     instance = None
     get_event = BUILD_JOB_VIEWED
     update_event = BUILD_JOB_UPDATED
@@ -102,8 +102,8 @@ class BuildViewMixin(object):
     def get_job(self):
         # Get project and check access
         self.project = get_permissible_project(view=self)
-        sequence = self.kwargs['job_sequence']
-        self.job = get_object_or_404(BuildJob, project=self.project, sequence=sequence)
+        id = self.kwargs['job_id']
+        self.job = get_object_or_404(BuildJob, project=self.project, id=id)
         return self.job
 
     def filter_queryset(self, queryset):
@@ -163,7 +163,7 @@ class BuildStopView(CreateAPIView):
     queryset = BuildJob.objects.all()
     serializer_class = BuildJobSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
+    lookup_field = 'id'
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))

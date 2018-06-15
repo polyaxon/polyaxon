@@ -35,7 +35,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
     onDelete: (job: JobModel) => dispatch(actions.deleteJobActionCreator(job)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
     fetchData: (currentPage?: number) => dispatch(
-      actions.fetchJobs(params.experiment.project_name, params.experiment.sequence, currentPage))
+      actions.fetchJobs(params.experiment.project_name, params.experiment.id, currentPage))
   };
 }
 

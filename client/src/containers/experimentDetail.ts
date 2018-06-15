@@ -11,7 +11,7 @@ export function mapStateToProps(state: AppState, params: any)  {
   let experimentUniqueName = getExperimentUniqueName(
     params.match.params.user,
     params.match.params.projectName,
-    params.match.params.experimentSequence);
+    params.match.params.experimentId);
   return _.includes(state.experiments.uniqueNames, experimentUniqueName) ?
     {experiment: state.experiments.byUniqueNames[experimentUniqueName]} :
     {experiment: null};
@@ -24,12 +24,11 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, params: any): DispatchProps {
   return {
-    onDelete: () => dispatch(() => undefined),
     fetchData: () => dispatch(
       actions.fetchExperiment(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.experimentSequence))
+        params.match.params.experimentId))
   };
 }
 

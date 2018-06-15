@@ -18,7 +18,7 @@ Options:
 option | type | description
 -------|------|------------
   -p, --project | TEXT | The project name, e.g. 'mnist' or 'adam/mnist'.
-  -xp, --experiment | INTEGER | The experiment sequence number.
+  -xp, --experiment | INTEGER | The experiment id number.
   --help |  | Show this message and exit.
 
 ## get

@@ -1,7 +1,7 @@
 export class ExperimentModel {
   public uuid: string;
   public unique_name: string;
-  public sequence: number;
+  public id: number;
   public description: string;
   public experiment_group_name: string;
   public user: string;

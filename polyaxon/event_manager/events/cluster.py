@@ -59,7 +59,6 @@ class ClusterNodeCreatedEvent(Event):
     attributes = (
         Attribute('id'),
         Attribute('role'),
-        Attribute('sequence', attr_type=int),
         Attribute('docker_version', is_required=False),
         Attribute('kubelet_version'),
         Attribute('os_image'),
@@ -75,7 +74,6 @@ class ClusterNodeUpdatedEvent(Event):
     attributes = (
         Attribute('id'),
         Attribute('role'),
-        Attribute('sequence', attr_type=int),
         Attribute('docker_version', is_required=False),
         Attribute('kubelet_version'),
         Attribute('os_image'),
@@ -91,7 +89,6 @@ class ClusterNodeDeletedEvent(Event):
     attributes = (
         Attribute('id'),
         Attribute('role'),
-        Attribute('sequence', attr_type=int),
         Attribute('docker_version', is_required=False),
         Attribute('kubelet_version'),
         Attribute('os_image'),

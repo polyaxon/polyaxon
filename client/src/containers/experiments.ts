@@ -11,13 +11,13 @@ import { getPaginatedSlice } from '../constants/paginate';
 interface OwnProps {
   user: string;
   projectName: string;
-  groupSequence?: string;
+  groupId?: string;
   fetchData?: () => any;
 }
 
 export function mapStateToProps(state: AppState, ownProps: any) {
-  let groupName = ownProps.groupSequence != null ?
-                  getGroupName(ownProps.projectName, ownProps.groupSequence) :
+  let groupName = ownProps.groupId != null ?
+                  getGroupName(ownProps.projectName, ownProps.groupId) :
                   null;
   let experiments: ExperimentModel[] = [];
   let count = 0;
@@ -59,7 +59,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
     fetchData: (currentPage?: number) => dispatch(
-      actions.fetchExperiments(ownProps.projectName, currentPage, ownProps.groupSequence))
+      actions.fetchExperiments(ownProps.projectName, currentPage, ownProps.groupId))
   };
 }
 

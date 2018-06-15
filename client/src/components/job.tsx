@@ -11,7 +11,7 @@ export interface Props {
 
 function Job({job, onDelete}: Props) {
   let statusCssClass = getCssClassForStatus(job.last_status);
-  let jobDetailUrl = `jobs/${job.sequence}/`;
+  let jobDetailUrl = `jobs/${job.id}/`;
 
   return (
     <div className="row">
@@ -29,8 +29,8 @@ function Job({job, onDelete}: Props) {
           </span>
           <span className="meta-info">
             <i className="fa fa-circle icon" aria-hidden="true"/>
-            <span className="title">Sequence:</span>
-            {job.sequence}
+            <span className="title">id:</span>
+            {job.id}
           </span>
         </div>
         {job.resources &&

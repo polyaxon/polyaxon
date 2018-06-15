@@ -181,7 +181,6 @@ class BuildJobLogsViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -196,7 +195,6 @@ class BuildJobStatusesViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),

@@ -1,4 +1,5 @@
 import { AppState } from './constants/types';
+import * as Cookies from 'js-cookie';
 
 export const loadState = () => {
   try {
@@ -19,4 +20,9 @@ export const saveState = (state: AppState) => {
   } catch (err) {
     // Ignore write errors.
   }
+};
+
+export const setLocalUser = () => {
+  Cookies.set('token', '8ff04973157b2a5831329fbb1befd37f93e4de4f');
+  Cookies.set('user', 'admin');
 };

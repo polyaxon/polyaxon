@@ -30,7 +30,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentJob
         fields = (
-            'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
+            'id', 'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
             'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
             'started_at', 'finished_at', 'resources',)
 
@@ -85,7 +85,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'uuid', 'unique_name', 'user', 'sequence', 'description', 'created_at', 'updated_at',
+            'id', 'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
             'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
             'is_clone', 'project', 'project_name', 'experiment_group',
             'experiment_group_name', 'num_jobs',)

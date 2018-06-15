@@ -263,10 +263,10 @@ count  2
 
 Experiment groups:
 
-  sequence  unique_name    project_name    created_at           concurrency    num_experiments    num_pending_experiments    num_running_experiments
-----------  -------------  --------------  -----------------  -------------  -----------------  -------------------------  -------------------------
-         1  admin.mnist.1  admin.mnist     a few seconds ago              1                  5                          4                          1
-         2  admin.mnist.2  admin.mnist     a few seconds ago              2                  5                          3                          2
+  id  unique_name    project_name    created_at           concurrency    num_experiments    num_pending_experiments    num_running_experiments
+----  -------------  --------------  -----------------  -------------  -----------------  -------------------------  -------------------------
+   1  admin.mnist.1  admin.mnist     a few seconds ago              1                  5                          4                          1
+   2  admin.mnist.2  admin.mnist     a few seconds ago              2                  5                          3                          2
 ```
 
 We can see that we created 2 groups, the first one with sequential runs, and the second one with 2 concurrent runs.
@@ -291,13 +291,13 @@ count  5
 
 Experiments:
 
-  sequence  unique_name       user    last_status    created_at         is_clone      num_jobs  finished_at    started_at
-----------  ----------------  ------  -------------  -----------------  ----------  ----------  -------------  -----------------
-         6  admin.mnist.2.6   admin   Created        a few seconds ago  False                0
-         7  admin.mnist.2.7   admin   Created        a few seconds ago  False                0
-         8  admin.mnist.2.8   admin   Starting       a few seconds ago  False                0                 a few seconds ago
-         9  admin.mnist.2.9   admin   Created        a few seconds ago  False                0
-        10  admin.mnist.2.10  admin   Building       a few seconds ago  False                0                 a few seconds ago
+  id  unique_name       user    last_status    created_at         is_clone      num_jobs  finished_at    started_at
+----  ----------------  ------  -------------  -----------------  ----------  ----------  -------------  -----------------
+   6  admin.mnist.2.6   admin   Created        a few seconds ago  False                0
+   7  admin.mnist.2.7   admin   Created        a few seconds ago  False                0
+   8  admin.mnist.2.8   admin   Starting       a few seconds ago  False                0                 a few seconds ago
+   9  admin.mnist.2.9   admin   Created        a few seconds ago  False                0
+  10  admin.mnist.2.10  admin   Building       a few seconds ago  False                0                 a few seconds ago
 ```
 
 ## Experiment group search algorithms

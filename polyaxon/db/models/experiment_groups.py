@@ -13,14 +13,7 @@ from django.utils.functional import cached_property
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
-from db.models.utils import (
-    DescribableModel,
-    DiffModel,
-    LastStatusMixin,
-    NameableModel,
-    SequenceModel,
-    StatusModel
-)
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, NameableModel, StatusModel
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
@@ -29,7 +22,7 @@ from polyaxon_schemas.utils import Optimization
 _logger = logging.getLogger('polyaxon.db.experiment_groups')
 
 
-class ExperimentGroup(DiffModel, NameableModel, DescribableModel, SequenceModel, LastStatusMixin):
+class ExperimentGroup(DiffModel, NameableModel, DescribableModel, LastStatusMixin):
     """A model that saves Specification/Polyaxonfiles."""
     STATUSES = ExperimentGroupLifeCycle
 
@@ -73,20 +66,14 @@ class ExperimentGroup(DiffModel, NameableModel, DescribableModel, SequenceModel,
 
     class Meta:
         app_label = 'db'
-        unique_together = (('project', 'sequence'), ('project', 'name'),)
+        unique_together = (('project', 'name'),)
 
     def __str__(self):
         return self.unique_name
 
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        filter_query = ExperimentGroup.sequence_objects.filter(project=self.project)
-        self._set_sequence(filter_query=filter_query)
-        self._set_name(unique_name=self.unique_name)
-        super(ExperimentGroup, self).save(*args, **kwargs)
-
     @property
     def unique_name(self):
-        return '{}.{}'.format(self.project.unique_name, self.sequence)
+        return '{}.{}'.format(self.project.unique_name, self.id)
 
     @property
     def last_status(self):

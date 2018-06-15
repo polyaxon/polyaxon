@@ -195,7 +195,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
                                                  project.user.username,
                                                  project.name,
-                                                 self.object.sequence)
+                                                 self.object.id)
         self.queryset = self.model_class.objects.all()
 
         # Add 2 experiments
@@ -261,7 +261,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.object.sequence)
+            self.object.id)
 
     def test_stop_all(self):
         data = {}

@@ -95,45 +95,45 @@ export let getProjectUniqueName = function (username: string, projectName: strin
   return `${username}.${projectName}`;
 };
 
-export let getGroupUrl = function (username: string, projectName: string, groupSequence: number) {
+export let getGroupUrl = function (username: string, projectName: string, groupId: number) {
   let projectUrl = getProjectUrl(username, projectName);
-  return `${projectUrl}/groups/${groupSequence}/`;
+  return `${projectUrl}/groups/${groupId}/`;
 };
 
-export let getGroupUniqueName = function (username: string, projectName: string, groupSequence: number) {
+export let getGroupUniqueName = function (username: string, projectName: string, groupId: number) {
   let projectUniqueName = getProjectUniqueName(username, projectName);
-  return `${projectUniqueName}.${groupSequence}`;
+  return `${projectUniqueName}.${groupId}`;
 };
 
-export let getExperimentUrl = function (username: string, projectName: string, experimentSequence: number) {
+export let getExperimentUrl = function (username: string, projectName: string, experimentId: number) {
   let projectUrl = getProjectUrl(username, projectName);
-  return `${projectUrl}/experiments/${experimentSequence}/`;
+  return `${projectUrl}/experiments/${experimentId}/`;
 };
 
-export let getExperimentUniqueName = function (username: string, projectName: string, experimentSequence: number) {
+export let getExperimentUniqueName = function (username: string, projectName: string, experimentId: number) {
   let projectUniqueName = getProjectUniqueName(username, projectName);
-  return `${projectUniqueName}.${experimentSequence}`;
+  return `${projectUniqueName}.${experimentId}`;
 };
 
 export let getJobtUrl = function (username: string,
                                   projectName: string,
-                                  experimentSequence: number,
-                                  jobSequence: number) {
-  let experimentUrl = getExperimentUrl(username, projectName, experimentSequence);
+                                  experimentId: number,
+                                  jobId: number) {
+  let experimentUrl = getExperimentUrl(username, projectName, experimentId);
 
-  return `${experimentUrl}/jobs/${jobSequence}/`;
+  return `${experimentUrl}/jobs/${jobId}/`;
 };
 
 export let getJobUniqueName = function (username: string,
                                         projectName: string,
-                                        experimentSequence: number,
-                                        jobSequence: number) {
-  let experimentUrl = getExperimentUniqueName(username, projectName, experimentSequence);
-  return `${experimentUrl}.${jobSequence}`;
+                                        experimentId: number,
+                                        jobId: number) {
+  let experimentUrl = getExperimentUniqueName(username, projectName, experimentId);
+  return `${experimentUrl}.${jobId}`;
 };
 
-export function getGroupName(projectName: string, groupSequence: number | string) {
-  return `${projectName}.${groupSequence}`;
+export function getGroupName(projectName: string, groupId: number | string) {
+  return `${projectName}.${groupId}`;
 }
 
 export function handleAuthError(response: any, dispatch: any) {

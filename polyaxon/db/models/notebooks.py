@@ -3,6 +3,7 @@ from django.db import models
 
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
+from db.models.utils import NameableModel
 from libs.spec_validation import validate_notebook_spec_config
 from polyaxon_schemas.polyaxonfile.specification import NotebookSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
@@ -29,15 +30,10 @@ class NotebookJob(PluginJobBase, JobMixin):
 
     class Meta:
         app_label = 'db'
-        unique_together = (('project', 'sequence'),)
 
-    def __str__(self):
-        return '{}.notebooks.{}'.format(self.project.unique_name, self.sequence)
-
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        filter_query = NotebookJob.sequence_objects.filter(project=self.project)
-        self._set_sequence(filter_query=filter_query)
-        super(NotebookJob, self).save(*args, **kwargs)
+    @cached_property
+    def unique_name(self):
+        return '{}.notebooks.{}'.format(self.project.unique_name, self.id)
 
     @cached_property
     def specification(self):

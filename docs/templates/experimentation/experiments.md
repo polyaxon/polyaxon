@@ -119,9 +119,9 @@ count  1
 
 Experiments:
 
-  sequence  unique_name       user    project_name    experiment_group_name    last_status    created_at         is_clone      num_jobs  finished_at    started_at
-----------  ----------------  ------  --------------  -----------------------  -------------  -----------------  ----------  ----------  -------------  ------------
-        1  admin.mnist.1      admin   admin.mnist                              Created        a few seconds ago  False                0
+  id  unique_name       user    project_name    experiment_group_name    last_status    created_at         is_clone      num_jobs  finished_at    started_at
+----  ----------------  ------  --------------  -----------------------  -------------  -----------------  ----------  ----------  -------------  ------------
+   1  admin.mnist.1      admin   admin.mnist                              Created        a few seconds ago  False                0
 
 ```
 
@@ -339,15 +339,15 @@ count  6
 
 Jobs:
 
-sequence   role    experiment_name         last_status    created_at         started_at    finished_at    total_run
----------  ------  ----------------------  -------------  -----------------  ------------  -------------  -----------
-        1  master  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-        2  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-        3  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-        4  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-        5  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-        6  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-        7  ps      admin.cats-vs-dogs.1.5  Building       a few seconds ago
+id   role    experiment_name         last_status    created_at         started_at    finished_at    total_run
+---  ------  ----------------------  -------------  -----------------  ------------  -------------  -----------
+  1  master  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+  2  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+  3  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+  4  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+  5  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+  6  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+  7  ps      admin.cats-vs-dogs.1.5  Building       a few seconds ago
 ```
 
 For more information about jobs, please refer to [jobs](jobs)
@@ -364,8 +364,8 @@ This command will show the logs in real time of all the jobs running for the exp
 In the [jobs](jobs)'s page, we will see how we can view the logs of a particular job.
 
 !!! note
-    3 is the sequence of the experiment in this project,
-    you can see it when running `polyaxon project experiments` in the sequence column.
+    3 is the id of the experiment in this project,
+    you can see it when running `polyaxon project experiments` in the id column.
 
 
 ## Tracking experiment resources

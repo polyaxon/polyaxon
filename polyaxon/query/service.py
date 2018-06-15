@@ -19,4 +19,3 @@ class QueryService(Service):
 
     def query_builds(self):
         pass
-

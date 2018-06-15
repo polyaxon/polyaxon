@@ -1,4 +1,4 @@
-import { FormReducer } from 'redux-form';
+// import { FormReducer } from 'redux-form';
 
 import { ProjectStateSchema, ProjectsEmptyState } from '../models/project';
 import { ExperimentStateSchema, ExperimentsEmptyState } from '../models/experiment';
@@ -17,7 +17,7 @@ export interface AppState {
   modal: ModalStateSchema;
   auth: TokenStateSchema;
   users: UserStateSchema;
-  form: FormReducer;
+  // form: FormReducer;
   pagination: PaginationStateSchema;
   logs: string;
 }

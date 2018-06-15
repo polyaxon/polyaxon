@@ -82,18 +82,18 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   };
 }
 
-export function fetchExperiments(projectUniqueName: string, currentPage?: number, groupSequence?: string): any {
+export function fetchExperiments(projectUniqueName: string, currentPage?: number, groupId?: string): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
     paginationActions.paginateExperiment(dispatch, currentPage);
     let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}`;
-    if (groupSequence) {
-      experimentsUrl += `/groups/${groupSequence}/experiments/`;
+    if (groupId) {
+      experimentsUrl += `/groups/${groupId}/experiments/`;
     } else {
       experimentsUrl += `/experiments/`;
     }
     let filters: {[key: string]: number|boolean|string} = {};
-    if (!groupSequence) {
+    if (!groupId) {
       filters.independent = true;
     }
     let offset = getOffset(currentPage);
@@ -115,10 +115,10 @@ export function fetchExperiments(projectUniqueName: string, currentPage?: number
   };
 }
 
-export function fetchExperiment(user: string, projectName: string, experimentSequence: number): any {
+export function fetchExperiment(user: string, projectName: string, experimentId: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
-    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/experiments/` + `${experimentSequence}`, {
+    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/experiments/` + `${experimentId}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

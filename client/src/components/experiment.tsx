@@ -22,7 +22,7 @@ function Experiment({experiment, onDelete}: Props) {
   return (
     <div className="row">
       <div className="col-md-8 block">
-        <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.sequence)}>
+        <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.id)}>
           <a className="title">
             <i className="fa fa-cube icon" aria-hidden="true"/>
             {experiment.unique_name}

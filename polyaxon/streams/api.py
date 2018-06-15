@@ -40,48 +40,47 @@ def _get_project(username, project_name):
         raise exceptions.NotFound('Project was not found')
 
 
-def _get_experiment(project, experiment_sequence):
+def _get_experiment(project, experiment_id):
     try:
-        return Experiment.objects.get(project=project, sequence=experiment_sequence)
+        return Experiment.objects.get(project=project, id=experiment_id)
     except (Experiment.DoesNotExist, ValidationError):
         raise exceptions.NotFound('Experiment was not found')
 
 
-def _get_job(experiment, job_sequence):
+def _get_job(experiment, job_id):
     try:
-        job = ExperimentJob.objects.get(experiment=experiment, sequence=job_sequence)
+        job = ExperimentJob.objects.get(experiment=experiment, id=job_id)
     except (ExperimentJob.DoesNotExist, ValidationError):
-        _logger.info('Job with experiment:`%s` sequence:`%s` does not exist',
-                     experiment.unique_name, job_sequence)
+        _logger.info('Job with experiment:`%s` id:`%s` does not exist',
+                     experiment.unique_name, job_id)
         raise exceptions.NotFound('Experiment was not found')
 
     if not job.is_running:
-        _logger.info('Job with experiment:`%s` sequence:`%s` is not currently running',
-                     experiment.unique_name, job_sequence)
+        _logger.info('Job with experiment:`%s` id:`%s` is not currently running',
+                     experiment.unique_name, job_id)
         raise exceptions.NotFound('Job was not running')
 
     return job
 
 
-def _get_running_experiment(project, experiment_sequence):
-    experiment = _get_experiment(project, experiment_sequence)
+def _get_running_experiment(project, experiment_id):
+    experiment = _get_experiment(project, experiment_id)
     if not experiment.is_running:
-        _logger.info('Experiment project `%s` num `%s` is not currently running',
-                     project.name, experiment.sequence)
+        _logger.info('Experiment project `%s` is not currently running', experiment.unique_name)
         raise exceptions.NotFound('Experiment was not running')
 
     return experiment
 
 
 @authorized()
-async def job_resources(request, ws, username, project_name, experiment_sequence, job_sequence):
+async def job_resources(request, ws, username, project_name, experiment_id, job_id):
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_sequence)
-    job = _get_job(experiment, job_sequence)
+    experiment = _get_running_experiment(project, experiment_id)
+    job = _get_job(experiment, job_id)
     job_uuid = job.uuid.hex
-    job_name = '{}.{}'.format(job.role, job.sequence)
+    job_name = '{}.{}'.format(job.role, job.id)
     auditor.record(event_type=EXPERIMENT_JOB_RESOURCES_VIEWED,
                    instance=job,
                    actor_id=request.app.user.id)
@@ -137,11 +136,11 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
 
 
 @authorized()
-async def experiment_resources(request, ws, username, project_name, experiment_sequence):
+async def experiment_resources(request, ws, username, project_name, experiment_id):
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_sequence)
+    experiment = _get_running_experiment(project, experiment_id)
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_RESOURCES_VIEWED,
                    instance=experiment,
@@ -167,9 +166,9 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
         _logger.info('Quitting resources socket for uuid %s', experiment_uuid)
 
     jobs = []
-    for job in experiment.jobs.values('uuid', 'role', 'sequence'):
+    for job in experiment.jobs.values('uuid', 'role', 'id'):
         job['uuid'] = job['uuid'].hex
-        job['name'] = '{}.{}'.format(job.pop('role'), job.pop('sequence'))
+        job['name'] = '{}.{}'.format(job.pop('role'), job.pop('id'))
         jobs.append(job)
     ws_manager.add_socket(ws)
     should_check = 0
@@ -205,12 +204,12 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
 
 
 @authorized()
-async def job_logs(request, ws, username, project_name, experiment_sequence, job_sequence):
+async def job_logs(request, ws, username, project_name, experiment_id, job_id):
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_sequence)
-    job = _get_job(experiment, job_sequence)
+    experiment = _get_running_experiment(project, experiment_id)
+    job = _get_job(experiment, job_id)
     job_uuid = job.uuid.hex
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
                    instance=job,
@@ -280,11 +279,11 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
 
 
 @authorized()
-async def experiment_logs(request, ws, username, project_name, experiment_sequence):
+async def experiment_logs(request, ws, username, project_name, experiment_id):
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_sequence)
+    experiment = _get_running_experiment(project, experiment_id)
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
                    instance=experiment,
@@ -352,23 +351,23 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-EXPERIMENT_URL = '/v1/<username>/<project_name>/experiments/<experiment_sequence>'
+EXPERIMENT_URL = '/v1/<username>/<project_name>/experiments/<experiment_id>'
 WS_EXPERIMENT_URL = '/ws{}'.format(EXPERIMENT_URL)
 
 # Job urls
 app.add_websocket_route(
     job_resources,
-    '{}/jobs/<job_sequence>/resources'.format(EXPERIMENT_URL))
+    '{}/jobs/<job_id>/resources'.format(EXPERIMENT_URL))
 app.add_websocket_route(
     job_resources,
-    '{}/jobs/<job_sequence>/resources'.format(WS_EXPERIMENT_URL))
+    '{}/jobs/<job_id>/resources'.format(WS_EXPERIMENT_URL))
 
 app.add_websocket_route(
     job_logs,
-    '{}/jobs/<job_sequence>/logs'.format(EXPERIMENT_URL))
+    '{}/jobs/<job_id>/logs'.format(EXPERIMENT_URL))
 app.add_websocket_route(
     job_logs,
-    '{}/jobs/<job_sequence>/logs'.format(WS_EXPERIMENT_URL))
+    '{}/jobs/<job_id>/logs'.format(WS_EXPERIMENT_URL))
 
 # Experiment urls
 app.add_websocket_route(

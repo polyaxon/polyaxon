@@ -7,7 +7,7 @@ so the user might want to look at a specific job running in that experiment.
 
 ## Getting job info
 
-To view the info of a specific job, you need to have the experiment sequence it belongs to, and the job sequence within that experiment.
+To view the info of a specific job, you need to have the experiment id it belongs to, and the job id.
 
 
 ```bash
@@ -24,7 +24,7 @@ gpu                1           1
 Job info:
 
 ---------------  --------------------
-sequence         1
+id               1
 role             master
 experiment_name  root.quick-start.3
 last_status      Succeeded
@@ -38,7 +38,7 @@ total_run        10m 40s
 
 ## Tracking job logs
 
-To view the logs of a specific job, you need to have the experiment sequence it belongs to, and the job sequence within that experiment.
+To view the logs of a specific job, you need to have the experiment is it belongs to, and the job id within that experiment.
 
 For example
 
@@ -50,7 +50,7 @@ This command will show the logs of in real time for that job.
 
 ## Tracking job resources
 
-To view the resources of a specific job, you need to have the experiment sequence it belongs to, and the job sequence within that experiment.
+To view the resources of a specific job, you need to have the experiment id it belongs to, and the job id within that experiment.
 
 For example
 
@@ -72,7 +72,7 @@ $ polyaxon job -xp 3 -j 1 resources -g
 
 ## Job statuses
 
-To view the chronological statuses of a specific job, you need to have the experiment sequence it belongs to, and the job sequence within that experiment.
+To view the chronological statuses of a specific job, you need to have the experiment id it belongs to, and the job id within that experiment.
 
 ```bash
 $ polyaxon job -xp 3 -j 1 statuses

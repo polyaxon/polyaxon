@@ -21,14 +21,13 @@ class DescribableModel(models.Model):
 class NameableModel(models.Model):
     name = models.CharField(
         max_length=256,
+        blank=True,
+        null=True,
+        default=None,
         validators=[validate_slug, validate_blacklist_name])
 
     class Meta:
         abstract = True
-
-    def _set_name(self, unique_name):
-        if self.pk is None and not self.name:
-            self.name = unique_name
 
 
 class SequenceManager(models.Manager):

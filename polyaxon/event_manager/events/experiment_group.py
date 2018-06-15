@@ -41,7 +41,6 @@ class ExperimentGroupCreatedEvent(Event):
     actor_id = 'user.id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -58,7 +57,6 @@ class ExperimentGroupUpdatedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -76,7 +74,6 @@ class ExperimentGroupDeletedEvent(Event):
     event_type = EXPERIMENT_GROUP_DELETED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -90,7 +87,6 @@ class ExperimentGroupViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -108,7 +104,6 @@ class ExperimentGroupStoppedEvent(Event):
     event_type = EXPERIMENT_GROUP_STOPPED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -126,7 +121,6 @@ class ExperimentGroupResumedEvent(Event):
     event_type = EXPERIMENT_GROUP_RESUMED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -143,7 +137,6 @@ class ExperimentGroupDoneEvent(Event):
     event_type = EXPERIMENT_GROUP_DONE
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -161,7 +154,6 @@ class ExperimentGroupNewStatusEvent(Event):
     event_type = EXPERIMENT_GROUP_NEW_STATUS
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -179,7 +171,6 @@ class ExperimentGroupIterationEvent(Event):
     event_type = EXPERIMENT_GROUP_ITERATION
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -197,7 +188,6 @@ class ExperimentGroupExperimentsViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -232,7 +222,6 @@ class ExperimentGroupDeletedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -251,7 +240,6 @@ class ExperimentGroupStoppedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
@@ -271,7 +259,6 @@ class ExperimentGroupResumedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),

@@ -1,18 +1,23 @@
 import uuid
 
 from django.conf import settings
+from django.core.validators import validate_slug
 from django.db import models
 
-from db.models.utils import DescribableModel, DiffModel, NameableModel
+from db.models.utils import DescribableModel, DiffModel
+from libs.blacklist import validate_blacklist_name
 
 
-class Project(DiffModel, NameableModel, DescribableModel):
+class Project(DiffModel, DescribableModel):
     """A model that represents a set of experiments to solve a specific problem."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
         unique=True,
         null=False)
+    name = models.CharField(
+        max_length=256,
+        validators=[validate_slug, validate_blacklist_name])
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

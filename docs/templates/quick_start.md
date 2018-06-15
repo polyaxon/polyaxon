@@ -28,11 +28,11 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     Cluster Nodes:
 
-      sequence  name                       hostname                   role    memory      n_cpus    n_gpus
-    ----------  -------------------------  -------------------------  ------  --------  --------  --------
-             1  k8s-agentpool1-13475325-0  k8s-agentpool1-13475325-0  agent   6.7 Gb           2         0
-             2  k8s-agentpool2-13475325-0  k8s-agentpool2-13475325-0  agent   54.93 Gb         6         1
-             3  k8s-master-13475325-0      k8s-master-13475325-0      master  6.7 Gb           2         0
+      id  name                       hostname                   role    memory      n_cpus    n_gpus
+    ----  -------------------------  -------------------------  ------  --------  --------  --------
+       1  k8s-agentpool1-13475325-0  k8s-agentpool1-13475325-0  agent   6.7 Gb           2         0
+       2  k8s-agentpool2-13475325-0  k8s-agentpool2-13475325-0  agent   54.93 Gb         6         1
+       3  k8s-master-13475325-0      k8s-master-13475325-0      master  6.7 Gb           2         0
     ```
 
 2. Now  we can create a project, you can do that with `Polyaxon Dashboard` or with `polyaxon CLI`
@@ -112,9 +112,9 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     $ polyaxon project experiments
     ```
 
-    sequence | name | user | project | status | created_at
-    ---------|------|------|---------|--------|-----------
-    1 | root.quick-start.1 | root | root.quick-start| Scheduled | seconds ago
+    id | name | user | project | status | created_at
+    ---|------|------|---------|--------|--------|-----------
+    1  | root.quick-start.1 | root | root.quick-start| Scheduled | seconds ago
 
 
 9. Check the experiment logs and resource
@@ -127,7 +127,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Experiment info:
 
     ---------------------  ------------------
-    sequence               1
+    id                     1
     unique_name            root.quick-start.1
     user                   root
     project_name           root.quick-start
@@ -210,7 +210,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Experiment group info:
 
     -----------------------  ------------------
-    sequence                 1
+    id                       1
     unique_name              root.quick-start.1
     user                     root
     project_name             root.quick-start
@@ -238,28 +238,28 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     Experiments:
 
-      sequence  unique_name            user    last_status    created_at          num_jobs  finished_at    started_at
-    ----------  ---------------------  ------  -------------  -----------------  ---------  -------------  -----------------
-             4  root.quick-start.1.4   root    Created        a few seconds ago          0
-             5  root.quick-start.1.5   root    Created        a few seconds ago          0
-             6  root.quick-start.1.6   root    Created        a few seconds ago          0
-             7  root.quick-start.1.7   root    Created        a few seconds ago          0
-             8  root.quick-start.1.8   root    Created        a few seconds ago          0
-             9  root.quick-start.1.9   root    Created        a few seconds ago          0
-            10  root.quick-start.1.10  root    Created        a few seconds ago          0
-            11  root.quick-start.1.11  root    Created        a few seconds ago          0
-            12  root.quick-start.1.12  root    Running        a few seconds ago          1                 a few seconds ago
-            13  root.quick-start.1.13  root    Created        a few seconds ago          0
-            14  root.quick-start.1.14  root    Created        a few seconds ago          0
-            15  root.quick-start.1.15  root    Running        a few seconds ago          1                 a few seconds ago
-            16  root.quick-start.1.16  root    Created        a few seconds ago          0
-            17  root.quick-start.1.17  root    Created        a few seconds ago          0
-            18  root.quick-start.1.18  root    Created        a few seconds ago          0
-            19  root.quick-start.1.19  root    Created        a few seconds ago          0
-            20  root.quick-start.1.20  root    Created        a few seconds ago          0
-            21  root.quick-start.1.21  root    Created        a few seconds ago          0
-            22  root.quick-start.1.22  root    Created        a few seconds ago          0
-            23  root.quick-start.1.23  root    Created        a few seconds ago          0
+      id  unique_name            user    last_status    created_at          num_jobs  finished_at    started_at
+    ----  ---------------------  ------  -------------  -----------------  ---------  -------------  -----------------
+       4  root.quick-start.1.4   root    Created        a few seconds ago          0
+       5  root.quick-start.1.5   root    Created        a few seconds ago          0
+       6  root.quick-start.1.6   root    Created        a few seconds ago          0
+       7  root.quick-start.1.7   root    Created        a few seconds ago          0
+       8  root.quick-start.1.8   root    Created        a few seconds ago          0
+       9  root.quick-start.1.9   root    Created        a few seconds ago          0
+      10  root.quick-start.1.10  root    Created        a few seconds ago          0
+      11  root.quick-start.1.11  root    Created        a few seconds ago          0
+      12  root.quick-start.1.12  root    Running        a few seconds ago          1                 a few seconds ago
+      13  root.quick-start.1.13  root    Created        a few seconds ago          0
+      14  root.quick-start.1.14  root    Created        a few seconds ago          0
+      15  root.quick-start.1.15  root    Running        a few seconds ago          1                 a few seconds ago
+      16  root.quick-start.1.16  root    Created        a few seconds ago          0
+      17  root.quick-start.1.17  root    Created        a few seconds ago          0
+      18  root.quick-start.1.18  root    Created        a few seconds ago          0
+      19  root.quick-start.1.19  root    Created        a few seconds ago          0
+      20  root.quick-start.1.20  root    Created        a few seconds ago          0
+      21  root.quick-start.1.21  root    Created        a few seconds ago          0
+      22  root.quick-start.1.22  root    Created        a few seconds ago          0
+      23  root.quick-start.1.23  root    Created        a few seconds ago          0
     ```
 
     Comparing experiments metrics in the groups:
@@ -278,28 +278,28 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     Experiments:
 
-      sequence  unique_name                loss    precision    accuracy
-    ----------  ---------------------  ------------  -----------  ----------
-         4  root.quick-start.1.4      0.0514547     0.999445      0.9829
-         5  root.quick-start.1.5      0.0554655     0.999334      0.9833
-         6  root.quick-start.1.6      0.0607866     0.999002      0.9797
-         7  root.quick-start.1.7      4.62058       0.902         0.1028
-         8  root.quick-start.1.8      0.379242      0.996773      0.8854
-         9  root.quick-start.1.9   3635.83          0.902         0.0974
-        10  root.quick-start.1.10     0.0462428     0.998892      0.9848
-        11  root.quick-start.1.11     2.73637       0.902         0.1135
-        12  root.quick-start.1.12     0.394347      0.997983      0.8859
-        13  root.quick-start.1.13  2081.07          0             0.098
-        14  root.quick-start.1.14     0.0514547     0.999445      0.9829
-        15  root.quick-start.1.15     0.0554655     0.999334      0.9833
-        16  root.quick-start.1.16     0.0607866     0.999002      0.9797
-        17  root.quick-start.1.17     4.62058       0.902         0.1028
-        18  root.quick-start.1.18     0.379242      0.996773      0.8854
-        19  root.quick-start.1.19     0.388242      0.9963        0.88
-        20  root.quick-start.1.20     0.0462428     0.998892      0.9848
-        21  root.quick-start.1.21     2.73637       0.902         0.1135
-        22  root.quick-start.1.22     0.394347      0.997983      0.8859
-        23  root.quick-start.1.23     4.62058       0.902         0.1028
+     id  unique_name                loss          precision    accuracy
+    ---  --__---------------------  ------------  -----------  ----------
+      4   root.quick-start.1.4      0.0514547     0.999445      0.9829
+      5   root.quick-start.1.5      0.0554655     0.999334      0.9833
+      6   root.quick-start.1.6      0.0607866     0.999002      0.9797
+      7   root.quick-start.1.7      4.62058       0.902         0.1028
+      8   root.quick-start.1.8      0.379242      0.996773      0.8854
+      9   root.quick-start.1.9   3635.83          0.902         0.0974
+     10   root.quick-start.1.10     0.0462428     0.998892      0.9848
+     11   root.quick-start.1.11     2.73637       0.902         0.1135
+     12   root.quick-start.1.12     0.394347      0.997983      0.8859
+     13   root.quick-start.1.13  2081.07          0             0.098
+     14   root.quick-start.1.14     0.0514547     0.999445      0.9829
+     15   root.quick-start.1.15     0.0554655     0.999334      0.9833
+     16   root.quick-start.1.16     0.0607866     0.999002      0.9797
+     17   root.quick-start.1.17     4.62058       0.902         0.1028
+     18   root.quick-start.1.18     0.379242      0.996773      0.8854
+     19   root.quick-start.1.19     0.388242      0.9963        0.88
+     20   root.quick-start.1.20     0.0462428     0.998892      0.9848
+     21   root.quick-start.1.21     2.73637       0.902         0.1135
+     22   root.quick-start.1.22     0.394347      0.997983      0.8859
+     23   root.quick-start.1.23     4.62058       0.902         0.1028
     ```
 
 14. More information about the project in the dashboard

@@ -15,7 +15,6 @@ class ClusterNodeFactory(factory.DjangoModelFactory):
     os_image = 'Buildroot 2017.02'
     kernel_version = '4.9.13'
     name = factory.Sequence('name {}'.format)
-    sequence = factory.Sequence(lambda i: i)
     memory = factory.Sequence(lambda x: x)
     cpu = factory.Sequence(lambda x: x)
     n_gpus = factory.Sequence(lambda x: x)

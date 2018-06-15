@@ -7,7 +7,6 @@
         "created_at": "2017-12-24T17:18:58.453Z",
         "updated_at": "2018-01-27T14:59:11.411Z",
         "uuid": "8eefb7a1-146f-476c-a66e-3bee9b88c1de",
-        "sequence": 1,
         "project": 1,
         "name": "xp1",
         "user": [
@@ -50,7 +49,6 @@
         "created_at": "2017-12-24T17:49:50.531Z",
         "updated_at": "2018-01-27T14:59:29.645Z",
         "uuid": "0bfb74cc-a2c5-4190-b3f1-6fd5aba11321",
-        "sequence": 2,
         "name": "xp2",
         "project": 1,
         "user": [
@@ -82,7 +80,6 @@
         "created_at": "2017-12-24T18:12:41.121Z",
         "updated_at": "2018-01-24T00:48:47.133Z",
         "uuid": "88897dab-8ba6-4bc7-af82-43b0afdfaeec",
-        "sequence": 3,
         "name": "xp3",
         "project": 1,
         "user": [
@@ -114,7 +111,6 @@
         "created_at": "2017-12-24T18:15:59.520Z",
         "updated_at": "2018-01-24T00:48:47.144Z",
         "uuid": "f53c7bb1-90fd-481d-90e3-28bd05ac21eb",
-        "sequence": 4,
         "name": "xp4",
         "project": 1,
         "user": [
@@ -146,7 +142,6 @@
         "created_at": "2017-12-24T18:53:48.019Z",
         "updated_at": "2018-01-24T00:48:47.156Z",
         "uuid": "d3cee868-4748-4488-b13f-f82b5b803584",
-        "sequence": 5,
         "name": "xp5",
         "project": 1,
         "user": [
@@ -390,7 +385,6 @@
         "created_at": "2017-12-24T18:53:48.040Z",
         "updated_at": "2018-01-24T00:48:47.166Z",
         "uuid": "78013845-efa5-44d6-8efd-37e96bd8ab0b",
-        "sequence": 6,
         "project": 1,
         "user": [
             "admin"
@@ -1745,7 +1739,6 @@
             }
         },
         "role": "master",
-        "sequence": 1,
         "status": 5,
         "resources": 1
     }
@@ -2456,7 +2449,6 @@
             }
         },
         "role": "master",
-        "sequence": 1,
         "status": 10,
         "resources": 2
     }
@@ -3167,7 +3159,6 @@
             }
         },
         "role": "master",
-        "sequence": 1,
         "status": 15,
         "resources": null
     }
@@ -3878,7 +3869,6 @@
             }
         },
         "role": "master",
-        "sequence": 1,
         "status": 20,
         "resources": null
     }
@@ -4594,7 +4584,6 @@
             }
         },
         "role": "master",
-        "sequence": 1,
         "status": 27,
         "resources": null
     }
@@ -5310,7 +5299,6 @@
             }
         },
         "role": "worker",
-        "sequence": 2,
         "status": 28,
         "resources": null
     }
@@ -6026,7 +6014,6 @@
             }
         },
         "role": "ps",
-        "sequence": 3,
         "status": 35,
         "resources": null
     }
@@ -6742,7 +6729,6 @@
             }
         },
         "role": "master",
-        "sequence": 1,
         "status": 36,
         "resources": null
     }
@@ -7458,7 +7444,6 @@
             }
         },
         "role": "worker",
-        "sequence": 2,
         "status": 37,
         "resources": null
     }
@@ -8174,7 +8159,6 @@
             }
         },
         "role": "ps",
-        "sequence": 3,
         "status": 34,
         "resources": null
     }

@@ -35,12 +35,12 @@ export type LogsAction =
   RequestLogsAction
   | ReceiveLogsAction;
 
-export function fetchLogs(projectUniqueName: string, experimentSequence: number): any {
+export function fetchLogs(projectUniqueName: string, experimentId: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestLogsActionCreator());
 
     let logsUrl =
-      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/logs';
+      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentId + '/logs';
 
     return fetch(logsUrl, {
       headers: {

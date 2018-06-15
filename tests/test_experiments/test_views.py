@@ -195,7 +195,7 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
                                                              self.experiment_group.project.user,
                                                              self.experiment_group.project.name,
-                                                             self.experiment_group.sequence)
+                                                             self.experiment_group.id)
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
@@ -299,7 +299,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
                                                              self.experiment_group.project.user,
                                                              self.experiment_group.project.name,
-                                                             self.experiment_group.sequence)
+                                                             self.experiment_group.id)
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
@@ -405,7 +405,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
                                                       project.user.username,
                                                       project.name,
-                                                      self.object.sequence)
+                                                      self.object.id)
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
@@ -446,7 +446,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
                                                  project.user.username,
                                                  project.name,
-                                                 exp.sequence)
+                                                 exp.id)
 
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
@@ -508,7 +508,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/experiments/{}/statuses/'.format(API_V1,
                                                                project.user.username,
                                                                project.name,
-                                                               self.experiment.sequence)
+                                                               self.experiment.id)
         self.objects = [self.factory_class(experiment=self.experiment,
                                            status=ExperimentLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -583,7 +583,7 @@ class TestExperimentMetricListViewV1(BaseViewTest):
         self.url = '/{}/{}/{}/experiments/{}/metrics/'.format(API_V1,
                                                               project.user.username,
                                                               project.name,
-                                                              self.experiment.sequence)
+                                                              self.experiment.id)
         self.objects = [self.factory_class(experiment=self.experiment, values={'accuracy': i / 10})
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
@@ -666,7 +666,7 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
             API_V1,
             self.experiment.project.user.username,
             self.experiment.project.name,
-            self.experiment.sequence,
+            self.experiment.id,
             self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
@@ -703,7 +703,7 @@ class TestExperimentJobListViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.experiment.sequence)
+            self.experiment.id)
         self.objects = [self.factory_class(experiment=self.experiment)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
@@ -768,8 +768,8 @@ class TestExperimentJobDetailViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.experiment.sequence,
-            self.object.sequence)
+            self.experiment.id,
+            self.object.id)
         self.queryset = self.model_class.objects.filter(experiment=self.experiment)
 
     def test_get(self):
@@ -819,8 +819,8 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            experiment.sequence,
-            self.experiment_job.sequence)
+            experiment.id,
+            self.experiment_job.id)
         self.objects = [self.factory_class(job=self.experiment_job,
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -896,8 +896,8 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            experiment.sequence,
-            self.experiment_job.sequence,
+            experiment.id,
+            self.experiment_job.id,
             self.object.uuid.hex)
         self.queryset = self.model_class.objects.filter(job=self.experiment_job)
 
@@ -943,7 +943,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.object.sequence)
+            self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_restart(self):
@@ -1009,7 +1009,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.object.sequence)
+            self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_resume(self):
@@ -1075,7 +1075,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.object.sequence)
+            self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_resume(self):
@@ -1140,7 +1140,7 @@ class TestStopExperimentViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            self.object.sequence)
+            self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_stop(self):
@@ -1167,7 +1167,7 @@ class TestExperimentLogsViewV1(BaseViewTest):
             API_V1,
             project.user.username,
             project.name,
-            experiment.sequence)
+            experiment.id)
 
         log_path = get_experiment_logs_path(experiment.unique_name)
         create_experiment_logs_path(experiment_name=experiment.unique_name)

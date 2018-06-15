@@ -27,7 +27,7 @@ class TestExperimentSerializer(BaseTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     expected_keys = {
-        'uuid', 'user', 'unique_name', 'sequence', 'description', 'created_at', 'updated_at',
+        'id', 'uuid', 'user', 'unique_name', 'description', 'created_at', 'updated_at',
         'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
         'is_clone', 'project', 'project_name', 'experiment_group',
         'experiment_group_name', 'num_jobs', }
@@ -111,6 +111,7 @@ class TestExperimentDetailSerializer(BaseTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     expected_keys = {
+        'id',
         'uuid',
         'unique_name',
         'created_at',
@@ -118,7 +119,6 @@ class TestExperimentDetailSerializer(BaseTest):
         'project',
         'project_name',
         'user',
-        'sequence',
         'last_status',
         'last_metric',
         'description',
@@ -219,7 +219,7 @@ class TestExperimentJobSerializer(BaseTest):
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
     expected_keys = {
-        'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
+        'id', 'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
         'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
         'started_at', 'finished_at', 'resources', }
 
@@ -256,7 +256,7 @@ class TestExperimentJobDetailsSerializer(BaseTest):
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
     expected_keys = {
-        'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
+        'id', 'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
         'definition', 'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
         'started_at', 'finished_at', 'resources', }
 

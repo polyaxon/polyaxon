@@ -1,5 +1,5 @@
 import { Action, combineReducers } from 'redux';
-import {reducer as formReducer } from 'redux-form';
+// import {reducer as formReducer } from 'redux-form';
 
 import { projectsReducer, UserProjectsReducer } from './projects';
 import { experimentsReducer, GroupExperimentsReducer, ProjectExperimentsReducer } from './experiments';
@@ -21,7 +21,7 @@ const combinedReducer = combineReducers<AppState>({
   modal: modalReducer,
   auth: tokenReducer,
   users: userReducer,
-  form: formReducer,
+  // form: formReducer,
   pagination: PaginationReducer,
   logs: logsReducer
 });
@@ -35,7 +35,7 @@ function SliceReducer(state: AppState, action: Action) {
     modal: state.modal,
     auth: state.auth,
     users: UserProjectsReducer(state.users, action),
-    form: state.form,
+    // form: state.form,
     pagination: state.pagination,
     logs: state.logs
   };

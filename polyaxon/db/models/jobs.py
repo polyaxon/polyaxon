@@ -61,20 +61,11 @@ class Job(AbstractJob, NameableModel, DescribableModel, JobMixin):
 
     class Meta:
         app_label = 'db'
-        unique_together = (('project', 'sequence'), ('project', 'name'),)
+        unique_together = (('project', 'name'),)
 
-    def __str__(self):
-        return self.unique_name
-
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        filter_query = Job.sequence_objects.filter(project=self.project)
-        self._set_sequence(filter_query=filter_query)
-        self._set_name(unique_name=self.unique_name)
-        super(Job, self).save(*args, **kwargs)
-
-    @property
+    @cached_property
     def unique_name(self):
-        return '{}.jobs.{}'.format(self.project.unique_name, self.sequence)
+        return '{}.jobs.{}'.format(self.project.unique_name, self.id)
 
     @cached_property
     def specification(self):

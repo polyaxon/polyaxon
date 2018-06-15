@@ -16,7 +16,7 @@ class TestJobSerializer(BaseTest):
     model_class = Job
     factory_class = JobFactory
     expected_keys = {
-        'uuid', 'user', 'unique_name', 'sequence', 'description', 'created_at', 'updated_at',
+        'id', 'uuid', 'user', 'unique_name', 'description', 'created_at', 'updated_at',
         'last_status', 'started_at', 'finished_at', 'is_running', 'is_done',
         'is_clone', 'project', 'project_name', }
 
@@ -93,6 +93,7 @@ class TestJobDetailSerializer(BaseTest):
     model_class = Job
     factory_class = JobFactory
     expected_keys = {
+        'id',
         'uuid',
         'unique_name',
         'created_at',
@@ -100,7 +101,6 @@ class TestJobDetailSerializer(BaseTest):
         'project',
         'project_name',
         'user',
-        'sequence',
         'last_status',
         'description',
         'config',

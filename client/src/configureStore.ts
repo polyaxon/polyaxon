@@ -2,28 +2,29 @@ import { createStore, applyMiddleware } from 'redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as _ from 'lodash';
 
-import thunkMiddleware from 'redux-thunk';
+import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 import appReducer from './reducers/app';
-import { AppState } from './constants/types';
-import { loadState, saveState } from './localStorage';
+// import { AppState } from './constants/types';
+import { loadState, saveState, setLocalUser } from './localStorage';
 import { getToken } from './constants/utils';
 import { receiveTokenActionCreator } from './actions/token';
 
 const configureStore = () => {
-  const persistedState = loadState();
+  // const persistedState = loadState();
 
-  let middleware = [thunkMiddleware];
+  let middleware = [thunk];
   let newMiddleware = [];
   if (process.env.NODE_ENV !== 'production') {
+    setLocalUser();
     const loggerMiddleware = createLogger();
     newMiddleware = [...middleware, loggerMiddleware];
   } else {
     newMiddleware = middleware;
   }
 
-  const store = createStore<AppState>(
+  const store = createStore(
     appReducer,
     // persistedState,
     applyMiddleware(...newMiddleware)

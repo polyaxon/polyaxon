@@ -78,7 +78,6 @@ class ExperimentUpdatedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -104,7 +103,6 @@ class ExperimentViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -121,7 +119,6 @@ class ExperimentStoppedEvent(Event):
     event_type = EXPERIMENT_STOPPED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -138,7 +135,6 @@ class ExperimentResumedEvent(Event):
     event_type = EXPERIMENT_RESUMED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -155,7 +151,6 @@ class ExperimentRestartedEvent(Event):
     event_type = EXPERIMENT_RESTARTED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -171,7 +166,6 @@ class ExperimentCopiedEvent(Event):
     event_type = EXPERIMENT_COPIED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -187,7 +181,6 @@ class ExperimentNewStatusEvent(Event):
     event_type = EXPERIMENT_NEW_STATUS
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('last_status'),
@@ -199,7 +192,6 @@ class ExperimentNewMetricEvent(Event):
     event_type = EXPERIMENT_NEW_METRIC
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('last_metric', attr_type=dict, is_required=False),
@@ -210,7 +202,6 @@ class ExperimentSucceededEvent(Event):
     event_type = EXPERIMENT_SUCCEEDED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('previous_status', is_required=False),
@@ -221,7 +212,6 @@ class ExperimentFailedEvent(Event):
     event_type = EXPERIMENT_FAILED
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('previous_status', is_required=False),
@@ -232,7 +222,6 @@ class ExperimentDoneEvent(Event):
     event_type = EXPERIMENT_DONE
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('previous_status', is_required=False),
@@ -244,7 +233,6 @@ class ExperimentResourcesViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -260,7 +248,6 @@ class ExperimentLogsViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -276,7 +263,6 @@ class ExperimentStatusesViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -292,7 +278,6 @@ class ExperimentJobsViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -308,7 +293,6 @@ class ExperimentMetricsViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -324,7 +308,6 @@ class ExperimentDeletedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -343,7 +326,6 @@ class ExperimentStoppedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -361,7 +343,6 @@ class ExperimentResumedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -379,7 +360,6 @@ class ExperimentRestartedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
@@ -397,7 +377,6 @@ class ExperimentCopiedTriggeredEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
