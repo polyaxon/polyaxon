@@ -47,7 +47,7 @@ _logger = logging.getLogger("polyaxon.views.builds")
 
 class ProjectBuildListView(ListCreateAPIView):
     """List/Create an build under a project"""
-    queryset = BuildJob.objects.all()
+    queryset = BuildJob.objects.all().order_by('-updated_at')
     serializer_class = BuildJobSerializer
     create_serializer_class = BuildJobCreateSerializer
     permission_classes = (IsAuthenticated,)
@@ -112,7 +112,7 @@ class BuildViewMixin(object):
 
 
 class BuildStatusListView(BuildViewMixin, ListCreateAPIView):
-    queryset = BuildJobStatus.objects.all()
+    queryset = BuildJobStatus.objects.order_by('created_at').all()
     serializer_class = BuildJobStatusSerializer
     permission_classes = (IsAuthenticated,)
 

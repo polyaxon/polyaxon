@@ -25,7 +25,7 @@ from polyaxon.settings import SchedulerCeleryTasks
 
 
 class ExperimentGroupListView(ListCreateAPIView):
-    queryset = ExperimentGroup.objects.all()
+    queryset = ExperimentGroup.objects.order_by('-updated_at').all()
     serializer_class = ExperimentGroupSerializer
     create_serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated,)

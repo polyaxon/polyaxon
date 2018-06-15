@@ -6,12 +6,12 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.jobs import JobLifeCycle
-from db.models.utils import DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DiffModel, LastStatusMixin, StatusModel, SequenceModel
 
 _logger = logging.getLogger('polyaxon.db.jobs')
 
 
-class AbstractJob(DiffModel, LastStatusMixin):
+class AbstractJob(DiffModel, SequenceModel, LastStatusMixin):
     """An abstract base class for job, used both by experiment jobs and other jobs."""
     STATUSES = JobLifeCycle
 
@@ -20,10 +20,6 @@ class AbstractJob(DiffModel, LastStatusMixin):
         editable=False,
         unique=True,
         null=False)
-    sequence = models.PositiveSmallIntegerField(
-        editable=False,
-        null=False,
-        help_text='The sequence number of this job.', )
     definition = JSONField(help_text='The specific values/manifest for this job.', default={})
 
     class Meta:

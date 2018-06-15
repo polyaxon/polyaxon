@@ -31,7 +31,7 @@ class ProjectCreateView(CreateAPIView):
 
 
 class ProjectListView(ListAPIView):
-    queryset = Project.objects.all()
+    queryset = Project.objects.order_by('-updated_at').all()
     serializer_class = ProjectSerializer
     permission_classes = (IsAuthenticated,)
 

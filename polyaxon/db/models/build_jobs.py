@@ -4,13 +4,13 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
-from db.models.utils import DescribableModel
+from db.models.utils import DescribableModel, NameableModel
 from docker_images.images_tags import LATEST_IMAGE_TAG
 from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 
 
-class BuildJob(AbstractJob, DescribableModel, JobMixin):
+class BuildJob(AbstractJob, DescribableModel, NameableModel, JobMixin):
     """A model that represents the configuration for build job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -43,19 +43,15 @@ class BuildJob(AbstractJob, DescribableModel, JobMixin):
 
     class Meta:
         app_label = 'db'
-        ordering = ['sequence']
-        unique_together = (('project', 'sequence'),)
+        unique_together = (('project', 'sequence'), ('project', 'name'),)
 
     def __str__(self):
         return '{}.builds.{}'.format(self.project.unique_name, self.sequence)
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        if self.pk is None:
-            last = BuildJob.objects.filter(project=self.project).last()
-            self.sequence = 1
-            if last:
-                self.sequence = last.sequence + 1
-
+        filter_query = BuildJob.sequence_objects.filter(project=self.project)
+        self._set_sequence(filter_query=filter_query)
+        self._set_name(unique_name=self.unique_name)
         super(BuildJob, self).save(*args, **kwargs)
 
     @cached_property

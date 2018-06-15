@@ -7,13 +7,13 @@ import auditor
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
-from db.models.utils import DescribableModel
+from db.models.utils import DescribableModel, NameableModel
 from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 
 
-class Job(AbstractJob, DescribableModel, JobMixin):
+class Job(AbstractJob, NameableModel, DescribableModel, JobMixin):
     """A model that represents the configuration for run job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -61,19 +61,15 @@ class Job(AbstractJob, DescribableModel, JobMixin):
 
     class Meta:
         app_label = 'db'
-        ordering = ['sequence']
-        unique_together = (('project', 'sequence'),)
+        unique_together = (('project', 'sequence'), ('project', 'name'),)
 
     def __str__(self):
         return self.unique_name
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        if self.pk is None:
-            last = Job.objects.filter(project=self.project).last()
-            self.sequence = 1
-            if last:
-                self.sequence = last.sequence + 1
-
+        filter_query = Job.sequence_objects.filter(project=self.project)
+        self._set_sequence(filter_query=filter_query)
+        self._set_name(unique_name=self.unique_name)
         super(Job, self).save(*args, **kwargs)
 
     @property

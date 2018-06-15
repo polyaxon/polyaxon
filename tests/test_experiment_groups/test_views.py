@@ -47,6 +47,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(project=self.project)
         # Other objects
         self.other_object = self.factory_class(project=self.other_project)
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

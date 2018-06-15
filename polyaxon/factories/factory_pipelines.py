@@ -15,6 +15,7 @@ class PipelineFactory(factory.DjangoModelFactory):
 
 
 class OperationFactory(factory.DjangoModelFactory):
+    name = factory.Sequence("pipeline-{}".format)
     pipeline = factory.SubFactory(PipelineFactory)
 
     class Meta:

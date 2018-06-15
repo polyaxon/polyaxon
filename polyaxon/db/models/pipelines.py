@@ -10,7 +10,8 @@ from django.db import models
 from django.dispatch import Signal
 
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel, \
+    NameableModel, SequenceModel
 from libs.blacklist import validate_blacklist_name
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
@@ -76,7 +77,7 @@ class ExecutableModel(models.Model):
         abstract = True
 
 
-class Pipeline(DiffModel, DescribableModel, ExecutableModel):
+class Pipeline(DiffModel, NameableModel, DescribableModel, SequenceModel, ExecutableModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
     A Pipeline is a collection / namespace of operations with directional dependencies.
@@ -91,9 +92,6 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
 
     A pipeline can also have dependencies/upstream pipelines/operations.
     """
-    name = models.CharField(
-        max_length=256,
-        validators=[validate_slug, validate_blacklist_name])
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -112,8 +110,22 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
         help_text="If set, it determines the number of operation instances "
                   "allowed to run concurrently.")
 
+    def __str__(self):
+        return self.unique_name
+
     class Meta:
         app_label = 'db'
+        unique_together = (('project', 'sequence'), ('project', 'name'),)
+
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
+        filter_query = Pipeline.sequence_objects.filter(project=self.project)
+        self._set_sequence(filter_query=filter_query)
+        self._set_name(unique_name=self.unique_name)
+        super(Pipeline, self).save(*args, **kwargs)
+
+    @property
+    def unique_name(self):
+        return '{}.pipelines.{}'.format(self.project.unique_name, self.sequence)
 
     @property
     def dag(self):
@@ -128,7 +140,7 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
         return dags.get_dag(operations, get_downstream)
 
 
-class Operation(DiffModel, DescribableModel, ExecutableModel):
+class Operation(DiffModel, NameableModel, DescribableModel, ExecutableModel):
     """ Base class for all Operations.
 
     To derive this class, you are expected to override
@@ -215,6 +227,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
 
     class Meta:
         app_label = 'db'
+        unique_together = (('pipeline', 'name'),)
 
     def get_countdown(self, retries):
         """Calculate the countdown for a celery task retry."""

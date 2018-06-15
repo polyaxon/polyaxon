@@ -69,6 +69,7 @@ class TestProjectListViewV1(BaseViewTest):
         self.url_other = '/{}/{}'.format(API_V1, self.other_object.user)
 
         self.queryset = self.model_class.objects.filter(user=self.user)
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

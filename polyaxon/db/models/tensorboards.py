@@ -39,17 +39,14 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     class Meta:
         app_label = 'db'
+        unique_together = (('project', 'sequence'),)
 
     def __str__(self):
         return '{}.tensorboards.{}'.format(self.project.unique_name, self.sequence)
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        if self.pk is None:
-            last = TensorboardJob.objects.filter(project=self.project).last()
-            self.sequence = 1
-            if last:
-                self.sequence = last.sequence + 1
-
+        filter_query = TensorboardJob.sequence_objects.filter(project=self.project)
+        self._set_sequence(filter_query=filter_query)
         super(TensorboardJob, self).save(*args, **kwargs)
 
     @cached_property

@@ -8,7 +8,7 @@ from db.models.nodes import ClusterNode, NodeGPU
 
 
 class ClusterNodeListView(ListCreateAPIView):
-    queryset = ClusterNode.objects.filter(is_current=True)
+    queryset = ClusterNode.objects.order_by('sequence').filter(is_current=True)
     serializer_class = ClusterNodeSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
 

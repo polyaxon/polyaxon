@@ -13,7 +13,8 @@ from django.utils.functional import cached_property
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel, \
+    NameableModel, SequenceModel
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
@@ -22,7 +23,7 @@ from polyaxon_schemas.utils import Optimization
 _logger = logging.getLogger('polyaxon.db.experiment_groups')
 
 
-class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
+class ExperimentGroup(DiffModel, NameableModel, DescribableModel, SequenceModel, LastStatusMixin):
     """A model that saves Specification/Polyaxonfiles."""
     STATUSES = ExperimentGroupLifeCycle
 
@@ -35,10 +36,6 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='experiment_groups')
-    sequence = models.PositiveSmallIntegerField(
-        editable=False,
-        null=False,
-        help_text='The sequence number of this group within the project.', )
     project = models.ForeignKey(
         'db.Project',
         on_delete=models.CASCADE,
@@ -70,20 +67,16 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
     class Meta:
         app_label = 'db'
-        ordering = ['sequence']
-        unique_together = (('project', 'sequence'),)
-
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        if self.pk is None:
-            last = ExperimentGroup.objects.filter(project=self.project).last()
-            self.sequence = 1
-            if last:
-                self.sequence = last.sequence + 1
-
-        super(ExperimentGroup, self).save(*args, **kwargs)
+        unique_together = (('project', 'sequence'), ('project', 'name'),)
 
     def __str__(self):
         return self.unique_name
+
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
+        filter_query = ExperimentGroup.sequence_objects.filter(project=self.project)
+        self._set_sequence(filter_query=filter_query)
+        self._set_name(unique_name=self.unique_name)
+        super(ExperimentGroup, self).save(*args, **kwargs)
 
     @property
     def unique_name(self):
@@ -317,7 +310,6 @@ class ExperimentGroupStatus(StatusModel):
     class Meta:
         app_label = 'db'
         verbose_name_plural = 'Experiment group Statuses'
-        ordering = ['created_at']
 
     def __str__(self):
         return '{} <{}>'.format(self.experiment_group.unique_name, self.status)

@@ -29,17 +29,14 @@ class NotebookJob(PluginJobBase, JobMixin):
 
     class Meta:
         app_label = 'db'
+        unique_together = (('project', 'sequence'),)
 
     def __str__(self):
         return '{}.notebooks.{}'.format(self.project.unique_name, self.sequence)
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        if self.pk is None:
-            last = NotebookJob.objects.filter(project=self.project).last()
-            self.sequence = 1
-            if last:
-                self.sequence = last.sequence + 1
-
+        filter_query = NotebookJob.sequence_objects.filter(project=self.project)
+        self._set_sequence(filter_query=filter_query)
         super(NotebookJob, self).save(*args, **kwargs)
 
     @cached_property

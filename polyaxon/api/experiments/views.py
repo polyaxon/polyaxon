@@ -69,14 +69,14 @@ _logger = logging.getLogger("polyaxon.views.experiments")
 
 class ExperimentListView(ListAPIView):
     """List all experiments"""
-    queryset = Experiment.objects.all()
+    queryset = Experiment.objects.order_by('-updated_at').all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class ProjectExperimentListView(ListCreateAPIView):
     """List/Create an experiment under a project"""
-    queryset = Experiment.objects.all()
+    queryset = Experiment.objects.order_by('-updated_at').all()
     serializer_class = ExperimentSerializer
     create_serializer_class = ExperimentCreateSerializer
     permission_classes = (IsAuthenticated,)
@@ -106,7 +106,7 @@ class ProjectExperimentListView(ListCreateAPIView):
 
 class GroupExperimentListView(ListAPIView):
     """List all experiments under a group"""
-    queryset = Experiment.objects.all()
+    queryset = Experiment.objects.order_by('-updated_at').all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -246,7 +246,7 @@ class ExperimentViewMixin(object):
 
 
 class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
-    queryset = ExperimentStatus.objects.all()
+    queryset = ExperimentStatus.objects.order_by('created_at').all()
     serializer_class = ExperimentStatusSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -281,7 +281,7 @@ class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
 
 
 class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
-    queryset = ExperimentJob.objects.all()
+    queryset = ExperimentJob.objects.order_by('-updated_at').all()
     serializer_class = ExperimentJobSerializer
     create_serializer_class = ExperimentJobDetailSerializer
     permission_classes = (IsAuthenticated,)
@@ -356,7 +356,7 @@ class ExperimentJobViewMixin(object):
 
 
 class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
-    queryset = ExperimentJobStatus.objects.all()
+    queryset = ExperimentJobStatus.objects.order_by('created_at').all()
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)
 

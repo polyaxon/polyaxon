@@ -28,8 +28,12 @@ class ExperimentJob(AbstractJob):
 
     class Meta:
         app_label = 'db'
-        ordering = ['sequence']
         unique_together = (('experiment', 'sequence'),)
+
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
+        filter_query = ExperimentJob.sequence_objects.filter(experiment=self.experiment)
+        self._set_sequence(filter_query=filter_query)
+        super(ExperimentJob, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.unique_name

@@ -11,7 +11,8 @@ import auditor
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.cloning_strategies import CloningStrategy
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel, \
+    NameableModel, SequenceModel
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
     EXPERIMENT_RESTARTED,
@@ -22,7 +23,7 @@ from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 
 
-class Experiment(DiffModel, DescribableModel, LastStatusMixin):
+class Experiment(DiffModel, NameableModel, DescribableModel, SequenceModel, LastStatusMixin):
     """A model that represents experiments."""
     STATUSES = ExperimentLifeCycle
 
@@ -31,10 +32,6 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         editable=False,
         unique=True,
         null=False)
-    sequence = models.PositiveSmallIntegerField(
-        editable=False,
-        null=False,
-        help_text='The sequence number of this experiment within the project.')
     project = models.ForeignKey(
         'db.Project',
         on_delete=models.CASCADE,
@@ -101,20 +98,16 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     class Meta:
         app_label = 'db'
-        ordering = ['sequence']
-        unique_together = (('project', 'sequence'),)
-
-    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        if self.pk is None:
-            last = Experiment.objects.filter(project=self.project).last()
-            self.sequence = 1
-            if last:
-                self.sequence = last.sequence + 1
-
-        super(Experiment, self).save(*args, **kwargs)
+        unique_together = (('project', 'sequence'), ('project', 'name'),)
 
     def __str__(self):
         return self.unique_name
+
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
+        filter_query = Experiment.sequence_objects.filter(project=self.project)
+        self._set_sequence(filter_query=filter_query)
+        self._set_name(unique_name=self.unique_name)
+        super(Experiment, self).save(*args, **kwargs)
 
     @property
     def unique_name(self):

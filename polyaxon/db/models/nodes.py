@@ -6,7 +6,7 @@ from django.db import models
 
 from constants.nodes import NodeLifeCycle, NodeRoles
 from constants.unknown import UNKNOWN
-from db.models.utils import DiffModel
+from db.models.utils import DiffModel, SequenceModel
 
 
 class NodeParser(object):
@@ -101,17 +101,13 @@ class NodeParser(object):
                 return a.address
 
 
-class ClusterNode(models.Model):
+class ClusterNode(SequenceModel):
     """A model that represents the cluster node."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
         unique=True,
         null=False)
-    sequence = models.PositiveSmallIntegerField(
-        editable=False,
-        null=False,
-        help_text='The sequence number of this node within the cluser.', )
     name = models.CharField(
         max_length=256,
         null=False,
@@ -149,19 +145,14 @@ class ClusterNode(models.Model):
 
     class Meta:
         app_label = 'db'
-        ordering = ['sequence']
         unique_together = (('cluster', 'sequence'),)
 
     def __str__(self):
         return '{}/{}'.format(self.cluster, self.name)
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
-        if self.pk is None:
-            last = ClusterNode.objects.filter(cluster=self.cluster).last()
-            self.sequence = 1
-            if last:
-                self.sequence = last.sequence + 1
-
+        filter_query = ClusterNode.sequence_objects.filter(cluster=self.cluster)
+        self._set_sequence(filter_query=filter_query)
         super(ClusterNode, self).save(*args, **kwargs)
 
     @classmethod

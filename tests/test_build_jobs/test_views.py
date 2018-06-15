@@ -45,6 +45,7 @@ class TestProjectBuildListViewV1(BaseViewTest):
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(project=self.project)
+        self.queryset = self.queryset.order_by('-updated_at')
         self.other_object = self.factory_class(project=self.other_project)
 
     def test_get(self):
@@ -141,6 +142,7 @@ class TestBuildListViewV1(BaseViewTest):
                                               self.project.name)
         self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -273,6 +275,7 @@ class TestBuildStatusListViewV1(BaseViewTest):
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

@@ -9,6 +9,7 @@
         "uuid": "8eefb7a1-146f-476c-a66e-3bee9b88c1de",
         "sequence": 1,
         "project": 1,
+        "name": "xp1",
         "user": [
             "admin"
         ],
@@ -50,6 +51,7 @@
         "updated_at": "2018-01-27T14:59:29.645Z",
         "uuid": "0bfb74cc-a2c5-4190-b3f1-6fd5aba11321",
         "sequence": 2,
+        "name": "xp2",
         "project": 1,
         "user": [
             "admin"
@@ -81,6 +83,7 @@
         "updated_at": "2018-01-24T00:48:47.133Z",
         "uuid": "88897dab-8ba6-4bc7-af82-43b0afdfaeec",
         "sequence": 3,
+        "name": "xp3",
         "project": 1,
         "user": [
             "admin"
@@ -112,6 +115,7 @@
         "updated_at": "2018-01-24T00:48:47.144Z",
         "uuid": "f53c7bb1-90fd-481d-90e3-28bd05ac21eb",
         "sequence": 4,
+        "name": "xp4",
         "project": 1,
         "user": [
             "admin"
@@ -143,6 +147,7 @@
         "updated_at": "2018-01-24T00:48:47.156Z",
         "uuid": "d3cee868-4748-4488-b13f-f82b5b803584",
         "sequence": 5,
+        "name": "xp5",
         "project": 1,
         "user": [
             "admin"

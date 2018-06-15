@@ -59,6 +59,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         self.factory_class()
         self.queryset = self.model_class.objects.filter(project=self.project)
         self.other_object = self.factory_class(project=self.other_project)
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -198,6 +199,7 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -301,6 +303,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -352,6 +355,7 @@ class TestExperimentListViewV1(BaseViewTest):
                                                    self.project.name)
         self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -509,6 +513,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
                                            status=ExperimentLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -582,6 +587,7 @@ class TestExperimentMetricListViewV1(BaseViewTest):
         self.objects = [self.factory_class(experiment=self.experiment, values={'accuracy': i / 10})
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -701,6 +707,7 @@ class TestExperimentJobListViewV1(BaseViewTest):
         self.objects = [self.factory_class(experiment=self.experiment)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -818,6 +825,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(job=self.experiment_job)
+        self.queryset = self.queryset.order_by('created_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

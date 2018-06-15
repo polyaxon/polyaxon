@@ -42,6 +42,7 @@ class TestProjectJobListViewV1(BaseViewTest):
         self.factory_class()
         self.queryset = self.model_class.objects.filter(project=self.project)
         self.other_object = self.factory_class(project=self.other_project)
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -137,6 +138,7 @@ class TestJobListViewV1(BaseViewTest):
                                             self.project.name)
         self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

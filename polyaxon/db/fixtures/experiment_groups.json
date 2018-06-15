@@ -2,6 +2,7 @@
 {
     "model": "db.experimentgroup",
     "pk": 1,
+    "name": "group1",
     "fields": {
         "description": null,
         "created_at": "2017-12-24T18:53:47.433Z",

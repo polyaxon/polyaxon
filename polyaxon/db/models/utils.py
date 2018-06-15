@@ -1,7 +1,10 @@
 import uuid
 
 from django.core.cache import cache
+from django.core.validators import validate_slug
 from django.db import models
+
+from libs.blacklist import validate_blacklist_name
 
 
 class DescribableModel(models.Model):
@@ -13,6 +16,43 @@ class DescribableModel(models.Model):
     @property
     def has_description(self):
         return bool(self.description)
+
+
+class NameableModel(models.Model):
+    name = models.CharField(
+        max_length=256,
+        validators=[validate_slug, validate_blacklist_name])
+
+    class Meta:
+        abstract = True
+
+    def _set_name(self, unique_name):
+        if self.pk is None and not self.name:
+            self.name = unique_name
+
+
+class SequenceManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().order_by('sequence')
+
+
+class SequenceModel(models.Model):
+    sequence = models.PositiveSmallIntegerField(
+        editable=False,
+        null=False)
+
+    objects = models.Manager()
+    sequence_objects = SequenceManager()
+
+    class Meta:
+        abstract = True
+
+    def _set_sequence(self, filter_query):
+        if self.pk is None:
+            last = filter_query.last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
 
 
 class DiffModel(models.Model):

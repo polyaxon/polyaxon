@@ -51,6 +51,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
         self.url = '/{}/cluster/nodes/'.format(API_V1)
         self.objects = [self.factory_class(cluster=self.cluster) for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(cluster=self.cluster)
+        self.queryset = self.queryset.order_by('sequence')
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
