@@ -94,7 +94,7 @@ class Pipeline(DiffModel, NameableModel, DescribableModel, ExecutableModel):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='pipelines')
+        related_name='+')
     project = models.ForeignKey(
         'db.Project',
         on_delete=models.CASCADE,

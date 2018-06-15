@@ -38,7 +38,7 @@ class Experiment(DiffModel, NameableModel, DescribableModel, LastStatusMixin):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='experiments')
+        related_name='+')
     build_job = models.ForeignKey(
         'db.BuildJob',
         on_delete=models.SET_NULL,

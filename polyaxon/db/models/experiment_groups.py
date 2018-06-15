@@ -34,7 +34,7 @@ class ExperimentGroup(DiffModel, NameableModel, DescribableModel, LastStatusMixi
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='experiment_groups')
+        related_name='+')
     project = models.ForeignKey(
         'db.Project',
         on_delete=models.CASCADE,
