@@ -1,8 +1,9 @@
 import pytest
+
 from django.db.models import Q
 
 from db.models.experiments import Experiment
-from query.builder import QueryCondSpec, DateTimeCondition, ValueCondition, ComparisonCondition
+from query.builder import ComparisonCondition, DateTimeCondition, QueryCondSpec, ValueCondition
 from query.exceptions import QueryError
 from query.managers.experiment import ExperimentQueryManager
 from query.parser import QueryOpSpec

@@ -159,10 +159,10 @@ class SettingConfig(object):
         publisher.setup()
 
     def setup_query_service(self):
-        import publisher
+        import query
 
-        publisher.validate()
-        publisher.setup()
+        query.validate()
+        query.setup()
 
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name

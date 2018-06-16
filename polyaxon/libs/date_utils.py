@@ -2,7 +2,7 @@ import pytz
 
 from datetime import date, datetime, timedelta
 
-from django.utils import timezone
+from django.conf import settings
 
 epoch = datetime(1970, 1, 1, tzinfo=pytz.utc)
 
@@ -137,5 +137,5 @@ class DateTimeFormatter(object):
     @staticmethod
     def _extract_timestamp(timestamp_str, dt_format):
         timestamp = datetime.strptime(timestamp_str, dt_format)
-        timestamp = timestamp.replace(tzinfo=timezone.utc)
+        timestamp = timestamp.replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
         return timestamp
