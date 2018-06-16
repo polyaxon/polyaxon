@@ -3,8 +3,6 @@ import os
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
-import rncryptor
-
 from unipath import Path
 
 from django.utils.functional import cached_property
@@ -178,7 +176,7 @@ class SettingConfig(object):
             is_secret=True,
             is_local=True,
             is_optional=True)
-        return self._decode(self._decrypt(value)) if value else None
+        return self._decode(value) if value else None
 
     @cached_property
     def platform_dns(self):
@@ -187,7 +185,7 @@ class SettingConfig(object):
             is_secret=True,
             is_local=True,
             is_optional=True)
-        return self._decode(self._decrypt(value)) if value else None
+        return self._decode(value) if value else None
 
     @cached_property
     def cli_dns(self):
@@ -196,7 +194,7 @@ class SettingConfig(object):
             is_secret=True,
             is_local=True,
             is_optional=True)
-        return self._decrypt(value) if value else None
+        return self._decode(value, 2) if value else None
 
     @cached_property
     def tracker_key(self):
@@ -205,7 +203,7 @@ class SettingConfig(object):
             is_secret=True,
             is_local=True,
             is_optional=True)
-        return self._decode(self._decode(value)) if value else None
+        return self._decode(value) if value else None
 
     def get_requested_params(self, include_secrets=False, include_locals=False, to_str=False):
         params = {}
@@ -403,15 +401,17 @@ class SettingConfig(object):
         raise ConfigurationError(key, value, target_type)
 
     @staticmethod
-    def _decode(value):
-        return base64.b64decode(value).decode('utf-8')
+    def _decode(value, iteration=3):
+        def _decode_once():
+            return base64.b64decode(value).decode('utf-8')
+
+        for i in range(iteration):
+            value = _decode_once()
+        return value
 
     @staticmethod
     def _encode(value):
         return base64.b64encode(value.encode('utf-8')).decode('utf-8')
-
-    def _decrypt(self, value):
-        return rncryptor.decrypt(value, self._PASS)
 
 
 config_values = [
