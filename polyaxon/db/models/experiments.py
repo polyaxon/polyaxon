@@ -17,9 +17,10 @@ from db.models.utils import (
     DiffModel,
     LastStatusMixin,
     NameableModel,
+    RunTimeModel,
     StatusModel,
-    TagModel,
-    RunTimeModel)
+    TagModel
+)
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
     EXPERIMENT_RESTARTED,

@@ -21,8 +21,7 @@ from libs.paths.experiment_groups import (
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
-from signals.run_time import set_started_at, set_finished_at
+from signals.run_time import set_finished_at, set_started_at
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")

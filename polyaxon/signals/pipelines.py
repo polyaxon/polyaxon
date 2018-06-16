@@ -6,8 +6,7 @@ from db.models.pipelines import OperationRun, OperationRunStatus, PipelineRun, P
 from libs.decorators import ignore_raw, ignore_updates
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import PipelineCeleryTasks
-
-from signals.run_time import set_started_at, set_finished_at
+from signals.run_time import set_finished_at, set_started_at
 
 
 @receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_saved")

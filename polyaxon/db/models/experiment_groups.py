@@ -19,9 +19,10 @@ from db.models.utils import (
     DiffModel,
     LastStatusMixin,
     NameableModel,
+    RunTimeModel,
     StatusModel,
-    TagModel,
-    RunTimeModel)
+    TagModel
+)
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification

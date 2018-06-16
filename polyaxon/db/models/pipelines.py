@@ -14,9 +14,10 @@ from db.models.utils import (
     DiffModel,
     LastStatusMixin,
     NameableModel,
+    RunTimeModel,
     StatusModel,
-    TagModel,
-    RunTimeModel)
+    TagModel
+)
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 

@@ -15,8 +15,7 @@ from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
-from signals.run_time import set_job_started_at, set_job_finished_at
+from signals.run_time import set_job_finished_at, set_job_started_at
 
 
 @receiver(pre_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_pre_save")
