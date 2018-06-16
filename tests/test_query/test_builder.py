@@ -14,13 +14,12 @@ from factories.factory_experiments import (
 from libs.date_utils import DateTimeFormatter
 from query.builder import (
     ComparisonCondition,
-    QueryConditionException,
     DateTimeCondition,
     EqualityCondition,
+    QueryConditionException,
     ValueCondition
 )
 from tests.utils import BaseTest
-
 
 # pylint:disable=protected-access
 
