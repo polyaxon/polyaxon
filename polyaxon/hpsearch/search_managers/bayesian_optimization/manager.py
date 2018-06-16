@@ -10,7 +10,7 @@ class BOSearchManager(BaseSearchAlgorithmManager):
     NAME = SearchAlgorithms.BO
 
     def __init__(self, hptuning_config):
-        super(BOSearchManager, self).__init__(hptuning_config=hptuning_config)
+        super().__init__(hptuning_config=hptuning_config)
         self.n_initial_trials = self.hptuning_config.bo.n_initial_trials
         self.n_iterations = self.hptuning_config.bo.n_iterations
 

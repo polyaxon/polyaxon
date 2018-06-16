@@ -38,7 +38,7 @@ class Consumer(SocketManager):
         self._queue = queue
         self._loop = loop
         self.messages = []
-        super(Consumer, self).__init__()
+        super().__init__()
 
     def get_messages(self):
         messages = self.messages[:]

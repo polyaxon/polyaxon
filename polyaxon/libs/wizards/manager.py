@@ -10,10 +10,10 @@ class WizardManager(ManagerInterface):
         """
         >>> subscribe(SomeEvent)
         """
-        super(WizardManager, self).subscribe(obj=provider)
+        super().subscribe(obj=provider)
 
     def knows(self, provider):  # pylint:disable=arguments-differ
-        return super(WizardManager, self).knows(key=provider)
+        return super().knows(key=provider)
 
     def get(self, provider):  # pylint:disable=arguments-differ
-        return super(WizardManager, self).get(key=provider)
+        return super().get(key=provider)

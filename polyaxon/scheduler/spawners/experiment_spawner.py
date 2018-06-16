@@ -64,9 +64,9 @@ class ExperimentSpawner(K8SManager):
                                            declarations=self.spec.declarations)
         self.persist = persist
 
-        super(ExperimentSpawner, self).__init__(k8s_config=k8s_config,
-                                                namespace=namespace,
-                                                in_cluster=in_cluster)
+        super().__init__(k8s_config=k8s_config,
+                         namespace=namespace,
+                         in_cluster=in_cluster)
 
         # Set the cluster_def
         cluster_def = self.get_cluster()

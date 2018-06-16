@@ -48,7 +48,7 @@ class ProtectedView(APIView):
         if isinstance(exc, rest_exceptions.PermissionDenied):
             raise django_exceptions.PermissionDenied()
 
-        return super(ProtectedView, self).handle_exception(exc)
+        return super().handle_exception(exc)
 
     @classmethod
     def _redirect(cls, path, filename=None):
@@ -104,7 +104,7 @@ class AuditorMixinView(object):
     delete_event = None
 
     def get_object(self):
-        instance = super(AuditorMixinView, self).get_object()
+        instance = super().get_object()
         method = self.request.method.lower()
         if method == 'get':
             auditor.record(event_type=self.get_event,

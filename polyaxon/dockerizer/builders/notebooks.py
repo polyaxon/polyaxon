@@ -19,7 +19,7 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
                  build_steps=None,
                  env_vars=None,
                  dockerfile_name='Dockerfile'):
-        super(NotebookDockerBuilder, self).__init__(
+        super().__init__(
             project_id=project_id,
             project_name=project_name,
             repo_path=repo_path,

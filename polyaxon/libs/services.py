@@ -37,7 +37,7 @@ class LazyServiceWrapper(LazyObject):
     """
 
     def __init__(self, backend_base, backend_path, options):
-        super(LazyServiceWrapper, self).__init__()
+        super().__init__()
         self.__dict__.update(
             {
                 '_backend_base': backend_base,

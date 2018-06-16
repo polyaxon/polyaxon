@@ -27,22 +27,22 @@ class OperationTask(CeleryTask):
         # pylint:disable=attribute-defined-outside-init
         self.countdown = self._operation_run.operation.get_countdown(self.request.retries)
 
-        super(OperationTask, self).__call__(*args, **kwargs)
+        super().__call__(*args, **kwargs)
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         """Update query status and send email notification to a user"""
-        super(OperationTask, self).on_failure(exc, task_id, args, kwargs, einfo)
+        super().on_failure(exc, task_id, args, kwargs, einfo)
         if isinstance(exc, OperationRunDoesNotExist):
             return
         self._operation_run.on_failure()
 
     def on_retry(self, exc, task_id, args, kwargs, einfo):
-        super(OperationTask, self).on_retry(exc, task_id, args, kwargs, einfo)
+        super().on_retry(exc, task_id, args, kwargs, einfo)
         self._operation_run.on_retry()
 
     def on_success(self, retval, task_id, args, kwargs):
         """Send email notification and a file, if requested to do so by a user"""
-        super(OperationTask, self).on_success(retval, task_id, args, kwargs)
+        super().on_success(retval, task_id, args, kwargs)
         self._operation_run.on_success()
 
 

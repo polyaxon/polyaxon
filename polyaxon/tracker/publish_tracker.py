@@ -40,5 +40,5 @@ class PublishTrackerService(TrackerService):
         )
 
     def setup(self):
-        super(PublishTrackerService, self).setup()
+        super().setup()
         self.cluster_id = self.get_cluster_id()

@@ -10,7 +10,7 @@ class Command(BaseMonitorCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('pod_id')
-        super(Command, self).add_arguments(parser)
+        super().add_arguments(parser)
 
     def handle(self, *args, **options):
         pod_id = options['pod_id']

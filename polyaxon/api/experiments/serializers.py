@@ -172,4 +172,4 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
         if not validated_data.get('declarations') and validated_data.get('config'):
             config = validate_experiment_spec_config(validated_data['config'])
             validated_data['declarations'] = config.declarations
-        return super(ExperimentCreateSerializer, self).create(validated_data=validated_data)
+        return super().create(validated_data=validated_data)

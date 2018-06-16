@@ -81,4 +81,4 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
             if config.hptuning:
                 hptuning = config.hptuning.to_dict()
                 validated_data['hptuning'] = hptuning
-        return super(ExperimentGroupDetailSerializer, self).create(validated_data=validated_data)
+        return super().create(validated_data=validated_data)

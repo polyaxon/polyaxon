@@ -95,7 +95,7 @@ class Singleton(DiffModel):
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         self.pk = 1
-        super(Singleton, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         self.set_cache()
 
     def delete(self, *args, **kwargs):  # pylint:disable=arguments-differ

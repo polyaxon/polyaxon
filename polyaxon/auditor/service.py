@@ -27,7 +27,7 @@ class AuditorService(EventService):
                                  **event['kwargs'])
 
     def setup(self):
-        super(AuditorService, self).setup()
+        super().setup()
         # Load default event types
         import auditor.events  # noqa
 

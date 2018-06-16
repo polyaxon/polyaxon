@@ -19,9 +19,9 @@ class ProjectJobSpawner(K8SManager):
         self.job_name = job_name
         self.job_uuid = job_uuid
 
-        super(ProjectJobSpawner, self).__init__(k8s_config=k8s_config,
-                                                namespace=namespace,
-                                                in_cluster=in_cluster)
+        super().__init__(k8s_config=k8s_config,
+                         namespace=namespace,
+                         in_cluster=in_cluster)
 
     @staticmethod
     def _get_proxy_url(namespace, job_name, deployment_name, port):

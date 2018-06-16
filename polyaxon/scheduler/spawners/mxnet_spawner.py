@@ -76,7 +76,7 @@ class MXNetSpawner(ExperimentSpawner):
         return self.spec.cluster_def[0].get(task_type, 0)
 
     def start_experiment(self):
-        experiment = super(MXNetSpawner, self).start_experiment()
+        experiment = super().start_experiment()
         experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
                                                              add_service=self.WORKER_SERVICE)
         experiment[TaskType.SERVER] = self.create_multi_jobs(task_type=TaskType.SERVER,
@@ -84,7 +84,7 @@ class MXNetSpawner(ExperimentSpawner):
         return experiment
 
     def stop_experiment(self):
-        super(MXNetSpawner, self).stop_experiment()
+        super().stop_experiment()
         self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE)
         self.delete_multi_jobs(task_type=TaskType.SERVER, has_service=self.SERVER_SERVICE)
 

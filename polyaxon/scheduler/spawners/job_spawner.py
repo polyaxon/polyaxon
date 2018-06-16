@@ -51,9 +51,9 @@ class JobSpawner(K8SManager):
                                            log_level=self.spec.log_level)
         self.persist = persist
 
-        super(JobSpawner, self).__init__(k8s_config=k8s_config,
-                                         namespace=namespace,
-                                         in_cluster=in_cluster)
+        super().__init__(k8s_config=k8s_config,
+                         namespace=namespace,
+                         in_cluster=in_cluster)
 
     def get_env_vars(self):
         env_vars = get_service_env_vars(namespace=self.namespace)

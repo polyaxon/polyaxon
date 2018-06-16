@@ -77,7 +77,7 @@ class LoginView(AuthLoginView):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_anonymous:
             return HttpResponseRedirect('/')
-        response = super(LoginView, self).dispatch(request, *args, **kwargs)
+        response = super().dispatch(request, *args, **kwargs)
         login_user(request=request, response=response, user=request.user, login=False)
         return response
 
@@ -85,7 +85,7 @@ class LoginView(AuthLoginView):
 class LogoutView(AuthLogoutView):
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
-        response = super(LogoutView, self).dispatch(request, *args, **kwargs)
+        response = super().dispatch(request, *args, **kwargs)
         logout_user(request=request, response=response, logout=False)
         return response
 
@@ -187,7 +187,7 @@ class SimpleRegistrationView(RegistrationView):
     def get(self, request, *args, **kwargs):
         if not request.user.is_anonymous:
             return HttpResponseRedirect('/')
-        return super(SimpleRegistrationView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
 class ActivationView(TemplateView):
@@ -262,7 +262,7 @@ class ActivationView(TemplateView):
                 request=request
             )
             return redirect(self.success_url)
-        return super(ActivationView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
 class PasswordResetView(auth_views.PasswordResetView):
@@ -276,7 +276,7 @@ class TokenView(TemplateView):
     template_name = 'users/token.html'
 
     def get_context_data(self, **kwargs):
-        context = super(TokenView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         token, _ = Token.objects.get_or_create(user=self.request.user)
         context['token'] = token.key
         return context

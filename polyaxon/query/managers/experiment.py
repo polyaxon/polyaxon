@@ -6,7 +6,9 @@ from query.parser import parse_datetime_operation, parse_value_operation
 class ExperimentQueryManager(BaseQueryManager):
     NAME = 'experiment_query_manager'
     FIELDS_PROXY = {
-        'metric': 'metric__values'
+        'metric': 'metric__values',
+        'started_at': 'status__created_at',
+        'finished_at': 'status__finished_at',
     }
     PARSERS_BY_FIELD = {
         # Dates

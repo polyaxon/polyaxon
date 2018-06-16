@@ -18,7 +18,7 @@ class PublishTrackerTest(BaseTest):
         self.user = UserFactory()
         self.publisher = PublishTrackerService()
         self.publisher.setup()
-        super(PublishTrackerTest, self).setUp()
+        super().setUp()
 
     def test_record_calls_identify_if_cluster_created(self):
         with patch('analytics.identify') as mock_identify:

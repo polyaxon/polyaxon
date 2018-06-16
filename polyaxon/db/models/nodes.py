@@ -153,7 +153,7 @@ class ClusterNode(SequenceModel):
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         filter_query = ClusterNode.sequence_objects.filter(cluster=self.cluster)
         self._set_sequence(filter_query=filter_query)
-        super(ClusterNode, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @classmethod
     def from_node_item(cls, node):

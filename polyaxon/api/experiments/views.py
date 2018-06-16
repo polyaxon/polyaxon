@@ -240,7 +240,7 @@ class ExperimentViewMixin(object):
         return self.experiment
 
     def filter_queryset(self, queryset):
-        queryset = super(ExperimentViewMixin, self).filter_queryset(queryset)
+        queryset = super().filter_queryset(queryset)
         return queryset.filter(experiment=self.get_experiment())
 
 
@@ -253,7 +253,7 @@ class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
         serializer.save(experiment=self.get_experiment())
 
     def get(self, request, *args, **kwargs):
-        response = super(ExperimentStatusListView, self).get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_STATUSES_VIEWED,
                        instance=self.experiment,
                        actor_id=request.user.id)
@@ -289,7 +289,7 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
         serializer.save(experiment=self.get_experiment())
 
     def get(self, request, *args, **kwargs):
-        response = super(ExperimentJobListView, self).get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_JOBS_VIEWED,
                        instance=self.experiment,
                        actor_id=request.user.id)
@@ -350,7 +350,7 @@ class ExperimentJobViewMixin(object):
         return self.job
 
     def filter_queryset(self, queryset):
-        queryset = super(ExperimentJobViewMixin, self).filter_queryset(queryset)
+        queryset = super().filter_queryset(queryset)
         return queryset.filter(job=self.get_job())
 
 
@@ -363,7 +363,7 @@ class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
         serializer.save(job=self.get_job())
 
     def get(self, request, *args, **kwargs):
-        response = super(ExperimentJobStatusListView, self).get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_JOB_STATUSES_VIEWED,
                        instance=self.job,
                        actor_id=request.user.id)

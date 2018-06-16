@@ -54,7 +54,7 @@ class ExperimentGroupDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
         return queryset.filter(project=get_permissible_project(view=self))
 
     def get_object(self):
-        obj = super(ExperimentGroupDetailView, self).get_object()
+        obj = super().get_object()
         # Check project permissions
         self.check_object_permissions(self.request, obj)
         return obj

@@ -19,7 +19,7 @@ class ActivityLogService(EventService):
         )
 
     def setup(self):
-        super(ActivityLogService, self).setup()
+        super().setup()
         # Load default event types
         import activitylogs.events  # noqa
 

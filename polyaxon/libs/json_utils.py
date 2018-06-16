@@ -37,7 +37,7 @@ def better_default_encoder(o):
 class JSONEncoderForHTML(JSONEncoder):
 
     def iterencode(self, o, _one_shot=False):
-        chunks = super(JSONEncoderForHTML, self).iterencode(o, _one_shot)
+        chunks = super().iterencode(o, _one_shot)
         for chunk in chunks:
             chunk = chunk.replace('&', '\\u0026')
             chunk = chunk.replace('<', '\\u003c')

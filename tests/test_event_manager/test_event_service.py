@@ -12,7 +12,7 @@ class DummyEventService(EventService):
 
     def __init__(self):
         self.events = []
-        super(DummyEventService, self).__init__()
+        super().__init__()
 
     def record_event(self, event):
         self.events.append(event)
@@ -37,7 +37,7 @@ class TestEventService(BaseTest):
         self.service = DummyEventService()
         self.service.event_manager = EventManager()
         self.service.setup()
-        super(TestEventService, self).setUp()
+        super().setUp()
 
     def test_can_handle(self):
         # Test handles only str event types

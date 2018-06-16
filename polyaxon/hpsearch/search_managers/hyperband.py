@@ -49,7 +49,7 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
     NAME = SearchAlgorithms.HYPERBAND
 
     def __init__(self, hptuning_config):
-        super(HyperbandSearchManager, self).__init__(hptuning_config=hptuning_config)
+        super().__init__(hptuning_config=hptuning_config)
         # Maximum iterations per configuration
         self.max_iter = self.hptuning_config.hyperband.max_iter
         # Defines configuration downsampling/elimination rate (default = 3)

@@ -5,12 +5,12 @@ class ReadOnlyAdmin(ModelAdmin):
     """Disables all editing capabilities."""
 
     def __init__(self, *args, **kwargs):
-        super(ReadOnlyAdmin, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # pylint:disable=protected-access
         self.readonly_fields = [field.name for field in self.model._meta.get_fields()]
 
     def get_actions(self, request):
-        actions = super(ReadOnlyAdmin, self).get_actions(request)
+        actions = super().get_actions(request)
         del actions["delete_selected"]
         return actions
 

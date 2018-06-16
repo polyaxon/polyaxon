@@ -24,7 +24,7 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
                  dockerfile_name='Dockerfile'):
         self.project_id = project_id
         self.project_name = project_name
-        super(BaseJobDockerBuilder, self).__init__(
+        super().__init__(
             repo_path=repo_path,
             from_image=from_image,
             image_name=image_name,

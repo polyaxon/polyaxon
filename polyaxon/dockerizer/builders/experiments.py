@@ -31,7 +31,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
                  dockerfile_name='Dockerfile'):
         self.experiment_name = experiment_name
         self.experiment_uuid = experiment_uuid
-        super(ExperimentDockerBuilder, self).__init__(
+        super().__init__(
             repo_path=repo_path,
             from_image=from_image,
             image_name=image_name,

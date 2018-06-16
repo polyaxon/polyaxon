@@ -68,7 +68,7 @@ class TensorflowSpawner(ExperimentSpawner):
         return self.spec.cluster_def[0].get(task_type, 0)
 
     def start_experiment(self):
-        experiment = super(TensorflowSpawner, self).start_experiment()
+        experiment = super().start_experiment()
         experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
                                                              add_service=self.WORKER_SERVICE)
         experiment[TaskType.PS] = self.create_multi_jobs(task_type=TaskType.PS,
@@ -76,7 +76,7 @@ class TensorflowSpawner(ExperimentSpawner):
         return experiment
 
     def stop_experiment(self):
-        super(TensorflowSpawner, self).stop_experiment()
+        super().stop_experiment()
         self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE)
         self.delete_multi_jobs(task_type=TaskType.PS, has_service=self.PS_SERVICE)
 

@@ -106,7 +106,7 @@ class BuildViewMixin(object):
         return self.job
 
     def filter_queryset(self, queryset):
-        queryset = super(BuildViewMixin, self).filter_queryset(queryset)
+        queryset = super().filter_queryset(queryset)
         return queryset.filter(job=self.get_job())
 
 
@@ -119,7 +119,7 @@ class BuildStatusListView(BuildViewMixin, ListCreateAPIView):
         serializer.save(job=self.get_job())
 
     def get(self, request, *args, **kwargs):
-        response = super(BuildStatusListView, self).get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
         auditor.record(event_type=BUILD_JOB_STATUSES_VIEWED,
                        instance=self.job,
                        actor_id=request.user.id)
