@@ -15,7 +15,7 @@ from query.parser import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.conditions_mark
+@pytest.mark.query_mark
 class TestParser(BaseTest):
     DISABLE_RUNNER = True
 

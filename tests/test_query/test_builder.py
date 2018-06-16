@@ -19,7 +19,7 @@ from tests.utils import BaseTest
 # pylint:disable=protected-access
 
 
-@pytest.mark.conditions_mark
+@pytest.mark.query_mark
 class TestEqualityCondition(BaseTest):
     DISABLE_RUNNER = True
 
@@ -64,7 +64,7 @@ class TestEqualityCondition(BaseTest):
         assert queryset.count() == 1
 
 
-@pytest.mark.conditions_mark
+@pytest.mark.query_mark
 class TestComparisonCondition(BaseTest):
     DISABLE_RUNNER = True
 
@@ -220,7 +220,7 @@ class TestComparisonCondition(BaseTest):
         assert queryset.count() == 1
 
 
-@pytest.mark.conditions_mark
+@pytest.mark.query_mark
 class TestDateTimeCondition(BaseTest):
     DISABLE_RUNNER = True
 
@@ -418,7 +418,7 @@ class TestDateTimeCondition(BaseTest):
         assert queryset.count() == 2
 
 
-@pytest.mark.conditions_mark
+@pytest.mark.query_mark
 class TestValueCondition(BaseTest):
     DISABLE_RUNNER = True
 
