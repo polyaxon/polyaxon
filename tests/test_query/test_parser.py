@@ -1,14 +1,17 @@
 import pytest
 
+from query.exceptions import QueryParserException
 from query.parser import (
-    QueryParserException,
-    parse_expression,
+    QueryOpSpec,
     parse_datetime_operation,
+    parse_expression,
+    parse_field,
     parse_negation_operation,
     parse_scalar_operation,
     parse_value_operation,
     split_query,
-    tokenize_query)
+    tokenize_query
+)
 from tests.utils import BaseTest
 
 
@@ -90,27 +93,27 @@ class TestParser(BaseTest):
 
         # Parses ranges
         assert parse_datetime_operation('foo..bar') == (
-            '..', False, ['foo', 'bar'])
+            QueryOpSpec('..', False, ['foo', 'bar']))
         assert parse_datetime_operation(' foo .. bar ') == (
-            '..', False, ['foo', 'bar'])
+            QueryOpSpec('..', False, ['foo', 'bar']))
         assert parse_datetime_operation('! foo .. bar ') == (
-            '..', True, ['foo', 'bar'])
+            QueryOpSpec('..', True, ['foo', 'bar']))
 
         # Comparison
         assert parse_datetime_operation('>=foo') == (
-            '>=', False, 'foo')
+            QueryOpSpec('>=', False, 'foo'))
         assert parse_datetime_operation(' ! <= bar ') == (
-            '<=', True, 'bar')
+            QueryOpSpec('<=', True, 'bar'))
         assert parse_datetime_operation('! > bar ') == (
-            '>', True, 'bar')
+            QueryOpSpec('>', True, 'bar'))
 
         # Equality
         assert parse_datetime_operation('foo') == (
-            '=', False, 'foo')
+            QueryOpSpec('=', False, 'foo'))
         assert parse_datetime_operation(' !  bar ') == (
-            '=', True, 'bar')
+            QueryOpSpec('=', True, 'bar'))
         assert parse_datetime_operation('!bar') == (
-            '=', True, 'bar')
+            QueryOpSpec('=', True, 'bar'))
 
     def test_parse_scalar_operation(self):
         # Raises for not allowed operators
@@ -141,19 +144,19 @@ class TestParser(BaseTest):
 
         # Comparison
         assert parse_scalar_operation('>=1') == (
-            '>=', False, 1)
+            QueryOpSpec('>=', False, 1))
         assert parse_scalar_operation(' ! <= 0.1 ') == (
-            '<=', True, 0.1)
+            QueryOpSpec('<=', True, 0.1))
         assert parse_scalar_operation('! > 20 ') == (
-            '>', True, 20)
+            QueryOpSpec('>', True, 20))
 
         # Equality
         assert parse_scalar_operation('1') == (
-            '=', False, 1)
+            QueryOpSpec('=', False, 1))
         assert parse_scalar_operation(' !  2 ') == (
-            '=', True, 2)
+            QueryOpSpec('=', True, 2))
         assert parse_scalar_operation('!0.1') == (
-            '=', True, 0.1)
+            QueryOpSpec('=', True, 0.1))
 
     def test_parse_value_operation(self):
         # Raises for not allowed operators
@@ -184,19 +187,19 @@ class TestParser(BaseTest):
 
         # Equality
         assert parse_value_operation('tag') == (
-            '=', False, 'tag')
+            QueryOpSpec('=', False, 'tag'))
         assert parse_value_operation(' !  tag ') == (
-            '=', True, 'tag')
+            QueryOpSpec('=', True, 'tag'))
         assert parse_value_operation('!tag') == (
-            '=', True, 'tag')
+            QueryOpSpec('=', True, 'tag'))
 
         # In op
         assert parse_value_operation('tag1|tag2') == (
-            '|', False, ['tag1', 'tag2'])
+            QueryOpSpec('|', False, ['tag1', 'tag2']))
         assert parse_value_operation(' !  tag1|tag2 ') == (
-            '|', True, ['tag1', 'tag2'])
+            QueryOpSpec('|', True, ['tag1', 'tag2']))
         assert parse_value_operation('!tag1 | tag2| tag23') == (
-            '|', True, ['tag1', 'tag2', 'tag23'])
+            QueryOpSpec('|', True, ['tag1', 'tag2', 'tag23']))
 
     def test_split_query(self):
         with self.assertRaises(QueryParserException):
@@ -226,3 +229,21 @@ class TestParser(BaseTest):
             'name1': ['!tag1 | tag2| tag23', 'foo'],
             'name2': ['sdf..dsf']
         }
+
+    def test_parse_field(self):
+        with self.assertRaises(QueryParserException):
+            parse_field('')
+
+        with self.assertRaises(QueryParserException):
+            parse_field('__')
+
+        with self.assertRaises(QueryParserException):
+            parse_field('sdf__sdf__sf')
+
+        with self.assertRaises(QueryParserException):
+            parse_field('foo__')
+
+        assert parse_field('foo') == ('foo', None)
+        assert parse_field('foo_bar') == ('foo_bar', None)
+        assert parse_field('foo__bar') == ('foo', 'bar')
+        assert parse_field('metric__foo_bar') == ('metric', 'foo_bar')
