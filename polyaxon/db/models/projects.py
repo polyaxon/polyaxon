@@ -4,11 +4,11 @@ from django.conf import settings
 from django.core.validators import validate_slug
 from django.db import models
 
-from db.models.utils import DescribableModel, DiffModel
+from db.models.utils import DescribableModel, DiffModel, TagModel
 from libs.blacklist import validate_blacklist_name
 
 
-class Project(DiffModel, DescribableModel):
+class Project(DiffModel, DescribableModel, TagModel):
     """A model that represents a set of experiments to solve a specific problem."""
     uuid = models.UUIDField(
         default=uuid.uuid4,

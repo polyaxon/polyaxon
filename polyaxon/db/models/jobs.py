@@ -7,13 +7,13 @@ import auditor
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
-from db.models.utils import DescribableModel, NameableModel
+from db.models.utils import DescribableModel, NameableModel, TagModel
 from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 
 
-class Job(AbstractJob, NameableModel, DescribableModel, JobMixin):
+class Job(AbstractJob, NameableModel, DescribableModel, TagModel, JobMixin):
     """A model that represents the configuration for run job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

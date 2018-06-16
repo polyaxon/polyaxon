@@ -9,7 +9,14 @@ from django.db import models
 from django.dispatch import Signal
 
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, NameableModel, StatusModel
+from db.models.utils import (
+    DescribableModel,
+    DiffModel,
+    LastStatusMixin,
+    NameableModel,
+    StatusModel,
+    TagModel
+)
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
@@ -74,7 +81,7 @@ class ExecutableModel(models.Model):
         abstract = True
 
 
-class Pipeline(DiffModel, NameableModel, DescribableModel, ExecutableModel):
+class Pipeline(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
     A Pipeline is a collection / namespace of operations with directional dependencies.
@@ -131,7 +138,7 @@ class Pipeline(DiffModel, NameableModel, DescribableModel, ExecutableModel):
         return dags.get_dag(operations, get_downstream)
 
 
-class Operation(DiffModel, NameableModel, DescribableModel, ExecutableModel):
+class Operation(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableModel):
     """ Base class for all Operations.
 
     To derive this class, you are expected to override

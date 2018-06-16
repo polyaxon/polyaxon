@@ -13,7 +13,14 @@ from django.utils.functional import cached_property
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, NameableModel, StatusModel
+from db.models.utils import (
+    DescribableModel,
+    DiffModel,
+    LastStatusMixin,
+    NameableModel,
+    StatusModel,
+    TagModel
+)
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
@@ -22,7 +29,7 @@ from polyaxon_schemas.utils import Optimization
 _logger = logging.getLogger('polyaxon.db.experiment_groups')
 
 
-class ExperimentGroup(DiffModel, NameableModel, DescribableModel, LastStatusMixin):
+class ExperimentGroup(DiffModel, NameableModel, DescribableModel, TagModel, LastStatusMixin):
     """A model that saves Specification/Polyaxonfiles."""
     STATUSES = ExperimentGroupLifeCycle
 

@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.postgres.fields import JSONField
 from django.core.cache import cache
 from django.core.validators import validate_slug
 from django.db import models
@@ -71,6 +72,16 @@ class TypeModel(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TagModel(models.Model):
+    tags = JSONField(
+        blank=True,
+        null=True,
+        help_text='The parameters used for this experiment.')
+
+    class Meta:
+        abstract = True
 
 
 class Singleton(DiffModel):

@@ -11,7 +11,14 @@ import auditor
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.cloning_strategies import CloningStrategy
-from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, NameableModel, StatusModel
+from db.models.utils import (
+    DescribableModel,
+    DiffModel,
+    LastStatusMixin,
+    NameableModel,
+    StatusModel,
+    TagModel
+)
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
     EXPERIMENT_RESTARTED,
@@ -22,7 +29,7 @@ from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 
 
-class Experiment(DiffModel, NameableModel, DescribableModel, LastStatusMixin):
+class Experiment(DiffModel, NameableModel, DescribableModel, TagModel, LastStatusMixin):
     """A model that represents experiments."""
     STATUSES = ExperimentLifeCycle
 
