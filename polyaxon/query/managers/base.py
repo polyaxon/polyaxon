@@ -10,6 +10,14 @@ class BaseQueryManager(object):
     CONDITIONS_BY_FIELD = {}
 
     @classmethod
+    def proxy_field(cls, field):
+        field, suffix = parse_field(field)
+        if field in cls.FIELDS_PROXY:
+            field = cls.FIELDS_PROXY[field]
+            return '{}__{}'.format(field, suffix) if suffix else field
+        return field
+
+    @classmethod
     def tokenize(cls, query_spec):
         tokenized_query = tokenize_query(query_spec)
         for key in tokenized_query.keys():
@@ -24,7 +32,7 @@ class BaseQueryManager(object):
     @classmethod
     def parse(cls, tokenized_query):
         parsed_query = {}
-        for key, expressions in tokenized_query.values():
+        for key, expressions in tokenized_query.items():
             field, _ = parse_field(key)
             parsed_query[key] = [cls.PARSERS_BY_FIELD[field](exp) for exp in expressions]
         return parsed_query
@@ -32,11 +40,11 @@ class BaseQueryManager(object):
     @classmethod
     def build(cls, parsed_query):
         built_query = {}
-        for key, operations in parsed_query.values():
+        for key, operations in parsed_query.items():
             field, _ = parse_field(key)
             built_query[key] = [
                 QueryCondSpec(
-                    cond=cls.CONDITIONS_BY_FIELD[field](op=op_spec, negation=op_spec.negation),
+                    cond=cls.CONDITIONS_BY_FIELD[field](op=op_spec.op, negation=op_spec.negation),
                     params=op_spec.params)
                 for op_spec in operations]
         return built_query
@@ -51,9 +59,10 @@ class BaseQueryManager(object):
     @classmethod
     def apply(cls, query_spec, queryset):
         built_query = cls.handle_query(query_spec=query_spec)
-        for key, cond_spec in built_query.values():
-            if key in cls.FIELDS_PROXY:
-                key = cls.FIELDS_PROXY[key]
-            queryset = cond_spec.cond.apply(queryset=queryset, name=key, params=cond_spec.params)
+        for key, cond_specs in built_query.items():
+            key = cls.proxy_field(key)
+            for cond_spec in cond_specs:
+                queryset = cond_spec.cond.apply(
+                    queryset=queryset, name=key, params=cond_spec.params)
 
         return queryset

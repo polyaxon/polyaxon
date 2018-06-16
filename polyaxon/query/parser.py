@@ -11,34 +11,34 @@ class QueryOpSpec(namedtuple("QueryOpSpec", "op negation params")):
 
 def parse_negation_operation(operation):
     """Parse the negation modifier in an operation."""
-    operation = operation.strip()
-    if not operation:
+    _operation = operation.strip()
+    if not _operation:
         raise QueryParserException('Operation is not valid: {}'.format(operation))
     negation = False
-    if operation[0] == '!':
+    if _operation[0] == '!':
         negation = True
-        operation = operation[1:]
+        _operation = _operation[1:]
 
-    return negation, operation.strip()
+    return negation, _operation.strip()
 
 
 def parse_comparison_operation(operation):
     """Parse the comparision operator in an operation."""
-    operation = operation.strip()
-    if not operation:
+    _operation = operation.strip()
+    if not _operation:
         raise QueryParserException('Operation is not valid: {}'.format(operation))
     # Check inclusion comparison
-    if operation[:2] in ('<=', '=<'):
-        return '<=', operation[2:].strip()
+    if _operation[:2] in ('<=', '=<'):
+        return '<=', _operation[2:].strip()
 
-    if operation[:2] in ('>=', '=>'):
-        return '>=', operation[2:].strip()
+    if _operation[:2] in ('>=', '=>'):
+        return '>=', _operation[2:].strip()
 
     # Non inclusive
-    if operation[:1] in ('>', '<'):
-        return operation[:1], operation[1:].strip()
+    if _operation[:1] in ('>', '<'):
+        return _operation[:1], _operation[1:].strip()
 
-    return None, operation
+    return None, _operation
 
 
 def parse_datetime_operation(operation):
@@ -53,21 +53,21 @@ def parse_datetime_operation(operation):
 
     This parser does not allow `|`
     """
-    operation = operation.strip()
-    if not operation:
+    _operation = operation.strip()
+    if not _operation:
         raise QueryParserException('Operation is not valid: {}'.format(operation))
     # Check not allowed ops
-    if '|' in operation:
+    if '|' in _operation:
         raise QueryParserException('`|` is not allowed for datetime operations. '
                                    'Operation: {}'.format(operation))
 
     # Check negation
-    negation, operation = parse_negation_operation(operation)
+    negation, _operation = parse_negation_operation(_operation)
 
     # Check range operator
-    if '..' in operation:
+    if '..' in _operation:
         op = '..'
-        params = operation.split('..')
+        params = _operation.split('..')
         params = [param.strip() for param in params if param]
         if len(params) != 2:
             raise QueryParserException('Expression is not valid, ranges requires only 2 params, '
@@ -75,16 +75,16 @@ def parse_datetime_operation(operation):
         return QueryOpSpec(op, negation, params)
 
     # Check comparison operators
-    op, operation = parse_comparison_operation(operation)
+    op, _operation = parse_comparison_operation(_operation)
     if not op:
         # Now the operation must be an equality param param
         op = '='
 
-    if not operation:
+    if not _operation:
         raise QueryParserException('Expression is not valid, it must be formatted as '
                                    'name:operation, '
                                    'Operation: {}'.format(operation))
-    return QueryOpSpec(op, negation, operation)
+    return QueryOpSpec(op, negation, _operation)
 
 
 def parse_scalar_operation(operation):
@@ -97,36 +97,36 @@ def parse_scalar_operation(operation):
 
     This parser does not allow `|` and `..`.
     """
-    operation = operation.strip()
-    if not operation:
+    _operation = operation.strip()
+    if not _operation:
         raise QueryParserException('Operation is not valid: {}'.format(operation))
     # Check not allowed ops
-    if '|' in operation:
+    if '|' in _operation:
         raise QueryParserException('`|` is not allowed for scalar operations. '
                                    'Operation: {}'.format(operation))
-    if '..' in operation:
+    if '..' in _operation:
         raise QueryParserException('`..` is not allowed for scalar operations. '
                                    'Operation: {}'.format(operation))
 
     # Check negation
-    negation, operation = parse_negation_operation(operation)
+    negation, _operation = parse_negation_operation(_operation)
 
     # Check comparison operators
-    op, operation = parse_comparison_operation(operation)
+    op, _operation = parse_comparison_operation(_operation)
     if not op:
         # Now the operation must be an equality param param
         op = '='
 
     # Check that params are scalar (int, float)
     try:
-        operation = int(operation)
+        _operation = int(_operation)
     except (ValueError, TypeError):
         try:
-            operation = float(operation)
+            _operation = float(_operation)
         except (ValueError, TypeError):
             raise QueryParserException('Scalar operation requires int or float params, '
                                        'receive {}.'.format(operation))
-    return QueryOpSpec(op, negation, operation)
+    return QueryOpSpec(op, negation, _operation)
 
 
 def parse_value_operation(operation):
@@ -141,39 +141,39 @@ def parse_value_operation(operation):
 
     This parser does not allow `|`, `..`, '>', '<', '>=', and '<='.
     """
-    operation = operation.strip()
-    if not operation:
+    _operation = operation.strip()
+    if not _operation:
         raise QueryParserException('Operation is not valid: {}'.format(operation))
     # Check range not allowed
-    if '..' in operation:
+    if '..' in _operation:
         raise QueryParserException('`..` is not allowed for value operations. '
                                    'Operation: {}'.format(operation))
 
     # Check negation
-    negation, operation = parse_negation_operation(operation)
+    negation, _operation = parse_negation_operation(_operation)
 
     # Check comparison not allowed
-    op, operation = parse_comparison_operation(operation)
+    op, _operation = parse_comparison_operation(_operation)
     if op:
         raise QueryParserException('`{}` is not allowed for value operations, '
                                    'Operation: {}'.format(op, operation))
 
     # Check in operator
-    if '|' in operation:
+    if '|' in _operation:
         op = '|'
-        params = operation.split('|')
+        params = _operation.split('|')
         params = [param.strip() for param in params if param.strip()]
         if len(params) <= 1:
             raise QueryParserException('`{}` is not allowed for value operations, '
                                        'Operation: {}'.format(op, operation))
         return QueryOpSpec(op, negation, params)
 
-    if not operation:
+    if not _operation:
         raise QueryParserException('Expression is not valid, it must be formatted as '
                                    'name:operation, '
                                    'Operation: {}'.format(operation))
     # Now the operation must be an equality param param
-    return QueryOpSpec('=', negation, operation)
+    return QueryOpSpec('=', negation, _operation)
 
 
 def parse_expression(expression):
@@ -185,8 +185,8 @@ def parse_expression(expression):
     So this parser just split the expression into: field name, operation.
     """
     try:
-        expression = expression.strip()
-        name, operation = expression.split(':')
+        _expression = expression.strip()
+        name, operation = _expression.split(':')
         name = name.strip()
         operation = operation.strip()
         if not name or not operation:
@@ -205,11 +205,11 @@ def split_query(query):
         name:bla, foo:<=1
     """
     try:
-        query = query.strip()
+        _query = query.strip()
     except (ValueError, AttributeError):
         raise QueryParserException('query is not valid, received instead {}'.format(query))
 
-    expressions = query.split(',')
+    expressions = _query.split(',')
     expressions = [exp.strip() for exp in expressions if exp.strip()]
     if not expressions:
         raise QueryParserException('Query is not valid: {}'.format(query))
@@ -221,11 +221,11 @@ def tokenize_query(query):
     """Tokenizes a standard search query in name: operations mapping.
 
     Example:
-        moo:bla, foo:!<=1
+        moo:bla, foo:!<=1, foo:ll..ff
 
         {
-          'moo': 'bla',
-          'foo': '!<=1'
+          'moo': ['bla'],
+          'foo': ['!<=1', 'll..ff']
         }
     """
     expressions = split_query(query)
@@ -243,12 +243,12 @@ def parse_field(field):
         foo => foo, None
         metric__foo => metric, foo
     """
-    field = field.split('__')
-    field = [f.strip() for f in field]
-    if len(field) == 1 and field[0]:
-        return field[0], None
-    elif len(field) == 2 and field[0] and field[1]:
-        return field[0], field[1]
+    _field = field.split('__')
+    _field = [f.strip() for f in _field]
+    if len(_field) == 1 and _field[0]:
+        return _field[0], None
+    elif len(_field) == 2 and _field[0] and _field[1]:
+        return _field[0], _field[1]
     raise QueryParserException('Query field must be either a single value,'
                                'possibly with single underscores, '
                                'or a prefix double underscore field. '

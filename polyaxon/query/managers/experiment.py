@@ -1,6 +1,6 @@
 from query.builder import ComparisonCondition, DateTimeCondition, ValueCondition
 from query.managers.base import BaseQueryManager
-from query.parser import parse_datetime_operation, parse_value_operation
+from query.parser import parse_datetime_operation, parse_value_operation, parse_scalar_operation
 
 
 class ExperimentQueryManager(BaseQueryManager):
@@ -26,7 +26,7 @@ class ExperimentQueryManager(BaseQueryManager):
         # Tags
         'tags': parse_value_operation,
         # Metrics
-        'metric': parse_value_operation,
+        'metric': parse_scalar_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Dates

@@ -38,12 +38,15 @@ class BaseCondition(object):
 class BaseOperatorCondition(BaseCondition):
 
     def __init__(self, op, negation=False):
-        if op not in self.VALUES:
+        if op not in self.VALUES and op not in self.REPRESENTATIONS:
             raise QueryConditionException(
                 'Received an invalid operator `{}`, '
-                'possible values `{}`.'.format(op, self.VALUES))
+                'possible values `{}` or `{}`.'.format(op, self.VALUES, self.REPRESENTATIONS))
 
         self.operator = self._get_operator(op, negation)
+
+    def __eq__(self, other):
+        return self.operator == other.operator
 
     def apply(self, queryset, name, params):
         return queryset.filter(self.operator(name=name, params=params))
@@ -67,8 +70,12 @@ class EqualityCondition(BaseOperatorCondition):
     )
 
     @classmethod
+    def _mapping(cls):
+        return dict(cls.REPRESENTATION_MAPPING)
+
+    @classmethod
     def _get_operator(cls, op, negation=False):
-        if op not in cls.VALUES:
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
             return None
 
         if negation:
@@ -96,29 +103,31 @@ class ComparisonCondition(EqualityCondition):
 
     @classmethod
     def _get_operator(cls, op, negation=False):
-        if op not in cls.VALUES:
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
             return None
 
         _op = EqualityCondition._get_operator(op, negation)
         if _op:
             return _op
 
-        if op == 'lt':
+        mapping = cls._mapping()
+
+        if op == 'lt' or mapping[op] == 'lt':
             if negation:
                 return cls._gte_operator
             return cls._lt_operator
 
-        if op == 'lte':
+        if op == 'lte' or mapping[op] == 'lte':
             if negation:
                 return cls._gt_operator
             return cls._lte_operator
 
-        if op == 'gt':
+        if op == 'gt' or mapping[op] == 'gt':
             if negation:
                 return cls._lte_operator
             return cls._gt_operator
 
-        if op == 'gte':
+        if op == 'gte' or mapping[op] == 'gte':
             if negation:
                 return cls._lt_operator
             return cls._gte_operator
@@ -153,7 +162,7 @@ class DateTimeCondition(ComparisonCondition):
 
     @classmethod
     def _get_operator(cls, op, negation=False):
-        if op not in cls.VALUES:
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
             return None
 
         _op = ComparisonCondition._get_operator(op, negation)
@@ -190,7 +199,7 @@ class ValueCondition(EqualityCondition):
 
     @classmethod
     def _get_operator(cls, op, negation=False):
-        if op not in cls.VALUES:
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
             return None
 
         _op = EqualityCondition._get_operator(op, negation)
