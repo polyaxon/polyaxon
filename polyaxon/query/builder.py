@@ -19,7 +19,7 @@ class QueryBuilder(object):
         return queryset
 
 
-class ConditionException(Exception):
+class QueryConditionException(Exception):
     pass
 
 
@@ -34,7 +34,7 @@ class BaseOperatorCondition(BaseCondition):
 
     def __init__(self, op, negation=False):
         if op not in self.VALUES:
-            raise ConditionException(
+            raise QueryConditionException(
                 'Received an invalid operator `{}`, '
                 'possible values `{}`.'.format(op, self.VALUES))
 
@@ -99,12 +99,23 @@ class ComparisonCondition(EqualityCondition):
             return _op
 
         if op == 'lt':
+            if negation:
+                return cls._gte_operator
             return cls._lt_operator
+
         if op == 'lte':
+            if negation:
+                return cls._gt_operator
             return cls._lte_operator
+
         if op == 'gt':
+            if negation:
+                return cls._lte_operator
             return cls._gt_operator
+
         if op == 'gte':
+            if negation:
+                return cls._lt_operator
             return cls._gte_operator
 
     @staticmethod
@@ -155,7 +166,7 @@ class DateTimeCondition(ComparisonCondition):
             start_date = DateTimeFormatter.extract(params[0])
             end_date = DateTimeFormatter.extract(params[1])
         except DateTimeFormatterException as e:
-            raise ConditionException(e)
+            raise QueryConditionException(e)
 
         name = '{}__range'.format(name)
         return Q(**{name: (start_date, end_date)})

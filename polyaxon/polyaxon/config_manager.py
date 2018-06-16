@@ -405,7 +405,7 @@ class SettingConfig(object):
         def _decode_once():
             return base64.b64decode(value).decode('utf-8')
 
-        for i in range(iteration):
+        for _ in range(iteration):
             value = _decode_once()
         return value
 
