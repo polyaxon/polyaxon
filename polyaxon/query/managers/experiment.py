@@ -7,8 +7,7 @@ class ExperimentQueryManager(BaseQueryManager):
     NAME = 'experiment_query_manager'
     FIELDS_PROXY = {
         'metric': 'metric__values',
-        'started_at': 'status__created_at',
-        'finished_at': 'status__finished_at',
+        'status': 'status__status'
     }
     PARSERS_BY_FIELD = {
         # Dates
@@ -18,6 +17,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'finished_at': parse_datetime_operation,
         # User
         'user': parse_value_operation,
+        # Status
+        'status': parse_value_operation,
         # Groups
         'experiment_group': parse_value_operation,
         # Declarations
@@ -35,6 +36,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'finished_at': DateTimeCondition,
         # User
         'user': ValueCondition,
+        # Status
+        'status': ValueCondition,
         # Groups
         'experiment_group': ValueCondition,
         # Declarations

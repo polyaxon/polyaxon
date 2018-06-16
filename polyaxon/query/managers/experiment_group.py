@@ -5,6 +5,9 @@ from query.parser import parse_datetime_operation, parse_value_operation
 
 class ExperimentGroupQueryManager(BaseQueryManager):
     NAME = 'experiment_group_query_manager'
+    FIELDS_PROXY = {
+        'status': 'status__status'
+    }
     PARSERS_BY_FIELD = {
         # Dates
         'created_at': parse_datetime_operation,
@@ -13,6 +16,8 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         'finished_at': parse_datetime_operation,
         # User
         'user': parse_value_operation,
+        # Status
+        'status': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
         # hptuning
@@ -26,6 +31,8 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         'finished_at': DateTimeCondition,
         # User
         'user': ValueCondition,
+        # Status
+        'status': ValueCondition,
         # Tags
         'tags': ValueCondition,
         # hptuning
