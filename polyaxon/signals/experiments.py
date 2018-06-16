@@ -26,6 +26,9 @@ from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
+from signals.run_time import set_started_at, set_finished_at, set_job_finished_at, \
+    set_job_started_at
+
 _logger = logging.getLogger('polyaxon.signals.experiments')
 
 
@@ -99,26 +102,23 @@ def experiment_job_post_save(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentJobStatus, dispatch_uid="experiment_job_status_post_save")
+@ignore_updates
 @ignore_raw
 def experiment_job_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
     job = instance.job
 
-    if created:
-        # update job last_status
-        job.status = instance
-        job.save()
+    # update job last_status
+    job.status = instance
+    set_job_started_at(instance=job, status=instance.status)
+    set_job_finished_at(instance=job, status=instance.status)
+    job.save()
 
     # check if the new status is done to remove the containers from the monitors
     if job.is_done:
         from libs.redis_db import RedisJobContainers
 
         RedisJobContainers.remove_job(job.uuid.hex)
-
-    # Check if the experiment job status
-    if not created:
-        return
 
     # Check if we need to change the experiment status
     experiment = instance.job.experiment
@@ -132,20 +132,25 @@ def experiment_job_status_post_save(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_post_save")
+@ignore_updates
 @ignore_raw
 def experiment_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
     experiment = instance.experiment
     previous_status = experiment.last_status
 
-    if created:
-        # update experiment last_status
-        experiment.status = instance
-        experiment.save()
-        auditor.record(event_type=EXPERIMENT_NEW_STATUS,
-                       instance=experiment,
-                       previous_status=previous_status)
+    # update experiment last_status
+    experiment.status = instance
+    set_started_at(instance=experiment,
+                   status=instance.status,
+                   starting_statuses=[ExperimentLifeCycle.STARTING])
+    set_finished_at(instance=experiment,
+                    status=instance.status,
+                    is_done=ExperimentLifeCycle.is_done)
+    experiment.save()
+    auditor.record(event_type=EXPERIMENT_NEW_STATUS,
+                   instance=experiment,
+                   previous_status=previous_status)
 
     if instance.status == ExperimentLifeCycle.SUCCEEDED:
         # update all workers with succeeded status, since we will trigger a stop mechanism

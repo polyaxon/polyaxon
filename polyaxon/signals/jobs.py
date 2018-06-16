@@ -21,6 +21,8 @@ from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
+from signals.run_time import set_job_started_at, set_job_finished_at
+
 _logger = logging.getLogger('polyaxon.signals.jobs')
 
 
@@ -67,6 +69,8 @@ def job_status_post_save(sender, **kwargs):
     previous_status = job.last_status
     # Update job last_status
     job.status = instance
+    set_job_started_at(instance=job, status=instance.status)
+    set_job_finished_at(instance=job, status=instance.status)
     job.save()
     auditor.record(event_type=JOB_NEW_STATUS,
                    instance=job,

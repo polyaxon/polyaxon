@@ -6,12 +6,12 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.jobs import JobLifeCycle
-from db.models.utils import DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DiffModel, LastStatusMixin, StatusModel, RunTimeModel
 
 _logger = logging.getLogger('polyaxon.db.jobs')
 
 
-class AbstractJob(DiffModel, LastStatusMixin):
+class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
     """An abstract base class for job, used both by experiment jobs and other jobs."""
     STATUSES = JobLifeCycle
 
@@ -24,27 +24,6 @@ class AbstractJob(DiffModel, LastStatusMixin):
 
     class Meta:
         abstract = True
-
-    @property
-    def last_status(self):
-        return self.status.status if self.status else None
-
-    @property
-    def started_at(self):
-        status = self.statuses.filter(status__in=[JobLifeCycle.BUILDING,
-                                                  JobLifeCycle.SCHEDULED]).first()
-        if not status:
-            status = self.statuses.filter(status=JobLifeCycle.RUNNING).first()
-        if status:
-            return status.created_at
-        return None
-
-    @property
-    def finished_at(self):
-        status = self.statuses.filter(status__in=JobLifeCycle.DONE_STATUS).last()
-        if status:
-            return status.created_at
-        return None
 
     def _set_status(self, status_model, status, message=None, details=None):
         current_status = self.last_status
@@ -93,6 +72,17 @@ class JobMixin(object):
     @cached_property
     def env_vars(self):
         return self.specification.build.env_vars
+
+
+class TensorboardJobMixin(object):
+    @property
+    def tensorboard(self):
+        return self.tensorboard_jobs.last()
+
+    @property
+    def has_tensorboard(self):
+        tensorboard = self.tensorboard
+        return tensorboard and tensorboard.is_running
 
 
 class AbstractJobStatus(StatusModel):

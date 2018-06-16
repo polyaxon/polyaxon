@@ -4,11 +4,12 @@ from django.conf import settings
 from django.core.validators import validate_slug
 from django.db import models
 
+from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.utils import DescribableModel, DiffModel, TagModel
 from libs.blacklist import validate_blacklist_name
 
 
-class Project(DiffModel, DescribableModel, TagModel):
+class Project(DiffModel, DescribableModel, TagModel, TensorboardJobMixin):
     """A model that represents a set of experiments to solve a specific problem."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -42,17 +43,8 @@ class Project(DiffModel, DescribableModel, TagModel):
         return hasattr(self, 'repo')
 
     @property
-    def tensorboard(self):
-        return self.tensorboard_jobs.last()
-
-    @property
     def notebook(self):
         return self.notebook_jobs.last()
-
-    @property
-    def has_tensorboard(self):
-        tensorboard = self.tensorboard
-        return tensorboard and tensorboard.is_running
 
     @property
     def has_notebook(self):

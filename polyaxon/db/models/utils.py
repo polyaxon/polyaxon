@@ -63,6 +63,14 @@ class DiffModel(models.Model):
         abstract = True
 
 
+class RunTimeModel(models.Model):
+    started_at = models.DateTimeField(blank=True, null=True)
+    finished_at = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
 class TypeModel(models.Model):
     name = models.CharField(max_length=128, unique=True)
     schema_definition = models.TextField()
@@ -165,7 +173,7 @@ class LastStatusMixin(object):
 
     @property
     def last_status(self):
-        raise NotImplemented  # noqa
+        return self.status.status if self.status else None
 
     @property
     def is_running(self):
@@ -186,14 +194,6 @@ class LastStatusMixin(object):
     @property
     def stopped(self):
         return self.STATUSES.stopped(self.last_status)
-
-    @property
-    def finished_at(self):
-        raise NotImplemented  # noqa
-
-    @property
-    def started_at(self):
-        raise NotImplemented  # noqa
 
     def set_status(self, status, message=None, **kwargs):
         raise NotImplemented  # noqa

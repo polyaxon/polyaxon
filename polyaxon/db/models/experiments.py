@@ -10,6 +10,7 @@ import auditor
 
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
+from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.cloning_strategies import CloningStrategy
 from db.models.utils import (
     DescribableModel,
@@ -17,8 +18,8 @@ from db.models.utils import (
     LastStatusMixin,
     NameableModel,
     StatusModel,
-    TagModel
-)
+    TagModel,
+    RunTimeModel)
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
     EXPERIMENT_RESTARTED,
@@ -29,7 +30,13 @@ from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 
 
-class Experiment(DiffModel, NameableModel, DescribableModel, TagModel, LastStatusMixin):
+class Experiment(DiffModel,
+                 RunTimeModel,
+                 NameableModel,
+                 DescribableModel,
+                 TagModel,
+                 LastStatusMixin,
+                 TensorboardJobMixin):
     """A model that represents experiments."""
     STATUSES = ExperimentLifeCycle
 
@@ -157,26 +164,8 @@ class Experiment(DiffModel, NameableModel, DescribableModel, TagModel, LastStatu
         return calculated_status
 
     @property
-    def last_status(self):
-        return self.status.status if self.status else None
-
-    @property
     def last_metric(self):
         return self.metric.values if self.metric else None
-
-    @property
-    def finished_at(self):
-        status = self.statuses.filter(status__in=ExperimentLifeCycle.DONE_STATUS).first()
-        if status:
-            return status.created_at
-        return None
-
-    @property
-    def started_at(self):
-        status = self.statuses.filter(status=ExperimentLifeCycle.STARTING).first()
-        if status:
-            return status.created_at
-        return None
 
     @property
     def is_clone(self):

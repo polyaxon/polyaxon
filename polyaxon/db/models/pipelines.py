@@ -15,8 +15,8 @@ from db.models.utils import (
     LastStatusMixin,
     NameableModel,
     StatusModel,
-    TagModel
-)
+    TagModel,
+    RunTimeModel)
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
@@ -307,7 +307,7 @@ class OperationRunStatus(StatusModel):
         return '{} <{}>'.format(self.operation_run, self.status)
 
 
-class RunModel(DiffModel, LastStatusMixin):
+class RunModel(DiffModel, RunTimeModel, LastStatusMixin):
     """
     A model that represents an execution behaviour of instance/run of a operation or a pipeline.
     """
@@ -323,26 +323,8 @@ class RunModel(DiffModel, LastStatusMixin):
         abstract = True
 
     @property
-    def last_status(self):
-        return self.status.status if self.status else None
-
-    @property
     def skipped(self):
         return self.STATUSES.skipped(self.last_status)
-
-    @property
-    def finished_at(self):
-        status = self.statuses.filter(status__in=self.STATUSES.DONE_STATUS).first()
-        if status:
-            return status.created_at
-        return None
-
-    @property
-    def started_at(self):
-        status = self.statuses.filter(status=self.STATUSES.RUNNING).first()
-        if status:
-            return status.created_at
-        return None
 
     def can_transition(self, status):
         """Update the status of the current instance.

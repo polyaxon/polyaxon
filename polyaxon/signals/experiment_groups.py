@@ -1,5 +1,6 @@
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
+from django.utils.timezone import now
 
 import auditor
 
@@ -20,6 +21,8 @@ from libs.paths.experiment_groups import (
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+
+from signals.run_time import set_started_at, set_finished_at
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")
@@ -80,20 +83,28 @@ def experiment_group_post_delete(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentGroupStatus, dispatch_uid="experiment_group_status_post_save")
+@ignore_updates
 @ignore_raw
 def experiment_group_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
     experiment_group = instance.experiment_group
     previous_status = experiment_group.last_status
 
-    if created:
-        # update experiment last_status
-        experiment_group.status = instance
-        experiment_group.save()
-        auditor.record(event_type=EXPERIMENT_GROUP_NEW_STATUS,
-                       instance=experiment_group,
-                       previous_status=previous_status)
+    # update experiment last_status
+    experiment_group.status = instance
+    if instance.status == ExperimentGroupLifeCycle.RUNNING:
+        experiment_group.started_at = now()
+
+    set_started_at(instance=experiment_group,
+                   status=instance.status,
+                   starting_statuses=[ExperimentGroupLifeCycle.RUNNING])
+    set_finished_at(instance=experiment_group,
+                    status=instance.status,
+                    is_done=ExperimentGroupLifeCycle.is_done)
+    experiment_group.save()
+    auditor.record(event_type=EXPERIMENT_GROUP_NEW_STATUS,
+                   instance=experiment_group,
+                   previous_status=previous_status)
 
     if instance.status == ExperimentGroupLifeCycle.STOPPED:
         auditor.record(event_type=EXPERIMENT_GROUP_STOPPED,

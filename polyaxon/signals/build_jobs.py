@@ -20,6 +20,9 @@ from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
+from signals.run_time import set_started_at, set_finished_at, set_job_started_at, \
+    set_job_finished_at
+
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
 
 
@@ -38,8 +41,11 @@ def build_job_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
     job = instance.job
     previous_status = job.last_status
+
     # Update job last_status
     job.status = instance
+    set_job_started_at(instance=job, status=instance.status)
+    set_job_finished_at(instance=job, status=instance.status)
     job.save()
     auditor.record(event_type=BUILD_JOB_NEW_STATUS,
                    instance=job,

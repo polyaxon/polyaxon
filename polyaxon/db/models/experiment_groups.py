@@ -13,14 +13,15 @@ from django.utils.functional import cached_property
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
+from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.utils import (
     DescribableModel,
     DiffModel,
     LastStatusMixin,
     NameableModel,
     StatusModel,
-    TagModel
-)
+    TagModel,
+    RunTimeModel)
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
@@ -29,7 +30,13 @@ from polyaxon_schemas.utils import Optimization
 _logger = logging.getLogger('polyaxon.db.experiment_groups')
 
 
-class ExperimentGroup(DiffModel, NameableModel, DescribableModel, TagModel, LastStatusMixin):
+class ExperimentGroup(DiffModel,
+                      RunTimeModel,
+                      NameableModel,
+                      DescribableModel,
+                      TagModel,
+                      LastStatusMixin,
+                      TensorboardJobMixin):
     """A model that saves Specification/Polyaxonfiles."""
     STATUSES = ExperimentGroupLifeCycle
 
@@ -81,24 +88,6 @@ class ExperimentGroup(DiffModel, NameableModel, DescribableModel, TagModel, Last
     @property
     def unique_name(self):
         return '{}.{}'.format(self.project.unique_name, self.id)
-
-    @property
-    def last_status(self):
-        return self.status.status if self.status else None
-
-    @property
-    def finished_at(self):
-        status = self.statuses.filter(status__in=ExperimentGroupLifeCycle.DONE_STATUS).first()
-        if status:
-            return status.created_at
-        return None
-
-    @property
-    def started_at(self):
-        status = self.statuses.filter(status=ExperimentGroupLifeCycle.RUNNING).first()
-        if status:
-            return status.created_at
-        return None
 
     def can_transition(self, status):
         """Update the status of the current instance.

@@ -7,6 +7,8 @@ from libs.decorators import ignore_raw, ignore_updates
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import PipelineCeleryTasks
 
+from signals.run_time import set_started_at, set_finished_at
+
 
 @receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_saved")
 @ignore_updates
@@ -32,6 +34,12 @@ def new_pipeline_run_status(sender, **kwargs):
     pipeline_run = instance.pipeline_run
     # Update job last_status
     pipeline_run.status = instance
+    set_started_at(instance=pipeline_run,
+                   status=instance.status,
+                   starting_statuses=[PipelineStatuses.RUNNING])
+    set_finished_at(instance=pipeline_run,
+                    status=instance.status,
+                    is_done=PipelineStatuses.is_done)
     pipeline_run.save()
     # Notify operations with status change. This is necessary if we skip or stop the dag run.
     if pipeline_run.stopped:
@@ -55,6 +63,12 @@ def new_operation_run_status(sender, **kwargs):
     pipeline_run = operation_run.pipeline_run
     # Update job last_status
     operation_run.status = instance
+    set_started_at(instance=operation_run,
+                   status=instance.status,
+                   starting_statuses=[PipelineStatuses.RUNNING])
+    set_finished_at(instance=operation_run,
+                    status=instance.status,
+                    is_done=PipelineStatuses.is_done)
     operation_run.save()
 
     # No need to check if it is just created
