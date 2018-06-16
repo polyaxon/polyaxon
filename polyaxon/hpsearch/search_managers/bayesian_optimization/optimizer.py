@@ -10,8 +10,8 @@ class BOOptimizer(object):
         self.space = SearchSpace(hptuning_config=hptuning_config)
         self.utility_function = UtilityFunction(
             config=hptuning_config.bo.utility_function, seed=hptuning_config.seed)
-        self.n_warmup = hptuning_config.bo.utility_function.n_warmup or 5000
-        self.n_iter = hptuning_config.bo.utility_function.n_iter or 150
+        self.n_warmup = hptuning_config.bo.utility_function.n_warmup or 5
+        self.n_iter = hptuning_config.bo.utility_function.n_iter or 10
 
     def _maximize(self):
         """ Find argmax of the acquisition function."""
