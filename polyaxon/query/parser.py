@@ -1,8 +1,12 @@
-from collections import defaultdict
+from collections import defaultdict, namedtuple
+
+from query.exceptions import QueryParserException
 
 
-class QueryParserException(Exception):
-    pass
+class QueryOpSpec(namedtuple("QueryOpSpec", "op negation params")):
+
+    def items(self):
+        return self._asdict().items()
 
 
 def parse_negation_operation(operation):
@@ -68,7 +72,7 @@ def parse_datetime_operation(operation):
         if len(params) != 2:
             raise QueryParserException('Expression is not valid, ranges requires only 2 params, '
                                        'Operation: {}'.format(operation))
-        return op, negation, params
+        return QueryOpSpec(op, negation, params)
 
     # Check comparison operators
     op, operation = parse_comparison_operation(operation)
@@ -80,7 +84,7 @@ def parse_datetime_operation(operation):
         raise QueryParserException('Expression is not valid, it must be formatted as '
                                    'name:operation, '
                                    'Operation: {}'.format(operation))
-    return op, negation, operation
+    return QueryOpSpec(op, negation, operation)
 
 
 def parse_scalar_operation(operation):
@@ -122,7 +126,7 @@ def parse_scalar_operation(operation):
         except (ValueError, TypeError):
             raise QueryParserException('Scalar operation requires int or float params, '
                                        'receive {}.'.format(operation))
-    return op, negation, operation
+    return QueryOpSpec(op, negation, operation)
 
 
 def parse_value_operation(operation):
@@ -162,14 +166,14 @@ def parse_value_operation(operation):
         if len(params) <= 1:
             raise QueryParserException('`{}` is not allowed for value operations, '
                                        'Operation: {}'.format(op, operation))
-        return op, negation, params
+        return QueryOpSpec(op, negation, params)
 
     if not operation:
         raise QueryParserException('Expression is not valid, it must be formatted as '
                                    'name:operation, '
                                    'Operation: {}'.format(operation))
     # Now the operation must be an equality param param
-    return '=', negation, operation
+    return QueryOpSpec('=', negation, operation)
 
 
 def parse_expression(expression):
@@ -230,3 +234,22 @@ def tokenize_query(query):
     for name, operation in name_operation_tuples:
         operation_by_name[name].append(operation)
     return operation_by_name
+
+
+def parse_field(field):
+    """Parses fields with underscores, and return field and suffix.
+
+    Example:
+        foo => foo, None
+        metric__foo => metric, foo
+    """
+    field = field.split('__')
+    field = [f.strip() for f in field]
+    if len(field) == 1 and field[0]:
+        return field[0], None
+    elif len(field) == 2 and field[0] and field[1]:
+        return field[0], field[1]
+    raise QueryParserException('Query field must be either a single value,'
+                               'possibly with single underscores, '
+                               'or a prefix double underscore field. '
+                               'Received `{}`'.format(field))

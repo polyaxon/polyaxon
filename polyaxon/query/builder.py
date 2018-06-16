@@ -1,6 +1,15 @@
+from collections import namedtuple
+
 from django.db.models import Q
 
 from libs.date_utils import DateTimeFormatter, DateTimeFormatterException
+from query.exceptions import QueryConditionException
+
+
+class QueryCondSpec(namedtuple("QueryCondSpec", "cond params")):
+
+    def items(self):
+        return self._asdict().items()
 
 
 class QueryBuilder(object):
@@ -17,10 +26,6 @@ class QueryBuilder(object):
             if name in params:
                 queryset = condition.apply(queryset, name, params[name])
         return queryset
-
-
-class QueryConditionException(Exception):
-    pass
 
 
 class BaseCondition(object):
