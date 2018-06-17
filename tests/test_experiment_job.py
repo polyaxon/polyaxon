@@ -18,11 +18,11 @@ faker = Faker()
 class TestExperimentJobClient(TestCase):
     def setUp(self):
         self.client = ExperimentJobClient(host='localhost',
-                                http_port=8000,
-                                ws_port=1337,
-                                version='v1',
-                                token=faker.uuid4(),
-                                reraise=True)
+                                          http_port=8000,
+                                          ws_port=1337,
+                                          version='v1',
+                                          token=faker.uuid4(),
+                                          reraise=True)
 
     @httpretty.activate
     def test_get_job(self):

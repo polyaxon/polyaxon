@@ -432,9 +432,9 @@ class TestProjectClient(TestCase):
             status=200)
 
         response = self.client.list_builds('user',
-                                         'project',
-                                         query='started_at:>=2010-10-10',
-                                         sort='created_at')
+                                           'project',
+                                           query='started_at:>=2010-10-10',
+                                           sort='created_at')
         assert len(response['results']) == 10
 
     @httpretty.activate
