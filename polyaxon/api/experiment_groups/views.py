@@ -9,6 +9,7 @@ from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer
 )
+from api.filters import QueryFilter, OrderingFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from event_manager.events.experiment_group import (
@@ -25,17 +26,22 @@ from polyaxon.settings import SchedulerCeleryTasks
 
 
 class ExperimentGroupListView(ListCreateAPIView):
-    queryset = ExperimentGroup.objects.order_by('-updated_at').all()
+    queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
     create_serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated,)
+    filter_backends = (QueryFilter, OrderingFilter,)
+    query_manager = 'experiment_group'
+    ordering = ('-updated_at',)
+    ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
 
     def filter_queryset(self, queryset):
         project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_EXPERIMENT_GROUPS_VIEWED,
                        instance=project,
                        actor_id=self.request.user.id)
-        return queryset.filter(project=project)
+        queryset = queryset.filter(project=project)
+        return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, project=get_permissible_project(view=self))

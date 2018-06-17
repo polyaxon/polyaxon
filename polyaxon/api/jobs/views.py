@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from django.http import StreamingHttpResponse
 
 import auditor
+from api.filters import QueryFilter, OrderingFilter
 
 from api.jobs.serializers import (
     JobCreateSerializer,
@@ -50,17 +51,22 @@ _logger = logging.getLogger("polyaxon.views.jobs")
 
 class ProjectJobListView(ListCreateAPIView):
     """List/Create an job under a project"""
-    queryset = Job.objects.order_by('-updated_at').all()
+    queryset = Job.objects.all()
     serializer_class = JobSerializer
     create_serializer_class = JobCreateSerializer
     permission_classes = (IsAuthenticated,)
+    filter_backends = (QueryFilter, OrderingFilter,)
+    query_manager = 'job'
+    ordering = ('-updated_at',)
+    ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
 
     def filter_queryset(self, queryset):
         project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_JOBS_VIEWED,
                        instance=project,
                        actor_id=self.request.user.id)
-        return queryset.filter(project=project)
+        queryset = queryset.filter(project=project)
+        return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user, project=get_permissible_project(view=self))

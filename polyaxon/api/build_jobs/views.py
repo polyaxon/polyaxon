@@ -24,6 +24,7 @@ from api.build_jobs.serializers import (
     BuildJobSerializer,
     BuildJobStatusSerializer
 )
+from api.filters import QueryFilter, OrderingFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from event_manager.events.build_job import (
@@ -47,17 +48,22 @@ _logger = logging.getLogger("polyaxon.views.builds")
 
 class ProjectBuildListView(ListCreateAPIView):
     """List/Create an build under a project"""
-    queryset = BuildJob.objects.all().order_by('-updated_at')
+    queryset = BuildJob.objects.all()
     serializer_class = BuildJobSerializer
     create_serializer_class = BuildJobCreateSerializer
     permission_classes = (IsAuthenticated,)
+    filter_backends = (QueryFilter, OrderingFilter,)
+    query_manager = 'build'
+    ordering = ('-updated_at',)
+    ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
 
     def filter_queryset(self, queryset):
         project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_BUILDS_VIEWED,
                        instance=project,
                        actor_id=self.request.user.id)
-        return queryset.filter(project=project)
+        queryset = queryset.filter(project=project)
+        return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
         project = get_permissible_project(view=self)

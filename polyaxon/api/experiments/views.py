@@ -32,6 +32,7 @@ from api.experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
+from api.filters import QueryFilter, OrderingFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
@@ -69,28 +70,51 @@ _logger = logging.getLogger("polyaxon.views.experiments")
 
 class ExperimentListView(ListAPIView):
     """List all experiments"""
-    queryset = Experiment.objects.order_by('-updated_at').all()
+    queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class ProjectExperimentListView(ListCreateAPIView):
     """List/Create an experiment under a project"""
-    queryset = Experiment.objects.order_by('-updated_at').all()
+    queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     create_serializer_class = ExperimentCreateSerializer
     permission_classes = (IsAuthenticated,)
+    filter_backends = (QueryFilter, OrderingFilter,)
+    query_manager = 'experiment'
+    ordering = ('-updated_at',)
+    ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
+
+    def get_group(self, project, group_id):
+        group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
+        auditor.record(event_type=EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
+                       instance=group,
+                       actor_id=self.request.user.id)
+
+        return group
 
     def filter_queryset(self, queryset):
         independent = self.request.query_params.get('independent', None)
-        filters = {}
-        if independent is not None and to_bool(independent):
-            filters['experiment_group__isnull'] = True
+        if independent is not None:
+            independent = to_bool(independent)
+        else:
+            independent = False
+        group_id = self.request.query_params.get('group', None)
+        if independent and group_id:
+            raise ValidationError('You cannot filter for independent experiments and '
+                                  'group experiments at the same time.')
         project = get_permissible_project(view=self)
+        queryset = queryset.filter(project=project)
+        if independent is not None and to_bool(independent):
+            queryset = queryset.filter(experiment_group__isnull=True)
+        if group_id:
+            group = self.get_group(project=project, group_id=group_id)
+            queryset = queryset.filter(experiment_group=group)
         auditor.record(event_type=PROJECT_EXPERIMENTS_VIEWED,
                        instance=project,
                        actor_id=self.request.user.id)
-        return queryset.filter(project=project, **filters)
+        return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user, project=get_permissible_project(view=self))
@@ -102,26 +126,6 @@ class ProjectExperimentListView(ListCreateAPIView):
         auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-class GroupExperimentListView(ListAPIView):
-    """List all experiments under a group"""
-    queryset = Experiment.objects.order_by('-updated_at').all()
-    serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_group(self):
-        # Get project and check permissions
-        project = get_permissible_project(view=self)
-        group = get_object_or_404(ExperimentGroup, project=project, id=self.kwargs['id'])
-        auditor.record(event_type=EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
-                       instance=group,
-                       actor_id=self.request.user.id)
-
-        return group
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(experiment_group=self.get_group())
 
 
 class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
