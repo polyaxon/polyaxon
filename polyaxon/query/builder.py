@@ -3,6 +3,7 @@ from collections import namedtuple
 from django.db.models import Q
 
 from libs.date_utils import DateTimeFormatter, DateTimeFormatterException
+from polyaxon_schemas.utils import to_list
 from query.exceptions import QueryConditionException
 
 
@@ -208,6 +209,51 @@ class ValueCondition(EqualityCondition):
     def _in_operator(name, params):
         assert isinstance(params, (list, tuple))
         name = '{}__in'.format(name)
+        return Q(**{name: params})
+
+    @classmethod
+    def _nin_operator(cls, name, params):
+        return ~cls._in_operator(name, params)
+
+
+class ArrayCondition(EqualityCondition):
+    VALUES = EqualityCondition.VALUES | {'in', }
+    REPRESENTATIONS = EqualityCondition.REPRESENTATIONS | {'|', }
+    REPRESENTATION_MAPPING = EqualityCondition.REPRESENTATION_MAPPING + (
+        ('|', 'in'),
+    )
+
+    @classmethod
+    def _get_operator(cls, op, negation=False):
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
+            return None
+
+        _op = cls._get_eq_operator(op, negation)
+        if _op:
+            return _op
+
+        if negation:
+            return cls._nin_operator
+        return cls._in_operator
+
+    @classmethod
+    def _get_eq_operator(cls, op, negation):
+        if op not in EqualityCondition.VALUES and op not in EqualityCondition.REPRESENTATIONS:
+            return None
+
+        if negation:
+            return cls._neq_operator
+        return cls._eq_operator
+
+    @staticmethod
+    def _eq_operator(name, params):
+        name = '{}__contains'.format(name)
+        return Q(**{name: to_list(params)})
+
+    @staticmethod
+    def _in_operator(name, params):
+        assert isinstance(params, (list, tuple))
+        name = '{}__overlap'.format(name)
         return Q(**{name: params})
 
     @classmethod

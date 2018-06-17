@@ -1,4 +1,4 @@
-from query.builder import ComparisonCondition, DateTimeCondition, ValueCondition
+from query.builder import ArrayCondition, ComparisonCondition, DateTimeCondition, ValueCondition
 from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_scalar_operation, parse_value_operation
 
@@ -43,7 +43,7 @@ class ExperimentQueryManager(BaseQueryManager):
         # Declarations
         'declarations': ValueCondition,
         # Tags
-        'tags': ValueCondition,
+        'tags': ArrayCondition,
         # Metrics
         'metric': ComparisonCondition,
     }

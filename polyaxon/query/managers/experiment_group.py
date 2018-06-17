@@ -1,10 +1,10 @@
-from query.builder import DateTimeCondition, ValueCondition
+from query.builder import ArrayCondition, DateTimeCondition, ValueCondition
 from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_value_operation
 
 
 class ExperimentGroupQueryManager(BaseQueryManager):
-    NAME = 'experiment'
+    NAME = 'experiment_group'
     FIELDS_PROXY = {
         'status': 'status__status'
     }
@@ -34,7 +34,7 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         # Status
         'status': ValueCondition,
         # Tags
-        'tags': ValueCondition,
+        'tags': ArrayCondition,
         # hptuning
         'hptuning': ValueCondition,
     }

@@ -1,4 +1,4 @@
-from query.builder import DateTimeCondition, ValueCondition
+from query.builder import ArrayCondition, DateTimeCondition, ValueCondition
 from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_value_operation
 
@@ -32,5 +32,5 @@ class JobQueryManager(BaseQueryManager):
         # Status
         'status': ValueCondition,
         # Tags
-        'tags': ValueCondition,
+        'tags': ArrayCondition,
     }

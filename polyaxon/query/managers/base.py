@@ -14,8 +14,7 @@ class BaseQueryManager(object):
         field, suffix = parse_field(field)
         if field in cls.FIELDS_PROXY:
             field = cls.FIELDS_PROXY[field]
-            return '{}__{}'.format(field, suffix) if suffix else field
-        return field
+        return '{}__{}'.format(field, suffix) if suffix else field
 
     @classmethod
     def tokenize(cls, query_spec):

@@ -139,7 +139,7 @@ def parse_value_operation(operation):
      * multiple values: tag1:foo|bar|moo
      * negation multiple values: tag1:!foo|bar|moo
 
-    This parser does not allow `|`, `..`, '>', '<', '>=', and '<='.
+    This parser does not allow `..`, '>', '<', '>=', and '<='.
     """
     _operation = operation.strip()
     if not _operation:
