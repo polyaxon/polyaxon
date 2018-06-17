@@ -112,7 +112,7 @@ class TestEventsJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
 
     def get_job_object(self, job_state):
         job_uuid = job_state.details.labels.job_uuid.hex
-        with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:
+        with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
             return JobFactory(uuid=job_uuid)
 
 

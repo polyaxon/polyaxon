@@ -32,7 +32,7 @@ class TestJobModel(BaseTest):
         assert mock_fct.call_count == 1
 
     def test_job_creation_triggers_status_creation(self):
-        with patch('scheduler.tasks.jobs.jobs_build.apply_async') as mock_fct:
+        with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
             job = JobFactory()
         assert JobStatus.objects.filter(job=job).count() == 1
         assert job.last_status == JobLifeCycle.CREATED
