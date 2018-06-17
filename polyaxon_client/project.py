@@ -120,8 +120,7 @@ class ProjectClient(PolyaxonClient):
                          sort=None,
                          page=1):
         """Fetch list of experiments related to this project."""
-        request_url = self._build_url(
-            self._get_http_url(), username, project_name, 'experiments')
+        request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
             params = self.get_page(page=page)
