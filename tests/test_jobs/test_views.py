@@ -89,6 +89,44 @@ class TestProjectJobListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
+    def test_get_order(self):
+        resp = self.auth_client.get(self.url + '?sort=created_at,updated_at')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data != self.serializer_class(self.queryset, many=True).data
+        assert data == self.serializer_class(self.queryset.order_by('created_at', 'updated_at'),
+                                             many=True).data
+
+    def test_get_order_pagination(self):
+        queryset = self.queryset.order_by('created_at', 'updated_at')
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}&{}".format(self.url,
+                                                            limit,
+                                                            'sort=created_at,updated_at'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(queryset[limit:], many=True).data
+
     def test_create(self):
         data = {}
         resp = self.auth_client.post(self.url, data)

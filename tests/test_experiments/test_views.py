@@ -96,6 +96,15 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['count'] == independent_count
 
+        # Getting only group experiments
+        resp = self.auth_client.get(self.url + '?group={}'.format(group.id))
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == group.experiments.count()
+
+        # Filtering for independent and group experiments should raise
+        resp = self.auth_client.get(self.url + '?independent=true&group={}'.format(group.id))
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
     def test_pagination(self):
         limit = self.num_objects - 1
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
@@ -117,6 +126,55 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_get_order(self):
+        resp = self.auth_client.get(self.url + '?sort=created_at,updated_at')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data != self.serializer_class(self.queryset, many=True).data
+        assert data == self.serializer_class(self.queryset.order_by('created_at', 'updated_at'),
+                                             many=True).data
+
+        resp = self.auth_client.get(self.url + '?sort=-started_at')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset.order_by('-started_at'),
+                                             many=True).data
+
+    def test_get_order_pagination(self):
+        queryset = self.queryset.order_by('created_at', 'updated_at')
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}&{}".format(self.url,
+                                                            limit,
+                                                            'sort=created_at,updated_at'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(queryset[limit:], many=True).data
 
     def test_create(self):
         data = {'check_specification': True}
@@ -189,15 +247,18 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.experiment_group = ExperimentGroupFactory()
-        self.objects = [self.factory_class(experiment_group=self.experiment_group)
+        self.project = ProjectFactory()
+        self.experiment_group = ExperimentGroupFactory(project=self.project)
+        self.objects = [self.factory_class(project=self.project,
+                                           experiment_group=self.experiment_group)
                         for _ in range(self.num_objects)]
-        self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
-                                                             self.experiment_group.project.user,
-                                                             self.experiment_group.project.name,
-                                                             self.experiment_group.id)
+        self.url = '/{}/{}/{}/experiments?group={}'.format(
+            API_V1,
+            self.experiment_group.project.user,
+            self.experiment_group.project.name,
+            self.experiment_group.id)
         # one object that does not belong to the filter
-        self.factory_class()
+        self.factory_class(project=self.experiment_group.project)
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
         self.queryset = self.queryset.order_by('-updated_at')
 
@@ -214,7 +275,7 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
 
     def test_pagination(self):
         limit = self.num_objects - 1
-        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        resp = self.auth_client.get("{}&limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
         next_page = resp.data.get('next')
@@ -233,6 +294,44 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_get_order(self):
+        resp = self.auth_client.get(self.url + '&sort=created_at,updated_at')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data != self.serializer_class(self.queryset, many=True).data
+        assert data == self.serializer_class(self.queryset.order_by('created_at', 'updated_at'),
+                                             many=True).data
+
+    def test_get_order_pagination(self):
+        queryset = self.queryset.order_by('created_at', 'updated_at')
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}&limit={}&{}".format(self.url,
+                                                            limit,
+                                                            'sort=created_at,updated_at'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(queryset[limit:], many=True).data
 
 
 @pytest.mark.experiments_mark
@@ -288,20 +387,24 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
+        self.project = ProjectFactory()
         with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as start_fct:
             with patch('scheduler.tasks.experiments.'
                        'experiments_build.apply_async') as build_fct:
-                self.experiment_group = ExperimentGroupFactory(content=content)
+                self.experiment_group = ExperimentGroupFactory(
+                    project=self.project,
+                    content=content)
 
         assert start_fct.call_count == 1
         assert build_fct.call_count == 1
         assert self.experiment_group.specification.matrix_space == 3
-        self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
-                                                             self.experiment_group.project.user,
-                                                             self.experiment_group.project.name,
-                                                             self.experiment_group.id)
+        self.url = '/{}/{}/{}/experiments?group={}'.format(
+            API_V1,
+            self.experiment_group.project.user,
+            self.experiment_group.project.name,
+            self.experiment_group.id)
         # one object that does not belong to the filter
-        self.factory_class()
+        self.factory_class(project=self.project)
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
         self.queryset = self.queryset.order_by('-updated_at')
 
@@ -318,7 +421,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
 
     def test_pagination(self):
         limit = self.num_objects - 1
-        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        resp = self.auth_client.get("{}&limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
         next_page = resp.data.get('next')
@@ -338,48 +441,34 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
-
-@pytest.mark.experiments_mark
-class TestExperimentListViewV1(BaseViewTest):
-    serializer_class = ExperimentSerializer
-    model_class = Experiment
-    factory_class = ExperimentFactory
-    num_objects = 3
-    HAS_AUTH = True
-
-    def setUp(self):
-        super().setUp()
-        self.project = ProjectFactory(user=self.auth_client.user)
-        self.url = '/{}/{}/{}/experiments/'.format(API_V1,
-                                                   self.project.user,
-                                                   self.project.name)
-        self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
-        self.queryset = self.model_class.objects.all()
-        self.queryset = self.queryset.order_by('-updated_at')
-
-    def test_get(self):
-        resp = self.auth_client.get(self.url)
+    def test_get_order(self):
+        resp = self.auth_client.get(self.url + '&sort=created_at,updated_at')
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
-        assert resp.data['count'] == len(self.objects)
+        assert resp.data['count'] == self.num_objects
 
         data = resp.data['results']
         assert len(data) == self.queryset.count()
-        assert data == self.serializer_class(self.queryset, many=True).data
+        assert data != self.serializer_class(self.queryset, many=True).data
+        assert data == self.serializer_class(self.queryset.order_by('created_at', 'updated_at'),
+                                             many=True).data
 
-    def test_pagination(self):
+    def test_get_order_pagination(self):
+        queryset = self.queryset.order_by('created_at', 'updated_at')
         limit = self.num_objects - 1
-        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        resp = self.auth_client.get("{}&limit={}&{}".format(self.url,
+                                                            limit,
+                                                            'sort=created_at,updated_at'))
         assert resp.status_code == status.HTTP_200_OK
 
         next_page = resp.data.get('next')
         assert next_page is not None
-        assert resp.data['count'] == self.queryset.count()
+        assert resp.data['count'] == queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
-        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+        assert data == self.serializer_class(queryset[:limit], many=True).data
 
         resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
@@ -388,7 +477,7 @@ class TestExperimentListViewV1(BaseViewTest):
 
         data = resp.data['results']
         assert len(data) == 1
-        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+        assert data == self.serializer_class(queryset[limit:], many=True).data
 
 
 @pytest.mark.experiments_mark

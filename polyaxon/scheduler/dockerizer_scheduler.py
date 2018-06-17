@@ -43,8 +43,8 @@ def create_build_job(user, project, config, code_reference):
         # Check if image exists already
         return build_job, True, False
 
-    if build_job.succeeded and (now() - build_job.finished_at).seconds < 3600:
-        # Check if image was built in less than an hour
+    if build_job.succeeded and (now() - build_job.finished_at).seconds < 3600 * 6:
+        # Check if image was built in less than an 6 hours
         return build_job, True, False
 
     if build_job.is_done:

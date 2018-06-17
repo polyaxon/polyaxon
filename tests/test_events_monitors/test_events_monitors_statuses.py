@@ -1,6 +1,7 @@
 import pytest
 
 from django.conf import settings
+from mock import patch
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus
@@ -110,7 +111,8 @@ class TestEventsJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
 
     def get_job_object(self, job_state):
         job_uuid = job_state.details.labels.job_uuid.hex
-        return JobFactory(uuid=job_uuid)
+        with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:
+            return JobFactory(uuid=job_uuid)
 
 
 @pytest.mark.monitors_mark
@@ -155,6 +157,7 @@ class TestEventsDockerizerJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
         project_uuid = job_state.details.labels.project_uuid.hex
         project = ProjectFactory(uuid=project_uuid)
         job_uuid = job_state.details.labels.job_uuid.hex
+
         return BuildJobFactory(uuid=job_uuid, project=project)
 
 

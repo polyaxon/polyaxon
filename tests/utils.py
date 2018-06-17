@@ -185,12 +185,18 @@ class BaseTest(TestCase):
         cache.clear()
         # Mock celery default sent task
         self.mock_send_task()
+        self.disable_docker_api()
 
         if self.DISABLE_RUNNER:
             self.disable_experiment_groups_runner()
             self.disable_experiments_runner()
             self.plugin_jobs_runner()
         return super().setUp()
+
+    def disable_docker_api(self):
+        patcher = patch('scheduler.dockerizer_scheduler.check_image')
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def mock_send_task(self):
         from celery import current_app

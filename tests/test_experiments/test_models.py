@@ -191,7 +191,8 @@ class TestExperimentModel(BaseTest):
         assert mock_fct2.call_count == 1
 
     def test_experiment_creation_triggers_status_creation(self):
-        experiment = ExperimentFactory()
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
+            experiment = ExperimentFactory()
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
         assert experiment.last_status == ExperimentLifeCycle.CREATED
