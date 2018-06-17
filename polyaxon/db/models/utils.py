@@ -1,6 +1,6 @@
 import uuid
 
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.cache import cache
 from django.core.validators import validate_slug
 from django.db import models
@@ -83,7 +83,8 @@ class TypeModel(models.Model):
 
 
 class TagModel(models.Model):
-    tags = JSONField(
+    tags = ArrayField(
+        base_field=models.CharField(max_length=64),
         blank=True,
         null=True,
         help_text='The parameters used for this experiment.')
