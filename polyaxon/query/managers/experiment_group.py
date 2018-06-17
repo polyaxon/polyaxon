@@ -4,7 +4,7 @@ from query.parser import parse_datetime_operation, parse_value_operation
 
 
 class ExperimentGroupQueryManager(BaseQueryManager):
-    NAME = 'experiment_group_query_manager'
+    NAME = 'experiment'
     FIELDS_PROXY = {
         'status': 'status__status'
     }

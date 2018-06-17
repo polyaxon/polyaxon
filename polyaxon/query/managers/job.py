@@ -4,7 +4,7 @@ from query.parser import parse_datetime_operation, parse_value_operation
 
 
 class JobQueryManager(BaseQueryManager):
-    NAME = 'job_query_manager'
+    NAME = 'job'
     FIELDS_PROXY = {
         'status': 'status__status'
     }

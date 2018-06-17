@@ -3,8 +3,8 @@ from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_value_operation
 
 
-class BuilQueryManager(BaseQueryManager):
-    NAME = 'build_query_manager'
+class BuildQueryManager(BaseQueryManager):
+    NAME = 'build'
     FIELDS_PROXY = {
         'status': 'status__status'
     }

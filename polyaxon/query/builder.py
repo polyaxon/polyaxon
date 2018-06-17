@@ -70,10 +70,6 @@ class EqualityCondition(BaseOperatorCondition):
     )
 
     @classmethod
-    def _mapping(cls):
-        return dict(cls.REPRESENTATION_MAPPING)
-
-    @classmethod
     def _get_operator(cls, op, negation=False):
         if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
             return None
@@ -110,24 +106,22 @@ class ComparisonCondition(EqualityCondition):
         if _op:
             return _op
 
-        mapping = cls._mapping()
-
-        if op == 'lt' or mapping[op] == 'lt':
+        if op == 'lt' or op == '<':
             if negation:
                 return cls._gte_operator
             return cls._lt_operator
 
-        if op == 'lte' or mapping[op] == 'lte':
+        if op == 'lte' or op == '<=':
             if negation:
                 return cls._gt_operator
             return cls._lte_operator
 
-        if op == 'gt' or mapping[op] == 'gt':
+        if op == 'gt' or op == '>':
             if negation:
                 return cls._lte_operator
             return cls._gt_operator
 
-        if op == 'gte' or mapping[op] == 'gte':
+        if op == 'gte' or op == '>=':
             if negation:
                 return cls._lt_operator
             return cls._gte_operator
