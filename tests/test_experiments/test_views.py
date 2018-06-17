@@ -176,6 +176,90 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(queryset[limit:], many=True).data
 
+    def test_get_filter(self):
+        # Wrong filter raises
+        resp = self.auth_client.get(self.url + '?filter=created_at<2010-01-01')
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        resp = self.auth_client.get(self.url + '?filter=created_at:<2010-01-01')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        resp = self.auth_client.get(self.url +
+                                    '?filter=created_at:>=2010-01-01,status:Finished')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        resp = self.auth_client.get(self.url +
+                                    '?filter=created_at:>=2010-01-01,status:Created|Running')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+        # Set metrics
+        optimizers = ['sgd', 'sgd', 'adam']
+        tags = [['tag1'], ['tag1', 'tag2'], ['tag2']]
+        losses = [0.1, 0.2, 0.9]
+        for i, obj in enumerate(self.objects[:3]):
+            ExperimentMetricFactory(experiment=obj, values={'loss': losses[i]})
+            obj.declarations = {'optimizer': optimizers[i]}
+            obj.tags = tags[i]
+            obj.save()
+
+        resp = self.auth_client.get(
+            self.url + '?filter=created_at:>=2010-01-01,'
+                       'declarations__optimizer:sgd,'
+                       'metric__loss:>=0.2,'
+                       'tags:tag1')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 1
+
+        resp = self.auth_client.get(
+            self.url + '?filter=created_at:>=2010-01-01,'
+                       'declarations__optimizer:sgd|adam,'
+                       'metric__loss:>=0.2,'
+                       'tags:tag1|tag2')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 2
+
+    def test_get_filter_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}&{}".format(
+            self.url,
+            limit,
+            '?filter=created_at:>=2010-01-01,status:Created|Running'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
     def test_create(self):
         data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)

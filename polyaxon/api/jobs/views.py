@@ -18,8 +18,8 @@ from rest_framework.response import Response
 from django.http import StreamingHttpResponse
 
 import auditor
-from api.filters import QueryFilter, OrderingFilter
 
+from api.filters import OrderingFilter, QueryFilter
 from api.jobs.serializers import (
     JobCreateSerializer,
     JobDetailSerializer,

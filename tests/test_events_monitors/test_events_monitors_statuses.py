@@ -1,7 +1,8 @@
 import pytest
 
-from django.conf import settings
 from mock import patch
+
+from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus

@@ -1,7 +1,12 @@
+from rest_framework.exceptions import ValidationError
+from rest_framework.filters import BaseFilterBackend
+from rest_framework.filters import OrderingFilter as BaseOrderingFilter
+
 from django.core.exceptions import ImproperlyConfigured
-from rest_framework.filters import BaseFilterBackend, OrderingFilter as BaseOrderingFilter
 
 import query
+
+from query.exceptions import QueryError
 
 
 class QueryFilter(BaseFilterBackend):
@@ -23,9 +28,13 @@ class QueryFilter(BaseFilterBackend):
         query_manager = self.get_query_manager(view=view)
         query_spec = request.query_params.get(query_param)
         if query_spec:
-            queryset = query.filter_queryset(manager=query_manager,
-                                             query_spec=query_spec,
-                                             queryset=queryset)
+            try:
+                queryset = query.filter_queryset(manager=query_manager,
+                                                 query_spec=query_spec,
+                                                 queryset=queryset)
+            except QueryError as e:
+                raise ValidationError(e)
+
         return queryset
 
 

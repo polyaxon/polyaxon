@@ -24,7 +24,7 @@ from api.build_jobs.serializers import (
     BuildJobSerializer,
     BuildJobStatusSerializer
 )
-from api.filters import QueryFilter, OrderingFilter
+from api.filters import OrderingFilter, QueryFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from event_manager.events.build_job import (

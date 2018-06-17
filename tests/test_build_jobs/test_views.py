@@ -131,6 +131,60 @@ class TestProjectBuildListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(queryset[limit:], many=True).data
 
+    def test_get_filter(self):
+        # Wrong filter format raises
+        resp = self.auth_client.get(self.url + '?filter=created_at<2010-01-01')
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        resp = self.auth_client.get(self.url + '?filter=created_at:<2010-01-01')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        resp = self.auth_client.get(self.url +
+                                    '?filter=created_at:>=2010-01-01,status:Finished')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        resp = self.auth_client.get(self.url +
+                                    '?filter=created_at:>=2010-01-01,status:Created|Running')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_get_filter_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}&{}".format(
+            self.url,
+            limit,
+            '?filter=created_at:>=2010-01-01,status:Created|Running'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
     def test_create(self):
         data = {}
         resp = self.auth_client.post(self.url, data)

@@ -9,7 +9,7 @@ from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer
 )
-from api.filters import QueryFilter, OrderingFilter
+from api.filters import OrderingFilter, QueryFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from event_manager.events.experiment_group import (
