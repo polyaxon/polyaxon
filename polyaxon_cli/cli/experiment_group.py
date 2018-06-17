@@ -148,11 +148,14 @@ def update(ctx, description):
 
 
 @group.command()
-@click.option('--page', type=int, help='To paginate through the list of experiments.')
 @click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
+@click.option('--query', '-q', type=str,
+              help='To filter the experiments based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
+@click.option('--page', type=int, help='To paginate through the list of experiments.')
 @click.pass_context
 @clean_outputs
-def experiments(ctx, page, metrics):
+def experiments(ctx, metrics, query, sort, page):
     """List experiments for this experiment group
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -160,8 +163,12 @@ def experiments(ctx, page, metrics):
     user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
     page = page or 1
     try:
-        response = PolyaxonClients().experiment_group.list_experiments(
-            user, project_name, _group, page=page)
+        response = PolyaxonClients().experiment_group.list_experiments(username=user,
+                                                                       project_name=project_name,
+                                                                       group_sequence=_group,
+                                                                       query=query,
+                                                                       sort=sort,
+                                                                       page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiments for group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))

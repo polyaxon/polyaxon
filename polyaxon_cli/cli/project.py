@@ -264,10 +264,13 @@ def update(ctx, name, description, private):
 
 
 @project.command()
+@click.option('--query', '-q', type=str,
+              help='To filter the experiments based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
 @click.option('--page', type=int, help='To paginate through the list of groups.')
 @click.pass_context
 @clean_outputs
-def groups(ctx, page):
+def groups(ctx, query, sort, page):
     """List experiment groups for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -276,7 +279,11 @@ def groups(ctx, page):
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_experiment_groups(user, project_name, page=page)
+        response = PolyaxonClients().project.list_experiment_groups(username=user,
+                                                                    project_name=project_name,
+                                                                    query=query,
+                                                                    sort=sort,
+                                                                    page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error(
             'Could not get experiment groups for project `{}`.'.format(project_name))
@@ -303,12 +310,61 @@ def groups(ctx, page):
 
 
 @project.command()
-@click.option('--page', type=int, help='To paginate through the list of experiments.')
-@click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
+@click.option('--query', '-q', type=str,
+              help='To filter the experiments based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
+@click.option('--page', type=int, help='To paginate through the list of jobs.')
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def experiments(ctx, page, metrics):
+def jobs(ctx, query, sort, page):
+    """List jobs for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = get_project_or_local(ctx.obj['project'])
+
+    page = page or 1
+    try:
+        response = PolyaxonClients().project.list_jobs(username=user,
+                                                       project_name=project_name,
+                                                       query=query,
+                                                       sort=sort,
+                                                       page=page)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get jobs for project `{}`.'.format(project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header('Jobs for project `{}/{}`.'.format(user, project_name))
+        Printer.print_header('Navigation:')
+        dict_tabulate(meta)
+    else:
+        Printer.print_header('No jobs found for project `{}/{}`.'.format(user, project_name))
+
+    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+               for o in response['results']]
+    objects = list_dicts_to_tabulate(objects)
+    if objects:
+        Printer.print_header("Jobs:")
+        objects.pop('project_name', None)
+        dict_tabulate(objects, is_list_dict=True)
+
+
+@project.command()
+@click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
+@click.option('--independent', '-i', is_flag=True, help='To return only independent experiments.')
+@click.option('--group', '-g', type=int, help='To filter experiments for a specific group.')
+@click.option('--query', '-q', type=str,
+              help='To filter the experiments based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
+@click.option('--page', type=int, help='To paginate through the list of experiments.')
+@click.pass_context
+@clean_outputs
+@clean_outputs
+def experiments(ctx, metrics, independent, group, query, sort, page):
     """List experiments for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -317,7 +373,13 @@ def experiments(ctx, page, metrics):
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_experiments(user, project_name, page=page)
+        response = PolyaxonClients().project.list_experiments(username=user,
+                                                              project_name=project_name,
+                                                              independent=independent,
+                                                              group=group,
+                                                              query=query,
+                                                              sort=sort,
+                                                              page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiments for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -344,48 +406,14 @@ def experiments(ctx, page, metrics):
 
 
 @project.command()
-@click.option('--page', type=int, help='To paginate through the list of jobs.')
-@click.pass_context
-@clean_outputs
-@clean_outputs
-def jobs(ctx, page):
-    """List jobs for this project.
-
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
-    """
-    user, project_name = get_project_or_local(ctx.obj['project'])
-
-    page = page or 1
-    try:
-        response = PolyaxonClients().project.list_jobs(user, project_name, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get jobs for project `{}`.'.format(project_name))
-        Printer.print_error('Error message `{}`.'.format(e))
-        sys.exit(1)
-
-    meta = get_meta_response(response)
-    if meta:
-        Printer.print_header('Jobs for project `{}/{}`.'.format(user, project_name))
-        Printer.print_header('Navigation:')
-        dict_tabulate(meta)
-    else:
-        Printer.print_header('No jobs found for project `{}/{}`.'.format(user, project_name))
-
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
-    objects = list_dicts_to_tabulate(objects)
-    if objects:
-        Printer.print_header("Jobs:")
-        objects.pop('project_name', None)
-        dict_tabulate(objects, is_list_dict=True)
-
-
-@project.command()
 @click.option('--page', type=int, help='To paginate through the list of build jobs.')
+@click.option('--query', '-q', type=str,
+              help='To filter the experiments based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def builds(ctx, page):
+def builds(ctx, query, sort, page):
     """List build jobs for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -394,7 +422,11 @@ def builds(ctx, page):
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_builds(user, project_name, page=page)
+        response = PolyaxonClients().project.list_builds(username=user,
+                                                         project_name=project_name,
+                                                         query=query,
+                                                         sort=sort,
+                                                         page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get builds for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
