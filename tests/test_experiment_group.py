@@ -61,9 +61,7 @@ class TestExperimentGroupClient(TestCase):
                 ExperimentGroupClient.ENDPOINT,
                 'username',
                 'project_name',
-                'groups',
-                1,
-                'experiments'),
+                'experiments') + '?group=1',
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
@@ -83,14 +81,33 @@ class TestExperimentGroupClient(TestCase):
                 ExperimentGroupClient.ENDPOINT,
                 'username',
                 'project_name',
-                'groups',
-                1,
-                'experiments') + '?offset=2',
+                'experiments') + '?group=1&offset=2',
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
         response = self.client.list_experiments('username', 'project_name', 1, page=2)
+        assert len(response['results']) == 10
+
+        # query, sort
+
+        httpretty.register_uri(
+            httpretty.GET,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments') + '?group=1&query=started_at:>=2010-10-10,sort=created_at',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_experiments('username',
+                                                'project_name',
+                                                1,
+                                                query='started_at:>=2010-10-10',
+                                                sort='created_at')
         assert len(response['results']) == 10
 
     @httpretty.activate

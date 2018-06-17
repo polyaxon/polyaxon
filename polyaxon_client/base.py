@@ -60,8 +60,8 @@ class PolyaxonClient(object):
     @classmethod
     def get_page(cls, page=1):
         if page <= 1:
-            return ''
-        return 'offset={}'.format((page - 1) * cls.PAGE_SIZE)
+            return {}
+        return {'offset': (page - 1) * cls.PAGE_SIZE}
 
     @staticmethod
     def create_progress_callback(encoder):

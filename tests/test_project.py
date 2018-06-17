@@ -239,6 +239,26 @@ class TestProjectClient(TestCase):
         response = self.client.list_experiments('user', 'project', page=2)
         assert len(response['results']) == 10
 
+        # query, sort
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments') + '?independent=true&query=started_at:>=2010-10-10,sort=created_at',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_experiments('user',
+                                                'project',
+                                                True,
+                                                query='started_at:>=2010-10-10',
+                                                sort='created_at')
+        assert len(response['results']) == 10
+
     @httpretty.activate
     def test_create_experiment(self):
         project_uuid = uuid.uuid4().hex
@@ -309,6 +329,25 @@ class TestProjectClient(TestCase):
         response = self.client.list_jobs('user', 'project', page=2)
         assert len(response['results']) == 10
 
+        # query, sort
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'jobs') + '?query=started_at:>=2010-10-10,sort=created_at',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_jobs('user',
+                                         'project',
+                                         query='started_at:>=2010-10-10',
+                                         sort='created_at')
+        assert len(response['results']) == 10
+
     @httpretty.activate
     def test_create_job(self):
         project_uuid = uuid.uuid4().hex
@@ -377,6 +416,25 @@ class TestProjectClient(TestCase):
             status=200)
 
         response = self.client.list_builds('user', 'project', page=2)
+        assert len(response['results']) == 10
+
+        # query, sort
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'builds') + '?query=started_at:>=2010-10-10,sort=created_at',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_builds('user',
+                                         'project',
+                                         query='started_at:>=2010-10-10',
+                                         sort='created_at')
         assert len(response['results']) == 10
 
     @httpretty.activate

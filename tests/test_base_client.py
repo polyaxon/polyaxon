@@ -29,10 +29,10 @@ class TestBaseClient(TestCase):
         assert self.client.base_ws_url == 'ws://{}:{}/ws/v1'.format(self.host, self.ws_port)
 
     def test_get_page(self):
-        assert self.client.get_page() == ''
-        assert self.client.get_page(page=1) == ''
-        assert self.client.get_page(page=2) == 'offset={}'.format(self.client.PAGE_SIZE)
-        assert self.client.get_page(page=3) == 'offset={}'.format(self.client.PAGE_SIZE * 2)
+        assert self.client.get_page() == {}
+        assert self.client.get_page(page=1) == {}
+        assert self.client.get_page(page=2) == {'offset': self.client.PAGE_SIZE}
+        assert self.client.get_page(page=3) == {'offset': self.client.PAGE_SIZE * 2}
 
     def test_build_url(self):
         assert self.client._build_url('a') == 'a/'

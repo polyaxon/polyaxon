@@ -77,13 +77,18 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while updating project repo')
             return None
 
-    def list_experiment_groups(self, username, project_name, page=1):
+    def list_experiment_groups(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of experiment groups related to this project."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'groups')
 
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            params = self.get_page(page=page)
+            if query:
+                params['query'] = query
+            if sort:
+                params['sort'] = sort
+            response = self.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, ExperimentGroupConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiment groups')
@@ -106,13 +111,29 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while creating experiment group')
             return None
 
-    def list_experiments(self, username, project_name, page=1):
+    def list_experiments(self,
+                         username,
+                         project_name,
+                         independent=None,
+                         group=None,
+                         query=None,
+                         sort=None,
+                         page=1):
         """Fetch list of experiments related to this project."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'experiments')
 
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            params = self.get_page(page=page)
+            if independent:
+                params['independent'] = independent
+            if group:
+                params['group'] = group
+            if query:
+                params['query'] = query
+            if sort:
+                params['sort'] = sort
+            response = self.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
@@ -133,13 +154,18 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while creating experiment.')
             return None
 
-    def list_jobs(self, username, project_name, page=1):
+    def list_jobs(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of jobs related to this project."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'jobs')
 
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            params = self.get_page(page=page)
+            if query:
+                params['query'] = query
+            if sort:
+                params['sort'] = sort
+            response = self.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, JobConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving jobs')
@@ -160,13 +186,18 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while creating job')
             return None
 
-    def list_builds(self, username, project_name, page=1):
+    def list_builds(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of build jobs related to this project."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'builds')
 
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            params = self.get_page(page=page)
+            if query:
+                params['query'] = query
+            if sort:
+                params['sort'] = sort
+            response = self.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, JobConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving build jobs')
