@@ -178,24 +178,24 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
     def test_get_filter(self):
         # Wrong filter raises
-        resp = self.auth_client.get(self.url + '?filter=created_at<2010-01-01')
+        resp = self.auth_client.get(self.url + '?query=created_at<2010-01-01')
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        resp = self.auth_client.get(self.url + '?filter=created_at:<2010-01-01')
+        resp = self.auth_client.get(self.url + '?query=created_at:<2010-01-01')
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
         assert resp.data['count'] == 0
 
         resp = self.auth_client.get(self.url +
-                                    '?filter=created_at:>=2010-01-01,status:Finished')
+                                    '?query=created_at:>=2010-01-01,status:Finished')
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
         assert resp.data['count'] == 0
 
         resp = self.auth_client.get(self.url +
-                                    '?filter=created_at:>=2010-01-01,status:Created|Running')
+                                    '?query=created_at:>=2010-01-01,status:Created|Running')
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -216,7 +216,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
             obj.save()
 
         resp = self.auth_client.get(
-            self.url + '?filter=created_at:>=2010-01-01,'
+            self.url + '?query=created_at:>=2010-01-01,'
                        'declarations__optimizer:sgd,'
                        'metric__loss:>=0.2,'
                        'tags:tag1')
@@ -226,7 +226,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.data['count'] == 1
 
         resp = self.auth_client.get(
-            self.url + '?filter=created_at:>=2010-01-01,'
+            self.url + '?query=created_at:>=2010-01-01,'
                        'declarations__optimizer:sgd|adam,'
                        'metric__loss:>=0.2,'
                        'tags:tag1|tag2')
@@ -240,7 +240,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}&{}".format(
             self.url,
             limit,
-            '?filter=created_at:>=2010-01-01,status:Created|Running'))
+            '?query=created_at:>=2010-01-01,status:Created|Running'))
         assert resp.status_code == status.HTTP_200_OK
 
         next_page = resp.data.get('next')

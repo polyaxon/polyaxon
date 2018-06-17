@@ -1,6 +1,6 @@
 import uuid
 
-from django.contrib.postgres.fields import ArrayField, JSONField
+from django.contrib.postgres.fields import ArrayField
 from django.core.cache import cache
 from django.core.validators import validate_slug
 from django.db import models

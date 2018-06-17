@@ -11,7 +11,7 @@ from query.exceptions import QueryError
 
 class QueryFilter(BaseFilterBackend):
     # The URL query parameter used for the ordering.
-    query_param = 'filter'
+    query_param = 'query'
     query_manager = None
 
     def get_query_param(self, view):
