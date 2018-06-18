@@ -141,7 +141,7 @@ class StopTensorboardView(CreateAPIView):
                     'update_status': True
                 })
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
-                           instance=project.tensorboard,
+                           instance=tensorboard,
                            target='project',
                            actor_id=self.request.user.id)
         return Response(status=status.HTTP_200_OK)
