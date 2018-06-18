@@ -34,6 +34,7 @@ class BaseSpecification(object):
     VERSION = 'version'
     KIND = 'kind'
     LOGGING = 'logging'
+    TAGS = 'tags'
     HP_TUNING = 'hptuning'
     DECLARATIONS = 'declarations'
     ENVIRONMENT = 'environment'
@@ -44,12 +45,12 @@ class BaseSpecification(object):
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, KIND, ENVIRONMENT, DECLARATIONS, LOGGING, HP_TUNING,
+        VERSION, KIND, TAGS, ENVIRONMENT, DECLARATIONS, LOGGING, HP_TUNING,
         BUILD, RUN, MODEL, TRAIN, EVAL
     )
 
     HEADER_SECTIONS = (
-        VERSION, KIND, LOGGING
+        VERSION, KIND, LOGGING, TAGS
     )
 
     GRAPH_SECTIONS = (
@@ -61,7 +62,7 @@ class BaseSpecification(object):
     )
 
     POSSIBLE_SECTIONS = (
-        VERSION, KIND, LOGGING
+        VERSION, KIND, LOGGING, TAGS
     )
 
     OPERATORS = {
@@ -210,3 +211,7 @@ class BaseSpecification(object):
         if self.logging:
             return self.logging.level
         return 'INFO'
+
+    @cached_property
+    def tags(self):
+        return self.headers.get(self.TAGS, None)

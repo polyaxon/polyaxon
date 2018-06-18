@@ -3,6 +3,8 @@ version: 1
 
 kind: tensorboard
 
+tags: ['foo', 'bar']
+
 environment:
   node_selectors:
     polyaxon.com: node_for_tensorboard_jobs

@@ -3,6 +3,8 @@ version: 1
 
 kind: group
 
+tags: ['foo', 'bar']
+
 logging:
   level: INFO
 

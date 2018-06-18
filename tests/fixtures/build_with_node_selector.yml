@@ -3,6 +3,8 @@ version: 1
 
 kind: build
 
+tags: ['foo', 'bar']
+
 environment:
   node_selectors:
     polyaxon.com: node_for_build_jobs

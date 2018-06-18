@@ -3,6 +3,8 @@ version: 1
 
 kind: experiment
 
+tags: ['foo', 'bar']
+
 build:
   image: my_image
   build_steps:

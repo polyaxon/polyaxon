@@ -51,6 +51,10 @@ class Parser(object):
             parsed_data[spec.LOGGING] = cls.parse_expression(
                 spec, data[spec.LOGGING], declarations)
 
+        if spec.TAGS in data:
+            parsed_data[spec.TAGS] = cls.parse_expression(
+                spec, data[spec.TAGS], declarations)
+
         if spec.HP_TUNING in data:
             parsed_data[spec.HP_TUNING] = cls.parse_expression(
                 spec, data[spec.HP_TUNING], declarations)

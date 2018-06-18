@@ -18,6 +18,7 @@ class GroupSpecification(BaseSpecification):
     SECTIONS:
         VERSION: defines the version of the file to be parsed and validated.
         LOGGING: defines the logging
+        TAGS: defines the tags
         HYPER_PARAMS: hyper params tuning and concurrent runs.
         ENVIRONMENT: defines the run environment for experiment.
         DECLARATIONS: variables/modules that can be reused.

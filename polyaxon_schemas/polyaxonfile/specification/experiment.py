@@ -19,6 +19,7 @@ class ExperimentSpecification(JobSpecification):
     SECTIONS:
         VERSION: defines the version of the file to be parsed and validated.
         LOGGING: defines the logging
+        TAGS: defines the tags
         ENVIRONMENT: defines the run environment for experiment.
         DECLARATIONS: variables/modules that can be reused.
         BUILD: defines the build step where the user can set a docker image definition

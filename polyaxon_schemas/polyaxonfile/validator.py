@@ -24,6 +24,9 @@ def validate_headers(spec, data):
         validated_data[spec.LOGGING] = LoggingConfig.from_dict(
             data[spec.LOGGING])
 
+    if data.get(spec.TAGS):
+        validated_data[spec.TAGS] = data[spec.TAGS]
+
     if data.get(spec.HP_TUNING):
         validated_data[spec.HP_TUNING] = HPTuningConfig.from_dict(
             data[spec.HP_TUNING])
