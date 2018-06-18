@@ -58,9 +58,14 @@ class CallbackCondition(BaseCondition):
 
     def __init__(self, callback):
         self.callback = callback
+        self.negation = False
+
+    def __call__(self, op, negation=False):
+        self.negation = negation
+        return self
 
     def apply(self, queryset, name, params):
-        return self.callback(queryset, params)
+        return self.callback(queryset, params, self.negation)
 
 
 class EqualityCondition(BaseOperatorCondition):
