@@ -1,10 +1,15 @@
 from django.db.models import Q
-from polyaxon_schemas.utils import to_list
 
-from query.builder import ArrayCondition, DateTimeCondition, ValueCondition, CallbackCondition, \
-    ComparisonCondition
+from polyaxon_schemas.utils import to_list
+from query.builder import (
+    ArrayCondition,
+    CallbackCondition,
+    ComparisonCondition,
+    DateTimeCondition,
+    ValueCondition
+)
 from query.managers.base import BaseQueryManager
-from query.parser import parse_datetime_operation, parse_value_operation, parse_scalar_operation
+from query.parser import parse_datetime_operation, parse_scalar_operation, parse_value_operation
 
 
 def _search_algorithm_condition(queryset, params, negation):

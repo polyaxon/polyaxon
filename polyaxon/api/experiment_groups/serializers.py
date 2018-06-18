@@ -1,9 +1,9 @@
-from polyaxon_schemas.utils import SearchAlgorithms
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from db.models.experiment_groups import ExperimentGroup
 from libs.spec_validation import validate_group_spec_content
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class ExperimentGroupSerializer(serializers.ModelSerializer):

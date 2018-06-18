@@ -1,7 +1,6 @@
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
 from django.utils.timezone import now
-from polyaxon_schemas.utils import SearchAlgorithms
 
 import auditor
 
@@ -22,6 +21,7 @@ from libs.paths.experiment_groups import (
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon_schemas.utils import SearchAlgorithms
 from signals.run_time import set_finished_at, set_started_at
 
 
