@@ -19,6 +19,7 @@ from factories.factory_experiments import (
     ExperimentStatusFactory
 )
 from factories.factory_projects import ProjectFactory
+from factories.fixtures import experiment_group_spec_content_early_stopping
 from tests.utils import BaseViewTest
 
 
@@ -154,6 +155,66 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
+
+        # Search concurrency
+        resp = self.auth_client.get(self.url +
+                                    '?query=concurrency:1')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        # Search concurrency
+        resp = self.auth_client.get(self.url +
+                                    '?query=concurrency:{}'.format(self.objects[0].concurrency))
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        # Search hp search algorithm
+        resp = self.auth_client.get(self.url +
+                                    '?query=search_algorithm:grid')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 3
+
+        # Search hp search algorithm
+        resp = self.auth_client.get(self.url +
+                                    '?query=search_algorithm:random')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        # Search hp search algorithm
+        resp = self.auth_client.get(self.url +
+                                    '?query=search_algorithm:grid|random')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 3
+
+        # Create a new object with random search
+        self.factory_class(project=self.project,
+                           content=experiment_group_spec_content_early_stopping)
+
+        # Search hp search algorithm
+        resp = self.auth_client.get(self.url +
+                                    '?query=search_algorithm:random')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 1
+
+        # Search hp search algorithm
+        resp = self.auth_client.get(self.url +
+                                    '?query=search_algorithm:grid|random')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects) + 1
 
     def test_get_filter_pagination(self):
         limit = self.num_objects - 1
