@@ -1,3 +1,4 @@
+from polyaxon_schemas.utils import SearchAlgorithms
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
@@ -80,5 +81,8 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
             config = validate_group_spec_content(validated_data['content'])
             if config.hptuning:
                 hptuning = config.hptuning.to_dict()
+                if config.search_algorithm == SearchAlgorithms.GRID:
+                    hptuning['grid_search'] = hptuning.get('grid_search', {})
                 validated_data['hptuning'] = hptuning
+
         return super().create(validated_data=validated_data)

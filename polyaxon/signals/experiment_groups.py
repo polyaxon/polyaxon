@@ -1,6 +1,7 @@
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
 from django.utils.timezone import now
+from polyaxon_schemas.utils import SearchAlgorithms
 
 import auditor
 
@@ -33,7 +34,11 @@ def experiment_group_pre_save(sender, **kwargs):
     assign_code_reference(instance)
     # Check if params need to be set
     if not instance.hptuning and instance.specification:
-        instance.hptuning = instance.specification.hptuning.to_dict()
+        hptuning_config = instance.specification.hptuning
+        hptuning = hptuning_config.to_dict()
+        if hptuning_config.search_algorithm == SearchAlgorithms.GRID:
+            hptuning['grid_search'] = hptuning.get('grid_search', {})
+        instance.hptuning = hptuning
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
