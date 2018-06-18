@@ -332,17 +332,19 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
 15. Finally, Let start tensorboard to see the model outputs:
 
-     ```bash
-     $ polyaxon tensorboard start
+    ```bash
+    $ polyaxon tensorboard start
+    ```
 
-     Tensorboard is being deployed for project `quick-start`
+    Tensorboard is being deployed for project `quick-start`
 
     It may take some time before you can access tensorboard.
 
     Your tensorboard will be available on:
 
+    ```
         http://192.168.64.14:32566/tensorboard/root/quick-start/
-     ```
+    ```
 
 Congratulations! You've trained your first experiments with Polyaxon. Behind the scene a couple of things have happened:
 
