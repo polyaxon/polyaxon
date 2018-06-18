@@ -1,6 +1,6 @@
 import logging
 
-from django.db.models.signals import post_delete, post_save, pre_delete
+from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
 import auditor
@@ -15,13 +15,22 @@ from event_manager.events.build_job import (
     BUILD_JOB_STOPPED,
     BUILD_JOB_SUCCEEDED
 )
-from libs.decorators import ignore_raw, ignore_updates
+from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.run_time import set_job_finished_at, set_job_started_at
 
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
+
+
+@receiver(pre_save, sender=BuildJob, dispatch_uid="build_job_pre_save")
+@ignore_updates_pre
+@ignore_raw
+def build_job_pre_save(sender, **kwargs):
+    instance = kwargs['instance']
+    if not instance.tags and instance.specification:
+        instance.tags = instance.specification.tags
 
 
 @receiver(post_save, sender=BuildJob, dispatch_uid="build_job_post_save")

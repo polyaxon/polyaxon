@@ -30,6 +30,8 @@ _logger = logging.getLogger('polyaxon.signals.jobs')
 @ignore_raw
 def job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
+    if not instance.tags and instance.specification:
+        instance.tags = instance.specification.tags
 
     # Add code reference
     # Check if :

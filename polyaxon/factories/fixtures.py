@@ -12,6 +12,8 @@ experiment_group_spec_content = """---
     version: 1
     
     kind: group
+    
+    tags: [fixtures]
 
     hptuning:
       matrix:
@@ -56,6 +58,8 @@ experiment_group_spec_content_2_xps = """---
     version: 1
     
     kind: group
+    
+    tags: [fixtures]
       
     hptuning:
       concurrency: 2
@@ -74,6 +78,8 @@ experiment_group_spec_content_early_stopping = """---
     version: 1
     
     kind: group
+    
+    tags: [fixtures]
 
     hptuning:
       concurrency: 2
@@ -100,6 +106,8 @@ experiment_group_spec_content_hyperband = """---
     version: 1
 
     kind: group
+    
+    tags: [fixtures]
 
     hptuning:
       concurrency: 2
@@ -135,6 +143,8 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
     version: 1
 
     kind: group
+    
+    tags: [fixtures]
 
     hptuning:
       concurrency: 200
@@ -176,6 +186,8 @@ experiment_group_spec_content_bo = """---
     version: 1
 
     kind: group
+    
+    tags: [fixtures]
 
     hptuning:
       concurrency: 2
@@ -215,6 +227,8 @@ experiment_spec_content = """---
     version: 1
     
     kind: experiment
+    
+    tags: [fixtures]
 
     model:
       model_type: regressor
@@ -255,6 +269,8 @@ exec_experiment_spec_content = """---
     version: 1
     
     kind: experiment
+    
+    tags: [fixtures]
 
     build:
       image: my_image
@@ -270,6 +286,8 @@ exec_experiment_resources_content = """---
     version: 1
     
     kind: experiment
+    
+    tags: [fixtures]
 
     declarations:
       lr: 0.1
@@ -347,6 +365,8 @@ tensorboard_spec_content = """---
     version: 1
     
     kind: tensorboard
+    
+    tags: [fixtures]
 
     build:
       image: my_image
@@ -359,6 +379,8 @@ notebook_spec_content = """---
     version: 1
 
     kind: notebook
+    
+    tags: [fixtures]
 
     build:
       image: my_image
@@ -371,6 +393,8 @@ job_spec_content = """---
     version: 1
 
     kind: job
+    
+    tags: [fixtures]
 
     build:
       image: my_image
@@ -386,6 +410,8 @@ job_spec_resources_content = """---
     version: 1
 
     kind: job
+    
+    tags: [fixtures]
     
     environment:
       resources:
@@ -409,6 +435,8 @@ build_spec_content = """---
     version: 1
 
     kind: build
+    
+    tags: [fixtures]
 
     build:
       image: my_image

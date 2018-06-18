@@ -43,6 +43,8 @@ def experiment_pre_save(sender, **kwargs):
     # Check if declarations need to be set
     if not instance.declarations and instance.specification:
         instance.declarations = instance.specification.declarations
+    if not instance.tags and instance.specification:
+        instance.tags = instance.specification.tags
 
     # Add code reference
     # Check if :

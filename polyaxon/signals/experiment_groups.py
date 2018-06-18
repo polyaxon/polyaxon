@@ -39,6 +39,8 @@ def experiment_group_pre_save(sender, **kwargs):
         if hptuning_config.search_algorithm == SearchAlgorithms.GRID:
             hptuning['grid_search'] = hptuning.get('grid_search', {})
         instance.hptuning = hptuning
+    if not instance.tags and instance.specification:
+        instance.tags = instance.specification.tags
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")

@@ -1,3 +1,4 @@
+# pylint:disable=too-many-lines
 from unittest.mock import patch
 
 import mock
@@ -884,7 +885,7 @@ class TestTensorboardExperimentGroupViewV1(BaseTestPluginViewV1):
     plugin_app = TensorboardSpawner.TENSORBOARD_JOB_NAME
 
     @classmethod
-    def _get_url(cls, project, group, path=None):
+    def _get_url(cls, project, group, path=None):  # pylint:disable=arguments-differ
         url = '/{}/{}/{}/groups/{}'.format(
             cls.plugin_app,
             project.user.username,
