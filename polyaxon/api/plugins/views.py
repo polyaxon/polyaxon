@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -11,6 +11,8 @@ import auditor
 from api.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from api.utils.views import ProtectedView
 from constants.experiments import ExperimentLifeCycle
+from db.models.experiment_groups import ExperimentGroup
+from db.models.experiments import Experiment
 from db.models.projects import Project
 from event_manager.events.notebook import (
     NOTEBOOK_STARTED_TRIGGERED,
@@ -46,25 +48,58 @@ class StartTensorboardView(CreateAPIView):
             {'image': settings.TENSORBOARD_DOCKER_IMAGE})
         return {'config': specification}
 
-    def _create_tensorboard(self, project):
+    def _create_tensorboard(self, project, experiment_group=None, experiment=None):
         config = self.request.data or self._get_default_tensorboard_config()
         serializer = self.get_serializer(data=config)
         serializer.is_valid(raise_exception=True)
-        instance = serializer.save(user=self.request.user, project=project)
+        instance = serializer.save(user=self.request.user,
+                                   project=project,
+                                   experiment_group=experiment_group,
+                                   experiment=experiment)
         auditor.record(event_type=TENSORBOARD_STARTED_TRIGGERED,
                        instance=instance,
                        target='project',
                        actor_id=self.request.user.id)
 
+    def _handle_project_tensorboard(self, project):
+        if project.has_tensorboard:
+            return None
+        self._create_tensorboard(project=project)
+        return project.tensorboard
+
+    def _handle_group_tensorboard(self, project, group):
+        if group.has_tensorboard:
+            return None
+        self._create_tensorboard(project=project, experiment_group=group)
+        return group.tensorboard
+
+    def _handle_experiment_tensorboard(self, project, experiment):
+        if experiment.has_tensorboard:
+            return None
+        self._create_tensorboard(project=project, experiment=experiment)
+        return experiment.tensorboard
+
     def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.has_tensorboard:
+        project = self.get_object()
+        experiment_id = self.kwargs.get('experiment_id')
+        group_id = self.kwargs.get('group_id')
+        if experiment_id:
+            experiment = get_object_or_404(Experiment, project=project, id=experiment_id)
+            tensorboard = self._handle_experiment_tensorboard(project=project,
+                                                              experiment=experiment)
+        elif group_id:
+            group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
+            tensorboard = self._handle_group_tensorboard(project=project, group=group)
+        else:
+            tensorboard = self._handle_project_tensorboard(project=project)
+
+        if not tensorboard:
             return Response(data='Tensorboard is already running', status=status.HTTP_200_OK)
-        self._create_tensorboard(obj)
-        if not obj.tensorboard.is_running:
+
+        if not tensorboard.is_running:
             celery_app.send_task(
                 SchedulerCeleryTasks.TENSORBOARDS_START,
-                kwargs={'tensorboard_job_id': obj.tensorboard.id},
+                kwargs={'tensorboard_job_id': tensorboard.id},
                 countdown=1)
         return Response(status=status.HTTP_201_CREATED)
 
@@ -79,19 +114,34 @@ class StopTensorboardView(CreateAPIView):
         return queryset.filter(user__username=username)
 
     def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.has_tensorboard:
+        project = self.get_object()
+        experiment_id = self.kwargs.get('experiment_id')
+        group_id = self.kwargs.get('group_id')
+
+        if experiment_id:
+            experiment = get_object_or_404(Experiment, project=project, id=experiment_id)
+            has_tensorboard = experiment.has_tensorboard
+            tensorboard = experiment.tensorboard
+        elif group_id:
+            group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
+            has_tensorboard = group.has_tensorboard
+            tensorboard = group.tensorboard
+        else:
+            has_tensorboard = project.has_tensorboard
+            tensorboard = project.tensorboard
+
+        if has_tensorboard:
             celery_app.send_task(
                 SchedulerCeleryTasks.TENSORBOARDS_STOP,
                 kwargs={
-                    'project_name': obj.unique_name,
-                    'project_uuid': obj.uuid.hex,
-                    'tensorboard_job_name': obj.tensorboard.unique_name,
-                    'tensorboard_job_uuid': obj.tensorboard.uuid.hex,
+                    'project_name': project.unique_name,
+                    'project_uuid': project.uuid.hex,
+                    'tensorboard_job_name': tensorboard.unique_name,
+                    'tensorboard_job_uuid': tensorboard.uuid.hex,
                     'update_status': True
                 })
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
-                           instance=obj.tensorboard,
+                           instance=project.tensorboard,
                            target='project',
                            actor_id=self.request.user.id)
         return Response(status=status.HTTP_200_OK)
@@ -171,35 +221,35 @@ class StopNotebookView(CreateAPIView):
 
 
 class PluginJobView(ProtectedView):
-    def audit(self, project):
+    def audit(self, instance):
         pass
 
     @staticmethod
-    def get_base_path(project):
+    def get_base_path(instance):
         return ''
 
     @staticmethod
-    def get_base_params(project):
+    def get_base_params(instance):
         return ''
 
-    def has_plugin_job(self, project):
+    def has_plugin_job(self, instance):
         raise NotImplementedError
 
-    def get_service_url(self, project):
+    def get_service_url(self, instance):
         raise NotImplementedError
 
     def get_object(self):
         return get_permissible_project(view=self)
 
     def get(self, request, *args, **kwargs):
-        project = self.get_object()
-        if not self.has_plugin_job(project):
+        instance = self.get_object()
+        if not self.has_plugin_job(instance):
             raise Http404
-        self.audit(project=project)
-        service_url = self.get_service_url(project=project)
+        self.audit(instance=instance)
+        service_url = self.get_service_url(instance=instance)
         path = '/{}'.format(service_url.strip('/'))
-        base_path = self.get_base_path(project)
-        base_params = self.get_base_params(project)
+        base_path = self.get_base_path(instance)
+        base_params = self.get_base_params(instance)
         if self.kwargs['path']:
             path = '{}/{}'.format(path, self.kwargs['path'].strip('/'))
         elif base_path:
@@ -217,41 +267,61 @@ class PluginJobView(ProtectedView):
 
 class NotebookView(PluginJobView):
     @staticmethod
-    def get_base_path(project):
+    def get_base_path(instance):
         return 'tree'
 
     @staticmethod
-    def get_base_params(project):
+    def get_base_params(instance):
         from scheduler import notebook_scheduler
 
-        return 'token={}'.format(notebook_scheduler.get_notebook_token(notebook=project.notebook))
+        return 'token={}'.format(notebook_scheduler.get_notebook_token(notebook=instance.notebook))
 
-    def get_service_url(self, project):
+    def get_service_url(self, instance):
         from scheduler import notebook_scheduler
 
-        return notebook_scheduler.get_notebook_url(notebook=project.notebook)
+        return notebook_scheduler.get_notebook_url(notebook=instance.notebook)
 
-    def has_plugin_job(self, project):
-        return project.has_notebook
+    def has_plugin_job(self, instance):
+        return instance.has_notebook
 
-    def audit(self, project):
+    def audit(self, instance):
         auditor.record(event_type=NOTEBOOK_VIEWED,
-                       instance=project.notebook,
+                       instance=instance.notebook,
                        target='project',
                        actor_id=self.request.user.id)
 
 
 class TensorboardView(PluginJobView):
-    def get_service_url(self, project):
+    def get_object(self):
+        project = get_permissible_project(view=self)
+        experiment_id = self.kwargs.get('experiment_id')
+        group_id = self.kwargs.get('group_id')
+
+        if experiment_id:
+            return get_object_or_404(Experiment, project=project, id=experiment_id)
+        elif group_id:
+            return get_object_or_404(ExperimentGroup, project=project, id=group_id)
+
+        return project
+
+    def get_service_url(self, instance):
         from scheduler import tensorboard_scheduler
 
-        return tensorboard_scheduler.get_tensorboard_url(tensorboard=project.tensorboard)
+        return tensorboard_scheduler.get_tensorboard_url(tensorboard=instance.tensorboard)
 
-    def has_plugin_job(self, project):
-        return project.has_tensorboard
+    def has_plugin_job(self, instance):
+        return instance.has_tensorboard
 
-    def audit(self, project):
+    def audit(self, instance):
+        experiment_id = self.kwargs.get('experiment_id')
+        group_id = self.kwargs.get('group_id')
+        if experiment_id:
+            target = 'experiment'
+        elif group_id:
+            target = 'experiment_group'
+        else:
+            target = 'project'
         auditor.record(event_type=TENSORBOARD_VIEWED,
-                       instance=project.tensorboard,
-                       target='project',
+                       instance=instance.tensorboard,
+                       target=target,
                        actor_id=self.request.user.id)

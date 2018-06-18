@@ -8,10 +8,14 @@ from rest_framework import status
 from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.models.experiment_groups import ExperimentGroup
+from db.models.experiments import Experiment
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from dockerizer.tasks import build_project_notebook
+from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiments import ExperimentFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
@@ -25,7 +29,7 @@ from tests.utils import BaseViewTest
 
 
 @pytest.mark.plugins_mark
-class TestStartTensorboardViewV1(BaseViewTest):
+class TestStartProjectTensorboardViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
     HAS_AUTH = True
@@ -139,7 +143,249 @@ class TestStartTensorboardViewV1(BaseViewTest):
 
 
 @pytest.mark.plugins_mark
-class TestStopTensorboardViewV1(BaseViewTest):
+class TestStartExperimentTensorboardViewV1(BaseViewTest):
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(user=self.auth_client.user, project=self.project)
+        self.url = '/{}/{}/{}/experiments/{}/tensorboard/start'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.object.id)
+        self.queryset = self.model_class.objects
+
+    def test_start(self):
+        assert self.queryset.count() == 1
+        assert self.object.tensorboard is None
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == 1
+        self.object.refresh_from_db()
+        assert isinstance(self.object.tensorboard, TensorboardJob)
+        assert self.project.tensorboard is None
+
+    def test_spawner_start(self):
+        assert self.queryset.count() == 1
+        with patch('scheduler.tensorboard_scheduler.start_tensorboard') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == 1
+        assert self.project.tensorboard is None
+
+    def test_start_with_updated_config(self):
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        # Start with default config
+        self.object.refresh_from_db()
+        config = self.object.tensorboard.config
+
+        # Simulate stop the tensorboard
+        self.object.tensorboard.delete()
+
+        # Starting the tensorboard without config should pass
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        # Check that still using same config
+        self.object.refresh_from_db()
+        assert config == self.object.tensorboard.config
+
+        # Simulate stop the tensorboard
+        self.object.tensorboard.delete()
+        self.object.save()
+
+        # Starting again the tensorboard with different config
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(
+                self.url,
+                data={'config': tensorboard_spec_parsed_content.parsed_data})
+
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        self.object.refresh_from_db()
+        # Check that the image was update
+        assert config != self.object.tensorboard.config
+
+        # Trying to start an already running job returns 200
+        # Starting again the tensorboard with different config
+        self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(
+                self.url,
+                data={'config': tensorboard_spec_parsed_content.parsed_data})
+
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.project.tensorboard is None
+
+    def test_start_during_build_process(self):
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+
+        # Check that user cannot start a new job if it's already building
+        self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        assert start_mock.call_count == 0
+
+    def test_starting_stopping_tensorboard_creating_new_one_create_new_job(self):
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+        self.object.tensorboard.set_status(status=JobLifeCycle.STOPPED)
+        assert TensorboardJob.objects.count() == 1
+        assert TensorboardJobStatus.objects.count() == 2
+
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+        assert TensorboardJob.objects.count() == 2
+        assert TensorboardJobStatus.objects.count() == 3
+        assert self.project.tensorboard is None
+
+
+@pytest.mark.plugins_mark
+class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            self.object = self.factory_class(user=self.auth_client.user, project=self.project)
+        self.url = '/{}/{}/{}/groups/{}/tensorboard/start'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.object.id)
+        self.queryset = self.model_class.objects
+
+    def test_start(self):
+        assert self.queryset.count() == 1
+        assert self.object.tensorboard is None
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == 1
+        self.object.refresh_from_db()
+        assert isinstance(self.object.tensorboard, TensorboardJob)
+        assert self.project.tensorboard is None
+
+    def test_spawner_start(self):
+        assert self.queryset.count() == 1
+        with patch('scheduler.tensorboard_scheduler.start_tensorboard') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == 1
+        assert self.project.tensorboard is None
+
+    def test_start_with_updated_config(self):
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        # Start with default config
+        self.object.refresh_from_db()
+        config = self.object.tensorboard.config
+
+        # Simulate stop the tensorboard
+        self.object.tensorboard.delete()
+
+        # Starting the tensorboard without config should pass
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        # Check that still using same config
+        self.object.refresh_from_db()
+        assert config == self.object.tensorboard.config
+
+        # Simulate stop the tensorboard
+        self.object.tensorboard.delete()
+        self.object.save()
+
+        # Starting again the tensorboard with different config
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(
+                self.url,
+                data={'config': tensorboard_spec_parsed_content.parsed_data})
+
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_201_CREATED
+        self.object.refresh_from_db()
+        # Check that the image was update
+        assert config != self.object.tensorboard.config
+
+        # Trying to start an already running job returns 200
+        # Starting again the tensorboard with different config
+        self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
+            resp = self.auth_client.post(
+                self.url,
+                data={'config': tensorboard_spec_parsed_content.parsed_data})
+
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.project.tensorboard is None
+
+    def test_start_during_build_process(self):
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+
+        # Check that user cannot start a new job if it's already building
+        self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        assert start_mock.call_count == 0
+
+    def test_starting_stopping_tensorboard_creating_new_one_create_new_job(self):
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+        self.object.tensorboard.set_status(status=JobLifeCycle.STOPPED)
+        assert TensorboardJob.objects.count() == 1
+        assert TensorboardJobStatus.objects.count() == 2
+
+        with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+        assert TensorboardJob.objects.count() == 2
+        assert TensorboardJobStatus.objects.count() == 3
+        assert self.project.tensorboard is None
+
+
+@pytest.mark.plugins_mark
+class TestStopProjectTensorboardViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
     HAS_AUTH = True
@@ -153,6 +399,84 @@ class TestStopTensorboardViewV1(BaseViewTest):
             API_V1,
             self.object.user.username,
             self.object.name)
+        self.queryset = TensorboardJob.objects.all()
+
+    def test_stop(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('scheduler.tasks.tensorboards.tensorboards_stop.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+    def test_spawner_stop(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('scheduler.tensorboard_scheduler.stop_tensorboard') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+
+@pytest.mark.plugins_mark
+class TestStopExperimentTensorboardViewV1(BaseViewTest):
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(user=self.auth_client.user, project=self.project)
+        tensorboard = TensorboardJobFactory(project=self.project, experiment=self.object)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        self.url = '/{}/{}/{}/experiments/{}/tensorboard/stop'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.object.id)
+        self.queryset = TensorboardJob.objects.all()
+
+    def test_stop(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('scheduler.tasks.tensorboards.tensorboards_stop.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+    def test_spawner_stop(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('scheduler.tensorboard_scheduler.stop_tensorboard') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+
+@pytest.mark.plugins_mark
+class TestStopExperimentGroupTensorboardViewV1(BaseViewTest):
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            self.object = self.factory_class(user=self.auth_client.user, project=self.project)
+        tensorboard = TensorboardJobFactory(project=self.project, experiment_group=self.object)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        self.url = '/{}/{}/{}/groups/{}/tensorboard/stop'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.object.id)
         self.queryset = TensorboardJob.objects.all()
 
     def test_stop(self):
@@ -394,7 +718,8 @@ class BaseTestPluginViewV1(BaseViewTest):
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
-class TestTensorboardViewV1(BaseTestPluginViewV1):
+@pytest.mark.plugins_mark
+class TestTensorboardProjectViewV1(BaseTestPluginViewV1):
     plugin_app = TensorboardSpawner.TENSORBOARD_JOB_NAME
 
     def test_project_requests_tensorboard_url(self):
@@ -448,6 +773,212 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         # To static files
         response = self.auth_client.get(
             self._get_url(project, 'static/components/something?v=4.7.0'))
+        assert response.status_code == 200
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        proxy_url = '{}/{}'.format(
+            service_url,
+            'static/components/something?v=4.7.0'
+        )
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
+
+
+@pytest.mark.plugins_mark
+class TestTensorboardExperimentViewV1(BaseTestPluginViewV1):
+    plugin_app = TensorboardSpawner.TENSORBOARD_JOB_NAME
+
+    @classmethod
+    def _get_url(cls, project, experiment, path=None):  # noqa
+        url = '/{}/{}/{}/experiments/{}'.format(
+            cls.plugin_app,
+            project.user.username,
+            project.name,
+            experiment.id)
+
+        if path:
+            url = '{}/{}'.format(url, path)
+        return url
+
+    def test_rejects_anonymous_user_and_redirected_to_login_page(self):
+        project = ProjectFactory()
+        experiment = ExperimentFactory(project=project)
+        response = self.client.get(self._get_url(project, experiment))
+        assert response.status_code == 302
+
+    def test_rejects_user_with_no_privileges(self):
+        project = ProjectFactory(is_public=False)
+        experiment = ExperimentFactory(project=project)
+        response = self.auth_client.get(self._get_url(project, experiment))
+        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_project_with_no_job(self):
+        project = ProjectFactory(user=self.auth_client.user)
+        experiment = ExperimentFactory(project=project)
+        response = self.auth_client.get(self._get_url(project, experiment))
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_project_requests_tensorboard_url(self):
+        project = ProjectFactory(user=self.auth_client.user)
+        experiment = ExperimentFactory(project=project)
+        tensorboard = TensorboardJobFactory(project=project, experiment=experiment)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        with patch('scheduler.tensorboard_scheduler.get_tensorboard_url') as mock_fct:
+            response = self.auth_client.get(self._get_url(project, experiment))
+
+        assert mock_fct.call_count == 1
+        assert response.status_code == 200
+
+    @mock.patch('scheduler.tensorboard_scheduler.TensorboardSpawner')
+    def test_redirects_to_proxy_protected_url(self, spawner_mock):
+        project = ProjectFactory(user=self.auth_client.user)
+        experiment = ExperimentFactory(project=project)
+        tensorboard = TensorboardJobFactory(project=project, experiment=experiment)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        deployment_name = JOB_NAME.format(
+            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
+        mock_instance = spawner_mock.return_value
+        mock_instance.get_tensorboard_url.return_value = service_url
+
+        response = self.auth_client.get(self._get_url(project, experiment))
+        assert response.status_code == 200
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        proxy_url = '{}/'.format(service_url)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
+
+    @mock.patch('scheduler.tensorboard_scheduler.TensorboardSpawner')
+    def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
+        project = ProjectFactory(user=self.auth_client.user)
+        experiment = ExperimentFactory(project=project)
+        tensorboard = TensorboardJobFactory(project=project, experiment=experiment)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        deployment_name = JOB_NAME.format(
+            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
+        mock_instance = spawner_mock.return_value
+        mock_instance.get_tensorboard_url.return_value = service_url
+
+        # To `tree?`
+        response = self.auth_client.get(self._get_url(project, experiment, 'tree?'))
+        assert response.status_code == 200
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        proxy_url = '{}/{}'.format(
+            service_url,
+            'tree/'
+        )
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
+
+        # To static files
+        response = self.auth_client.get(
+            self._get_url(project, experiment, 'static/components/something?v=4.7.0'))
+        assert response.status_code == 200
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        proxy_url = '{}/{}'.format(
+            service_url,
+            'static/components/something?v=4.7.0'
+        )
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
+
+
+@pytest.mark.plugins_mark
+class TestTensorboardExperimentGroupViewV1(BaseTestPluginViewV1):
+    plugin_app = TensorboardSpawner.TENSORBOARD_JOB_NAME
+
+    @classmethod
+    def _get_url(cls, project, group, path=None):
+        url = '/{}/{}/{}/groups/{}'.format(
+            cls.plugin_app,
+            project.user.username,
+            project.name,
+            group.id)
+
+        if path:
+            url = '{}/{}'.format(url, path)
+        return url
+
+    def test_rejects_anonymous_user_and_redirected_to_login_page(self):
+        project = ProjectFactory()
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            group = ExperimentGroupFactory(project=project)
+        response = self.client.get(self._get_url(project, group))
+        assert response.status_code == 302
+
+    def test_rejects_user_with_no_privileges(self):
+        project = ProjectFactory(is_public=False)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            group = ExperimentGroupFactory(project=project)
+        response = self.auth_client.get(self._get_url(project, group))
+        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_project_with_no_job(self):
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            group = ExperimentGroupFactory(project=project)
+        response = self.auth_client.get(self._get_url(project, group))
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_project_requests_tensorboard_url(self):
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            group = ExperimentGroupFactory(project=project)
+        tensorboard = TensorboardJobFactory(project=project, experiment_group=group)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        with patch('scheduler.tensorboard_scheduler.get_tensorboard_url') as mock_fct:
+            response = self.auth_client.get(self._get_url(project, group))
+
+        assert mock_fct.call_count == 1
+        assert response.status_code == 200
+
+    @mock.patch('scheduler.tensorboard_scheduler.TensorboardSpawner')
+    def test_redirects_to_proxy_protected_url(self, spawner_mock):
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            group = ExperimentGroupFactory(project=project)
+        tensorboard = TensorboardJobFactory(project=project, experiment_group=group)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        deployment_name = JOB_NAME.format(
+            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
+        mock_instance = spawner_mock.return_value
+        mock_instance.get_tensorboard_url.return_value = service_url
+
+        response = self.auth_client.get(self._get_url(project, group))
+        assert response.status_code == 200
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        proxy_url = '{}/'.format(service_url)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
+
+    @mock.patch('scheduler.tensorboard_scheduler.TensorboardSpawner')
+    def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as _:  # noqa
+            group = ExperimentGroupFactory(project=project)
+        tensorboard = TensorboardJobFactory(project=project, experiment_group=group)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
+        deployment_name = JOB_NAME.format(
+            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
+        mock_instance = spawner_mock.return_value
+        mock_instance.get_tensorboard_url.return_value = service_url
+
+        # To `tree?`
+        response = self.auth_client.get(self._get_url(project, group, 'tree?'))
+        assert response.status_code == 200
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        proxy_url = '{}/{}'.format(
+            service_url,
+            'tree/'
+        )
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
+
+        # To static files
+        response = self.auth_client.get(
+            self._get_url(project, group, 'static/components/something?v=4.7.0'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         proxy_url = '{}/{}'.format(
