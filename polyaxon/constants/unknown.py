@@ -1,1 +1,1 @@
-UNKNOWN = 'UNKNOWN'
+UNKNOWN = 'unknown'

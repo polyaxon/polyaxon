@@ -64,7 +64,7 @@ def get_job_status(pod_state, job_container_names):
             break
 
     if not job_container_status:
-        return PodLifeCycle.UNKNOWN, None
+        return JobLifeCycle.UNKNOWN, None
 
     job_container_status_terminated = job_container_status['state'][ContainerStatuses.TERMINATED]
     if job_container_status_terminated:
@@ -83,7 +83,7 @@ def get_job_status(pod_state, job_container_names):
         return JobLifeCycle.RUNNING, job_container_status_running.get('reason')
 
     # Unknown?
-    return PodLifeCycle.UNKNOWN, None
+    return JobLifeCycle.UNKNOWN, None
 
 
 def get_job_state(event_type, event, job_container_names, experiment_type_label):

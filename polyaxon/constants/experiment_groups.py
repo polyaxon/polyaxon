@@ -11,11 +11,11 @@ class ExperimentGroupLifeCycle(BaseStatuses):
         * FAILED: one of the jobs has failed
         * STOPPED: was stopped/deleted/killed
     """
-    CREATED = 'Created'
-    RUNNING = 'Running'
-    SUCCEEDED = 'Succeeded'
-    FAILED = 'Failed'
-    STOPPED = 'Stopped'
+    CREATED = 'created'
+    RUNNING = 'running'
+    SUCCEEDED = 'succeeded'
+    FAILED = 'failed'
+    STOPPED = 'stopped'
 
     CHOICES = (
         (CREATED, CREATED),

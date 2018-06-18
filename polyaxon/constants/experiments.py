@@ -17,15 +17,15 @@ class ExperimentLifeCycle(BaseStatuses):
         * STOPPED: was stopped/deleted/killed
         * UNKNOWN: unknown state
     """
-    CREATED = 'Created'
-    RESUMING = 'Resuming'
-    BUILDING = 'Building'
-    SCHEDULED = 'Scheduled'
-    STARTING = 'Starting'
-    RUNNING = 'Running'
-    SUCCEEDED = 'Succeeded'
-    FAILED = 'Failed'
-    STOPPED = 'Stopped'
+    CREATED = 'created'
+    RESUMING = 'resuming'
+    BUILDING = 'building'
+    SCHEDULED = 'scheduled'
+    STARTING = 'starting'
+    RUNNING = 'running'
+    SUCCEEDED = 'succeeded'
+    FAILED = 'failed'
+    STOPPED = 'stopped'
     UNKNOWN = UNKNOWN
 
     CHOICES = (

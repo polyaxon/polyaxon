@@ -19,13 +19,13 @@ class JobLifeCycle(BaseStatuses):
         * UNKNOWN: For some reason the state of the pod could not be obtained,
                    typically due to an error in communicating with the host of the pod.
     """
-    CREATED = 'Created'
-    BUILDING = 'Building'
-    SCHEDULED = 'Scheduled'
-    RUNNING = 'Running'
-    SUCCEEDED = 'Succeeded'
-    FAILED = 'Failed'
-    STOPPED = 'Stopped'
+    CREATED = 'created'
+    BUILDING = 'building'
+    SCHEDULED = 'scheduled'
+    RUNNING = 'running'
+    SUCCEEDED = 'succeeded'
+    FAILED = 'failed'
+    STOPPED = 'stopped'
     UNKNOWN = UNKNOWN
 
     CHOICES = (

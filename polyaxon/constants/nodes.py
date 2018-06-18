@@ -3,9 +3,9 @@ from constants.unknown import UNKNOWN
 
 class NodeLifeCycle(object):
     UNKNOWN = UNKNOWN
-    READY = 'Ready'
-    NOT_READY = 'NotReady'
-    DELETED = 'Deleted'
+    READY = 'ready'
+    NOT_READY = 'notReady'
+    DELETED = 'deleted'
 
     CHOICES = (
         (UNKNOWN, UNKNOWN),

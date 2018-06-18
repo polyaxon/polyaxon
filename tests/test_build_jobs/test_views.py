@@ -150,7 +150,7 @@ class TestProjectBuildListViewV1(BaseViewTest):
         assert resp.data['count'] == 0
 
         resp = self.auth_client.get(self.url +
-                                    '?query=created_at:>=2010-01-01,status:Created|Running')
+                                    '?query=created_at:>=2010-01-01,status:created|running')
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -165,7 +165,7 @@ class TestProjectBuildListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}&{}".format(
             self.url,
             limit,
-            '?query=created_at:>=2010-01-01,status:Created|Running'))
+            '?query=created_at:>=2010-01-01,status:created|running'))
         assert resp.status_code == status.HTTP_200_OK
 
         next_page = resp.data.get('next')
