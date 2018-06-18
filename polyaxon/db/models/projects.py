@@ -50,3 +50,12 @@ class Project(DiffModel, DescribableModel, TagModel, TensorboardJobMixin):
     def has_notebook(self):
         notebook = self.notebook
         return notebook and notebook.is_running
+
+    @property
+    def tensorboard(self):
+        return self.tensorboard_jobs.filter(experiment=None, experiment_group=None).last()
+
+    @property
+    def has_tensorboard(self):
+        tensorboard = self.tensorboard
+        return tensorboard and tensorboard.is_running
