@@ -120,4 +120,3 @@ class ExperimentGroupClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
-
