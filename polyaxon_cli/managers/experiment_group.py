@@ -20,7 +20,7 @@ class GroupManager(BaseConfigManager):
     def get_config_or_raise(cls):
         experiment_group = cls.get_config()
         if not experiment_group:
-            Printer.print_error('No group sequence was provided.')
+            Printer.print_error('No group id was provided.')
             sys.exit(1)
 
         return experiment_group

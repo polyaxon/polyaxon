@@ -20,7 +20,7 @@ class ExperimentManager(BaseConfigManager):
     def get_config_or_raise(cls):
         experiment = cls.get_config()
         if not experiment:
-            Printer.print_error('No experiment sequence was provided.')
+            Printer.print_error('No experiment id was provided.')
             sys.exit(1)
 
         return experiment

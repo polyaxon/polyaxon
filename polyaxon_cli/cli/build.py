@@ -23,7 +23,7 @@ from polyaxon_schemas.utils import to_list
 
 def get_job_or_local(project=None, job=None):
     user, project_name = get_project_or_local(project)
-    job = job or BuildJobManager.get_config_or_raise().sequence
+    job = job or BuildJobManager.get_config_or_raise().id
     return user, project_name, job
 
 
@@ -47,7 +47,7 @@ def get_job_details(job):
 
 @click.group()
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-@click.option('--job', '-j', type=int, help="The job sequence.")
+@click.option('--job', '-j', type=int, help="The job id.")
 @click.pass_context
 @clean_outputs
 def build(ctx, project, job):  # pylint:disable=redefined-outer-name

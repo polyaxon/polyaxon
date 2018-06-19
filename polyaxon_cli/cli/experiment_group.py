@@ -21,7 +21,7 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 
 
 def get_group_or_local(_group):
-    return _group or GroupManager.get_config_or_raise().sequence
+    return _group or GroupManager.get_config_or_raise().id
 
 
 def get_project_group_or_local(project=None, group=None):  # pylint:disable=redefined-outer-name
@@ -45,7 +45,7 @@ def get_group_details(group):  # pylint:disable=redefined-outer-name
 
 @click.group()
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
-@click.option('--group', '-g', type=int, help="The group sequence number.")
+@click.option('--group', '-g', type=int, help="The group id number.")
 @click.pass_context
 @clean_outputs
 def group(ctx, project, group):  # pylint:disable=redefined-outer-name
@@ -169,7 +169,7 @@ def experiments(ctx, metrics, query, sort, page):
     try:
         response = PolyaxonClients().experiment_group.list_experiments(username=user,
                                                                        project_name=project_name,
-                                                                       group_sequence=_group,
+                                                                       group_id=_group,
                                                                        query=query,
                                                                        sort=sort,
                                                                        page=page)

@@ -34,8 +34,8 @@ def get_tensorboard_url(user, project_name, experiment=None, group=None):
 
 @click.group()
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
-@click.option('--group', '-g', type=int, help="The group sequence number.")
-@click.option('--experiment', '-xp', type=int, help="The experiment sequence number.")
+@click.option('--group', '-g', type=int, help="The group id number.")
+@click.option('--experiment', '-xp', type=int, help="The experiment id number.")
 @click.pass_context
 @clean_outputs
 def tensorboard(ctx, project, group, experiment):
@@ -68,7 +68,7 @@ def url(ctx):
             response = PolyaxonClients().experiment.get_experiment(
                 username=user,
                 project_name=project_name,
-                experiment_sequence=experiment)
+                experiment_id=experiment)
             obj = 'experiment {}'.format(experiment)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get experiment `{}`.'.format(experiment))
@@ -79,7 +79,7 @@ def url(ctx):
             response = PolyaxonClients().experiment_group.get_experiment_group(
                 username=user,
                 project_name=project_name,
-                group_sequence=group)
+                group_id=group)
             obj = 'group `{}`.'.format(group)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get group `{}`.'.format(group))
@@ -150,7 +150,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
             response = PolyaxonClients().experiment.start_tensorboard(
                 username=user,
                 project_name=project_name,
-                experiment_sequence=experiment,
+                experiment_id=experiment,
                 job_config=job_config)
             obj = 'experiment `{}`'.format(experiment)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -162,7 +162,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
             response = PolyaxonClients().experiment_group.start_tensorboard(
                 username=user,
                 project_name=project_name,
-                group_sequence=group,
+                group_id=group,
                 job_config=job_config)
             obj = 'group `{}`'.format(group)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -232,7 +232,7 @@ def stop(ctx, yes):
             PolyaxonClients().experiment.stop_tensorboard(
                 username=user,
                 project_name=project_name,
-                experiment_sequence=experiment)
+                experiment_id=experiment)
             Printer.print_success('Tensorboard is being deleted')
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not stop tensorboard {}.'.format(obj))
@@ -243,7 +243,7 @@ def stop(ctx, yes):
             PolyaxonClients().experiment_group.stop_tensorboard(
                 username=user,
                 project_name=project_name,
-                group_sequence=group)
+                group_id=group)
             Printer.print_success('Tensorboard is being deleted')
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not stop tensorboard {}.'.format(obj))

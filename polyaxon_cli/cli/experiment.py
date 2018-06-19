@@ -27,7 +27,7 @@ from polyaxon_schemas.utils import to_list
 
 
 def get_experiment_or_local(_experiment=None):
-    return _experiment or ExperimentManager.get_config_or_raise().sequence
+    return _experiment or ExperimentManager.get_config_or_raise().id
 
 
 def get_project_experiment_or_local(_project=None, _experiment=None):
@@ -37,7 +37,7 @@ def get_project_experiment_or_local(_project=None, _experiment=None):
 
 
 def get_experiment_job_or_local(_job=None):
-    return _job or ExperimentJobManager.get_config_or_raise().sequence
+    return _job or ExperimentJobManager.get_config_or_raise().id
 
 
 def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
@@ -69,7 +69,7 @@ def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
 
 @click.group()
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
-@click.option('--experiment', '-xp', type=int, help="The experiment sequence number.")
+@click.option('--experiment', '-xp', type=int, help="The experiment id number.")
 @click.pass_context
 @clean_outputs
 def experiment(ctx, project, experiment):  # pylint:disable=redefined-outer-name
@@ -80,7 +80,7 @@ def experiment(ctx, project, experiment):  # pylint:disable=redefined-outer-name
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job sequence.")
+@click.option('--job', '-j', type=int, help="The job id.")
 @click.pass_context
 @clean_outputs
 def get(ctx, job):
@@ -390,7 +390,7 @@ def jobs(ctx, page):
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job sequence.")
+@click.option('--job', '-j', type=int, help="The job id.")
 @click.option('--page', type=int, help="To paginate through the list of statuses.")
 @click.pass_context
 @clean_outputs
@@ -490,7 +490,7 @@ def statuses(ctx, job, page):
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job sequence.")
+@click.option('--job', '-j', type=int, help="The job id.")
 @click.option('--gpu', '-g', is_flag=True, help="List experiment GPU resources.")
 @click.pass_context
 @clean_outputs
@@ -562,7 +562,7 @@ def resources(ctx, job, gpu):
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job sequence.")
+@click.option('--job', '-j', type=int, help="The job id.")
 @click.option('--past', is_flag=True, help="Show the past logs.")
 @click.option('--follow', is_flag=True, default=False, help="Stream logs after showing past logs.")
 @click.pass_context
