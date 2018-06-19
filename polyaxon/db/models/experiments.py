@@ -87,7 +87,6 @@ class Experiment(DiffModel,
         max_length=16,
         blank=True,
         null=True,
-        default=CloningStrategy.RESTART,
         choices=CloningStrategy.CHOICES)
     status = models.OneToOneField(
         'db.ExperimentStatus',
