@@ -74,14 +74,14 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
             description=description,
             config=specification.parsed_data)
         try:
-            PolyaxonClients().project.create_experiment(project.user,
-                                                        project.name,
-                                                        experiment)
+            response = PolyaxonClients().project.create_experiment(project.user,
+                                                                   project.name,
+                                                                   experiment)
+            Printer.print_success('Experiment `{}` was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create experiment.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
-        Printer.print_success('Experiment was created')
 
     def run_group():
         click.echo('Creating an experiment group with the following definition:')
@@ -91,10 +91,10 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
             description=description,
             content=specification._data)  # pylint:disable=protected-access
         try:
-            project_client.create_experiment_group(project.user,
-                                                   project.name,
-                                                   experiment_group)
-            Printer.print_success('Experiment group was created')
+            response = project_client.create_experiment_group(project.user,
+                                                              project.name,
+                                                              experiment_group)
+            Printer.print_success('Experiment group {} was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create experiment group.')
             Printer.print_error('Error message `{}`.'.format(e))
@@ -106,10 +106,10 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
             description=description,
             config=specification.parsed_data)
         try:
-            project_client.create_job(project.user,
-                                      project.name,
-                                      job)
-            Printer.print_success('Job was created')
+            response = project_client.create_job(project.user,
+                                                 project.name,
+                                                 job)
+            Printer.print_success('Job {} was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create job.')
             Printer.print_error('Error message `{}`.'.format(e))
@@ -121,10 +121,10 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
             description=description,
             config=specification.parsed_data)
         try:
-            project_client.create_build(project.user,
-                                        project.name,
-                                        job)
-            Printer.print_success('Build was created')
+            response = project_client.create_build(project.user,
+                                                   project.name,
+                                                   job)
+            Printer.print_success('Build {} was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create build.')
             Printer.print_error('Error message `{}`.'.format(e))
