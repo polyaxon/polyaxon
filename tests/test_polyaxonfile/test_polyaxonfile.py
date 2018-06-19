@@ -461,7 +461,7 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
-        self.assertCountEqual(spec.tags, ['foo', 'bar'])
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert spec.is_experiment
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
@@ -504,7 +504,7 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
-        self.assertCountEqual(spec.tags, ['foo', 'bar'])
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.hptuning.matrix['model'], MatrixConfig)
         assert spec.hptuning.matrix['learning_rate'].to_dict() == {
             'normal': {'loc': 0, 'scale': 0.9}}
@@ -1194,7 +1194,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_notebook
         assert spec.is_notebook is True
         assert spec.logging is None
-        self.assertCountEqual(spec.tags, ['foo', 'bar'])
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_notebook_jobs'}
@@ -1208,7 +1208,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_tensorboard
         assert spec.is_tensorboard is True
         assert spec.logging is None
-        self.assertCountEqual(spec.tags, ['foo', 'bar'])
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_tensorboard_jobs'}
@@ -1220,7 +1220,7 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_job
-        self.assertCountEqual(spec.tags, ['foo', 'bar'])
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert spec.logging is None
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
@@ -1235,7 +1235,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.version == 1
         assert spec.is_build is True
         assert spec.logging is None
-        self.assertCountEqual(spec.tags, ['foo', 'bar'])
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_build_jobs'}
