@@ -292,15 +292,15 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
         if copy:
             response = PolyaxonClients().experiment.copy(
                 user, project_name, _experiment, config=config, update_code=update_code)
+            Printer.print_success('Experiment was copied with id {}'.format(response.id))
         else:
             response = PolyaxonClients().experiment.restart(
                 user, project_name, _experiment, config=config, update_code=update_code)
+            Printer.print_success('Experiment was restarted with id {}'.format(response.id))
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not restart experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
-
-    get_experiment_details(response)
 
 
 @experiment.command()
@@ -337,13 +337,11 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     try:
         response = PolyaxonClients().experiment.resume(
             user, project_name, _experiment, config=config, update_code=update_code)
+        Printer.print_success('Experiment was resumed with id {}'.format(response.id))
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not resume experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
-
-    get_experiment_details(response)
-
 
 @experiment.command()
 @click.option('--page', type=int, help="To paginate through the list of jobs.")
