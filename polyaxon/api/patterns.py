@@ -60,6 +60,10 @@ urlpatterns = [
     re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
     re_path(r'^{}/'.format(API_V1), include((api_patterns, 'v1'), namespace='v1')),
     re_path(r'^$', IndexView.as_view(), name='index'),
-    re_path(r'^^50x.html$', Handler50xView.as_view(), name='50x'),
+    re_path(r'^50x.html$', Handler50xView.as_view(), name='50x'),
     re_path(r'^app.*/?', login_required(ReactIndexView.as_view()), name='react-index'),
 ]
+
+handler404 = Handler404View.as_view()
+handler403 = Handler403View.as_view()
+handler500 = Handler50xView.as_view()
