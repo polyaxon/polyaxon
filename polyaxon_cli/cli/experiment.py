@@ -235,7 +235,7 @@ def update(ctx, name, description, tags):
     ```
     """
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                 ctx.obj['experiment'])
+                                                                      ctx.obj['experiment'])
     update_dict = {}
 
     if name:
