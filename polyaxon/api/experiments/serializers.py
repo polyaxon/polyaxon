@@ -13,7 +13,6 @@ class ExperimentJobStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExperimentJobStatus
-        exclude = ('id',)
 
     def get_job(self, obj):
         return obj.job.uuid.hex
@@ -30,7 +29,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentJob
         fields = (
-            'id', 'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
+            'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
             'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
             'started_at', 'finished_at', 'resources',)
 
@@ -52,7 +51,6 @@ class ExperimentStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExperimentStatus
-        exclude = ('id',)
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex
@@ -64,7 +62,6 @@ class ExperimentMetricSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExperimentMetric
-        exclude = ('id',)
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex
@@ -85,7 +82,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'id', 'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
+            'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
             'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
             'is_clone', 'project', 'project_name', 'experiment_group',
             'experiment_group_name', 'num_jobs',)

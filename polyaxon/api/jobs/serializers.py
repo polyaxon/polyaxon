@@ -11,7 +11,6 @@ class JobStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JobStatus
-        exclude = ('id',)
 
     def get_job(self, obj):
         return obj.job.uuid.hex
@@ -28,7 +27,7 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = (
-            'id', 'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
+            'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
             'last_status', 'started_at', 'finished_at', 'is_running', 'is_done',
             'is_clone', 'project', 'project_name',)
 

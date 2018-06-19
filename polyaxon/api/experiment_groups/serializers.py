@@ -18,7 +18,7 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentGroup
         fields = (
-            'id', 'uuid', 'unique_name', 'user', 'description',
+            'uuid', 'unique_name', 'user', 'description',
             'last_status', 'is_running', 'is_done', 'project', 'project_name',
             'created_at', 'updated_at', 'concurrency', 'search_algorithm',
             'num_experiments', 'num_pending_experiments', 'num_running_experiments',)
