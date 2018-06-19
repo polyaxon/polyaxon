@@ -284,8 +284,6 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
-        import pdb; pdb.set_trace()
-
         assert resp.status_code == status.HTTP_201_CREATED
         assert mock_fct.call_count == 1
         assert self.queryset.count() == self.num_objects + 1

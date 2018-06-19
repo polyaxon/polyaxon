@@ -1,4 +1,4 @@
 -r requirements-base.txt
 
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@cb74e72a055149507b8cb0a5e2470e5bee4ffcc1#egg=polyaxon-k8s==0.1.0
--e git+https://github.com/polyaxon/polyaxon-schemas.git@b69cfec585762c6f4dda0eaa4f37ef2e66c52e0e#egg=polyaxon-schemas==0.1.0
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@97e34bb5d51cd80831fa00883934b688ab0eead4#egg=polyaxon-schemas==0.1.0
