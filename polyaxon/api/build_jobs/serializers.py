@@ -1,5 +1,4 @@
 from rest_framework import fields, serializers
-from rest_framework.exceptions import ValidationError
 
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from libs.spec_validation import validate_build_spec_config
