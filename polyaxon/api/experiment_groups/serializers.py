@@ -20,6 +20,7 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'uuid',
+            'name',
             'unique_name',
             'user',
             'description',

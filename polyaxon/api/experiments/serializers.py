@@ -98,6 +98,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'uuid',
+            'name',
             'unique_name',
             'user',
             'description',
@@ -170,6 +171,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = (
             'user',
+            'name',
             'description',
             'original_experiment',
             'config',

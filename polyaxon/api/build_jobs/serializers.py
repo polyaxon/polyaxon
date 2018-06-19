@@ -30,6 +30,7 @@ class BuildJobSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'uuid',
+            'name',
             'unique_name',
             'user',
             'description',
@@ -70,7 +71,7 @@ class BuildJobCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BuildJob
-        fields = ('user', 'description', 'config', 'tags')
+        fields = ('user', 'name', 'description', 'config', 'tags')
 
     def get_user(self, obj):
         return obj.user.username

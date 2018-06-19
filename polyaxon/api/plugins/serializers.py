@@ -12,6 +12,7 @@ class PluginJobBaseSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'user',
+            'name',
             'config',
             'tags',
         )
