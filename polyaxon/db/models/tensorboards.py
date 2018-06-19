@@ -68,7 +68,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
                 experiment_group_name=self.experiment_group.unique_name)
 
         from libs.paths.projects import get_project_outputs_path
-        get_project_outputs_path(project_name=self.project.unique_name)
+        return get_project_outputs_path(project_name=self.project.unique_name)
 
 
 class TensorboardJobStatus(AbstractJobStatus):
