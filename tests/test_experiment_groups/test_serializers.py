@@ -17,10 +17,26 @@ class TestExperimentGroupSerializer(BaseTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     expected_keys = {
-        'id', 'uuid', 'unique_name', 'description', 'project', 'project_name',
-        'user', 'created_at', 'updated_at', 'concurrency', 'num_experiments',
-        'last_status', 'is_running', 'is_done',
-        'search_algorithm', 'num_pending_experiments', 'num_running_experiments', }
+        'id',
+        'uuid',
+        'unique_name',
+        'description',
+        'project',
+        'project_name',
+        'user',
+        'created_at',
+        'updated_at',
+        'tags',
+        'concurrency',
+        'num_experiments',
+        'last_status',
+        'has_tensorboard',
+        'is_running',
+        'is_done',
+        'search_algorithm',
+        'num_pending_experiments',
+        'num_running_experiments',
+    }
 
     def setUp(self):
         super().setUp()
@@ -59,12 +75,35 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     expected_keys = {
-        'id', 'uuid', 'unique_name', 'description', 'content',
-        'hptuning', 'project', 'project_name', 'user',
-        'created_at', 'updated_at', 'started_at', 'finished_at', 'is_running', 'is_done',
-        'concurrency', 'num_experiments', 'last_status', 'current_iteration', 'search_algorithm',
-        'num_pending_experiments', 'num_running_experiments', 'num_scheduled_experiments',
-        'num_succeeded_experiments', 'num_failed_experiments', 'num_stopped_experiments'}
+        'id',
+        'uuid',
+        'unique_name',
+        'description',
+        'content',
+        'tags',
+        'hptuning',
+        'project',
+        'project_name',
+        'user',
+        'created_at',
+        'updated_at',
+        'started_at',
+        'finished_at',
+        'has_tensorboard',
+        'is_running',
+        'is_done',
+        'concurrency',
+        'num_experiments',
+        'last_status',
+        'current_iteration',
+        'search_algorithm',
+        'num_pending_experiments',
+        'num_running_experiments',
+        'num_scheduled_experiments',
+        'num_succeeded_experiments',
+        'num_failed_experiments',
+        'num_stopped_experiments',
+    }
     DISABLE_RUNNER = True
 
     def setUp(self):

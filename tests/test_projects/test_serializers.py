@@ -8,13 +8,27 @@ from tests.utils import BaseTest
 
 @pytest.mark.projects_mark
 class TestProjectSerializer(BaseTest):
+    DISABLE_RUNNER = True
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {
-        'uuid', 'name', 'unique_name', 'description', 'user', 'description', 'created_at',
-        'updated_at', 'is_public', 'has_code', 'has_tensorboard', 'has_notebook',
-        'num_experiment_groups', 'num_experiments'}
+        'id',
+        'uuid',
+        'name',
+        'unique_name',
+        'description',
+        'user',
+        'description',
+        'created_at',
+        'updated_at',
+        'is_public',
+        'has_code',
+        'tags',
+        'has_tensorboard',
+        'has_notebook',
+        'num_experiment_groups',
+        'num_experiments'}
 
     def setUp(self):
         super().setUp()
@@ -44,13 +58,27 @@ class TestProjectSerializer(BaseTest):
 
 @pytest.mark.projects_mark
 class TestProjectDetailSerializer(BaseTest):
+    DISABLE_RUNNER = True
     serializer_class = ProjectDetailSerializer
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {
-        'uuid', 'unique_name', 'name', 'description', 'user', 'description', 'created_at',
-        'updated_at', 'is_public', 'has_code', 'has_tensorboard', 'has_notebook',
-        'num_experiment_groups', 'num_experiments', 'num_independent_experiments'}
+        'id',
+        'uuid',
+        'unique_name',
+        'name',
+        'description',
+        'user',
+        'created_at',
+        'updated_at',
+        'is_public',
+        'tags',
+        'has_code',
+        'has_tensorboard',
+        'has_notebook',
+        'num_experiment_groups',
+        'num_experiments',
+        'num_independent_experiments'}
 
     def setUp(self):
         super().setUp()

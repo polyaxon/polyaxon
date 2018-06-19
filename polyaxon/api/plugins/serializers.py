@@ -9,7 +9,12 @@ class PluginJobBaseSerializer(serializers.ModelSerializer):
     user = fields.SerializerMethodField()
 
     class Meta:
-        fields = ('user', 'config',)
+        fields = (
+            'id',
+            'user',
+            'config',
+            'tags',
+        )
 
     def get_user(self, obj):
         return obj.user.username

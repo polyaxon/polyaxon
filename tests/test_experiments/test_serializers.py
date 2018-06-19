@@ -27,10 +27,27 @@ class TestExperimentSerializer(BaseTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     expected_keys = {
-        'id', 'uuid', 'user', 'unique_name', 'description', 'created_at', 'updated_at',
-        'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
-        'is_clone', 'project', 'project_name', 'experiment_group',
-        'experiment_group_name', 'num_jobs', }
+        'id',
+        'uuid',
+        'user',
+        'unique_name',
+        'description',
+        'created_at',
+        'updated_at',
+        'last_status',
+        'last_metric',
+        'started_at',
+        'finished_at',
+        'tags',
+        'is_running',
+        'is_done',
+        'is_clone',
+        'has_tensorboard',
+        'project',
+        'project_name',
+        'experiment_group',
+        'experiment_group_name',
+        'num_jobs', }
 
     def setUp(self):
         super().setUp()
@@ -127,9 +144,11 @@ class TestExperimentDetailSerializer(BaseTest):
         'config',
         'started_at',
         'finished_at',
+        'tags',
         'is_running',
         'is_done',
         'is_clone',
+        'has_tensorboard',
         'original',
         'num_jobs',
         'declarations',
@@ -219,9 +238,21 @@ class TestExperimentJobSerializer(BaseTest):
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
     expected_keys = {
-        'id', 'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
-        'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
-        'started_at', 'finished_at', 'resources', }
+        'id',
+        'uuid',
+        'unique_name',
+        'role',
+        'experiment',
+        'experiment_name',
+        'last_status',
+        'is_running',
+        'is_done',
+        'created_at',
+        'updated_at',
+        'started_at',
+        'finished_at',
+        'resources',
+    }
 
     def setUp(self):
         super().setUp()
@@ -256,9 +287,22 @@ class TestExperimentJobDetailsSerializer(BaseTest):
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
     expected_keys = {
-        'id', 'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
-        'definition', 'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
-        'started_at', 'finished_at', 'resources', }
+        'id',
+        'uuid',
+        'unique_name',
+        'role',
+        'experiment',
+        'experiment_name',
+        'definition',
+        'last_status',
+        'is_running',
+        'is_done',
+        'created_at',
+        'updated_at',
+        'started_at',
+        'finished_at',
+        'resources',
+    }
 
     def setUp(self):
         super().setUp()

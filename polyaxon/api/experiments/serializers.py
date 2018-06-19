@@ -13,6 +13,7 @@ class ExperimentJobStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExperimentJobStatus
+        exclude = ('id',)
 
     def get_job(self, obj):
         return obj.job.uuid.hex
@@ -29,9 +30,20 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentJob
         fields = (
-            'uuid', 'unique_name', 'role', 'experiment', 'experiment_name',
-            'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
-            'started_at', 'finished_at', 'resources',)
+            'id',
+            'uuid',
+            'unique_name',
+            'role',
+            'experiment',
+            'experiment_name',
+            'last_status',
+            'is_running',
+            'is_done',
+            'created_at',
+            'updated_at',
+            'started_at',
+            'finished_at',
+            'resources',)
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex
@@ -51,6 +63,7 @@ class ExperimentStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExperimentStatus
+        exclude = ('id',)
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex
@@ -62,6 +75,7 @@ class ExperimentMetricSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExperimentMetric
+        exclude = ('id',)
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex
@@ -82,10 +96,28 @@ class ExperimentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
-            'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
-            'is_clone', 'project', 'project_name', 'experiment_group', 'has_tensorboard',
-            'experiment_group_name', 'num_jobs',)
+            'id',
+            'uuid',
+            'unique_name',
+            'user',
+            'description',
+            'created_at',
+            'updated_at',
+            'last_status',
+            'last_metric',
+            'started_at',
+            'finished_at',
+            'is_running',
+            'is_done',
+            'is_clone',
+            'project',
+            'project_name',
+            'experiment_group',
+            'tags',
+            'has_tensorboard',
+            'experiment_group_name',
+            'num_jobs',
+        )
 
     def get_user(self, obj):
         return obj.user.username
@@ -115,8 +147,12 @@ class ExperimentDetailSerializer(ExperimentSerializer):
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
-            'original', 'original_experiment',
-            'description', 'config', 'declarations', 'resources',
+            'original',
+            'original_experiment',
+            'description',
+            'config',
+            'declarations',
+            'resources',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
 
@@ -133,7 +169,13 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'user', 'description', 'original_experiment', 'config', 'declarations')
+            'user',
+            'description',
+            'original_experiment',
+            'config',
+            'declarations',
+            'tags',
+        )
 
     def get_user(self, obj):
         return obj.user.username

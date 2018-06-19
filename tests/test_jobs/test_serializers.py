@@ -16,9 +16,23 @@ class TestJobSerializer(BaseTest):
     model_class = Job
     factory_class = JobFactory
     expected_keys = {
-        'id', 'uuid', 'user', 'unique_name', 'description', 'created_at', 'updated_at',
-        'last_status', 'started_at', 'finished_at', 'is_running', 'is_done',
-        'is_clone', 'project', 'project_name', }
+        'id',
+        'uuid',
+        'user',
+        'unique_name',
+        'description',
+        'created_at',
+        'updated_at',
+        'last_status',
+        'started_at',
+        'finished_at',
+        'is_running',
+        'is_done',
+        'tags',
+        'is_clone',
+        'project',
+        'project_name',
+    }
 
     def setUp(self):
         super().setUp()
@@ -104,6 +118,7 @@ class TestJobDetailSerializer(BaseTest):
         'last_status',
         'description',
         'config',
+        'tags',
         'started_at',
         'finished_at',
         'is_running',

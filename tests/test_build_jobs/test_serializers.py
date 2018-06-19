@@ -20,9 +20,22 @@ class TestBuildJobSerializer(BaseTest):
     model_class = BuildJob
     factory_class = BuildJobFactory
     expected_keys = {
-        'uuid', 'user', 'unique_name', 'id', 'description', 'created_at', 'updated_at',
-        'last_status', 'started_at', 'finished_at', 'is_running', 'is_done',
-        'project', 'project_name', }
+        'id',
+        'uuid',
+        'user',
+        'unique_name',
+        'description',
+        'created_at',
+        'updated_at',
+        'last_status',
+        'started_at',
+        'finished_at',
+        'is_running',
+        'is_done',
+        'tags',
+        'project',
+        'project_name',
+    }
 
     def setUp(self):
         super().setUp()
@@ -93,6 +106,7 @@ class TestBuildJobDetailSerializer(BaseTest):
         'last_status',
         'description',
         'config',
+        'tags',
         'started_at',
         'finished_at',
         'is_running',

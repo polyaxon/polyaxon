@@ -18,10 +18,25 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentGroup
         fields = (
-            'uuid', 'unique_name', 'user', 'description',
-            'last_status', 'is_running', 'is_done', 'project', 'project_name',
-            'created_at', 'updated_at', 'concurrency', 'search_algorithm', 'has_tensorboard',
-            'num_experiments', 'num_pending_experiments', 'num_running_experiments',)
+            'id',
+            'uuid',
+            'unique_name',
+            'user',
+            'description',
+            'last_status',
+            'is_running',
+            'is_done',
+            'project',
+            'project_name',
+            'created_at',
+            'updated_at',
+            'concurrency',
+            'tags',
+            'search_algorithm',
+            'has_tensorboard',
+            'num_experiments',
+            'num_pending_experiments',
+            'num_running_experiments',)
 
     def get_project(self, obj):
         return obj.project.uuid.hex
@@ -50,9 +65,15 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
-            'current_iteration', 'content', 'hptuning', 'started_at', 'finished_at',
-            'num_scheduled_experiments', 'num_succeeded_experiments',
-            'num_failed_experiments', 'num_stopped_experiments')
+            'current_iteration',
+            'content',
+            'hptuning',
+            'started_at',
+            'finished_at',
+            'num_scheduled_experiments',
+            'num_succeeded_experiments',
+            'num_failed_experiments',
+            'num_stopped_experiments')
 
     def get_num_scheduled_experiments(self, obj):
         return obj.scheduled_experiments.count()

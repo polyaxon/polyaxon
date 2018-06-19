@@ -11,6 +11,7 @@ class BuildJobStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BuildJobStatus
+        exclude = ('id',)
 
     def get_job(self, obj):
         return obj.job.uuid.hex
@@ -27,9 +28,22 @@ class BuildJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = BuildJob
         fields = (
-            'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
-            'last_status', 'started_at', 'finished_at', 'is_running', 'is_done',
-            'project', 'project_name',)
+            'id',
+            'uuid',
+            'unique_name',
+            'user',
+            'description',
+            'created_at',
+            'updated_at',
+            'last_status',
+            'started_at',
+            'finished_at',
+            'is_running',
+            'is_done',
+            'tags',
+            'project',
+            'project_name',
+        )
 
     def get_user(self, obj):
         return obj.user.username
@@ -56,7 +70,7 @@ class BuildJobCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BuildJob
-        fields = ('user', 'description', 'config',)
+        fields = ('user', 'description', 'config', 'tags')
 
     def get_user(self, obj):
         return obj.user.username

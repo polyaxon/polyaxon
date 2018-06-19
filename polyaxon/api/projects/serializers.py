@@ -12,9 +12,22 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = (
-            'uuid', 'user', 'name', 'unique_name', 'description', 'created_at', 'updated_at',
-            'is_public', 'has_code', 'has_tensorboard', 'has_notebook',
-            'num_experiment_groups', 'num_experiments')
+            'id',
+            'uuid',
+            'user',
+            'name',
+            'unique_name',
+            'description',
+            'tags',
+            'created_at',
+            'updated_at',
+            'is_public',
+            'has_code',
+            'has_tensorboard',
+            'has_notebook',
+            'num_experiment_groups',
+            'num_experiments',
+        )
 
     def get_user(self, obj):
         return obj.user.username
