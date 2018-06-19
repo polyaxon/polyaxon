@@ -7,8 +7,6 @@ import click
 import clint
 
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
-from polyaxon_cli.cli.experiment import get_experiment_or_local
-from polyaxon_cli.cli.experiment_group import get_group_or_local
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils.clients import PolyaxonClients
