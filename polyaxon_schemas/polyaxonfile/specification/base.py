@@ -216,4 +216,3 @@ class BaseSpecification(object):
     def tags(self):
         tags = self.headers.get(self.TAGS, None)
         return list(set(tags)) if tags else None
-
