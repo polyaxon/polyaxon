@@ -84,7 +84,7 @@ class Printer(object):
         if obj_dict.get('is_running'):
             obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color='yellow')
         elif obj_dict.get('is_done'):
-            color = 'green' if obj_dict['last_status'] == 'Succeeded' else 'red'
+            color = 'green' if obj_dict['last_status'] == 'succeeded' else 'red'
             obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color=color)
         elif obj_dict.get('last_status'):
             obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color='cyan')
@@ -102,11 +102,11 @@ class Printer(object):
 
     @classmethod
     def handle_statuses(cls, obj_dict):
-        if obj_dict.get('status') == 'Created':
+        if obj_dict.get('status') == 'created':
             obj_dict['status'] = cls.add_color(obj_dict['status'], color='cyan')
-        elif obj_dict.get('status') == 'Succeeded':
+        elif obj_dict.get('status') == 'succeeded':
             obj_dict['status'] = cls.add_color(obj_dict['status'], color='green')
-        elif obj_dict.get('status') in ['Failed', 'Stopped']:
+        elif obj_dict.get('status') in ['failed', 'stopped']:
             obj_dict['status'] = cls.add_color(obj_dict['status'], color='red')
         obj_dict['status'] = cls.add_color(obj_dict['status'], color='yellow')
         return obj_dict
