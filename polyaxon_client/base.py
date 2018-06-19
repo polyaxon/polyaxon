@@ -202,21 +202,20 @@ class PolyaxonClient(object):
 
         return response
 
-    def download(self, url, filename, relative=False, headers=None, timeout=TIME_OUT):
+    def download(self, url, filename, headers=None, timeout=TIME_OUT):
         """
         Download the file from the given url at the current path
         """
-        request_url = self.base_url + url if relative else url
-        logger.debug("Downloading file from url: %s", request_url)
+        logger.debug("Downloading files from url: %s", url)
 
         request_headers = self._get_headers(headers=headers)
 
         try:
-            response = requests.get(request_url,
+            response = requests.get(url,
                                     headers=request_headers,
                                     timeout=timeout,
                                     stream=True)
-            self.check_response_status(response, request_url)
+            self.check_response_status(response, url)
             with open(filename, 'wb') as f:
                 # chunk mode response doesn't have content-length so we are
                 # using a custom header here
@@ -243,7 +242,7 @@ class PolyaxonClient(object):
                 "Cannot connect to the Polyaxon server on `{}`.\n"
                 "Check your host and ports configuration and your internet connection.".format(url))
 
-    def download_tar(self, url, untar=True, delete_after_untar=False):
+    def download_tar(self, url, untar=True, delete_tar=False):
         """
         Download and optionally untar the tar file from the given url
         """
@@ -255,7 +254,7 @@ class PolyaxonClient(object):
                 tar = tarfile.open(filename)
                 tar.extractall()
                 tar.close()
-            if delete_after_untar:
+            if delete_tar:
                 logger.info("Cleaning up the tar file ...")
                 os.remove(filename)
             return filename
