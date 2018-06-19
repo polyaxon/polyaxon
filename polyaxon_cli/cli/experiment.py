@@ -593,7 +593,7 @@ def logs(ctx, job, past, follow):
         def message_handler(message):
             status = message['status']
             log_lines = to_list(message['log_lines'])
-            if status == 'Running':
+            if status == 'running':
                 job_info = '{}.{}'.format(message['task_type'], int(message['task_idx']) + 1)
                 if job_info in job_to_color:
                     color = job_to_color[job_info]
@@ -605,7 +605,7 @@ def logs(ctx, job, past, follow):
                 for log_line in log_lines:
                     log_line = '{} -- {}'.format(Printer.add_color(job_info, color), log_line)
                     Printer.log(log_line, nl=True)
-            elif status == 'Building':
+            elif status == 'building':
                 sign['current'] = (sign['values'][0]
                                    if sign['current'] == sign['values'][1]
                                    else sign['values'][1])
