@@ -20,9 +20,13 @@ from polyaxon_cli.utils.formatting import (
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
-def get_group_or_local(project=None, group=None):  # pylint:disable=redefined-outer-name
+def get_group_or_local(_group):
+    return _group or GroupManager.get_config_or_raise().sequence
+
+
+def get_project_group_or_local(project=None, group=None):  # pylint:disable=redefined-outer-name
     user, project_name = get_project_or_local(project)
-    group = group or GroupManager.get_config_or_raise().sequence
+    group = get_group_or_local(group)
     return user, project_name, group
 
 
@@ -66,7 +70,7 @@ def get(ctx):
     $ polyaxon group -g 13 get
     ```
     """
-    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
     try:
         response = PolyaxonClients().experiment_group.get_experiment_group(
             user, project_name, _group)
@@ -89,7 +93,7 @@ def delete(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
 
     if not click.confirm("Are sure you want to delete experiment group `{}`".format(_group)):
         click.echo('Existing without deleting experiment group.')
@@ -125,7 +129,7 @@ def update(ctx, description):
     $ polyaxon group -g 2 update --description="new description for my experiments"
     ```
     """
-    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
     update_dict = {}
 
     if description:
@@ -160,7 +164,7 @@ def experiments(ctx, metrics, query, sort, page):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
     page = page or 1
     try:
         response = PolyaxonClients().experiment_group.list_experiments(username=user,
@@ -228,7 +232,7 @@ def stop(ctx, yes, pending):
     $ polyaxon group -g 2 stop
     ```
     """
-    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
 
     if not yes and not click.confirm("Are sure you want to stop experiments "
                                      "in group `{}`".format(_group)):
