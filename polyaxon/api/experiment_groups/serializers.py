@@ -96,19 +96,3 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
         if self.initial_data.get('check_specification') and not attrs.get('content'):
             raise ValidationError('Experiment group expects `content`.')
         return attrs
-
-    def create(self, validated_data):
-        """Check the hptuning or set the value from the specification."""
-        config = None
-        if validated_data.get('content'):
-            config = validate_group_spec_content(validated_data['content'])
-        if not validated_data.get('hptuning') and config:
-            if config.hptuning:
-                hptuning = config.hptuning.to_dict()
-                if config.search_algorithm == SearchAlgorithms.GRID:
-                    hptuning['grid_search'] = hptuning.get('grid_search', {})
-                validated_data['hptuning'] = hptuning
-
-        if not validated_data.get('tags') and config:
-            validated_data['tags'] = config.tags
-        return super().create(validated_data=validated_data)

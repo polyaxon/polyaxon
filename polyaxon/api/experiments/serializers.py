@@ -208,14 +208,3 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
         if self.initial_data.get('check_specification') and not attrs.get('config'):
             raise ValidationError('Experiment expects a `config`.')
         return attrs
-
-    def create(self, validated_data):
-        """Check the params or set the value from the specification."""
-        config = None
-        if validated_data.get('config'):
-            config = validate_experiment_spec_config(validated_data['config'])
-        if not validated_data.get('declarations') and config:
-            validated_data['declarations'] = config.declarations
-        if not validated_data.get('tags') and config:
-            validated_data['tags'] = config.tags
-        return super().create(validated_data=validated_data)
