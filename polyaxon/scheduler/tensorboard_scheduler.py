@@ -26,6 +26,7 @@ def start_tensorboard(tensorboard):
 
     try:
         results = spawner.start_tensorboard(image=tensorboard.image,
+                                            outputs_path=tensorboard.outputs_path,
                                             resources=tensorboard.resources,
                                             node_selectors=tensorboard.node_selectors)
     except ApiException as e:

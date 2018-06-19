@@ -3,7 +3,6 @@ import random
 
 from django.conf import settings
 
-from libs.paths.projects import get_project_outputs_path
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
@@ -29,11 +28,10 @@ class TensorboardSpawner(ProjectJobSpawner):
             port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
         return port
 
-    def start_tensorboard(self, image, resources=None, node_selectors=None):
+    def start_tensorboard(self, image, outputs_path, resources=None, node_selectors=None):
         ports = [self.request_tensorboard_port()]
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes()
-        outputs_path = get_project_outputs_path(project_name=self.project_name)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=settings.APP_LABELS_TENSORBOARD,

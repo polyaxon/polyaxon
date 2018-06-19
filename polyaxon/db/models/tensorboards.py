@@ -54,6 +54,22 @@ class TensorboardJob(PluginJobBase, JobMixin):
                                 message=message,
                                 details=details)
 
+    @cached_property
+    def outputs_path(self):
+        if self.experiment:
+            from libs.paths.experiments import get_experiment_outputs_path
+            return get_experiment_outputs_path(
+                experiment_name=self.experiment.unique_name,
+                original_name=self.experiment.original_unique_name,
+                cloning_strategy=self.experiment.cloning_strategy)
+        if self.experiment_group:
+            from libs.paths.experiment_groups import get_experiment_group_outputs_path
+            return get_experiment_group_outputs_path(
+                experiment_group_name=self.experiment_group.unique_name)
+
+        from libs.paths.projects import get_project_outputs_path
+        get_project_outputs_path(project_name=self.project.unique_name)
+
 
 class TensorboardJobStatus(AbstractJobStatus):
     """A model that represents tensorboard job status at certain time."""
