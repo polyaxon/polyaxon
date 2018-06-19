@@ -52,6 +52,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('started_at')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
+        config_to_dict.pop('name')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict()
@@ -111,6 +112,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('last_metric')
         config_to_dict.pop('resources')
         config_to_dict.pop('user')
+        config_to_dict.pop('name')
         assert config_to_dict == config_dict
 
         config_dict.pop('tags')

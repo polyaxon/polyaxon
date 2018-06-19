@@ -110,6 +110,7 @@ class TestProjectConfigs(TestCase):
         config_to_dict.pop('num_succeeded_experiments', None)
         config_to_dict.pop('unique_name', None)
         config_to_dict.pop('user', None)
+        config_to_dict.pop('name', None)
         assert config_to_dict == config_dict
 
         config_dict.pop('content')

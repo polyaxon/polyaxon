@@ -11,6 +11,7 @@ from polyaxon_schemas.utils import UUID
 class ExperimentGroupSchema(Schema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
+    name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = UUID(allow_none=True)
@@ -60,6 +61,7 @@ class ExperimentGroupConfig(BaseConfig):
                  unique_name=None,
                  id=None,  # pylint:disable=redefined-builtin
                  user=None,
+                 name=None,
                  description=None,
                  content=None,
                  uuid=None,
@@ -84,6 +86,7 @@ class ExperimentGroupConfig(BaseConfig):
         self.unique_name = unique_name
         self.id = id
         self.user = user
+        self.name = name
         self.description = description
         self.content = content
         self.uuid = uuid
