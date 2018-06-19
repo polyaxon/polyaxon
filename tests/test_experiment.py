@@ -46,7 +46,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('jobs')
         config_to_dict.pop('last_metric')
         config_to_dict.pop('resources')
-        config_to_dict.pop('sequence')
+        config_to_dict.pop('id')
         config_to_dict.pop('started_at')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
@@ -63,7 +63,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('finished_at')
         config_to_dict.pop('is_done')
         config_to_dict.pop('is_running')
-        config_to_dict.pop('sequence')
+        config_to_dict.pop('id')
         config_to_dict.pop('started_at')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
@@ -74,7 +74,7 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict.pop('started_at') is None
 
     def test_experiment_with_jobs_config(self):
-        config_dict = {'sequence': 2,
+        config_dict = {'id': 2,
                        'config': {},
                        'unique_name': 'adam.proj.1',
                        'uuid': uuid.uuid4().hex,
@@ -123,7 +123,7 @@ class TestExperimentConfigs(TestCase):
                        'finished_at': local_now().isoformat(),
                        'definition': {},
                        'role': 'master',
-                       'sequence': 1,
+                       'id': 1,
                        'unique_name': 'project.1.1.master'}
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()

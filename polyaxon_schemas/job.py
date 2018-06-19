@@ -9,7 +9,7 @@ from polyaxon_schemas.utils import UUID, humanize_timedelta
 
 
 class JobSchema(Schema):
-    sequence = fields.Int(allow_none=True)
+    id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
@@ -45,13 +45,13 @@ class JobConfig(BaseConfig):
     SCHEMA = JobSchema
     IDENTIFIER = 'Job'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'sequence', 'unique_name', 'user', 'experiment_group_name', 'last_status',
+        'id', 'unique_name', 'user', 'experiment_group_name', 'last_status',
         'created_at', 'started_at', 'finished_at', 'total_run', 'is_done', 'is_running'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
-                 sequence=None,
+                 id=None,
                  user=None,
                  uuid=None,
                  unique_name=None,
@@ -74,7 +74,7 @@ class JobConfig(BaseConfig):
                  resources=None,
                  jobs=None,
                  total_run=None):
-        self.sequence = sequence
+        self.id = id
         self.user = user
         self.uuid = uuid
         self.unique_name = unique_name

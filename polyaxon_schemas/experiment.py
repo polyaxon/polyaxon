@@ -9,7 +9,7 @@ from polyaxon_schemas.utils import UUID, humanize_timedelta
 
 
 class ExperimentJobSchema(Schema):
-    sequence = fields.Int(allow_none=True)
+    id = fields.Int(allow_none=True)
     uuid = UUID()
     unique_name = fields.Str(allow_none=True)
     role = fields.Str(allow_none=True)
@@ -53,7 +53,7 @@ class ExperimentJobConfig(BaseConfig):
                  updated_at,
                  definition=None,
                  unique_name=None,
-                 sequence=None,
+                 id=None,
                  role=None,
                  last_status=None,
                  is_running=None,
@@ -64,7 +64,7 @@ class ExperimentJobConfig(BaseConfig):
                  total_run=None):
         self.uuid = uuid
         self.unique_name = unique_name
-        self.sequence = sequence
+        self.id = id
         self.role = role
         self.experiment = experiment
         self.experiment_name = experiment_name
@@ -83,7 +83,7 @@ class ExperimentJobConfig(BaseConfig):
 
 
 class ExperimentSchema(Schema):
-    sequence = fields.Int(allow_none=True)
+    id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
@@ -124,13 +124,13 @@ class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'sequence', 'unique_name', 'user', 'experiment_group_name', 'last_status',
+        'id', 'unique_name', 'user', 'experiment_group_name', 'last_status',
         'created_at', 'started_at', 'finished_at', 'total_run', 'num_jobs', 'is_done', 'is_running'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
-                 sequence=None,
+                 id=None,
                  user=None,
                  uuid=None,
                  unique_name=None,
@@ -154,7 +154,7 @@ class ExperimentConfig(BaseConfig):
                  resources=None,
                  jobs=None,
                  total_run=None):
-        self.sequence = sequence
+        self.id = id
         self.user = user
         self.uuid = uuid
         self.unique_name = unique_name

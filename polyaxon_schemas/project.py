@@ -9,7 +9,7 @@ from polyaxon_schemas.utils import UUID
 
 
 class ExperimentGroupSchema(Schema):
-    sequence = fields.Int(allow_none=True)
+    id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
@@ -48,7 +48,7 @@ class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'sequence', 'unique_name', 'user', 'concurrency', 'num_experiments',
+        'id', 'unique_name', 'user', 'concurrency', 'num_experiments',
         'num_pending_experiments', 'num_running_experiments', 'created_at',
         'is_done', 'is_running', 'last_status'
     ]
@@ -56,7 +56,7 @@ class ExperimentGroupConfig(BaseConfig):
 
     def __init__(self,
                  unique_name=None,
-                 sequence=None,
+                 id=None,
                  user=None,
                  description=None,
                  content=None,
@@ -78,7 +78,7 @@ class ExperimentGroupConfig(BaseConfig):
                  concurrency=None,
                  experiments=None):
         self.unique_name = unique_name
-        self.sequence = sequence
+        self.id = id
         self.user = user
         self.description = description
         self.content = content

@@ -79,7 +79,7 @@ class TestProjectConfigs(TestCase):
 
     def test_experiment_group_config(self):
         uuid_value = uuid.uuid4().hex
-        config_dict = {'sequence': 1,
+        config_dict = {'id': 1,
                        'content': 'some content',
                        'uuid': uuid_value,
                        'project': uuid_value,
@@ -113,7 +113,7 @@ class TestProjectConfigs(TestCase):
         config_dict.pop('uuid')
         config_dict.pop('project')
         config_dict.pop('updated_at')
-        config_dict.pop('sequence')
+        config_dict.pop('id')
         config_dict.pop('experiments')
         config_dict.pop('project_name')
         assert_equal_dict(config_dict, config.to_light_dict())
