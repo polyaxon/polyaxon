@@ -20,13 +20,16 @@ from polyaxon_schemas.project import ExperimentGroupConfig
 @click.command()
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to run.')
+@click.option('--name', type=str,
+              help='Name to give to this run, must be unique within the project, could be none.')
 @click.option('--description', type=str,
               help='The description to give to this run.')
+@click.option('--tags', type=str, help='Tags of this run, comma separated values.')
 @click.option('-u', is_flag=True, default=False,
               help='To upload the repo before running.')
 @click.pass_context
 @clean_outputs
-def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
+def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-builtin
     """Run polyaxonfile specification.
 
     Example:
@@ -71,7 +74,9 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
     def run_experiment():
         click.echo('Creating an independent experiment.')
         experiment = ExperimentConfig(
+            name=name,
             description=description,
+            tags=tags,
             config=specification.parsed_data)
         try:
             response = PolyaxonClients().project.create_experiment(project.user,
@@ -88,7 +93,9 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
         experiments_def = specification.experiments_def
         get_group_experiments_info(**experiments_def)
         experiment_group = ExperimentGroupConfig(
+            name=name,
             description=description,
+            tags=tags,
             content=specification._data)  # pylint:disable=protected-access
         try:
             response = project_client.create_experiment_group(project.user,
@@ -103,7 +110,9 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
     def run_job():
         click.echo('Creating a job.')
         job = JobConfig(
+            name=name,
             description=description,
+            tags=tags,
             config=specification.parsed_data)
         try:
             response = project_client.create_job(project.user,
@@ -118,7 +127,9 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
     def run_build():
         click.echo('Creating a build.')
         job = JobConfig(
+            name=name,
             description=description,
+            tags=tags,
             config=specification.parsed_data)
         try:
             response = project_client.create_build(project.user,
