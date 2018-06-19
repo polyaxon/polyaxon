@@ -30,6 +30,7 @@ class ExperimentGroupSchema(Schema):
     last_status = fields.Str(allow_none=True)
     is_running = fields.Bool(allow_none=True)
     is_done = fields.Bool(allow_none=True)
+    has_tensorboard = fields.Bool(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
     class Meta:
@@ -73,6 +74,7 @@ class ExperimentGroupConfig(BaseConfig):
                  last_status=None,
                  is_running=None,
                  is_done=None,
+                 has_tensorboard=False,
                  created_at=None,
                  updated_at=None,
                  concurrency=None,
@@ -96,6 +98,7 @@ class ExperimentGroupConfig(BaseConfig):
         self.updated_at = self.localize_date(updated_at)
         self.is_running = is_running
         self.is_done = is_done
+        self.has_tensorboard = has_tensorboard
         self.last_status = last_status
         self.concurrency = concurrency
         self.experiments = experiments

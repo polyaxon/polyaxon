@@ -90,6 +90,7 @@ class TestProjectConfigs(TestCase):
                        'last_status': None,
                        'is_done': False,
                        'is_running': True,
+                       'has_tensorboard': False,
                        'experiments': [
                            ExperimentConfig(config={},
                                             uuid=uuid_value,
@@ -116,6 +117,7 @@ class TestProjectConfigs(TestCase):
         config_dict.pop('id')
         config_dict.pop('experiments')
         config_dict.pop('project_name')
+        config_dict.pop('has_tensorboard')
         assert_equal_dict(config_dict, config.to_light_dict())
 
         config_to_dict = config.to_dict(humanize_values=True)

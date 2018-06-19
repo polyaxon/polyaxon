@@ -102,6 +102,7 @@ class ExperimentSchema(Schema):
     is_running = fields.Bool(allow_none=True)
     is_done = fields.Bool(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
+    has_tensorboard = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
     num_jobs = fields.Int(allow_none=True)
     declarations = fields.Dict(allow_none=True)
@@ -148,6 +149,7 @@ class ExperimentConfig(BaseConfig):
                  is_clone=None,
                  is_running=None,
                  is_done=None,
+                 has_tensorboard=False,
                  config=None,
                  num_jobs=0,
                  declarations=None,
@@ -172,6 +174,7 @@ class ExperimentConfig(BaseConfig):
         self.is_running = is_running
         self.is_done = is_done
         self.is_clone = is_clone
+        self.has_tensorboard = has_tensorboard
         self.config = config  # The json compiled content of this experiment
         self.num_jobs = num_jobs
         self.declarations = declarations

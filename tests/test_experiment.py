@@ -35,6 +35,7 @@ class TestExperimentConfigs(TestCase):
             'num_jobs': 1,
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat(),
+            'has_tensorboard': True,
         }
         config = ExperimentConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
@@ -65,6 +66,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('is_running')
         config_to_dict.pop('id')
         config_to_dict.pop('started_at')
+        config_dict.pop('has_tensorboard')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
         assert config_to_dict == config_dict
@@ -88,6 +90,7 @@ class TestExperimentConfigs(TestCase):
                        'updated_at': local_now().isoformat(),
                        'started_at': local_now().isoformat(),
                        'finished_at': local_now().isoformat(),
+                       'has_tensorboard': False,
                        'jobs': [ExperimentJobConfig(uuid=uuid.uuid4().hex,
                                                     experiment=uuid.uuid4().hex,
                                                     experiment_name='name.name.1',
