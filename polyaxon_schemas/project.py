@@ -17,6 +17,7 @@ class ExperimentGroupSchema(Schema):
     project_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     content = fields.Str()
+    tags = fields.List(fields.Str(), allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
     concurrency = fields.Int(allow_none=True)
@@ -65,6 +66,7 @@ class ExperimentGroupConfig(BaseConfig):
                  project=None,
                  project_name=None,
                  num_experiments=None,
+                 tags=None,
                  num_scheduled_experiments=None,
                  num_pending_experiments=None,
                  num_running_experiments=None,
@@ -87,6 +89,7 @@ class ExperimentGroupConfig(BaseConfig):
         self.uuid = uuid
         self.project = project
         self.project_name = project_name
+        self.tags = tags
         self.num_experiments = num_experiments
         self.num_scheduled_experiments = num_scheduled_experiments
         self.num_pending_experiments = num_pending_experiments
@@ -110,6 +113,7 @@ class ProjectSchema(Schema):
     unique_name = fields.Str(allow_none=True)
     uuid = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
+    tags = fields.List(fields.Str(), allow_none=True)
     is_public = fields.Boolean(allow_none=True)
     has_code = fields.Bool(allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
@@ -149,6 +153,7 @@ class ProjectConfig(BaseConfig):
                  uuid=None,
                  description=None,
                  is_public=True,
+                 tags=None,
                  has_code=False,
                  has_tensorboard=False,
                  has_notebook=False,
@@ -165,6 +170,7 @@ class ProjectConfig(BaseConfig):
         self.uuid = uuid
         self.description = description
         self.is_public = is_public
+        self.tags = tags
         self.has_code = has_code
         self.has_tensorboard = has_tensorboard
         self.has_notebook = has_notebook

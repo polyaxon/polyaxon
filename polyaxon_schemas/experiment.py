@@ -106,6 +106,7 @@ class ExperimentSchema(Schema):
     config = fields.Dict(allow_none=True)
     num_jobs = fields.Int(allow_none=True)
     declarations = fields.Dict(allow_none=True)
+    tags = fields.List(fields.Str(), allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
@@ -153,6 +154,7 @@ class ExperimentConfig(BaseConfig):
                  config=None,
                  num_jobs=0,
                  declarations=None,
+                 tags=None,
                  resources=None,
                  jobs=None,
                  total_run=None):
@@ -178,6 +180,7 @@ class ExperimentConfig(BaseConfig):
         self.config = config  # The json compiled content of this experiment
         self.num_jobs = num_jobs
         self.declarations = declarations
+        self.tags = tags
         self.resources = resources
         self.jobs = jobs
         self.total_run = None

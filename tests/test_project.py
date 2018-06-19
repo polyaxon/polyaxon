@@ -26,6 +26,7 @@ class TestProjectConfigs(TestCase):
             'is_public': True,
             'has_code': True,
             'has_tensorboard': True,
+            'tags': ['foo'],
             'num_experiments': 0,
             'num_independent_experiments': 0,
             'num_experiment_groups': 0,
@@ -91,6 +92,7 @@ class TestProjectConfigs(TestCase):
                        'is_done': False,
                        'is_running': True,
                        'has_tensorboard': False,
+                       'tags': ['tests'],
                        'experiments': [
                            ExperimentConfig(config={},
                                             uuid=uuid_value,
@@ -118,6 +120,7 @@ class TestProjectConfigs(TestCase):
         config_dict.pop('experiments')
         config_dict.pop('project_name')
         config_dict.pop('has_tensorboard')
+        config_dict.pop('tags')
         assert_equal_dict(config_dict, config.to_light_dict())
 
         config_to_dict = config.to_dict(humanize_values=True)

@@ -16,6 +16,7 @@ class JobSchema(Schema):
     project = UUID(allow_none=True)
     project_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
+    tags = fields.List(fields.Str(), allow_none=True)
     last_status = fields.Str(allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
@@ -60,6 +61,7 @@ class JobConfig(BaseConfig):
                  experiment_group=None,
                  experiment_group_name=None,
                  description=None,
+                 tags=None,
                  last_status=None,
                  definition=None,
                  created_at=None,
@@ -83,6 +85,7 @@ class JobConfig(BaseConfig):
         self.experiment_group = experiment_group
         self.experiment_group_name = experiment_group_name
         self.description = description
+        self.tags = tags
         self.last_status = last_status
         self.definition = definition
         self.started_at = self.localize_date(started_at)

@@ -32,6 +32,7 @@ class TestExperimentConfigs(TestCase):
             'last_status': 'Running',
             'description': 'description',
             'config': {'k': 'v'},
+            'tags': ['tag1'],
             'num_jobs': 1,
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat(),
@@ -61,6 +62,7 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('experiment_group')
         config_dict.pop('updated_at')
         config_dict.pop('project_name')
+        config_dict.pop('tags')
         config_to_dict.pop('finished_at')
         config_to_dict.pop('is_done')
         config_to_dict.pop('is_running')
@@ -91,6 +93,7 @@ class TestExperimentConfigs(TestCase):
                        'started_at': local_now().isoformat(),
                        'finished_at': local_now().isoformat(),
                        'has_tensorboard': False,
+                       'tags': ['tag'],
                        'jobs': [ExperimentJobConfig(uuid=uuid.uuid4().hex,
                                                     experiment=uuid.uuid4().hex,
                                                     experiment_name='name.name.1',
@@ -110,6 +113,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('user')
         assert config_to_dict == config_dict
 
+        config_dict.pop('tags')
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop('total_run') == '0s'
         assert config_to_dict.pop('created_at') == 'a few seconds ago'

@@ -19,6 +19,7 @@ class TestJobConfigs(TestCase):
             'last_status': 'Running',
             'description': 'description',
             'config': {'k': 'v'},
+            'tags': ['test'],
             'definition': None,
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat(),
@@ -44,6 +45,7 @@ class TestJobConfigs(TestCase):
         config_dict.pop('updated_at')
         config_dict.pop('project_name')
         config_dict.pop('definition')
+        config_dict.pop('tags')
         config_to_dict.pop('is_done')
         config_to_dict.pop('is_running')
         config_to_dict.pop('id')
