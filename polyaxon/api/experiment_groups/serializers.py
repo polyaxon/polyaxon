@@ -20,7 +20,7 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
         fields = (
             'uuid', 'unique_name', 'user', 'description',
             'last_status', 'is_running', 'is_done', 'project', 'project_name',
-            'created_at', 'updated_at', 'concurrency', 'search_algorithm',
+            'created_at', 'updated_at', 'concurrency', 'search_algorithm', 'has_tensorboard',
             'num_experiments', 'num_pending_experiments', 'num_running_experiments',)
 
     def get_project(self, obj):

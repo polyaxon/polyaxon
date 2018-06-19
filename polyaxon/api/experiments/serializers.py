@@ -84,7 +84,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         fields = (
             'uuid', 'unique_name', 'user', 'description', 'created_at', 'updated_at',
             'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
-            'is_clone', 'project', 'project_name', 'experiment_group',
+            'is_clone', 'project', 'project_name', 'experiment_group', 'has_tensorboard',
             'experiment_group_name', 'num_jobs',)
 
     def get_user(self, obj):
