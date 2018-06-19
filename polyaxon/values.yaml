@@ -195,9 +195,6 @@ hpsearch:
   replicas: 1
   concurrency: 2
   resources:
-    limits:
-      cpu: 350m
-      memory: 350Mi
     requests:
       cpu: 150m
       memory: 200Mi
