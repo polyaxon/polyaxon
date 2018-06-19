@@ -79,11 +79,12 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
 
 @project.command()
 @click.option('--name', required=True, type=str,
-              help='Name of the project, must be unique for the same user')
-@click.option('--description', type=str, help='Description of the project,')
+              help='Name of the project, must be unique for the same user.')
+@click.option('--description', type=str, help='Description of the project.')
+@click.option('--tags', type=str, help='Tags, comma separated values, of the project.')
 @click.option('--private', is_flag=True, help='Set the visibility of the project to private.')
 @clean_outputs
-def create(name, description, private):
+def create(name, description, tags, private):
     """Create a new project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -96,7 +97,8 @@ def create(name, description, private):
     ```
     """
     try:
-        project_dict = dict(name=name, description=description, is_public=not private)
+        tags = tags.split(',') if tags else None
+        project_dict = dict(name=name, description=description, is_public=not private, tags=tags)
         project_config = ProjectConfig.from_dict(project_dict)
     except ValidationError:
         Printer.print_error('Project name should contain only alpha numerical, "-", and "_".')
@@ -214,12 +216,13 @@ def delete(ctx):
 
 @project.command()
 @click.option('--name', type=str,
-              help='Name of the project, must be unique for the same user,')
-@click.option('--description', type=str, help='Description of the project,')
+              help='Name of the project, must be unique for the same user.')
+@click.option('--description', type=str, help='Description of the project.')
+@click.option('--tags', type=str, help='Tags, comma separated values, of the project.')
 @click.option('--private', type=bool, help='Set the visibility of the project to private/public.')
 @click.pass_context
 @clean_outputs
-def update(ctx, name, description, private):
+def update(ctx, name, description, tags, private):
     """Update project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -247,6 +250,9 @@ def update(ctx, name, description, private):
 
     if private is not None:
         update_dict['is_public'] = not private
+
+    if tags:
+        update_dict['tags'] = tags.split(',')
 
     if not update_dict:
         Printer.print_warning('No argument was provided to update the project.')
@@ -412,7 +418,6 @@ def experiments(ctx, metrics, independent, group, query, sort, page):
 @click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
 @click.pass_context
 @clean_outputs
-@clean_outputs
 def builds(ctx, query, sort, page):
     """List build jobs for this project.
 
@@ -452,5 +457,13 @@ def builds(ctx, query, sort, page):
 @project.command()
 @click.pass_context
 @clean_outputs
-def clone(ctx):
-    pass
+def download(ctx):
+    """Download code of the current project."""
+    user, project_name = get_project_or_local(ctx.obj['project'])
+    try:
+        PolyaxonClients().project.download_repo(user, project_name)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not download code for project `{}`.'.format(project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+    Printer.print_success('Files downloaded.')
