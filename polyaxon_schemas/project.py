@@ -56,7 +56,7 @@ class ExperimentGroupConfig(BaseConfig):
 
     def __init__(self,
                  unique_name=None,
-                 id=None,
+                 id=None,  # pylint:disable=redefined-builtin
                  user=None,
                  description=None,
                  content=None,

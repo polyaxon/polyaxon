@@ -53,7 +53,7 @@ class ExperimentJobConfig(BaseConfig):
                  updated_at,
                  definition=None,
                  unique_name=None,
-                 id=None,
+                 id=None,  # pylint:disable=redefined-builtin
                  role=None,
                  last_status=None,
                  is_running=None,
@@ -130,7 +130,7 @@ class ExperimentConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
-                 id=None,
+                 id=None,  # pylint:disable=redefined-builtin
                  user=None,
                  uuid=None,
                  unique_name=None,

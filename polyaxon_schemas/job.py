@@ -51,7 +51,7 @@ class JobConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
-                 id=None,
+                 id=None,  # pylint:disable=redefined-builtin
                  user=None,
                  uuid=None,
                  unique_name=None,
