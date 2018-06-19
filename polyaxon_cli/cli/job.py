@@ -137,6 +137,53 @@ def delete(ctx):
 
 
 @job.command()
+@click.option('--name', type=str,
+              help='Name of the job, must be unique within the project, could none.')
+@click.option('--description', type=str, help='Description of the job.')
+@click.option('--tags', type=str, help='Tags of the job, comma separated values.')
+@click.pass_context
+@clean_outputs
+def update(ctx, name, description, tags):
+    """Update job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon job -j 2 update --description="new description for my job"
+    ```
+    """
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    update_dict = {}
+
+    if name:
+        update_dict['name'] = name
+
+    if description:
+        update_dict['description'] = description
+
+    if tags:
+        update_dict['tags'] = tags.split(',')
+
+    if not update_dict:
+        Printer.print_warning('No argument was provided to update the job.')
+        sys.exit(0)
+
+    try:
+        response = PolyaxonClients().build_job.update_job(
+            user, project_name, _job, update_dict)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not update job  `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Job updated.")
+    get_job_details(response)
+
+
+@job.command()
 @click.option('--yes', '-y', is_flag=True, default=False,
               help="Automatic yes to prompts. "
                    "Assume \"yes\" as answer to all prompts and run non-interactively.")

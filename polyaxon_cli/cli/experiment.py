@@ -216,6 +216,54 @@ def delete(ctx):
 
 
 @experiment.command()
+@click.option('--name', type=str,
+              help='Name of the experiment, must be unique within the project, could be none.')
+@click.option('--description', type=str, help='Description of the experiment.')
+@click.option('--tags', type=str, help='Tags of the experiment, comma separated values.')
+@click.pass_context
+@clean_outputs
+def update(ctx, name, description, tags):
+    """Update experiment.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 2 update --description="new description for my experiments"
+    ```
+    """
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
+                                                                 ctx.obj['experiment'])
+    update_dict = {}
+
+    if name:
+        update_dict['name'] = name
+
+    if description:
+        update_dict['description'] = description
+
+    if tags:
+        update_dict['tags'] = tags.split(',')
+
+    if not update_dict:
+        Printer.print_warning('No argument was provided to update the experiment.')
+        sys.exit(0)
+
+    try:
+        response = PolyaxonClients().experiment.update_experiment(
+            user, project_name, _experiment, update_dict)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not update experiment `{}`.'.format(_experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Experiment updated.")
+    get_experiment_details(response)
+
+
+@experiment.command()
 @click.option('--yes', '-y', is_flag=True, default=False,
               help="Automatic yes to prompts. "
                    "Assume \"yes\" as answer to all prompts and run non-interactively.")
@@ -342,6 +390,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
         Printer.print_error('Could not resume experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
+
 
 @experiment.command()
 @click.option('--page', type=int, help="To paginate through the list of jobs.")

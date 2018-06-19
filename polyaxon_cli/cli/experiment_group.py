@@ -114,10 +114,13 @@ def delete(ctx):
 
 
 @group.command()
-@click.option('--description', type=str, help='Description of the project,')
+@click.option('--name', type=str,
+              help='Name of the group, must be unique within the project, could none.')
+@click.option('--description', type=str, help='Description of the group.')
+@click.option('--tags', type=str, help='Tags of the group, comma separated values.')
 @click.pass_context
 @clean_outputs
-def update(ctx, description):
+def update(ctx, name, description, tags):
     """Update experiment group.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -132,8 +135,14 @@ def update(ctx, description):
     user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
     update_dict = {}
 
+    if name:
+        update_dict['name'] = name
+
     if description:
         update_dict['description'] = description
+
+    if tags:
+        update_dict['tags'] = tags.split(',')
 
     if not update_dict:
         Printer.print_warning('No argument was provided to update the experiment group.')
