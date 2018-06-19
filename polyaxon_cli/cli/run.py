@@ -71,6 +71,9 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
 
+    if tags:
+        tags = tags.split(',')
+
     def run_experiment():
         click.echo('Creating an independent experiment.')
         experiment = ExperimentConfig(
