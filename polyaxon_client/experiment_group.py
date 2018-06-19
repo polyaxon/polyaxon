@@ -90,3 +90,34 @@ class ExperimentGroupClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while stopping experiments in group')
             return None
+
+    def start_tensorboard(self, username, project_name, group_sequence, job_config=None):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_sequence,
+                                      'tensorboard',
+                                      'start')
+
+        try:
+            job_config = {'config': job_config} if job_config else {}
+            return self.post(request_url, json_data=job_config)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while starting tensorboard')
+            return None
+
+    def stop_tensorboard(self, username, project_name, group_sequence):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_sequence,
+                                      'tensorboard',
+                                      'stop')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while stopping tensorboard')
+            return None
+

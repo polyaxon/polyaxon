@@ -242,3 +242,33 @@ class ExperimentClient(PolyaxonClient):
                                       experiment_sequence,
                                       'logs')
         self.socket(request_url, message_handler=message_handler)
+
+    def start_tensorboard(self, username, project_name, experiment_sequence, job_config=None):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'tensorboard',
+                                      'start')
+
+        try:
+            job_config = {'config': job_config} if job_config else {}
+            return self.post(request_url, json_data=job_config)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while starting tensorboard')
+            return None
+
+    def stop_tensorboard(self, username, project_name, experiment_sequence):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'tensorboard',
+                                      'stop')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while stopping tensorboard')
+            return None

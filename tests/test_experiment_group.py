@@ -180,3 +180,59 @@ class TestExperimentGroupClient(TestCase):
             status=200)
         result = self.client.stop('username', 'project_name', 1, pending=True)
         assert result.status_code == 200
+
+    @httpretty.activate
+    def test_start_tensorboard(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'username',
+                'project_name',
+                'groups',
+                1,
+                'tensorboard',
+                'start'),
+            content_type='application/json',
+            status=200)
+        result = self.client.start_tensorboard('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_start_tensorboard_with_config(self):
+        obj = {}
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'username',
+                'project_name',
+                'groups',
+                1,
+                'tensorboard',
+                'start'),
+            body=json.dumps(obj),
+            content_type='application/json',
+            status=200)
+        result = self.client.start_tensorboard('username', 'project_name', 1, obj)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_stop_tensorboard(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'username',
+                'project_name',
+                'groups',
+                1,
+                'tensorboard',
+                'stop'),
+            content_type='application/json',
+            status=200)
+        result = self.client.stop_tensorboard('username', 'project_name', 1)
+        assert result.status_code == 200
