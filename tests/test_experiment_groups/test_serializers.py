@@ -19,6 +19,7 @@ class TestExperimentGroupSerializer(BaseTest):
     expected_keys = {
         'id',
         'uuid',
+        'name',
         'unique_name',
         'description',
         'project',
@@ -77,6 +78,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     expected_keys = {
         'id',
         'uuid',
+        'name',
         'unique_name',
         'description',
         'content',

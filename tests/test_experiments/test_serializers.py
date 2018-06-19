@@ -29,6 +29,7 @@ class TestExperimentSerializer(BaseTest):
     expected_keys = {
         'id',
         'uuid',
+        'name',
         'user',
         'unique_name',
         'description',
@@ -130,6 +131,7 @@ class TestExperimentDetailSerializer(BaseTest):
     expected_keys = {
         'id',
         'uuid',
+        'name',
         'unique_name',
         'created_at',
         'updated_at',

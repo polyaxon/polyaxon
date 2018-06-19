@@ -22,6 +22,7 @@ class TestBuildJobSerializer(BaseTest):
     expected_keys = {
         'id',
         'uuid',
+        'name',
         'user',
         'unique_name',
         'description',
@@ -97,6 +98,7 @@ class TestBuildJobDetailSerializer(BaseTest):
     expected_keys = {
         'id',
         'uuid',
+        'name',
         'unique_name',
         'created_at',
         'updated_at',
