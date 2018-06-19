@@ -46,27 +46,27 @@ class TestParser(BaseTest):
         assert parse_expression('foo:>=bar') == ('foo', '>=bar')
         assert parse_expression('foo:bar|moo|boo') == ('foo', 'bar|moo|boo')
         assert parse_expression('foo:bar..moo') == ('foo', 'bar..moo')
-        assert parse_expression('foo:!bar') == ('foo', '!bar')
+        assert parse_expression('foo:~bar') == ('foo', '~bar')
 
         # Handles spaces
         assert parse_expression(' foo: bar ') == ('foo', 'bar')
         assert parse_expression('foo :>=bar ') == ('foo', '>=bar')
         assert parse_expression(' foo :bar|moo|boo') == ('foo', 'bar|moo|boo')
         assert parse_expression(' foo : bar..moo ') == ('foo', 'bar..moo')
-        assert parse_expression(' foo : !bar ') == ('foo', '!bar')
+        assert parse_expression(' foo : ~bar ') == ('foo', '~bar')
 
     def test_parse_negation_operation(self):
         assert parse_negation_operation('foo') == (False, 'foo')
-        assert parse_negation_operation('!foo') == (True, 'foo')
+        assert parse_negation_operation('~foo') == (True, 'foo')
         assert parse_negation_operation('foo..boo') == (False, 'foo..boo')
-        assert parse_negation_operation('!foo..boo') == (True, 'foo..boo')
+        assert parse_negation_operation('~foo..boo') == (True, 'foo..boo')
         assert parse_negation_operation('>=foo') == (False, '>=foo')
-        assert parse_negation_operation('!>=foo') == (True, '>=foo')
+        assert parse_negation_operation('~>=foo') == (True, '>=foo')
         assert parse_negation_operation('foo|boo') == (False, 'foo|boo')
-        assert parse_negation_operation('!foo|boo') == (True, 'foo|boo')
-        assert parse_negation_operation(' ! >=foo ') == (True, '>=foo')
+        assert parse_negation_operation('~foo|boo') == (True, 'foo|boo')
+        assert parse_negation_operation(' ~ >=foo ') == (True, '>=foo')
         assert parse_negation_operation(' foo|boo ') == (False, 'foo|boo')
-        assert parse_negation_operation('! foo|boo') == (True, 'foo|boo')
+        assert parse_negation_operation('~ foo|boo') == (True, 'foo|boo')
 
     def test_parse_datetime_operation(self):
         # Raises for not allowed operators
@@ -77,7 +77,7 @@ class TestParser(BaseTest):
             parse_datetime_operation('')
 
         with self.assertRaises(QueryParserException):
-            parse_datetime_operation('!')
+            parse_datetime_operation('~')
 
         with self.assertRaises(QueryParserException):
             parse_datetime_operation('..')
@@ -96,23 +96,23 @@ class TestParser(BaseTest):
             QueryOpSpec('..', False, ['foo', 'bar']))
         assert parse_datetime_operation(' foo .. bar ') == (
             QueryOpSpec('..', False, ['foo', 'bar']))
-        assert parse_datetime_operation('! foo .. bar ') == (
+        assert parse_datetime_operation('~ foo .. bar ') == (
             QueryOpSpec('..', True, ['foo', 'bar']))
 
         # Comparison
         assert parse_datetime_operation('>=foo') == (
             QueryOpSpec('>=', False, 'foo'))
-        assert parse_datetime_operation(' ! <= bar ') == (
+        assert parse_datetime_operation(' ~ <= bar ') == (
             QueryOpSpec('<=', True, 'bar'))
-        assert parse_datetime_operation('! > bar ') == (
+        assert parse_datetime_operation('~ > bar ') == (
             QueryOpSpec('>', True, 'bar'))
 
         # Equality
         assert parse_datetime_operation('foo') == (
             QueryOpSpec('=', False, 'foo'))
-        assert parse_datetime_operation(' !  bar ') == (
+        assert parse_datetime_operation(' ~  bar ') == (
             QueryOpSpec('=', True, 'bar'))
-        assert parse_datetime_operation('!bar') == (
+        assert parse_datetime_operation('~bar') == (
             QueryOpSpec('=', True, 'bar'))
 
     def test_parse_scalar_operation(self):
@@ -128,16 +128,16 @@ class TestParser(BaseTest):
             parse_scalar_operation('>=f')
 
         with self.assertRaises(QueryParserException):
-            parse_scalar_operation(' ! <=f1 ')
+            parse_scalar_operation(' ~ <=f1 ')
 
         with self.assertRaises(QueryParserException):
-            parse_scalar_operation('! > bbb ')
+            parse_scalar_operation('~ > bbb ')
 
         with self.assertRaises(QueryParserException):
             parse_datetime_operation('')
 
         with self.assertRaises(QueryParserException):
-            parse_datetime_operation('!')
+            parse_datetime_operation('~')
 
         with self.assertRaises(QueryParserException):
             parse_datetime_operation('>')
@@ -145,17 +145,17 @@ class TestParser(BaseTest):
         # Comparison
         assert parse_scalar_operation('>=1') == (
             QueryOpSpec('>=', False, 1))
-        assert parse_scalar_operation(' ! <= 0.1 ') == (
+        assert parse_scalar_operation(' ~ <= 0.1 ') == (
             QueryOpSpec('<=', True, 0.1))
-        assert parse_scalar_operation('! > 20 ') == (
+        assert parse_scalar_operation('~ > 20 ') == (
             QueryOpSpec('>', True, 20))
 
         # Equality
         assert parse_scalar_operation('1') == (
             QueryOpSpec('=', False, 1))
-        assert parse_scalar_operation(' !  2 ') == (
+        assert parse_scalar_operation(' ~  2 ') == (
             QueryOpSpec('=', True, 2))
-        assert parse_scalar_operation('!0.1') == (
+        assert parse_scalar_operation('~0.1') == (
             QueryOpSpec('=', True, 0.1))
 
     def test_parse_value_operation(self):
@@ -167,38 +167,38 @@ class TestParser(BaseTest):
             parse_datetime_operation('')
 
         with self.assertRaises(QueryParserException):
-            parse_datetime_operation('!')
+            parse_datetime_operation('~')
 
         # Raises for comparison
         with self.assertRaises(QueryParserException):
             parse_value_operation('>=f')
 
         with self.assertRaises(QueryParserException):
-            parse_value_operation(' ! <=f1 ')
+            parse_value_operation(' ~ <=f1 ')
 
         with self.assertRaises(QueryParserException):
-            parse_value_operation('!|')
+            parse_value_operation('~|')
 
         with self.assertRaises(QueryParserException):
             parse_value_operation('|')
 
         with self.assertRaises(QueryParserException):
-            parse_value_operation('!tag1 |')
+            parse_value_operation('~tag1 |')
 
         # Equality
         assert parse_value_operation('tag') == (
             QueryOpSpec('=', False, 'tag'))
-        assert parse_value_operation(' !  tag ') == (
+        assert parse_value_operation(' ~  tag ') == (
             QueryOpSpec('=', True, 'tag'))
-        assert parse_value_operation('!tag') == (
+        assert parse_value_operation('~tag') == (
             QueryOpSpec('=', True, 'tag'))
 
         # In op
         assert parse_value_operation('tag1|tag2') == (
             QueryOpSpec('|', False, ['tag1', 'tag2']))
-        assert parse_value_operation(' !  tag1|tag2 ') == (
+        assert parse_value_operation(' ~  tag1|tag2 ') == (
             QueryOpSpec('|', True, ['tag1', 'tag2']))
-        assert parse_value_operation('!tag1 | tag2| tag23') == (
+        assert parse_value_operation('~tag1 | tag2| tag23') == (
             QueryOpSpec('|', True, ['tag1', 'tag2', 'tag23']))
 
     def test_split_query(self):
@@ -211,8 +211,8 @@ class TestParser(BaseTest):
         with self.assertRaises(QueryParserException):
             split_query(', , ')
 
-        assert len(split_query('name:!tag1 | tag2| tag23')) == 1
-        assert len(split_query('name:!tag1 | tag2| tag23, name2:foo')) == 2
+        assert len(split_query('name:~tag1 | tag2| tag23')) == 1
+        assert len(split_query('name:~tag1 | tag2| tag23, name2:foo')) == 2
 
     def test_tokenize_query(self):
         with self.assertRaises(QueryParserException):
@@ -224,9 +224,9 @@ class TestParser(BaseTest):
         with self.assertRaises(QueryParserException):
             tokenize_query(', , ')
 
-        assert tokenize_query('name:!tag1 | tag2| tag23') == {'name': ['!tag1 | tag2| tag23']}
-        assert tokenize_query('name1:!tag1 | tag2| tag23, name1:foo, name2:sdf..dsf') == {
-            'name1': ['!tag1 | tag2| tag23', 'foo'],
+        assert tokenize_query('name:~tag1 | tag2| tag23') == {'name': ['~tag1 | tag2| tag23']}
+        assert tokenize_query('name1:~tag1 | tag2| tag23, name1:foo, name2:sdf..dsf') == {
+            'name1': ['~tag1 | tag2| tag23', 'foo'],
             'name2': ['sdf..dsf']
         }
 

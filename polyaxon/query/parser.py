@@ -15,7 +15,7 @@ def parse_negation_operation(operation):
     if not _operation:
         raise QueryParserException('Operation is not valid: {}'.format(operation))
     negation = False
-    if _operation[0] == '!':
+    if _operation[0] == '~':
         negation = True
         _operation = _operation[1:]
 
@@ -47,9 +47,9 @@ def parse_datetime_operation(operation):
     A datetime operation can one of the following:
 
      * single value: start_date:2014-10-10, start_date:>2014-10-10, start_date:>=2014-10-10
-     * negation single value: start_date:!2014-10-10
+     * negation single value: start_date:~2014-10-10
      * interval: start_date:2010-10-10 10:10 .. 2012-10-10
-     * negation interval: start_date:!2010-10-10 10:10 .. 2012-10-10
+     * negation interval: start_date:~2010-10-10 10:10 .. 2012-10-10
 
     This parser does not allow `|`
     """
@@ -93,7 +93,7 @@ def parse_scalar_operation(operation):
     A scalar operation can one of the following:
 
      * single value: start_date:12, metric1:>0.9, metric1:>=-0.12
-     * negation single value: metric1:!1112, metric1:!<1112 equivalent to metric1:>=1112
+     * negation single value: metric1:~1112, metric1:~<1112 equivalent to metric1:>=1112
 
     This parser does not allow `|` and `..`.
     """
@@ -135,9 +135,9 @@ def parse_value_operation(operation):
     A value operation can one of the following:
 
      * single value: tag1:foo
-     * negation single value: tag1:!foo
+     * negation single value: tag1:~foo
      * multiple values: tag1:foo|bar|moo
-     * negation multiple values: tag1:!foo|bar|moo
+     * negation multiple values: tag1:~foo|bar|moo
 
     This parser does not allow `..`, '>', '<', '>=', and '<='.
     """
@@ -221,11 +221,11 @@ def tokenize_query(query):
     """Tokenizes a standard search query in name: operations mapping.
 
     Example:
-        moo:bla, foo:!<=1, foo:ll..ff
+        moo:bla, foo:~<=1, foo:ll..ff
 
         {
           'moo': ['bla'],
-          'foo': ['!<=1', 'll..ff']
+          'foo': ['~<=1', 'll..ff']
         }
     """
     expressions = split_query(query)

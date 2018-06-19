@@ -27,10 +27,10 @@ class TestQueryManager(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.query1 = 'updated_at:<=2020-10-10, started_at:>2010-10-10, started_at:!2016-10-01'
+        self.query1 = 'updated_at:<=2020-10-10, started_at:>2010-10-10, started_at:~2016-10-01'
         self.query2 = 'metric__loss:<=0.8, status:starting|running'
         self.query3 = 'finished_at:2012-12-12..2042-12-12'
-        self.query4 = 'tags:!tag1|tag2,tags:tag3'
+        self.query4 = 'tags:~tag1|tag2,tags:tag3'
         self.query5 = 'foobar:2012-12-12..2042-12-12'
 
     def test_managers(self):
@@ -43,7 +43,7 @@ class TestQueryManager(BaseTest):
         tokenized_query = ExperimentQueryManager.tokenize(self.query1)
         assert dict(tokenized_query.items()) == {
             'updated_at': ['<=2020-10-10'],
-            'started_at': ['>2010-10-10', '!2016-10-01'],
+            'started_at': ['>2010-10-10', '~2016-10-01'],
         }
 
         tokenized_query = ExperimentQueryManager.tokenize(self.query2)
@@ -59,7 +59,7 @@ class TestQueryManager(BaseTest):
 
         tokenized_query = ExperimentQueryManager.tokenize(self.query4)
         assert tokenized_query == {
-            'tags': ['!tag1|tag2', 'tag3'],
+            'tags': ['~tag1|tag2', 'tag3'],
         }
 
         with self.assertRaises(QueryError):
