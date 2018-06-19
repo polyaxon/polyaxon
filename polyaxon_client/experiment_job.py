@@ -10,14 +10,14 @@ class ExperimentJobClient(PolyaxonClient):
     """Client to get jobs from the server"""
     ENDPOINT = "/"
 
-    def get_job(self, username, project_name, experiment_sequence, job_uuid):
+    def get_job(self, username, project_name, experiment_id, job_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'jobs',
-                                      job_uuid)
+                                      job_id)
         try:
             response = self.get(request_url)
             return ExperimentJobConfig.from_dict(response.json())
@@ -25,14 +25,14 @@ class ExperimentJobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving job')
             return None
 
-    def get_statuses(self, username, project_name, experiment_sequence, job_uuid, page=1):
+    def get_statuses(self, username, project_name, experiment_id, job_id, page=1):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'jobs',
-                                      job_uuid,
+                                      job_id,
                                       'statuses')
 
         try:
@@ -42,7 +42,7 @@ class ExperimentJobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving job statuses')
             return []
 
-    def resources(self, username, project_name, experiment_sequence, job_uuid,
+    def resources(self, username, project_name, experiment_id, job_id,
                   message_handler=None):
         """Streams job resources using websockets.
 
@@ -53,13 +53,13 @@ class ExperimentJobClient(PolyaxonClient):
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'jobs',
-                                      job_uuid,
+                                      job_id,
                                       'resources')
         self.socket(request_url, message_handler=message_handler)
 
-    def logs(self, username, project_name, experiment_sequence, job_uuid, message_handler=None):
+    def logs(self, username, project_name, experiment_id, job_id, message_handler=None):
         """Streams job logs using websockets.
 
         message_handler: handles the messages received from server.
@@ -69,8 +69,8 @@ class ExperimentJobClient(PolyaxonClient):
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'jobs',
-                                      job_uuid,
+                                      job_id,
                                       'logs')
         self.socket(request_url, message_handler=message_handler)

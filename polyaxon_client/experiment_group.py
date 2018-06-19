@@ -11,12 +11,12 @@ class ExperimentGroupClient(PolyaxonClient):
     """Client to get experiments for a group from the server"""
     ENDPOINT = "/"
 
-    def get_experiment_group(self, username, project_name, group_sequence):
+    def get_experiment_group(self, username, project_name, group_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
-                                      group_sequence)
+                                      group_id)
         try:
             response = self.get(request_url)
             return ExperimentGroupConfig.from_dict(response.json())
@@ -27,7 +27,7 @@ class ExperimentGroupClient(PolyaxonClient):
     def list_experiments(self,
                          username,
                          project_name,
-                         group_sequence,
+                         group_id,
                          query=None,
                          sort=None,
                          page=1):
@@ -36,7 +36,7 @@ class ExperimentGroupClient(PolyaxonClient):
 
         try:
             params = self.get_page(page=page)
-            params['group'] = group_sequence
+            params['group'] = group_id
             if query:
                 params['query'] = query
             if sort:
@@ -47,12 +47,12 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
 
-    def update_experiment_group(self, username, project_name, group_sequence, patch_dict):
+    def update_experiment_group(self, username, project_name, group_id, patch_dict):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
-                                      group_sequence)
+                                      group_id)
 
         try:
             response = self.patch(request_url, json_data=patch_dict)
@@ -61,12 +61,12 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while updating project')
             return None
 
-    def delete_experiment_group(self, username, project_name, group_sequence):
+    def delete_experiment_group(self, username, project_name, group_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
-                                      group_sequence)
+                                      group_id)
         try:
             response = self.delete(request_url)
             return response
@@ -74,12 +74,12 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while deleting experiment group')
             return None
 
-    def stop(self, username, project_name, group_sequence, pending=False):
+    def stop(self, username, project_name, group_id, pending=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
-                                      group_sequence,
+                                      group_id,
                                       'stop')
         json_data = None
         if pending is True:
@@ -91,12 +91,12 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while stopping experiments in group')
             return None
 
-    def start_tensorboard(self, username, project_name, group_sequence, job_config=None):
+    def start_tensorboard(self, username, project_name, group_id, job_config=None):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
-                                      group_sequence,
+                                      group_id,
                                       'tensorboard',
                                       'start')
 
@@ -107,12 +107,12 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while starting tensorboard')
             return None
 
-    def stop_tensorboard(self, username, project_name, group_sequence):
+    def stop_tensorboard(self, username, project_name, group_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
-                                      group_sequence,
+                                      group_id,
                                       'tensorboard',
                                       'stop')
         try:

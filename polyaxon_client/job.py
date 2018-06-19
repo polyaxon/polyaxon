@@ -10,12 +10,12 @@ class JobClient(PolyaxonClient):
     """Client to get jobs from the server"""
     ENDPOINT = "/"
 
-    def get_job(self, username, project_name, job_sequence):
+    def get_job(self, username, project_name, job_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence)
+                                      job_id)
         try:
             response = self.get(request_url)
             return JobConfig.from_dict(response.json())
@@ -23,12 +23,12 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving job')
             return None
 
-    def update_job(self, username, project_name, job_sequence, patch_dict):
+    def update_job(self, username, project_name, job_id, patch_dict):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence)
+                                      job_id)
         try:
             response = self.patch(request_url, json_data=patch_dict)
             return JobConfig.from_dict(response.json())
@@ -36,24 +36,24 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while updating job')
             return None
 
-    def delete_job(self, username, project_name, job_sequence):
+    def delete_job(self, username, project_name, job_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence)
+                                      job_id)
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while deleting job')
             return None
 
-    def get_statuses(self, username, project_name, job_sequence, page=1):
+    def get_statuses(self, username, project_name, job_id, page=1):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence,
+                                      job_id,
                                       'statuses')
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -62,13 +62,13 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving job status')
             return None
 
-    def restart(self, username, project_name, job_sequence, config=None, update_code=None):
+    def restart(self, username, project_name, job_id, config=None, update_code=None):
         """Restart an job."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence,
+                                      job_id,
                                       'restart')
 
         data = {}
@@ -84,13 +84,13 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while restarting the job')
             return None
 
-    def resume(self, username, project_name, job_sequence, config=None, update_code=None):
+    def resume(self, username, project_name, job_id, config=None, update_code=None):
         """Resume a job."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence,
+                                      job_id,
                                       'resume')
 
         data = {}
@@ -106,13 +106,13 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while resuming the job')
             return None
 
-    def copy(self, username, project_name, job_sequence, config=None, update_code=None):
+    def copy(self, username, project_name, job_id, config=None, update_code=None):
         """Copy an job."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence,
+                                      job_id,
                                       'copy')
 
         data = {}
@@ -128,12 +128,12 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while copying the job')
             return None
 
-    def stop(self, username, project_name, job_sequence):
+    def stop(self, username, project_name, job_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence,
+                                      job_id,
                                       'stop')
         try:
             return self.post(request_url)
@@ -141,7 +141,7 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while stopping job')
             return None
 
-    def resources(self, username, project_name, job_sequence, message_handler=None):
+    def resources(self, username, project_name, job_id, message_handler=None):
         """Streams jobs resources using websockets.
 
         message_handler: handles the messages received from server.
@@ -151,12 +151,12 @@ class JobClient(PolyaxonClient):
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence,
+                                      job_id,
                                       'resources')
         self.socket(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
-    def logs(self, username, project_name, job_sequence, stream=True, message_handler=None):
+    def logs(self, username, project_name, job_id, stream=True, message_handler=None):
         """Streams jobs logs using websockets.
 
         message_handler: handles the messages received from server.
@@ -167,7 +167,7 @@ class JobClient(PolyaxonClient):
                                           username,
                                           project_name,
                                           'jobs',
-                                          job_sequence,
+                                          job_id,
                                           'logs')
 
             try:
@@ -180,6 +180,6 @@ class JobClient(PolyaxonClient):
                                       username,
                                       project_name,
                                       'jobs',
-                                      job_sequence,
+                                      job_id,
                                       'logs')
         self.socket(request_url, message_handler=message_handler)

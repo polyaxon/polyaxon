@@ -25,12 +25,12 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
 
-    def get_experiment(self, username, project_name, experiment_sequence):
+    def get_experiment(self, username, project_name, experiment_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence)
+                                      experiment_id)
         try:
             response = self.get(request_url)
             return ExperimentConfig.from_dict(response.json())
@@ -38,12 +38,12 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiment')
             return None
 
-    def update_experiment(self, username, project_name, experiment_sequence, patch_dict):
+    def update_experiment(self, username, project_name, experiment_id, patch_dict):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence)
+                                      experiment_id)
         try:
             response = self.patch(request_url, json_data=patch_dict)
             return ExperimentConfig.from_dict(response.json())
@@ -51,24 +51,24 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while updating experiment')
             return None
 
-    def delete_experiment(self, username, project_name, experiment_sequence):
+    def delete_experiment(self, username, project_name, experiment_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence)
+                                      experiment_id)
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while deleting experiment')
             return None
 
-    def get_statuses(self, username, project_name, experiment_sequence, page=1):
+    def get_statuses(self, username, project_name, experiment_id, page=1):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'statuses')
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -77,12 +77,12 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiment status')
             return None
 
-    def get_metrics(self, username, project_name, experiment_sequence, page=1):
+    def get_metrics(self, username, project_name, experiment_id, page=1):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'metrics')
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -91,12 +91,12 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiment status')
             return None
 
-    def create_metric(self, username, project_name, experiment_sequence, values):
+    def create_metric(self, username, project_name, experiment_id, values):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'metrics')
         try:
             response = self.post(request_url, data={'values': values})
@@ -105,13 +105,13 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiment status')
             return None
 
-    def list_jobs(self, username, project_name, experiment_sequence, page=1):
+    def list_jobs(self, username, project_name, experiment_id, page=1):
         """Fetch list of jobs related to this experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'jobs')
 
         try:
@@ -121,13 +121,13 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving jobs')
             return []
 
-    def restart(self, username, project_name, experiment_sequence, config=None, update_code=None):
+    def restart(self, username, project_name, experiment_id, config=None, update_code=None):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'restart')
 
         data = {}
@@ -143,13 +143,13 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while restarting the experiment')
             return None
 
-    def resume(self, username, project_name, experiment_sequence, config=None, update_code=None):
+    def resume(self, username, project_name, experiment_id, config=None, update_code=None):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'resume')
 
         data = {}
@@ -165,13 +165,13 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while resuming the experiment')
             return None
 
-    def copy(self, username, project_name, experiment_sequence, config=None, update_code=None):
+    def copy(self, username, project_name, experiment_id, config=None, update_code=None):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'copy')
 
         data = {}
@@ -187,12 +187,12 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while copying the experiment')
             return None
 
-    def stop(self, username, project_name, experiment_sequence):
+    def stop(self, username, project_name, experiment_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'stop')
         try:
             return self.post(request_url)
@@ -200,7 +200,7 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while stopping experiment')
             return None
 
-    def resources(self, username, project_name, experiment_sequence, message_handler=None):
+    def resources(self, username, project_name, experiment_id, message_handler=None):
         """Streams experiments resources using websockets.
 
         message_handler: handles the messages received from server.
@@ -210,12 +210,12 @@ class ExperimentClient(PolyaxonClient):
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'resources')
         self.socket(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
-    def logs(self, username, project_name, experiment_sequence, stream=True, message_handler=None):
+    def logs(self, username, project_name, experiment_id, stream=True, message_handler=None):
         """Streams experiments logs using websockets.
 
         message_handler: handles the messages received from server.
@@ -226,7 +226,7 @@ class ExperimentClient(PolyaxonClient):
                                           username,
                                           project_name,
                                           'experiments',
-                                          experiment_sequence,
+                                          experiment_id,
                                           'logs')
 
             try:
@@ -239,16 +239,16 @@ class ExperimentClient(PolyaxonClient):
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'logs')
         self.socket(request_url, message_handler=message_handler)
 
-    def start_tensorboard(self, username, project_name, experiment_sequence, job_config=None):
+    def start_tensorboard(self, username, project_name, experiment_id, job_config=None):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'tensorboard',
                                       'start')
 
@@ -259,12 +259,12 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while starting tensorboard')
             return None
 
-    def stop_tensorboard(self, username, project_name, experiment_sequence):
+    def stop_tensorboard(self, username, project_name, experiment_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
-                                      experiment_sequence,
+                                      experiment_id,
                                       'tensorboard',
                                       'stop')
         try:
