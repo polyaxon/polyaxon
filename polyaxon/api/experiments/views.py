@@ -117,15 +117,9 @@ class ProjectExperimentListView(ListCreateAPIView):
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user, project=get_permissible_project(view=self))
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        instance = self.perform_create(serializer)
+        instance = serializer.save(user=self.request.user,
+                                   project=get_permissible_project(view=self))
         auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):

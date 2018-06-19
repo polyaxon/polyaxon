@@ -79,7 +79,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ('user', 'name', 'description', 'config',)
+        fields = ('id', 'user', 'name', 'description', 'config',)
 
     def get_user(self, obj):
         return obj.user.username

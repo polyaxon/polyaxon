@@ -170,6 +170,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
+            'id',
             'user',
             'name',
             'description',

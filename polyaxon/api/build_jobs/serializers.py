@@ -71,7 +71,7 @@ class BuildJobCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BuildJob
-        fields = ('user', 'name', 'description', 'config', 'tags')
+        fields = ('id', 'user', 'name', 'description', 'config', 'tags')
 
     def get_user(self, obj):
         return obj.user.username

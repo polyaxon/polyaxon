@@ -68,22 +68,15 @@ class ProjectBuildListView(ListCreateAPIView):
     def perform_create(self, serializer):
         project = get_permissible_project(view=self)
         code_reference = get_project_latest_code_reference(project=project)
-        return serializer.save(user=self.request.user,
-                               project=project,
-                               code_reference=code_reference)
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        instance = self.perform_create(serializer)
+        instance = serializer.save(user=self.request.user,
+                                   project=project,
+                                   code_reference=code_reference)
         auditor.record(event_type=BUILD_JOB_CREATED, instance=instance)
         # Trigger build scheduling
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_START,
             kwargs={'build_job_id': instance.id},
             countdown=1)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class BuildDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
