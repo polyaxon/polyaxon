@@ -214,4 +214,6 @@ class BaseSpecification(object):
 
     @cached_property
     def tags(self):
-        return self.headers.get(self.TAGS, None)
+        tags = self.headers.get(self.TAGS, None)
+        return list(set(tags)) if tags else None
+
