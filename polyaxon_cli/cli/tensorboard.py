@@ -248,13 +248,12 @@ def stop(ctx, yes):
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
     else:
-        if experiment:
-            try:
-                PolyaxonClients().project.stop_tensorboard(
-                    username=user,
-                    project_name=project_name)
-                Printer.print_success('Tensorboard is being deleted')
-            except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-                Printer.print_error('Could not stop tensorboard {}.'.format(obj))
-                Printer.print_error('Error message `{}`.'.format(e))
-                sys.exit(1)
+        try:
+            PolyaxonClients().project.stop_tensorboard(
+                username=user,
+                project_name=project_name)
+            Printer.print_success('Tensorboard is being deleted')
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not stop tensorboard {}.'.format(obj))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
