@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import * as moment from 'moment';
-import { Tab, Nav, NavItem, Col, Row } from 'react-bootstrap';
 
 import { ProjectModel } from '../models/project';
 import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
-import { getNotebookUrl, getTensorboardUrl, getUserUrl } from '../constants/utils';
+import { getUserUrl, getProjectUrl } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
+import LinkedTab from './linkedTab';
+import ProjectOverview from './projectOverview';
 
 export interface Props {
   project: ProjectModel;
@@ -25,78 +25,35 @@ export default class ProjectDetail extends React.Component<Props, Object> {
     if (_.isNil(project)) {
       return (<div>Nothing</div>);
     }
-    let visibility = project.is_public ? 'Public' : 'Private';
+    let projectUrl = getProjectUrl(project.user, project.name);
+
     return (
       <div className="row">
         <div className="col-md-12">
-          <div className="entity-details">
-            <Breadcrumb
-              icon="fa-server"
-              links={[
-                {name: project.user, value: getUserUrl(project.user)},
-                {name: project.name}]}
-            />
-            <div className="meta-description">
-              {project.description}
-            </div>
-            <div className="meta">
-              <span className="meta-info">
-                <i className="fa fa-lock icon" aria-hidden="true"/>
-                <span className="title">Visibility:</span>
-                {visibility}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"/>
-                <span className="title">Last updated:</span>
-                {moment(project.updated_at).fromNow()}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-cube icon" aria-hidden="true"/>
-                <span className="title">Experiments:</span>
-                {project.num_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-cubes icon" aria-hidden="true"/>
-                <span className="title">Experiment Groups:</span>
-                {project.num_experiment_groups}
-              </span>
-            </div>
-            <div className="meta">
-              {project.has_tensorboard &&
-              <span className="meta-info meta-dashboard">
-                <i className="fa fa-link icon" aria-hidden="true"/>
-                <a href={getTensorboardUrl(project.user, project.name)} className="title-link">Tensorboard</a>
-              </span>
-              }
-              {project.has_notebook &&
-              <span className="meta-info meta-dashboard">
-                <i className="fa fa-link icon" aria-hidden="true"/>
-                <a href={getNotebookUrl(project.user, project.name)} className="title-link">Notebook</a>
-              </span>
-              }
-            </div>
-          </div>
-          <Tab.Container defaultActiveKey={1} id="project-tabs" className="plx-nav">
-            <Row className="clearfix">
-              <Col sm={12}>
-                <Nav bsStyle="tabs">
-                  <NavItem eventKey={1}>Independent Experiments</NavItem>
-                  <NavItem eventKey={2}>Experiment groups</NavItem>
-                </Nav>
-              </Col>
-              <Col sm={12}>
-                <Tab.Content animation={true} mountOnEnter={true}>
-                  <Tab.Pane eventKey={1}>
-                    <Experiments user={project.user} projectName={project.unique_name}/>
-                  </Tab.Pane>
-                  <Tab.Pane eventKey={2}>
-                    <Groups user={project.user} projectName={project.unique_name}/>
-                  </Tab.Pane>
-                </Tab.Content>
-              </Col>
-            </Row>
-          </Tab.Container>
-
+          <Breadcrumb
+            icon="fa-server"
+            links={[
+              {name: project.user, value: getUserUrl(project.user)},
+              {name: project.name}]}
+          />
+          <LinkedTab
+            baseUrl={projectUrl}
+            tabs={[
+            {
+              title: 'Overview',
+              component: <ProjectOverview project={project}/>,
+              relUrl: ''
+            }, {
+              title: 'Independent Experiments',
+              component: <Experiments user={project.user} projectName={project.unique_name}/>,
+              relUrl: 'experiments'
+            }, {
+              title: 'Experiment groups',
+              component: <Groups user={project.user} projectName={project.unique_name}/>,
+              relUrl: 'groups'
+            }
+          ]}
+          />
         </div>
       </div>
     );

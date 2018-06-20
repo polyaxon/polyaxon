@@ -118,18 +118,21 @@ input:focus, textarea:focus {
   position: relative;
 }
 
-.list-item {
-  display: block;
-  border-bottom: 1px solid #f9f9f9;
-  padding: 10px 0;
-}
-
 .list-item .description,
 span .icon {
   padding-right: 8px;
 }
 
 .entity-details {
+  .entity-name {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    word-wrap: break-word;
+    text-align: center;
+  }
   padding-bottom: 20px;
   .content {
     margin: 10px 0 0 55px;
@@ -139,7 +142,9 @@ span .icon {
   .button {
     margin-left: 20px;
   }
-
+  .meta {
+    margin-bottom: 10px;
+  }
 }
 
 .block {
@@ -227,15 +232,6 @@ a {
   background: rgba(151, 173, 202, 0.06);
   margin-top: 5em;
   margin-bottom: 8em;
-}
-
-.plx-nav {
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  .nav-tabs {
-    margin-bottom: 30px;
-  }
 }
 
 .empty-icon {
