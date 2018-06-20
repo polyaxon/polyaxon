@@ -22,13 +22,13 @@ export let splitGroupName = function (groupName: string) {
 };
 
 export let getCssClassForStatus = function (status?: string): string {
-  if (status === 'Succeeded') {
+  if (status === 'succeeded') {
     return 'success';
-  } else if (status === 'Stopped') {
+  } else if (status === 'stopped') {
     return 'danger';
-  } else if (status === 'Failed') {
+  } else if (status === 'failed') {
     return 'danger';
-  } else if (status === 'Created') {
+  } else if (status === 'created') {
     return 'info';
   }
   return 'warning';
