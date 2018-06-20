@@ -13,6 +13,7 @@ export class ProjectModel {
   public updated_at: string;
   public has_tensorboard: boolean;
   public has_notebook: boolean;
+  public tags: Array<string> = [];
   public groups: Array<string> = [];
   public experiments: Array<string> = [];
 }

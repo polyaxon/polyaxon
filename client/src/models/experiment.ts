@@ -17,6 +17,7 @@ export class ExperimentModel {
   public started_at: string;
   public finished_at: string;
   public declarations: {[key: string]: any};
+  public tags: Array<string> = [];
   public last_metric: {[metric: string]: number};
   public resources: {[key: string]: any};
   public jobs: Array<string> = [];
