@@ -3,11 +3,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 import * as moment from 'moment';
 
 import {
-  getCssClassForStatus,
   getGroupUrl,
   splitProjectName
 } from '../constants/utils';
 import { GroupModel } from '../models/group';
+import Status from './status';
 
 export interface Props {
   group: GroupModel;
@@ -15,16 +15,17 @@ export interface Props {
 }
 
 function Group({group, onDelete}: Props) {
-  let statusCssClass = getCssClassForStatus(group.last_status);
   let values = splitProjectName(group.project_name);
   return (
     <div className="row">
-      <div className="col-md-10 block">
+      <div className="col-md-1 block">
+        <Status status={group.last_status}/>
+      </div>
+      <div className="col-md-9 block">
         <LinkContainer to={getGroupUrl(values[0], values[1], group.id)}>
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
             {group.unique_name}
-            <span className={`status alert alert-${statusCssClass}`}>{group.last_status}</span>
           </a>
         </LinkContainer>
         <div className="meta-description">

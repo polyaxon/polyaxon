@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { JobModel } from '../models/job';
-import { getCssClassForStatus } from '../constants/utils';
 import TaskRunMetaInfo from './taskRunMetaInfo';
+import Status from './status';
 
 export interface Props {
   job: JobModel;
@@ -10,16 +10,17 @@ export interface Props {
 }
 
 function Job({job, onDelete}: Props) {
-  let statusCssClass = getCssClassForStatus(job.last_status);
   let jobDetailUrl = `jobs/${job.id}/`;
 
   return (
     <div className="row">
-      <div className="col-md-10 block">
+      <div className="col-md-1 block">
+        <Status status={job.last_status}/>
+      </div>
+      <div className="col-md-9 block">
         <span className="title">
           <i className="fa fa-tasks icon" aria-hidden="true"/>
           {job.unique_name}
-          <span className={`status alert alert-${statusCssClass}`}>{job.last_status}</span>
         </span>
         <div className="meta">
           <span className="meta-info">

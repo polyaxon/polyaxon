@@ -3,13 +3,13 @@ import * as moment from 'moment';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import {
-  getCssClassForStatus,
   getExperimentUrl,
   splitProjectName
 } from '../constants/utils';
 
 import { ExperimentModel } from '../models/experiment';
 import TaskRunMetaInfo from './taskRunMetaInfo';
+import Status from './status';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -17,16 +17,17 @@ export interface Props {
 }
 
 function Experiment({experiment, onDelete}: Props) {
-  let statusCssClass = getCssClassForStatus(experiment.last_status);
   let values = splitProjectName(experiment.project_name);
   return (
     <div className="row">
-      <div className="col-md-8 block">
+      <div className="col-md-1 block">
+        <Status status={experiment.last_status}/>
+      </div>
+      <div className="col-md-7 block">
         <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.id)}>
           <a className="title">
             <i className="fa fa-cube icon" aria-hidden="true"/>
             {experiment.unique_name}
-            <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
           </a>
         </LinkContainer>
         <div className="meta-description">

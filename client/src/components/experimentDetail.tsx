@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { LinkContainer } from 'react-router-bootstrap';
 
 import { ExperimentModel } from '../models/experiment';
-import Jobs from '../containers/jobs';
+import ExperimentJobs from '../containers/experimentJobs';
 import Logs from '../containers/logs';
 import {
   getGroupUrl,
@@ -12,10 +11,10 @@ import {
   getUserUrl,
   splitGroupName,
   splitProjectName,
-  getCssClassForStatus,
 } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
 import TaskRunMetaInfo from './taskRunMetaInfo';
+import Status from './status';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -34,7 +33,6 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
     if (_.isNil(experiment)) {
       return (<div>Nothing</div>);
     }
-    let statusCssClass = getCssClassForStatus(experiment.last_status);
     let values = splitProjectName(experiment.project_name);
     let group = null;
     if (!_.isNil(experiment.experiment_group_name)) {
@@ -76,8 +74,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                 {experiment.num_jobs}
               </span>
               <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at} inline={true}/>
-              <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}
-              </span>
+              <Status status={experiment.last_status}/>
             </div>
             {experiment.last_metric &&
             <div className="meta meta-metrics">
@@ -120,7 +117,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
             }
           </div>
           <h4 className="polyaxon-header">Jobs</h4>
-          <Jobs fetchData={() => null} user={experiment.user} experiment={experiment}/>
+          <ExperimentJobs fetchData={() => null} user={experiment.user} experiment={experiment}/>
           <h4 className="polyaxon-header">Logs</h4>
           <Logs fetchData={() => null} logs={''} user={experiment.user} experiment={experiment}/>
         </div>

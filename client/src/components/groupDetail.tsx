@@ -1,18 +1,17 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { LinkContainer } from 'react-router-bootstrap';
 
 import { GroupModel } from '../models/group';
 import Experiments from '../containers/experiments';
 import {
-  getCssClassForStatus,
   getProjectUrl,
   getUserUrl,
   splitProjectName
 } from '../constants/utils';
 import TaskRunMetaInfo from './taskRunMetaInfo';
 import Breadcrumb from './breadcrumb';
+import Status from './status';
 
 export interface Props {
   group: GroupModel;
@@ -30,7 +29,6 @@ export default class GroupDetail extends React.Component<Props, Object> {
     if (_.isNil(group)) {
       return (<div>Nothing</div>);
     }
-    let statusCssClass = getCssClassForStatus(group.last_status);
     let values = splitProjectName(group.project_name);
     return (
       <div className="row">
@@ -70,8 +68,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
               </span>
               }
               <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at} inline={true}/>
-              <span className={`status alert alert-${statusCssClass}`}>{group.last_status}
-              </span>
+              <Status status={group.last_status}/>
             </div>
             <div className="meta">
               <span className="meta-info">

@@ -3,7 +3,10 @@ import * as React from 'react';
 function ExperimentHeader() {
   return (
     <div className="row">
-      <div className="col-md-8 block">
+      <div className="col-md-1 block">
+        Status
+      </div>
+      <div className="col-md-7 block">
         Name
       </div>
       <div className="col-md-2 block">
