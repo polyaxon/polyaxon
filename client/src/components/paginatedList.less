@@ -5,9 +5,10 @@
     }
     border-radius: 4px;
     border: 1px solid rgb(240, 244, 255);
-    border-image: initial;
     padding: 10px 10px 10px 0;
+    border-image: initial;
   }
+
   .list-header {
     padding: 8px;
     -webkit-box-align: center;
@@ -16,5 +17,12 @@
     background: rgb(250, 249, 251);
     border: 1px solid #f0f4ff;
     border-radius: 4px 4px 0 0;
+  }
+  .list-item {
+    display: block;
+    padding: 10px 0;
+  }
+  .list-item:not(:last-child) {
+    border-bottom: 1px solid #dbdbdc;
   }
 }
