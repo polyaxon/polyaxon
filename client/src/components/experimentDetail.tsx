@@ -14,6 +14,7 @@ import {
   splitProjectName,
   getCssClassForStatus,
 } from '../constants/utils';
+import Breadcrumb from './breadcrumb';
 import TaskRunMetaInfo from './taskRunMetaInfo';
 
 export interface Props {
@@ -39,39 +40,22 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
     if (!_.isNil(experiment.experiment_group_name)) {
       group = parseInt(splitGroupName(experiment.experiment_group_name)[2], 10);
     }
+    let breadcrumbLinks = [
+      {name: values[0], value: getUserUrl(values[0])},
+      {name: values[1], value: getProjectUrl(values[0], values[1])},
+      {name: `Experiment ${experiment.id}`}];
+    if (group) {
+      breadcrumbLinks.splice(
+        2,
+        0,
+        {name: `Group ${group}`, value: getGroupUrl(values[0], values[1], group)});
+    }
     return (
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <span className="title">
-              <i className="fa fa-cube icon" aria-hidden="true"/>
-              <LinkContainer to={getUserUrl(values[0])}>
-                <span>
-                  <a className="title">
-                    {values[0]}
-                  </a>/
-                </span>
-              </LinkContainer>
-              <LinkContainer to={getProjectUrl(values[0], values[1])}>
-                <span>
-                  <a className="title">
-                    {values[1]}
-                  </a>/
-                </span>
-              </LinkContainer>
-              {group &&
-              <LinkContainer to={getGroupUrl(values[0], values[1], group)}>
-                <span>
-                  <a className="title">
-                    Group {group}
-                  </a>/
-                </span>
-              </LinkContainer>
-              }
-              <span className="title">
-                Experiment {experiment.id}
-              </span>
-            </span>
+            <Breadcrumb icon="fa-cube" links={breadcrumbLinks}/>
+
             <div className="meta-description">
               {experiment.description}
             </div>

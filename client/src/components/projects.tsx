@@ -4,9 +4,9 @@ import * as _ from 'lodash';
 import Project from './project';
 import RootModal from '../containers/modal';
 import { ProjectModel } from '../models/project';
-import { pluralize } from '../constants/utils';
 import PaginatedList from '../components/paginatedList';
 import { noObjectListComponent } from '../constants/templates';
+import Breadcrumb from './breadcrumb';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -43,17 +43,18 @@ export default class Projects extends React.Component<Props, Object> {
     };
 
     return (
-      <div>
-        <div className="entity-details">
-          <span className="title">{this.props.user}</span>
-          <span className="results-info">[{projects.length} {pluralize('Project', projects.length)}]</span>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="entity-details">
+            <Breadcrumb links={[{name: this.props.user}]}/>
+          </div>
+          <RootModal hideModal={this.props.hideModal}/>
+          <PaginatedList
+            count={this.props.count}
+            componentList={listProjects()}
+            fetchData={this.props.fetchData}
+          />
         </div>
-        <RootModal hideModal={this.props.hideModal}/>
-        <PaginatedList
-          count={this.props.count}
-          componentList={listProjects()}
-          fetchData={this.props.fetchData}
-        />
       </div>
     );
   }

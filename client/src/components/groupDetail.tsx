@@ -12,6 +12,7 @@ import {
   splitProjectName
 } from '../constants/utils';
 import TaskRunMetaInfo from './taskRunMetaInfo';
+import Breadcrumb from './breadcrumb';
 
 export interface Props {
   group: GroupModel;
@@ -35,26 +36,13 @@ export default class GroupDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <span className="title">
-              <i className="fa fa-cubes icon" aria-hidden="true"/>
-              <LinkContainer to={getUserUrl(values[0])}>
-                <span>
-                  <a className="title">
-                    {values[0]}
-                  </a>/
-                </span>
-              </LinkContainer>
-              <LinkContainer to={getProjectUrl(values[0], values[1])}>
-                <span>
-                  <a className="title">
-                    {values[1]}
-                  </a>/
-                </span>
-              </LinkContainer>
-              <span className="title">
-                Group {group.id}
-              </span>
-            </span>
+            <Breadcrumb
+              icon="fa-cubes"
+              links={[
+                {name: values[0], value: getUserUrl(values[0])},
+                {name: values[1], value: getProjectUrl(values[0], values[1])},
+                {name: `Group ${group.id}`}]}
+            />
             <div className="meta-description">
               {group.description}
             </div>

@@ -2,12 +2,12 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Tab, Nav, NavItem, Col, Row } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 
 import { ProjectModel } from '../models/project';
 import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
 import { getNotebookUrl, getTensorboardUrl, getUserUrl } from '../constants/utils';
+import Breadcrumb from './breadcrumb';
 
 export interface Props {
   project: ProjectModel;
@@ -30,19 +30,12 @@ export default class ProjectDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <span className="title">
-              <i className="fa fa-server icon" aria-hidden="true"/>
-              <LinkContainer to={getUserUrl(project.user)}>
-                <span>
-                  <a className="title">
-                    {project.user}
-                  </a>/
-                </span>
-              </LinkContainer>
-              <span className="title">
-                {project.name}
-              </span>
-            </span>
+            <Breadcrumb
+              icon="fa-server"
+              links={[
+                {name: project.user, value: getUserUrl(project.user)},
+                {name: project.name}]}
+            />
             <div className="meta-description">
               {project.description}
             </div>
