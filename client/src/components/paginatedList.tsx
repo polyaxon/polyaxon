@@ -7,6 +7,8 @@ import './paginatedList.less';
 export interface Props {
   count: number;
   componentList: React.ReactNode;
+  componentHeader: React.ReactNode;
+  componentEmpty: React.ReactNode;
   fetchData: (currentPage: number) => any;
 }
 
@@ -31,38 +33,60 @@ export default class PaginatedList extends React.Component<Props, State> {
   }
 
   handleNextPage = () => {
-      this.setState((prevState, prevProps) => ({
-        currentPage: prevState.currentPage + 1,
-      }));
+    this.setState((prevState, prevProps) => ({
+      currentPage: prevState.currentPage + 1,
+    }));
   }
 
   handlePreviousPage = () => {
-      this.setState((prevState, prevProps) => ({
-        currentPage: prevState.currentPage - 1,
-      }));
+    this.setState((prevState, prevProps) => ({
+      currentPage: prevState.currentPage - 1,
+    }));
   }
 
   public render() {
-    return (
-      <div className="row paginated-list">
-        {this.props.componentList}
-        {paginate(this.props.count) &&
-        <Pager>
-          <Pager.Item
-            onClick={this.handlePreviousPage}
-            disabled={!paginatePrevious(this.state.currentPage)}
-          >
-            Previous
-          </Pager.Item>{' '}
-          <Pager.Item
-            onClick={this.handleNextPage}
-            disabled={!paginateNext(this.state.currentPage, this.props.count)}
-          >
-            Next
-          </Pager.Item>
-        </Pager>
-        }
-      </div>
-    );
+    let getContent = () => {
+      if (this.props.count > 0) {
+        return (
+          <div className="paginated-list">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="list-header">
+                  {this.props.componentHeader}
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="list-items">
+                  {this.props.componentList}
+                </div>
+              </div>
+            </div>
+            {paginate(this.props.count) &&
+            <div className="row">
+              <Pager>
+                <Pager.Item
+                  onClick={this.handlePreviousPage}
+                  disabled={!paginatePrevious(this.state.currentPage)}
+                >
+                  Previous
+                </Pager.Item>{' '}
+                <Pager.Item
+                  onClick={this.handleNextPage}
+                  disabled={!paginateNext(this.state.currentPage, this.props.count)}
+                >
+                  Next
+                </Pager.Item>
+              </Pager>
+            </div>
+            }
+          </div>
+        );
+      } else {
+        return this.props.componentEmpty;
+      }
+    };
+    return getContent();
   }
 }
