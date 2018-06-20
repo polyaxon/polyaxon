@@ -26,7 +26,7 @@ function LinkedTab({baseUrl, tabs}: Props) {
   };
 
   return (
-    <Tab.Container defaultActiveKey={getActiveTab()} id="project-tabs" className="plx-nav">
+    <Tab.Container defaultActiveKey={getActiveTab()} className="tab-container">
       <Row className="clearfix">
         <Col sm={12}>
           <Nav bsStyle="tabs">
@@ -34,8 +34,6 @@ function LinkedTab({baseUrl, tabs}: Props) {
               <NavItem eventKey={idx + 1} href={`${baseUrl}#${tab.relUrl}`} key={idx}>{tab.title}</NavItem>
             )}
           </Nav>
-        </Col>
-        <Col sm={12}>
           <Tab.Content animation={true} mountOnEnter={true}>
             {tabs.map((tab, idx) =>
               <Tab.Pane eventKey={idx + 1} key={idx}>
