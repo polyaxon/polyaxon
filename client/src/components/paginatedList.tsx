@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Pager } from 'react-bootstrap';
 
 import { paginate, paginateNext, paginatePrevious } from '../constants/paginate';
+import './paginatedList.less';
 
 export interface Props {
   count: number;
@@ -43,7 +44,7 @@ export default class PaginatedList extends React.Component<Props, State> {
 
   public render() {
     return (
-      <div className="row">
+      <div className="row paginated-list">
         {this.props.componentList}
         {paginate(this.props.count) &&
         <Pager>
