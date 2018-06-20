@@ -5,13 +5,15 @@ export enum actionTypes {
   PAGINATE_GROUP = 'PAGINATE_GROUP',
   PAGINATE_EXPERIMENT = 'PAGINATE_EXPERIMENT',
   PAGINATE_JOB = 'PAGINATE_JOB',
+  PAGINATE_EXPERIMENT_JOB = 'PAGINATE_EXPERIMENT_JOB',
 }
 
 export interface PaginationAction extends Action {
   type: actionTypes.PAGINATE_PROJECT
     | actionTypes.PAGINATE_GROUP
     | actionTypes.PAGINATE_EXPERIMENT
-    | actionTypes.PAGINATE_JOB;
+    | actionTypes.PAGINATE_JOB
+    | actionTypes.PAGINATE_EXPERIMENT_JOB;
   currentPage: number;
 }
 
@@ -43,6 +45,13 @@ export function paginateJobActionCreator(currentPage: number): PaginationAction 
   };
 }
 
+export function paginateExperimentJobActionCreator(currentPage: number): PaginationAction {
+  return {
+    type: actionTypes.PAGINATE_EXPERIMENT_JOB,
+    currentPage
+  };
+}
+
 export function paginateProject(dispatch: any, currentPage?: number) {
   return dispatch(paginateProjectActionCreator(currentPage || 1));
 }
@@ -57,4 +66,8 @@ export function paginateExperiment(dispatch: any, currentPage?: number) {
 
 export function paginateJob(dispatch: any, currentPage?: number) {
   return dispatch(paginateJobActionCreator(currentPage || 1));
+}
+
+export function paginateExperimentJob(dispatch: any, currentPage?: number) {
+  return dispatch(paginateExperimentJobActionCreator(currentPage || 1));
 }
