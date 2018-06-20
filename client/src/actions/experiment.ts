@@ -87,10 +87,10 @@ export function fetchExperiments(projectUniqueName: string, currentPage?: number
     dispatch(requestExperimentsActionCreator());
     paginationActions.paginateExperiment(dispatch, currentPage);
     let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
-    if (groupId) {
-      experimentsUrl += `/?group=${groupId}`;
-    }
     let filters: {[key: string]: number|boolean|string} = {};
+    if (groupId) {
+      filters.group = groupId;
+    }
     if (!groupId) {
       filters.independent = true;
     }
