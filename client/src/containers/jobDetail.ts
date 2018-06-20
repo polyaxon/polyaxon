@@ -8,14 +8,14 @@ import JobDetail from '../components/jobDetail';
 import * as actions from '../actions/job';
 import { getJobUniqueName } from '../constants/utils';
 
-export function mapStateToProps(state: AppState, params: any)  {
+export function mapStateToProps(state: AppState, params: any) {
   let jobUniqueName = getJobUniqueName(
     params.match.params.user,
     params.match.params.projectName,
-    params.match.params.jobId,);
+    params.match.params.jobId);
   return _.includes(state.jobs.uniqueNames, jobUniqueName) ?
-      {job: state.jobs.byUniqueNames[jobUniqueName]} :
-      {job: null};
+    {job: state.jobs.byUniqueNames[jobUniqueName]} :
+    {job: null};
 }
 
 export interface DispatchProps {
@@ -29,7 +29,6 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
       actions.fetchJob(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.experimentId,
         params.match.params.jobId))
   };
 }
