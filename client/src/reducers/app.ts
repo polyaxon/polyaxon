@@ -4,7 +4,8 @@ import { Action, combineReducers } from 'redux';
 import { projectsReducer, UserProjectsReducer } from './projects';
 import { experimentsReducer, GroupExperimentsReducer, ProjectExperimentsReducer } from './experiments';
 import { groupsReducer, ProjectGroupsReducer } from './groups';
-import { ExperimentJobsReducer, jobsReducer } from './jobs';
+import { jobsReducer } from './jobs';
+import { ExperimentJobsReducer, ExperimentJobExperimentsReducer } from './experimentJobs';
 
 import { tokenReducer } from './token';
 import { AppState } from '../constants/types';
@@ -18,6 +19,7 @@ const combinedReducer = combineReducers<AppState>({
   experiments: experimentsReducer,
   groups: groupsReducer,
   jobs: jobsReducer,
+  experimentJobs: ExperimentJobsReducer,
   modal: modalReducer,
   auth: tokenReducer,
   users: userReducer,
@@ -30,8 +32,9 @@ function SliceReducer(state: AppState, action: Action) {
   return {
     projects: ProjectGroupsReducer(ProjectExperimentsReducer(state.projects, action), action),
     groups: GroupExperimentsReducer(state.groups, action),
-    experiments: ExperimentJobsReducer(state.experiments, action),
+    experiments: ExperimentJobExperimentsReducer(state.experiments, action),
     jobs: state.jobs,
+    experimentJobs: state.experimentJobs,
     modal: state.modal,
     auth: state.auth,
     users: UserProjectsReducer(state.users, action),
