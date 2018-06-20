@@ -6,6 +6,7 @@ import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
 import PaginatedList from '../components/paginatedList';
 import { noObjectListComponent } from '../constants/templates';
+import ExperimentHeader from './experimentHeader';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -22,33 +23,33 @@ export default class Experiments extends React.Component<Props, Object> {
   public render() {
     const experiments = this.props.experiments;
     const listExperiments = () => {
-      if (experiments.length === 0) {
-         return noObjectListComponent(
-          this.props.isCurrentUser,
-          'experiment',
-          'experiment',
-          'polyaxon run --help');
-      }
       return (
-        <div className="col-md-12">
-          <ul>
-            {experiments.filter(
-              (xp: ExperimentModel) => _.isNil(xp.deleted) || !xp.deleted
-            ).map(
-              (xp: ExperimentModel) =>
-                <li className="list-item" key={xp.unique_name}>
-                  <Experiment experiment={xp} onDelete={() => this.props.onDelete(xp)}/>
-                </li>)}
-          </ul>
-        </div>
+        <ul>
+          {experiments.filter(
+            (xp: ExperimentModel) => _.isNil(xp.deleted) || !xp.deleted
+          ).map(
+            (xp: ExperimentModel) =>
+              <li className="list-item" key={xp.unique_name}>
+                <Experiment experiment={xp} onDelete={() => this.props.onDelete(xp)}/>
+              </li>)}
+        </ul>
       );
     };
     return (
       <PaginatedList
         count={this.props.count}
         componentList={listExperiments()}
+        componentHeader={ExperimentHeader()}
+        componentEmpty={noObjectListComponent(
+          this.props.isCurrentUser,
+          'experiment',
+          'experiment',
+          'polyaxon run --help')
+        }
+
         fetchData={this.props.fetchData}
       />
-    );
+    )
+      ;
   }
 }

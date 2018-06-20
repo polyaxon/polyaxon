@@ -6,6 +6,7 @@ import Job from './job';
 import { JobModel } from '../models/job';
 import PaginatedList from '../components/paginatedList';
 import { noObjectListComponent } from '../constants/templates';
+import JobHeader from './jobHeader';
 
 export interface Props {
   jobs: JobModel[];
@@ -20,27 +21,24 @@ export default class Jobs extends React.Component<Props, Object> {
   public render() {
     const jobs = this.props.jobs;
     const listJobs = () => {
-      if (jobs.length === 0) {
-        return noObjectListComponent(false, 'job', 'job');
-      }
       return (
-        <div className="col-md-12">
-          <ul>
-            {jobs.filter(
-              (xp: JobModel) => _.isNil(xp.deleted) || !xp.deleted
-            ).map(
-              (job: JobModel) =>
-                <li className="list-item" key={job.unique_name}>
-                  <Job job={job} onDelete={() => this.props.onDelete(job)}/>
-                </li>)}
-          </ul>
-        </div>
+        <ul>
+          {jobs.filter(
+            (xp: JobModel) => _.isNil(xp.deleted) || !xp.deleted
+          ).map(
+            (job: JobModel) =>
+              <li className="list-item" key={job.unique_name}>
+                <Job job={job} onDelete={() => this.props.onDelete(job)}/>
+              </li>)}
+        </ul>
       );
     };
     return (
       <PaginatedList
         count={this.props.count}
         componentList={listJobs()}
+        componentHeader={JobHeader()}
+        componentEmpty={noObjectListComponent(false, 'job', 'job')}
         fetchData={this.props.fetchData}
       />
     );

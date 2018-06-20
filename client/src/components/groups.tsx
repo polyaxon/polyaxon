@@ -5,6 +5,7 @@ import Group from './group';
 import { GroupModel } from '../models/group';
 import PaginatedList from '../components/paginatedList';
 import { noObjectListComponent } from '../constants/templates';
+import GroupHeader from './groupHeader';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -20,30 +21,27 @@ export default class Groups extends React.Component<Props, Object> {
   public render() {
     const groups = this.props.groups;
     const listGroups = () => {
-      if (groups.length === 0) {
-        return noObjectListComponent(
-          this.props.isCurrentUser,
-          'experiment group',
-          'group',
-          'polyaxon run --help');
-      }
       return (
-        <div className="col-md-12">
-          <ul>
-            {groups.filter(
-              (group: GroupModel) => _.isNil(group.deleted) || !group.deleted
-            ).map(
-              (group: GroupModel) =>
-                <li className="list-item" key={group.unique_name}>
-                  <Group group={group} onDelete={() => this.props.onDelete(group)}/>
-                </li>)}
-          </ul>
-        </div>
+        <ul>
+          {groups.filter(
+            (group: GroupModel) => _.isNil(group.deleted) || !group.deleted
+          ).map(
+            (group: GroupModel) =>
+              <li className="list-item" key={group.unique_name}>
+                <Group group={group} onDelete={() => this.props.onDelete(group)}/>
+              </li>)}
+        </ul>
       );
     };
     return (
       <PaginatedList
         count={this.props.count}
+        componentEmpty={noObjectListComponent(
+          this.props.isCurrentUser,
+          'experiment group',
+          'group',
+          'polyaxon run --help')}
+        componentHeader={GroupHeader()}
         componentList={listGroups()}
         fetchData={this.props.fetchData}
       />
