@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware } from 'redux';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import * as _ from 'lodash';
 
 import thunk from 'redux-thunk';
