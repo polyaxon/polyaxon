@@ -86,11 +86,9 @@ export function fetchExperiments(projectUniqueName: string, currentPage?: number
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
     paginationActions.paginateExperiment(dispatch, currentPage);
-    let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}`;
+    let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
     if (groupId) {
-      experimentsUrl += `/groups/${groupId}/experiments/`;
-    } else {
-      experimentsUrl += `/experiments/`;
+      experimentsUrl += `/?group=${groupId}`;
     }
     let filters: {[key: string]: number|boolean|string} = {};
     if (!groupId) {
