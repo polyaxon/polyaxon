@@ -2,6 +2,7 @@
 
 import { ProjectStateSchema, ProjectsEmptyState } from '../models/project';
 import { ExperimentStateSchema, ExperimentsEmptyState } from '../models/experiment';
+import { ExperimentJobStateSchema, ExperimentJobsEmptyState } from '../models/experimentJob';
 import { JobStateSchema, JobsEmptyState } from '../models/job';
 import { GroupStateSchema, GroupsEmptyState } from '../models/group';
 import { TokenStateSchema, TokenEmptyState } from '../models/token';
@@ -14,6 +15,7 @@ export interface AppState {
   experiments: ExperimentStateSchema;
   groups: GroupStateSchema;
   jobs: JobStateSchema;
+  experimentJobs: ExperimentJobStateSchema;
   modal: ModalStateSchema;
   auth: TokenStateSchema;
   users: UserStateSchema;
@@ -27,6 +29,7 @@ export const AppEmptyState = {
   experiments: ExperimentsEmptyState,
   groups: GroupsEmptyState,
   jobs: JobsEmptyState,
+  experimentJobs: ExperimentJobsEmptyState,
   auth: TokenEmptyState,
   user: UserEmptyState
 };

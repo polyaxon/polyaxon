@@ -1,9 +1,9 @@
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
 
-import { TokenStateSchema } from '../models/token';
-import { fetchUser } from '../actions/user';
-import { BASE_URL } from '../constants/api';
+import {TokenStateSchema} from '../models/token';
+import {fetchUser} from '../actions/user';
+import {BASE_URL} from '../constants/api';
 
 export const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
@@ -19,19 +19,6 @@ export let splitProjectName = function (projectName: string) {
 
 export let splitGroupName = function (groupName: string) {
   return groupName.split('.');
-};
-
-export let getCssClassForStatus = function (status?: string): string {
-  if (status === 'succeeded') {
-    return 'success';
-  } else if (status === 'stopped') {
-    return 'danger';
-  } else if (status === 'failed') {
-    return 'danger';
-  } else if (status === 'created') {
-    return 'info';
-  }
-  return 'warning';
 };
 
 export let sortByUpdatedAt = function (a: any, b: any): any {
@@ -117,19 +104,34 @@ export let getExperimentUniqueName = function (username: string, projectName: st
 
 export let getJobtUrl = function (username: string,
                                   projectName: string,
-                                  experimentId: number,
                                   jobId: number) {
+  let projectUrl = getProjectUrl(username, projectName);
+
+  return `${projectUrl}/jobs/${jobId}/`;
+};
+
+export let getExperimentJobtUrl = function (username: string,
+                                            projectName: string,
+                                            experimentId: number,
+                                            jobId: number) {
   let experimentUrl = getExperimentUrl(username, projectName, experimentId);
 
   return `${experimentUrl}/jobs/${jobId}/`;
 };
 
-export let getJobUniqueName = function (username: string,
-                                        projectName: string,
-                                        experimentId: number,
-                                        jobId: number) {
+export let getExperimentJobUniqueName = function (username: string,
+                                                  projectName: string,
+                                                  experimentId: number,
+                                                  jobId: number) {
   let experimentUrl = getExperimentUniqueName(username, projectName, experimentId);
   return `${experimentUrl}.${jobId}`;
+};
+
+export let getJobUniqueName = function (username: string,
+                                        projectName: string,
+                                        jobId: number) {
+  let projectUrl = getProjectUniqueName(username, projectName);
+  return `${projectUrl}.${jobId}`;
 };
 
 export function getGroupName(projectName: string, groupId: number | string) {
@@ -158,7 +160,7 @@ export function getExperimentIndexName(uniqueName: string): string {
 /*
   Convert a job unique name to an index by ignoring the group if it exists on the unique name, and task type.
 */
-export function getJobIndexName(uniqueName: string): string {
+export function getExperimentJobIndexName(uniqueName: string): string {
   let values = uniqueName.split('.');
   if (values.length === 6) {
     values.splice(2, 1);
