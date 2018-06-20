@@ -3,8 +3,8 @@ body {
   font-size: 15px;
 }
 
-.container-fluid {
-  min-height: 55%;
+.layout {
+  width: 98%;
 }
 
 .list-item {
@@ -41,14 +41,14 @@ body {
 #top {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
   padding: 0 36px;
   background: #485563;
   background: -webkit-linear-gradient(to left, #485563, #29323c);
   background: linear-gradient(to left, #485563, #29323c);
   border-radius: 0.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  height: 62px;
+  height: 45px;
 }
 
 #top #top-brand {
