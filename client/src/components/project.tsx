@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import * as moment from 'moment';
 
 import { ProjectModel } from '../models/project';
 import { getProjectUrl } from '../constants/utils';
 import Tags from './tags';
 import Description from './description';
-import MetaInfo from './metaInfo';
+import MetaInfo from './metaInfo/metaInfo';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
 
 export interface Props {
   project: ProjectModel;
@@ -33,20 +33,8 @@ function Project({project, onDelete}: Props) {
           icon="fa-lock"
           name="Visibility"
           value={visibility}
-          row={true}
         />
-        <MetaInfo
-          icon="fa-clock-o"
-          name="Created at"
-          value={moment(project.created_at).fromNow()}
-          row={true}
-        />
-        <MetaInfo
-          icon="fa-clock-o"
-          name="Last updated"
-          value={moment(project.updated_at).fromNow()}
-          row={true}
-        />
+        <DatesMetaInfo createdAt={project.created_at} updatedAt={project.updated_at}/>
       </div>
     </div>
   );

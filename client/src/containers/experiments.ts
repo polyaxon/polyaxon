@@ -34,7 +34,7 @@ export function mapStateToProps(state: AppState, ownProps: any) {
     let project = state.projects.byUniqueNames[ownProps.projectName];
     count = project.num_independent_experiments;
     let experimentNames = project.experiments.filter(
-      (experiment) => state.experiments.byUniqueNames[experiment].experiment_group_name == null
+      (experiment) => state.experiments.byUniqueNames[experiment].experiment_group == null
     );
     experimentNames = getPaginatedSlice(experimentNames, state.pagination.experimentCurrentPage);
     experimentNames.forEach(

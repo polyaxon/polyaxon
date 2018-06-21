@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 
 import { ProjectModel } from '../models/project';
 import { getNotebookUrl, getTensorboardUrl } from '../constants/utils';
 import Tags from './tags';
 import Description from './description';
-import MetaInfo from './metaInfo';
+import MetaInfo from './metaInfo/metaInfo';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
 
 export interface Props {
   project: ProjectModel;
@@ -31,31 +31,38 @@ function ProjectOverview({project}: Props) {
               icon="fa-lock"
               name="Visibility"
               value={visibility}
+              inline={true}
             />
-            <MetaInfo
-              icon="fa-clock-o"
-              name="Last updated"
-              value={moment(project.updated_at).fromNow()}
+            <DatesMetaInfo
+              createdAt={project.created_at}
+              updatedAt={project.updated_at}
+              inline={true}
             />
+          </div>
+          <div className="meta">
             <MetaInfo
               icon="fa-cube"
               name="Experiments"
               value={project.num_experiments}
+              inline={true}
             />
             <MetaInfo
               icon="fa-cubes"
               name="Experiment Groups"
               value={project.num_experiment_groups}
+              inline={true}
             />
              <MetaInfo
               icon="fa-tasks"
               name="Jobs"
               value={project.num_jobs}
+              inline={true}
              />
              <MetaInfo
               icon="fa-cog"
               name="Builds"
               value={project.num_builds}
+              inline={true}
              />
           </div>
           <Tags tags={project.tags}/>

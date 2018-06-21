@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { BuildModel } from '../models/build';
-import TaskRunMetaInfo from './taskRunMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import Status from './status';
 
 export interface Props {
