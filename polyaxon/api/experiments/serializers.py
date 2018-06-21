@@ -98,6 +98,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
     original = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
     experiment_group = fields.SerializerMethodField()
+    build_job = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
