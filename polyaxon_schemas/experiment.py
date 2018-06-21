@@ -13,7 +13,7 @@ class ExperimentJobSchema(Schema):
     uuid = UUID()
     unique_name = fields.Str(allow_none=True)
     role = fields.Str(allow_none=True)
-    experiment = UUID()
+    experiment = fields.Int()
     experiment_name = fields.Str()
     last_status = fields.Str(allow_none=True)
     is_running = fields.Bool(allow_none=True)
@@ -88,10 +88,9 @@ class ExperimentSchema(Schema):
     unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
-    project = UUID(allow_none=True)
-    project_name = fields.Str(allow_none=True)
-    experiment_group = UUID(allow_none=True)
-    experiment_group_name = fields.Str(allow_none=True)
+    project = fields.Str(allow_none=True)
+    experiment_group = fields.Str(allow_none=True)
+    build_job = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     last_status = fields.Str(allow_none=True)
     last_metric = fields.Dict(allow_none=True)
@@ -100,8 +99,6 @@ class ExperimentSchema(Schema):
     started_at = fields.LocalDateTime(allow_none=True)
     finished_at = fields.LocalDateTime(allow_none=True)
     total_run = fields.Str(allow_none=True)
-    is_running = fields.Bool(allow_none=True)
-    is_done = fields.Bool(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     has_tensorboard = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
@@ -127,8 +124,8 @@ class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'experiment_group_name', 'last_status',
-        'created_at', 'started_at', 'finished_at', 'total_run', 'num_jobs', 'is_done', 'is_running'
+        'id', 'unique_name', 'user', 'experiment_group', 'last_status',
+        'created_at', 'started_at', 'finished_at', 'total_run'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -139,9 +136,8 @@ class ExperimentConfig(BaseConfig):
                  name=None,
                  unique_name=None,
                  project=None,
-                 project_name=None,
                  experiment_group=None,
-                 experiment_group_name=None,
+                 build_job=None,
                  description=None,
                  last_status=None,
                  last_metric=None,
@@ -150,8 +146,6 @@ class ExperimentConfig(BaseConfig):
                  started_at=None,
                  finished_at=None,
                  is_clone=None,
-                 is_running=None,
-                 is_done=None,
                  has_tensorboard=False,
                  config=None,
                  num_jobs=0,
@@ -166,9 +160,8 @@ class ExperimentConfig(BaseConfig):
         self.name = name
         self.unique_name = unique_name
         self.project = project
-        self.project_name = project_name
         self.experiment_group = experiment_group
-        self.experiment_group_name = experiment_group_name
+        self.build_job = build_job
         self.description = description
         self.last_status = last_status
         self.last_metric = last_metric
@@ -176,8 +169,6 @@ class ExperimentConfig(BaseConfig):
         self.finished_at = self.localize_date(finished_at)
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
-        self.is_running = is_running
-        self.is_done = is_done
         self.is_clone = is_clone
         self.has_tensorboard = has_tensorboard
         self.config = config  # The json compiled content of this experiment
@@ -192,8 +183,9 @@ class ExperimentConfig(BaseConfig):
 
 
 class ExperimentStatusSchema(Schema):
+    id = fields.Int()
     uuid = UUID()
-    experiment = UUID()
+    experiment = fields.Int()
     created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)
@@ -216,7 +208,7 @@ class ExperimentStatusConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at']
     DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
-    def __init__(self, uuid, experiment, created_at, status, message=None):
+    def __init__(self, id, uuid, experiment, created_at, status, message=None):
         self.uuid = uuid
         self.experiment = experiment
         self.created_at = self.localize_date(created_at)
@@ -225,6 +217,7 @@ class ExperimentStatusConfig(BaseConfig):
 
 
 class ExperimentMetricSchema(Schema):
+    id = fields.Int()
     uuid = UUID()
     experiment = UUID()
     created_at = fields.LocalDateTime()
@@ -248,7 +241,8 @@ class ExperimentMetricConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at']
     DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
-    def __init__(self, uuid, experiment, created_at, values):
+    def __init__(self, id, uuid, experiment, created_at, values):
+        self.id = id
         self.uuid = uuid
         self.experiment = experiment
         self.created_at = self.localize_date(created_at)
@@ -256,6 +250,7 @@ class ExperimentMetricConfig(BaseConfig):
 
 
 class ExperimentJobStatusSchema(Schema):
+    id = fields.Int()
     uuid = UUID()
     job = UUID()
     created_at = fields.LocalDateTime()
@@ -281,7 +276,8 @@ class ExperimentJobStatusConfig(BaseConfig):
     DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'details', 'uuid']
     DATETIME_ATTRIBUTES = ['created_at']
 
-    def __init__(self, uuid, job, created_at, status, message=None, details=None):
+    def __init__(self, id, uuid, job, created_at, status, message=None, details=None):
+        self.id = id
         self.uuid = uuid
         self.job = job
         self.created_at = self.localize_date(created_at)

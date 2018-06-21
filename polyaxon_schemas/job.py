@@ -14,8 +14,8 @@ class JobSchema(Schema):
     unique_name = fields.Str(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
-    project = UUID(allow_none=True)
-    project_name = fields.Str(allow_none=True)
+    project = fields.Str(allow_none=True)
+    build_job = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     last_status = fields.Str(allow_none=True)
@@ -24,8 +24,6 @@ class JobSchema(Schema):
     started_at = fields.LocalDateTime(allow_none=True)
     finished_at = fields.LocalDateTime(allow_none=True)
     total_run = fields.Str(allow_none=True)
-    is_running = fields.Bool(allow_none=True)
-    is_done = fields.Bool(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
@@ -47,8 +45,8 @@ class JobConfig(BaseConfig):
     SCHEMA = JobSchema
     IDENTIFIER = 'Job'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'experiment_group_name', 'last_status',
-        'created_at', 'started_at', 'finished_at', 'total_run', 'is_done', 'is_running'
+        'id', 'unique_name', 'user', 'last_status',
+        'created_at', 'started_at', 'finished_at', 'total_run',
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -59,9 +57,7 @@ class JobConfig(BaseConfig):
                  name=None,
                  unique_name=None,
                  project=None,
-                 project_name=None,
-                 experiment_group=None,
-                 experiment_group_name=None,
+                 build_job=None,
                  description=None,
                  tags=None,
                  last_status=None,
@@ -84,9 +80,7 @@ class JobConfig(BaseConfig):
         self.name = name
         self.unique_name = unique_name
         self.project = project
-        self.project_name = project_name
-        self.experiment_group = experiment_group
-        self.experiment_group_name = experiment_group_name
+        self.build_job = build_job
         self.description = description
         self.tags = tags
         self.last_status = last_status
@@ -108,8 +102,9 @@ class JobConfig(BaseConfig):
 
 
 class JobStatusSchema(Schema):
+    id = fields.Int()
     uuid = UUID()
-    job = UUID()
+    job = fields.Int()
     created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)
@@ -133,7 +128,15 @@ class JobStatusConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at']
     DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'uuid']
 
-    def __init__(self, uuid, job, created_at, status, message=None, details=None):
+    def __init__(self,
+                 id,  # pylint:disable=redefined-builtin
+                 uuid,
+                 job,
+                 created_at,
+                 status,
+                 message=None,
+                 details=None):
+        self.id = id
         self.uuid = uuid
         self.job = job
         self.created_at = self.localize_date(created_at)

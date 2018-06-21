@@ -14,8 +14,7 @@ class ExperimentGroupSchema(Schema):
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
-    project = UUID(allow_none=True)
-    project_name = fields.Str(allow_none=True)
+    project = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     content = fields.Str()
     tags = fields.List(fields.Str(), allow_none=True)
@@ -66,7 +65,6 @@ class ExperimentGroupConfig(BaseConfig):
                  content=None,
                  uuid=None,
                  project=None,
-                 project_name=None,
                  num_experiments=None,
                  tags=None,
                  num_scheduled_experiments=None,
@@ -91,7 +89,6 @@ class ExperimentGroupConfig(BaseConfig):
         self.content = content
         self.uuid = uuid
         self.project = project
-        self.project_name = project_name
         self.tags = tags
         self.num_experiments = num_experiments
         self.num_scheduled_experiments = num_scheduled_experiments
@@ -111,6 +108,7 @@ class ExperimentGroupConfig(BaseConfig):
 
 
 class ProjectSchema(Schema):
+    id = fields.Int(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     unique_name = fields.Str(allow_none=True)
@@ -145,12 +143,14 @@ class ProjectConfig(BaseConfig):
     SCHEMA = ProjectSchema
     IDENTIFIER = 'project'
     DEFAULT_EXCLUDE_ATTRIBUTES = [
-        'uuid', 'description', 'updated_at', 'experiment_groups', 'experiments', 'has_code', 'user'
+        'id', 'uuid', 'description', 'updated_at',
+        'experiment_groups', 'experiments', 'has_code', 'user'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
     def __init__(self,
                  name,
+                 id=None,  # pylint:disable=redefined-builtin
                  user=None,
                  unique_name=None,
                  uuid=None,
@@ -168,6 +168,7 @@ class ProjectConfig(BaseConfig):
                  experiments=None,
                  experiment_groups=None):
         self.name = name
+        self.id = id
         self.user = user
         self.unique_name = unique_name
         self.uuid = uuid
