@@ -489,7 +489,7 @@ def statuses(ctx, job, page):
             Printer.print_header('No statuses found for experiment `{}`.'.format(_experiment))
 
         objects = list_dicts_to_tabulate(
-            [Printer.handle_statuses(o.to_light_dict(humanize_values=True))
+            [Printer.add_status_color(o.to_light_dict(humanize_values=True), status_key='status')
              for o in response['results']])
         if objects:
             Printer.print_header("Statuses:")
@@ -517,7 +517,7 @@ def statuses(ctx, job, page):
             Printer.print_header('No statuses found for job `{}`.'.format(_job))
 
         objects = list_dicts_to_tabulate(
-            [Printer.handle_statuses(o.to_light_dict(humanize_values=True))
+            [Printer.add_status_color(o.to_light_dict(humanize_values=True), status_key='status')
              for o in response['results']])
         if objects:
             Printer.print_header("Statuses:")

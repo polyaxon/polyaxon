@@ -344,8 +344,9 @@ def statuses(ctx, page):
     else:
         Printer.print_header('No statuses found for job `{}`.'.format(_job))
 
-    objects = list_dicts_to_tabulate([Printer.handle_statuses(o.to_light_dict(humanize_values=True))
-                                      for o in response['results']])
+    objects = list_dicts_to_tabulate(
+        [Printer.add_status_color(o.to_light_dict(humanize_values=True), status_key='status')
+         for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
         objects.pop('job', None)

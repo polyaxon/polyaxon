@@ -80,17 +80,18 @@ class Printer(object):
         return click.style('{}'.format(value), fg=color)
 
     @classmethod
-    def add_status_color(cls, obj_dict):
-        if obj_dict.get('is_running'):
-            obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color='yellow')
-        elif obj_dict.get('is_done'):
-            color = 'green' if obj_dict['last_status'] == 'succeeded' else 'red'
-            obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color=color)
-        elif obj_dict.get('last_status'):
-            obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color='cyan')
+    def add_status_color(cls, obj_dict, status_key='last_status'):
+        if obj_dict.get(status_key) is None:
+            return obj_dict
 
-        obj_dict.pop('is_done', None)
-        obj_dict.pop('is_running', None)
+        if obj_dict[status_key] == 'created':
+            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='cyan')
+        elif obj_dict[status_key] == 'succeeded':
+            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='green')
+        elif obj_dict[status_key] in ['failed', 'stopped']:
+            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='red')
+        else:
+            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='yellow')
         return obj_dict
 
     @classmethod
@@ -98,17 +99,6 @@ class Printer(object):
         keys = to_list(keys)
         for key in keys:
             obj_dict[key] = to_unit_memory(obj_dict[key])
-        return obj_dict
-
-    @classmethod
-    def handle_statuses(cls, obj_dict):
-        if obj_dict.get('status') == 'created':
-            obj_dict['status'] = cls.add_color(obj_dict['status'], color='cyan')
-        elif obj_dict.get('status') == 'succeeded':
-            obj_dict['status'] = cls.add_color(obj_dict['status'], color='green')
-        elif obj_dict.get('status') in ['failed', 'stopped']:
-            obj_dict['status'] = cls.add_color(obj_dict['status'], color='red')
-        obj_dict['status'] = cls.add_color(obj_dict['status'], color='yellow')
         return obj_dict
 
     @classmethod
