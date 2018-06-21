@@ -1,17 +1,10 @@
 body {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-  font-size: 15px;
 }
 
 .layout {
   width: 98%;
   min-height: 80%;
-}
-
-.list-item .description,
-.list-item .meta {
-  color: #7e7c7c;
-  font-size: 12px;
 }
 
 .navbar, #header {
