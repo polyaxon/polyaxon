@@ -2,10 +2,8 @@ export class JobModel {
   public uuid: string;
   public unique_name: string;
   public id: number;
-  public role: string;
+  public name: string;
   public last_status: string;
-  public experiment_name: string;
-  public experiment: string;
   public definition: string;
   public deleted?: boolean;
   public project?: string;
