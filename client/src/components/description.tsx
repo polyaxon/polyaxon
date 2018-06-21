@@ -3,8 +3,8 @@ import './description.less';
 
 export interface Props {
   description?: string;
-  command: string;
-  entity: string;
+  command?: string;
+  entity?: string;
 }
 
 function Description({description, entity, command}: Props) {
@@ -12,13 +12,16 @@ function Description({description, entity, command}: Props) {
     if (description) {
       return description;
     }
-    return (
-      <div>
-        <p>No description!</p>
+    if (command && entity) {
+      return (
+        <div>
+          <p>No description!</p>
 
-        <p>You can add a description to this {entity} by using CLI: <b> {command} </b></p>
-      </div>
-    );
+          <p>You can add a description to this {entity} by using CLI: <b> {command} </b></p>
+        </div>
+      );
+    }
+    return (null);
   }
 
   return (
