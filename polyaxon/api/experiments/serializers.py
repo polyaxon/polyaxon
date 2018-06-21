@@ -9,48 +9,35 @@ from libs.spec_validation import validate_experiment_spec_config
 
 class ExperimentJobStatusSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    job = fields.SerializerMethodField()
 
     class Meta:
         model = ExperimentJobStatus
-        exclude = ('id',)
-
-    def get_job(self, obj):
-        return obj.job.uuid.hex
+        exclude = []
+        extra_kwargs = {'job': {'read_only': True}}
 
 
 class ExperimentJobSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    experiment = fields.SerializerMethodField()
-    experiment_name = fields.SerializerMethodField()
     resources = JobResourcesSerializer(required=False)
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
 
     class Meta:
         model = ExperimentJob
+        extra_kwargs = {'experiment': {'read_only': True}}
         fields = (
             'id',
             'uuid',
             'unique_name',
             'role',
             'experiment',
-            'experiment_name',
             'last_status',
-            'is_running',
-            'is_done',
             'created_at',
             'updated_at',
             'started_at',
             'finished_at',
             'resources',
         )
-
-    def get_experiment(self, obj):
-        return obj.experiment.uuid.hex
-
-    def get_experiment_name(self, obj):
-        return obj.experiment.unique_name
 
 
 class ExperimentJobDetailSerializer(ExperimentJobSerializer):
@@ -60,26 +47,20 @@ class ExperimentJobDetailSerializer(ExperimentJobSerializer):
 
 class ExperimentStatusSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    experiment = fields.SerializerMethodField()
 
     class Meta:
         model = ExperimentStatus
-        exclude = ('id',)
-
-    def get_experiment(self, obj):
-        return obj.experiment.uuid.hex
+        exclude = []
+        extra_kwargs = {'experiment': {'read_only': True}}
 
 
 class ExperimentMetricSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    experiment = fields.SerializerMethodField()
 
     class Meta:
         model = ExperimentMetric
-        exclude = ('id',)
-
-    def get_experiment(self, obj):
-        return obj.experiment.uuid.hex
+        exclude = []
+        extra_kwargs = {'experiment': {'read_only': True}}
 
 
 class ExperimentLastMetricSerializer(serializers.ModelSerializer):
@@ -114,11 +95,10 @@ class ExperimentDeclarationsSerializer(serializers.ModelSerializer):
 
 class ExperimentSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
+    original = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
     experiment_group = fields.SerializerMethodField()
-    experiment_group_name = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
-    project_name = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
 
@@ -136,42 +116,37 @@ class ExperimentSerializer(serializers.ModelSerializer):
             'started_at',
             'finished_at',
             'last_status',
-            'is_running',
-            'is_done',
+            'original',
             'project',
-            'project_name',
             'experiment_group',
-            'experiment_group_name',
+            'build_job',
             'tags',
         )
 
     def get_user(self, obj):
         return obj.user.username
 
-    def get_experiment_group(self, obj):
-        return obj.experiment_group.uuid.hex if obj.experiment_group else None
+    def get_original(self, obj):
+        return obj.original_experiment.unique_name if obj.original_experiment else None
 
-    def get_experiment_group_name(self, obj):
+    def get_experiment_group(self, obj):
         return obj.experiment_group.unique_name if obj.experiment_group else None
 
     def get_project(self, obj):
-        return obj.project.uuid.hex
-
-    def get_project_name(self, obj):
         return obj.project.unique_name
+
+    def get_build_job(self, obj):
+        return obj.build_job.unique_name if obj.build_job else None
 
 
 class ExperimentDetailSerializer(ExperimentSerializer):
     build_job = fields.SerializerMethodField()
-    original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
-            'build_job',
-            'original',
             'original_experiment',
             'description',
             'config',
@@ -183,12 +158,6 @@ class ExperimentDetailSerializer(ExperimentSerializer):
             'has_tensorboard',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
-
-    def get_build_job(self, obj):
-        return obj.build_job.unique_name if obj.build_job else None
-
-    def get_original(self, obj):
-        return obj.original_experiment.unique_name if obj.original_experiment else None
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None

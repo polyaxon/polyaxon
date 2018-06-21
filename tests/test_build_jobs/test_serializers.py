@@ -33,11 +33,8 @@ class TestBuildJobSerializer(BaseTest):
         'last_status',
         'started_at',
         'finished_at',
-        'is_running',
-        'is_done',
         'tags',
         'project',
-        'project_name',
     }
 
     def setUp(self):
@@ -51,8 +48,7 @@ class TestBuildJobSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('project_name') == self.obj1.project.unique_name
+        assert data.pop('project') == self.obj1.project.unique_name
         assert data.pop('last_status') == self.obj1.last_status
         data.pop('created_at')
         data.pop('updated_at')
@@ -105,7 +101,6 @@ class TestBuildJobDetailSerializer(BaseTest):
         'created_at',
         'updated_at',
         'project',
-        'project_name',
         'user',
         'last_status',
         'description',
@@ -113,8 +108,6 @@ class TestBuildJobDetailSerializer(BaseTest):
         'tags',
         'started_at',
         'finished_at',
-        'is_running',
-        'is_done',
         'resources',
         'num_jobs',
         'num_experiments',
@@ -131,8 +124,7 @@ class TestBuildJobDetailSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('project_name') == self.obj1.project.unique_name
+        assert data.pop('project') == self.obj1.project.unique_name
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('num_jobs') == Job.objects.filter(build_job=self.obj1).count()
         assert data.pop('num_experiments') == Experiment.objects.filter(build_job=self.obj1).count()
@@ -179,7 +171,7 @@ class TestBuildJobStatusSerializer(BaseTest):
     serializer_class = BuildJobStatusSerializer
     model_class = BuildJobStatus
     factory_class = BuildJobStatusFactory
-    expected_keys = {'uuid', 'job', 'created_at', 'status', 'message', 'details'}
+    expected_keys = {'id', 'uuid', 'job', 'created_at', 'status', 'message', 'details'}
 
     def setUp(self):
         super().setUp()

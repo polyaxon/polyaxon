@@ -23,15 +23,14 @@ class TestExperimentGroupSerializer(BaseTest):
         'unique_name',
         'description',
         'project',
-        'project_name',
         'user',
         'created_at',
         'updated_at',
+        'started_at',
+        'finished_at',
         'tags',
         'concurrency',
         'last_status',
-        'is_running',
-        'is_done',
         'search_algorithm',
     }
 
@@ -46,9 +45,10 @@ class TestExperimentGroupSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         data.pop('created_at')
         data.pop('updated_at')
+        data.pop('started_at')
+        data.pop('finished_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('project_name') == self.obj1.project.unique_name
+        assert data.pop('project') == self.obj1.project.unique_name
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('search_algorithm') == self.obj1.search_algorithm
@@ -78,15 +78,12 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         'tags',
         'hptuning',
         'project',
-        'project_name',
         'user',
         'created_at',
         'updated_at',
         'started_at',
         'finished_at',
         'has_tensorboard',
-        'is_running',
-        'is_done',
         'concurrency',
         'num_experiments',
         'last_status',
@@ -115,8 +112,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         data.pop('started_at')
         data.pop('finished_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('project_name') == self.obj1.project.unique_name
+        assert data.pop('project') == self.obj1.project.unique_name
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('num_experiments') == self.obj1.experiments.count()
         assert data.pop('num_pending_experiments') == self.obj1.pending_experiments.count()

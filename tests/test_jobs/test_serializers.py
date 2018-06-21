@@ -27,11 +27,9 @@ class TestJobSerializer(BaseTest):
         'last_status',
         'started_at',
         'finished_at',
-        'is_running',
-        'is_done',
         'tags',
         'project',
-        'project_name',
+        'build_job',
     }
 
     def setUp(self):
@@ -45,8 +43,9 @@ class TestJobSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('project_name') == self.obj1.project.unique_name
+        assert data.pop('project') == self.obj1.project.unique_name
+        assert data.pop('build_job') == (
+            self.obj1.build_job.unique_name if self.obj1.build_job else None)
         assert data.pop('last_status') == self.obj1.last_status
         data.pop('created_at')
         data.pop('updated_at')
@@ -99,7 +98,7 @@ class TestJobDetailSerializer(BaseTest):
         'created_at',
         'updated_at',
         'project',
-        'project_name',
+        'build_job',
         'user',
         'last_status',
         'description',
@@ -107,8 +106,6 @@ class TestJobDetailSerializer(BaseTest):
         'tags',
         'started_at',
         'finished_at',
-        'is_running',
-        'is_done',
         'is_clone',
         'build_job',
         'original',
@@ -126,10 +123,8 @@ class TestJobDetailSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('project_name') == self.obj1.project.unique_name
-        assert data.pop('build_job') == (self.obj1.build_job.unique_name if
-                                         self.obj1.build_job else None)
+        assert data.pop('project') == self.obj1.project.unique_name
+        assert data.pop('build_job') == self.obj1.build_job.unique_name
         assert data.pop('original') == (self.obj1.original_job.unique_name if
                                         self.obj1.original_job else None)
         assert data.pop('last_status') == self.obj1.last_status
@@ -191,7 +186,7 @@ class TestJobStatusSerializer(BaseTest):
     serializer_class = JobStatusSerializer
     model_class = JobStatus
     factory_class = JobStatusFactory
-    expected_keys = {'uuid', 'job', 'created_at', 'status', 'message', 'details'}
+    expected_keys = {'id', 'uuid', 'job', 'created_at', 'status', 'message', 'details'}
 
     def setUp(self):
         super().setUp()
@@ -204,7 +199,7 @@ class TestJobStatusSerializer(BaseTest):
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('job') == self.obj1.job.uuid.hex
+        assert data.pop('job') == self.obj1.job.id
         data.pop('created_at')
 
         for k, v in data.items():

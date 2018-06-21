@@ -8,7 +8,6 @@ from libs.spec_validation import validate_group_spec_content
 class ExperimentGroupSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     project = fields.SerializerMethodField()
-    project_name = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
 
     class Meta:
@@ -21,10 +20,7 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
             'user',
             'description',
             'last_status',
-            'is_running',
-            'is_done',
             'project',
-            'project_name',
             'created_at',
             'updated_at',
             'started_at',
@@ -35,9 +31,6 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
         )
 
     def get_project(self, obj):
-        return obj.project.uuid.hex
-
-    def get_project_name(self, obj):
         return obj.project.unique_name
 
     def get_user(self, obj):

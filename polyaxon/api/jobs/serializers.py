@@ -6,23 +6,18 @@ from libs.spec_validation import validate_job_spec_config
 
 class JobStatusSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    job = fields.SerializerMethodField()
 
     class Meta:
         model = JobStatus
-        exclude = ('id',)
-
-    def get_job(self, obj):
-        return obj.job.uuid.hex
+        extra_kwargs = {'job': {'read_only': True}}
+        exclude = []
 
 
 class JobSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
-    project_name = fields.SerializerMethodField()
-    started_at = fields.DateTimeField(read_only=True)
-    finished_at = fields.DateTimeField(read_only=True)
+    build_job = fields.SerializerMethodField()
 
     class Meta:
         model = Job
@@ -38,32 +33,28 @@ class JobSerializer(serializers.ModelSerializer):
             'last_status',
             'started_at',
             'finished_at',
-            'is_running',
-            'is_done',
             'tags',
             'project',
-            'project_name',
+            'build_job',
         )
 
     def get_user(self, obj):
         return obj.user.username
 
     def get_project(self, obj):
-        return obj.project.uuid.hex
-
-    def get_project_name(self, obj):
         return obj.project.unique_name
+
+    def get_build_job(self, obj):
+        return obj.build_job.unique_name if obj.build_job else None
 
 
 class JobDetailSerializer(JobSerializer):
-    build_job = fields.SerializerMethodField()
     original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
 
     class Meta(JobSerializer.Meta):
         fields = JobSerializer.Meta.fields + (
             'is_clone',
-            'build_job',
             'original',
             'original_job',
             'description',
@@ -71,9 +62,6 @@ class JobDetailSerializer(JobSerializer):
             'resources',
         )
         extra_kwargs = {'original_job': {'write_only': True}}
-
-    def get_build_job(self, obj):
-        return obj.build_job.unique_name if obj.build_job else None
 
     def get_original(self, obj):
         return obj.original_job.unique_name if obj.original_job else None
