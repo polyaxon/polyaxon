@@ -10,9 +10,6 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
     project = fields.SerializerMethodField()
     project_name = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
-    num_experiments = fields.SerializerMethodField()
-    num_pending_experiments = fields.SerializerMethodField()
-    num_running_experiments = fields.SerializerMethodField()
 
     class Meta:
         model = ExperimentGroup
@@ -30,13 +27,10 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
             'project_name',
             'created_at',
             'updated_at',
-            'concurrency',
             'tags',
-            'search_algorithm',
-            'has_tensorboard',
-            'num_experiments',
-            'num_pending_experiments',
-            'num_running_experiments',)
+            'concurrency',
+            'search_algorithm'
+        )
 
     def get_project(self, obj):
         return obj.project.uuid.hex
@@ -47,17 +41,11 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         return obj.user.username
 
-    def get_num_experiments(self, obj):
-        return obj.experiments.count()
-
-    def get_num_pending_experiments(self, obj):
-        return obj.pending_experiments.count()
-
-    def get_num_running_experiments(self, obj):
-        return obj.running_experiments.count()
-
 
 class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
+    num_experiments = fields.SerializerMethodField()
+    num_pending_experiments = fields.SerializerMethodField()
+    num_running_experiments = fields.SerializerMethodField()
     num_scheduled_experiments = fields.SerializerMethodField()
     num_succeeded_experiments = fields.SerializerMethodField()
     num_failed_experiments = fields.SerializerMethodField()
@@ -70,10 +58,24 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
             'hptuning',
             'started_at',
             'finished_at',
+            'has_tensorboard',
+            'num_experiments',
+            'num_pending_experiments',
+            'num_running_experiments',
             'num_scheduled_experiments',
             'num_succeeded_experiments',
             'num_failed_experiments',
-            'num_stopped_experiments')
+            'num_stopped_experiments',
+        )
+
+    def get_num_experiments(self, obj):
+        return obj.experiments.count()
+
+    def get_num_pending_experiments(self, obj):
+        return obj.pending_experiments.count()
+
+    def get_num_running_experiments(self, obj):
+        return obj.running_experiments.count()
 
     def get_num_scheduled_experiments(self, obj):
         return obj.scheduled_experiments.count()

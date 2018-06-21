@@ -43,7 +43,8 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
             'updated_at',
             'started_at',
             'finished_at',
-            'resources',)
+            'resources',
+        )
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex
@@ -81,6 +82,36 @@ class ExperimentMetricSerializer(serializers.ModelSerializer):
         return obj.experiment.uuid.hex
 
 
+class ExperimentLastMetricSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+
+    class Meta:
+        model = Experiment
+        fields = (
+            'id',
+            'uuid',
+            'name',
+            'unique_name',
+            'last_metric',
+            'started_at',
+            'finished_at',
+        )
+
+
+class ExperimentDeclarationsSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+
+    class Meta:
+        model = Experiment
+        fields = (
+            'id',
+            'uuid',
+            'name',
+            'unique_name',
+            'declarations',
+        )
+
+
 class ExperimentSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
@@ -88,8 +119,6 @@ class ExperimentSerializer(serializers.ModelSerializer):
     experiment_group_name = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
     project_name = fields.SerializerMethodField()
-    num_jobs = fields.SerializerMethodField()
-    last_metric = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
 
@@ -104,20 +133,16 @@ class ExperimentSerializer(serializers.ModelSerializer):
             'description',
             'created_at',
             'updated_at',
-            'last_status',
-            'last_metric',
             'started_at',
             'finished_at',
+            'last_status',
             'is_running',
             'is_done',
-            'is_clone',
             'project',
             'project_name',
             'experiment_group',
-            'tags',
-            'has_tensorboard',
             'experiment_group_name',
-            'num_jobs',
+            'tags',
         )
 
     def get_user(self, obj):
@@ -135,33 +160,44 @@ class ExperimentSerializer(serializers.ModelSerializer):
     def get_project_name(self, obj):
         return obj.project.unique_name
 
-    def get_num_jobs(self, obj):
-        return obj.jobs.count()
-
-    def get_last_metric(self, obj):
-        return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
-
 
 class ExperimentDetailSerializer(ExperimentSerializer):
+    build_job = fields.SerializerMethodField()
     original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
+    num_jobs = fields.SerializerMethodField()
+    last_metric = fields.SerializerMethodField()
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
+            'build_job',
             'original',
             'original_experiment',
             'description',
             'config',
             'declarations',
             'resources',
+            'last_metric',
+            'num_jobs',
+            'is_clone',
+            'has_tensorboard',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
+
+    def get_build_job(self, obj):
+        return obj.build_job.unique_name if obj.build_job else None
 
     def get_original(self, obj):
         return obj.original_experiment.unique_name if obj.original_experiment else None
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
+
+    def get_num_jobs(self, obj):
+        return obj.jobs.count()
+
+    def get_last_metric(self, obj):
+        return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):

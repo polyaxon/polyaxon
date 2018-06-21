@@ -9,6 +9,8 @@ from api.build_jobs.serializers import (
 )
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.models.experiments import Experiment
+from db.models.jobs import Job
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from tests.utils import BaseTest
 
@@ -114,6 +116,8 @@ class TestBuildJobDetailSerializer(BaseTest):
         'is_running',
         'is_done',
         'resources',
+        'num_jobs',
+        'num_experiments',
     }
 
     def setUp(self):
@@ -130,6 +134,8 @@ class TestBuildJobDetailSerializer(BaseTest):
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('project_name') == self.obj1.project.unique_name
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('num_jobs') == Job.objects.filter(build_job=self.obj1).count()
+        assert data.pop('num_experiments') == Experiment.objects.filter(build_job=self.obj1).count()
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)

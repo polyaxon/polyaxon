@@ -41,7 +41,6 @@ class JobSerializer(serializers.ModelSerializer):
             'is_running',
             'is_done',
             'tags',
-            'is_clone',
             'project',
             'project_name',
         )
@@ -57,14 +56,24 @@ class JobSerializer(serializers.ModelSerializer):
 
 
 class JobDetailSerializer(JobSerializer):
+    build_job = fields.SerializerMethodField()
     original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
 
     class Meta(JobSerializer.Meta):
         fields = JobSerializer.Meta.fields + (
-            'original', 'original_job',
-            'description', 'config', 'resources',)
+            'is_clone',
+            'build_job',
+            'original',
+            'original_job',
+            'description',
+            'config',
+            'resources',
+        )
         extra_kwargs = {'original_job': {'write_only': True}}
+
+    def get_build_job(self, obj):
+        return obj.build_job.unique_name if obj.build_job else None
 
     def get_original(self, obj):
         return obj.original_job.unique_name if obj.original_job else None

@@ -7,8 +7,8 @@ from api.experiments.serializers import (
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer
-)
+    ExperimentStatusSerializer,
+    ExperimentLastMetricSerializer, ExperimentDeclarationsSerializer)
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentStatus
@@ -18,6 +18,83 @@ from factories.factory_experiments import (
     ExperimentStatusFactory
 )
 from tests.utils import BaseTest
+
+
+@pytest.mark.experiments_mark
+class TestExperimentLastMetricSerializer(BaseTest):
+    DISABLE_RUNNER = True
+    serializer_class = ExperimentLastMetricSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    expected_keys = {
+        'id',
+        'uuid',
+        'name',
+        'unique_name',
+        'last_metric',
+        'started_at',
+        'finished_at',
+    }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('last_metric') == self.obj1.last_metric
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.experiments_mark
+class TestExperimentDeclarationsSerializer(BaseTest):
+    DISABLE_RUNNER = True
+    serializer_class = ExperimentDeclarationsSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    expected_keys = {
+        'id',
+        'uuid',
+        'name',
+        'unique_name',
+        'declarations',
+    }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
 
 
 @pytest.mark.experiments_mark
@@ -36,19 +113,16 @@ class TestExperimentSerializer(BaseTest):
         'created_at',
         'updated_at',
         'last_status',
-        'last_metric',
         'started_at',
         'finished_at',
         'tags',
         'is_running',
         'is_done',
-        'is_clone',
-        'has_tensorboard',
         'project',
         'project_name',
         'experiment_group',
         'experiment_group_name',
-        'num_jobs', }
+    }
 
     def setUp(self):
         super().setUp()
@@ -68,8 +142,6 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('experiment_group_name') == (self.obj1.experiment_group.unique_name
                                                      if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
-        assert data.pop('last_metric') == self.obj1.last_metric
-        assert data.pop('num_jobs') == self.obj1.jobs.count()
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)
@@ -99,21 +171,6 @@ class TestExperimentSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
         assert data['finished_at'] is not None
-
-    def test_cloned(self):
-        obj1 = self.factory_class()
-        data = self.serializer_class(obj1).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data['is_clone'] is False
-
-        obj2 = self.factory_class()
-        obj1.original_experiment = obj2
-        obj1.save()
-        data = self.serializer_class(obj1).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data['is_clone'] is True
 
     def test_serialize_many(self):
         data = self.serializer_class(self.model_class.objects.all(), many=True).data
@@ -151,6 +208,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'is_done',
         'is_clone',
         'has_tensorboard',
+        'build_job',
         'original',
         'num_jobs',
         'declarations',
@@ -172,6 +230,8 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('project_name') == self.obj1.project.unique_name
+        assert data.pop('build_job') == (self.obj1.build_job.unique_name if
+                                         self.obj1.build_job else None)
         assert data.pop('original') == (self.obj1.original_experiment.unique_name if
                                         self.obj1.original_experiment else None)
         assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex

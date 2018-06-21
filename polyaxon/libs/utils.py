@@ -3,7 +3,7 @@ from distutils.util import strtobool  # pylint:disable=import-error
 from polyaxon_schemas.utils import to_list
 
 
-def to_bool(value):
+def to_bool(value, handle_none=False, exception=TypeError):
     if isinstance(value, str):
         value = strtobool(value)
 
@@ -13,7 +13,10 @@ def to_bool(value):
     if value in (True, 1):
         return True
 
-    raise TypeError('The value `{}` cannot be interpreted as boolean'.format(value))
+    if handle_none and value is None:
+        return False
+
+    raise exception('The value `{}` cannot be interpreted as boolean'.format(value))
 
 
 def get_list(values):

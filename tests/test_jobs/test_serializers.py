@@ -30,7 +30,6 @@ class TestJobSerializer(BaseTest):
         'is_running',
         'is_done',
         'tags',
-        'is_clone',
         'project',
         'project_name',
     }
@@ -79,21 +78,6 @@ class TestJobSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is not None
 
-    def test_cloned(self):
-        obj1 = self.factory_class()
-        data = self.serializer_class(obj1).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data['is_clone'] is False
-
-        obj2 = self.factory_class()
-        obj1.original_job = obj2
-        obj1.save()
-        data = self.serializer_class(obj1).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data['is_clone'] is True
-
     def test_serialize_many(self):
         data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
@@ -126,6 +110,7 @@ class TestJobDetailSerializer(BaseTest):
         'is_running',
         'is_done',
         'is_clone',
+        'build_job',
         'original',
         'resources',
     }
@@ -143,6 +128,8 @@ class TestJobDetailSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('project_name') == self.obj1.project.unique_name
+        assert data.pop('build_job') == (self.obj1.build_job.unique_name if
+                                         self.obj1.build_job else None)
         assert data.pop('original') == (self.obj1.original_job.unique_name if
                                         self.obj1.original_job else None)
         assert data.pop('last_status') == self.obj1.last_status

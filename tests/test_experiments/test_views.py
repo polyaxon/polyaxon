@@ -13,8 +13,8 @@ from api.experiments.serializers import (
     ExperimentJobStatusSerializer,
     ExperimentMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer
-)
+    ExperimentStatusSerializer,
+    ExperimentLastMetricSerializer, ExperimentDeclarationsSerializer)
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
@@ -318,6 +318,46 @@ class TestProjectExperimentListViewV1(BaseViewTest):
             'lr': 0.1,
             'dropout': 0.5
         }
+
+
+@pytest.mark.experiments_mark
+class TestProjectExperimentLastMetricListViewV1(BaseViewTest):
+    metrics_serializer_class = ExperimentLastMetricSerializer
+    declarations_serializer_class = ExperimentDeclarationsSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    num_objects = 3
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.url = '/{}/{}/{}/experiments/'.format(API_V1,
+                                                   self.project.user.username,
+                                                   self.project.name)
+        self.objects = [self.factory_class(project=self.project,
+                                           declarations={'param1': i, 'param2': i * 2})
+                        for i in range(self.num_objects)]
+        # Create Metrics
+        for obj in self.objects:
+            ExperimentMetricFactory(experiment=obj)
+        self.queryset = self.model_class.objects.filter(project=self.project)
+        self.queryset = self.queryset.order_by('-updated_at')
+
+    def test_get_metrics(self):
+        resp = self.auth_client.get(self.url + '?metrics=true')
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == self.queryset.count()
+        assert resp.data['results'] == self.metrics_serializer_class(
+            self.queryset, many=True).data
+
+    def test_get_declarations(self):
+        resp = self.auth_client.get(self.url + '?declarations=true')
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == self.queryset.count()
+        assert resp.data['results'] == self.declarations_serializer_class(
+            self.queryset, many=True).data
 
 
 @pytest.mark.experiments_mark

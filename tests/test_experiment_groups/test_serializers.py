@@ -29,14 +29,10 @@ class TestExperimentGroupSerializer(BaseTest):
         'updated_at',
         'tags',
         'concurrency',
-        'num_experiments',
         'last_status',
-        'has_tensorboard',
         'is_running',
         'is_done',
         'search_algorithm',
-        'num_pending_experiments',
-        'num_running_experiments',
     }
 
     def setUp(self):
@@ -54,9 +50,6 @@ class TestExperimentGroupSerializer(BaseTest):
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('project_name') == self.obj1.project.unique_name
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('num_experiments') == self.obj1.experiments.count()
-        assert data.pop('num_pending_experiments') == self.obj1.pending_experiments.count()
-        assert data.pop('num_running_experiments') == self.obj1.running_experiments.count()
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('search_algorithm') == self.obj1.search_algorithm
 

@@ -1,6 +1,8 @@
 from rest_framework import fields, serializers
 
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.models.experiments import Experiment
+from db.models.jobs import Job
 from libs.spec_validation import validate_build_spec_config
 
 
@@ -57,12 +59,26 @@ class BuildJobSerializer(serializers.ModelSerializer):
 
 class BuildJobDetailSerializer(BuildJobSerializer):
     resources = fields.SerializerMethodField()
+    num_jobs = fields.SerializerMethodField()
+    num_experiments = fields.SerializerMethodField()
 
     class Meta(BuildJobSerializer.Meta):
-        fields = BuildJobSerializer.Meta.fields + ('description', 'config', 'resources',)
+        fields = BuildJobSerializer.Meta.fields + (
+            'description',
+            'config',
+            'resources',
+            'num_jobs',
+            'num_experiments',
+        )
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
+
+    def get_num_jobs(self, obj):
+        return Job.objects.filter(build_job=obj).count()
+
+    def get_num_experiments(self, obj):
+        return Experiment.objects.filter(build_job=obj).count()
 
 
 class BuildJobCreateSerializer(serializers.ModelSerializer):
