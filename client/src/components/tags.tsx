@@ -6,16 +6,23 @@ export interface Props {
 }
 
 function Tags({tags}: Props) {
-  return (
-    <div className="tags">
-      {tags && tags.map(
-        (tag, idx) =>
-          <span key={idx} className="label label-tags">
+  function getTags() {
+    if (tags) {
+      return (
+        <div className="tags">
+          {tags && tags.map(
+            (tag, idx) =>
+              <span key={idx} className="label label-tags">
             <i className="fa fa-tags icon" aria-hidden="true"/> {tag}
           </span>
-      )}
-    </div>
-  );
+          )}
+        </div>
+      );
+    }
+    return (null);
+  }
+
+  return (getTags());
 }
 
 export default Tags;
