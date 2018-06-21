@@ -1,10 +1,12 @@
 import * as React from 'react';
 
+import './emptyList.less';
+
 export function noObjectListComponent(isCurrentUser: boolean, objectType: string, image: string, command?: string) {
   return (
     <div className="row">
       <div className="col-md-offset-2 col-md-8">
-        <div className="jumbotron jumbotron-action text-center">
+        <div className="jumbotron jumbotron-action text-center empty-jumbotron">
           <h3>No {objectType} was found</h3>
           <img src={`/static/images/${image}.svg`} alt={image} className="empty-icon"/>
           {command && isCurrentUser &&
