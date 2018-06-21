@@ -13,12 +13,8 @@ export let urlifyProjectName = function (projectName: string) {
   return projectName.replace(re, '\/');
 };
 
-export let splitProjectName = function (projectName: string) {
-  return projectName.split('.');
-};
-
-export let splitGroupName = function (groupName: string) {
-  return groupName.split('.');
+export let splitUniqueName = function (uniqueName: string) {
+  return uniqueName.split('.');
 };
 
 export let sortByUpdatedAt = function (a: any, b: any): any {
@@ -82,38 +78,54 @@ export let getProjectUniqueName = function (username: string, projectName: strin
   return `${username}.${projectName}`;
 };
 
-export let getGroupUrl = function (username: string, projectName: string, groupId: number) {
+export let getGroupUrl = function (username: string,
+                                   projectName: string,
+                                   groupId: number | string) {
   let projectUrl = getProjectUrl(username, projectName);
   return `${projectUrl}/groups/${groupId}/`;
 };
 
-export let getGroupUniqueName = function (username: string, projectName: string, groupId: number) {
+export let getGroupUniqueName = function (username: string,
+                                          projectName: string,
+                                          groupId: number | string) {
   let projectUniqueName = getProjectUniqueName(username, projectName);
   return `${projectUniqueName}.${groupId}`;
 };
 
-export let getExperimentUrl = function (username: string, projectName: string, experimentId: number) {
+export let getExperimentUrl = function (username: string,
+                                        projectName: string,
+                                        experimentId:  number | string) {
   let projectUrl = getProjectUrl(username, projectName);
   return `${projectUrl}/experiments/${experimentId}/`;
 };
 
-export let getExperimentUniqueName = function (username: string, projectName: string, experimentId: number) {
+export let getExperimentUniqueName = function (username: string,
+                                               projectName: string,
+                                               experimentId:  number | string) {
   let projectUniqueName = getProjectUniqueName(username, projectName);
   return `${projectUniqueName}.${experimentId}`;
 };
 
 export let getJobUrl = function (username: string,
                                  projectName: string,
-                                 jobId: number) {
+                                 jobId:  number | string) {
   let projectUrl = getProjectUrl(username, projectName);
 
   return `${projectUrl}/jobs/${jobId}/`;
 };
 
-export let getExperimentJobtUrl = function (username: string,
-                                            projectName: string,
-                                            experimentId: number,
-                                            jobId: number) {
+export let getBuildUrl = function (username: string,
+                                   projectName: string,
+                                   buildId: number | string) {
+  let projectUrl = getProjectUrl(username, projectName);
+
+  return `${projectUrl}/builds/${buildId}/`;
+};
+
+export let getExperimentJobUrl = function (username: string,
+                                           projectName: string,
+                                           experimentId: number,
+                                           jobId: number) {
   let experimentUrl = getExperimentUrl(username, projectName, experimentId);
 
   return `${experimentUrl}/jobs/${jobId}/`;
