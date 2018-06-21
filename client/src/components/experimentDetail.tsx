@@ -9,8 +9,7 @@ import {
   getGroupUrl,
   getProjectUrl,
   getUserUrl,
-  splitGroupName,
-  splitProjectName,
+  splitUniqueName,
 } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
@@ -33,11 +32,11 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
     if (_.isNil(experiment)) {
       return (<div>Nothing</div>);
     }
-    let values = splitProjectName(experiment.project_name);
-    let exerimentUrl = getExperimentUrl(values[0], values[1], this.props.experiment.id);
+    let values = splitUniqueName(experiment.project);
+    let experimentUrl = getExperimentUrl(values[0], values[1], this.props.experiment.id);
     let group = null;
-    if (!_.isNil(experiment.experiment_group_name)) {
-      group = parseInt(splitGroupName(experiment.experiment_group_name)[2], 10);
+    if (!_.isNil(experiment.experiment_group)) {
+      group = parseInt(splitUniqueName(experiment.experiment_group)[2], 10);
     }
     let breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
@@ -55,7 +54,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
           <div className="entity-details">
             <Breadcrumb icon="fa-cube" links={breadcrumbLinks}/>
             <LinkedTab
-              baseUrl={exerimentUrl}
+              baseUrl={experimentUrl}
               tabs={[
                 {
                   title: 'Overview',

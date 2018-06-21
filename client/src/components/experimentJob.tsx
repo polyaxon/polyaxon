@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { ExperimentJobModel } from '../models/experimentJob';
-import TaskRunMetaInfo from './taskRunMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import Status from './status';
 
 export interface Props {

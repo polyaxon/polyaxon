@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 
 import { ExperimentModel } from '../models/experiment';
-import ExperimentJobs from '../containers/experimentJobs';
-import Logs from '../containers/logs';
-import TaskRunMetaInfo from './taskRunMetaInfo';
 import Status from './status';
 import Description from './description';
+import UserMetaInfo from './metaInfo/userMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import MetaInfo from './metaInfo/metaInfo';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -30,21 +30,20 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
                 command="polyaxon experiment update --description=..."
              />
             <div className="meta">
-              <span className="meta-info">
-                <i className="fa fa-user-o icon" aria-hidden="true"/>
-                <span className="title">User:</span>
-                {experiment.user}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"/>
-                <span className="title">Created:</span>
-                {moment(experiment.created_at).fromNow()}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-tasks icon" aria-hidden="true"/>
-                <span className="title">Jobs:</span>
-                {experiment.num_jobs}
-              </span>
+              <UserMetaInfo user={experiment.user} inline={true}/>
+              <DatesMetaInfo
+                createdAt={experiment.created_at}
+                updatedAt={experiment.updated_at}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-cube"
+                name="Jobs"
+                value={experiment.num_jobs}
+                inline={true}
+              />
+            </div>
+            <div className="meta">
               <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at} inline={true}/>
               <Status status={experiment.last_status}/>
             </div>
