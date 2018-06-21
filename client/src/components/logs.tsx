@@ -21,8 +21,22 @@ export default class Logs extends React.Component<Props, Object> {
 
     return (
       <div className="logs">
-        {logsElements}
+        <div className="row">
+          <div className="col-md-12">
+            <div className="logs-header">
+              Logs
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="logs-content">
+              {logsElements}
+            </div>
+          </div>
+        </div>
       </div>
+
     );
   }
 }
