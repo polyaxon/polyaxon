@@ -30,7 +30,9 @@ from api.experiments.serializers import (
     ExperimentJobStatusSerializer,
     ExperimentMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer
+    ExperimentStatusSerializer,
+    ExperimentLastMetricSerializer,
+    ExperimentDeclarationsSerializer,
 )
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
@@ -79,12 +81,32 @@ class ProjectExperimentListView(ListCreateAPIView):
     """List/Create an experiment under a project"""
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
+    metrics_serializer_class = ExperimentLastMetricSerializer
+    declarations_serializer_class = ExperimentDeclarationsSerializer
     create_serializer_class = ExperimentCreateSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)
     query_manager = 'experiment'
     ordering = ('-updated_at',)
     ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
+
+    def get_serializer_class(self):
+        if self.create_serializer_class and self.request.method.lower() == 'post':
+            return self.create_serializer_class
+
+        metrics_only = to_bool(self.request.query_params.get('metrics', None),
+                               handle_none=True,
+                               exception=ValidationError)
+        if metrics_only:
+            return self.metrics_serializer_class
+
+        declarations_only = to_bool(self.request.query_params.get('declarations', None),
+                                    handle_none=True,
+                                    exception=ValidationError)
+        if declarations_only:
+            return self.declarations_serializer_class
+
+        return self.serializer_class
 
     def get_group(self, project, group_id):
         group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
@@ -95,18 +117,16 @@ class ProjectExperimentListView(ListCreateAPIView):
         return group
 
     def filter_queryset(self, queryset):
-        independent = self.request.query_params.get('independent', None)
-        if independent is not None:
-            independent = to_bool(independent)
-        else:
-            independent = False
+        independent = to_bool(self.request.query_params.get('independent', None),
+                              handle_none=True,
+                              exception=ValidationError)
         group_id = self.request.query_params.get('group', None)
         if independent and group_id:
             raise ValidationError('You cannot filter for independent experiments and '
                                   'group experiments at the same time.')
         project = get_permissible_project(view=self)
         queryset = queryset.filter(project=project)
-        if independent is not None and to_bool(independent):
+        if independent:
             queryset = queryset.filter(experiment_group__isnull=True)
         if group_id:
             group = self.get_group(project=project, group_id=group_id)
@@ -165,10 +185,9 @@ class ExperimentCloneView(CreateAPIView):
             config = spec.parsed_data
             declarations = spec.declarations
         if 'update_code' in request.data:
-            try:
-                update_code_reference = to_bool(request.data['update_code'])
-            except TypeError:
-                raise ValidationError('update_code should be a boolean')
+            update_code_reference = to_bool(request.data['update_code'],
+                                            handle_none=True,
+                                            exception=ValidationError)
         if 'description' in request.data:
             description = request.data['description']
         new_obj = self.clone(obj=obj,
