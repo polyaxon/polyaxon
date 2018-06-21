@@ -1,11 +1,14 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 
 import { GroupModel } from '../models/group';
-import TaskRunMetaInfo from './taskRunMetaInfo';
 import Status from './status';
 import Description from './description';
+import Tags from './tags';
+import MetaInfo from './metaInfo/metaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import UserMetaInfo from './metaInfo/userMetaInfo';
 
 export interface Props {
   group: GroupModel;
@@ -27,73 +30,83 @@ export default class GroupOverview extends React.Component<Props, Object> {
               command="polyaxon group update --description=..."
             />
             <div className="meta">
-              <span className="meta-info">
-                <i className="fa fa-user-o icon" aria-hidden="true"/>
-                <span className="title">User:</span>
-                {group.user}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"/>
-                <span className="title">Last updated:</span>
-                {moment(group.updated_at).fromNow()}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-share-alt icon" aria-hidden="true"/>
-                <span className="title">Concurrency:</span>
-                {group.concurrency}
-              </span>
-              {group.current_iteration > 0 &&
-              <span className="meta-info">
-                <i className="fa fa-refresh icon" aria-hidden="true"/>
-                <span className="title">Iteration:</span>
-                {group.current_iteration}
-              </span>
-              }
+              <UserMetaInfo user={group.user} inline={true}/>
+              <DatesMetaInfo
+                createdAt={group.created_at}
+                updatedAt={group.updated_at}
+                inline={true}
+              />
+            </div>
+            <div className="meta">
               <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at} inline={true}/>
               <Status status={group.last_status}/>
             </div>
             <div className="meta">
-              <span className="meta-info">
-                <i className="fa fa-asterisk icon" aria-hidden="true"/>
-                <span className="title">Algorithm:</span>
-                {group.search_algorithm}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-cube icon" aria-hidden="true"/>
-                <span className="title">Experiments:</span>
-                {group.num_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-hourglass-1 icon" aria-hidden="true"/>
-                <span className="title">Scheduled:</span>
-                {group.num_scheduled_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-hourglass-end icon" aria-hidden="true"/>
-                <span className="title">Pending:</span>
-                {group.num_pending_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-bolt icon" aria-hidden="true"/>
-                <span className="title">Running:</span>
-                {group.num_running_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-check icon" aria-hidden="true"/>
-                <span className="title">Succeeded:</span>
-                {group.num_succeeded_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-close icon" aria-hidden="true"/>
-                <span className="title">Failed:</span>
-                {group.num_failed_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-stop icon" aria-hidden="true"/>
-                <span className="title">Stopped:</span>
-                {group.num_stopped_experiments}
-              </span>
+              <MetaInfo
+                icon="fa-asterisk"
+                name="Algorithm"
+                value={group.search_algorithm}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-share-alt"
+                name="Concurrency"
+                value={group.concurrency}
+                inline={true}
+              />
+              {group.current_iteration > 0 &&
+              <MetaInfo
+                icon="fa-refresh"
+                name="Iteration"
+                value={group.current_iteration}
+                inline={true}
+              />}
             </div>
+            <div className="meta">
+              <MetaInfo
+                icon="fa-cube"
+                name="Experiments"
+                value={group.num_experiments}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-hourglass-1"
+                name="Scheduled"
+                value={group.num_scheduled_experiments}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-hourglass-end"
+                name="Pending"
+                value={group.num_pending_experiments}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-bolt"
+                name="Running"
+                value={group.num_running_experiments}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-check"
+                name="Succeeded"
+                value={group.num_succeeded_experiments}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-close"
+                name="Failed"
+                value={group.num_failed_experiments}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-stop"
+                name="Stopped"
+                value={group.num_stopped_experiments}
+                inline={true}
+              />
+            </div>
+            <Tags tags={group.tags}/>
           </div>
         </div>
       </div>

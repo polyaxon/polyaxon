@@ -6,11 +6,14 @@ function GroupHeader() {
       <div className="col-md-1 block">
         Status
       </div>
-      <div className="col-md-9 block">
+      <div className="col-md-7 block">
         Name
       </div>
       <div className="col-md-2 block">
         Info
+      </div>
+      <div className="col-md-2 block">
+        Run
       </div>
     </div>
   );

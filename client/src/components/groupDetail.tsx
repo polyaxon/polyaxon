@@ -5,7 +5,7 @@ import { GroupModel } from '../models/group';
 import {
   getProjectUrl,
   getUserUrl,
-  splitProjectName
+  splitUniqueName
 } from '../constants/utils';
 import Experiments from '../containers/experiments';
 import Breadcrumb from './breadcrumb';
@@ -29,7 +29,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
     if (_.isNil(group)) {
       return (<div>Nothing</div>);
     }
-    let values = splitProjectName(group.project_name);
+    let values = splitUniqueName(group.project);
     let groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
     return (
       <div className="row">
@@ -51,7 +51,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
                   relUrl: ''
                 }, {
                   title: 'Experiments',
-                  component: <Experiments user={group.user} projectName={group.project_name} groupId={group.id}/>,
+                  component: <Experiments user={group.user} projectName={group.project} groupId={group.id}/>,
                   relUrl: 'experiments'
                 }
               ]}

@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import * as moment from 'moment';
 
 import {
   getGroupUrl,
-  splitProjectName
+  splitUniqueName
 } from '../constants/utils';
 import { GroupModel } from '../models/group';
 import Status from './status';
+import Description from './description';
+import Tags from './tags';
+import MetaInfo from './metaInfo/metaInfo';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import UserMetaInfo from './metaInfo/userMetaInfo';
 
 export interface Props {
   group: GroupModel;
@@ -15,75 +20,44 @@ export interface Props {
 }
 
 function Group({group, onDelete}: Props) {
-  let values = splitProjectName(group.project_name);
+  let values = splitUniqueName(group.project);
   return (
     <div className="row">
       <div className="col-md-1 block">
         <Status status={group.last_status}/>
       </div>
-      <div className="col-md-9 block">
+      <div className="col-md-7 block">
         <LinkContainer to={getGroupUrl(values[0], values[1], group.id)}>
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
             {group.unique_name}
           </a>
         </LinkContainer>
-        <div className="meta-description">
-          {group.description}
-        </div>
+        <Description description={group.description}/>
         <div className="meta">
-          <span className="meta-info">
-            <i className="fa fa-user-o icon" aria-hidden="true"/>
-            <span className="title">User:</span>
-            {group.user}
-          </span>
-          <span className="meta-info">
-            <i className="fa fa-clock-o icon" aria-hidden="true"/>
-            <span className="title">Last updated:</span>
-            {moment(group.updated_at).fromNow()}
-          </span>
+          <UserMetaInfo user={group.user} inline={true}/>
+          <DatesMetaInfo
+            createdAt={group.created_at}
+            updatedAt={group.updated_at}
+            inline={true}
+          />
         </div>
+        <Tags tags={group.tags}/>
       </div>
-
       <div className="col-md-2 block">
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-asterisk icon" aria-hidden="true"/>
-            <span className="title">Algorithm:</span>
-            {group.search_algorithm}
-          </span>
-        </div>
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-cube icon" aria-hidden="true"/>
-            <span className="title">Experiments:</span>
-            {group.num_experiments}
-          </span>
-        </div>
-
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-share-alt icon" aria-hidden="true"/>
-            <span className="title">Concurrency:</span>
-            {group.concurrency}
-          </span>
-        </div>
-
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-bolt icon" aria-hidden="true"/>
-            <span className="title">Running Experiments:</span>
-            {group.num_running_experiments}
-          </span>
-        </div>
-
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-hourglass-end icon" aria-hidden="true"/>
-            <span className="title">Pending Experiments:</span>
-            {group.num_pending_experiments}
-          </span>
-        </div>
+        <MetaInfo
+          icon="fa-asterisk"
+          name="Algorithm"
+          value={group.search_algorithm}
+        />
+        <MetaInfo
+          icon="fa-share-alt"
+          name="Concurrency"
+          value={group.concurrency}
+        />
+      </div>
+      <div className="col-md-2 block">
+        <TaskRunMetaInfo startedAt={group.created_at} finishedAt={group.updated_at}/>
       </div>
     </div>
   );
