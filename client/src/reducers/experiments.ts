@@ -74,7 +74,7 @@ export const ProjectExperimentsReducer: Reducer<ProjectStateSchema> =
 
     let processExperiment = function (experiment: ExperimentModel) {
       let uniqueName = getExperimentIndexName(experiment.unique_name);
-      let projectName = experiment.project_name;
+      let projectName = experiment.project;
       if (_.includes(newState.uniqueNames, projectName) &&
         !_.includes(newState.byUniqueNames[projectName].experiments, uniqueName)) {
         newState.byUniqueNames[projectName].experiments.push(uniqueName);
@@ -101,7 +101,7 @@ export const GroupExperimentsReducer: Reducer<GroupStateSchema> =
 
     let processExperiment = function (experiment: ExperimentModel) {
       let uniqueName = getExperimentIndexName(experiment.unique_name);
-      let groupName = experiment.experiment_group_name;
+      let groupName = experiment.experiment_group;
       if (groupName != null &&
         _.includes(newState.uniqueNames, groupName) &&
         !_.includes(newState.byUniqueNames[groupName].experiments, uniqueName)) {

@@ -3,15 +3,14 @@ export class ExperimentModel {
   public unique_name: string;
   public id: number;
   public description: string;
-  public experiment_group_name: string;
   public user: string;
   public config: string;
   public num_jobs: number;
   public last_status: string;
-  public project_name: string;
-  public experiment_group: string;
   public deleted?: boolean;
   public project: string;
+  public experiment_group: string;
+  public build_job: string;
   public created_at: string;
   public updated_at: string;
   public started_at: string;

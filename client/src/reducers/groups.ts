@@ -66,7 +66,7 @@ export const ProjectGroupsReducer: Reducer<ProjectStateSchema> =
     let newState = {...state};
 
     let processGroup = function (group: GroupModel) {
-      let projectName = group.project_name;
+      let projectName = group.project;
       if (_.includes(newState.uniqueNames, projectName) &&
         !_.includes(newState.byUniqueNames[projectName].groups, group.unique_name)) {
         newState.byUniqueNames[projectName].groups.push(group.unique_name);

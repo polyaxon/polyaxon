@@ -4,7 +4,6 @@ export class ExperimentJobModel {
   public id: number;
   public role: string;
   public last_status: string;
-  public experiment_name: string;
   public experiment: string;
   public definition: string;
   public deleted?: boolean;
