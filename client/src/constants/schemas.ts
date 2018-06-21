@@ -7,6 +7,14 @@ export const JobSchema = new schema.Entity(
     idAttribute: 'unique_name'
   });
 
+export const BuildSchema = new schema.Entity(
+  'builds',
+  {},
+  {
+    idAttribute: 'unique_name'
+  });
+
+
 export const ExperimentJobSchema = new schema.Entity(
   'experimentJobs',
   {},

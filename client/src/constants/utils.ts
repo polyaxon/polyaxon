@@ -102,9 +102,9 @@ export let getExperimentUniqueName = function (username: string, projectName: st
   return `${projectUniqueName}.${experimentId}`;
 };
 
-export let getJobtUrl = function (username: string,
-                                  projectName: string,
-                                  jobId: number) {
+export let getJobUrl = function (username: string,
+                                 projectName: string,
+                                 jobId: number) {
   let projectUrl = getProjectUrl(username, projectName);
 
   return `${projectUrl}/jobs/${jobId}/`;
@@ -131,7 +131,14 @@ export let getJobUniqueName = function (username: string,
                                         projectName: string,
                                         jobId: number) {
   let projectUrl = getProjectUniqueName(username, projectName);
-  return `${projectUrl}.${jobId}`;
+  return `${projectUrl}.jobs.${jobId}`;
+};
+
+export let getBuildUniqueName = function (username: string,
+                                          projectName: string,
+                                          buildId: number) {
+  let projectUrl = getProjectUniqueName(username, projectName);
+  return `${projectUrl}.builds.${buildId}`;
 };
 
 export function getGroupName(projectName: string, groupId: number | string) {

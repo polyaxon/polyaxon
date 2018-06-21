@@ -9,12 +9,14 @@ import { TokenStateSchema, TokenEmptyState } from '../models/token';
 import { ModalStateSchema } from '../models/modal';
 import { UserEmptyState, UserStateSchema } from '../models/user';
 import { PaginationStateSchema } from '../models/pagination';
+import { BuildsEmptyState, BuildStateSchema } from '../models/build';
 
 export interface AppState {
   projects: ProjectStateSchema;
   experiments: ExperimentStateSchema;
   groups: GroupStateSchema;
   jobs: JobStateSchema;
+  builds: BuildStateSchema;
   experimentJobs: ExperimentJobStateSchema;
   modal: ModalStateSchema;
   auth: TokenStateSchema;
@@ -29,6 +31,7 @@ export const AppEmptyState = {
   experiments: ExperimentsEmptyState,
   groups: GroupsEmptyState,
   jobs: JobsEmptyState,
+  builds: BuildsEmptyState,
   experimentJobs: ExperimentJobsEmptyState,
   auth: TokenEmptyState,
   user: UserEmptyState

@@ -5,6 +5,8 @@ export class ProjectModel {
   public num_experiments: number;
   public num_experiment_groups: number;
   public num_independent_experiments: number;
+  public num_jobs: number;
+  public num_builds: number;
   public unique_name: string;
   public is_public: boolean;
   public deleted?: boolean;
@@ -16,6 +18,8 @@ export class ProjectModel {
   public tags: Array<string> = [];
   public groups: Array<string> = [];
   public experiments: Array<string> = [];
+  public jobs: Array<string> = [];
+  public builds: Array<string> = [];
 }
 
 export class ProjectStateSchema {

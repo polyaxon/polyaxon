@@ -26,6 +26,12 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
       if (newState.byUniqueNames[uniqueName].groups == null) {
         newState.byUniqueNames[uniqueName].groups = [];
       }
+      if (newState.byUniqueNames[uniqueName].jobs == null) {
+        newState.byUniqueNames[uniqueName].jobs = [];
+      }
+      if (newState.byUniqueNames[uniqueName].builds == null) {
+        newState.byUniqueNames[uniqueName].builds = [];
+      }
       return newState;
     };
 

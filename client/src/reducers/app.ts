@@ -9,16 +9,18 @@ import { ExperimentJobsReducer, ExperimentJobExperimentsReducer } from './experi
 
 import { tokenReducer } from './token';
 import { AppState } from '../constants/types';
-import { modalReducer } from '../reducers/modal';
-import { userReducer } from '../reducers/user';
-import { PaginationReducer } from '../reducers/pagination';
+import { modalReducer } from './modal';
+import { userReducer } from './user';
+import { PaginationReducer } from './pagination';
 import { logsReducer } from './logs';
+import { buildsReducer } from './builds';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
   experiments: experimentsReducer,
   groups: groupsReducer,
   jobs: jobsReducer,
+  builds: buildsReducer,
   experimentJobs: ExperimentJobsReducer,
   modal: modalReducer,
   auth: tokenReducer,
@@ -34,6 +36,7 @@ function SliceReducer(state: AppState, action: Action) {
     groups: GroupExperimentsReducer(state.groups, action),
     experiments: ExperimentJobExperimentsReducer(state.experiments, action),
     jobs: state.jobs,
+    builds: state.builds,
     experimentJobs: state.experimentJobs,
     modal: state.modal,
     auth: state.auth,

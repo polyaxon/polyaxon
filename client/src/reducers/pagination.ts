@@ -21,10 +21,20 @@ export const PaginationReducer: Reducer<PaginationStateSchema> =
           ...state,
           experimentCurrentPage: action.currentPage,
         };
+      case actionTypes.PAGINATE_EXPERIMENT_JOB:
+        return {
+          ...state,
+          experimentJobCurrentPage: action.currentPage,
+        };
       case actionTypes.PAGINATE_JOB:
         return {
           ...state,
           jobCurrentPage: action.currentPage,
+        };
+      case actionTypes.PAGINATE_BUILD:
+        return {
+          ...state,
+          buildCurrentPage: action.currentPage,
         };
       default:
         return state;

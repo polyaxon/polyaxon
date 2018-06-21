@@ -4,6 +4,8 @@ import * as _ from 'lodash';
 import { ProjectModel } from '../models/project';
 import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
+import Jobs from '../containers/jobs';
+import Builds from '../containers/builds';
 import { getUserUrl, getProjectUrl } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
@@ -44,13 +46,21 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               component: <ProjectOverview project={project}/>,
               relUrl: ''
             }, {
-              title: 'Independent Experiments',
+              title: 'Experiments',
               component: <Experiments user={project.user} projectName={project.unique_name}/>,
               relUrl: 'experiments'
             }, {
               title: 'Experiment groups',
               component: <Groups user={project.user} projectName={project.unique_name}/>,
               relUrl: 'groups'
+            }, {
+              title: 'Jobs',
+              component: <Jobs user={project.user} projectName={project.unique_name}/>,
+              relUrl: 'jobs'
+            }, {
+              title: 'Builds',
+              component: <Builds user={project.user} projectName={project.unique_name}/>,
+              relUrl: 'builds'
             }
           ]}
           />
