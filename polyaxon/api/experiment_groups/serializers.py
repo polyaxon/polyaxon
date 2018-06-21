@@ -27,6 +27,8 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
             'project_name',
             'created_at',
             'updated_at',
+            'started_at',
+            'finished_at',
             'tags',
             'concurrency',
             'search_algorithm'
@@ -56,8 +58,6 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
             'current_iteration',
             'content',
             'hptuning',
-            'started_at',
-            'finished_at',
             'has_tensorboard',
             'num_experiments',
             'num_pending_experiments',
