@@ -1,17 +1,17 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 
 import { GroupModel } from '../models/group';
-import Experiments from '../containers/experiments';
 import {
   getProjectUrl,
   getUserUrl,
   splitProjectName
 } from '../constants/utils';
-import TaskRunMetaInfo from './taskRunMetaInfo';
+import Experiments from '../containers/experiments';
 import Breadcrumb from './breadcrumb';
-import Status from './status';
+import LinkedTab from './linkedTab';
+import GroupOverview from './groupOverview';
+import { getGroupUrl } from '../constants/utils';
 
 export interface Props {
   group: GroupModel;
@@ -30,6 +30,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
       return (<div>Nothing</div>);
     }
     let values = splitProjectName(group.project_name);
+    let groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
     return (
       <div className="row">
         <div className="col-md-12">
@@ -41,82 +42,24 @@ export default class GroupDetail extends React.Component<Props, Object> {
                 {name: values[1], value: getProjectUrl(values[0], values[1])},
                 {name: `Group ${group.id}`}]}
             />
-            <div className="meta-description">
-              {group.description}
-            </div>
-            <div className="meta">
-              <span className="meta-info">
-                <i className="fa fa-user-o icon" aria-hidden="true"/>
-                <span className="title">User:</span>
-                {group.user}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"/>
-                <span className="title">Last updated:</span>
-                {moment(group.updated_at).fromNow()}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-share-alt icon" aria-hidden="true"/>
-                <span className="title">Concurrency:</span>
-                {group.concurrency}
-              </span>
-              {group.current_iteration > 0 &&
-              <span className="meta-info">
-                <i className="fa fa-refresh icon" aria-hidden="true"/>
-                <span className="title">Iteration:</span>
-                {group.current_iteration}
-              </span>
-              }
-              <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at} inline={true}/>
-              <Status status={group.last_status}/>
-            </div>
-            <div className="meta">
-              <span className="meta-info">
-                <i className="fa fa-asterisk icon" aria-hidden="true"/>
-                <span className="title">Algorithm:</span>
-                {group.search_algorithm}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-cube icon" aria-hidden="true"/>
-                <span className="title">Experiments:</span>
-                {group.num_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-hourglass-1 icon" aria-hidden="true"/>
-                <span className="title">Scheduled:</span>
-                {group.num_scheduled_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-hourglass-end icon" aria-hidden="true"/>
-                <span className="title">Pending:</span>
-                {group.num_pending_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-bolt icon" aria-hidden="true"/>
-                <span className="title">Running:</span>
-                {group.num_running_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-check icon" aria-hidden="true"/>
-                <span className="title">Succeeded:</span>
-                {group.num_succeeded_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-close icon" aria-hidden="true"/>
-                <span className="title">Failed:</span>
-                {group.num_failed_experiments}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-stop icon" aria-hidden="true"/>
-                <span className="title">Stopped:</span>
-                {group.num_stopped_experiments}
-              </span>
-            </div>
+            <LinkedTab
+              baseUrl={groupUrl}
+              tabs={[
+                {
+                  title: 'Overview',
+                  component: <GroupOverview group={group}/>,
+                  relUrl: ''
+                }, {
+                  title: 'Experiments',
+                  component: <Experiments user={group.user} projectName={group.project_name} groupId={group.id}/>,
+                  relUrl: 'experiments'
+                }
+              ]}
+            />
           </div>
-          <h4 className="polyaxon-header">Experiments</h4>
-          <Experiments user={group.user} projectName={group.project_name} groupId={group.id}/>
         </div>
       </div>
     );
   }
 }
+
