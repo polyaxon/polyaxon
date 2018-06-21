@@ -6,6 +6,7 @@ import { ProjectModel } from '../models/project';
 import { getNotebookUrl, getTensorboardUrl } from '../constants/utils';
 import Tags from './tags';
 import Description from './description';
+import MetaInfo from './metaInfo';
 
 export interface Props {
   project: ProjectModel;
@@ -25,28 +26,37 @@ function ProjectOverview({project}: Props) {
             entity="project"
             command="polyaxon project update --description=..."
           />
-          {/*<div className="entity-name">{project.name}</div>*/}
           <div className="meta">
-                <span className="meta-info">
-                  <i className="fa fa-lock icon" aria-hidden="true"/>
-                  <span className="title">Visibility:</span>
-                  {visibility}
-                </span>
-            <span className="meta-info">
-                  <i className="fa fa-clock-o icon" aria-hidden="true"/>
-                  <span className="title">Last updated:</span>
-              {moment(project.updated_at).fromNow()}
-                </span>
-            <span className="meta-info">
-                  <i className="fa fa-cube icon" aria-hidden="true"/>
-                  <span className="title">Experiments:</span>
-              {project.num_experiments}
-                </span>
-            <span className="meta-info">
-                  <i className="fa fa-cubes icon" aria-hidden="true"/>
-                  <span className="title">Experiment Groups:</span>
-              {project.num_experiment_groups}
-                </span>
+            <MetaInfo
+              icon="fa-lock"
+              name="Visibility"
+              value={visibility}
+            />
+            <MetaInfo
+              icon="fa-clock-o"
+              name="Last updated"
+              value={moment(project.updated_at).fromNow()}
+            />
+            <MetaInfo
+              icon="fa-cube"
+              name="Experiments"
+              value={project.num_experiments}
+            />
+            <MetaInfo
+              icon="fa-cubes"
+              name="Experiment Groups"
+              value={project.num_experiment_groups}
+            />
+             <MetaInfo
+              icon="fa-tasks"
+              name="Jobs"
+              value={project.num_jobs}
+             />
+             <MetaInfo
+              icon="fa-cog"
+              name="Builds"
+              value={project.num_builds}
+             />
           </div>
           <Tags tags={project.tags}/>
           <div className="meta">

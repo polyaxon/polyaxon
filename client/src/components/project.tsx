@@ -4,7 +4,9 @@ import * as moment from 'moment';
 
 import { ProjectModel } from '../models/project';
 import { getProjectUrl } from '../constants/utils';
-import { getNotebookUrl, getTensorboardUrl } from '../constants/utils';
+import Tags from './tags';
+import Description from './description';
+import MetaInfo from './metaInfo';
 
 export interface Props {
   project: ProjectModel;
@@ -22,54 +24,29 @@ function Project({project, onDelete}: Props) {
             {project.name}
           </a>
         </LinkContainer>
-        <div className="meta-description">
-          {project.description}
-        </div>
-        <div className="meta">
-          <span className="meta-info">
-            <i className="fa fa-lock icon" aria-hidden="true"/>
-            <span className="title">Visibility:</span>
-            {visibility}
-          </span>
-          <span className="meta-info">
-            <i className="fa fa-clock-o icon" aria-hidden="true"/>
-            <span className="title">Last updated:</span>
-            {moment(project.updated_at).fromNow()}
-          </span>
-        </div>
+        <Description description={project.description}/>
+        <Tags tags={project.tags} />
       </div>
 
       <div className="col-md-2 block">
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-cube icon" aria-hidden="true"/>
-            <span className="title">Experiments:</span>
-            {project.num_experiments}
-          </span>
-        </div>
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-cubes icon" aria-hidden="true"/>
-            <span className="title">Experiment Groups:</span>
-            {project.num_experiment_groups}
-          </span>
-        </div>
-        {project.has_tensorboard &&
-        <div className="row meta">
-          <span className="meta-info meta-dashboard">
-            <i className="fa fa-link icon" aria-hidden="true"/>
-            <a href={getTensorboardUrl(project.user, project.name)} className="title-link">Tensorboard</a>
-          </span>
-        </div>
-        }
-        {project.has_notebook &&
-        <div className="row meta">
-          <span className="meta-info meta-dashboard">
-            <i className="fa fa-link icon" aria-hidden="true"/>
-            <a href={getNotebookUrl(project.user, project.name)} className="title-link">Notebook</a>
-          </span>
-        </div>
-        }
+        <MetaInfo
+          icon="fa-lock"
+          name="Visibility"
+          value={visibility}
+          row={true}
+        />
+        <MetaInfo
+          icon="fa-clock-o"
+          name="Created at"
+          value={moment(project.created_at).fromNow()}
+          row={true}
+        />
+        <MetaInfo
+          icon="fa-clock-o"
+          name="Last updated"
+          value={moment(project.updated_at).fromNow()}
+          row={true}
+        />
       </div>
     </div>
   );
