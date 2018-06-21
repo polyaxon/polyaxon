@@ -5,6 +5,7 @@ body {
 
 .layout {
   width: 98%;
+  min-height: 80%;
 }
 
 .list-item .description,

@@ -5,12 +5,7 @@ body {
 
 .layout {
   width: 98%;
-}
-
-.list-item {
-  display: block;
-  border-bottom: 1px solid #f9f9f9;
-  padding: 10px 0;
+  min-height: 80%;
 }
 
 .list-item .description,
