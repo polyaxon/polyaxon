@@ -5,7 +5,7 @@ import * as actions from '../actions/build';
 import Build from './build';
 import { BuildModel } from '../models/build';
 import PaginatedList from '../components/paginatedList';
-import { noObjectListComponent } from '../constants/templates';
+import { EmptyList } from './emptyList';
 import JobHeader from './jobHeader';
 
 export interface Props {
@@ -38,7 +38,7 @@ export default class Builds extends React.Component<Props, Object> {
         count={this.props.count}
         componentList={listBuilds()}
         componentHeader={JobHeader()}
-        componentEmpty={noObjectListComponent(false, 'build', 'build')}
+        componentEmpty={EmptyList(false, 'build', 'build')}
         fetchData={this.props.fetchData}
       />
     );

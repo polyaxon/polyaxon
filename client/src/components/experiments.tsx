@@ -5,7 +5,7 @@ import Experiment from './experiment';
 import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
 import PaginatedList from '../components/paginatedList';
-import { noObjectListComponent } from '../constants/templates';
+import { EmptyList } from './emptyList';
 import ExperimentHeader from './experimentHeader';
 
 export interface Props {
@@ -40,7 +40,7 @@ export default class Experiments extends React.Component<Props, Object> {
         count={this.props.count}
         componentList={listExperiments()}
         componentHeader={ExperimentHeader()}
-        componentEmpty={noObjectListComponent(
+        componentEmpty={EmptyList(
           this.props.isCurrentUser,
           'experiment',
           'experiment',

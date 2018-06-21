@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import Group from './group';
 import { GroupModel } from '../models/group';
 import PaginatedList from '../components/paginatedList';
-import { noObjectListComponent } from '../constants/templates';
+import { EmptyList } from './emptyList';
 import GroupHeader from './groupHeader';
 
 export interface Props {
@@ -36,7 +36,7 @@ export default class Groups extends React.Component<Props, Object> {
     return (
       <PaginatedList
         count={this.props.count}
-        componentEmpty={noObjectListComponent(
+        componentEmpty={EmptyList(
           this.props.isCurrentUser,
           'experiment group',
           'group',

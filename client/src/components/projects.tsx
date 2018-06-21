@@ -5,7 +5,7 @@ import Project from './project';
 import RootModal from '../containers/modal';
 import { ProjectModel } from '../models/project';
 import PaginatedList from '../components/paginatedList';
-import { noObjectListComponent } from '../constants/templates';
+import { EmptyList } from './emptyList';
 import Breadcrumb from './breadcrumb';
 import ProjectHeader from './projectHeader';
 
@@ -48,7 +48,7 @@ export default class Projects extends React.Component<Props, Object> {
             count={this.props.count}
             componentList={listProjects()}
             componentHeader={ProjectHeader()}
-            componentEmpty={noObjectListComponent(
+            componentEmpty={EmptyList(
               this.props.isCurrentUser,
               'project',
               'project',

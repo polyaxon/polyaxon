@@ -5,7 +5,7 @@ import * as actions from '../actions/experimentJob';
 import ExperimentJob from './experimentJob';
 import { ExperimentJobModel } from '../models/experimentJob';
 import PaginatedList from '../components/paginatedList';
-import { noObjectListComponent } from '../constants/templates';
+import { EmptyList } from './emptyList';
 import JobHeader from './jobHeader';
 
 export interface Props {
@@ -41,7 +41,7 @@ export default class ExperimentJobs extends React.Component<Props, Object> {
         count={this.props.count}
         componentList={listExperimentJobs()}
         componentHeader={JobHeader()}
-        componentEmpty={noObjectListComponent(false, 'job', 'job')}
+        componentEmpty={EmptyList(false, 'job', 'job')}
         fetchData={this.props.fetchData}
       />
     );
