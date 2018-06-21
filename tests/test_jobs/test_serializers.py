@@ -124,7 +124,8 @@ class TestJobDetailSerializer(BaseTest):
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.unique_name
-        assert data.pop('build_job') == self.obj1.build_job.unique_name
+        assert data.pop('build_job') == (self.obj1.build_job.unique_name if
+                                         self.obj1.build_job else None)
         assert data.pop('original') == (self.obj1.original_job.unique_name if
                                         self.obj1.original_job else None)
         assert data.pop('last_status') == self.obj1.last_status
