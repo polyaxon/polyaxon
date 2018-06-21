@@ -4,11 +4,11 @@ import './metaInfo.less';
 export interface Props {
   icon: string;
   name: string;
-  value: string|number|boolean;
-  row?: boolean;
+  value: string|number|boolean|React.ReactNode;
+  inline?: boolean;
 }
 
-function MetaInfo({icon, name, value, row}: Props) {
+function MetaInfo({icon, name, value, inline = false}: Props) {
   function getInfo() {
     return (
       <span className="meta-info">
@@ -20,10 +20,10 @@ function MetaInfo({icon, name, value, row}: Props) {
   }
 
   function getMetaInfo() {
-    if (row) {
-      return (<div className="row meta">{getInfo()}</div>);
+    if (inline) {
+      return (getInfo());
     }
-    return (getInfo());
+    return (<div className="row meta">{getInfo()}</div>);
   }
 
   return (getMetaInfo());
