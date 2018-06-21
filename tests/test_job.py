@@ -13,8 +13,8 @@ class TestJobConfigs(TestCase):
     def test_job_config(self):
         config_dict = {
             'uuid': uuid.uuid4().hex,
-            'project': uuid.uuid4().hex,
-            'project_name': 'name.name',
+            'project': 'name.name',
+            'build_job': 'name.name',
             'unique_name': 'user.proj.1',
             'last_status': 'Running',
             'description': 'description',
@@ -29,8 +29,6 @@ class TestJobConfigs(TestCase):
         config = JobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         config_to_dict.pop('is_clone')
-        config_to_dict.pop('is_done')
-        config_to_dict.pop('is_running')
         config_to_dict.pop('resources')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
@@ -43,12 +41,10 @@ class TestJobConfigs(TestCase):
         config_dict.pop('description')
         config_dict.pop('config')
         config_dict.pop('project')
+        config_dict.pop('build_job')
         config_dict.pop('updated_at')
-        config_dict.pop('project_name')
         config_dict.pop('definition')
         config_dict.pop('tags')
-        config_to_dict.pop('is_done')
-        config_to_dict.pop('is_running')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
@@ -61,8 +57,9 @@ class TestJobConfigs(TestCase):
         assert config_to_dict.pop('finished_at') == 'a few seconds ago'
 
     def test_job_status_config(self):
-        config_dict = {'uuid': uuid.uuid4().hex,
-                       'job': uuid.uuid4().hex,
+        config_dict = {'id': 1,
+                       'uuid': uuid.uuid4().hex,
+                       'job': 1,
                        'created_at': local_now().isoformat(),
                        'status': 'Running',
                        'message': None,

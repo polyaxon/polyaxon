@@ -29,8 +29,6 @@ class ExperimentGroupSchema(Schema):
     num_failed_experiments = fields.Int(allow_none=True)
     num_stopped_experiments = fields.Int(allow_none=True)
     last_status = fields.Str(allow_none=True)
-    is_running = fields.Bool(allow_none=True)
-    is_done = fields.Bool(allow_none=True)
     has_tensorboard = fields.Bool(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
@@ -51,8 +49,7 @@ class ExperimentGroupConfig(BaseConfig):
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
         'id', 'unique_name', 'user', 'concurrency', 'num_experiments',
-        'num_pending_experiments', 'num_running_experiments', 'created_at',
-        'is_done', 'is_running', 'last_status'
+        'num_pending_experiments', 'num_running_experiments', 'created_at', 'last_status'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
@@ -74,8 +71,6 @@ class ExperimentGroupConfig(BaseConfig):
                  num_failed_experiments=None,
                  num_stopped_experiments=None,
                  last_status=None,
-                 is_running=None,
-                 is_done=None,
                  has_tensorboard=False,
                  created_at=None,
                  updated_at=None,
@@ -99,8 +94,6 @@ class ExperimentGroupConfig(BaseConfig):
         self.num_stopped_experiments = num_stopped_experiments
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
-        self.is_running = is_running
-        self.is_done = is_done
         self.has_tensorboard = has_tensorboard
         self.last_status = last_status
         self.concurrency = concurrency

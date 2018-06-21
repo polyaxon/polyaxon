@@ -35,6 +35,7 @@ class TestProjectConfigs(TestCase):
         }
         config = ProjectConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
+        config_to_dict.pop('id', None)
         config_to_dict.pop('experiment_groups', None)
         config_to_dict.pop('experiments', None)
         config_to_dict.pop('has_notebook', None)
@@ -83,14 +84,11 @@ class TestProjectConfigs(TestCase):
         config_dict = {'id': 1,
                        'content': 'some content',
                        'uuid': uuid_value,
-                       'project': uuid_value,
-                       'project_name': 'user.name',
+                       'project': 'user.name',
                        'num_experiments': 0,
                        'created_at': local_now().isoformat(),
                        'updated_at': local_now().isoformat(),
                        'last_status': None,
-                       'is_done': False,
-                       'is_running': True,
                        'has_tensorboard': False,
                        'tags': ['tests'],
                        'experiments': [
@@ -119,7 +117,6 @@ class TestProjectConfigs(TestCase):
         config_dict.pop('updated_at')
         config_dict.pop('id')
         config_dict.pop('experiments')
-        config_dict.pop('project_name')
         config_dict.pop('has_tensorboard')
         config_dict.pop('tags')
         assert_equal_dict(config_dict, config.to_light_dict())

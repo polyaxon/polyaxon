@@ -16,8 +16,6 @@ class ExperimentJobSchema(Schema):
     experiment = fields.Int()
     experiment_name = fields.Str()
     last_status = fields.Str(allow_none=True)
-    is_running = fields.Bool(allow_none=True)
-    is_done = fields.Bool(allow_none=True)
     created_at = fields.LocalDateTime()
     updated_at = fields.LocalDateTime()
     started_at = fields.LocalDateTime(allow_none=True)
@@ -48,7 +46,6 @@ class ExperimentJobConfig(BaseConfig):
     def __init__(self,
                  uuid,
                  experiment,
-                 experiment_name,
                  created_at,
                  updated_at,
                  definition=None,
@@ -56,8 +53,6 @@ class ExperimentJobConfig(BaseConfig):
                  id=None,  # pylint:disable=redefined-builtin
                  role=None,
                  last_status=None,
-                 is_running=None,
-                 is_done=None,
                  started_at=None,
                  finished_at=None,
                  resources=None,
@@ -67,15 +62,12 @@ class ExperimentJobConfig(BaseConfig):
         self.id = id
         self.role = role
         self.experiment = experiment
-        self.experiment_name = experiment_name
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
         self.started_at = self.localize_date(started_at)
         self.finished_at = self.localize_date(finished_at)
         self.definition = definition
         self.last_status = last_status
-        self.is_running = is_running
-        self.is_done = is_done
         self.resources = resources
         self.total_run = total_run
         if all([self.started_at, self.finished_at]):
@@ -124,7 +116,7 @@ class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'experiment_group', 'last_status',
+        'id', 'unique_name', 'user', 'experiment_group', 'build_job', 'last_status',
         'created_at', 'started_at', 'finished_at', 'total_run'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
@@ -209,6 +201,7 @@ class ExperimentStatusConfig(BaseConfig):
     DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
     def __init__(self, id, uuid, experiment, created_at, status, message=None):
+        self.id = id
         self.uuid = uuid
         self.experiment = experiment
         self.created_at = self.localize_date(created_at)
@@ -219,7 +212,7 @@ class ExperimentStatusConfig(BaseConfig):
 class ExperimentMetricSchema(Schema):
     id = fields.Int()
     uuid = UUID()
-    experiment = UUID()
+    experiment = fields.Int()
     created_at = fields.LocalDateTime()
     values = fields.Dict()
 
@@ -252,7 +245,7 @@ class ExperimentMetricConfig(BaseConfig):
 class ExperimentJobStatusSchema(Schema):
     id = fields.Int()
     uuid = UUID()
-    job = UUID()
+    job = fields.Int()
     created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)

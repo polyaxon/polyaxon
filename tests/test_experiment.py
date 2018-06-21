@@ -24,10 +24,9 @@ class TestExperimentConfigs(TestCase):
     def test_experiment_config(self):
         config_dict = {
             'uuid': uuid.uuid4().hex,
-            'project': uuid.uuid4().hex,
-            'project_name': 'name.name',
-            'experiment_group': uuid.uuid4().hex,
-            'experiment_group_name': 'name.name.1',
+            'project': 'name.name',
+            'experiment_group': 'name.name.1',
+            'build_job': 'name.name.1',
             'unique_name': 'user.proj.1',
             'last_status': 'Running',
             'description': 'description',
@@ -43,8 +42,6 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('declarations')
         config_to_dict.pop('finished_at')
         config_to_dict.pop('is_clone')
-        config_to_dict.pop('is_done')
-        config_to_dict.pop('is_running')
         config_to_dict.pop('jobs')
         config_to_dict.pop('last_metric')
         config_to_dict.pop('resources')
@@ -60,13 +57,10 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('description')
         config_dict.pop('config')
         config_dict.pop('project')
-        config_dict.pop('experiment_group')
         config_dict.pop('updated_at')
-        config_dict.pop('project_name')
         config_dict.pop('tags')
+        config_dict.pop('num_jobs')
         config_to_dict.pop('finished_at')
-        config_to_dict.pop('is_done')
-        config_to_dict.pop('is_running')
         config_to_dict.pop('id')
         config_to_dict.pop('started_at')
         config_dict.pop('has_tensorboard')
@@ -83,10 +77,8 @@ class TestExperimentConfigs(TestCase):
                        'config': {},
                        'unique_name': 'adam.proj.1',
                        'uuid': uuid.uuid4().hex,
-                       'project': uuid.uuid4().hex,
-                       'project_name': 'user.name',
-                       'experiment_group': uuid.uuid4().hex,
-                       'experiment_group_name': 'user.name.1',
+                       'project': 'user.name',
+                       'experiment_group': 'user.name.1',
                        'last_status': 'Running',
                        'num_jobs': 1,
                        'created_at': local_now().isoformat(),
@@ -96,8 +88,7 @@ class TestExperimentConfigs(TestCase):
                        'has_tensorboard': False,
                        'tags': ['tag'],
                        'jobs': [ExperimentJobConfig(uuid=uuid.uuid4().hex,
-                                                    experiment=uuid.uuid4().hex,
-                                                    experiment_name='name.name.1',
+                                                    experiment=2,
                                                     created_at=local_now(),
                                                     updated_at=local_now(),
                                                     definition={}).to_dict()]}
@@ -107,12 +98,11 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('declarations')
         config_to_dict.pop('description')
         config_to_dict.pop('is_clone')
-        config_to_dict.pop('is_done')
-        config_to_dict.pop('is_running')
         config_to_dict.pop('last_metric')
         config_to_dict.pop('resources')
         config_to_dict.pop('user')
         config_to_dict.pop('name')
+        config_to_dict.pop('build_job')
         assert config_to_dict == config_dict
 
         config_dict.pop('tags')
@@ -124,8 +114,7 @@ class TestExperimentConfigs(TestCase):
 
     def test_experiment_job_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
-                       'experiment': uuid.uuid4().hex,
-                       'experiment_name': 'name.name',
+                       'experiment': 1,
                        'created_at': local_now().isoformat(),
                        'updated_at': local_now().isoformat(),
                        'started_at': local_now().isoformat(),
@@ -137,8 +126,6 @@ class TestExperimentConfigs(TestCase):
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict.pop('total_run') == '0s'
-        config_to_dict.pop('is_done')
-        config_to_dict.pop('is_running')
         config_to_dict.pop('last_status')
         config_to_dict.pop('resources')
         assert config_to_dict == config_dict
@@ -150,8 +137,6 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         assert config_to_dict.pop('total_run') == '0s'
         config_dict.pop('unique_name')
-        config_to_dict.pop('is_done')
-        config_to_dict.pop('is_running')
         config_to_dict.pop('last_status')
         assert config_to_dict == config_dict
 
@@ -162,8 +147,9 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict.pop('finished_at') == 'a few seconds ago'
 
     def test_experiment_status_config(self):
-        config_dict = {'uuid': uuid.uuid4().hex,
-                       'experiment': uuid.uuid4().hex,
+        config_dict = {'id': 1,
+                       'uuid': uuid.uuid4().hex,
+                       'experiment': 1,
                        'created_at': local_now().isoformat(),
                        'status': 'Running',
                        'message': None}
@@ -180,8 +166,9 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
 
     def test_experiment_metric_config(self):
-        config_dict = {'uuid': uuid.uuid4().hex,
-                       'experiment': uuid.uuid4().hex,
+        config_dict = {'id': 1,
+                       'uuid': uuid.uuid4().hex,
+                       'experiment': 1,
                        'created_at': local_now().isoformat(),
                        'values': {'accuracy': 0.9}}
         config = ExperimentMetricConfig.from_dict(config_dict)
@@ -197,8 +184,9 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
 
     def test_experiment_job_status_config(self):
-        config_dict = {'uuid': uuid.uuid4().hex,
-                       'job': uuid.uuid4().hex,
+        config_dict = {'id': 1,
+                       'uuid': uuid.uuid4().hex,
+                       'job': 1,
                        'created_at': local_now().isoformat(),
                        'status': 'Running'}
         config = ExperimentJobStatusConfig.from_dict(config_dict)

@@ -67,8 +67,6 @@ class JobConfig(BaseConfig):
                  started_at=None,
                  finished_at=None,
                  is_clone=None,
-                 is_running=None,
-                 is_done=None,
                  config=None,
                  num_jobs=0,
                  resources=None,
@@ -89,8 +87,6 @@ class JobConfig(BaseConfig):
         self.finished_at = self.localize_date(finished_at)
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
-        self.is_running = is_running
-        self.is_done = is_done
         self.is_clone = is_clone
         self.config = config  # The json compiled content of this experiment
         self.num_jobs = num_jobs
