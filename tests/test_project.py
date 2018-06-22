@@ -30,6 +30,8 @@ class TestProjectConfigs(TestCase):
             'num_experiments': 0,
             'num_independent_experiments': 0,
             'num_experiment_groups': 0,
+            'num_jobs': 0,
+            'num_builds': 0,
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat()
         }
