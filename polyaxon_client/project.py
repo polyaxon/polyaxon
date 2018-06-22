@@ -144,7 +144,7 @@ class ProjectClient(PolyaxonClient):
                 params['group'] = group
             if metrics:
                 params['metrics'] = metrics
-            if metrics:
+            if declarations:
                 params['declarations'] = declarations
             if query:
                 params['query'] = query
