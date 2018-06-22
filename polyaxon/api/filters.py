@@ -1,3 +1,5 @@
+from django.contrib.postgres.fields.jsonb import KeyTransform
+from django.db.models.sql.constants import ORDER_PATTERN
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.filters import OrderingFilter as BaseOrderingFilter
@@ -40,3 +42,56 @@ class QueryFilter(BaseFilterBackend):
 
 class OrderingFilter(BaseOrderingFilter):
     ordering_param = 'sort'
+    ordering_proxy_fields = {}
+
+    def remove_invalid_fields(self, queryset, fields, view, request):
+        result_fields = []
+        annotation = {}
+        proxy_fields = getattr(view, 'ordering_proxy_fields', {})
+        valid_fields = [item[0] for item in
+                        self.get_valid_fields(queryset, view, {'request': request})]
+
+        for field in fields:
+            if not ORDER_PATTERN.match(field):
+                continue
+
+            negation = '-' if field[0] == '-' else ''
+            field = field.lstrip('-')
+            if field in valid_fields:
+                result_fields.append('{}{}'.format(negation, field))
+                continue
+
+            field, suffix = query.parse_field(field)
+            if field in proxy_fields:
+                result_fields.append('{}{}'.format(negation, suffix))
+                annotation[suffix] = KeyTransform(suffix, proxy_fields[field])
+
+        return result_fields, annotation
+
+    def get_ordering(self, request, queryset, view):
+        """
+        Ordering is set by a comma delimited ?ordering=... query parameter.
+
+        The `ordering` query parameter can be overridden by setting
+        the `ordering_param` value on the OrderingFilter or by
+        specifying an `ORDERING_PARAM` value in the API settings.
+        """
+        params = request.query_params.get(self.ordering_param)
+        if params:
+            fields = [param.strip() for param in params.split(',')]
+            ordering, annotations = self.remove_invalid_fields(queryset, fields, view, request)
+            if ordering:
+                return ordering, annotations
+
+        # No ordering was included, or all the ordering fields were invalid
+        return self.get_default_ordering(view), None
+
+    def filter_queryset(self, request, queryset, view):
+        ordering, annotations = self.get_ordering(request, queryset, view)
+
+        if ordering:
+            if annotations:
+                queryset = queryset.annotate(**annotations)
+            return queryset.order_by(*ordering)
+
+        return queryset

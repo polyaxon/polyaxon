@@ -235,6 +235,27 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.data['next'] is None
         assert resp.data['count'] == 2
 
+        # Order by metrics
+        resp = self.auth_client.get(self.url + '?sort=-metric__loss')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == [self.serializer_class(obj).data for obj in reversed(self.objects)]
+
+        resp = self.auth_client.get(self.url + '?sort=metric__loss')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == [self.serializer_class(obj).data for obj in self.objects]
+
     def test_get_filter_pagination(self):
         limit = self.num_objects - 1
         resp = self.auth_client.get("{}?limit={}&{}".format(

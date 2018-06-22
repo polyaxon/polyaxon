@@ -89,6 +89,7 @@ class ProjectExperimentListView(ListCreateAPIView):
     query_manager = 'experiment'
     ordering = ('-updated_at',)
     ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
+    ordering_proxy_fields = {'metric': 'metric__values'}
 
     def get_serializer_class(self):
         if self.create_serializer_class and self.request.method.lower() == 'post':
