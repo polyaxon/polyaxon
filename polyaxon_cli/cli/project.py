@@ -142,8 +142,13 @@ def list(page):  # pylint:disable=redefined-builtin
     else:
         Printer.print_header('No projects found for current user')
 
-    objects = list_dicts_to_tabulate([o.to_light_dict(humanize_values=True)
-                                      for o in response['results']])
+    objects = list_dicts_to_tabulate(
+        [o.to_light_dict(
+            humanize_values=True,
+            exclude_attrs=['uuid', 'experiment_groups', 'experiments', 'description',
+                           'num_experiments', 'num_independent_experiments',
+                           'num_experiment_groups', 'num_jobs', 'num_builds', 'unique_name'])
+         for o in response['results']])
     if objects:
         Printer.print_header("Projects:")
         dict_tabulate(objects, is_list_dict=True)
