@@ -30,18 +30,17 @@ def get_job_or_local(project=None, _job=None):
 
 
 def get_job_details(_job):
-    if job.description:
+    if _job.description:
         Printer.print_header("Job description:")
-        click.echo('{}\n'.format(job.description))
+        click.echo('{}\n'.format(_job.description))
 
-    if job.resources:
-        get_resources(job.resources.to_dict(), header="Job resources:")
+    if _job.resources:
+        get_resources(_job.resources.to_dict(), header="Job resources:")
 
-    response = job.to_light_dict(
+    response = _job.to_light_dict(
         humanize_values=True,
         exclude_attrs=[
-            'uuid', 'config', 'project', 'description',
-            'declarations', 'resources',
+            'uuid', 'config', 'project', 'description', 'resources',
         ])
 
     Printer.print_header("Job info:")
@@ -91,15 +90,7 @@ def get(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    if response.resources:
-        get_resources(response.resources.to_dict(), header="Job resources:")
-
-    response = Printer.add_status_color(response.to_light_dict(
-        humanize_values=True,
-        exclude_attrs=['uuid', 'definition', 'unique_name', 'resources']
-    ))
-    Printer.print_header("Job info:")
-    dict_tabulate(response)
+    get_job_details(response)
 
 
 @job.command()

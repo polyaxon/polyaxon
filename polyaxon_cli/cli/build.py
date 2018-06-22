@@ -38,7 +38,7 @@ def get_job_details(job):
     response = job.to_light_dict(
         humanize_values=True,
         exclude_attrs=[
-            'uuid', 'config', 'project', 'description', 'resources',
+            'uuid', 'config', 'project', 'description', 'resources', 'is_clone', 'build_job'
         ])
 
     Printer.print_header("Job info:")
