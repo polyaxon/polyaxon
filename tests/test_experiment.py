@@ -101,9 +101,9 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment_statuses_and_latest_code(self):
-        experiment_uuid = uuid.uuid4().hex
-        exp = ExperimentStatusConfig(uuid=experiment_uuid,
-                                     experiment=experiment_uuid,
+        exp = ExperimentStatusConfig(id=1,
+                                     uuid=uuid.uuid4().hex,
+                                     experiment=1,
                                      created_at=datetime.datetime.now(),
                                      status='Running').to_dict()
         httpretty.register_uri(
@@ -124,9 +124,9 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment_metrics(self):
-        experiment_uuid = uuid.uuid4().hex
-        exp = ExperimentMetricConfig(uuid=experiment_uuid,
-                                     experiment=experiment_uuid,
+        exp = ExperimentMetricConfig(id=1,
+                                     uuid=uuid.uuid4().hex,
+                                     experiment=1,
                                      created_at=datetime.datetime.now(),
                                      values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
@@ -147,9 +147,9 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_create_experiment_metric(self):
-        experiment_uuid = uuid.uuid4().hex
-        exp = ExperimentMetricConfig(uuid=experiment_uuid,
-                                     experiment=experiment_uuid,
+        exp = ExperimentMetricConfig(id=1,
+                                     uuid=uuid.uuid4().hex,
+                                     experiment=1,
                                      created_at=datetime.datetime.now(),
                                      values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
@@ -171,11 +171,9 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_list_experiment_jobs(self):
-        experiment_uuid = uuid.uuid4().hex
         job_uuid = uuid.uuid4().hex
         xps = [ExperimentJobConfig(uuid=job_uuid,
-                                   experiment=experiment_uuid,
-                                   experiment_name='user.project.1',
+                                   experiment=1,
                                    created_at=datetime.datetime.now(),
                                    updated_at=datetime.datetime.now(),
                                    definition={}).to_dict() for _ in range(10)]

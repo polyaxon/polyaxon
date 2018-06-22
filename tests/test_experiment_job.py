@@ -26,10 +26,8 @@ class TestExperimentJobClient(TestCase):
 
     @httpretty.activate
     def test_get_job(self):
-        experiment_uuid = uuid.uuid4().hex
         obj = ExperimentJobConfig(uuid=uuid.uuid4().hex,
-                                  experiment=experiment_uuid,
-                                  experiment_name='user.project.1',
+                                  experiment=1,
                                   created_at=datetime.datetime.now(),
                                   updated_at=datetime.datetime.now(),
                                   definition={}).to_dict()
@@ -52,9 +50,9 @@ class TestExperimentJobClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment_job_status(self):
-        job_uuid = uuid.uuid4().hex
-        obj = ExperimentJobStatusConfig(uuid=uuid.uuid4().hex,
-                                        job=job_uuid,
+        obj = ExperimentJobStatusConfig(id=1,
+                                        uuid=uuid.uuid4().hex,
+                                        job=1,
                                         created_at=datetime.datetime.now(),
                                         status='Running').to_dict()
         httpretty.register_uri(
@@ -67,10 +65,10 @@ class TestExperimentJobClient(TestCase):
                 'experiments',
                 1,
                 'jobs',
-                job_uuid,
+                1,
                 'statuses'),
             body=json.dumps({'results': [obj], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        response = self.client.get_statuses('username', 'project_name', 1, job_uuid)
+        response = self.client.get_statuses('username', 'project_name', 1, 1)
         assert len(response['results']) == 1

@@ -79,9 +79,9 @@ class TestBuildJobClient(TestCase):
 
     @httpretty.activate
     def test_get_job_statuses(self):
-        job_uuid = uuid.uuid4().hex
-        job = JobStatusConfig(uuid=job_uuid,
-                              job=job_uuid,
+        job = JobStatusConfig(id=1,
+                              uuid=uuid.uuid4().hex,
+                              job=1,
                               created_at=datetime.datetime.now(),
                               status='Running').to_dict()
         httpretty.register_uri(
