@@ -25,12 +25,17 @@ export interface Props {
 function Experiment({experiment, onDelete}: Props) {
   let values = splitUniqueName(experiment.project);
   let groupUrl = '';
+  let groupValues: string[] = [];
   if (!_.isNil(experiment.experiment_group)) {
-    let groupValues = splitUniqueName(experiment.experiment_group);
+    groupValues = splitUniqueName(experiment.experiment_group);
     groupUrl = getGroupUrl(groupValues[0], groupValues[1], groupValues[2]);
   }
-  let buildValues = splitUniqueName(experiment.build_job);
-  let buildUrl = getBuildUrl(buildValues[0], buildValues[1], buildValues[2]);
+  let buildUrl = '';
+  let buildValues: string[] = [];
+  if (!_.isNil(experiment.build_job)) {
+    buildValues = splitUniqueName(experiment.build_job);
+    buildUrl = getBuildUrl(buildValues[0], buildValues[1], buildValues[3]);
+  }
   return (
     <div className="row">
       <div className="col-md-1 block">
@@ -54,16 +59,17 @@ function Experiment({experiment, onDelete}: Props) {
         </div>
       </div>
       <div className="col-md-2 block">
-        {groupUrl &&
         <LinkMetaInfo
-          icon="fa-asterisk"
+          icon="fa-cubes"
           name="Group"
-          value={groupUrl}
-        />}
+          value={groupValues[2]}
+          link={groupUrl}
+        />
         <LinkMetaInfo
-          icon="fa-asterisk"
+          icon="fa-cog"
           name="Build"
-          value={buildUrl}
+          value={buildValues[3]}
+          link={buildUrl}
         />
       </div>
       <div className="col-md-2 block">

@@ -10,10 +10,10 @@ function ExperimentHeader() {
         Name
       </div>
       <div className="col-md-2 block">
-        Metrics
+        Info
       </div>
       <div className="col-md-2 block">
-        Info
+        Run
       </div>
     </div>
   );
