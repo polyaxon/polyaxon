@@ -200,7 +200,13 @@ class ExperimentStatusConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at']
     DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
-    def __init__(self, id, uuid, experiment, created_at, status, message=None):
+    def __init__(self,
+                 id,  # pylint:disable=redefined-builtin
+                 uuid,
+                 experiment,
+                 created_at,
+                 status,
+                 message=None):
         self.id = id
         self.uuid = uuid
         self.experiment = experiment
@@ -234,7 +240,12 @@ class ExperimentMetricConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at']
     DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
-    def __init__(self, id, uuid, experiment, created_at, values):
+    def __init__(self,
+                 id,  # pylint:disable=redefined-builtin
+                 uuid,
+                 experiment,
+                 created_at,
+                 values):
         self.id = id
         self.uuid = uuid
         self.experiment = experiment
@@ -269,7 +280,14 @@ class ExperimentJobStatusConfig(BaseConfig):
     DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'details', 'uuid']
     DATETIME_ATTRIBUTES = ['created_at']
 
-    def __init__(self, id, uuid, job, created_at, status, message=None, details=None):
+    def __init__(self,
+                 id,  # pylint:disable=redefined-builtin
+                 uuid,
+                 job,
+                 created_at,
+                 status,
+                 message=None,
+                 details=None):
         self.id = id
         self.uuid = uuid
         self.job = job
