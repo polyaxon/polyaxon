@@ -128,6 +128,8 @@ class ProjectClient(PolyaxonClient):
                          project_name,
                          independent=None,
                          group=None,
+                         metrics=None,
+                         declarations=None,
                          query=None,
                          sort=None,
                          page=1):
@@ -140,6 +142,10 @@ class ProjectClient(PolyaxonClient):
                 params['independent'] = independent
             if group:
                 params['group'] = group
+            if metrics:
+                params['metrics'] = metrics
+            if metrics:
+                params['declarations'] = declarations
             if query:
                 params['query'] = query
             if sort:

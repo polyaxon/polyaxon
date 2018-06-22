@@ -223,7 +223,6 @@ class TestProjectClient(TestCase):
         assert len(response['results']) == 10
 
         # pagination
-
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
@@ -237,6 +236,41 @@ class TestProjectClient(TestCase):
             status=200)
 
         response = self.client.list_experiments('user', 'project', page=2)
+        assert len(response['results']) == 10
+
+        # metrics & declarations
+        for xp in xps:
+            xp['metrics'] = {'loss': 0.1}
+            xp['declarations'] = {'foo': 'bar'}
+
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'experiments') + '?metrics=true',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_experiments('user', 'project', metrics=True, page=2)
+
+        assert len(response['results']) == 10
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'experiments') + '?declarations=true',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_experiments('user', 'project', declarations=True, page=2)
         assert len(response['results']) == 10
 
         # query, sort
