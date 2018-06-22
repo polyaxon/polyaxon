@@ -168,8 +168,11 @@ export function handleAuthError(response: any, dispatch: any) {
 /*
   Convert an experiment unique name to an index by ignoring the group if it exists on the unique name.
 */
-export function getExperimentIndexName(uniqueName: string): string {
+export function getExperimentIndexName(uniqueName: string, fromJob: boolean = false): string {
   let values = uniqueName.split('.');
+  if (fromJob) {
+    values.pop();
+  }
   if (values.length === 4) {
     values.splice(2, 1);
   }

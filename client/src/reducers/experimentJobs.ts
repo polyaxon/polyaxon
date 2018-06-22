@@ -76,7 +76,7 @@ export const ExperimentJobExperimentsReducer: Reducer<ExperimentStateSchema> =
 
     let processJob = function (experimentJob: ExperimentJobModel) {
       let uniqueName = getExperimentJobIndexName(experimentJob.unique_name);
-      let experimentName = getExperimentIndexName(experimentJob.experiment);
+      let experimentName = getExperimentIndexName(uniqueName, true);
       if (_.includes(newState.uniqueNames, experimentName) &&
         !_.includes(newState.byUniqueNames[experimentName].jobs, uniqueName)) {
         newState.byUniqueNames[experimentName].jobs.push(uniqueName);
