@@ -15,7 +15,8 @@ from polyaxon_cli.utils.formatting import (
     dict_tabulate,
     get_experiments_with_metrics,
     get_meta_response,
-    list_dicts_to_tabulate
+    list_dicts_to_tabulate,
+    get_experiments_with_declarations
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
@@ -162,13 +163,15 @@ def update(ctx, name, description, tags):
 
 @group.command()
 @click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
+@click.option('--declarations', '-d', is_flag=True,
+              help='List experiments with their declarations/params.')
 @click.option('--query', '-q', type=str,
               help='To filter the experiments based on this query spec.')
 @click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 @click.pass_context
 @clean_outputs
-def experiments(ctx, metrics, query, sort, page):
+def experiments(ctx, metrics, declarations, query, sort, page):
     """List experiments for this experiment group
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -179,6 +182,8 @@ def experiments(ctx, metrics, query, sort, page):
         response = PolyaxonClients().experiment_group.list_experiments(username=user,
                                                                        project_name=project_name,
                                                                        group_id=_group,
+                                                                       metrics=metrics,
+                                                                       declarations=declarations,
                                                                        query=query,
                                                                        sort=sort,
                                                                        page=page)
@@ -197,6 +202,8 @@ def experiments(ctx, metrics, query, sort, page):
 
     if metrics:
         objects = get_experiments_with_metrics(response)
+    elif declarations:
+        objects = get_experiments_with_declarations(response)
     else:
         objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
                    for o in response['results']]

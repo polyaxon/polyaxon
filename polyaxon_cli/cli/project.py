@@ -17,7 +17,8 @@ from polyaxon_cli.utils.formatting import (
     dict_tabulate,
     get_experiments_with_metrics,
     get_meta_response,
-    list_dicts_to_tabulate
+    list_dicts_to_tabulate,
+    get_experiments_with_declarations
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.project import ProjectConfig
@@ -366,6 +367,8 @@ def jobs(ctx, query, sort, page):
 
 @project.command()
 @click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
+@click.option('--declarations', '-d', is_flag=True,
+              help='List experiments with their declarations/params.')
 @click.option('--independent', '-i', is_flag=True, help='To return only independent experiments.')
 @click.option('--group', '-g', type=int, help='To filter experiments for a specific group.')
 @click.option('--query', '-q', type=str,
@@ -375,7 +378,7 @@ def jobs(ctx, query, sort, page):
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def experiments(ctx, metrics, independent, group, query, sort, page):
+def experiments(ctx, metrics, declarations, independent, group, query, sort, page):
     """List experiments for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -388,6 +391,8 @@ def experiments(ctx, metrics, independent, group, query, sort, page):
                                                               project_name=project_name,
                                                               independent=independent,
                                                               group=group,
+                                                              metrics=metrics,
+                                                              declarations=declarations,
                                                               query=query,
                                                               sort=sort,
                                                               page=page)
@@ -406,6 +411,8 @@ def experiments(ctx, metrics, independent, group, query, sort, page):
 
     if metrics:
         objects = get_experiments_with_metrics(response)
+    elif declarations:
+        objects = get_experiments_with_declarations(response)
     else:
         objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
                    for o in response['results']]

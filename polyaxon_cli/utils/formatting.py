@@ -163,27 +163,40 @@ class Printer(object):
         sys.stdout.flush()
 
 
-def get_experiments_with_metrics(response):
+def get_experiments_with_params(response, params_key, extra_attrs=None):
+    if not extra_attrs:
+        extra_attrs = [params_key]
+    extra_attrs.append(params_key)
     objects = [
-        o.to_light_dict(include_attrs=['id', 'unique_name', 'total_run', 'last_metric'])
+        o.to_light_dict(include_attrs=['id', 'unique_name'] + extra_attrs)
         for o in response['results']
     ]
     # Extend experiment with metrics
-    metric_keys = set([])
+    params_keys = set([])
     for obj in objects:
-        last_metric = obj.pop('last_metric', {}) or {}
-        metric_keys |= set(six.iterkeys(last_metric))
-        obj.update(last_metric)
+        params = obj.pop(params_key, {}) or {}
+        params_keys |= set(six.iterkeys(params))
+        obj.update(params)
 
     # Check that all obj have all metrics
     # TODO: optimize this process
     for obj in objects:
         obj_keys = set(six.iterkeys(obj))
-        for metric in metric_keys:
-            if metric not in obj_keys:
-                obj[metric] = None
+        for param in params_keys:
+            if param not in obj_keys:
+                obj[param] = None
 
     return objects
+
+
+def get_experiments_with_metrics(response):
+    return get_experiments_with_params(response=response,
+                                       params_key='last_metric',
+                                       extra_attrs=['total_run'])
+
+
+def get_experiments_with_declarations(response):
+    return get_experiments_with_params(response=response, params_key='declarations')
 
 
 def get_resources(resources, header=None):
