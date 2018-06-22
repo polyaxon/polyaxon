@@ -6,8 +6,8 @@ export class BuildModel {
   public last_status: string;
   public definition: string;
   public deleted?: boolean;
-  public project?: string;
-  public status?: string;
+  public project: string;
+  public last_status: string;
   public created_at: string;
   public updated_at: string;
   public started_at: string;

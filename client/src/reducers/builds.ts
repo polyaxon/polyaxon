@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { BuildSchema } from '../constants/schemas';
 import { BuildAction, actionTypes } from '../actions/build';
 import { BuildStateSchema, BuildsEmptyState, BuildModel } from '../models/build';
+import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 
 export const buildsReducer: Reducer<BuildStateSchema> =
   (state: BuildStateSchema = BuildsEmptyState, action: BuildAction) => {
@@ -53,6 +54,33 @@ export const buildsReducer: Reducer<BuildStateSchema> =
         return newState;
       case actionTypes.RECEIVE_BUILD:
         return processBuild(action.build);
+      default:
+        return state;
+    }
+  };
+
+export const ProjectBuildsReducer: Reducer<ProjectStateSchema> =
+  (state: ProjectStateSchema = ProjectsEmptyState, action: BuildAction) => {
+    let newState = {...state};
+
+    let processBuild = function (build: BuildModel) {
+      let uniqueName = build.unique_name;
+      let projectName = build.project;
+      if (_.includes(newState.uniqueNames, projectName) &&
+        !_.includes(newState.byUniqueNames[projectName].builds, uniqueName)) {
+        newState.byUniqueNames[projectName].builds.push(uniqueName);
+      }
+      return newState;
+    };
+
+    switch (action.type) {
+      case actionTypes.RECEIVE_BUILD:
+        return processBuild(action.build);
+      case actionTypes.RECEIVE_BUILDS:
+        for (let build of action.builds) {
+          newState = processBuild(build);
+        }
+        return newState;
       default:
         return state;
     }

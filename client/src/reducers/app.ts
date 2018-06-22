@@ -4,7 +4,7 @@ import { Action, combineReducers } from 'redux';
 import { projectsReducer, UserProjectsReducer } from './projects';
 import { experimentsReducer, GroupExperimentsReducer, ProjectExperimentsReducer } from './experiments';
 import { groupsReducer, ProjectGroupsReducer } from './groups';
-import { jobsReducer } from './jobs';
+import { jobsReducer, ProjectJobsReducer } from './jobs';
 import { ExperimentJobsReducer, ExperimentJobExperimentsReducer } from './experimentJobs';
 
 import { tokenReducer } from './token';
@@ -13,7 +13,7 @@ import { modalReducer } from './modal';
 import { userReducer } from './user';
 import { PaginationReducer } from './pagination';
 import { logsReducer } from './logs';
-import { buildsReducer } from './builds';
+import { buildsReducer, ProjectBuildsReducer } from './builds';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
@@ -32,7 +32,15 @@ const combinedReducer = combineReducers<AppState>({
 
 function SliceReducer(state: AppState, action: Action) {
   return {
-    projects: ProjectGroupsReducer(ProjectExperimentsReducer(state.projects, action), action),
+    projects: ProjectGroupsReducer(
+      ProjectExperimentsReducer(
+        ProjectJobsReducer(
+          ProjectBuildsReducer(
+            state.projects,
+            action),
+          action),
+        action),
+      action),
     groups: GroupExperimentsReducer(state.groups, action),
     experiments: ExperimentJobExperimentsReducer(state.experiments, action),
     jobs: state.jobs,

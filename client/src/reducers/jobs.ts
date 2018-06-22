@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { JobSchema } from '../constants/schemas';
 import { JobAction, actionTypes } from '../actions/job';
 import { JobStateSchema, JobsEmptyState, JobModel } from '../models/job';
+import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 
 export const jobsReducer: Reducer<JobStateSchema> =
   (state: JobStateSchema = JobsEmptyState, action: JobAction) => {
@@ -53,6 +54,33 @@ export const jobsReducer: Reducer<JobStateSchema> =
         return newState;
       case actionTypes.RECEIVE_JOB:
         return processJob(action.job);
+      default:
+        return state;
+    }
+  };
+
+export const ProjectJobsReducer: Reducer<ProjectStateSchema> =
+  (state: ProjectStateSchema = ProjectsEmptyState, action: JobAction) => {
+    let newState = {...state};
+
+    let processJob = function (job: JobModel) {
+      let uniqueName = job.unique_name;
+      let projectName = job.project;
+      if (_.includes(newState.uniqueNames, projectName) &&
+        !_.includes(newState.byUniqueNames[projectName].jobs, uniqueName)) {
+        newState.byUniqueNames[projectName].jobs.push(uniqueName);
+      }
+      return newState;
+    };
+
+    switch (action.type) {
+      case actionTypes.RECEIVE_JOB:
+        return processJob(action.job);
+      case actionTypes.RECEIVE_JOBS:
+        for (let job of action.jobs) {
+          newState = processJob(job);
+        }
+        return newState;
       default:
         return state;
     }
