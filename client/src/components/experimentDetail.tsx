@@ -62,11 +62,22 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                   relUrl: ''
                 }, {
                   title: 'Logs',
-                  component: <Logs fetchData={() => null} logs={''} user={experiment.user} experiment={experiment}/>,
-                  relUrl: 'groups'
+                  component: <Logs
+                    fetchData={() => null}
+                    logs={''}
+                    user={experiment.user}
+                    project={experiment.project}
+                    resource="experiments"
+                    id={experiment.id}
+                  />,
+                  relUrl: 'logs'
                 }, {
                   title: 'Jobs',
-                  component: <ExperimentJobs fetchData={() => null} user={experiment.user} experiment={experiment}/>,
+                  component: <ExperimentJobs
+                    fetchData={() => null}
+                    user={experiment.user}
+                    experiment={experiment}
+                  />,
                   relUrl: 'jobs'
                 }
               ]}

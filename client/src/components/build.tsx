@@ -8,7 +8,7 @@ import Tags from './tags';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
-import { getJobUrl, splitUniqueName } from '../constants/utils';
+import { getBuildUrl, splitUniqueName } from '../constants/utils';
 
 export interface Props {
   build: BuildModel;
@@ -24,7 +24,7 @@ function Build({build, onDelete}: Props) {
         <Status status={build.last_status}/>
       </div>
       <div className="col-md-9 block">
-        <LinkContainer to={getJobUrl(values[0], values[1], build.id)}>
+        <LinkContainer to={getBuildUrl(values[0], values[1], build.id)}>
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
             {build.unique_name}
