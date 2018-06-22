@@ -6,9 +6,13 @@ import './linkedTab.less';
 export interface Props {
   baseUrl: string;
   tabs: Array<{ title: string, component: React.ReactNode, relUrl: string }>;
+  tabId?: string;
 }
 
-function LinkedTab({baseUrl, tabs}: Props) {
+function LinkedTab({baseUrl, tabs, tabId}: Props) {
+  if (!tabId) {
+    tabId = Math.floor((Math.random() * 100) + 1).toString();
+  }
   let getActiveTab = () => {
     let pieces = location.hash.split('?')[0].split('#');
     if (pieces.length === 1) {
@@ -26,7 +30,7 @@ function LinkedTab({baseUrl, tabs}: Props) {
   };
 
   return (
-    <Tab.Container defaultActiveKey={getActiveTab()} className="tab-container">
+    <Tab.Container id={tabId} defaultActiveKey={getActiveTab()} className="tab-container">
       <Row className="clearfix">
         <Col sm={12}>
           <Nav bsStyle="tabs">
