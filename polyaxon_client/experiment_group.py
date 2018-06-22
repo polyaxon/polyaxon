@@ -28,6 +28,8 @@ class ExperimentGroupClient(PolyaxonClient):
                          username,
                          project_name,
                          group_id,
+                         metrics=None,
+                         declarations=None,
                          query=None,
                          sort=None,
                          page=1):
@@ -37,6 +39,10 @@ class ExperimentGroupClient(PolyaxonClient):
         try:
             params = self.get_page(page=page)
             params['group'] = group_id
+            if metrics:
+                params['metrics'] = metrics
+            if declarations:
+                params['declarations'] = declarations
             if query:
                 params['query'] = query
             if sort:
