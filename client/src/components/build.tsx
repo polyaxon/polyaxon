@@ -1,8 +1,14 @@
 import * as React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { BuildModel } from '../models/build';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import Status from './status';
+import Description from './description';
+import Tags from './tags';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import UserMetaInfo from './metaInfo/userMetaInfo';
+import { getJobUrl, splitUniqueName } from '../constants/utils';
 
 export interface Props {
   build: BuildModel;
@@ -10,7 +16,7 @@ export interface Props {
 }
 
 function Build({build, onDelete}: Props) {
-  let buildDetailUrl = `builds/${build.id}/`;
+  let values = splitUniqueName(build.project);
 
   return (
     <div className="row">
@@ -18,37 +24,25 @@ function Build({build, onDelete}: Props) {
         <Status status={build.last_status}/>
       </div>
       <div className="col-md-9 block">
-        <span className="title">
-          <i className="fa fa-tasks icon" aria-hidden="true"/>
-          {build.unique_name}
-        </span>
+        <LinkContainer to={getJobUrl(values[0], values[1], build.id)}>
+          <a className="title">
+            <i className="fa fa-cubes icon" aria-hidden="true"/>
+            {build.unique_name}
+          </a>
+        </LinkContainer>
+        <Description description={build.description}/>
         <div className="meta">
-          <span className="meta-info">
-            <i className="fa fa-circle icon" aria-hidden="true"/>
-            <span className="title">id:</span>
-            {build.id}
-          </span>
+          <UserMetaInfo user={build.user} inline={true}/>
+          <DatesMetaInfo
+            createdAt={build.created_at}
+            updatedAt={build.updated_at}
+            inline={true}
+          />
         </div>
-        {build.resources &&
-        <div className="meta meta-resources">
-          {Object.keys(build.resources)
-            .filter(
-              (res, idx) =>
-                build.resources[res] != null
-            )
-            .map(
-            (res, idx) =>
-              <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"/>
-                <span className="title">{res}:</span>
-                {build.resources[res].requests || ''} - {build.resources[res].limits || ''}
-              </span>
-          )}
-        </div>
-        }
+        <Tags tags={build.tags}/>
       </div>
       <div className="col-md-2 block">
-        <TaskRunMetaInfo startedAt={build.started_at} finishedAt={build.finished_at}/>
+        <TaskRunMetaInfo startedAt={build.created_at} finishedAt={build.updated_at}/>
       </div>
     </div>
   );

@@ -1,12 +1,14 @@
 export class BuildModel {
+  public id: number;
   public uuid: string;
   public unique_name: string;
   public name: string;
-  public id: number;
-  public last_status: string;
+  public user: string;
   public definition: string;
+  public description: string;
   public deleted?: boolean;
   public project: string;
+  public tags: Array<string> = [];
   public last_status: string;
   public created_at: string;
   public updated_at: string;

@@ -1,8 +1,14 @@
 import * as React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { JobModel } from '../models/job';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import Status from './status';
+import Description from './description';
+import Tags from './tags';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import UserMetaInfo from './metaInfo/userMetaInfo';
+import { getJobUrl, splitUniqueName } from '../constants/utils';
 
 export interface Props {
   job: JobModel;
@@ -10,7 +16,7 @@ export interface Props {
 }
 
 function Job({job, onDelete}: Props) {
-  let jobDetailUrl = `jobs/${job.id}/`;
+  let values = splitUniqueName(job.project);
 
   return (
     <div className="row">
@@ -18,37 +24,25 @@ function Job({job, onDelete}: Props) {
         <Status status={job.last_status}/>
       </div>
       <div className="col-md-9 block">
-        <span className="title">
-          <i className="fa fa-tasks icon" aria-hidden="true"/>
-          {job.unique_name}
-        </span>
+        <LinkContainer to={getJobUrl(values[0], values[1], job.id)}>
+          <a className="title">
+            <i className="fa fa-cubes icon" aria-hidden="true"/>
+            {job.unique_name}
+          </a>
+        </LinkContainer>
+        <Description description={job.description}/>
         <div className="meta">
-          <span className="meta-info">
-            <i className="fa fa-circle icon" aria-hidden="true"/>
-            <span className="title">id:</span>
-            {job.id}
-          </span>
+          <UserMetaInfo user={job.user} inline={true}/>
+          <DatesMetaInfo
+            createdAt={job.created_at}
+            updatedAt={job.updated_at}
+            inline={true}
+          />
         </div>
-        {job.resources &&
-        <div className="meta meta-resources">
-          {Object.keys(job.resources)
-            .filter(
-              (res, idx) =>
-                job.resources[res] != null
-            )
-            .map(
-            (res, idx) =>
-              <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"/>
-                <span className="title">{res}:</span>
-                {job.resources[res].requests || ''} - {job.resources[res].limits || ''}
-              </span>
-          )}
-        </div>
-        }
+        <Tags tags={job.tags}/>
       </div>
       <div className="col-md-2 block">
-        <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>
+        <TaskRunMetaInfo startedAt={job.created_at} finishedAt={job.updated_at}/>
       </div>
     </div>
   );
