@@ -1,3 +1,5 @@
+import { LastFetched } from './utils';
+
 export class JobModel {
   public id: number;
   public uuid: string;
@@ -21,6 +23,11 @@ export class JobModel {
 export class JobStateSchema {
   byUniqueNames: {[uniqueName: string]: JobModel};
   uniqueNames: string[];
+  lastFetched: LastFetched;
 }
 
-export const JobsEmptyState = {byUniqueNames: {}, uniqueNames: []};
+export const JobsEmptyState = {
+  byUniqueNames: {},
+  uniqueNames: [],
+  lastFetched: new LastFetched()
+};

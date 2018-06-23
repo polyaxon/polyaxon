@@ -1,3 +1,5 @@
+import { LastFetched } from './utils';
+
 export class ProjectModel {
   public uuid: string;
   public name: string;
@@ -25,6 +27,12 @@ export class ProjectModel {
 export class ProjectStateSchema {
   byUniqueNames: {[uniqueName: string]: ProjectModel};
   uniqueNames: string[];
+  lastFetched: LastFetched;
+
 }
 
-export const ProjectsEmptyState = {byUniqueNames: {}, uniqueNames: []};
+export const ProjectsEmptyState = {
+  byUniqueNames: {},
+  uniqueNames: [],
+  lastFetched: new LastFetched()
+};

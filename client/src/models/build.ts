@@ -1,3 +1,5 @@
+import { LastFetched } from './utils';
+
 export class BuildModel {
   public id: number;
   public uuid: string;
@@ -20,6 +22,11 @@ export class BuildModel {
 export class BuildStateSchema {
   byUniqueNames: {[uniqueName: string]: BuildModel};
   uniqueNames: string[];
+  lastFetched: LastFetched;
 }
 
-export const BuildsEmptyState = {byUniqueNames: {}, uniqueNames: []};
+export const BuildsEmptyState = {
+  byUniqueNames: {},
+  uniqueNames: [],
+  lastFetched: new LastFetched()
+};
