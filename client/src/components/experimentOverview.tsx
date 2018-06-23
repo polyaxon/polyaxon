@@ -8,6 +8,7 @@ import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import MetaInfo from './metaInfo/metaInfo';
+import GridList from './gridList';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -24,11 +25,11 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
       <div className="entity-details">
         <div className="row">
           <div className="col-md-12">
-             <Description
-                description={experiment.description}
-                entity="experiment"
-                command="polyaxon experiment update --description=..."
-             />
+            <Description
+              description={experiment.description}
+              entity="experiment"
+              command="polyaxon experiment update --description=..."
+            />
             <div className="meta">
               <UserMetaInfo user={experiment.user} inline={true}/>
               <DatesMetaInfo
@@ -47,17 +48,6 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
               <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at} inline={true}/>
               <Status status={experiment.last_status}/>
             </div>
-            {experiment.last_metric &&
-            <div className="meta meta-metrics">
-              {Object.keys(experiment.last_metric).map(
-                (xp, idx) =>
-                  <span className="meta-info" key={idx}>
-                  <i className="fa fa-area-chart icon" aria-hidden="true"/>
-                  <span className="title">{xp}:</span>
-                    {experiment.last_metric[xp]}
-                </span>)}
-            </div>
-            }
             {experiment.resources &&
             <div className="meta meta-resources">
               {Object.keys(experiment.resources)
@@ -77,13 +67,20 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
             }
             {experiment.declarations &&
             <div className="meta meta-declarations">
-              {Object.keys(experiment.declarations).map(
-                (xp, idx) =>
-                  <span className="meta-info" key={idx}>
-                  <i className="fa fa-gear icon" aria-hidden="true"/>
-                  <span className="title">{xp}:</span>
-                    {experiment.declarations[xp]}
-                </span>)}
+              <span className="meta-info">
+                <i className="fa fa-gear icon" aria-hidden="true"/>
+                <span className="title">Declarations:</span>
+              </span>
+              <GridList rows={[experiment.declarations]}/>
+            </div>
+            }
+            {experiment.last_metric &&
+            <div className="meta meta-metrics">
+              <span className="meta-info">
+                <i className="fa fa-area-chart icon" aria-hidden="true"/>
+                <span className="title">Metrics:</span>
+              </span>
+              <GridList rows={[experiment.last_metric]}/>
             </div>
             }
           </div>
