@@ -13,7 +13,7 @@ function GridList({columns, rows}: Props) {
   if (!columns) {
     columns = [];
     for (let row of rows) {
-      let rowColumns = Object.keys(row).map(v => { return {key: v, name: v}});
+      let rowColumns = Object.keys(row).map(v => ({key: v, name: v}));
       columns.push(...rowColumns);
     }
   }
