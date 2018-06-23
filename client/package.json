@@ -38,6 +38,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
+    "@types/history": "^4.6.2",
     "@types/js-cookie": "^2.1.0",
     "@types/lodash": "^4.14.71",
     "@types/raven": "^2.5.1",
@@ -51,6 +52,7 @@
     "@types/react-router-dom": "^4.2.3",
     "@types/redux-form": "^7.2.6",
     "@types/sprintf-js": "0.0.27",
+    "history": "^4.7.2",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
