@@ -8,7 +8,6 @@ import { GroupStateSchema, GroupsEmptyState } from '../models/group';
 import { TokenStateSchema, TokenEmptyState } from '../models/token';
 import { ModalStateSchema } from '../models/modal';
 import { UserEmptyState, UserStateSchema } from '../models/user';
-import { PaginationStateSchema } from '../models/pagination';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
 
 export interface AppState {
@@ -22,7 +21,6 @@ export interface AppState {
   auth: TokenStateSchema;
   users: UserStateSchema;
   // form: FormReducer;
-  pagination: PaginationStateSchema;
   logs: string;
 }
 
