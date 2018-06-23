@@ -17,41 +17,59 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: any) {
-  let groupName = ownProps.groupId != null ?
-                  getGroupName(ownProps.projectName, ownProps.groupId) :
-                  null;
-  let experiments: ExperimentModel[] = [];
-  let count = 0;
-  if (groupName != null) {
-    let group = state.groups.byUniqueNames[groupName];
-    count = group.num_experiments;
-    let experimentNames = group.experiments;
-    experimentNames = getPaginatedSlice(experimentNames);
+  let useFilter = () => {
+    let groupName = ownProps.groupId != null ?
+      getGroupName(ownProps.projectName, ownProps.groupId) :
+      null;
+    let experiments: ExperimentModel[] = [];
+    let count = 0;
+    if (groupName != null) {
+      let group = state.groups.byUniqueNames[groupName];
+      count = group.num_experiments;
+      let experimentNames = group.experiments;
+      experimentNames = getPaginatedSlice(experimentNames);
+      experimentNames.forEach(
+        function (experiment: string, idx: number) {
+          experiments.push(state.experiments.byUniqueNames[experiment]);
+        });
+    } else {
+      let project = state.projects.byUniqueNames[ownProps.projectName];
+      count = project.num_independent_experiments;
+      let experimentNames = project.experiments.filter(
+        (experiment) => state.experiments.byUniqueNames[experiment].experiment_group == null
+      );
+      experimentNames = getPaginatedSlice(experimentNames);
+      experimentNames.forEach(
+        function (experiment: string, idx: number) {
+          experiments.push(state.experiments.byUniqueNames[experiment]);
+        });
+    }
+    return {experiments: experiments, count: count};
+  };
+  let useLastFetched = () => {
+    let experimentNames = state.experiments.lastFetched.names;
+    let count = state.experiments.lastFetched.count;
+    let experiments: ExperimentModel[] = [];
     experimentNames.forEach(
       function (experiment: string, idx: number) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
       });
-  } else {
-    let project = state.projects.byUniqueNames[ownProps.projectName];
-    count = project.num_independent_experiments;
-    let experimentNames = project.experiments.filter(
-      (experiment) => state.experiments.byUniqueNames[experiment].experiment_group == null
-    );
-    experimentNames = getPaginatedSlice(experimentNames);
-    experimentNames.forEach(
-      function (experiment: string, idx: number) {
-        experiments.push(state.experiments.byUniqueNames[experiment]);
-      });
-  }
+    return {experiments: experiments, count: count};
+  };
+  let results = useLastFetched();
 
-  return {isCurrentUser: state.auth.user === ownProps.user, experiments: experiments, count: count};
+  return {
+    isCurrentUser: state.auth.user === ownProps.user,
+    experiments: results.experiments,
+    count: results.count
+  };
 }
 
 export interface DispatchProps {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete?: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate?: (experiment: ExperimentModel) => actions.ExperimentAction;
-  fetchData?: (currentPage?: number) => actions.ExperimentAction;
+  fetchData?: (currentPage?: number, query?: string, sort?: string) => actions.ExperimentAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -59,13 +77,19 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
-    fetchData: (currentPage?: number) => {
+    fetchData: (currentPage?: number, query?: string, sort?: string) => {
       let filters: {[key: string]: number|boolean|string} = {};
       if (ownProps.groupId) {
         filters.group = ownProps.groupId;
       }
       if (!ownProps.groupId) {
         filters.independent = true;
+      }
+      if (query) {
+        filters.query = query;
+      }
+      if (sort) {
+        filters.sort = sort;
       }
       let offset = getOffset(currentPage);
       if (offset != null) {

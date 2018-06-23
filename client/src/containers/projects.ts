@@ -8,25 +8,39 @@ import * as modalActions from '../actions/modal';
 import { modalTypes, modalPropsByTypes } from '../models/modal';
 import { getOffset, getPaginatedSlice } from '../constants/paginate';
 
-export function mapStateToProps(state: AppState, params: any)  {
+export function mapStateToProps(state: AppState, params: any) {
   let username = params.match.params.user;
-  let projects: ProjectModel[] = [];
-  let user = state.users.byUserNames[username];
-  if (user == null) {
-    return {user: username, projects: <ProjectModel[]> [], count: 0};
-  }
-  let projectNames = user.projects;
-  projectNames = getPaginatedSlice(projectNames);
-  projectNames.forEach(
-    function (project: string, idx: number) {
-      projects.push(state.projects.byUniqueNames[project]);
-    });
+  let useFilter = () => {
+    let projects: ProjectModel[] = [];
+    let user = state.users.byUserNames[username];
+    if (user == null) {
+      return {user: username, projects: <ProjectModel[]> [], count: 0};
+    }
+    let projectNames = user.projects;
+    projectNames = getPaginatedSlice(projectNames);
+    projectNames.forEach(
+      function (project: string, idx: number) {
+        projects.push(state.projects.byUniqueNames[project]);
+      });
+    return {projects: projects, count: user.num_projects};
+  };
+  let useLastFetched = () => {
+    let projectNames = state.projects.lastFetched.names;
+    let count = state.projects.lastFetched.count;
+    let projects: ProjectModel[] = [];
+    projectNames.forEach(
+      function (project: string, idx: number) {
+        projects.push(state.projects.byUniqueNames[project]);
+      });
+    return {projects: projects, count: count};
+  };
+  let results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === username,
     user: username,
-    projects: projects,
-    count: user.num_projects
+    projects: results.projects,
+    count: results.count
   };
 }
 
@@ -44,7 +58,7 @@ export function mapDispatchToProps(
     onDelete: (project: ProjectModel) => dispatch(actions.deleteProject(project)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
     fetchData: (currentPage?: number) => {
-      let filters: {[key: string]: number|boolean|string} = {};
+      let filters: { [key: string]: number | boolean | string } = {};
       let offset = getOffset(currentPage);
       if (offset != null) {
         filters.offset = offset;
@@ -57,7 +71,8 @@ export function mapDispatchToProps(
         props: {
           ...modalPropsByTypes[modalTypes.CREATE_PROJECT],
           show: true,
-          submitCb: (project: ProjectModel) => dispatch(actions.createProject(params.match.params.user, project))}
+          submitCb: (project: ProjectModel) => dispatch(actions.createProject(params.match.params.user, project))
+        }
       })),
     hideModal: () => dispatch(modalActions.hideModal(
       {

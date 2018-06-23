@@ -9,23 +9,38 @@ import * as actions from '../actions/experimentJob';
 import { getOffset } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let experimentName = getExperimentIndexName(params.experiment.unique_name);
-  let jobs: ExperimentJobModel[] = [];
-  let experiment = state.experiments.byUniqueNames[experimentName];
-  let jobNames = experiment.jobs;
-  jobNames.forEach(
-    function (job: string, idx: number) {
-      jobs.push(state.experimentJobs.byUniqueNames[job]);
-    });
+  let useFilter = () => {
+    let experimentName = getExperimentIndexName(params.experiment.unique_name);
+    let jobs: ExperimentJobModel[] = [];
+    let experiment = state.experiments.byUniqueNames[experimentName];
+    let jobNames = experiment.jobs;
+    jobNames.forEach(
+      function (job: string, idx: number) {
+        jobs.push(state.experimentJobs.byUniqueNames[job]);
+      });
+    return {jobs: jobs, count: experiment.num_jobs};
+  };
 
-  return {jobs: jobs, count: experiment.num_jobs};
+  let useLastFetched = () => {
+    let jobNames = state.experimentJobs.lastFetched.names;
+    let count = state.experimentJobs.lastFetched.count;
+    let jobs: ExperimentJobModel[] = [];
+    jobNames.forEach(
+      function (job: string, idx: number) {
+        jobs.push(state.experimentJobs.byUniqueNames[job]);
+      });
+    return {jobs: jobs, count: count};
+  };
+  let results = useLastFetched();
+
+  return {jobs: results.jobs, count: results.count};
 }
 
 export interface DispatchProps {
   onCreate?: (job: ExperimentJobModel) => actions.ExperimentJobAction;
   onDelete?: (job: ExperimentJobModel) => actions.ExperimentJobAction;
   onUpdate?: (job: ExperimentJobModel) => actions.ExperimentJobAction;
-  fetchData?: (currentPage?: number) => actions.ExperimentJobAction;
+  fetchData?: (currentPage?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobAction>, params: any): DispatchProps {
@@ -33,8 +48,14 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobActio
     onCreate: (job: ExperimentJobModel) => dispatch(actions.createExperimentJobActionCreator(job)),
     onDelete: (job: ExperimentJobModel) => dispatch(actions.deleteExperimentJobActionCreator(job)),
     onUpdate: (job: ExperimentJobModel) => dispatch(actions.updateExperimentJobActionCreator(job)),
-    fetchData: (currentPage?: number) => {
-      let filters: {[key: string]: number|boolean|string} = {};
+    fetchData: (currentPage?: number, query?: string, sort?: string) => {
+      let filters: { [key: string]: number | boolean | string } = {};
+      if (query) {
+        filters.query = query;
+      }
+      if (sort) {
+        filters.sort = sort;
+      }
       let offset = getOffset(currentPage);
       if (offset != null) {
         filters.offset = offset;

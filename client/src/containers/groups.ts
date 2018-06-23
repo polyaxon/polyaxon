@@ -14,26 +14,42 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: any) {
-  let groups: GroupModel[] = [];
-  let project = state.projects.byUniqueNames[ownProps.projectName];
-  let groupNames = project.groups;
-  groupNames = getPaginatedSlice(groupNames);
-  groupNames.forEach(
-    function (group: string, idx: number) {
-      groups.push(state.groups.byUniqueNames[group]);
-    });
+  let useFilter = () => {
+    let groups: GroupModel[] = [];
+    let project = state.projects.byUniqueNames[ownProps.projectName];
+    let groupNames = project.groups;
+    groupNames = getPaginatedSlice(groupNames);
+    groupNames.forEach(
+      function (group: string, idx: number) {
+        groups.push(state.groups.byUniqueNames[group]);
+      });
+    return {groups: groups, count: project.num_experiment_groups};
+  };
+
+  let useLastFetched = () => {
+    let groupNames = state.groups.lastFetched.names;
+    let count = state.groups.lastFetched.count;
+    let groups: GroupModel[] = [];
+    groupNames.forEach(
+      function (group: string, idx: number) {
+        groups.push(state.groups.byUniqueNames[group]);
+      });
+    return {groups: groups, count: count};
+  };
+  let results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === ownProps.user,
-    groups: groups,
-    count: project.num_experiment_groups};
+    groups: results.groups,
+    count: results.count
+  };
 }
 
 export interface DispatchProps {
-  onCreate?: (group: GroupModel) => any;
-  onDelete?: (group: GroupModel) => any;
-  onUpdate?: (group: GroupModel) => any;
-  fetchData?: (currentPage?: number) => any;
+  onCreate?: (group: GroupModel) => actions.GroupAction;
+  onDelete?: (group: GroupModel) => actions.GroupAction;
+  onUpdate?: (group: GroupModel) => actions.GroupAction;
+  fetchData?: (currentPage?: number, query?: string, sort?: string) => actions.GroupAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownProps: OwnProps): DispatchProps {
@@ -41,8 +57,14 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onCreate: (group: GroupModel) => dispatch(actions.createGroupActionCreator(group)),
     onDelete: (group: GroupModel) => dispatch(actions.deleteGroupActionCreator(group)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
-    fetchData: (currentPage?: number) => {
+    fetchData: (currentPage?: number, query?: string, sort?: string) => {
       let filters: {[key: string]: number|boolean|string} = {};
+      if (query) {
+        filters.query = query;
+      }
+      if (sort) {
+        filters.sort = sort;
+      }
       let offset = getOffset(currentPage);
       if (offset != null) {
         filters.offset = offset;
