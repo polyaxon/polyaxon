@@ -95,10 +95,12 @@ export function fetchBuilds(projectUniqueName: string,
   return (dispatch: any, getState: any) => {
     dispatch(requestBuildsActionCreator());
     let buildsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/builds';
-    if (filters) {
+    if (Object.keys(filters).length) {
       buildsUrl += url.format({query: filters});
       let baseUrl = location.hash.split('?')[0];
-      history.push(baseUrl + url.format({ query: filters }));
+      if (baseUrl) {
+        history.push(baseUrl + url.format({query: filters}));
+      }
     }
     return fetch(
       buildsUrl, {

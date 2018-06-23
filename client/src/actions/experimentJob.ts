@@ -100,10 +100,12 @@ export function fetchExperimentJobs(projectUniqueName: string,
     dispatch(requestExperimentJobsActionCreator());
     let jobsUrl =
       BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentId + '/jobs';
-    if (filters) {
+    if (Object.keys(filters).length) {
       jobsUrl += url.format({query: filters});
       let baseUrl = location.hash.split('?')[0];
-      history.push(baseUrl + url.format({ query: filters }));
+      if (baseUrl) {
+        history.push(baseUrl + url.format({query: filters}));
+      }
     }
     return fetch(
       jobsUrl, {
