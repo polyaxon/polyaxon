@@ -1,11 +1,10 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
+import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 import { BASE_API_URL } from '../constants/api';
-import { getOffset } from '../constants/paginate';
-import * as paginationActions from '../actions/pagination';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
@@ -82,24 +81,15 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   };
 }
 
-export function fetchExperiments(projectUniqueName: string, currentPage?: number, groupId?: string): any {
+export function fetchExperiments(projectUniqueName: string,
+                                 filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
-    paginationActions.paginateExperiment(dispatch, currentPage);
     let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
-    let filters: {[key: string]: number|boolean|string} = {};
-    if (groupId) {
-      filters.group = groupId;
-    }
-    if (!groupId) {
-      filters.independent = true;
-    }
-    let offset = getOffset(currentPage);
-    if (offset != null) {
-      filters.offset = offset;
-    }
     if (filters) {
-      experimentsUrl += url.format({ query: filters });
+      experimentsUrl += url.format({query: filters});
+      let baseUrl = location.hash.split('?')[0];
+      history.push(baseUrl + url.format({ query: filters }));
     }
     return fetch(experimentsUrl, {
       headers: {

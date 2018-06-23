@@ -1,11 +1,10 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
+import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { GroupModel } from '../models/group';
 import { BASE_API_URL } from '../constants/api';
-import * as paginationActions from '../actions/pagination';
-import { getOffset } from '../constants/paginate';
 
 export enum actionTypes {
   CREATE_GROUP = 'CREATE_GROUP',
@@ -83,14 +82,15 @@ export function receiveGroupActionCreator(group: GroupModel): CreateUpdateReceiv
   };
 }
 
-export function fetchGroups(projectUniqueName: string, currentPage?: number): any {
+export function fetchGroups(projectUniqueName: string,
+                            filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
-    paginationActions.paginateGroup(dispatch, currentPage);
     let groupsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/';
-    let offset = getOffset(currentPage);
-    if (offset != null) {
-      groupsUrl += url.format({query: {offset: offset}});
+    if (filters) {
+      groupsUrl += url.format({query: filters});
+      let baseUrl = location.hash.split('?')[0];
+      history.push(baseUrl + url.format({ query: filters }));
     }
     return fetch(groupsUrl, {
       headers: {

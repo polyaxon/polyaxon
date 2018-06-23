@@ -1,11 +1,10 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
+import history from '../history';
 import { ProjectModel } from '../models/project';
 import { BASE_API_URL } from '../constants/api';
 import { handleAuthError } from '../constants/utils';
-import { getOffset } from '../constants/paginate';
-import * as paginationActions from '../actions/pagination';
 
 export enum actionTypes {
   CREATE_PROJECT = 'CREATE_PROJECT',
@@ -124,14 +123,15 @@ export function deleteProject(project: ProjectModel): any {
   };
 }
 
-export function fetchProjects(user: string, currentPage?: number): any {
+export function fetchProjects(user: string,
+                              filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectsActionCreator());
-    paginationActions.paginateProject(dispatch, currentPage);
     let projectsUrl = BASE_API_URL + `/${user}`;
-    let offset = getOffset(currentPage);
-    if (offset != null) {
-      projectsUrl += url.format({query: {offset: offset}});
+    if (filters) {
+      projectsUrl += url.format({query: filters});
+      let baseUrl = location.hash.split('?')[0];
+      history.push(baseUrl + url.format({ query: filters }));
     }
     return fetch(projectsUrl, {
       headers: {

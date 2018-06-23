@@ -1,11 +1,10 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
+import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { JobModel } from '../models/job';
 import { BASE_API_URL } from '../constants/api';
-import * as paginationActions from '../actions/pagination';
-import { getOffset } from '../constants/paginate';
 
 export enum actionTypes {
   CREATE_JOB = 'CREATE_JOB',
@@ -89,21 +88,22 @@ export function receiveJobsActionCreator(jobs: JobModel[]): ReceiveJobsAction {
   };
 }
 
-export function fetchJobs(projectUniqueName: string, currentPage?: number): any {
+export function fetchJobs(projectUniqueName: string,
+                          filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestJobsActionCreator());
-    paginationActions.paginateJob(dispatch, currentPage);
     let jobsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/jobs';
-    let offset = getOffset(currentPage);
-    if (offset != null) {
-      jobsUrl += url.format({query: {offset: offset}});
+    if (filters) {
+      jobsUrl += url.format({query: filters});
+      let baseUrl = location.hash.split('?')[0];
+      history.push(baseUrl + url.format({ query: filters }));
     }
     return fetch(
       jobsUrl, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        }
+      })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => json.results)
@@ -116,10 +116,10 @@ export function fetchJob(user: string, projectName: string, jobId: number): any 
     dispatch(requestJobActionCreator());
     return fetch(
       BASE_API_URL + `/${user}/${projectName}` + '/jobs/' + jobId, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        }
+      })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => dispatch(receiveJobActionCreator(json)));

@@ -1,11 +1,10 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
+import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { ExperimentJobModel } from '../models/experimentJob';
 import { BASE_API_URL } from '../constants/api';
-import * as paginationActions from '../actions/pagination';
-import { getOffset } from '../constants/paginate';
 
 export enum actionTypes {
   CREATE_EXPERIMENT_JOB = 'CREATE_EXPERIMENT_JOB',
@@ -91,22 +90,24 @@ export function receiveExperimentJobsActionCreator(jobs: ExperimentJobModel[]): 
   };
 }
 
-export function fetchExperimentJobs(projectUniqueName: string, experimentId: number, currentPage?: number): any {
+export function fetchExperimentJobs(projectUniqueName: string,
+                                    experimentId: number,
+                                    filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentJobsActionCreator());
-    paginationActions.paginateExperimentJob(dispatch, currentPage);
     let jobsUrl =
       BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentId + '/jobs';
-    let offset = getOffset(currentPage);
-    if (offset != null) {
-      jobsUrl += url.format({query: {offset: offset}});
+    if (filters) {
+      jobsUrl += url.format({query: filters});
+      let baseUrl = location.hash.split('?')[0];
+      history.push(baseUrl + url.format({ query: filters }));
     }
     return fetch(
       jobsUrl, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        }
+      })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => json.results)
@@ -119,10 +120,10 @@ export function fetchExperimentJob(user: string, projectName: string, experiment
     dispatch(requestExperimentJobActionCreator());
     return fetch(
       BASE_API_URL + `/${user}/${projectName}` + '/experiments/' + experimentId + '/jobs/' + jobId, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        }
+      })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => dispatch(receiveExperimentJobActionCreator(json)));

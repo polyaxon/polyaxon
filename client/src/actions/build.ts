@@ -1,11 +1,10 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
+import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { BuildModel } from '../models/build';
 import { BASE_API_URL } from '../constants/api';
-import * as paginationActions from '../actions/pagination';
-import { getOffset } from '../constants/paginate';
 
 export enum actionTypes {
   CREATE_BUILD = 'CREATE_BUILD',
@@ -89,21 +88,22 @@ export function receiveBuildsActionCreator(builds: BuildModel[]): ReceiveBuildsA
   };
 }
 
-export function fetchBuilds(projectUniqueName: string, currentPage?: number): any {
+export function fetchBuilds(projectUniqueName: string,
+                            filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestBuildsActionCreator());
-    paginationActions.paginateBuild(dispatch, currentPage);
     let buildsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/builds';
-    let offset = getOffset(currentPage);
-    if (offset != null) {
-      buildsUrl += url.format({query: {offset: offset}});
+    if (filters) {
+      buildsUrl += url.format({query: filters});
+      let baseUrl = location.hash.split('?')[0];
+      history.push(baseUrl + url.format({ query: filters }));
     }
     return fetch(
       buildsUrl, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        }
+      })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => json.results)
@@ -116,10 +116,10 @@ export function fetchBuild(user: string, projectName: string, buildId: number): 
     dispatch(requestBuildActionCreator());
     return fetch(
       BASE_API_URL + `/${user}/${projectName}` + '/builds/' + buildId, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        }
+      })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => dispatch(receiveBuildActionCreator(json)));
