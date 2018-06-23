@@ -31,6 +31,7 @@ export interface DeleteExperimentJobAction extends Action {
 export interface ReceiveExperimentJobsAction extends Action {
   type: actionTypes.RECEIVE_EXPERIMENT_JOBS;
   jobs: ExperimentJobModel[];
+  count: number;
 }
 
 export interface RequestExperimentJobsAction extends Action {
@@ -83,10 +84,12 @@ export function receiveExperimentJobActionCreator(job: ExperimentJobModel): Crea
   };
 }
 
-export function receiveExperimentJobsActionCreator(jobs: ExperimentJobModel[]): ReceiveExperimentJobsAction {
+export function receiveExperimentJobsActionCreator(jobs: ExperimentJobModel[],
+                                                   count: number): ReceiveExperimentJobsAction {
   return {
     type: actionTypes.RECEIVE_EXPERIMENT_JOBS,
-    jobs
+    jobs,
+    count
   };
 }
 
@@ -110,12 +113,14 @@ export function fetchExperimentJobs(projectUniqueName: string,
       })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results)
-      .then(json => dispatch(receiveExperimentJobsActionCreator(json)));
+      .then(json => dispatch(receiveExperimentJobsActionCreator(json.results, json.count)));
   };
 }
 
-export function fetchExperimentJob(user: string, projectName: string, experimentId: number, jobId: number): any {
+export function fetchExperimentJob(user: string,
+                                   projectName: string,
+                                   experimentId: number,
+                                   jobId: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentJobActionCreator());
     return fetch(

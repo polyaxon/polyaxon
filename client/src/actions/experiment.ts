@@ -28,6 +28,7 @@ export interface DeleteExperimentAction extends Action {
 export interface ReceiveExperimentsAction extends Action {
   type: actionTypes.RECEIVE_EXPERIMENTS;
   experiments: ExperimentModel[];
+  count: number;
 }
 
 export interface RequestExperimentsAction extends Action {
@@ -67,10 +68,11 @@ export function requestExperimentsActionCreator(): RequestExperimentsAction {
   };
 }
 
-export function receiveExperimentsActionCreator(experiments: ExperimentModel[]): ReceiveExperimentsAction {
+export function receiveExperimentsActionCreator(experiments: ExperimentModel[], count: number): ReceiveExperimentsAction {
   return {
     type: actionTypes.RECEIVE_EXPERIMENTS,
-    experiments
+    experiments,
+    count
   };
 }
 
@@ -98,8 +100,7 @@ export function fetchExperiments(projectUniqueName: string,
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results)
-      .then(json => dispatch(receiveExperimentsActionCreator(json)));
+      .then(json => dispatch(receiveExperimentsActionCreator(json.results, json.count)));
   };
 }
 

@@ -29,6 +29,7 @@ export interface DeleteGroupAction extends Action {
 export interface ReceiveGroupsAction extends Action {
   type: actionTypes.RECEIVE_GROUPS;
   groups: GroupModel[];
+  count: number;
 }
 
 export interface RequestGroupsAction extends Action {
@@ -68,10 +69,11 @@ export function requestGroupsActionCreator(): RequestGroupsAction {
   };
 }
 
-export function receiveGroupsActionCreator(groups: GroupModel[]): ReceiveGroupsAction {
+export function receiveGroupsActionCreator(groups: GroupModel[], count: number): ReceiveGroupsAction {
   return {
     type: actionTypes.RECEIVE_GROUPS,
-    groups
+    groups,
+    count
   };
 }
 
@@ -99,8 +101,7 @@ export function fetchGroups(projectUniqueName: string,
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results)
-      .then(json => dispatch(receiveGroupsActionCreator(json)));
+      .then(json => dispatch(receiveGroupsActionCreator(json.results, json.count)));
   };
 }
 

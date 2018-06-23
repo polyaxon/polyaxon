@@ -29,6 +29,7 @@ export interface DeleteJobAction extends Action {
 export interface ReceiveJobsAction extends Action {
   type: actionTypes.RECEIVE_JOBS;
   jobs: JobModel[];
+  count: number;
 }
 
 export interface RequestJobsAction extends Action {
@@ -81,10 +82,11 @@ export function receiveJobActionCreator(job: JobModel): CreateUpdateReceiveJobAc
   };
 }
 
-export function receiveJobsActionCreator(jobs: JobModel[]): ReceiveJobsAction {
+export function receiveJobsActionCreator(jobs: JobModel[], count: number): ReceiveJobsAction {
   return {
     type: actionTypes.RECEIVE_JOBS,
-    jobs
+    jobs,
+    count
   };
 }
 
@@ -106,8 +108,7 @@ export function fetchJobs(projectUniqueName: string,
       })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results)
-      .then(json => dispatch(receiveJobsActionCreator(json)));
+      .then(json => dispatch(receiveJobsActionCreator(json.results, json.count)));
   };
 }
 

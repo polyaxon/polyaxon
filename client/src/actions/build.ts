@@ -29,6 +29,7 @@ export interface DeleteBuildAction extends Action {
 export interface ReceiveBuildsAction extends Action {
   type: actionTypes.RECEIVE_BUILDS;
   builds: BuildModel[];
+  count: number;
 }
 
 export interface RequestBuildsAction extends Action {
@@ -81,10 +82,11 @@ export function receiveBuildActionCreator(build: BuildModel): CreateUpdateReceiv
   };
 }
 
-export function receiveBuildsActionCreator(builds: BuildModel[]): ReceiveBuildsAction {
+export function receiveBuildsActionCreator(builds: BuildModel[], count: number): ReceiveBuildsAction {
   return {
     type: actionTypes.RECEIVE_BUILDS,
-    builds
+    builds,
+    count
   };
 }
 
@@ -106,8 +108,7 @@ export function fetchBuilds(projectUniqueName: string,
       })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results)
-      .then(json => dispatch(receiveBuildsActionCreator(json)));
+      .then(json => dispatch(receiveBuildsActionCreator(json.results, json.count)));
   };
 }
 
