@@ -15,7 +15,7 @@ export interface Props {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experiment: ExperimentModel) => actions.ExperimentAction;
-  fetchData: (currentPage: number) => actions.ExperimentAction;
+  fetchData: (currentPage?: number, query?: string, sort?: string) => actions.ExperimentAction;
 }
 
 export default class Experiments extends React.Component<Props, Object> {
@@ -46,7 +46,7 @@ export default class Experiments extends React.Component<Props, Object> {
           'experiment',
           'polyaxon run --help')
         }
-
+        enableFilters={true}
         fetchData={this.props.fetchData}
       />
     )

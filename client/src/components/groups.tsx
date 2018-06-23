@@ -6,15 +6,16 @@ import { GroupModel } from '../models/group';
 import PaginatedList from '../components/paginatedList';
 import { EmptyList } from './emptyList';
 import GroupHeader from './groupHeader';
+import * as actions from '../actions/group';
 
 export interface Props {
   isCurrentUser: boolean;
   groups: GroupModel[];
   count: number;
-  onCreate: (group: GroupModel) => any;
-  onUpdate: (group: GroupModel) => any;
-  onDelete: (group: GroupModel) => any;
-  fetchData: (currentPage: number) => any;
+  onCreate: (group: GroupModel) => actions.GroupAction;
+  onUpdate: (group: GroupModel) => actions.GroupAction;
+  onDelete: (group: GroupModel) => actions.GroupAction;
+  fetchData: (currentPage?: number, query?: string, sort?: string) => actions.GroupAction;
 }
 
 export default class Groups extends React.Component<Props, Object> {
@@ -43,6 +44,7 @@ export default class Groups extends React.Component<Props, Object> {
           'polyaxon run --help')}
         componentHeader={GroupHeader()}
         componentList={listGroups()}
+        enableFilters={true}
         fetchData={this.props.fetchData}
       />
     );

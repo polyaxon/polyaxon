@@ -14,7 +14,7 @@ export interface Props {
   onCreate: (build: BuildModel) => actions.BuildAction;
   onUpdate: (build: BuildModel) => actions.BuildAction;
   onDelete: (build: BuildModel) => actions.BuildAction;
-  fetchData: (currentPage: number) => actions.BuildAction;
+  fetchData: (currentPage?: number, query?: string, sort?: string) => actions.BuildAction;
 }
 
 export default class Builds extends React.Component<Props, Object> {
@@ -39,6 +39,7 @@ export default class Builds extends React.Component<Props, Object> {
         componentList={listBuilds()}
         componentHeader={JobHeader()}
         componentEmpty={EmptyList(false, 'build', 'build')}
+        enableFilters={true}
         fetchData={this.props.fetchData}
       />
     );

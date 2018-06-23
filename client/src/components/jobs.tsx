@@ -14,7 +14,7 @@ export interface Props {
   onCreate: (job: JobModel) => actions.JobAction;
   onUpdate: (job: JobModel) => actions.JobAction;
   onDelete: (job: JobModel) => actions.JobAction;
-  fetchData: (currentPage: number) => actions.JobAction;
+  fetchData: (currentPage?: number, query?: string, sort?: string) => actions.JobAction;
 }
 
 export default class Jobs extends React.Component<Props, Object> {
@@ -39,6 +39,7 @@ export default class Jobs extends React.Component<Props, Object> {
         componentList={listJobs()}
         componentHeader={JobHeader()}
         componentEmpty={EmptyList(false, 'job', 'job')}
+        enableFilters={true}
         fetchData={this.props.fetchData}
       />
     );
