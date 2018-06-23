@@ -54,8 +54,14 @@ export default class FilterList extends React.Component<Props, State> {
     let getFilter = () => {
       return (
         <div className="filter-list">
-          {/*<div className="sort sliders-h"></div>*/}
-          <form className="form-horizontal" onSubmit={this.handleFilter}>
+            <div className="col-md-offset-10 col-md-2">
+              <div className="col-md-offset-2 col-md-10">
+              <button className="btn btn-default btn-filters" data-toggle="collapse" data-target="#filters">
+                <i className="fa fa-sliders icon" aria-hidden="true"/>
+              </button>
+              </div>
+          </div>
+          <form className="form-horizontal collapse"  id="filters" onSubmit={this.handleFilter}>
             <div className="col-md-10">
               <div className="form-group">
                 <label htmlFor="query" className="col-md-1 control-label">Query</label>
