@@ -6,14 +6,13 @@ import ExperimentJobs from '../components/experimentJobs';
 import { ExperimentJobModel } from '../models/experimentJob';
 
 import * as actions from '../actions/experimentJob';
-import { getPaginatedSlice } from '../constants/paginate';
+import { getOffset } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
   let experimentName = getExperimentIndexName(params.experiment.unique_name);
   let jobs: ExperimentJobModel[] = [];
   let experiment = state.experiments.byUniqueNames[experimentName];
   let jobNames = experiment.jobs;
-  jobNames = getPaginatedSlice(jobNames, state.pagination.experimentJobCurrentPage);
   jobNames.forEach(
     function (job: string, idx: number) {
       jobs.push(state.experimentJobs.byUniqueNames[job]);
@@ -34,8 +33,17 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobActio
     onCreate: (job: ExperimentJobModel) => dispatch(actions.createExperimentJobActionCreator(job)),
     onDelete: (job: ExperimentJobModel) => dispatch(actions.deleteExperimentJobActionCreator(job)),
     onUpdate: (job: ExperimentJobModel) => dispatch(actions.updateExperimentJobActionCreator(job)),
-    fetchData: (currentPage?: number) => dispatch(
-      actions.fetchExperimentJobs(params.experiment.project, params.experiment.id, currentPage))
+    fetchData: (currentPage?: number) => {
+      let filters: {[key: string]: number|boolean|string} = {};
+      let offset = getOffset(currentPage);
+      if (offset != null) {
+        filters.offset = offset;
+      }
+      return dispatch(actions.fetchExperimentJobs(
+        params.experiment.project,
+        params.experiment.id,
+        filters));
+    }
   };
 }
 

@@ -7,6 +7,7 @@ import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
 import { getPaginatedSlice } from '../constants/paginate';
+import { getOffset } from '../constants/paginate';
 
 interface OwnProps {
   user: string;
@@ -25,7 +26,7 @@ export function mapStateToProps(state: AppState, ownProps: any) {
     let group = state.groups.byUniqueNames[groupName];
     count = group.num_experiments;
     let experimentNames = group.experiments;
-    experimentNames = getPaginatedSlice(experimentNames, state.pagination.experimentCurrentPage);
+    experimentNames = getPaginatedSlice(experimentNames);
     experimentNames.forEach(
       function (experiment: string, idx: number) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
@@ -36,7 +37,7 @@ export function mapStateToProps(state: AppState, ownProps: any) {
     let experimentNames = project.experiments.filter(
       (experiment) => state.experiments.byUniqueNames[experiment].experiment_group == null
     );
-    experimentNames = getPaginatedSlice(experimentNames, state.pagination.experimentCurrentPage);
+    experimentNames = getPaginatedSlice(experimentNames);
     experimentNames.forEach(
       function (experiment: string, idx: number) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
@@ -58,8 +59,20 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
-    fetchData: (currentPage?: number) => dispatch(
-      actions.fetchExperiments(ownProps.projectName, currentPage, ownProps.groupId))
+    fetchData: (currentPage?: number) => {
+      let filters: {[key: string]: number|boolean|string} = {};
+      if (ownProps.groupId) {
+        filters.group = ownProps.groupId;
+      }
+      if (!ownProps.groupId) {
+        filters.independent = true;
+      }
+      let offset = getOffset(currentPage);
+      if (offset != null) {
+        filters.offset = offset;
+      }
+      return dispatch(actions.fetchExperiments(ownProps.projectName, filters));
+    }
   };
 }
 

@@ -5,13 +5,12 @@ import Builds from '../components/builds';
 import { BuildModel } from '../models/build';
 
 import * as actions from '../actions/build';
-import { getPaginatedSlice } from '../constants/paginate';
+import { getOffset } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
   let builds: BuildModel[] = [];
   let project = state.projects.byUniqueNames[params.projectName];
   let BuildNames = project.builds;
-  BuildNames = getPaginatedSlice(BuildNames, state.pagination.buildCurrentPage);
   BuildNames.forEach(
     function (build: string, idx: number) {
       builds.push(state.builds.byUniqueNames[build]);
@@ -36,8 +35,14 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
     onCreate: (build: BuildModel) => dispatch(actions.createBuildActionCreator(build)),
     onDelete: (build: BuildModel) => dispatch(actions.deleteBuildActionCreator(build)),
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
-    fetchData: (currentPage?: number) => dispatch(
-      actions.fetchBuilds(params.projectName, currentPage))
+    fetchData: (currentPage?: number) => {
+      let filters: {[key: string]: number|boolean|string} = {};
+      let offset = getOffset(currentPage);
+      if (offset != null) {
+        filters.offset = offset;
+      }
+      return dispatch(actions.fetchBuilds(params.projectName, filters));
+    }
   };
 }
 
