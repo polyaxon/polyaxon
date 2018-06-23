@@ -1,3 +1,5 @@
+import * as queryString from 'query-string';
+
 export const PAGE_SIZE = 30;
 
 export function getOffset(page?: number): number | null {
@@ -23,8 +25,14 @@ export function paginatePrevious(currentPage: number): boolean {
   return currentPage > 1;
 }
 
-export function getPaginatedSlice(list: Array<any>, currentPage: number): Array<any> {
-  let start = getOffset(currentPage) || 0;
+export function getPaginatedSlice(list: Array<any>): Array<any> {
+  let pieces = location.href.split('?');
+  let offset = null;
+  if (pieces.length > 1) {
+    let search = queryString.parse(pieces[1]);
+    offset = search.offset ? parseInt(search.offset, 10) : null;
+  }
+  let start = offset || 0;
   let end = start + PAGE_SIZE;
   return list.slice(start, end);
 }
