@@ -6,13 +6,16 @@ import { ProjectSchema } from '../constants/schemas';
 import { ProjectAction, actionTypes } from '../actions/project';
 import { ProjectStateSchema, ProjectsEmptyState, ProjectModel } from '../models/project';
 import { UserEmptyState, UserModel, UserStateSchema } from '../models/user';
+import { LastFetched } from '../models/utils';
 
 export const projectsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ProjectAction) => {
     let newState = {...state};
+    newState.lastFetched = new LastFetched();
 
     let processProject = function(project: ProjectModel) {
       let uniqueName = project.unique_name;
+      newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
@@ -60,6 +63,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: action.project}
         };
       case actionTypes.RECEIVE_PROJECTS:
+        newState.lastFetched.count = action.count;
         for (let project of action.projects) {
           newState = processProject(project);
         }

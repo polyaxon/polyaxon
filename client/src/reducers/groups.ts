@@ -6,13 +6,16 @@ import { GroupSchema } from '../constants/schemas';
 import { GroupAction, actionTypes } from '../actions/group';
 import { GroupStateSchema, GroupsEmptyState, GroupModel } from '../models/group';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
+import { LastFetched } from '../models/utils';
 
 export const groupsReducer: Reducer<GroupStateSchema> =
   (state: GroupStateSchema = GroupsEmptyState, action: GroupAction) => {
     let newState = {...state};
+    newState.lastFetched = new LastFetched();
 
     let processGroup = function(group: GroupModel) {
       let uniqueName = group.unique_name;
+      newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
@@ -50,6 +53,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
           byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: action.group}
         };
       case actionTypes.RECEIVE_GROUPS:
+        newState.lastFetched.count = action.count;
         for (let group of action.groups) {
           newState = processGroup(group);
         }

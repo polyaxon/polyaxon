@@ -8,13 +8,16 @@ import { ExperimentStateSchema, ExperimentsEmptyState, ExperimentModel } from '.
 import { getExperimentIndexName } from '../constants/utils';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
+import { LastFetched } from '../models/utils';
 
 export const experimentsReducer: Reducer<ExperimentStateSchema> =
   (state: ExperimentStateSchema = ExperimentsEmptyState, action: ExperimentAction) => {
     let newState = {...state};
+    newState.lastFetched = new LastFetched();
 
     let processExperiment = function (experiment: ExperimentModel) {
       let uniqueName = getExperimentIndexName(experiment.unique_name);
+      newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
@@ -57,6 +60,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           }
         };
       case actionTypes.RECEIVE_EXPERIMENTS:
+        newState.lastFetched.count = action.count;
         for (let experiment of action.experiments) {
           newState = processExperiment(experiment);
         }
