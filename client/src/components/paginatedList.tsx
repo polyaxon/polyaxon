@@ -56,15 +56,15 @@ export default class PaginatedList extends React.Component<Props, State> {
               </div>
             </div>
           </div>
-          {this.props.count > 0 && <div className="row">
+          {this.props.count > 0 &&
+          <div className="row">
             <div className="col-md-12">
               <div className="list-items">
                 {this.props.componentList}
               </div>
             </div>
           </div>}
-          {!this.props.count &&
-            this.props.componentEmpty}
+          {!this.props.count && this.props.componentEmpty}
           {paginate(this.props.count) &&
           <div className="row">
             <Pager>
