@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Pager } from 'react-bootstrap';
 
-import * as deepEqual from "deep-equal";
+import * as deepEqual from 'deep-equal';
 import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
@@ -33,7 +33,7 @@ export default class PaginatedList extends React.Component<Props, State> {
   }
 
   getFilters() {
-    let filters = {offset: 0, query: '', sort: '', extraFilters: undefined};
+    let filters = {offset: 0, query: '', sort: '', extraFilters: {}};
     let pieces = location.href.split('?');
     if (pieces.length > 1) {
       let search = queryString.parse(pieces[1]);
@@ -77,7 +77,9 @@ export default class PaginatedList extends React.Component<Props, State> {
       changed = true;
       this.setState({offset: 0});
     }
-    if (!deepEqual(this.state.extraFilters, prevState.extraFilters)) {
+    if (this.state.extraFilters &&
+        prevState.extraFilters &&
+        !deepEqual(this.state.extraFilters, prevState.extraFilters)) {
       changed = true;
       this.setState({offset: 0});
     }
