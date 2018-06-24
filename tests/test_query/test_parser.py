@@ -235,15 +235,15 @@ class TestParser(BaseTest):
             parse_field('')
 
         with self.assertRaises(QueryParserException):
-            parse_field('__')
+            parse_field('.')
 
         with self.assertRaises(QueryParserException):
-            parse_field('sdf__sdf__sf')
+            parse_field('sdf.sdf.sf')
 
         with self.assertRaises(QueryParserException):
-            parse_field('foo__')
+            parse_field('foo.')
 
         assert parse_field('foo') == ('foo', None)
         assert parse_field('foo_bar') == ('foo_bar', None)
-        assert parse_field('foo__bar') == ('foo', 'bar')
-        assert parse_field('metric__foo_bar') == ('metric', 'foo_bar')
+        assert parse_field('foo.bar') == ('foo', 'bar')
+        assert parse_field('metric.foo_bar') == ('metric', 'foo_bar')

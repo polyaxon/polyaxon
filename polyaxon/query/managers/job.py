@@ -6,7 +6,8 @@ from query.parser import parse_datetime_operation, parse_value_operation
 class JobQueryManager(BaseQueryManager):
     NAME = 'job'
     FIELDS_PROXY = {
-        'status': 'status__status'
+        'status': 'status__status',
+        'build': 'build_job'
     }
     PARSERS_BY_FIELD = {
         # Dates
@@ -18,6 +19,8 @@ class JobQueryManager(BaseQueryManager):
         'user': parse_value_operation,
         # Status
         'status': parse_value_operation,
+        # Builds
+        'build': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
     }
@@ -31,6 +34,8 @@ class JobQueryManager(BaseQueryManager):
         'user': ValueCondition,
         # Status
         'status': ValueCondition,
+        # Builds
+        'build': ValueCondition,
         # Tags
         'tags': ArrayCondition,
     }

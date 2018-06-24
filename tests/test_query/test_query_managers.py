@@ -28,7 +28,7 @@ class TestQueryManager(BaseTest):
     def setUp(self):
         super().setUp()
         self.query1 = 'updated_at:<=2020-10-10, started_at:>2010-10-10, started_at:~2016-10-01'
-        self.query2 = 'metric__loss:<=0.8, status:starting|running'
+        self.query2 = 'metric.loss:<=0.8, status:starting|running'
         self.query3 = 'finished_at:2012-12-12..2042-12-12'
         self.query4 = 'tags:~tag1|tag2,tags:tag3'
         self.query5 = 'foobar:2012-12-12..2042-12-12'
@@ -48,7 +48,7 @@ class TestQueryManager(BaseTest):
 
         tokenized_query = ExperimentQueryManager.tokenize(self.query2)
         assert dict(tokenized_query) == {
-            'metric__loss': ['<=0.8'],
+            'metric.loss': ['<=0.8'],
             'status': ['starting|running'],
         }
 
@@ -77,7 +77,7 @@ class TestQueryManager(BaseTest):
         tokenized_query = ExperimentQueryManager.tokenize(self.query2)
         parsed_query = ExperimentQueryManager.parse(tokenized_query)
         assert parsed_query == {
-            'metric__loss': [QueryOpSpec('<=', False, params=0.8)],
+            'metric.loss': [QueryOpSpec('<=', False, params=0.8)],
             'status': [QueryOpSpec('|', False, params=['starting', 'running'])],
         }
 
@@ -110,7 +110,7 @@ class TestQueryManager(BaseTest):
         parsed_query = ExperimentQueryManager.parse(tokenized_query)
         built_query = ExperimentQueryManager.build(parsed_query)
         assert built_query == {
-            'metric__loss': [
+            'metric.loss': [
                 QueryCondSpec(ComparisonCondition(op='<=', negation=False), params=0.8)],
             'status': [
                 QueryCondSpec(ValueCondition(op='|', negation=False),

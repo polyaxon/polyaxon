@@ -217,8 +217,8 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
         resp = self.auth_client.get(
             self.url + '?query=created_at:>=2010-01-01,'
-                       'declarations__optimizer:sgd,'
-                       'metric__loss:>=0.2,'
+                       'declarations.optimizer:sgd,'
+                       'metric.loss:>=0.2,'
                        'tags:tag1')
         assert resp.status_code == status.HTTP_200_OK
 
@@ -227,8 +227,8 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
         resp = self.auth_client.get(
             self.url + '?query=created_at:>=2010-01-01,'
-                       'declarations__optimizer:sgd|adam,'
-                       'metric__loss:>=0.2,'
+                       'declarations.optimizer:sgd|adam,'
+                       'metric.loss:>=0.2,'
                        'tags:tag1|tag2')
         assert resp.status_code == status.HTTP_200_OK
 
@@ -236,7 +236,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.data['count'] == 2
 
         # Order by metrics
-        resp = self.auth_client.get(self.url + '?sort=-metric__loss')
+        resp = self.auth_client.get(self.url + '?sort=-metric.loss')
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -246,7 +246,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert len(data) == self.queryset.count()
         assert data == [self.serializer_class(obj).data for obj in reversed(self.objects)]
 
-        resp = self.auth_client.get(self.url + '?sort=metric__loss')
+        resp = self.auth_client.get(self.url + '?sort=metric.loss')
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None

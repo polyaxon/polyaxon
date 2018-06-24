@@ -241,9 +241,9 @@ def parse_field(field):
 
     Example:
         foo => foo, None
-        metric__foo => metric, foo
+        metric.foo => metric, foo
     """
-    _field = field.split('__')
+    _field = field.split('.')
     _field = [f.strip() for f in _field]
     if len(_field) == 1 and _field[0]:
         return _field[0], None
