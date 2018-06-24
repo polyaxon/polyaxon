@@ -11,7 +11,6 @@ import { LastFetched } from '../models/utils';
 export const projectsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ProjectAction) => {
     let newState = {...state};
-    newState.lastFetched = new LastFetched();
 
     let processProject = function(project: ProjectModel) {
       let uniqueName = project.unique_name;
@@ -62,7 +61,11 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: action.project}
         };
+      case actionTypes.REQUEST_PROJECTS:
+        newState.lastFetched = new LastFetched();
+        return newState;
       case actionTypes.RECEIVE_PROJECTS:
+        newState.lastFetched = new LastFetched();
         newState.lastFetched.count = action.count;
         for (let project of action.projects) {
           newState = processProject(project);

@@ -11,7 +11,6 @@ import { LastFetched } from '../models/utils';
 export const groupsReducer: Reducer<GroupStateSchema> =
   (state: GroupStateSchema = GroupsEmptyState, action: GroupAction) => {
     let newState = {...state};
-    newState.lastFetched = new LastFetched();
 
     let processGroup = function(group: GroupModel) {
       let uniqueName = group.unique_name;
@@ -52,7 +51,11 @@ export const groupsReducer: Reducer<GroupStateSchema> =
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: action.group}
         };
+      case actionTypes.REQUEST_GROUPS:
+        newState.lastFetched = new LastFetched();
+        return newState;
       case actionTypes.RECEIVE_GROUPS:
+        newState.lastFetched = new LastFetched();
         newState.lastFetched.count = action.count;
         for (let group of action.groups) {
           newState = processGroup(group);

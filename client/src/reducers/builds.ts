@@ -12,7 +12,6 @@ import { LastFetched } from '../models/utils';
 export const buildsReducer: Reducer<BuildStateSchema> =
   (state: BuildStateSchema = BuildsEmptyState, action: BuildAction) => {
     let newState = {...state};
-    newState.lastFetched = new LastFetched();
 
     let processBuild = function (build: BuildModel) {
       let uniqueName = build.unique_name;
@@ -50,7 +49,11 @@ export const buildsReducer: Reducer<BuildStateSchema> =
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.build.unique_name]: action.build}
         };
+      case actionTypes.REQUEST_BUILDS:
+        newState.lastFetched = new LastFetched();
+        return newState;
       case actionTypes.RECEIVE_BUILDS:
+        newState.lastFetched = new LastFetched();
         newState.lastFetched.count = action.count;
         for (let build of action.builds) {
           newState = processBuild(build);
