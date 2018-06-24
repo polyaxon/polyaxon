@@ -57,10 +57,9 @@ export function mapDispatchToProps(
   return {
     onDelete: (project: ProjectModel) => dispatch(actions.deleteProject(project)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
-    fetchData: (currentPage?: number) => {
+    fetchData: (offset?: number) => {
       let filters: { [key: string]: number | boolean | string } = {};
-      let offset = getOffset(currentPage);
-      if (offset != null) {
+      if (offset) {
         filters.offset = offset;
       }
       return dispatch(actions.fetchProjects(params.match.params.user, filters));

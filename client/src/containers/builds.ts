@@ -42,7 +42,7 @@ export interface DispatchProps {
   onCreate?: (build: BuildModel) => actions.BuildAction;
   onDelete?: (build: BuildModel) => actions.BuildAction;
   onUpdate?: (build: BuildModel) => actions.BuildAction;
-  fetchData?: (currentPage?: number, query?: string, sort?: string) => actions.BuildAction;
+  fetchData?: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, params: any): DispatchProps {
@@ -50,7 +50,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
     onCreate: (build: BuildModel) => dispatch(actions.createBuildActionCreator(build)),
     onDelete: (build: BuildModel) => dispatch(actions.deleteBuildActionCreator(build)),
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
-    fetchData: (currentPage?: number, query?: string, sort?: string) => {
+    fetchData: (offset?: number, query?: string, sort?: string) => {
       let filters: {[key: string]: number|boolean|string} = {};
       if (query) {
         filters.query = query;
@@ -58,8 +58,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
       if (sort) {
         filters.sort = sort;
       }
-      let offset = getOffset(currentPage);
-      if (offset != null) {
+      if (offset) {
         filters.offset = offset;
       }
       return dispatch(actions.fetchBuilds(params.projectName, filters));

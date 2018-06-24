@@ -69,7 +69,7 @@ export interface DispatchProps {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete?: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate?: (experiment: ExperimentModel) => actions.ExperimentAction;
-  fetchData?: (currentPage?: number, query?: string, sort?: string) => actions.ExperimentAction;
+  fetchData?: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -77,7 +77,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
-    fetchData: (currentPage?: number, query?: string, sort?: string) => {
+    fetchData: (offset?: number, query?: string, sort?: string, extraFilters?: Object) => {
       let filters: {[key: string]: number|boolean|string} = {};
       if (ownProps.groupId) {
         filters.group = ownProps.groupId;
@@ -91,8 +91,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       if (sort) {
         filters.sort = sort;
       }
-      let offset = getOffset(currentPage);
-      if (offset != null) {
+      if (offset) {
         filters.offset = offset;
       }
       return dispatch(actions.fetchExperiments(ownProps.projectName, filters));

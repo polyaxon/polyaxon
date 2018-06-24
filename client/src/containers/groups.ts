@@ -49,7 +49,7 @@ export interface DispatchProps {
   onCreate?: (group: GroupModel) => actions.GroupAction;
   onDelete?: (group: GroupModel) => actions.GroupAction;
   onUpdate?: (group: GroupModel) => actions.GroupAction;
-  fetchData?: (currentPage?: number, query?: string, sort?: string) => actions.GroupAction;
+  fetchData?: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownProps: OwnProps): DispatchProps {
@@ -57,7 +57,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onCreate: (group: GroupModel) => dispatch(actions.createGroupActionCreator(group)),
     onDelete: (group: GroupModel) => dispatch(actions.deleteGroupActionCreator(group)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
-    fetchData: (currentPage?: number, query?: string, sort?: string) => {
+    fetchData: (offset?: number, query?: string, sort?: string) => {
       let filters: {[key: string]: number|boolean|string} = {};
       if (query) {
         filters.query = query;
@@ -65,8 +65,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
       if (sort) {
         filters.sort = sort;
       }
-      let offset = getOffset(currentPage);
-      if (offset != null) {
+      if (offset) {
         filters.offset = offset;
       }
       return dispatch(actions.fetchGroups(ownProps.projectName, filters));
