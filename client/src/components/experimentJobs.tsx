@@ -14,7 +14,7 @@ export interface Props {
   onCreate: (job: ExperimentJobModel) => actions.ExperimentJobAction;
   onUpdate: (job: ExperimentJobModel) => actions.ExperimentJobAction;
   onDelete: (job: ExperimentJobModel) => actions.ExperimentJobAction;
-  fetchData: (currentPage?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
+  fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
 }
 
 export default class ExperimentJobs extends React.Component<Props, Object> {

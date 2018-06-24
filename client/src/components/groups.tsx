@@ -16,7 +16,7 @@ export interface Props {
   onCreate: (group: GroupModel) => actions.GroupAction;
   onUpdate: (group: GroupModel) => actions.GroupAction;
   onDelete: (group: GroupModel) => actions.GroupAction;
-  fetchData: (currentPage?: number, query?: string, sort?: string) => actions.GroupAction;
+  fetchData: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
 }
 
 export default class Groups extends React.Component<Props, Object> {

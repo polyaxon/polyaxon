@@ -15,7 +15,7 @@ export interface Props {
   onCreate: (build: BuildModel) => actions.BuildAction;
   onUpdate: (build: BuildModel) => actions.BuildAction;
   onDelete: (build: BuildModel) => actions.BuildAction;
-  fetchData: (currentPage?: number, query?: string, sort?: string) => actions.BuildAction;
+  fetchData: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
 }
 
 export default class Builds extends React.Component<Props, Object> {

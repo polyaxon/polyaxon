@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Pager } from 'react-bootstrap';
 
-import { paginate, paginateNext, paginatePrevious } from '../constants/paginate';
+import * as queryString from 'query-string';
+
+import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
 import './paginatedList.less';
 import FilterList from './filters/filterList';
 import ExperimentFilterList from './filters/experimentFilterList';
@@ -13,57 +15,84 @@ export interface Props {
   componentHeader: React.ReactNode;
   componentEmpty: React.ReactNode;
   filters: boolean | string;
-  fetchData: (currentPage: number, query?: string, sort?: string) => any;
+  fetchData: (offset: number, query?: string, sort?: string, extraFilters?: Object) => any;
 }
 
 interface State {
-  currentPage: number;
+  offset: number;
   query?: string;
   sort?: string;
+  extraFilters?: Object;
 }
 
 export default class PaginatedList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {currentPage: 1, query: '', sort: ''};
+    this.state = this.getFilters();
+  }
+
+  getFilters() {
+    let filters = {offset: 0, query: '', sort: '', extraFilters: undefined};
+    let pieces = location.href.split('?');
+    if (pieces.length > 1) {
+      let search = queryString.parse(pieces[1]);
+      return {
+        offset: search.offset ? parseInt(search.offset, 10) : 0,
+        query: search.query || '',
+        sort: search.sort || '',
+        extraFilters: undefined
+      };
+    }
+    return filters;
   }
 
   componentDidMount() {
-    this.props.fetchData(this.state.currentPage);
+    this.props.fetchData(
+        this.state.offset,
+        this.state.query,
+        this.state.sort,
+        this.state.extraFilters);
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
     let changed = false;
-    if (this.state.currentPage !== prevState.currentPage) {
+    if (this.state.offset !== prevState.offset) {
       changed = true;
     }
     if (this.state.query !== prevState.query) {
       changed = true;
+      this.setState({offset: 0});
     }
     if (this.state.sort !== prevState.sort) {
       changed = true;
+      this.setState({offset: 0});
     }
     if (changed) {
-      this.props.fetchData(this.state.currentPage, this.state.query, this.state.sort);
+      this.props.fetchData(
+        this.state.offset,
+        this.state.query,
+        this.state.sort,
+        this.state.extraFilters);
     }
   }
 
   handleNextPage = () => {
     this.setState((prevState, prevProps) => ({
-      currentPage: prevState.currentPage + 1,
+      offset: prevState.offset + PAGE_SIZE,
     }));
   }
 
   handlePreviousPage = () => {
     this.setState((prevState, prevProps) => ({
-      currentPage: prevState.currentPage - 1,
+      offset: prevState.offset - PAGE_SIZE,
     }));
   }
 
-  handleFilter = (query: string, sort: string) => {
+  handleFilter = (query: string, sort: string, extraFilters?: Object) => {
     this.setState((prevState, prevProps) => ({
       query: query,
-      sort: sort
+      sort: sort,
+      extraFilters: extraFilters,
     }));
   }
 
@@ -81,6 +110,7 @@ export default class PaginatedList extends React.Component<Props, State> {
           <ExperimentFilterList
             query={this.state.query}
             sort={this.state.sort}
+            extraFilters={this.state.extraFilters}
             handleFilter={(query, sort) => this.handleFilter(query, sort)}
           />
         );
@@ -96,7 +126,7 @@ export default class PaginatedList extends React.Component<Props, State> {
     let getContent = () => {
       return (
         <div className="paginated-list">
-          {(this.props.count > 0 && enableFilter()) &&
+          {(enableFilter()) &&
           <div className="row">
             <div className="col-md-12">
               {getFilters()}
@@ -124,13 +154,13 @@ export default class PaginatedList extends React.Component<Props, State> {
             <Pager>
               <Pager.Item
                 onClick={this.handlePreviousPage}
-                disabled={!paginatePrevious(this.state.currentPage)}
+                disabled={!paginatePrevious(this.state.offset)}
               >
                 Previous
               </Pager.Item>{' '}
               <Pager.Item
                 onClick={this.handleNextPage}
-                disabled={!paginateNext(this.state.currentPage, this.props.count)}
+                disabled={!paginateNext(this.state.offset, this.props.count)}
               >
                 Next
               </Pager.Item>

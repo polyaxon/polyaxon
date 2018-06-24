@@ -5,7 +5,7 @@ import './filterList.less';
 export interface Props {
   query?: string;
   sort?: string;
-  radio?: string;
+  extraFilters?: Object;
   handleFilter: (query: string, sort: string) => any;
 }
 
