@@ -3,14 +3,16 @@ import { Pager } from 'react-bootstrap';
 
 import { paginate, paginateNext, paginatePrevious } from '../constants/paginate';
 import './paginatedList.less';
-import FilterList from './filterList';
+import FilterList from './filters/filterList';
+import ExperimentFilterList from './filters/experimentFilterList';
+import { DEFAULT_FILTERS, EXPERIMENT_FILTERS } from './filters/constants';
 
 export interface Props {
   count: number;
   componentList: React.ReactNode;
   componentHeader: React.ReactNode;
   componentEmpty: React.ReactNode;
-  enableFilters: boolean;
+  filters: boolean | string;
   fetchData: (currentPage: number, query?: string, sort?: string) => any;
 }
 
@@ -66,18 +68,38 @@ export default class PaginatedList extends React.Component<Props, State> {
   }
 
   public render() {
+    let getFilters = () => {
+      if (this.props.filters === DEFAULT_FILTERS) {
+        return (
+          <FilterList
+            query={this.state.query}
+            sort={this.state.sort}
+            handleFilter={(query, sort) => this.handleFilter(query, sort)}
+          />);
+      } else if (this.props.filters === EXPERIMENT_FILTERS) {
+        return (
+          <ExperimentFilterList
+            query={this.state.query}
+            sort={this.state.sort}
+            handleFilter={(query, sort) => this.handleFilter(query, sort)}
+          />
+        );
+      } else {
+        return (null);
+      }
+    };
+
+    let enableFilter = () => {
+      return this.props.filters !== false;
+    };
+
     let getContent = () => {
-      // if (this.props.count > 0) {
       return (
         <div className="paginated-list">
-          {(this.props.count > 0 && this.props.enableFilters) &&
+          {(this.props.count > 0 && enableFilter()) &&
           <div className="row">
             <div className="col-md-12">
-              <FilterList
-                query={this.state.query}
-                sort={this.state.sort}
-                handleFilter={(query, sort) => this.handleFilter(query, sort)}
-              />
+              {getFilters()}
             </div>
           </div>
           }

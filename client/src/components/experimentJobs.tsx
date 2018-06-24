@@ -42,7 +42,7 @@ export default class ExperimentJobs extends React.Component<Props, Object> {
         componentList={listExperimentJobs()}
         componentHeader={JobHeader()}
         componentEmpty={EmptyList(false, 'job', 'job')}
-        enableFilters={false}
+        filters={false}
         fetchData={this.props.fetchData}
       />
     );

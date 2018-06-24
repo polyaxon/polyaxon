@@ -4,7 +4,8 @@ import * as _ from 'lodash';
 import * as actions from '../actions/build';
 import Build from './build';
 import { BuildModel } from '../models/build';
-import PaginatedList from '../components/paginatedList';
+import { DEFAULT_FILTERS } from './filters/constants';
+import PaginatedList from './paginatedList';
 import { EmptyList } from './emptyList';
 import JobHeader from './jobHeader';
 
@@ -39,7 +40,7 @@ export default class Builds extends React.Component<Props, Object> {
         componentList={listBuilds()}
         componentHeader={JobHeader()}
         componentEmpty={EmptyList(false, 'build', 'build')}
-        enableFilters={true}
+        filters={DEFAULT_FILTERS}
         fetchData={this.props.fetchData}
       />
     );

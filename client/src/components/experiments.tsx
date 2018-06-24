@@ -4,7 +4,8 @@ import * as _ from 'lodash';
 import Experiment from './experiment';
 import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
-import PaginatedList from '../components/paginatedList';
+import { EXPERIMENT_FILTERS } from './filters/constants';
+import PaginatedList from './paginatedList';
 import { EmptyList } from './emptyList';
 import ExperimentHeader from './experimentHeader';
 
@@ -46,7 +47,7 @@ export default class Experiments extends React.Component<Props, Object> {
           'experiment',
           'polyaxon run --help')
         }
-        enableFilters={true}
+        filters={EXPERIMENT_FILTERS}
         fetchData={this.props.fetchData}
       />
     )

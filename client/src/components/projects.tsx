@@ -53,7 +53,7 @@ export default class Projects extends React.Component<Props, Object> {
               'project',
               'project',
               'polyaxon project create --help')}
-            enableFilters={false}
+            filters={false}
             fetchData={this.props.fetchData}
           />
         </div>

@@ -3,7 +3,8 @@ import * as _ from 'lodash';
 
 import Group from './group';
 import { GroupModel } from '../models/group';
-import PaginatedList from '../components/paginatedList';
+import { DEFAULT_FILTERS } from './filters/constants';
+import PaginatedList from './paginatedList';
 import { EmptyList } from './emptyList';
 import GroupHeader from './groupHeader';
 import * as actions from '../actions/group';
@@ -44,7 +45,7 @@ export default class Groups extends React.Component<Props, Object> {
           'polyaxon run --help')}
         componentHeader={GroupHeader()}
         componentList={listGroups()}
-        enableFilters={true}
+        filters={DEFAULT_FILTERS}
         fetchData={this.props.fetchData}
       />
     );

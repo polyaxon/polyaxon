@@ -5,20 +5,18 @@ import './filterList.less';
 export interface Props {
   query?: string;
   sort?: string;
-  radio?: string;
   handleFilter: (query: string, sort: string) => any;
 }
 
 interface State {
   query: string;
   sort: string;
-  radio: string;
 }
 
 export default class FilterList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {query: props.query || '', sort: props.sort || '', radio: 'data'};
+    this.state = {query: props.query || '', sort: props.sort || ''};
   }
 
   handleFilter = (event: any) => {
@@ -30,7 +28,6 @@ export default class FilterList extends React.Component<Props, State> {
     this.setState((prevState, prevProps) => ({
       query: value,
       sort: prevState.sort,
-      radio: prevState.radio
     }));
   }
 
@@ -38,30 +35,26 @@ export default class FilterList extends React.Component<Props, State> {
     this.setState((prevState, prevProps) => ({
       query: prevState.query,
       sort: value,
-      radio: prevState.radio
-    }));
-  }
-
-  onRadioChange = (value: string) => {
-    this.setState((prevState, prevProps) => ({
-      query: prevState.query,
-      sort: prevState.sort,
-      radio: value
     }));
   }
 
   public render() {
+    const filterId = Math.floor((Math.random() * 100) + 1).toString();
     let getFilter = () => {
       return (
         <div className="filter-list">
             <div className="col-md-offset-10 col-md-2">
               <div className="col-md-offset-2 col-md-10">
-              <button className="btn btn-default btn-filters" data-toggle="collapse" data-target="#filters">
+              <button
+                className="btn btn-default btn-filters"
+                data-toggle="collapse"
+                data-target={`#filters-${filterId}`}
+              >
                 <i className="fa fa-sliders icon" aria-hidden="true"/>
               </button>
               </div>
           </div>
-          <form className="form-horizontal collapse"  id="filters" onSubmit={this.handleFilter}>
+          <form className="form-horizontal collapse" id={`filters-${filterId}`} onSubmit={this.handleFilter}>
             <div className="col-md-10">
               <div className="form-group">
                 <label htmlFor="query" className="col-md-1 control-label">Query</label>
@@ -87,44 +80,6 @@ export default class FilterList extends React.Component<Props, State> {
                     value={this.state.sort}
                     onChange={(event) => this.onSortInput(event.target.value)}
                   />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-md-offset-1 col-md-1">
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value="data"
-                        checked={this.state.radio === 'data'}
-                        onChange={(event) => this.onRadioChange(event.target.value)}
-                      /> Data
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-1">
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value="metrics"
-                        checked={this.state.radio === 'metrics'}
-                        onChange={(event) => this.onRadioChange(event.target.value)}
-                      /> Metrics
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-1">
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value="declarations"
-                        checked={this.state.radio === 'declarations'}
-                        onChange={(event) => this.onRadioChange(event.target.value)}
-                      /> Declarations
-                    </label>
-                  </div>
                 </div>
               </div>
             </div>

@@ -4,7 +4,8 @@ import * as _ from 'lodash';
 import * as actions from '../actions/job';
 import Job from './job';
 import { JobModel } from '../models/job';
-import PaginatedList from '../components/paginatedList';
+import { DEFAULT_FILTERS } from './filters/constants';
+import PaginatedList from './paginatedList';
 import { EmptyList } from './emptyList';
 import JobHeader from './jobHeader';
 
@@ -39,7 +40,7 @@ export default class Jobs extends React.Component<Props, Object> {
         componentList={listJobs()}
         componentHeader={JobHeader()}
         componentEmpty={EmptyList(false, 'job', 'job')}
-        enableFilters={true}
+        filters={DEFAULT_FILTERS}
         fetchData={this.props.fetchData}
       />
     );
