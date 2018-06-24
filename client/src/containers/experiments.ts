@@ -77,13 +77,22 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
-    fetchData: (offset?: number, query?: string, sort?: string, extraFilters?: Object) => {
+    fetchData: (offset?: number,
+                query?: string,
+                sort?: string,
+                extraFilters?:  {[key: string]: number|boolean|string}) => {
       let filters: {[key: string]: number|boolean|string} = {};
       if (ownProps.groupId) {
         filters.group = ownProps.groupId;
       }
-      if (!ownProps.groupId) {
-        filters.independent = true;
+      if (extraFilters && (extraFilters.metrics === true || extraFilters.metrics === 'true')) {
+        filters.metrics = extraFilters.metrics;
+      }
+      if (extraFilters && (extraFilters.declarations === true || extraFilters.declarations === 'true')) {
+        filters.declarations = extraFilters.declarations;
+      }
+      if (extraFilters && (extraFilters.independent === true || extraFilters.independent === 'true')) {
+        filters.independent = extraFilters.independent;
       }
       if (query) {
         filters.query = query;

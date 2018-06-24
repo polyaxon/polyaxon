@@ -11,11 +11,13 @@ export interface Props {
 
 function GridList({columns, rows}: Props) {
   if (!columns) {
-    columns = [];
+    let columnValues: string[] = [];
     for (let row of rows) {
-      let rowColumns = Object.keys(row).map(v => ({key: v, name: v}));
-      columns.push(...rowColumns);
+      Object.keys(row)
+        .filter(v => columnValues.indexOf(v) === -1)
+        .map(v => columnValues.push(v));
     }
+    columns = columnValues.map(v => ({key: v, name: v}));
   }
   return (
     <div className="grid-list">

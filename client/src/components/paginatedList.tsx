@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Pager } from 'react-bootstrap';
 
+import * as deepEqual from "deep-equal";
 import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
@@ -12,7 +13,7 @@ import { DEFAULT_FILTERS, EXPERIMENT_FILTERS } from './filters/constants';
 export interface Props {
   count: number;
   componentList: React.ReactNode;
-  componentHeader: React.ReactNode;
+  componentHeader?: React.ReactNode;
   componentEmpty: React.ReactNode;
   filters: boolean | string;
   fetchData: (offset: number, query?: string, sort?: string, extraFilters?: Object) => any;
@@ -22,7 +23,7 @@ interface State {
   offset: number;
   query?: string;
   sort?: string;
-  extraFilters?: Object;
+  extraFilters?: {[key: string]: number|boolean|string};
 }
 
 export default class PaginatedList extends React.Component<Props, State> {
@@ -36,12 +37,21 @@ export default class PaginatedList extends React.Component<Props, State> {
     let pieces = location.href.split('?');
     if (pieces.length > 1) {
       let search = queryString.parse(pieces[1]);
-      return {
-        offset: search.offset ? parseInt(search.offset, 10) : 0,
-        query: search.query || '',
-        sort: search.sort || '',
-        extraFilters: undefined
-      };
+      if (search.offset) {
+        filters.offset = parseInt(search.offset, 10);
+        delete search.offset;
+      }
+      if (search.query) {
+        filters.query = search.query;
+        delete search.query;
+      }
+      if (search.sort) {
+        filters.sort = search.sort;
+        delete search.sort;
+      }
+      if (Object.keys(search).length > 0) {
+        filters.extraFilters = search;
+      }
     }
     return filters;
   }
@@ -67,6 +77,10 @@ export default class PaginatedList extends React.Component<Props, State> {
       changed = true;
       this.setState({offset: 0});
     }
+    if (!deepEqual(this.state.extraFilters, prevState.extraFilters)) {
+      changed = true;
+      this.setState({offset: 0});
+    }
     if (changed) {
       this.props.fetchData(
         this.state.offset,
@@ -88,7 +102,7 @@ export default class PaginatedList extends React.Component<Props, State> {
     }));
   }
 
-  handleFilter = (query: string, sort: string, extraFilters?: Object) => {
+  handleFilter = (query: string, sort: string, extraFilters?: {[key: string]: number|boolean|string}) => {
     this.setState((prevState, prevProps) => ({
       query: query,
       sort: sort,
@@ -111,7 +125,7 @@ export default class PaginatedList extends React.Component<Props, State> {
             query={this.state.query}
             sort={this.state.sort}
             extraFilters={this.state.extraFilters}
-            handleFilter={(query, sort) => this.handleFilter(query, sort)}
+            handleFilter={(query, sort, extraFilters) => this.handleFilter(query, sort, extraFilters)}
           />
         );
       } else {
@@ -133,6 +147,7 @@ export default class PaginatedList extends React.Component<Props, State> {
             </div>
           </div>
           }
+          {this.props.componentHeader &&
           <div className="row">
             <div className="col-md-12">
               <div className="list-header">
@@ -140,6 +155,7 @@ export default class PaginatedList extends React.Component<Props, State> {
               </div>
             </div>
           </div>
+          }
           {this.props.count > 0 &&
           <div className="row">
             <div className="col-md-12">
