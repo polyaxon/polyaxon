@@ -89,12 +89,15 @@ export function fetchGroups(projectUniqueName: string,
   return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
     let groupsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/';
+    let urlPieces = location.hash.split('?');
+    let baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
       groupsUrl += url.format({query: filters});
-      let baseUrl = location.hash.split('?')[0];
       if (baseUrl) {
         history.push(baseUrl + url.format({query: filters}));
       }
+    } else if (urlPieces.length > 1) {
+      history.push(baseUrl);
     }
     return fetch(groupsUrl, {
       headers: {

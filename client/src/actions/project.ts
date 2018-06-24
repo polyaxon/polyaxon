@@ -128,12 +128,15 @@ export function fetchProjects(user: string,
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectsActionCreator());
     let projectsUrl = BASE_API_URL + `/${user}`;
+    let urlPieces = location.hash.split('?');
+    let baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
       projectsUrl += url.format({query: filters});
-      let baseUrl = location.hash.split('?')[0];
       if (baseUrl) {
         history.push(baseUrl + url.format({query: filters}));
       }
+    } else if (urlPieces.length > 1) {
+      history.push(baseUrl);
     }
     return fetch(projectsUrl, {
       headers: {

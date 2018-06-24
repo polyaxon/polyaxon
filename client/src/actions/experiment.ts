@@ -88,12 +88,15 @@ export function fetchExperiments(projectUniqueName: string,
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
     let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
+    let urlPieces = location.hash.split('?');
+    let baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
       experimentsUrl += url.format({query: filters});
-      let baseUrl = location.hash.split('?')[0];
       if (baseUrl) {
         history.push(baseUrl + url.format({query: filters}));
       }
+    } else if (urlPieces.length > 1) {
+      history.push(baseUrl);
     }
     return fetch(experimentsUrl, {
       headers: {

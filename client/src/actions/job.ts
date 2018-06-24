@@ -95,12 +95,15 @@ export function fetchJobs(projectUniqueName: string,
   return (dispatch: any, getState: any) => {
     dispatch(requestJobsActionCreator());
     let jobsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/jobs';
+    let urlPieces = location.hash.split('?');
+    let baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
       jobsUrl += url.format({query: filters});
-      let baseUrl = location.hash.split('?')[0];
       if (baseUrl) {
         history.push(baseUrl + url.format({query: filters}));
       }
+    } else if (urlPieces.length > 1) {
+      history.push(baseUrl);
     }
     return fetch(
       jobsUrl, {
