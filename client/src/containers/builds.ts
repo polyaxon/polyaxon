@@ -5,7 +5,6 @@ import Builds from '../components/builds';
 import { BuildModel } from '../models/build';
 
 import * as actions from '../actions/build';
-import { getOffset } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
   let useFilter = () => {
