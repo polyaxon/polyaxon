@@ -100,6 +100,50 @@ class ExperimentGroupConfig(BaseConfig):
         self.experiments = experiments
 
 
+class GroupStatusSchema(Schema):
+    id = fields.Int()
+    uuid = UUID()
+    group = fields.Int()
+    created_at = fields.LocalDateTime()
+    status = fields.Str()
+    message = fields.Str(allow_none=True)
+    details = fields.Dict(allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return GroupStatusConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GroupStatusConfig.remove_reduced_attrs(data)
+
+
+class GroupStatusConfig(BaseConfig):
+    SCHEMA = GroupStatusSchema
+    IDENTIFIER = 'GroupStatus'
+    DATETIME_ATTRIBUTES = ['created_at']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['group', 'uuid', 'details']
+
+    def __init__(self,
+                 id,  # pylint:disable=redefined-builtin
+                 uuid,
+                 group,
+                 created_at,
+                 status,
+                 message=None,
+                 details=None):
+        self.id = id
+        self.uuid = uuid
+        self.group = group
+        self.created_at = self.localize_date(created_at)
+        self.status = status
+        self.message = message
+        self.details = details
+
+
 class ProjectSchema(Schema):
     id = fields.Int(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))

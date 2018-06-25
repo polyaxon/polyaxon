@@ -70,6 +70,7 @@ class TestJobConfigs(TestCase):
 
         config_dict.pop('job', None)
         config_dict.pop('uuid', None)
+        config_dict.pop('details', None)
         config_to_dict = config.to_light_dict()
         assert config_to_dict == config_dict
 

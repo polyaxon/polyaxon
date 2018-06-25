@@ -9,7 +9,7 @@ from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
+from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig, GroupStatusConfig
 from polyaxon_schemas.utils import local_now
 
 
@@ -128,4 +128,25 @@ class TestProjectConfigs(TestCase):
         assert config_to_dict.pop('updated_at') == 'a few seconds ago'
 
         config_to_dict = config.to_light_dict(humanize_values=True)
+        assert config_to_dict.pop('created_at') == 'a few seconds ago'
+
+    def test_group_status_config(self):
+        config_dict = {'id': 1,
+                       'uuid': uuid.uuid4().hex,
+                       'group': 1,
+                       'created_at': local_now().isoformat(),
+                       'status': 'Running',
+                       'message': None,
+                       'details': None}
+        config = GroupStatusConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        assert config_to_dict == config_dict
+
+        config_dict.pop('group', None)
+        config_dict.pop('uuid', None)
+        config_dict.pop('details', None)
+        config_to_dict = config.to_light_dict()
+        assert config_to_dict == config_dict
+
+        config_to_dict = config.to_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'

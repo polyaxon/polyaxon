@@ -120,9 +120,9 @@ class JobStatusSchema(Schema):
 
 class JobStatusConfig(BaseConfig):
     SCHEMA = JobStatusSchema
-    IDENTIFIER = 'ExperimentStatus'
+    IDENTIFIER = 'JobStatus'
     DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'uuid']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'uuid', 'details']
 
     def __init__(self,
                  id,  # pylint:disable=redefined-builtin
