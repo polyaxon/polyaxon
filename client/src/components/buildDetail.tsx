@@ -12,6 +12,7 @@ import {
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import BuildOverview from './buildOverview';
+import Text from './text';
 
 export interface Props {
   build: BuildModel;
@@ -59,6 +60,10 @@ export default class BuildDetail extends React.Component<Props, Object> {
                     id={build.id}
                   />,
                   relUrl: 'logs'
+                }, {
+                  title: 'Dockerfile',
+                  component: <Text title="Dockerfile" text={build.dockerfile}/>,
+                  relUrl: 'dockerfile'
                 }
               ]}
             />
