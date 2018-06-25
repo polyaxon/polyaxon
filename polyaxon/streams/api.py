@@ -1,4 +1,5 @@
 import asyncio
+import json
 import logging
 
 from sanic import Sanic
@@ -35,6 +36,10 @@ RESOURCES_CHECK = 7
 CHECK_DELAY = 5
 
 app = Sanic(__name__)
+
+
+def get_error_message(message):
+    return json.dumps({'status': 'error', 'log_lines': [message]})
 
 
 def validate_project(request, username, project_name):
@@ -116,7 +121,7 @@ async def experiment_job_resources(request, ws, username, project_name, experime
                                               experiment_id=experiment_id,
                                               job_id=job_id)
     if job is None:
-        await ws.send(message)
+        await ws.send(get_error_message(message))
         return
     job_uuid = job.uuid.hex
     job_name = '{}.{}'.format(job.role, job.id)
@@ -181,7 +186,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_i
                                               project_name=project_name,
                                               experiment_id=experiment_id)
     if experiment is None:
-        await ws.send(message)
+        await ws.send(get_error_message(message))
         return
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_RESOURCES_VIEWED,
@@ -253,7 +258,7 @@ async def experiment_job_logs(request, ws, username, project_name, experiment_id
                                                        experiment_id=experiment_id,
                                                        job_id=job_id)
     if job is None:
-        await ws.send(message)
+        await ws.send(get_error_message(message))
         return
     job_uuid = job.uuid.hex
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
@@ -330,7 +335,7 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
                                               project_name=project_name,
                                               experiment_id=experiment_id)
     if experiment is None:
-        await ws.send(message)
+        await ws.send(get_error_message(message))
         return
 
     experiment_uuid = experiment.uuid.hex
@@ -407,7 +412,7 @@ async def job_logs(request, ws, username, project_name, job_id):
                                 project_name=project_name,
                                 job_id=job_id)
     if job is None:
-        await ws.send(message)
+        await ws.send(get_error_message(message))
         return
     job_uuid = job.uuid.hex
     auditor.record(event_type=JOB_LOGS_VIEWED,
@@ -482,7 +487,7 @@ async def build_logs(request, ws, username, project_name, job_id):
                                   project_name=project_name,
                                   job_id=job_id)
     if job is None:
-        await ws.send(message)
+        await ws.send(get_error_message(message))
         return
     job_uuid = job.uuid.hex
     auditor.record(event_type=BUILD_JOB_LOGS_VIEWED,
