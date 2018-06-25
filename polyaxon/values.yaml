@@ -144,8 +144,8 @@ api:
   replicas: 1
   resources:
     limits:
-      cpu: 500m
-      memory: 400Mi
+      cpu: 1000m
+      memory: 2000Mi
     requests:
       cpu: 128m
       memory: 300Mi
@@ -162,8 +162,8 @@ streams:
   imagePullPolicy: IfNotPresent
   resources:
     limits:
-      cpu: 200m
-      memory: 256Mi
+      cpu: 700m
+      memory: 1000Mi
     requests:
       cpu: 100m
       memory: 128Mi

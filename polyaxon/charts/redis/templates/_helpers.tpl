@@ -19,9 +19,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Return the appropriate apiVersion for networkpolicy.
 */}}
 {{- define "networkPolicy.apiVersion" -}}
-{{- if and (ge .Capabilities.KubeVersion.Minor "4") (le .Capabilities.KubeVersion.Minor "6") -}}
+{{- if and (ge (int (.Capabilities.KubeVersion.Minor)) 4) (le (int (.Capabilities.KubeVersion.Minor)) 6) -}}
 {{- print "extensions/v1beta1" -}}
-{{- else if ge .Capabilities.KubeVersion.Minor "7" -}}
+{{- else if ge (int (.Capabilities.KubeVersion.Minor)) 7 -}}
 {{- print "networking.k8s.io/v1" -}}
 {{- end -}}
 {{- end -}}

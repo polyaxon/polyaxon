@@ -39,8 +39,8 @@ Core config
 - name: POLYAXON_K8S_NAMESPACE
   value: {{ .Values.namespace | quote }}
 - name: POLYAXON_K8S_GPU_RESOURCE_KEY
-{{- if ge .Capabilities.KubeVersion.Minor "8" }}
-  value: 'nvidia.com/gpu'
+{{- if ge (int (.Capabilities.KubeVersion.Minor)) 8 }}
+  value: "nvidia.com/gpu"
 {{- else }}
   value: "alpha.kubernetes.io/nvidia-gpu"
 {{- end }}
