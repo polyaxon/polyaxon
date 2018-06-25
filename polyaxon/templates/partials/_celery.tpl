@@ -8,8 +8,12 @@ Celery config
   value: "events.resources"
 - name: POLYAXON_ROUTING_KEYS_EVENTS_JOB_STATUSES
   value: "events.statuses"
-- name: POLYAXON_ROUTING_KEYS_LOGS_SIDECARS
-  value: "logs.sidecars"
+- name: POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_EXPERIMENTS
+  value: "logs.sidecars.experiments"
+- name: POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_JOBS
+  value: "logs.sidecars.jobs"
+- name: POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_BUILDS
+  value: "logs.sidecars.builds"
 - name: POLYAXON_QUEUES_REPOS
   value: {{ .Values.queues.repos | quote }}
 - name: POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS
