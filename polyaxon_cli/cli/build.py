@@ -29,11 +29,11 @@ def get_build_or_local(project=None, _build=None):
 
 def get_build_details(_build):
     if _build.description:
-        Printer.print_header("Job description:")
+        Printer.print_header("Build description:")
         click.echo('{}\n'.format(_build.description))
 
     if _build.resources:
-        get_resources(_build.resources.to_dict(), header="Job resources:")
+        get_resources(_build.resources.to_dict(), header="Build resources:")
 
     response = _build.to_light_dict(
         humanize_values=True,
@@ -41,7 +41,7 @@ def get_build_details(_build):
             'uuid', 'config', 'project', 'description', 'resources', 'is_clone', 'build_job'
         ])
 
-    Printer.print_header("Job info:")
+    Printer.print_header("Build info:")
     dict_tabulate(Printer.add_status_color(response))
 
 
