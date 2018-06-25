@@ -7,7 +7,8 @@ import Description from './description';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import MetaInfo from 'src/components/metaInfo/metaInfo';
+import MetaInfo from './metaInfo/metaInfo';
+import Tags from './tags';
 
 export interface Props {
   build: BuildModel;
@@ -26,8 +27,7 @@ export default class BuildOverview extends React.Component<Props, Object> {
           <div className="col-md-12">
              <Description
                 description={build.description}
-                entity="build"
-                command="polyaxon build update --description=..."
+                showEmpty={true}
              />
             <div className="meta">
               <UserMetaInfo user={build.user} inline={true}/>
@@ -64,7 +64,7 @@ export default class BuildOverview extends React.Component<Props, Object> {
                 )}
             </div>
             }
-            <Tags tags={group.tags}/>
+            <Tags tags={build.tags}/>
           </div>
         </div>
       </div>
