@@ -7,7 +7,7 @@ import { BuildModel } from '../models/build';
 import { DEFAULT_FILTERS } from './filters/constants';
 import PaginatedList from './paginatedList';
 import { EmptyList } from './emptyList';
-import JobHeader from './jobHeader';
+import BuildHeader from './buildHeader';
 
 export interface Props {
   builds: BuildModel[];
@@ -38,7 +38,7 @@ export default class Builds extends React.Component<Props, Object> {
       <PaginatedList
         count={this.props.count}
         componentList={listBuilds()}
-        componentHeader={JobHeader()}
+        componentHeader={BuildHeader()}
         componentEmpty={EmptyList(false, 'build', 'build')}
         filters={DEFAULT_FILTERS}
         fetchData={this.props.fetchData}

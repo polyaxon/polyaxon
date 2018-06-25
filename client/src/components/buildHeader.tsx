@@ -1,16 +1,13 @@
 import * as React from 'react';
 
-function JobHeader() {
+function BuildHeader() {
   return (
     <div className="row">
       <div className="col-md-1 block">
         Status
       </div>
-      <div className="col-md-7 block">
+      <div className="col-md-9 block">
         Name
-      </div>
-      <div className="col-md-2 block">
-        Info
       </div>
       <div className="col-md-2 block">
         Run
@@ -19,4 +16,4 @@ function JobHeader() {
   );
 }
 
-export default JobHeader;
+export default BuildHeader;
