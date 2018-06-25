@@ -73,7 +73,7 @@ def validate_experiment_job(request, username, project_name, experiment_id, job_
                                               project_name=project_name,
                                               experiment_id=experiment_id)
     if experiment is None:
-        return None, None
+        return None, None, message
     try:
         job = ExperimentJob.objects.get(experiment=experiment, id=job_id)
     except (ExperimentJob.DoesNotExist, ValidationError):
