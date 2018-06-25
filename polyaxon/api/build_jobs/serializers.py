@@ -51,6 +51,7 @@ class BuildJobDetailSerializer(BuildJobSerializer):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
+    commit = fields.SerializerMethodField()
 
     class Meta(BuildJobSerializer.Meta):
         fields = BuildJobSerializer.Meta.fields + (
@@ -59,8 +60,12 @@ class BuildJobDetailSerializer(BuildJobSerializer):
             'resources',
             'num_jobs',
             'num_experiments',
-            'dockerfile'
+            'dockerfile',
+            'commit'
         )
+
+    def get_commit(self, obj):
+        return obj.code_reference.commit if obj.code_reference else None
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None

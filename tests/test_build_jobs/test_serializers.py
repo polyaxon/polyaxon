@@ -111,6 +111,8 @@ class TestBuildJobDetailSerializer(BaseTest):
         'resources',
         'num_jobs',
         'num_experiments',
+        'dockerfile',
+        'commit'
     }
 
     def setUp(self):
@@ -128,6 +130,8 @@ class TestBuildJobDetailSerializer(BaseTest):
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('num_jobs') == Job.objects.filter(build_job=self.obj1).count()
         assert data.pop('num_experiments') == Experiment.objects.filter(build_job=self.obj1).count()
+        assert data.pop('commit') == (self.obj1.code_reference.commit
+                                      if self.obj1.code_reference else None)
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)
