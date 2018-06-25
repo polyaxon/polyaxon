@@ -16,6 +16,8 @@ export class BuildModel {
   public updated_at: string;
   public started_at: string;
   public finished_at: string;
+  public commit: string;
+  public dockerfile: string;
   public resources: {[key: string]: any};
 }
 
