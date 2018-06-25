@@ -323,7 +323,7 @@ def statuses(ctx, page):
     try:
         response = PolyaxonClients().job.get_statuses(user, project_name, _job, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get status for job `{}`.'.format(job))
+        Printer.print_error('Could not get status for job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -419,7 +419,7 @@ def logs(ctx, past, follow):
             if not follow:
                 return
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-            Printer.print_error('Could not get logs for job `{}`.'.format(job))
+            Printer.print_error('Could not get logs for job `{}`.'.format(_job))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
