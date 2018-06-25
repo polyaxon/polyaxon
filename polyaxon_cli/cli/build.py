@@ -21,21 +21,21 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 from polyaxon_schemas.utils import to_list
 
 
-def get_job_or_local(project=None, job=None):
+def get_build_or_local(project=None, _build=None):
     user, project_name = get_project_or_local(project)
-    job = job or BuildJobManager.get_config_or_raise().id
-    return user, project_name, job
+    _build = _build or BuildJobManager.get_config_or_raise().id
+    return user, project_name, _build
 
 
-def get_job_details(job):
-    if job.description:
+def get_build_details(_build):
+    if _build.description:
         Printer.print_header("Job description:")
-        click.echo('{}\n'.format(job.description))
+        click.echo('{}\n'.format(_build.description))
 
-    if job.resources:
-        get_resources(job.resources.to_dict(), header="Job resources:")
+    if _build.resources:
+        get_resources(_build.resources.to_dict(), header="Job resources:")
 
-    response = job.to_light_dict(
+    response = _build.to_light_dict(
         humanize_values=True,
         exclude_attrs=[
             'uuid', 'config', 'project', 'description', 'resources', 'is_clone', 'build_job'
@@ -47,14 +47,14 @@ def get_job_details(job):
 
 @click.group()
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-@click.option('--job', '-j', type=int, help="The job id.")
+@click.option('--build', '-b', type=int, help="The build id.")
 @click.pass_context
 @clean_outputs
-def build(ctx, project, job):  # pylint:disable=redefined-outer-name
+def build(ctx, project, build):  # pylint:disable=redefined-outer-name
     """Commands for build jobs."""
     ctx.obj = ctx.obj or {}
     ctx.obj['project'] = project
-    ctx.obj['job'] = job
+    ctx.obj['build'] = build
 
 
 @build.command()
@@ -77,18 +77,18 @@ def get(ctx):
     $ polyaxon build --job=1 --project=project_name get
     ```
     """
-    user, project_name, job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
-        response = PolyaxonClients().build_job.get_job(user, project_name, job)
+        response = PolyaxonClients().build_job.get_job(user, project_name, _build)
         # Set caching only if we have an initialized project
         if ProjectManager.is_initialized():
             BuildJobManager.set_config(response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get build job `{}`.'.format(job))
+        Printer.print_error('Could not get build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    get_job_details(response)
+    get_build_details(response)
 
 
 @build.command()
@@ -111,23 +111,23 @@ def delete(ctx):
     $ polyaxon build -j 2 delete
     ```
     """
-    user, project_name, job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
-    if not click.confirm("Are sure you want to delete build job `{}`".format(job)):
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    if not click.confirm("Are sure you want to delete build job `{}`".format(_build)):
         click.echo('Existing without deleting build job.')
         sys.exit(1)
 
     try:
         response = PolyaxonClients().build_job.delete_job(
-            user, project_name, job)
+            user, project_name, _build)
         # Purge caching
         BuildJobManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not delete job `{}`.'.format(job))
+        Printer.print_error('Could not delete job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     if response.status_code == 204:
-        Printer.print_success("Experiment `{}` was delete successfully".format(job))
+        Printer.print_success("Experiment `{}` was delete successfully".format(_build))
 
 
 @build.command()
@@ -149,7 +149,7 @@ def update(ctx, name, description, tags):
     $ polyaxon build -j 2 update --description="new description for my build"
     ```
     """
-    user, project_name, job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     update_dict = {}
 
     if name:
@@ -167,14 +167,14 @@ def update(ctx, name, description, tags):
 
     try:
         response = PolyaxonClients().build_job.update_job(
-            user, project_name, job, update_dict)
+            user, project_name, _build, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not update build `{}`.'.format(job))
+        Printer.print_error('Could not update build `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     Printer.print_success("Build updated.")
-    get_job_details(response)
+    get_build_details(response)
 
 
 @build.command()
@@ -200,16 +200,16 @@ def stop(ctx, yes):
     $ polyaxon build -j 2 stop
     ```
     """
-    user, project_name, job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     if not yes and not click.confirm("Are sure you want to stop "
-                                     "job `{}`".format(job)):
+                                     "job `{}`".format(_build)):
         click.echo('Existing without stopping build job.')
         sys.exit(0)
 
     try:
-        PolyaxonClients().build_job.stop(user, project_name, job)
+        PolyaxonClients().build_job.stop(user, project_name, _build)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not stop build job `{}`.'.format(job))
+        Printer.print_error('Could not stop build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -232,22 +232,22 @@ def statuses(ctx, page):
     $ polyaxon build -j 2 statuses
     ```
     """
-    user, project_name, job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     page = page or 1
     try:
-        response = PolyaxonClients().build_job.get_statuses(user, project_name, job, page=page)
+        response = PolyaxonClients().build_job.get_statuses(user, project_name, _build, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get status for build job `{}`.'.format(job))
+        Printer.print_error('Could not get status for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Statuses for build job `{}`.'.format(job))
+        Printer.print_header('Statuses for build job `{}`.'.format(_build))
         Printer.print_header('Navigation:')
         dict_tabulate(meta)
     else:
-        Printer.print_header('No statuses found for build job `{}`.'.format(job))
+        Printer.print_header('No statuses found for build job `{}`.'.format(_build))
 
     objects = list_dicts_to_tabulate(
         [Printer.add_status_color(o.to_light_dict(humanize_values=True), status_key='status')
@@ -259,7 +259,7 @@ def statuses(ctx, page):
 
 
 @build.command()
-@click.option('--gpu', '-g', is_flag=True, help='List job GPU resources.')
+@click.option('--gpu', '-g', is_flag=True, help='List build GPU resources.')
 @click.pass_context
 @clean_outputs
 def resources(ctx, gpu):
@@ -281,15 +281,15 @@ def resources(ctx, gpu):
     $ polyaxon build -j 2 resources --gpu
     ```
     """
-    user, project_name, job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
         message_handler = Printer.gpu_resources if gpu else Printer.resources
         PolyaxonClients().build_job.resources(user,
                                               project_name,
-                                              job,
+                                              _build,
                                               message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get resources for build job `{}`.'.format(job))
+        Printer.print_error('Could not get resources for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -316,7 +316,7 @@ def logs(ctx, past, follow):
     $ polyaxon build logs
     ```
     """
-    user, project_name, job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
 
     def message_handler(message):
         log_lines = to_list(message['log_lines'])
@@ -326,23 +326,23 @@ def logs(ctx, past, follow):
     if past:
         try:
             response = PolyaxonClients().build_job.logs(
-                user, project_name, job, stream=False)
+                user, project_name, _build, stream=False)
             for log_line in response.content.decode().split('\n'):
                 Printer.log(log_line, nl=True)
 
             if not follow:
                 return
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-            Printer.print_error('Could not get logs for job `{}`.'.format(job))
+            Printer.print_error('Could not get logs for job `{}`.'.format(_build))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
     try:
         PolyaxonClients().build_job.logs(user,
                                          project_name,
-                                         job,
+                                         _build,
                                          message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get logs for build job `{}`.'.format(job))
+        Printer.print_error('Could not get logs for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
