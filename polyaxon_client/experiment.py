@@ -74,7 +74,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentStatusConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment status')
+            self.handle_exception(e=e, log_message='Error while retrieving experiment statuses')
             return None
 
     def get_metrics(self, username, project_name, experiment_id, page=1):

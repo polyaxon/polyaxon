@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ExperimentGroupConfig
+from polyaxon_schemas.project import ExperimentGroupConfig, GroupStatusConfig
 
 
 class ExperimentGroupClient(PolyaxonClient):
@@ -78,6 +78,20 @@ class ExperimentGroupClient(PolyaxonClient):
             return response
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while deleting experiment group')
+            return None
+
+    def get_statuses(self, username, project_name, group_id, page=1):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_id,
+                                      'statuses')
+        try:
+            response = self.get(request_url, params=self.get_page(page=page))
+            return self.prepare_list_results(response.json(), page, GroupStatusConfig)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving group statuses')
             return None
 
     def stop(self, username, project_name, group_id, pending=False):

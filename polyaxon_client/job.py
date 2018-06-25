@@ -59,7 +59,7 @@ class JobClient(PolyaxonClient):
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobStatusConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job status')
+            self.handle_exception(e=e, log_message='Error while retrieving job statuses')
             return None
 
     def restart(self, username, project_name, job_id, config=None, update_code=None):

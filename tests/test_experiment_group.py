@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import datetime
+
 import httpretty
 import json
 import uuid
@@ -10,7 +12,7 @@ from unittest import TestCase
 
 from polyaxon_client.experiment_group import ExperimentGroupClient
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ExperimentGroupConfig
+from polyaxon_schemas.project import ExperimentGroupConfig, GroupStatusConfig
 
 faker = Faker()
 
@@ -146,6 +148,29 @@ class TestExperimentGroupClient(TestCase):
             status=204)
         result = self.client.delete_experiment_group('username', 'project_name', 1)
         assert result.status_code == 204
+
+    @httpretty.activate
+    def test_get_experiment_group_statuses(self):
+        group = GroupStatusConfig(id=1,
+                                  uuid=uuid.uuid4().hex,
+                                  group=1,
+                                  created_at=datetime.datetime.now(),
+                                  status='Running').to_dict()
+        httpretty.register_uri(
+            httpretty.GET,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'username',
+                'project_name',
+                'groups',
+                1,
+                'statuses'),
+            body=json.dumps({'results': [group], 'count': 1, 'next': None}),
+            content_type='application/json',
+            status=200)
+        response = self.client.get_statuses('username', 'project_name', 1)
+        assert len(response['results']) == 1
 
     @httpretty.activate
     def test_stop_experiment_group_all(self):
