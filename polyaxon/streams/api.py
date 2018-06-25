@@ -1,21 +1,25 @@
 import asyncio
 import logging
 
-from sanic import Sanic, exceptions
+from sanic import Sanic
 from websockets import ConnectionClosed
 
 from django.core.exceptions import ValidationError
 
 import auditor
 
+from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment
+from db.models.jobs import Job
 from db.models.projects import Project
+from event_manager.events.build_job import BUILD_JOB_LOGS_VIEWED
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
 from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_LOGS_VIEWED,
     EXPERIMENT_JOB_RESOURCES_VIEWED
 )
+from event_manager.events.job import JOB_LOGS_VIEWED
 from libs.permissions.projects import has_project_permissions
 from libs.redis_db import RedisToStream
 from polyaxon.settings import CeleryQueues, RoutingKeys
@@ -33,52 +37,87 @@ CHECK_DELAY = 5
 app = Sanic(__name__)
 
 
-def _get_project(username, project_name):
+def validate_project(request, username, project_name):
     try:
-        return Project.objects.get(name=project_name, user__username=username)
+        project = Project.objects.get(name=project_name, user__username=username)
     except Project.DoesNotExist:
-        raise exceptions.NotFound('Project was not found')
+        return None, 'Project was not found'
+    if not has_project_permissions(request.app.user, project, 'GET'):
+        return None, "You don't have access to this project"
+    return project, None
 
 
-def _get_experiment(project, experiment_id):
+def validate_experiment(request, username, project_name, experiment_id):
+    project, message = validate_project(request=request,
+                                        username=username,
+                                        project_name=project_name)
+    if project is None:
+        return None, message
     try:
-        return Experiment.objects.get(project=project, id=experiment_id)
+        experiment = Experiment.objects.get(project=project, id=experiment_id)
     except (Experiment.DoesNotExist, ValidationError):
-        raise exceptions.NotFound('Experiment was not found')
+        return None, 'Experiment was not found'
+    if not experiment.is_running:
+        return None, 'Experiment was not running'
+    return experiment, None
 
 
-def _get_job(experiment, job_id):
+def validate_experiment_job(request, username, project_name, experiment_id, job_id):
+    experiment, message = validate_experiment(request=request,
+                                              username=username,
+                                              project_name=project_name,
+                                              experiment_id=experiment_id)
+    if experiment is None:
+        return None, None
     try:
         job = ExperimentJob.objects.get(experiment=experiment, id=job_id)
     except (ExperimentJob.DoesNotExist, ValidationError):
-        _logger.info('Job with experiment:`%s` id:`%s` does not exist',
-                     experiment.unique_name, job_id)
-        raise exceptions.NotFound('Experiment was not found')
-
+        return None, None, 'Experiment was not found'
     if not job.is_running:
-        _logger.info('Job with experiment:`%s` id:`%s` is not currently running',
-                     experiment.unique_name, job_id)
-        raise exceptions.NotFound('Job was not running')
-
-    return job
+        return None, None, 'Job was not running'
+    return job, experiment, None
 
 
-def _get_running_experiment(project, experiment_id):
-    experiment = _get_experiment(project, experiment_id)
-    if not experiment.is_running:
-        _logger.info('Experiment project `%s` is not currently running', experiment.unique_name)
-        raise exceptions.NotFound('Experiment was not running')
+def validate_job(request, username, project_name, job_id):
+    project, message = validate_project(request=request,
+                                        username=username,
+                                        project_name=project_name)
+    if project is None:
+        return None, message
+    try:
+        job = Job.objects.get(project=project, id=job_id)
+    except (Experiment.DoesNotExist, ValidationError):
+        return None, 'job was not found'
+    if not job.is_running:
+        return None, 'job was not running'
+    return job, None
 
-    return experiment
+
+def validate_build(request, username, project_name, job_id):
+    project, message = validate_project(request=request,
+                                        username=username,
+                                        project_name=project_name)
+    if project is None:
+        return None, message
+    try:
+        job = BuildJob.objects.get(project=project, id=job_id)
+    except (Experiment.DoesNotExist, ValidationError):
+        return None, 'build was not found'
+    if not job.is_running:
+        return None, 'build was not running'
+    return job, None
 
 
 @authorized()
-async def job_resources(request, ws, username, project_name, experiment_id, job_id):
-    project = _get_project(username, project_name)
-    if not has_project_permissions(request.app.user, project, 'GET'):
-        exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_id)
-    job = _get_job(experiment, job_id)
+async def experiment_job_resources(request, ws, username, project_name, experiment_id, job_id):
+    job, _, message = validate_experiment_job(request=request,
+                                              username=username,
+                                              project_name=project_name,
+                                              experiment_id=experiment_id,
+                                              job_id=job_id)
+    if job is None:
+        await ws.send(message)
+        return
     job_uuid = job.uuid.hex
     job_name = '{}.{}'.format(job.role, job.id)
     auditor.record(event_type=EXPERIMENT_JOB_RESOURCES_VIEWED,
@@ -137,10 +176,13 @@ async def job_resources(request, ws, username, project_name, experiment_id, job_
 
 @authorized()
 async def experiment_resources(request, ws, username, project_name, experiment_id):
-    project = _get_project(username, project_name)
-    if not has_project_permissions(request.app.user, project, 'GET'):
-        exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_id)
+    experiment, message = validate_experiment(request=request,
+                                              username=username,
+                                              project_name=project_name,
+                                              experiment_id=experiment_id)
+    if experiment is None:
+        await ws.send(message)
+        return
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_RESOURCES_VIEWED,
                    instance=experiment,
@@ -204,12 +246,15 @@ async def experiment_resources(request, ws, username, project_name, experiment_i
 
 
 @authorized()
-async def job_logs(request, ws, username, project_name, experiment_id, job_id):
-    project = _get_project(username, project_name)
-    if not has_project_permissions(request.app.user, project, 'GET'):
-        exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_id)
-    job = _get_job(experiment, job_id)
+async def experiment_job_logs(request, ws, username, project_name, experiment_id, job_id):
+    job, experiment, message = validate_experiment_job(request=request,
+                                                       username=username,
+                                                       project_name=project_name,
+                                                       experiment_id=experiment_id,
+                                                       job_id=job_id)
+    if job is None:
+        await ws.send(message)
+        return
     job_uuid = job.uuid.hex
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
                    instance=job,
@@ -225,7 +270,7 @@ async def job_logs(request, ws, username, project_name, experiment_id, job_id):
     else:
         _logger.info('Add job log consumer for %s', job_uuid)
         consumer = Consumer(
-            routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
+            routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS_EXPERIMENTS,
                                           experiment.uuid.hex,
                                           job_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
@@ -280,10 +325,14 @@ async def job_logs(request, ws, username, project_name, experiment_id, job_id):
 
 @authorized()
 async def experiment_logs(request, ws, username, project_name, experiment_id):
-    project = _get_project(username, project_name)
-    if not has_project_permissions(request.app.user, project, 'GET'):
-        exceptions.Forbidden("You don't have access to this project")
-    experiment = _get_running_experiment(project, experiment_id)
+    experiment, message = validate_experiment(request=request,
+                                              username=username,
+                                              project_name=project_name,
+                                              experiment_id=experiment_id)
+    if experiment is None:
+        await ws.send(message)
+        return
+
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
                    instance=experiment,
@@ -299,7 +348,7 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
     else:
         _logger.info('Add experiment log consumer for %s', experiment_uuid)
         consumer = Consumer(
-            routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS, experiment_uuid),
+            routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS_EXPERIMENTS, experiment_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, experiment_uuid))
         request.app.experiment_logs_consumers[experiment_uuid] = consumer
         consumer.run()
@@ -351,38 +400,181 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
+@authorized()
+async def job_logs(request, ws, username, project_name, job_id):
+    job, message = validate_job(request=request,
+                                username=username,
+                                project_name=project_name,
+                                job_id=job_id)
+    if job is None:
+        await ws.send(message)
+        return
+    job_uuid = job.uuid.hex
+    auditor.record(event_type=JOB_LOGS_VIEWED,
+                   instance=job,
+                   actor_id=request.app.user.id)
+
+    if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
+        _logger.info('Job uuid `%s` logs is now being monitored', job_uuid)
+        RedisToStream.monitor_job_logs(job_uuid=job_uuid)
+
+    # start consumer
+    if job_uuid in request.app.job_logs_consumers:
+        consumer = request.app.job_logs_consumers[job_uuid]
+    else:
+        _logger.info('Add job log consumer for %s', job_uuid)
+        consumer = Consumer(
+            routing_key='{}.{}'.format(RoutingKeys.LOGS_SIDECARS_JOBS, job_uuid),
+            queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
+        request.app.job_logs_consumers[job_uuid] = consumer
+        consumer.run()
+
+    # add socket manager
+    consumer.add_socket(ws)
+    should_quite = False
+    num_message_retries = 0
+    while True:
+        num_message_retries += 1
+        for message in consumer.get_messages():
+            num_message_retries = 0
+            disconnected_ws = set()
+            for _ws in consumer.ws:
+                try:
+                    await _ws.send(message)
+                except ConnectionClosed:
+                    disconnected_ws.add(_ws)
+            consumer.remove_sockets(disconnected_ws)
+
+        # After trying a couple of time, we must check the status of the experiment
+        if num_message_retries > MAX_RETRIES:
+            job.refresh_from_db()
+            if job.is_done:
+                _logger.info('removing all socket because the job `%s` is done', job_uuid)
+                consumer.ws = set([])
+            else:
+                num_message_retries -= CHECK_DELAY
+
+        # Just to check if connection closed
+        if ws._connection_lost:  # pylint:disable=protected-access
+            _logger.info('Quitting logs socket for job uuid %s', job_uuid)
+            consumer.remove_sockets({ws, })
+            should_quite = True
+
+        if not consumer.ws:
+            _logger.info('Stopping logs monitor for job uuid %s', job_uuid)
+            RedisToStream.remove_job_logs(job_uuid=job_uuid)
+            # if job_uuid in request.app.job_logs_consumers:
+            #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
+            #     if consumer:
+            #         consumer.stop()
+            should_quite = True
+
+        if should_quite:
+            return
+
+        await asyncio.sleep(SOCKET_SLEEP)
+
+
+@authorized()
+async def build_logs(request, ws, username, project_name, job_id):
+    job, message = validate_build(request=request,
+                                  username=username,
+                                  project_name=project_name,
+                                  job_id=job_id)
+    if job is None:
+        await ws.send(message)
+        return
+    job_uuid = job.uuid.hex
+    auditor.record(event_type=BUILD_JOB_LOGS_VIEWED,
+                   instance=job,
+                   actor_id=request.app.user.id)
+
+    if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
+        _logger.info('Job uuid `%s` logs is now being monitored', job_uuid)
+        RedisToStream.monitor_job_logs(job_uuid=job_uuid)
+
+    # start consumer
+    if job_uuid in request.app.job_logs_consumers:
+        consumer = request.app.job_logs_consumers[job_uuid]
+    else:
+        _logger.info('Add job log consumer for %s', job_uuid)
+        consumer = Consumer(
+            routing_key='{}.{}'.format(RoutingKeys.LOGS_SIDECARS_JOBS, job_uuid),
+            queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
+        request.app.job_logs_consumers[job_uuid] = consumer
+        consumer.run()
+
+    # add socket manager
+    consumer.add_socket(ws)
+    should_quite = False
+    num_message_retries = 0
+    while True:
+        num_message_retries += 1
+        for message in consumer.get_messages():
+            num_message_retries = 0
+            disconnected_ws = set()
+            for _ws in consumer.ws:
+                try:
+                    await _ws.send(message)
+                except ConnectionClosed:
+                    disconnected_ws.add(_ws)
+            consumer.remove_sockets(disconnected_ws)
+
+        # After trying a couple of time, we must check the status of the experiment
+        if num_message_retries > MAX_RETRIES:
+            job.refresh_from_db()
+            if job.is_done:
+                _logger.info('removing all socket because the job `%s` is done', job_uuid)
+                consumer.ws = set([])
+            else:
+                num_message_retries -= CHECK_DELAY
+
+        # Just to check if connection closed
+        if ws._connection_lost:  # pylint:disable=protected-access
+            _logger.info('Quitting logs socket for job uuid %s', job_uuid)
+            consumer.remove_sockets({ws, })
+            should_quite = True
+
+        if not consumer.ws:
+            _logger.info('Stopping logs monitor for job uuid %s', job_uuid)
+            RedisToStream.remove_job_logs(job_uuid=job_uuid)
+            # if job_uuid in request.app.job_logs_consumers:
+            #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
+            #     if consumer:
+            #         consumer.stop()
+            should_quite = True
+
+        if should_quite:
+            return
+
+        await asyncio.sleep(SOCKET_SLEEP)
+
+
 EXPERIMENT_URL = '/v1/<username>/<project_name>/experiments/<experiment_id>'
-WS_EXPERIMENT_URL = '/ws{}'.format(EXPERIMENT_URL)
+BUILD_URL = '/v1/<username>/<project_name>/builds/<build_id>'
+JOB_URL = '/v1/<username>/<project_name>/jobs/<job_id>'
 
-# Job urls
-app.add_websocket_route(
-    job_resources,
-    '{}/jobs/<job_id>/resources'.format(EXPERIMENT_URL))
-app.add_websocket_route(
-    job_resources,
-    '{}/jobs/<job_id>/resources'.format(WS_EXPERIMENT_URL))
 
-app.add_websocket_route(
-    job_logs,
-    '{}/jobs/<job_id>/logs'.format(EXPERIMENT_URL))
-app.add_websocket_route(
-    job_logs,
-    '{}/jobs/<job_id>/logs'.format(WS_EXPERIMENT_URL))
+def add_url(endpoint, base_url, url):
+    app.add_websocket_route(endpoint, '{}/{}'.format(base_url, url))
+    app.add_websocket_route(endpoint, '/ws{}/{}'.format(base_url, url))
+
+
+# Experiment Job urls
+add_url(endpoint=experiment_job_resources, base_url=EXPERIMENT_URL, url='jobs/<job_id>/resources')
+add_url(endpoint=experiment_job_logs, base_url=EXPERIMENT_URL, url='jobs/<job_id>/logs')
 
 # Experiment urls
-app.add_websocket_route(
-    experiment_resources,
-    '{}/resources'.format(EXPERIMENT_URL))
-app.add_websocket_route(
-    experiment_resources,
-    '{}/resources'.format(WS_EXPERIMENT_URL))
+add_url(endpoint=experiment_resources, base_url=EXPERIMENT_URL, url='resources')
+add_url(endpoint=experiment_logs, base_url=EXPERIMENT_URL, url='logs')
 
-app.add_websocket_route(
-    experiment_logs,
-    '{}/logs'.format(EXPERIMENT_URL))
-app.add_websocket_route(
-    experiment_logs,
-    '{}/logs'.format(WS_EXPERIMENT_URL))
+# Job urls
+# add_url(endpoint=job_resources, base_url=EXPERIMENT_URL, url='resources')
+add_url(endpoint=job_logs, base_url=JOB_URL, url='logs')
+
+# Build Job urls
+# add_url(endpoint=job_resources, base_url=EXPERIMENT_URL, url='resources')
+add_url(endpoint=build_logs, base_url=BUILD_URL, url='logs')
 
 
 @app.listener('after_server_start')

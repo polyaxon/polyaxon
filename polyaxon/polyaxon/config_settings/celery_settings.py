@@ -81,12 +81,16 @@ class Intervals(object):
 
 
 class RoutingKeys(object):
-    LOGS_SIDECARS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS')
+    LOGS_SIDECARS_EXPERIMENTS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_EXPERIMENTS')
+    LOGS_SIDECARS_JOBS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_JOBS')
+    LOGS_SIDECARS_BUILDS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_BUILDS')
 
 
 class CeleryPublishTask(object):
     """Tasks to be send as a signal to the exchange."""
-    PUBLISH_LOGS_SIDECAR = 'publish_logs_sidecar'
+    PUBLISH_LOGS_SIDECAR_EXPERIMENTS = 'publish_logs_sidecar_experiments'
+    PUBLISH_LOGS_SIDECAR_JOBS = 'publish_logs_sidecar_jobs'
+    PUBLISH_LOGS_SIDECAR_BUILDS = 'publish_logs_sidecar_builds'
 
 
 class CronsCeleryTasks(object):
@@ -236,7 +240,13 @@ class CeleryQueues(object):
 CELERY_TASK_QUEUES = (
     Queue(CeleryQueues.STREAM_LOGS_SIDECARS,
           exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
-          routing_key=RoutingKeys.LOGS_SIDECARS + '.#'),
+          routing_key=RoutingKeys.LOGS_SIDECARS_EXPERIMENTS + '.#'),
+    Queue(CeleryQueues.STREAM_LOGS_SIDECARS,
+          exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
+          routing_key=RoutingKeys.LOGS_SIDECARS_JOBS + '.#'),
+    Queue(CeleryQueues.STREAM_LOGS_SIDECARS,
+          exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
+          routing_key=RoutingKeys.LOGS_SIDECARS_BUILDS + '.#'),
 )
 
 CELERY_TASK_ROUTES = {
@@ -257,9 +267,17 @@ CELERY_TASK_ROUTES = {
     CeleryOperationTasks.EXPERIMENTS_SCHEDULE:
         {'queue': CeleryQueues.PIPELINES},
 
-    CeleryPublishTask.PUBLISH_LOGS_SIDECAR:
+    CeleryPublishTask.PUBLISH_LOGS_SIDECAR_EXPERIMENTS:
         {'exchange': INTERNAL_EXCHANGE,
-         'routing_key': RoutingKeys.LOGS_SIDECARS,
+         'routing_key': RoutingKeys.LOGS_SIDECARS_EXPERIMENTS,
+         'exchange_type': 'topic'},
+    CeleryPublishTask.PUBLISH_LOGS_SIDECAR_JOBS:
+        {'exchange': INTERNAL_EXCHANGE,
+         'routing_key': RoutingKeys.LOGS_SIDECARS_JOBS,
+         'exchange_type': 'topic'},
+    CeleryPublishTask.PUBLISH_LOGS_SIDECAR_BUILDS:
+        {'exchange': INTERNAL_EXCHANGE,
+         'routing_key': RoutingKeys.LOGS_SIDECARS_BUILDS,
          'exchange_type': 'topic'},
 
     SchedulerCeleryTasks.EXPERIMENTS_START:
