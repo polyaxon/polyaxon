@@ -7,14 +7,16 @@ import pytest
 from rest_framework import status
 
 from api.experiments.serializers import (
+    ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
+    ExperimentLastMetricSerializer,
     ExperimentMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer,
-    ExperimentLastMetricSerializer, ExperimentDeclarationsSerializer)
+    ExperimentStatusSerializer
+)
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1

@@ -1,10 +1,10 @@
-from django.contrib.postgres.fields.jsonb import KeyTransform
-from django.db.models.sql.constants import ORDER_PATTERN
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.filters import OrderingFilter as BaseOrderingFilter
 
+from django.contrib.postgres.fields.jsonb import KeyTransform
 from django.core.exceptions import ImproperlyConfigured
+from django.db.models.sql.constants import ORDER_PATTERN
 
 import query
 

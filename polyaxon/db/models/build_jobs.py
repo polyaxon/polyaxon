@@ -3,9 +3,9 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
+from constants.images_tags import LATEST_IMAGE_TAG
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.utils import DescribableModel, NameableModel, TagModel
-from constants.images_tags import LATEST_IMAGE_TAG
 from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 

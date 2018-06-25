@@ -3,12 +3,14 @@ from unittest.mock import patch
 import pytest
 
 from api.experiments.serializers import (
+    ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
+    ExperimentLastMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer,
-    ExperimentLastMetricSerializer, ExperimentDeclarationsSerializer)
+    ExperimentStatusSerializer
+)
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentStatus

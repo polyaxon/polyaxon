@@ -24,15 +24,15 @@ import auditor
 
 from api.experiments.serializers import (
     ExperimentCreateSerializer,
+    ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
+    ExperimentLastMetricSerializer,
     ExperimentMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer,
-    ExperimentLastMetricSerializer,
-    ExperimentDeclarationsSerializer,
+    ExperimentStatusSerializer
 )
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
