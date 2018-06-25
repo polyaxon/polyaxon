@@ -9,6 +9,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import MetaInfo from './metaInfo/metaInfo';
 import GridList from './gridList';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -19,7 +20,7 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
     const experiment = this.props.experiment;
 
     if (_.isNil(experiment)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'experiment', 'experiment');
     }
     return (
       <div className="entity-details">

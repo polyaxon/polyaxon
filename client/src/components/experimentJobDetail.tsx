@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 import { JobModel } from '../models/job';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   job: JobModel;
@@ -17,7 +18,7 @@ export default class JobDetail extends React.Component<Props, Object> {
   public render() {
     const job = this.props.job;
     if (_.isNil(job)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'experiment', 'experiment');
     }
     return (
       <div className="row">

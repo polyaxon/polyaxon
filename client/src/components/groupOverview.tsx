@@ -9,6 +9,7 @@ import MetaInfo from './metaInfo/metaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   group: GroupModel;
@@ -18,7 +19,7 @@ export default class GroupOverview extends React.Component<Props, Object> {
   public render() {
     const group = this.props.group;
     if (_.isNil(group)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'experiment group', 'group');
     }
     return (
       <div className="entity-details">

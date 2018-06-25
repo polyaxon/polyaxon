@@ -15,6 +15,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ExperimentOverview from './experimentOverview';
 import EntityBuild from '../containers/EntityBuild';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -31,7 +32,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
     const experiment = this.props.experiment;
 
     if (_.isNil(experiment)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'experiment', 'experiment');
     }
     let values = splitUniqueName(experiment.project);
     let experimentUrl = getExperimentUrl(values[0], values[1], this.props.experiment.id);

@@ -9,6 +9,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import MetaInfo from './metaInfo/metaInfo';
 import Tags from './tags';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   build: BuildModel;
@@ -19,7 +20,7 @@ export default class BuildOverview extends React.Component<Props, Object> {
     const build = this.props.build;
 
     if (_.isNil(build)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'build', 'build');
     }
     return (
       <div className="entity-details">

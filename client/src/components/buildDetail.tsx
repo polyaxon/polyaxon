@@ -13,6 +13,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import BuildOverview from './buildOverview';
 import Text from './text';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   build: BuildModel;
@@ -29,7 +30,7 @@ export default class BuildDetail extends React.Component<Props, Object> {
     const build = this.props.build;
 
     if (_.isNil(build)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'build', 'build');
     }
     let values = splitUniqueName(build.project);
     let buildUrl = getBuildUrl(values[0], values[1], this.props.build.id);

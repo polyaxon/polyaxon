@@ -7,6 +7,7 @@ import Tags from './tags';
 import Description from './description';
 import MetaInfo from './metaInfo/metaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   project: ProjectModel;
@@ -14,7 +15,7 @@ export interface Props {
 
 function ProjectOverview({project}: Props) {
   if (_.isNil(project)) {
-    return (<div>Nothing</div>);
+    return EmptyList(false, 'project', 'project');
   }
   let visibility = project.is_public ? 'Public' : 'Private';
   return (

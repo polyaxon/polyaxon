@@ -13,6 +13,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import JobOverview from './jobOverview';
 import EntityBuild from '../containers/EntityBuild';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   job: JobModel;
@@ -28,7 +29,7 @@ export default class JobDetail extends React.Component<Props, Object> {
   public render() {
     const job = this.props.job;
     if (_.isNil(job)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'job', 'job');
     }
     let values = splitUniqueName(job.project);
     let jobUrl = getJobUrl(values[0], values[1], this.props.job.id);

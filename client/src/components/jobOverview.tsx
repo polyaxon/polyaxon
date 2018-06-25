@@ -8,6 +8,7 @@ import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import Tags from './tags';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   job: JobModel;
@@ -18,7 +19,7 @@ export default class JobOverview extends React.Component<Props, Object> {
     const job = this.props.job;
 
     if (_.isNil(job)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'job', 'job');
     }
     return (
       <div className="entity-details">

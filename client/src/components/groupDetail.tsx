@@ -12,6 +12,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import GroupOverview from './groupOverview';
 import { getGroupUrl } from '../constants/utils';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   group: GroupModel;
@@ -27,7 +28,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
   public render() {
     const group = this.props.group;
     if (_.isNil(group)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'experiment group', 'group');
     }
     let values = splitUniqueName(group.project);
     let groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
@@ -62,4 +63,3 @@ export default class GroupDetail extends React.Component<Props, Object> {
     );
   }
 }
-
