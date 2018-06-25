@@ -92,9 +92,9 @@ def validate_job(request, username, project_name, job_id):
     try:
         job = Job.objects.get(project=project, id=job_id)
     except (Experiment.DoesNotExist, ValidationError):
-        return None, 'job was not found'
+        return None, 'Job was not found'
     if not job.is_running:
-        return None, 'job was not running'
+        return None, 'Job was not running'
     return job, None
 
 
@@ -107,9 +107,9 @@ def validate_build(request, username, project_name, build_id):
     try:
         job = BuildJob.objects.get(project=project, id=build_id)
     except (Experiment.DoesNotExist, ValidationError):
-        return None, 'build was not found'
+        return None, 'Build was not found'
     if not job.is_running:
-        return None, 'build was not running'
+        return None, 'Build was not running'
     return job, None
 
 
