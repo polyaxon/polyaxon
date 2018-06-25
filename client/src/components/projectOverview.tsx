@@ -23,8 +23,7 @@ function ProjectOverview({project}: Props) {
         <div className="col-md-12">
           <Description
             description={project.description}
-            entity="project"
-            command="polyaxon project update --description=..."
+            showEmpty={true}
           />
           <div className="meta">
             <MetaInfo

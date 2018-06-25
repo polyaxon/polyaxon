@@ -26,8 +26,7 @@ export default class GroupOverview extends React.Component<Props, Object> {
           <div className="col-md-12">
             <Description
               description={group.description}
-              entity="group"
-              command="polyaxon group update --description=..."
+              showEmpty={true}
             />
             <div className="meta">
               <UserMetaInfo user={group.user} inline={true}/>

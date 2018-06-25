@@ -104,7 +104,6 @@ export default class Experiments extends React.Component<Props, Object> {
         filters={EXPERIMENT_FILTERS}
         fetchData={this.props.fetchData}
       />
-    )
-      ;
+    );
   }
 }

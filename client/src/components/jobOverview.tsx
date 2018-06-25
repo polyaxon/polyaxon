@@ -7,6 +7,7 @@ import Description from './description';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import Tags from './tags';
 
 export interface Props {
   job: JobModel;
@@ -25,8 +26,7 @@ export default class JobOverview extends React.Component<Props, Object> {
           <div className="col-md-12">
              <Description
                 description={job.description}
-                entity="job"
-                command="polyaxon job update --description=..."
+                showEmpty={true}
              />
             <div className="meta">
               <UserMetaInfo user={job.user} inline={true}/>
@@ -57,7 +57,7 @@ export default class JobOverview extends React.Component<Props, Object> {
                 )}
             </div>
             }
-            <Tags tags={group.tags}/>
+            <Tags tags={job.tags}/>
           </div>
         </div>
       </div>

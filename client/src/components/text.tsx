@@ -8,6 +8,9 @@ export interface Props {
 }
 
 function Text({text, title}: Props) {
+  let processedText = text.length > 0 ?
+    (text.split('\n').map((line, i) => <p key={i}>{line}</p>)) :
+    (<p>No content!</p>);
   function getText() {
     if (text) {
       return (
@@ -22,7 +25,7 @@ function Text({text, title}: Props) {
           <div className="row">
             <div className="col-md-12">
               <div className="text-content">
-                {text}
+                {processedText}
               </div>
             </div>
           </div>

@@ -27,8 +27,7 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
           <div className="col-md-12">
             <Description
               description={experiment.description}
-              entity="experiment"
-              command="polyaxon experiment update --description=..."
+              showEmpty={true}
             />
             <div className="meta">
               <UserMetaInfo user={experiment.user} inline={true}/>
