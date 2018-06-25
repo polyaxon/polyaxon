@@ -11,7 +11,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import LinkMetaInfo from './metaInfo/linkMetaInfo';
 import { getJobUrl, splitUniqueName } from '../constants/utils';
-import {getBuildUrl} from 'src/constants/utils';
+import { getBuildUrl } from '../constants/utils';
 
 export interface Props {
   job: JobModel;

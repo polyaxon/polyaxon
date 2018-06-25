@@ -14,6 +14,7 @@ import {
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ExperimentOverview from './experimentOverview';
+import EntityBuild from '../containers/EntityBuild';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -79,6 +80,10 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                     experiment={experiment}
                   />,
                   relUrl: 'jobs'
+                }, {
+                  title: 'Build',
+                  component: <EntityBuild buildName={experiment.build_job}/>,
+                  relUrl: 'build'
                 }
               ]}
             />

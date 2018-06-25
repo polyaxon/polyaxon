@@ -12,6 +12,7 @@ import {
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import JobOverview from './jobOverview';
+import EntityBuild from '../containers/EntityBuild';
 
 export interface Props {
   job: JobModel;
@@ -58,6 +59,10 @@ export default class JobDetail extends React.Component<Props, Object> {
                     id={job.id}
                   />,
                   relUrl: 'logs'
+                }, {
+                  title: 'Build',
+                  component: <EntityBuild buildName={job.build_job}/>,
+                  relUrl: 'build'
                 }
               ]}
             />
