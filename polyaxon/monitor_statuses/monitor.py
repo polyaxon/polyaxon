@@ -67,6 +67,7 @@ def run(k8s_manager):
             event=event_object,
             job_container_names=(settings.CONTAINER_NAME_EXPERIMENT_JOB,
                                  settings.CONTAINER_NAME_PLUGIN_JOB,
+                                 settings.CONTAINER_NAME_JOB,
                                  settings.CONTAINER_NAME_DOCKERIZER_JOB),
             experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
 
@@ -79,7 +80,7 @@ def run(k8s_manager):
             logger.debug(event_object)
             job_state = job_state.to_dict()
             logger.debug(job_state)
-            # Only update job containers if it's an experiment job not plugins
+
             experiment_job_condition = (
                 settings.CONTAINER_NAME_EXPERIMENT_JOB in job_state['details']['container_statuses']
             )
