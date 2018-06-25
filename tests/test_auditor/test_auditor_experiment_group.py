@@ -187,3 +187,13 @@ class AuditorExperimentGroupTest(BaseTest):
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_statuses_viewed(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_STATUSES_VIEWED,
+                       instance=self.experiment_group,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1

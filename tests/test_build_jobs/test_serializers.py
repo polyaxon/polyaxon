@@ -184,7 +184,7 @@ class TestBuildJobStatusSerializer(BaseTest):
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('job') == self.obj1.job.uuid.hex
+        assert data.pop('job') == self.obj1.job.id
         data.pop('created_at')
 
         for k, v in data.items():

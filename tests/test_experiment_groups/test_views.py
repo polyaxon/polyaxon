@@ -6,13 +6,14 @@ from rest_framework import status
 
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
-    ExperimentGroupSerializer
-)
+    ExperimentGroupSerializer,
+    ExperimentGroupStatusSerializer)
+from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
-from db.models.experiment_groups import ExperimentGroup
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from db.models.experiments import Experiment
-from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
@@ -448,3 +449,77 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert self.object.stopped_experiments.count() == 2
+
+
+@pytest.mark.experiment_groups_mark
+class TestExperimentGroupStatusListViewV1(BaseViewTest):
+    serializer_class = ExperimentGroupStatusSerializer
+    model_class = ExperimentGroupStatus
+    factory_class = ExperimentGroupStatusFactory
+    num_objects = 3
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch.object(ExperimentGroup, 'set_status') as _:
+            self.experiment_group = ExperimentGroupFactory(project=project)
+        self.url = '/{}/{}/{}/groups/{}/statuses/'.format(API_V1,
+                                                          project.user.username,
+                                                          project.name,
+                                                          self.experiment_group.id)
+        self.objects = [self.factory_class(experiment_group=self.experiment_group,
+                                           status=ExperimentGroupLifeCycle.CHOICES[i][0])
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
+        self.queryset = self.queryset.order_by('created_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.status == ExperimentGroupLifeCycle.CREATED
+
+        data = {'status': ExperimentGroupLifeCycle.RUNNING}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 2
+        last_object = self.model_class.objects.last()
+        assert last_object.experiment_group == self.experiment_group
+        assert last_object.status == data['status']

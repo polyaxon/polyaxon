@@ -75,6 +75,8 @@ class TestEvents(BaseTest):
                 'experiment_group')
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_subject() ==
                 'experiment_group')
+        assert (experiment_group.ExperimentGroupStatusesViewedEvent.get_event_subject() ==
+                'experiment_group')
         assert (experiment_group.ExperimentGroupIterationEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupRandomEvent.get_event_subject() ==
@@ -243,6 +245,8 @@ class TestEvents(BaseTest):
         assert experiment_group.ExperimentGroupNewStatusEvent.get_event_action() is None
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_action() ==
                 'experiments_viewed')
+        assert (experiment_group.ExperimentGroupStatusesViewedEvent.get_event_action() ==
+                'statuses_viewed')
         assert experiment_group.ExperimentGroupIterationEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupRandomEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupGridEvent.get_event_action() is None

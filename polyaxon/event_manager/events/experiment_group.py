@@ -24,7 +24,8 @@ EXPERIMENT_GROUP_RANDOM = '{}.random'.format(event_subjects.EXPERIMENT_GROUP)
 EXPERIMENT_GROUP_GRID = '{}.grid'.format(event_subjects.EXPERIMENT_GROUP)
 EXPERIMENT_GROUP_HYPERBAND = '{}.hyperband'.format(event_subjects.EXPERIMENT_GROUP)
 EXPERIMENT_GROUP_BO = '{}.bo'.format(event_subjects.EXPERIMENT_GROUP)
-
+EXPERIMENT_GROUP_STATUSES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                                  event_actions.STATUSES_VIEWED)
 EXPERIMENT_GROUP_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                                        event_actions.DELETED,
                                                        event_subjects.TRIGGER)
@@ -268,5 +269,18 @@ class ExperimentGroupResumedTriggeredEvent(Event):
         Attribute('search_algorithm', is_required=False),
         Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentGroupStatusesViewedEvent(Event):
+    event_type = EXPERIMENT_GROUP_STATUSES_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
         Attribute('last_status'),
     )
