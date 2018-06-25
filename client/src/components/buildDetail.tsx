@@ -14,6 +14,7 @@ import LinkedTab from './linkedTab';
 import BuildOverview from './buildOverview';
 import Text from './text';
 import { EmptyList } from './emptyList';
+import GeneralInstructions from './generalInstructions';
 
 export interface Props {
   build: BuildModel;
@@ -65,6 +66,10 @@ export default class BuildDetail extends React.Component<Props, Object> {
                   title: 'Dockerfile',
                   component: <Text title="Dockerfile" text={build.dockerfile}/>,
                   relUrl: 'dockerfile'
+                }, {
+                  title: 'Instructions',
+                  component: <GeneralInstructions entity="build" entityId={build.id}/>,
+                  relUrl: 'instructions'
                 }
               ]}
             />

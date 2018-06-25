@@ -16,6 +16,7 @@ import LinkedTab from './linkedTab';
 import ExperimentOverview from './experimentOverview';
 import EntityBuild from '../containers/EntityBuild';
 import { EmptyList } from './emptyList';
+import GeneralInstructions from './generalInstructions';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -85,6 +86,10 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                   title: 'Build',
                   component: <EntityBuild buildName={experiment.build_job}/>,
                   relUrl: 'build'
+                }, {
+                  title: 'Instructions',
+                  component: <GeneralInstructions entity="experiment" entityId={experiment.id}/>,
+                  relUrl: 'instructions'
                 }
               ]}
             />

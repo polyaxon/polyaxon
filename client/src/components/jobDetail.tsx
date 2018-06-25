@@ -14,6 +14,7 @@ import LinkedTab from './linkedTab';
 import JobOverview from './jobOverview';
 import EntityBuild from '../containers/EntityBuild';
 import { EmptyList } from './emptyList';
+import GeneralInstructions from './generalInstructions';
 
 export interface Props {
   job: JobModel;
@@ -64,6 +65,10 @@ export default class JobDetail extends React.Component<Props, Object> {
                   title: 'Build',
                   component: <EntityBuild buildName={job.build_job}/>,
                   relUrl: 'build'
+                }, {
+                  title: 'Instructions',
+                  component: <GeneralInstructions entity="job" entityId={job.id}/>,
+                  relUrl: 'instructions'
                 }
               ]}
             />

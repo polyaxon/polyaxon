@@ -13,6 +13,7 @@ import LinkedTab from './linkedTab';
 import GroupOverview from './groupOverview';
 import { getGroupUrl } from '../constants/utils';
 import { EmptyList } from './emptyList';
+import GeneralInstructions from './generalInstructions';
 
 export interface Props {
   group: GroupModel;
@@ -54,6 +55,10 @@ export default class GroupDetail extends React.Component<Props, Object> {
                   title: 'Experiments',
                   component: <Experiments user={group.user} projectName={group.project} groupId={group.id}/>,
                   relUrl: 'experiments'
+                }, {
+                  title: 'Instructions',
+                  component: <GeneralInstructions entity="group" entityId={group.id}/>,
+                  relUrl: 'instructions'
                 }
               ]}
             />
