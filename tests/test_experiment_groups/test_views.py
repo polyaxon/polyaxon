@@ -463,7 +463,7 @@ class TestExperimentGroupStatusListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch.object(ExperimentGroup, 'set_status') as _:
+        with patch.object(ExperimentGroup, 'set_status') as _:  # noqa
             self.experiment_group = ExperimentGroupFactory(project=project)
         self.url = '/{}/{}/{}/groups/{}/statuses/'.format(API_V1,
                                                           project.user.username,
