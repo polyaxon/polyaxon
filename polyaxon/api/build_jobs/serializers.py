@@ -59,6 +59,7 @@ class BuildJobDetailSerializer(BuildJobSerializer):
             'resources',
             'num_jobs',
             'num_experiments',
+            'dockerfile'
         )
 
     def get_resources(self, obj):
