@@ -1,8 +1,17 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
-from db.models.experiment_groups import ExperimentGroup
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from libs.spec_validation import validate_group_spec_content
+
+
+class ExperimentGroupStatusSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+
+    class Meta:
+        model = ExperimentGroupStatus
+        extra_kwargs = {'experiment_group': {'read_only': True}}
+        exclude = []
 
 
 class ExperimentGroupSerializer(serializers.ModelSerializer):

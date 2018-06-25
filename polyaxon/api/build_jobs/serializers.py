@@ -8,14 +8,11 @@ from libs.spec_validation import validate_build_spec_config
 
 class BuildJobStatusSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    job = fields.SerializerMethodField()
 
     class Meta:
         model = BuildJobStatus
+        extra_kwargs = {'job': {'read_only': True}}
         exclude = []
-
-    def get_job(self, obj):
-        return obj.job.uuid.hex
 
 
 class BuildJobSerializer(serializers.ModelSerializer):

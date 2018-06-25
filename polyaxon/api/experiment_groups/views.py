@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -7,17 +7,17 @@ import auditor
 
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
-    ExperimentGroupSerializer
-)
+    ExperimentGroupSerializer,
+    ExperimentGroupStatusSerializer)
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
-from db.models.experiment_groups import ExperimentGroup
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
     EXPERIMENT_GROUP_STOPPED_TRIGGERED,
     EXPERIMENT_GROUP_UPDATED,
-    EXPERIMENT_GROUP_VIEWED
-)
+    EXPERIMENT_GROUP_VIEWED,
+    EXPERIMENT_GROUP_STATUSES_VIEWED)
 from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
 from libs.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.utils import to_bool
@@ -89,3 +89,32 @@ class ExperimentGroupStopView(CreateAPIView):
                     'pending': pending,
                     'message': 'User stopped experiment group'})
         return Response(status=status.HTTP_200_OK)
+
+
+class ExperimentGroupStatusListView(ListCreateAPIView):
+    queryset = ExperimentGroupStatus.objects.order_by('created_at').all()
+    serializer_class = ExperimentGroupStatusSerializer
+    permission_classes = (IsAuthenticated,)
+    project = None
+    group = None
+
+    def get_experiment_group(self):
+        # Get project and check access
+        self.project = get_permissible_project(view=self)
+        group_id = self.kwargs['group_id']
+        self.group = get_object_or_404(ExperimentGroup, project=self.project, id=group_id)
+        return self.group
+
+    def filter_queryset(self, queryset):
+        queryset = super().filter_queryset(queryset)
+        return queryset.filter(experiment_group=self.get_experiment_group())
+
+    def perform_create(self, serializer):
+        serializer.save(experiment_group=self.get_experiment_group())
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        auditor.record(event_type=EXPERIMENT_GROUP_STATUSES_VIEWED,
+                       instance=self.group,
+                       actor_id=request.user.id)
+        return response
