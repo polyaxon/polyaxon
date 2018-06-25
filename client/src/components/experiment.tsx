@@ -16,6 +16,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import LinkMetaInfo from './metaInfo/linkMetaInfo';
+import Tags from './tags';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -57,6 +58,7 @@ function Experiment({experiment, onDelete}: Props) {
             inline={true}
           />
         </div>
+        <Tags tags={experiment.tags}/>
       </div>
       <div className="col-md-2 block">
         <LinkMetaInfo
