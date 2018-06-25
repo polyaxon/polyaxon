@@ -57,6 +57,7 @@ export default class BuildOverview extends React.Component<Props, Object> {
                 )}
             </div>
             }
+            <Tags tags={group.tags}/>
           </div>
         </div>
       </div>
