@@ -3,21 +3,18 @@ import './description.less';
 
 export interface Props {
   description?: string;
-  command?: string;
-  entity?: string;
+  showEmpty?: boolean;
 }
 
-function Description({description, entity, command}: Props) {
+function Description({description, showEmpty = false}: Props) {
   function getDescription() {
     if (description) {
       return description;
     }
-    if (command && entity) {
+    if (showEmpty) {
       return (
         <div>
           <p>No description!</p>
-
-          <p>You can add a description to this {entity} by using CLI: <b> {command} </b></p>
         </div>
       );
     }
