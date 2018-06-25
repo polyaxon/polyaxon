@@ -98,14 +98,14 @@ def validate_job(request, username, project_name, job_id):
     return job, None
 
 
-def validate_build(request, username, project_name, job_id):
+def validate_build(request, username, project_name, build_id):
     project, message = validate_project(request=request,
                                         username=username,
                                         project_name=project_name)
     if project is None:
         return None, message
     try:
-        job = BuildJob.objects.get(project=project, id=job_id)
+        job = BuildJob.objects.get(project=project, id=build_id)
     except (Experiment.DoesNotExist, ValidationError):
         return None, 'build was not found'
     if not job.is_running:
@@ -481,11 +481,11 @@ async def job_logs(request, ws, username, project_name, job_id):
 
 
 @authorized()
-async def build_logs(request, ws, username, project_name, job_id):
+async def build_logs(request, ws, username, project_name, build_id):
     job, message = validate_build(request=request,
                                   username=username,
                                   project_name=project_name,
-                                  job_id=job_id)
+                                  build_id=build_id)
     if job is None:
         await ws.send(get_error_message(message))
         return
