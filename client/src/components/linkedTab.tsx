@@ -10,11 +10,6 @@ export interface Props {
 }
 
 export default class LinkedTab extends React.Component<Props, Object> {
-  shouldComponentUpdate(nextProps: Props, nextState: Object) {
-    let baseUrl = location.hash.split('?')[0];
-    return baseUrl === this.props.baseUrl;
-  }
-
   public render() {
     let tabId = this.props.tabId ? this.props.tabId : Math.floor((Math.random() * 100) + 1).toString();
     let getActiveTab = () => {
