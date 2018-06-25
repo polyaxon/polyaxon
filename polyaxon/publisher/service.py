@@ -98,7 +98,7 @@ class PublisherService(Service):
             kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_lines': log_lines})
         self._stream_job_log(job_uuid=job_uuid,
                              log_lines=log_lines,
-                             routing_key=RoutingKeys.LOGS_SIDECARS_JOBS)
+                             routing_key=RoutingKeys.LOGS_SIDECARS_BUILDS)
 
     def publish_job_log(self, log_lines, job_uuid, job_name):
         self._logger.info("Publishing log event for task: %s", job_uuid)
@@ -107,7 +107,7 @@ class PublisherService(Service):
             kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_lines': log_lines})
         self._stream_job_log(job_uuid=job_uuid,
                              log_lines=log_lines,
-                             routing_key=RoutingKeys.LOGS_SIDECARS_BUILDS)
+                             routing_key=RoutingKeys.LOGS_SIDECARS_JOBS)
 
     def setup(self):
         import logging
