@@ -7,6 +7,7 @@ import Description from './description';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import MetaInfo from 'src/components/metaInfo/metaInfo';
 
 export interface Props {
   build: BuildModel;
@@ -33,6 +34,12 @@ export default class BuildOverview extends React.Component<Props, Object> {
               <DatesMetaInfo
                 createdAt={build.created_at}
                 updatedAt={build.updated_at}
+                inline={true}
+              />
+              <MetaInfo
+                icon="fa-hashtag"
+                name="Commit"
+                value={build.commit}
                 inline={true}
               />
             </div>
