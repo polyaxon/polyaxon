@@ -10,6 +10,8 @@ import { getUserUrl, getProjectUrl } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ProjectOverview from './projectOverview';
+import ProjectInstructions from './projectInstructions';
+import { EmptyList } from './emptyList';
 
 export interface Props {
   project: ProjectModel;
@@ -25,7 +27,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
   public render() {
     const project = this.props.project;
     if (_.isNil(project)) {
-      return (<div>Nothing</div>);
+      return EmptyList(false, 'project', 'project');
     }
     let projectUrl = getProjectUrl(project.user, project.name);
 
@@ -41,28 +43,32 @@ export default class ProjectDetail extends React.Component<Props, Object> {
           <LinkedTab
             baseUrl={projectUrl}
             tabs={[
-            {
-              title: 'Overview',
-              component: <ProjectOverview project={project}/>,
-              relUrl: ''
-            }, {
-              title: 'Experiments',
-              component: <Experiments user={project.user} projectName={project.unique_name}/>,
-              relUrl: 'experiments'
-            }, {
-              title: 'Experiment groups',
-              component: <Groups user={project.user} projectName={project.unique_name}/>,
-              relUrl: 'groups'
-            }, {
-              title: 'Jobs',
-              component: <Jobs user={project.user} projectName={project.unique_name}/>,
-              relUrl: 'jobs'
-            }, {
-              title: 'Builds',
-              component: <Builds user={project.user} projectName={project.unique_name}/>,
-              relUrl: 'builds'
-            }
-          ]}
+              {
+                title: 'Overview',
+                component: <ProjectOverview project={project}/>,
+                relUrl: ''
+              }, {
+                title: 'Experiments',
+                component: <Experiments user={project.user} projectName={project.unique_name}/>,
+                relUrl: 'experiments'
+              }, {
+                title: 'Experiment groups',
+                component: <Groups user={project.user} projectName={project.unique_name}/>,
+                relUrl: 'groups'
+              }, {
+                title: 'Jobs',
+                component: <Jobs user={project.user} projectName={project.unique_name}/>,
+                relUrl: 'jobs'
+              }, {
+                title: 'Builds',
+                component: <Builds user={project.user} projectName={project.unique_name}/>,
+                relUrl: 'builds'
+              }, {
+                title: 'Instructions',
+                component: <ProjectInstructions projectName={project.unique_name}/>,
+                relUrl: 'instructions'
+              }
+            ]}
           />
         </div>
       </div>
