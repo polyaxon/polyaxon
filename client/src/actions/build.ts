@@ -117,7 +117,7 @@ export function fetchBuilds(projectUniqueName: string,
   };
 }
 
-export function fetchBuild(user: string, projectName: string, buildId: number): any {
+export function fetchBuild(user: string, projectName: string, buildId: number | string): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestBuildActionCreator());
     return fetch(

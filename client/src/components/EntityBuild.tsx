@@ -23,7 +23,7 @@ export default class EntityBuild extends React.Component<Props, Object> {
         return (
           <ul>
             <li className="list-item">
-              <Build build={this.props.build}/>
+              <Build build={this.props.build} onDelete={() => undefined}/>
             </li>
           </ul>
         );
