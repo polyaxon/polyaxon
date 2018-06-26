@@ -103,7 +103,7 @@ class ExperimentGroupConfig(BaseConfig):
 class GroupStatusSchema(Schema):
     id = fields.Int()
     uuid = UUID()
-    group = fields.Int()
+    experiment_group = fields.Int()
     created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)
@@ -125,19 +125,19 @@ class GroupStatusConfig(BaseConfig):
     SCHEMA = GroupStatusSchema
     IDENTIFIER = 'GroupStatus'
     DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['group', 'uuid', 'details']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment_group', 'uuid', 'details']
 
     def __init__(self,
                  id,  # pylint:disable=redefined-builtin
                  uuid,
-                 group,
+                 experiment_group,
                  created_at,
                  status,
                  message=None,
                  details=None):
         self.id = id
         self.uuid = uuid
-        self.group = group
+        self.experiment_group = experiment_group
         self.created_at = self.localize_date(created_at)
         self.status = status
         self.message = message

@@ -133,7 +133,7 @@ class TestProjectConfigs(TestCase):
     def test_group_status_config(self):
         config_dict = {'id': 1,
                        'uuid': uuid.uuid4().hex,
-                       'group': 1,
+                       'experiment_group': 1,
                        'created_at': local_now().isoformat(),
                        'status': 'Running',
                        'message': None,
@@ -142,7 +142,7 @@ class TestProjectConfigs(TestCase):
         config_to_dict = config.to_dict()
         assert config_to_dict == config_dict
 
-        config_dict.pop('group', None)
+        config_dict.pop('experiment_group', None)
         config_dict.pop('uuid', None)
         config_dict.pop('details', None)
         config_to_dict = config.to_light_dict()
