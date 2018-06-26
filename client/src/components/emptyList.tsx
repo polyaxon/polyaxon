@@ -8,7 +8,7 @@ export function EmptyList(isCurrentUser: boolean, objectType: string, image: str
       <div className="col-md-offset-2 col-md-8">
         <div className="jumbotron jumbotron-action text-center empty-jumbotron">
           <h3>No {objectType} was found</h3>
-          {command && isCurrentUser &&
+          {image && isCurrentUser &&
             <img src={`/static/images/${image}.svg`} alt={image} className="empty-icon"/>
           }
           {command && isCurrentUser &&

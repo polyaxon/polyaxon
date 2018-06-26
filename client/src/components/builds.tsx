@@ -39,7 +39,7 @@ export default class Builds extends React.Component<Props, Object> {
         count={this.props.count}
         componentList={listBuilds()}
         componentHeader={BuildHeader()}
-        componentEmpty={EmptyList(false, 'build', 'build')}
+        componentEmpty={EmptyList(false, 'build', 'job')}
         filters={DEFAULT_FILTERS}
         fetchData={this.props.fetchData}
       />
