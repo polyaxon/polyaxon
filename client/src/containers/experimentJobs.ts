@@ -1,4 +1,5 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { getExperimentIndexName } from '../constants/utils';
 import { AppState } from '../constants/types';
@@ -6,7 +7,6 @@ import ExperimentJobs from '../components/experimentJobs';
 import { ExperimentJobModel } from '../models/experimentJob';
 
 import * as actions from '../actions/experimentJob';
-import { getOffset } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
   let useFilter = () => {

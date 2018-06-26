@@ -1,4 +1,5 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { AppState } from '../constants/types';
 import Builds from '../components/builds';

@@ -1,11 +1,12 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { AppState } from '../constants/types';
 import Jobs from '../components/jobs';
 import { JobModel } from '../models/job';
 
 import * as actions from '../actions/job';
-import { getOffset, getPaginatedSlice } from '../constants/paginate';
+import { getPaginatedSlice } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
   let useFilter = () => {

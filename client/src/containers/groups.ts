@@ -1,11 +1,11 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { AppState } from '../constants/types';
 import Groups from '../components/groups';
 import { GroupModel } from '../models/group';
 import * as actions from '../actions/group';
 import { getPaginatedSlice } from '../constants/paginate';
-import { getOffset } from '../constants/paginate';
 
 interface OwnProps {
   user: string;

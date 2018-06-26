@@ -1,4 +1,5 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { AppState } from '../constants/types';
 import Projects from '../components/projects';
@@ -6,7 +7,7 @@ import { ProjectModel } from '../models/project';
 import * as actions from '../actions/project';
 import * as modalActions from '../actions/modal';
 import { modalTypes, modalPropsByTypes } from '../models/modal';
-import { getOffset, getPaginatedSlice } from '../constants/paginate';
+import { getPaginatedSlice } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
   let username = params.match.params.user;

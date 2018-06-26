@@ -1,4 +1,5 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import { AppState } from '../constants/types';
