@@ -8,31 +8,28 @@ export interface Props {
 }
 
 function Text({text, title}: Props) {
-  let processedText = text.length > 0 ?
-    (text.split('\n').map((line, i) => <p key={i}>{line}</p>)) :
-    (<p>No content!</p>);
+  let processedText = (text && text.length > 0) ?
+    text.split('\n').map((line, i) => <p key={i}>{line}</p>) :
+    <p>No content!</p>;
   function getText() {
-    if (text) {
-      return (
-        <div className="text">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="text-header">
-                {title}
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="text-content">
-                {processedText}
-              </div>
+    return (
+      <div className="text">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="text-header">
+              {title}
             </div>
           </div>
         </div>
-      );
-    }
-    return (null);
+        <div className="row">
+          <div className="col-md-12">
+            <div className="text-content">
+              {processedText}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (getText());
