@@ -125,6 +125,8 @@ auth:
 nodeSelectors:
   core:
   experiments:
+  jobs:
+  builds:
 
 tolerations:
   core:

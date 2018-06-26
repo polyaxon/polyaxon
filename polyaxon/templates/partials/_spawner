@@ -59,6 +59,10 @@ Spawner config
   value: {{ toJson .Values.nodeSelectors.core | quote }}
 - name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
   value: {{ toJson .Values.nodeSelectors.experiments | quote }}
+- name: POLYAXON_NODE_SELECTORS_JOBS
+  value: {{ toJson .Values.nodeSelectors.jobs | quote }}
+- name: POLYAXON_NODE_SELECTORS_BUILDS
+  value: {{ toJson .Values.nodeSelectors.builds | quote }}
 - name: POLYAXON_ROLE_LABELS_API
   value: {{ .Values.roles.api }}
 - name: POLYAXON_ROLE_LABELS_LOG
