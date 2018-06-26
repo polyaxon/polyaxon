@@ -60,8 +60,11 @@ def get_resources_env_vars(resources):
     # Fix https://github.com/kubernetes/kubernetes/issues/59629
     # When resources.gpu.limits is not set or set to 0, we explicitly
     # pass NVIDIA_VISIBLE_DEVICES=none into container to avoid exposing GPUs.
-    if (not resources or not resources.gpu or
-            not resources.gpu.limits or resources.gpu.limits == '0'):
+    condition = (not resources or
+                 not resources.gpu or
+                 not resources.gpu.limits or
+                 resources.gpu.limits == '0')
+    if condition:
         env_vars.append(
             client.V1EnvVar(
                 name='NVIDIA_VISIBLE_DEVICES',

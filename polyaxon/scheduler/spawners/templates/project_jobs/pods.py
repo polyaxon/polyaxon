@@ -5,6 +5,7 @@ from django.conf import settings
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
+from scheduler.spawners.templates.env_vars import get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.project_jobs.labels import get_labels
 from scheduler.spawners.templates.resources import get_resources
@@ -31,6 +32,7 @@ def get_project_pod_spec(volume_mounts,
     volumes += gpu_volumes
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
+    env_vars += get_resources_env_vars(resources=resources)
 
     containers = [client.V1Container(name=container_name,
                                      image=image,
