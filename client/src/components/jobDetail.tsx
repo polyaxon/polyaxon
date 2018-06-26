@@ -34,9 +34,11 @@ export default class JobDetail extends React.Component<Props, Object> {
     }
     let values = splitUniqueName(job.project);
     let jobUrl = getJobUrl(values[0], values[1], this.props.job.id);
+    let projectUrl = getProjectUrl(values[0], values[1]);
     let breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
-      {name: values[1], value: getProjectUrl(values[0], values[1])},
+      {name: values[1], value: projectUrl},
+      {name: 'Jobs', value: `${projectUrl}#jobs`},
       {name: `Job ${job.id}`}];
     return (
       <div className="row">

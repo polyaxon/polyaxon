@@ -33,6 +33,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
     }
     let values = splitUniqueName(group.project);
     let groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
+    let projectUrl = getProjectUrl(values[0], values[1]);
     return (
       <div className="row">
         <div className="col-md-12">
@@ -41,7 +42,8 @@ export default class GroupDetail extends React.Component<Props, Object> {
               icon="fa-cubes"
               links={[
                 {name: values[0], value: getUserUrl(values[0])},
-                {name: values[1], value: getProjectUrl(values[0], values[1])},
+                {name: values[1], value: projectUrl},
+                {name: 'Groups', value: `${projectUrl}#groups`},
                 {name: `Group ${group.id}`}]}
             />
             <LinkedTab

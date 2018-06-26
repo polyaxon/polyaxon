@@ -41,16 +41,21 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
     if (!_.isNil(experiment.experiment_group)) {
       group = parseInt(splitUniqueName(experiment.experiment_group)[2], 10);
     }
-    let breadcrumbLinks = [
+    let projectUrl = getProjectUrl(values[0], values[1]);
+    let breadcrumbLinks: {name: string; value?: string|undefined}[];
+    breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
-      {name: values[1], value: getProjectUrl(values[0], values[1])},
-      {name: `Experiment ${experiment.id}`}];
+      {name: values[1], value: projectUrl}];
     if (group) {
-      breadcrumbLinks.splice(
-        2,
-        0,
-        {name: `Group ${group}`, value: getGroupUrl(values[0], values[1], group)});
+      let groupUrl = getGroupUrl(values[0], values[1], group);
+      breadcrumbLinks.push(
+        {name: `Group ${group}`, value: groupUrl},
+        {name: 'Experiments', value: `${groupUrl}#experiments`});
+    } else {
+      breadcrumbLinks.push({name: 'Experiments', value: `${projectUrl}#experiments`});
     }
+    breadcrumbLinks.push({name: `Experiment ${experiment.id}`});
+
     return (
       <div className="row">
         <div className="col-md-12">

@@ -35,9 +35,11 @@ export default class BuildDetail extends React.Component<Props, Object> {
     }
     let values = splitUniqueName(build.project);
     let buildUrl = getBuildUrl(values[0], values[1], this.props.build.id);
+    let projectUrl = getProjectUrl(values[0], values[1]);
     let breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
-      {name: values[1], value: getProjectUrl(values[0], values[1])},
+      {name: values[1], value: projectUrl},
+      {name: 'Builds', value: `${projectUrl}#builds`},
       {name: `Build ${build.id}`}];
     return (
       <div className="row">
