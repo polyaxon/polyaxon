@@ -17,8 +17,7 @@ class InitCommands(object):
 
 
 def get_output_args(command, outputs_path, original_outputs_path=None):
-    base_path = '/'.join(outputs_path.split('/')[:-1])
-    get_or_create = 'if [ ! -d "{dir}" ]; then mkdir -p {dir}; fi;'.format(dir=base_path)
+    get_or_create = 'if [ ! -d "{dir}" ]; then mkdir -p {dir}; fi;'.format(dir=outputs_path)
     delete_dir = 'if [ -d {path} ]; then rm -r {path}; fi;'.format(path=outputs_path)
     copy_file_if_exist = 'if [ -f {original_path} ]; then cp {original_path} {path}; fi;'.format(
         original_path=original_outputs_path, path=outputs_path)
