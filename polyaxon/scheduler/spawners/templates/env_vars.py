@@ -50,8 +50,23 @@ def get_job_env_vars(log_level, outputs_path, logs_path, data_path, project_data
 
 
 def get_resources_env_vars(resources):
-    if resources.gpu and settings.LD_LIBRARY_PATH:
-        return [client.V1EnvVar(name='LD_LIBRARY_PATH', value=settings.LD_LIBRARY_PATH)]
-    if resources.gpu and not settings.LD_LIBRARY_PATH:
-        # TODO: logger.warning('`LD_LIBRARY_PATH` was not properly set.')  # Publish error
-        return []
+    env_vars = []
+    if resources:
+        if resources.gpu and settings.LD_LIBRARY_PATH:
+            env_vars += [client.V1EnvVar(name='LD_LIBRARY_PATH', value=settings.LD_LIBRARY_PATH)]
+        if resources.gpu and not settings.LD_LIBRARY_PATH:
+            # TODO: logger.warning('`LD_LIBRARY_PATH` was not properly set.')  # Publish error
+            pass
+
+    # Fix https://github.com/kubernetes/kubernetes/issues/59629
+    # When resources.gpu.limits is not set or set to 0, we explicitly pass NVIDIA_VISIBLE_DEVICES=none into
+    # container to avoid exposing GPUs.
+    if not resources or not resources.gpu or not resources.gpu.limits or resources.gpu.limits == '0':
+        env_vars.append(
+            client.V1EnvVar(
+                name='NVIDIA_VISIBLE_DEVICES',
+                value='none'
+            )
+        )
+
+    return env_vars

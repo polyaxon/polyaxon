@@ -143,8 +143,7 @@ class PodManager(object):
                         value=json.dumps(self.experiment_labels)),
         ]
 
-        if resources:
-            env_vars += get_resources_env_vars(resources=resources)
+        env_vars += get_resources_env_vars(resources=resources)
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
         return client.V1Container(name=self.job_container_name,
