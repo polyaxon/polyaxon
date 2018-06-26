@@ -56,4 +56,9 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.hpsearch.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.hpsearch.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.hpsearch.resources.limits | indent 12 }}
+          {{- end }}

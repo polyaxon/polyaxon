@@ -58,6 +58,11 @@ spec:
         volumeMounts:
         {{ include "volumes.dirMounts" . | indent 8}}
         resources:
-{{ toYaml .Values.scheduler.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.scheduler.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.scheduler.resources.limits | indent 12 }}
+          {{- end }}
       volumes:
       {{ include "volumes.dirs" . | indent 6 }}

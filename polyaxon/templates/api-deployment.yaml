@@ -84,7 +84,12 @@ spec:
           successThreshold: 1
           timeoutSeconds: 2
         resources:
-{{ toYaml .Values.api.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.api.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.api.resources.limits | indent 12 }}
+          {{- end }}
       - name: {{ .Chart.Name }}-streams
         image: "{{ .Values.streams.image }}:{{ .Values.streams.imageTag }}"
         imagePullPolicy: {{ .Values.streams.imagePullPolicy }}
@@ -107,7 +112,12 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.streams.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.streams.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.streams.resources.limits | indent 12 }}
+          {{- end }}
       volumes:
       {{ include "volumes.volumes.data" . | indent 6}}
       {{ include "volumes.volumes.logs" . | indent 6}}

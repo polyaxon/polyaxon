@@ -55,7 +55,12 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.beat.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.beat.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.beat.resources.limits | indent 12 }}
+          {{- end }}
       - name: {{ .Chart.Name }}-crons
         image: "{{ .Values.crons.image }}:{{ .Values.crons.imageTag }}"
         imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
@@ -77,4 +82,9 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.crons.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.crons.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.crons.resources.limits | indent 12 }}
+          {{- end }}

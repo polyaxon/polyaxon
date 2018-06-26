@@ -47,12 +47,12 @@ spec:
         ports:
         - containerPort: 8080
         resources:
-          limits:
-            cpu: 10m
-            memory: 20Mi
           requests:
-            cpu: 10m
-            memory: 20Mi
+{{ toYaml .Values.ingress.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.ingress.resources.limits | indent 12 }}
+          {{- end }}
 ---
 apiVersion: v1
 kind: Service

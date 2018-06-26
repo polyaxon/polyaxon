@@ -58,6 +58,11 @@ spec:
         volumeMounts:
         {{ include "volumes.volumeMounts.logs" . | indent 8}}
         resources:
-{{ toYaml .Values.eventsHandlers.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.eventsHandlers.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.eventsHandlers.resources.limits | indent 12 }}
+          {{- end }}
       volumes:
       {{ include "volumes.volumes.logs" . | indent 6 }}

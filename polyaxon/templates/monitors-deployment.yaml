@@ -58,7 +58,12 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.eventMonitors.namespace.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.eventMonitors.namespace.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.eventMonitors.namespace.resources.limits | indent 12 }}
+          {{- end }}
       {{- end }}
       # statuses event monitor
       {{- if .Values.eventMonitors.statuses.enabled }}
@@ -83,5 +88,10 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.eventMonitors.statuses.resources | indent 10 }}
+          requests:
+{{ toYaml .Values.eventMonitors.statuses.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.eventMonitors.statuses.resources.limits | indent 12 }}
+          {{- end }}
       {{- end }}
