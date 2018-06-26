@@ -5,8 +5,8 @@ from django.conf import settings
 from scheduler.spawners.templates import constants
 
 
-def get_volume_mount(volume, volume_mount=None):
-    return client.V1VolumeMount(name=volume, mount_path=volume_mount)
+def get_volume_mount(volume, volume_mount=None, read_only=False):
+    return client.V1VolumeMount(name=volume, mount_path=volume_mount, read_only=read_only)
 
 
 def get_volume(volume, claim_name=None, volume_mount=None):
@@ -44,12 +44,14 @@ def get_pod_volumes():
             mount_path = extra_data.get('mountPath')
             claim_name = extra_data.get('existingClaim')
             host_path = extra_data.get('hostPath')
+            read_only = extra_data.get('readOnly', False)
             if mount_path:
                 volumes.append(get_volume(volume=volume_name,
                                           claim_name=claim_name,
                                           volume_mount=host_path))
                 volume_mounts.append(get_volume_mount(volume=volume_name,
-                                                      volume_mount=mount_path))
+                                                      volume_mount=mount_path,
+                                                      read_only=read_only))
     return volumes, volume_mounts
 
 
