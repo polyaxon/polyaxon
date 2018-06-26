@@ -307,7 +307,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 @click.pass_context
 @clean_outputs
 def statuses(ctx, page):
-    """Get job status.
+    """Get job statuses.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 

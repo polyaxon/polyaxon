@@ -221,7 +221,7 @@ def stop(ctx, yes):
 @click.pass_context
 @clean_outputs
 def statuses(ctx, page):
-    """Get build job status.
+    """Get build job statuses.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 

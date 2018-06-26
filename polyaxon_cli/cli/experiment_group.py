@@ -41,7 +41,7 @@ def get_group_details(group):  # pylint:disable=redefined-outer-name
         exclude_attrs=['uuid', 'content', 'project', 'experiments', 'description'])
 
     Printer.print_header("Experiment group info:")
-    dict_tabulate(response)
+    dict_tabulate(Printer.add_status_color(response))
 
 
 @click.group()
@@ -263,3 +263,48 @@ def stop(ctx, yes, pending):
         sys.exit(1)
 
     Printer.print_success("Experiments in group are being stopped.")
+
+
+@group.command()
+@click.option('--page', type=int, help="To paginate through the list of statuses.")
+@click.pass_context
+@clean_outputs
+def statuses(ctx, page):
+    """Get experiment group statuses.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon group -g 2 statuses
+    ```
+    """
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    page = page or 1
+    try:
+        response = PolyaxonClients().experiment_group.get_statuses(user,
+                                                                   project_name,
+                                                                   _group,
+                                                                   page=page)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get status for group `{}`.'.format(_group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header('Statuses for group `{}`.'.format(_group))
+        Printer.print_header('Navigation:')
+        dict_tabulate(meta)
+    else:
+        Printer.print_header('No statuses found for group `{}`.'.format(_group))
+
+    objects = list_dicts_to_tabulate(
+        [Printer.add_status_color(o.to_light_dict(humanize_values=True), status_key='status')
+         for o in response['results']])
+    if objects:
+        Printer.print_header("Statuses:")
+        objects.pop('group', None)
+        dict_tabulate(objects, is_list_dict=True)

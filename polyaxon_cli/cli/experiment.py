@@ -442,7 +442,7 @@ def jobs(ctx, page):
 @click.pass_context
 @clean_outputs
 def statuses(ctx, job, page):
-    """Get experiment or experiment job status.
+    """Get experiment or experiment job statuses.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
