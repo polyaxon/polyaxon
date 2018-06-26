@@ -153,7 +153,7 @@ class TestExperimentGroupClient(TestCase):
     def test_get_experiment_group_statuses(self):
         group = GroupStatusConfig(id=1,
                                   uuid=uuid.uuid4().hex,
-                                  group=1,
+                                  experiment_group=1,
                                   created_at=datetime.datetime.now(),
                                   status='Running').to_dict()
         httpretty.register_uri(
