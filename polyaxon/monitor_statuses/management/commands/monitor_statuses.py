@@ -28,11 +28,12 @@ class Command(BaseMonitorCommand):
                     "Exception when calling CoreV1Api->list_namespaced_pod: %s\n", e)
                 time.sleep(log_sleep_interval)
             except InterfaceError:
-                # In some cases such as timeout, database restart, connection will be closed by remote peer.
-                # Django cannot recover from this condition automatically.
-                # Here we close dead connection manually, make Django to reconnect next time querying DB.
+                # In some cases such as timeout, database restart, connection will
+                # be closed by remote peer. Django cannot recover from this
+                # condition automatically. Here we close dead connection manually,
+                # make Django to reconnect next time querying DB.
                 connection.close()
-                monitor.logger.warn(
+                monitor.logger.warning(
                     "Database connection is already closed by peer, discard old connection\n")
             except Exception as e:
                 monitor.logger.exception("Unhandled exception occurred %s\n", e)
