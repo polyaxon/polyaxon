@@ -31,6 +31,8 @@ EXPERIMENT_RESOURCES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                              event_actions.RESOURCES_VIEWED)
 EXPERIMENT_LOGS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                         event_actions.LOGS_VIEWED)
+EXPERIMENT_OUTPUTS_DOWNLOADED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                               event_actions.OUTPUTS_DOWNLOADED)
 EXPERIMENT_STATUSES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                             event_actions.STATUSES_VIEWED)
 EXPERIMENT_JOBS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
@@ -245,6 +247,21 @@ class ExperimentResourcesViewedEvent(Event):
 
 class ExperimentLogsViewedEvent(Event):
     event_type = EXPERIMENT_LOGS_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentOutputsDownloadedEvent(Event):
+    event_type = EXPERIMENT_OUTPUTS_DOWNLOADED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

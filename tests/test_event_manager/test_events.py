@@ -47,6 +47,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentDoneEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentResourcesViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentLogsViewedEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentOutputsDownloadedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentStatusesViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentJobsViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentMetricsViewedEvent.get_event_subject() == 'experiment'
@@ -225,6 +226,8 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentDoneEvent.get_event_action() is None
         assert experiment.ExperimentResourcesViewedEvent.get_event_action() == 'resources_viewed'
         assert experiment.ExperimentLogsViewedEvent.get_event_action() == 'logs_viewed'
+        assert (experiment.ExperimentOutputsDownloadedEvent.get_event_action() ==
+                'outputs_downloaded')
         assert experiment.ExperimentStatusesViewedEvent.get_event_action() == 'statuses_viewed'
         assert experiment.ExperimentJobsViewedEvent.get_event_action() == 'jobs_viewed'
         assert experiment.ExperimentMetricsViewedEvent.get_event_action() == 'metrics_viewed'
