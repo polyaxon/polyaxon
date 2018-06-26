@@ -158,6 +158,8 @@ class BaseDockerBuilder(object):
             container_limits=limits,
         ):
             self._handle_logs(log_line)
+            if 'error' in log_line:
+                return False
             # Check if we need to stop this process
             check_pulse, should_stop = self._check_pulse(check_pulse)
             if should_stop:
@@ -174,6 +176,7 @@ class BaseDockerBuilder(object):
         last_emit_time = time.time()
         check_pulse = 0
         for log_line in self.docker.push(self.image_name, tag=self.image_tag, stream=True):
+            self._handle_logs(log_line)
             lines = [l for l in log_line.decode('utf-8').split('\r\n') if l]
             lines = [json.loads(l) for l in lines]
             for progress in lines:
@@ -190,9 +193,7 @@ class BaseDockerBuilder(object):
                     _logger.debug('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
                     last_emit_time = time.time()
 
-                self._handle_logs(log_line)
-
-                # Check if we need to stop this process
+            # Check if we need to stop this process
             check_pulse, should_stop = self._check_pulse(check_pulse)
             if should_stop:
                 return False

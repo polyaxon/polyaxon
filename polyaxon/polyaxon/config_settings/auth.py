@@ -50,6 +50,9 @@ if AUTH_LDAP_ENABLED:
 
     AUTH_LDAP_USER_DN_TEMPLATE = config.get_string('POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE',
                                                    is_optional=True)
+    # when USER_DN_TEMPLATE is empty string, all users will login as anonymous user.
+    if AUTH_LDAP_USER_DN_TEMPLATE == '':
+        AUTH_LDAP_USER_DN_TEMPLATE = None
 
     AUTH_LDAP_START_TLS = config.get_boolean('POLYAXON_AUTH_LDAP_START_TLS', is_optional=True)
 

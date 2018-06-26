@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 from docker.errors import DockerException
 
@@ -98,12 +99,15 @@ def build_experiment(self, experiment_id):
                               message='No code was found for to build this experiment.')
         return
     except Exception as e:  # Other exceptions
-        _logger.warning('Failed to build experiment %s', e)
+        _logger.error('Failed to build experiment, unexpected error occurred.\n%s',
+                      traceback.format_exc())
         experiment.set_status(ExperimentLifeCycle.FAILED,
                               message='Failed to build image for experiment.')
         return
 
     if not status:
+        experiment.set_status(ExperimentLifeCycle.FAILED,
+                              message='Failed to build image for experiment.')
         return
 
     # Now we can start the experiment

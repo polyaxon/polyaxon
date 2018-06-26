@@ -104,8 +104,7 @@ class PodManager(object):
             get_env_var(name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME, value=json.dumps(self.labels)),
         ]
 
-        if resources:
-            env_vars += get_resources_env_vars(resources=resources)
+        env_vars += get_resources_env_vars(resources=resources)
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
         return client.V1Container(name=self.job_container_name,
