@@ -105,17 +105,6 @@ def fetch(git_url, repo_path, overwrite=False):
     return clone_git_repo(repo_path=repo_path, git_url=git_url)
 
 
-def archive_repo(repo, repo_name):
-    if not os.path.exists(settings.REPOS_ARCHIVE_ROOT):
-        os.makedirs(settings.REPOS_ARCHIVE_ROOT)
-
-    archive_name = '{}.tar.gz'.format(repo_name)
-    with open(os.path.join(settings.REPOS_ARCHIVE_ROOT, archive_name), 'wb') as fp:
-        repo.archive(fp, format='tgz')
-
-    return settings.REPOS_ARCHIVE_ROOT, archive_name
-
-
 def checkout_commit(repo_path, commit=None):  # pylint:disable=redefined-outer-name
     """Checkout to a specific commit.
 
