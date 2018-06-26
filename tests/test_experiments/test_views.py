@@ -1447,7 +1447,7 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.experiment = self.factory_class(project=self.project)
-        self.download_url = '/{}/{}/{}/experiments/{}/download'.format(
+        self.download_url = '/{}/{}/{}/experiments/{}/outputs'.format(
             API_V1,
             self.project.user.username,
             self.project.name,

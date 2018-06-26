@@ -42,7 +42,7 @@ experiments_urlpatterns = [
         views.ExperimentLogsView.as_view()),
     re_path(r'^{}/{}/experiments/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
             views.ExperimentStopView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/download/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+    re_path(r'^{}/{}/experiments/{}/outputs/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
             views.DownloadOutputsView.as_view()),
 ]
 
