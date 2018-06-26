@@ -306,5 +306,5 @@ def statuses(ctx, page):
          for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
-        objects.pop('group', None)
+        objects.pop('experiment_group', None)
         dict_tabulate(objects, is_list_dict=True)
