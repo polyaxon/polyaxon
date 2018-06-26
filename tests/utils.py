@@ -181,6 +181,7 @@ class BaseTest(TestCase):
         settings.LOGS_ROOT = tempfile.mkdtemp()
         settings.OUTPUTS_ROOT = tempfile.mkdtemp()
         settings.REPOS_ARCHIVE_ROOT = tempfile.mkdtemp()
+        settings.OUTPUTS_ARCHIVE_ROOT = tempfile.mkdtemp()
         # Flush cache
         cache.clear()
         # Mock celery default sent task

@@ -40,9 +40,10 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/logs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentLogsView.as_view()),
-    re_path(
-        r'^{}/{}/experiments/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
-        views.ExperimentStopView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+            views.ExperimentStopView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/download/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+            views.DownloadOutputsView.as_view()),
 ]
 
 jobs_urlpatterns = [

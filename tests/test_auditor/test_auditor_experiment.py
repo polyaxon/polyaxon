@@ -177,7 +177,7 @@ class AuditorExperimentTest(BaseTest):
     @patch('activitylogs.service.ActivityLogService.record_event')
     def test_experiment_outputs_downloaded(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_OUTPUTS_DOWNLOADED,
-                       instance=self.project,
+                       instance=self.experiment,
                        actor_id=1)
 
         assert tracker_record.call_count == 1

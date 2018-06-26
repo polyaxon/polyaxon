@@ -35,7 +35,7 @@ from api.experiments.serializers import (
     ExperimentStatusSerializer
 )
 from api.filters import OrderingFilter, QueryFilter
-from api.utils.views import AuditorMixinView, ListCreateAPIView
+from api.utils.views import AuditorMixinView, ListCreateAPIView, ProtectedView
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
@@ -50,7 +50,8 @@ from event_manager.events.experiment import (
     EXPERIMENT_STATUSES_VIEWED,
     EXPERIMENT_STOPPED_TRIGGERED,
     EXPERIMENT_UPDATED,
-    EXPERIMENT_VIEWED
+    EXPERIMENT_VIEWED,
+    EXPERIMENT_OUTPUTS_DOWNLOADED
 )
 from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
 from event_manager.events.experiment_job import (
@@ -58,6 +59,7 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
+from libs.archive import archive_experiment_outputs
 from libs.paths.experiments import get_experiment_logs_path
 from libs.permissions.authentication import InternalAuthentication
 from libs.permissions.internal import IsAuthenticatedOrInternal
@@ -423,3 +425,24 @@ class ExperimentStopView(CreateAPIView):
                 'update_status': True
             })
         return Response(status=status.HTTP_200_OK)
+
+
+class DownloadOutputsView(ProtectedView):
+    permission_classes = (IsAuthenticated,)
+    HANDLE_UNAUTHENTICATED = False
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(project=get_permissible_project(view=self))
+
+    def get_object(self):
+        project = get_permissible_project(view=self)
+        experiment = get_object_or_404(Experiment, project=project, id=self.kwargs['id'])
+        auditor.record(event_type=EXPERIMENT_OUTPUTS_DOWNLOADED,
+                       instance=experiment,
+                       actor_id=self.request.user.id)
+        return experiment
+
+    def get(self, request, *args, **kwargs):
+        experiment = self.get_object()
+        archived_path, archive_name = archive_experiment_outputs(experiment.unique_name)
+        return self.redirect(path='{}/{}'.format(archived_path, archive_name))
