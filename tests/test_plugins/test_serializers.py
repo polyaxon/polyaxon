@@ -1,11 +1,92 @@
 import pytest
 
-from api.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
+from api.plugins.serializers import (
+    NotebookJobSerializer,
+    ProjectTensorboardJobSerializer,
+    TensorboardJobSerializer
+)
+from constants.jobs import JobLifeCycle
 from db.models.notebooks import NotebookJob
-from db.models.tensorboards import TensorboardJob
+from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
+from factories.factory_projects import ProjectFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from tests.utils import BaseTest
+
+
+@pytest.mark.plugins_mark
+class TestProjectTensorboardJobSerializer(BaseTest):
+    DISABLE_RUNNER = True
+    serializer_class = ProjectTensorboardJobSerializer
+    model_class = TensorboardJob
+    factory_class = TensorboardJobFactory
+    expected_keys = {
+        'id',
+        'uuid',
+        'name',
+        'unique_name',
+        'user',
+        'description',
+        'created_at',
+        'updated_at',
+        'started_at',
+        'finished_at',
+        'last_status',
+        'tags',
+        'project',
+        'experiment_group',
+        'experiment',
+    }
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory()
+        self.obj1 = self.factory_class(project=self.project)
+        self.obj2 = self.factory_class(project=self.project)
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('user') == self.obj1.user.username
+        assert data.pop('project') == self.obj1.project.unique_name
+        assert data.pop('last_status') == self.obj1.last_status
+        data.pop('created_at')
+        data.pop('updated_at')
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_one_with_status(self):
+        obj1 = self.factory_class(project=self.project)
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is None
+        assert data['finished_at'] is None
+
+        TensorboardJobStatus.objects.create(job=obj1, status=JobLifeCycle.SCHEDULED)
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is not None
+        assert data['finished_at'] is None
+
+        TensorboardJobStatus.objects.create(job=obj1, status=JobLifeCycle.SUCCEEDED)
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is not None
+        assert data['finished_at'] is not None
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
 
 
 @pytest.mark.plugins_mark

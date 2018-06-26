@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, get_object_or_404
+from rest_framework.generics import CreateAPIView, ListAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -8,17 +8,24 @@ from django.http import Http404
 
 import auditor
 
-from api.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
+from api.filters import OrderingFilter, QueryFilter
+from api.plugins.serializers import (
+    NotebookJobSerializer,
+    ProjectTensorboardJobSerializer,
+    TensorboardJobSerializer
+)
 from api.utils.views import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.projects import Project
+from db.models.tensorboards import TensorboardJob
 from event_manager.events.notebook import (
     NOTEBOOK_STARTED_TRIGGERED,
     NOTEBOOK_STOPPED_TRIGGERED,
     NOTEBOOK_VIEWED
 )
+from event_manager.events.project import PROJECT_TENSORBOARDS_VIEWED
 from event_manager.events.tensorboard import (
     TENSORBOARD_STARTED_TRIGGERED,
     TENSORBOARD_STOPPED_TRIGGERED,
@@ -325,3 +332,22 @@ class TensorboardView(PluginJobView):
                        instance=instance.tensorboard,
                        target=target,
                        actor_id=self.request.user.id)
+
+
+class ProjectTensorboardListView(ListAPIView):
+    """List an experiment under a project"""
+    queryset = TensorboardJob.objects.all()
+    serializer_class = ProjectTensorboardJobSerializer
+    permission_classes = (IsAuthenticated,)
+    filter_backends = (QueryFilter, OrderingFilter,)
+    query_manager = 'tensorboard'
+    ordering = ('-updated_at',)
+    ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
+
+    def filter_queryset(self, queryset):
+        project = get_permissible_project(view=self)
+        auditor.record(event_type=PROJECT_TENSORBOARDS_VIEWED,
+                       instance=project,
+                       actor_id=self.request.user.id)
+        queryset = queryset.filter(project=project)
+        return super().filter_queryset(queryset=queryset)

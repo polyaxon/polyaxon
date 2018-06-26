@@ -7,6 +7,7 @@ from api.experiment_groups import views as groups_views
 from api.experiments import views as experiments_views
 from api.jobs import views as jobs_views
 from api.projects import views
+from api.plugins import views as tensorboards_views
 from constants.urls import NAME_PATTERN, USERNAME_PATTERN
 
 projects_urlpatterns = [
@@ -24,6 +25,8 @@ projects_urlpatterns = [
             jobs_views.ProjectJobListView.as_view()),
     re_path(r'^{}/{}/builds/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
             builds_views.ProjectBuildListView.as_view()),
+    re_path(r'^{}/{}/tensorboards/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+            tensorboards_views.ProjectTensorboardListView.as_view()),
 ]
 
 # Order is important, because the patterns could swallow other urls
