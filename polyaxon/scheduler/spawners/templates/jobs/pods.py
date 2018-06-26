@@ -172,7 +172,7 @@ class PodManager(object):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.POLYAXON_NODE_SELECTORS_JOBS)
+            default_node_selector=settings.NODE_SELECTORS_JOBS)
         service_account_name = None
         if settings.K8S_RBAC_ENABLED:
             service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
