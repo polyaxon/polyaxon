@@ -10,7 +10,7 @@ from unittest import TestCase
 
 from polyaxon_client.project import ProjectClient
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.job import JobConfig
+from polyaxon_schemas.job import JobConfig, TensorboardJobConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
 faker = Faker()
@@ -414,6 +414,62 @@ class TestProjectClient(TestCase):
             status=200)
         result = self.client.create_job('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
+
+    @httpretty.activate
+    def test_list_tensorboards(self):
+        project_uuid = uuid.uuid4().hex
+        xp_uuid = uuid.uuid4().hex
+        xps = [TensorboardJobConfig(config={}, uuid=xp_uuid, project=project_uuid).to_dict()
+               for _ in range(10)]
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'tensorboards'),
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_tensorboards('user', 'project')
+        assert len(response['results']) == 10
+
+        # pagination
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'tensorboards') + '?offset=2',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_tensorboards('user', 'project', page=2)
+        assert len(response['results']) == 10
+
+        # query, sort
+        httpretty.register_uri(
+            httpretty.GET,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'tensorboards') + '?query=started_at:>=2010-10-10,sort=created_at',
+            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
+            content_type='application/json',
+            status=200)
+
+        response = self.client.list_tensorboards('user',
+                                                 'project',
+                                                 query='started_at:>=2010-10-10',
+                                                 sort='created_at')
+        assert len(response['results']) == 10
 
     @httpretty.activate
     def test_list_builds(self):

@@ -6,7 +6,7 @@ from collections import Mapping
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.job import JobConfig
+from polyaxon_schemas.job import JobConfig, TensorboardJobConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
 
@@ -218,6 +218,23 @@ class ProjectClient(PolyaxonClient):
             return self.prepare_list_results(response.json(), page, JobConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving build jobs')
+            return []
+
+    def list_tensorboards(self, username, project_name, query=None, sort=None, page=1):
+        """Fetch list of tensorboard jobs related to this project."""
+        request_url = self._build_url(
+            self._get_http_url(), username, project_name, 'tensorboards')
+
+        try:
+            params = self.get_page(page=page)
+            if query:
+                params['query'] = query
+            if sort:
+                params['sort'] = sort
+            response = self.get(request_url, params=params)
+            return self.prepare_list_results(response.json(), page, TensorboardJobConfig)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving tensorboard jobs')
             return []
 
     def create_build(self, username, project_name, build_config):
