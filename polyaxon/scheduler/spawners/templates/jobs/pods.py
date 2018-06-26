@@ -132,8 +132,8 @@ class PodManager(object):
         """Pod init container for setting outputs path."""
         outputs_path = get_job_outputs_path(job_name=self.job_name)
         outputs_volume_mount = get_volume_mount(
-            volume=constants.DATA_VOLUME,
-            volume_mount=settings.DATA_ROOT)
+            volume=constants.OUTPUTS_VOLUME,
+            volume_mount=settings.OUTPUTS_ROOT)
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,

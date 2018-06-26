@@ -181,8 +181,8 @@ class PodManager(object):
 
         outputs_path = get_experiment_outputs_path(experiment_name=self.experiment_name)
         outputs_volume_mount = get_volume_mount(
-            volume=constants.DATA_VOLUME,
-            volume_mount=settings.DATA_ROOT)
+            volume=constants.OUTPUTS_VOLUME,
+            volume_mount=settings.OUTPUTS_ROOT)
         return [
             client.V1Container(
                 name=self.init_container_name,
