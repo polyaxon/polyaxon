@@ -149,7 +149,7 @@ def list(page):  # pylint:disable=redefined-builtin
             exclude_attrs=['uuid', 'experiment_groups', 'experiments', 'description',
                            'num_experiments', 'num_independent_experiments',
                            'num_experiment_groups', 'num_jobs', 'num_builds', 'unique_name'])
-         for o in response['results']])
+            for o in response['results']])
     if objects:
         Printer.print_header("Projects:")
         dict_tabulate(objects, is_list_dict=True)
@@ -427,7 +427,7 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
 @click.option('--page', type=int, help='To paginate through the list of build jobs.')
 @click.option('--query', '-q', type=str,
               help='To filter the experiments based on this query spec.')
-@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
+@click.option('--sort', '-s', type=str, help='To change order by of the builds.')
 @click.pass_context
 @clean_outputs
 def builds(ctx, query, sort, page):
@@ -462,6 +462,50 @@ def builds(ctx, query, sort, page):
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Builds:")
+        objects.pop('project_name', None)
+        dict_tabulate(objects, is_list_dict=True)
+
+
+@project.command()
+@click.option('--page', type=int, help='To paginate through the list of tensorboardv jobs.')
+@click.option('--query', '-q', type=str,
+              help='To filter the experiments based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the tensorboards.')
+@click.pass_context
+@clean_outputs
+def tensorboards(ctx, query, sort, page):
+    """List tensorboard jobs for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = get_project_or_local(ctx.obj['project'])
+
+    page = page or 1
+    try:
+        response = PolyaxonClients().project.list_tensorboards(username=user,
+                                                               project_name=project_name,
+                                                               query=query,
+                                                               sort=sort,
+                                                               page=page)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get tensorboards for project `{}`.'.format(project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header('Tensorboards for project `{}/{}`.'.format(user, project_name))
+        Printer.print_header('Navigation:')
+        dict_tabulate(meta)
+    else:
+        Printer.print_header('No tensorboards found for project `{}/{}`.'.format(user,
+                                                                                 project_name))
+
+    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+               for o in response['results']]
+    objects = list_dicts_to_tabulate(objects)
+    if objects:
+        Printer.print_header("Tensorboards:")
         objects.pop('project_name', None)
         dict_tabulate(objects, is_list_dict=True)
 
