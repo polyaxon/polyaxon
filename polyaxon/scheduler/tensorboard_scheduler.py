@@ -5,6 +5,7 @@ from kubernetes.client.rest import ApiException
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
+from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 from scheduler.spawners.utils import get_job_definition
 
@@ -25,10 +26,13 @@ def start_tensorboard(tensorboard):
         in_cluster=True)
 
     try:
+        node_selectors = get_node_selector(
+            node_selector=tensorboard.node_selectors,
+            default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
         results = spawner.start_tensorboard(image=tensorboard.image,
                                             outputs_path=tensorboard.outputs_path,
                                             resources=tensorboard.resources,
-                                            node_selectors=tensorboard.node_selectors)
+                                            node_selectors=node_selectors)
     except ApiException as e:
         _logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
         tensorboard.set_status(

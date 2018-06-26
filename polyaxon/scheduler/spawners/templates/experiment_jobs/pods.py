@@ -24,6 +24,7 @@ from scheduler.spawners.templates.env_vars import (
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
+from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_container
 from scheduler.spawners.templates.volumes import get_volume_mount
@@ -236,9 +237,9 @@ class PodManager(object):
                                                            args=sidecar_args)
             containers.append(sidecar_container)
 
-        if not node_selector:
-            node_selector = settings.NODE_SELECTORS_EXPERIMENTS
-            node_selector = json.loads(node_selector) if node_selector else None
+        node_selector = get_node_selector(
+            node_selector=node_selector,
+            default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
         service_account_name = None
         if settings.K8S_RBAC_ENABLED:
             service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME

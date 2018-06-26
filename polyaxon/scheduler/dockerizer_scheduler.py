@@ -12,6 +12,7 @@ from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_tagged_image
 from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
+from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.utils import get_job_definition
 
 _logger = logging.getLogger('polyaxon.scheduler.dockerizer')
@@ -80,8 +81,11 @@ def start_dockerizer(build_job):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
     try:
+        node_selectors = get_node_selector(
+            node_selector=build_job.node_selectors,
+            default_node_selector=settings.NODE_SELECTORS_BUILDS)
         results = spawner.start_dockerizer(resources=build_job.resources,
-                                           node_selectors=build_job.node_selectors)
+                                           node_selectors=node_selectors)
         auditor.record(event_type=BUILD_JOB_STARTED,
                        instance=build_job)
     except ApiException as e:
