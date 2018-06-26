@@ -78,7 +78,7 @@ class ProjectClient(PolyaxonClient):
             return None
 
     def download_repo(self, username, project_name):
-        """Downloads code data for this project from to the current dir."""
+        """Downloads code for this project to the current dir."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'repo', 'download')
 
@@ -86,7 +86,7 @@ class ProjectClient(PolyaxonClient):
             response = self.download(request_url, 'repo.tar.gz')
             return response
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating project repo')
+            self.handle_exception(e=e, log_message='Error while downloading project repo')
             return None
 
     def list_experiment_groups(self, username, project_name, query=None, sort=None, page=1):

@@ -272,3 +272,21 @@ class ExperimentClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
+
+    def download_outputs(self, username, project_name, experiment_id):
+        """Downloads outputs for this experiment to the current dir."""
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_id,
+                                      'outputss')
+
+        try:
+            response = self.download(
+                request_url,
+                '{}.{}.{}.tar.gz'.format(username, project_name, experiment_id))
+            return response
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while downloading experiment outputs.')
+            return None
