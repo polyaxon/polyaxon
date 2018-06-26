@@ -48,6 +48,10 @@ class Command(BaseCommand):
             status = False
 
         if not status:
+            builder.send_status(
+                build_job=build_job,
+                status=JobLifeCycle.FAILED,
+                message='Failed to build job %s' % e)
             return
 
         builder.send_status(
