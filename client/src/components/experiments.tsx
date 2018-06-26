@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import * as queryString from 'query-string';
 
@@ -11,6 +12,7 @@ import PaginatedList from './paginatedList';
 import { EmptyList } from './emptyList';
 import ExperimentHeader from './experimentHeader';
 import GridList from './gridList';
+import { getExperimentUrl, splitUniqueName } from '../constants/utils';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -29,6 +31,18 @@ export default class Experiments extends React.Component<Props, Object> {
   }
 
   public render() {
+    const getExperimentLink = (experimentName: string, experimentId: string | number) => {
+      let values = splitUniqueName(experimentName);
+      return(
+        <LinkContainer to={getExperimentUrl(values[0], values[1], experimentId)}>
+          <a className="title">
+            <i className="fa fa-cube icon" aria-hidden="true"/>
+            {experimentName}
+          </a>
+        </LinkContainer>
+      );
+    };
+
     const experiments = this.props.experiments;
     const listExperiments = () => {
       return (
@@ -45,25 +59,29 @@ export default class Experiments extends React.Component<Props, Object> {
     };
     const listExperimentMetrics = () => {
       return (
-          <GridList
-            rows={experiments
-              .filter((xp: ExperimentModel) => xp.last_metric)
-              .map((xp: ExperimentModel) => (
-                {...{id: xp.id, name: xp.unique_name},
-                ...xp.last_metric}))}
-          />
+        <GridList
+          rows={experiments
+            .filter((xp: ExperimentModel) => xp.last_metric)
+            .map((xp: ExperimentModel) => (
+              {
+                ...{experiment: getExperimentLink(xp.unique_name, xp.id)},
+                ...xp.last_metric
+              }))}
+        />
       );
     };
 
     const listExperimentDeclarations = () => {
       return (
-          <GridList
-            rows={experiments
-              .filter((xp: ExperimentModel) => xp.declarations)
-              .map((xp: ExperimentModel) => (
-                {...{id: xp.id, name: xp.unique_name},
-                ...xp.declarations}))}
-          />
+        <GridList
+          rows={experiments
+            .filter((xp: ExperimentModel) => xp.declarations)
+            .map((xp: ExperimentModel) => (
+              {
+                ...{experiment: getExperimentLink(xp.unique_name, xp.id)},
+                ...xp.declarations
+              }))}
+        />
       );
     };
 
@@ -77,7 +95,7 @@ export default class Experiments extends React.Component<Props, Object> {
           return 'declarations';
         }
       }
-      return 'data';
+      return 'info';
     };
     const listType = getListType();
 
@@ -94,7 +112,7 @@ export default class Experiments extends React.Component<Props, Object> {
       <PaginatedList
         count={this.props.count}
         componentList={getList()}
-        componentHeader={listType === 'data' ? ExperimentHeader() : null}
+        componentHeader={listType === 'info' ? ExperimentHeader() : null}
         componentEmpty={EmptyList(
           this.props.isCurrentUser,
           'experiment',

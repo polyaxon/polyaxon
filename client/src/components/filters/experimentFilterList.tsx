@@ -21,7 +21,7 @@ interface State {
 export default class ExperimentFilterList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    let dataRadio = 'data';
+    let dataRadio = 'info';
     let independent = false;
     if (props.extraFilters &&
         (props.extraFilters.metrics === true || props.extraFilters.metrics === 'true')) {
@@ -152,10 +152,10 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
                     <label>
                       <input
                         type="radio"
-                        value="data"
-                        checked={this.state.dataRadio === 'data'}
+                        value="info"
+                        checked={this.state.dataRadio === 'info'}
                         onChange={(event) => this.onDataRadioChange(event.target.value)}
-                      /> Data
+                      /> Info
                     </label>
                   </div>
                 </div>

@@ -7,7 +7,6 @@ import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
 import { getPaginatedSlice } from '../constants/paginate';
-import { getOffset } from '../constants/paginate';
 
 interface OwnProps {
   user: string;
