@@ -16,6 +16,8 @@ PROJECT_JOBS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
                                      event_actions.JOBS_VIEWED)
 PROJECT_BUILDS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
                                        event_actions.BUILDS_VIEWED)
+PROJECT_TENSORBOARDS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
+                                             event_actions.TENSORBOARDS_VIEWED)
 PROJECT_EXPERIMENT_GROUPS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
                                                   event_actions.EXPERIMENT_GROUPS_VIEWED)
 
@@ -115,6 +117,17 @@ class ProjectJobsViewedEvent(Event):
 
 class ProjectBuildsViewedEvent(Event):
     event_type = PROJECT_BUILDS_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('is_public', attr_type=bool),
+    )
+
+
+class ProjectTensorboardsViewedEvent(Event):
+    event_type = PROJECT_TENSORBOARDS_VIEWED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
