@@ -716,4 +716,23 @@ def logs(ctx, job, past, follow):
 @experiment.command()
 @clean_outputs
 def outputs(ctx):
-    pass
+    """Download outputs for experiment.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon experiment --experiment=1 outputs
+    ```
+    """
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
+                                                                      ctx.obj['experiment'])
+    try:
+        PolyaxonClients().experiment.download_outputs(user, project_name, _experiment)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not download outputs for experiment `{}`.'.format(_experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+    Printer.print_success('Files downloaded.')
