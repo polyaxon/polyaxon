@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from django.urls import re_path
 
 from api.experiment_groups import views
-from constants.urls import ID_PATTERN, NAME_PATTERN, USERNAME_PATTERN, GROUP_ID_PATTERN
+from constants.urls import GROUP_ID_PATTERN, ID_PATTERN, NAME_PATTERN, USERNAME_PATTERN
 
 groups_urlpatterns = [
     re_path(r'^{}/{}/groups/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),

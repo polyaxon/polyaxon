@@ -8,16 +8,18 @@ import auditor
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer,
-    ExperimentGroupStatusSerializer)
+    ExperimentGroupStatusSerializer
+)
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
+    EXPERIMENT_GROUP_STATUSES_VIEWED,
     EXPERIMENT_GROUP_STOPPED_TRIGGERED,
     EXPERIMENT_GROUP_UPDATED,
-    EXPERIMENT_GROUP_VIEWED,
-    EXPERIMENT_GROUP_STATUSES_VIEWED)
+    EXPERIMENT_GROUP_VIEWED
+)
 from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
 from libs.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.utils import to_bool

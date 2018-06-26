@@ -1,13 +1,14 @@
 # pylint:disable=too-many-lines
 import os
 
-from django.conf import settings
 from faker import Faker
 from unittest.mock import patch
 
 import pytest
 
 from rest_framework import status
+
+from django.conf import settings
 
 from api.experiments.serializers import (
     ExperimentDeclarationsSerializer,

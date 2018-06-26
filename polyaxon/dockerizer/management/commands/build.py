@@ -51,7 +51,7 @@ class Command(BaseCommand):
             builder.send_status(
                 build_job=build_job,
                 status=JobLifeCycle.FAILED,
-                message='Failed to build job %s' % e)
+                message='Failed to build job.')
             return
 
         builder.send_status(

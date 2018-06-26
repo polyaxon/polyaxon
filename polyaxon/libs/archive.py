@@ -20,7 +20,7 @@ def create_tarfile(files, tar_path):
 
 def get_files_in_path(path):
     result_files = []
-    for root, dirs, files in os.walk(path):
+    for root, _, files in os.walk(path):
         for file_name in files:
             result_files.append(os.path.join(root, file_name))
     return result_files

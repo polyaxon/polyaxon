@@ -1,7 +1,8 @@
 import json
 
-from django.conf import settings
 from kubernetes import client
+
+from django.conf import settings
 
 from libs.api import API_KEY_NAME, get_settings_api_url
 from scheduler.spawners.templates import constants

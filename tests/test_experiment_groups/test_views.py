@@ -7,7 +7,8 @@ from rest_framework import status
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer,
-    ExperimentGroupStatusSerializer)
+    ExperimentGroupStatusSerializer
+)
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
