@@ -532,6 +532,8 @@ def validate_frameworks(frameworks):
 class EnvironmentSchema(Schema):
     cluster_uuid = UUID(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    data_persistence = fields.List(fields.Str(), allow_none=True)
+    outputs_persistence = fields.Str(allow_none=True)
     node_selectors = fields.Dict(allow_none=True)
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
     horovod = fields.Nested(HorovodSchema, allow_none=True)
@@ -564,14 +566,18 @@ class EnvironmentConfig(BaseConfig):
     def __init__(self,
                  cluster_uuid=None,
                  resources=None,
+                 data_persistence=None,
+                 outputs_persistence=None,
                  node_selectors=None,
                  tensorflow=None,
                  horovod=None,
                  pytorch=None,
                  mxnet=None):
         self.cluster_uuid = cluster_uuid
-        self.node_selectors = node_selectors
         self.resources = resources
+        self.data_persistence = data_persistence
+        self.outputs_persistence = outputs_persistence
+        self.node_selectors = node_selectors
         validate_frameworks([tensorflow, horovod, pytorch, mxnet])
         self.tensorflow = tensorflow
         self.horovod = horovod

@@ -6,6 +6,9 @@ kind: job
 tags: ['foo', 'bar']
 
 environment:
+  data_persistence: ['data1', 'data2']
+  outputs_persistence: 'outputs1'
+
   node_selectors:
     polyaxon.com: node_for_jobs
 
