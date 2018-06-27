@@ -161,7 +161,10 @@ class ExperimentDetailSerializer(ExperimentSerializer):
         extra_kwargs = {'original_experiment': {'write_only': True}}
 
     def get_resources(self, obj):
-        return obj.resources.to_dict() if obj.resources else None
+        resources = obj.resources
+        if resources and not isinstance(resources, dict):
+            resources = resources.to_dict()
+        return resources
 
     def get_num_jobs(self, obj):
         return obj.jobs.count()
