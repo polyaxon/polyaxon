@@ -87,6 +87,7 @@ persistence:
   # extra:
   #   - mountPath: "/storage/1"
   #     hostPath: "/path/to/storage"
+  #     readOnly: true
   #   - mountPath: "/storage/2"
   #     existingClaim: "storage-2-pvc"
 
