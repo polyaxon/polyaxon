@@ -63,7 +63,7 @@ export default class FilterList extends React.Component<Props, State> {
                     type="text"
                     className="form-control"
                     id="query"
-                    placeholder="metrics.loss:<=0.1, status:~running|scheduled, created_at:2018-01-01..2018-02-01"
+                    placeholder="build.id:3|4, status:~running|scheduled, created_at:2018-01-01..2018-02-01"
                     value={this.state.query}
                     onChange={(event) =>  this.onQueryInput(event.target.value)}
                   />

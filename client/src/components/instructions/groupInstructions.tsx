@@ -2,11 +2,10 @@ import * as React from 'react';
 import './instructions.less';
 
 export interface Props {
-  entity: string;
-  entityId: number | string;
+  id: number | string;
 }
 
-function GeneralInstructions({entity, entityId}: Props) {
+function GroupInstructions({id}: Props) {
   return (
     <div className="instructions">
       <div className="row">
@@ -22,13 +21,19 @@ function GeneralInstructions({entity, entityId}: Props) {
             <div className="instructions-section">
               <h4>Add/update the build description</h4>
               <div className="instructions-section-content">
-                polyaxon entity -b {entityId} update --description="New {entity} description..."
+                polyaxon group -g {id} update --description="New group description..."
               </div>
             </div>
             <div className="instructions-section">
               <h4>Add/update the project tags</h4>
               <div className="instructions-section-content">
-                polyaxon entity -b {entityId} update --tags="foo, bar, ..,"
+                polyaxon group -g {id} update --tags="foo, bar, ..,"
+              </div>
+            </div>
+            <div className="instructions-section">
+              <h4>Start a tensorboard</h4>
+              <div className="instructions-section-content">
+                polyaxon tensorboard start -g {id} [-f polyaxonfile.yml] [-f override_file.yml] [-u]
               </div>
             </div>
           </div>
@@ -38,4 +43,4 @@ function GeneralInstructions({entity, entityId}: Props) {
   );
 }
 
-export default GeneralInstructions;
+export default GroupInstructions;

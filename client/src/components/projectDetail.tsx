@@ -10,7 +10,7 @@ import { getUserUrl, getProjectUrl } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ProjectOverview from './projectOverview';
-import ProjectInstructions from './projectInstructions';
+import ProjectInstructions from './instructions/projectInstructions';
 import { EmptyList } from './emptyList';
 
 export interface Props {
