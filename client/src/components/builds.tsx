@@ -10,6 +10,7 @@ import { EmptyList } from './emptyList';
 import BuildHeader from './buildHeader';
 
 export interface Props {
+  isCurrentUser: boolean;
   builds: BuildModel[];
   count: number;
   onCreate: (build: BuildModel) => actions.BuildAction;
@@ -39,7 +40,12 @@ export default class Builds extends React.Component<Props, Object> {
         count={this.props.count}
         componentList={listBuilds()}
         componentHeader={BuildHeader()}
-        componentEmpty={EmptyList(false, 'build', 'job')}
+        componentEmpty={
+          EmptyList(
+            this.props.isCurrentUser,
+            'build',
+            'build',
+            'polyaxon run --help')}
         filters={DEFAULT_FILTERS}
         fetchData={this.props.fetchData}
       />

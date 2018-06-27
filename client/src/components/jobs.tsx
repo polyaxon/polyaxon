@@ -10,6 +10,7 @@ import { EmptyList } from './emptyList';
 import JobHeader from './jobHeader';
 
 export interface Props {
+  isCurrentUser: boolean;
   jobs: JobModel[];
   count: number;
   onCreate: (job: JobModel) => actions.JobAction;
@@ -39,7 +40,12 @@ export default class Jobs extends React.Component<Props, Object> {
         count={this.props.count}
         componentList={listJobs()}
         componentHeader={JobHeader()}
-        componentEmpty={EmptyList(false, 'job', 'job')}
+        componentEmpty={
+          EmptyList(
+            this.props.isCurrentUser,
+            'job',
+            'job',
+            'polyaxon run --help')}
         filters={DEFAULT_FILTERS}
         fetchData={this.props.fetchData}
       />
