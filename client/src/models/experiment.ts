@@ -13,6 +13,7 @@ export class ExperimentModel {
   public project: string;
   public experiment_group: string;
   public build_job: string;
+  public has_tensorboard: boolean;
   public created_at: string;
   public updated_at: string;
   public started_at: string;

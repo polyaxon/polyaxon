@@ -25,6 +25,7 @@ export class GroupModel {
   public current_iteration: number;
   public search_algorithm: string;
   public project: string;
+  public has_tensorboard: boolean;
   public experiments: Array<string> = [];
 }
 

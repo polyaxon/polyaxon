@@ -10,6 +10,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import { EmptyList } from './emptyList';
+import { getGroupTensorboardUrl } from '../constants/utils';
 
 export interface Props {
   group: GroupModel;
@@ -106,6 +107,18 @@ export default class GroupOverview extends React.Component<Props, Object> {
                 inline={true}
               />
             </div>
+            {group.has_tensorboard &&
+            <div className="meta">
+              <span className="meta-info meta-dashboard">
+                <i className="fa fa-link icon" aria-hidden="true"/>
+                <a
+                  href={getGroupTensorboardUrl(group.project, group.id)}
+                  className="title-link"
+                >Tensorboard
+                </a>
+              </span>
+            </div>
+            }
             <Tags tags={group.tags}/>
           </div>
         </div>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 import { ProjectModel } from '../models/project';
-import { getNotebookUrl, getTensorboardUrl } from '../constants/utils';
+import { getNotebookUrl, getProjectTensorboardUrl } from '../constants/utils';
 import Tags from './tags';
 import Description from './description';
 import MetaInfo from './metaInfo/metaInfo';
@@ -65,21 +65,23 @@ function ProjectOverview({project}: Props) {
               inline={true}
              />
           </div>
-          <Tags tags={project.tags}/>
+          {project.has_tensorboard &&
           <div className="meta">
-            {project.has_tensorboard &&
             <span className="meta-info meta-dashboard">
-                  <i className="fa fa-link icon" aria-hidden="true"/>
-                  <a href={getTensorboardUrl(project.user, project.name)} className="title-link">Tensorboard</a>
-                </span>
-            }
-            {project.has_notebook &&
-            <span className="meta-info meta-dashboard">
-                  <i className="fa fa-link icon" aria-hidden="true"/>
-                  <a href={getNotebookUrl(project.user, project.name)} className="title-link">Notebook</a>
-                </span>
-            }
+              <i className="fa fa-link icon" aria-hidden="true"/>
+              <a href={getProjectTensorboardUrl(project.unique_name)} className="title-link">Tensorboard</a>
+            </span>
           </div>
+          }
+          {project.has_notebook &&
+          <div className="meta">
+            <span className="meta-info meta-dashboard">
+              <i className="fa fa-link icon" aria-hidden="true"/>
+              <a href={getNotebookUrl(project.unique_name)} className="title-link">Notebook</a>
+            </span>
+          </div>
+          }
+          <Tags tags={project.tags}/>
         </div>
       </div>
     </div>

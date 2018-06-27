@@ -10,6 +10,8 @@ import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import MetaInfo from './metaInfo/metaInfo';
 import GridList from './gridList';
 import { EmptyList } from './emptyList';
+import { getExperimentTensorboardUrl } from '../constants/utils';
+import Tags from './tags';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -65,6 +67,19 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
                 )}
             </div>
             }
+            {experiment.has_tensorboard &&
+            <div className="meta">
+              <span className="meta-info meta-dashboard">
+                <i className="fa fa-link icon" aria-hidden="true"/>
+                <a
+                  href={getExperimentTensorboardUrl(experiment.project, experiment.id)}
+                  className="title-link"
+                >Tensorboard
+                </a>
+              </span>
+            </div>
+            }
+            <Tags tags={experiment.tags}/>
             {experiment.declarations &&
             <div className="meta meta-declarations">
               <span className="meta-info">
