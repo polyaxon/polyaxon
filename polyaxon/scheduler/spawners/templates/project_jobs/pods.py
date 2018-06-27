@@ -24,6 +24,7 @@ def get_project_pod_spec(volume_mounts,
                          restart_policy=None,
                          use_service_account=False):
     """Pod spec to be used to create pods for project: tensorboard, notebooks."""
+    env_vars = get_list(env_vars)
     volume_mounts = get_list(volume_mounts)
     volumes = get_list(volumes)
 
