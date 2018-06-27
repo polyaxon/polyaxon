@@ -6,9 +6,11 @@ export const logsReducer: Reducer<string> =
     switch (action.type) {
 
       case actionTypes.REQUEST_LOGS:
-        return '';
+        return 'Fetching logs...';
       case actionTypes.RECEIVE_LOGS:
         return action.logs;
+      case actionTypes.RECEIVE_LOGS_ERROR:
+        return action.msg;
       default:
         return state;
     }

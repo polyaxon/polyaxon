@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 
 from api.experiments.serializers import (
     ExperimentDeclarationsSerializer,
@@ -285,6 +286,39 @@ class TestExperimentDetailSerializer(BaseTest):
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
+
+    def test_serialize_cluster_resources(self):
+        spec_content = """---
+            version: 1
+
+            kind: experiment
+
+            environment:
+              resources:
+                cpu:
+                  requests: 2
+                  limits: 4
+                memory:
+                  requests: 4096
+                  limits: 10240
+              pytorch:
+                n_workers: 2
+                default_worker_resources:
+                  cpu:
+                    requests: 2
+                    limits: 4
+                  memory:
+                    requests: 4096
+                    limits: 10240
+
+            run:
+              image: my_image
+              cmd: video_prediction_train --model=DNA --num_masks=1
+        """
+        spec = ExperimentSpecification.read(spec_content)
+
+        obj = self.factory_class(config=spec.parsed_data)
+        self.serializer_class(obj).data  # pylint:disable=expression-not-assigned
 
 
 @pytest.mark.experiments_mark
