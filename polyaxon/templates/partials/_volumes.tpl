@@ -44,7 +44,7 @@ Volumes
 - name: upload
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.upload.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
+    claimName: {{ .Values.persistence.upload.existingClaim | default .Values.nfsProvisioner.pvc.upload.name }}
 {{- else }}
   hostPath:
     path:  {{ .Values.persistence.upload.mountPath }}
@@ -54,7 +54,7 @@ Volumes
 - name: repos
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.repos.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
+    claimName: {{ .Values.persistence.repos.existingClaim | default .Values.nfsProvisioner.pvc.repos.name }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.repos.mountPath }}
@@ -64,7 +64,7 @@ Volumes
 - name: logs
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.logs.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
+    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.nfsProvisioner.pvc.logs.name }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.logs.mountPath }}
@@ -74,7 +74,7 @@ Volumes
 - name: data
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.data.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.data.existingClaim | default .Values.persistence.data.name }}
+    claimName: {{ .Values.persistence.data.existingClaim | default .Values.nfsProvisioner.pvc.data.name }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.data.mountPath }}
@@ -84,7 +84,7 @@ Volumes
 - name: outputs
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.outputs.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
+    claimName: {{ .Values.persistence.outputs.existingClaim | default .Values.nfsProvisioner.pvc.outputs.name }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.outputs.mountPath }}

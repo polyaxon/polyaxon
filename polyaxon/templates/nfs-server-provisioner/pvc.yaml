@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.persistence.repos.name }}
+  name: {{ .Values.nfsProvisioner.pvc.repos.name }}
   labels:
     app: {{ template "polyaxon.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -11,10 +11,10 @@ metadata:
     type: {{ .Values.types.core }}
 spec:
   accessModes:
-    - {{ .Values.persistence.repos.accessMode | quote }}
+    - {{ .Values.nfsProvisioner.pvc.repos.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.repos.size | quote }}
+      storage: {{ .Values.nfsProvisioner.pvc.repos.size | quote }}
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
@@ -22,7 +22,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.persistence.logs.name }}
+  name: {{ .Values.nfsProvisioner.pvc.logs.name }}
   labels:
     app: {{ template "polyaxon.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -31,10 +31,10 @@ metadata:
     type: {{ .Values.types.core }}
 spec:
   accessModes:
-    - {{ .Values.persistence.logs.accessMode | quote }}
+    - {{ .Values.nfsProvisioner.pvc.logs.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.logs.size | quote }}
+      storage: {{ .Values.nfsProvisioner.pvc.logs.size | quote }}
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
@@ -42,7 +42,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.persistence.upload.name }}
+  name: {{ .Values.nfsProvisioner.pvc.upload.name }}
   labels:
     app: {{ template "polyaxon.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -51,10 +51,10 @@ metadata:
     type: {{ .Values.types.core }}
 spec:
   accessModes:
-    - {{ .Values.persistence.upload.accessMode | quote }}
+    - {{ .Values.nfsProvisioner.pvc.upload.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.upload.size | quote }}
+      storage: {{ .Values.nfsProvisioner.pvc.upload.size | quote }}
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
@@ -62,7 +62,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.persistence.outputs.name }}
+  name: {{ .Values.nfsProvisioner.pvc.outputs.name }}
   labels:
     app: {{ template "polyaxon.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -71,10 +71,10 @@ metadata:
     type: {{ .Values.types.core }}
 spec:
   accessModes:
-    - {{ .Values.persistence.outputs.accessMode | quote }}
+    - {{ .Values.nfsProvisioner.pvc.outputs.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.outputs.size | quote }}
+      storage: {{ .Values.nfsProvisioner.pvc.outputs.size | quote }}
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
@@ -82,7 +82,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.persistence.data.name }}
+  name: {{ .Values.nfsProvisioner.pvc.data.name }}
   labels:
     app: {{ template "polyaxon.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -91,9 +91,9 @@ metadata:
     type: {{ .Values.types.core }}
 spec:
   accessModes:
-    - {{ .Values.persistence.data.accessMode | quote }}
+    - {{ .Values.nfsProvisioner.pvc.data.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.data.size | quote }}
+      storage: {{ .Values.nfsProvisioner.pvc.data.size | quote }}
   storageClassName: polyaxon-nfs
 {{- end }}

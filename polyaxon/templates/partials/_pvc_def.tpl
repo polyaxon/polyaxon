@@ -4,27 +4,31 @@ Config claim_names
 {{- define "config.claim_names" }}
 - name: POLYAXON_CLAIM_NAMES_DATA
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.data.existingClaim }}
-  value: {{ .Values.persistence.data.existingClaim | default .Values.persistence.data.name }}
+  value: {{ .Values.persistence.data.existingClaim | default .Values.nfsProvisioner.pvc.data.name }}
 {{- else }}
   value: ""
 {{- end }}
 - name: POLYAXON_CLAIM_NAMES_OUTPUTS
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.data.existingClaim }}
-  value: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
+{{- if or .Values.nfsProvisioner.enabled .Values.persistence.outputs.existingClaim }}
+  value: {{ .Values.persistence.outputs.existingClaim | default .Values.nfsProvisioner.pvc.outputs.name }}
 {{- else }}
   value: ""
 {{- end }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
-  value: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
+{{- if or .Values.nfsProvisioner.enabled .Values.persistence.logs.existingClaim }}
+  value: {{ .Values.persistence.logs.existingClaim | default .Values.nfsProvisioner.pvc.logs.name }}
+{{- else }}
+  value: ""
+{{- end }}
 - name: POLYAXON_CLAIM_NAMES_UPLOAD
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.upload.existingClaim }}
-  value: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
+  value: {{ .Values.persistence.upload.existingClaim | default .Values.nfsProvisioner.pvc.upload.name }}
 {{- else }}
   value: ""
 {{- end }}
 - name: POLYAXON_CLAIM_NAMES_REPOS
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.repos.existingClaim }}
-  value: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
+  value: {{ .Values.persistence.repos.existingClaim | default .Values.nfsProvisioner.pvc.repos.name }}
 {{- else }}
   value: ""
 {{- end }}

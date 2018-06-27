@@ -47,41 +47,21 @@ mountPaths:
   docker: "/var/run/docker.sock"
 
 persistence:
-  data:
-    existingClaim:
-    name: "polyaxon-pvc-data"
-    accessMode: ReadWriteMany
-    size: 10Gi
-    mountPath: "/data"
-    subPath: ""
-  outputs:
-    existingClaim:
-    name: "polyaxon-pvc-outputs"
-    accessMode: ReadWriteMany
-    size: 10Gi
-    mountPath: "/outputs"
-    subPath: ""
   logs:
     existingClaim:
-    name: "polyaxon-pvc-logs"
-    accessMode: ReadWriteMany
-    size: 5Gi
     mountPath: "/logs"
-    subPath: ""
   repos:
     existingClaim:
-    name: "polyaxon-pvc-repos"
-    accessMode: ReadWriteMany
-    size: 10Gi
     mountPath: "/repos"
-    subPath: ""
   upload:
     existingClaim:
-    name: "polyaxon-pvc-upload"
-    accessMode: ReadWriteMany
-    size: 10Gi
     mountPath: "/uploads"
-    subPath: ""
+  data:
+    existingClaim:
+    mountPath: "/data"
+  outputs:
+    existingClaim:
+    mountPath: "/outputs"
   extra: []
 # e.g.
   # extra:
@@ -409,6 +389,27 @@ nfsProvisioner:
     enabled: false
     size: 50Gi
     accessMode: ReadWriteOnce
+  pvc:
+    logs:
+      name: "polyaxon-pvc-logs"
+      accessMode: ReadWriteMany
+      size: 5Gi
+    repos:
+      name: "polyaxon-pvc-repos"
+      accessMode: ReadWriteMany
+      size: 10Gi
+    upload:
+      name: "polyaxon-pvc-upload"
+      accessMode: ReadWriteMany
+      size: 10Gi
+    data:
+      name: "polyaxon-pvc-data"
+      accessMode: ReadWriteMany
+      size: 10Gi
+    outputs:
+      name: "polyaxon-pvc-outputs"
+      accessMode: ReadWriteMany
+      size: 10Gi
 
   resources: {}
   image:
