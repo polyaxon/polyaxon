@@ -57,7 +57,6 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         volumeMounts:
-        {{ include "volumes.volumeMounts.data" . | indent 8}}
         {{ include "volumes.volumeMounts.logs" . | indent 8}}
         {{ include "volumes.volumeMounts.outputs" . | indent 8}}
         {{ include "volumes.volumeMounts.repos" . | indent 8}}
@@ -119,7 +118,6 @@ spec:
 {{ toYaml .Values.streams.resources.limits | indent 12 }}
           {{- end }}
       volumes:
-      {{ include "volumes.volumes.data" . | indent 6}}
       {{ include "volumes.volumes.logs" . | indent 6}}
       {{ include "volumes.volumes.outputs" . | indent 6}}
       {{ include "volumes.volumes.repos" . | indent 6}}
