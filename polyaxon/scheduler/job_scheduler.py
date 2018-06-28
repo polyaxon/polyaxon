@@ -37,7 +37,7 @@ def start_job(job):
         namespace=settings.K8S_NAMESPACE,
         job_docker_image=job_docker_image,
         in_cluster=True,
-        use_sidecar=False,
+        use_sidecar=True,
         sidecar_config=config.get_requested_params(to_str=True))
 
     try:

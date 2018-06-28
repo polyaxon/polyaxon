@@ -134,14 +134,14 @@ class PodManager(object):
         """Pod init container for setting outputs path."""
         outputs_path = get_job_outputs_path(persistence_outputs=persistence_outputs,
                                             job_name=self.job_name)
-        outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
+        _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,
             command=["/bin/sh", "-c"],
             args=to_list(get_output_args(command=InitCommands.CREATE,
                                          outputs_path=outputs_path)),
-            volume_mounts=[outputs_volume_mount])
+            volume_mounts=outputs_volume_mount)
 
     def get_task_pod_spec(self,
                           volume_mounts,
