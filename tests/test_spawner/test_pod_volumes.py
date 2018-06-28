@@ -1,38 +1,41 @@
 from unittest import TestCase
 
-from django.conf import settings
+from django.test import override_settings
 
 from libs.paths.exceptions import VolumeNotFoundError
 from scheduler.spawners.templates.volumes import get_pod_volumes
 
 
 class TestPodVolumes(TestCase):
-    def test_get_pod_volumes(self):
+    PERSISTENCE_OUTPUTS = {
+        'outputs1': {
+            'mountPath': '/outputs/1',
+            'existingClaim': 'test-claim-outputs-1'
+        },
+        'outputs2': {
+            'mountPath': '/outputs/2',
+            'hostPath': '/root/outputs'
+        }
+    }
+    PERSISTENCE_DATA = {
+        'data1': {
+            'mountPath': '/data/1',
+            'existingClaim': 'test-claim-data-1'
+        },
+        'data2': {
+            'mountPath': '/data/2',
+            'hostPath': '/root/data'
+        }
+    }
+
+    def test_default_get_pod_volumes(self):
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=None, persistence_data=None)
         assert len(volumes) == 2
         assert volumes[0].persistent_volume_claim.claim_name == 'test-claim-outputs'
         assert volumes[1].persistent_volume_claim.claim_name == 'test-claim-data'
 
-        settings.PERSISTENCE_OUTPUTS = {
-            'outputs1': {
-                'mountPath': '/outputs/1',
-                'existingClaim': 'test-claim-outputs-1'
-            },
-            'outputs2': {
-                'mountPath': '/outputs/2',
-                'hostPath': '/root/outputs'
-            }
-        }
-        settings.PERSISTENCE_DATA = {
-            'data1': {
-                'mountPath': '/data/1',
-                'existingClaim': 'test-claim-data-1'
-             },
-            'data2': {
-                'mountPath': '/data/2',
-                'hostPath': '/root/data'
-            }
-        }
+    @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS, PERSISTENCE_DATA=PERSISTENCE_DATA)
+    def test_pod_volumes_changes(self):
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=None, persistence_data=None)
         assert len(volumes) == 3
         if volumes[0].name == 'outputs1':
