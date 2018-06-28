@@ -1,75 +1,65 @@
 {{/*
-Config claim_names
+Config data persistence
 */}}
-{{- define "config.claim_names" }}
-- name: POLYAXON_CLAIM_NAMES_DATA
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.data.existingClaim }}
-  value: {{ .Values.persistence.data.existingClaim | default .Values.nfsProvisioner.pvc.data.name }}
-{{- else }}
-  value: ""
-{{- end }}
-- name: POLYAXON_CLAIM_NAMES_OUTPUTS
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.outputs.existingClaim }}
-  value: {{ .Values.persistence.outputs.existingClaim | default .Values.nfsProvisioner.pvc.outputs.name }}
-{{- else }}
-  value: ""
-{{- end }}
-- name: POLYAXON_CLAIM_NAMES_LOGS
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.logs.existingClaim }}
-  value: {{ .Values.persistence.logs.existingClaim | default .Values.nfsProvisioner.pvc.logs.name }}
-{{- else }}
-  value: ""
-{{- end }}
-- name: POLYAXON_CLAIM_NAMES_UPLOAD
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.upload.existingClaim }}
-  value: {{ .Values.persistence.upload.existingClaim | default .Values.nfsProvisioner.pvc.upload.name }}
-{{- else }}
-  value: ""
-{{- end }}
-- name: POLYAXON_CLAIM_NAMES_REPOS
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.repos.existingClaim }}
-  value: {{ .Values.persistence.repos.existingClaim | default .Values.nfsProvisioner.pvc.repos.name }}
-{{- else }}
-  value: ""
+{{- define "config.persistence.data" }}
+{{- if .Values.persistence.data }}
+- name: POLYAXON_PERSISTENCE_DATA
+  value: {{ toJson .Values.persistence.data | quote }}
+{{- else if .Values.nfsProvisioner.enabled }}
+- name: POLYAXON_PERSISTENCE_DATA
+  value: {{ ( toJson ( dict "data" (dict "mountPath" .Values.nfsProvisioner.pvc.data.mountPath "existingClaim" .Values.nfsProvisioner.pvc.data.name))) | quote }}
 {{- end }}
 {{- end -}}
 
 {{/*
-Config mount_paths
+Config outputs persistence
 */}}
-{{- define "config.mount_paths" }}
-- name: POLYAXON_MOUNT_PATHS_UPLOAD
-  value: {{ .Values.persistence.upload.mountPath | quote }}
-- name: POLYAXON_MOUNT_PATHS_DATA
-  value: {{ .Values.persistence.data.mountPath | quote }}
-- name: POLYAXON_MOUNT_PATHS_LOGS
-  value: {{ .Values.persistence.logs.mountPath | quote }}
-- name: POLYAXON_MOUNT_PATHS_OUTPUTS
-  value: {{ .Values.persistence.outputs.mountPath | quote }}
-- name: POLYAXON_MOUNT_PATHS_REPOS
-  value: {{ .Values.persistence.repos.mountPath | quote }}
+{{- define "config.persistence.outputs" }}
+{{- if .Values.persistence.outputs }}
+- name: POLYAXON_PERSISTENCE_OUTPUTS
+  value: {{ toJson .Values.persistence.outputs | quote }}
+{{- else if .Values.nfsProvisioner.enabled }}
+- name: POLYAXON_PERSISTENCE_OUTPUTS
+  value: {{ ( toJson ( dict "outputs" (dict "mountPath" .Values.nfsProvisioner.pvc.outputs.mountPath "existingClaim" .Values.nfsProvisioner.pvc.outputs.name))) | quote }}
+{{- end }}
 {{- end -}}
 
 {{/*
-Config sub_paths
+Config logs persistence
 */}}
-{{- define "config.sub_paths" }}
-- name: POLYAXON_SUB_PATHS_UPLOAD
-  value: {{ .Values.persistence.upload.subPath | quote }}
-- name: POLYAXON_SUB_PATHS_DATA
-  value: {{ .Values.persistence.data.subPath | quote }}
-- name: POLYAXON_SUB_PATHS_LOGS
-  value: {{ .Values.persistence.logs.subPath | quote }}
-- name: POLYAXON_SUB_PATHS_OUTPUTS
-  value: {{ .Values.persistence.outputs.subPath | quote }}
-- name: POLYAXON_SUB_PATHS_REPOS
-  value: {{ .Values.persistence.repos.subPath | quote }}
+{{- define "config.persistence.logs" }}
+{{- if .Values.persistence.logs }}
+- name: POLYAXON_PERSISTENCE_LOGS
+  value: {{ toJson .Values.persistence.logs | quote }}
+{{- else if .Values.nfsProvisioner.enabled }}
+- name: POLYAXON_PERSISTENCE_LOGS
+  value: {{ toJson (dict "mountPath" .Values.nfsProvisioner.pvc.logs.mountPath "existingClaim" .Values.nfsProvisioner.pvc.logs.name) | quote }}
+{{- end }}
 {{- end -}}
 
 {{/*
-Config extra_data
+Config repos persistence
 */}}
-{{- define "config.extra_data" }}
-- name: POLYAXON_EXTRA_PERSISTENCES
-  value: {{ toJson .Values.persistence.extra | quote }}
+{{- define "config.persistence.repos" }}
+{{- if .Values.persistence.repos }}
+- name: POLYAXON_PERSISTENCE_REPOS
+  value: {{ toJson .Values.persistence.repos | quote }}
+{{- else if .Values.nfsProvisioner.enabled }}
+- name: POLYAXON_PERSISTENCE_REPOS
+  value: {{ toJson (dict "mountPath" .Values.nfsProvisioner.pvc.repos.mountPath "existingClaim" .Values.nfsProvisioner.pvc.repos.name) | quote }}
+{{- end }}
+{{- end -}}
+
+
+{{/*
+Config upload persistence
+*/}}
+{{- define "config.persistence.upload" }}
+{{- if .Values.persistence.upload }}
+- name: POLYAXON_PERSISTENCE_UPLOAD
+  value: {{ toJson .Values.persistence.upload | quote }}
+{{- else if .Values.nfsProvisioner.enabled }}
+- name: POLYAXON_PERSISTENCE_UPLOAD
+  value: {{ toJson .Values.nfsProvisioner.pvc.upload | quote }}
+{{- end }}
 {{- end -}}

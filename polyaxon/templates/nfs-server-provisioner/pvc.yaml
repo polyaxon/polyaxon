@@ -1,4 +1,4 @@
-{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.repos.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.repos) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -38,7 +38,7 @@ spec:
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.upload.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.upload) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -58,7 +58,7 @@ spec:
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.outputs.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.outputs) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -78,7 +78,7 @@ spec:
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.data.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.data) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:

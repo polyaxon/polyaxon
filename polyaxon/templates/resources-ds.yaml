@@ -41,10 +41,6 @@ spec:
         {{ include "config.dirs" . | indent 8 }}
         {{ include "config.emails" . | indent 8 }}
         {{ include "config.k8s" . | indent 8 }}
-        {{ include "config.extra_data" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.mount_paths" . | indent 8 }}
-        {{ include "config.sub_paths" . | indent 8 }}
         {{ include "config.registry" . | indent 8 }}
         {{ include "config.spawner" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -64,10 +60,6 @@ spec:
         {{ include "config.dirs" . | indent 8 }}
         {{ include "config.emails" . | indent 8 }}
         {{ include "config.k8s" . | indent 8 }}
-        {{ include "config.extra_data" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.mount_paths" . | indent 8 }}
-        {{ include "config.sub_paths" . | indent 8 }}
         {{ include "config.registry" . | indent 8 }}
         {{ include "config.spawner" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}

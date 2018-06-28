@@ -50,26 +50,38 @@ persistence:
   logs:
     existingClaim:
     mountPath: "/logs"
+    hostPath:
   repos:
     existingClaim:
     mountPath: "/repos"
+    hostPath:
   upload:
     existingClaim:
-    mountPath: "/uploads"
+    mountPath: "/upload"
+    hostPath:
   data:
     existingClaim:
     mountPath: "/data"
-  outputs:
-    existingClaim:
-    mountPath: "/outputs"
-  extra: []
+    hostPath:
+  outputs: {}
+  data: {}
 # e.g.
-  # extra:
-  #   - mountPath: "/storage/1"
-  #     hostPath: "/path/to/storage"
+  # data:
+  #   data1:
+  #     mountPath: "/data/1"
+  #     hostPath: "/path/to/data"
   #     readOnly: true
-  #   - mountPath: "/storage/2"
-  #     existingClaim: "storage-2-pvc"
+  #   data2:
+  #     mountPath: "/data/2"
+  #     existingClaim: "data-2-pvc"
+  # outputs:
+  #   outputs1:
+  #      mountPath: "/outputs/1"
+  #     hostPath: "/path/to/outputs"
+  #     readOnly: true
+  #   outputs2:
+  #      mountPath: "/outputs/2"
+  #     existingClaim: "outputs-2-pvc"
 
 auth:
   ldap:
@@ -393,21 +405,26 @@ nfsProvisioner:
     logs:
       name: "polyaxon-pvc-logs"
       accessMode: ReadWriteMany
+      mountPath: "/logs"
       size: 5Gi
     repos:
       name: "polyaxon-pvc-repos"
       accessMode: ReadWriteMany
+      mountPath: "/repos"
       size: 10Gi
     upload:
       name: "polyaxon-pvc-upload"
       accessMode: ReadWriteMany
+      mountPath: "/upload"
       size: 10Gi
     data:
       name: "polyaxon-pvc-data"
       accessMode: ReadWriteMany
+      mountPath: "/data"
       size: 10Gi
     outputs:
       name: "polyaxon-pvc-outputs"
+      mountPath: "/outputs"
       accessMode: ReadWriteMany
       size: 10Gi
 
