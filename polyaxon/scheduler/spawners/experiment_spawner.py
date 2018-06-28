@@ -16,6 +16,7 @@ class ExperimentSpawner(K8SManager):
                  project_uuid,
                  experiment_uuid,
                  spec,
+                 persistence_config=None,
                  experiment_group_uuid=None,
                  experiment_group_name=None,
                  original_name=None,
@@ -42,6 +43,7 @@ class ExperimentSpawner(K8SManager):
         self.experiment_uuid = experiment_uuid
         self.original_name = original_name
         self.cloning_strategy = cloning_strategy
+        self.persistence_config = persistence_config
         self.pod_manager = pods.PodManager(namespace=namespace,
                                            project_name=self.project_name,
                                            experiment_group_name=self.experiment_group_name,
@@ -98,21 +100,23 @@ class ExperimentSpawner(K8SManager):
         sidecar_args = get_sidecar_args(pod_id=job_name)
         labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
-        volumes, volume_mounts = get_pod_volumes(persistence_outputs=self.spec.persistence_outputs,
-                                                 persistence_data=self.spec.persistence_data)
-        pod = self.pod_manager.get_pod(task_type=task_type,
-                                       task_idx=task_idx,
-                                       volume_mounts=volume_mounts,
-                                       volumes=volumes,
-                                       env_vars=env_vars,
-                                       command=command,
-                                       args=args,
-                                       sidecar_args=sidecar_args,
-                                       persistence_outputs=self.spec.persistence_outputs,
-                                       persistence_data=self.spec.persistence_data,
-                                       resources=resources,
-                                       node_selector=node_selector,
-                                       restart_policy=restart_policy)
+        volumes, volume_mounts = get_pod_volumes(
+            persistence_outputs=self.persistence_config.outputs,
+            persistence_data=self.persistence_config.data)
+        pod = self.pod_manager.get_pod(
+            task_type=task_type,
+            task_idx=task_idx,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            env_vars=env_vars,
+            command=command,
+            args=args,
+            sidecar_args=sidecar_args,
+            persistence_outputs=self.persistence_config.outputs,
+            persistence_data=self.persistence_config.data,
+            resources=resources,
+            node_selector=node_selector,
+            restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=job_name, data=pod)
 
         service = services.get_service(namespace=self.namespace,
@@ -189,10 +193,10 @@ class ExperimentSpawner(K8SManager):
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy,
             cluster_def=self.get_cluster(),
-            persistence_outputs=self.spec.persistence_outputs,
+            persistence_outputs=self.persistence_config.outputs,
             declarations=self.spec.declarations,
             log_level=self.spec.log_level,
-            experiment_data_paths=self.spec.persistence_outputs,
+            persistence_data=self.persistence_config.data,
         )
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)

@@ -16,7 +16,7 @@ class TensorflowSpawner(ExperimentSpawner):
             'cluster': self.get_cluster(),
             'task': {'type': task_type, 'index': task_idx},
             'model_dir': get_experiment_outputs_path(
-                persistence_outputs=self.spec.persistence_outputs,
+                persistence_outputs=self.persistence_config.outputs,
                 experiment_name=self.experiment_name,
                 cloning_strategy=self.cloning_strategy),
             'environment': 'cloud'
