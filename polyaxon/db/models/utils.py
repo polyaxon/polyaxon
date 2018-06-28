@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.cache import cache
 from django.core.validators import validate_slug
 from django.db import models
+from django.utils.functional import cached_property
 
 from libs.blacklist import validate_blacklist_name
 
@@ -198,3 +199,17 @@ class LastStatusMixin(object):
 
     def set_status(self, status, message=None, **kwargs):
         raise NotImplemented  # noqa
+
+
+class PersistenceMixin(object):
+    @cached_property
+    def persistence(self):
+        return self.specification.persistence
+
+    @cached_property
+    def persistence_data(self):
+        return self.persistence.data if self.persistence else None
+
+    @cached_property
+    def persistence_outputs(self):
+        return self.persistence.outputs if self.persistence else None
