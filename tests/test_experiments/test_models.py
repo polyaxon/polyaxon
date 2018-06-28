@@ -410,7 +410,8 @@ class TestExperimentModel(BaseTest):
             experiment1 = ExperimentFactory()
 
         # We create some outputs files for the experiment
-        path = create_experiment_outputs_path(experiment1.unique_name)
+        path = create_experiment_outputs_path(persistence_outputs=experiment1.persistence_outputs,
+                                              experiment_name=experiment1.unique_name)
         open(os.path.join(path, 'file'), 'w+')
 
         # Create a new experiment that is a clone of the previous
@@ -418,7 +419,9 @@ class TestExperimentModel(BaseTest):
             experiment2 = ExperimentFactory(original_experiment=experiment1)
 
         # Check that outputs path for experiment2 does not exist yet
-        experiment2_outputs_path = get_experiment_outputs_path(experiment2.unique_name)
+        experiment2_outputs_path = get_experiment_outputs_path(
+            persistence_outputs=experiment2.persistence_outputs,
+            experiment_name=experiment2.unique_name)
         assert os.path.exists(experiment2_outputs_path) is False
 
         # Handle restart should create the outputs and copy the content of experiment 1

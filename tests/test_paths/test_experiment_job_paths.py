@@ -30,8 +30,10 @@ class TestJobPaths(BaseTest):
 
     def test_experiment_group_outputs_path_creation_deletion(self):
         job = JobFactory()
-        create_job_outputs_path(job.unique_name)
-        job_outputs_path = get_job_outputs_path(job.unique_name)
+        create_job_outputs_path(persistence_outputs=job.persistence_outputs,
+                                job_name=job.unique_name)
+        job_outputs_path = get_job_outputs_path(persistence_outputs=job.persistence_outputs,
+                                                job_name=job.unique_name)
         assert os.path.exists(job_outputs_path) is True
-        delete_job_outputs(job.unique_name)
+        delete_job_outputs(persistence_outputs=job.persistence_outputs, job_name=job.unique_name)
         assert os.path.exists(job_outputs_path) is False

@@ -11,6 +11,7 @@ from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_tagged_image
 from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
+from libs.paths.exceptions import VolumeNotFoundError
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.utils import get_job_definition
@@ -93,6 +94,12 @@ def start_dockerizer(build_job):
         build_job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start build job, encountered a Kubernetes ApiException.')
+        return False
+    except VolumeNotFoundError as e:
+        _logger.warning('Could not start build job, please check your volume definitions %s', e)
+        build_job.set_status(
+            JobLifeCycle.FAILED,
+            message='Could not start build job, encountered a volume definition problem. %s' % e)
         return False
     except Exception as e:
         _logger.warning('Could not start build job, please check your polyaxon spec %s', e)

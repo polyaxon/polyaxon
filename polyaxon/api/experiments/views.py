@@ -444,5 +444,7 @@ class DownloadOutputsView(ProtectedView):
 
     def get(self, request, *args, **kwargs):
         experiment = self.get_object()
-        archived_path, archive_name = archive_experiment_outputs(experiment.unique_name)
+        archived_path, archive_name = archive_experiment_outputs(
+            persistence_outputs=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))

@@ -65,13 +65,20 @@ class JobSpawner(K8SManager):
     def get_pod_command_args(self):
         return get_pod_command_args(run_config=self.spec.run)
 
-    def start_job(self, resources=None, node_selectors=None):
-        volumes, volume_mounts = get_pod_volumes()
+    def start_job(self,
+                  persistence_outputs=None,
+                  persistence_data=None,
+                  resources=None,
+                  node_selectors=None):
+        volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
+                                                 persistence_data=persistence_data)
         command, args = self.get_pod_command_args()
         env_vars = self.get_env_vars()
         pod = self.pod_manager.get_pod(
             volume_mounts=volume_mounts,
             volumes=volumes,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
             env_vars=env_vars,
             command=command,
             args=args,

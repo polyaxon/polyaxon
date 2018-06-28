@@ -98,7 +98,8 @@ class ExperimentSpawner(K8SManager):
         sidecar_args = get_sidecar_args(pod_id=job_name)
         labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
-        volumes, volume_mounts = get_pod_volumes()
+        volumes, volume_mounts = get_pod_volumes(persistence_outputs=self.spec.persistence_outputs,
+                                                 persistence_data=self.spec.persistence_data)
         pod = self.pod_manager.get_pod(task_type=task_type,
                                        task_idx=task_idx,
                                        volume_mounts=volume_mounts,
@@ -107,6 +108,8 @@ class ExperimentSpawner(K8SManager):
                                        command=command,
                                        args=args,
                                        sidecar_args=sidecar_args,
+                                       persistence_outputs=self.spec.persistence_outputs,
+                                       persistence_data=self.spec.persistence_data,
                                        resources=resources,
                                        node_selector=node_selector,
                                        restart_policy=restart_policy)
@@ -186,6 +189,7 @@ class ExperimentSpawner(K8SManager):
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy,
             cluster_def=self.get_cluster(),
+            persistence_outputs=self.spec.persistence_outputs,
             declarations=self.spec.declarations,
             log_level=self.spec.log_level
         )

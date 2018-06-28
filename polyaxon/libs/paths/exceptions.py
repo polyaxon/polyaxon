@@ -1,0 +1,2 @@
+class VolumeNotFoundError(Exception):
+    pass

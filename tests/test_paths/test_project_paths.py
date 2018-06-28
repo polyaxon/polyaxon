@@ -49,12 +49,16 @@ class TestProjectPaths(BaseTest):
     def test_project_outputs_path_creation_deletion(self):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
-        create_experiment_outputs_path(experiment.unique_name)
+        create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
+                                       experiment_name=experiment.unique_name)
         create_experiment_logs_path(experiment.unique_name)
-        experiment_outputs_path = get_experiment_outputs_path(experiment.unique_name)
-        project_outputs_path = get_project_outputs_path(self.project.unique_name)
+        experiment_outputs_path = get_experiment_outputs_path(
+            persistence_outputs=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name)
+        project_outputs_path = get_project_outputs_path(persistence_outputs=None,
+                                                        project_name=self.project.unique_name)
         assert os.path.exists(experiment_outputs_path) is True
         assert os.path.exists(project_outputs_path) is True
-        delete_project_outputs(self.project.unique_name)
+        delete_project_outputs(persistence_outputs=None, project_name=self.project.unique_name)
         assert os.path.exists(experiment_outputs_path) is False
         assert os.path.exists(project_outputs_path) is False

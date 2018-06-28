@@ -4,8 +4,8 @@ from kubernetes import client
 
 from django.conf import settings
 
-from libs.paths.jobs import get_job_data_path, get_job_logs_path, get_job_outputs_path
-from libs.paths.projects import get_project_data_path
+from libs.paths.data_paths import get_data_paths
+from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
@@ -21,7 +21,7 @@ from scheduler.spawners.templates.init_containers import InitCommands, get_outpu
 from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
-from scheduler.spawners.templates.volumes import get_volume_mount
+from scheduler.spawners.templates.volumes import get_pod_outputs_volume
 
 
 class PodManager(object):
@@ -87,6 +87,8 @@ class PodManager(object):
 
     def get_pod_container(self,
                           volume_mounts,
+                          persistence_outputs,
+                          persistence_data,
                           env_vars=None,
                           command=None,
                           args=None,
@@ -95,10 +97,10 @@ class PodManager(object):
         env_vars = get_list(env_vars)
         env_vars += get_job_env_vars(
             log_level=self.log_level,
-            outputs_path=get_job_outputs_path(job_name=self.job_name),
+            outputs_path=get_job_outputs_path(persistence_outputs=persistence_outputs,
+                                              job_name=self.job_name),
+            data_paths=get_data_paths(persistence_data),
             logs_path=get_job_logs_path(job_name=self.job_name),
-            data_path=get_job_data_path(job_name=self.job_name),
-            project_data_path=get_project_data_path(project_name=self.project_name)
         )
         env_vars += [
             get_env_var(name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME, value=json.dumps(self.labels)),
@@ -128,12 +130,11 @@ class PodManager(object):
             sidecar_config=self.sidecar_config,
             sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name))
 
-    def get_init_container(self):
+    def get_init_container(self, persistence_outputs):
         """Pod init container for setting outputs path."""
-        outputs_path = get_job_outputs_path(job_name=self.job_name)
-        outputs_volume_mount = get_volume_mount(
-            volume=constants.OUTPUTS_VOLUME,
-            volume_mount=settings.OUTPUTS_ROOT)
+        outputs_path = get_job_outputs_path(persistence_outputs=persistence_outputs,
+                                            job_name=self.job_name)
+        outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,
@@ -145,6 +146,8 @@ class PodManager(object):
     def get_task_pod_spec(self,
                           volume_mounts,
                           volumes,
+                          persistence_outputs=None,
+                          persistence_data=None,
                           env_vars=None,
                           command=None,
                           args=None,
@@ -160,6 +163,8 @@ class PodManager(object):
         volumes += gpu_volumes
 
         pod_container = self.get_pod_container(volume_mounts=volume_mounts,
+                                               persistence_outputs=persistence_outputs,
+                                               persistence_data=persistence_data,
                                                env_vars=env_vars,
                                                command=command,
                                                args=args,
@@ -176,16 +181,19 @@ class PodManager(object):
         service_account_name = None
         if settings.K8S_RBAC_ENABLED:
             service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
-        return client.V1PodSpec(restart_policy=restart_policy,
-                                service_account_name=service_account_name,
-                                init_containers=to_list(self.get_init_container()),
-                                containers=containers,
-                                volumes=volumes,
-                                node_selector=node_selector)
+        return client.V1PodSpec(
+            restart_policy=restart_policy,
+            service_account_name=service_account_name,
+            init_containers=to_list(self.get_init_container(persistence_outputs)),
+            containers=containers,
+            volumes=volumes,
+            node_selector=node_selector)
 
     def get_pod(self,
                 volume_mounts,
                 volumes,
+                persistence_outputs=None,
+                persistence_data=None,
                 env_vars=None,
                 command=None,
                 args=None,
@@ -199,6 +207,8 @@ class PodManager(object):
         pod_spec = self.get_task_pod_spec(
             volume_mounts=volume_mounts,
             volumes=volumes,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
             env_vars=env_vars,
             command=command,
             args=args,

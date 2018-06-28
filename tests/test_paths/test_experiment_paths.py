@@ -33,9 +33,14 @@ class TestExperimentPaths(BaseTest):
         assert os.path.exists(filepath) is False
 
     def test_experiment_outputs_path_creation_deletion(self):
-        experiment_outputs_path = get_experiment_outputs_path(self.experiment.unique_name)
+        experiment_outputs_path = get_experiment_outputs_path(
+            persistence_outputs=self.experiment.persistence_outputs,
+            experiment_name=self.experiment.unique_name)
         assert os.path.exists(experiment_outputs_path) is False
-        create_experiment_outputs_path(self.experiment.unique_name)
+        create_experiment_outputs_path(persistence_outputs=self.experiment.persistence_outputs,
+                                       experiment_name=self.experiment.unique_name)
         assert os.path.exists(experiment_outputs_path) is True
-        delete_experiment_outputs(self.experiment.unique_name)
+        delete_experiment_outputs(
+            persistence_outputs=self.experiment.persistence_outputs,
+            experiment_name=self.experiment.unique_name)
         assert os.path.exists(experiment_outputs_path) is False

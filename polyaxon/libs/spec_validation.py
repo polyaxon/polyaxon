@@ -1,4 +1,5 @@
 from marshmallow.exceptions import ValidationError as MarshmallowValidationError
+from polyaxon_schemas.environments import PersistenceConfig
 from rest_framework.exceptions import ValidationError
 
 from django.core.exceptions import ValidationError as DjangoValidationError
@@ -101,3 +102,15 @@ def validate_job_spec_config(config, raise_for_rest=False):
             raise DjangoValidationError(message_error)
 
     return spec
+
+
+def validate_persistence_config(config, raise_for_rest=False):
+    if not config:
+        return None
+    try:
+        PersistenceConfig.from_dict(config)
+    except MarshmallowValidationError as e:
+        if raise_for_rest:
+            raise ValidationError(e)
+        else:
+            raise DjangoValidationError(e)

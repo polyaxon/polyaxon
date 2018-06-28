@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 
 from api.experiments.serializers import (
     ExperimentDeclarationsSerializer,
@@ -20,6 +19,7 @@ from factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentStatusFactory
 )
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from tests.utils import BaseTest
 
 

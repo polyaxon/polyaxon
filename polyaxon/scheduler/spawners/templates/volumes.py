@@ -2,6 +2,7 @@ from kubernetes import client
 
 from django.conf import settings
 
+from libs.paths.exceptions import VolumeNotFoundError
 from scheduler.spawners.templates import constants
 
 
@@ -23,35 +24,54 @@ def get_volume(volume, claim_name=None, volume_mount=None):
     return client.V1Volume(name=volume, empty_dir=empty_dir)
 
 
-def get_pod_volumes():
+def get_volume_from_definition(volume_name, volume_settings):
+    if volume_name not in volume_settings:
+        raise VolumeNotFoundError('Volume with name `{}` was defined in specification, '
+                                  'but was not found'.format(volume_name))
     volumes = []
     volume_mounts = []
-    volumes.append(get_volume(volume=constants.DATA_VOLUME,
-                              claim_name=settings.DATA_CLAIM_NAME,
-                              volume_mount=settings.DATA_ROOT))
-    volume_mounts.append(get_volume_mount(volume=constants.DATA_VOLUME,
-                                          volume_mount=settings.DATA_ROOT))
+    definition = volume_settings[volume_name]
+    mount_path = definition.get('mountPath')
+    claim_name = definition.get('existingClaim')
+    host_path = definition.get('hostPath')
+    read_only = definition.get('readOnly', False)
+    if mount_path:
+        volumes.append(get_volume(volume=volume_name,
+                                  claim_name=claim_name,
+                                  volume_mount=host_path))
+        volume_mounts.append(get_volume_mount(volume=volume_name,
+                                              volume_mount=mount_path,
+                                              read_only=read_only))
 
-    volumes.append(get_volume(volume=constants.OUTPUTS_VOLUME,
-                              claim_name=settings.OUTPUTS_CLAIM_NAME,
-                              volume_mount=settings.OUTPUTS_ROOT))
-    volume_mounts.append(get_volume_mount(volume=constants.OUTPUTS_VOLUME,
-                                          volume_mount=settings.OUTPUTS_ROOT))
+    return volumes, volume_mounts
 
-    if settings.EXTRA_PERSISTENCES:
-        for i, extra_data in enumerate(settings.EXTRA_PERSISTENCES):
-            volume_name = 'extra-{}'.format(i)
-            mount_path = extra_data.get('mountPath')
-            claim_name = extra_data.get('existingClaim')
-            host_path = extra_data.get('hostPath')
-            read_only = extra_data.get('readOnly', False)
-            if mount_path:
-                volumes.append(get_volume(volume=volume_name,
-                                          claim_name=claim_name,
-                                          volume_mount=host_path))
-                volume_mounts.append(get_volume_mount(volume=volume_name,
-                                                      volume_mount=mount_path,
-                                                      read_only=read_only))
+
+def get_pod_data_volume(persistence_data):
+    # If no persistence is defined we mount all
+    persistence_data = persistence_data or settings.PERSISTENCE_DATA.keys()
+    volumes = []
+    volume_mounts = []
+    for persistence_name in persistence_data:
+        persistence_volumes, persistence_volume_mounts = get_volume_from_definition(
+            volume_name=persistence_name,
+            volume_settings=settings.PERSISTENCE_DATA)
+        volumes += persistence_volumes
+        volume_mounts += persistence_volume_mounts
+    return volumes, volume_mounts
+
+
+def get_pod_outputs_volume(persistence_outputs):
+    # If no persistence is defined we mount the first one as default
+    persistence_outputs = persistence_outputs or list(settings.PERSISTENCE_OUTPUTS.keys())[0]
+    return get_volume_from_definition(volume_name=persistence_outputs,
+                                      volume_settings=settings.PERSISTENCE_OUTPUTS)
+
+
+def get_pod_volumes(persistence_outputs, persistence_data):
+    outputs_volumes, outputs_volume_mounts = get_pod_outputs_volume(persistence_outputs)
+    data_volumes, data_volume_mounts = get_pod_data_volume(persistence_data)
+    volumes = outputs_volumes + data_volumes
+    volume_mounts = outputs_volume_mounts + data_volume_mounts
     return volumes, volume_mounts
 
 

@@ -26,7 +26,11 @@ def copy_experiment(experiment):
             experiment_name=experiment.unique_name,
             job_uuid='all',
         )
-        copy_experiment_outputs(experiment.original_experiment.unique_name, experiment.unique_name)
+        copy_experiment_outputs(
+            persistence_outputs_from=experiment.original_experiment.persistence_outputs,
+            persistence_outputs_to=experiment.persistence_outputs,
+            experiment_name_from=experiment.original_experiment.unique_name,
+            experiment_name_to=experiment.unique_name)
 
     except OSError:
         publisher.publish_experiment_job_log(

@@ -9,6 +9,7 @@ from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from docker_images.image_info import get_image_info
+from libs.paths.exceptions import VolumeNotFoundError
 from polyaxon.config_manager import config
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,
@@ -288,6 +289,14 @@ def start_experiment(experiment):
             ExperimentLifeCycle.FAILED,
             message='Could not start the experiment, encountered a Kubernetes ApiException.')
         return
+    except VolumeNotFoundError as e:
+        _logger.warning('Could not start the experiment, '
+                        'please check your volume definitions %s', e)
+        experiment.set_status(
+            ExperimentLifeCycle.FAILED,
+            message='Could not start the experiment, '
+                    'encountered a volume definition problem. %s' % e)
+        return False
     except Exception as e:
         _logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
         experiment.set_status(

@@ -6,6 +6,7 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
+from libs.paths.exceptions import VolumeNotFoundError
 from polyaxon.config_manager import config
 from scheduler.spawners.job_spawner import JobSpawner
 from scheduler.spawners.utils import get_job_definition
@@ -40,7 +41,9 @@ def start_job(job):
         sidecar_config=config.get_requested_params(to_str=True))
 
     try:
-        results = spawner.start_job(resources=job.resources,
+        results = spawner.start_job(persistence_data=job.persistence_data,
+                                    persistence_outputs=job.persistence_outputs,
+                                    resources=job.resources,
                                     node_selectors=job.node_selectors)
     except ApiException as e:
         _logger.warning('Could not start job, please check your polyaxon spec %s', e)
@@ -48,6 +51,13 @@ def start_job(job):
             JobLifeCycle.FAILED,
             message='Could not start job, encountered a Kubernetes ApiException.')
         return
+    except VolumeNotFoundError as e:
+        _logger.warning('Could not start the job, please check your volume definitions %s', e)
+        job.set_status(
+            JobLifeCycle.FAILED,
+            message='Could not start the job, '
+                    'encountered a volume definition problem. %s' % e)
+        return False
     except Exception as e:
         _logger.warning('Could not start job, please check your polyaxon spec %s', e)
         job.set_status(

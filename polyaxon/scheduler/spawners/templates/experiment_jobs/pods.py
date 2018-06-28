@@ -6,12 +6,8 @@ from kubernetes import client
 from django.conf import settings
 
 from db.models.cloning_strategies import CloningStrategy
-from libs.paths.experiments import (
-    get_experiment_data_path,
-    get_experiment_logs_path,
-    get_experiment_outputs_path
-)
-from libs.paths.projects import get_project_data_path
+from libs.paths.data_paths import get_data_paths
+from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
@@ -27,7 +23,7 @@ from scheduler.spawners.templates.init_containers import InitCommands, get_outpu
 from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_container
-from scheduler.spawners.templates.volumes import get_volume_mount
+from scheduler.spawners.templates.volumes import get_pod_outputs_volume
 
 
 class PodManager(object):
@@ -119,21 +115,23 @@ class PodManager(object):
                           env_vars=None,
                           command=None,
                           args=None,
+                          persistence_outputs=None,
+                          persistence_data=None,
                           resources=None):
         """Pod job container for task."""
         assert self.cluster_def is not None
 
         env_vars = get_list(env_vars)
         outputs_path = get_experiment_outputs_path(
+            persistence_outputs=persistence_outputs,
             experiment_name=self.experiment_name,
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy)
         env_vars += get_job_env_vars(
             log_level=self.log_level,
             outputs_path=outputs_path,
+            data_paths=get_data_paths(persistence_data),
             logs_path=get_experiment_logs_path(self.experiment_name),
-            data_path=get_experiment_data_path(self.experiment_name),
-            project_data_path=get_project_data_path(project_name=self.project_name)
         )
         env_vars += [
             get_env_var(name=constants.CONFIG_MAP_CLUSTER_KEY_NAME,
@@ -168,21 +166,21 @@ class PodManager(object):
             sidecar_config=self.sidecar_config,
             sidecar_args=args)
 
-    def get_init_container(self):
+    def get_init_container(self, persistence_outputs):
         """Pod init container for setting outputs path."""
         if self.original_name is not None and self.cloning_strategy == CloningStrategy.RESUME:
             return []
         if self.original_name is not None and self.cloning_strategy == CloningStrategy.COPY:
             command = InitCommands.COPY
-            original_outputs_path = get_experiment_outputs_path(experiment_name=self.original_name)
+            original_outputs_path = get_experiment_outputs_path(
+                persistence_outputs=persistence_outputs, experiment_name=self.original_name)
         else:
             command = InitCommands.CREATE
             original_outputs_path = None
 
-        outputs_path = get_experiment_outputs_path(experiment_name=self.experiment_name)
-        outputs_volume_mount = get_volume_mount(
-            volume=constants.OUTPUTS_VOLUME,
-            volume_mount=settings.OUTPUTS_ROOT)
+        outputs_path = get_experiment_outputs_path(persistence_outputs=persistence_outputs,
+                                                   experiment_name=self.experiment_name)
+        outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
         return [
             client.V1Container(
                 name=self.init_container_name,
@@ -203,6 +201,8 @@ class PodManager(object):
                           command=None,
                           args=None,
                           sidecar_args=None,
+                          persistence_outputs=None,
+                          persistence_data=None,
                           resources=None,
                           node_selector=None,
                           restart_policy='OnFailure'):
@@ -227,6 +227,8 @@ class PodManager(object):
                                                env_vars=env_vars,
                                                command=command,
                                                args=args,
+                                               persistence_outputs=persistence_outputs,
+                                               persistence_data=persistence_data,
                                                resources=resources)
 
         containers = [pod_container]
@@ -242,12 +244,13 @@ class PodManager(object):
         service_account_name = None
         if settings.K8S_RBAC_ENABLED:
             service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
-        return client.V1PodSpec(restart_policy=restart_policy,
-                                service_account_name=service_account_name,
-                                init_containers=to_list(self.get_init_container()),
-                                containers=containers,
-                                volumes=volumes,
-                                node_selector=node_selector)
+        return client.V1PodSpec(
+            restart_policy=restart_policy,
+            service_account_name=service_account_name,
+            init_containers=to_list(self.get_init_container(persistence_outputs)),
+            containers=containers,
+            volumes=volumes,
+            node_selector=node_selector)
 
     def get_pod(self,
                 task_type,
@@ -258,6 +261,8 @@ class PodManager(object):
                 command=None,
                 args=None,
                 sidecar_args=None,
+                persistence_outputs=None,
+                persistence_data=None,
                 resources=None,
                 node_selector=None,
                 restart_policy=None):
@@ -274,6 +279,8 @@ class PodManager(object):
             command=command,
             args=args,
             sidecar_args=sidecar_args,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
             resources=resources,
             node_selector=node_selector,
             restart_policy=restart_policy)

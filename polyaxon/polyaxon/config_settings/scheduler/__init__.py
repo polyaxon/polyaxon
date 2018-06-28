@@ -5,4 +5,7 @@ from polyaxon.config_settings.spawner import *
 from polyaxon.config_settings.registry import *
 from polyaxon.config_settings.persistence_data import *
 from polyaxon.config_settings.persistence_outputs import *
+from polyaxon.config_settings.persistence_logs import *
+from polyaxon.config_settings.persistence_repos import *
+from polyaxon.config_settings.persistence_upload import *
 from .apps import *

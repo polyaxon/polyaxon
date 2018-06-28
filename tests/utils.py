@@ -179,7 +179,7 @@ class BaseTest(TestCase):
         settings.REPOS_ROOT = tempfile.mkdtemp()
         settings.UPLOAD_ROOT = tempfile.mkdtemp()
         settings.LOGS_ROOT = tempfile.mkdtemp()
-        settings.OUTPUTS_ROOT = tempfile.mkdtemp()
+        settings.PERSISTENCE_OUTPUTS['outputs']['mountPath'] = tempfile.mkdtemp()
         settings.REPOS_ARCHIVE_ROOT = tempfile.mkdtemp()
         settings.OUTPUTS_ARCHIVE_ROOT = tempfile.mkdtemp()
         # Flush cache

@@ -4,9 +4,12 @@ import random
 from django.conf import settings
 
 from libs.crypto import get_hmac
+from libs.paths.data_paths import get_data_paths
+from libs.paths.notebooks import get_notebook_job_outputs_path
 from libs.paths.projects import get_project_repos_path
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
+from scheduler.spawners.templates.env_vars import get_job_env_vars
 from scheduler.spawners.templates.project_jobs import deployments
 from scheduler.spawners.templates.volumes import get_pod_volumes, get_volume, get_volume_mount
 
@@ -69,10 +72,21 @@ class NotebookSpawner(ProjectJobSpawner):
                 base_url=notebook_url,
                 notebook_dir=notebook_dir)]
 
-    def start_notebook(self, image, resources=None, node_selectors=None):
+    def start_notebook(self,
+                       image,
+                       persistence_outputs=None,
+                       persistence_data=None,
+                       resources=None,
+                       node_selectors=None):
         ports = [self.request_notebook_port()]
         target_ports = [self.PORT]
-        volumes, volume_mounts = get_pod_volumes()
+        volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
+                                                 persistence_data=persistence_data)
+        env_vars = get_job_env_vars(
+            outputs_path=get_notebook_job_outputs_path(persistence_outputs=persistence_outputs,
+                                                       notebook_job=self.job_name),
+            data_paths=get_data_paths(persistence_data),
+        )
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
@@ -93,6 +107,7 @@ class NotebookSpawner(ProjectJobSpawner):
             args=self.get_notebook_args(deployment_name=deployment_name, ports=ports),
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
+            env_vars=env_vars,
             resources=resources,
             node_selector=node_selectors,
             role=settings.ROLE_LABELS_DASHBOARD,

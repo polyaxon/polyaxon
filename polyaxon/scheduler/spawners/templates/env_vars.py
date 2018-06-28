@@ -37,16 +37,22 @@ def get_service_env_vars(namespace='default'):
     ]
 
 
-def get_job_env_vars(log_level, outputs_path, logs_path, data_path, project_data_path=None):
-    return [
-        get_env_var(name=constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME, value=log_level),
+def get_job_env_vars(outputs_path, data_paths, log_level=None, logs_path=None):
+    env_vars = [
         get_env_var(name=API_KEY_NAME, value=get_settings_api_url()),
         get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
-        get_env_var(name=constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME, value=logs_path),
-        get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATH_KEY_NAME, value=data_path),
-        get_env_var(name=constants.CONFIG_MAP_PROJECT_DATA_PATH_KEY_NAME, value=project_data_path),
+        get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATH_KEY_NAME, value=data_paths),
         get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'polyaxon-internal-secret-token'),
     ]
+    if log_level:
+        env_vars.append(
+            get_env_var(name=constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME, value=log_level))
+
+    if logs_path:
+        env_vars.append(
+            get_env_var(name=constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME, value=logs_path))
+
+    return env_vars
 
 
 def get_resources_env_vars(resources):

@@ -1452,11 +1452,14 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
             self.project.user.username,
             self.project.name,
             self.experiment.id)
-        self.experiment_outputs_path = get_experiment_outputs_path(self.experiment.unique_name)
+        self.experiment_outputs_path = get_experiment_outputs_path(
+            persistence_outputs=self.experiment.persistence_outputs,
+            experiment_name=self.experiment.unique_name)
         self.url = self.download_url
 
     def create_tmp_outputs(self):
-        create_experiment_outputs_path(self.experiment.unique_name)
+        create_experiment_outputs_path(persistence_outputs=self.experiment.persistence_outputs,
+                                       experiment_name=self.experiment.unique_name)
         for i in range(4):
             open('{}/{}'.format(self.experiment_outputs_path, i), '+w')
 

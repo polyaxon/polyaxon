@@ -48,12 +48,18 @@ class TestExperimentGroupPaths(BaseTest):
         experiment = ExperimentFactory(user=self.project.user,
                                        project=self.project,
                                        experiment_group=self.experiment_group)
-        create_experiment_outputs_path(experiment.unique_name)
-        experiment_outputs_path = get_experiment_outputs_path(experiment.unique_name)
+        create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
+                                       experiment_name=experiment.unique_name)
+        experiment_outputs_path = get_experiment_outputs_path(
+            persistence_outputs=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name)
         experiment_group_outputs_path = get_experiment_group_outputs_path(
+            self.experiment_group.persistence_outputs,
             self.experiment_group.unique_name)
         assert os.path.exists(experiment_outputs_path) is True
         assert os.path.exists(experiment_group_outputs_path) is True
-        delete_experiment_group_outputs(self.experiment_group.unique_name)
+        delete_experiment_group_outputs(
+            persistence_outputs=self.experiment_group.persistence_outputs,
+            experiment_group_name=self.experiment_group.unique_name)
         assert os.path.exists(experiment_outputs_path) is False
         assert os.path.exists(experiment_group_outputs_path) is False

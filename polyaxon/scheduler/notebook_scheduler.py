@@ -6,6 +6,7 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
+from libs.paths.exceptions import VolumeNotFoundError
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.utils import get_job_definition
@@ -40,6 +41,8 @@ def start_notebook(notebook):
             node_selector=notebook.node_selectors,
             default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
         results = spawner.start_notebook(image=job_docker_image,
+                                         persistence_outputs=notebook.persistence_outputs,
+                                         persistence_data=notebook.persistence_data,
                                          resources=notebook.resources,
                                          node_selectors=node_selectors)
     except ApiException as e:
@@ -48,6 +51,13 @@ def start_notebook(notebook):
             JobLifeCycle.FAILED,
             message='Could not start notebook, encountered a Kubernetes ApiException.')
         return
+    except VolumeNotFoundError as e:
+        _logger.warning('Could not start the notebook, please check your volume definitions %s', e)
+        notebook.set_status(
+            JobLifeCycle.FAILED,
+            message='Could not start the notebook, '
+                    'encountered a volume definition problem. %s' % e)
+        return False
     except Exception as e:
         _logger.warning('Could not start notebook, please check your polyaxon spec %s', e)
         notebook.set_status(
