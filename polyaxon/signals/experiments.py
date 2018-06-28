@@ -31,6 +31,7 @@ from signals.run_time import (
     set_job_started_at,
     set_started_at
 )
+from signals.utils import set_tags, set_persistence
 
 _logger = logging.getLogger('polyaxon.signals.experiments')
 
@@ -43,10 +44,8 @@ def experiment_pre_save(sender, **kwargs):
     # Check if declarations need to be set
     if not instance.declarations and instance.specification:
         instance.declarations = instance.specification.declarations
-    if not instance.tags and instance.specification:
-        instance.tags = instance.specification.tags
-    if not instance.persistence and instance.specification:
-        instance.persistence = instance.specification.persistence
+    set_tags(instance=instance)
+    set_persistence(instance=instance)
 
     # Add code reference
     # Check if :

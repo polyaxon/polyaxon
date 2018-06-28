@@ -23,6 +23,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from polyaxon_schemas.utils import SearchAlgorithms
 from signals.run_time import set_finished_at, set_started_at
+from signals.utils import set_persistence, set_tags
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")
@@ -39,10 +40,8 @@ def experiment_group_pre_save(sender, **kwargs):
         if hptuning_config.search_algorithm == SearchAlgorithms.GRID:
             hptuning['grid_search'] = hptuning.get('grid_search', {})
         instance.hptuning = hptuning
-    if not instance.tags and instance.specification:
-        instance.tags = instance.specification.tags
-    if not instance.persistence and instance.specification:
-        instance.persistence = instance.specification.persistence
+    set_tags(instance=instance)
+    set_persistence(instance=instance)
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")

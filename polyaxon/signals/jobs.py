@@ -21,6 +21,7 @@ from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.run_time import set_job_finished_at, set_job_started_at
+from signals.utils import set_tags, set_persistence
 
 _logger = logging.getLogger('polyaxon.signals.jobs')
 
@@ -30,10 +31,8 @@ _logger = logging.getLogger('polyaxon.signals.jobs')
 @ignore_raw
 def job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
-    if not instance.tags and instance.specification:
-        instance.tags = instance.specification.tags
-    if not instance.persistence and instance.specification:
-        instance.persistence = instance.specification.persistence
+    set_tags(instance=instance)
+    set_persistence(instance=instance)
 
     # Add code reference
     # Check if :

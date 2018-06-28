@@ -2,7 +2,9 @@ from kubernetes import client
 
 from django.conf import settings
 
+from libs.paths.data_paths import validate_persistence_data
 from libs.paths.exceptions import VolumeNotFoundError
+from libs.paths.outputs_paths import validate_persistence_outputs
 from scheduler.spawners.templates import constants
 
 
@@ -47,8 +49,7 @@ def get_volume_from_definition(volume_name, volume_settings):
 
 
 def get_pod_data_volume(persistence_data):
-    # If no persistence is defined we mount all
-    persistence_data = persistence_data or settings.PERSISTENCE_DATA.keys()
+    persistence_data = validate_persistence_data(persistence_data=persistence_data)
     volumes = []
     volume_mounts = []
     for persistence_name in persistence_data:
@@ -61,8 +62,7 @@ def get_pod_data_volume(persistence_data):
 
 
 def get_pod_outputs_volume(persistence_outputs):
-    # If no persistence is defined we mount the first one as default
-    persistence_outputs = persistence_outputs or list(settings.PERSISTENCE_OUTPUTS.keys())[0]
+    persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence_outputs)
     return get_volume_from_definition(volume_name=persistence_outputs,
                                       volume_settings=settings.PERSISTENCE_OUTPUTS)
 
