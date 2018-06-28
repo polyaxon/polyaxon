@@ -20,7 +20,7 @@ from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.run_time import set_job_finished_at, set_job_started_at
-from signals.utils import set_tags, set_persistence
+from signals.utils import set_persistence, set_tags
 
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
 

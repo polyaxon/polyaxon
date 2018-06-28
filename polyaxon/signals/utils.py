@@ -1,7 +1,6 @@
-from polyaxon_schemas.environments import PersistenceConfig
-
 from libs.paths.data_paths import validate_persistence_data
 from libs.paths.outputs_paths import validate_persistence_outputs
+from polyaxon_schemas.environments import PersistenceConfig
 
 
 def set_tags(instance):
