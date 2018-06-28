@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
+from polyaxon_schemas.environments import PersistenceConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile.parser import Parser
@@ -57,6 +58,17 @@ class GroupSpecification(BaseSpecification):
         del parsed_data[self.HP_TUNING]
         validator.validate(spec=self, data=parsed_data)
         return ExperimentSpecification(values=[parsed_data, {'kind': self._EXPERIMENT}])
+
+    @cached_property
+    def environment(self):
+        # This is a hack, in the future we need to gather the paths of the experiments
+        parsed_data = Parser.parse(self, self._data, self.matrix_declaration_test)
+        return parsed_data.get(self.ENVIRONMENT, None)
+
+    @cached_property
+    def persistence(self):
+        persistence = self.environment.get('persistence') if self.environment else None
+        return PersistenceConfig.from_dict(persistence) if persistence else None
 
     @cached_property
     def hptuning(self):

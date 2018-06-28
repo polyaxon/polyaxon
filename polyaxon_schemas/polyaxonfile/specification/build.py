@@ -37,8 +37,16 @@ class BuildSpecification(BaseSpecification):
         return self.validated_data.get(self.BUILD, None)
 
     @cached_property
+    def environment(self):
+        return self.validated_data.get(self.ENVIRONMENT, None)
+
+    @cached_property
     def resources(self):
         return self.environment.resources if self.environment else None
+
+    @cached_property
+    def persistence(self):
+        return self.environment.persistence if self.environment else None
 
     @cached_property
     def node_selectors(self):

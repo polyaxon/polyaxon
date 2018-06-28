@@ -295,7 +295,9 @@ class TestPolyaxonfile(TestCase):
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
-        assert spec.environment is None
+        assert spec.environment is not None
+        assert spec.persistence.outputs == 'outputs1'
+        assert spec.persistence.data == ['data1', 'data2']
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         model = spec.model

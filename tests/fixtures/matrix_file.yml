@@ -3,6 +3,11 @@ version: 1
 
 kind: group
 
+environment:
+  persistence:
+    data: ['data1', 'data2']
+    outputs: 'outputs1'
+
 hptuning:
   concurrency: 2
 
