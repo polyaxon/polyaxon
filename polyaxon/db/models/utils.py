@@ -1,12 +1,14 @@
 import uuid
 
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.cache import cache
 from django.core.validators import validate_slug
 from django.db import models
 from django.utils.functional import cached_property
 
 from libs.blacklist import validate_blacklist_name
+from libs.spec_validation import validate_persistence_config
+from polyaxon_schemas.environments import PersistenceConfig
 
 
 class DescribableModel(models.Model):
@@ -92,6 +94,29 @@ class TagModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class PersistenceModel(models.Model):
+    persistence = JSONField(
+        null=True,
+        blank=True,
+        help_text='The persistence definition.',
+        validators=[validate_persistence_config])
+
+    class Meta:
+        abstract = True
+
+    @cached_property
+    def persistence_config(self):
+        return PersistenceConfig.from_dict(self.persistence) if self.persistence else None
+
+    @cached_property
+    def persistence_data(self):
+        return self.persistence_config.data if self.persistence_config else None
+
+    @cached_property
+    def persistence_outputs(self):
+        return self.persistence_config.outputs if self.persistence_config else None
 
 
 class Singleton(DiffModel):
@@ -199,17 +224,3 @@ class LastStatusMixin(object):
 
     def set_status(self, status, message=None, **kwargs):
         raise NotImplemented  # noqa
-
-
-class PersistenceMixin(object):
-    @cached_property
-    def persistence(self):
-        return self.specification.persistence
-
-    @cached_property
-    def persistence_data(self):
-        return self.persistence.data if self.persistence else None
-
-    @cached_property
-    def persistence_outputs(self):
-        return self.persistence.outputs if self.persistence else None

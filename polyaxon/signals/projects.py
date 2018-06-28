@@ -15,7 +15,7 @@ from libs.paths.projects import delete_project_logs, delete_project_outputs, del
 def project_post_save(sender, **kwargs):
     instance = kwargs['instance']
     # Clean outputs, logs, and repos
-    delete_project_outputs(instance.unique_name)
+    delete_project_outputs(persistence_outputs=None, project_name=instance.unique_name)
     delete_project_logs(instance.unique_name)
     delete_project_repos(instance.unique_name)
 
@@ -25,7 +25,7 @@ def project_post_save(sender, **kwargs):
 def project_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
     # Clean outputs, logs, and repos
-    delete_project_outputs(instance.unique_name)
+    delete_project_outputs(persistence_outputs=None, project_name=instance.unique_name)
     delete_project_logs(instance.unique_name)
     delete_project_repos(instance.unique_name)
 

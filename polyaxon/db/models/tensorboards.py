@@ -59,16 +59,19 @@ class TensorboardJob(PluginJobBase, JobMixin):
         if self.experiment:
             from libs.paths.experiments import get_experiment_outputs_path
             return get_experiment_outputs_path(
+                persistence_outputs=self.experiment.persistence_outputs,
                 experiment_name=self.experiment.unique_name,
                 original_name=self.experiment.original_unique_name,
                 cloning_strategy=self.experiment.cloning_strategy)
         if self.experiment_group:
             from libs.paths.experiment_groups import get_experiment_group_outputs_path
             return get_experiment_group_outputs_path(
+                persistence_outputs=self.experiment_group.persistence_outputs,
                 experiment_group_name=self.experiment_group.unique_name)
 
         from libs.paths.projects import get_project_outputs_path
-        return get_project_outputs_path(project_name=self.project.unique_name)
+        return get_project_outputs_path(persistence_outputs=None,
+                                        project_name=self.project.unique_name)
 
 
 class TensorboardJobStatus(AbstractJobStatus):

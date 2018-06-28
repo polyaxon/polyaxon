@@ -22,7 +22,12 @@ from signals.run_time import set_job_finished_at, set_job_started_at
 @ignore_updates_pre
 @ignore_raw
 def tensorboard_job_pre_save(sender, **kwargs):
-    assign_code_reference(kwargs['instance'])
+    instance = kwargs['instance']
+    if not instance.tags and instance.specification:
+        instance.tags = instance.specification.tags
+    if not instance.persistence and instance.specification:
+        instance.persistence = instance.specification.persistence
+    assign_code_reference(instance)
 
 
 @receiver(post_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_post_save")

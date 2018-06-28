@@ -45,6 +45,8 @@ def experiment_pre_save(sender, **kwargs):
         instance.declarations = instance.specification.declarations
     if not instance.tags and instance.specification:
         instance.tags = instance.specification.tags
+    if not instance.persistence and instance.specification:
+        instance.persistence = instance.specification.persistence
 
     # Add code reference
     # Check if :
@@ -75,7 +77,8 @@ def experiment_post_save(sender, **kwargs):
     if instance.is_independent:
         # Clean outputs and logs
         delete_experiment_logs(instance.unique_name)
-        delete_experiment_outputs(instance.unique_name)
+        delete_experiment_outputs(persistence_outputs=instance.persistence_outputs,
+                                  experiment_name=instance.unique_name)
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_pre_delete")
@@ -83,7 +86,9 @@ def experiment_post_save(sender, **kwargs):
 def experiment_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
     # Delete outputs and logs
-    delete_experiment_outputs(instance.unique_name)
+    delete_experiment_outputs(
+        persistence_outputs=instance.persistence_outputs,
+        experiment_name=instance.unique_name)
     delete_experiment_logs(instance.unique_name)
 
     # Delete clones

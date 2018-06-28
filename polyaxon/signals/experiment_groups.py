@@ -41,6 +41,8 @@ def experiment_group_pre_save(sender, **kwargs):
         instance.hptuning = hptuning
     if not instance.tags and instance.specification:
         instance.tags = instance.specification.tags
+    if not instance.persistence and instance.specification:
+        instance.persistence = instance.specification.persistence
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
@@ -50,7 +52,9 @@ def new_experiment_group(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(ExperimentGroupLifeCycle.CREATED)
     # Clean outputs and logs
-    delete_experiment_group_outputs(instance.unique_name)
+    delete_experiment_group_outputs(
+        persistence_outputs=instance.persistence_outputs,
+        experiment_group_name=instance.unique_name)
     delete_experiment_group_logs(instance.unique_name)
     auditor.record(event_type=EXPERIMENT_GROUP_CREATED,
                    instance=instance)
@@ -75,7 +79,9 @@ def experiment_group_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
 
     # Delete outputs and logs
-    delete_experiment_group_outputs(instance.unique_name)
+    delete_experiment_group_outputs(
+        persistence_outputs=instance.persistence_outputs,
+        experiment_group_name=instance.unique_name)
     delete_experiment_group_logs(instance.unique_name)
 
 

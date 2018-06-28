@@ -32,6 +32,8 @@ def job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     if not instance.tags and instance.specification:
         instance.tags = instance.specification.tags
+    if not instance.persistence and instance.specification:
+        instance.persistence = instance.specification.persistence
 
     # Add code reference
     # Check if :
@@ -58,7 +60,8 @@ def job_post_save(sender, **kwargs):
 
     # Clean outputs and logs
     delete_job_logs(instance.unique_name)
-    delete_job_outputs(instance.unique_name)
+    delete_job_outputs(persistence_outputs=instance.persistence_outputs,
+                       job_name=instance.unique_name)
 
 
 @receiver(post_save, sender=JobStatus, dispatch_uid="job_status_post_save")
@@ -121,7 +124,7 @@ def job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
 
     # Delete outputs and logs
-    delete_job_outputs(job.unique_name)
+    delete_job_outputs(persistence_outputs=job.persistence_outputs, job_name=job.unique_name)
     delete_job_logs(job.unique_name)
 
     if not job.is_running:

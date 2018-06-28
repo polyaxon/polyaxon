@@ -31,6 +31,8 @@ def build_job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     if not instance.tags and instance.specification:
         instance.tags = instance.specification.tags
+    if not instance.persistence and instance.specification:
+        instance.persistence = instance.specification.persistence
 
 
 @receiver(post_save, sender=BuildJob, dispatch_uid="build_job_post_save")
@@ -103,7 +105,7 @@ def build_job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
 
     # Delete outputs and logs
-    delete_job_outputs(job.unique_name)
+    delete_job_outputs(persistence_outputs=job.persistence_outputs, job_name=job.unique_name)
     delete_job_logs(job.unique_name)
 
     if not job.is_running:

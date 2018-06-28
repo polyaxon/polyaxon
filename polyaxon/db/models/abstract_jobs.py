@@ -6,12 +6,12 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.jobs import JobLifeCycle
-from db.models.utils import DiffModel, LastStatusMixin, RunTimeModel, StatusModel, PersistenceMixin
+from db.models.utils import DiffModel, LastStatusMixin, RunTimeModel, StatusModel
 
 _logger = logging.getLogger('polyaxon.db.jobs')
 
 
-class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin, PersistenceMixin):
+class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
     """An abstract base class for job, used both by experiment jobs and other jobs."""
     STATUSES = JobLifeCycle
 

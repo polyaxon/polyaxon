@@ -17,10 +17,10 @@ from db.models.utils import (
     DiffModel,
     LastStatusMixin,
     NameableModel,
+    PersistenceModel,
     RunTimeModel,
     StatusModel,
-    TagModel,
-    PersistenceMixin,
+    TagModel
 )
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
@@ -39,7 +39,7 @@ class Experiment(DiffModel,
                  TagModel,
                  LastStatusMixin,
                  TensorboardJobMixin,
-                 PersistenceMixin):
+                 PersistenceModel):
     """A model that represents experiments."""
     STATUSES = ExperimentLifeCycle
 

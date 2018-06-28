@@ -19,6 +19,7 @@ from db.models.utils import (
     DiffModel,
     LastStatusMixin,
     NameableModel,
+    PersistenceModel,
     RunTimeModel,
     StatusModel,
     TagModel
@@ -37,7 +38,8 @@ class ExperimentGroup(DiffModel,
                       DescribableModel,
                       TagModel,
                       LastStatusMixin,
-                      TensorboardJobMixin):
+                      TensorboardJobMixin,
+                      PersistenceModel):
     """A model that saves Specification/Polyaxonfiles."""
     STATUSES = ExperimentGroupLifeCycle
 
