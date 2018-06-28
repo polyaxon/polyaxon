@@ -3,65 +3,65 @@ Volume mounts
 */}}
 {{- define "volumes.volumeMounts.upload" }}
 {{- if .Values.persistence.upload }}
-- mountPath: {{ .Values.persistence.upload.mountPath }}
+- mountPath: {{ .Values.persistence.upload.mountPath | quote }}
   name: upload
   {{ if .Values.persistence.upload.subPath -}}
   subPath: {{ .Values.persistence.upload.subPath | quote }}
   {{- end }}
 {{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.upload.mountPath }}
+- mountPath: {{ .Values.nfsProvisioner.pvc.upload.mountPath | quote }}
   name: upload
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumeMounts.logs" }}
 {{- if .Values.persistence.logs }}
-- mountPath: {{ .Values.persistence.logs.mountPath }}
+- mountPath: {{ .Values.persistence.logs.mountPath | quote }}
   name: logs
   {{ if .Values.persistence.logs.subPath -}}
   subPath: {{ .Values.persistence.logs.subPath | quote }}
   {{- end }}
 {{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.logs.mountPath }}
+- mountPath: {{ .Values.nfsProvisioner.pvc.logs.mountPath | quote }}
   name: logs
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumeMounts.repos" }}
 {{- if .Values.persistence.repos }}
-- mountPath: {{ .Values.persistence.repos.mountPath }}
+- mountPath: {{ .Values.persistence.repos.mountPath | quote }}
   name: repos
   {{ if .Values.persistence.repos.subPath -}}
   subPath: {{ .Values.persistence.repos.subPath | quote }}
   {{- end }}
 {{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.repos.mountPath }}
+- mountPath: {{ .Values.nfsProvisioner.pvc.repos.mountPath | quote }}
   name: repos
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumeMounts.data" }}
 {{- if .Values.persistence.data }}
 {{- range $key, $val := .Values.persistence.data }}
-- mountPath: {{ $val.mountPath }}
+- mountPath: {{ $val.mountPath | quote }}
   name: {{ $key }}
   {{ if $val.subPath -}}
   subPath: {{ $val.subPath | quote }}
   {{- end }}
 {{- end}}
 {{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.data.mountPath }}
+- mountPath: {{ .Values.nfsProvisioner.pvc.data.mountPath | quote }}
   name: data
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumeMounts.outputs" }}
 {{- if .Values.persistence.outputs }}
 {{- range $key, $val := .Values.persistence.outputs }}
-- mountPath: {{ $val.mountPath }}
+- mountPath: {{ $val.mountPath | quote }}
   name: {{ $key }}
   {{ if $val.subPath -}}
   subPath: {{ $val.subPath | quote }}
   {{- end }}
 {{- end}}
 {{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.outputs.mountPath }}
+- mountPath: {{ .Values.nfsProvisioner.pvc.outputs.mountPath | quote }}
   name: outputs
 {{- end }}
 {{- end -}}
@@ -73,30 +73,30 @@ Volumes
 - name: upload
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.upload.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.upload.existingClaim | default .Values.nfsProvisioner.pvc.upload.name }}
+    claimName: {{ .Values.persistence.upload.existingClaim | default .Values.nfsProvisioner.pvc.upload.name | quote}}
 {{- else }}
   hostPath:
-    path:  {{ .Values.persistence.upload.hostPath | .Values.persistence.upload.mountPath }}
+    path:  {{ .Values.persistence.upload.hostPath | default .Values.persistence.upload.mountPath | quote }}
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumes.repos" }}
 - name: repos
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.repos.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.repos.existingClaim | default .Values.nfsProvisioner.pvc.repos.name }}
+    claimName: {{ .Values.persistence.repos.existingClaim | default .Values.nfsProvisioner.pvc.repos.name | quote }}
 {{- else }}
   hostPath:
-    path: {{ .Values.persistence.repos.hostPath | .Values.persistence.repos.mountPath }}
+    path: {{ .Values.persistence.repos.hostPath | default .Values.persistence.repos.mountPath | quote }}
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumes.logs" }}
 - name: logs
 {{- if or .Values.nfsProvisioner.enabled .Values.persistence.logs.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.nfsProvisioner.pvc.logs.name }}
+    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.nfsProvisioner.pvc.logs.name | quote }}
 {{- else }}
   hostPath:
-    path: {{ .Values.persistence.logs.hostPath | .Values.persistence.logs.mountPath }}
+    path: {{ .Values.persistence.logs.hostPath | default .Values.persistence.logs.mountPath | quote }}
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumes.data" }}
@@ -108,7 +108,7 @@ Volumes
     claimName: {{ $val.existingClaim }}
 {{- else }}
   hostPath:
-    path: {{ $val.hostPath | $val.mountPath }}
+    path: {{ $val.hostPath | default $val.mountPath | quote }}
 {{- end }}
 {{- end}}
 {{- else if .Values.nfsProvisioner.enabled }}
@@ -126,7 +126,7 @@ Volumes
     claimName: {{ $val.existingClaim }}
 {{- else }}
   hostPath:
-    path: {{ $val.hostPath | $val.mountPath }}
+    path: {{ $val.hostPath | default $val.mountPath | quote }}
 {{- end }}
 {{- end}}
 {{- else if .Values.nfsProvisioner.enabled }}

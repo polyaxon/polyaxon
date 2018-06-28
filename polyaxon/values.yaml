@@ -50,21 +50,18 @@ persistence:
   logs:
     existingClaim:
     mountPath: "/logs"
-    hostPath:
+    hostPath: "/tmp/logs"
   repos:
     existingClaim:
     mountPath: "/repos"
-    hostPath:
+    hostPath: "/tmp/logs"
   upload:
     existingClaim:
     mountPath: "/upload"
-    hostPath:
-  data:
-    existingClaim:
-    mountPath: "/data"
-    hostPath:
+    hostPath: "/tmp/upload"
   outputs: {}
   data: {}
+
 # e.g.
   # data:
   #   data1:
