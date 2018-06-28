@@ -45,6 +45,10 @@ class BuildSpecification(BaseSpecification):
         return self.environment.resources if self.environment else None
 
     @cached_property
+    def persistence(self):
+        return self.environment.persistence if self.environment else None
+
+    @cached_property
     def node_selectors(self):
         return self.environment.node_selectors if self.environment else None
 

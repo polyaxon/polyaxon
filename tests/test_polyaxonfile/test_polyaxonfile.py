@@ -166,8 +166,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.TENSORFLOW
-        assert spec.environment.persistence.outputs == 'outputs1'
-        assert spec.environment.persistence.data == ['data1', 'data2']
+        assert spec.persistence.outputs == 'outputs1'
+        assert spec.persistence.data == ['data1', 'data2']
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
         assert spec.environment.tensorflow.delay_workers_by_global_step is True
@@ -1199,8 +1199,8 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.persistence.outputs == 'outputs1'
-        assert spec.environment.persistence.data == ['data1', 'data2']
+        assert spec.persistence.outputs == 'outputs1'
+        assert spec.persistence.data == ['data1', 'data2']
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_notebook_jobs'}
         assert spec.node_selectors == {'polyaxon.com': 'node_for_notebook_jobs'}
 
@@ -1229,8 +1229,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.persistence.outputs == 'outputs1'
-        assert spec.environment.persistence.data == ['data1', 'data2']
+        assert spec.persistence.outputs == 'outputs1'
+        assert spec.persistence.data == ['data1', 'data2']
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_jobs'}
         assert spec.node_selectors == {'polyaxon.com': 'node_for_jobs'}
 
