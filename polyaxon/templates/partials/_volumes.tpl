@@ -130,7 +130,7 @@ Volumes
 {{- end }}
 {{- end}}
 {{- else if .Values.nfsProvisioner.enabled }}
-- name: data
+- name: outputs
   persistentVolumeClaim:
     claimName: {{ .Values.nfsProvisioner.pvc.outputs.name }}
 {{- end }}

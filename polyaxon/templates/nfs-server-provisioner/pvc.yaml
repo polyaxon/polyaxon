@@ -18,7 +18,7 @@ spec:
   storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.logs.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.logs) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
