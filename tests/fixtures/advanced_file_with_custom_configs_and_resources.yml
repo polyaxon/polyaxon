@@ -8,8 +8,9 @@ logging:
   path: /mypath/project1
 
 environment:
-  data_persistence: ['data1', 'data2']
-  outputs_persistence: 'outputs1'
+  persistence:
+    data: ['data1', 'data2']
+    outputs: 'outputs1'
 
   resources:
     cpu:

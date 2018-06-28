@@ -350,12 +350,11 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add data persistence
-        config_dict['data_persistence'] = [
-            'data1', 'data2'
-        ]
-        # Add outputs persistence
-        config_dict['outputs_persistence'] = 'outputs1'
+        # Add persistence
+        config_dict['persistence'] = {
+            'data': ['data1', 'data2'],
+            'outputs': 'outputs1',
+        }
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 

@@ -529,11 +529,35 @@ def validate_frameworks(frameworks):
         raise ValidationError('Only one framework can be used.')
 
 
+class PersistenceSchema(Schema):
+    data = fields.List(fields.Str(), allow_none=True)
+    outputs = fields.Str(allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return PersistenceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PersistenceConfig.remove_reduced_attrs(data)
+
+
+class PersistenceConfig(BaseConfig):
+    IDENTIFIER = 'persistence'
+    SCHEMA = PersistenceSchema
+
+    def __init__(self, data=None, outputs=None):
+        self.data = data
+        self.outputs = outputs
+
+
 class EnvironmentSchema(Schema):
     cluster_uuid = UUID(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    data_persistence = fields.List(fields.Str(), allow_none=True)
-    outputs_persistence = fields.Str(allow_none=True)
+    persistence = fields.Nested(PersistenceSchema, allow_none=True)
     node_selectors = fields.Dict(allow_none=True)
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
     horovod = fields.Nested(HorovodSchema, allow_none=True)
@@ -566,8 +590,7 @@ class EnvironmentConfig(BaseConfig):
     def __init__(self,
                  cluster_uuid=None,
                  resources=None,
-                 data_persistence=None,
-                 outputs_persistence=None,
+                 persistence=None,
                  node_selectors=None,
                  tensorflow=None,
                  horovod=None,
@@ -575,8 +598,7 @@ class EnvironmentConfig(BaseConfig):
                  mxnet=None):
         self.cluster_uuid = cluster_uuid
         self.resources = resources
-        self.data_persistence = data_persistence
-        self.outputs_persistence = outputs_persistence
+        self.persistence = persistence
         self.node_selectors = node_selectors
         validate_frameworks([tensorflow, horovod, pytorch, mxnet])
         self.tensorflow = tensorflow
