@@ -14,7 +14,7 @@ from tests.utils import BaseTest
 class TestCopyPaths(BaseTest):
     def test_copy_repo_path_to_tmp_dir(self):
         project = ProjectFactory()
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
                                          project.user.username,
                                          project.name,
                                          project.name)

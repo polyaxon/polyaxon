@@ -12,11 +12,11 @@ def get_project_outputs_path(persistence_outputs, project_name):
 
 
 def get_project_logs_path(project_name):
-    return os.path.join(settings.LOGS_ROOT, project_name.replace('.', '/'))
+    return os.path.join(settings.LOGS_MOUNT_PATH, project_name.replace('.', '/'))
 
 
 def get_project_repos_path(project_name):
-    return os.path.join(settings.REPOS_ROOT, project_name.replace('.', '/'))
+    return os.path.join(settings.REPOS_MOUNT_PATH, project_name.replace('.', '/'))
 
 
 def delete_project_outputs(persistence_outputs, project_name):

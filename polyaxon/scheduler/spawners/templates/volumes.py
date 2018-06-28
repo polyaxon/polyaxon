@@ -12,15 +12,15 @@ def get_volume_mount(volume, volume_mount=None, read_only=False):
     return client.V1VolumeMount(name=volume, mount_path=volume_mount, read_only=read_only)
 
 
-def get_volume(volume, claim_name=None, volume_mount=None):
+def get_volume(volume, claim_name=None, host_path=None):
     if claim_name:
         pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name)
         return client.V1Volume(name=volume, persistent_volume_claim=pv_claim)
 
-    if volume_mount:
+    if host_path:
         return client.V1Volume(
             name=volume,
-            host_path=client.V1HostPathVolumeSource(path=volume_mount))
+            host_path=client.V1HostPathVolumeSource(path=host_path))
 
     empty_dir = client.V1EmptyDirVolumeSource()
     return client.V1Volume(name=volume, empty_dir=empty_dir)
@@ -40,7 +40,7 @@ def get_volume_from_definition(volume_name, volume_settings):
     if mount_path:
         volumes.append(get_volume(volume=volume_name,
                                   claim_name=claim_name,
-                                  volume_mount=host_path))
+                                  host_path=host_path))
         volume_mounts.append(get_volume_mount(volume=volume_name,
                                               volume_mount=mount_path,
                                               read_only=read_only))
@@ -76,7 +76,7 @@ def get_pod_volumes(persistence_outputs, persistence_data):
 
 
 def get_docker_volumes():
-    volumes = [get_volume(volume=constants.DOCKER_VOLUME, volume_mount=settings.MOUNT_PATHS_DOCKER)]
+    volumes = [get_volume(volume=constants.DOCKER_VOLUME, host_path=settings.MOUNT_PATHS_DOCKER)]
     volume_mounts = [get_volume_mount(volume=constants.DOCKER_VOLUME,
                                       volume_mount=settings.MOUNT_PATHS_DOCKER)]
     return volumes, volume_mounts

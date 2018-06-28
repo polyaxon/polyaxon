@@ -12,7 +12,7 @@ def get_job_outputs_path(persistence_outputs, job_name):
 
 
 def get_job_logs_path(job_name):
-    return os.path.join(settings.LOGS_ROOT, job_name.replace('.', '/'))
+    return os.path.join(settings.LOGS_MOUNT_PATH, job_name.replace('.', '/'))
 
 
 def delete_job_outputs(persistence_outputs, job_name):
@@ -37,7 +37,7 @@ def create_job_path(job_name, path):
 
 
 def create_job_logs_path(job_name):
-    return create_job_path(job_name, settings.LOGS_ROOT)
+    return create_job_path(job_name, settings.LOGS_MOUNT_PATH)
 
 
 def create_job_outputs_path(persistence_outputs, job_name):

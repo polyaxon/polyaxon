@@ -73,13 +73,12 @@ class JobSpawner(K8SManager):
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
         command, args = self.get_pod_command_args()
-        env_vars = self.get_env_vars()
         pod = self.pod_manager.get_pod(
             volume_mounts=volume_mounts,
             volumes=volumes,
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
-            env_vars=env_vars,
+            env_vars=None,
             command=command,
             args=args,
             resources=resources,

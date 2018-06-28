@@ -28,10 +28,10 @@ class NotebookSpawner(ProjectJobSpawner):
     def get_notebook_code_volume():
         volume = get_volume(volume=constants.REPOS_VOLUME,
                             claim_name=settings.REPOS_CLAIM_NAME,
-                            volume_mount=settings.REPOS_ROOT)
+                            host_path=settings.REPOS_HOST_PATH)
 
         volume_mount = get_volume_mount(volume=constants.REPOS_VOLUME,
-                                        volume_mount=settings.REPOS_ROOT)
+                                        volume_mount=settings.REPOS_MOUNT_PATH)
         return volume, volume_mount
 
     def request_notebook_port(self):

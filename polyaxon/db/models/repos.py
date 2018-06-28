@@ -10,7 +10,7 @@ from db.models.utils import DiffModel
 class RepoMixin(object):
     @property
     def user_path(self):
-        return os.path.join(settings.REPOS_ROOT, self.project.user.username)
+        return os.path.join(settings.REPOS_MOUNT_PATH, self.project.user.username)
 
     @property
     def project_path(self):

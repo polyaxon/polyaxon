@@ -18,7 +18,7 @@ class TestDockerize(BaseTest):
     def test_get_requirements_and_setup_path_works_as_expected(self, _):
         build_job = BuildJobFactory()
         # Create a repo folder
-        repo_path = os.path.join(settings.REPOS_ROOT, 'repo')
+        repo_path = os.path.join(settings.REPOS_MOUNT_PATH, 'repo')
         os.mkdir(repo_path)
 
         builder = DockerBuilder(build_job=build_job,
@@ -44,7 +44,7 @@ class TestDockerize(BaseTest):
         build_job = BuildJobFactory()
 
         # Create a repo folder
-        repo_path = os.path.join(settings.REPOS_ROOT, 'repo')
+        repo_path = os.path.join(settings.REPOS_MOUNT_PATH, 'repo')
         os.mkdir(repo_path)
 
         # By default it should user FROM image declare WORKDIR and COPY code

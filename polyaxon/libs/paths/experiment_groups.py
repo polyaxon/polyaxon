@@ -16,7 +16,7 @@ def get_experiment_group_outputs_path(persistence_outputs, experiment_group_name
 def get_experiment_group_logs_path(experiment_group_name):
     values = experiment_group_name.split('.')
     values.insert(2, 'groups')
-    return os.path.join(settings.LOGS_ROOT, '/'.join(values))
+    return os.path.join(settings.LOGS_MOUNT_PATH, '/'.join(values))
 
 
 def delete_experiment_group_outputs(persistence_outputs, experiment_group_name):

@@ -29,7 +29,7 @@ def get_experiment_logs_path(experiment_name):
         values.insert(2, 'experiments')
     else:
         values.insert(2, 'groups')
-    return os.path.join(settings.LOGS_ROOT, '/'.join(values))
+    return os.path.join(settings.LOGS_MOUNT_PATH, '/'.join(values))
 
 
 def delete_experiment_logs(experiment_name):
@@ -58,7 +58,7 @@ def create_experiment_path(experiment_name, path):
 
 
 def create_experiment_logs_path(experiment_name):
-    return create_experiment_path(experiment_name, settings.LOGS_ROOT)
+    return create_experiment_path(experiment_name, settings.LOGS_MOUNT_PATH)
 
 
 def create_experiment_outputs_path(persistence_outputs, experiment_name):

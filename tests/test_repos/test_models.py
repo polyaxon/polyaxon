@@ -15,7 +15,7 @@ class TestRepoModels(BaseTest):
         self.project = ProjectFactory()
 
     def test_repo_creation_results_in_repo_path_creation_deletion_results_in_path_deletion(self):
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
                                          self.project.user.username,
                                          self.project.name,
                                          self.project.name)
@@ -34,7 +34,7 @@ class TestRepoModels(BaseTest):
         self.assertFalse(os.path.exists(repo_path))
 
     def test_external_repo_creation_and_deletion(self):
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
                                          self.project.user.username,
                                          self.project.name,
                                          'empty')

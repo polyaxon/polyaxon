@@ -73,7 +73,7 @@ class UploadFilesView(UploadView):
     def put(self, request, *args, **kwargs):
         user = request.user
         repo = self.get_object()
-        path = os.path.join(settings.UPLOAD_ROOT, user.username)
+        path = os.path.join(settings.UPLOAD_MOUNT_PATH, user.username)
         if not os.path.exists(path):
             os.makedirs(path)
         try:

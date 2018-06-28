@@ -176,9 +176,9 @@ class BaseTest(TestCase):
         redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
         redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
         # Mock dirs
-        settings.REPOS_ROOT = tempfile.mkdtemp()
-        settings.UPLOAD_ROOT = tempfile.mkdtemp()
-        settings.LOGS_ROOT = tempfile.mkdtemp()
+        settings.REPOS_MOUNT_PATH = tempfile.mkdtemp()
+        settings.UPLOAD_MOUNT_PATH = tempfile.mkdtemp()
+        settings.LOGS_MOUNT_PATH = tempfile.mkdtemp()
         settings.PERSISTENCE_OUTPUTS['outputs']['mountPath'] = tempfile.mkdtemp()
         settings.REPOS_ARCHIVE_ROOT = tempfile.mkdtemp()
         settings.OUTPUTS_ARCHIVE_ROOT = tempfile.mkdtemp()
