@@ -272,6 +272,7 @@ def start_experiment(experiment):
                             project_uuid=project.uuid.hex,
                             experiment_group_uuid=group.uuid.hex if group else None,
                             experiment_uuid=experiment.uuid.hex,
+                            persistence_config=experiment.persistence_config,
                             original_name=experiment.original_unique_name,
                             cloning_strategy=experiment.cloning_strategy,
                             spec=experiment.specification,

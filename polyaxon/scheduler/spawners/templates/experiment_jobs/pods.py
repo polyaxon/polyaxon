@@ -180,7 +180,7 @@ class PodManager(object):
 
         outputs_path = get_experiment_outputs_path(persistence_outputs=persistence_outputs,
                                                    experiment_name=self.experiment_name)
-        outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
+        _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
         return [
             client.V1Container(
                 name=self.init_container_name,
@@ -189,7 +189,7 @@ class PodManager(object):
                 args=to_list(get_output_args(command=command,
                                              outputs_path=outputs_path,
                                              original_outputs_path=original_outputs_path)),
-                volume_mounts=[outputs_volume_mount])
+                volume_mounts=outputs_volume_mount)
         ]
 
     def get_task_pod_spec(self,
