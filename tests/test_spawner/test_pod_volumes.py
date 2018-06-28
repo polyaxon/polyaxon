@@ -29,7 +29,7 @@ class TestPodVolumes(TestCase):
     }
 
     def test_default_get_pod_volumes(self):
-        volumes, volume_mounts = get_pod_volumes(persistence_outputs=None, persistence_data=None)
+        volumes, _ = get_pod_volumes(persistence_outputs=None, persistence_data=None)
         assert len(volumes) == 2
         assert volumes[0].persistent_volume_claim.claim_name == 'test-claim-outputs'
         assert volumes[1].persistent_volume_claim.claim_name == 'test-claim-data'
