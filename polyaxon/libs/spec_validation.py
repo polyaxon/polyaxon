@@ -1,9 +1,9 @@
 from marshmallow.exceptions import ValidationError as MarshmallowValidationError
-from polyaxon_schemas.environments import PersistenceConfig
 from rest_framework.exceptions import ValidationError
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 
+from polyaxon_schemas.environments import PersistenceConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import (

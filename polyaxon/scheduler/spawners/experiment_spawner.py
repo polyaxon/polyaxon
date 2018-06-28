@@ -191,7 +191,8 @@ class ExperimentSpawner(K8SManager):
             cluster_def=self.get_cluster(),
             persistence_outputs=self.spec.persistence_outputs,
             declarations=self.spec.declarations,
-            log_level=self.spec.log_level
+            log_level=self.spec.log_level,
+            experiment_data_paths=self.spec.persistence_outputs,
         )
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)

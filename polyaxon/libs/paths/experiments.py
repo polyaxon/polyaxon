@@ -6,7 +6,6 @@ from django.conf import settings
 from db.models.cloning_strategies import CloningStrategy
 from libs.paths.outputs_paths import get_outputs_paths
 from libs.paths.utils import create_path, delete_path
-from polyaxon_schemas.utils import to_list
 
 
 def get_experiment_outputs_path(persistence_outputs,
