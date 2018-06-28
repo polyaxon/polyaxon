@@ -216,3 +216,11 @@ class BaseSpecification(object):
     def tags(self):
         tags = self.headers.get(self.TAGS, None)
         return list(set(tags)) if tags else None
+
+    @cached_property
+    def environment(self):
+        return self.validated_data.get(self.ENVIRONMENT, None)
+
+    @cached_property
+    def persistence(self):
+        return self.environment.persistence if self.environment else None
