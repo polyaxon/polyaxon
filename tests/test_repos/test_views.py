@@ -171,7 +171,9 @@ class TestUploadFilesView(BaseViewTest):
                              data={'repo': uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
-        upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH, user.username, repo_name)
+        upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH,
+                                                    user.username,
+                                                    repo_name)
         # Assert the the task handler takes care of cleaning the upload root after
         # committing changes
         self.assertFalse(os.path.exists(upload_file_path))
