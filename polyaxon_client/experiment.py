@@ -280,7 +280,7 @@ class ExperimentClient(PolyaxonClient):
                                       project_name,
                                       'experiments',
                                       experiment_id,
-                                      'outputss')
+                                      'outputs')
 
         try:
             response = self.download(
