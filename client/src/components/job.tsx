@@ -35,7 +35,7 @@ function Job({job, onDelete}: Props) {
       <div className="col-md-7 block">
         <LinkContainer to={getJobUrl(values[0], values[1], job.id)}>
           <a className="title">
-            <i className="fa fa-cubes icon" aria-hidden="true"/>
+            <i className="fa fa-tasks icon" aria-hidden="true"/>
             {job.unique_name}
           </a>
         </LinkContainer>

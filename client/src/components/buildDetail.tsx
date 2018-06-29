@@ -45,7 +45,7 @@ export default class BuildDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <Breadcrumb icon="fa-cube" links={breadcrumbLinks}/>
+            <Breadcrumb icon="fa-gavel" links={breadcrumbLinks}/>
             <LinkedTab
               baseUrl={buildUrl}
               tabs={[

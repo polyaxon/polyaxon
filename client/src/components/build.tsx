@@ -26,7 +26,7 @@ function Build({build, onDelete}: Props) {
       <div className="col-md-9 block">
         <LinkContainer to={getBuildUrl(values[0], values[1], build.id)}>
           <a className="title">
-            <i className="fa fa-cubes icon" aria-hidden="true"/>
+            <i className="fa fa-gavel icon" aria-hidden="true"/>
             {build.unique_name}
           </a>
         </LinkContainer>

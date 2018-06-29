@@ -44,7 +44,7 @@ export default class JobDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <Breadcrumb icon="fa-cube" links={breadcrumbLinks}/>
+            <Breadcrumb icon="fa-tasks" links={breadcrumbLinks}/>
             <LinkedTab
               baseUrl={jobUrl}
               tabs={[
