@@ -39,7 +39,7 @@ from event_manager.events.job import (
     JOB_VIEWED,
     JOB_OUTPUTS_DOWNLOADED)
 from event_manager.events.project import PROJECT_JOBS_VIEWED
-from libs.archive import archive_experiment_outputs, archive_job_outputs
+from libs.archive import archive_job_outputs
 from libs.paths.jobs import get_job_logs_path
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_job_spec_config

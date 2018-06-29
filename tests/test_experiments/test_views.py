@@ -1436,6 +1436,7 @@ class TestExperimentLogsViewV1(BaseViewTest):
         assert data == self.logs
 
 
+@pytest.mark.experiments_mark
 class DownloadExperimentOutputsViewTest(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory

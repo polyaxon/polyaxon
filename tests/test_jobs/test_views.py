@@ -1,4 +1,7 @@
 # pylint:disable=too-many-lines
+import os
+
+from django.conf import settings
 from faker import Faker
 from unittest.mock import patch
 
@@ -7,13 +10,15 @@ import pytest
 from rest_framework import status
 
 from api.jobs.serializers import JobDetailSerializer, JobSerializer, JobStatusSerializer
+from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
-from libs.paths.jobs import create_job_logs_path, get_job_logs_path
+from libs.paths.jobs import create_job_logs_path, get_job_logs_path, get_job_outputs_path, \
+    create_job_outputs_path
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 from tests.utils import BaseViewTest
 
@@ -603,3 +608,43 @@ class TestJobLogsViewV1(BaseViewTest):
         data = [d for d in data[0].decode('utf-8').split('\n') if d]
         assert len(data) == len(self.logs)
         assert data == self.logs
+
+
+@pytest.mark.jobs_mark
+class DownloadExperimentOutputsViewTest(BaseViewTest):
+    model_class = Job
+    factory_class = JobFactory
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.job = self.factory_class(project=self.project)
+        self.download_url = '/{}/{}/{}/jobs/{}/outputs'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.job.id)
+        self.job_outputs_path = get_job_outputs_path(
+            persistence_outputs=self.job.persistence_outputs,
+            job_name=self.job.unique_name)
+        self.url = self.download_url
+
+    def create_tmp_outputs(self):
+        create_job_outputs_path(persistence_outputs=self.job.persistence_outputs,
+                                job_name=self.job.unique_name)
+        for i in range(4):
+            open('{}/{}'.format(self.job_outputs_path, i), '+w')
+
+    def test_redirects_nginx_to_file(self):
+        self.create_tmp_outputs()
+        # Assert that the job outputs
+        self.assertTrue(os.path.exists(self.job_outputs_path))
+        response = self.auth_client.get(self.download_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
+                         '{}/{}.tar.gz'.format(settings.OUTPUTS_ARCHIVE_ROOT,
+                                               self.job.unique_name.replace('.', '_')))
