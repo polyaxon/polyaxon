@@ -129,30 +129,30 @@ pages:
 - Reference Polyaxon Helm: reference_polyaxon_helm.md
 - Reference Polyaxon Client: reference_polyaxon_client.md
 - Reference Polyaxon Helper: reference_polyaxon_helper.md
-- Reference Polyaxon Lib:
-  - Introduction: polyaxon_lib/introduction.md
-  - Models: polyaxon_lib/models.md
-  - Layers:
-    - Advanced Actications: polyaxon_lib/layers/advanced_activations.md
-    - Convolutional: polyaxon_lib/layers/convolutional.md
-    - Convolutional Reccurent: polyaxon_lib/layers/convolutional_recurrent.md
-    - Core: polyaxon_lib/layers/core.md
-    - Embedding: polyaxon_lib/layers/embeddings.md
-    - Local: polyaxon_lib/layers/local.md
-    - Merge: polyaxon_lib/layers/merge.md
-    - Noise: polyaxon_lib/layers/noise.md
-    - Normalizations: polyaxon_lib/layers/normalizations.md
-    - Pooling: polyaxon_lib/layers/pooling.md
-    - Recurrent: polyaxon_lib/layers/recurrent.md
-    - Wrappers: polyaxon_lib/layers/wrappers.md
-  - Bridges: polyaxon_lib/bridges.md
-  - Processing:
-    - Image: polyaxon_lib/processing/image.md
-    - Pipelines: polyaxon_lib/processing/pipelines.md
-  - Losses: polyaxon_lib/losses.md
-  - Metrics: polyaxon_lib/metrics.md
-  - Optimizers: polyaxon_lib/optimizers.md
-  - Initializations: polyaxon_lib/initializations.md
-  - Constraints: polyaxon_lib/constraints.md
-  - Regularizations: polyaxon_lib/regularizers.md
+#- Reference Polyaxon Lib:
+#  - Introduction: polyaxon_lib/introduction.md
+#  - Models: polyaxon_lib/models.md
+#  - Layers:
+#    - Advanced Actications: polyaxon_lib/layers/advanced_activations.md
+#    - Convolutional: polyaxon_lib/layers/convolutional.md
+#    - Convolutional Reccurent: polyaxon_lib/layers/convolutional_recurrent.md
+#    - Core: polyaxon_lib/layers/core.md
+#    - Embedding: polyaxon_lib/layers/embeddings.md
+#    - Local: polyaxon_lib/layers/local.md
+#    - Merge: polyaxon_lib/layers/merge.md
+#    - Noise: polyaxon_lib/layers/noise.md
+#    - Normalizations: polyaxon_lib/layers/normalizations.md
+#    - Pooling: polyaxon_lib/layers/pooling.md
+#    - Recurrent: polyaxon_lib/layers/recurrent.md
+#    - Wrappers: polyaxon_lib/layers/wrappers.md
+#  - Bridges: polyaxon_lib/bridges.md
+#  - Processing:
+#    - Image: polyaxon_lib/processing/image.md
+#    - Pipelines: polyaxon_lib/processing/pipelines.md
+#  - Losses: polyaxon_lib/losses.md
+#  - Metrics: polyaxon_lib/metrics.md
+#  - Optimizers: polyaxon_lib/optimizers.md
+#  - Initializations: polyaxon_lib/initializations.md
+#  - Constraints: polyaxon_lib/constraints.md
+#  - Regularizations: polyaxon_lib/regularizers.md
 - Contributing: contributing.md
