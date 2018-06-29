@@ -611,7 +611,7 @@ class TestJobLogsViewV1(BaseViewTest):
 
 
 @pytest.mark.jobs_mark
-class DownloadExperimentOutputsViewTest(BaseViewTest):
+class DownloadJobOutputsViewTest(BaseViewTest):
     model_class = Job
     factory_class = JobFactory
     HAS_AUTH = True
