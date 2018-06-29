@@ -4,10 +4,12 @@ should be used for the core platform, for the dependencies, and for the experime
 
 ## Node Selectors
 
-Polyaxon comes with 2 node selectors to assign pods to nodes
+Polyaxon comes with 4 node selectors to assign pods to nodes
 
   * `core`: the core polyaxon platform
   * `experiments`: all user's experiments scheduled by polyaxon
+  * `jobs`: all user's generic jobs scheduled by polyaxon
+  * `builds`: all build jobs scheduled by polyaxon
 
 Additionally every dependency in our helm package, exposes a node selector option.
 
