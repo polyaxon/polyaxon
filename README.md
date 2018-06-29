@@ -26,9 +26,9 @@ It also packages some required dependencies for Polyaxon:
 
 > **Warning**: This chart does not yet allow for you to specify your own database host, redis host, rabbitmq host.
 
-Thi chart can be installed on single node or multi-nodes cluster,
+This chart can be installed on single node or multi-nodes cluster,
 in which case you need to provide some volumes with `ReadWriteMany`.
-An nfs provisioner can be enbaled in cases where you want to try the platform on multi-nodes cluster
+An nfs provisioner can be enabled in cases where you want to try the platform on multi-nodes cluster
 without the need to create your own volumes.
 
 > **Warning**: You should know that using the nfs provisioner is not meant to be a production option.
