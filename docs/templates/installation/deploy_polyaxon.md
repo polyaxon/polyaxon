@@ -24,15 +24,6 @@ To do so, you need to create a configuration file and we recommend to save it so
 Create a config file `config.yml` or `polyaxon_config.yml`,
 and set up all information you want to override in the default config.
 
-Example, updating the user data:
-
-```yaml
-user:
-  username: "root"
-  email: "root@polyaxon.local"
-  password: "dummypassword"
-```
-
 Example, disabling ingress and RBAC
 
 ```yaml
@@ -50,8 +41,17 @@ Example, adding database persistence
 ```yaml
 postgresql:
   persistence:
-      enabled: true
-      size: 5Gi
+    enabled: true
+    size: 5Gi
+```
+
+Example, updating the user data:
+
+```yaml
+user:
+  username: "root"
+  email: "root@polyaxon.local"
+  password: "dummypassword"
 ```
 
 ## Install Polyaxon

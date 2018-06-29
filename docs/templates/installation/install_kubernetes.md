@@ -32,8 +32,8 @@ you should be able to create a cluster with `az group create --name=${RESOURCE_G
 
 ## Install Kubernetes on [Amazon Web Services](https://kubernetes.io/docs/getting-started-guides/aws/)
 
-Although AWS does not have native support for Kubernetes,
-there are many solutions and guides for setting up Kubernetes on AWS,
+AWS has recently introduced [EKS](https://aws.amazon.com/eks/),
+but there are many solutions and guides as well for setting up Kubernetes on AWS,
 such as [kops](https://kubernetes.io/docs/getting-started-guides/kops/) and [Heptio](https://s3.amazonaws.com/quickstart-reference/heptio/latest/doc/heptio-kubernetes-on-the-aws-cloud.pdf)
 
 
