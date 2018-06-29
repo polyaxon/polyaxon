@@ -129,6 +129,7 @@ class TestEvents(BaseTest):
         assert job.JobRestartedEvent.get_event_subject() == 'job'
         assert job.JobRestartedTriggeredEvent.get_event_subject() == 'job'
         assert job.JobStatusesViewedEvent.get_event_subject() == 'job'
+        assert job.JobOutputsDownloadedEvent.get_event_subject() == 'job'
 
         # BuildJob
         assert build_job.BuildJobCreatedEvent.get_event_subject() == 'build_job'
@@ -296,6 +297,7 @@ class TestEvents(BaseTest):
         assert job.JobRestartedEvent.get_event_action() is None
         assert job.JobRestartedTriggeredEvent.get_event_action() == 'restarted'
         assert job.JobStatusesViewedEvent.get_event_action() == 'statuses_viewed'
+        assert job.JobOutputsDownloadedEvent.get_event_action() == 'outputs_downloaded'
 
         # Build job
         assert build_job.BuildJobCreatedEvent.get_event_action() == 'created'

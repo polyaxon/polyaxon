@@ -431,9 +431,6 @@ class DownloadOutputsView(ProtectedView):
     permission_classes = (IsAuthenticated,)
     HANDLE_UNAUTHENTICATED = False
 
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
-
     def get_object(self):
         project = get_permissible_project(view=self)
         experiment = get_object_or_404(Experiment, project=project, id=self.kwargs['id'])

@@ -22,6 +22,7 @@ JOB_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
                                           event_actions.DELETED,
                                           event_subjects.TRIGGER)
 JOB_LOGS_VIEWED = '{}.{}'.format(event_subjects.JOB, event_actions.LOGS_VIEWED)
+JOB_OUTPUTS_DOWNLOADED = '{}.{}'.format(event_subjects.JOB, event_actions.OUTPUTS_DOWNLOADED)
 JOB_RESTARTED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
                                             event_actions.RESTARTED,
                                             event_subjects.TRIGGER)
@@ -186,6 +187,20 @@ class JobDeletedTriggeredEvent(Event):
 
 class JobLogsViewedEvent(Event):
     event_type = JOB_LOGS_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class JobOutputsDownloadedEvent(Event):
+    event_type = JOB_OUTPUTS_DOWNLOADED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

@@ -26,7 +26,7 @@ from api.jobs.serializers import (
     JobSerializer,
     JobStatusSerializer
 )
-from api.utils.views import AuditorMixinView, ListCreateAPIView
+from api.utils.views import AuditorMixinView, ListCreateAPIView, ProtectedView
 from db.models.jobs import Job, JobStatus
 from event_manager.events.job import (
     JOB_CREATED,
@@ -36,9 +36,10 @@ from event_manager.events.job import (
     JOB_STATUSES_VIEWED,
     JOB_STOPPED_TRIGGERED,
     JOB_UPDATED,
-    JOB_VIEWED
-)
+    JOB_VIEWED,
+    JOB_OUTPUTS_DOWNLOADED)
 from event_manager.events.project import PROJECT_JOBS_VIEWED
+from libs.archive import archive_experiment_outputs, archive_job_outputs
 from libs.paths.jobs import get_job_logs_path
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_job_spec_config
@@ -233,3 +234,23 @@ class JobStopView(CreateAPIView):
                 'update_status': True
             })
         return Response(status=status.HTTP_200_OK)
+
+
+class DownloadOutputsView(ProtectedView):
+    permission_classes = (IsAuthenticated,)
+    HANDLE_UNAUTHENTICATED = False
+
+    def get_object(self):
+        project = get_permissible_project(view=self)
+        job = get_object_or_404(Job, project=project, id=self.kwargs['id'])
+        auditor.record(event_type=JOB_OUTPUTS_DOWNLOADED,
+                       instance=job,
+                       actor_id=self.request.user.id)
+        return job
+
+    def get(self, request, *args, **kwargs):
+        job = self.get_object()
+        archived_path, archive_name = archive_job_outputs(
+            persistence_outputs=job.persistence_outputs,
+            job_name=job.unique_name)
+        return self.redirect(path='{}/{}'.format(archived_path, archive_name))

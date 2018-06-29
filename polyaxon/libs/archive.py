@@ -4,6 +4,7 @@ import tarfile
 from django.conf import settings
 
 from libs.paths.experiments import get_experiment_outputs_path
+from libs.paths.jobs import get_job_outputs_path
 
 
 def check_archive_path(archive_path=None):
@@ -41,6 +42,17 @@ def archive_experiment_outputs(persistence_outputs, experiment_name):
                                                           experiment_name=experiment_name)
     outputs_files = get_files_in_path(experiment_outputs_path)
     tar_name = "{}.tar.gz".format(experiment_name.replace('.', '_'))
+    create_tarfile(files=outputs_files, tar_path=os.path.join(settings.OUTPUTS_ARCHIVE_ROOT,
+                                                              tar_name))
+    return settings.OUTPUTS_ARCHIVE_ROOT, tar_name
+
+
+def archive_job_outputs(persistence_outputs, job_name):
+    check_archive_path(settings.OUTPUTS_ARCHIVE_ROOT)
+    job_outputs_path = get_job_outputs_path(persistence_outputs=persistence_outputs,
+                                            job_name=job_name)
+    outputs_files = get_files_in_path(job_outputs_path)
+    tar_name = "{}.tar.gz".format(job_name.replace('.', '_'))
     create_tarfile(files=outputs_files, tar_path=os.path.join(settings.OUTPUTS_ARCHIVE_ROOT,
                                                               tar_name))
     return settings.OUTPUTS_ARCHIVE_ROOT, tar_name
