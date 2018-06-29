@@ -432,3 +432,27 @@ def logs(ctx, past, follow):
         Printer.print_error('Could not get logs for job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
+
+@job.command()
+@click.pass_context
+@clean_outputs
+def outputs(ctx):
+    """Download outputs for job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon job -j 1 outputs
+    ```
+    """
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    try:
+        PolyaxonClients().job.download_outputs(user, project_name, _job)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not download outputs for job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+    Printer.print_success('Files downloaded.')

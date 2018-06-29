@@ -714,6 +714,7 @@ def logs(ctx, job, past, follow):
 
 
 @experiment.command()
+@click.pass_context
 @clean_outputs
 def outputs(ctx):
     """Download outputs for experiment.
@@ -724,7 +725,7 @@ def outputs(ctx):
 
     \b
     ```bash
-    $ polyaxon experiment --experiment=1 outputs
+    $ polyaxon experiment -xp 1 outputs
     ```
     """
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
