@@ -49,6 +49,9 @@ Volume mounts
 {{- else if .Values.nfsProvisioner.enabled }}
 - mountPath: {{ .Values.nfsProvisioner.pvc.data.mountPath | quote }}
   name: data
+{{- else }}
+- mountPath: {{ .Values.defaultPersistence.data.mountPath | quote }}
+  name: data
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumeMounts.outputs" }}
@@ -62,6 +65,9 @@ Volume mounts
 {{- end}}
 {{- else if .Values.nfsProvisioner.enabled }}
 - mountPath: {{ .Values.nfsProvisioner.pvc.outputs.mountPath | quote }}
+  name: outputs
+{{- else }}
+- mountPath: {{ .Values.defaultPersistence.outputs.mountPath | quote }}
   name: outputs
 {{- end }}
 {{- end -}}

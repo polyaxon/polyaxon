@@ -8,6 +8,9 @@ Config data persistence
 {{- else if .Values.nfsProvisioner.enabled }}
 - name: POLYAXON_PERSISTENCE_DATA
   value: {{ ( toJson ( dict "data" (dict "mountPath" .Values.nfsProvisioner.pvc.data.mountPath "existingClaim" .Values.nfsProvisioner.pvc.data.name))) | quote }}
+{{- else }}
+- name: POLYAXON_PERSISTENCE_DATA
+  value: {{ toJson .Values.defaultPersistence.data | quote }}
 {{- end }}
 {{- end -}}
 
@@ -21,6 +24,9 @@ Config outputs persistence
 {{- else if .Values.nfsProvisioner.enabled }}
 - name: POLYAXON_PERSISTENCE_OUTPUTS
   value: {{ ( toJson ( dict "outputs" (dict "mountPath" .Values.nfsProvisioner.pvc.outputs.mountPath "existingClaim" .Values.nfsProvisioner.pvc.outputs.name))) | quote }}
+{{- else }}
+- name: POLYAXON_PERSISTENCE_OUTPUTS
+  value: {{ toJson .Values.defaultPersistence.outputs | quote }}
 {{- end }}
 {{- end -}}
 

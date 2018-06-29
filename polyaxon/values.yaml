@@ -80,6 +80,16 @@ persistence:
   #      mountPath: "/outputs/2"
   #     existingClaim: "outputs-2-pvc"
 
+defaultPersistence:
+  data:
+    default-data:
+      mountPath: "/data"
+      hostPath: "/data"
+  outputs:
+    default-outputs:
+      mountPath: "/outputs"
+      hostPath: "/outputs"
+
 auth:
   ldap:
     enabled: false
