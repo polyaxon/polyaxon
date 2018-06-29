@@ -433,6 +433,7 @@ def logs(ctx, past, follow):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
+
 @job.command()
 @click.pass_context
 @clean_outputs
