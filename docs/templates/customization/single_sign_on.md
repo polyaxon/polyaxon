@@ -110,7 +110,7 @@ Once you set one or all of these providers your users will be able to signup/log
 
 ### Signup page
 
-![signup](/images/sso/signup.png)
+![signup](/images/dashboard/signup.png)
 
 ### Login page
-![login](/images/sso/login.png)
+![login](/images/dashboard/login.png)

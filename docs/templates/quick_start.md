@@ -50,9 +50,11 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     $ cd polyaxon-quick-start
     $ ls
 
-    LICENSE                       polyaxonfile.yml
-    README.md                     polyaxonfile_declarations.yml
-    model.py                      polyaxonfile_hyperparams.yml
+    LICENSE                       polyaxonfile.yml                  polyaxonfile_hyperparams_early_stopping.yml
+    README.md                     polyaxonfile_declarations.yml     polyaxonfile_hyperparams_grid.yml
+    model.py                      polyaxonfile_hyperparams.yml      polyaxonfile_hyperparams_hyperband.yml
+    download_data.py              polyaxonfile_hyperparams_bo.yml   polyaxonfile_job.yml
+    ....
     ```
 
 4. Initialize the project with the same name that you used when you created the project in Polyaxon
@@ -84,6 +86,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     This configuration specifies:
 
        * The Polyaxon specification `version` we are using.
+       * The `kind` of this operation, in this case experiment.
        * The `project` namespace we want to run the experiment inside.
        * The `run` section to build and execute our code,
          in this case we want to run our code with the specified tensorflow docker image.
@@ -111,11 +114,6 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ```bash
     $ polyaxon project experiments
     ```
-
-    id | name | user | project | status | created_at
-    ---|------|------|---------|--------|--------|-----------
-    1  | root.quick-start.1 | root | root.quick-start| Scheduled | seconds ago
-
 
 9. Check the experiment logs and resource
 
@@ -302,6 +300,69 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
      23   root.quick-start.1.23     4.62058       0.902         0.1028
     ```
 
+    Comparing experiments declarations in the groups:
+
+    ```bash
+    polyaxon group -g 1 experiments -d
+
+    Experiments for experiment group `1`.
+
+
+    Navigation:
+
+    -----  --
+    count  20
+    -----  --
+
+    Experiments:
+
+      id  unique_name              learning_rate    num_steps    batch_size    num_epochs    dropout  activation
+    ----  ---------------------  ---------------  -----------  ------------  ------------  ---------  ------------
+      77  root.quick-start.1.77          0.1              500           128             1       0.3   relu
+      76  root.quick-start.1.76          0.07525          500           128             1       0.3   sigmoid
+      78  root.quick-start.1.78          0.1              500           128             1       0.3   sigmoid
+      74  root.quick-start.1.74          0.0505           500           128             1       0.3   sigmoid
+      75  root.quick-start.1.75          0.07525          500           128             1       0.3   relu
+      71  root.quick-start.1.71          0.02575          500           128             1       0.3   relu
+      73  root.quick-start.1.73          0.0505           500           128             1       0.3   relu
+      72  root.quick-start.1.72          0.02575          500           128             1       0.3   sigmoid
+      69  root.quick-start.1.69          0.001            500           128             1       0.3   relu
+      70  root.quick-start.1.70          0.001            500           128             1       0.3   sigmoid
+      68  root.quick-start.1.68          0.1              500           128             1       0.25  sigmoid
+      67  root.quick-start.1.67          0.1              500           128             1       0.25  relu
+      66  root.quick-start.1.66          0.07525          500           128             1       0.25  sigmoid
+      64  root.quick-start.1.64          0.0505           500           128             1       0.25  sigmoid
+      65  root.quick-start.1.65          0.07525          500           128             1       0.25  relu
+      62  root.quick-start.1.62          0.02575          500           128             1       0.25  sigmoid
+      60  root.quick-start.1.60          0.001            500           128             1       0.25  sigmoid
+      59  root.quick-start.1.59          0.001            500           128             1       0.25  relu
+      63  root.quick-start.1.63          0.0505           500           128             1       0.25  relu
+      61  root.quick-start.1.61          0.02575          500           128             1       0.25  relu
+    ```
+
+    Filtering only experiments with certain condition
+
+    ```bash
+    polyaxon group -g 1 experiments -m -q "status:succeeded, declarations.activation:relu|sigmoid, metric.loss:<=0.3"
+
+    Experiments for experiment group `1`.
+
+
+    Navigation:
+
+    -----  -
+    count  3
+    -----  -
+
+    Experiments:
+
+      id  unique_name            total_run         loss    precision    accuracy
+    ----  ---------------------  -----------  ---------  -----------  ----------
+      71  root.quick-start.8.71  1m 38s       0.274588      0.995453      0.9279
+      69  root.quick-start.8.69  1m 12s       0.0491856     0.999223      0.9832
+      59  root.quick-start.8.59  2m 14s       0.0471044     0.999445      0.9845
+    ```
+
 14. More information about the project in the dashboard
 
     ```bash
@@ -322,28 +383,38 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
         ![project](/images/dashboard/projects.png)
 
-    * Project Details
+    * Project Overview
 
-        ![project](/images/dashboard/project.png)
+        ![project](/images/dashboard/project_overview.png)
+
+    * Experiments
+
+        ![project](/images/dashboard/experiments.png)
+
+    * Experiment Groups
+
+        ![project](/images/dashboard/experiment_groups.png)
 
     * Experiment Details
 
         ![experiment](/images/dashboard/experiment.png)
 
-15. Finally, Let start tensorboard to see the model outputs:
+15. Finally, Let start for tensorboard to see the model outputs:
+
+    You can start a tensorboard for a single experiment, for all experiments under a group, or all experiments in a Project
 
     ```bash
-    $ polyaxon tensorboard start
+    $ polyaxon tensorboard -xp 23 start
     ```
 
-    Tensorboard is being deployed for project `quick-start`
+    Tensorboard is being deployed for experiment `23`
 
     It may take some time before you can access tensorboard.
 
     Your tensorboard will be available on:
 
     ```
-        http://192.168.64.14:32566/tensorboard/root/quick-start/
+        http://192.168.64.14:32566/tensorboard/root/quick-start/experiments/23/
     ```
 
 Congratulations! You've trained your first experiments with Polyaxon. Behind the scene a couple of things have happened:
