@@ -160,13 +160,21 @@ $ polyaxon dashboard
 
     ![Polyaxon dashboard](config/projects.png)
 
- * Project Details
+ * Project Overview
 
-    ![Polyaxon dashboard](config/project.png)
+    ![Polyaxon dashboard](config/project_overview.png)
 
- * Experiment Details
+ * Experiments
 
-    ![Polyaxon dashboard](config/experiment.png)
+    ![Polyaxon dashboard](config/experiments.png)
+
+ * Experiment Groups
+
+    ![Polyaxon dashboard](config/experiment_groups.png)
+
+ * Experiment Overview
+
+    ![Polyaxon dashboard](config/experiment_groups.png)
 
 # Project status
 
