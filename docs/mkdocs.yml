@@ -81,11 +81,13 @@ pages:
   - Projects: experimentation/projects.md
   - Experiment Groups: experimentation/experiment_groups.md
   - Experiments: experimentation/experiments.md
+  - Experiment Jobs: experimentation/experiment_jobs.md
   - Jobs: experimentation/jobs.md
   - Distributed Experiments: experimentation/distributed_experiments.md
   - Hyperparams Search: experimentation/hyperparameters_search.md
   - Save Restart Resume: experimentation/save_resume_restart.md
-  - Project Plugins: experimentation/project_plugins.md
+  - Tensorboards: experimentation/tensorboards.md
+  - Notebooks: experimentation/notebooks.md
 - Tutorials:
   - Introduction: tutorials/index.md
   - Azure:
@@ -103,6 +105,7 @@ pages:
   - Extend Polyaxon Deployments: customization/extend_deployments.md
   - Customize Run Environment: customization/customize_run_environment.md  # hptuning, resources,
   - Customize Node Scheduling: customization/customize_node_scheduling.md
+  - Customize Data and Outputs: customization/customize_node_scheduling.md
   - Single Sign On: customization/single_sign_on.md
 - Reference Polyaxon CLI:
   - Introduction: polyaxon_cli/introduction.md
