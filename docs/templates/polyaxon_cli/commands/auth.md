@@ -13,6 +13,12 @@ $ polyaxon login [OPTIONS]
 $ polyaxon login --username=adam --password=secret
 ```
 
+Or
+
+```bash
+$ polyaxon login -u adam -p secret
+```
+
 ### Example using username and prompt
 
 ```bash
