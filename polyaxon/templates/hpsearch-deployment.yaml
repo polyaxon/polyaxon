@@ -48,6 +48,8 @@ spec:
         {{ include "config.emails" . | indent 8 }}
         {{ include "config.k8s" . | indent 8 }}
         {{ include "config.registry" . | indent 8 }}
+        {{ include "config.persistence.data" . | indent 8 }}
+        {{ include "config.persistence.outputs" . | indent 8 }}
         {{ include "config.spawner" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
