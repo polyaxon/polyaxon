@@ -221,7 +221,9 @@ Every definition should follow the following structure:
 | `persistence.data.dataName.hostPath`       | The directory from the host node's                | ``
 | `persistence.data.dataName.readOnly`       | Whether to mount as read only                     |
 
-There no default value for the data persistence definition, so you need to set it up yourself, this is a value based on the host node::
+> **Warning**: There's no default value for the data persistence definition, so you need to set it up yourself.
+
+Example of a value based on the host node::
 
 ```yaml
 persistence:
@@ -264,7 +266,10 @@ Every definition should follow the following structure:
 | `persistence.outputs.outputsName.hostPath`       | The directory from the host node's                | ``
 | `persistence.outputs.outputsName.readOnly`       | Whether to mount as read only                     |
 
-There no default value for the outputs persistence definition, so you need to set it up yourself, this is a value based on the host node:
+
+> **Warning**: There's no default value for the outputs persistence definition, so you need to set it up yourself.
+
+Example of value based on the host node:
 
 ```yaml
 persistence:
