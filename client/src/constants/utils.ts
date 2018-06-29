@@ -74,13 +74,13 @@ export let getProjectTensorboardUrl = function (projectName: string) {
 export let getExperimentTensorboardUrl = function (projectName: string,
                                                    experimentId: string | number) {
   let values = splitUniqueName(projectName);
-  return `/tensorboard/${values[0]}/${values[1]}/experiments/${experimentId}`;
+  return `/tensorboard/${values[0]}/${values[1]}/experiments/${experimentId}/`;
 };
 
 export let getGroupTensorboardUrl = function (projectName: string,
                                               groupId: string | number) {
   let values = splitUniqueName(projectName);
-  return `/tensorboard/${values[0]}/${values[1]}/groups/${groupId}`;
+  return `/tensorboard/${values[0]}/${values[1]}/groups/${groupId}/`;
 };
 
 export let getNotebookUrl = function (projectName: string) {
