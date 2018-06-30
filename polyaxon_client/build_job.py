@@ -10,7 +10,7 @@ class BuildJobClient(PolyaxonClient):
     """Client to get build jobs from the server"""
     ENDPOINT = "/"
 
-    def get_job(self, username, project_name, job_id):
+    def get_build(self, username, project_name, job_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -23,7 +23,7 @@ class BuildJobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving job')
             return None
 
-    def update_job(self, username, project_name, job_id, patch_dict):
+    def update_build(self, username, project_name, job_id, patch_dict):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -36,7 +36,7 @@ class BuildJobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while updating job')
             return None
 
-    def delete_job(self, username, project_name, job_id):
+    def delete_build(self, username, project_name, job_id):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,

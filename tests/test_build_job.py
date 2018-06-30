@@ -25,7 +25,7 @@ class TestBuildJobClient(TestCase):
                                      reraise=True)
 
     @httpretty.activate
-    def test_get_job(self):
+    def test_get_build(self):
         job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
@@ -40,11 +40,11 @@ class TestBuildJobClient(TestCase):
             body=json.dumps(job),
             content_type='application/json',
             status=200)
-        result = self.client.get_job('username', 'project_name', 1)
+        result = self.client.get_build('username', 'project_name', 1)
         assert job == result.to_dict()
 
     @httpretty.activate
-    def test_update_job(self):
+    def test_update_build(self):
         job = JobConfig(config={})
         httpretty.register_uri(
             httpretty.PATCH,
@@ -58,11 +58,11 @@ class TestBuildJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_job('username', 'project_name', 1, {'name': 'new'})
+        result = self.client.update_build('username', 'project_name', 1, {'name': 'new'})
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
-    def test_delete_job(self):
+    def test_delete_build(self):
         httpretty.register_uri(
             httpretty.DELETE,
             BuildJobClient._build_url(
@@ -74,7 +74,7 @@ class TestBuildJobClient(TestCase):
                 1),
             content_type='application/json',
             status=204)
-        result = self.client.delete_job('username', 'project_name', 1)
+        result = self.client.delete_build('username', 'project_name', 1)
         assert result.status_code == 204
 
     @httpretty.activate
@@ -101,7 +101,7 @@ class TestBuildJobClient(TestCase):
         assert len(response['results']) == 1
 
     @httpretty.activate
-    def test_stop_job(self):
+    def test_stop_build(self):
         httpretty.register_uri(
             httpretty.POST,
             BuildJobClient._build_url(

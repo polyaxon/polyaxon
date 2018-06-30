@@ -220,6 +220,21 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving build jobs')
             return []
 
+    def create_build(self, username, project_name, build_config):
+        if isinstance(build_config, Mapping):
+            build_config = JobConfig.from_dict(build_config)
+        elif not isinstance(build_config, JobConfig):
+            raise PolyaxonException('create_build received an invalid build_config.')
+
+        request_url = self._build_url(self._get_http_url(), username, project_name, 'builds')
+
+        try:
+            response = self.post(request_url, json_data=build_config.to_dict())
+            return JobConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while creating build job')
+            return None
+
     def list_tensorboards(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of tensorboard jobs related to this project."""
         request_url = self._build_url(
@@ -236,25 +251,6 @@ class ProjectClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving tensorboard jobs')
             return []
-
-    def create_build(self, username, project_name, build_config):
-        if isinstance(build_config, Mapping):
-            build_config = JobConfig.from_dict(build_config)
-        elif not isinstance(build_config, JobConfig):
-            raise PolyaxonException('create_build received an invalid build_config.')
-
-        request_url = self._build_url(self._get_http_url(), username, project_name, 'builds')
-
-        try:
-            response = self.post(request_url, json_data=build_config.to_dict())
-            return JobConfig.from_dict(response.json())
-        except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while creating build job')
-            return None
-
-    def clone_repo(self, username, project_name):
-        # TODO
-        pass
 
     def start_tensorboard(self, username, project_name, job_config=None):
         request_url = self._build_url(self._get_http_url(),
