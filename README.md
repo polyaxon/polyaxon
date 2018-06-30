@@ -23,6 +23,7 @@ Please check the [polyaxon cli reference](https://docs.polyaxon.com/polyaxon_cli
 
  * [Auth](https://docs.polyaxon.com/polyaxon_cli/commands/auth)
  * [Check](https://docs.polyaxon.com/polyaxon_cli/commands/check)
+ * [User](https://docs.polyaxon.com/polyaxon_cli/commands/user)
  * [Config](https://docs.polyaxon.com/polyaxon_cli/commands/config)
  * [Init](https://docs.polyaxon.com/polyaxon_cli/commands/init)
  * [Project](https://docs.polyaxon.com/polyaxon_cli/commands/project)
@@ -31,6 +32,7 @@ Please check the [polyaxon cli reference](https://docs.polyaxon.com/polyaxon_cli
  * [Experiment Group](https://docs.polyaxon.com/polyaxon_cli/commands/experiment_group)
  * [Experiment](https://docs.polyaxon.com/polyaxon_cli/commands/experiment)
  * [Job](https://docs.polyaxon.com/polyaxon_cli/commands/job)
+ * [Build](https://docs.polyaxon.com/polyaxon_cli/commands/build)
  * [Dashboard](https://docs.polyaxon.com/polyaxon_cli/commands/dashboard)
  * [Tensorboard](https://docs.polyaxon.com/polyaxon_cli/commands/tensorboard)
  * [Notebook](https://docs.polyaxon.com/polyaxon_cli/commands/notebook)
