@@ -79,7 +79,7 @@ def get(ctx):
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
-        response = PolyaxonClients().build_job.get_job(user, project_name, _build)
+        response = PolyaxonClients().build_job.get_build(user, project_name, _build)
         # Set caching only if we have an initialized project
         if ProjectManager.is_initialized():
             BuildJobManager.set_config(response)
@@ -117,7 +117,7 @@ def delete(ctx):
         sys.exit(1)
 
     try:
-        response = PolyaxonClients().build_job.delete_job(
+        response = PolyaxonClients().build_job.delete_build(
             user, project_name, _build)
         # Purge caching
         BuildJobManager.purge()
@@ -166,7 +166,7 @@ def update(ctx, name, description, tags):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().build_job.update_job(
+        response = PolyaxonClients().build_job.update_build(
             user, project_name, _build, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not update build `{}`.'.format(_build))
