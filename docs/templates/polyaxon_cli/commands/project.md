@@ -2,7 +2,7 @@ The project commands accept an optional argument `--project` or '-p'  to use a s
 
 If no project is provided, the command will default to the currently initialized project.
 
-If no project is provided and no project is cached, the command will raise.
+If no project is provided and no project is cached, the command will raise an error.
 
 
 Usage:
@@ -20,7 +20,6 @@ option | type | description
 
 
 ## create
-
 
 Usage:
 
@@ -43,7 +42,8 @@ Options:
 option | type | description
 -------|------|------------
   --name [required] | TEXT | Name of the project, must be unique for the same user
-  --description | TEXT | Description of the project,
+  --description | TEXT | Description of the project.
+  --tags | TEXT | Tags, comma separated values, of the project.
   --private | | Set the visibility of the project to private.
   --help | | Show this message and exit.
 
@@ -117,12 +117,17 @@ $ polyaxon update foobar --description="Image Classification with Deep Learning 
 $ polyaxon update mike1/foobar --description="Image Classification with Deep Learning using TensorFlow"
 ```
 
+```bash
+$ polyaxon update --tags="foo, bar"
+```
+
 Options:
 
 option | type | descrition
 -------|------|-----------
   --name | TEXT | Name of the project, must be unique for the same user,
-  --description | TEXT | Description of the project,
+  --description | TEXT | Description of the project.
+  --tags | TEXT | Tags, comma separated values, of the project.
   --private | BOOLEAN | Set the visibility of the project to private/public.
   --help | | Show this message and exit.
 
@@ -130,6 +135,7 @@ option | type | descrition
 ## delete
 
 Usage:
+
 ```bash
 polyaxon project delete
 ```
@@ -137,9 +143,21 @@ polyaxon project delete
 Delete project.
 
 
+## download
+
+Usage:
+
+```bash
+polyaxon project download
+```
+
+Download code of the current project.
+
+
 ## experiments
 
 Usage:
+
 ```bash
 polyaxon project experiments [OPTIONS]
 ```
@@ -148,12 +166,40 @@ List experiments for this project.
 
 Uses [Caching](/polyaxon_cli/introduction#Caching)
 
+Examples:
+
+Get all experiments:
+
+```bash
+$ polyaxon project experiments
+```
+
+Get all experiments with with status {created or running}, and creation
+date between 2018-01-01 and 2018-01-02, and declarations activation equal
+to sigmoid and metric loss less or equal to 0.2
+
+```bash
+$ polyaxon project experiments -q "status:created|running, started_at:2018-01-01..2018-01-02, declarations.activation:sigmoid, metric.loss:<=0.2"
+```
+
+Get all experiments sorted by update date
+
+```bash
+$ polyaxon project experiments -s "-updated_at"
+```
+
 Options:
 
 option | type | description
 -------|------|------------
-  --page | INTEGER | To paginate through the list of experiments.
+  -m, --metrics | | List experiments with their metrics.
+  -d, --declarations | | List experiments with their declarations/params.
+  -i, --independent | | To return only independent experiments.
+  -g, --group| INTEGER | To filter experiments for a specific group.
+  -q, --query| TEXT | To filter the experiments based on this query spec.
+  -s, --sort | TEXT | To change order by of the experiments.
   -m, --metrics | Flag | List experiments with their metrics.
+  --page | INTEGER | To paginate through the list of experiments.
   --help | | Show this message and exit.
 
 ## groups
@@ -168,9 +214,152 @@ List experiment groups for this project.
 
 Uses [Caching](/polyaxon_cli/introduction#Caching)
 
+Examples:
+
+Get all groups:
+
+```bash
+$ polyaxon project groups
+```
+
+Get all groups with with status {created or running}, and creation date
+between 2018-01-01 and 2018-01-02, and search algorithm not in {grid or
+random search}
+
+```bash
+$ polyaxon project groups -q "status:created|running, started_at:2018-01-01..2018-01-02, search_algorithm:~grid|random"
+```
+
+Get all groups sorted by update date
+
+```bash
+$ polyaxon project groups -s "-updated_at"
+```
+
 Options:
 
 option | type | description
 -------|------|------------
+  -q, --query| TEXT | To filter the groups based on this query spec.
+  -s, --sort | TEXT | To change order by of the groups.
   --page | INTEGER | To paginate through the list of groups.
+  --help | | Show this message and exit.
+
+
+## jobs
+
+Usage:
+
+```bash
+polyaxon project jobs [OPTIONS]
+```
+
+List jobs for this project.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+Get all jobs:
+
+```bash
+$ polyaxon project jobs
+```
+
+Get all jobs with with status not in {created or running}
+
+```bash
+$ polyaxon project jobs -q "status:~created|running"
+```
+
+Get all jobs with with status failed
+
+```bash
+$ polyaxon project jobs -q "status:failed"
+```
+
+Get all jobs sorted by update date
+
+```bash
+$ polyaxon project jobs -s "-updated_at"
+```
+
+Options:
+
+option | type | description
+-------|------|------------
+  -q, --query| TEXT | To filter the jobs based on this query spec.
+  -s, --sort | TEXT | To change order by of the jobs.
+  --page | INTEGER | To paginate through the list of jobs.
+  --help | | Show this message and exit.
+
+## builds
+
+Usage:
+
+```bash
+polyaxon project builds [OPTIONS]
+```
+
+List build jobs for this project.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+Get all builds:
+
+```bash
+$ polyaxon project builds
+```
+
+Get all builds with with status not in {created or running}
+
+```bash
+$ polyaxon project builds -q "status:~created"
+```
+
+Get all builds with with status failed
+
+```bash
+$ polyaxon project builds -q "status:failed"
+```
+
+Get all builds sorted by update date
+
+```bash
+$ polyaxon project builds -s "-updated_at"
+```
+
+Options:
+
+option | type | description
+-------|------|------------
+  -q, --query| TEXT | To filter the builds based on this query spec.
+  -s, --sort | TEXT | To change order by of the builds.
+  --page | INTEGER | To paginate through the list of builds.
+  --help | | Show this message and exit.
+
+
+## tensorboards
+
+Usage:
+
+```bash
+polyaxon project tensorboards [OPTIONS]
+```
+
+Usage: polyaxon project tensorboards [OPTIONS]
+
+List tensorboard jobs for this project.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Options:
+
+option | type | description
+-------|------|------------
+  -q, --query| TEXT | To filter the tensorboards based on this query spec.
+  -s, --sort | TEXT | To change order by of the tensorboards.
+  --page | INTEGER | To paginate through the list of tensorboards.
   --help | | Show this message and exit.
