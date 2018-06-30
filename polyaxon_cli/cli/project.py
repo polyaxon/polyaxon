@@ -244,6 +244,11 @@ def update(ctx, name, description, tags, private):
     ```bash
     $ polyaxon update mike1/foobar --description="Image Classification with DL using TensorFlow"
     ```
+
+    \b
+    ```bash
+    $ polyaxon update --tags="foo, bar"
+    ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
 
@@ -277,8 +282,8 @@ def update(ctx, name, description, tags, private):
 
 @project.command()
 @click.option('--query', '-q', type=str,
-              help='To filter the experiments based on this query spec.')
-@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
+              help='To filter the groups based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the groups.')
 @click.option('--page', type=int, help='To paginate through the list of groups.')
 @click.pass_context
 @clean_outputs
@@ -286,6 +291,30 @@ def groups(ctx, query, sort, page):
     """List experiment groups for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    Get all groups:
+
+    \b
+    ```bash
+    $ polyaxon project groups
+    ```
+
+    Get all groups with with status {created or running}, and
+    creation date between 2018-01-01 and 2018-01-02, and search algorithm not in {grid or random search}
+
+    \b
+    ```bash
+    $ polyaxon project groups -q "status:created|running, started_at:2018-01-01..2018-01-02, search_algorithm:~grid|random"
+    ```
+
+    Get all groups sorted by update date
+
+    \b
+    ```bash
+    $ polyaxon project groups -s "-updated_at"
+    ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
 
@@ -323,8 +352,8 @@ def groups(ctx, query, sort, page):
 
 @project.command()
 @click.option('--query', '-q', type=str,
-              help='To filter the experiments based on this query spec.')
-@click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
+              help='To filter the jobs based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the jobs.')
 @click.option('--page', type=int, help='To paginate through the list of jobs.')
 @click.pass_context
 @clean_outputs
@@ -333,6 +362,36 @@ def jobs(ctx, query, sort, page):
     """List jobs for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    Get all jobs:
+
+    \b
+    ```bash
+    $ polyaxon project jobs
+    ```
+
+    Get all jobs with with status not in {created or running}
+
+    \b
+    ```bash
+    $ polyaxon project jobs -q "status:~created|running"
+    ```
+
+    Get all jobs with with status failed
+
+    \b
+    ```bash
+    $ polyaxon project jobs -q "status:failed"
+    ```
+
+    Get all jobs sorted by update date
+
+    \b
+    ```bash
+    $ polyaxon project jobs -s "-updated_at"
+    ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
 
@@ -382,6 +441,31 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
     """List experiments for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    Get all experiments:
+
+    \b
+    ```bash
+    $ polyaxon project experiments
+    ```
+
+    Get all experiments with with status {created or running}, and
+    creation date between 2018-01-01 and 2018-01-02, and declarations activation equal to sigmoid
+    and metric loss less or equal to 0.2
+
+    \b
+    ```bash
+    $ polyaxon project experiments -q "status:created|running, started_at:2018-01-01..2018-01-02, declarations.activation:sigmoid, metric.loss:<=0.2"
+    ```
+
+    Get all experiments sorted by update date
+
+    \b
+    ```bash
+    $ polyaxon project experiments -s "-updated_at"
+    ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
 
@@ -424,9 +508,9 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
 
 
 @project.command()
-@click.option('--page', type=int, help='To paginate through the list of build jobs.')
+@click.option('--page', type=int, help='To paginate through the list of build builds.')
 @click.option('--query', '-q', type=str,
-              help='To filter the experiments based on this query spec.')
+              help='To filter the builds based on this query spec.')
 @click.option('--sort', '-s', type=str, help='To change order by of the builds.')
 @click.pass_context
 @clean_outputs
@@ -434,6 +518,36 @@ def builds(ctx, query, sort, page):
     """List build jobs for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    Get all builds:
+
+    \b
+    ```bash
+    $ polyaxon project builds
+    ```
+
+    Get all builds with with status not in {created or running}
+
+    \b
+    ```bash
+    $ polyaxon project builds -q "status:~created"
+    ```
+
+    Get all builds with with status failed
+
+    \b
+    ```bash
+    $ polyaxon project builds -q "status:failed"
+    ```
+
+    Get all builds sorted by update date
+
+    \b
+    ```bash
+    $ polyaxon project builds -s "-updated_at"
+    ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
 
@@ -467,10 +581,10 @@ def builds(ctx, query, sort, page):
 
 
 @project.command()
-@click.option('--page', type=int, help='To paginate through the list of tensorboardv jobs.')
+@click.option('--page', type=int, help='To paginate through the list of tensorboard jobs.')
 @click.option('--query', '-q', type=str,
-              help='To filter the experiments based on this query spec.')
-@click.option('--sort', '-s', type=str, help='To change order by of the tensorboards.')
+              help='To filter the tensorboard jobs based on this query spec.')
+@click.option('--sort', '-s', type=str, help='To change order by of the tensorboard jobss.')
 @click.pass_context
 @clean_outputs
 def tensorboards(ctx, query, sort, page):
