@@ -120,6 +120,7 @@ pages:
     - Experiment Group: polyaxon_cli/commands/experiment_group.md
     - Experiment: polyaxon_cli/commands/experiment.md
     - Job: polyaxon_cli/commands/job.md
+    - Build: polyaxon_cli/commands/build.md
     - Dashboard: polyaxon_cli/commands/dashboard.md
     - Notebook: polyaxon_cli/commands/notebook.md
     - Tensorboard: polyaxon_cli/commands/tensorboard.md
