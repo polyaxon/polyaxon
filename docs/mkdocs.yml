@@ -129,8 +129,20 @@ pages:
   - Introduction: polyaxonfile_specification/introduction.md
   - Sections: polyaxonfile_specification/sections.md
   - Model Sections: polyaxonfile_specification/model_sections.md
+- Reference Polyaxon Client:
+  - Introduction: polyaxon_client/introduction.md
+  - Commnands:
+    - Auth: polyaxon_client/clients/auth.md
+    - Cluster: polyaxon_client/clients/cluster.md
+    - User: polyaxon_client/clients/user.md
+    - Project: polyaxon_client/clients/project.md
+    - Experiment Group: polyaxon_client/clients/experiment_group.md
+    - Experiment: polyaxon_client/clients/experiment.md
+    - Experiment Job: polyaxon_client/clients/experiment_job.md
+    - Job: polyaxon_client/clients/job.md
+    - Build Job: polyaxon_client/clients/build_job.md
+    - Version: polyaxon_client/clients/version.md
 - Reference Polyaxon Helm: reference_polyaxon_helm.md
-- Reference Polyaxon Client: reference_polyaxon_client.md
 - Reference Polyaxon Helper: reference_polyaxon_helper.md
 #- Reference Polyaxon Lib:
 #  - Introduction: polyaxon_lib/introduction.md
