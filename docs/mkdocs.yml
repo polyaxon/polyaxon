@@ -128,10 +128,10 @@ pages:
 - Reference Polyaxonfile Specification:
   - Introduction: polyaxonfile_specification/introduction.md
   - Sections: polyaxonfile_specification/sections.md
-  - Model Sections: polyaxonfile_specification/model_sections.md
+#  - Model Sections: polyaxonfile_specification/model_sections.md
 - Reference Polyaxon Client:
   - Introduction: polyaxon_client/introduction.md
-  - Commnands:
+  - Clients:
     - Auth: polyaxon_client/clients/auth.md
     - Cluster: polyaxon_client/clients/cluster.md
     - User: polyaxon_client/clients/user.md

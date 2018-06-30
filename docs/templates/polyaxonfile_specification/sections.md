@@ -10,7 +10,7 @@ version: 1
 
 ## Kind
 
-Represents the polyaxon file specification kind, i.e. one of the values `experiment`, `group`, `plugin`, `pipeline`, `job`.
+Represents the polyaxon file specification kind, i.e. one of the values `experiment`, `group`, `job`, `notebook`, `tensorboard`, `pipeline`.
 
 Example:
 
@@ -238,7 +238,15 @@ Example:
 
 ```yaml
 hyperband:
-  n_experiments: 10
+  max_iter: 81
+  eta: 3
+  resource:
+    name: num_steps
+    type: int
+  metric:
+    name: loss
+    optimization: minimize
+  resume: False
 ```
 
 ### search algorithm: bo
@@ -249,7 +257,19 @@ Example:
 
 ```yaml
 bo:
-  n_experiments: 10
+  n_iterations: 15
+  n_initial_trials: 30
+  metric:
+    name: loss
+    optimization: minimize
+  utility_function:
+    acquisition_function: ucb
+    kappa: 1.2
+    gaussian_process:
+      kernel: matern
+      length_scale: 1.0
+      nu: 1.9
+      n_restarts_optimizer: 0
 ```
 
 ### early_stopping
@@ -287,6 +307,18 @@ A resources definition, is optional and made of three optional fields:
  * cpu: {limits: value, requests: value}
  * memory: {limits: value, requests: value}
  * gpu: {limits: value, requests: value}
+
+### persistence
+
+The volumes to mount for data and outputs, this is only needed when Polyaxon was deployed
+with multiple data volumes or multiple outputs volumes or both.
+
+```yaml
+environment:
+  persistence:
+    data: ['data_volume_name1', 'data_volume_name2', 'data_volume_name3']
+    outputs: 'outputs_volume_name2'
+```
 
 ### node selectors
 
@@ -529,7 +561,7 @@ declarations:
   batch_size: 128
 ```
 
-Or value named with a list or nested values:
+List of values or nested values:
 
 ```yaml
 declarations:
@@ -573,16 +605,15 @@ All your declaration will be exported under the environment variable name `POLYA
 !!! tip "Polyaxon export your declarations under environment variable name `POLYAXON_DECLARATIONS`"
     Check how you can [get the experiment declarations](/reference_polyaxon_helper) to use them with your models.
 
-## run
+## build
 
-This is where you define how you want to run your code, and the requirements needed to run it.
+This is where you define how you build an image to run your code.
 This section defines the following values/subsections:
 
  * image [required]: the base image polyaxon will use to build an image for you to run your code.
  * build_steps [optional]: steps are basically a list of ops that Polyaxon use with docker
  `RUN` to install/run further operations you define in the list.
  * env_vars [optional]: environment variables are also a list of tuples of 2 elements, that polyaxon will use to add env variables in the docker image.
- * cmd [required]: The command to run during the execution of your code.
 
 ```yaml
 build:
@@ -593,7 +624,15 @@ build:
   env_vars:
     - [KEY1, VALUE1]
     - [KEY2, VALUE2]
+```
 
+## run
+
+This is where you define how you want to run your code.
+
+ * cmd [required]: The command to run during the execution of your code.
+
+```yaml
 run:
   cmd: video_prediction_train --num_masks=1
 ```

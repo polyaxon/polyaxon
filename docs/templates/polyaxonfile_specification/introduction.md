@@ -13,9 +13,10 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
  * [kind](sections#kind) `required`: defines the kind of operation to run: experiment.
  * [logging](section#logging): defines the logging.
  * [project](sections#project) `required`: defines the project name (must be unique).
- * [environment](sections#environment): defines the run environment, resources, and node selectors.
+ * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
  * [declarations](sections#declarations): defines variables/modules that can be reused.
- * [run](sections#run) `required`: defines the how the user can set a docker image and a command to execute.
+ * [build](sections#build) `required`: defines the how the user can set a docker image.
+ * [run](sections#run) `required`: defines the how the user can set a command to execute.
 
 
 ## Experiment Group Sections
@@ -27,20 +28,41 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
  * [hptuning](sections#hptuning) `required`: defines the seed, concurrent runs, search algorithm, early stopping, matrix hyper parameters.
  * [environment](sections#environment): defines the run environment, resources, node selectors, and distributed jobs definition.
  * [declarations](sections#declarations): defines variables/modules that can be reused.
- * [run](sections#run) `required`: defines the how the user can set a docker image and a command to execute.
+ * [build](sections#build) `required`: defines the how the user can set a docker image.
+ * [run](sections#run) `required`: defines the how the user can set a command to execute.
 
 
-## Plugins sections
+## Build Job sections
 
  * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
  * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
  * [project](sections#project) `required`: defines the project name (must be unique).
- * [environment](sections#environment): defines the run environment, resources, and node selectors.
- * [run](sections#run): defines the run step where the user can set a docker image and a command to execute.
+ * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
+ * [build](sections#build) `required`: defines the how the user can set a docker image.
 
 
-## Model specific sections
+## Generic Job sections
 
- * [model](model_sections#model): defines the model to use based on the declarative API.
- * [train](model_sections#train): defines how to train a model and how to read the data.
- * [eval](model_sections#train): defines how to evaluate a modela how to read the data
+ * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
+ * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
+ * [project](sections#project) `required`: defines the project name (must be unique).
+ * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
+ * [build](sections#build) `required`: defines the how the user can set a docker image.
+ * [run](sections#run) `required`: defines the how the user can set a command to execute.
+
+## Tensorboard sections
+
+ * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
+ * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
+ * [project](sections#project) `required`: defines the project name (must be unique).
+ * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
+ * [build](sections#build) `required`: defines the how the user can set a docker image.
+
+
+## Notebook sections
+
+ * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
+ * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
+ * [project](sections#project) `required`: defines the project name (must be unique).
+ * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
+ * [build](sections#build) `required`: defines the how the user can set a docker image.
