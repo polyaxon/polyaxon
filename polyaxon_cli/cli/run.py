@@ -32,20 +32,32 @@ from polyaxon_schemas.project import ExperimentGroupConfig
 def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-builtin
     """Run polyaxonfile specification.
 
-    Example:
+    Examples:
 
     \b
     ```bash
     $ polyaxon run -f file -f file_override ...
     ```
 
-    Example: upload before running
+    Upload before running
 
     \b
     ```bash
     $ polyaxon run -f file -u
     ```
 
+    Run and set description and tags for this run
+
+    \b
+    ```bash
+    $ polyaxon run -f file -u --description="Description of the current run" --tags="foo, bar, moo"
+    ```
+    Run and set a unique name for this run
+
+    \b
+    ```bash
+    polyaxon run --name=foo
+    ```
     """
     file = file or 'polyaxonfile.yml'
     specification = check_polyaxonfile(file, log=False).specification
