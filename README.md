@@ -20,17 +20,39 @@ $ pip install -U polyaxon-client
 This module includes several clients that can be used to interact
 with Polyaxon API in a programmatic way.
 
- * `Auth`: A client for handling authentication and user information.
- * `Cluster`: A client for getting cluster and cluster nodes information.
- * `Data`: A client for getting data.
- * `Experiment`: A client for doing CRUD operations on experiments, as well as statuses, jobs, resources, and logs.
- * `Experiment group`: A client for doing CRUD operations on experiment groups, as well as fetching experiments per group.
- * `Experiment Job`: A client for getting information, resources, and logs of experiment jobs.
- * `Job`: A client for getting information, resources, and logs of jobs.
- * `Build Job`: A client for getting information, resources, and logs of build jobs.
- * `Project`: A client for doing CRUD operations on projects, as well as getting and creating experiments and experiment groups, creating and stopping tensorboard/notebook, and uploading code.
- * `User`: A client to manage users and superuser roles.
- * `Version`: A client to get current and supported versions of several Polyaxon component.
+ * [Auth](https://docs.polyaxon.com/polyaxon_client/auth): A client for handling authentication and user information.
+ * [Cluster](https://docs.polyaxon.com/polyaxon_client/cluster): A client for getting cluster and cluster nodes information.
+ * [User](https://docs.polyaxon.com/polyaxon_client/user): A client to manage users and superuser roles.
+ * [Project](https://docs.polyaxon.com/polyaxon_client/project): A client for doing CRUD operations on projects, as well as getting and creating experiments and experiment groups, creating and stopping tensorboard/notebook, and uploading code.
+ * [Experiment](https://docs.polyaxon.com/polyaxon_client/experiment): A client for doing CRUD operations on experiments, as well as statuses, jobs, resources, and logs.
+ * [Experiment group](https://docs.polyaxon.com/polyaxon_client/experiment_group): A client for doing CRUD operations on experiment groups, as well as fetching experiments per group.
+ * [Experiment Job](https://docs.polyaxon.com/polyaxon_client/experiment_job): A client for getting information, resources, and logs of experiment jobs.
+ * [Job](https://docs.polyaxon.com/polyaxon_client/job): A client for getting information, resources, and logs of jobs.
+ * [Build Job](https://docs.polyaxon.com/polyaxon_client/build_job): A client for getting information, resources, and logs of build jobs.
+ * [Version](https://docs.polyaxon.com/polyaxon_client/version): A client to get current and supported versions of several Polyaxon component.
+
+
+## Usage
+
+```python
+from polyaxon_client.clients import PolyaxonClients
+
+polyaxon_clients = PolyaxonClients(
+    host=POLYAXON_IP,
+    token=MY_TOKEN, http_port=POLYAXON_HTTP_PORT,
+    ws_port=POLYAXON_WS_PORT)
+
+polyaxon_clients.auth
+polyaxon_clients.cluster
+polyaxon_clients.user
+polyaxon_clients.project
+polyaxon_clients.experiment
+polyaxon_clients.experiment_group
+polyaxon_clients.experiment_job
+polyaxon_clients.job
+polyaxon_clients.build_job
+polyaxon_clients.version
+```
 
 
 ## Install polyaxon
