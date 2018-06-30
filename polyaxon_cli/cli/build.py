@@ -69,12 +69,12 @@ def get(ctx):
 
     \b
     ```bash
-    $ polyaxon build --job=1 get
+    $ polyaxon build -b 1 get
     ```
 
     \b
     ```bash
-    $ polyaxon build --job=1 --project=project_name get
+    $ polyaxon build --build=1 --project=project_name get
     ```
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
@@ -108,7 +108,7 @@ def delete(ctx):
 
     \b
     ```bash
-    $ polyaxon build -j 2 delete
+    $ polyaxon build -b 2 delete
     ```
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
@@ -146,7 +146,7 @@ def update(ctx, name, description, tags):
 
     \b
     ```bash
-    $ polyaxon build -j 2 update --description="new description for my build"
+    $ polyaxon build -b 2 update --description="new description for my build"
     ```
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
@@ -197,7 +197,7 @@ def stop(ctx, yes):
 
     \b
     ```bash
-    $ polyaxon build -j 2 stop
+    $ polyaxon build -b 2 stop
     ```
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
@@ -229,7 +229,7 @@ def statuses(ctx, page):
 
     \b
     ```bash
-    $ polyaxon build -j 2 statuses
+    $ polyaxon build -b 2 statuses
     ```
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
@@ -271,14 +271,14 @@ def resources(ctx, gpu):
 
     \b
     ```bash
-    $ polyaxon build -j 2 resources
+    $ polyaxon build -b 2 resources
     ```
 
     For GPU resources
 
     \b
     ```bash
-    $ polyaxon build -j 2 resources --gpu
+    $ polyaxon build -b 2 resources --gpu
     ```
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
@@ -308,7 +308,7 @@ def logs(ctx, past, follow):
 
     \b
     ```bash
-    $ polyaxon build -j 2 logs
+    $ polyaxon build -b 2 logs
     ```
 
     \b
