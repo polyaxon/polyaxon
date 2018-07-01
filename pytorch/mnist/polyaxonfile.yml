@@ -3,8 +3,11 @@ version: 1
 
 kind: experiment
 
+build:
+ image: pytorch/pytorch:latest
+ build_steps:
+   - apt-get -y update && apt-get -y install git
+   - pip install --no-cache-dir -U git+https://github.com/polyaxon/polyaxon-helper.git@master#egg=polyaxon-helper
+
 run:
-  image: pytorch/pytorch:latest
-  build_steps:
-    - pip install --no-cache-dir -U polyaxon-helper
-  cmd:  python run.py --epochs=8
+  cmd:  python -u run.py --epochs=8

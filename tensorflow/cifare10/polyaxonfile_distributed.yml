@@ -8,8 +8,10 @@ environment:
     n_workers: 3
     n_ps: 1
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1
   build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
+
+run:
   cmd:  python run.py --train-steps=400 --sync

@@ -7,8 +7,10 @@ environment:
   pytorch:
     n_workers: 1
 
-run:
+builds:
   image: pytorch/pytorch:latest
   build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
+
+run:
   cmd: python distributed_run.py

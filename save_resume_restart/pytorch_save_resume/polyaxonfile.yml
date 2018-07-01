@@ -10,10 +10,12 @@ declarations:
   num_classes: 10
   notify: 10
 
-run:
+build:
   image: pytorch/pytorch:latest
   build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
+
+run:
   cmd:  python run.py --batch-size={{ batch_size }} \
                       --epochs={{ epochs }} \
                       --learning-rate={{ learning_rate }} \
