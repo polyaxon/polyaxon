@@ -130,7 +130,12 @@ def update(ctx, name, description, tags):
 
     \b
     ```bash
-    $ polyaxon group -g 2 update --description="new description for my experiments"
+    $ polyaxon group -g 2 update --description="new description for this group"
+    ```
+
+    \b
+    ```bash
+    $ polyaxon update --tags="foo, bar"
     ```
     """
     user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
