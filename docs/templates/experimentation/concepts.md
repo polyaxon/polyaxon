@@ -56,6 +56,7 @@ An `Team` provides a way to manage team/group of users, their access roles, and 
     This is still a work in progress.
     If you want to be notified when we release this feature, please [subscribe](https://polyaxon.com/signup/) to receive our progress.
 
+
 ### Project
 
 A `Project` in Polyaxon is very similar to a project in github,
@@ -65,12 +66,14 @@ A project consist of a name and a description, the code to execute, the data, an
 !!! info "More details"
     Please refer to the [projects section](projects) for more details.
 
+
 ### Experiment Group
 
 An `Experiment Group` is an automatic and practical way to run a version of your model and data with different hyper parameters.
 
 !!! info "More details"
     Please refer to the [experiment groups and hyper parameters search section](experiment_groups) for more details.
+
 
 ### Experiment
 
@@ -79,13 +82,14 @@ An `Experiment` is the execution of your model with data and the provided parame
 !!! info "More details"
     Please refer to the [experiments and distributed runs section](experiments) for more details.
 
-### Job
 
-A `Job` is the Kubernetes pod running on the cluster for a specific experiment,
-if an experiment run in a distributed way it will create multiple instances of `Job`.
+### Experiment Job
+
+A `Experiment Job` is the Kubernetes pod running on the cluster for a specific experiment,
+if an experiment run in a distributed way it will create multiple instances of `Experiment Job`.
 
 !!! info "More details"
-    Please refer to the [jobs section](jobs) for more details.
+    Please refer to the [experiment jobs section](experiment_jobs) for more details.
 
 
 ### Distributed Experiments
@@ -96,6 +100,14 @@ A `Distributed Experiment` is the execution of a model or a computation graph ac
     Please refer to the [distributed experiments](distributed_experiments) for more details.
 
 
+### Job
+
+A `Job` is the execution of your your code to do some data processing or any generic operation.
+
+!!! info "More details"
+    Please refer to the [jobs section](jobs) for more details.
+
+
 ### Hyperparameters search
 
 Finding good hyperparameters involves can be very challenging,
@@ -104,6 +116,7 @@ how to manage a large set of experiments for hyperparameter tuning.
 
 !!! info "More details"
     Please refer to the [hyperparameters search](hyperparameters_search) for more details.
+
 
 ### Checkpointing, resuming and restarting experiments
 
@@ -117,8 +130,15 @@ Polyaxon provides some structure and organization regarding checkpointing and ou
     Please refer to the [save, resume & restart](save_resume_restart) for more details.
 
 
+### Tensorboard
 
-### Project Plugins
+A `Tensorboard` is a job running to visualize the metrics of an experiment,
+the experiments of a group, or of a project.
+
+!!! info "More details"
+    Please refer to the [tensorboard](tensorboard) for more details.
+
+### Notebooks
 
 A `Project plugin` is a job running project wide. Currently, Polyaxon offers 2 plugins: Tensorboard and Jupyter notebook.
 
