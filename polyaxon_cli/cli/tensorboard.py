@@ -47,15 +47,34 @@ def tensorboard(ctx, project, group, experiment):
 @click.pass_context
 @clean_outputs
 def url(ctx):
-    """Prints the tensorboard url for this project.
+    """Prints the tensorboard url for project/experiment/experiment group.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Example:
+    Examples for project tensorboards:
 
     \b
     ```bash
     $ polyaxon tensorboard url
+    ```
+
+    \b
+    ```bash
+    $ polyaxon tensorboard -p mnist url
+    ```
+
+    Examples for experiment tensorboards:
+
+    \b
+    ```bash
+    $ polyaxon tensorboard -xp 1 url
+    ```
+
+    Examples for experiment group tensorboards:
+
+    \b
+    ```bash
+    $ polyaxon tensorboard -g 1 url
     ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
@@ -110,9 +129,13 @@ def url(ctx):
 @click.pass_context
 @clean_outputs
 def start(ctx, file):  # pylint:disable=redefined-builtin
-    """Start a tensorboard deployment for this project/experiment/experiment group.
+    """Start a tensorboard deployment for project/experiment/experiment group.
 
-    It will show a tensorboard with all experiments under the project.
+    Project tensorboard will aggregate all experiments under the project.
+
+    Experiment group tensorboard will aggregate all experiments under the group.
+
+    Experiment tensorboard will show all metrics for an experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
@@ -128,6 +151,20 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
     \b
     ```bash
     $ polyaxon tensorboard start -f file -f file_override ...
+    ```
+
+    Example: starting a tensorboard for an experiment group
+
+    \b
+    ```bash
+    $ polyaxon tensorboard -g 1 start -f file
+    ```
+
+    Example: starting a tensorboard for an experiment
+
+    \b
+    ```bash
+    $ polyaxon tensorboard -xp 112 start -f file
     ```
     """
     specification = None
@@ -205,9 +242,30 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
 @click.pass_context
 @clean_outputs
 def stop(ctx, yes):
-    """Stops the tensorboard deployment for this project if it exists.
+    """Stops the tensorboard deployment for project/experiment/experiment group if it exists.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples: stopping project tensorboard
+
+    \b
+    ```bash
+    $ polyaxon tensorboard stop
+    ```
+
+    Examples: stopping experiment group tensorboard
+
+    \b
+    ```bash
+    $ polyaxon tensorboard -g 1 stop
+    ```
+
+    Examples: stopping experiment tensorboard
+
+    \b
+    ```bash
+    $ polyaxon tensorboard -xp 112 stop
+    ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
     group = ctx.obj['group']
