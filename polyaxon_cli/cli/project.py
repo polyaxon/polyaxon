@@ -302,11 +302,13 @@ def groups(ctx, query, sort, page):
     ```
 
     Get all groups with with status {created or running}, and
-    creation date between 2018-01-01 and 2018-01-02, and search algorithm not in {grid or random search}
+    creation date between 2018-01-01 and 2018-01-02,
+    and search algorithm not in {grid or random search}
 
     \b
     ```bash
-    $ polyaxon project groups -q "status:created|running, started_at:2018-01-01..2018-01-02, search_algorithm:~grid|random"
+    $ polyaxon project groups \
+      -q "status:created|running, started_at:2018-01-01..2018-01-02, search_algorithm:~grid|random"
     ```
 
     Get all groups sorted by update date
@@ -457,7 +459,9 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
 
     \b
     ```bash
-    $ polyaxon project experiments -q "status:created|running, started_at:2018-01-01..2018-01-02, declarations.activation:sigmoid, metric.loss:<=0.2"
+    $ polyaxon project experiments \
+      -q "status:created|running, started_at:2018-01-01..2018-01-02, \
+          declarations.activation:sigmoid, metric.loss:<=0.2"
     ```
 
     Get all experiments sorted by update date
