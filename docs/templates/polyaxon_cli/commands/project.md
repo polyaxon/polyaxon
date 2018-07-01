@@ -198,7 +198,6 @@ option | type | description
   -g, --group| INTEGER | To filter experiments for a specific group.
   -q, --query| TEXT | To filter the experiments based on this query spec.
   -s, --sort | TEXT | To change order by of the experiments.
-  -m, --metrics | Flag | List experiments with their metrics.
   --page | INTEGER | To paginate through the list of experiments.
   --help | | Show this message and exit.
 

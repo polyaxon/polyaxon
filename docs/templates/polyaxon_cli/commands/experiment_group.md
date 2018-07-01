@@ -5,7 +5,7 @@ The experiment group commands accept 2 optional arguments:
 
 If no project/group is provided, the command will default to the currently initialized project/last used group.
 
-If no project/group is provided and no project/group is cached, the command will raise.
+If no project/group is provided and no project/group is cached, the command will raise an error.
 
 Usage:
 
@@ -58,11 +58,17 @@ Example:
 $ polyaxon group -g 2 update --description="new description for my experiments"
 ```
 
+```bash
+$ polyaxon update --tags="foo, bar"
+```
+
 Options:
 
 option | type | description
 -------|------|------------
-  --description | TEXT | Description of the project
+  --name [optional] | TEXT | Name of the group, must be unique within the project.
+  --description [optional] | TEXT | Description of the experiment group.
+  --tags [optional] | TEXT | Tags, comma separated values, of the experiment group.
   --help | | Show this message and exit
 
 ## delete
@@ -85,14 +91,19 @@ Usage:
 $ polyaxon group experiments [OPTIONS]
 ```
 
-List experiments for this experiment group
+List experiments for this experiment group. Supports sorting and querying.
 
 Uses [Caching](/polyaxon_cli/introduction#Caching)
 
+Options:
+
 option | type | description
 -------|------|------------
+  -m, --metrics | | List experiments with their metrics.
+  -d, --declarations | | List experiments with their declarations/params.
+  -q, --query| TEXT | To filter the experiments based on this query spec.
+  -s, --sort | TEXT | To change order by of the experiments.
   --page | INTEGER | To paginate through the list of experiments.
-  -m, --metrics | Flag | List experiments with their metrics.
   --help | | Show this message and exit.
 
 ## stop
@@ -133,4 +144,30 @@ option | type | description
 -------|------|------------
   --pending | Flag | To stop only pending experiments, i.e. leave currently running one intact.
   -y, --yes | Flag |  Automatic yes to prompts. Assume "yes" as answer to all prompts and run non-interactively.
+  --help | | Show this message and exit.
+
+
+## statuses
+
+Usage:
+
+```bash
+polyaxon group statuses
+```
+
+Get experiment group statuses.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon group -g 2 statuses
+```
+
+Options:
+
+option | type | description
+-------|------|------------
+  --page | INTEGER | To paginate through the list of statuses.
   --help | | Show this message and exit.
