@@ -21,7 +21,7 @@ def superuser():
 @click.argument('username', type=str)
 @clean_outputs
 def grant(username):
-    """Grant superuser role to  a user.
+    """Grant superuser role to a user.
 
     Example:
 

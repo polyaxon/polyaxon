@@ -24,6 +24,7 @@ Please check the [polyaxon cli reference](https://docs.polyaxon.com/polyaxon_cli
  * [Auth](https://docs.polyaxon.com/polyaxon_cli/commands/auth)
  * [Check](https://docs.polyaxon.com/polyaxon_cli/commands/check)
  * [User](https://docs.polyaxon.com/polyaxon_cli/commands/user)
+ * [Super User role](https://docs.polyaxon.com/polyaxon_cli/commands/superuser)
  * [Config](https://docs.polyaxon.com/polyaxon_cli/commands/config)
  * [Init](https://docs.polyaxon.com/polyaxon_cli/commands/init)
  * [Project](https://docs.polyaxon.com/polyaxon_cli/commands/project)
