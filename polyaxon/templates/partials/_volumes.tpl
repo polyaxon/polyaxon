@@ -50,7 +50,7 @@ Volume mounts
 - mountPath: {{ .Values.nfsProvisioner.pvc.data.mountPath | quote }}
   name: data
 {{- else }}
-- mountPath: {{ .Values.defaultPersistence.data.mountPath | quote }}
+- mountPath: {{ .Values.defaultPersistence.data.data.mountPath | quote }}
   name: data
 {{- end }}
 {{- end -}}
@@ -67,7 +67,7 @@ Volume mounts
 - mountPath: {{ .Values.nfsProvisioner.pvc.outputs.mountPath | quote }}
   name: outputs
 {{- else }}
-- mountPath: {{ .Values.defaultPersistence.outputs.mountPath | quote }}
+- mountPath: {{ .Values.defaultPersistence.outputs.outputs.mountPath | quote }}
   name: outputs
 {{- end }}
 {{- end -}}
@@ -121,6 +121,10 @@ Volumes
 - name: data
   persistentVolumeClaim:
     claimName: {{ .Values.nfsProvisioner.pvc.data.name }}
+{{- else }}
+- name: data
+  hostPath:
+    path: {{ .Values.defaultPersistence.data.data.hostPath | quote }}
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumes.outputs" }}
@@ -139,6 +143,10 @@ Volumes
 - name: outputs
   persistentVolumeClaim:
     claimName: {{ .Values.nfsProvisioner.pvc.outputs.name }}
+{{- else }}
+- name: outputs
+  hostPath:
+    path: {{ .Values.defaultPersistence.outputs.outputs.hostPath | quote }}
 {{- end }}
 {{- end -}}
 

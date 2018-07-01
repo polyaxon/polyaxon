@@ -82,11 +82,11 @@ persistence:
 
 defaultPersistence:
   data:
-    default-data:
+    data:
       mountPath: "/data"
       hostPath: "/data"
   outputs:
-    default-outputs:
+    outputs:
       mountPath: "/outputs"
       hostPath: "/outputs"
 
