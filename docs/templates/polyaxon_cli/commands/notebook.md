@@ -2,7 +2,7 @@ The project commands accept an optional argument `--project` or '-p'  to use a s
 
 If no project is provided, the command will default to the currently initialized project.
 
-If no project is provided and no project is cached, the command will raise.
+If no project is provided and no project is cached, the command will raise an error.
 
 
 Usage:
