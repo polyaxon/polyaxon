@@ -124,6 +124,7 @@ pages:
     - Dashboard: polyaxon_cli/commands/dashboard.md
     - Notebook: polyaxon_cli/commands/notebook.md
     - Tensorboard: polyaxon_cli/commands/tensorboard.md
+    - User: polyaxon_cli/commands/user.md
     - Cluster: polyaxon_cli/commands/cluster.md
     - Version: polyaxon_cli/commands/version.md
 - Reference Polyaxonfile Specification:
