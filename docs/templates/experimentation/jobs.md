@@ -1,105 +1,54 @@
-The job is the running component of an experiment.
-An experiment has at least one job.
-If the experiment is running in a distributed way then it will have more than one job.
+Assuming that you have already a [project](projects) created and initialized,
+and you uploaded your code containing a file `prepare_data.py` that does some preprocessing of your data.
+Of course you can call this file directly from your experiments, but that will lead to basically
+doing the same operation for all experiments.
 
-For distributed experiments, it is often difficult to follow the logs/resources of that experiments,
-so the user might want to look at a specific job running in that experiment.
+## Updating the polyaxonfile.yml
 
-## Getting job info
+Running a job is very similar to running an experiment, in the sense that you need to have a polyaxonfile and code to run.
 
-To view the info of a specific job, you need to have the experiment id it belongs to, and the job id.
+The polyaxonfile will define the environment requirements needed to run your job.
 
+```yaml
+---
+...
 
-```bash
-$ polyaxon job -xp 3 -j 1 get
+build
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip install scikit-learn
 
-Job resources:
-
-resource      limits    requests
-----------  --------  ----------
-cpu                2           1
-memory           200         100
-gpu                1           1
-
-Job info:
-
----------------  --------------------
-id               1
-role             master
-experiment_name  root.quick-start.3
-last_status      Succeeded
-created_at       2 hours ago
-updated_at       15 minutes ago
-started_at       2 hours ago
-finished_at      2 hours ago
-total_run        10m 40s
----------------  --------------------
+run:
+  cmd: python3 prepare_data.py
 ```
 
-## Tracking job logs
+!!! info "More details"
+    For more details about the `run section` check the [run section reference](/polyaxonfile_specification/sections#run)
 
-To view the logs of a specific job, you need to have the experiment is it belongs to, and the job id within that experiment.
 
-For example
+## Running a job
 
-```bash
-$ polyaxon job -xp 3 -j 1 logs
-```
-
-This command will show the logs of in real time for that job.
-
-## Tracking job resources
-
-To view the resources of a specific job, you need to have the experiment id it belongs to, and the job id within that experiment.
-
-For example
+To run this polyaxonfile execute
 
 ```bash
-$ polyaxon job -xp 3 -j 1 resources
+$ polyaxon run -f my_polyaxonfile.yml
+
+Job 1 was created.
 ```
 
-This command will show the resources in real time for that job.
+!!! info "More details"
+    For more details about this command please run `polyaxon run --help`,
+    or check the [command reference](/polyaxon_cli/commands/run)
 
-If the job is running with GPU, and you want to see GPU metrics in real time, run
+## Checking the jobs of a project
+
+We can check that the project has now a job creted.
+For that we can use Polyaxon dashboard or Polyaxon CLI,
 
 ```bash
-$ polyaxon job -xp 3 -j 1 resources --gpu
-
-or
-
-$ polyaxon job -xp 3 -j 1 resources -g
+$ polyaxon project jobs
 ```
-
-## Job statuses
-
-To view the chronological statuses of a specific job, you need to have the experiment id it belongs to, and the job id within that experiment.
-
-```bash
-$ polyaxon job -xp 3 -j 1 statuses
-
-Statuses for Job `1`.
-
-
-Navigation:
-
------  -
-count  6
------  -
-
-Statuses:
-
-created_at    status     message
-------------  ---------  ----------------------
-2 hours ago   Created
-2 hours ago   Building
-2 hours ago   UNKNOWN    Unknown pod conditions
-2 hours ago   Building   ContainerCreating
-2 hours ago   Running
-2 hours ago   Succeeded  Completed
-```
-
 
 !!! info "More details"
     For more details about this command please run `polyaxon job --help`,
     or check the [command reference](/polyaxon_cli/commands/job)
-
