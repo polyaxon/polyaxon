@@ -88,7 +88,7 @@ def get(ctx, job):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Example for getting an experiment:
+    Examples for getting an experiment:
 
     \b
     ```bash
@@ -110,7 +110,7 @@ def get(ctx, job):
     $ polyaxon experiment -xp 1 -p alain/cats-vs-dogs get
     ```
 
-    Example for getting an experiment job:
+    Examples for getting an experiment job:
 
     \b
     ```bash
@@ -227,11 +227,16 @@ def update(ctx, name, description, tags):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Example:
+    Examples:
 
     \b
     ```bash
     $ polyaxon experiment -xp 2 update --description="new description for my experiments"
+    ```
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 2 update --tags="foo, bar" --name="unique-name"
     ```
     """
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
@@ -446,7 +451,7 @@ def statuses(ctx, job, page):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Example getting experiment statuses:
+    Examples getting experiment statuses:
 
     \b
     ```bash
@@ -458,7 +463,7 @@ def statuses(ctx, job, page):
     $ polyaxon experiment -xp 1 statuses
     ```
 
-    Example getting experiment job statuses:
+    Examples getting experiment job statuses:
 
     \b
     ```bash
@@ -546,7 +551,7 @@ def resources(ctx, job, gpu):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Example for getting experiment resources:
+    Examples for getting experiment resources:
 
     \b
     ```bash
@@ -560,7 +565,7 @@ def resources(ctx, job, gpu):
     $ polyaxon experiment -xp 19 resources --gpu
     ```
 
-    Example for getting experiment job resources:
+    Examples for getting experiment job resources:
 
     \b
     ```bash
@@ -619,7 +624,7 @@ def logs(ctx, job, past, follow):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Example for getting experiment logs:
+    Examples for getting experiment logs:
 
     \b
     ```bash
@@ -629,6 +634,13 @@ def logs(ctx, job, past, follow):
     \b
     ```bash
     $ polyaxon experiment -xp 10 -p mnist logs
+    ```
+
+    Examples for getting experiment job logs:
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 1 -j 1 logs
     ```
     """
 
