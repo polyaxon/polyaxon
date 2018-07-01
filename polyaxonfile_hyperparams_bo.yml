@@ -4,7 +4,7 @@ version: 1
 kind: group
 
 hptuning:
-  concurrency: 2
+  concurrency: 20
   bo:
     n_iterations: 15
     n_initial_trials: 10
@@ -12,6 +12,8 @@ hptuning:
       name: loss
       optimization: minimize
     utility_function:
+      n_warmup: 5
+      n_iter: 10
       acquisition_function: ucb
       kappa: 2.576
       gaussian_process:
@@ -36,7 +38,6 @@ declarations:
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
-    - apt-get -y update && apt-get -y install git
     - pip3 install --no-cache-dir -U polyaxon-helper
 
 run:

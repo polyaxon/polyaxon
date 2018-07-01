@@ -1,0 +1,8 @@
+---
+version: 1
+
+kind: build
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  nocache: true

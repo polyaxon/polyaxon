@@ -1,12 +1,16 @@
-from __future__ import division, print_function, absolute_import
+from __future__ import absolute_import, division, print_function
 
 import argparse
 
 import tensorflow as tf
-
+from polyaxon_helper import (
+    get_log_level,
+    get_data_path,
+    get_outputs_path,
+    get_tf_config,
+    send_metrics
+)
 from tensorflow.examples.tutorials.mnist import input_data
-
-from polyaxon_helper import get_outputs_path, send_metrics, get_log_level, get_tf_config
 
 
 def set_logging(log_level=None):
@@ -25,7 +29,9 @@ def set_logging(log_level=None):
 set_logging(get_log_level())
 
 
-mnist = input_data.read_data_sets("/tmp/data/", one_hot=False)
+data_paths = list(get_data_path().values())[0]
+data_paths = "{}/mnist".format(data_paths)
+mnist = input_data.read_data_sets(data_paths, one_hot=False)
 
 
 def get_model_fn(learning_rate, dropout, activation):

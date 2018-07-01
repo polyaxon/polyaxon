@@ -3,8 +3,8 @@ version: 1
 
 kind: group
 
-settings:
-  concurrency: 2
+hptuning:
+  concurrency: 5
   random_search:
     n_experiments: 10
 
@@ -24,7 +24,6 @@ declarations:
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
-    - apt-get -y update && apt-get -y install git
     - pip3 install --no-cache-dir -U polyaxon-helper
 
 run:
