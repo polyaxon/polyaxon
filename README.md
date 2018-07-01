@@ -174,7 +174,7 @@ $ polyaxon dashboard
 
  * Experiment Overview
 
-    ![Polyaxon dashboard](config/experiment_groups.png)
+    ![Polyaxon dashboard](config/experiment.png)
 
 # Project status
 
