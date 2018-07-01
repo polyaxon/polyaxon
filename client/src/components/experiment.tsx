@@ -68,7 +68,7 @@ function Experiment({experiment, onDelete}: Props) {
           link={groupUrl}
         />
         <LinkMetaInfo
-          icon="fa-cog"
+          icon="fa-gavel"
           name="Build"
           value={buildValues[3]}
           link={buildUrl}

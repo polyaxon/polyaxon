@@ -52,7 +52,7 @@ function Job({job, onDelete}: Props) {
       </div>
       <div className="col-md-2 block">
         <LinkMetaInfo
-          icon="fa-cog"
+          icon="fa-gavel"
           name="Build"
           value={buildValues[3]}
           link={buildUrl}
