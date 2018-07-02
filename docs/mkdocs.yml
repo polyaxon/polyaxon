@@ -127,11 +127,11 @@ pages:
     - User: polyaxon_cli/commands/user.md
     - Cluster: polyaxon_cli/commands/cluster.md
     - Version: polyaxon_cli/commands/version.md
-- Reference Polyaxonfile Specification:
+- Specification Reference:
   - Introduction: polyaxonfile_specification/introduction.md
   - Sections: polyaxonfile_specification/sections.md
 #  - Model Sections: polyaxonfile_specification/model_sections.md
-- Reference Polyaxon Client:
+- Client Reference:
   - Introduction: polyaxon_client/introduction.md
   - Clients:
     - Auth: polyaxon_client/clients/auth.md
@@ -144,8 +144,16 @@ pages:
     - Job: polyaxon_client/clients/job.md
     - Build Job: polyaxon_client/clients/build_job.md
     - Version: polyaxon_client/clients/version.md
-- Reference Polyaxon Helm: reference_polyaxon_helm.md
-- Reference Polyaxon Helper: reference_polyaxon_helper.md
+- Helm Chart Reference: reference_polyaxon_helm.md
+- Helper Reference: reference_polyaxon_helper.md
+- Query Syntax Reference:
+  - Intorduction: query_syntax/introduction.md
+  - Entities:
+    - Builds: query_syntax/entities/builds.md
+    - Jobs: query_syntax/entities/jobs.md
+    - Tensorboards: query_syntax/entities/tensorboards.md
+    - Experiments: query_syntax/entities/experiments.md
+    - Experiment groups: query_syntax/entities/experiment_groups.md
 #- Reference Polyaxon Lib:
 #  - Introduction: polyaxon_lib/introduction.md
 #  - Models: polyaxon_lib/models.md
