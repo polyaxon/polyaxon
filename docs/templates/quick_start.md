@@ -88,9 +88,10 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
        * The Polyaxon specification `version` we are using.
        * The `kind` of this operation, in this case experiment.
        * The `project` namespace we want to run the experiment inside.
-       * The `run` section to build and execute our code,
+       * The `build` section to build a docker image,
          in this case we want to run our code with the specified tensorflow docker image.
          We are also installing the [polyaxon helper](/reference_polyaxon_helper) library to send metrics at the end of the experiment.
+       * The `run` section to execute our code.
 
 6. Now let's upload our code to create a commit on Polyaxon
 
@@ -399,13 +400,12 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
         ![experiment](/images/dashboard/experiment.png)
 
-15. Finally, Let start for tensorboard to see the model outputs:
+15. Finally, Let start a tensorboard to see the model outputs:
 
     You can start a tensorboard for a single experiment, for all experiments under a group, or all experiments in a Project
 
     ```bash
     $ polyaxon tensorboard -xp 23 start
-    ```
 
     Tensorboard is being deployed for experiment `23`
 
@@ -413,7 +413,6 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     Your tensorboard will be available on:
 
-    ```
         http://192.168.64.14:32566/tensorboard/root/quick-start/experiments/23/
     ```
 
