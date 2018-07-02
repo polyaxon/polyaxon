@@ -50,11 +50,11 @@ persistence:
   logs:
     existingClaim:
     mountPath: "/logs"
-    hostPath: "/tmp/logs"
+    hostPath: "/logs"
   repos:
     existingClaim:
     mountPath: "/repos"
-    hostPath: "/tmp/repos"
+    hostPath: "/repos"
   upload:
     existingClaim:
     mountPath: "/upload"
