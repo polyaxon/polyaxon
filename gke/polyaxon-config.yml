@@ -7,19 +7,16 @@ ingress:
 serviceType: ClusterIP
 
 persistence:
-  data:
-    existingClaim: polyaxon-pvc-data
-  outputs:
-    existingClaim: polyaxon-pvc-outputs
   logs:
     existingClaim: polyaxon-pvc-logs
   repos:
-    enabled: true
     existingClaim: polyaxon-pvc-repos
-    mountPath: "/repos"
-    accessMode: ReadWriteMany
-  upload:
-    enabled: true
-    existingClaim: polyaxon-pvc-upload
-    mountPath: "/upload"
-    accessMode: ReadWriteMany
+
+  data:
+    data1:
+      existingClaim: polyaxon-pvc-data
+      mountPath: /data
+  outputs:
+    outputs1:
+      existingClaim: polyaxon-pvc-outputs
+      mountPath: /outputs

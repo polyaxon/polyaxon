@@ -5,7 +5,7 @@ kind: experiment
 
 environment:
   tensorflow:
-    n_workers: 3
+    n_workers: 1
     n_ps: 1
 
 build:

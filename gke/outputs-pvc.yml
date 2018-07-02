@@ -17,7 +17,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: polyaxon-pvc-outputs 
+  name: polyaxon-pvc-outputs
 spec:
   accessModes:
     - ReadWriteMany
