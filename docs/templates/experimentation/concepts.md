@@ -140,7 +140,7 @@ the experiments of a group, or of a project.
 
 ### Notebooks
 
-A `Project plugin` is a job running project wide. Currently, Polyaxon offers 2 plugins: Tensorboard and Jupyter notebook.
+A `Project plugin` is a job running project wide.
 
 !!! info "More details"
     Please refer to the [project plugins section](project_plugins) for more details.
