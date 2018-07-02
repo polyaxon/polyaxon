@@ -6,7 +6,7 @@ This section tries to explain how Polyaxon mounts these volumes for experiments 
 
 ## Chart Definition
 
-The [helm reference](/reference_polyaxon_helm) talks briefly about the data and outputs persistence definitions,
+The [helm reference](/reference_polyaxon_helm) describes briefly the data and outputs persistence definitions,
 and how you can mount volumes, both persistent claims and host paths, here's the example coming from the ref:
 
 ```yaml

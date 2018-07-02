@@ -33,7 +33,7 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
     and keep the default value `data`, and check `enable NFS sharing`. You can set the storage to 50GB for example.
 
 
-3. Use ssh to create some folders for `data`, `logs`, `outputs`, `upload`, and `repos` under /data :
+3. Use ssh to create some folders for `data`, `logs`, `outputs`, and `repos` under /data :
 
     ```bash
     $ gcloud --project "polyaxon-test" compute ssh --ssh-flag=-L3000:localhost:3000 --zone=us-central1-b polyaxon-nfs-vm
@@ -45,7 +45,6 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
     $ mkdir -m 777 outputs
     $ mkdir -m 777 logs
     $ mkdir -m 777 repos
-    $ mkdir -m 777 upload
     ```
 
     This is just a tutorial, please consult with your devops team on how to setup an NFS server with correct security.
@@ -77,9 +76,6 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
 
     $ vi gke/repos-pvc.yml
     # And replace with the right ip address
-
-    $ vi gke/upload-pvc.yml
-    # And replace with the right ip address
     ```
 
 6. Use kubectl to create a namespace polyaxon
@@ -101,10 +97,6 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
 
     ```bash
     $ kubectl create -f gke/logs-pvc.yml -n polyaxon
-    ```
-
-    ```bash
-    $ kubectl create -f gke/upload-pvc.yml -n polyaxon
     ```
 
     ```bash
