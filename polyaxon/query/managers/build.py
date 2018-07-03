@@ -6,7 +6,8 @@ from query.parser import parse_datetime_operation, parse_value_operation
 class BuildQueryManager(BaseQueryManager):
     NAME = 'build'
     FIELDS_PROXY = {
-        'status': 'status__status'
+        'status': 'status__status',
+        'commit': 'code_reference__commit',
     }
     PARSERS_BY_FIELD = {
         # Dates
@@ -20,6 +21,8 @@ class BuildQueryManager(BaseQueryManager):
         'status': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
+        # Commit
+        'commit': parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Dates
@@ -33,4 +36,6 @@ class BuildQueryManager(BaseQueryManager):
         'status': ValueCondition,
         # Tags
         'tags': ArrayCondition,
+        # Commit
+        'commit': ValueCondition,
     }

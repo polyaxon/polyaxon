@@ -9,7 +9,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'metric': 'metric__values',
         'status': 'status__status',
         'group': 'experiment_group',
-        'build': 'build_job'
+        'build': 'build_job',
+        'commit': 'code_reference__commit',
     }
     PARSERS_BY_FIELD = {
         # Dates
@@ -25,6 +26,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'group': parse_value_operation,
         # Builds
         'build': parse_value_operation,
+        # Commit
+        'commit': parse_value_operation,
         # Declarations
         'declarations': parse_value_operation,
         # Tags
@@ -46,6 +49,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'group': ValueCondition,
         # Builds
         'build': ValueCondition,
+        # Commit
+        'commit': ValueCondition,
         # Declarations
         'declarations': ValueCondition,
         # Tags

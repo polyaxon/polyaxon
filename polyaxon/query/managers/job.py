@@ -7,7 +7,8 @@ class JobQueryManager(BaseQueryManager):
     NAME = 'job'
     FIELDS_PROXY = {
         'status': 'status__status',
-        'build': 'build_job'
+        'build': 'build_job',
+        'commit': 'code_reference__commit',
     }
     PARSERS_BY_FIELD = {
         # Dates
@@ -21,6 +22,8 @@ class JobQueryManager(BaseQueryManager):
         'status': parse_value_operation,
         # Builds
         'build': parse_value_operation,
+        # Commit
+        'commit': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
     }
@@ -36,6 +39,8 @@ class JobQueryManager(BaseQueryManager):
         'status': ValueCondition,
         # Builds
         'build': ValueCondition,
+        # Commit
+        'commit': ValueCondition,
         # Tags
         'tags': ArrayCondition,
     }
