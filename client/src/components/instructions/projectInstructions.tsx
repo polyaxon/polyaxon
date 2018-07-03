@@ -25,13 +25,13 @@ function ProjectInstructions({projectName}: Props) {
               </div>
             </div>
             <div className="instructions-section">
-              <h4>Add/update the project description</h4>
+              <h4>Add/update the project's description</h4>
               <div className="instructions-section-content">
                 polyaxon update --description="My new description for the project..."
               </div>
             </div>
             <div className="instructions-section">
-              <h4>Add/update the project tags</h4>
+              <h4>Add/update the project's tags</h4>
               <div className="instructions-section-content">
                 polyaxon update --tags="foo, bar, ..,"
               </div>
@@ -39,7 +39,7 @@ function ProjectInstructions({projectName}: Props) {
             <div className="instructions-section">
               <h4>Start experiment/experiment group/job/build</h4>
               <div className="instructions-section-content">
-                polyaxon run -f polyaxonfile.yml [-f override_file.yml] [-u]
+                polyaxon run -f polyaxonfile.yml [-f override_file.yml] [-u] [--name] [--description] [--tags]
               </div>
             </div>
             <div className="instructions-section">
