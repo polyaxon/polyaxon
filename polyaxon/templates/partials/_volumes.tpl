@@ -77,32 +77,47 @@ Volumes
 */}}
 {{- define "volumes.volumes.upload" }}
 - name: upload
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.upload.existingClaim }}
+{{- if .Values.persistence.upload }}
+{{- if .Values.persistence.upload.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.upload.existingClaim | default .Values.nfsProvisioner.pvc.upload.name | quote}}
+    claimName: {{ .Values.persistence.upload.existingClaim | quote}}
 {{- else }}
   hostPath:
     path:  {{ .Values.persistence.upload.hostPath | default .Values.persistence.upload.mountPath | quote }}
 {{- end }}
+{{- else if .Values.nfsProvisioner.enabled }}
+ persistentVolumeClaim:
+    claimName: {{ .Values.nfsProvisioner.pvc.upload.name | quote}}
+{{- end }}
 {{- end -}}
 {{- define "volumes.volumes.repos" }}
 - name: repos
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.repos.existingClaim }}
+{{- if .Values.persistence.repos }}
+{{- if.Values.persistence.repos.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.repos.existingClaim | default .Values.nfsProvisioner.pvc.repos.name | quote }}
+    claimName: {{ .Values.persistence.repos.existingClaim | quote }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.repos.hostPath | default .Values.persistence.repos.mountPath | quote }}
 {{- end }}
+{{- else if .Values.nfsProvisioner.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ .Values.nfsProvisioner.pvc.repos.name | quote }}
+{{- end }}
 {{- end -}}
 {{- define "volumes.volumes.logs" }}
 - name: logs
-{{- if or .Values.nfsProvisioner.enabled .Values.persistence.logs.existingClaim }}
+{{- if .Values.persistence.logs }}
+{{- if .Values.persistence.logs.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.nfsProvisioner.pvc.logs.name | quote }}
+    claimName: {{ .Values.persistence.logs.existingClaim | quote }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.logs.hostPath | default .Values.persistence.logs.mountPath | quote }}
+{{- end }}
+{{- else if .Values.nfsProvisioner.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ .Values.nfsProvisioner.pvc.logs.name | quote }}
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumes.data" }}
