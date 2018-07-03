@@ -9,6 +9,7 @@ import { TokenStateSchema, TokenEmptyState } from '../models/token';
 import { ModalStateSchema } from '../models/modal';
 import { UserEmptyState, UserStateSchema } from '../models/user';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
+import { StatusEmptyState, StatusStateSchema } from '../models/status';
 
 export interface AppState {
   projects: ProjectStateSchema;
@@ -22,6 +23,7 @@ export interface AppState {
   users: UserStateSchema;
   // form: FormReducer;
   logs: string;
+  statuses: StatusStateSchema;
 }
 
 export const AppEmptyState = {
@@ -32,5 +34,7 @@ export const AppEmptyState = {
   builds: BuildsEmptyState,
   experimentJobs: ExperimentJobsEmptyState,
   auth: TokenEmptyState,
-  user: UserEmptyState
+  user: UserEmptyState,
+  logs: '',
+  statuses: StatusEmptyState,
 };

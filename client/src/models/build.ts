@@ -1,4 +1,4 @@
-import { LastFetched } from './utils';
+import { LastFetchedNames } from './utils';
 
 export class BuildModel {
   public id: number;
@@ -24,11 +24,11 @@ export class BuildModel {
 export class BuildStateSchema {
   byUniqueNames: {[uniqueName: string]: BuildModel};
   uniqueNames: string[];
-  lastFetched: LastFetched;
+  lastFetched: LastFetchedNames;
 }
 
 export const BuildsEmptyState = {
   byUniqueNames: {},
   uniqueNames: [],
-  lastFetched: new LastFetched()
+  lastFetched: new LastFetchedNames()
 };

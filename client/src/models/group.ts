@@ -1,4 +1,4 @@
-import { LastFetched } from './utils';
+import { LastFetchedNames } from './utils';
 
 export class GroupModel {
   public uuid: string;
@@ -32,11 +32,11 @@ export class GroupModel {
 export class GroupStateSchema {
   byUniqueNames: {[uniqueName: string]: GroupModel};
   uniqueNames: string[];
-  lastFetched: LastFetched;
+  lastFetched: LastFetchedNames;
 }
 
 export const GroupsEmptyState = {
   byUniqueNames: {},
   uniqueNames: [],
-  lastFetched: new LastFetched()
+  lastFetched: new LastFetchedNames()
 };

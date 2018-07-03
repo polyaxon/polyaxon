@@ -1,4 +1,4 @@
-import { LastFetched } from './utils';
+import { LastFetchedNames } from './utils';
 
 export class ProjectModel {
   public uuid: string;
@@ -27,12 +27,12 @@ export class ProjectModel {
 export class ProjectStateSchema {
   byUniqueNames: {[uniqueName: string]: ProjectModel};
   uniqueNames: string[];
-  lastFetched: LastFetched;
+  lastFetched: LastFetchedNames;
 
 }
 
 export const ProjectsEmptyState = {
   byUniqueNames: {},
   uniqueNames: [],
-  lastFetched: new LastFetched()
+  lastFetched: new LastFetchedNames()
 };

@@ -14,6 +14,12 @@ export const BuildSchema = new schema.Entity(
     idAttribute: 'unique_name'
   });
 
+export const StatusSchema = new schema.Entity(
+  'statuses',
+  {},
+  {
+    idAttribute: 'id'
+  });
 
 export const ExperimentJobSchema = new schema.Entity(
   'experimentJobs',

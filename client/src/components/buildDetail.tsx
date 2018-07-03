@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 
 import { BuildModel } from '../models/build';
 import Logs from '../containers/logs';
+import Statuses from '../containers/statuses';
 import {
   getBuildUrl,
   getProjectUrl,
@@ -68,6 +69,14 @@ export default class BuildDetail extends React.Component<Props, Object> {
                   title: 'Dockerfile',
                   component: <Text title="Dockerfile" text={build.dockerfile}/>,
                   relUrl: 'dockerfile'
+                }, {
+                  title: 'Statuses',
+                  component: <Statuses
+                    project={build.project}
+                    resource="builds"
+                    id={build.id}
+                  />,
+                  relUrl: 'statuses'
                 }, {
                   title: 'Instructions',
                   component: <BuildInstructions id={build.id}/>,

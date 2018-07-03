@@ -1,4 +1,4 @@
-import { LastFetched } from './utils';
+import { LastFetchedNames } from './utils';
 
 export class JobModel {
   public id: number;
@@ -23,11 +23,11 @@ export class JobModel {
 export class JobStateSchema {
   byUniqueNames: {[uniqueName: string]: JobModel};
   uniqueNames: string[];
-  lastFetched: LastFetched;
+  lastFetched: LastFetchedNames;
 }
 
 export const JobsEmptyState = {
   byUniqueNames: {},
   uniqueNames: [],
-  lastFetched: new LastFetched()
+  lastFetched: new LastFetchedNames()
 };

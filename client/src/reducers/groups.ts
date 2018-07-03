@@ -6,7 +6,7 @@ import { GroupSchema } from '../constants/schemas';
 import { GroupAction, actionTypes } from '../actions/group';
 import { GroupStateSchema, GroupsEmptyState, GroupModel } from '../models/group';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
-import { LastFetched } from '../models/utils';
+import { LastFetchedNames } from '../models/utils';
 
 export const groupsReducer: Reducer<GroupStateSchema> =
   (state: GroupStateSchema = GroupsEmptyState, action: GroupAction) => {
@@ -52,10 +52,10 @@ export const groupsReducer: Reducer<GroupStateSchema> =
           byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: action.group}
         };
       case actionTypes.REQUEST_GROUPS:
-        newState.lastFetched = new LastFetched();
+        newState.lastFetched = new LastFetchedNames();
         return newState;
       case actionTypes.RECEIVE_GROUPS:
-        newState.lastFetched = new LastFetched();
+        newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (let group of action.groups) {
           newState = processGroup(group);

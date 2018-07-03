@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import { urlifyProjectName } from '../constants/utils';
 import { BASE_API_URL } from '../constants/api';
 
 export enum actionTypes {

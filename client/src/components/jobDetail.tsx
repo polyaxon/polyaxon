@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 
 import { JobModel } from '../models/job';
 import Logs from '../containers/logs';
+import Statuses from '../containers/statuses';
 import {
   getJobUrl,
   getProjectUrl,
@@ -67,6 +68,14 @@ export default class JobDetail extends React.Component<Props, Object> {
                   title: 'Build',
                   component: <EntityBuild buildName={job.build_job}/>,
                   relUrl: 'build'
+                }, {
+                  title: 'Statuses',
+                  component: <Statuses
+                    project={job.project}
+                    resource="jobs"
+                    id={job.id}
+                  />,
+                  relUrl: 'statuses'
                 }, {
                   title: 'Instructions',
                   component: <JobInstructions id={job.id}/>,

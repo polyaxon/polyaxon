@@ -13,6 +13,7 @@ import { modalReducer } from './modal';
 import { userReducer } from './user';
 import { logsReducer } from './logs';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
+import { StatusesReducer } from './statuses';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
@@ -25,7 +26,8 @@ const combinedReducer = combineReducers<AppState>({
   auth: tokenReducer,
   users: userReducer,
   // form: formReducer,
-  logs: logsReducer
+  logs: logsReducer,
+  statuses: StatusesReducer,
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -48,7 +50,8 @@ function SliceReducer(state: AppState, action: Action) {
     auth: state.auth,
     users: UserProjectsReducer(state.users, action),
     // form: state.form,
-    logs: state.logs
+    logs: state.logs,
+    statuses: state.statuses,
   };
 }
 

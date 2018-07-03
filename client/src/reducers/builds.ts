@@ -7,7 +7,7 @@ import { BuildSchema } from '../constants/schemas';
 import { BuildAction, actionTypes } from '../actions/build';
 import { BuildStateSchema, BuildsEmptyState, BuildModel } from '../models/build';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
-import { LastFetched } from '../models/utils';
+import { LastFetchedNames } from '../models/utils';
 
 export const buildsReducer: Reducer<BuildStateSchema> =
   (state: BuildStateSchema = BuildsEmptyState, action: BuildAction) => {
@@ -50,10 +50,10 @@ export const buildsReducer: Reducer<BuildStateSchema> =
           byUniqueNames: {...state.byUniqueNames, [action.build.unique_name]: action.build}
         };
       case actionTypes.REQUEST_BUILDS:
-        newState.lastFetched = new LastFetched();
+        newState.lastFetched = new LastFetchedNames();
         return newState;
       case actionTypes.RECEIVE_BUILDS:
-        newState.lastFetched = new LastFetched();
+        newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (let build of action.builds) {
           newState = processBuild(build);

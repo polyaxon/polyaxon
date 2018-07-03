@@ -7,7 +7,7 @@ import { JobSchema } from '../constants/schemas';
 import { JobAction, actionTypes } from '../actions/job';
 import { JobStateSchema, JobsEmptyState, JobModel } from '../models/job';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
-import { LastFetched } from '../models/utils';
+import { LastFetchedNames } from '../models/utils';
 
 export const jobsReducer: Reducer<JobStateSchema> =
   (state: JobStateSchema = JobsEmptyState, action: JobAction) => {
@@ -51,10 +51,10 @@ export const jobsReducer: Reducer<JobStateSchema> =
         };
 
       case actionTypes.REQUEST_JOBS:
-        newState.lastFetched = new LastFetched();
+        newState.lastFetched = new LastFetchedNames();
         return newState;
       case actionTypes.RECEIVE_JOBS:
-        newState.lastFetched = new LastFetched();
+        newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (let job of action.jobs) {
           newState = processJob(job);

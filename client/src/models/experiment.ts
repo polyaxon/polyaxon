@@ -1,4 +1,4 @@
-import { LastFetched } from './utils';
+import { LastFetchedNames } from './utils';
 
 export class ExperimentModel {
   public uuid: string;
@@ -28,11 +28,11 @@ export class ExperimentModel {
 export class ExperimentStateSchema {
   byUniqueNames: {[uniqueName: string]: ExperimentModel};
   uniqueNames: string[];
-  lastFetched: LastFetched;
+  lastFetched: LastFetchedNames;
 }
 
 export const ExperimentsEmptyState = {
   byUniqueNames: {},
   uniqueNames: [],
-  lastFetched: new LastFetched()
+  lastFetched: new LastFetchedNames()
 };

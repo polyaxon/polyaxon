@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { ExperimentModel } from '../models/experiment';
 import ExperimentJobs from '../containers/experimentJobs';
 import Logs from '../containers/logs';
+import Statuses from '../containers/statuses';
 import {
   getExperimentUrl,
   getGroupUrl,
@@ -91,6 +92,14 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                   title: 'Build',
                   component: <EntityBuild buildName={experiment.build_job}/>,
                   relUrl: 'build'
+                }, {
+                  title: 'Statuses',
+                  component: <Statuses
+                    project={experiment.project}
+                    resource="experiments"
+                    id={experiment.id}
+                  />,
+                  relUrl: 'statuses'
                 }, {
                   title: 'Instructions',
                   component: <ExperimentInstructions id={experiment.id}/>,

@@ -8,6 +8,7 @@ import {
   splitUniqueName
 } from '../constants/utils';
 import Experiments from '../containers/experiments';
+import Statuses from '../containers/statuses';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import GroupOverview from './groupOverview';
@@ -57,6 +58,14 @@ export default class GroupDetail extends React.Component<Props, Object> {
                   title: 'Experiments',
                   component: <Experiments user={group.user} projectName={group.project} groupId={group.id}/>,
                   relUrl: 'experiments'
+                }, {
+                  title: 'Statuses',
+                  component: <Statuses
+                    project={group.project}
+                    resource="groups"
+                    id={group.id}
+                  />,
+                  relUrl: 'statuses'
                 }, {
                   title: 'Instructions',
                   component: <GroupInstructions id={group.id}/>,

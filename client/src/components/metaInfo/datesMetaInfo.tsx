@@ -4,8 +4,8 @@ import * as moment from 'moment';
 import MetaInfo from './metaInfo';
 
 export interface Props {
-  createdAt: Date | string;
-  updatedAt: Date | string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   inline?: boolean;
 }
 
