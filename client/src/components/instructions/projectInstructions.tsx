@@ -19,6 +19,31 @@ function ProjectInstructions({projectName}: Props) {
         <div className="col-md-12">
           <div className="instructions-content">
             <div className="instructions-section">
+              <h4>Filters</h4>
+              <ul>
+                <li>
+                  <a href="https://docs.polyaxon.com/polyaxonfile_specification/sections/">
+                    Understanding the query syntax
+                  </a>
+                </li>
+                <li>
+                  <a href="https://docs.polyaxon.com/query_syntax/entities/jobs/">
+                    Searching Jobs
+                  </a>
+                </li>
+                <li>
+                  <a href="https://docs.polyaxon.com/query_syntax/entities/experiments/">
+                    Searching Experiments
+                  </a>
+                </li>
+                <li>
+                  <a href="https://docs.polyaxon.com/query_syntax/entities/experiment_groups/">
+                    Searching Groups
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="instructions-section">
               <h4>Init project</h4>
               <div className="instructions-section-content">
                 polyaxon init {projectName}
