@@ -3,10 +3,6 @@ version: 1
 
 kind: group
 
-environment:
-  node_selectors:
-    polyaxon: core
-
 
 hptuning:
   concurrency: 5
