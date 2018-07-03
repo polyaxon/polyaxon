@@ -4,7 +4,7 @@
   "description": "Polyaxon ui",
   "private": true,
   "scripts": {
-    "clean": "rm -rf dist/* && rm -rf public/dist/* && mkdir public/dist/js && mkdir public/dist/css && mkdir public/dist/fonts",
+    "clean": "rm -rf dist/* && rm -rf public/dist/* && mkdir -p public/dist/js && mkdir public/dist/css && mkdir public/dist/fonts",
     "_copy_react": "cp node_modules/react/umd/react.production.min.js node_modules/react-dom/umd/react-dom.production.min.js public/dist/js",
     "_copy_css": "cp node_modules/font-awesome/css/font-awesome.min.css node_modules/bootstrap/dist/css/bootstrap.min.css public/dist/css",
     "_copy_fonts": "cp -r node_modules/font-awesome/fonts public/dist/",
