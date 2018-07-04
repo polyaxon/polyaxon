@@ -554,10 +554,36 @@ class PersistenceConfig(BaseConfig):
         self.outputs = outputs
 
 
+class OutputsSchema(Schema):
+    jobs = fields.List(fields.Str(), allow_none=True)
+    experiments = fields.List(fields.Str(), allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return OutputsConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return OutputsConfig.remove_reduced_attrs(data)
+
+
+class OutputsConfig(BaseConfig):
+    IDENTIFIER = 'outputs'
+    SCHEMA = OutputsSchema
+
+    def __init__(self, jobs=None, experiments=None):
+        self.jobs = jobs
+        self.experiments = experiments
+
+
 class EnvironmentSchema(Schema):
     cluster_uuid = UUID(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
+    outputs = fields.Nested(OutputsSchema, allow_none=True)
     node_selectors = fields.Dict(allow_none=True)
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
     horovod = fields.Nested(HorovodSchema, allow_none=True)
@@ -591,6 +617,7 @@ class EnvironmentConfig(BaseConfig):
                  cluster_uuid=None,
                  resources=None,
                  persistence=None,
+                 outputs=None,
                  node_selectors=None,
                  tensorflow=None,
                  horovod=None,
@@ -599,6 +626,7 @@ class EnvironmentConfig(BaseConfig):
         self.cluster_uuid = cluster_uuid
         self.resources = resources
         self.persistence = persistence
+        self.outputs = outputs
         self.node_selectors = node_selectors
         validate_frameworks([tensorflow, horovod, pytorch, mxnet])
         self.tensorflow = tensorflow
