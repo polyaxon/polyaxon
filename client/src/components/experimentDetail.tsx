@@ -5,6 +5,7 @@ import { ExperimentModel } from '../models/experiment';
 import ExperimentJobs from '../containers/experimentJobs';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
+import Metrics from '../containers/metrics';
 import {
   getExperimentUrl,
   getGroupUrl,
@@ -100,6 +101,14 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                     id={experiment.id}
                   />,
                   relUrl: 'statuses'
+                }, {
+                  title: 'Metrics',
+                  component: <Metrics
+                    project={experiment.project}
+                    resource="experiments"
+                    id={experiment.id}
+                  />,
+                  relUrl: 'metrics'
                 }, {
                   title: 'Instructions',
                   component: <ExperimentInstructions id={experiment.id}/>,

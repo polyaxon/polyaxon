@@ -1,9 +1,9 @@
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
 
-import {TokenStateSchema} from '../models/token';
-import {fetchUser} from '../actions/user';
-import {BASE_URL} from '../constants/api';
+import { TokenStateSchema } from '../models/token';
+import { fetchUser } from '../actions/user';
+import { BASE_URL } from '../constants/api';
 
 export const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 

@@ -21,6 +21,13 @@ export const StatusSchema = new schema.Entity(
     idAttribute: 'id'
   });
 
+export const MetricSchema = new schema.Entity(
+  'metrics',
+  {},
+  {
+    idAttribute: 'id'
+  });
+
 export const ExperimentJobSchema = new schema.Entity(
   'experimentJobs',
   {},

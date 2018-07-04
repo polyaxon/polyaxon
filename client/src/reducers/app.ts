@@ -1,3 +1,4 @@
+///<reference path="statuses.ts"/>
 import { Action, combineReducers } from 'redux';
 // import {reducer as formReducer } from 'redux-form';
 
@@ -14,6 +15,7 @@ import { userReducer } from './user';
 import { logsReducer } from './logs';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
 import { StatusesReducer } from './statuses';
+import { MetricsReducer } from './metrics';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
@@ -28,6 +30,7 @@ const combinedReducer = combineReducers<AppState>({
   // form: formReducer,
   logs: logsReducer,
   statuses: StatusesReducer,
+  metrics: MetricsReducer,
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -52,6 +55,7 @@ function SliceReducer(state: AppState, action: Action) {
     // form: state.form,
     logs: state.logs,
     statuses: state.statuses,
+    metrics: state.metrics,
   };
 }
 

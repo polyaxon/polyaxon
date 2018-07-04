@@ -10,6 +10,7 @@ import { ModalStateSchema } from '../models/modal';
 import { UserEmptyState, UserStateSchema } from '../models/user';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
 import { StatusEmptyState, StatusStateSchema } from '../models/status';
+import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 
 export interface AppState {
   projects: ProjectStateSchema;
@@ -24,6 +25,7 @@ export interface AppState {
   // form: FormReducer;
   logs: string;
   statuses: StatusStateSchema;
+  metrics: MetricStateSchema;
 }
 
 export const AppEmptyState = {
@@ -37,4 +39,5 @@ export const AppEmptyState = {
   user: UserEmptyState,
   logs: '',
   statuses: StatusEmptyState,
+  metrics: MetricEmptyState,
 };
