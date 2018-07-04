@@ -46,7 +46,7 @@ class NotebookSpawner(ProjectJobSpawner):
             port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
         return port
 
-    def get_notebook_args(self, deployment_name, ports):
+    def get_notebook_args(self, deployment_name, ports, allow_commits=False):
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
@@ -54,8 +54,11 @@ class NotebookSpawner(ProjectJobSpawner):
             deployment_name=deployment_name,
             port=ports[0])
 
-        notebook_dir = get_project_repos_path(self.project_name)
-        notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
+        if allow_commits:
+            notebook_dir = get_project_repos_path(self.project_name)
+            notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
+        else:
+            notebook_dir = '.'
 
         return [
             "jupyter notebook "
@@ -77,7 +80,8 @@ class NotebookSpawner(ProjectJobSpawner):
                        persistence_outputs=None,
                        persistence_data=None,
                        resources=None,
-                       node_selectors=None):
+                       node_selectors=None,
+                       allow_commits=False):
         ports = [self.request_notebook_port()]
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
@@ -104,7 +108,9 @@ class NotebookSpawner(ProjectJobSpawner):
             volumes=volumes,
             image=image,
             command=["/bin/sh", "-c"],
-            args=self.get_notebook_args(deployment_name=deployment_name, ports=ports),
+            args=self.get_notebook_args(deployment_name=deployment_name,
+                                        ports=ports,
+                                        allow_commits=allow_commits),
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             env_vars=env_vars,

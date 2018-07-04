@@ -37,6 +37,9 @@ def start_notebook(notebook):
         in_cluster=True)
 
     try:
+        allow_commits = False
+        if settings.REPOS_CLAIM_NAME and notebook.node_selectors:
+            allow_commits = True
         node_selectors = get_node_selector(
             node_selector=notebook.node_selectors,
             default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
@@ -44,7 +47,8 @@ def start_notebook(notebook):
                                          persistence_outputs=notebook.persistence_outputs,
                                          persistence_data=notebook.persistence_data,
                                          resources=notebook.resources,
-                                         node_selectors=node_selectors)
+                                         node_selectors=node_selectors,
+                                         allow_commits=allow_commits)
     except ApiException as e:
         _logger.warning('Could not start notebook, please check your polyaxon spec %s', e)
         notebook.set_status(
