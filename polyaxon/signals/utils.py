@@ -8,7 +8,7 @@ def set_tags(instance):
         instance.tags = instance.specification.tags
 
 
-def set_persistence(instance):
+def set_persistence(instance, default_persistence_data=None, default_persistence_outputs=None):
     if instance.persistence:
         return
 
@@ -17,6 +17,11 @@ def set_persistence(instance):
     if instance.specification and instance.specification.persistence:
         persistence_data = instance.specification.persistence.data
         persistence_outputs = instance.specification.persistence.outputs
+    if not persistence_data and default_persistence_data:
+        persistence_data = default_persistence_data
+
+    if not persistence_outputs and default_persistence_outputs:
+        persistence_outputs = default_persistence_outputs
 
     persistence_data = validate_persistence_data(persistence_data=persistence_data)
     persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence_outputs)

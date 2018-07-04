@@ -25,7 +25,12 @@ from signals.utils import set_persistence, set_tags
 def tensorboard_job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     set_tags(instance=instance)
-    set_persistence(instance=instance)
+    default_persistence_outputs = None
+    if instance.experiment:
+        default_persistence_outputs = instance.experiment.persistence_outputs
+    if instance.experiment_group:
+        default_persistence_outputs = instance.experiment_group.persistence_outputs
+    set_persistence(instance=instance, default_persistence_outputs=default_persistence_outputs)
     assign_code_reference(instance)
 
 
