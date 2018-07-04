@@ -257,6 +257,7 @@ class PodManager(object):
                 task_idx,
                 volume_mounts,
                 volumes,
+                labels,
                 env_vars=None,
                 command=None,
                 args=None,
@@ -267,7 +268,6 @@ class PodManager(object):
                 node_selector=None,
                 restart_policy=None):
         job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
-        labels = self.get_labels(task_type=task_type, task_idx=task_idx)
         metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
 
         pod_spec = self.get_task_pod_spec(

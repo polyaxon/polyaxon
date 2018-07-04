@@ -108,6 +108,7 @@ class ExperimentSpawner(K8SManager):
             task_idx=task_idx,
             volume_mounts=volume_mounts,
             volumes=volumes,
+            labels=labels,
             env_vars=env_vars,
             command=command,
             args=args,
@@ -118,15 +119,13 @@ class ExperimentSpawner(K8SManager):
             node_selector=node_selector,
             restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=job_name, data=pod)
-
-        service = services.get_service(namespace=self.namespace,
-                                       name=job_name,
-                                       labels=labels,
-                                       ports=self.pod_manager.ports,
-                                       target_ports=self.pod_manager.ports)
-
         results = {'pod': pod_resp.to_dict()}
         if add_service:
+            service = services.get_service(namespace=self.namespace,
+                                           name=job_name,
+                                           labels=labels,
+                                           ports=self.pod_manager.ports,
+                                           target_ports=self.pod_manager.ports)
             service_resp, _ = self.create_or_update_service(name=job_name, data=service)
             results['service'] = service_resp.to_dict()
         return results
