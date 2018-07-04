@@ -38,7 +38,7 @@ def start_notebook(notebook):
 
     try:
         allow_commits = False
-        if settings.REPOS_CLAIM_NAME and notebook.node_selectors:
+        if settings.REPOS_CLAIM_NAME or notebook.node_selectors:
             allow_commits = True
         node_selectors = get_node_selector(
             node_selector=notebook.node_selectors,
