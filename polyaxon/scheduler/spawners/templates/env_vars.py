@@ -66,7 +66,8 @@ def get_job_env_vars(outputs_path,
     if outputs_experiments_paths:
         refs_outputs['experiments'] = outputs_experiments_paths
     if refs_outputs:
-        get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME, value=refs_outputs)
+        env_vars.append(
+            get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME, value=refs_outputs))
     return env_vars
 
 
