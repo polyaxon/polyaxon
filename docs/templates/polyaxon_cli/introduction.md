@@ -48,8 +48,8 @@ you can always specify the values for these options, example:
 
  * `$ polyaxon project --project=user_1/project_10 get`
  * `$ polyaxon experiment --project=user_1/project_10 --experiment=2 get`
+ * `$ polyaxon experiment --project=user_1/project_10 --experiment=3 --job=2 logs`
  * `$ polyaxon group --project=user_1/project_10 --group=2 experiments`
- * `$ polyaxon job --project=user_1/project_10 --experiment=3 --job=2 logs`
 
 
 Polyaxon CLI allows also you to omit these options, i.e. project, experiment group, experiment, and job, the CLI does the following:
@@ -59,9 +59,10 @@ Polyaxon CLI allows also you to omit these options, i.e. project, experiment gro
  3. When an experiment group, experiment, or job is missing, the last value is used.
  4. If no values are found, the CLI will show an error.
 
-Same commands with caching:
+Some commands with caching:
 
  * `$ polyaxon project get`
  * `$ polyaxon experiment get`
  * `$ polyaxon group experiments`
  * `$ polyaxon job logs`
+ * ...
