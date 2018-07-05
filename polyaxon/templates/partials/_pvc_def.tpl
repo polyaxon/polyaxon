@@ -66,6 +66,6 @@ Config upload persistence
   value: {{ toJson .Values.persistence.upload | quote }}
 {{- else if .Values.nfsProvisioner.enabled }}
 - name: POLYAXON_PERSISTENCE_UPLOAD
-  value: {{ toJson .Values.nfsProvisioner.pvc.upload | quote }}
+  value: {{ toJson (dict "mountPath" .Values.nfsProvisioner.pvc.upload.mountPath "existingClaim" .Values.nfsProvisioner.pvc.upload.name) | quote }}
 {{- end }}
 {{- end -}}
