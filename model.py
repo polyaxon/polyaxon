@@ -5,7 +5,7 @@ import argparse
 import tensorflow as tf
 from polyaxon_helper import (
     get_log_level,
-    get_data_path,
+    get_data_paths,
     get_outputs_path,
     get_tf_config,
     send_metrics
@@ -29,7 +29,7 @@ def set_logging(log_level=None):
 set_logging(get_log_level())
 
 
-data_paths = list(get_data_path().values())[0]
+data_paths = list(get_data_paths().values())[0]
 data_paths = "{}/mnist".format(data_paths)
 mnist = input_data.read_data_sets(data_paths, one_hot=False)
 

@@ -4,10 +4,10 @@ version: 1
 kind: group
 
 hptuning:
-  concurrency: 20
+  concurrency: 40
   bo:
     n_iterations: 15
-    n_initial_trials: 10
+    n_initial_trials: 40
     metric:
       name: loss
       optimization: minimize
