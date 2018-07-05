@@ -86,14 +86,14 @@ Volumes
     path:  {{ .Values.persistence.upload.hostPath | default .Values.persistence.upload.mountPath | quote }}
 {{- end }}
 {{- else if .Values.nfsProvisioner.enabled }}
- persistentVolumeClaim:
+  persistentVolumeClaim:
     claimName: {{ .Values.nfsProvisioner.pvc.upload.name | quote}}
 {{- end }}
 {{- end -}}
 {{- define "volumes.volumes.repos" }}
 - name: repos
 {{- if .Values.persistence.repos }}
-{{- if.Values.persistence.repos.existingClaim }}
+{{- if .Values.persistence.repos.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.repos.existingClaim | quote }}
 {{- else }}
@@ -135,7 +135,7 @@ Volumes
 {{- else if .Values.nfsProvisioner.enabled }}
 - name: data
   persistentVolumeClaim:
-    claimName: {{ .Values.nfsProvisioner.pvc.data.name }}
+    claimName: {{ .Values.nfsProvisioner.pvc.data.name | quote }}
 {{- else }}
 - name: data
   hostPath:
@@ -157,7 +157,7 @@ Volumes
 {{- else if .Values.nfsProvisioner.enabled }}
 - name: outputs
   persistentVolumeClaim:
-    claimName: {{ .Values.nfsProvisioner.pvc.outputs.name }}
+    claimName: {{ .Values.nfsProvisioner.pvc.outputs.name | quote }}
 {{- else }}
 - name: outputs
   hostPath:
