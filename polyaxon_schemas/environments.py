@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import Schema, ValidationError, fields, post_dump, post_load, validates_schema
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import UUID
+from polyaxon_schemas.utils import UUID, IntOrStr
 
 
 class TensorflowClusterSchema(Schema):
@@ -555,8 +555,8 @@ class PersistenceConfig(BaseConfig):
 
 
 class OutputsSchema(Schema):
-    jobs = fields.List(fields.Str(), allow_none=True)
-    experiments = fields.List(fields.Str(), allow_none=True)
+    jobs = fields.List(IntOrStr(), allow_none=True)
+    experiments = fields.List(IntOrStr(), allow_none=True)
 
     class Meta:
         ordered = True

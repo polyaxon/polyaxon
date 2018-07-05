@@ -358,6 +358,14 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        # Add outputs
+        config_dict['outputs'] = {
+            'jobs': ['data1.dfs', 34, 'data2'],
+            'experiments': [1, 'outputs1', 2, 3],
+        }
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add tensorflow
         config_dict['tensorflow'] = {
             'n_workers': 10,

@@ -82,6 +82,25 @@ class PValue(fields.Field):
         raise ValidationError("This field expects a list of [value<Any>, dist<float>].")
 
 
+class IntOrStr(fields.Str):
+    default_error_messages = {
+        'invalid': 'Not a valid string or int.',
+        'invalid_utf8': 'Not a valid utf-8 string.'
+    }
+
+    def _serialize(self, value, attr, obj):
+        if isinstance(value, int):
+            return int(value)
+
+        return super(IntOrStr, self)._serialize(value=value, attr=attr, obj=obj)
+
+    def _deserialize(self, value, attr, data):
+        if isinstance(value, int):
+            return int(value)
+
+        return super(IntOrStr, self)._deserialize(value=value, attr=attr, data=data)
+
+
 class Range(fields.Field):
     REQUIRED_KEYS = ['start', 'stop', 'step']
     OPTIONAL_KEY = None
