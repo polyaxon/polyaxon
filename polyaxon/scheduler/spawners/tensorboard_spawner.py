@@ -6,8 +6,10 @@ from django.conf import settings
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
-from scheduler.spawners.templates.volumes import get_pod_outputs_volume, \
+from scheduler.spawners.templates.volumes import (
+    get_pod_outputs_volume,
     get_pod_refs_outputs_volumes
+)
 
 
 class TensorboardSpawner(ProjectJobSpawner):

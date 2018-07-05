@@ -4,10 +4,8 @@ from rest_framework.exceptions import ValidationError
 
 from db.models.experiments import Experiment
 from db.models.jobs import Job
-
-from polyaxon_schemas.environments import OutputsConfig
-
 from db.models.outputs import OutputsRefs
+from polyaxon_schemas.environments import OutputsConfig
 
 
 def get_valid_ref(model, instance=None, entity_id=None, entity_args=None):

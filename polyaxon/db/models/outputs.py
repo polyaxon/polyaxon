@@ -3,8 +3,12 @@ from collections import namedtuple
 from django.contrib.postgres.fields.jsonb import KeyTransform
 from django.db import models
 
-from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT, JOB_UNIQUE_NAME_FORMAT, \
-    GROUP_UNIQUE_NAME_FORMAT, EXPERIMENT_UNIQUE_NAME_FORMAT
+from db.models.unique_names import (
+    EXPERIMENT_UNIQUE_NAME_FORMAT,
+    GROUP_UNIQUE_NAME_FORMAT,
+    JOB_UNIQUE_NAME_FORMAT,
+    PROJECT_UNIQUE_NAME_FORMAT
+)
 
 
 class OutputsRefsSpec(namedtuple("OutputsRefsSpec", "path persistence")):

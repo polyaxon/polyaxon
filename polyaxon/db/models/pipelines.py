@@ -9,7 +9,7 @@ from django.db import models
 from django.dispatch import Signal
 
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
-from db.models.unique_names import PIPELINES_UNIQUE_NAME_FORMAT, OPS_UNIQUE_NAME_FORMAT
+from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DescribableModel,
     DiffModel,

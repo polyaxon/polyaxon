@@ -32,12 +32,13 @@ from event_manager.events.job import (
     JOB_CREATED,
     JOB_DELETED_TRIGGERED,
     JOB_LOGS_VIEWED,
+    JOB_OUTPUTS_DOWNLOADED,
     JOB_RESTARTED_TRIGGERED,
     JOB_STATUSES_VIEWED,
     JOB_STOPPED_TRIGGERED,
     JOB_UPDATED,
-    JOB_VIEWED,
-    JOB_OUTPUTS_DOWNLOADED)
+    JOB_VIEWED
+)
 from event_manager.events.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_job_outputs
 from libs.paths.jobs import get_job_logs_path

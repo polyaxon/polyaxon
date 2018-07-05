@@ -4,7 +4,7 @@ from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
 from scheduler.spawners.templates.sidecars import get_sidecar_args
-from scheduler.spawners.templates.volumes import get_pod_volumes, get_pod_refs_outputs_volumes
+from scheduler.spawners.templates.volumes import get_pod_refs_outputs_volumes, get_pod_volumes
 
 
 class ExperimentSpawner(K8SManager):

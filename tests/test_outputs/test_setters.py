@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 import pytest
-from polyaxon_schemas.environments import OutputsConfig
+
 from rest_framework.exceptions import ValidationError
 
 from db.models.experiments import Experiment
@@ -10,7 +10,8 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
-from signals.outputs import get_valid_ref, get_valid_outputs, set_outputs, set_outputs_refs
+from polyaxon_schemas.environments import OutputsConfig
+from signals.outputs import get_valid_outputs, get_valid_ref, set_outputs, set_outputs_refs
 from tests.utils import BaseTest
 
 

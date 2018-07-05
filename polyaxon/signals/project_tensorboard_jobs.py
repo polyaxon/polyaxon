@@ -15,8 +15,7 @@ from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
-from signals.outputs import set_outputs_refs, set_outputs
+from signals.outputs import set_outputs, set_outputs_refs
 from signals.run_time import set_job_finished_at, set_job_started_at
 from signals.utils import set_persistence, set_tags
 

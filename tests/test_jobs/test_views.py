@@ -1,13 +1,14 @@
 # pylint:disable=too-many-lines
 import os
 
-from django.conf import settings
 from faker import Faker
 from unittest.mock import patch
 
 import pytest
 
 from rest_framework import status
+
+from django.conf import settings
 
 from api.jobs.serializers import JobDetailSerializer, JobSerializer, JobStatusSerializer
 from api.utils.views import ProtectedView
@@ -17,8 +18,12 @@ from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
-from libs.paths.jobs import create_job_logs_path, get_job_logs_path, get_job_outputs_path, \
-    create_job_outputs_path
+from libs.paths.jobs import (
+    create_job_logs_path,
+    create_job_outputs_path,
+    get_job_logs_path,
+    get_job_outputs_path
+)
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 from tests.utils import BaseViewTest
 

@@ -2,9 +2,8 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
-from polyaxon_schemas.utils import TaskType
-
 from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
+from polyaxon_schemas.utils import TaskType
 
 
 class ExperimentJob(AbstractJob):
