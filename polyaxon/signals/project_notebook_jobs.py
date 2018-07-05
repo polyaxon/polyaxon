@@ -15,6 +15,8 @@ from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+
+from signals.outputs import set_outputs_refs, set_outputs
 from signals.run_time import set_job_finished_at, set_job_started_at
 from signals.utils import set_persistence, set_tags
 
@@ -26,6 +28,8 @@ def notebook_job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     set_tags(instance=instance)
     set_persistence(instance=instance)
+    set_outputs(instance=instance)
+    set_outputs_refs(instance=instance)
     assign_code_reference(instance)
 
 

@@ -20,6 +20,8 @@ from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+
+from signals.outputs import set_outputs, set_outputs_refs
 from signals.run_time import set_job_finished_at, set_job_started_at
 from signals.utils import set_persistence, set_tags
 
@@ -33,6 +35,8 @@ def job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     set_tags(instance=instance)
     set_persistence(instance=instance)
+    set_outputs(instance=instance)
+    set_outputs_refs(instance=instance)
 
     # Add code reference
     # Check if :

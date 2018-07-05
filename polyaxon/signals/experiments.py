@@ -25,6 +25,8 @@ from libs.paths.experiments import delete_experiment_logs, delete_experiment_out
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+
+from signals.outputs import set_outputs_refs, set_outputs
 from signals.run_time import (
     set_finished_at,
     set_job_finished_at,
@@ -46,6 +48,8 @@ def experiment_pre_save(sender, **kwargs):
         instance.declarations = instance.specification.declarations
     set_tags(instance=instance)
     set_persistence(instance=instance)
+    set_outputs(instance=instance)
+    set_outputs_refs(instance=instance)
 
     # Add code reference
     # Check if :
