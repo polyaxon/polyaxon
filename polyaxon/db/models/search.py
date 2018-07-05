@@ -20,7 +20,3 @@ class Search(DiffModel, NameableModel):
     class Meta:
         app_label = 'db'
         unique_together = (('project', 'name'), )
-
-    @property
-    def unique_name(self):
-        return '{}.{}'.format(self.project.username, self.name)

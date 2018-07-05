@@ -12,11 +12,13 @@ from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.cloning_strategies import CloningStrategy
+from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DescribableModel,
     DiffModel,
     LastStatusMixin,
     NameableModel,
+    OutputsModel,
     PersistenceModel,
     RunTimeModel,
     StatusModel,
@@ -35,11 +37,12 @@ from polyaxon_schemas.utils import TaskType
 class Experiment(DiffModel,
                  RunTimeModel,
                  NameableModel,
+                 OutputsModel,
+                 PersistenceModel,
                  DescribableModel,
                  TagModel,
                  LastStatusMixin,
-                 TensorboardJobMixin,
-                 PersistenceModel):
+                 TensorboardJobMixin):
     """A model that represents experiments."""
     STATUSES = ExperimentLifeCycle
 
@@ -121,8 +124,10 @@ class Experiment(DiffModel,
     @property
     def unique_name(self):
         if self.experiment_group:
-            return '{}.{}'.format(self.experiment_group.unique_name, self.id)
-        return '{}.{}'.format(self.project.unique_name, self.id)
+            parent_name = self.experiment_group.unique_name
+        else:
+            parent_name = self.project.unique_name
+        return EXPERIMENT_UNIQUE_NAME_FORMAT.format(parent_name=parent_name, id=self.id)
 
     @cached_property
     def specification(self):

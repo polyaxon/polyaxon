@@ -7,8 +7,8 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from libs.blacklist import validate_blacklist_name
-from libs.spec_validation import validate_persistence_config
-from polyaxon_schemas.environments import PersistenceConfig
+from libs.spec_validation import validate_outputs_config, validate_persistence_config
+from polyaxon_schemas.environments import OutputsConfig, PersistenceConfig
 
 
 class DescribableModel(models.Model):
@@ -117,6 +117,68 @@ class PersistenceModel(models.Model):
     @cached_property
     def persistence_outputs(self):
         return self.persistence_config.outputs if self.persistence_config else None
+
+
+class OutputsModel(models.Model):
+    outputs = JSONField(
+        null=True,
+        blank=True,
+        help_text='The persistence definition.',
+        validators=[validate_outputs_config])
+    outputs_refs = models.OneToOneField(
+        'db.OutputsRefs',
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=False,
+        on_delete=models.SET_NULL)
+
+    class Meta:
+        abstract = True
+
+    @cached_property
+    def outputs_config(self):
+        return OutputsConfig.from_dict(self.outputs) if self.outputs else None
+
+    @cached_property
+    def outputs_jobs(self):
+        return self.outputs_config.jobs if self.outputs_config else None
+
+    @cached_property
+    def outputs_experiments(self):
+        return self.outputs_config.experiments if self.outputs_config else None
+
+    @cached_property
+    def outputs_refs_jobs(self):
+        if not self.outputs_refs:
+            return None
+
+        specs = self.outputs_refs.get_jobs_outputs_spec()
+        if not specs:
+            return None
+
+        # Return an ordered list
+        refs = []
+        for job in self.outputs_jobs:
+            refs.append(specs[int(job)])
+
+        return refs
+
+    @cached_property
+    def outputs_refs_experiments(self):
+        if not self.outputs_refs:
+            return None
+
+        specs = self.outputs_refs.get_experiments_outputs_spec()
+        if not specs:
+            return None
+
+        # Return an ordered list
+        refs = []
+        for experiment in self.outputs_experiments:
+            refs.append(specs[int(experiment)])
+
+        return refs
 
 
 class Singleton(DiffModel):

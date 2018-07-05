@@ -7,13 +7,26 @@ import auditor
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
-from db.models.utils import DescribableModel, NameableModel, PersistenceModel, TagModel
+from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
+from db.models.utils import (
+    DescribableModel,
+    NameableModel,
+    OutputsModel,
+    PersistenceModel,
+    TagModel
+)
 from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 
 
-class Job(AbstractJob, PersistenceModel, NameableModel, DescribableModel, TagModel, JobMixin):
+class Job(AbstractJob,
+          OutputsModel,
+          PersistenceModel,
+          NameableModel,
+          DescribableModel,
+          TagModel,
+          JobMixin):
     """A model that represents the configuration for run job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -65,7 +78,9 @@ class Job(AbstractJob, PersistenceModel, NameableModel, DescribableModel, TagMod
 
     @cached_property
     def unique_name(self):
-        return '{}.jobs.{}'.format(self.project.unique_name, self.id)
+        return JOB_UNIQUE_NAME_FORMAT.format(
+            project_name=self.project.unique_name,
+            id=self.id)
 
     @cached_property
     def specification(self):

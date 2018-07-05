@@ -4,6 +4,8 @@ from django.utils.functional import cached_property
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from polyaxon_schemas.utils import TaskType
 
+from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
+
 
 class ExperimentJob(AbstractJob):
     """A model that represents job related to an experiment"""
@@ -32,7 +34,11 @@ class ExperimentJob(AbstractJob):
 
     @cached_property
     def unique_name(self):
-        return '{}.{}.{}'.format(self.experiment.unique_name, self.id, self.role)
+        return EXPERIMENT_JOB_UNIQUE_NAME_FORMAT.format(
+            experiment_name=self.experiment.unique_name,
+            id=self.id,
+            role=self.role
+        )
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=ExperimentJobStatus,

@@ -4,6 +4,7 @@ from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
+from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
 from libs.spec_validation import validate_tensorboard_spec_config
 from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
 
@@ -42,7 +43,9 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     @cached_property
     def unique_name(self):
-        return '{}.tensorboards.{}'.format(self.project.unique_name, self.id)
+        return TENSORBOARD_UNIQUE_NAME_FORMAT.format(
+            project_name=self.project.unique_name,
+            id=self.id)
 
     @cached_property
     def specification(self):

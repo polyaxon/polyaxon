@@ -9,6 +9,7 @@ from django.db import models
 from django.dispatch import Signal
 
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
+from db.models.unique_names import PIPELINES_UNIQUE_NAME_FORMAT, OPS_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DescribableModel,
     DiffModel,
@@ -124,7 +125,9 @@ class Pipeline(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableM
 
     @property
     def unique_name(self):
-        return '{}.pipelines.{}'.format(self.project.unique_name, self.id)
+        return PIPELINES_UNIQUE_NAME_FORMAT.format(
+            project_name=self.project.unique_name,
+            id=self.id)
 
     @property
     def dag(self):
@@ -230,7 +233,9 @@ class Operation(DiffModel, NameableModel, DescribableModel, TagModel, Executable
 
     @property
     def unique_name(self):
-        return '{}.ops.{}'.format(self.pipeline.unique_name, self.id)
+        return OPS_UNIQUE_NAME_FORMAT.format(
+            pipeline_name=self.pipeline.unique_name,
+            id=self.id)
 
     def get_countdown(self, retries):
         """Calculate the countdown for a celery task retry."""

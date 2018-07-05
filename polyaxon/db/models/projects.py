@@ -5,6 +5,7 @@ from django.core.validators import validate_slug
 from django.db import models
 
 from db.models.abstract_jobs import TensorboardJobMixin
+from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT
 from db.models.utils import DescribableModel, DiffModel, TagModel
 from libs.blacklist import validate_blacklist_name
 
@@ -36,7 +37,9 @@ class Project(DiffModel, DescribableModel, TagModel, TensorboardJobMixin):
 
     @property
     def unique_name(self):
-        return '{}.{}'.format(self.user.username, self.name)
+        return PROJECT_UNIQUE_NAME_FORMAT.format(
+            user=self.user.username,
+            project=self.name)
 
     @property
     def has_code(self):

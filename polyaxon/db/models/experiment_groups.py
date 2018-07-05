@@ -14,12 +14,13 @@ from django.utils.functional import cached_property
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
+from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DescribableModel,
     DiffModel,
     LastStatusMixin,
     NameableModel,
-    PersistenceModel,
+    OutputsModel,
     RunTimeModel,
     StatusModel,
     TagModel
@@ -35,11 +36,11 @@ _logger = logging.getLogger('polyaxon.db.experiment_groups')
 class ExperimentGroup(DiffModel,
                       RunTimeModel,
                       NameableModel,
+                      OutputsModel,
                       DescribableModel,
                       TagModel,
                       LastStatusMixin,
-                      TensorboardJobMixin,
-                      PersistenceModel):
+                      TensorboardJobMixin):
     """A model that saves Specification/Polyaxonfiles."""
     STATUSES = ExperimentGroupLifeCycle
 
@@ -90,7 +91,9 @@ class ExperimentGroup(DiffModel,
 
     @property
     def unique_name(self):
-        return '{}.{}'.format(self.project.unique_name, self.id)
+        return GROUP_UNIQUE_NAME_FORMAT.format(
+            project_name=self.project.unique_name,
+            id=self.id)
 
     def can_transition(self, status):
         """Update the status of the current instance.

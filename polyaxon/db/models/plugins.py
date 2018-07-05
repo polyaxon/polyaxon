@@ -2,10 +2,21 @@ from django.conf import settings
 from django.db import models
 
 from db.models.abstract_jobs import AbstractJob
-from db.models.utils import DescribableModel, NameableModel, PersistenceModel, TagModel
+from db.models.utils import (
+    DescribableModel,
+    NameableModel,
+    OutputsModel,
+    PersistenceModel,
+    TagModel
+)
 
 
-class PluginJobBase(AbstractJob, PersistenceModel, NameableModel, DescribableModel, TagModel):
+class PluginJobBase(AbstractJob,
+                    OutputsModel,
+                    PersistenceModel,
+                    NameableModel,
+                    DescribableModel,
+                    TagModel):
     """A base model for plugin jobs."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
