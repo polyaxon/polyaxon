@@ -7,7 +7,7 @@ import os
 import torch
 import torch.optim as optim
 
-from polyaxon_helper import get_data_path
+from polyaxon_helper import get_data_paths
 
 from network import Network
 from train import train, test, get_test_loader, get_train_loader
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     if args.cuda:
         model.cuda()
 
-    data_dir = os.path.join(get_data_path(), 'pytorch', 'mnist')
+    data_dir = os.path.join(get_data_paths(), 'pytorch', 'mnist')
 
     logging.info('Downloading data ...')
     train_loader = get_train_loader(data_dir, args.batch_size, args.cuda)

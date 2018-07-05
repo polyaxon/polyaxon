@@ -4,7 +4,7 @@ import argparse
 from cifar10_main import train
 from generate_cifar10_tfrecords import generate_data
 
-from polyaxon_helper import get_data_path, get_outputs_path
+from polyaxon_helper import get_data_paths, get_outputs_path
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -125,7 +125,7 @@ if __name__ == '__main__':
     if args.num_gpus != 0 and args.eval_batch_size % args.num_gpus != 0:
         raise ValueError('--eval-batch-size must be multiple of --num-gpus.')
 
-    data_dir = os.path.join(list(get_data_path().values())[0], 'cifar-10-data')
+    data_dir = os.path.join(list(get_data_paths().values())[0], 'cifar-10-data')
     # We create data for the project if it does not exists
     if not os.path.exists(os.path.join(data_dir, 'train.tfrecords')):
         generate_data(data_dir)

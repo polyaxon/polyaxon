@@ -10,13 +10,13 @@ import torch
 from torchvision import datasets
 from torchvision import transforms
 
-from polyaxon_helper import get_data_path
+from polyaxon_helper import get_data_paths
 
 logging.basicConfig(level=logging.INFO)
 
 
 def get_data_loaders(batch_size):
-    data_dir = os.path.join(list(get_data_path().values())[0], 'pytorch', 'mnist')
+    data_dir = os.path.join(list(get_data_paths().values())[0], 'pytorch', 'mnist')
 
     train_dataset = datasets.MNIST(root=data_dir,
                                    train=True,

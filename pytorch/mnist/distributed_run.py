@@ -9,7 +9,7 @@ import torch
 import torch.distributed as dist
 import torch.optim as optim
 
-from polyaxon_helper import get_data_path
+from polyaxon_helper import get_data_paths
 
 from distributed_train import distributed_train, partition_dataset
 from network import Network
@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     model = Network()
 
-    data_dir = os.path.join(get_data_path(), 'pytorch', 'mnist')
+    data_dir = os.path.join(get_data_paths(), 'pytorch', 'mnist')
 
     train_set, bsz = partition_dataset(data_dir=data_dir,
                                        batch_size=args.batch_size,
