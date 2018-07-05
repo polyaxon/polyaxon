@@ -28,12 +28,10 @@ class OutputsRefs(models.Model):
     jobs = models.ManyToManyField(
         'db.Job',
         blank=True,
-        null=True,
         related_name='+')
     experiments = models.ManyToManyField(
         'db.Experiment',
         blank=True,
-        null=True,
         related_name='+')
 
     class Meta:
