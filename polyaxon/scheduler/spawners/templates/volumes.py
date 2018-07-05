@@ -67,13 +67,13 @@ def get_pod_outputs_volume(persistence_outputs):
                                       volume_settings=settings.PERSISTENCE_OUTPUTS)
 
 
-def get_pod_refs_outputs_volumes(outputs_refs):
+def get_pod_refs_outputs_volumes(outputs_refs, persistence_outputs):
     volumes, volume_mounts = [], []
 
     if not outputs_refs:
         return volumes, volume_mounts
 
-    persistences = set([ref.persistence for ref in outputs_refs])
+    persistences = set([ref.persistence for ref in outputs_refs if ref != persistence_outputs])
     for persistence in persistences:
         p_volumes, p_volume_mounts = get_volume_from_definition(
             volume_name=persistence,

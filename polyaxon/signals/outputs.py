@@ -61,14 +61,13 @@ def get_valid_outputs(instance, outputs, model, entity):
 
 def set_outputs(instance):
     if instance.outputs:
-        outputs = instance.outputs
+        outputs_config = instance.outputs_config
     elif instance.specification and instance.specification.outputs:
-        outputs = instance.specification.outputs
+        outputs_config = instance.specification.outputs
     else:
         return
 
     # Validate the outputs
-    outputs_config = OutputsConfig.from_dict(outputs)
     if outputs_config.jobs:
         jobs = get_valid_outputs(instance=instance,
                                  outputs=outputs_config.jobs,
@@ -89,7 +88,7 @@ def set_outputs_refs(instance):
     if not instance.outputs:
         return
 
-    if not (instance.outputs_jobs and instance.outputs_experiments):
+    if not instance.outputs_jobs and not instance.outputs_experiments:
         return
 
     outputs_refs = OutputsRefs.objects.create()

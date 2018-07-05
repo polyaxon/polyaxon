@@ -108,11 +108,13 @@ class ExperimentSpawner(K8SManager):
             persistence_outputs=self.persistence_config.outputs,
             persistence_data=self.persistence_config.data)
         refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
-            outputs_refs=self.outputs_refs_jobs)
+            outputs_refs=self.outputs_refs_jobs,
+            persistence_outputs=self.persistence_config.outputs)
         volumes += refs_volumes
         volume_mounts += refs_volume_mounts
         refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
-            outputs_refs=self.outputs_refs_experiments)
+            outputs_refs=self.outputs_refs_experiments,
+            persistence_outputs=self.persistence_config.outputs)
         volumes += refs_volumes
         volume_mounts += refs_volume_mounts
         pod = self.pod_manager.get_pod(

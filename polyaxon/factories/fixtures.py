@@ -281,6 +281,26 @@ exec_experiment_spec_content = """---
 
 exec_experiment_spec_parsed_content = ExperimentSpecification.read(exec_experiment_spec_content)
 
+exec_experiment_outputs_refs_content = """---
+    version: 1
+
+    kind: experiment
+
+    tags: [fixtures]
+    
+    environment:
+      outputs:
+        jobs: ['foo']
+
+    build:
+      image: my_image
+
+    run:
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
+exec_experiment_outputs_refs_parsed_content = ExperimentSpecification.read(
+    exec_experiment_outputs_refs_content)
 
 exec_experiment_resources_content = """---
     version: 1
