@@ -22,7 +22,7 @@ function ProjectInstructions({projectName}: Props) {
               <h4>Filters</h4>
               <ul>
                 <li>
-                  <a href="https://docs.polyaxon.com/polyaxonfile_specification/sections/">
+                  <a href="https://docs.polyaxon.com/query_syntax/introduction/">
                     Understanding the query syntax
                   </a>
                 </li>
