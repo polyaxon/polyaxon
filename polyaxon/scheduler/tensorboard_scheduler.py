@@ -30,11 +30,14 @@ def start_tensorboard(tensorboard):
         node_selectors = get_node_selector(
             node_selector=tensorboard.node_selectors,
             default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
-        results = spawner.start_tensorboard(image=tensorboard.image,
-                                            outputs_path=tensorboard.outputs_path,
-                                            persistence_outputs=tensorboard.persistence_outputs,
-                                            resources=tensorboard.resources,
-                                            node_selectors=node_selectors)
+        results = spawner.start_tensorboard(
+            image=tensorboard.image,
+            outputs_path=tensorboard.outputs_path,
+            persistence_outputs=tensorboard.persistence_outputs,
+            outputs_refs_jobs=tensorboard.outputs_refs_jobs,
+            outputs_refs_experiments=tensorboard.outputs_refs_experiments,
+            resources=tensorboard.resources,
+            node_selectors=node_selectors)
     except ApiException as e:
         _logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
         tensorboard.set_status(

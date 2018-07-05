@@ -4,6 +4,7 @@ from kubernetes import client
 
 from django.conf import settings
 
+from db.models.outputs import get_paths_from_specs
 from libs.api import API_KEY_NAME, get_settings_api_url
 from scheduler.spawners.templates import constants
 
@@ -37,11 +38,16 @@ def get_service_env_vars(namespace='default'):
     ]
 
 
-def get_job_env_vars(outputs_path, data_paths, log_level=None, logs_path=None):
+def get_job_env_vars(outputs_path,
+                     data_paths,
+                     log_level=None,
+                     logs_path=None,
+                     outputs_refs_jobs=None,
+                     outputs_refs_experiments=None):
     env_vars = [
         get_env_var(name=API_KEY_NAME, value=get_settings_api_url()),
         get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
-        get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATH_KEY_NAME, value=data_paths),
+        get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME, value=data_paths),
         get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'polyaxon-internal-secret-token'),
     ]
     if log_level:
@@ -52,6 +58,15 @@ def get_job_env_vars(outputs_path, data_paths, log_level=None, logs_path=None):
         env_vars.append(
             get_env_var(name=constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME, value=logs_path))
 
+    refs_outputs = {}
+    outputs_jobs_paths = get_paths_from_specs(specs=outputs_refs_jobs)
+    if outputs_jobs_paths:
+        refs_outputs['jobs'] = outputs_jobs_paths
+    outputs_experiments_paths = get_paths_from_specs(specs=outputs_refs_experiments)
+    if outputs_experiments_paths:
+        refs_outputs['experiments'] = outputs_experiments_paths
+    if refs_outputs:
+        get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME, value=refs_outputs)
     return env_vars
 
 

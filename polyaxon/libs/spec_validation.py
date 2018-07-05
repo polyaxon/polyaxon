@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 
-from polyaxon_schemas.environments import PersistenceConfig
+from polyaxon_schemas.environments import OutputsConfig, PersistenceConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.polyaxonfile.specification import (
@@ -109,6 +109,18 @@ def validate_persistence_config(config, raise_for_rest=False):
         return None
     try:
         PersistenceConfig.from_dict(config)
+    except MarshmallowValidationError as e:
+        if raise_for_rest:
+            raise ValidationError(e)
+        else:
+            raise DjangoValidationError(e)
+
+
+def validate_outputs_config(config, raise_for_rest=False):
+    if not config:
+        return None
+    try:
+        OutputsConfig.from_dict(config)
     except MarshmallowValidationError as e:
         if raise_for_rest:
             raise ValidationError(e)

@@ -16,7 +16,7 @@ Same as logs, the outputs are saved on the outputs volume, on:
  * Group experiment: `/[OUTPUTS MOUNT PATH]/username/project_name/groups/group_id/experiment_id`
 
 You don't need to figure out this path or hardcode them manually,
-Polyaxon will provide an environment variable for the outputs `POLYAXON_OUTPUTS_PATH`
+Polyaxon will provide an environment variable for the outputs `POLYAXON_RUN_OUTPUTS_PATH`
 that you can use to export your outputs, artifacts and checkpoints.
 You can also use our helper to get this path [get_outputs_path](/reference_polyaxon_helper/#getting-env-variables-defined-by-polyaxon).
 
@@ -32,7 +32,7 @@ The Estimator takes care of saving checkpoints automatically,
 you only need to specify the top-level directory in which the Estimator stores its information,
 This is done by assigning a value to the optional `model_dir` argument of any Estimator's constructor.
 
-In the case of Polyaxon you should assign provided path `POLYAXON_OUTPUTS_PATH`, e.g.
+In the case of Polyaxon you should assign provided path `POLYAXON_RUN_OUTPUTS_PATH`, e.g.
 
 ```python
 classifier = tf.estimator.DNNClassifier(

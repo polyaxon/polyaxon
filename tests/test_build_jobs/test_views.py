@@ -340,7 +340,7 @@ class TestBuildDetailViewV1(BaseViewTest):
             with patch('libs.paths.jobs.delete_path') as outputs_mock_stop:
                 resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1
-        assert outputs_mock_stop.call_count == 2  # Outputs and Logs
+        assert outputs_mock_stop.call_count == 1  # Logs
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
 

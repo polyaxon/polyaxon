@@ -117,6 +117,8 @@ class PodManager(object):
                           args=None,
                           persistence_outputs=None,
                           persistence_data=None,
+                          outputs_refs_jobs=None,
+                          outputs_refs_experiments=None,
                           resources=None):
         """Pod job container for task."""
         assert self.cluster_def is not None
@@ -132,6 +134,8 @@ class PodManager(object):
             outputs_path=outputs_path,
             data_paths=get_data_paths(persistence_data),
             logs_path=get_experiment_logs_path(self.experiment_name),
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments
         )
         env_vars += [
             get_env_var(name=constants.CONFIG_MAP_CLUSTER_KEY_NAME,
@@ -203,6 +207,8 @@ class PodManager(object):
                           sidecar_args=None,
                           persistence_outputs=None,
                           persistence_data=None,
+                          outputs_refs_jobs=None,
+                          outputs_refs_experiments=None,
                           resources=None,
                           node_selector=None,
                           restart_policy='OnFailure'):
@@ -229,6 +235,8 @@ class PodManager(object):
                                                args=args,
                                                persistence_outputs=persistence_outputs,
                                                persistence_data=persistence_data,
+                                               outputs_refs_jobs=outputs_refs_jobs,
+                                               outputs_refs_experiments=outputs_refs_experiments,
                                                resources=resources)
 
         containers = [pod_container]
@@ -264,6 +272,8 @@ class PodManager(object):
                 sidecar_args=None,
                 persistence_outputs=None,
                 persistence_data=None,
+                outputs_refs_jobs=None,
+                outputs_refs_experiments=None,
                 resources=None,
                 node_selector=None,
                 restart_policy=None):
@@ -281,6 +291,8 @@ class PodManager(object):
             sidecar_args=sidecar_args,
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
             resources=resources,
             node_selector=node_selector,
             restart_policy=restart_policy)

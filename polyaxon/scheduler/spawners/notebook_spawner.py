@@ -11,7 +11,8 @@ from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.env_vars import get_job_env_vars
 from scheduler.spawners.templates.project_jobs import deployments
-from scheduler.spawners.templates.volumes import get_pod_volumes, get_volume, get_volume_mount
+from scheduler.spawners.templates.volumes import get_pod_volumes, get_volume, get_volume_mount, \
+    get_pod_refs_outputs_volumes
 
 
 class NotebookSpawner(ProjectJobSpawner):
@@ -79,6 +80,8 @@ class NotebookSpawner(ProjectJobSpawner):
                        image,
                        persistence_outputs=None,
                        persistence_data=None,
+                       outputs_refs_jobs=None,
+                       outputs_refs_experiments=None,
                        resources=None,
                        node_selectors=None,
                        allow_commits=False):
@@ -86,10 +89,20 @@ class NotebookSpawner(ProjectJobSpawner):
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=outputs_refs_jobs)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=outputs_refs_experiments)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
         env_vars = get_job_env_vars(
             outputs_path=get_notebook_job_outputs_path(persistence_outputs=persistence_outputs,
                                                        notebook_job=self.job_name),
             data_paths=get_data_paths(persistence_data),
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments
         )
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)

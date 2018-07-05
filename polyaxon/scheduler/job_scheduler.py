@@ -43,6 +43,8 @@ def start_job(job):
     try:
         results = spawner.start_job(persistence_data=job.persistence_data,
                                     persistence_outputs=job.persistence_outputs,
+                                    outputs_refs_jobs=job.outputs_refs_jobs,
+                                    outputs_refs_experiments=job.outputs_refs_experiments,
                                     resources=job.resources,
                                     node_selectors=job.node_selectors)
     except ApiException as e:

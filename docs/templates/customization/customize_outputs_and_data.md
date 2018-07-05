@@ -46,7 +46,7 @@ If the polyaxonfile for running an experiment or a job does not define the data 
 Polyaxon will, by default mount all these volumes when it schedules the experiment or the job.
 
 These data volumes will be accessible to you as a dictionary {volume_name: path_to_data},
-exported as an env variable `POLYAXON_DATA_PATH`.
+exported as an env variable `POLYAXON_DATA_PATHS`.
 
 You can use as well our `helper` library `polyaxon-helper` to extract this value for you automatically.
 
@@ -71,7 +71,7 @@ If the polyaxonfile for running an experiment or a job does not define the outpu
 Polyaxon will, by default mount one volume, either the first one or a random one from the list of the defined volumes.
 
 The outputs volume will be accessible to you as a string `path_to_outputs_for_experiment`,
-exported as an env variable `POLYAXON_OUTPUTS_PATH`.
+exported as an env variable `POLYAXON_RUN_OUTPUTS_PATH`.
 
 You can use as well our `helper` library `polyaxon-helper` to extract this value for you automatically.
 

@@ -3,7 +3,7 @@ from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
 from scheduler.spawners.templates.jobs import pods
-from scheduler.spawners.templates.volumes import get_pod_volumes
+from scheduler.spawners.templates.volumes import get_pod_volumes, get_pod_refs_outputs_volumes
 
 
 class JobSpawner(K8SManager):
@@ -68,16 +68,28 @@ class JobSpawner(K8SManager):
     def start_job(self,
                   persistence_outputs=None,
                   persistence_data=None,
+                  outputs_refs_jobs=None,
+                  outputs_refs_experiments=None,
                   resources=None,
                   node_selectors=None):
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=outputs_refs_jobs)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=outputs_refs_experiments)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
         command, args = self.get_pod_command_args()
         pod = self.pod_manager.get_pod(
             volume_mounts=volume_mounts,
             volumes=volumes,
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
             env_vars=None,
             command=command,
             args=args,

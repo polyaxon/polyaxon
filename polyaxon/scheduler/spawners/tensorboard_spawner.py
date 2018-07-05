@@ -6,7 +6,8 @@ from django.conf import settings
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
-from scheduler.spawners.templates.volumes import get_pod_outputs_volume
+from scheduler.spawners.templates.volumes import get_pod_outputs_volume, \
+    get_pod_refs_outputs_volumes
 
 
 class TensorboardSpawner(ProjectJobSpawner):
@@ -32,11 +33,21 @@ class TensorboardSpawner(ProjectJobSpawner):
                           image,
                           outputs_path,
                           persistence_outputs,
+                          outputs_refs_jobs=None,
+                          outputs_refs_experiments=None,
                           resources=None,
                           node_selectors=None):
         ports = [self.request_tensorboard_port()]
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_outputs_volume(persistence_outputs)
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=outputs_refs_jobs)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=outputs_refs_experiments)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=settings.APP_LABELS_TENSORBOARD,

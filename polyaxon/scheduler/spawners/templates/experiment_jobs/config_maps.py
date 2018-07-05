@@ -61,7 +61,7 @@ def get_config_map(namespace,
         API_KEY_NAME: get_settings_api_url(),
         constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path,
         constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME: experiment_logs_path,
-        constants.CONFIG_MAP_RUN_DATA_PATH_KEY_NAME: persistence_data,
+        constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME: persistence_data,
     }
     return client.V1ConfigMap(api_version=k8s_constants.K8S_API_VERSION_V1,
                               kind=k8s_constants.K8S_CONFIG_MAP_KIND,

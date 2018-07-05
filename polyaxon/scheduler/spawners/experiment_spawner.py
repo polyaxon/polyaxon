@@ -4,7 +4,7 @@ from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
 from scheduler.spawners.templates.sidecars import get_sidecar_args
-from scheduler.spawners.templates.volumes import get_pod_volumes
+from scheduler.spawners.templates.volumes import get_pod_volumes, get_pod_refs_outputs_volumes
 
 
 class ExperimentSpawner(K8SManager):
@@ -17,6 +17,8 @@ class ExperimentSpawner(K8SManager):
                  experiment_uuid,
                  spec,
                  persistence_config=None,
+                 outputs_refs_experiments=None,
+                 outputs_refs_jobs=None,
                  experiment_group_uuid=None,
                  experiment_group_name=None,
                  original_name=None,
@@ -44,6 +46,8 @@ class ExperimentSpawner(K8SManager):
         self.original_name = original_name
         self.cloning_strategy = cloning_strategy
         self.persistence_config = persistence_config
+        self.outputs_refs_experiments = outputs_refs_experiments
+        self.outputs_refs_jobs = outputs_refs_jobs
         self.pod_manager = pods.PodManager(namespace=namespace,
                                            project_name=self.project_name,
                                            experiment_group_name=self.experiment_group_name,
@@ -103,6 +107,14 @@ class ExperimentSpawner(K8SManager):
         volumes, volume_mounts = get_pod_volumes(
             persistence_outputs=self.persistence_config.outputs,
             persistence_data=self.persistence_config.data)
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=self.outputs_refs_jobs)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=self.outputs_refs_experiments)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
         pod = self.pod_manager.get_pod(
             task_type=task_type,
             task_idx=task_idx,
@@ -115,6 +127,8 @@ class ExperimentSpawner(K8SManager):
             sidecar_args=sidecar_args,
             persistence_outputs=self.persistence_config.outputs,
             persistence_data=self.persistence_config.data,
+            outputs_refs_jobs=self.outputs_refs_jobs,
+            outputs_refs_experiments=self.outputs_refs_experiments,
             resources=resources,
             node_selector=node_selector,
             restart_policy=restart_policy)

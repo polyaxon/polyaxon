@@ -7,10 +7,17 @@ from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT, JOB_UNIQUE_NAME_F
     GROUP_UNIQUE_NAME_FORMAT, EXPERIMENT_UNIQUE_NAME_FORMAT
 
 
-class OutputsRefsSpec(namedtuple("OutputsRefsSpec", "paths persistences")):
+class OutputsRefsSpec(namedtuple("OutputsRefsSpec", "path persistence")):
 
     def items(self):
         return self._asdict().items()
+
+
+def get_paths_from_specs(specs):
+    if not specs:
+        return None
+
+    return [spec.path for spec in specs]
 
 
 class OutputsRefs(models.Model):
@@ -51,7 +58,7 @@ class OutputsRefs(models.Model):
                 id=data[0]
             )
             outputs_path = get_job_outputs_path(persistence_outputs=data[3], job_name=job_name)
-            outputs_spec_data[data[0]] = OutputsRefsSpec(paths=outputs_path, persistences=data[3])
+            outputs_spec_data[data[0]] = OutputsRefsSpec(path=outputs_path, persistence=data[3])
 
         return outputs_spec_data
 
@@ -89,6 +96,6 @@ class OutputsRefs(models.Model):
             outputs_path = get_experiment_outputs_path(
                 persistence_outputs=data[4],
                 experiment_name=experiment_name)
-            outputs_spec_data[data[0]] = OutputsRefsSpec(paths=outputs_path, persistences=data[4])
+            outputs_spec_data[data[0]] = OutputsRefsSpec(path=outputs_path, persistence=data[4])
 
         return outputs_spec_data

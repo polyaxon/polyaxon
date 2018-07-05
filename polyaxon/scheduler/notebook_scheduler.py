@@ -46,6 +46,8 @@ def start_notebook(notebook):
         results = spawner.start_notebook(image=job_docker_image,
                                          persistence_outputs=notebook.persistence_outputs,
                                          persistence_data=notebook.persistence_data,
+                                         outputs_refs_jobs=notebook.outputs_refs_jobs,
+                                         outputs_refs_experiments=notebook.outputs_refs_experiments,
                                          resources=notebook.resources,
                                          node_selectors=node_selectors,
                                          allow_commits=allow_commits)

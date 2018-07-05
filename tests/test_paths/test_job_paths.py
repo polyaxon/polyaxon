@@ -28,7 +28,7 @@ class TestJobPaths(BaseTest):
         delete_job_logs(job.unique_name)
         assert os.path.exists(job_logs_path) is False
 
-    def test_experiment_group_outputs_path_creation_deletion(self):
+    def test_job_outputs_path_creation_deletion(self):
         job = JobFactory()
         create_job_outputs_path(persistence_outputs=job.persistence_outputs,
                                 job_name=job.unique_name)
