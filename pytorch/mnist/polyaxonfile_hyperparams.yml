@@ -1,15 +1,24 @@
 ---
 version: 1
 
-kind: experiment
+kind: group
+
+hptuning:
+  concurrency: 5
+  random_search:
+    n_experiments: 10
+
+  matrix:
+    lr:
+      linspace: 0.001:0.1:5
+    momentum:
+      uniform: 0.5:0.6
 
 declarations:
   batch_size_train: 128
   batch_size_test: 1000
   epochs: 5
-  lr: 0.01
   train_steps: 400
-  momentum: 0.5
 
 build:
  image: pytorch/pytorch:latest

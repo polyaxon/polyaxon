@@ -7,10 +7,23 @@ environment:
   pytorch:
     n_workers: 1
 
-builds:
+declarations:
+  batch_size_train: 128
+  batch_size_test: 1000
+  epochs: 5
+  lr: 0.01
+  train_steps: 400
+  momentum: 0.5
+
+build:
   image: pytorch/pytorch:latest
   build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
 
 run:
-  cmd: python distributed_run.py
+  cmd: python distributed_run.py --batch-size={{ batch_size_train }} \
+                                 --test-batch-size={{ batch_size_test }} \
+                                 --epochs={{ epochs }} \
+                                 --lr={{ lr }} \
+                                 --momentum={{ momentum }} \
+                                 --epochs={{ epochs }}

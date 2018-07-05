@@ -43,7 +43,7 @@ if __name__ == '__main__':
     if args.cuda:
         model.cuda()
 
-    data_dir = os.path.join(get_data_paths(), 'pytorch', 'mnist')
+    data_dir = os.path.join(list(get_data_paths().values())[0], 'pytorch', 'mnist')
 
     logging.info('Downloading data ...')
     train_loader = get_train_loader(data_dir, args.batch_size, args.cuda)

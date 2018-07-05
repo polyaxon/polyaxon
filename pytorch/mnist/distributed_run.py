@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     model = Network()
 
-    data_dir = os.path.join(get_data_paths(), 'pytorch', 'mnist')
+    data_dir = os.path.join(list(get_data_paths().values())[0], 'pytorch', 'mnist')
 
     train_set, bsz = partition_dataset(data_dir=data_dir,
                                        batch_size=args.batch_size,
