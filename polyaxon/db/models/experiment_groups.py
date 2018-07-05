@@ -20,7 +20,7 @@ from db.models.utils import (
     DiffModel,
     LastStatusMixin,
     NameableModel,
-    OutputsModel,
+    PersistenceModel,
     RunTimeModel,
     StatusModel,
     TagModel
@@ -36,7 +36,7 @@ _logger = logging.getLogger('polyaxon.db.experiment_groups')
 class ExperimentGroup(DiffModel,
                       RunTimeModel,
                       NameableModel,
-                      OutputsModel,
+                      PersistenceModel,
                       DescribableModel,
                       TagModel,
                       LastStatusMixin,
