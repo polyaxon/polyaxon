@@ -308,6 +308,28 @@ A resources definition, is optional and made of three optional fields:
  * memory: {limits: value, requests: value}
  * gpu: {limits: value, requests: value}
 
+### outputs
+
+Sometime you experiment or your job might depend on previous jobs or experiments,
+and you need to use their outputs to either do fine tuning or post processing of those outputs.
+
+Outputs gives you a way to reference outputs from previous experiments and jobs,
+by either using their ids or names (if you gave them name).
+
+This will both mount necessary outputs volumes,
+and will expose the paths of those outputs in your experiment/job that requested them.
+
+If you referenced different outputs from jobs and experiments, the paths will following
+the same order that was provided.
+
+```yaml
+environment:
+  outputs:
+    jobs: [1, 234, 'job_name1', 'another_username/another_project/job_name2']
+    experiments: [12, 'experiment_name', 'my_other_project/experiment_name2']
+```
+
+
 ### persistence
 
 The volumes to mount for data and outputs, this is only needed when Polyaxon was deployed
