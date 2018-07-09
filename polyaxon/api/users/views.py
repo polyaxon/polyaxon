@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.generics import DestroyAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -284,12 +284,14 @@ class TokenView(TemplateView):
 
 
 class UserView(RetrieveAPIView):
+    """Get user details."""
     def retrieve(self, request, *args, **kwargs):
         user = request.user
         return Response(UserConfig.obj_to_dict(user))
 
 
 class ActivateView(PostAPIView):
+    """Activate user."""
     queryset = get_user_model().objects.filter()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'
@@ -305,6 +307,7 @@ class ActivateView(PostAPIView):
 
 
 class DeleteView(DestroyAPIView):
+    """Delete user."""
     queryset = get_user_model()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'
@@ -319,6 +322,7 @@ class DeleteView(DestroyAPIView):
 
 
 class GrantSuperuserView(PostAPIView):
+    """Grant a user the superuser role."""
     queryset = get_user_model()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'
@@ -335,6 +339,7 @@ class GrantSuperuserView(PostAPIView):
 
 
 class RevokeSuperuserView(PostAPIView):
+    """Revoke the superuser role from user."""
     queryset = get_user_model()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'
