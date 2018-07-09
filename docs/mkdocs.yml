@@ -144,6 +144,17 @@ pages:
     - Job: polyaxon_client/clients/job.md
     - Build Job: polyaxon_client/clients/build_job.md
     - Version: polyaxon_client/clients/version.md
+- REST API Reference:
+  - Introduction: polyaxon_rest/introduction.md
+  - Resources:
+    - Cluster: polyaxon_rest/resources/cluster.md
+    - User: polyaxon_rest/resources/user.md
+    - Project: polyaxon_rest/resources/project.md
+    - Experiment Group: polyaxon_rest/resources/experiment_group.md
+    - Experiment: polyaxon_rest/resources/experiment.md
+    - Job: polyaxon_rest/resources/job.md
+    - Build Job: polyaxon_rest/resources/build_job.md
+    - Version: polyaxon_rest/resources/version.md
 - Helm Chart Reference: reference_polyaxon_helm.md
 - Helper Reference: reference_polyaxon_helper.md
 - Query Syntax Reference:
