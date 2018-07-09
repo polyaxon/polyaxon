@@ -29,6 +29,7 @@ import auditor
 
 from api.users.forms import RegistrationForm
 from api.users.utils import login_user, logout_user
+from api.utils.views import PostAPIView
 from event_manager.events.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
 from event_manager.events.user import USER_ACTIVATED, USER_DELETED
 from polyaxon_schemas.user import UserConfig
@@ -288,7 +289,7 @@ class UserView(RetrieveAPIView):
         return Response(UserConfig.obj_to_dict(user))
 
 
-class ActivateView(CreateAPIView):
+class ActivateView(PostAPIView):
     queryset = get_user_model().objects.filter()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'
@@ -317,7 +318,7 @@ class DeleteView(DestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class GrantSuperuserView(CreateAPIView):
+class GrantSuperuserView(PostAPIView):
     queryset = get_user_model()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'
@@ -333,7 +334,7 @@ class GrantSuperuserView(CreateAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class RevokeSuperuserView(CreateAPIView):
+class RevokeSuperuserView(PostAPIView):
     queryset = get_user_model()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'

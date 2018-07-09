@@ -14,7 +14,7 @@ from api.plugins.serializers import (
     ProjectTensorboardJobSerializer,
     TensorboardJobSerializer
 )
-from api.utils.views import ProtectedView
+from api.utils.views import ProtectedView, PostAPIView
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
@@ -111,7 +111,7 @@ class StartTensorboardView(CreateAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopTensorboardView(CreateAPIView):
+class StopTensorboardView(PostAPIView):
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
@@ -187,7 +187,7 @@ class StartNotebookView(CreateAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopNotebookView(CreateAPIView):
+class StopNotebookView(PostAPIView):
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'

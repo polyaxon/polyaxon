@@ -15,6 +15,11 @@ from django.urls import reverse
 import auditor
 
 
+class PostAPIView(generics.CreateAPIView):
+    def get_serializer(self):
+        pass
+
+
 class ListCreateAPIView(generics.ListCreateAPIView):
     create_serializer_class = None
 
