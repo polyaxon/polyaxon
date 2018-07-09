@@ -37,6 +37,7 @@ from signals import users as users_signals
 
 
 class AuthTokenLogin(ObtainAuthToken):
+    """Login user and return user's token."""
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
