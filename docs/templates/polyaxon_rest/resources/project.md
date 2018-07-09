@@ -66,7 +66,7 @@ GET /api/v1/{username}/
 ### Url
 
 ```
-/api/v1/{username}/{project_name}
+GET /api/v1/{username}/{project_name}/
 ```
 
 ### Headers
@@ -91,7 +91,7 @@ GET /api/v1/{username}/
 ### Url
 
 ```
-/api/v1/{username}/{project_name}/
+PATCH /api/v1/{username}/{project_name}/
 ```
 
 ### Headers
@@ -116,7 +116,7 @@ GET /api/v1/{username}/
 ### Url
 
 ```
-/api/v1/{username}/{project_name}/
+DELETE /api/v1/{username}/{project_name}/
 ```
 
 ### Headers
@@ -141,7 +141,7 @@ GET /api/v1/{username}/
 ### Url
 
 ```
-PUT /api/v1/{username}/{project_name}/repo/upload
+PUT /api/v1/{username}/{project_name}/repo/upload/
 ```
 
 ### Headers
@@ -165,7 +165,7 @@ PUT /api/v1/{username}/{project_name}/repo/upload
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/repo/download
+GET /api/v1/{username}/{project_name}/repo/download/
 ```
 
 ### Headers
@@ -190,7 +190,7 @@ GET /api/v1/{username}/{project_name}/repo/download
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/groups
+GET /api/v1/{username}/{project_name}/groups/
 ```
 
 ### Headers
@@ -214,7 +214,7 @@ GET /api/v1/{username}/{project_name}/groups
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/groups
+GET /api/v1/{username}/{project_name}/groups/
 ```
 
 ### Headers
@@ -238,7 +238,7 @@ GET /api/v1/{username}/{project_name}/groups
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/experiments
+GET /api/v1/{username}/{project_name}/experiments/
 ```
 
 ### Headers
@@ -262,7 +262,7 @@ GET /api/v1/{username}/{project_name}/experiments
 ### Url
 
 ```
-POST /api/v1/{username}/{project_name}/experiments
+POST /api/v1/{username}/{project_name}/experiments/
 ```
 
 ### Headers
@@ -286,7 +286,7 @@ POST /api/v1/{username}/{project_name}/experiments
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/jobs
+GET /api/v1/{username}/{project_name}/jobs/
 ```
 
 ### Headers
@@ -310,7 +310,7 @@ GET /api/v1/{username}/{project_name}/jobs
 ### Url
 
 ```
-POST /api/v1/{username}/{project_name}/jobs
+POST /api/v1/{username}/{project_name}/jobs/
 ```
 
 ### Headers
@@ -334,7 +334,7 @@ POST /api/v1/{username}/{project_name}/jobs
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/builds
+GET /api/v1/{username}/{project_name}/builds/
 ```
 
 ### Headers
@@ -358,7 +358,7 @@ GET /api/v1/{username}/{project_name}/builds
 ### Url
 
 ```
-POST /api/v1/{username}/{project_name}/builds
+POST /api/v1/{username}/{project_name}/builds/
 ```
 
 ### Headers
@@ -382,7 +382,7 @@ POST /api/v1/{username}/{project_name}/builds
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/tensorboards
+GET /api/v1/{username}/{project_name}/tensorboards/
 ```
 
 ### Headers
@@ -407,7 +407,7 @@ GET /api/v1/{username}/{project_name}/tensorboards
 ### Url
 
 ```
-POST /api/v1/{username}/{project_name}/tensorboard/start
+POST /api/v1/{username}/{project_name}/tensorboard/start/
 ```
 
 ### Headers
@@ -432,7 +432,7 @@ POST /api/v1/{username}/{project_name}/tensorboard/start
 ### Url
 
 ```
-GET /api/v1/{username}/{project_name}/tensorboard/stop
+GET /api/v1/{username}/{project_name}/tensorboard/stop/
 ```
 
 ### Responses
@@ -456,7 +456,7 @@ GET /api/v1/{username}/{project_name}/tensorboard/stop
 ### Url
 
 ```
-POST /api/v1/{username}/{project_name}/notebook/start
+POST /api/v1/{username}/{project_name}/notebook/start/
 ```
 
 ### Headers
@@ -480,7 +480,7 @@ POST /api/v1/{username}/{project_name}/notebook/start
 ### Url
 
 ```
-POST /api/v1/{username}/{project_name}/notebook/stop
+POST /api/v1/{username}/{project_name}/notebook/stop/
 ```
 
 ### Headers
