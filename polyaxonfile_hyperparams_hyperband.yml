@@ -4,7 +4,7 @@ version: 1
 kind: group
 
 hptuning:
-  concurrency: 200
+  concurrency: 20
   hyperband:
     max_iter: 500
     eta: 3

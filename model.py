@@ -96,6 +96,11 @@ if __name__ == '__main__':
         type=int
     )
     parser.add_argument(
+        '--num_iterations',
+        default=1,
+        type=int
+    )
+    parser.add_argument(
         '--learning_rate',
         default=0.001,
         type=float
@@ -131,6 +136,7 @@ if __name__ == '__main__':
     num_epochs = arguments.pop('num_epochs')
     activation = arguments.pop('activation')
     distributed = arguments.pop('distributed')
+    num_iterations = arguments.pop('num_iterations')
     if activation == 'relu':
         activation = tf.nn.relu
     elif activation == 'sigmoid':
@@ -153,16 +159,20 @@ if __name__ == '__main__':
         batch_size=batch_size,
         num_epochs=num_epochs,
         shuffle=True)
-    estimator.train(input_fn, steps=num_steps)
 
-    # Evaluate the Model
-    input_fn = tf.estimator.inputs.numpy_input_fn(
-        x={'images': mnist.test.images},
-        y=mnist.test.labels,
-        batch_size=batch_size,
-        shuffle=False)
+    for i in range(num_iterations):
+        estimator.train(input_fn, steps=num_steps)
 
-    metrics = estimator.evaluate(input_fn)
+        # Evaluate the Model
+        input_fn = tf.estimator.inputs.numpy_input_fn(
+            x={'images': mnist.test.images},
+            y=mnist.test.labels,
+            batch_size=batch_size,
+            shuffle=False)
 
-    print("Testing metrics: {}", metrics)
-    send_metrics(loss=metrics['loss'], accuracy=metrics['accuracy'], precision=metrics['precision'])
+        metrics = estimator.evaluate(input_fn)
+
+        print("Testing metrics: {}", metrics)
+        send_metrics(loss=metrics['loss'],
+                     accuracy=metrics['accuracy'],
+                     precision=metrics['precision'])
