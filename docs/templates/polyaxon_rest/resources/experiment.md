@@ -316,3 +316,50 @@ GET /api/v1/{username}/{project_name}/experiments/{id}/outputs
  * Response 403 (application/json)
  * Response 404 (application/json)
 
+## Get experiment job
+
+### Method
+
+<span class="api api-get">GET</span>
+
+### Url
+
+```
+GET /api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/
+```
+
+### Headers
+
+  * Authorization: Token "token"
+
+### Responses
+
+ * Response 200 (application/json)
+ * Response 400 (application/json)
+ * Response 401 (application/json)
+ * Response 403 (application/json)
+ * Response 404 (application/json)
+
+## Get experiment job statuses
+
+### Method
+
+<span class="api api-get">GET</span>
+
+### Url
+
+```
+GET /api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/statuses/
+```
+
+### Headers
+
+  * Authorization: Token "token"
+
+### Responses
+
+ * Response 200 (application/json)
+ * Response 400 (application/json)
+ * Response 401 (application/json)
+ * Response 403 (application/json)
+ * Response 404 (application/json)

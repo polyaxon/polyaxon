@@ -10,7 +10,7 @@ polyaxon_clients.experiment_job.get_job(username, project_name, experiment_id, j
 polyaxon_clients.experiment_job.get_statuses(username, project_name, experiment_id, job_id, page=1)
 ```
 
-## Get experiment job statuses
+## Get experiment job resources
 
 ```python
 polyaxon_clients.experiment_job.resources(
