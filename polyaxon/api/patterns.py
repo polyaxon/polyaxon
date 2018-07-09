@@ -14,6 +14,7 @@ from api.index.views import (  # noqa
 )
 from api.users.views import LogoutView
 from constants.urls import API_V1
+from polyaxon.config_manager import config
 
 api_patterns = [
     re_path(r'', include(
@@ -67,3 +68,13 @@ urlpatterns = [
 handler404 = Handler404View.as_view()
 handler403 = Handler403View.as_view()
 handler500 = Handler50xView.as_view()
+
+if config.is_local_env and config.is_monolith_service:
+    from rest_framework.schemas import get_schema_view
+    from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
+
+    schema_view = get_schema_view(
+        title='Users API',
+        renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer])
+
+    urlpatterns.append(re_path(r'^docs/?', schema_view, name="docs"))

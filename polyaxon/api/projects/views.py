@@ -17,6 +17,7 @@ from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly
 
 
 class ProjectCreateView(CreateAPIView):
+    """Create a project."""
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = (IsAuthenticated,)
@@ -31,6 +32,7 @@ class ProjectCreateView(CreateAPIView):
 
 
 class ProjectListView(ListAPIView):
+    """List projects for a user."""
     queryset = Project.objects.order_by('-updated_at').all()
     serializer_class = ProjectSerializer
     permission_classes = (IsAuthenticated,)
@@ -46,6 +48,14 @@ class ProjectListView(ListAPIView):
 
 
 class ProjectDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get a project details.
+    patch:
+        Update a project details.
+    delete:
+        Delete a project.
+    """
     queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializer
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)

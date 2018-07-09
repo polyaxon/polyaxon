@@ -73,14 +73,20 @@ _logger = logging.getLogger("polyaxon.views.experiments")
 
 
 class ExperimentListView(ListAPIView):
-    """List all experiments"""
+    """List all experiments for a user."""
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class ProjectExperimentListView(ListCreateAPIView):
-    """List/Create an experiment under a project"""
+    """
+    get:
+        List experiments under a project.
+
+    post:
+        Create an experiment under a project.
+    """
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     metrics_serializer_class = ExperimentLastMetricSerializer
@@ -146,6 +152,14 @@ class ProjectExperimentListView(ListCreateAPIView):
 
 
 class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get an experiment details.
+    patch:
+        Update an experiment details.
+    delete:
+        Delete an experiment.
+    """
     queryset = Experiment.objects.all()
     serializer_class = ExperimentDetailSerializer
     permission_classes = (IsAuthenticated,)
@@ -203,6 +217,7 @@ class ExperimentCloneView(CreateAPIView):
 
 
 class ExperimentRestartView(ExperimentCloneView):
+    """Restart an experiment."""
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
@@ -218,6 +233,7 @@ class ExperimentRestartView(ExperimentCloneView):
 
 
 class ExperimentResumeView(ExperimentCloneView):
+    """Resume an experiment."""
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
@@ -233,6 +249,7 @@ class ExperimentResumeView(ExperimentCloneView):
 
 
 class ExperimentCopyView(ExperimentCloneView):
+    """Copy an experiment."""
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
@@ -265,6 +282,12 @@ class ExperimentViewMixin(object):
 
 
 class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all statuses of an experiment.
+    post:
+        Create an experiment status.
+    """
     queryset = ExperimentStatus.objects.order_by('created_at').all()
     serializer_class = ExperimentStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -281,6 +304,12 @@ class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
 
 
 class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all metrics of an experiment.
+    post:
+        Create an experiment metric.
+    """
     queryset = ExperimentMetric.objects.all()
     serializer_class = ExperimentMetricSerializer
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
@@ -293,6 +322,7 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
 
 
 class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
+    """Get experiment status details."""
     queryset = ExperimentStatus.objects.all()
     serializer_class = ExperimentStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -300,6 +330,12 @@ class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
 
 
 class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all jobs of an experiment.
+    post:
+        Create an experiment job.
+    """
     queryset = ExperimentJob.objects.order_by('-updated_at').all()
     serializer_class = ExperimentJobSerializer
     create_serializer_class = ExperimentJobDetailSerializer
@@ -317,6 +353,14 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
 
 
 class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get experiment job details.
+    patch:
+        Update an experiment job details.
+    delete:
+        Delete an experiment job.
+    """
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobDetailSerializer
     permission_classes = (IsAuthenticated,)
@@ -325,6 +369,7 @@ class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpd
 
 
 class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
+    """Get experiment logs."""
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
@@ -375,6 +420,12 @@ class ExperimentJobViewMixin(object):
 
 
 class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all statuses of experiment job.
+    post:
+        Create an experiment job status.
+    """
     queryset = ExperimentJobStatus.objects.order_by('created_at').all()
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -391,6 +442,12 @@ class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
 
 
 class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIView):
+    """
+    get:
+        Get experiment job status details.
+    patch:
+        Update an experiment job status details.
+    """
     queryset = ExperimentJobStatus.objects.all()
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -398,6 +455,7 @@ class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIVie
 
 
 class ExperimentStopView(CreateAPIView):
+    """Stop an experiment."""
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
@@ -428,6 +486,7 @@ class ExperimentStopView(CreateAPIView):
 
 
 class DownloadOutputsView(ProtectedView):
+    """Download outputs of an experiment."""
     permission_classes = (IsAuthenticated,)
     HANDLE_UNAUTHENTICATED = False
 

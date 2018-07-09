@@ -52,7 +52,13 @@ _logger = logging.getLogger("polyaxon.views.jobs")
 
 
 class ProjectJobListView(ListCreateAPIView):
-    """List/Create an job under a project"""
+    """
+    get:
+        List jobs under a project.
+
+    post:
+        Create a job under a project.
+    """
     queryset = Job.objects.all()
     serializer_class = JobSerializer
     create_serializer_class = JobCreateSerializer
@@ -78,6 +84,14 @@ class ProjectJobListView(ListCreateAPIView):
 
 
 class JobDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get a job details.
+    patch:
+        Update a job details.
+    delete:
+        Delete a job.
+    """
     queryset = Job.objects.all()
     serializer_class = JobDetailSerializer
     permission_classes = (IsAuthenticated,)
@@ -133,6 +147,7 @@ class JobCloneView(CreateAPIView):
 
 
 class JobRestartView(JobCloneView):
+    """Restart a job."""
     queryset = Job.objects.all()
     serializer_class = JobSerializer
     permission_classes = (IsAuthenticated,)
@@ -163,6 +178,12 @@ class JobViewMixin(object):
 
 
 class JobStatusListView(JobViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all statuses of a job.
+    post:
+        Create a job status.
+    """
     queryset = JobStatus.objects.order_by('created_at').all()
     serializer_class = JobStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -179,6 +200,7 @@ class JobStatusListView(JobViewMixin, ListCreateAPIView):
 
 
 class JobStatusDetailView(JobViewMixin, RetrieveAPIView):
+    """Get job status details."""
     queryset = JobStatus.objects.all()
     serializer_class = JobStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -186,6 +208,7 @@ class JobStatusDetailView(JobViewMixin, RetrieveAPIView):
 
 
 class JobLogsView(JobViewMixin, RetrieveAPIView):
+    """Get job logs."""
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
@@ -211,6 +234,7 @@ class JobLogsView(JobViewMixin, RetrieveAPIView):
 
 
 class JobStopView(CreateAPIView):
+    """Stop a job."""
     queryset = Job.objects.all()
     serializer_class = JobSerializer
     permission_classes = (IsAuthenticated,)
@@ -238,6 +262,7 @@ class JobStopView(CreateAPIView):
 
 
 class DownloadOutputsView(ProtectedView):
+    """Download outputs of a job."""
     permission_classes = (IsAuthenticated,)
     HANDLE_UNAUTHENTICATED = False
 

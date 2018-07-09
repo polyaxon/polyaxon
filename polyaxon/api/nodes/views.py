@@ -8,6 +8,13 @@ from db.models.nodes import ClusterNode, NodeGPU
 
 
 class ClusterNodeListView(ListCreateAPIView):
+    """
+    get:
+        List cluster nodes.
+
+    post:
+        Create a cluster node.
+    """
     queryset = ClusterNode.objects.order_by('sequence').filter(is_current=True)
     serializer_class = ClusterNodeSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
@@ -17,6 +24,14 @@ class ClusterNodeListView(ListCreateAPIView):
 
 
 class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get a custer node details.
+    patch:
+        Update a custer node details.
+    delete:
+        Delete a custer node.
+    """
     queryset = ClusterNode.objects.filter(is_current=True)
     serializer_class = ClusterNodeDetailSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
@@ -33,6 +48,13 @@ class ClusterNodeGPUViewMixin(object):
 
 
 class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
+    """
+    get:
+        List cluster node GPUs.
+
+    post:
+        Create a cluster node GPU.
+    """
     queryset = NodeGPU.objects.all()
     serializer_class = GPUSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
@@ -42,6 +64,14 @@ class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
 
 
 class ClusterNodeGPUDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeGPUViewMixin):
+    """
+    get:
+        Get a custer node GPU details.
+    patch:
+        Update a custer node GPU details.
+    delete:
+        Delete a custer node GPU.
+    """
     queryset = NodeGPU.objects.all()
     serializer_class = GPUSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)

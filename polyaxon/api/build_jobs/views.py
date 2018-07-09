@@ -47,7 +47,13 @@ _logger = logging.getLogger("polyaxon.views.builds")
 
 
 class ProjectBuildListView(ListCreateAPIView):
-    """List/Create an build under a project"""
+    """
+    get:
+        List builds under a project.
+
+    post:
+        Create a build under a project.
+    """
     queryset = BuildJob.objects.all()
     serializer_class = BuildJobSerializer
     create_serializer_class = BuildJobCreateSerializer
@@ -80,6 +86,14 @@ class ProjectBuildListView(ListCreateAPIView):
 
 
 class BuildDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get a build details.
+    patch:
+        Update a build details.
+    delete:
+        Delete a build.
+    """
     queryset = BuildJob.objects.all()
     serializer_class = BuildJobDetailSerializer
     permission_classes = (IsAuthenticated,)
@@ -110,6 +124,12 @@ class BuildViewMixin(object):
 
 
 class BuildStatusListView(BuildViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all statuses of a build.
+    post:
+        Create an build status.
+    """
     queryset = BuildJobStatus.objects.order_by('created_at').all()
     serializer_class = BuildJobStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -126,6 +146,7 @@ class BuildStatusListView(BuildViewMixin, ListCreateAPIView):
 
 
 class BuildStatusDetailView(BuildViewMixin, RetrieveAPIView):
+    """Get build status details."""
     queryset = BuildJobStatus.objects.all()
     serializer_class = BuildJobStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -133,6 +154,7 @@ class BuildStatusDetailView(BuildViewMixin, RetrieveAPIView):
 
 
 class BuildLogsView(BuildViewMixin, RetrieveAPIView):
+    """Get build logs."""
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
@@ -158,6 +180,7 @@ class BuildLogsView(BuildViewMixin, RetrieveAPIView):
 
 
 class BuildStopView(CreateAPIView):
+    """Stop a build."""
     queryset = BuildJob.objects.all()
     serializer_class = BuildJobSerializer
     permission_classes = (IsAuthenticated,)

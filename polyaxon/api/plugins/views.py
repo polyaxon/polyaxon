@@ -40,6 +40,7 @@ from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
 
 
 class StartTensorboardView(CreateAPIView):
+    """Start a tensorboard."""
     queryset = Project.objects.all()
     serializer_class = TensorboardJobSerializer
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
@@ -112,6 +113,7 @@ class StartTensorboardView(CreateAPIView):
 
 
 class StopTensorboardView(PostAPIView):
+    """Stop a tensorboard."""
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
@@ -155,6 +157,7 @@ class StopTensorboardView(PostAPIView):
 
 
 class StartNotebookView(CreateAPIView):
+    """Start a notebook."""
     queryset = Project.objects.all()
     serializer_class = NotebookJobSerializer
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
@@ -188,6 +191,7 @@ class StartNotebookView(CreateAPIView):
 
 
 class StopNotebookView(PostAPIView):
+    """Stop a tensorboard."""
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
@@ -335,7 +339,7 @@ class TensorboardView(PluginJobView):
 
 
 class ProjectTensorboardListView(ListAPIView):
-    """List an experiment under a project"""
+    """List an tensorboards under a project."""
     queryset = TensorboardJob.objects.all()
     serializer_class = ProjectTensorboardJobSerializer
     permission_classes = (IsAuthenticated,)

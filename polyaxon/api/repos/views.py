@@ -26,6 +26,14 @@ _logger = logging.getLogger('polyaxon.views.repos')
 
 
 class RepoDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get a repo details.
+    patch:
+        Update a repo details.
+    delete:
+        Delete a repo.
+    """
     queryset = Repo.objects.all()
     serializer_class = RepoSerializer
     permission_classes = (IsAuthenticated,)
@@ -35,6 +43,7 @@ class RepoDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class DownloadFilesView(ProtectedView):
+    """Download repo code as tar.gz."""
     HANDLE_UNAUTHENTICATED = False
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
         InternalAuthentication,
@@ -55,6 +64,7 @@ class DownloadFilesView(ProtectedView):
 
 
 class UploadFilesView(UploadView):
+    """Upload code to a repo."""
 
     def get_object(self):
         project = get_permissible_project(view=self)

@@ -9,6 +9,7 @@ PROJECT_APPS = AUDITOR_APPS + (
     'pipelines.apps.PipelinesConfig',
     'events_handlers.apps.EventsHandlersConfig',
     'commands.apps.CommandsConfig',
+    'rest_framework_swagger',
 )
 
 INSTALLED_APPS += PROJECT_APPS

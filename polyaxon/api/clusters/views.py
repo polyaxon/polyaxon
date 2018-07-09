@@ -6,6 +6,7 @@ from db.models.clusters import Cluster
 
 
 class ClusterDetailView(RetrieveAPIView):
+    """Get cluster details."""
     queryset = Cluster.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
 

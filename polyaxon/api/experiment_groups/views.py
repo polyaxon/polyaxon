@@ -28,6 +28,13 @@ from polyaxon.settings import SchedulerCeleryTasks
 
 
 class ExperimentGroupListView(ListCreateAPIView):
+    """
+    get:
+        List experiment groups under a project.
+
+    post:
+        Create an experiment group under a project.
+    """
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
     create_serializer_class = ExperimentGroupDetailSerializer
@@ -50,6 +57,14 @@ class ExperimentGroupListView(ListCreateAPIView):
 
 
 class ExperimentGroupDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get an experiment group details.
+    patch:
+        Update an experiment group details.
+    delete:
+        Delete an experiment group.
+    """
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
@@ -69,6 +84,7 @@ class ExperimentGroupDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
 
 
 class ExperimentGroupStopView(CreateAPIView):
+    """Stop an experiment group."""
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
     permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
@@ -94,6 +110,12 @@ class ExperimentGroupStopView(CreateAPIView):
 
 
 class ExperimentGroupStatusListView(ListCreateAPIView):
+    """
+    get:
+        List all statuses of experiment group.
+    post:
+        Create an experiment group status.
+    """
     queryset = ExperimentGroupStatus.objects.order_by('created_at').all()
     serializer_class = ExperimentGroupStatusSerializer
     permission_classes = (IsAuthenticated,)
