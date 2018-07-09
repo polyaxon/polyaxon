@@ -16,7 +16,7 @@ polyaxon_clients.user.delete_user(username)
 polyaxon_clients.user.grant_superuser(username)
 ```
 
-## Grant superuser role to a user
+## Revoke superuser role to a user
 
 ```python
 polyaxon_clients.user.revoke_superuser(username)
