@@ -55,6 +55,6 @@
   background-color: #902722;
 }
 
-.api-patch {
+.api-patch, .api-put {
   background-color: #ff8f05;
 }

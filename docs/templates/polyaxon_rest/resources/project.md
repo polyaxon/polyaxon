@@ -13,7 +13,7 @@ POST /api/v1/projects/
 ### Body
 
 param | type | optional
-______|______|____________
+------|------|----------
 name | string | False
 description | string | True
 is_public | bool | True
