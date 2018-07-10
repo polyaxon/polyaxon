@@ -127,9 +127,7 @@ def get_container_resources(node, container, gpu_resources):
     })
 
 
-def update_cluster(node_gpus):
-    celery_app.send_task(CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO)
-    celery_app.send_task(CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES)
+def update_cluster_node(node_gpus):
     if not node_gpus:
         return
     node = ClusterNode.objects.filter(name=settings.K8S_NODE_NAME).first()
@@ -150,8 +148,7 @@ def run(containers, node, persist):
     gpu_resources = get_gpu_resources()
     if gpu_resources:
         gpu_resources = {gpu_resource['index']: gpu_resource for gpu_resource in gpu_resources}
-    # update cluster and current node
-    update_cluster(gpu_resources)
+    update_cluster_node(gpu_resources)
     for container_id in container_ids:
         container = get_container(containers, container_id)
         if not container:

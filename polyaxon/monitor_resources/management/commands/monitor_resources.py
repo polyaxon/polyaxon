@@ -17,7 +17,7 @@ class Command(BaseMonitorCommand):
     def get_node():
         cluster = Cluster.load()
         node = ClusterNode.objects.filter(cluster=cluster, name=settings.K8S_NODE_NAME)
-        if node.count():
+        if node.exists():
             return node.first()
         return None
 
