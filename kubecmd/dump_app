@@ -1,1 +1,1 @@
-kubectl exec -it -n polyaxon --container=polyaxon-api $(kubectl get pods -n polyaxon | grep api | awk '{print $1}') -- python3 ./polyaxon/manage.py dumpdata --indent 4 --natural-primary --natural-foreign $* > ./polyaxon/db/fixtures/$*.json
+kubectl exec -it -n polyaxon --container=polyaxon-api $(kubectl get pods -n polyaxon | grep api | awk '{print $1}') -- python3 ./manage.py dumpdata --indent 4 --natural-primary --natural-foreign $* > ./polyaxon/db/fixtures/$*.json
