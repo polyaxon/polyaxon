@@ -3,11 +3,7 @@ import os
 import pytest
 
 from factories.factory_build_jobs import BuildJobFactory
-from libs.paths.jobs import (
-    create_job_logs_path,
-    delete_job_logs,
-    get_job_logs_path,
-)
+from libs.paths.jobs import create_job_logs_path, delete_job_logs, get_job_logs_path
 from tests.utils import BaseTest
 
 

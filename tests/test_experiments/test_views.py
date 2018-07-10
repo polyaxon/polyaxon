@@ -38,8 +38,8 @@ from factories.factory_experiments import (
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
-    exec_experiment_spec_parsed_content,
-    exec_experiment_outputs_refs_parsed_content
+    exec_experiment_outputs_refs_parsed_content,
+    exec_experiment_spec_parsed_content
 )
 from libs.paths.experiments import (
     create_experiment_logs_path,

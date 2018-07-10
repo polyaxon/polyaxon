@@ -14,7 +14,7 @@ from api.plugins.serializers import (
     ProjectTensorboardJobSerializer,
     TensorboardJobSerializer
 )
-from api.utils.views import ProtectedView, PostAPIView
+from api.utils.views import PostAPIView, ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment

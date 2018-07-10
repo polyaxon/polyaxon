@@ -3,15 +3,16 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from db.models.utils import DiffModel
 
-class Bookmark(models.Model):
+
+class Bookmark(DiffModel):
     """The Bookmark model represents an instance of object that user bookmarked."""
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='+')
-    created_at = models.DateTimeField()
     enabled = models.BooleanField(default=True)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
