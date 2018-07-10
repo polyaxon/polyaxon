@@ -36,7 +36,7 @@ def update_system_info():
     k8s_manager = K8SManager(in_cluster=True)
     version_api = k8s_manager.get_version()
     cluster = Cluster.load()
-    if cluster.version_api != version_api:
+    if version_api and cluster.version_api != version_api:
         cluster.version_api = version_api
         cluster.save()
         auditor.record(event_type=CLUSTER_UPDATED,
