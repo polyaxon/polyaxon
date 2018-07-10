@@ -17,6 +17,8 @@ EXPERIMENT_RESTARTED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                       event_actions.RESTARTED)
 EXPERIMENT_COPIED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                    event_actions.COPIED)
+EXPERIMENT_BOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                       event_actions.BOOKMARKED)
 EXPERIMENT_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT,
                                        event_actions.NEW_STATUS)
 EXPERIMENT_NEW_METRIC = '{}.{}'.format(event_subjects.EXPERIMENT,
@@ -102,6 +104,23 @@ class ExperimentDeletedEvent(Event):
 
 class ExperimentViewedEvent(Event):
     event_type = EXPERIMENT_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
+    )
+
+
+class ExperimentBookmarkedEvent(Event):
+    event_type = EXPERIMENT_BOOKMARKED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

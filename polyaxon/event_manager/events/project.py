@@ -8,6 +8,7 @@ PROJECT_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.PROJECT,
                                               event_actions.DELETED,
                                               event_subjects.TRIGGER)
 PROJECT_VIEWED = '{}.{}'.format(event_subjects.PROJECT, event_actions.VIEWED)
+PROJECT_BOOKMARKED = '{}.{}'.format(event_subjects.PROJECT, event_actions.BOOKMARKED)
 PROJECT_SET_PUBLIC = '{}.set_public'.format(event_subjects.PROJECT)  # Not set
 PROJECT_SET_PRIVATE = '{}.set_private'.format(event_subjects.PROJECT)  # Not set
 PROJECT_EXPERIMENTS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
@@ -68,6 +69,17 @@ class ProjectDeletedTriggeredEvent(Event):
 
 class ProjectViewedEvent(Event):
     event_type = PROJECT_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('is_public', attr_type=bool),
+    )
+
+
+class ProjectBookmarkedEvent(Event):
+    event_type = PROJECT_BOOKMARKED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

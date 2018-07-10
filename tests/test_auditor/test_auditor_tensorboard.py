@@ -83,6 +83,17 @@ class AuditorTensorboardTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_tensorboard_bookmarked(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=tensorboard_events.TENSORBOARD_BOOKMARKED,
+                       instance=self.tensorboard,
+                       actor_id=1,
+                       target='project')
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
     def test_experiment_new_status(self, activitylogs_record, tracker_record):
         auditor.record(event_type=tensorboard_events.TENSORBOARD_NEW_STATUS,
                        instance=self.tensorboard,

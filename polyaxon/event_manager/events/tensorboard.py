@@ -10,6 +10,7 @@ TENSORBOARD_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.TENSORBOARD,
                                                   event_actions.STOPPED,
                                                   event_subjects.TRIGGER)
 TENSORBOARD_VIEWED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.VIEWED)
+TENSORBOARD_BOOKMARKED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.BOOKMARKED)
 TENSORBOARD_NEW_STATUS = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.NEW_STATUS)
 TENSORBOARD_FAILED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.FAILED)
 TENSORBOARD_SUCCEEDED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.SUCCEEDED)
@@ -68,6 +69,20 @@ class TensorboardSoppedTriggeredEvent(Event):
 
 class TensorboardViewedEvent(Event):
     event_type = TENSORBOARD_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('actor_id'),
+        Attribute('last_status'),
+        Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class TensorboardBookmarkedEvent(Event):
+    event_type = TENSORBOARD_BOOKMARKED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

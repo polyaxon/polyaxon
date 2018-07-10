@@ -11,12 +11,12 @@ BUILD_JOB_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
                                                 event_subjects.TRIGGER)
 BUILD_JOB_CREATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.CREATED)
 BUILD_JOB_VIEWED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.VIEWED)
+BUILD_JOB_BOOKMARKED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.BOOKMARKED)
 BUILD_JOB_UPDATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.UPDATED)
 BUILD_JOB_NEW_STATUS = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.NEW_STATUS)
 BUILD_JOB_FAILED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.FAILED)
 BUILD_JOB_SUCCEEDED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.SUCCEEDED)
 BUILD_JOB_DONE = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.DONE)
-
 BUILD_JOB_DELETED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.DELETED)
 BUILD_JOB_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
                                                 event_actions.DELETED,
@@ -101,6 +101,19 @@ class BuildJobSoppedTriggeredEvent(Event):
 
 class BuildJobViewedEvent(Event):
     event_type = BUILD_JOB_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('actor_id'),
+        Attribute('last_status'),
+    )
+
+
+class BuildJobBookmarkedEvent(Event):
+    event_type = BUILD_JOB_BOOKMARKED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

@@ -5,3 +5,4 @@ from event_manager.events import tensorboard
 activitylogs.subscribe(tensorboard.TensorboardStartedTriggeredEvent)
 activitylogs.subscribe(tensorboard.TensorboardSoppedTriggeredEvent)
 activitylogs.subscribe(tensorboard.TensorboardViewedEvent)
+activitylogs.subscribe(tensorboard.TensorboardBookmarkedEvent)
