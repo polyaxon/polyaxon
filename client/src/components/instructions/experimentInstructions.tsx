@@ -39,7 +39,7 @@ function ExperimentInstructions({id}: Props) {
             <div className="instructions-section">
               <h4>Start a tensorboard for experiment</h4>
               <div className="instructions-section-content">
-                polyaxon tensorboard start -xp {id} [-f polyaxonfile.yml] [-f override_file.yml] [-u]
+                polyaxon tensorboard -xp {id} start [-f polyaxonfile.yml] [-f override_file.yml] [-u]
               </div>
             </div>
           </div>
