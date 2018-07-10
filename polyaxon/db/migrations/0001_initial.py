@@ -464,8 +464,8 @@ class Migration(migrations.Migration):
             name='OutputsRefs',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('experiments', models.ManyToManyField(blank=True, null=True, related_name='_outputsrefs_experiments_+', to='db.Experiment')),
-                ('jobs', models.ManyToManyField(blank=True, null=True, related_name='_outputsrefs_jobs_+', to='db.Job')),
+                ('experiments', models.ManyToManyField(blank=True, related_name='_outputsrefs_experiments_+', to='db.Experiment')),
+                ('jobs', models.ManyToManyField(blank=True, related_name='_outputsrefs_jobs_+', to='db.Job')),
             ],
         ),
         migrations.CreateModel(
