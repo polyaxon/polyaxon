@@ -41,6 +41,9 @@ def start_group_experiments(experiment_group):
         return
 
     experiment_to_start = experiment_group.n_experiments_to_start
+    if experiment_to_start <= 0:
+        # This could happen due to concurrency
+        return experiment_group.pending_experiments.exists()
     pending_experiments = experiment_group.pending_experiments[:experiment_to_start]
     n_pending_experiment = experiment_group.pending_experiments.count()
 
