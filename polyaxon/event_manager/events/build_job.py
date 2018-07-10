@@ -148,7 +148,6 @@ class BuildJobSucceededEvent(Event):
 
 class BuildJobDoneEvent(Event):
     event_type = BUILD_JOB_DONE
-    event_type = BUILD_JOB_DONE
     attributes = (
         Attribute('id'),
         Attribute('user.id'),

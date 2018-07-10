@@ -14,7 +14,8 @@ from event_manager.events import (
     repo,
     superuser,
     tensorboard,
-    user
+    user,
+    bookmark
 )
 from libs.json_utils import loads
 from tests.utils import BaseTest
@@ -152,6 +153,13 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobDeletedTriggeredEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobLogsViewedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobStatusesViewedEvent.get_event_subject() == 'build_job'
+
+        # Bookmarks
+        assert bookmark.BookmarkBuildJobsViewedEvent.get_event_subject() == 'bookmark'
+        assert bookmark.BookmarkJobsViewedEvent.get_event_subject() == 'bookmark'
+        assert bookmark.BookmarkExperimentsViewedEvent.get_event_subject() == 'bookmark'
+        assert bookmark.BookmarkExperimentGroupsViewedEvent.get_event_subject() == 'bookmark'
+        assert bookmark.BookmarkProjectsViewedEvent.get_event_subject() == 'bookmark'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
@@ -326,6 +334,14 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobDeletedTriggeredEvent.get_event_action() == 'deleted'
         assert build_job.BuildJobLogsViewedEvent.get_event_action() == 'logs_viewed'
         assert build_job.BuildJobStatusesViewedEvent.get_event_action() == 'statuses_viewed'
+
+        # Bookmarks
+        assert bookmark.BookmarkBuildJobsViewedEvent.get_event_action() == 'builds_viewed'
+        assert bookmark.BookmarkJobsViewedEvent.get_event_action() == 'jobs_viewed'
+        assert bookmark.BookmarkExperimentsViewedEvent.get_event_action() == 'experiments_viewed'
+        assert bookmark.BookmarkExperimentGroupsViewedEvent.get_event_action(
+            ) == 'experiment_groups_viewed'
+        assert bookmark.BookmarkProjectsViewedEvent.get_event_action() == 'projects_viewed'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'
