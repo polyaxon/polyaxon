@@ -5,11 +5,11 @@ versions config
 - name: POLYAXON_CLI_MIN_VERSION
   value: "0.1.1"
 - name: POLYAXON_CLI_LATEST_VERSION
-  value: "0.1.3"
+  value: "0.1.4"
 - name: POLYAXON_PLATFORM_MIN_VERSION
   value: "0.1.1"
 - name: POLYAXON_PLATFORM_LATEST_VERSION
-  value: "0.1.3"
+  value: "0.1.4"
 - name: POLYAXON_LIB_MIN_VERSION
   value: "0.0.2"
 - name: POLYAXON_LIB_LATEST_VERSION
