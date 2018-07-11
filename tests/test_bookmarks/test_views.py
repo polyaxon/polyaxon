@@ -34,7 +34,7 @@ class BaseTestBookmarkCreateView(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class()
+        self.object = self.factory_class()  # pylint:disable=not-callable
         self.url = '/{}/bookmarks/{}/{}/'.format(API_V1, self.entity, self.object.id)
 
     def test_create(self):
@@ -96,14 +96,15 @@ class BaseTestBookmarkListViewV1(BaseViewTest):
         self.user = self.auth_client.user
         self.url = '/{}/bookmarks/{}/{}'.format(API_V1, self.user.username, self.entity)
         self.objects = []
-        for i in range(self.num_objects):
-            obj = self.factory_class(user=self.user)
+        for _ in range(self.num_objects):
+            obj = self.factory_class(user=self.user)  # pylint:disable=not-callable
             self.objects.append(Bookmark.objects.create(user=self.user, content_object=obj))
 
         # Other user objects
-        obj = self.factory_class()
-        self.other_object = Bookmark.objects.create(user=obj.user,
-                                                    content_object=self.factory_class())
+        obj = self.factory_class()  # pylint:disable=not-callable
+        self.other_object = Bookmark.objects.create(
+            user=obj.user,
+            content_object=self.factory_class())  # pylint:disable=not-callable
         self.url_other = '/{}/bookmarks/{}/{}'.format(API_V1, obj.user.username, self.entity)
 
         self.queryset = self.model_class.objects.filter(user=self.user)
@@ -118,7 +119,7 @@ class BaseTestBookmarkListViewV1(BaseViewTest):
 
         data = resp.data['results']
         assert len(data) == self.queryset.count()
-        assert data == self.serializer_class(self.queryset, many=True).data
+        assert data == self.serializer_class(self.queryset, many=True).data  # noqa
 
     def test_get_others(self):
         resp = self.auth_client.get(self.url_other)
@@ -138,7 +139,7 @@ class BaseTestBookmarkListViewV1(BaseViewTest):
 
         data = resp.data['results']
         assert len(data) == limit
-        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data  # noqa
 
         resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
@@ -147,7 +148,7 @@ class BaseTestBookmarkListViewV1(BaseViewTest):
 
         data = resp.data['results']
         assert len(data) == 1
-        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data  # noqa
 
 
 @pytest.mark.bookmarks_mark

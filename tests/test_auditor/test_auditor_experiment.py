@@ -76,7 +76,6 @@ class AuditorExperimentTest(BaseTest):
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
 
-
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
     def test_experiment_stopped(self, activitylogs_record, tracker_record):
