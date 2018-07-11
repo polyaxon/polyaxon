@@ -135,6 +135,7 @@ class JobBookmarkedEvent(Event):
         Attribute('has_description', attr_type=bool),
     )
 
+
 class JobNewStatusEvent(Event):
     event_type = JOB_NEW_STATUS
     attributes = (
