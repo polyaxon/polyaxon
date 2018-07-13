@@ -20,4 +20,5 @@ spec:
     name: {{ .Values.api.service.name }}
   - port: {{ .Values.streams.service.externalPort }}
     targetPort: {{ .Values.streams.service.internalPort }}
+    nodePort: {{ .Values.streams.service.nodePort }}
     name: {{ .Values.streams.service.name }}
