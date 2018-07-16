@@ -37,20 +37,21 @@ persistence:
 
 ## Scheduling
 
-When you define a multi data outputs volumes, Polyaxon has default behavior on how to mount
-these volumes for your jobs and experiments, unless you override this default behavior in your polyaxonfiles.
+When the user defines a multi data and/or outputs volumes,
+Polyaxon has a default behavior for mounting these volumes during the scheduling of the jobs and experiments,
+unless the user override this default behavior in the polyaxonfiles.
 
 ### For data
 
 If the polyaxonfile for running an experiment or a job does not define the data volume or volumes that it needs access to,
-Polyaxon will, by default mount all these volumes when it schedules the experiment or the job.
+Polyaxon will by default mount all these volumes when it schedules the experiment or the job.
 
-These data volumes will be accessible to you as a dictionary {volume_name: path_to_data},
+These data volumes will be accessible to you as a dictionary `{volume_name: path_to_data}`,
 exported as an env variable `POLYAXON_DATA_PATHS`.
 
-You can use as well our `helper` library `polyaxon-helper` to extract this value for you automatically.
+You can use as well our `helper` library `polyaxon-helper` to get access to this env variable automatically.
 
-If on the other hand, if you wish to only mount a one volume or a subset of the volumes,
+If on the other hand, you wish to only mount one volume or a subset of the volumes,
 you then need to provide this information in the polyaxonfile, e.g.
 
 ```yaml
@@ -65,7 +66,7 @@ Polyaxon will only mount these volumes by looking up there names from the define
 
 ### For outputs
 
-This is also optional and you can only define one volume to use for the outputs for a particular experiment or a job.
+Polyaxon mounts only one  outputs for a particular experiment or a job.
 
 If the polyaxonfile for running an experiment or a job does not define the outputs volume,
 Polyaxon will, by default mount one volume, either the first one or a random one from the list of the defined volumes.
@@ -73,7 +74,7 @@ Polyaxon will, by default mount one volume, either the first one or a random one
 The outputs volume will be accessible to you as a string `path_to_outputs_for_experiment`,
 exported as an env variable `POLYAXON_RUN_OUTPUTS_PATH`.
 
-You can use as well our `helper` library `polyaxon-helper` to extract this value for you automatically.
+You can use as well our `helper` library `polyaxon-helper` to get access to this env variable automatically.
 
 If on the other hand, you wish to mount a particular volume,
 you then need to provide this information in the polyaxonfile, e.g.
