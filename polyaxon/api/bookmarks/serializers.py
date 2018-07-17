@@ -13,7 +13,7 @@ class BuildJobBookmarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bookmark
-        exclude = []
+        fields = ['content_object']
 
 
 class JobBookmarkSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class JobBookmarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bookmark
-        exclude = []
+        fields = ['content_object']
 
 
 class ExperimentBookmarkSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class ExperimentBookmarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bookmark
-        exclude = []
+        fields = ['content_object']
 
 
 class ExperimentGroupBookmarkSerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class ExperimentGroupBookmarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bookmark
-        exclude = []
+        fields = ['content_object']
 
 
 class ProjectBookmarkSerializer(serializers.ModelSerializer):
@@ -45,4 +45,4 @@ class ProjectBookmarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bookmark
-        exclude = []
+        fields = ['content_object']
