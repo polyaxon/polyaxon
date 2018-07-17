@@ -3,12 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
-from polyaxon_schemas.experiment import (
-    ExperimentConfig,
-    ExperimentJobConfig,
-    ExperimentMetricConfig,
-    ExperimentStatusConfig
-)
+from polyaxon_schemas.experiment import ExperimentConfig
 from polyaxon_schemas.job import JobConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
