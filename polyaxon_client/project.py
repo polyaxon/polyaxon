@@ -315,7 +315,7 @@ class ProjectClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while bookmarking notebook')
+            self.handle_exception(e=e, log_message='Error while bookmarking project')
             return None
 
     def unbookmark(self, username, project_name):
@@ -326,5 +326,5 @@ class ProjectClient(PolyaxonClient):
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while unbookmarking notebook')
+            self.handle_exception(e=e, log_message='Error while unbookmarking project')
             return None
