@@ -213,3 +213,49 @@ option | type | description
 -------|------|------------
   --page | INTEGER | To paginate through the list of statuses.
   --help | | Show this message and exit.
+
+
+## bookmark
+
+Usage:
+
+```bash
+$ polyaxon build bookmark
+```
+
+Bookmark build job.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Example:
+
+```bash
+$ polyaxon build bookmark
+```
+
+```bash
+$ polyaxon build -b 2 bookmark
+```
+
+
+## unbookmark
+
+Usage:
+
+```bash
+$ polyaxon build unbookmark
+```
+
+Unbookmark build job.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Example:
+
+```bash
+$ polyaxon build unbookmark
+```
+
+```bash
+$ polyaxon build -b 2 unbookmark
+```

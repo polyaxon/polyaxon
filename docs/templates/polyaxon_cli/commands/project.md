@@ -362,3 +362,49 @@ option | type | description
   -s, --sort | TEXT | To change order by of the tensorboards.
   --page | INTEGER | To paginate through the list of tensorboards.
   --help | | Show this message and exit.
+
+
+## bookmark
+
+Usage:
+
+```bash
+$ polyaxon project bookmark
+```
+
+Bookmark project.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon project bookmark
+```
+
+```bash
+$ polyaxon project --project=project_name bookmark
+```
+
+
+## unbookmark
+
+Usage:
+
+```bash
+$ polyaxon project unbookmark
+```
+
+Unbookmark project.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon project unbookmark
+```
+
+```bash
+$ polyaxon project --project=project_name unbookmark
+```

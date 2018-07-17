@@ -171,3 +171,51 @@ option | type | description
 -------|------|------------
   --page | INTEGER | To paginate through the list of statuses.
   --help | | Show this message and exit.
+
+
+## bookmark
+
+Usage:
+
+```bash
+polyaxon group bookmark [OPTIONS]
+```
+
+Bookmark experiments group
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+
+Examples:
+
+```bash
+$ polyaxon group bookmark
+```
+
+```bash
+$ polyaxon group -g 2 bookmark
+```
+
+
+## unbookmark
+
+Usage:
+
+```bash
+polyaxon group unbookmark [OPTIONS]
+```
+
+Unbookmark experiments group
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+
+Examples:
+
+```bash
+$ polyaxon group unbookmark
+```
+
+```bash
+$ polyaxon group -g 2 unbookmark
+```

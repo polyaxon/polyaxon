@@ -377,3 +377,49 @@ Examples:
 ```bash
 $ polyaxon experiment -xp 1 outputs
 ```
+
+
+## bookmark
+
+Usage:
+
+```bash
+$ polyaxon experiment bookmark
+```
+
+Bookmark experiment.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon experiment bookmark
+```
+
+```bash
+$ polyaxon experiment -xp 2 bookmark
+```
+
+
+## unbookmark
+
+Usage:
+
+```bash
+$ polyaxon experiment unbookmark
+```
+
+Unbookmark experiment.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon experiment unbookmark
+```
+
+```bash
+$ polyaxon experiment -xp 2 unbookmark
+```

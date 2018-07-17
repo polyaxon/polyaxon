@@ -260,3 +260,49 @@ Examples:
 ```bash
 $ polyaxon job -xp 1 outputs
 ```
+
+
+## bookmark
+
+Usage:
+
+```bash
+$ polyaxon job bookmark
+```
+
+Bookmark job.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon job bookmark
+```
+
+```bash
+$ polyaxon job -j 2 bookmark
+```
+
+
+## unbookmark
+
+Usage:
+
+```bash
+$ polyaxon job unbookmark
+```
+
+Unbookmark job.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon job unbookmark
+```
+
+```bash
+$ polyaxon job -j 2 unbookmark
+```
