@@ -14,6 +14,12 @@ k8s config
   value: {{ template "polyaxon.fullname" . }}-secret
 - name: POLYAXON_K8S_RABBITMQ_SECRET_NAME
   value: {{ template "rabbitmq.fullname" . }}
+- name: POLYAXON_K8S_DB_SECRET_NAME
+{{- if .Values.postgresql.enabled }}
+  value: {{ template "postgres.fullname" . }}
+{{- else }}
+value: {{ template "polyaxon.fullname" . }}-postgres-secret
+{{- end}}
 {{- if .Values.k8s.authorisation }}
 - name: POLYAXON_K8S_AUTHORISATION
   valueFrom:
