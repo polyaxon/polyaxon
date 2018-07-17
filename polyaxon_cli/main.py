@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import click
 
 from polyaxon_cli.cli.auth import login, logout, whoami
+from polyaxon_cli.cli.bookmark import bookmark
 from polyaxon_cli.cli.build import build
 from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.cluster import cluster
@@ -66,3 +67,4 @@ cli.add_command(job)
 cli.add_command(upload)
 cli.add_command(run)
 cli.add_command(dashboard)
+cli.add_command(bookmark)
