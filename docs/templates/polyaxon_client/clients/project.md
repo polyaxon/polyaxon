@@ -169,3 +169,15 @@ polyaxon_clients.project.start_notebook(
 ```python
 polyaxon_clients.project.stop_notebook(username, project_name, commit=True)
 ```
+
+## Bookmark notebook
+
+```python
+polyaxon_clients.project.bookmark(username, project_name)
+```
+
+## Unbookmark notebook
+
+```python
+polyaxon_clients.project.unbookmark(username, project_name)
+```

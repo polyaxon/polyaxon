@@ -141,3 +141,22 @@ polyaxon_clients.experiment.stop_tensorboard(username, project_name, experiment_
 ```python
 polyaxon_clients.experiment.download_outputs(username, project_name, experiment_id)
 ```
+
+## Bookmark experiment
+
+```python
+polyaxon_clients.experiment.bookmark(
+    username,
+    project_name,
+    experiment_id)
+```
+
+
+## Unbookmark experiment
+
+```python
+polyaxon_clients.experiment.unbookmark(
+    username,
+    project_name,
+    experiment_id)
+```

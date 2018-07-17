@@ -38,3 +38,15 @@ polyaxon_clients.build_job.logs(
     stream=True,
     message_handler=print)
 ```
+
+## Bookmark build
+
+```python
+polyaxon_clients.build_job.bookmark(username, project_name, job_id)
+```
+
+## Unbookmark build
+
+```python
+polyaxon_clients.build_job.unbookmark(username, project_name, job_id)
+```

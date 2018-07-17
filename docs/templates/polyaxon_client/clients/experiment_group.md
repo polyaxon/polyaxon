@@ -55,3 +55,15 @@ polyaxon_clients.experiment_group.start_tensorboard(
 ```python
 polyaxon_clients.experiment_group.stop_tensorboard(username, project_name, group_id)
 ```
+
+## Bookmark experiment group
+
+```python
+polyaxon_clients.experiment_group.bookmark(username, project_name, group_id)
+```
+
+## Unbookmark experiment group
+
+```python
+polyaxon_clients.experiment_group.unbookmark(username, project_name, group_id)
+```
