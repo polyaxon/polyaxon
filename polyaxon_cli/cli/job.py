@@ -457,3 +457,65 @@ def outputs(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
     Printer.print_success('Files downloaded.')
+
+
+@job.command()
+@click.pass_context
+@clean_outputs
+def bookmark(ctx):
+    """Bookmark job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon job bookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon job -xp 2 bookmark
+    ```
+    """
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    try:
+        PolyaxonClients().job.bookmark(user, project_name, _job)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not bookmark job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Job is bookmarked.")
+
+
+@job.command()
+@click.pass_context
+@clean_outputs
+def unbookmark(ctx):
+    """Unbookmark job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon job unbookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon job -xp 2 unbookmark
+    ```
+    """
+    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    try:
+        PolyaxonClients().job.unbookmark(user, project_name, _job)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not unbookmark job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Job is unbookmarked.")

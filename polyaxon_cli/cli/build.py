@@ -217,6 +217,68 @@ def stop(ctx, yes):
 
 
 @build.command()
+@click.pass_context
+@clean_outputs
+def bookmark(ctx):
+    """Bookmark build job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon build bookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon build -b 2 bookmark
+    ```
+    """
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    try:
+        PolyaxonClients().build_job.bookmark(user, project_name, _build)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not bookmark build job `{}`.'.format(_build))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Build job bookmarked.")
+
+
+@build.command()
+@click.pass_context
+@clean_outputs
+def unbookmark(ctx):
+    """Unbookmark build job.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon build unbookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon build -b 2 unbookmark
+    ```
+    """
+    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    try:
+        PolyaxonClients().build_job.bookmark(user, project_name, _build)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not unbookmark build job `{}`.'.format(_build))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Build job unbookmarked.")
+
+
+@build.command()
 @click.option('--page', type=int, help="To paginate through the list of statuses.")
 @click.pass_context
 @clean_outputs

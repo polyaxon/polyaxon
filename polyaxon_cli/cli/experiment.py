@@ -749,3 +749,67 @@ def outputs(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
     Printer.print_success('Files downloaded.')
+
+
+@experiment.command()
+@click.pass_context
+@clean_outputs
+def bookmark(ctx):
+    """Bookmark experiment.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon experiment bookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 2 bookmark
+    ```
+    """
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
+                                                                      ctx.obj['experiment'])
+    try:
+        PolyaxonClients().experiment.bookmark(user, project_name, _experiment)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not bookmark experiment `{}`.'.format(_experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Experiment is bookmarked.")
+
+
+@experiment.command()
+@click.pass_context
+@clean_outputs
+def unbookmark(ctx):
+    """Unbookmark experiment.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon experiment unbookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 2 unbookmark
+    ```
+    """
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
+                                                                      ctx.obj['experiment'])
+    try:
+        PolyaxonClients().experiment.unbookmark(user, project_name, _experiment)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not unbookmark experiment `{}`.'.format(_experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Experiment is unbookmarked.")

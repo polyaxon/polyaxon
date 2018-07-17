@@ -641,3 +641,43 @@ def download(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
     Printer.print_success('Files downloaded.')
+
+
+@project.command()
+@click.pass_context
+@clean_outputs
+def bookmark(ctx):
+    """Bookmark project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = get_project_or_local(ctx.obj['project'])
+
+    try:
+        PolyaxonClients().project.bookmark(user, project_name)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not bookmark project `{}/{}`.'.format(user, project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Project `{}/{}` is bookmarked.".format(user, project_name))
+
+
+@project.command()
+@click.pass_context
+@clean_outputs
+def unbookmark(ctx):
+    """Unbookmark project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = get_project_or_local(ctx.obj['project'])
+
+    try:
+        PolyaxonClients().project.unbookmark(user, project_name)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not unbookmark project `{}/{}`.'.format(user, project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Project `{}/{}` is unbookmarked.".format(user, project_name))

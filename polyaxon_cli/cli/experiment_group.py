@@ -313,3 +313,67 @@ def statuses(ctx, page):
         Printer.print_header("Statuses:")
         objects.pop('experiment_group', None)
         dict_tabulate(objects, is_list_dict=True)
+
+
+@group.command()
+@click.pass_context
+@clean_outputs
+def bookmark(ctx):
+    """Bookmark group.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon group bookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon group -g 2 bookmark
+    ```
+    """
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+
+    try:
+        PolyaxonClients().experiment_group.bookmark(user, project_name, _group)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not bookmark group `{}`.'.format(_group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Experiments group is bookmarked.")
+
+
+@group.command()
+@click.pass_context
+@clean_outputs
+def unbookmark(ctx):
+    """Unbookmark group.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon group unbookmark
+    ```
+
+    \b
+    ```bash
+    $ polyaxon group -g 2 unbookmark
+    ```
+    """
+    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+
+    try:
+        PolyaxonClients().experiment_group.unbookmark(user, project_name, _group)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not unbookmark group `{}`.'.format(_group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Experiments group is unbookmarked.")
