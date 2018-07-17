@@ -100,7 +100,8 @@ class Command(BaseCommand):
         except self.UserModel.DoesNotExist:
             pass
         else:
-            raise CommandError("Error: That username {} is already taken.".format(username))
+            _logger.warning("Warning: Username {} is already taken. Will not recreate user.".format(username))
+            return
 
         try:
             self.UserModel.objects.get(email=email)
