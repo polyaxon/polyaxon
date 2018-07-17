@@ -1,6 +1,7 @@
 import pytest
 
 import activitylogs
+
 from api.activitylogs.serializers import ActivityLogsSerializer
 from db.models.activitylogs import ActivityLog
 from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
@@ -72,4 +73,3 @@ class TestActivityLogsSerializer(BaseTest):
         assert len(data) == 3
         for d in data:
             assert set(d.keys()) == self.expected_keys
-

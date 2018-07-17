@@ -1,7 +1,7 @@
-from django.db.models import Q
-
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
+
+from django.db.models import Q
 
 from api.activitylogs.serializers import ActivityLogsSerializer
 from db.models.activitylogs import ActivityLog

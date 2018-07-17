@@ -1,7 +1,12 @@
 import pytest
 
-from api.bookmarks.serializers import BuildJobBookmarkSerializer, JobBookmarkSerializer, \
-    ExperimentBookmarkSerializer, ExperimentGroupBookmarkSerializer, ProjectBookmarkSerializer
+from api.bookmarks.serializers import (
+    BuildJobBookmarkSerializer,
+    ExperimentBookmarkSerializer,
+    ExperimentGroupBookmarkSerializer,
+    JobBookmarkSerializer,
+    ProjectBookmarkSerializer
+)
 from api.build_jobs.serializers import BuildJobSerializer
 from api.experiment_groups.serializers import ExperimentGroupSerializer
 from api.experiments.serializers import ExperimentSerializer

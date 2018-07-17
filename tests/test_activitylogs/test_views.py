@@ -3,6 +3,7 @@ import pytest
 from rest_framework import status
 
 import activitylogs
+
 from api.activitylogs.serializers import ActivityLogsSerializer
 from constants.urls import API_V1
 from db.models.activitylogs import ActivityLog

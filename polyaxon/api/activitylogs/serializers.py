@@ -19,4 +19,3 @@ class ActivityLogsSerializer(serializers.ModelSerializer):
         if hasattr(obj.content_object, 'name'):
             return obj.content_object.name
         return None
-
