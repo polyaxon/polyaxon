@@ -127,6 +127,7 @@ pages:
     - Tensorboard: polyaxon_cli/commands/tensorboard.md
     - User: polyaxon_cli/commands/user.md
     - Cluster: polyaxon_cli/commands/cluster.md
+    - Bookmark: polyaxon_cli/commands/bookmark.md
     - Version: polyaxon_cli/commands/version.md
 - Specification Reference:
   - Introduction: polyaxonfile_specification/introduction.md
@@ -144,6 +145,7 @@ pages:
     - Experiment Job: polyaxon_client/clients/experiment_job.md
     - Job: polyaxon_client/clients/job.md
     - Build Job: polyaxon_client/clients/build_job.md
+    - Bookmark: polyaxon_client/clients/bookmark.md
     - Version: polyaxon_client/clients/version.md
 #- REST API Reference:
 #  - Introduction: polyaxon_rest/introduction.md

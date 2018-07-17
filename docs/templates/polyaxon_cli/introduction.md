@@ -39,6 +39,7 @@ $ polyaxon command --help
  * [Tensorboard](commands/tensorboard)
  * [Notebook](commands/notebook)
  * [Cluster](commands/cluster)
+ * [Bookmark](commands/bookmark)
  * [Version](commands/version)
 
 ## Caching
