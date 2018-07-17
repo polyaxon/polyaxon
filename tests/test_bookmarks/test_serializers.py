@@ -41,21 +41,25 @@ class TestBookmarkSerializer(BaseTest):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()
-        self.obj1 = Bookmark.objects.create(user=self.user, content_object=self.factory_class())
-        self.obj2 = Bookmark.objects.create(user=self.user, content_object=self.factory_class())
+        self.obj1 = Bookmark.objects.create(
+            user=self.user,
+            content_object=self.factory_class())  # pylint:disable=not-callable
+        self.obj2 = Bookmark.objects.create(
+            user=self.user,
+            content_object=self.factory_class())  # pylint:disable=not-callable
 
     def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
+        data = self.serializer_class(self.obj1).data  # pylint:disable=not-callable
 
         assert set(data.keys()) == self.expected_keys
-        assert data.pop('content_object') == self.model_serializer_class(
+        assert data.pop('content_object') == self.model_serializer_class(  # noqa
             self.obj1.content_object).data
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(Bookmark.objects.all(), many=True).data
+        data = self.serializer_class(Bookmark.objects.all(), many=True).data  # noqa
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
