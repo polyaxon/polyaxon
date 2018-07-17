@@ -28,6 +28,7 @@ def bookmark(ctx, username):  # pylint:disable=redefined-outer-name
 
 
 @bookmark.command()
+@click.option('--page', type=int, help='To paginate through the list of projects.')
 @click.pass_context
 @clean_outputs
 def projects(ctx, page):
@@ -75,6 +76,7 @@ def projects(ctx, page):
 
 
 @bookmark.command()
+@click.option('--page', type=int, help='To paginate through the list of groups.')
 @click.pass_context
 @clean_outputs
 def groups(ctx, page):
@@ -122,6 +124,7 @@ def groups(ctx, page):
 
 
 @bookmark.command()
+@click.option('--page', type=int, help='To paginate through the list of experiments.')
 @click.pass_context
 @clean_outputs
 def experiments(ctx, page):
@@ -169,6 +172,7 @@ def experiments(ctx, page):
 
 
 @bookmark.command()
+@click.option('--page', type=int, help='To paginate through the list of jobs.')
 @click.pass_context
 @clean_outputs
 def jobs(ctx, page):
@@ -216,6 +220,7 @@ def jobs(ctx, page):
 
 
 @bookmark.command()
+@click.option('--page', type=int, help='To paginate through the list of builds.')
 @click.pass_context
 @clean_outputs
 def builds(ctx, page):
