@@ -269,7 +269,8 @@ class TestEvents(BaseTest):
         assert experiment_group.ExperimentGroupDeletedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupViewedEvent.get_event_action() == 'viewed'
         assert experiment_group.ExperimentGroupBookmarkedEvent.get_event_action() == 'bookmarked'
-        assert experiment_group.ExperimentGroupUnBookmarkedEvent.get_event_action() == 'unbookmarked'
+        assert (experiment_group.ExperimentGroupUnBookmarkedEvent.get_event_action() ==
+                'unbookmarked')
         assert experiment_group.ExperimentGroupStoppedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupResumedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupDoneEvent.get_event_action() is None
