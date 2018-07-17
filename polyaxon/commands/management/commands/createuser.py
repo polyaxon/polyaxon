@@ -100,7 +100,7 @@ class Command(BaseCommand):
         except self.UserModel.DoesNotExist:
             pass
         else:
-            _logger.warning("Warning: Username {} is already taken. Will not recreate user.".format(username))
+            _logger.info("Info: Username %s is already taken. Will not recreate user.", username)
             return
 
         try:
