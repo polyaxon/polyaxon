@@ -48,6 +48,7 @@ Once you have a Polyaxon deployment, you can check polyaxon architecture and lea
  * [Customize Node Scheduling](customization/customize_node_scheduling)
  * [Customize Data and Outputs](customization/customize_outputs_and_data)
  * [Single Sign On (SSO)](customization/single_sign_on)
+ * [Replication](customization/replication)
 
 
 ## References
