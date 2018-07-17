@@ -316,10 +316,14 @@ hooks:
   imagePullPolicy: IfNotPresent
 
 postgresql:
-  imageTag: 9.6.1
+  ## Whether to deploy a postgres server in-cluster. To use an external postgres instance, set enabled to False and configure 
+  ## externalPostgresHost with your existing postgres hostname. postgresUser, postgresPassword and postgresDatabase still apply.
+  enabled: True
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: polyaxon
+  externalPostgresHost:
+  imageTag: 9.6.1
   persistence:
     enabled: false
     size: 2Gi
