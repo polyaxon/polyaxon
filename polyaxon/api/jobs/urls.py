@@ -2,6 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
+from api.bookmarks import views as bookmark_views
 from api.jobs import views
 from constants.urls import ID_PATTERN, JOB_ID_PATTERN, NAME_PATTERN, USERNAME_PATTERN, UUID_PATTERN
 
@@ -27,6 +28,12 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/outputs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.DownloadOutputsView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/bookmark/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+        bookmark_views.JobBookmarkCreateView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/unbookmark/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+        bookmark_views.JobBookmarkDeleteView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(jobs_urlpatterns)

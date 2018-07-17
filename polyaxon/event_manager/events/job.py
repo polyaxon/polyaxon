@@ -12,6 +12,7 @@ JOB_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
 JOB_CREATED = '{}.{}'.format(event_subjects.JOB, event_actions.CREATED)
 JOB_VIEWED = '{}.{}'.format(event_subjects.JOB, event_actions.VIEWED)
 JOB_BOOKMARKED = '{}.{}'.format(event_subjects.JOB, event_actions.BOOKMARKED)
+JOB_UNBOOKMARKED = '{}.{}'.format(event_subjects.JOB, event_actions.UNBOOKMARKED)
 JOB_UPDATED = '{}.{}'.format(event_subjects.JOB, event_actions.UPDATED)
 JOB_NEW_STATUS = '{}.{}'.format(event_subjects.JOB, event_actions.NEW_STATUS)
 JOB_FAILED = '{}.{}'.format(event_subjects.JOB, event_actions.FAILED)
@@ -124,6 +125,20 @@ class JobViewedEvent(Event):
 
 class JobBookmarkedEvent(Event):
     event_type = JOB_BOOKMARKED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('actor_id'),
+        Attribute('last_status'),
+        Attribute('has_description', attr_type=bool),
+    )
+
+
+class JobUnBookmarkedEvent(Event):
+    event_type = JOB_UNBOOKMARKED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

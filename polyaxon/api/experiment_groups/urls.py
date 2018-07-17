@@ -2,6 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
+from api.bookmarks import views as bookmark_views
 from api.experiment_groups import views
 from constants.urls import GROUP_ID_PATTERN, ID_PATTERN, NAME_PATTERN, USERNAME_PATTERN
 
@@ -13,6 +14,12 @@ groups_urlpatterns = [
         views.ExperimentGroupStatusListView.as_view()),
     re_path(r'^{}/{}/groups/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
             views.ExperimentGroupStopView.as_view()),
+    re_path(
+        r'^{}/{}/groups/{}/bookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+        bookmark_views.ExperimentGroupBookmarkCreateView.as_view()),
+    re_path(
+        r'^{}/{}/groups/{}/unbookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+        bookmark_views.ExperimentGroupBookmarkDeleteView.as_view()),
 ]
 
 # Order is important, because the patterns could swallow other urls

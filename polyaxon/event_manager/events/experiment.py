@@ -19,6 +19,8 @@ EXPERIMENT_COPIED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                    event_actions.COPIED)
 EXPERIMENT_BOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                        event_actions.BOOKMARKED)
+EXPERIMENT_UNBOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                         event_actions.UNBOOKMARKED)
 EXPERIMENT_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT,
                                        event_actions.NEW_STATUS)
 EXPERIMENT_NEW_METRIC = '{}.{}'.format(event_subjects.EXPERIMENT,
@@ -121,6 +123,23 @@ class ExperimentViewedEvent(Event):
 
 class ExperimentBookmarkedEvent(Event):
     event_type = EXPERIMENT_BOOKMARKED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
+    )
+
+
+class ExperimentUnBookmarkedEvent(Event):
+    event_type = EXPERIMENT_UNBOOKMARKED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

@@ -126,6 +126,16 @@ class AuditorBuildJobTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_build_job_unbookmarked(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=build_job_events.BUILD_JOB_UNBOOKMARKED,
+                       instance=self.build_job,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
     def test_build_job_new_status(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_NEW_STATUS,
                        instance=self.build_job)

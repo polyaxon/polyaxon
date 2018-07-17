@@ -11,6 +11,8 @@ EXPERIMENT_GROUP_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                          event_actions.VIEWED)
 EXPERIMENT_GROUP_BOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                              event_actions.BOOKMARKED)
+EXPERIMENT_GROUP_UNBOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                               event_actions.UNBOOKMARKED)
 EXPERIMENT_GROUP_STOPPED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.STOPPED)
 EXPERIMENT_GROUP_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
@@ -105,6 +107,24 @@ class ExperimentGroupViewedEvent(Event):
 
 class ExperimentGroupBookmarkedEvent(Event):
     event_type = EXPERIMENT_GROUP_BOOKMARKED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentGroupUnBookmarkedEvent(Event):
+    event_type = EXPERIMENT_GROUP_UNBOOKMARKED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

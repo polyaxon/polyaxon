@@ -2,6 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
+from api.bookmarks import views as bookmark_views
 from api.build_jobs import views as builds_views
 from api.experiment_groups import views as groups_views
 from api.experiments import views as experiments_views
@@ -27,6 +28,10 @@ projects_urlpatterns = [
             builds_views.ProjectBuildListView.as_view()),
     re_path(r'^{}/{}/tensorboards/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
             tensorboards_views.ProjectTensorboardListView.as_view()),
+    re_path(r'^{}/{}/bookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+            bookmark_views.ProjectBookmarkCreateView.as_view()),
+    re_path(r'^{}/{}/unbookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+            bookmark_views.ProjectBookmarkDeleteView.as_view()),
 ]
 
 # Order is important, because the patterns could swallow other urls
