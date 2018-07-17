@@ -34,6 +34,8 @@ def get_service_env_vars(namespace='default'):
         get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'polyaxon-internal-secret-token'),
         get_from_app_secret('POLYAXON_RABBITMQ_PASSWORD', 'rabbitmq-password',
                             settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME),
+        get_from_app_secret('POLYAXON_DB_PASSWORD', 'postgres-password',
+                            settings.POLYAXON_K8S_DB_SECRET_NAME),
         get_env_var(name=API_KEY_NAME, value=get_settings_api_url()),
     ]
 
