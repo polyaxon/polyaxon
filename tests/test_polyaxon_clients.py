@@ -3,9 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from mock import patch
-
 from polyaxon_client.auth import AuthClient
+from polyaxon_client.bookmark import BookmarkClient
 from polyaxon_client.build_job import BuildJobClient
 from polyaxon_client.clients import PolyaxonClients
 from polyaxon_client.cluster import ClusterClient
@@ -36,4 +35,5 @@ class TestPolyaxonClients(TestCase):
         assert isinstance(clients.experiment_job, ExperimentJobClient)
         assert isinstance(clients.job, JobClient)
         assert isinstance(clients.build_job, BuildJobClient)
+        assert isinstance(clients.bookmark, BookmarkClient)
         assert isinstance(clients.user, UserClient)

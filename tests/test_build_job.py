@@ -118,6 +118,40 @@ class TestBuildJobClient(TestCase):
         assert result.status_code == 200
 
     @httpretty.activate
+    def test_bookmark_build(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            BuildJobClient._build_url(
+                self.client.base_url,
+                BuildJobClient.ENDPOINT,
+                'username',
+                'project_name',
+                'builds',
+                1,
+                'bookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.bookmark('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_unbookmark_build(self):
+        httpretty.register_uri(
+            httpretty.DELETE,
+            BuildJobClient._build_url(
+                self.client.base_url,
+                BuildJobClient.ENDPOINT,
+                'username',
+                'project_name',
+                'builds',
+                1,
+                'unbookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.unbookmark('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
     def test_job_logs(self):
         httpretty.register_uri(
             httpretty.GET,

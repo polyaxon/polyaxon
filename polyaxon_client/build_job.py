@@ -20,7 +20,7 @@ class BuildJobClient(PolyaxonClient):
             response = self.get(request_url)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job')
+            self.handle_exception(e=e, log_message='Error while retrieving build')
             return None
 
     def update_build(self, username, project_name, job_id, patch_dict):
@@ -33,7 +33,7 @@ class BuildJobClient(PolyaxonClient):
             response = self.patch(request_url, json_data=patch_dict)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating job')
+            self.handle_exception(e=e, log_message='Error while updating build')
             return None
 
     def delete_build(self, username, project_name, job_id):
@@ -45,7 +45,7 @@ class BuildJobClient(PolyaxonClient):
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting job')
+            self.handle_exception(e=e, log_message='Error while deleting build')
             return None
 
     def get_statuses(self, username, project_name, job_id, page=1):
@@ -59,7 +59,7 @@ class BuildJobClient(PolyaxonClient):
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobStatusConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job statuses')
+            self.handle_exception(e=e, log_message='Error while retrieving build statuses')
             return None
 
     def stop(self, username, project_name, job_id):
@@ -72,7 +72,33 @@ class BuildJobClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping job')
+            self.handle_exception(e=e, log_message='Error while stopping build')
+            return None
+
+    def bookmark(self, username, project_name, job_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'builds',
+                                      job_id,
+                                      'bookmark')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while bookmarking build')
+            return None
+
+    def unbookmark(self, username, project_name, job_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'builds',
+                                      job_id,
+                                      'unbookmark')
+        try:
+            return self.delete(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while unbookmarking build')
             return None
 
     def resources(self, username, project_name, job_id, message_handler=None):

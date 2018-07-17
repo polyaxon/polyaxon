@@ -253,3 +253,37 @@ class TestJobClient(TestCase):
 
         response = self.client.logs('username', 'project_name', 1, stream=False)
         assert response.content.decode() == 'some text'
+
+    @httpretty.activate
+    def test_bookmark_job(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            JobClient._build_url(
+                self.client.base_url,
+                JobClient.ENDPOINT,
+                'username',
+                'project_name',
+                'jobs',
+                1,
+                'bookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.bookmark('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_unbookmark_job(self):
+        httpretty.register_uri(
+            httpretty.DELETE,
+            JobClient._build_url(
+                self.client.base_url,
+                JobClient.ENDPOINT,
+                'username',
+                'project_name',
+                'jobs',
+                1,
+                'unbookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.unbookmark('username', 'project_name', 1)
+        assert result.status_code == 200

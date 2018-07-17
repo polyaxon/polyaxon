@@ -273,6 +273,32 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
 
+    def bookmark(self, username, project_name, experiment_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_id,
+                                      'bookmark')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while bookmarking tensorboard')
+            return None
+
+    def unbookmark(self, username, project_name, experiment_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_id,
+                                      'unbookmark')
+        try:
+            return self.delete(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while unbookmarking tensorboard')
+            return None
+
     def download_outputs(self, username, project_name, experiment_id):
         """Downloads outputs for this experiment to the current dir."""
         request_url = self._build_url(self._get_http_url(),

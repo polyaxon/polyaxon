@@ -29,6 +29,7 @@ with Polyaxon API in a programmatic way.
  * [Experiment Job](https://docs.polyaxon.com/polyaxon_client/experiment_job): A client for getting information, resources, and logs of experiment jobs.
  * [Job](https://docs.polyaxon.com/polyaxon_client/job): A client for getting information, resources, and logs of jobs.
  * [Build Job](https://docs.polyaxon.com/polyaxon_client/build_job): A client for getting information, resources, and logs of build jobs.
+ * [Bookmark](https://docs.polyaxon.com/polyaxon_client/bookmark): A client for getting bookmarks.
  * [Version](https://docs.polyaxon.com/polyaxon_client/version): A client to get current and supported versions of several Polyaxon component.
 
 
@@ -51,6 +52,7 @@ polyaxon_clients.experiment_group
 polyaxon_clients.experiment_job
 polyaxon_clients.job
 polyaxon_clients.build_job
+polyaxon_clients.bookmark
 polyaxon_clients.version
 ```
 

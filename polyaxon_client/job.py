@@ -141,6 +141,32 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while stopping job')
             return None
 
+    def bookmark(self, username, project_name, job_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'jobs',
+                                      job_id,
+                                      'bookmark')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while bookmarking job')
+            return None
+
+    def unbookmark(self, username, project_name, job_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'jobs',
+                                      job_id,
+                                      'unbookmark')
+        try:
+            return self.delete(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while unbookmarking job')
+            return None
+
     def resources(self, username, project_name, job_id, message_handler=None):
         """Streams jobs resources using websockets.
 

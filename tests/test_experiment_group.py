@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-
 import httpretty
 import json
 import uuid
@@ -207,7 +206,7 @@ class TestExperimentGroupClient(TestCase):
         assert result.status_code == 200
 
     @httpretty.activate
-    def test_start_tensorboard(self):
+    def test_start_experiment_group_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
             ExperimentGroupClient._build_url(
@@ -225,7 +224,7 @@ class TestExperimentGroupClient(TestCase):
         assert result.status_code == 200
 
     @httpretty.activate
-    def test_start_tensorboard_with_config(self):
+    def test_start_experiment_group_tensorboard_with_config(self):
         obj = {}
         httpretty.register_uri(
             httpretty.POST,
@@ -245,7 +244,7 @@ class TestExperimentGroupClient(TestCase):
         assert result.status_code == 200
 
     @httpretty.activate
-    def test_stop_tensorboard(self):
+    def test_stop_experiment_group_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
             ExperimentGroupClient._build_url(
@@ -260,4 +259,38 @@ class TestExperimentGroupClient(TestCase):
             content_type='application/json',
             status=200)
         result = self.client.stop_tensorboard('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_bookmark_experiment(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'username',
+                'project_name',
+                'groups',
+                1,
+                'bookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.bookmark('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_unbookmark_experiment(self):
+        httpretty.register_uri(
+            httpretty.DELETE,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'username',
+                'project_name',
+                'groups',
+                1,
+                'unbookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200

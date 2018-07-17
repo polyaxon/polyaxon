@@ -369,7 +369,7 @@ class TestExperimentClient(TestCase):
         assert response.content.decode() == 'some text'
 
     @httpretty.activate
-    def test_start_tensorboard(self):
+    def test_start_experiment_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
@@ -387,7 +387,7 @@ class TestExperimentClient(TestCase):
         assert result.status_code == 200
 
     @httpretty.activate
-    def test_start_tensorboard_with_config(self):
+    def test_start_experiment_tensorboard_with_config(self):
         obj = {}
         httpretty.register_uri(
             httpretty.POST,
@@ -407,7 +407,7 @@ class TestExperimentClient(TestCase):
         assert result.status_code == 200
 
     @httpretty.activate
-    def test_stop_tensorboard(self):
+    def test_stop_experiment_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
@@ -422,4 +422,38 @@ class TestExperimentClient(TestCase):
             content_type='application/json',
             status=200)
         result = self.client.stop_tensorboard('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_bookmark_experiment(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'bookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.bookmark('username', 'project_name', 1)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_unbookmark_experiment(self):
+        httpretty.register_uri(
+            httpretty.DELETE,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'unbookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200

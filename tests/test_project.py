@@ -675,3 +675,33 @@ class TestProjectClient(TestCase):
             status=200)
         result = self.client.stop_notebook('username', 'project_name', commit=False)
         assert result.status_code == 200
+
+    @httpretty.activate
+    def test_bookmark_project(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'bookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.bookmark('username', 'project_name')
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_unbookmark_project(self):
+        httpretty.register_uri(
+            httpretty.DELETE,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'unbookmark'),
+            content_type='application/json',
+            status=200)
+        result = self.client.unbookmark('username', 'project_name')
+        assert result.status_code == 200

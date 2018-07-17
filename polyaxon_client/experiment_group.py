@@ -140,3 +140,29 @@ class ExperimentGroupClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
+
+    def bookmark(self, username, project_name, group_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_id,
+                                      'bookmark')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while bookmarking group')
+            return None
+
+    def unbookmark(self, username, project_name, group_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_id,
+                                      'unbookmark')
+        try:
+            return self.delete(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while unbookmarking group')
+            return None

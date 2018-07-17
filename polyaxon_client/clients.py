@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.auth import AuthClient
+from polyaxon_client.bookmark import BookmarkClient
 from polyaxon_client.build_job import BuildJobClient
 from polyaxon_client.cluster import ClusterClient
 from polyaxon_client.experiment import ExperimentClient
@@ -39,6 +40,7 @@ class PolyaxonClients(object):
         self._job_client = None
         self._build_job_client = None
         self._user_client = None
+        self._bookmark_client = None
 
     def reset(self):
         self._auth_client = None
@@ -51,6 +53,7 @@ class PolyaxonClients(object):
         self._job_client = None
         self._build_job_client = None
         self._user_client = None
+        self._bookmark_client = None
 
     @property
     def host(self):
@@ -151,3 +154,9 @@ class PolyaxonClients(object):
         if not self._user_client:
             self._user_client = UserClient(**self.params)
         return self._user_client
+
+    @property
+    def bookmark(self):
+        if not self._bookmark_client:
+            self._bookmark_client = BookmarkClient(**self.params)
+        return self._bookmark_client
