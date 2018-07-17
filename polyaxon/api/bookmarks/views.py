@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from django.contrib.auth import get_user_model
-from django.contrib.contenttypes.models import ContentType
 
 import auditor
 
@@ -60,8 +59,10 @@ class BookmarkListView(ListAPIView):
         if self.request.user.is_staff or self.request.user.username == username:
             auditor.record(event_type=self.event_type,
                            instance=user,
-                           actor_id=self.request.user.id)
-            queryset = queryset.filter(user=user, content_type__model=self.content_type)
+                           actor_id=self.request.user.id,)
+            queryset = queryset.filter(user=user,
+                                       content_type__model=self.content_type,
+                                       enabled=True)
             return super().filter_queryset(queryset=queryset)
         return queryset.none()
 
@@ -107,6 +108,7 @@ class BookmarkCreateView(PostAPIView):
     lookup_field = 'id'
     queryset = None
     event_type = None
+    content_type = None
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))
@@ -119,7 +121,7 @@ class BookmarkCreateView(PostAPIView):
                        actor_id=user.id)
         bookmark, created = Bookmark.objects.get_or_create(
             user=user,
-            content_type=ContentType.objects.get_for_model(obj),
+            content_type__model=self.content_type,
             object_id=obj.id)
         if not created:
             bookmark.enabled = True
@@ -133,6 +135,7 @@ class BookmarkDeleteView(DestroyAPIView):
     lookup_field = 'id'
     queryset = None
     event_type = None
+    content_type = None
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))
@@ -142,7 +145,7 @@ class BookmarkDeleteView(DestroyAPIView):
         obj = self.get_object()
         bookmark = get_object_or_404(Bookmark,
                                      user=user,
-                                     content_type=ContentType.objects.get_for_model(obj),
+                                     content_type__model=self.content_type,
                                      object_id=obj.id)
         auditor.record(event_type=self.event_type,
                        instance=obj,
@@ -156,48 +159,56 @@ class BuildJobBookmarkCreateView(BookmarkCreateView):
     """Bookmark build view."""
     event_type = BUILD_JOB_BOOKMARKED
     queryset = BuildJob.objects.filter()
+    content_type = 'buildjob'
 
 
 class BuildJobBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark build view."""
     event_type = BUILD_JOB_UNBOOKMARKED
     queryset = BuildJob.objects.filter()
+    content_type = 'buildjob'
 
 
 class JobBookmarkCreateView(BookmarkCreateView):
     """Bookmark job view."""
     event_type = JOB_BOOKMARKED
     queryset = Job.objects.filter()
+    content_type = 'job'
 
 
 class JobBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark job view."""
     event_type = JOB_UNBOOKMARKED
     queryset = Job.objects.filter()
+    content_type = 'job'
 
 
 class ExperimentBookmarkCreateView(BookmarkCreateView):
     """Bookmark experiment view."""
     event_type = EXPERIMENT_BOOKMARKED
     queryset = Experiment.objects.filter()
+    content_type = 'experiment'
 
 
 class ExperimentBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark experiment view."""
     event_type = EXPERIMENT_UNBOOKMARKED
     queryset = Experiment.objects.filter()
+    content_type = 'experiment'
 
 
 class ExperimentGroupBookmarkCreateView(BookmarkCreateView):
     """Bookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_BOOKMARKED
     queryset = ExperimentGroup.objects.filter()
+    content_type = 'experimentgroup'
 
 
 class ExperimentGroupBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_UNBOOKMARKED
     queryset = ExperimentGroup.objects.filter()
+    content_type = 'experimentgroup'
 
 
 class ProjectBookmarkCreateView(BookmarkCreateView):
@@ -206,6 +217,7 @@ class ProjectBookmarkCreateView(BookmarkCreateView):
     queryset = Project.objects.filter()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
+    content_type = 'project'
 
     def filter_queryset(self, queryset):
         username = self.kwargs['username']
@@ -218,6 +230,7 @@ class ProjectBookmarkDeleteView(BookmarkDeleteView):
     queryset = Project.objects.filter()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
+    content_type = 'project'
 
     def filter_queryset(self, queryset):
         username = self.kwargs['username']
