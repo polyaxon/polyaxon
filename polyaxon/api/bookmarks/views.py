@@ -119,13 +119,17 @@ class BookmarkCreateView(PostAPIView):
         auditor.record(event_type=self.event_type,
                        instance=obj,
                        actor_id=user.id)
-        bookmark, created = Bookmark.objects.get_or_create(
-            user=user,
-            content_type__model=self.content_type,
-            object_id=obj.id)
-        if not created:
+        try:
+            bookmark = Bookmark.objects.get(
+                user=user,
+                content_type__model=self.content_type,
+                object_id=obj.id)
             bookmark.enabled = True
             bookmark.save()
+        except Bookmark.DoesNotExist:
+            Bookmark.objects.create(
+                user=user,
+                content_object=obj)
         return Response(status=status.HTTP_201_CREATED)
 
 
