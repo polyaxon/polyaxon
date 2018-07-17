@@ -20,7 +20,7 @@ class JobClient(PolyaxonClient):
             response = self.get(request_url)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job')
+            self.handle_exception(e=e, log_message='Error while retrieving job.')
             return None
 
     def update_job(self, username, project_name, job_id, patch_dict):
@@ -33,7 +33,7 @@ class JobClient(PolyaxonClient):
             response = self.patch(request_url, json_data=patch_dict)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating job')
+            self.handle_exception(e=e, log_message='Error while updating job.')
             return None
 
     def delete_job(self, username, project_name, job_id):
@@ -45,7 +45,7 @@ class JobClient(PolyaxonClient):
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting job')
+            self.handle_exception(e=e, log_message='Error while deleting job.')
             return None
 
     def get_statuses(self, username, project_name, job_id, page=1):
@@ -59,7 +59,7 @@ class JobClient(PolyaxonClient):
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobStatusConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job statuses')
+            self.handle_exception(e=e, log_message='Error while retrieving job statuses.')
             return None
 
     def restart(self, username, project_name, job_id, config=None, update_code=None):
@@ -81,7 +81,7 @@ class JobClient(PolyaxonClient):
             response = self.post(request_url, json_data=data)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while restarting the job')
+            self.handle_exception(e=e, log_message='Error while restarting the job.')
             return None
 
     def resume(self, username, project_name, job_id, config=None, update_code=None):
@@ -103,7 +103,7 @@ class JobClient(PolyaxonClient):
             response = self.post(request_url, json_data=data)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while resuming the job')
+            self.handle_exception(e=e, log_message='Error while resuming the job.')
             return None
 
     def copy(self, username, project_name, job_id, config=None, update_code=None):
@@ -125,7 +125,7 @@ class JobClient(PolyaxonClient):
             response = self.post(request_url, json_data=data)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while copying the job')
+            self.handle_exception(e=e, log_message='Error while copying the job.')
             return None
 
     def stop(self, username, project_name, job_id):
@@ -138,7 +138,7 @@ class JobClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping job')
+            self.handle_exception(e=e, log_message='Error while stopping job.')
             return None
 
     def bookmark(self, username, project_name, job_id):
@@ -151,7 +151,7 @@ class JobClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while bookmarking job')
+            self.handle_exception(e=e, log_message='Error while bookmarking job.')
             return None
 
     def unbookmark(self, username, project_name, job_id):
@@ -164,7 +164,7 @@ class JobClient(PolyaxonClient):
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while unbookmarking job')
+            self.handle_exception(e=e, log_message='Error while unbookmarking job.')
             return None
 
     def resources(self, username, project_name, job_id, message_handler=None):
@@ -199,7 +199,7 @@ class JobClient(PolyaxonClient):
             try:
                 return self.get(request_url)
             except PolyaxonException as e:
-                self.handle_exception(e=e, log_message='Error while retrieving jobs')
+                self.handle_exception(e=e, log_message='Error while retrieving jobs.')
                 return []
 
         request_url = self._build_url(self._get_ws_url(),

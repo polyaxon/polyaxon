@@ -22,7 +22,7 @@ class ExperimentClient(PolyaxonClient):
                                 params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiments')
+            self.handle_exception(e=e, log_message='Error while retrieving experiments.')
             return []
 
     def get_experiment(self, username, project_name, experiment_id):
@@ -35,7 +35,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.get(request_url)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment')
+            self.handle_exception(e=e, log_message='Error while retrieving experiment.')
             return None
 
     def update_experiment(self, username, project_name, experiment_id, patch_dict):
@@ -48,7 +48,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.patch(request_url, json_data=patch_dict)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating experiment')
+            self.handle_exception(e=e, log_message='Error while updating experiment.')
             return None
 
     def delete_experiment(self, username, project_name, experiment_id):
@@ -60,7 +60,7 @@ class ExperimentClient(PolyaxonClient):
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting experiment')
+            self.handle_exception(e=e, log_message='Error while deleting experiment.')
             return None
 
     def get_statuses(self, username, project_name, experiment_id, page=1):
@@ -74,7 +74,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentStatusConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment statuses')
+            self.handle_exception(e=e, log_message='Error while retrieving experiment statuses.')
             return None
 
     def get_metrics(self, username, project_name, experiment_id, page=1):
@@ -88,7 +88,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentMetricConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment status')
+            self.handle_exception(e=e, log_message='Error while retrieving experiment status.')
             return None
 
     def create_metric(self, username, project_name, experiment_id, values):
@@ -102,7 +102,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.post(request_url, data={'values': values})
             return ExperimentMetricConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment status')
+            self.handle_exception(e=e, log_message='Error while retrieving experiment status.')
             return None
 
     def list_jobs(self, username, project_name, experiment_id, page=1):
@@ -118,7 +118,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentJobConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving jobs')
+            self.handle_exception(e=e, log_message='Error while retrieving jobs.')
             return []
 
     def restart(self, username, project_name, experiment_id, config=None, update_code=None):
@@ -140,7 +140,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while restarting the experiment')
+            self.handle_exception(e=e, log_message='Error while restarting the experiment.')
             return None
 
     def resume(self, username, project_name, experiment_id, config=None, update_code=None):
@@ -162,7 +162,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while resuming the experiment')
+            self.handle_exception(e=e, log_message='Error while resuming the experiment.')
             return None
 
     def copy(self, username, project_name, experiment_id, config=None, update_code=None):
@@ -184,7 +184,7 @@ class ExperimentClient(PolyaxonClient):
             response = self.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while copying the experiment')
+            self.handle_exception(e=e, log_message='Error while copying the experiment.')
             return None
 
     def stop(self, username, project_name, experiment_id):
@@ -197,7 +197,7 @@ class ExperimentClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping experiment')
+            self.handle_exception(e=e, log_message='Error while stopping experiment.')
             return None
 
     def resources(self, username, project_name, experiment_id, message_handler=None):
@@ -232,7 +232,7 @@ class ExperimentClient(PolyaxonClient):
             try:
                 return self.get(request_url)
             except PolyaxonException as e:
-                self.handle_exception(e=e, log_message='Error while retrieving jobs')
+                self.handle_exception(e=e, log_message='Error while retrieving jobs.')
                 return []
 
         request_url = self._build_url(self._get_ws_url(),
@@ -256,7 +256,7 @@ class ExperimentClient(PolyaxonClient):
             job_config = {'config': job_config} if job_config else {}
             return self.post(request_url, json_data=job_config)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while starting tensorboard')
+            self.handle_exception(e=e, log_message='Error while starting tensorboard.')
             return None
 
     def stop_tensorboard(self, username, project_name, experiment_id):
@@ -270,7 +270,7 @@ class ExperimentClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping tensorboard')
+            self.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
     def bookmark(self, username, project_name, experiment_id):
@@ -283,7 +283,7 @@ class ExperimentClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while bookmarking tensorboard')
+            self.handle_exception(e=e, log_message='Error while bookmarking experiment.')
             return None
 
     def unbookmark(self, username, project_name, experiment_id):
@@ -296,7 +296,7 @@ class ExperimentClient(PolyaxonClient):
         try:
             return self.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while unbookmarking tensorboard')
+            self.handle_exception(e=e, log_message='Error while unbookmarking experiment.')
             return None
 
     def download_outputs(self, username, project_name, experiment_id):
