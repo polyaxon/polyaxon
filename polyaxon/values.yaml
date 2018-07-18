@@ -120,6 +120,11 @@ auth:
     enabled: false
     clientId:
     clientSecret:
+  azure:
+    enabled: false
+    tenantId:
+    clientId:
+    clientSecret:
 
 
 nodeSelectors:

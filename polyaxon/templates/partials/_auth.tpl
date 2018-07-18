@@ -85,4 +85,23 @@ Auth
       name: {{ template "polyaxon.fullname" . }}-secret
       key: auth-gitlab-client-secret
 {{- end }}
+{{- if .Values.auth.azure.enabled }}
+- name: POLYAXON_AUTH_AZURE
+  value: "true"
+- name: POLYAXON_AUTH_AZURE_TENANT_ID
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-azure-tenant-id
+- name: POLYAXON_AUTH_AZURE_CLIENT_ID
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-azure-client-id
+- name: POLYAXON_AUTH_AZURE_CLIENT_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-azure-client-secret
+{{- end }}
 {{- end -}}
