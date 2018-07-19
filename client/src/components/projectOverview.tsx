@@ -59,7 +59,7 @@ function ProjectOverview({project}: Props) {
               inline={true}
              />
              <MetaInfo
-              icon="fa-cog"
+              icon="fa-gavel"
               name="Builds"
               value={project.num_builds}
               inline={true}
