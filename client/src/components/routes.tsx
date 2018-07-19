@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
 
+import Bookmarks from '../containers/bookmarks';
 import ProjectDetail from '../containers/projectDetail';
 import ExperimentDetail from '../containers/experimentDetail';
 import GroupDetail from '../containers/groupDetail';
@@ -14,8 +15,9 @@ import { getHomeUrl } from '../constants/utils';
 
 function Routes() {
   let tokenRoute = '/app/token';
-  let projectDetailRoute = '/app/:user/:projectName/';
   let projectsRoute = '/app/:user/';
+  let bookmarksRoute = '/app/:user/bookmarks/';
+  let projectDetailRoute = '/app/:user/:projectName/';
   let buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
   let jobDetailRoute = '/app/:user/:projectName/jobs/:jobId/';
   let experimentDetailRoute = '/app/:user/:projectName/experiments/:experimentId/';
@@ -44,6 +46,7 @@ function Routes() {
       <Route path={jobDetailRoute} component={JobDetail}/>
       <Route path={groupDetailRoute} component={GroupDetail}/>
       <Route path={experimentDetailRoute} component={ExperimentDetail}/>
+      <Route path={bookmarksRoute} component={Bookmarks}/>
       <Route path={projectDetailRoute} component={ProjectDetail}/>
       <Route path={projectsRoute} component={Projects}/>
 

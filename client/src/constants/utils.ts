@@ -66,6 +66,10 @@ export let getProjectUrl = function (username: string, projectName: string) {
   return `/app/${username}/${projectName}`;
 };
 
+export let getBookmarksUrl = function (username: string) {
+  return `/app/${username}/bookmarks`;
+};
+
 export let getProjectTensorboardUrl = function (projectName: string) {
   let values = splitUniqueName(projectName);
   return `/tensorboard/${values[0]}/${values[1]}/`;
