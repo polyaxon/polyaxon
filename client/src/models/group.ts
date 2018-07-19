@@ -27,6 +27,7 @@ export class GroupModel {
   public project: string;
   public has_tensorboard: boolean;
   public experiments: Array<string> = [];
+  public bookmarked: boolean;
 }
 
 export class GroupStateSchema {

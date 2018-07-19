@@ -5,7 +5,7 @@ import history from '../history';
 import { ProjectModel } from '../models/project';
 import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
-import { handleAuthError } from '../constants/utils';
+import { handleAuthError, getProjectUniqueName, getProjectUrl } from '../constants/utils';
 
 export enum actionTypes {
   CREATE_PROJECT = 'CREATE_PROJECT',
@@ -15,6 +15,8 @@ export enum actionTypes {
   REQUEST_PROJECT = 'REQUEST_PROJECT',
   RECEIVE_PROJECTS = 'RECEIVE_PROJECTS',
   REQUEST_PROJECTS = 'REQUEST_PROJECTS',
+  BOOKMARK_PROJECT = 'BOOKMARK_PROJECT',
+  UNBOOKMARK_PROJECT = 'UNBOOKMARK_PROJECT',
 }
 
 export interface CreateUpdateReceiveProjectAction extends Action {
@@ -37,11 +39,17 @@ export interface RequestProjectsAction extends Action {
   type: actionTypes.REQUEST_PROJECTS | actionTypes.REQUEST_PROJECT;
 }
 
+export interface BookmarkProjectAction extends Action {
+  type: actionTypes.BOOKMARK_PROJECT | actionTypes.UNBOOKMARK_PROJECT;
+  projectName: string;
+}
+
 export type ProjectAction =
   CreateUpdateReceiveProjectAction
   | DeleteProjectAction
   | ReceiveProjectsAction
-  | RequestProjectsAction;
+  | RequestProjectsAction
+  | BookmarkProjectAction;
 
 export function createProjectActionCreator(project: ProjectModel): CreateUpdateReceiveProjectAction {
   return {
@@ -104,6 +112,21 @@ export function receiveBookmarkedProjectsActionCreator(bookmarkedProjects: Bookm
   };
 }
 
+export function bookmarkProjectActionCreator(projectName: string) {
+  return {
+    type: actionTypes.BOOKMARK_PROJECT,
+    projectName,
+  };
+}
+
+export function unbookmarkProjectActionCreator(projectName: string) {
+  return {
+    type: actionTypes.UNBOOKMARK_PROJECT,
+    projectName,
+  };
+}
+
+
 export function createProject(user: string, project: ProjectModel): any {
   return (dispatch: any, getState: any) => {
     // FIX ME: We need to add a first dispatch here so we show it to the user before
@@ -124,9 +147,10 @@ export function createProject(user: string, project: ProjectModel): any {
 }
 
 export function deleteProject(project: ProjectModel): any {
+  let projectUrl = getProjectUrl(project.user, project.name, false);
   return (dispatch: any, getState: any) => {
     dispatch(deleteProjectActionCreator(project));
-    return fetch(BASE_API_URL + `/${project.user}` + `/${project.name}`, {
+    return fetch(`/${BASE_API_URL}${projectUrl}`, {
       method: 'DELETE',
       headers: {
         'Authorization': 'token ' + getState().auth.token
@@ -184,9 +208,10 @@ export function fetchProjects(user: string,
 }
 
 export function fetchProject(user: string, projectName: string): any {
+  let projectUrl = getProjectUrl(user, projectName, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectActionCreator());
-    return fetch(BASE_API_URL + `/${user}` + `/${projectName}`, {
+    return fetch(`/${BASE_API_URL}${projectUrl}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
@@ -194,5 +219,37 @@ export function fetchProject(user: string, projectName: string): any {
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => dispatch(receiveProjectActionCreator(json)));
+  };
+}
+
+export function bookmark(user: string, projectName: string): any {
+  let projectUniqueName = getProjectUniqueName(user, projectName);
+  let projectUrl = getProjectUrl(user, projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${projectUrl}/bookmark`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(bookmarkProjectActionCreator(projectUniqueName)));
+  };
+}
+
+export function unbookmark(user: string, projectName: string): any {
+  let projectUniqueName = getProjectUniqueName(user, projectName);
+  let projectUrl = getProjectUrl(user, projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${projectUrl}/unbookmark`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(unbookmarkProjectActionCreator(projectUniqueName)));
   };
 }

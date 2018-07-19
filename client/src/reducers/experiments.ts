@@ -51,6 +51,24 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           uniqueNames: state.uniqueNames.filter(
             name => name !== getExperimentIndexName(action.experiment.unique_name)),
         };
+      case actionTypes.BOOKMARK_EXPERIMENT:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.experimentName]: {
+              ...state.byUniqueNames[action.experimentName], bookmarked: true}
+          },
+        };
+      case actionTypes.UNBOOKMARK_EXPERIMENT:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.experimentName]: {
+              ...state.byUniqueNames[action.experimentName], bookmarked: false}
+          },
+        };
       case actionTypes.UPDATE_EXPERIMENT:
         return {
           ...state,

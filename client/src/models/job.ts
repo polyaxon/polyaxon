@@ -18,6 +18,7 @@ export class JobModel {
   public started_at: string;
   public finished_at: string;
   public resources: {[key: string]: any};
+  public bookmarked: boolean;
 }
 
 export class JobStateSchema {

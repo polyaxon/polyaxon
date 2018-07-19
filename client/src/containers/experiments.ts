@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
+import { isTrue } from '../constants/utils';
 import Experiments from '../components/experiments';
 import { ExperimentModel } from '../models/experiment';
 
@@ -64,8 +65,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     isCurrentUser: state.auth.user === ownProps.user,
     experiments: results.experiments,
     count: results.count,
-    useFilters: !_.isNil(ownProps.useFilters) && ownProps.useFilters,
-    bookmarks: !_.isNil(ownProps.bookmarks) && ownProps.bookmarks,
+    useFilters: isTrue(ownProps.useFilters),
+    bookmarks: isTrue(ownProps.bookmarks),
   };
 }
 

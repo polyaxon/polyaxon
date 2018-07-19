@@ -19,6 +19,7 @@ export class BuildModel {
   public commit: string;
   public dockerfile: string;
   public resources: {[key: string]: any};
+  public bookmarked: boolean;
 }
 
 export class BuildStateSchema {

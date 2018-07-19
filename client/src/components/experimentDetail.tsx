@@ -7,12 +7,14 @@ import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
 import Metrics from '../containers/metrics';
 import {
+  isTrue,
   getExperimentUrl,
   getGroupUrl,
   getProjectUrl,
   getUserUrl,
   splitUniqueName,
 } from '../constants/utils';
+import { Bookmark } from '../constants/bookmarks';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ExperimentOverview from './experimentOverview';
@@ -24,6 +26,8 @@ export interface Props {
   experiment: ExperimentModel;
   onDelete: () => any;
   fetchData: () => any;
+  bookmark: () => any;
+  unbookmark: () => any;
 }
 
 export default class ExperimentDetail extends React.Component<Props, Object> {
@@ -33,10 +37,14 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
 
   public render() {
     const experiment = this.props.experiment;
-
     if (_.isNil(experiment)) {
       return EmptyList(false, 'experiment', 'experiment');
     }
+
+    const bookmark: Bookmark = {
+      active: isTrue(this.props.experiment.bookmarked),
+      callback: isTrue(this.props.experiment.bookmarked) ? this.props.unbookmark : this.props.bookmark
+    };
     let values = splitUniqueName(experiment.project);
     let experimentUrl = getExperimentUrl(values[0], values[1], this.props.experiment.id);
     let group = null;
@@ -62,7 +70,11 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <Breadcrumb icon="fa-cube" links={breadcrumbLinks}/>
+            <Breadcrumb
+              icon="fa-cube"
+              links={breadcrumbLinks}
+              bookmark={bookmark}
+            />
             <LinkedTab
               baseUrl={experimentUrl}
               tabs={[

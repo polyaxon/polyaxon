@@ -44,6 +44,24 @@ export const buildsReducer: Reducer<BuildStateSchema> =
           uniqueNames: state.uniqueNames.filter(
             name => name !== action.build.unique_name),
         };
+      case actionTypes.BOOKMARK_BUILD:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.buildName]: {
+              ...state.byUniqueNames[action.buildName], bookmarked: true}
+          },
+        };
+      case actionTypes.UNBOOKMARK_BUILD:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.buildName]: {
+              ...state.byUniqueNames[action.buildName], bookmarked: false}
+          },
+        };
       case actionTypes.UPDATE_BUILD:
         return {
           ...state,

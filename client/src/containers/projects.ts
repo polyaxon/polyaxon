@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
+import { isTrue } from '../constants/utils';
 import Projects from '../components/projects';
 import { ProjectModel } from '../models/project';
 import * as actions from '../actions/project';
@@ -47,7 +48,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     user: ownProps.user,
     projects: results.projects,
     count: results.count,
-    bookmarks: !_.isNil(ownProps.bookmarks) && ownProps.bookmarks,
+    bookmarks: isTrue(ownProps.bookmarks),
   };
 }
 
@@ -67,7 +68,7 @@ export function mapDispatchToProps(
       if (offset) {
         filters.offset = offset;
       }
-      if (!_.isNil(ownProps.bookmarks) && ownProps.bookmarks) {
+      if (isTrue(ownProps.bookmarks)) {
         return dispatch(actions.fetchBookmarkedProjects(ownProps.user, filters));
       } else if (ownProps.user) {
         return dispatch(actions.fetchProjects(ownProps.user, filters));

@@ -2,7 +2,12 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import history from '../history';
-import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import {
+  handleAuthError,
+  urlifyProjectName,
+  getJobUniqueName,
+  getJobUrl
+} from '../constants/utils';
 import { JobModel } from '../models/job';
 import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
@@ -15,6 +20,8 @@ export enum actionTypes {
   RECEIVE_JOBS = 'RECEIVE_JOBS',
   REQUEST_JOB = 'REQUEST_JOB',
   REQUEST_JOBS = 'REQUEST_JOBS',
+  BOOKMARK_JOB = 'BOOKMARK_JOB',
+  UNBOOKMARK_JOB = 'UNBOOKMARK_JOB',
 }
 
 export interface CreateUpdateReceiveJobAction extends Action {
@@ -37,11 +44,17 @@ export interface RequestJobsAction extends Action {
   type: actionTypes.REQUEST_JOBS | actionTypes.REQUEST_JOB;
 }
 
+export interface BookmarkJobAction extends Action {
+  type: actionTypes.BOOKMARK_JOB | actionTypes.UNBOOKMARK_JOB;
+  jobName: string;
+}
+
 export type JobAction =
   CreateUpdateReceiveJobAction
   | DeleteJobAction
   | ReceiveJobsAction
-  | RequestJobsAction;
+  | RequestJobsAction
+  | BookmarkJobAction;
 
 export function createJobActionCreator(job: JobModel): CreateUpdateReceiveJobAction {
   return {
@@ -104,6 +117,20 @@ export function receiveBookmarkedJobsActionCreator(bookmarkedJobs: BookmarkModel
   };
 }
 
+export function bookmarkJobActionCreator(jobName: string) {
+  return {
+    type: actionTypes.BOOKMARK_JOB,
+    jobName,
+  };
+}
+
+export function unbookmarkJobActionCreator(jobName: string) {
+  return {
+    type: actionTypes.UNBOOKMARK_JOB,
+    jobName,
+  };
+}
+
 function _fetchJobs(jobsUrl: string,
                     bookmarks: boolean,
                     filters: { [key: string]: number | boolean | string } = {},
@@ -150,10 +177,11 @@ export function fetchJobs(projectUniqueName: string,
 }
 
 export function fetchJob(user: string, projectName: string, jobId: number): any {
+  let jobUrl = getJobUrl(user, projectName, jobId, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestJobActionCreator());
     return fetch(
-      `${BASE_API_URL}/${user}/${projectName}/jobs/${jobId}`, {
+      `${BASE_API_URL}${jobUrl}`, {
         headers: {
           'Authorization': 'token ' + getState().auth.token
         }
@@ -161,5 +189,37 @@ export function fetchJob(user: string, projectName: string, jobId: number): any 
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => dispatch(receiveJobActionCreator(json)));
+  };
+}
+
+export function bookmark(user: string, projectName: string, jobId: number | string): any {
+  let jobName = getJobUniqueName(user, projectName, jobId);
+  let jobUrl = getJobUrl(user, projectName, jobId, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${jobUrl}/bookmark`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(bookmarkJobActionCreator(jobName)));
+  };
+}
+
+export function unbookmark(user: string, projectName: string, jobId: number | string): any {
+  let jobName = getJobUniqueName(user, projectName, jobId);
+  let jobUrl = getJobUrl(user, projectName, jobId, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${jobUrl}/unbookmark`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(unbookmarkJobActionCreator(jobName)));
   };
 }

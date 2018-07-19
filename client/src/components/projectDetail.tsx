@@ -6,7 +6,8 @@ import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
 import Jobs from '../containers/jobs';
 import Builds from '../containers/builds';
-import { getUserUrl, getProjectUrl } from '../constants/utils';
+import { isTrue, getUserUrl, getProjectUrl } from '../constants/utils';
+import { Bookmark } from '../constants/bookmarks';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ProjectOverview from './projectOverview';
@@ -17,6 +18,8 @@ export interface Props {
   project: ProjectModel;
   onDelete: (project: ProjectModel) => undefined;
   fetchData: () => undefined;
+  bookmark: () => any;
+  unbookmark: () => any;
 }
 
 export default class ProjectDetail extends React.Component<Props, Object> {
@@ -29,6 +32,11 @@ export default class ProjectDetail extends React.Component<Props, Object> {
     if (_.isNil(project)) {
       return EmptyList(false, 'project', 'project');
     }
+
+    const bookmark: Bookmark = {
+      active: isTrue(this.props.project.bookmarked),
+      callback: isTrue(this.props.project.bookmarked) ? this.props.unbookmark : this.props.bookmark
+    };
     let projectUrl = getProjectUrl(project.user, project.name);
 
     return (
@@ -39,6 +47,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
             links={[
               {name: project.user, value: getUserUrl(project.user)},
               {name: project.name}]}
+            bookmark={bookmark}
           />
           <LinkedTab
             baseUrl={projectUrl}

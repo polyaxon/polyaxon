@@ -46,6 +46,24 @@ export const groupsReducer: Reducer<GroupStateSchema> =
           uniqueNames: state.uniqueNames.filter(
             name => name !== action.group.unique_name),
         };
+      case actionTypes.BOOKMARK_GROUP:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.groupName]: {
+              ...state.byUniqueNames[action.groupName], bookmarked: true}
+          },
+        };
+      case actionTypes.UNBOOKMARK_GROUP:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.groupName]: {
+              ...state.byUniqueNames[action.groupName], bookmarked: false}
+          },
+        };
       case actionTypes.UPDATE_GROUP:
         return {
           ...state,

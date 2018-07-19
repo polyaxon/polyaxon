@@ -44,6 +44,24 @@ export const jobsReducer: Reducer<JobStateSchema> =
           uniqueNames: state.uniqueNames.filter(
             name => name !== action.job.unique_name),
         };
+      case actionTypes.BOOKMARK_JOB:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.jobName]: {
+              ...state.byUniqueNames[action.jobName], bookmarked: true}
+          },
+        };
+      case actionTypes.UNBOOKMARK_JOB:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.jobName]: {
+              ...state.byUniqueNames[action.jobName], bookmarked: false}
+          },
+        };
       case actionTypes.UPDATE_JOB:
         return {
           ...state,

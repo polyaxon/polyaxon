@@ -3,6 +3,7 @@ import * as url from 'url';
 
 import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import { getExperimentUniqueName, getExperimentUrl } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 import { BASE_API_URL } from '../constants/api';
 import { BookmarkModel } from '../models/bookmark';
@@ -14,6 +15,8 @@ export enum actionTypes {
   RECEIVE_EXPERIMENT = 'RECEIVE_EXPERIMENT',
   RECEIVE_EXPERIMENTS = 'RECEIVE_EXPERIMENTS',
   REQUEST_EXPERIMENTS = 'REQUEST_EXPERIMENTS',
+  BOOKMARK_EXPERIMENT = 'BOOKMARK_EXPERIMENT',
+  UNBOOKMARK_EXPERIMENT = 'UNBOOKMARK_EXPERIMENT',
 }
 
 export interface CreateUpdateReceiveExperimentAction extends Action {
@@ -36,11 +39,17 @@ export interface RequestExperimentsAction extends Action {
   type: actionTypes.REQUEST_EXPERIMENTS;
 }
 
+export interface BookmarkExperimentAction extends Action {
+  type: actionTypes.BOOKMARK_EXPERIMENT | actionTypes.UNBOOKMARK_EXPERIMENT;
+  experimentName: string;
+}
+
 export type ExperimentAction =
   CreateUpdateReceiveExperimentAction
   | DeleteExperimentAction
   | ReceiveExperimentsAction
-  | RequestExperimentsAction;
+  | RequestExperimentsAction
+  | BookmarkExperimentAction;
 
 export function createExperimentActionCreator(experiment: ExperimentModel): CreateUpdateReceiveExperimentAction {
   return {
@@ -98,6 +107,20 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   };
 }
 
+export function bookmarkExperimentActionCreator(experimentName: string) {
+  return {
+    type: actionTypes.BOOKMARK_EXPERIMENT,
+    experimentName,
+  };
+}
+
+export function unbookmarkExperimentActionCreator(experimentName: string) {
+  return {
+    type: actionTypes.UNBOOKMARK_EXPERIMENT,
+    experimentName,
+  };
+}
+
 function _fetchExperiments(experimentsUrl: string,
                            bookmarks: boolean,
                            filters: { [key: string]: number | boolean | string } = {},
@@ -143,9 +166,10 @@ export function fetchExperiments(projectUniqueName: string,
 }
 
 export function fetchExperiment(user: string, projectName: string, experimentId: number): any {
+  let experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
-    return fetch(`${BASE_API_URL}/${user}/${projectName}/experiments/${experimentId}`, {
+    return fetch(`${BASE_API_URL}${experimentUrl}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
@@ -153,5 +177,37 @@ export function fetchExperiment(user: string, projectName: string, experimentId:
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => dispatch(receiveExperimentActionCreator(json)));
+  };
+}
+
+export function bookmark(user: string, projectName: string, experimentId: number | string): any {
+  let experimentName = getExperimentUniqueName(user, projectName, experimentId);
+  let experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${experimentUrl}/bookmark`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(bookmarkExperimentActionCreator(experimentName)));
+  };
+}
+
+export function unbookmark(user: string, projectName: string, experimentId: number | string): any {
+  let experimentName = getExperimentUniqueName(user, projectName, experimentId);
+  let experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${experimentUrl}/unbookmark`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(unbookmarkExperimentActionCreator(experimentName)));
   };
 }

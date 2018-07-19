@@ -5,11 +5,13 @@ import { JobModel } from '../models/job';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
 import {
+  isTrue,
   getJobUrl,
   getProjectUrl,
   getUserUrl,
   splitUniqueName,
 } from '../constants/utils';
+import { Bookmark } from '../constants/bookmarks';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import JobOverview from './jobOverview';
@@ -21,6 +23,8 @@ export interface Props {
   job: JobModel;
   onDelete: () => any;
   fetchData: () => any;
+  bookmark: () => any;
+  unbookmark: () => any;
 }
 
 export default class JobDetail extends React.Component<Props, Object> {
@@ -33,6 +37,11 @@ export default class JobDetail extends React.Component<Props, Object> {
     if (_.isNil(job)) {
       return EmptyList(false, 'job', 'job');
     }
+
+    const bookmark: Bookmark = {
+      active: isTrue(this.props.job.bookmarked),
+      callback: isTrue(this.props.job.bookmarked) ? this.props.unbookmark : this.props.bookmark
+    };
     let values = splitUniqueName(job.project);
     let jobUrl = getJobUrl(values[0], values[1], this.props.job.id);
     let projectUrl = getProjectUrl(values[0], values[1]);
@@ -45,7 +54,11 @@ export default class JobDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <Breadcrumb icon="fa-tasks" links={breadcrumbLinks}/>
+            <Breadcrumb
+              icon="fa-tasks"
+              links={breadcrumbLinks}
+              bookmark={bookmark}
+            />
             <LinkedTab
               baseUrl={jobUrl}
               tabs={[

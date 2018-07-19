@@ -56,6 +56,24 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           uniqueNames: state.uniqueNames.filter(
             name => name !== action.project.unique_name),
         };
+      case actionTypes.BOOKMARK_PROJECT:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.projectName]: {
+              ...state.byUniqueNames[action.projectName], bookmarked: true}
+          },
+        };
+      case actionTypes.UNBOOKMARK_PROJECT:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.projectName]: {
+              ...state.byUniqueNames[action.projectName], bookmarked: false}
+          },
+        };
       case actionTypes.UPDATE_PROJECT:
         return {
           ...state,

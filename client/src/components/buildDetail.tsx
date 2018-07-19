@@ -5,6 +5,7 @@ import { BuildModel } from '../models/build';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
 import {
+  isTrue,
   getBuildUrl,
   getProjectUrl,
   getUserUrl,
@@ -16,11 +17,14 @@ import BuildOverview from './buildOverview';
 import Text from './text';
 import { EmptyList } from './empty/emptyList';
 import BuildInstructions from './instructions/buildInstructions';
+import { Bookmark } from '../constants/bookmarks';
 
 export interface Props {
   build: BuildModel;
   onDelete: () => any;
   fetchData: () => any;
+  bookmark: () => any;
+  unbookmark: () => any;
 }
 
 export default class BuildDetail extends React.Component<Props, Object> {
@@ -30,10 +34,14 @@ export default class BuildDetail extends React.Component<Props, Object> {
 
   public render() {
     const build = this.props.build;
-
     if (_.isNil(build)) {
       return EmptyList(false, 'build', 'build');
     }
+
+    const bookmark: Bookmark = {
+      active: isTrue(this.props.build.bookmarked),
+      callback: isTrue(this.props.build.bookmarked) ? this.props.unbookmark : this.props.bookmark
+    };
     let values = splitUniqueName(build.project);
     let buildUrl = getBuildUrl(values[0], values[1], this.props.build.id);
     let projectUrl = getProjectUrl(values[0], values[1]);
@@ -46,7 +54,11 @@ export default class BuildDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <Breadcrumb icon="fa-gavel" links={breadcrumbLinks}/>
+            <Breadcrumb
+              icon="fa-gavel"
+              links={breadcrumbLinks}
+              bookmark={bookmark}
+            />
             <LinkedTab
               baseUrl={buildUrl}
               tabs={[

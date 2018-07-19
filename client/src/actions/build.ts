@@ -2,7 +2,12 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import history from '../history';
-import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import {
+  getBuildUniqueName,
+  getBuildUrl,
+  handleAuthError,
+  urlifyProjectName
+} from '../constants/utils';
 import { BuildModel } from '../models/build';
 import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
@@ -15,6 +20,8 @@ export enum actionTypes {
   RECEIVE_BUILDS = 'RECEIVE_BUILDS',
   REQUEST_BUILD = 'REQUEST_BUILD',
   REQUEST_BUILDS = 'REQUEST_BUILDS',
+  BOOKMARK_BUILD = 'BOOKMARK_BUILD',
+  UNBOOKMARK_BUILD = 'UNBOOKMARK_BUILD',
 }
 
 export interface CreateUpdateReceiveBuildAction extends Action {
@@ -25,6 +32,11 @@ export interface CreateUpdateReceiveBuildAction extends Action {
 export interface DeleteBuildAction extends Action {
   type: actionTypes.DELETE_BUILD;
   build: BuildModel;
+}
+
+export interface BookmarkBuildAction extends Action {
+  type: actionTypes.BOOKMARK_BUILD | actionTypes.UNBOOKMARK_BUILD;
+  buildName: string;
 }
 
 export interface ReceiveBuildsAction extends Action {
@@ -41,7 +53,8 @@ export type BuildAction =
   CreateUpdateReceiveBuildAction
   | DeleteBuildAction
   | ReceiveBuildsAction
-  | RequestBuildsAction;
+  | RequestBuildsAction
+  | BookmarkBuildAction;
 
 export function createBuildActionCreator(build: BuildModel): CreateUpdateReceiveBuildAction {
   return {
@@ -104,6 +117,20 @@ export function receiveBookmarkedBuildsActionCreator(bookmarkedBuilds: BookmarkM
   };
 }
 
+export function bookmarkBuildActionCreator(buildName: string) {
+  return {
+    type: actionTypes.BOOKMARK_BUILD,
+    buildName,
+  };
+}
+
+export function unbookmarkBuildActionCreator(buildName: string) {
+  return {
+    type: actionTypes.UNBOOKMARK_BUILD,
+    buildName,
+  };
+}
+
 function _fetchBuilds(buildsUrl: string,
                       bookmarks: boolean,
                       filters: { [key: string]: number | boolean | string } = {},
@@ -150,10 +177,11 @@ export function fetchBuilds(projectUniqueName: string,
 }
 
 export function fetchBuild(user: string, projectName: string, buildId: number | string): any {
+  let buildUrl = getBuildUrl(user, projectName, buildId, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestBuildActionCreator());
     return fetch(
-      `${BASE_API_URL}/${user}/${projectName}/builds/${buildId}`, {
+      `${BASE_API_URL}${buildUrl}`, {
         headers: {
           'Authorization': 'token ' + getState().auth.token
         }
@@ -161,5 +189,37 @@ export function fetchBuild(user: string, projectName: string, buildId: number | 
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => dispatch(receiveBuildActionCreator(json)));
+  };
+}
+
+export function bookmark(user: string, projectName: string, buildId: number | string): any {
+  let buildName = getBuildUniqueName(user, projectName, buildId);
+  let buildUrl = getBuildUrl(user, projectName, buildId, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${buildUrl}/bookmark`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(bookmarkBuildActionCreator(buildName)));
+  };
+}
+
+export function unbookmark(user: string, projectName: string, buildId: number | string): any {
+  let buildName = getBuildUniqueName(user, projectName, buildId);
+  let buildUrl = getBuildUrl(user, projectName, buildId, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${buildUrl}/unbookmark`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token
+        },
+      })
+      .then(response => handleAuthError(response, dispatch))
+      .then(() => dispatch(unbookmarkBuildActionCreator(buildName)));
   };
 }

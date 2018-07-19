@@ -22,6 +22,7 @@ export class ProjectModel {
   public experiments: Array<string> = [];
   public jobs: Array<string> = [];
   public builds: Array<string> = [];
+  public bookmarked: boolean;
 }
 
 export class ProjectStateSchema {

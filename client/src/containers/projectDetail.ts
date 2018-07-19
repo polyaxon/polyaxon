@@ -21,12 +21,26 @@ export function mapStateToProps(state: AppState, params: any) {
 export interface DispatchProps {
   onDelete?: (project: ProjectModel) => any;
   fetchData?: () => any;
+  bookmark: () => any;
+  unbookmark: () => any;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
-    onDelete: (project: ProjectModel) => dispatch(actions.deleteProject(project)),
-    fetchData: () => dispatch(actions.fetchProject(params.match.params.user, params.match.params.projectName))
+    onDelete: (project: ProjectModel) => dispatch(
+      actions.deleteProject(project)),
+    fetchData: () => dispatch(
+      actions.fetchProject(
+        params.match.params.user,
+        params.match.params.projectName)),
+    bookmark: () => dispatch(
+      actions.bookmark(
+        params.match.params.user,
+        params.match.params.projectName)),
+    unbookmark: () => dispatch(
+      actions.unbookmark(
+        params.match.params.user,
+        params.match.params.projectName)),
   };
 }
 

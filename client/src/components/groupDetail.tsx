@@ -3,10 +3,12 @@ import * as _ from 'lodash';
 
 import { GroupModel } from '../models/group';
 import {
+  isTrue,
   getProjectUrl,
   getUserUrl,
   splitUniqueName
 } from '../constants/utils';
+import { Bookmark } from '../constants/bookmarks';
 import Experiments from '../containers/experiments';
 import Statuses from '../containers/statuses';
 import Breadcrumb from './breadcrumb';
@@ -20,6 +22,8 @@ export interface Props {
   group: GroupModel;
   onDelete: () => undefined;
   fetchData: () => undefined;
+  bookmark: () => any;
+  unbookmark: () => any;
 }
 
 export default class GroupDetail extends React.Component<Props, Object> {
@@ -32,6 +36,11 @@ export default class GroupDetail extends React.Component<Props, Object> {
     if (_.isNil(group)) {
       return EmptyList(false, 'experiment group', 'group');
     }
+
+    const bookmark: Bookmark = {
+      active: isTrue(this.props.group.bookmarked),
+      callback: isTrue(this.props.group.bookmarked) ? this.props.unbookmark : this.props.bookmark
+    };
     let values = splitUniqueName(group.project);
     let groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
     let projectUrl = getProjectUrl(values[0], values[1]);
@@ -46,6 +55,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
                 {name: values[1], value: projectUrl},
                 {name: 'Groups', value: `${projectUrl}#groups`},
                 {name: `Group ${group.id}`}]}
+              bookmark={bookmark}
             />
             <LinkedTab
               baseUrl={groupUrl}

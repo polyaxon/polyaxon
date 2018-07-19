@@ -1,5 +1,6 @@
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 import { TokenStateSchema } from '../models/token';
 import { fetchUser } from '../actions/user';
@@ -58,12 +59,12 @@ export let getLogoutUrl = function () {
   return `/users/logout/`;
 };
 
-export let getUserUrl = function (username: string) {
-  return `/app/${username}`;
+export let getUserUrl = function (username: string, app: boolean = true) {
+  return app ? `/app/${username}` : `/${username}`;
 };
 
-export let getProjectUrl = function (username: string, projectName: string) {
-  return `/app/${username}/${projectName}`;
+export let getProjectUrl = function (username: string, projectName: string, app: boolean = true) {
+  return `${getUserUrl(username, app)}/${projectName}`;
 };
 
 export let getBookmarksUrl = function (username: string) {
@@ -98,8 +99,9 @@ export let getProjectUniqueName = function (username: string, projectName: strin
 
 export let getGroupUrl = function (username: string,
                                    projectName: string,
-                                   groupId: number | string) {
-  let projectUrl = getProjectUrl(username, projectName);
+                                   groupId: number | string,
+                                   app: boolean = true) {
+  let projectUrl = getProjectUrl(username, projectName, app);
   return `${projectUrl}/groups/${groupId}/`;
 };
 
@@ -112,8 +114,9 @@ export let getGroupUniqueName = function (username: string,
 
 export let getExperimentUrl = function (username: string,
                                         projectName: string,
-                                        experimentId: number | string) {
-  let projectUrl = getProjectUrl(username, projectName);
+                                        experimentId: number | string,
+                                        app: boolean = true) {
+  let projectUrl = getProjectUrl(username, projectName, app);
   return `${projectUrl}/experiments/${experimentId}/`;
 };
 
@@ -126,16 +129,18 @@ export let getExperimentUniqueName = function (username: string,
 
 export let getJobUrl = function (username: string,
                                  projectName: string,
-                                 jobId: number | string) {
-  let projectUrl = getProjectUrl(username, projectName);
+                                 jobId: number | string,
+                                 app: boolean = true) {
+  let projectUrl = getProjectUrl(username, projectName, app);
 
   return `${projectUrl}/jobs/${jobId}/`;
 };
 
 export let getBuildUrl = function (username: string,
                                    projectName: string,
-                                   buildId: number | string) {
-  let projectUrl = getProjectUrl(username, projectName);
+                                   buildId: number | string,
+                                   app: boolean = true) {
+  let projectUrl = getProjectUrl(username, projectName, app);
 
   return `${projectUrl}/builds/${buildId}/`;
 };
@@ -143,8 +148,9 @@ export let getBuildUrl = function (username: string,
 export let getExperimentJobUrl = function (username: string,
                                            projectName: string,
                                            experimentId: number,
-                                           jobId: number) {
-  let experimentUrl = getExperimentUrl(username, projectName, experimentId);
+                                           jobId: number,
+                                           app: boolean = true) {
+  let experimentUrl = getExperimentUrl(username, projectName, experimentId, app);
 
   return `${experimentUrl}/jobs/${jobId}/`;
 };
@@ -159,14 +165,14 @@ export let getExperimentJobUniqueName = function (username: string,
 
 export let getJobUniqueName = function (username: string,
                                         projectName: string,
-                                        jobId: number) {
+                                        jobId: number | string) {
   let projectUrl = getProjectUniqueName(username, projectName);
   return `${projectUrl}.jobs.${jobId}`;
 };
 
 export let getBuildUniqueName = function (username: string,
                                           projectName: string,
-                                          buildId: number) {
+                                          buildId: number | string) {
   let projectUrl = getProjectUniqueName(username, projectName);
   return `${projectUrl}.builds.${buildId}`;
 };
@@ -263,4 +269,8 @@ export function b64DecodeUnicode(str: string) {
   return decodeURIComponent(atob(str).split('').map(function (c) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
+}
+
+export function isTrue(value?: boolean) {
+  return !_.isNil(value) && value;
 }
