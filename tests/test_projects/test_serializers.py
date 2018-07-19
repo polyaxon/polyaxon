@@ -76,6 +76,7 @@ class TestProjectDetailSerializer(BaseTest):
         'num_experiments',
         'num_jobs',
         'num_builds',
+        'bookmarked',
     }
 
     def setUp(self):
@@ -97,6 +98,7 @@ class TestProjectDetailSerializer(BaseTest):
             experiment_group__isnull=True).count()
         assert data.pop('num_jobs') == self.obj1.jobs.count()
         assert data.pop('num_builds') == self.obj1.build_jobs.count()
+        assert data.pop('bookmarked') is False
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

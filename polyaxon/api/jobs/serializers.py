@@ -1,5 +1,6 @@
 from rest_framework import fields, serializers
 
+from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_job_spec_config
 
@@ -51,6 +52,7 @@ class JobSerializer(serializers.ModelSerializer):
 class JobDetailSerializer(JobSerializer):
     original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
+    bookmarked = fields.SerializerMethodField()
 
     class Meta(JobSerializer.Meta):
         fields = JobSerializer.Meta.fields + (
@@ -60,6 +62,7 @@ class JobDetailSerializer(JobSerializer):
             'description',
             'config',
             'resources',
+            'bookmarked',
         )
         extra_kwargs = {'original_job': {'write_only': True}}
 
@@ -68,6 +71,11 @@ class JobDetailSerializer(JobSerializer):
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
+
+    def get_bookmarked(self, obj):
+        return Bookmark.objects.filter(
+            content_type__model='job',
+            object_id=obj.id).exists()
 
 
 class JobCreateSerializer(serializers.ModelSerializer):

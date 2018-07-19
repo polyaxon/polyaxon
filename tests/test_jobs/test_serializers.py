@@ -110,6 +110,7 @@ class TestJobDetailSerializer(BaseTest):
         'build_job',
         'original',
         'resources',
+        'bookmarked'
     }
 
     def setUp(self):
@@ -129,6 +130,7 @@ class TestJobDetailSerializer(BaseTest):
         assert data.pop('original') == (self.obj1.original_job.unique_name if
                                         self.obj1.original_job else None)
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('bookmarked') is False
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)

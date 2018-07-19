@@ -211,6 +211,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'num_jobs',
         'declarations',
         'resources',
+        'bookmarked',
     }
 
     def setUp(self):
@@ -236,6 +237,7 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('last_metric') == self.obj1.last_metric
         assert data.pop('num_jobs') == self.obj1.jobs.count()
+        assert data.pop('bookmarked') is False
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)

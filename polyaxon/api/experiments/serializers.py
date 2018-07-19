@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.job_resources import JobResourcesSerializer
+from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from libs.spec_validation import validate_experiment_spec_config
@@ -145,6 +146,7 @@ class ExperimentDetailSerializer(ExperimentSerializer):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
+    bookmarked = fields.SerializerMethodField()
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
@@ -157,6 +159,7 @@ class ExperimentDetailSerializer(ExperimentSerializer):
             'num_jobs',
             'is_clone',
             'has_tensorboard',
+            'bookmarked',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
 
@@ -171,6 +174,11 @@ class ExperimentDetailSerializer(ExperimentSerializer):
 
     def get_last_metric(self, obj):
         return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
+
+    def get_bookmarked(self, obj):
+        return Bookmark.objects.filter(
+            content_type__model='experiment',
+            object_id=obj.id).exists()
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):

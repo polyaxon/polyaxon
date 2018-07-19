@@ -1,5 +1,6 @@
 from rest_framework import fields, serializers
 
+from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.models.experiments import Experiment
 from db.models.jobs import Job
@@ -52,6 +53,7 @@ class BuildJobDetailSerializer(BuildJobSerializer):
     num_jobs = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
     commit = fields.SerializerMethodField()
+    bookmarked = fields.SerializerMethodField()
 
     class Meta(BuildJobSerializer.Meta):
         fields = BuildJobSerializer.Meta.fields + (
@@ -61,7 +63,8 @@ class BuildJobDetailSerializer(BuildJobSerializer):
             'num_jobs',
             'num_experiments',
             'dockerfile',
-            'commit'
+            'commit',
+            'bookmarked'
         )
 
     def get_commit(self, obj):
@@ -75,6 +78,11 @@ class BuildJobDetailSerializer(BuildJobSerializer):
 
     def get_num_experiments(self, obj):
         return Experiment.objects.filter(build_job=obj).count()
+
+    def get_bookmarked(self, obj):
+        return Bookmark.objects.filter(
+            content_type__model='buildjob',
+            object_id=obj.id).exists()
 
 
 class BuildJobCreateSerializer(serializers.ModelSerializer):

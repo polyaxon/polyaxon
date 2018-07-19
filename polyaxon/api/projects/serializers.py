@@ -1,5 +1,6 @@
 from rest_framework import fields, serializers
 
+from db.models.bookmarks import Bookmark
 from db.models.projects import Project
 
 
@@ -33,6 +34,7 @@ class ProjectDetailSerializer(ProjectSerializer):
     num_independent_experiments = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_builds = fields.SerializerMethodField()
+    bookmarked = fields.SerializerMethodField()
 
     class Meta(ProjectSerializer.Meta):
         fields = ProjectSerializer.Meta.fields + (
@@ -43,6 +45,7 @@ class ProjectDetailSerializer(ProjectSerializer):
             'num_experiments',
             'num_jobs',
             'num_builds',
+            'bookmarked',
         )
 
     def get_num_independent_experiments(self, obj):
@@ -59,3 +62,8 @@ class ProjectDetailSerializer(ProjectSerializer):
 
     def get_num_builds(self, obj):
         return obj.build_jobs.count()
+
+    def get_bookmarked(self, obj):
+        return Bookmark.objects.filter(
+            content_type__model='project',
+            object_id=obj.id).exists()

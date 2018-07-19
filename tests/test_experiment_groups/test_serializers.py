@@ -95,6 +95,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         'num_succeeded_experiments',
         'num_failed_experiments',
         'num_stopped_experiments',
+        'bookmarked',
     }
     DISABLE_RUNNER = True
 
@@ -124,6 +125,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('current_iteration') == self.obj1.current_iteration
         assert data.pop('search_algorithm') == self.obj1.search_algorithm
+        assert data.pop('bookmarked') is False
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

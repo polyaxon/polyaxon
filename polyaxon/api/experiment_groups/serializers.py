@@ -1,6 +1,7 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
+from db.models.bookmarks import Bookmark
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from libs.spec_validation import validate_group_spec_content
 
@@ -54,6 +55,7 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
     num_succeeded_experiments = fields.SerializerMethodField()
     num_failed_experiments = fields.SerializerMethodField()
     num_stopped_experiments = fields.SerializerMethodField()
+    bookmarked = fields.SerializerMethodField()
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
@@ -68,6 +70,7 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
             'num_succeeded_experiments',
             'num_failed_experiments',
             'num_stopped_experiments',
+            'bookmarked',
         )
 
     def get_num_experiments(self, obj):
@@ -90,6 +93,11 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
 
     def get_num_stopped_experiments(self, obj):
         return obj.stopped_experiments.count()
+
+    def get_bookmarked(self, obj):
+        return Bookmark.objects.filter(
+            content_type__model='experimentgroup',
+            object_id=obj.id).exists()
 
     def validate_content(self, content):
         validate_group_spec_content(content)
