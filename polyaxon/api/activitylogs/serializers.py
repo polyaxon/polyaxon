@@ -8,7 +8,7 @@ class ActivityLogsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ActivityLog
-        fields = ['event_type', 'actor', 'created_at', 'object_id', 'object_name']
+        fields = ['id', 'event_type', 'actor', 'created_at', 'object_id', 'object_name']
 
     def get_object_name(self, obj):
         # Deleted objects don't have a content object any more

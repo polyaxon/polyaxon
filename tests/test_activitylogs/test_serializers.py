@@ -19,6 +19,7 @@ class TestActivityLogsSerializer(BaseTest):
     DISABLE_RUNNER = True
     serializer_class = ActivityLogsSerializer
     expected_keys = {
+        'id',
         'event_type',
         'actor',
         'created_at',
