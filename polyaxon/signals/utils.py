@@ -1,3 +1,4 @@
+from db.models.bookmarks import Bookmark
 from libs.paths.data_paths import validate_persistence_data
 from libs.paths.outputs_paths import validate_persistence_outputs
 from polyaxon_schemas.environments import PersistenceConfig
@@ -27,3 +28,8 @@ def set_persistence(instance, default_persistence_data=None, default_persistence
     persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence_outputs)
     persistence_config = PersistenceConfig(data=persistence_data, outputs=persistence_outputs)
     instance.persistence = persistence_config.to_dict()
+
+
+def remove_bookmarks(object_id, content_type):
+    # Remove any bookmark
+    Bookmark.objects.filter(content_type__model=content_type, object_id=object_id).delete()

@@ -32,7 +32,7 @@ from signals.run_time import (
     set_job_started_at,
     set_started_at
 )
-from signals.utils import set_persistence, set_tags
+from signals.utils import set_persistence, set_tags, remove_bookmarks
 
 _logger = logging.getLogger('polyaxon.signals.experiments')
 
@@ -103,6 +103,7 @@ def experiment_pre_delete(sender, **kwargs):
 def experiment_post_delete(sender, **kwargs):
     instance = kwargs['instance']
     auditor.record(event_type=EXPERIMENT_DELETED, instance=instance)
+    remove_bookmarks(object_id=instance.id, content_type='experiment')
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_post_save")

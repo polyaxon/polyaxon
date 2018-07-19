@@ -22,7 +22,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.run_time import set_job_finished_at, set_job_started_at
-from signals.utils import set_persistence, set_tags
+from signals.utils import set_persistence, set_tags, remove_bookmarks
 
 _logger = logging.getLogger('polyaxon.signals.jobs')
 
@@ -149,6 +149,7 @@ def job_pre_delete(sender, **kwargs):
 def job_post_delete(sender, **kwargs):
     instance = kwargs['instance']
     auditor.record(event_type=JOB_DELETED, instance=instance)
+    remove_bookmarks(object_id=instance.id, content_type='job')
 
 
 @receiver(post_save, sender=Job, dispatch_uid="start_job")

@@ -7,6 +7,7 @@ from db.models.projects import Project
 from event_manager.events.project import PROJECT_DELETED
 from libs.decorators import ignore_raw, ignore_updates
 from libs.paths.projects import delete_project_logs, delete_project_outputs, delete_project_repos
+from signals.utils import remove_bookmarks
 
 
 @receiver(post_save, sender=Project, dispatch_uid="project_post_save")
@@ -35,3 +36,4 @@ def project_pre_delete(sender, **kwargs):
 def project_post_deleted(sender, **kwargs):
     instance = kwargs['instance']
     auditor.record(event_type=PROJECT_DELETED, instance=instance)
+    remove_bookmarks(object_id=instance.id, content_type='project')

@@ -23,7 +23,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from polyaxon_schemas.utils import SearchAlgorithms
 from signals.run_time import set_finished_at, set_started_at
-from signals.utils import set_persistence, set_tags
+from signals.utils import set_persistence, set_tags, remove_bookmarks
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")
@@ -91,6 +91,7 @@ def experiment_group_post_delete(sender, **kwargs):
     instance = kwargs['instance']
     auditor.record(event_type=EXPERIMENT_GROUP_DELETED,
                    instance=instance)
+    remove_bookmarks(object_id=instance.id, content_type='experimentgroup')
 
 
 @receiver(post_save, sender=ExperimentGroupStatus, dispatch_uid="experiment_group_status_post_save")
