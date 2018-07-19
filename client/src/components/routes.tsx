@@ -16,7 +16,7 @@ import { getHomeUrl } from '../constants/utils';
 function Routes() {
   let tokenRoute = '/app/token';
   let projectsRoute = '/app/:user/';
-  let bookmarksRoute = '/app/:user/bookmarks/';
+  let bookmarksRoute = '/app/bookmarks/:user/';
   let projectDetailRoute = '/app/:user/:projectName/';
   let buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
   let jobDetailRoute = '/app/:user/:projectName/jobs/:jobId/';

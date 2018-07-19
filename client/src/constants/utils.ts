@@ -67,7 +67,7 @@ export let getProjectUrl = function (username: string, projectName: string) {
 };
 
 export let getBookmarksUrl = function (username: string) {
-  return `/app/${username}/bookmarks`;
+  return `/app/bookmarks/${username}`;
 };
 
 export let getProjectTensorboardUrl = function (projectName: string) {
