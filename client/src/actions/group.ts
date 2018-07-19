@@ -4,6 +4,7 @@ import * as url from 'url';
 import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { GroupModel } from '../models/group';
+import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
 
 export enum actionTypes {
@@ -77,6 +78,19 @@ export function receiveGroupsActionCreator(groups: GroupModel[], count: number):
   };
 }
 
+export function receiveBookmarkedGroupsActionCreator(bookmarkedGroups: BookmarkModel[],
+                                                     count: number): ReceiveGroupsAction {
+  let groups: GroupModel[] = [];
+  for (let bookmarkedGroup of bookmarkedGroups) {
+    groups.push(bookmarkedGroup.content_object as GroupModel);
+  }
+  return {
+    type: actionTypes.RECEIVE_GROUPS,
+    groups,
+    count
+  };
+}
+
 export function receiveGroupActionCreator(group: GroupModel): CreateUpdateReceiveGroupAction {
   return {
     type: actionTypes.RECEIVE_GROUP,
@@ -84,11 +98,12 @@ export function receiveGroupActionCreator(group: GroupModel): CreateUpdateReceiv
   };
 }
 
-export function fetchGroups(projectUniqueName: string,
-                            filters: { [key: string]: number | boolean | string } = {}): any {
-  return (dispatch: any, getState: any) => {
+function _fetchGroups(groupsUrl: string,
+                      bookmarks: boolean,
+                      filters: { [key: string]: number | boolean | string } = {},
+                      dispatch: any,
+                      getState: any): any {
     dispatch(requestGroupsActionCreator());
-    let groupsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/';
     let urlPieces = location.hash.split('?');
     let baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
@@ -106,14 +121,31 @@ export function fetchGroups(projectUniqueName: string,
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveGroupsActionCreator(json.results, json.count)));
+      .then(json =>  bookmarks ?
+        dispatch(receiveBookmarkedGroupsActionCreator(json.results, json.count)) :
+        dispatch(receiveGroupsActionCreator(json.results, json.count)));
+}
+
+export function fetchBookmarkedGroups(user: string,
+                                      filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let groupsUrl = BASE_API_URL + `/bookmarks/${user}/groups/`;
+    return _fetchGroups(groupsUrl, true, filters, dispatch, getState);
+  };
+}
+
+export function fetchGroups(projectUniqueName: string,
+                            filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let groupsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/groups/`;
+    return _fetchGroups(groupsUrl, false, filters, dispatch, getState);
   };
 }
 
 export function fetchGroup(user: string, projectName: string, groupId: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
-    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/groups/` + `${groupId}`, {
+    return fetch(`${BASE_API_URL}/${user}/${projectName}/groups/${groupId}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

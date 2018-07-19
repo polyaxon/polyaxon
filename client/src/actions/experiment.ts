@@ -5,6 +5,7 @@ import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 import { BASE_API_URL } from '../constants/api';
+import { BookmarkModel } from '../models/bookmark';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
@@ -68,7 +69,21 @@ export function requestExperimentsActionCreator(): RequestExperimentsAction {
   };
 }
 
-export function receiveExperimentsActionCreator(experiments: ExperimentModel[], count: number): ReceiveExperimentsAction {
+export function receiveExperimentsActionCreator(experiments: ExperimentModel[],
+                                                count: number): ReceiveExperimentsAction {
+  return {
+    type: actionTypes.RECEIVE_EXPERIMENTS,
+    experiments,
+    count
+  };
+}
+
+export function receiveBookmarkedExperimentsActionCreator(bookmarkedExperiments: BookmarkModel[],
+                                                          count: number): ReceiveExperimentsAction {
+  let experiments: ExperimentModel[] = [];
+  for (let bookmarkedExperiment of bookmarkedExperiments) {
+    experiments.push(bookmarkedExperiment.content_object as ExperimentModel);
+  }
   return {
     type: actionTypes.RECEIVE_EXPERIMENTS,
     experiments,
@@ -83,36 +98,54 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   };
 }
 
+function _fetchExperiments(experimentsUrl: string,
+                           bookmarks: boolean,
+                           filters: { [key: string]: number | boolean | string } = {},
+                           dispatch: any,
+                           getState: any): any {
+  dispatch(requestExperimentsActionCreator());
+  let urlPieces = location.hash.split('?');
+  let baseUrl = urlPieces[0];
+  if (Object.keys(filters).length) {
+    experimentsUrl += url.format({query: filters});
+    if (baseUrl) {
+      history.push(baseUrl + url.format({query: filters}));
+    }
+  } else if (urlPieces.length > 1) {
+    history.push(baseUrl);
+  }
+  return fetch(experimentsUrl, {
+    headers: {
+      'Authorization': 'token ' + getState().auth.token
+    }
+  })
+    .then(response => handleAuthError(response, dispatch))
+    .then(response => response.json())
+    .then(json => bookmarks ?
+      dispatch(receiveBookmarkedExperimentsActionCreator(json.results, json.count)) :
+      dispatch(receiveExperimentsActionCreator(json.results, json.count)));
+}
+
+export function fetchBookmarkedExperiments(user: string,
+                                           filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let experimentsUrl = `${BASE_API_URL}/bookmarks/${user}/experiments/`;
+    return _fetchExperiments(experimentsUrl, true, filters, dispatch, getState);
+  };
+}
+
 export function fetchExperiments(projectUniqueName: string,
                                  filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestExperimentsActionCreator());
     let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
-    let urlPieces = location.hash.split('?');
-    let baseUrl = urlPieces[0];
-    if (Object.keys(filters).length) {
-      experimentsUrl += url.format({query: filters});
-      if (baseUrl) {
-        history.push(baseUrl + url.format({query: filters}));
-      }
-    } else if (urlPieces.length > 1) {
-      history.push(baseUrl);
-    }
-    return fetch(experimentsUrl, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveExperimentsActionCreator(json.results, json.count)));
+    return _fetchExperiments(experimentsUrl, false, filters, dispatch, getState);
   };
 }
 
 export function fetchExperiment(user: string, projectName: string, experimentId: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
-    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/experiments/` + `${experimentId}`, {
+    return fetch(`${BASE_API_URL}/${user}/${projectName}/experiments/${experimentId}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

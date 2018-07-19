@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
 import Builds from '../components/builds';
@@ -7,17 +8,25 @@ import { BuildModel } from '../models/build';
 
 import * as actions from '../actions/build';
 
-export function mapStateToProps(state: AppState, params: any) {
-  let useFilter = () => {
-    let builds: BuildModel[] = [];
-    let project = state.projects.byUniqueNames[params.projectName];
-    let BuildNames = project.builds;
-    BuildNames.forEach(
-      function (build: string, idx: number) {
-        builds.push(state.builds.byUniqueNames[build]);
-      });
-    return {builds: builds, count: project.num_builds};
-  };
+interface OwnProps {
+  user: string;
+  projectName?: string;
+  bookmarks?: boolean;
+  useFilters?: boolean;
+  fetchData?: () => any;
+}
+
+export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+  // let useFilter = () => {
+  //   let builds: BuildModel[] = [];
+  //   let project = state.projects.byUniqueNames[ownProps.projectName];
+  //   let BuildNames = project.builds;
+  //   BuildNames.forEach(
+  //     function (build: string, idx: number) {
+  //       builds.push(state.builds.byUniqueNames[build]);
+  //     });
+  //   return {builds: builds, count: project.num_builds};
+  // };
 
   let useLastFetched = () => {
     let buildNames = state.builds.lastFetched.names;
@@ -32,9 +41,10 @@ export function mapStateToProps(state: AppState, params: any) {
   let results = useLastFetched();
 
   return {
-    isCurrentUser: state.auth.user === params.user,
+    isCurrentUser: state.auth.user === ownProps.user,
     builds: results.builds,
-    count: results.count
+    count: results.count,
+    useFilters: !_.isNil(ownProps.useFilters) && ownProps.useFilters,
   };
 }
 
@@ -45,7 +55,7 @@ export interface DispatchProps {
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownProps: OwnProps): DispatchProps {
   return {
     onCreate: (build: BuildModel) => dispatch(actions.createBuildActionCreator(build)),
     onDelete: (build: BuildModel) => dispatch(actions.deleteBuildActionCreator(build)),
@@ -61,7 +71,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
       if (offset) {
         filters.offset = offset;
       }
-      return dispatch(actions.fetchBuilds(params.projectName, filters));
+      if (_.isNil(ownProps.projectName) && ownProps.bookmarks) {
+        return dispatch(actions.fetchBookmarkedBuilds(ownProps.user, filters));
+      } else if (ownProps.projectName) {
+        return dispatch(actions.fetchBuilds(ownProps.projectName, filters));
+      } else {
+        throw new Error('Builds container expects either a project name or bookmarks.');
+      }
     }
   };
 }

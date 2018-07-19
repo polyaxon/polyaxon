@@ -1,9 +1,13 @@
 import * as React from 'react';
 
+import Experiments from '../containers/experiments';
+import Groups from '../containers/groups';
+import Jobs from '../containers/jobs';
+import Builds from '../containers/builds';
+import Projects from '../containers/projects';
 import { getUserUrl, getBookmarksUrl } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
-import BuildInstructions from './instructions/buildInstructions';
 
 export interface Props {
   user: string;
@@ -27,28 +31,23 @@ export default class Bookmarks extends React.Component<Props, Object> {
             tabs={[
               {
                 title: 'Experiments',
-                // component: <Experiments user={this.props.user}/>,
-                component: <BuildInstructions id={1} />,
+                component: <Experiments user={this.props.user} bookmarks={true} useFilters={false}/>,
                 relUrl: 'experiments'
               }, {
                 title: 'Experiment groups',
-                // component: <Groups user={this.props.user}/>,
-                component: <BuildInstructions id={1} />,
+                component: <Groups user={this.props.user} bookmarks={true} useFilters={false}/>,
                 relUrl: 'groups'
               }, {
                 title: 'Jobs',
-                // component: <Jobs user={this.props.user}/>,
-                component: <BuildInstructions id={1} />,
+                component: <Jobs user={this.props.user} bookmarks={true} useFilters={false}/>,
                 relUrl: 'jobs'
               }, {
                 title: 'Builds',
-                // component: <Builds user={this.props.user}/>,
-                component: <BuildInstructions id={1} />,
+                component: <Builds user={this.props.user} bookmarks={true} useFilters={false}/>,
                 relUrl: 'builds'
               }, {
                 title: 'Projects',
-                // component: <Projects user={this.props.user}/>,
-                component: <BuildInstructions id={1} />,
+                component: <Projects user={this.props.user} bookmarks={true}/>,
                 relUrl: 'Projects'
               }
             ]}

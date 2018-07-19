@@ -4,6 +4,7 @@ import * as url from 'url';
 import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { BuildModel } from '../models/build';
+import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
 
 export enum actionTypes {
@@ -90,11 +91,25 @@ export function receiveBuildsActionCreator(builds: BuildModel[], count: number):
   };
 }
 
-export function fetchBuilds(projectUniqueName: string,
-                            filters: { [key: string]: number | boolean | string } = {}): any {
-  return (dispatch: any, getState: any) => {
+export function receiveBookmarkedBuildsActionCreator(bookmarkedBuilds: BookmarkModel[],
+                                                     count: number): ReceiveBuildsAction {
+  let builds: BuildModel[] = [];
+  for (let bookmarkedBuild of bookmarkedBuilds) {
+    builds.push(bookmarkedBuild.content_object as BuildModel);
+  }
+  return {
+    type: actionTypes.RECEIVE_BUILDS,
+    builds,
+    count
+  };
+}
+
+function _fetchBuilds(buildsUrl: string,
+                      bookmarks: boolean,
+                      filters: { [key: string]: number | boolean | string } = {},
+                      dispatch: any,
+                      getState: any): any {
     dispatch(requestBuildsActionCreator());
-    let buildsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/builds';
     let urlPieces = location.hash.split('?');
     let baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
@@ -113,7 +128,24 @@ export function fetchBuilds(projectUniqueName: string,
       })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveBuildsActionCreator(json.results, json.count)));
+      .then(json => bookmarks ?
+        dispatch(receiveBookmarkedBuildsActionCreator(json.results, json.count)) :
+        dispatch(receiveBuildsActionCreator(json.results, json.count)));
+}
+
+export function fetchBookmarkedBuilds(user: string,
+                                      filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let buildsUrl = `${BASE_API_URL}/bookmarks/${user}/builds/`;
+    return _fetchBuilds(buildsUrl, true, filters, dispatch, getState);
+  };
+}
+
+export function fetchBuilds(projectUniqueName: string,
+                            filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let buildsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/builds`;
+    return _fetchBuilds(buildsUrl, false, filters, dispatch, getState);
   };
 }
 
@@ -121,7 +153,7 @@ export function fetchBuild(user: string, projectName: string, buildId: number | 
   return (dispatch: any, getState: any) => {
     dispatch(requestBuildActionCreator());
     return fetch(
-      BASE_API_URL + `/${user}/${projectName}` + '/builds/' + buildId, {
+      `${BASE_API_URL}/${user}/${projectName}/builds/${buildId}`, {
         headers: {
           'Authorization': 'token ' + getState().auth.token
         }

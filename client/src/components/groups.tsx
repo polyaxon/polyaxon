@@ -13,6 +13,7 @@ export interface Props {
   isCurrentUser: boolean;
   groups: GroupModel[];
   count: number;
+  useFilters: boolean;
   onCreate: (group: GroupModel) => actions.GroupAction;
   onUpdate: (group: GroupModel) => actions.GroupAction;
   onDelete: (group: GroupModel) => actions.GroupAction;
@@ -21,6 +22,7 @@ export interface Props {
 
 export default class Groups extends React.Component<Props, Object> {
   public render() {
+    const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const groups = this.props.groups;
     const listGroups = () => {
       return (
@@ -45,7 +47,7 @@ export default class Groups extends React.Component<Props, Object> {
           'polyaxon run --help')}
         componentHeader={GroupHeader()}
         componentList={listGroups()}
-        filters={DEFAULT_FILTERS}
+        filters={filters}
         fetchData={this.props.fetchData}
       />
     );

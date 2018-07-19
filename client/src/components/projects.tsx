@@ -2,11 +2,9 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 import Project from './project';
-import RootModal from '../containers/modal';
 import { ProjectModel } from '../models/project';
 import PaginatedList from '../components/paginatedList';
 import { EmptyList } from './emptyList';
-import Breadcrumb from './breadcrumb';
 import ProjectHeader from './projectHeader';
 
 export interface Props {
@@ -17,8 +15,6 @@ export interface Props {
   onUpdate: (project: ProjectModel) => any;
   onDelete: (project: ProjectModel) => any;
   fetchData: () => any;
-  showModal: () => any;
-  hideModal: () => any;
 }
 
 export default class Projects extends React.Component<Props, Object> {
@@ -38,26 +34,18 @@ export default class Projects extends React.Component<Props, Object> {
     ;
 
     return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="entity-details">
-            <Breadcrumb links={[{name: this.props.user}, {name: 'projects'}]}/>
-          </div>
-          <RootModal hideModal={this.props.hideModal}/>
-          <PaginatedList
-            count={this.props.count}
-            componentList={listProjects()}
-            componentHeader={ProjectHeader()}
-            componentEmpty={EmptyList(
-              this.props.isCurrentUser,
-              'project',
-              'project',
-              'polyaxon project create --help')}
-            filters={false}
-            fetchData={this.props.fetchData}
-          />
-        </div>
-      </div>
+      <PaginatedList
+        count={this.props.count}
+        componentList={listProjects()}
+        componentHeader={ProjectHeader()}
+        componentEmpty={EmptyList(
+          this.props.isCurrentUser,
+          'project',
+          'project',
+          'polyaxon project create --help')}
+        filters={false}
+        fetchData={this.props.fetchData}
+      />
     );
   }
 }

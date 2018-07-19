@@ -56,7 +56,7 @@ export function fetchLogs(projectUniqueName: string, resources: string, id: numb
     dispatch(requestLogsActionCreator());
 
     let logsUrl =
-      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/logs`;
+      `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/logs`;
 
     function handleError(response: Response, dispatch: any): any {
       if (!response.ok) {

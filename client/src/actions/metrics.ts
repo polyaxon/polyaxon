@@ -59,7 +59,7 @@ export function fetchMetrics(projectUniqueName: string, resources: string, id: n
     dispatch(requestMetricsActionCreator());
 
     let metricsUrl =
-      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/metrics`;
+      `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/metrics`;
 
     function handleError(response: Response, dispatch: any): any {
       if (!response.ok) {

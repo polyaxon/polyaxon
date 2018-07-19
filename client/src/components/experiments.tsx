@@ -18,6 +18,7 @@ export interface Props {
   isCurrentUser: boolean;
   experiments: ExperimentModel[];
   count: number;
+  useFilters: boolean;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experiment: ExperimentModel) => actions.ExperimentAction;
@@ -43,6 +44,7 @@ export default class Experiments extends React.Component<Props, Object> {
       );
     };
 
+    const filters = this.props.useFilters ? EXPERIMENT_FILTERS : false;
     const experiments = this.props.experiments;
     const listExperiments = () => {
       return (
@@ -119,7 +121,7 @@ export default class Experiments extends React.Component<Props, Object> {
           'experiment',
           'polyaxon run --help')
         }
-        filters={EXPERIMENT_FILTERS}
+        filters={filters}
         fetchData={this.props.fetchData}
       />
     );

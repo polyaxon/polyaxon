@@ -59,7 +59,7 @@ export function fetchStatuses(projectUniqueName: string, resources: string, id: 
     dispatch(requestStatusesActionCreator());
 
     let statusesUrl =
-      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/statuses`;
+      `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/statuses`;
 
     function handleError(response: Response, dispatch: any): any {
       if (!response.ok) {

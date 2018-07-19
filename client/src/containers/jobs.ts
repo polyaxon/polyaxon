@@ -1,25 +1,34 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
 import Jobs from '../components/jobs';
 import { JobModel } from '../models/job';
 
 import * as actions from '../actions/job';
-import { getPaginatedSlice } from '../constants/paginate';
 
-export function mapStateToProps(state: AppState, params: any) {
-  let useFilter = () => {
-    let jobs: JobModel[] = [];
-    let project = state.projects.byUniqueNames[params.projectName];
-    let jobNames = project.jobs;
-    jobNames = getPaginatedSlice(jobNames);
-    jobNames.forEach(
-      function (job: string, idx: number) {
-        jobs.push(state.jobs.byUniqueNames[job]);
-      });
-    return {jobs: jobs, count: project.num_jobs};
-  };
+interface OwnProps {
+  user: string;
+  projectName?: string;
+  groupId?: string;
+  useFilters?: boolean;
+  bookmarks?: boolean;
+  fetchData?: () => any;
+}
+
+export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+  // let useFilter = () => {
+  //   let jobs: JobModel[] = [];
+  //   let project = state.projects.byUniqueNames[ownProps.projectName];
+  //   let jobNames = project.jobs;
+  //   jobNames = getPaginatedSlice(jobNames);
+  //   jobNames.forEach(
+  //     function (job: string, idx: number) {
+  //       jobs.push(state.jobs.byUniqueNames[job]);
+  //     });
+  //   return {jobs: jobs, count: project.num_jobs};
+  // };
 
   let useLastFetched = () => {
     let jobNames = state.jobs.lastFetched.names;
@@ -34,9 +43,10 @@ export function mapStateToProps(state: AppState, params: any) {
   let results = useLastFetched();
 
   return {
-    isCurrentUser: state.auth.user === params.user,
+    isCurrentUser: state.auth.user === ownProps.user,
     jobs: results.jobs,
-    count: results.count
+    count: results.count,
+    useFilters: !_.isNil(ownProps.useFilters) && ownProps.useFilters,
   };
 }
 
@@ -47,7 +57,7 @@ export interface DispatchProps {
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.JobAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownProps: OwnProps): DispatchProps {
   return {
     onCreate: (job: JobModel) => dispatch(actions.createJobActionCreator(job)),
     onDelete: (job: JobModel) => dispatch(actions.deleteJobActionCreator(job)),
@@ -63,7 +73,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
       if (offset) {
         filters.offset = offset;
       }
-      return dispatch(actions.fetchJobs(params.projectName, filters));
+      if (_.isNil(ownProps.projectName) && ownProps.bookmarks) {
+        return dispatch(actions.fetchBookmarkedJobs(ownProps.user, filters));
+      } else if (ownProps.projectName) {
+        return dispatch(actions.fetchJobs(ownProps.projectName, filters));
+      } else {
+        throw new Error('Jobs container expects either a project name or bookmarks.');
+      }
     }
   };
 }

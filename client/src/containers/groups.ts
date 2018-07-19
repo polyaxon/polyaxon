@@ -1,30 +1,32 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
 import Groups from '../components/groups';
 import { GroupModel } from '../models/group';
 import * as actions from '../actions/group';
-import { getPaginatedSlice } from '../constants/paginate';
 
 interface OwnProps {
   user: string;
-  projectName: string;
+  projectName?: string;
+  useFilters?: boolean;
+  bookmarks?: boolean;
   fetchData?: () => any;
 }
 
-export function mapStateToProps(state: AppState, ownProps: any) {
-  let useFilter = () => {
-    let groups: GroupModel[] = [];
-    let project = state.projects.byUniqueNames[ownProps.projectName];
-    let groupNames = project.groups;
-    groupNames = getPaginatedSlice(groupNames);
-    groupNames.forEach(
-      function (group: string, idx: number) {
-        groups.push(state.groups.byUniqueNames[group]);
-      });
-    return {groups: groups, count: project.num_experiment_groups};
-  };
+export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+  // let useFilter = () => {
+  //   let groups: GroupModel[] = [];
+  //   let project = state.projects.byUniqueNames[ownProps.projectName];
+  //   let groupNames = project.groups;
+  //   groupNames = getPaginatedSlice(groupNames);
+  //   groupNames.forEach(
+  //     function (group: string, idx: number) {
+  //       groups.push(state.groups.byUniqueNames[group]);
+  //     });
+  //   return {groups: groups, count: project.num_experiment_groups};
+  // };
 
   let useLastFetched = () => {
     let groupNames = state.groups.lastFetched.names;
@@ -41,7 +43,8 @@ export function mapStateToProps(state: AppState, ownProps: any) {
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     groups: results.groups,
-    count: results.count
+    count: results.count,
+    useFilters: !_.isNil(ownProps.useFilters) && ownProps.useFilters,
   };
 }
 
@@ -68,7 +71,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
       if (offset) {
         filters.offset = offset;
       }
-      return dispatch(actions.fetchGroups(ownProps.projectName, filters));
+      if (_.isNil(ownProps.projectName) && ownProps.bookmarks) {
+        return dispatch(actions.fetchBookmarkedGroups(ownProps.user, filters));
+      } else if (ownProps.projectName) {
+        return dispatch(actions.fetchGroups(ownProps.projectName, filters));
+      } else {
+        throw new Error('Groups container expects either a project name or bookmarks.');
+      }
     }
   };
 }

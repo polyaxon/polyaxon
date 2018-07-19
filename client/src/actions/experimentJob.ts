@@ -99,7 +99,7 @@ export function fetchExperimentJobs(projectUniqueName: string,
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentJobsActionCreator());
     let jobsUrl =
-      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentId + '/jobs';
+      `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/${experimentId}/jobs`;
     let urlPieces = location.hash.split('?');
     let baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
@@ -129,7 +129,7 @@ export function fetchExperimentJob(user: string,
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentJobActionCreator());
     return fetch(
-      BASE_API_URL + `/${user}/${projectName}` + '/experiments/' + experimentId + '/jobs/' + jobId, {
+      `${BASE_API_URL}/${user}/${projectName}/experiments/${experimentId}/jobs/${jobId}`, {
         headers: {
           'Authorization': 'token ' + getState().auth.token
         }

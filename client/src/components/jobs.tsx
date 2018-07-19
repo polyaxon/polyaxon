@@ -13,6 +13,7 @@ export interface Props {
   isCurrentUser: boolean;
   jobs: JobModel[];
   count: number;
+  useFilters: boolean;
   onCreate: (job: JobModel) => actions.JobAction;
   onUpdate: (job: JobModel) => actions.JobAction;
   onDelete: (job: JobModel) => actions.JobAction;
@@ -21,6 +22,7 @@ export interface Props {
 
 export default class Jobs extends React.Component<Props, Object> {
   public render() {
+    const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const jobs = this.props.jobs;
     const listJobs = () => {
       return (
@@ -46,7 +48,7 @@ export default class Jobs extends React.Component<Props, Object> {
             'job',
             'job',
             'polyaxon run --help')}
-        filters={DEFAULT_FILTERS}
+        filters={filters}
         fetchData={this.props.fetchData}
       />
     );

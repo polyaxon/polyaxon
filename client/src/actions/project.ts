@@ -3,6 +3,7 @@ import * as url from 'url';
 
 import history from '../history';
 import { ProjectModel } from '../models/project';
+import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
 import { handleAuthError } from '../constants/utils';
 
@@ -90,11 +91,24 @@ export function receiveProjectsActionCreator(projects: ProjectModel[], count: nu
   };
 }
 
+export function receiveBookmarkedProjectsActionCreator(bookmarkedProjects: BookmarkModel[],
+                                                       count: number): ReceiveProjectsAction {
+  let projects: ProjectModel[] = [];
+  for (let bookmarkedProject of bookmarkedProjects) {
+    projects.push(bookmarkedProject.content_object as ProjectModel);
+  }
+  return {
+    type: actionTypes.RECEIVE_PROJECTS,
+    projects,
+    count,
+  };
+}
+
 export function createProject(user: string, project: ProjectModel): any {
   return (dispatch: any, getState: any) => {
     // FIX ME: We need to add a first dispatch here so we show it to the user before
     // sending it to the backend: dispatch(createProjectActionCreator(project))
-    return fetch(BASE_API_URL + `/${user}`, {
+    return fetch(`${BASE_API_URL}/${user}`, {
       method: 'POST',
       body: JSON.stringify(project),
       headers: {
@@ -123,30 +137,49 @@ export function deleteProject(project: ProjectModel): any {
   };
 }
 
+function _fetchProjects(projectsUrl: string,
+                        bookmarks: boolean,
+                        filters: { [key: string]: number | boolean | string } = {},
+                        dispatch: any,
+                        getState: any): any {
+  dispatch(requestProjectsActionCreator());
+  let urlPieces = location.hash.split('?');
+  let baseUrl = urlPieces[0];
+  if (Object.keys(filters).length) {
+    projectsUrl += url.format({query: filters});
+    if (baseUrl) {
+      history.push(baseUrl + url.format({query: filters}));
+    }
+  } else if (urlPieces.length > 1) {
+    history.push(baseUrl);
+  }
+  return fetch(projectsUrl, {
+    headers: {
+      'Authorization': 'token ' + getState().auth.token
+    }
+  })
+    .then(response => handleAuthError(response, dispatch))
+    .then(response => response.json())
+    .then(json => dispatch(bookmarks ?
+      receiveBookmarkedProjectsActionCreator(json.results, json.count) :
+      receiveProjectsActionCreator(json.results, json.count)))
+    .catch(error => undefined);
+}
+
+export function fetchBookmarkedProjects(user: string,
+                                        filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let projectsUrl = `${BASE_API_URL}/bookmarks/${user}/projects`;
+    return _fetchProjects(projectsUrl, true, filters, dispatch, getState);
+  };
+}
+
 export function fetchProjects(user: string,
                               filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestProjectsActionCreator());
-    let projectsUrl = BASE_API_URL + `/${user}`;
-    let urlPieces = location.hash.split('?');
-    let baseUrl = urlPieces[0];
-    if (Object.keys(filters).length) {
-      projectsUrl += url.format({query: filters});
-      if (baseUrl) {
-        history.push(baseUrl + url.format({query: filters}));
-      }
-    } else if (urlPieces.length > 1) {
-      history.push(baseUrl);
-    }
-    return fetch(projectsUrl, {
-      headers: {
-        'Authorization': 'token ' + getState().auth.token
-      }
-    })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveProjectsActionCreator(json.results, json.count)))
-      .catch(error => undefined);
+    let projectsUrl = `${BASE_API_URL}/${user}`;
+
+    return _fetchProjects(projectsUrl, false, filters, dispatch, getState);
   };
 }
 

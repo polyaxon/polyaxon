@@ -4,6 +4,7 @@ import * as url from 'url';
 import history from '../history';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { JobModel } from '../models/job';
+import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
 
 export enum actionTypes {
@@ -90,30 +91,61 @@ export function receiveJobsActionCreator(jobs: JobModel[], count: number): Recei
   };
 }
 
+export function receiveBookmarkedJobsActionCreator(bookmarkedJobs: BookmarkModel[],
+                                                   count: number): ReceiveJobsAction {
+  let jobs: JobModel[] = [];
+  for (let bookmarkedJob of bookmarkedJobs) {
+    jobs.push(bookmarkedJob.content_object as JobModel);
+  }
+  return {
+    type: actionTypes.RECEIVE_JOBS,
+    jobs,
+    count
+  };
+}
+
+function _fetchJobs(jobsUrl: string,
+                    bookmarks: boolean,
+                    filters: { [key: string]: number | boolean | string } = {},
+                    dispatch: any,
+                    getState: any): any {
+  dispatch(requestJobsActionCreator());
+  let urlPieces = location.hash.split('?');
+  let baseUrl = urlPieces[0];
+  if (Object.keys(filters).length) {
+    jobsUrl += url.format({query: filters});
+    if (baseUrl) {
+      history.push(baseUrl + url.format({query: filters}));
+    }
+  } else if (urlPieces.length > 1) {
+    history.push(baseUrl);
+  }
+  return fetch(
+    jobsUrl, {
+      headers: {
+        'Authorization': 'token ' + getState().auth.token
+      }
+    })
+    .then(response => handleAuthError(response, dispatch))
+    .then(response => response.json())
+    .then(json => bookmarks ?
+      dispatch(receiveBookmarkedJobsActionCreator(json.results, json.count)) :
+      dispatch(receiveJobsActionCreator(json.results, json.count)));
+}
+
+export function fetchBookmarkedJobs(user: string,
+                                    filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let jobsUrl = `${BASE_API_URL}/bookmarks/${user}/jobs/`;
+    return _fetchJobs(jobsUrl, true, filters, dispatch, getState);
+  };
+}
+
 export function fetchJobs(projectUniqueName: string,
                           filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestJobsActionCreator());
-    let jobsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/jobs';
-    let urlPieces = location.hash.split('?');
-    let baseUrl = urlPieces[0];
-    if (Object.keys(filters).length) {
-      jobsUrl += url.format({query: filters});
-      if (baseUrl) {
-        history.push(baseUrl + url.format({query: filters}));
-      }
-    } else if (urlPieces.length > 1) {
-      history.push(baseUrl);
-    }
-    return fetch(
-      jobsUrl, {
-        headers: {
-          'Authorization': 'token ' + getState().auth.token
-        }
-      })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveJobsActionCreator(json.results, json.count)));
+    let jobsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/jobs`;
+    return _fetchJobs(jobsUrl, false, filters, dispatch, getState);
   };
 }
 
@@ -121,7 +153,7 @@ export function fetchJob(user: string, projectName: string, jobId: number): any 
   return (dispatch: any, getState: any) => {
     dispatch(requestJobActionCreator());
     return fetch(
-      BASE_API_URL + `/${user}/${projectName}` + '/jobs/' + jobId, {
+      `${BASE_API_URL}/${user}/${projectName}/jobs/${jobId}`, {
         headers: {
           'Authorization': 'token ' + getState().auth.token
         }

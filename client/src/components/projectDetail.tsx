@@ -49,19 +49,19 @@ export default class ProjectDetail extends React.Component<Props, Object> {
                 relUrl: ''
               }, {
                 title: 'Experiments',
-                component: <Experiments user={project.user} projectName={project.unique_name}/>,
+                component: <Experiments user={project.user} projectName={project.unique_name} useFilters={true}/>,
                 relUrl: 'experiments'
               }, {
                 title: 'Experiment groups',
-                component: <Groups user={project.user} projectName={project.unique_name}/>,
+                component: <Groups user={project.user} projectName={project.unique_name} useFilters={true}/>,
                 relUrl: 'groups'
               }, {
                 title: 'Jobs',
-                component: <Jobs user={project.user} projectName={project.unique_name}/>,
+                component: <Jobs user={project.user} projectName={project.unique_name} useFilters={true}/>,
                 relUrl: 'jobs'
               }, {
                 title: 'Builds',
-                component: <Builds user={project.user} projectName={project.unique_name}/>,
+                component: <Builds user={project.user} projectName={project.unique_name} useFilters={true}/>,
                 relUrl: 'builds'
               }, {
                 title: 'Instructions',

@@ -13,6 +13,7 @@ export interface Props {
   isCurrentUser: boolean;
   builds: BuildModel[];
   count: number;
+  useFilters: boolean;
   onCreate: (build: BuildModel) => actions.BuildAction;
   onUpdate: (build: BuildModel) => actions.BuildAction;
   onDelete: (build: BuildModel) => actions.BuildAction;
@@ -21,6 +22,7 @@ export interface Props {
 
 export default class Builds extends React.Component<Props, Object> {
   public render() {
+    const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const builds = this.props.builds;
     const listBuilds = () => {
       return (
@@ -46,7 +48,7 @@ export default class Builds extends React.Component<Props, Object> {
             'build',
             'build',
             'polyaxon run --help')}
-        filters={DEFAULT_FILTERS}
+        filters={filters}
         fetchData={this.props.fetchData}
       />
     );

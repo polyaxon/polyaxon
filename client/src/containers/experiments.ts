@@ -1,51 +1,53 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import * as _ from 'lodash';
 
-import { getGroupName } from '../constants/utils';
 import { AppState } from '../constants/types';
 import Experiments from '../components/experiments';
 import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
-import { getPaginatedSlice } from '../constants/paginate';
 
 interface OwnProps {
   user: string;
-  projectName: string;
-  groupId?: string;
+  projectName?: string;
+  groupId?: string | number;
+  useFilters?: boolean;
+  bookmarks?: boolean;
   fetchData?: () => any;
 }
 
-export function mapStateToProps(state: AppState, ownProps: any) {
-  let useFilter = () => {
-    let groupName = ownProps.groupId != null ?
-      getGroupName(ownProps.projectName, ownProps.groupId) :
-      null;
-    let experiments: ExperimentModel[] = [];
-    let count = 0;
-    if (groupName != null) {
-      let group = state.groups.byUniqueNames[groupName];
-      count = group.num_experiments;
-      let experimentNames = group.experiments;
-      experimentNames = getPaginatedSlice(experimentNames);
-      experimentNames.forEach(
-        function (experiment: string, idx: number) {
-          experiments.push(state.experiments.byUniqueNames[experiment]);
-        });
-    } else {
-      let project = state.projects.byUniqueNames[ownProps.projectName];
-      count = project.num_independent_experiments;
-      let experimentNames = project.experiments.filter(
-        (experiment) => state.experiments.byUniqueNames[experiment].experiment_group == null
-      );
-      experimentNames = getPaginatedSlice(experimentNames);
-      experimentNames.forEach(
-        function (experiment: string, idx: number) {
-          experiments.push(state.experiments.byUniqueNames[experiment]);
-        });
-    }
-    return {experiments: experiments, count: count};
-  };
+export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+  // let useFilter = () => {
+  //   let groupName = ownProps.groupId != null ?
+  //     getGroupName(ownProps.projectName, ownProps.groupId) :
+  //     null;
+  //   let experiments: ExperimentModel[] = [];
+  //   let count = 0;
+  //   if (groupName != null) {
+  //     let group = state.groups.byUniqueNames[groupName];
+  //     count = group.num_experiments;
+  //     let experimentNames = group.experiments;
+  //     experimentNames = getPaginatedSlice(experimentNames);
+  //     experimentNames.forEach(
+  //       function (experiment: string, idx: number) {
+  //         experiments.push(state.experiments.byUniqueNames[experiment]);
+  //       });
+  //   } else {
+  //     let project = state.projects.byUniqueNames[ownProps.projectName];
+  //     count = project.num_independent_experiments;
+  //     let experimentNames = project.experiments.filter(
+  //       (experiment) => state.experiments.byUniqueNames[experiment].experiment_group == null
+  //     );
+  //     experimentNames = getPaginatedSlice(experimentNames);
+  //     experimentNames.forEach(
+  //       function (experiment: string, idx: number) {
+  //         experiments.push(state.experiments.byUniqueNames[experiment]);
+  //       });
+  //   }
+  //   return {experiments: experiments, count: count};
+  // };
+
   let useLastFetched = () => {
     let experimentNames = state.experiments.lastFetched.names;
     let count = state.experiments.lastFetched.count;
@@ -61,7 +63,8 @@ export function mapStateToProps(state: AppState, ownProps: any) {
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     experiments: results.experiments,
-    count: results.count
+    count: results.count,
+    useFilters: !_.isNil(ownProps.useFilters) && ownProps.useFilters,
   };
 }
 
@@ -103,7 +106,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       if (offset) {
         filters.offset = offset;
       }
-      return dispatch(actions.fetchExperiments(ownProps.projectName, filters));
+      if (_.isNil(ownProps.projectName) && ownProps.bookmarks) {
+        return dispatch(actions.fetchBookmarkedExperiments(ownProps.user, filters));
+      } else if (ownProps.projectName) {
+        return dispatch(actions.fetchExperiments(ownProps.projectName, filters));
+      } else {
+        throw new Error('Experiments container expects either a project name or bookmarks.');
+      }
     }
   };
 }

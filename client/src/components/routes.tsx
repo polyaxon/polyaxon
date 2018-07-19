@@ -8,14 +8,14 @@ import GroupDetail from '../containers/groupDetail';
 import JobDetail from '../containers/jobDetail';
 import BuildDetail from '../containers/buildDetail';
 import ExperimentJobDetail from '../containers/experimentJobDetail';
-import Projects from '../containers/projects';
+import User from '../containers/user';
 import Token from '../containers/token';
 
 import { getHomeUrl } from '../constants/utils';
 
 function Routes() {
   let tokenRoute = '/app/token';
-  let projectsRoute = '/app/:user/';
+  let userRoute = '/app/:user/';
   let bookmarksRoute = '/app/bookmarks/:user/';
   let projectDetailRoute = '/app/:user/:projectName/';
   let buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
@@ -48,7 +48,7 @@ function Routes() {
       <Route path={experimentDetailRoute} component={ExperimentDetail}/>
       <Route path={bookmarksRoute} component={Bookmarks}/>
       <Route path={projectDetailRoute} component={ProjectDetail}/>
-      <Route path={projectsRoute} component={Projects}/>
+      <Route path={userRoute} component={User}/>
 
       <Route path="*" render={() => <Redirect to={getHomeUrl()}/>}/>
     </Switch>
