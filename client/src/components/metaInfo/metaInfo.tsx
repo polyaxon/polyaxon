@@ -5,16 +5,17 @@ export interface Props {
   icon: string;
   name: string;
   value: string|number|boolean|React.ReactNode;
+  tooltip?: string;
   inline?: boolean;
   extraClass?: string;
 }
 
-function MetaInfo({icon, name, value, inline = false, extraClass = ''}: Props) {
+function MetaInfo({icon, name, value, tooltip, inline = false, extraClass = ''}: Props) {
   function getInfo() {
     return (
-      <span className={`meta-info ${extraClass}`}>
+      <span className={`meta-info ${extraClass}`} title={tooltip || ''}>
         <i className={`fa ${icon} icon`} aria-hidden="true"/>
-        <span className="title">{name}:</span>
+        <span className="title" data-placement="left">{name}:</span>
         {value}
       </span>
     );

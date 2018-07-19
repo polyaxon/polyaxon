@@ -16,6 +16,7 @@ function DatesMetaInfo({createdAt, updatedAt, inline = false}: Props) {
         <MetaInfo
           icon="fa-clock-o"
           name="Created"
+          tooltip={createdAt.toString()}
           value={moment(createdAt).fromNow()}
           inline={inline}
         />
@@ -24,6 +25,7 @@ function DatesMetaInfo({createdAt, updatedAt, inline = false}: Props) {
       <MetaInfo
         icon="fa-clock-o"
         name="Last updated"
+        tooltip={updatedAt.toString()}
         value={moment(updatedAt).fromNow()}
         inline={inline}
       />
