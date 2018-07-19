@@ -57,6 +57,15 @@ function GroupInstructions({id}: Props) {
                 polyaxon tensorboard -g {id} start [-f polyaxonfile.yml] [-f override_file.yml] [-u]
               </div>
             </div>
+            <div className="instructions-section">
+              <h4>Bookmark group</h4>
+              <div className="instructions-section-content">
+                polyaxon group -g {id} bookmark
+              </div>
+              <div className="instructions-section-content">
+                polyaxon group -g {id} unbookmark
+              </div>
+            </div>
           </div>
         </div>
       </div>

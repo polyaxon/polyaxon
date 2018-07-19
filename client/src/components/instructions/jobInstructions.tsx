@@ -36,6 +36,15 @@ function JobInstructions({id}: Props) {
                 polyaxon job -j {id} update --tags="foo, bar, ..,"
               </div>
             </div>
+            <div className="instructions-section">
+              <h4>Add/update the job's tags</h4>
+              <div className="instructions-section-content">
+                polyaxon job -j {id} bookmark
+              </div>
+              <div className="instructions-section-content">
+                polyaxon job -j {id} unbookmark
+              </div>
+            </div>
           </div>
         </div>
       </div>

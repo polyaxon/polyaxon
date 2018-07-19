@@ -52,13 +52,13 @@ function ProjectInstructions({projectName}: Props) {
             <div className="instructions-section">
               <h4>Add/update the project's description</h4>
               <div className="instructions-section-content">
-                polyaxon update --description="My new description for the project..."
+                polyaxon project update --description="My new description for the project..."
               </div>
             </div>
             <div className="instructions-section">
               <h4>Add/update the project's tags</h4>
               <div className="instructions-section-content">
-                polyaxon update --tags="foo, bar, ..,"
+                polyaxon project update --tags="foo, bar, ..,"
               </div>
             </div>
             <div className="instructions-section">
@@ -77,6 +77,15 @@ function ProjectInstructions({projectName}: Props) {
               <h4>Start a tensorboard</h4>
               <div className="instructions-section-content">
                 polyaxon tensorboard start [-f polyaxonfile.yml] [-f override_file.yml] [-u]
+              </div>
+            </div>
+             <div className="instructions-section">
+              <h4>Bookmark project</h4>
+              <div className="instructions-section-content">
+                polyaxon project bookmark
+              </div>
+              <div className="instructions-section-content">
+                polyaxon project unbookmark
               </div>
             </div>
           </div>

@@ -42,6 +42,15 @@ function ExperimentInstructions({id}: Props) {
                 polyaxon tensorboard -xp {id} start [-f polyaxonfile.yml] [-f override_file.yml] [-u]
               </div>
             </div>
+            <div className="instructions-section">
+              <h4>Bookmark experiment</h4>
+              <div className="instructions-section-content">
+                polyaxon experiment -xp {id} bookmark
+              </div>
+              <div className="instructions-section-content">
+                polyaxon experiment -xp {id} unbookmark
+              </div>
+            </div>
           </div>
         </div>
       </div>
