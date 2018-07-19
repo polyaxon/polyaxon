@@ -9,7 +9,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import MetaInfo from './metaInfo/metaInfo';
 import Tags from './tags';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   build: BuildModel;

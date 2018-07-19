@@ -8,7 +8,7 @@ import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import Tags from './tags';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   job: JobModel;

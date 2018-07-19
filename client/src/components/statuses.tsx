@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as actions from '../actions/statuses';
 import { StatusModel } from '../models/status';
 import PaginatedList from './paginatedList';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import StatusHeader from './statusHeader';
 import StatusItem from './statusItem';
 

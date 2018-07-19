@@ -14,7 +14,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import BuildOverview from './buildOverview';
 import Text from './text';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import BuildInstructions from './instructions/buildInstructions';
 
 export interface Props {

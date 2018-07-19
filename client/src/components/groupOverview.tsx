@@ -9,7 +9,7 @@ import MetaInfo from './metaInfo/metaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import { getGroupTensorboardUrl } from '../constants/utils';
 
 export interface Props {

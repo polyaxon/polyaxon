@@ -9,7 +9,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import MetaInfo from './metaInfo/metaInfo';
 import GridList from './gridList';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import { getExperimentTensorboardUrl } from '../constants/utils';
 import Tags from './tags';
 

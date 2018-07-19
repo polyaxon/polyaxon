@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as actions from '../actions/build';
 import PaginatedList from '../components/paginatedList';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import BuildHeader from './buildHeader';
 import Build from './build';
 import { BuildModel } from '../models/build';

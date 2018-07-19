@@ -5,15 +5,17 @@ import Group from './group';
 import { GroupModel } from '../models/group';
 import { DEFAULT_FILTERS } from './filters/constants';
 import PaginatedList from './paginatedList';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import GroupHeader from './groupHeader';
 import * as actions from '../actions/group';
+import { EmptyBookmarks } from './empty/emptyBookmarks';
 
 export interface Props {
   isCurrentUser: boolean;
   groups: GroupModel[];
   count: number;
   useFilters: boolean;
+  bookmarks: boolean;
   onCreate: (group: GroupModel) => actions.GroupAction;
   onUpdate: (group: GroupModel) => actions.GroupAction;
   onDelete: (group: GroupModel) => actions.GroupAction;
@@ -37,14 +39,22 @@ export default class Groups extends React.Component<Props, Object> {
         </ul>
       );
     };
-    return (
-      <PaginatedList
-        count={this.props.count}
-        componentEmpty={EmptyList(
+
+    const empty = this.props.bookmarks ?
+      EmptyBookmarks(
+        this.props.isCurrentUser,
+        'experiment group',
+        'group')
+      : EmptyList(
           this.props.isCurrentUser,
           'experiment group',
           'group',
-          'polyaxon run --help')}
+          'polyaxon run --help');
+
+    return (
+      <PaginatedList
+        count={this.props.count}
+        componentEmpty={empty}
         componentHeader={GroupHeader()}
         componentList={listGroups()}
         filters={filters}

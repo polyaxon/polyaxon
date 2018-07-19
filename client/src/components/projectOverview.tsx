@@ -7,7 +7,7 @@ import Tags from './tags';
 import Description from './description';
 import MetaInfo from './metaInfo/metaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   project: ProjectModel;

@@ -11,7 +11,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ProjectOverview from './projectOverview';
 import ProjectInstructions from './instructions/projectInstructions';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   project: ProjectModel;

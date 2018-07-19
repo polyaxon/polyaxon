@@ -6,14 +6,16 @@ import Job from './job';
 import { JobModel } from '../models/job';
 import { DEFAULT_FILTERS } from './filters/constants';
 import PaginatedList from './paginatedList';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import JobHeader from './jobHeader';
+import { EmptyBookmarks } from './empty/emptyBookmarks';
 
 export interface Props {
   isCurrentUser: boolean;
   jobs: JobModel[];
   count: number;
   useFilters: boolean;
+  bookmarks: boolean;
   onCreate: (job: JobModel) => actions.JobAction;
   onUpdate: (job: JobModel) => actions.JobAction;
   onDelete: (job: JobModel) => actions.JobAction;
@@ -37,17 +39,24 @@ export default class Jobs extends React.Component<Props, Object> {
         </ul>
       );
     };
+
+    const empty = this.props.bookmarks ?
+      EmptyBookmarks(
+        this.props.isCurrentUser,
+        'job',
+        'job')
+      : EmptyList(
+        this.props.isCurrentUser,
+        'job',
+        'job',
+        'polyaxon run --help');
+
     return (
       <PaginatedList
         count={this.props.count}
         componentList={listJobs()}
         componentHeader={JobHeader()}
-        componentEmpty={
-          EmptyList(
-            this.props.isCurrentUser,
-            'job',
-            'job',
-            'polyaxon run --help')}
+        componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}
       />

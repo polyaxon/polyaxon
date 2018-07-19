@@ -45,6 +45,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     groups: results.groups,
     count: results.count,
     useFilters: !_.isNil(ownProps.useFilters) && ownProps.useFilters,
+    bookmarks: !_.isNil(ownProps.bookmarks) && ownProps.bookmarks,
   };
 }
 

@@ -7,7 +7,6 @@ import Projects from '../components/projects';
 import { ProjectModel } from '../models/project';
 import * as actions from '../actions/project';
 import * as modalActions from '../actions/modal';
-import { modalTypes, modalPropsByTypes } from '../models/modal';
 
 interface OwnProps {
   user: string;
@@ -47,7 +46,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     isCurrentUser: state.auth.user === ownProps.user,
     user: ownProps.user,
     projects: results.projects,
-    count: results.count
+    count: results.count,
+    bookmarks: !_.isNil(ownProps.bookmarks) && ownProps.bookmarks,
   };
 }
 

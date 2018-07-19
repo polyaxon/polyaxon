@@ -2,12 +2,12 @@ import * as React from 'react';
 import * as moment from 'moment';
 
 import * as actions from '../actions/metrics';
-import {MetricModel} from '../models/metric';
+import { MetricModel } from '../models/metric';
 import MetricLineChart from './metricLineChart';
 
 import './metrics.less';
-import {Data, DataPoint} from '../constants/charts';
-import {EmptyList} from './emptyList';
+import { Data, DataPoint } from '../constants/charts';
+import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   metrics: MetricModel[];

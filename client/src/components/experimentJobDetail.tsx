@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 import { JobModel } from '../models/job';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   job: JobModel;

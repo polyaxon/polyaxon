@@ -13,7 +13,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import GroupOverview from './groupOverview';
 import { getGroupUrl } from '../constants/utils';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import GroupInstructions from './instructions/groupInstructions';
 
 export interface Props {

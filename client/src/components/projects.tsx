@@ -4,7 +4,8 @@ import * as _ from 'lodash';
 import Project from './project';
 import { ProjectModel } from '../models/project';
 import PaginatedList from '../components/paginatedList';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
+import { EmptyBookmarks } from './empty/emptyBookmarks';
 import ProjectHeader from './projectHeader';
 
 export interface Props {
@@ -12,6 +13,7 @@ export interface Props {
   user: string;
   projects: ProjectModel[];
   count: number;
+  bookmarks: boolean;
   onUpdate: (project: ProjectModel) => any;
   onDelete: (project: ProjectModel) => any;
   fetchData: () => any;
@@ -30,19 +32,25 @@ export default class Projects extends React.Component<Props, Object> {
                 <Project project={project} onDelete={() => this.props.onDelete(project)}/></li>)}
           </ul>
         );
-      }
-    ;
+      };
+
+    const empty = this.props.bookmarks ?
+      EmptyBookmarks(
+        this.props.isCurrentUser,
+        'project',
+        'project')
+      : EmptyList(
+        this.props.isCurrentUser,
+        'project',
+        'project',
+        'polyaxon project create --help');
 
     return (
       <PaginatedList
         count={this.props.count}
         componentList={listProjects()}
         componentHeader={ProjectHeader()}
-        componentEmpty={EmptyList(
-          this.props.isCurrentUser,
-          'project',
-          'project',
-          'polyaxon project create --help')}
+        componentEmpty={empty}
         filters={false}
         fetchData={this.props.fetchData}
       />

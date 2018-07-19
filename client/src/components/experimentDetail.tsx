@@ -17,7 +17,7 @@ import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 import ExperimentOverview from './experimentOverview';
 import EntityBuild from '../containers/EntityBuild';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import ExperimentInstructions from './instructions/experimentInstructions';
 
 export interface Props {

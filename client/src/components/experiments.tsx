@@ -9,16 +9,18 @@ import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
 import { EXPERIMENT_FILTERS } from './filters/constants';
 import PaginatedList from './paginatedList';
-import { EmptyList } from './emptyList';
+import { EmptyList } from './empty/emptyList';
 import ExperimentHeader from './experimentHeader';
 import GridList from './gridList';
 import { getExperimentUrl, splitUniqueName } from '../constants/utils';
+import { EmptyBookmarks } from './empty/emptyBookmarks';
 
 export interface Props {
   isCurrentUser: boolean;
   experiments: ExperimentModel[];
   count: number;
   useFilters: boolean;
+  bookmarks: boolean;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experiment: ExperimentModel) => actions.ExperimentAction;
@@ -110,17 +112,22 @@ export default class Experiments extends React.Component<Props, Object> {
       return listExperiments();
     };
 
+    const empty = this.props.bookmarks ?
+      EmptyBookmarks(
+        this.props.isCurrentUser,
+        'experiment',
+        'experiment')
+      : EmptyList(
+        this.props.isCurrentUser,
+        'experiment',
+        'experiment',
+        'polyaxon run --help');
     return (
       <PaginatedList
         count={this.props.count}
         componentList={getList()}
         componentHeader={listType === 'info' ? ExperimentHeader() : null}
-        componentEmpty={EmptyList(
-          this.props.isCurrentUser,
-          'experiment',
-          'experiment',
-          'polyaxon run --help')
-        }
+        componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}
       />
