@@ -70,7 +70,9 @@ NAME_BLACKLIST = {
     'ext',
     'extension',
     'plugin',
-    'notebook',
+    'notebook'
+    'bookmark',
+    'bookmarking',
     'tensorboard',
     'pipeline',
     'operation',
