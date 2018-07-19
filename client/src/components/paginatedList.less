@@ -1,7 +1,7 @@
 .paginated-list {
   .list-items {
     ul {
-      padding-left: 10px;
+      padding-left: 0;
       border-radius: 4px;
       border: 1px solid #f0f4ff;
       border-image: initial;
@@ -20,10 +20,13 @@
   }
   .list-item {
     display: block;
-    padding: 10px 0;
+    padding: 10px 0 10px 10px;
     .row {
       align-items: center;
       display: flex;
+    }
+    &:hover {
+      background-color: #F9F9FE;
     }
   }
   .list-item:not(:last-child) {
