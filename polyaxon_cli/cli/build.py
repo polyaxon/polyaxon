@@ -269,7 +269,7 @@ def unbookmark(ctx):
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
-        PolyaxonClients().build_job.bookmark(user, project_name, _build)
+        PolyaxonClients().build_job.unbookmark(user, project_name, _build)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not unbookmark build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
