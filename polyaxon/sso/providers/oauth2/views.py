@@ -15,7 +15,7 @@ class OAuth2LoginView(View):
     scope = ''
 
     # pylint:disable=keyword-arg-before-vararg
-    def __init__(self, authorize_url=None, client_id=None, scope=None, *args, **kwargs):
+    def __init__(self, authorize_url=None, client_id=None, scope=None, resource=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if authorize_url is not None:
             self.authorize_url = authorize_url
@@ -23,6 +23,8 @@ class OAuth2LoginView(View):
             self.client_id = client_id
         if scope is not None:
             self.scope = scope
+        if resource is not None:
+            self.resource = resource
 
     def get_scope(self):
         return self.scope
@@ -37,12 +39,12 @@ class OAuth2LoginView(View):
             'scope': self.get_scope(),
             'state': state,
             'redirect_uri': redirect_uri,
+            'resource': self.resource,
         }
 
     def dispatch(self, request, wizard, *args, **kwargs):  # pylint:disable=arguments-differ
         if 'code' in request.GET:
             return wizard.next_step()
-
         state = uuid.uuid4().hex
 
         params = self.get_authorize_params(
@@ -50,7 +52,6 @@ class OAuth2LoginView(View):
             redirect_uri=wizard.redirect_url(request=request),
         )
         redirect_uri = '{}?{}'.format(self.get_authorize_url(), urlencode(params))
-
         wizard.bind_state('state', state)
         return self.redirect(redirect_uri)
 
@@ -117,5 +118,4 @@ class OAuth2CallbackView(View):
             return wizard.error('Failed to retrieve token from the upstream service.')
 
         wizard.bind_state('data', data)
-
         return wizard.next_step()
