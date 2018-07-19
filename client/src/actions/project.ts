@@ -211,7 +211,7 @@ export function fetchProject(user: string, projectName: string): any {
   let projectUrl = getProjectUrl(user, projectName, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectActionCreator());
-    return fetch(`/${BASE_API_URL}${projectUrl}`, {
+    return fetch(`${BASE_API_URL}${projectUrl}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
