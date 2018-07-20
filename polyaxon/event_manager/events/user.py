@@ -76,7 +76,7 @@ class UserBITBUCKETEvent(Event):
 
 
 class UserAZUREEvent(Event):
-    event_type = USER_AZURE,
+    event_type = USER_AZURE
     actor_id = 'id'
     attributes = (
         Attribute('id'),
