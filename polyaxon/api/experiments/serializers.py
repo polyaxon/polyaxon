@@ -178,7 +178,8 @@ class ExperimentDetailSerializer(ExperimentSerializer):
     def get_bookmarked(self, obj):
         return Bookmark.objects.filter(
             content_type__model='experiment',
-            object_id=obj.id).exists()
+            object_id=obj.id,
+            enabled=True).exists()
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):

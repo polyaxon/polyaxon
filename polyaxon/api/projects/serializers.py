@@ -66,4 +66,5 @@ class ProjectDetailSerializer(ProjectSerializer):
     def get_bookmarked(self, obj):
         return Bookmark.objects.filter(
             content_type__model='project',
-            object_id=obj.id).exists()
+            object_id=obj.id,
+            enabled=True).exists()

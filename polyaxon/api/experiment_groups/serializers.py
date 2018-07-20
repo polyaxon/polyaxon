@@ -97,7 +97,8 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
     def get_bookmarked(self, obj):
         return Bookmark.objects.filter(
             content_type__model='experimentgroup',
-            object_id=obj.id).exists()
+            object_id=obj.id,
+            enabled=True).exists()
 
     def validate_content(self, content):
         validate_group_spec_content(content)

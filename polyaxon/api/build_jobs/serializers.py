@@ -82,7 +82,8 @@ class BuildJobDetailSerializer(BuildJobSerializer):
     def get_bookmarked(self, obj):
         return Bookmark.objects.filter(
             content_type__model='buildjob',
-            object_id=obj.id).exists()
+            object_id=obj.id,
+            enabled=True).exists()
 
 
 class BuildJobCreateSerializer(serializers.ModelSerializer):
