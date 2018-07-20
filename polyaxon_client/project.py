@@ -238,7 +238,7 @@ class ProjectClient(PolyaxonClient):
     def list_tensorboards(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of tensorboard jobs related to this project."""
         request_url = self._build_url(
-            self._get_http_url(), username, project_name, 'tensorboards.')
+            self._get_http_url(), username, project_name, 'tensorboards')
 
         try:
             params = self.get_page(page=page)
