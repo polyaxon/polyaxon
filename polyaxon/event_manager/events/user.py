@@ -9,6 +9,7 @@ USER_LDAP = '{}.{}'.format(event_subjects.USER, event_actions.LDAP)
 USER_GITHUB = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_actions.GITHUB)
 USER_GITLAB = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_actions.GITLAB)
 USER_BITBUCKET = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_actions.BITBUCKET)
+USER_AZURE = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_actions.AZURE)
 
 
 class UserRegisteredEvent(Event):
@@ -68,6 +69,13 @@ class UserGITLABEvent(Event):
 
 class UserBITBUCKETEvent(Event):
     event_type = USER_BITBUCKET
+    actor_id = 'id'
+    attributes = (
+        Attribute('id'),
+    )
+
+class UserAZUREEvent(Event):
+    event_type = USER_AZURE,
     actor_id = 'id'
     attributes = (
         Attribute('id'),

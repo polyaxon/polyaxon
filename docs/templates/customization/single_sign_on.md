@@ -9,6 +9,7 @@ Supports multiple authentication schemes:
   * Signup/Login with Github accounts
   * Signup/Login with Gitlab accounts
   * Signup/Login with Bitbucket accounts
+  * Signup/Login with Microsoft (Office 365, Azure) accounts
   * Connecting more than one social account to an account based on email/username
 
 ## Default Membership
@@ -103,6 +104,22 @@ auth:
     clientSecret:
 ```
 
+### Microsoft (Azure)
+
+You need to register a new [application on Azure](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications).
+
+You will need to provide a reply URL: [Domain/IP]`/oauth/azure`
+
+And use your client id and secret token during the deployment:
+
+```yaml
+auth:
+  azure:
+    enabled: true
+    tenantId:
+    clientId:
+    clientSecret:
+```
 
 ## Signup/Login
 

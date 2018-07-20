@@ -14,6 +14,7 @@ class OAuth2Provider(IdentityProvider):
     oauth_access_token_url = ''
     oauth_authorize_url = ''
     refresh_token_url = ''
+    resource = ''
 
     oauth_scopes = ()
 
@@ -24,14 +25,15 @@ class OAuth2Provider(IdentityProvider):
         raise NotImplementedError
 
     def get_oauth_scopes(self):
-        return self.config.get('oauth_scopes', self.oauth_scopes)
+        return self.config.get('oauth_scopes', ' '.join(self.oauth_scopes))
 
     def get_wizard_views(self):
         return [
             OAuth2LoginView(
                 authorize_url=self.oauth_authorize_url,
                 client_id=self.get_oauth_client_id(),
-                scope=' '.join(self.get_oauth_scopes()),
+                scope=self.get_oauth_scopes(),
+                resource=self.resource
             ),
             OAuth2CallbackView(
                 access_token_url=self.oauth_access_token_url,
@@ -42,10 +44,11 @@ class OAuth2Provider(IdentityProvider):
 
     @staticmethod
     def get_oauth_data(payload):
+
         data = {'access_token': payload['access_token']}
 
         if 'expires_in' in payload:
-            data['expires_in'] = int(time()) + payload['expires_in']
+            data['expires_in'] = int(time()) + int(payload['expires_in'])
         if 'refresh_token' in payload:
             data['refresh_token'] = payload['refresh_token']
         if 'token_type' in payload:

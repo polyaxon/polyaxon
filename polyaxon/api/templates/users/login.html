@@ -80,6 +80,14 @@
                 </button>
             </form>
             {% endif %}
+            {% if sso_azure %}
+            <form class="form-horizontal form-login" id="signin-azure" method="post"
+                  action="{% url 'oauth:create_identity' 'azure' %}">
+                {% csrf_token %}
+                <button type="submit" form="signin-azure" value="Submit" style="position: relative;text-indent: 1.4em;" class="button"> Log in with Microsoft
+                </button>
+            </form>
+            {% endif %}
         </div>
     {% endif %}
     </div>

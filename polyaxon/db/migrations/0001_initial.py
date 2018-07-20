@@ -578,7 +578,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('provider', models.CharField(choices=[('github', 'github'), ('bitbucket', 'bitbucket'), ('gitlab', 'gitlab')], max_length=32)),
+                ('provider', models.CharField(choices=[('github', 'github'), ('bitbucket', 'bitbucket'), ('gitlab', 'gitlab'), ('azure', 'azure')], max_length=32)),
                 ('external_id', models.CharField(max_length=64, null=True)),
                 ('valid', models.BooleanField(default=False)),
                 ('last_verified', models.DateTimeField(default=django.utils.timezone.now)),
