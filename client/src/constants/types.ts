@@ -11,6 +11,7 @@ import { UserEmptyState, UserStateSchema } from '../models/user';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
 import { StatusEmptyState, StatusStateSchema } from '../models/status';
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
+import { ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activitylog';
 
 export interface AppState {
   projects: ProjectStateSchema;
@@ -26,6 +27,7 @@ export interface AppState {
   logs: string;
   statuses: StatusStateSchema;
   metrics: MetricStateSchema;
+  activityLogs: ActivityLogsStateSchema;
 }
 
 export const AppEmptyState = {
@@ -40,4 +42,5 @@ export const AppEmptyState = {
   logs: '',
   statuses: StatusEmptyState,
   metrics: MetricEmptyState,
+  activityLogs: ActivityLogsEmptyState,
 };

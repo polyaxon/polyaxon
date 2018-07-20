@@ -16,6 +16,7 @@ import { logsReducer } from './logs';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
 import { StatusesReducer } from './statuses';
 import { MetricsReducer } from './metrics';
+import { activityLogsReducer } from './activityLogs';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
@@ -31,6 +32,7 @@ const combinedReducer = combineReducers<AppState>({
   logs: logsReducer,
   statuses: StatusesReducer,
   metrics: MetricsReducer,
+  activityLogs: activityLogsReducer,
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -56,6 +58,7 @@ function SliceReducer(state: AppState, action: Action) {
     logs: state.logs,
     statuses: state.statuses,
     metrics: state.metrics,
+    activityLogs: state.activityLogs,
   };
 }
 

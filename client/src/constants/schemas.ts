@@ -62,3 +62,10 @@ export const UserSchema = new schema.Entity(
   {
     idAttribute: 'username'
   });
+
+export const activityLogSchema = new schema.Entity(
+  'activityLogs',
+  {},
+  {
+    idAttribute: 'id'
+  });

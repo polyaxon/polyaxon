@@ -10,11 +10,13 @@ import BuildDetail from '../containers/buildDetail';
 import ExperimentJobDetail from '../containers/experimentJobDetail';
 import User from '../containers/user';
 import Token from '../containers/token';
+import ClusterActivityLogs from './clusterActivitylogs';
 
 import { getHomeUrl } from '../constants/utils';
 
 function Routes() {
   let tokenRoute = '/app/token';
+  let clusterActivityLogsRoute = '/app/activitylogs';
   let userRoute = '/app/:user/';
   let bookmarksRoute = '/app/bookmarks/:user/';
   let projectDetailRoute = '/app/:user/:projectName/';
@@ -41,6 +43,7 @@ function Routes() {
   return (
     <Switch>
       <Route path={tokenRoute} component={Token}/>
+      <Route path={clusterActivityLogsRoute} component={ClusterActivityLogs}/>
       <Route path={experimentJobDetailRoute} component={ExperimentJobDetail}/>
       <Route path={buildDetailRoute} component={BuildDetail}/>
       <Route path={jobDetailRoute} component={JobDetail}/>
