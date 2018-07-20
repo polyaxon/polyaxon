@@ -14,9 +14,8 @@ class OAuth2LoginView(View):
     client_id = None
     scope = ''
 
-    # pylint:disable=keyword-arg-before-vararg
-    def __init__(self, authorize_url=None, client_id=None, scope=None, resource=None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, authorize_url=None, client_id=None, scope=None, resource=None, **kwargs):
+        super().__init__(**kwargs)
         if authorize_url is not None:
             self.authorize_url = authorize_url
         if client_id is not None:
