@@ -105,3 +105,13 @@ class AuditorUserTest(BaseTest):
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_user_azure(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=user_events.USER_AZURE,
+                       instance=self.user,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
