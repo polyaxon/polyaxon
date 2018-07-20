@@ -40,7 +40,7 @@ class OAUTH_PROVIDERS(object):  # noqa
         ENABLED = config.get_boolean('POLYAXON_AUTH_GITLAB',
                                      is_optional=True,
                                      default=False)
-    
+
     class AZURE(object):
         VERIFICATION_SCHEDULE = 0
         TENANT_ID = config.get_string('POLYAXON_AUTH_AZURE_TENANT_ID',
