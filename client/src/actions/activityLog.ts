@@ -76,11 +76,18 @@ export function fetchActivityLogs(filters: { [key: string]: number | boolean | s
   };
 }
 
+export function fetchHistoryLogs(filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    let activityLogsUrl = `${BASE_API_URL}/historylogs`;
+    return _fetchActivityLogs(activityLogsUrl, filters, dispatch, getState);
+  };
+}
+
 export function fetchProjectActivityLogs(user: string,
                                          projectName: string,
                                          filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let activityLogsUrl = `${BASE_API_URL}/${getProjectUrl(user, projectName, false)}/activitylogs`;
+    let activityLogsUrl = `${BASE_API_URL}/activitylogs/${getProjectUrl(user, projectName, false)}`;
     return _fetchActivityLogs(activityLogsUrl, filters, dispatch, getState);
   };
 }
