@@ -93,6 +93,15 @@
                 </button>
             </form>
             {% endif %}
+            {% if sso_bitbucket %}
+            <form class="form-horizontal form-login" id="signin-azure" method="post"
+                  action="{% url 'oauth:create_identity' 'azure' %}">
+                {% csrf_token %}
+                <button type="submit" form="signin-azure" value="Submit" style="position: relative;text-indent: 1.4em;" class="button"> Signup with Microsoft
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24" style="position: absolute;left: .4em;top: .4em;width: 2em;fill: white;"><path d="M 21 2 L 12 3.5 L 12 11 L 21 11 L 21 2 z M 10 3.8320312 L 3 5 L 3 11 L 10 11 L 10 3.8320312 z M 3 13 L 3 19 L 10 20.167969 L 10 13 L 3 13 z M 12 13 L 12 20.5 L 21 22 L 21 13 L 12 13 z"></path></svg>
+                </button>
+            </form>
+            {% endif %}
         </div>
     {% endif %}
     </div>
