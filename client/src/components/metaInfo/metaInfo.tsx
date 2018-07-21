@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+
 import './metaInfo.less';
 
 export interface Props {
@@ -11,14 +13,25 @@ export interface Props {
 }
 
 function MetaInfo({icon, name, value, tooltip, inline = false, extraClass = ''}: Props) {
+  const tooltipContent = (
+    <Tooltip id="tooltipId">
+      {tooltip}
+    </Tooltip>
+  );
+
   function getInfo() {
-    return (
-      <span className={`meta-info ${extraClass}`} title={tooltip || ''}>
+    const info = (
+      <span className={`meta-info ${extraClass}`}>
         <i className={`fa ${icon} icon`} aria-hidden="true"/>
-        <span className="title" data-placement="left">{name}:</span>
+        <span className="title">{name}:</span>
         {value}
       </span>
     );
+    return tooltip ? (
+      <OverlayTrigger placement="bottom" overlay={tooltipContent}>
+      {info}
+      </OverlayTrigger>
+    ) : info;
   }
 
   function getMetaInfo() {

@@ -10,23 +10,25 @@ export interface Props {
 }
 
 function DatesMetaInfo({createdAt, updatedAt, inline = false}: Props) {
+  let createdAtM = createdAt ? moment(createdAt) : null;
+  let updatedAtM = updatedAt ? moment(updatedAt) : null;
   return (
     <span>
-        {createdAt &&
+        {createdAtM &&
         <MetaInfo
           icon="fa-clock-o"
           name="Created"
-          tooltip={createdAt.toString()}
-          value={moment(createdAt).fromNow()}
+          tooltip={createdAtM.format('YYYY-MM-DD HH:mm:ss')}
+          value={createdAtM.fromNow()}
           inline={inline}
         />
         }
-      {updatedAt &&
+      {updatedAtM &&
       <MetaInfo
         icon="fa-clock-o"
         name="Last updated"
-        tooltip={updatedAt.toString()}
-        value={moment(updatedAt).fromNow()}
+        tooltip={updatedAtM.format('YYYY-MM-DD HH:mm:ss')}
+        value={updatedAtM.fromNow()}
         inline={inline}
       />
       }

@@ -12,23 +12,25 @@ export interface Props {
 
 function TaskRunMetaInfo({startedAt, finishedAt, inline = false}: Props) {
   let totalRun = humanizeTimeDelta(startedAt, finishedAt);
+  let startedAtM = startedAt ? moment(startedAt) : null;
+  let finishedAtM = finishedAt ? moment(finishedAt) : null;
   return (
     <span>
-        {startedAt &&
+        {startedAtM &&
         <MetaInfo
           icon="fa-clock-o"
           name="Started"
-          tooltip={startedAt.toString()}
-          value={moment(startedAt).fromNow()}
+          tooltip={startedAtM.format('YYYY-MM-DD HH:mm:ss')}
+          value={startedAtM.fromNow()}
           inline={inline}
         />
         }
-      {finishedAt &&
+      {finishedAtM &&
       <MetaInfo
         icon="fa-clock-o"
         name="Finished"
-        tooltip={finishedAt.toString()}
-        value={moment(finishedAt).fromNow()}
+        tooltip={finishedAtM.format('YYYY-MM-DD HH:mm:ss')}
+        value={finishedAtM.fromNow()}
         inline={inline}
       />
       }
@@ -36,7 +38,6 @@ function TaskRunMetaInfo({startedAt, finishedAt, inline = false}: Props) {
       <MetaInfo
         icon="fa-hourglass"
         name="Total run"
-        tooltip={totalRun}
         value={totalRun}
         inline={inline}
       />
