@@ -12,6 +12,12 @@ ENV SHELL /bin/bash
 ENV PATH="${PATH}:{{ nvidia_bin }}"
 {% endif -%}
 
+{% if env_vars -%}
+{% for env_var in env_vars -%}
+ENV {{env_var[0]}} {{env_var[1]}}
+{% endfor -%}
+{% endif -%}
+
 WORKDIR {{ workdir }}
 
 {% if polyaxon_requirements_path -%}
@@ -22,19 +28,13 @@ COPY {{ polyaxon_requirements_path }} {{ workdir }}
 COPY {{ polyaxon_setup_path }} {{ workdir }}
 {% endif -%}
 
+{% if copy_code -%}
+COPY {{ folder_name }} {{ workdir }}
+{% endif -%}
+
 {% if build_steps -%}
 {% for step in build_steps -%}
 RUN {{ step }}
 {% endfor -%}
-{% endif -%}
-
-{% if env_vars -%}
-{% for env_var in env_vars -%}
-ENV {{env_var[0]}} {{env_var[1]}}
-{% endfor -%}
-{% endif -%}
-
-{% if copy_code -%}
-COPY {{ folder_name }} {{ workdir }}
 {% endif -%}
 """
