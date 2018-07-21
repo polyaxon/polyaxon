@@ -23,7 +23,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from polyaxon_schemas.utils import SearchAlgorithms
 from signals.run_time import set_finished_at, set_started_at
-from signals.utils import set_persistence, set_tags, remove_bookmarks
+from signals.utils import remove_bookmarks, set_persistence, set_tags
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")

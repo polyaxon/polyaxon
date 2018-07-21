@@ -1,9 +1,10 @@
 import requests
+
 from django.conf import settings
 
 from constants.sso_providers import Providers
-from sso.providers.oauth2.provider import OAuth2Provider
 from event_manager.events.user import USER_AZURE
+from sso.providers.oauth2.provider import OAuth2Provider
 
 
 class AzureIdentityProvider(OAuth2Provider):

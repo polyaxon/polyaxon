@@ -32,7 +32,7 @@ from signals.run_time import (
     set_job_started_at,
     set_started_at
 )
-from signals.utils import set_persistence, set_tags, remove_bookmarks
+from signals.utils import remove_bookmarks, set_persistence, set_tags
 
 _logger = logging.getLogger('polyaxon.signals.experiments')
 
