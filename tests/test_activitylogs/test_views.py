@@ -8,7 +8,7 @@ from api.activitylogs.serializers import ActivityLogsSerializer
 from constants.urls import API_V1
 from db.models.activitylogs import ActivityLog
 from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
-from event_manager.events.job import JOB_VIEWED
+from event_manager.events.job import JOB_CREATED, JOB_VIEWED
 from event_manager.events.project import PROJECT_DELETED_TRIGGERED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
@@ -35,6 +35,9 @@ class TestActivityLogsListViewV1(BaseViewTest):
                             instance=self.experiment,
                             actor_id=self.user.id)
         self.job = JobFactory()
+        activitylogs.record(event_type=JOB_CREATED,
+                            instance=self.job,
+                            actor_id=self.user.id)
         activitylogs.record(event_type=JOB_VIEWED,
                             instance=self.job,
                             actor_id=self.user.id)
@@ -50,20 +53,23 @@ class TestActivityLogsListViewV1(BaseViewTest):
         self.set_objects()
         self.set_url()
 
-        self.objects = self.model_class.objects.all()
         self.queryset = self.model_class.objects.all()
         self.queryset = self.queryset.order_by('-created_at')
+        self.filtered_queryset = self.queryset.filter(
+            event_type__in=activitylogs.default_manager.user_write_events()
+        )
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
-        assert resp.data['count'] == len(self.objects)
+        assert resp.data['count'] == self.filtered_queryset.count()
 
         data = resp.data['results']
-        assert len(data) == self.queryset.count()
-        assert data == self.serializer_class(self.queryset, many=True).data  # noqa
+        assert len(data) == self.queryset.count() - 1
+        assert len(data) == self.filtered_queryset.count()
+        assert data == self.serializer_class(self.filtered_queryset, many=True).data  # noqa
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -72,11 +78,12 @@ class TestActivityLogsListViewV1(BaseViewTest):
 
         next_page = resp.data.get('next')
         assert next_page is not None
-        assert resp.data['count'] == self.queryset.count()
+        assert resp.data['count'] == self.queryset.count() - 1
+        assert resp.data['count'] == self.filtered_queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
-        assert data == self.serializer_class(self.queryset[:limit], many=True).data  # noqa
+        assert data == self.serializer_class(self.filtered_queryset[:limit], many=True).data  # noqa
 
         resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
@@ -85,7 +92,7 @@ class TestActivityLogsListViewV1(BaseViewTest):
 
         data = resp.data['results']
         assert len(data) == 1
-        assert data == self.serializer_class(self.queryset[limit:], many=True).data  # noqa
+        assert data == self.serializer_class(self.filtered_queryset[limit:], many=True).data  # noqa
 
 
 @pytest.mark.bookmarks_mark
@@ -101,9 +108,18 @@ class TestProjectActivityLogsListViewV1(TestActivityLogsListViewV1):
                             instance=self.experiment,
                             actor_id=self.user.id)
         self.job = JobFactory(project=self.project)
+        activitylogs.record(event_type=JOB_CREATED,
+                            instance=self.job,
+                            actor_id=self.user.id)
         activitylogs.record(event_type=JOB_VIEWED,
                             instance=self.job,
                             actor_id=self.user.id)
 
     def set_url(self):
-        self.url = '/{}/activitylogs/{}'.format(API_V1, self.project.id)
+        self.url = '/{}/activitylogs/{}/{}/'.format(API_V1,
+                                                    self.project.user.username,
+                                                    self.project.name)
+
+    def test_get_non_existing_project(self):
+        resp = self.auth_client.get('/{}/activitylogs/foo/bar/')
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
