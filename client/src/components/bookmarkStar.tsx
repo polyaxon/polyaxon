@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+
 import './bookmarkStar.less';
 
 export interface Props {
@@ -8,10 +10,13 @@ export interface Props {
 
 function BookmarkStar({active, callback}: Props) {
   const className = active ? 'icon-bookmark-active' : '';
+  const tooltip = active ? 'Remove from bookmarks' : 'Add to bookmarks';
   return (
-    <span className={`icon-bookmark ${className}`}>
-      <a onClick={callback}> <i className="fa fa-star" aria-hidden="true"/> </a>
-    </span>
+    <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">{tooltip}</Tooltip>}>
+      <span className={`icon-bookmark ${className}`}>
+        <a onClick={callback}> <i className="fa fa-star" aria-hidden="true"/> </a>
+      </span>
+    </OverlayTrigger>
   );
 }
 

@@ -242,6 +242,11 @@ a.brand {
   color: #f9f9f9 !important;
 }
 
+.tooltip-inner {
+  white-space:nowrap;
+  max-width:none;
+}
+
 /* Dropdown */
 .header-user .dropdown-menu li.current-user {
   padding: 5px 18px;

@@ -7,17 +7,29 @@
     </div>
     <ul class="nav navbar-nav navbar-right" style="margin-left: auto;">
         <li class="header-item">
-            <a class="header-item-link" href="{% url 'react-index' %}/activitylogs">
+            <a class="header-item-link header-tooltip"
+               href="{% url 'react-index' %}/activitylogs"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Activity logs">
                 <i class="fa fa-align-justify" aria-hidden="true"></i>
             </a>
         </li>
         <li class="header-item">
-            <a class="header-item-link" href="{% url 'react-index' %}/historylogs">
+            <a class="header-item-link header-tooltip"
+               href="{% url 'react-index' %}/historylogs"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Recently viewed">
                 <i class="fa fa-history" aria-hidden="true"></i>
             </a>
         </li>
         <li class="header-item">
-            <a class="header-item-link" href="{% url 'react-index' %}/bookmarks/{{ user.username }}">
+            <a class="header-item-link header-tooltip"
+               href="{% url 'react-index' %}/bookmarks/{{ user.username }}"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Bookmarks">
                 <i class="fa fa-star" aria-hidden="true"></i>
             </a>
         </li>
@@ -58,5 +70,4 @@
             </ul>
         </li>
     </ul>
-
 </header>
