@@ -10,7 +10,7 @@ function HistoryLogs() {
         <Breadcrumb
           icon="fa-history"
           links={[
-            {name: 'activities'}]}
+            {name: 'History'}]}
         />
        <ActivityLogs history={true} />
       </div>
