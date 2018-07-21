@@ -8,6 +8,7 @@ class ActivityLogsSerializer(serializers.ModelSerializer):
     object_name = serializers.SerializerMethodField()
     event_action = serializers.SerializerMethodField()
     event_subject = serializers.SerializerMethodField()
+    actor = serializers.SerializerMethodField()
 
     class Meta:
         model = ActivityLog
@@ -20,6 +21,9 @@ class ActivityLogsSerializer(serializers.ModelSerializer):
             'object_id',
             'object_name'
         ]
+
+    def get_actor(self, obj):
+        return obj.actor.username
 
     def get_event_action(self, obj):
         return event_context.get_event_action(event_type=obj.event_type)
@@ -35,4 +39,6 @@ class ActivityLogsSerializer(serializers.ModelSerializer):
             return obj.content_object.unique_name
         if hasattr(obj.content_object, 'name'):
             return obj.content_object.name
+        if hasattr(obj.content_object, 'username'):
+            return obj.content_object.username
         return None

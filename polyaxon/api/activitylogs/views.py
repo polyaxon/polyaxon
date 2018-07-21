@@ -19,6 +19,10 @@ class HistoryLogsView(ListAPIView):
     serializer_class = ActivityLogsSerializer
     permission_classes = (IsAuthenticated,)
 
+    def filter_queryset(self, queryset):
+        queryset = queryset.filter(actor=self.request.user)
+        return super().filter_queryset(queryset=queryset)
+
 
 class ActivityLogsView(ListAPIView):
     """Activity logs list view."""

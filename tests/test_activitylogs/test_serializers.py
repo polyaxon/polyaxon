@@ -8,6 +8,7 @@ from event_manager import event_context
 from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
 from event_manager.events.job import JOB_VIEWED
 from event_manager.events.project import PROJECT_DELETED_TRIGGERED
+from event_manager.events.user import USER_ACTIVATED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
@@ -35,6 +36,9 @@ class TestActivityLogsSerializer(BaseTest):
         activitylogs.validate()
         activitylogs.setup()
         self.project = ProjectFactory()
+        activitylogs.record(event_type=USER_ACTIVATED,
+                            instance=self.user,
+                            actor_id=self.user.id)
         activitylogs.record(event_type=PROJECT_DELETED_TRIGGERED,
                             instance=self.project,
                             actor_id=self.user.id)
@@ -52,8 +56,8 @@ class TestActivityLogsSerializer(BaseTest):
         data = self.serializer_class(obj).data
 
         assert set(data.keys()) == self.expected_keys
-        assert data.pop('object_name') == obj.content_object.unique_name
-        assert data.pop('actor') == obj.actor.id
+        assert data.pop('object_name') == obj.content_object.username
+        assert data.pop('actor') == obj.actor.username
         assert data.pop('event_action') == event_context.get_event_action(obj.event_type)
         assert data.pop('event_subject') == event_context.get_event_subject(obj.event_type)
         data.pop('created_at')
@@ -67,7 +71,7 @@ class TestActivityLogsSerializer(BaseTest):
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('object_name') == obj.content_object.unique_name
-        assert data.pop('actor') == obj.actor.id
+        assert data.pop('actor') == obj.actor.username
         assert data.pop('event_action') == event_context.get_event_action(obj.event_type)
         assert data.pop('event_subject') == event_context.get_event_subject(obj.event_type)
         data.pop('created_at')
@@ -77,6 +81,6 @@ class TestActivityLogsSerializer(BaseTest):
 
     def test_serialize_many(self):
         data = self.serializer_class(ActivityLog.objects.all(), many=True).data
-        assert len(data) == 3
+        assert len(data) == 4
         for d in data:
             assert set(d.keys()) == self.expected_keys
