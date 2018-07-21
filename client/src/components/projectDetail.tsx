@@ -6,6 +6,7 @@ import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
 import Jobs from '../containers/jobs';
 import Builds from '../containers/builds';
+import ActivityLogs from '../containers/activityLogs';
 import { isTrue, getUserUrl, getProjectUrl } from '../constants/utils';
 import { Bookmark } from '../constants/bookmarks';
 import Breadcrumb from './breadcrumb';
@@ -72,6 +73,10 @@ export default class ProjectDetail extends React.Component<Props, Object> {
                 title: 'Builds',
                 component: <Builds user={project.user} projectName={project.unique_name} useFilters={true}/>,
                 relUrl: 'builds'
+              }, {
+                title: 'Activity logs',
+                component: <ActivityLogs user={project.user} projectName={project.name}/>,
+                relUrl: 'activitylogs'
               }, {
                 title: 'Instructions',
                 component: <ProjectInstructions projectName={project.unique_name}/>,
