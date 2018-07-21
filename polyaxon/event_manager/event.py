@@ -2,6 +2,7 @@ from uuid import uuid1
 
 from django.utils import timezone
 
+from event_manager import event_context
 from libs.date_utils import to_timestamp
 from libs.json_utils import dumps_htmlsafe
 
@@ -78,7 +79,7 @@ class Event(object):
         >>> Event.event_type = 'experiment.deleted'
         >>> Event.get_event_subject() == 'experiment'
         """
-        return cls.event_type.split('.')[0]
+        return event_context.get_event_subject(cls.event_type)
 
     @classmethod
     def get_event_action(cls):
@@ -91,7 +92,7 @@ class Event(object):
         """
         if not cls.actor_id:
             return None
-        return cls.event_type.split('.')[1]
+        return event_context.get_event_action(cls.event_type)
 
     def serialize(self, dumps=False):
         data = {

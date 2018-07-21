@@ -8,7 +8,7 @@ class WizardManager(ManagerInterface):
 
     def subscribe(self, provider):  # pylint:disable=arguments-differ
         """
-        >>> subscribe(SomeEvent)
+        >>> subscribe(SomeProvider)
         """
         super().subscribe(obj=provider)
 

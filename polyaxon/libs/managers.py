@@ -14,13 +14,25 @@ class ManagerInterface(object):
         self._subscribe(key=key, value=value)
 
     def _subscribe(self, key, value):
-        if key in self._state:
-            assert self._state[key] == value
+        if key in self.state:
+            assert self.state[key] == value
         else:
-            self._state[key] = value
+            self.state[key] = value
 
     def knows(self, key):
-        return key in self._state
+        return key in self.state
 
     def get(self, key):
-        return self._state.get(key)
+        return self.state.get(key)
+
+    @property
+    def keys(self):
+        return self.state.keys()
+
+    @property
+    def values(self):
+        return self.state.values()
+
+    @property
+    def items(self):
+        return self.state.items()

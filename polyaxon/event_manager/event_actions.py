@@ -39,3 +39,13 @@ GITHUB = 'github'
 GITLAB = 'gitlab'
 BITBUCKET = 'bitbucket'
 AZURE = 'azure'
+
+WRITE_ACTIONS = [
+    CREATED,
+    UPDATED,
+    DELETED,
+    RESUMED,
+    COPIED,
+    CLONED,
+    STOPPED,
+]
