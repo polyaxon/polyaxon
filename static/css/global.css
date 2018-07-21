@@ -223,7 +223,40 @@ a.brand {
   background: #6c7c8c;
 }
 
+/* Header */
+/* Item */
+.header-item {
+  padding: 3px 1px;
+}
+
+.header-item-link {
+  padding: 14px 13px !important;
+  height: 39px !important;
+  margin: 0 !important;
+  background-color: transparent !important;
+  border-radius: 5px !important;
+  color: #ebf5ff !important;
+}
+.header-item-link:hover {
+  background-color: #dde1ea21 !important;
+  color: #f9f9f9 !important;
+}
+
 /* Dropdown */
 .header-user .dropdown-menu li.current-user {
   padding: 5px 18px;
+}
+
+.header-user-dropdown-toggle {
+  padding: 4px 8px !important;
+  height: 38px !important;
+  margin: 3px 0 !important;
+  background-color: transparent !important;
+  border-radius: 5px !important;
+}
+.header-user-dropdown-toggle:hover {
+  background-color: #dde1ea21 !important;
+}
+.open .header-user-dropdown-toggle {
+  background-color: #fdfdfd21 !important;
 }

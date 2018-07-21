@@ -6,16 +6,30 @@
                                          alt="Polyaxon">Polyaxon</a>
     </div>
     <ul class="nav navbar-nav navbar-right" style="margin-left: auto;">
+        <li class="header-item">
+            <a class="header-item-link" href="{% url 'react-index' %}/activitylogs">
+                <i class="fa fa-align-justify" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li class="header-item">
+            <a class="header-item-link" href="{% url 'react-index' %}/bookmarks/{{ user.username }}">
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </a>
+        </li>
         <li class="header-user dropdown">
-            <button class="btn btn-default dropdown-toggle"
-                    type="button"
+            <a class="header-user-dropdown-toggle dropdown-toggle"
                     id="dropdownMenu1"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="true">
-                Profile
-                <span class="caret"></span>
-            </button>
+                <span style="position: relative; display: inline-block; width: 29px; height: 29px;">
+                    <svg viewBox="0 0 120 120" class="css-1ibx90g e1knxa8x0">
+                        <rect x="0" y="0" width="120" height="120" rx="15" ry="15" fill="#618a64"></rect>
+                        <text x="50%" y="50%" font-size="65" text-anchor="middle" fill="#FFFFFF" style="dominant-baseline: central;">{{ user.username|make_list|first|title }}</text>
+                    </svg>
+                </span>
+                <span class="caret" style="height: 25px; margin-left: 5px; color: white"></span>
+            </a>
             <ul class="dropdown-menu">
                 <li class="current-user">
                     <div><strong>
