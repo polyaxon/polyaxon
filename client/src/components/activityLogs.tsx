@@ -27,12 +27,15 @@ export default class ActivityLogs extends React.Component<Props, State> {
   }
 
   public render() {
-    const listBuilds = () => {
+    const listActivities = () => {
+      const subjects = ['project', 'experiment_group', 'experiment', 'job', 'build'];
       return (
         <ul>
-          {this.props.activityLogs.map(
+          {this.props.activityLogs
+            .filter((activityLog: ActivityLogModel) => subjects.indexOf(activityLog.event_subject) > -1)
+            .map(
             (activityLog: ActivityLogModel) =>
-              <li className="activity-log" key={activityLog.id}>
+              <li className="list-item" key={activityLog.id}>
                 <ActivityLog activityLog={activityLog}/>
               </li>)}
         </ul>
@@ -41,7 +44,7 @@ export default class ActivityLogs extends React.Component<Props, State> {
     return (
       <PaginatedList
         count={this.props.count}
-        componentList={listBuilds()}
+        componentList={listActivities()}
         componentHeader={ActivityLogHeader()}
         componentEmpty={
           EmptyList(

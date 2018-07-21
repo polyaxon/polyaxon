@@ -10,6 +10,7 @@ import ActivityLogs from '../components/activityLogs';
 interface OwnProps {
   user?: string;
   projectName?: string;
+  history?: boolean;
   fetchData?: () => any;
 }
 
@@ -44,7 +45,9 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ActivityLogAction>
       if (offset) {
         filters.offset = offset;
       }
-      if (ownProps.projectName && ownProps.user) {
+      if (ownProps.history) {
+        return dispatch(actions.fetchHistoryLogs(filters));
+      } else if (ownProps.projectName && ownProps.user) {
         return dispatch(actions.fetchProjectActivityLogs(
           ownProps.user,
           ownProps.projectName,

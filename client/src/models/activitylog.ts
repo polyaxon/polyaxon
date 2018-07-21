@@ -2,7 +2,8 @@ import { LastFetchedIds } from './utils';
 
 export class ActivityLogModel {
   public id: number;
-  public event_type: string;
+  public event_action: string;
+  public event_subject: string;
   public actor: string;
   public created_at: string;
   public object_id: number;
