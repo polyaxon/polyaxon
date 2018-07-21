@@ -4,8 +4,11 @@ import pytest
 
 from event_manager.event_manager import EventManager
 from event_manager.events.cluster import ClusterCreatedEvent, ClusterUpdatedEvent
-from event_manager.events.experiment import ExperimentCreatedEvent, ExperimentViewedEvent, \
-    ExperimentDeletedEvent
+from event_manager.events.experiment import (
+    ExperimentCreatedEvent,
+    ExperimentDeletedEvent,
+    ExperimentViewedEvent
+)
 from tests.utils import BaseTest
 
 

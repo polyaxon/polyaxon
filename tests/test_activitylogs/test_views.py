@@ -7,16 +7,16 @@ import activitylogs
 from api.activitylogs.serializers import ActivityLogsSerializer
 from constants.urls import API_V1
 from db.models.activitylogs import ActivityLog
-from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
+from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED, EXPERIMENT_VIEWED
 from event_manager.events.job import JOB_CREATED, JOB_VIEWED
-from event_manager.events.project import PROJECT_DELETED_TRIGGERED
+from event_manager.events.project import PROJECT_DELETED_TRIGGERED, PROJECT_VIEWED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseViewTest
 
 
-@pytest.mark.bookmarks_mark
+@pytest.mark.activitylogs_mark
 class TestActivityLogsListViewV1(BaseViewTest):
     HAS_AUTH = True
     DISABLE_RUNNER = True
@@ -45,6 +45,13 @@ class TestActivityLogsListViewV1(BaseViewTest):
     def set_url(self):
         self.url = '/{}/activitylogs/'.format(API_V1)
 
+    def set_queryset(self):
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('-created_at')
+        self.filtered_queryset = self.queryset.filter(
+            event_type__in=activitylogs.default_manager.user_write_events()
+        )
+
     def setUp(self):
         super().setUp()
         activitylogs.validate()
@@ -52,12 +59,7 @@ class TestActivityLogsListViewV1(BaseViewTest):
 
         self.set_objects()
         self.set_url()
-
-        self.queryset = self.model_class.objects.all()
-        self.queryset = self.queryset.order_by('-created_at')
-        self.filtered_queryset = self.queryset.filter(
-            event_type__in=activitylogs.default_manager.user_write_events()
-        )
+        self.set_queryset()
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -95,7 +97,38 @@ class TestActivityLogsListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.filtered_queryset[limit:], many=True).data  # noqa
 
 
-@pytest.mark.bookmarks_mark
+@pytest.mark.activitylogs_mark
+class TestHistoryLogsListViewV1(TestActivityLogsListViewV1):
+    def set_objects(self):
+        self.user = self.auth_client.user
+        self.project = ProjectFactory()
+        activitylogs.record(event_type=PROJECT_VIEWED,
+                            instance=self.project,
+                            actor_id=self.user.id)
+        self.experiment = ExperimentFactory()
+        activitylogs.record(event_type=EXPERIMENT_VIEWED,
+                            instance=self.experiment,
+                            actor_id=self.user.id)
+        self.job = JobFactory()
+        activitylogs.record(event_type=JOB_CREATED,
+                            instance=self.job,
+                            actor_id=self.user.id)
+        activitylogs.record(event_type=JOB_VIEWED,
+                            instance=self.job,
+                            actor_id=self.user.id)
+
+    def set_url(self):
+        self.url = '/{}/historylogs/'.format(API_V1)
+
+    def set_queryset(self):
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('-created_at')
+        self.filtered_queryset = self.queryset.filter(
+            event_type__in=activitylogs.default_manager.user_view_events()
+        )
+
+
+@pytest.mark.activitylogs_mark
 class TestProjectActivityLogsListViewV1(TestActivityLogsListViewV1):
     def set_objects(self):
         self.user = self.auth_client.user

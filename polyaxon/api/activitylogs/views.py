@@ -10,6 +10,16 @@ from db.models.activitylogs import ActivityLog
 from db.models.projects import Project
 
 
+class HistoryLogsView(ListAPIView):
+    """Activity logs list view."""
+    # Filter only for user write events
+    queryset = ActivityLog.objects.order_by('-created_at').filter(
+        event_type__in=activitylogs.default_manager.user_view_events()
+    )
+    serializer_class = ActivityLogsSerializer
+    permission_classes = (IsAuthenticated,)
+
+
 class ActivityLogsView(ListAPIView):
     """Activity logs list view."""
     # Filter only for user write events
