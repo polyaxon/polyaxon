@@ -33,3 +33,8 @@ class EventManager(ManagerInterface):
         """
         return [event_type for event_type, event in self.items if event.get_event_action()
                 in event_actions.WRITE_ACTIONS]
+
+    def user_view_events(self):
+        """Return event types where use viewed a main object."""
+        return [event_type for event_type, event in self.items if event.get_event_action()
+                == event_actions.VIEWED]

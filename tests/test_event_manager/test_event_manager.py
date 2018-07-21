@@ -4,7 +4,8 @@ import pytest
 
 from event_manager.event_manager import EventManager
 from event_manager.events.cluster import ClusterCreatedEvent, ClusterUpdatedEvent
-from event_manager.events.experiment import ExperimentCreatedEvent
+from event_manager.events.experiment import ExperimentCreatedEvent, ExperimentViewedEvent, \
+    ExperimentDeletedEvent
 from tests.utils import BaseTest
 
 
@@ -70,5 +71,22 @@ class TestEventManager(BaseTest):
         assert self.manager.user_write_events() == []
         self.manager.subscribe(ClusterCreatedEvent)
         assert self.manager.user_write_events() == []
+        self.manager.subscribe(ExperimentViewedEvent)
+        assert self.manager.user_write_events() == []
+        self.manager.subscribe(ExperimentDeletedEvent)
+        assert self.manager.user_write_events() == []
         self.manager.subscribe(ExperimentCreatedEvent)
         assert self.manager.user_write_events() == [ExperimentCreatedEvent.event_type]
+
+    def test_user_view_events(self):
+        assert self.manager.user_view_events() == []
+        self.manager.subscribe(ClusterCreatedEvent)
+        assert self.manager.user_view_events() == []
+        self.manager.subscribe(ExperimentCreatedEvent)
+        assert self.manager.user_view_events() == []
+        self.manager.subscribe(ExperimentCreatedEvent)
+        assert self.manager.user_view_events() == []
+        self.manager.subscribe(ExperimentDeletedEvent)
+        assert self.manager.user_view_events() == []
+        self.manager.subscribe(ExperimentViewedEvent)
+        assert self.manager.user_view_events() == [ExperimentViewedEvent.event_type]
