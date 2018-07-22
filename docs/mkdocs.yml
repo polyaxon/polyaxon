@@ -108,6 +108,7 @@ pages:
   - Customize Data and Outputs: customization/customize_outputs_and_data.md
   - Single Sign On: customization/single_sign_on.md
   - Replication: customization/replication.md
+  - PostgreSQL HA: customization/postgresql_ha.md
 - Reference Polyaxon CLI:
   - Introduction: polyaxon_cli/introduction.md
   - Commnands:
