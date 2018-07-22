@@ -154,7 +154,7 @@ passwordLenght: 8
 
 api:
   image: polyaxon/polyaxon-api
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -173,7 +173,7 @@ api:
 
 streams:
   image: polyaxon/polyaxon-streams
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -191,7 +191,7 @@ streams:
 
 scheduler:
   image: polyaxon/polyaxon-scheduler
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -205,7 +205,7 @@ scheduler:
 
 hpsearch:
   image: polyaxon/polyaxon-hpsearch
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -216,7 +216,7 @@ hpsearch:
 
 eventsHandlers:
   image: polyaxon/polyaxon-events-handlers
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -230,7 +230,7 @@ eventsHandlers:
 
 beat:
   image: polyaxon/polyaxon-beat
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -243,7 +243,7 @@ beat:
 
 crons:
   image: polyaxon/polyaxon-crons
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -261,7 +261,7 @@ eventMonitors:
   namespace:
     enabled: true
     image: polyaxon/polyaxon-monitor-namespace
-    imageTag: 0.1.4
+    imageTag: 0.1.5
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -276,7 +276,7 @@ eventMonitors:
   statuses:
     enabled: true
     image: polyaxon/polyaxon-monitor-statuses
-    imageTag: 0.1.4
+    imageTag: 0.1.5
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -291,7 +291,7 @@ eventMonitors:
 resourcesDaemon:
   enabled: true
   image: polyaxon/polyaxon-monitor-resources
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -305,24 +305,30 @@ resourcesDaemon:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 0.1.4
+  imageTag: 0.1.5
 
 dockerizer:
   image: polyaxon/polyaxon-dockerizer
-  imageTag: 0.1.4
+  imageTag: 0.1.5
 
 job:
   image: polyaxon/polyaxon-lib
-  imageTag: 0.1.4
+  imageTag: 0.1.5
 
 hooks:
   image: polyaxon/polyaxon-manage
-  imageTag: 0.1.4
+  imageTag: 0.1.5
   imagePullPolicy: IfNotPresent
 
 postgresql:
-  ## Whether to deploy a postgres server in-cluster. To use an external postgres instance, set enabled to False and configure 
-  ## externalPostgresHost with your existing postgres hostname. postgresUser, postgresPassword and postgresDatabase still apply.
+  # Whether to deploy a postgres server in-cluster.
+  # To use an external postgres instance:
+  #  * set enabled to False, to disable the in-cluster deployment
+  #  * configure external postgresql required attributes:
+  #     externalPostgresHost:
+  #     postgresUser:
+  #     postgresPassword:
+  #     postgresDatabase:
   enabled: True
   postgresUser: polyaxon
   postgresPassword: polyaxon
