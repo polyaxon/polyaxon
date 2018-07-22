@@ -24,7 +24,8 @@ It also packages some required dependencies for Polyaxon:
  * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq)
  * [Docker-Registry](https://github.com/kubernetes/charts/tree/master/incubator/docker-registry)
 
-> **Warning**: This chart does not yet allow for you to specify your own database host, redis host, rabbitmq host.
+> **Note**: It's possible to provide your own database host.
+> **Warning**: This chart does not yet allow for you to specify your redis host, rabbitmq host.
 
 This chart can be installed on single node or multi-nodes cluster,
 in which case you need to provide some volumes with `ReadWriteMany`.
