@@ -35,13 +35,15 @@ def init(project, run, model):
         project_config = PolyaxonClients().project.get_project(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Make sure you have a project with this name `{}`'.format(project))
-        Printer.print_error('You can a new project with this command: '
-                            'polyaxon project create --name={} --description=...'.format(project))
+        Printer.print_error(
+            'You can a create new project with this command: '
+            'polyaxon project create '
+            '--name={} [--description=...] [--tags=...]'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     if not any([model, run]) and not all([model, run]):
-        Printer.print_error("You must specify which an init option, "
+        Printer.print_error("You must specify which init option, "
                             "possible values: `--model` or `--run`.")
         sys.exit(1)
 
@@ -53,6 +55,7 @@ def init(project, run, model):
         result = create_init_file(constants.INIT_FILE_RUN)
 
     if result:
+        ProjectManager.purge()
         ProjectManager.set_config(project_config, init=True)
         IgnoreManager.init_config()
         Printer.print_success(
@@ -78,6 +81,7 @@ def init(project, run, model):
         sys.exit(1)
 
     # At this point we check if we need to re init configurations
+    ProjectManager.purge()
     ProjectManager.set_config(project_config, init=True)
     IgnoreManager.init_config()
     Printer.print_success(
