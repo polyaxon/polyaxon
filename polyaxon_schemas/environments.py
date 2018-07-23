@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import Schema, ValidationError, fields, post_dump, post_load, validates_schema
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import UUID, IntOrStr, IndexedDict
+from polyaxon_schemas.utils import UUID, IntOrStr
 
 
 class TensorflowClusterSchema(Schema):
