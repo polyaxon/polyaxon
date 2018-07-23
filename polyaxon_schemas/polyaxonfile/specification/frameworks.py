@@ -7,8 +7,8 @@ from polyaxon_schemas.environments import PodResourcesConfig
 from polyaxon_schemas.polyaxonfile.specification.utils import (
     get_task_configs,
     get_task_job_node_selectors,
-    get_task_job_resources
-)
+    get_task_job_resources,
+    get_task_job_tolerations, get_task_job_affinities)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -105,6 +105,58 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             node_selectors=framework_environment.ps_node_selectors,
             default_node_selectors=framework_environment.default_ps_node_selectors,
+            task_type=cls.TASK_PS)
+
+    @classmethod
+    def get_worker_tolerations(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
+
+        return get_task_job_tolerations(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            tolerations=framework_environment.worker_tolerations,
+            default_tolerations=framework_environment.default_worker_tolerations,
+            task_type=cls.TASK_WORKER)
+
+    @classmethod
+    def get_ps_tolerations(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
+
+        return get_task_job_tolerations(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            tolerations=framework_environment.ps_tolerations,
+            default_tolerations=framework_environment.default_ps_tolerations,
+            task_type=cls.TASK_PS)
+
+    @classmethod
+    def get_worker_affinities(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
+
+        return get_task_job_affinities(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            affinities=framework_environment.worker_affinities,
+            default_affinity=framework_environment.default_worker_affinity,
+            task_type=cls.TASK_WORKER)
+
+    @classmethod
+    def get_ps_affinities(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
+
+        return get_task_job_affinities(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            affinities=framework_environment.ps_affinities,
+            default_affinity=framework_environment.default_ps_affinity,
             task_type=cls.TASK_PS)
 
 

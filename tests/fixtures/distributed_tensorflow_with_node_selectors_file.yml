@@ -19,44 +19,44 @@ environment:
     n_workers: 5
     n_ps: 10
 
-    default_worker_resources:
-      cpu:
-        requests: 3
-        limits: 3
-      memory:
+    default_worker:
+      resources:
+        cpu:
+          requests: 3
+          limits: 3
+        memory:
           requests: 256
           limits: 256
+      node_selectors:
+        polyaxon.com: node_for_worker_tasks
 
-    worker_resources:
+    worker:
+      - index: 2
+        node_selectors:
+          polyaxon.com: node_for_worker_task_2
       - index: 3
-        memory:
-          requests: 300
-          limits: 300
+        resources:
+          memory:
+            requests: 300
+            limits: 300
 
-    default_ps_resources:
-      cpu:
-        requests: 2
-        limits: 4
+    default_ps:
+      resources:
+        cpu:
+          requests: 2
+          limits: 4
+      node_selectors:
+        polyaxon.com: node_for_ps_tasks
 
-    ps_resources:
+    ps:
+      - index: 2
+        node_selectors:
+          polyaxon.com: node_for_ps_task_2
       - index: 9
-        memory:
-          requests: 512
-          limits: 1024
-
-    default_worker_node_selectors:
-      polyaxon.com: node_for_worker_tasks
-
-    worker_node_selectors:
-      - index: 2
-        polyaxon.com: node_for_worker_task_2
-
-    default_ps_node_selectors:
-      polyaxon.com: node_for_ps_tasks
-
-    ps_node_selectors:
-      - index: 2
-        polyaxon.com: node_for_ps_task_2
+        resources:
+          memory:
+            requests: 512
+            limits: 1024
 
 build:
   image: my_image

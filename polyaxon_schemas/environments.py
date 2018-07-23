@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import Schema, ValidationError, fields, post_dump, post_load, validates_schema
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import UUID, IntOrStr
+from polyaxon_schemas.utils import UUID, IntOrStr, IndexedDict
 
 
 class TensorflowClusterSchema(Schema):
@@ -159,8 +159,6 @@ class K8SResourcesConfig(BaseConfig):
 
 
 class PodResourcesSchema(Schema):
-    # To indicate which worker/ps index this session config belongs to
-    index = fields.Int(allow_none=True)
     cpu = fields.Nested(K8SResourcesSchema, allow_none=True)
     memory = fields.Nested(K8SResourcesSchema, allow_none=True)
     gpu = fields.Nested(K8SResourcesSchema, allow_none=True)
@@ -180,10 +178,8 @@ class PodResourcesSchema(Schema):
 class PodResourcesConfig(BaseConfig):
     IDENTIFIER = 'pod_resources'
     SCHEMA = PodResourcesSchema
-    REDUCED_ATTRIBUTES = ['index']
 
-    def __init__(self, index=None, cpu=None, memory=None, gpu=None):
-        self.index = index
+    def __init__(self, cpu=None, memory=None, gpu=None):
         self.cpu = cpu
         self.memory = memory
         self.gpu = gpu
@@ -246,8 +242,6 @@ class GPUOptionsConfig(BaseConfig):
 
 
 class SessionSchema(Schema):
-    # To indicate which worker/ps index this session config belongs to
-    index = fields.Int(allow_none=True)
     gpu_options = fields.Nested(GPUOptionsSchema, allow_none=True)
     log_device_placement = fields.Bool(allow_none=True)
     allow_soft_placement = fields.Bool(allow_none=True)
@@ -269,16 +263,13 @@ class SessionSchema(Schema):
 class SessionConfig(BaseConfig):
     IDENTIFIER = 'session'
     SCHEMA = SessionSchema
-    REDUCED_ATTRIBUTES = ['index']
 
     def __init__(self,
-                 index=None,
                  log_device_placement=True,
                  gpu_options=GPUOptionsConfig(),
                  allow_soft_placement=True,
                  intra_op_parallelism_threads=None,
                  inter_op_parallelism_threads=None):
-        self.index = index
         self.gpu_options = gpu_options
         self.log_device_placement = log_device_placement
         self.allow_soft_placement = allow_soft_placement
@@ -332,23 +323,180 @@ class TFRunConfig(BaseConfig):
         self.cluster = cluster
 
 
+class PodEnvironmentSchema(Schema):
+    # To indicate which worker/ps index this session config belongs to
+    index = fields.Int(allow_none=True)
+    resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    node_selectors = fields.Dict(allow_none=True)
+    affinity = fields.Dict(allow_none=True)
+    tolerations = fields.List(fields.Dict(), allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return PodEnvironmentConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PodEnvironmentConfig.remove_reduced_attrs(data)
+
+
+class PodEnvironmentConfig(BaseConfig):
+    IDENTIFIER = 'pod_environment'
+    SCHEMA = PodEnvironmentSchema
+    REDUCED_ATTRIBUTES = ['index', 'resources', 'node_selectors', 'affinity', 'tolerations']
+
+    def __init__(self,
+                 index=None,
+                 resources=None,
+                 node_selectors=None,
+                 affinity=None,
+                 tolerations=None,
+                 ):
+        self.index = index
+        self.resources = resources
+        self.node_selectors = node_selectors
+        self.affinity = affinity
+        self.tolerations = tolerations
+
+
+class TensorflowPodEnvironmentSchema(PodEnvironmentSchema):
+    config = fields.Nested(SessionSchema, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return TensorflowPodEnvironmentConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TensorflowPodEnvironmentConfig.remove_reduced_attrs(data)
+
+
+class TensorflowPodEnvironmentConfig(PodEnvironmentConfig):
+    IDENTIFIER = 'pod_environment'
+    SCHEMA = TensorflowPodEnvironmentSchema
+    REDUCED_ATTRIBUTES = PodEnvironmentConfig.REDUCED_ATTRIBUTES + ['config']
+
+    def __init__(self,
+                 index=None,
+                 config=None,
+                 resources=None,
+                 node_selectors=None,
+                 affinity=None,
+                 tolerations=None,
+                 ):
+        self.config = config
+        super(TensorflowPodEnvironmentConfig, self).__init__(
+            index=index,
+            resources=resources,
+            node_selectors=node_selectors,
+            affinity=affinity,
+            tolerations=tolerations,
+        )
+
+
+class FrameworkEnvironmentMixin(object):
+    @staticmethod
+    def _get_env_indexed_property(obj, getter):
+        if not obj:
+            return {}
+        return {o.index: getter(o) for o in obj if getter(o)}
+
+    @property
+    def default_worker_config(self):
+        return self.default_worker.config if self.default_worker else None
+
+    @property
+    def default_worker_resources(self):
+        return self.default_worker.resources if self.default_worker else None
+
+    @property
+    def default_worker_node_selectors(self):
+        return self.default_worker.node_selectors if self.default_worker else None
+
+    @property
+    def default_worker_affinity(self):
+        return self.default_worker.affinity if self.default_worker else None
+
+    @property
+    def default_worker_tolerations(self):
+        return self.default_worker.tolerations if self.default_worker else None
+
+    @property
+    def default_ps_config(self):
+        return self.default_ps.config if self.default_ps else None
+
+    @property
+    def default_ps_resources(self):
+        return self.default_ps.resources if self.default_ps else None
+
+    @property
+    def default_ps_node_selectors(self):
+        return self.default_ps.node_selectors if self.default_ps else None
+
+    @property
+    def default_ps_affinity(self):
+        return self.default_ps.affinity if self.default_ps else None
+
+    @property
+    def default_ps_tolerations(self):
+        return self.default_ps.tolerations if self.default_ps else None
+
+    @property
+    def worker_configs(self):
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.config)
+
+    @property
+    def worker_resources(self):
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.resources)
+
+    @property
+    def worker_node_selectors(self):
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.node_selectors)
+
+    @property
+    def worker_affinities(self):
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.affinity)
+
+    @property
+    def worker_tolerations(self):
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.tolerations)
+
+    @property
+    def ps_configs(self):
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.config)
+
+    @property
+    def ps_resources(self):
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.resources)
+
+    @property
+    def ps_node_selectors(self):
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.node_selectors)
+
+    @property
+    def ps_affinities(self):
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.affinity)
+
+    @property
+    def ps_tolerations(self):
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.tolerations)
+
+
 class TensorflowSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
     run_config = fields.Nested(TFRunSchema, allow_none=True)
-    default_worker_config = fields.Nested(SessionSchema, allow_none=True)
-    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    default_worker_node_selectors = fields.Dict(allow_none=True)
-    default_ps_config = fields.Nested(SessionSchema, allow_none=True)
-    default_ps_resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    default_ps_node_selectors = fields.Dict(allow_none=True)
-    worker_configs = fields.Nested(SessionSchema, many=True, allow_none=True)
-    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
-    ps_configs = fields.Nested(SessionSchema, many=True, allow_none=True)
-    ps_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
-    worker_node_selectors = fields.List(fields.Dict(), allow_none=True)
-    ps_node_selectors = fields.List(fields.Dict(), allow_none=True)
+    default_worker = fields.Nested(TensorflowPodEnvironmentSchema, allow_none=True)
+    default_ps = fields.Nested(TensorflowPodEnvironmentSchema, allow_none=True)
+    worker = fields.Nested(TensorflowPodEnvironmentSchema, many=True, allow_none=True)
+    ps = fields.Nested(TensorflowPodEnvironmentSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -362,7 +510,7 @@ class TensorflowSchema(Schema):
         return TensorflowConfig.remove_reduced_attrs(data)
 
 
-class TensorflowConfig(BaseConfig):
+class TensorflowConfig(BaseConfig, FrameworkEnvironmentMixin):
     IDENTIFIER = 'tensorflow'
     SCHEMA = TensorflowSchema
 
@@ -371,42 +519,25 @@ class TensorflowConfig(BaseConfig):
                  n_ps=0,
                  delay_workers_by_global_step=False,
                  run_config=None,
-                 default_worker_config=None,
-                 default_worker_resources=None,
-                 default_ps_config=None,
-                 default_ps_resources=None,
-                 default_worker_node_selectors=None,
-                 default_ps_node_selectors=None,
-                 worker_configs=None,
-                 worker_resources=None,
-                 ps_configs=None,
-                 ps_resources=None,
-                 worker_node_selectors=None,
-                 ps_node_selectors=None):
+                 default_worker=None,
+                 default_ps=None,
+                 worker=None,
+                 ps=None,
+                 ):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.delay_workers_by_global_step = delay_workers_by_global_step
         self.run_config = run_config
-        self.default_worker_config = default_worker_config
-        self.default_worker_resources = default_worker_resources
-        self.default_ps_config = default_ps_config
-        self.default_ps_resources = default_ps_resources
-        self.default_worker_node_selectors = default_worker_node_selectors
-        self.default_ps_node_selectors = default_ps_node_selectors
-        self.worker_configs = worker_configs
-        self.worker_resources = worker_resources
-        self.ps_configs = ps_configs
-        self.ps_resources = ps_resources
-        self.worker_node_selectors = worker_node_selectors
-        self.ps_node_selectors = ps_node_selectors
+        self.default_worker = default_worker
+        self.default_ps = default_ps
+        self.worker = worker
+        self.ps = ps
 
 
 class HorovodSchema(Schema):
     n_workers = fields.Int(allow_none=True)
-    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    default_worker_node_selectors = fields.Dict(allow_none=True)
-    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
-    worker_node_selectors = fields.List(fields.Dict(allow_none=True), allow_none=True)
+    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
+    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -420,29 +551,24 @@ class HorovodSchema(Schema):
         return HorovodConfig.remove_reduced_attrs(data)
 
 
-class HorovodConfig(BaseConfig):
+class HorovodConfig(BaseConfig, FrameworkEnvironmentMixin):
     IDENTIFIER = 'horovod'
     SCHEMA = HorovodSchema
 
     def __init__(self,
                  n_workers=0,
-                 default_worker_resources=None,
-                 default_worker_node_selectors=None,
-                 worker_resources=None,
-                 worker_node_selectors=None):
+                 default_worker=None,
+                 worker=None,
+                 ):
         self.n_workers = n_workers
-        self.default_worker_resources = default_worker_resources
-        self.default_worker_node_selectors = default_worker_node_selectors
-        self.worker_resources = worker_resources
-        self.worker_node_selectors = worker_node_selectors
+        self.default_worker = default_worker
+        self.worker = worker
 
 
 class PytorchSchema(Schema):
     n_workers = fields.Int(allow_none=True)
-    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    default_worker_node_selectors = fields.Dict(allow_none=True)
-    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
-    worker_node_selectors = fields.List(fields.Dict(), allow_none=True)
+    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
+    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -456,34 +582,27 @@ class PytorchSchema(Schema):
         return PytorchConfig.remove_reduced_attrs(data)
 
 
-class PytorchConfig(BaseConfig):
+class PytorchConfig(BaseConfig, FrameworkEnvironmentMixin):
     IDENTIFIER = 'pytorch'
     SCHEMA = PytorchSchema
 
     def __init__(self,
                  n_workers=0,
-                 default_worker_resources=None,
-                 default_worker_node_selectors=None,
-                 worker_resources=None,
-                 worker_node_selectors=None):
+                 default_worker=None,
+                 worker=None,
+                 ):
         self.n_workers = n_workers
-        self.default_worker_resources = default_worker_resources
-        self.default_worker_node_selectors = default_worker_node_selectors
-        self.worker_resources = worker_resources
-        self.worker_node_selectors = worker_node_selectors
+        self.default_worker = default_worker
+        self.worker = worker
 
 
 class MXNetSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
-    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    default_ps_resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    default_worker_node_selectors = fields.Dict(allow_none=True)
-    default_ps_node_selectors = fields.Dict(allow_none=True)
-    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
-    ps_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
-    worker_node_selectors = fields.List(fields.Dict(), allow_none=True)
-    ps_node_selectors = fields.List(fields.Dict(), allow_none=True)
+    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
+    default_ps = fields.Nested(PodEnvironmentSchema, allow_none=True)
+    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+    ps = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -497,31 +616,24 @@ class MXNetSchema(Schema):
         return MXNetConfig.remove_reduced_attrs(data)
 
 
-class MXNetConfig(BaseConfig):
+class MXNetConfig(BaseConfig, FrameworkEnvironmentMixin):
     IDENTIFIER = 'mxnet'
     SCHEMA = MXNetSchema
 
     def __init__(self,
                  n_workers=0,
                  n_ps=0,
-                 default_worker_resources=None,
-                 default_ps_resources=None,
-                 default_worker_node_selectors=None,
-                 default_ps_node_selectors=None,
-                 worker_resources=None,
-                 ps_resources=None,
-                 worker_node_selectors=None,
-                 ps_node_selectors=None):
+                 default_worker=None,
+                 default_ps=None,
+                 worker=None,
+                 ps=None,
+                 ):
         self.n_workers = n_workers
         self.n_ps = n_ps
-        self.default_worker_resources = default_worker_resources
-        self.default_ps_resources = default_ps_resources
-        self.default_worker_node_selectors = default_worker_node_selectors
-        self.default_ps_node_selectors = default_ps_node_selectors
-        self.worker_resources = worker_resources
-        self.ps_resources = ps_resources
-        self.worker_node_selectors = worker_node_selectors
-        self.ps_node_selectors = ps_node_selectors
+        self.default_worker = default_worker
+        self.default_ps = default_ps
+        self.worker = worker
+        self.ps = ps
 
 
 def validate_frameworks(frameworks):
@@ -579,12 +691,10 @@ class OutputsConfig(BaseConfig):
         self.experiments = experiments
 
 
-class EnvironmentSchema(Schema):
+class EnvironmentSchema(PodEnvironmentSchema):
     cluster_uuid = UUID(allow_none=True)
-    resources = fields.Nested(PodResourcesSchema, allow_none=True)
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
     outputs = fields.Nested(OutputsSchema, allow_none=True)
-    node_selectors = fields.Dict(allow_none=True)
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
     horovod = fields.Nested(HorovodSchema, allow_none=True)
     mxnet = fields.Nested(MXNetSchema, allow_none=True)
@@ -609,25 +719,31 @@ class EnvironmentSchema(Schema):
                              data.get('horovod')])
 
 
-class EnvironmentConfig(BaseConfig):
+class EnvironmentConfig(PodEnvironmentConfig):
     IDENTIFIER = 'environment'
     SCHEMA = EnvironmentSchema
 
     def __init__(self,
                  cluster_uuid=None,
-                 resources=None,
                  persistence=None,
                  outputs=None,
+                 resources=None,
                  node_selectors=None,
+                 affinity=None,
+                 tolerations=None,
                  tensorflow=None,
                  horovod=None,
                  pytorch=None,
                  mxnet=None):
         self.cluster_uuid = cluster_uuid
-        self.resources = resources
         self.persistence = persistence
         self.outputs = outputs
-        self.node_selectors = node_selectors
+        super(EnvironmentConfig, self).__init__(
+            resources=resources,
+            node_selectors=node_selectors,
+            affinity=affinity,
+            tolerations=tolerations,
+        )
         validate_frameworks([tensorflow, horovod, pytorch, mxnet])
         self.tensorflow = tensorflow
         self.horovod = horovod

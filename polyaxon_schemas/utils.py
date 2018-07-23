@@ -38,6 +38,13 @@ class UUID(fields.UUID):
         return super(fields.String, self)._serialize(validated, attr, obj)  # noqa
 
 
+class IndexedDict(fields.Dict):
+    def _validated(self, value):
+        """Check the dict has an index or raise a :exc:`ValidationError` if an error occurs."""
+        if not (isinstance(value, Mapping) or 'index' in value):
+            self.fail('invalid')
+
+
 class ObjectOrListObject(fields.Field):
     def __init__(self, cls_or_instance, min=None, max=None, **kwargs):  # noqa
         self.min = min

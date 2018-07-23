@@ -206,83 +206,112 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add default worker session config
-        config_dict['default_worker_config'] = SessionConfig(
-            intra_op_parallelism_threads=1,
-            inter_op_parallelism_threads=3
-        ).to_dict()
+        config_dict['default_worker'] = {
+            'config': SessionConfig(
+                intra_op_parallelism_threads=1,
+                inter_op_parallelism_threads=3).to_dict()
+        }
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add default worker resources
-        config_dict['default_worker_resources'] = PodResourcesConfig(
-            cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
+        config_dict['default_worker'] = {
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                gpu=K8SResourcesConfig(2, 4)).to_dict()
+        }
         config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
         # Add default ps session config
-        config_dict['default_ps_config'] = SessionConfig(
-            intra_op_parallelism_threads=0,
-            inter_op_parallelism_threads=2
-        ).to_dict()
+        config_dict['default_ps'] = {
+            'config': SessionConfig(
+                intra_op_parallelism_threads=0,
+                inter_op_parallelism_threads=2
+            ).to_dict()
+        }
         config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
         # Add default ps resources
-        config_dict['default_ps_resources'] = PodResourcesConfig(
-            cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()
+        config_dict['default_ps'] = {
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                memory=K8SResourcesConfig(256, 400)).to_dict()
+        }
         config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
         # Adding custom config for worker 3
-        config_dict['worker_configs'] = [SessionConfig(
-            index=3,
-            gpu_options=GPUOptionsConfig(gpu_memory_fraction=0.4),
-            intra_op_parallelism_threads=8,
-            inter_op_parallelism_threads=8
-        ).to_dict()]
+        config_dict['worker'] = [{
+            'index': 3,
+            'config': SessionConfig(
+                gpu_options=GPUOptionsConfig(gpu_memory_fraction=0.4),
+                intra_op_parallelism_threads=8,
+                inter_op_parallelism_threads=8
+            ).to_dict()
+        }]
         config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
         # Adding custom resources for worker 4
-        config_dict['worker_resources'] = [PodResourcesConfig(
-            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config_dict['worker'] = [{
+            'index': 4,
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                memory=K8SResourcesConfig(256, 400),
+            ).to_dict()
+        }]
         config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
         # Adding custom config for ps 2
-        config_dict['ps_configs'] = [SessionConfig(
-            index=2,
-            gpu_options=GPUOptionsConfig(allow_growth=False),
-            intra_op_parallelism_threads=1,
-            inter_op_parallelism_threads=1
-        ).to_dict()]
+        config_dict['ps'] = [{
+            'index': 2,
+            'config': SessionConfig(
+                gpu_options=GPUOptionsConfig(allow_growth=False),
+                intra_op_parallelism_threads=1,
+                inter_op_parallelism_threads=1
+            ).to_dict()
+        }]
         config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
         # Adding custom resources for ps 4
-        config_dict['ps_resources'] = [PodResourcesConfig(
-            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config_dict['ps'] = [{
+            'index': 4,
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                memory=K8SResourcesConfig(256, 400)).to_dict()
+        }]
         config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
     def test_horovod_config(self):
         config_dict = {
             'n_workers': 10,
         }
         config = HorovodConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
         # Add default worker resources
-        config_dict['default_worker_resources'] = PodResourcesConfig(
-            cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
+        config_dict['default_worker'] = {
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                gpu=K8SResourcesConfig(2, 4)).to_dict()
+        }
         config = HorovodConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom resources for worker 4
-        config_dict['worker_resources'] = [PodResourcesConfig(
-            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config_dict['worker'] = [{
+            'index': 4,
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                memory=K8SResourcesConfig(256, 400)).to_dict()
+        }]
         config = HorovodConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert_equal_dict(config_dict, config.to_light_dict())
 
     def test_pytorch_config(self):
         config_dict = {
@@ -292,14 +321,20 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add default worker resources
-        config_dict['default_worker_resources'] = PodResourcesConfig(
-            cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
+        config_dict['default_worker'] = {
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                gpu=K8SResourcesConfig(2, 4)).to_dict()
+        }
         config = PytorchConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom resources for worker 4
-        config_dict['worker_resources'] = [PodResourcesConfig(
-            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config_dict['worker'] = [{
+            'index': 4,
+            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1),
+                                            memory=K8SResourcesConfig(256, 400)).to_dict()
+        }]
         config = PytorchConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
@@ -312,26 +347,40 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add default worker resources
-        config_dict['default_worker_resources'] = PodResourcesConfig(
-            cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
+        config_dict['default_worker'] = {
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                gpu=K8SResourcesConfig(2, 4)).to_dict()
+        }
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add default ps resources
-        config_dict['default_ps_resources'] = PodResourcesConfig(
-            cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()
+        config_dict['default_ps'] = {
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                memory=K8SResourcesConfig(256, 400)).to_dict()
+        }
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom resources for worker 4
-        config_dict['worker_resources'] = [PodResourcesConfig(
-            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config_dict['worker'] = [{
+            'index': 4,
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                memory=K8SResourcesConfig(256, 400)).to_dict()
+        }]
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom resources for ps 4
-        config_dict['ps_resources'] = [PodResourcesConfig(
-            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config_dict['ps'] = [{
+            'index': 4,
+            'resources': PodResourcesConfig(
+                cpu=K8SResourcesConfig(0.5, 1),
+                memory=K8SResourcesConfig(256, 400)).to_dict()
+        }]
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 

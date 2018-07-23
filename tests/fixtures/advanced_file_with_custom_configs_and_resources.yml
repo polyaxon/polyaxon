@@ -31,27 +31,57 @@ environment:
         intra_op_parallelism_threads: 2
         inter_op_parallelism_threads: 2
 
-    default_worker_config:
-      allow_soft_placement: true
-      intra_op_parallelism_threads: 1
-      inter_op_parallelism_threads: 1
+    default_worker:
+      config:
+        allow_soft_placement: true
+        intra_op_parallelism_threads: 1
+        inter_op_parallelism_threads: 1
 
-    worker_configs:
+    worker:
       - index: 3
-        allow_soft_placement: False
-        intra_op_parallelism_threads: 5
-        inter_op_parallelism_threads: 5
+        config:
+          allow_soft_placement: False
+          intra_op_parallelism_threads: 5
+          inter_op_parallelism_threads: 5
+      - index: 4
+        tolerations:
+          - key: "key"
+            operator: "Exists"
+            effect: "NoSchedule"
 
-    default_ps_resources:
-      cpu:
-        requests: 2
-        limits: 4
+    default_ps:
+      resources:
+        cpu:
+          requests: 2
+          limits: 4
 
-    ps_resources:
+    ps:
+      - index: 7
+        tolerations:
+          - operator: "Exists"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/e2e-az-name
+                  operator: In
+                  values:
+                  - e2e-az1
+                  - e2e-az2
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                - key: another-node-label-key
+                  operator: In
+                  values:
+                  - another-node-label-value
       - index: 9
-        memory:
-          requests: 512
-          limits: 1024
+        resources:
+          memory:
+            requests: 512
+            limits: 1024
 
 
 declarations:

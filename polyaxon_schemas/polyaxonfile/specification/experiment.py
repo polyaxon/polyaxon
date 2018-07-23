@@ -162,3 +162,11 @@ class ExperimentSpecification(JobSpecification):
     @cached_property
     def master_node_selectors(self):
         return self.environment.node_selectors if self.environment else None
+
+    @cached_property
+    def master_affinity(self):
+        return self.environment.affinity if self.environment else None
+
+    @cached_property
+    def master_tolerations(self):
+        return self.environment.tolerations if self.environment else None

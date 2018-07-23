@@ -12,34 +12,66 @@ environment:
       requests: 1
       limits: 2
 
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/e2e-az-name
+            operator: In
+            values:
+            - e2e-az1
+            - e2e-az2
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: another-node-label-key
+            operator: In
+            values:
+            - another-node-label-value
+
   tensorflow:
     n_workers: 5
     n_ps: 10
 
-    default_worker_resources:
-      cpu:
-        requests: 3
-        limits: 3
-      memory:
+    default_worker:
+      tolerations:
+        - key: "key"
+          operator: "Exists"
+          effect: "NoSchedule"
+      resources:
+        cpu:
+          requests: 3
+          limits: 3
+        memory:
           requests: 256
           limits: 256
 
-    worker_resources:
+    worker:
+      - index: 2
+        tolerations:
+          - operator: "Exists"
       - index: 3
-        memory:
-          requests: 300
-          limits: 300
+        resources:
+          memory:
+            requests: 300
+            limits: 300
 
-    default_ps_resources:
-      cpu:
-        requests: 2
-        limits: 4
+    default_ps:
+      tolerations:
+        - operator: "Exists"
+      resources:
+        cpu:
+          requests: 2
+          limits: 4
 
-    ps_resources:
+    ps:
       - index: 9
-        memory:
-          requests: 512
-          limits: 1024
+        resources:
+          memory:
+            requests: 512
+            limits: 1024
 
 build:
   image: my_image

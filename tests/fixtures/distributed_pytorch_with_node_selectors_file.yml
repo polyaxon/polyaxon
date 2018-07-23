@@ -19,26 +19,26 @@ environment:
   pytorch:
     n_workers: 5
 
-    default_worker_resources:
-      cpu:
-        requests: 3
-        limits: 3
-      memory:
+    default_worker:
+      node_selectors:
+        polyaxon.com: node_for_worker_tasks
+      resources:
+        cpu:
+          requests: 3
+          limits: 3
+        memory:
           requests: 256
           limits: 256
 
-    worker_resources:
-      - index: 3
-        memory:
-          requests: 300
-          limits: 300
-
-    default_worker_node_selectors:
-      polyaxon.com: node_for_worker_tasks
-
-    worker_node_selectors:
+    worker:
       - index: 2
-        polyaxon.com: node_for_worker_task_2
+        node_selectors:
+          polyaxon.com: node_for_worker_task_2
+      - index: 3
+        resources:
+          memory:
+            requests: 300
+            limits: 300
 
 build:
   image: my_image
