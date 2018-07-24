@@ -28,32 +28,49 @@ from scheduler.spawners.utils import get_job_definition
 _logger = logging.getLogger('polyaxon.scheduler.experiment')
 
 
-def create_job(job_uuid, experiment, definition, role=None, resources=None):
+def create_job(job_uuid,
+               experiment,
+               definition,
+               role=None,
+               resources=None,
+               node_selector=None,
+               affinity=None,
+               tolerations=None):
     job = ExperimentJob(uuid=job_uuid,
                         experiment=experiment,
                         definition=definition)
     if role:
         job.role = role
 
-    if not resources:
-        job.save()
-        return
+    if node_selector:
+        job.node_selector = node_selector
 
-    job_resources = {}
-    if resources.memory:
-        _resources = resources.memory.to_dict()
-        if any(_resources.values()):
-            job_resources['memory'] = _resources
-    if resources.cpu:
-        _resources = resources.cpu.to_dict()
-        if any(_resources.values()):
-            job_resources['cpu'] = _resources
-    if resources.gpu:
-        _resources = resources.gpu.to_dict()
-        if any(_resources.values()):
-            job_resources['gpu'] = _resources
-    if job_resources:
-        job.resources = JobResources.objects.create(**job_resources)
+    if affinity:
+        job.affinity = affinity
+
+    if tolerations:
+        job.tolerations = tolerations
+
+    def set_resources():
+        job_resources = {}
+        if resources.memory:
+            _resources = resources.memory.to_dict()
+            if any(_resources.values()):
+                job_resources['memory'] = _resources
+        if resources.cpu:
+            _resources = resources.cpu.to_dict()
+            if any(_resources.values()):
+                job_resources['cpu'] = _resources
+        if resources.gpu:
+            _resources = resources.gpu.to_dict()
+            if any(_resources.values()):
+                job_resources['gpu'] = _resources
+        if job_resources:
+            job.resources = JobResources.objects.create(**job_resources)
+
+    if resources:
+        set_resources()
+
     job.save()
 
 
@@ -79,16 +96,29 @@ def handle_tensorflow_experiment(experiment, spawner, response):
     create_job(job_uuid=job_uuid,
                experiment=experiment,
                definition=get_job_definition(master),
-               resources=spawner.spec.master_resources)
+               resources=spawner.spec.master_resources,
+               node_selector=spawner.spec.master_node_selector,
+               affinity=spawner.spec.master_affinity,
+               tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed, = spawner.spec.cluster_def
+
     worker_resources = TensorflowSpecification.get_worker_resources(
         environment=spawner.spec.environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
-
-    ps_resources = TensorflowSpecification.get_ps_resources(
+    worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_affinities = TensorflowSpecification.get_worker_affinities(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_tolerations = TensorflowSpecification.get_worker_tolerations(
         environment=spawner.spec.environment,
         cluster=cluster,
         is_distributed=is_distributed
@@ -101,7 +131,31 @@ def handle_tensorflow_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
-                   resources=worker_resources.get(i))
+                   resources=worker_resources.get(i),
+                   node_selector=worker_node_selectors.get(i),
+                   affinity=worker_affinities.get(i),
+                   tolerations=worker_tolerations.get(i))
+
+    ps_resources = TensorflowSpecification.get_ps_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    ps_affinities = TensorflowSpecification.get_ps_affinities(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    ps_tolerations = TensorflowSpecification.get_ps_tolerations(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
 
     for i, ps in enumerate(response[TaskType.PS]):
         job_uuid = ps['pod']['metadata']['labels']['job_uuid']
@@ -110,7 +164,10 @@ def handle_tensorflow_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(ps),
                    role=TaskType.PS,
-                   resources=ps_resources.get(i))
+                   resources=ps_resources.get(i),
+                   node_selector=ps_node_selectors.get(i),
+                   affinity=ps_affinities.get(i),
+                   tolerations=ps_tolerations.get(i))
 
 
 def handle_horovod_experiment(experiment, spawner, response):
@@ -122,10 +179,28 @@ def handle_horovod_experiment(experiment, spawner, response):
     create_job(job_uuid=job_uuid,
                experiment=experiment,
                definition=get_job_definition(master),
-               resources=spawner.spec.master_resources)
+               resources=spawner.spec.master_resources,
+               node_selector=spawner.spec.master_node_selector,
+               affinity=spawner.spec.master_affinity,
+               tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed, = spawner.spec.cluster_def
     worker_resources = HorovodSpecification.get_worker_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_node_selectors = HorovodSpecification.get_worker_node_selectors(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_affinities = HorovodSpecification.get_worker_affinities(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_tolerations = HorovodSpecification.get_worker_tolerations(
         environment=spawner.spec.environment,
         cluster=cluster,
         is_distributed=is_distributed
@@ -138,7 +213,10 @@ def handle_horovod_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
-                   resources=worker_resources.get(i))
+                   resources=worker_resources.get(i),
+                   node_selector=worker_node_selectors.get(i),
+                   affinity=worker_affinities.get(i),
+                   tolerations=worker_tolerations.get(i))
 
 
 def handle_pytorch_experiment(experiment, spawner, response):
@@ -150,10 +228,28 @@ def handle_pytorch_experiment(experiment, spawner, response):
     create_job(job_uuid=job_uuid,
                experiment=experiment,
                definition=get_job_definition(master),
-               resources=spawner.spec.master_resources)
+               resources=spawner.spec.master_resources,
+               node_selector=spawner.spec.master_node_selector,
+               affinity=spawner.spec.master_affinity,
+               tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed, = spawner.spec.cluster_def
     worker_resources = PytorchSpecification.get_worker_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_node_selectors = PytorchSpecification.get_worker_node_selectors(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_affinities = PytorchSpecification.get_worker_affinities(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_tolerations = PytorchSpecification.get_worker_tolerations(
         environment=spawner.spec.environment,
         cluster=cluster,
         is_distributed=is_distributed
@@ -166,7 +262,10 @@ def handle_pytorch_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
-                   resources=worker_resources.get(i))
+                   resources=worker_resources.get(i),
+                   node_selector=worker_node_selectors.get(i),
+                   affinity=worker_affinities.get(i),
+                   tolerations=worker_tolerations.get(i))
 
 
 def handle_mxnet_experiment(experiment, spawner, response):
@@ -178,7 +277,10 @@ def handle_mxnet_experiment(experiment, spawner, response):
     create_job(job_uuid=job_uuid,
                experiment=experiment,
                definition=get_job_definition(master),
-               resources=spawner.spec.master_resources)
+               resources=spawner.spec.master_resources,
+               node_selector=spawner.spec.master_node_selector,
+               affinity=spawner.spec.master_affinity,
+               tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed, = spawner.spec.cluster_def
     worker_resources = MXNetSpecification.get_worker_resources(
@@ -186,8 +288,17 @@ def handle_mxnet_experiment(experiment, spawner, response):
         cluster=cluster,
         is_distributed=is_distributed
     )
-
-    server_resources = MXNetSpecification.get_ps_resources(
+    worker_node_selectors = MXNetSpecification.get_worker_node_selectors(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_affinities = MXNetSpecification.get_worker_affinities(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_tolerations = MXNetSpecification.get_worker_tolerations(
         environment=spawner.spec.environment,
         cluster=cluster,
         is_distributed=is_distributed
@@ -200,8 +311,31 @@ def handle_mxnet_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
-                   resources=worker_resources.get(i))
+                   resources=worker_resources.get(i),
+                   node_selector=worker_node_selectors.get(i),
+                   affinity=worker_affinities.get(i),
+                   tolerations=worker_tolerations.get(i))
 
+    server_resources = MXNetSpecification.get_ps_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    server_node_selectors = MXNetSpecification.get_ps_node_selectors(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    server_affinities = MXNetSpecification.get_ps_affinities(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    server_tolerations = MXNetSpecification.get_ps_tolerations(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
     for i, server in enumerate(response[TaskType.SERVER]):
         job_uuid = server['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
@@ -209,7 +343,10 @@ def handle_mxnet_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(server),
                    role=TaskType.SERVER,
-                   resources=server_resources.get(i))
+                   resources=server_resources.get(i),
+                   node_selector=server_node_selectors,
+                   affinity=server_affinities,
+                   tolerations=server_tolerations)
 
 
 def handle_base_experiment(experiment, spawner, response):
@@ -221,7 +358,10 @@ def handle_base_experiment(experiment, spawner, response):
     create_job(job_uuid=job_uuid,
                experiment=experiment,
                definition=get_job_definition(master),
-               resources=spawner.spec.master_resources)
+               resources=spawner.spec.master_resources,
+               node_selector=spawner.spec.master_node_selector,
+               affinity=spawner.spec.master_affinity,
+               tolerations=spawner.spec.master_tolerations)
 
 
 def handle_experiment(experiment, spawner, response):

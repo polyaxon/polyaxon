@@ -10,6 +10,11 @@ from libs.paths.projects import get_project_repos_path
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.env_vars import get_job_env_vars
+from scheduler.spawners.templates.pod_environment import (
+    get_affinity,
+    get_node_selector,
+    get_tolerations
+)
 from scheduler.spawners.templates.project_jobs import deployments
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
@@ -87,7 +92,9 @@ class NotebookSpawner(ProjectJobSpawner):
                        outputs_refs_jobs=None,
                        outputs_refs_experiments=None,
                        resources=None,
-                       node_selectors=None,
+                       node_selector=None,
+                       affinity=None,
+                       tolerations=None,
                        allow_commits=False):
         ports = [self.request_notebook_port()]
         target_ports = [self.PORT]
@@ -115,6 +122,16 @@ class NotebookSpawner(ProjectJobSpawner):
         volume_mounts.append(code_volume_mount)
         deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
                                                     job_uuid=self.job_uuid)
+
+        node_selector = get_node_selector(
+            node_selector=node_selector,
+            default_node_selector=settings.NODE_SELECTOR_EXPERIMENTS)
+        affinity = get_affinity(
+            affinity=affinity,
+            default_affinity=settings.AFFINITY_EXPERIMENTS)
+        tolerations = get_tolerations(
+            tolerations=tolerations,
+            default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=settings.APP_LABELS_NOTEBOOK,
@@ -134,7 +151,9 @@ class NotebookSpawner(ProjectJobSpawner):
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             env_vars=env_vars,
             resources=resources,
-            node_selector=node_selectors,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_NOTEBOOK,

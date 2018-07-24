@@ -46,7 +46,9 @@ def start_job(job):
                                     outputs_refs_jobs=job.outputs_refs_jobs,
                                     outputs_refs_experiments=job.outputs_refs_experiments,
                                     resources=job.resources,
-                                    node_selectors=job.node_selectors)
+                                    node_selector=job.node_selector,
+                                    affinity=job.affinity,
+                                    tolerations=job.tolerations)
     except ApiException as e:
         _logger.warning('Could not start job, please check your polyaxon spec %s', e)
         job.set_status(

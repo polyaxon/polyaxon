@@ -23,6 +23,8 @@ def get_deployment_spec(namespace,
                         container_name=None,
                         resources=None,
                         node_selector=None,
+                        affinity=None,
+                        tolerations=None,
                         role=None,
                         type=None,  # pylint:disable=redefined-builtin
                         replicas=1):
@@ -45,6 +47,8 @@ def get_deployment_spec(namespace,
                                     args=args,
                                     resources=resources,
                                     node_selector=node_selector,
+                                    affinity=affinity,
+                                    tolerations=tolerations,
                                     ports=ports,
                                     env_vars=env_vars)
     template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
@@ -68,6 +72,8 @@ def get_deployment(namespace,
                    env_vars=None,
                    resources=None,
                    node_selector=None,
+                   affinity=None,
+                   tolerations=None,
                    role=None,
                    type=None,  # pylint:disable=redefined-builtin
                    replicas=1):
@@ -99,6 +105,8 @@ def get_deployment(namespace,
                                container_name=container_name,
                                resources=resources,
                                node_selector=node_selector,
+                               affinity=affinity,
+                               tolerations=tolerations,
                                role=role,
                                type=type,
                                replicas=replicas)

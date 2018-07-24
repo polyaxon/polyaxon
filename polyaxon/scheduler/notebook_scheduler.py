@@ -8,7 +8,6 @@ from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
 from libs.paths.exceptions import VolumeNotFoundError
 from scheduler.spawners.notebook_spawner import NotebookSpawner
-from scheduler.spawners.templates.node_selectors import get_node_selector
 from scheduler.spawners.utils import get_job_definition
 
 _logger = logging.getLogger('polyaxon.scheduler.notebook')
@@ -38,18 +37,17 @@ def start_notebook(notebook):
 
     try:
         allow_commits = False
-        if settings.REPOS_CLAIM_NAME or notebook.node_selectors:
+        if settings.REPOS_CLAIM_NAME or notebook.node_selector:
             allow_commits = True
-        node_selectors = get_node_selector(
-            node_selector=notebook.node_selectors,
-            default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
         results = spawner.start_notebook(image=job_docker_image,
                                          persistence_outputs=notebook.persistence_outputs,
                                          persistence_data=notebook.persistence_data,
                                          outputs_refs_jobs=notebook.outputs_refs_jobs,
                                          outputs_refs_experiments=notebook.outputs_refs_experiments,
                                          resources=notebook.resources,
-                                         node_selectors=node_selectors,
+                                         node_selector=notebook.node_selector,
+                                         affinity=notebook.affinity,
+                                         tolerations=notebook.tolerations,
                                          allow_commits=allow_commits)
     except ApiException as e:
         _logger.warning('Could not start notebook, please check your polyaxon spec %s', e)

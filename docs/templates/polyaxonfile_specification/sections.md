@@ -350,7 +350,7 @@ which schedules experiments and jobs based on node selectors provided during the
 
 ```yaml
 environment:
-  node_selectors:
+  node_selector:
     node_label: node_value
 ```
 
@@ -366,37 +366,51 @@ The number of workers to use for an experiment.
 
 The number of parameter server to use for an experiment.
 
-#### default_worker_resources
+#### default_worker
 
-If specified, it will be the default workers resources.
+Default environment specification to use for all workers.
 
-#### default_ps_resources
+```yaml
+  resources:
+  node_selector:
+  affinity:
+  tolerations:
+```
 
-If specified, it will be the default ps resources.
+#### default_ps
 
-#### worker_resources
+Default environment specification to use for all ps.
 
-Defines a specific resources definition for a worker indicated by the index of the worker.
+```yaml
+  resources:
+  node_selector:
+  affinity:
+  tolerations:
+```
 
-#### ps_resources
+#### worker
 
-Defines a specific resources definition for a ps indicated by the index of the ps.
+Defines a specific worker(s)' environment section defining, indicated by index:
 
-#### default_worker_node_selectors
+```yaml
+ index: i
+   resources:
+   node_selector:
+   affinity:
+   tolerations:
+```
 
-If specified, it will be the default workers node selectors.
+#### ps
 
-#### default_ps_node_selectors
+Defines a specific ps(s)' environment section defining, indicated by index:
 
-If specified, it will be the default ps node selectors.
-
-#### worker_node_selectors
-
-Defines a specific node selectors for a worker indicated by the index of the worker.
-
-#### ps_node_selectors
-
-Defines a specific node selectors for a ps indicated by the index of the ps.
+```yaml
+ index: i
+   resources:
+   node_selector:
+   affinity:
+   tolerations:
+```
 
 Example:
 
@@ -404,8 +418,26 @@ Example:
 
 environment:
 
-  node_selectors:
+  node_selector:
     polyaxon: experiments
+
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
+
+  tolerations:
+    - key: "key"
+      operator: "Exists"
+      effect: "NoSchedule"
 
   resources:
     cpu:
@@ -419,29 +451,35 @@ environment:
       n_workers: 4
       n_ps: 1
 
-      worker_node_selectors:
-        - index: 3
-          polyaxon: special_node
-
-      default_worker_resources:
-        cpu:
-          requests: 1
-          limits: 2
-        memory:
-          requests: 256
-          limits: 1024
-        gpu:
-          request: 1
-          limits: 1
-
-      worker_resources:
-        - index: 2
+      default_worker:
+        resources:
           cpu:
             requests: 1
             limits: 2
           memory:
             requests: 256
             limits: 1024
+          gpu:
+            request: 1
+            limits: 1
+        tolerations:
+          - operator: "Exists"
+
+      worker:
+        - index: 2
+          resources:
+            cpu:
+              requests: 1
+              limits: 2
+            memory:
+              requests: 256
+              limits: 1024
+        - index: 3
+          node_selector:
+            polyaxon: special_node
+          tolerations:
+            - key: "key"
+              operator: "Exists"
 
       ps_resources:
         - index: 0
@@ -463,37 +501,50 @@ The number of workers to use for an experiment.
 
 The number of parameter server to use for an experiment.
 
-#### default_worker_resources
+#### default_worker
 
-If specified, it will be the default workers resources.
+Default environment specification to use for all workers.
 
-#### default_ps_resources
+```yaml
+  resources:
+  node_selector:
+  affinity:
+  tolerations:
+```
 
-If specified, it will be the default ps resources.
+#### default_ps
 
-#### worker_resources
+Default environment specification to use for all ps.
 
-Defines a specific resources definition for a worker indicated by the index of the worker.
+```yaml
+  resources:
+  node_selector:
+  affinity:
+  tolerations:
+```
+#### worker
 
-#### ps_resources
+Defines a specific worker(s)' environment section defining, indicated by index:
 
-Defines a specific resources definition for a ps indicated by the index of the ps.
+```yaml
+ index: i
+   resources:
+   node_selector:
+   affinity:
+   tolerations:
+```
 
-#### default_worker_node_selectors
+#### ps
 
-If specified, it will be the default workers node selectors.
+Defines a specific ps(s)' environment section defining, indicated by index:
 
-#### default_ps_node_selectors
-
-If specified, it will be the default ps node selectors.
-
-#### worker_node_selectors
-
-Defines a specific node selectors for a worker indicated by the index of the worker.
-
-#### ps_node_selectors
-
-Defines a specific node selectors for a ps indicated by the index of the ps.
+```yaml
+ index: i
+   resources:
+   node_selector:
+   affinity:
+   tolerations:
+```
 
 Example:
 
@@ -504,8 +555,9 @@ environment:
     n_workers: 4
     n_ps: 1
 
-    default_ps_node_selectors:
-      polyaxon: nodes_for_param_servers
+    default_ps:
+      node_selector:
+        polyaxon: nodes_for_param_servers
 ```
 
 ### pytorch
@@ -514,21 +566,28 @@ environment:
 
 The number of workers to use for an experiment.
 
-#### default_worker_resources
+#### default_worker
 
-If specified, it will be the default workers resources.
+Default environment specification to use for all workers.
 
-#### worker_resources
+```yaml
+  resources:
+  node_selector:
+  affinity:
+  tolerations:
+```
 
-Defines a specific resources definition for a worker indicated by the index of the worker.
+#### worker
 
-#### default_worker_node_selectors
+Defines a specific worker(s)' environment section defining, indicated by index:
 
-If specified, it will be the default workers node selectors.
-
-#### worker_node_selectors
-
-Defines a specific node selectors for a worker indicated by the index of the worker.
+```yaml
+ index: i
+   resources:
+   node_selector:
+   affinity:
+   tolerations:
+```
 
 Example:
 
@@ -545,21 +604,29 @@ environment:
 
 The number of workers to use for an experiment.
 
-#### default_worker_resources
 
-If specified, it will be the default workers resources.
+#### default_worker
 
-#### worker_resources
+Default environment specification to use for all workers.
 
-Defines a specific resources definition for a worker indicated by the index of the worker.
+```yaml
+  resources:
+  node_selector:
+  affinity:
+  tolerations:
+```
 
-#### default_worker_node_selectors
+#### worker
 
-If specified, it will be the default workers node selectors.
+Defines a specific worker(s)' environment section defining, indicated by index:
 
-#### worker_node_selectors
-
-Defines a specific node selectors for a worker indicated by the index of the worker.
+```yaml
+ index: i
+   resources:
+   node_selector:
+   affinity:
+   tolerations:
+```
 
 
 Example:

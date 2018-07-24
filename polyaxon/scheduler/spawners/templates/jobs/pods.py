@@ -18,7 +18,11 @@ from scheduler.spawners.templates.env_vars import (
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
-from scheduler.spawners.templates.node_selectors import get_node_selector
+from scheduler.spawners.templates.pod_environment import (
+    get_affinity,
+    get_node_selector,
+    get_tolerations
+)
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
 from scheduler.spawners.templates.volumes import get_pod_outputs_volume
@@ -159,6 +163,8 @@ class PodManager(object):
                           args=None,
                           resources=None,
                           node_selector=None,
+                          affinity=None,
+                          tolerations=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
         volume_mounts = get_list(volume_mounts)
@@ -185,7 +191,14 @@ class PodManager(object):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTORS_JOBS)
+            default_node_selector=settings.NODE_SELECTOR_JOBS)
+        affinity = get_affinity(
+            affinity=affinity,
+            default_affinity=settings.AFFINITY_JOBS)
+        tolerations = get_tolerations(
+            tolerations=tolerations,
+            default_tolerations=settings.TOLERATIONS_JOBS)
+
         service_account_name = None
         if settings.K8S_RBAC_ENABLED:
             service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
@@ -195,7 +208,9 @@ class PodManager(object):
             init_containers=to_list(self.get_init_container(persistence_outputs)),
             containers=containers,
             volumes=volumes,
-            node_selector=node_selector)
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations)
 
     def get_pod(self,
                 volume_mounts,
@@ -209,6 +224,8 @@ class PodManager(object):
                 args=None,
                 resources=None,
                 node_selector=None,
+                affinity=None,
+                tolerations=None,
                 restart_policy=None):
         metadata = client.V1ObjectMeta(name=self.k8s_job_name,
                                        labels=self.labels,
@@ -226,6 +243,8 @@ class PodManager(object):
             args=args,
             resources=resources,
             node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
             restart_policy=restart_policy)
         return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
                             kind=k8s_constants.K8S_POD_KIND,
