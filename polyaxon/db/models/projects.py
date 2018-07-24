@@ -18,7 +18,7 @@ class Project(DiffModel, DescribableModel, TagModel, TensorboardJobMixin):
         unique=True,
         null=False)
     name = models.CharField(
-        max_length=256,
+        max_length=128,
         validators=[validate_slug, validate_blacklist_name])
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
