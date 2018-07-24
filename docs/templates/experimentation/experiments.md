@@ -24,12 +24,11 @@ run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
-If the code requires many python dependencies, Polyaxon provides an elegant way to install these requirements,
+If the code requires many python dependencies, you can install these requirements by using a `requirements.txt` file,
 instead of specifying every single library in the `build_steps` part of the `run` section,
-we can create a requirements file with the name `polyaxon_requirements.txt` and just create one command in the build_steps `pip install -r polyaxon_requirements.txt`
-and Polyaxon will automatically detect it and install the requirements.
+we can create a requirements file with the name `polyaxon_requirements.txt` and just create one command in the build_steps `pip install -r polyaxon_requirements.txt`.
 
-Polyaxon also allows you to specify a `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
+You can also add any other executable script, e.g. `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
 
 Let's create a `polyaxon_requirements.txt` to demonstrate this process.
 
@@ -64,25 +63,43 @@ run:
     The declarations section was not completely necessary,
     we could have also just passed the value directly `--batch-size=128 --lr=0.01`
 
-    For more information please visite the [declarations section](/polyaxonfile_specification/sections#declarations) reference.
+    For more information please visit the [declarations section](/polyaxonfile_specification/sections#declarations) reference.
 
 !!! info "More details"
     For more details about the `run section` check the [run section reference](/polyaxonfile_specification/sections#run)
+
+It
 
 
 To make sure that the polyaxon file is valid, you can run the following command,
 
 ```bash
-$ polyaxon check -f polyaxonfile.yml -m
+$ polyaxon check -f polyaxonfile.yml -def
 
 Polyaxonfile valid
 
 This file has one independent experiment.
 ```
 
-This command validate the polyaxon file, and the option `-m` returns the matrix space,
-in this case we have only one independent experiment. This option is important when we want
-to check a polyaxonfile with a matrix section having an [experiment group](experiment_groups)
+This command validate the polyaxon file, and the option `-def` returns the experiment definition,
+in this case we have only one independent experiment.
+
+In some case you will need to change directory before running a command,
+the best way to do that is to create executable file,
+e.g. `run.sh` where you will put all the commands you wish to run, and then just run that file:
+
+For example the `run.sh` could be:
+
+```bash
+cd to_some_path; echo "running my run.sh file"; python model.py
+```
+
+And your cmd in polyaxonfile:
+
+```yaml
+run:
+  cmd: /bin/bash run.sh
+```
 
 ## Running an experiment
 
