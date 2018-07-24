@@ -37,6 +37,8 @@ run:
   cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
+### Environment variables
+
 To expose some environment variables you can use `env_vars`
 
 For example
@@ -64,6 +66,8 @@ run:
   cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
+### Installing libraries with pip
+
 Polyaxon also provides, an easy way to install multiple python libraries:
 
  1. you can define a requirements file e.g. `polyaxon_requirements.txt` file
@@ -87,13 +91,16 @@ Polyaxon also provides, an easy way to install multiple python libraries:
       batch_size: 128
       lr: 0.1
 
-    run:
+    build:
       image: tensorflow/tensorflow:1.4.1-py3
       build_steps:
         - pip install -r polyaxon_requirements.txt
+
+    run:
       cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
     ```
 
+### Installing other libraries or running other commands
 
 You can also install or execute other commands, by adding them to the `build_steps` part.
 If you have multiple commands that you wish to execute,
@@ -110,9 +117,33 @@ declarations:
   batch_size: 128
   lr: 0.1
 
-run:
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - ./polyaxon_setup.sh
+
+run:
   cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
+```
+
+
+### Running a script
+
+
+In some case you will need to change the directory before running a command,
+or you might need to run multiple commands,
+the best way to do that is to create an executable file,
+e.g. `run.sh` where you will put all the commands you wish to run, and then just run that file:
+
+For example the `run.sh` could be:
+
+```bash
+cd to_some_path; echo "running my run.sh file"; python model.py
+```
+
+And your cmd in polyaxonfile:
+
+```yaml
+run:
+  cmd: /bin/bash run.sh
 ```

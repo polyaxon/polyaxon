@@ -84,7 +84,7 @@ This file has one independent experiment.
 This command validate the polyaxon file, and the option `-def` returns the experiment definition,
 in this case we have only one independent experiment.
 
-In some case you will need to change directory before running a command,
+In some case you will need to change the directory before running a command, or you might need to run multiple commands,
 the best way to do that is to create executable file,
 e.g. `run.sh` where you will put all the commands you wish to run, and then just run that file:
 
