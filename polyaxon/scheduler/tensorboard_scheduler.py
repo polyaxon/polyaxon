@@ -6,11 +6,6 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from libs.paths.exceptions import VolumeNotFoundError
-from scheduler.spawners.templates.pod_environment import (
-    get_affinity,
-    get_node_selector,
-    get_tolerations
-)
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 from scheduler.spawners.utils import get_job_definition
 

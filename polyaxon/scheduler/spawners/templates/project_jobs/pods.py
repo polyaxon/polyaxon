@@ -7,11 +7,6 @@ from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
-from scheduler.spawners.templates.pod_environment import (
-    get_affinity,
-    get_node_selector,
-    get_tolerations
-)
 from scheduler.spawners.templates.project_jobs.labels import get_labels
 from scheduler.spawners.templates.resources import get_resources
 

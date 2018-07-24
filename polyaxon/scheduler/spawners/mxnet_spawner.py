@@ -88,7 +88,7 @@ class MXNetSpawner(ExperimentSpawner):
     @property
     def tolerations(self):
         cluster, is_distributed, = self.spec.cluster_def
-        worker_tolerations= MXNetSpecification.get_worker_tolerations(
+        worker_tolerations = MXNetSpecification.get_worker_tolerations(
             environment=self.spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
