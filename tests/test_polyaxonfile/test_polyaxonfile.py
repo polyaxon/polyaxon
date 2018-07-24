@@ -1335,7 +1335,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_notebook_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/notebook_with_node_selector.yml'))
+            'tests/fixtures/notebook_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_notebook
@@ -1346,12 +1346,33 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_notebook_jobs'}
-        assert spec.node_selectors == {'polyaxon.com': 'node_for_notebook_jobs'}
+
+        node_selectors = {'polyaxon.com': 'node_for_notebook_jobs'}
+        assert spec.environment.node_selectors == node_selectors
+        assert spec.node_selectors == node_selectors
+
+        resources = {
+            'cpu': {'requests': 1, 'limits': 2},
+            'memory': {'requests': 200, 'limits': 200},
+            'gpu': None
+        }
+        assert spec.environment.resources.to_dict() == resources
+        assert spec.resources.to_dict() == resources
+
+        affinity = {
+            'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}
+        }
+        assert spec.environment.affinity == affinity
+        assert spec.affinity == affinity
+
+        tolerations = [{'key': 'key', 'operator': 'Exists'}]
+
+        assert spec.environment.tolerations == tolerations
+        assert spec.tolerations == tolerations
 
     def test_tensorboard_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/tensorboard_with_node_selector.yml'))
+            'tests/fixtures/tensorboard_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_tensorboard
@@ -1360,12 +1381,33 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_tensorboard_jobs'}
-        assert spec.node_selectors == {'polyaxon.com': 'node_for_tensorboard_jobs'}
+
+        node_selectors = {'polyaxon.com': 'node_for_tensorboard_jobs'}
+        assert spec.environment.node_selectors == node_selectors
+        assert spec.node_selectors == node_selectors
+
+        resources = {
+            'cpu': {'requests': 1, 'limits': 2},
+            'memory': {'requests': 200, 'limits': 200},
+            'gpu': None
+        }
+        assert spec.environment.resources.to_dict() == resources
+        assert spec.resources.to_dict() == resources
+
+        affinity = {
+            'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}
+        }
+        assert spec.environment.affinity == affinity
+        assert spec.affinity == affinity
+
+        tolerations = [{'key': 'key', 'operator': 'Exists'}]
+
+        assert spec.environment.tolerations == tolerations
+        assert spec.tolerations == tolerations
 
     def test_run_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/run_with_node_selector.yml'))
+            'tests/fixtures/run_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_job
@@ -1376,12 +1418,33 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_jobs'}
-        assert spec.node_selectors == {'polyaxon.com': 'node_for_jobs'}
 
-    def test_build_job_with_node_selectors(self):
+        node_selectors = {'polyaxon.com': 'node_for_jobs'}
+        assert spec.environment.node_selectors == node_selectors
+        assert spec.node_selectors == node_selectors
+
+        resources = {
+            'cpu': {'requests': 1, 'limits': 2},
+            'memory': {'requests': 200, 'limits': 200},
+            'gpu': None
+        }
+        assert spec.environment.resources.to_dict() == resources
+        assert spec.resources.to_dict() == resources
+
+        affinity = {
+            'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}
+        }
+        assert spec.environment.affinity == affinity
+        assert spec.affinity == affinity
+
+        tolerations = [{'key': 'key', 'operator': 'Exists'}]
+
+        assert spec.environment.tolerations == tolerations
+        assert spec.tolerations == tolerations
+
+    def test_build_job_with_custom_environment(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/build_with_node_selector.yml'))
+            'tests/fixtures/build_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_build is True
@@ -1389,5 +1452,26 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_build_jobs'}
-        assert spec.node_selectors == {'polyaxon.com': 'node_for_build_jobs'}
+
+        node_selectors = {'polyaxon.com': 'node_for_build_jobs'}
+        assert spec.environment.node_selectors == node_selectors
+        assert spec.node_selectors == node_selectors
+
+        resources = {
+            'cpu': {'requests': 1, 'limits': 2},
+            'memory': {'requests': 200, 'limits': 200},
+            'gpu': None
+        }
+        assert spec.environment.resources.to_dict() == resources
+        assert spec.resources.to_dict() == resources
+
+        affinity = {
+            'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}
+        }
+        assert spec.environment.affinity == affinity
+        assert spec.affinity == affinity
+
+        tolerations = [{'key': 'key', 'operator': 'Exists'}]
+
+        assert spec.environment.tolerations == tolerations
+        assert spec.tolerations == tolerations

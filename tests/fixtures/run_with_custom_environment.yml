@@ -13,6 +13,22 @@ environment:
   node_selectors:
     polyaxon.com: node_for_jobs
 
+  resources:
+    cpu:
+      requests: 1
+      limits: 2
+    memory:
+      requests: 200
+      limits: 200
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: {}
+
+  tolerations:
+    - key: "key"
+      operator: "Exists"
+
 build:
   image: my_image
   build_steps:

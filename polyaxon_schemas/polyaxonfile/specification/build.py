@@ -56,6 +56,14 @@ class BuildSpecification(BaseSpecification):
     def node_selectors(self):
         return self.environment.node_selectors if self.environment else None
 
+    @cached_property
+    def affinity(self):
+        return self.environment.affinity if self.environment else None
+
+    @cached_property
+    def tolerations(self):
+        return self.environment.tolerations if self.environment else None
+
     @classmethod
     def create_specification(cls, build_config, to_dict=True):
         if isinstance(build_config, BuildConfig):

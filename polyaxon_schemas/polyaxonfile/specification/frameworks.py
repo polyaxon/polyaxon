@@ -6,9 +6,11 @@ import six
 from polyaxon_schemas.environments import PodResourcesConfig
 from polyaxon_schemas.polyaxonfile.specification.utils import (
     get_task_configs,
+    get_task_job_affinities,
     get_task_job_node_selectors,
     get_task_job_resources,
-    get_task_job_tolerations, get_task_job_affinities)
+    get_task_job_tolerations
+)
 from polyaxon_schemas.utils import TaskType
 
 
