@@ -66,7 +66,9 @@ def get_notebook_image_info(project, job):
 
 
 def get_image_name(build_job):
-    return '{}/{}'.format(settings.REGISTRY_HOST, build_job.project.name)
+    return '{}/{}_{}'.format(settings.REGISTRY_HOST,
+                             build_job.project.name.lower(),
+                             build_job.project.id)
 
 
 def get_image_info(build_job):
