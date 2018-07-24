@@ -74,7 +74,7 @@ class UploadFilesView(UploadView):
                 'The Project `{}` is currently running a Notebook. '
                 'You must stop it before uploading a new version of the code.'.format(project.name))
         repo, created = Repo.objects.get_or_create(project=project)
-        if not created and not os.path.isdir(repo.user_path):
+        if not created and not os.path.isdir(repo.project_path):
             set_git_repo(repo)
         else:
             auditor.record(event_type=REPO_CREATED, instance=repo, actor_id=self.request.user.id)
