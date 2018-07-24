@@ -699,6 +699,15 @@ class TestExperimentDetailViewV1(BaseViewTest):
             kind: experiment
 
             environment:
+              node_selectors: 
+                foo: bar
+              tolerations:
+                - key: "key"
+                  operator: "Equal"
+                  value: "value"
+                  effect: "NoSchedule"
+              affinity:
+                foo: bar
               resources:
                 gpu:
                   requests: 1

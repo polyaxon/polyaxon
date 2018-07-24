@@ -299,13 +299,22 @@ class TestJobDetailViewV1(BaseViewTest):
         self.object.refresh_from_db()
         assert resp.data == self.serializer_class(self.object).data
 
-    def test_get_with_resource_reg_90(self):
+    def test_get_with_environment(self):
         spec_content = """---
             version: 1
 
             kind: job
 
             environment:
+              node_selectors: 
+                foo: bar
+              tolerations:
+                - key: "key"
+                  operator: "Equal"
+                  value: "value"
+                  effect: "NoSchedule"
+              affinity:
+                foo: bar
               resources:
                 gpu:
                   requests: 1

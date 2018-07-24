@@ -289,7 +289,7 @@ class TestExperimentDetailSerializer(BaseTest):
         for d in data:
             assert set(d.keys()) == self.expected_keys
 
-    def test_serialize_cluster_resources(self):
+    def test_serialize_with_environment_section(self):
         spec_content = """---
             version: 1
 
@@ -305,13 +305,14 @@ class TestExperimentDetailSerializer(BaseTest):
                   limits: 10240
               pytorch:
                 n_workers: 2
-                default_worker_resources:
-                  cpu:
-                    requests: 2
-                    limits: 4
-                  memory:
-                    requests: 4096
-                    limits: 10240
+                default_worker:
+                  resources:
+                    cpu:
+                      requests: 2
+                      limits: 4
+                    memory:
+                      requests: 4096
+                      limits: 10240
 
             run:
               image: my_image
@@ -320,7 +321,9 @@ class TestExperimentDetailSerializer(BaseTest):
         spec = ExperimentSpecification.read(spec_content)
 
         obj = self.factory_class(config=spec.parsed_data)
-        self.serializer_class(obj).data  # pylint:disable=expression-not-assigned
+        serializer = self.serializer_class(obj)
+        data = serializer.data
+        assert 'resources' in data
 
 
 @pytest.mark.experiments_mark
