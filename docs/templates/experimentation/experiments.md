@@ -256,34 +256,37 @@ environment:
     n_workers: 4
     n_ps: 1
 
-     default_worker_resources:
-      cpu:
-        requests: 1
-        limits: 2
-      memory:
-        requests: 256
-        limits: 1024
-      gpu:
-        request: 1
-        limits: 1
-
-    worker_resources:
-      - index: 2
+     default_worker:
+      resources:
         cpu:
           requests: 1
           limits: 2
         memory:
           requests: 256
           limits: 1024
-
-    ps_resources:
-      - index: 0
-        cpu:
-          requests: 1
+        gpu:
+          request: 1
           limits: 1
-        memory:
-          requests: 256
-          limits: 1024
+
+    worker:
+      - index: 2
+        resources:
+          cpu:
+            requests: 1
+            limits: 2
+          memory:
+            requests: 256
+            limits: 1024
+
+    ps:
+      - index: 0
+        resources:
+          cpu:
+            requests: 1
+            limits: 1
+          memory:
+            requests: 256
+            limits: 1024
 
 build:
   image: tensorflow/tensorflow:1.4.1-gpu-py3  # Update the image to use GPU
@@ -305,14 +308,14 @@ you only need to specify the resources to have more control over the created pod
 
 `resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
 
-For the workers, we have two ways to define resources, the `default_worker_resources` and
+For the workers, we have two ways to define resources, the `default_worker.resources` and
 `worker_resources` that takes the index of the worker to define the resources for.
 
-Here, we defined the default resources for our 4 workers in the `default_worker_resources`,
+Here, we defined the default resources for our 4 workers in the `default_worker.resources`,
 and provided a specific resources by index for the third worker, because we don't want to run that worker with gpu.
 
 And finally we defined the resources requirement of our single ps node.
-We could have also used `default_ps_resources` instead.
+We could have also used `default_ps.resources` instead.
 
 Since we have multiple jobs, Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
 
