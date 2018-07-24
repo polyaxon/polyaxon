@@ -1,4 +1,7 @@
 {{- if .Values.ingress.enabled -}}
+{{- $fullName := include "polyaxon.fullname" . -}}
+{{- $secretName := printf "%s-%s" .Release.Name "tls" -}}
+
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -13,6 +16,30 @@ metadata:
   annotations:
 {{ toYaml .Values.ingress.annotations | indent 6 }}
 spec:
+  {{ if .Values.ingress.tls.enabled -}}
+  tls:
+  {{ with .Values.ingress.tls -}}
+  - hosts:
+    {{- range .hosts }}
+    - {{ . }}
+    {{- end }}
+    secretName: {{ .secretName | default $secretName }}
+  rules:
+    {{- range .hosts }}
+  - host: {{ . }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.api.service.externalPort }}
+      - path: /ws
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.streams.service.externalPort }}
+    {{- end }} {{- /* end range .hosts */ -}}
+  {{- end }}  {{- /* end with loop */ -}}
+  {{- else -}} {{- /* else of if tls.enabled */ -}}
   rules:
   - http:
       paths:
@@ -24,4 +51,5 @@ spec:
         backend:
           serviceName: {{ template "polyaxon.fullname" . }}-api
           servicePort: {{ .Values.streams.service.externalPort }}
-{{- end }}
+  {{- end -}} {{- /* end if tls.enabled */ -}}
+{{- end -}}

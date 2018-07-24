@@ -4,6 +4,11 @@ rbac:
   enabled: true
 ingress:
   enabled: true
+  tls:
+    enabled: false
+    hosts:
+    - chart-example.local
+    secretName: ""
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
     ingress.kubernetes.io/rewrite-target: /
@@ -170,6 +175,7 @@ api:
     externalPort: 80
     internalPort: 80
     nodePort: 31811
+    annotations: {}
 
 streams:
   image: polyaxon/polyaxon-streams
