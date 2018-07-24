@@ -26,14 +26,14 @@ APP_LABELS_EXPERIMENT = config.get_string('POLYAXON_APP_LABELS_EXPERIMENT')
 APP_LABELS_JOB = config.get_string('POLYAXON_APP_LABELS_JOB')
 
 # Selectors
-NODE_SELECTORS_EXPERIMENTS = config.get_string(
-    'POLYAXON_NODE_SELECTORS_EXPERIMENTS', is_optional=True)
-NODE_SELECTORS_JOBS = config.get_string(
-    'POLYAXON_NODE_SELECTORS_JOBS', is_optional=True)
-NODE_SELECTORS_BUILDS = config.get_string(
-    'POLYAXON_NODE_SELECTORS_BUILDS', is_optional=True)
-NODE_SELECTORS_CORE = config.get_string(
-    'POLYAXON_NODE_SELECTORS_CORE', is_optional=True)
+NODE_SELECTOR_EXPERIMENTS = config.get_string(
+    'POLYAXON_NODE_SELECTOR_EXPERIMENTS', is_optional=True)
+NODE_SELECTOR_JOBS = config.get_string(
+    'POLYAXON_NODE_SELECTOR_JOBS', is_optional=True)
+NODE_SELECTOR_BUILDS = config.get_string(
+    'POLYAXON_NODE_SELECTOR_BUILDS', is_optional=True)
+NODE_SELECTOR_CORE = config.get_string(
+    'POLYAXON_NODE_SELECTOR_CORE', is_optional=True)
 
 # Affinity
 AFFINITY_EXPERIMENTS = config.get_string(

@@ -32,7 +32,7 @@ class DockerizerSpawner(ProjectJobSpawner):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTORS_BUILDS)
+            default_node_selector=settings.NODE_SELECTOR_BUILDS)
         affinity = get_affinity(
             affinity=affinity,
             default_affinity=settings.AFFINITY_BUILDS)

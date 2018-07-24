@@ -191,7 +191,7 @@ class PodManager(object):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTORS_JOBS)
+            default_node_selector=settings.NODE_SELECTOR_JOBS)
         affinity = get_affinity(
             affinity=affinity,
             default_affinity=settings.AFFINITY_JOBS)

@@ -125,7 +125,7 @@ class NotebookSpawner(ProjectJobSpawner):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
+            default_node_selector=settings.NODE_SELECTOR_EXPERIMENTS)
         affinity = get_affinity(
             affinity=affinity,
             default_affinity=settings.AFFINITY_EXPERIMENTS)
