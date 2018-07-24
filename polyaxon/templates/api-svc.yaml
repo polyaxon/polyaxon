@@ -9,6 +9,10 @@ metadata:
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.api }}
+  {{- with .Values.api.service.annotations }}
+  annotations:
+  {{ toYaml . | indent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.serviceType }}
   selector:
