@@ -85,7 +85,7 @@ class ExperimentSpawner(K8SManager):
         return self.spec.master_resources
 
     def get_node_selector(self, task_type, task_idx):
-        return self.spec.master_node_selectors
+        return self.spec.master_node_selector
 
     def get_affinity(self, task_type, task_idx):
         return self.spec.master_affinity

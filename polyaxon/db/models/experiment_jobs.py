@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
@@ -20,6 +21,16 @@ class ExperimentJob(AbstractJob):
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
+    node_selector = JSONField(
+        null=True,
+        blank=True)
+    affinity = JSONField(
+        null=True,
+        blank=True)
+    tolerations = ArrayField(
+        base_field=JSONField(),
+        blank=True,
+        null=True)
     status = models.OneToOneField(
         'db.ExperimentJobStatus',
         related_name='+',

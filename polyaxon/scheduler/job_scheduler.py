@@ -46,7 +46,7 @@ def start_job(job):
                                     outputs_refs_jobs=job.outputs_refs_jobs,
                                     outputs_refs_experiments=job.outputs_refs_experiments,
                                     resources=job.resources,
-                                    node_selectors=job.node_selectors,
+                                    node_selector=job.node_selector,
                                     affinity=job.affinity,
                                     tolerations=job.tolerations)
     except ApiException as e:

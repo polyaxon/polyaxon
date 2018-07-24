@@ -350,7 +350,7 @@ which schedules experiments and jobs based on node selectors provided during the
 
 ```yaml
 environment:
-  node_selectors:
+  node_selector:
     node_label: node_value
 ```
 
@@ -404,7 +404,7 @@ Example:
 
 environment:
 
-  node_selectors:
+  node_selector:
     polyaxon: experiments
 
   resources:
@@ -419,20 +419,22 @@ environment:
       n_workers: 4
       n_ps: 1
 
-      worker_node_selectors:
+      worker:
         - index: 3
-          polyaxon: special_node
+          node_selectors:
+            polyaxon: special_node
 
-      default_worker_resources:
-        cpu:
-          requests: 1
-          limits: 2
-        memory:
-          requests: 256
-          limits: 1024
-        gpu:
-          request: 1
-          limits: 1
+      default_worker:
+        resources:
+          cpu:
+            requests: 1
+            limits: 2
+          memory:
+            requests: 256
+            limits: 1024
+          gpu:
+            request: 1
+            limits: 1
 
       worker_resources:
         - index: 2
@@ -504,8 +506,9 @@ environment:
     n_workers: 4
     n_ps: 1
 
-    default_ps_node_selectors:
-      polyaxon: nodes_for_param_servers
+    default_ps:
+      node_selectors:
+        polyaxon: nodes_for_param_servers
 ```
 
 ### pytorch

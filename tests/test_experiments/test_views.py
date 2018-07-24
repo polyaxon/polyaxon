@@ -699,7 +699,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
             kind: experiment
 
             environment:
-              node_selectors: 
+              node_selector: 
                 foo: bar
               tolerations:
                 - key: "key"

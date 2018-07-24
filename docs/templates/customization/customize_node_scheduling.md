@@ -64,7 +64,7 @@ version: 1
 kind: experiment
 
 environment:
-  node_selectors:
+  node_selector:
     polyaxon: specific-gpu
 
 build:
@@ -89,7 +89,7 @@ version: 1
 kind: notebook
 
 environment:
-  node_selectors:
+  node_selector:
     polyaxon: specific-gpu
 
 build:
@@ -113,9 +113,10 @@ environment:
     n_workers: 2
     n_ps: 1
 
-  worker_node_selectors:
+  worker:
     - index: 1
-      polyaxon: specific-gpu
+      node_selector:
+        polyaxon: specific-gpu
 
 build:
   image: tensorflow/tensorflow:1.4.1

@@ -82,7 +82,7 @@ def start_dockerizer(build_job):
         in_cluster=True)
     try:
         results = spawner.start_dockerizer(resources=build_job.resources,
-                                           node_selectors=build_job.node_selectors,
+                                           node_selector=build_job.node_selector,
                                            affinity=build_job.affinity,
                                            tolerations=build_job.tolerations)
         auditor.record(event_type=BUILD_JOB_STARTED,

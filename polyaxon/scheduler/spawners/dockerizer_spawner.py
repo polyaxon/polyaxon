@@ -25,13 +25,13 @@ class DockerizerSpawner(ProjectJobSpawner):
 
     def start_dockerizer(self,
                          resources=None,
-                         node_selectors=None,
+                         node_selector=None,
                          affinity=None,
                          tolerations=None):
         volumes, volume_mounts = get_docker_volumes()
 
-        node_selectors = get_node_selector(
-            node_selector=node_selectors,
+        node_selector = get_node_selector(
+            node_selector=node_selector,
             default_node_selector=settings.NODE_SELECTORS_BUILDS)
         affinity = get_affinity(
             affinity=affinity,
@@ -56,7 +56,7 @@ class DockerizerSpawner(ProjectJobSpawner):
             env_vars=self.get_env_vars(),
             container_name=settings.CONTAINER_NAME_DOCKERIZER_JOB,
             resources=resources,
-            node_selector=node_selectors,
+            node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
             role=settings.ROLE_LABELS_WORKER,

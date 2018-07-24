@@ -92,7 +92,7 @@ class NotebookSpawner(ProjectJobSpawner):
                        outputs_refs_jobs=None,
                        outputs_refs_experiments=None,
                        resources=None,
-                       node_selectors=None,
+                       node_selector=None,
                        affinity=None,
                        tolerations=None,
                        allow_commits=False):
@@ -123,8 +123,8 @@ class NotebookSpawner(ProjectJobSpawner):
         deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
                                                     job_uuid=self.job_uuid)
 
-        node_selectors = get_node_selector(
-            node_selector=node_selectors,
+        node_selector = get_node_selector(
+            node_selector=node_selector,
             default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
         affinity = get_affinity(
             affinity=affinity,
@@ -151,7 +151,7 @@ class NotebookSpawner(ProjectJobSpawner):
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             env_vars=env_vars,
             resources=resources,
-            node_selector=node_selectors,
+            node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,

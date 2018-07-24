@@ -38,7 +38,7 @@ def start_tensorboard(tensorboard):
             outputs_refs_jobs=tensorboard.outputs_refs_jobs,
             outputs_refs_experiments=tensorboard.outputs_refs_experiments,
             resources=tensorboard.resources,
-            node_selectors=tensorboard.node_selectors,
+            node_selector=tensorboard.node_selector,
             affinity=tensorboard.affinity,
             tolerations=tensorboard.tolerations)
     except ApiException as e:

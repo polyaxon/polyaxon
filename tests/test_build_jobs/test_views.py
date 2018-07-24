@@ -300,7 +300,7 @@ class TestBuildDetailViewV1(BaseViewTest):
             kind: build
 
             environment:
-              node_selectors: 
+              node_selector: 
                 foo: bar
               tolerations:
                 - key: "key"

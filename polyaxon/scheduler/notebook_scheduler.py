@@ -37,7 +37,7 @@ def start_notebook(notebook):
 
     try:
         allow_commits = False
-        if settings.REPOS_CLAIM_NAME or notebook.node_selectors:
+        if settings.REPOS_CLAIM_NAME or notebook.node_selector:
             allow_commits = True
         results = spawner.start_notebook(image=job_docker_image,
                                          persistence_outputs=notebook.persistence_outputs,
@@ -45,7 +45,7 @@ def start_notebook(notebook):
                                          outputs_refs_jobs=notebook.outputs_refs_jobs,
                                          outputs_refs_experiments=notebook.outputs_refs_experiments,
                                          resources=notebook.resources,
-                                         node_selectors=notebook.node_selectors,
+                                         node_selector=notebook.node_selector,
                                          affinity=notebook.affinity,
                                          tolerations=notebook.tolerations,
                                          allow_commits=allow_commits)

@@ -306,7 +306,7 @@ class TestJobDetailViewV1(BaseViewTest):
             kind: job
 
             environment:
-              node_selectors: 
+              node_selector: 
                 foo: bar
               tolerations:
                 - key: "key"

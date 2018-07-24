@@ -30,7 +30,7 @@ class HorovodSpawner(ExperimentSpawner):
             is_distributed=is_distributed
         )
         return {
-            TaskType.MASTER: {0: self.spec.master_node_selectors},
+            TaskType.MASTER: {0: self.spec.master_node_selector},
             TaskType.WORKER: worker_node_selectors,
         }
 

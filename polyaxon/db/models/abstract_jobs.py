@@ -62,8 +62,8 @@ class JobMixin(object):
         return self.specification.resources
 
     @cached_property
-    def node_selectors(self):
-        return self.specification.node_selectors
+    def node_selector(self):
+        return self.specification.node_selector
 
     @cached_property
     def affinity(self):
