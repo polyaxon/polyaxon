@@ -70,7 +70,7 @@ run:
 
 Polyaxon also provides, an easy way to install multiple python libraries:
 
- 1. you can define a requirements file e.g. `polyaxon_requirements.txt` file
+ 1. you can define a requirements file; the name must be either `requirements.txt` or `polyaxon_requirements.txt`
 
 
     ```bash
@@ -104,7 +104,7 @@ Polyaxon also provides, an easy way to install multiple python libraries:
 
 You can also install or execute other commands, by adding them to the `build_steps` part.
 If you have multiple commands that you wish to execute,
-You can create an executable file, e.g. `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
+You can create an executable file, the filename must be `polyaxon_setup.sh` or `setup.sh`, and a command to execute that file `./polyaxon_setup.sh`.
 
 ```yaml
 

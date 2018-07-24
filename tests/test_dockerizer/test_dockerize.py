@@ -39,6 +39,21 @@ class TestDockerize(BaseTest):
         assert builder.polyaxon_setup_path == 'repo/polyaxon_setup.sh'
         builder.clean()
 
+        # Delete previous files
+        os.remove(os.path.join(repo_path, 'polyaxon_requirements.txt'))
+        os.remove(os.path.join(repo_path, 'polyaxon_setup.sh'))
+
+        # Add a requirements.txt and setup.sh files to repo path
+        Path(os.path.join(repo_path, 'requirements.txt')).touch()
+        Path(os.path.join(repo_path, 'setup.sh')).touch()
+
+        builder = DockerBuilder(build_job=build_job,
+                                repo_path=repo_path,
+                                from_image='busybox')
+        assert builder.polyaxon_requirements_path == 'repo/requirements.txt'
+        assert builder.polyaxon_setup_path == 'repo/setup.sh'
+        builder.clean()
+
     @patch('dockerizer.builder.APIClient')
     def test_render_works_as_expected(self, _):
         build_job = BuildJobFactory()

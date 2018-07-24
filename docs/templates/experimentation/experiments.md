@@ -26,9 +26,9 @@ run:
 
 If the code requires many python dependencies, you can install these requirements by using a `requirements.txt` file,
 instead of specifying every single library in the `build_steps` part of the `run` section,
-we can create a requirements file with the name `polyaxon_requirements.txt` and just create one command in the build_steps `pip install -r polyaxon_requirements.txt`.
+we can create a requirements file, the name must be `requirements.txt` or `polyaxon_requirements.txt` and we need to add one command in the build_steps `pip install -r polyaxon_requirements.txt`.
 
-You can also add any other executable script, e.g. `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
+You can also add any other executable script, the name must be `setup.sh` or `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
 
 Let's create a `polyaxon_requirements.txt` to demonstrate this process.
 

@@ -137,18 +137,36 @@ class DockerBuilder(object):
         return True
 
     def _get_requirements_path(self):
-        requirements_path = os.path.join(self.repo_path, 'polyaxon_requirements.txt')
-        if os.path.isfile(requirements_path):
-            return os.path.join(self.folder_name, 'polyaxon_requirements.txt')
+        def get_requirements(requirements_file):
+            requirements_path = os.path.join(self.repo_path, requirements_file)
+            if os.path.isfile(requirements_path):
+                return os.path.join(self.folder_name, requirements_file)
+
+        requirements = get_requirements('polyaxon_requirements.txt')
+        if requirements:
+            return requirements
+
+        requirements = get_requirements('requirements.txt')
+        if requirements:
+            return requirements
         return None
 
     def _get_setup_path(self):
-        setup_file_path = os.path.join(self.repo_path, 'polyaxon_setup.sh')
-        has_setup = os.path.isfile(setup_file_path)
-        if has_setup:
-            st = os.stat(setup_file_path)
-            os.chmod(setup_file_path, st.st_mode | stat.S_IEXEC)
-            return os.path.join(self.folder_name, 'polyaxon_setup.sh')
+        def get_setup(setup_file):
+            setup_file_path = os.path.join(self.repo_path, setup_file)
+            has_setup = os.path.isfile(setup_file_path)
+            if has_setup:
+                st = os.stat(setup_file_path)
+                os.chmod(setup_file_path, st.st_mode | stat.S_IEXEC)
+                return os.path.join(self.folder_name, setup_file)
+
+        setup_file = get_setup('polyaxon_setup.sh')
+        if setup_file:
+            return setup_file
+
+        setup_file = get_setup('setup.sh')
+        if setup_file:
+            return setup_file
         return None
 
     def render(self):

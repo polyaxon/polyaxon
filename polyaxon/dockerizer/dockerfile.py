@@ -28,13 +28,13 @@ COPY {{ polyaxon_requirements_path }} {{ workdir }}
 COPY {{ polyaxon_setup_path }} {{ workdir }}
 {% endif -%}
 
-{% if copy_code -%}
-COPY {{ folder_name }} {{ workdir }}
-{% endif -%}
-
 {% if build_steps -%}
 {% for step in build_steps -%}
 RUN {{ step }}
 {% endfor -%}
+{% endif -%}
+
+{% if copy_code -%}
+COPY {{ folder_name }} {{ workdir }}
 {% endif -%}
 """
