@@ -55,14 +55,30 @@ Spawner config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: sidecar-log-sleep-interval
-- name: POLYAXON_NODE_SELECTORS_CORE
+- name: POLYAXON_NODE_SELECTOR_CORE
   value: {{ toJson .Values.nodeSelectors.core | quote }}
-- name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
+- name: POLYAXON_NODE_SELECTOR_EXPERIMENTS
   value: {{ toJson .Values.nodeSelectors.experiments | quote }}
-- name: POLYAXON_NODE_SELECTORS_JOBS
+- name: POLYAXON_NODE_SELECTOR_JOBS
   value: {{ toJson .Values.nodeSelectors.jobs | quote }}
-- name: POLYAXON_NODE_SELECTORS_BUILDS
+- name: POLYAXON_NODE_SELECTOR_BUILDS
   value: {{ toJson .Values.nodeSelectors.builds | quote }}
+- name: POLYAXON_AFFINITY_CORE
+  value: {{ toJson .Values.affinity.core | quote }}
+- name: POLYAXON_AFFINITY_EXPERIMENTS
+  value: {{ toJson .Values.affinity.experiments | quote }}
+- name: POLYAXON_AFFINITY_JOBS
+  value: {{ toJson .Values.affinity.jobs | quote }}
+- name: POLYAXON_AFFINITY_BUILDS
+  value: {{ toJson .Values.affinity.builds | quote }}
+- name: POLYAXON_TOLERATIONS_CORE
+  value: {{ toJson .Values.tolerations.core | quote }}
+- name: POLYAXON_TOLERATIONS_EXPERIMENTS
+  value: {{ toJson .Values.tolerations.experiments | quote }}
+- name: POLYAXON_TOLERATIONS_JOBS
+  value: {{ toJson .Values.tolerations.jobs | quote }}
+- name: POLYAXON_TOLERATIONS_BUILDS
+  value: {{ toJson .Values.tolerations.builds | quote }}
 - name: POLYAXON_ROLE_LABELS_API
   value: {{ .Values.roles.api }}
 - name: POLYAXON_ROLE_LABELS_LOG

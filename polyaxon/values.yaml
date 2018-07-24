@@ -139,21 +139,28 @@ nodeSelectors:
   builds:
 
 tolerations:
-  core:
   resourcesDaemon:
+  core:
+  experiments:
+  jobs:
+  builds:
 
 affinity:
-  podAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-            - key: type
-              operator: In
-              values:
-              - "polyaxon-core"
-          topologyKey: "kubernetes.io/hostname"
+  experiments:
+  jobs:
+  builds:
+  core:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
 
 passwordLenght: 8
 

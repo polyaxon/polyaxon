@@ -31,9 +31,9 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
-      {{- if .Values.affinity }}
+      {{- if .Values.affinity.core }}
       affinity:
-{{ toYaml .Values.affinity | indent 8 }}
+{{ toYaml .Values.affinity.core | indent 8 }}
       {{- end }}
       containers:
       - name: {{ template "redis.fullname" . }}

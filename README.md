@@ -497,13 +497,20 @@ nfsProvisioner:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `nodeSelector.core`                | Node labels for pod assignment for core                      | `{}`
-| `nodeSelector.experiments`         | Node labels for pod assignment for experiments               | `{}`
-| `nodeSelector.jobs`                | Node labels for pod assignment for core                      | `{}`
-| `nodeSelector.builds`              | Node labels for pod assignment for experiments               | `{}`
-| `tolerations.core`                 | Toleration labels for pod assignment for core                | `[]`
-| `tolerations.resourcesDaemon`      | Toleration labels for pod assignment for resourcesDaemon     | `[]`
-| `affinity`                         | Affinity for core                                            | Please check the values
+| `nodeSelector.core`                | Node selector for core pod assignment                        | `{}`
+| `nodeSelector.experiments`         | Node selector for experiments pod assignment                 | `{}`
+| `nodeSelector.jobs`                | Node selector for jobs pod assignment                        | `{}`
+| `nodeSelector.builds`              | Node selector for builds pod assignment                      | `{}`
+| `tolerations.core`                 | Tolerations for core pod assignment                          | `[]`
+| `tolerations.experiments`          | Tolerations for experiments pod assignment                   | `[]`
+| `tolerations.jobs`                 | Tolerations for jobs pod assignment                          | `[]`
+| `tolerations.builds`               | Tolerations for builds pod assignment                        | `[]`
+| `tolerations.resourcesDaemon`      | Tolerations for resourcesDaemon pod assignment               | `[]`
+| `affinity.core`                    | Affinity for core                                            | Please check the values
+| `affinity.experiments`             | Affinity for experiments                                     | `{}`
+| `affinity.jobs`                    | Affinity for jobs                                            | `{}`
+| `affinity.builds`                  | Affinity for builds                                          | `{}`
+
 
 
 Dependent charts can also have values overwritten. Preface values with

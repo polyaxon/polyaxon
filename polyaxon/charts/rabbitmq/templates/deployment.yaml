@@ -17,9 +17,9 @@ spec:
       nodeSelector:
 {{ toYaml .Values.nodeSelectors | indent 8 }}
       {{- end }}
-      {{- if .Values.affinity }}
+      {{- if .Values.affinity.core }}
       affinity:
-{{ toYaml .Values.affinity | indent 8 }}
+{{ toYaml .Values.affinity.core | indent 8 }}
       {{- end }}
       {{- if .Values.tolerations }}
       tolerations:
