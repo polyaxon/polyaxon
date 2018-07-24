@@ -4,6 +4,11 @@ from polyaxon.config_manager import config
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
+from scheduler.spawners.templates.pod_environment import (
+    get_affinity,
+    get_node_selector,
+    get_tolerations
+)
 from scheduler.spawners.templates.project_jobs import pods
 from scheduler.spawners.templates.volumes import get_docker_volumes
 
@@ -18,8 +23,22 @@ class DockerizerSpawner(ProjectJobSpawner):
 
         return env_vars
 
-    def start_dockerizer(self, resources=None, node_selectors=None):
+    def start_dockerizer(self,
+                         resources=None,
+                         node_selectors=None,
+                         affinity=None,
+                         tolerations=None):
         volumes, volume_mounts = get_docker_volumes()
+
+        node_selectors = get_node_selector(
+            node_selector=node_selectors,
+            default_node_selector=settings.NODE_SELECTORS_BUILDS)
+        affinity = get_affinity(
+            affinity=affinity,
+            default_affinity=settings.AFFINITY_BUILDS)
+        tolerations = get_tolerations(
+            tolerations=tolerations,
+            default_tolerations=settings.TOLERATIONS_BUILDS)
         deployment = pods.get_pod(
             namespace=self.namespace,
             app=settings.APP_LABELS_DOCKERIZER,
@@ -38,6 +57,8 @@ class DockerizerSpawner(ProjectJobSpawner):
             container_name=settings.CONTAINER_NAME_DOCKERIZER_JOB,
             resources=resources,
             node_selector=node_selectors,
+            affinity=affinity,
+            tolerations=tolerations,
             role=settings.ROLE_LABELS_WORKER,
             type=settings.TYPE_LABELS_EXPERIMENT,
             restart_policy='Never')

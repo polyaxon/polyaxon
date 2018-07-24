@@ -5,6 +5,11 @@ from django.conf import settings
 
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
+from scheduler.spawners.templates.pod_environment import (
+    get_affinity,
+    get_node_selector,
+    get_tolerations
+)
 from scheduler.spawners.templates.project_jobs import deployments
 from scheduler.spawners.templates.volumes import (
     get_pod_outputs_volume,
@@ -38,7 +43,9 @@ class TensorboardSpawner(ProjectJobSpawner):
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
                           resources=None,
-                          node_selectors=None):
+                          node_selectors=None,
+                          affinity=None,
+                          tolerations=None):
         ports = [self.request_tensorboard_port()]
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_outputs_volume(persistence_outputs)
@@ -52,6 +59,16 @@ class TensorboardSpawner(ProjectJobSpawner):
             persistence_outputs=persistence_outputs)
         volumes += refs_volumes
         volume_mounts += refs_volume_mounts
+
+        node_selectors = get_node_selector(
+            node_selector=node_selectors,
+            default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
+        affinity = get_affinity(
+            affinity=affinity,
+            default_affinity=settings.AFFINITY_EXPERIMENTS)
+        tolerations = get_tolerations(
+            tolerations=tolerations,
+            default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=settings.APP_LABELS_TENSORBOARD,
@@ -69,6 +86,8 @@ class TensorboardSpawner(ProjectJobSpawner):
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
             node_selector=node_selectors,
+            affinity=affinity,
+            tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME,

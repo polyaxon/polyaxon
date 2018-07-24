@@ -7,6 +7,11 @@ from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
+from scheduler.spawners.templates.pod_environment import (
+    get_affinity,
+    get_node_selector,
+    get_tolerations
+)
 from scheduler.spawners.templates.project_jobs.labels import get_labels
 from scheduler.spawners.templates.resources import get_resources
 
@@ -21,6 +26,8 @@ def get_project_pod_spec(volume_mounts,
                          container_name=None,
                          resources=None,
                          node_selector=None,
+                         affinity=None,
+                         tolerations=None,
                          restart_policy=None,
                          use_service_account=False):
     """Pod spec to be used to create pods for project: tensorboard, notebooks."""
@@ -52,7 +59,9 @@ def get_project_pod_spec(volume_mounts,
                             service_account_name=service_account_name,
                             containers=containers,
                             volumes=volumes,
-                            node_selector=node_selector)
+                            node_selector=node_selector,
+                            affinity=affinity,
+                            tolerations=tolerations)
 
 
 def get_pod(namespace,
@@ -72,6 +81,8 @@ def get_pod(namespace,
             env_vars=None,
             resources=None,
             node_selector=None,
+            affinity=None,
+            tolerations=None,
             type=None,  # pylint:disable=redefined-builtin
             role=None,
             restart_policy=None,
@@ -85,6 +96,8 @@ def get_pod(namespace,
         args=args,
         resources=resources,
         node_selector=node_selector,
+        affinity=affinity,
+        tolerations=tolerations,
         ports=ports,
         env_vars=env_vars,
         use_service_account=use_service_account,

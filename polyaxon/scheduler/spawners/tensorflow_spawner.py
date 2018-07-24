@@ -61,11 +61,55 @@ class TensorflowSpawner(ExperimentSpawner):
             TaskType.PS: ps_node_selectors,
         }
 
+    @property
+    def affinities(self):
+        cluster, is_distributed, = self.spec.cluster_def
+        worker_affinities = TensorflowSpecification.get_worker_affinities(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        ps_affinities = TensorflowSpecification.get_ps_affinities(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        return {
+            TaskType.MASTER: {0: self.spec.master_affinity},
+            TaskType.WORKER: worker_affinities,
+            TaskType.PS: ps_affinities,
+        }
+
+    @property
+    def tolerations(self):
+        cluster, is_distributed, = self.spec.cluster_def
+        worker_tolerations = TensorflowSpecification.get_worker_tolerations(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        ps_tolerations = TensorflowSpecification.get_ps_tolerations(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        return {
+            TaskType.MASTER: {0: self.spec.master_tolerations},
+            TaskType.WORKER: worker_tolerations,
+            TaskType.PS: ps_tolerations,
+        }
+
     def get_resources(self, task_type, task_idx):
         return self.resources.get(task_type, {}).get(task_idx)
 
-    def get_node_selectors(self, task_type, task_idx):
+    def get_node_selector(self, task_type, task_idx):
         return self.node_selectors.get(task_type, {}).get(task_idx)
+
+    def get_affinity(self, task_type, task_idx):
+        return self.affinities.get(task_type, {}).get(task_idx)
+
+    def get_tolerations(self, task_type, task_idx):
+        return self.tolerations.get(task_type, {}).get(task_idx)
 
     def get_n_pods(self, task_type):
         return self.spec.cluster_def[0].get(task_type, 0)

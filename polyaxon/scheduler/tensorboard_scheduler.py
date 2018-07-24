@@ -6,7 +6,11 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from libs.paths.exceptions import VolumeNotFoundError
-from scheduler.spawners.templates.node_selectors import get_node_selector
+from scheduler.spawners.templates.pod_environment import (
+    get_affinity,
+    get_node_selector,
+    get_tolerations
+)
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 from scheduler.spawners.utils import get_job_definition
 
@@ -27,9 +31,6 @@ def start_tensorboard(tensorboard):
         in_cluster=True)
 
     try:
-        node_selectors = get_node_selector(
-            node_selector=tensorboard.node_selectors,
-            default_node_selector=settings.NODE_SELECTORS_EXPERIMENTS)
         results = spawner.start_tensorboard(
             image=tensorboard.image,
             outputs_path=tensorboard.outputs_path,
@@ -37,7 +38,9 @@ def start_tensorboard(tensorboard):
             outputs_refs_jobs=tensorboard.outputs_refs_jobs,
             outputs_refs_experiments=tensorboard.outputs_refs_experiments,
             resources=tensorboard.resources,
-            node_selectors=node_selectors)
+            node_selectors=tensorboard.node_selectors,
+            affinity=tensorboard.affinity,
+            tolerations=tensorboard.tolerations)
     except ApiException as e:
         _logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
         tensorboard.set_status(

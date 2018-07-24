@@ -71,7 +71,9 @@ class JobSpawner(K8SManager):
                   outputs_refs_jobs=None,
                   outputs_refs_experiments=None,
                   resources=None,
-                  node_selectors=None):
+                  node_selectors=None,
+                  affinity=None,
+                  tolerations=None):
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
         refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
@@ -97,6 +99,8 @@ class JobSpawner(K8SManager):
             args=args,
             resources=resources,
             node_selector=node_selectors,
+            affinity=affinity,
+            tolerations=tolerations,
             restart_policy='Never')
         pod_resp, _ = self.create_or_update_pod(name=self.pod_manager.k8s_job_name, data=pod)
 

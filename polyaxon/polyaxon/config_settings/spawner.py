@@ -35,6 +35,26 @@ NODE_SELECTORS_BUILDS = config.get_string(
 NODE_SELECTORS_CORE = config.get_string(
     'POLYAXON_NODE_SELECTORS_CORE', is_optional=True)
 
+# Affinity
+AFFINITY_EXPERIMENTS = config.get_string(
+    'POLYAXON_AFFINITY_EXPERIMENTS', is_optional=True)
+AFFINITY_JOBS = config.get_string(
+    'POLYAXON_AFFINITY_JOBS', is_optional=True)
+AFFINITY_BUILDS = config.get_string(
+    'POLYAXON_AFFINITY_BUILDS', is_optional=True)
+AFFINITY_CORE = config.get_string(
+    'POLYAXON_AFFINITY_CORE', is_optional=True)
+
+# Tolerations
+TOLERATIONS_EXPERIMENTS = config.get_string(
+    'POLYAXON_TOLERATIONS_EXPERIMENTS', is_optional=True)
+TOLERATIONS_JOBS = config.get_string(
+    'POLYAXON_TOLERATIONS_JOBS', is_optional=True)
+TOLERATIONS_BUILDS = config.get_string(
+    'POLYAXON_TOLERATIONS_BUILDS', is_optional=True)
+TOLERATIONS_CORE = config.get_string(
+    'POLYAXON_TOLERATIONS_CORE', is_optional=True)
+
 CONTAINER_NAME_EXPERIMENT_JOB = config.get_string('POLYAXON_CONTAINER_NAME_EXPERIMENT_JOB')
 CONTAINER_NAME_JOB = config.get_string('POLYAXON_CONTAINER_NAME_JOB')
 CONTAINER_NAME_SIDECAR = config.get_string('POLYAXON_CONTAINER_NAME_SIDECAR')
