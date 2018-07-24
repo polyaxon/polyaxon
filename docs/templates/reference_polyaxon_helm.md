@@ -105,12 +105,45 @@ The following tables lists the configurable parameters of the Polyaxon chart and
 This chart provides support for Ingress resource with a custom ingress controller `polyaxon-ingress`.
 You can also provide different annotations for the ingress and it will not use `polyaxon-ingress` class. (`ingress.annotations.kubernetes.io/ingress.class`)
 
-| Parameter            | Description                                      | Default
-| ---------------------| -------------------------------------------------| ----------------------------------------------------------
-| `rbac.enabled`       | Use Kubernetes' role-based access control (RBAC) | `true`
-| `ingress.enabled`    | Use Kubernetes' ingress                          | `true`
-| `ingress.annotations`| Ingress annotations                              | `{}`
+| Parameter                | Description                                        | Default
+| ------------------------ | -------------------------------------------------- | ----------------------------------------------------------
+| `rbac.enabled`           | Use Kubernetes role-based access control (RBAC)    | `true`
+| `ingress.enabled`        | Use Kubernetes ingress                             | `true`
+| `ingress.annotations`    | Ingress annotations                                | `{}`
+| `ingress.tls.enabled`    | Use Ingress TLS                                    | `false`
+| `ingress.tls.hosts`      | Ingress Hosts list (used for configuring TLS host) | `{}`
+| `ingress.tls.secretName` | TLS secret name                                    | `{{ .Release.Name }}-tls`
+| `api.service.annotations`| API Service annotations                            | `{}`
 
+
+Note: using TLS requires either:
+a preconifgured secret with the TLS secrets in it or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
+
+It's alaso possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
+
+### Securing api server with TLS
+
+If you have your own certificate you can make a new secret with the `tls.crt` and the `tls.key`,
+then set the secret name in the values file.
+
+#### Automating TLS certificate creation and DNS setup
+
+To automate the creation and registration of new domain name you can use the following services:
+
+* [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager)
+* [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) (Route53 / Google CloudDNS)
+
+once installed, you can set the values for `ingress.tls.enabled` to `true` and then set the host
+name you need the TLS on under `ingress.tls.hosts` (can be more than one host)
+
+In order to get the domain registration to work you need to set the value of `api.service.annotations`
+to the annotation needed for your domain:
+i.e
+
+```yaml
+annotations:
+    domainName: polyaxon.my.domain.com
+```
 
 ### Time zone
 
@@ -452,13 +485,19 @@ nfsProvisioner:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `nodeSelector.core`                | Node labels for pod assignment for core                      | `{}`
-| `nodeSelector.experiments`         | Node labels for pod assignment for experiments               | `{}`
-| `nodeSelector.jobs`                | Node labels for pod assignment for core                      | `{}`
-| `nodeSelector.builds`              | Node labels for pod assignment for experiments               | `{}`
-| `tolerations.core`                 | Toleration labels for pod assignment for core                | `[]`
-| `tolerations.resourcesDaemon`      | Toleration labels for pod assignment for resourcesDaemon     | `[]`
-| `affinity`                         | Affinity for core                                            | Please check the values
+| `nodeSelector.core`                | Node selector for core pod assignment                        | `{}`
+| `nodeSelector.experiments`         | Node selector for experiments pod assignment                 | `{}`
+| `nodeSelector.jobs`                | Node selector for jobs pod assignment                        | `{}`
+| `nodeSelector.builds`              | Node selector for builds pod assignment                      | `{}`
+| `tolerations.core`                 | Tolerations for core pod assignment                          | `[]`
+| `tolerations.experiments`          | Tolerations for experiments pod assignment                   | `[]`
+| `tolerations.jobs`                 | Tolerations for jobs pod assignment                          | `[]`
+| `tolerations.builds`               | Tolerations for builds pod assignment                        | `[]`
+| `tolerations.resourcesDaemon`      | Tolerations for resourcesDaemon pod assignment               | `[]`
+| `affinity.core`                    | Affinity for core                                            | Please check the values
+| `affinity.experiments`             | Affinity for experiments                                     | `{}`
+| `affinity.jobs`                    | Affinity for jobs                                            | `{}`
+| `affinity.builds`                  | Affinity for builds                                          | `{}`
 
 
 Dependent charts can also have values overwritten. Preface values with
