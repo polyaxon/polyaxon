@@ -93,7 +93,7 @@ class DistributedSpecificationInterface(object):
             cluster=cluster,
             is_distributed=is_distributed,
             node_selectors=framework_environment.worker_node_selectors,
-            default_node_selectors=framework_environment.default_worker_node_selectors,
+            default_node_selector=framework_environment.default_worker_node_selector,
             task_type=cls.TASK_WORKER)
 
     @classmethod
@@ -106,7 +106,7 @@ class DistributedSpecificationInterface(object):
             cluster=cluster,
             is_distributed=is_distributed,
             node_selectors=framework_environment.ps_node_selectors,
-            default_node_selectors=framework_environment.default_ps_node_selectors,
+            default_node_selector=framework_environment.default_ps_node_selector,
             task_type=cls.TASK_PS)
 
     @classmethod

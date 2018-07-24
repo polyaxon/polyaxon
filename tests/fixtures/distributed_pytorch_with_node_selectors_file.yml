@@ -13,14 +13,14 @@ environment:
       requests: 1
       limits: 2
 
-  node_selectors:
+  node_selector:
     polyaxon.com: node_for_master_task
 
   pytorch:
     n_workers: 5
 
     default_worker:
-      node_selectors:
+      node_selector:
         polyaxon.com: node_for_worker_tasks
       resources:
         cpu:
@@ -32,7 +32,7 @@ environment:
 
     worker:
       - index: 2
-        node_selectors:
+        node_selector:
           polyaxon.com: node_for_worker_task_2
       - index: 3
         resources:

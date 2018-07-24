@@ -6,7 +6,7 @@ kind: build
 tags: ['foo', 'bar']
 
 environment:
-  node_selectors:
+  node_selector:
     polyaxon.com: node_for_build_jobs
 
   resources:

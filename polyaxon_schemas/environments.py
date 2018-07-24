@@ -327,7 +327,7 @@ class PodEnvironmentSchema(Schema):
     # To indicate which worker/ps index this session config belongs to
     index = fields.Int(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    node_selectors = fields.Dict(allow_none=True)
+    node_selector = fields.Dict(allow_none=True)
     affinity = fields.Dict(allow_none=True)
     tolerations = fields.List(fields.Dict(), allow_none=True)
 
@@ -346,18 +346,18 @@ class PodEnvironmentSchema(Schema):
 class PodEnvironmentConfig(BaseConfig):
     IDENTIFIER = 'pod_environment'
     SCHEMA = PodEnvironmentSchema
-    REDUCED_ATTRIBUTES = ['index', 'resources', 'node_selectors', 'affinity', 'tolerations']
+    REDUCED_ATTRIBUTES = ['index', 'resources', 'node_selector', 'affinity', 'tolerations']
 
     def __init__(self,
                  index=None,
                  resources=None,
-                 node_selectors=None,
+                 node_selector=None,
                  affinity=None,
                  tolerations=None,
                  ):
         self.index = index
         self.resources = resources
-        self.node_selectors = node_selectors
+        self.node_selector = node_selector
         self.affinity = affinity
         self.tolerations = tolerations
 
@@ -386,7 +386,7 @@ class TensorflowPodEnvironmentConfig(PodEnvironmentConfig):
                  index=None,
                  config=None,
                  resources=None,
-                 node_selectors=None,
+                 node_selector=None,
                  affinity=None,
                  tolerations=None,
                  ):
@@ -394,7 +394,7 @@ class TensorflowPodEnvironmentConfig(PodEnvironmentConfig):
         super(TensorflowPodEnvironmentConfig, self).__init__(
             index=index,
             resources=resources,
-            node_selectors=node_selectors,
+            node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
         )
@@ -416,8 +416,8 @@ class FrameworkEnvironmentMixin(object):
         return self.default_worker.resources if self.default_worker else None
 
     @property
-    def default_worker_node_selectors(self):
-        return self.default_worker.node_selectors if self.default_worker else None
+    def default_worker_node_selector(self):
+        return self.default_worker.node_selector if self.default_worker else None
 
     @property
     def default_worker_affinity(self):
@@ -436,8 +436,8 @@ class FrameworkEnvironmentMixin(object):
         return self.default_ps.resources if self.default_ps else None
 
     @property
-    def default_ps_node_selectors(self):
-        return self.default_ps.node_selectors if self.default_ps else None
+    def default_ps_node_selector(self):
+        return self.default_ps.node_selector if self.default_ps else None
 
     @property
     def default_ps_affinity(self):
@@ -457,7 +457,7 @@ class FrameworkEnvironmentMixin(object):
 
     @property
     def worker_node_selectors(self):
-        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.node_selectors)
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.node_selector)
 
     @property
     def worker_affinities(self):
@@ -477,7 +477,7 @@ class FrameworkEnvironmentMixin(object):
 
     @property
     def ps_node_selectors(self):
-        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.node_selectors)
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.node_selector)
 
     @property
     def ps_affinities(self):
@@ -728,7 +728,7 @@ class EnvironmentConfig(PodEnvironmentConfig):
                  persistence=None,
                  outputs=None,
                  resources=None,
-                 node_selectors=None,
+                 node_selector=None,
                  affinity=None,
                  tolerations=None,
                  tensorflow=None,
@@ -740,7 +740,7 @@ class EnvironmentConfig(PodEnvironmentConfig):
         self.outputs = outputs
         super(EnvironmentConfig, self).__init__(
             resources=resources,
-            node_selectors=node_selectors,
+            node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
         )

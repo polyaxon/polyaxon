@@ -7,7 +7,7 @@ logging:
   level: INFO
 
 environment:
-  node_selectors:
+  node_selector:
     polyaxon.com: node_for_master_task
 
   resources:
@@ -27,12 +27,12 @@ environment:
         memory:
           requests: 256
           limits: 256
-      node_selectors:
+      node_selector:
         polyaxon.com: node_for_worker_tasks
 
     worker:
       - index: 2
-        node_selectors:
+        node_selector:
           polyaxon.com: node_for_worker_task_2
       - index: 3
         resources:
@@ -45,12 +45,12 @@ environment:
         cpu:
           requests: 2
           limits: 4
-      node_selectors:
+      node_selector:
         polyaxon.com: node_for_ps_tasks
 
     ps:
       - index: 2
-        node_selectors:
+        node_selector:
           polyaxon.com: node_for_ps_task_2
       - index: 9
         resources:

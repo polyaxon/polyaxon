@@ -10,7 +10,7 @@ environment:
     data: ['data1', 'data2']
     outputs: 'outputs1'
 
-  node_selectors:
+  node_selector:
     polyaxon.com: node_for_jobs
 
   resources:

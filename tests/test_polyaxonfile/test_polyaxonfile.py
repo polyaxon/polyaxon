@@ -553,21 +553,21 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.environment.node_selectors is None
-        assert spec.master_node_selectors is None
+        assert spec.environment.node_selector is None
+        assert spec.master_node_selector is None
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
 
         assert spec.environment.tolerations is None
-        assert spec.environment.node_selectors is None
+        assert spec.environment.node_selector is None
         assert isinstance(spec.environment.affinity, dict)
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert spec.environment.tensorflow.default_worker_node_selectors is None
+        assert spec.environment.tensorflow.default_worker_node_selector is None
         assert spec.environment.tensorflow.default_worker_affinity is None
         assert isinstance(spec.environment.tensorflow.default_worker_tolerations, list)
         assert isinstance(spec.environment.tensorflow.default_worker_resources,
@@ -588,7 +588,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.tensorflow.worker_resources[3].memory.requests == 300
         assert spec.environment.tensorflow.worker_resources[3].memory.limits == 300
 
-        assert spec.environment.tensorflow.default_ps_node_selectors is None
+        assert spec.environment.tensorflow.default_ps_node_selector is None
         assert spec.environment.tensorflow.default_ps_affinity is None
         assert isinstance(spec.environment.tensorflow.default_ps_tolerations, list)
         assert isinstance(spec.environment.tensorflow.default_ps_resources, PodResourcesConfig)
@@ -679,8 +679,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.master_node_selectors == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
@@ -750,12 +750,12 @@ class TestPolyaxonfile(TestCase):
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)
 
-        assert (spec.environment.tensorflow.default_worker.node_selectors ==
+        assert (spec.environment.tensorflow.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
         assert (spec.environment.tensorflow.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
 
-        assert (spec.environment.tensorflow.default_ps.node_selectors ==
+        assert (spec.environment.tensorflow.default_ps.node_selector ==
                 {'polyaxon.com': 'node_for_ps_tasks'})
         assert (spec.environment.tensorflow.ps_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_ps_task_2'})
@@ -767,7 +767,7 @@ class TestPolyaxonfile(TestCase):
         )
         assert len(worker_node_selectors) == spec.environment.tensorflow.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.tensorflow.default_worker.node_selectors.items()),
+            tuple(spec.environment.tensorflow.default_worker.node_selector.items()),
             tuple(spec.environment.tensorflow.worker_node_selectors[2].items())}
 
         ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
@@ -777,7 +777,7 @@ class TestPolyaxonfile(TestCase):
         )
         assert len(ps_node_selectors) == spec.environment.tensorflow.n_ps
         assert set(tuple(i.items()) for i in ps_node_selectors.values()) == {
-            tuple(spec.environment.tensorflow.default_ps.node_selectors.items()),
+            tuple(spec.environment.tensorflow.default_ps.node_selector.items()),
             tuple(spec.environment.tensorflow.ps_node_selectors[2].items())}
 
     def test_distributed_horovod_passes(self):
@@ -871,8 +871,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.master_node_selectors == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == Frameworks.HOROVOD
         assert spec.environment.horovod.n_workers == 5
 
@@ -920,7 +920,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5}, True)
 
-        assert (spec.environment.horovod.default_worker.node_selectors ==
+        assert (spec.environment.horovod.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
         assert (spec.environment.horovod.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
@@ -932,7 +932,7 @@ class TestPolyaxonfile(TestCase):
         )
         assert len(worker_node_selectors) == spec.environment.horovod.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.horovod.default_worker.node_selectors.items()),
+            tuple(spec.environment.horovod.default_worker.node_selector.items()),
             tuple(spec.environment.horovod.worker_node_selectors[2].items())}
 
     def test_distributed_pytorch_passes(self):
@@ -947,7 +947,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.framework == Frameworks.PYTORCH
         assert spec.environment.pytorch.n_workers == 5
 
-        assert spec.environment.node_selectors is None
+        assert spec.environment.node_selector is None
         assert spec.environment.tolerations is None
         assert isinstance(spec.environment.affinity, dict)
         assert isinstance(spec.environment.resources, PodResourcesConfig)
@@ -955,7 +955,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert spec.environment.pytorch.default_worker_node_selectors is None
+        assert spec.environment.pytorch.default_worker_node_selector is None
         assert spec.environment.pytorch.default_worker_affinity is None
         assert isinstance(spec.environment.pytorch.default_worker_tolerations, list)
         assert isinstance(spec.environment.pytorch.default_worker_tolerations[0], dict)
@@ -1026,8 +1026,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.master_node_selectors == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == Frameworks.PYTORCH
         assert spec.environment.pytorch.n_workers == 5
 
@@ -1075,7 +1075,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5}, True)
 
-        assert (spec.environment.pytorch.default_worker.node_selectors ==
+        assert (spec.environment.pytorch.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
         assert (spec.environment.pytorch.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
@@ -1087,7 +1087,7 @@ class TestPolyaxonfile(TestCase):
         )
         assert len(worker_node_selectors) == spec.environment.pytorch.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.pytorch.default_worker.node_selectors.items()),
+            tuple(spec.environment.pytorch.default_worker.node_selector.items()),
             tuple(spec.environment.pytorch.worker_node_selectors[2].items())}
 
     def test_distributed_mxnet_passes(self):
@@ -1103,7 +1103,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.mxnet.n_workers == 5
         assert spec.environment.mxnet.n_ps == 10
 
-        assert spec.environment.node_selectors is None
+        assert spec.environment.node_selector is None
         assert spec.environment.tolerations is None
         assert isinstance(spec.environment.affinity, dict)
         assert isinstance(spec.environment.resources, PodResourcesConfig)
@@ -1111,7 +1111,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert spec.environment.mxnet.default_worker_node_selectors is None
+        assert spec.environment.mxnet.default_worker_node_selector is None
         assert spec.environment.mxnet.default_worker_affinity is None
         assert isinstance(spec.environment.mxnet.default_worker_tolerations, list)
         assert isinstance(spec.environment.mxnet.default_worker_resources,
@@ -1133,7 +1133,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.mxnet.worker_resources[3].memory.requests == 300
         assert spec.environment.mxnet.worker_resources[3].memory.limits == 300
 
-        assert spec.environment.mxnet.default_ps_node_selectors is None
+        assert spec.environment.mxnet.default_ps_node_selector is None
         assert spec.environment.mxnet.default_ps_affinity is None
         assert isinstance(spec.environment.mxnet.default_ps_tolerations, list)
         assert isinstance(spec.environment.mxnet.default_ps_resources,
@@ -1228,8 +1228,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.master_node_selectors == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
+        assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == Frameworks.MXNET
         assert spec.environment.mxnet.n_workers == 5
         assert spec.environment.mxnet.n_ps == 10
@@ -1303,12 +1303,12 @@ class TestPolyaxonfile(TestCase):
                                      TaskType.WORKER: 5,
                                      TaskType.SERVER: 10}, True)
 
-        assert (spec.environment.mxnet.default_worker.node_selectors ==
+        assert (spec.environment.mxnet.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
         assert (spec.environment.mxnet.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
 
-        assert (spec.environment.mxnet.default_ps.node_selectors ==
+        assert (spec.environment.mxnet.default_ps.node_selector ==
                 {'polyaxon.com': 'node_for_ps_tasks'})
         assert (spec.environment.mxnet.ps_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_ps_task_2'})
@@ -1320,7 +1320,7 @@ class TestPolyaxonfile(TestCase):
         )
         assert len(worker_node_selectors) == spec.environment.mxnet.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.mxnet.default_worker.node_selectors.items()),
+            tuple(spec.environment.mxnet.default_worker.node_selector.items()),
             tuple(spec.environment.mxnet.worker_node_selectors[2].items())}
 
         ps_node_selectors = MXNetSpecification.get_ps_node_selectors(
@@ -1330,7 +1330,7 @@ class TestPolyaxonfile(TestCase):
         )
         assert len(ps_node_selectors) == spec.environment.mxnet.n_ps
         assert set(tuple(i.items()) for i in ps_node_selectors.values()) == {
-            tuple(spec.environment.mxnet.default_ps.node_selectors.items()),
+            tuple(spec.environment.mxnet.default_ps.node_selector.items()),
             tuple(spec.environment.mxnet.ps_node_selectors[2].items())}
 
     def test_notebook_job_with_node_selectors(self):
@@ -1347,9 +1347,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
 
-        node_selectors = {'polyaxon.com': 'node_for_notebook_jobs'}
-        assert spec.environment.node_selectors == node_selectors
-        assert spec.node_selectors == node_selectors
+        node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
+        assert spec.environment.node_selector == node_selector
+        assert spec.node_selector == node_selector
 
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
@@ -1382,9 +1382,9 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
 
-        node_selectors = {'polyaxon.com': 'node_for_tensorboard_jobs'}
-        assert spec.environment.node_selectors == node_selectors
-        assert spec.node_selectors == node_selectors
+        node_selector = {'polyaxon.com': 'node_for_tensorboard_jobs'}
+        assert spec.environment.node_selector == node_selector
+        assert spec.node_selector == node_selector
 
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
@@ -1419,9 +1419,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
 
-        node_selectors = {'polyaxon.com': 'node_for_jobs'}
-        assert spec.environment.node_selectors == node_selectors
-        assert spec.node_selectors == node_selectors
+        node_selector = {'polyaxon.com': 'node_for_jobs'}
+        assert spec.environment.node_selector == node_selector
+        assert spec.node_selector == node_selector
 
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
@@ -1453,9 +1453,9 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
 
-        node_selectors = {'polyaxon.com': 'node_for_build_jobs'}
-        assert spec.environment.node_selectors == node_selectors
-        assert spec.node_selectors == node_selectors
+        node_selector = {'polyaxon.com': 'node_for_build_jobs'}
+        assert spec.environment.node_selector == node_selector
+        assert spec.node_selector == node_selector
 
         resources = {
             'cpu': {'requests': 1, 'limits': 2},

@@ -392,7 +392,7 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add node selectors
-        config_dict['node_selectors'] = {
+        config_dict['node_selector'] = {
             'polyaxon.com': 'master',
         }
 

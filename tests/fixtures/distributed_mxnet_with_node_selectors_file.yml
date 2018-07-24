@@ -13,7 +13,7 @@ environment:
       requests: 1
       limits: 2
 
-  node_selectors:
+  node_selector:
     polyaxon.com: node_for_master_task
 
   mxnet:
@@ -21,7 +21,7 @@ environment:
     n_ps: 10
 
     default_worker:
-      node_selectors:
+      node_selector:
         polyaxon.com: node_for_worker_tasks
       resources:
         cpu:
@@ -33,7 +33,7 @@ environment:
 
     worker:
       - index: 2
-        node_selectors:
+        node_selector:
           polyaxon.com: node_for_worker_task_2
       - index: 3
         resources:
@@ -46,12 +46,12 @@ environment:
         cpu:
           requests: 2
           limits: 4
-      node_selectors:
+      node_selector:
         polyaxon.com: node_for_ps_tasks
 
     ps:
       - index: 2
-        node_selectors:
+        node_selector:
           polyaxon.com: node_for_ps_task_2
       - index: 9
         resources:

@@ -13,7 +13,7 @@ environment:
       requests: 1
       limits: 2
 
-  node_selectors:
+  node_selector:
     polyaxon.com: node_for_master_task
 
   horovod:
@@ -27,12 +27,12 @@ environment:
         memory:
             requests: 256
             limits: 256
-      node_selectors:
+      node_selector:
         polyaxon.com: node_for_worker_tasks
 
     worker:
       - index: 2
-        node_selectors:
+        node_selector:
           polyaxon.com: node_for_worker_task_2
 
       - index: 3

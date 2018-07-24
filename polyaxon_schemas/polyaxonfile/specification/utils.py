@@ -29,15 +29,15 @@ def get_task_job_resources(cluster, is_distributed, resources, default_resources
 def get_task_job_node_selectors(cluster,
                                 is_distributed,
                                 node_selectors,
-                                default_node_selectors,
+                                default_node_selector,
                                 task_type):
     if not is_distributed:
         return None
 
     result_node_selectors = {}
-    if default_node_selectors:
+    if default_node_selector:
         for i in range(cluster.get(task_type, 0)):
-            result_node_selectors[i] = node_selectors.get(i, default_node_selectors)
+            result_node_selectors[i] = node_selectors.get(i, default_node_selector)
 
     return result_node_selectors
 

@@ -160,8 +160,8 @@ class ExperimentSpecification(JobSpecification):
         return self.environment.resources if self.environment else None
 
     @cached_property
-    def master_node_selectors(self):
-        return self.environment.node_selectors if self.environment else None
+    def master_node_selector(self):
+        return self.environment.node_selector if self.environment else None
 
     @cached_property
     def master_affinity(self):
