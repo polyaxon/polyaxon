@@ -164,6 +164,12 @@ class SettingConfig(object):
         query.validate()
         query.setup()
 
+    def setup_stats_service(self):
+        import stats
+
+        stats.validate()
+        stats.setup()
+
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
         config = reader.read(config_values)  # pylint:disable=redefined-outer-name
