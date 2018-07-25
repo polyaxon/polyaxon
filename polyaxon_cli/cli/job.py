@@ -381,8 +381,9 @@ def resources(ctx, gpu):
 
 
 @job.command()
-@click.option('--past', is_flag=True, help="Show the past logs.")
-@click.option('--follow', is_flag=True, default=False, help="Stream logs after showing past logs.")
+@click.option('--past', '-p', is_flag=True, help="Show the past logs.")
+@click.option('--follow', '-f', is_flag=True, default=False,
+              help="Stream logs after showing past logs.")
 @click.pass_context
 @clean_outputs
 def logs(ctx, past, follow):
