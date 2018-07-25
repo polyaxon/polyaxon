@@ -42,7 +42,7 @@ function Build({build, onDelete}: Props) {
         <Tags tags={build.tags}/>
       </div>
       <div className="col-md-2 block">
-        <TaskRunMetaInfo startedAt={build.created_at} finishedAt={build.updated_at}/>
+        <TaskRunMetaInfo startedAt={build.started_at} finishedAt={build.finished_at}/>
       </div>
     </div>
   );

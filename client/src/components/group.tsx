@@ -57,7 +57,7 @@ function Group({group, onDelete}: Props) {
         />
       </div>
       <div className="col-md-2 block">
-        <TaskRunMetaInfo startedAt={group.created_at} finishedAt={group.updated_at}/>
+        <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>
       </div>
     </div>
   );

@@ -59,7 +59,7 @@ function Job({job, onDelete}: Props) {
         />
       </div>
       <div className="col-md-2 block">
-        <TaskRunMetaInfo startedAt={job.created_at} finishedAt={job.updated_at}/>
+        <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>
       </div>
     </div>
   );
