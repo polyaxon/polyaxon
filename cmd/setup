@@ -1,5 +1,6 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+ROOT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )
 source $DIR/environment
 
 LOG_FILE="$DIR/setup.log"
@@ -19,6 +20,10 @@ if [ $? -eq 0 ]; then
 
     echo "Deleting docker containers..."
     $DIR/down
+
+    if [ ! -f $ROOT_DIR/polyaxon/polyaxon/env_vars/local.json ]; then
+        cp $ROOT_DIR/polyaxon/polyaxon/env_vars/local_template.json $ROOT_DIR/polyaxon/polyaxon/env_vars/local.json;
+    fi
 
     if [ "$1" = "npm" ]; then
         echo "Installing npm dependencies..."
