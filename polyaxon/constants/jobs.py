@@ -1,4 +1,4 @@
-from constants.statuses import BaseStatuses
+from constants.statuses import BaseStatuses, StatusOptions
 from constants.unknown import UNKNOWN
 
 
@@ -19,13 +19,13 @@ class JobLifeCycle(BaseStatuses):
         * UNKNOWN: For some reason the state of the pod could not be obtained,
                    typically due to an error in communicating with the host of the pod.
     """
-    CREATED = 'created'
-    BUILDING = 'building'
-    SCHEDULED = 'scheduled'
-    RUNNING = 'running'
-    SUCCEEDED = 'succeeded'
-    FAILED = 'failed'
-    STOPPED = 'stopped'
+    CREATED = StatusOptions.CREATED
+    BUILDING = StatusOptions.BUILDING
+    SCHEDULED = StatusOptions.SCHEDULED
+    RUNNING = StatusOptions.RUNNING
+    SUCCEEDED = StatusOptions.SUCCEEDED
+    FAILED = StatusOptions.FAILED
+    STOPPED = StatusOptions.STOPPED
     UNKNOWN = UNKNOWN
 
     CHOICES = (

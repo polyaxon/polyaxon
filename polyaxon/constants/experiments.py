@@ -1,5 +1,5 @@
 from constants.jobs import JobLifeCycle
-from constants.statuses import BaseStatuses
+from constants.statuses import BaseStatuses, StatusOptions
 from constants.unknown import UNKNOWN
 
 
@@ -17,15 +17,15 @@ class ExperimentLifeCycle(BaseStatuses):
         * STOPPED: was stopped/deleted/killed
         * UNKNOWN: unknown state
     """
-    CREATED = 'created'
-    RESUMING = 'resuming'
-    BUILDING = 'building'
-    SCHEDULED = 'scheduled'
-    STARTING = 'starting'
-    RUNNING = 'running'
-    SUCCEEDED = 'succeeded'
-    FAILED = 'failed'
-    STOPPED = 'stopped'
+    CREATED = StatusOptions.CREATED
+    RESUMING = StatusOptions.RESUMING
+    BUILDING = StatusOptions.BUILDING
+    SCHEDULED = StatusOptions.SCHEDULED
+    STARTING = StatusOptions.STARTING
+    RUNNING = StatusOptions.RUNNING
+    SUCCEEDED = StatusOptions.SUCCEEDED
+    FAILED = StatusOptions.FAILED
+    STOPPED = StatusOptions.STOPPED
     UNKNOWN = UNKNOWN
 
     CHOICES = (

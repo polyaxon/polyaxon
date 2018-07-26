@@ -1,13 +1,13 @@
-from constants.statuses import BaseStatuses
+from constants.statuses import BaseStatuses, StatusOptions
 
 
 class PipelineStatuses(BaseStatuses):
-    CREATED = 'created'
-    SCHEDULED = 'scheduled'
-    RUNNING = 'running'
-    FINISHED = 'finished'
-    STOPPED = 'stopped'
-    SKIPPED = 'skipped'
+    CREATED = StatusOptions.CREATED
+    SCHEDULED = StatusOptions.SCHEDULED
+    RUNNING = StatusOptions.RUNNING
+    FINISHED = StatusOptions.FAILED
+    STOPPED = StatusOptions.STOPPED
+    SKIPPED = StatusOptions.SKIPPED
 
     VALUES = {
         CREATED, SCHEDULED, RUNNING, FINISHED, STOPPED, SKIPPED

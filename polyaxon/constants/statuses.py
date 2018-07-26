@@ -1,3 +1,17 @@
+class StatusOptions:
+    CREATED = 'created'
+    SCHEDULED = 'scheduled'
+    BUILDING = 'building'
+    RESUMING = 'resuming'
+    STARTING = 'starting'
+    RUNNING = 'running'
+    SUCCEEDED = 'succeeded'
+    FAILED = 'failed'
+    STOPPED = 'stopped'
+    FINISHED = 'finished'
+    SKIPPED = 'skipped'
+
+
 class BaseStatuses(object):
     VALUES = set([])
     CHOICES = ()
