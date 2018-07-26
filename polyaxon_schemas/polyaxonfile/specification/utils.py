@@ -1,29 +1,36 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import copy
+
+
+def get_task_values(cluster, is_distributed, values, default_value, task_type):
+    result_values = {}
+    if not is_distributed:
+        return result_values
+
+    result_values = copy.deepcopy(values) if values else {}
+    if default_value:
+        for i in range(cluster.get(task_type, 0)):
+            result_values[i] = values.get(i, default_value)
+
+    return result_values
+
 
 def get_task_configs(cluster, is_distributed, configs, default_config, task_type):
-    result_configs = {}
-    if not is_distributed:
-        return result_configs
-
-    if default_config:
-        for i in range(cluster.get(task_type, 0)):
-            result_configs[i] = configs.get(i, default_config)
-
-    return result_configs
+    return get_task_values(cluster=cluster,
+                           is_distributed=is_distributed,
+                           values=configs,
+                           default_value=default_config,
+                           task_type=task_type)
 
 
 def get_task_job_resources(cluster, is_distributed, resources, default_resources, task_type):
-    if not is_distributed:
-        return None
-
-    result_resources = {}
-    if default_resources:
-        for i in range(cluster.get(task_type, 0)):
-            result_resources[i] = resources.get(i, default_resources)
-
-    return result_resources
+    return get_task_values(cluster=cluster,
+                           is_distributed=is_distributed,
+                           values=resources,
+                           default_value=default_resources,
+                           task_type=task_type)
 
 
 def get_task_job_node_selectors(cluster,
@@ -31,15 +38,11 @@ def get_task_job_node_selectors(cluster,
                                 node_selectors,
                                 default_node_selector,
                                 task_type):
-    if not is_distributed:
-        return None
-
-    result_node_selectors = {}
-    if default_node_selector:
-        for i in range(cluster.get(task_type, 0)):
-            result_node_selectors[i] = node_selectors.get(i, default_node_selector)
-
-    return result_node_selectors
+    return get_task_values(cluster=cluster,
+                           is_distributed=is_distributed,
+                           values=node_selectors,
+                           default_value=default_node_selector,
+                           task_type=task_type)
 
 
 def get_task_job_tolerations(cluster,
@@ -47,15 +50,11 @@ def get_task_job_tolerations(cluster,
                              tolerations,
                              default_tolerations,
                              task_type):
-    if not is_distributed:
-        return None
-
-    result_tolerations = {}
-    if default_tolerations:
-        for i in range(cluster.get(task_type, 0)):
-            result_tolerations[i] = tolerations.get(i, default_tolerations)
-
-    return result_tolerations
+    return get_task_values(cluster=cluster,
+                           is_distributed=is_distributed,
+                           values=tolerations,
+                           default_value=default_tolerations,
+                           task_type=task_type)
 
 
 def get_task_job_affinities(cluster,
@@ -63,12 +62,8 @@ def get_task_job_affinities(cluster,
                             affinities,
                             default_affinity,
                             task_type):
-    if not is_distributed:
-        return None
-
-    result_affinities = {}
-    if default_affinity:
-        for i in range(cluster.get(task_type, 0)):
-            result_affinities[i] = affinities.get(i, default_affinity)
-
-    return result_affinities
+    return get_task_values(cluster=cluster,
+                           is_distributed=is_distributed,
+                           values=affinities,
+                           default_value=default_affinity,
+                           task_type=task_type)
