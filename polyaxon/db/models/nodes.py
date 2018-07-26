@@ -90,6 +90,8 @@ class NodeParser(object):
             if t.key == 'node-role.kubernetes.io/master' and t.effect == 'NoSchedule':
                 return False
 
+        return True
+
     @staticmethod
     def get_schedulable_state(node):
         return not node.spec.unschedulable
