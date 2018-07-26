@@ -1,5 +1,7 @@
+# pylint:disable=import-error
 from datadog import initialize, ThreadStats
 from datadog.util.hostname import get_hostname
+
 from django.utils.functional import cached_property
 
 from stats.base import BaseStatsBackend
@@ -25,9 +27,8 @@ class DatadogStatsBackend(BaseStatsBackend):
         instance.start()
         return instance
 
-    def _incr(self, key, amount=1, sample_rate=1, tags=None):
-        if tags is None:
-            tags = []
+    def _incr(self, key, amount=1, sample_rate=1, **kwargs):
+        tags = kwargs.get('tags', [])
         if self.tags:
             tags += self.tags
         self.stats.increment(key, amount, sample_rate=sample_rate, tags=tags, host=self.host)

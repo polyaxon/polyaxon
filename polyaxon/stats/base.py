@@ -5,7 +5,7 @@ from threading import local
 
 
 class BaseStatsBackend(local):
-    def __init__(self, prefix=None):
+    def __init__(self, prefix=None):  # pylint:disable=super-init-not-called
         if prefix is None:
             prefix = settings.DEFAULT_STATS_PREFIX
         self.prefix = prefix
