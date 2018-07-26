@@ -1,5 +1,5 @@
 from constants.statuses import StatusOptions
-from event_manager import event_actions
+from event_manager import event_actions, event_context
 
 
 class EventColor(object):
@@ -10,8 +10,8 @@ class EventColor(object):
     GREY = '#485563'
 
     @classmethod
-    def get_for_event(cls, event):
-        action = event.get_event_action()
+    def get_for_event(cls, event_content_object, event_type):
+        action = event_context.get_event_action(event_type=event_type)
         if action in [event_actions.FAILED,
                       event_actions.STOPPED,
                       event_actions.DELETED]:
@@ -22,10 +22,10 @@ class EventColor(object):
         if action != event_actions.NEW_STATUS:
             return cls.GREY
 
-        if event.instance.last_status in [StatusOptions.FINISHED, StatusOptions.SKIPPED]:
+        if event_content_object.last_status in [StatusOptions.FINISHED, StatusOptions.SKIPPED]:
             return cls.GREEN
 
-        if event.instance.last_status == StatusOptions.CREATED:
+        if event_content_object.last_status == StatusOptions.CREATED:
             return cls.BLUE
 
         return cls.YELLOW
