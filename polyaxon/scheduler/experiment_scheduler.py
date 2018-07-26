@@ -101,7 +101,7 @@ def handle_tensorflow_experiment(experiment, spawner, response):
                affinity=spawner.spec.master_affinity,
                tolerations=spawner.spec.master_tolerations)
 
-    cluster, is_distributed, = spawner.spec.cluster_def
+    cluster, is_distributed = spawner.spec.cluster_def
 
     worker_resources = TensorflowSpecification.get_worker_resources(
         environment=spawner.spec.environment,
@@ -184,7 +184,7 @@ def handle_horovod_experiment(experiment, spawner, response):
                affinity=spawner.spec.master_affinity,
                tolerations=spawner.spec.master_tolerations)
 
-    cluster, is_distributed, = spawner.spec.cluster_def
+    cluster, is_distributed = spawner.spec.cluster_def
     worker_resources = HorovodSpecification.get_worker_resources(
         environment=spawner.spec.environment,
         cluster=cluster,
@@ -233,7 +233,7 @@ def handle_pytorch_experiment(experiment, spawner, response):
                affinity=spawner.spec.master_affinity,
                tolerations=spawner.spec.master_tolerations)
 
-    cluster, is_distributed, = spawner.spec.cluster_def
+    cluster, is_distributed = spawner.spec.cluster_def
     worker_resources = PytorchSpecification.get_worker_resources(
         environment=spawner.spec.environment,
         cluster=cluster,
@@ -282,7 +282,7 @@ def handle_mxnet_experiment(experiment, spawner, response):
                affinity=spawner.spec.master_affinity,
                tolerations=spawner.spec.master_tolerations)
 
-    cluster, is_distributed, = spawner.spec.cluster_def
+    cluster, is_distributed = spawner.spec.cluster_def
     worker_resources = MXNetSpecification.get_worker_resources(
         environment=spawner.spec.environment,
         cluster=cluster,
