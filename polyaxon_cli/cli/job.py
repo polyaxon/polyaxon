@@ -9,7 +9,7 @@ from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.job import JobManager
-from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -82,9 +82,7 @@ def get(ctx):
     user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
     try:
         response = PolyaxonClients().job.get_job(user, project_name, _job)
-        # Set caching only if we have an initialized project
-        if ProjectManager.is_initialized():
-            JobManager.set_config(response)
+        cache.cache(config_manager=JobManager, response=response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))

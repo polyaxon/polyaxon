@@ -8,7 +8,12 @@ import click
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.logger import clean_outputs
+from polyaxon_cli.managers.build_job import BuildJobManager
+from polyaxon_cli.managers.experiment import ExperimentManager
+from polyaxon_cli.managers.experiment_group import GroupManager
+from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
@@ -97,6 +102,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             response = PolyaxonClients().project.create_experiment(project.user,
                                                                    project.name,
                                                                    experiment)
+            cache.cache(config_manager=ExperimentManager, response=response)
             Printer.print_success('Experiment `{}` was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create experiment.')
@@ -116,6 +122,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             response = project_client.create_experiment_group(project.user,
                                                               project.name,
                                                               experiment_group)
+            cache.cache(config_manager=GroupManager, response=response)
             Printer.print_success('Experiment group {} was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create experiment group.')
@@ -133,6 +140,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             response = project_client.create_job(project.user,
                                                  project.name,
                                                  job)
+            cache.cache(config_manager=JobManager, response=response)
             Printer.print_success('Job {} was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create job.')
@@ -150,6 +158,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             response = project_client.create_build(project.user,
                                                    project.name,
                                                    job)
+            cache.cache(config_manager=BuildJobManager, response=response)
             Printer.print_success('Build {} was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not create build.')

@@ -8,7 +8,7 @@ import click
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.build_job import BuildJobManager
-from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -80,9 +80,7 @@ def get(ctx):
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
         response = PolyaxonClients().build_job.get_build(user, project_name, _build)
-        # Set caching only if we have an initialized project
-        if ProjectManager.is_initialized():
-            BuildJobManager.set_config(response)
+        cache.cache(config_manager=BuildJobManager, response=response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))

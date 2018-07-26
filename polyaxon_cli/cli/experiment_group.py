@@ -8,7 +8,7 @@ import click
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment_group import GroupManager
-from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -75,9 +75,7 @@ def get(ctx):
     try:
         response = PolyaxonClients().experiment_group.get_experiment_group(
             user, project_name, _group)
-        # Set caching only if we have an initialized project
-        if ProjectManager.is_initialized():
-            GroupManager.set_config(response)
+        cache.cache(config_manager=GroupManager, response=response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiment group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))

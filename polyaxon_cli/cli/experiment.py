@@ -12,7 +12,7 @@ from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_job import ExperimentJobManager
-from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -136,9 +136,7 @@ def get(ctx, job):
     def get_experiment():
         try:
             response = PolyaxonClients().experiment.get_experiment(user, project_name, _experiment)
-            # Set caching only if we have an initialized project
-            if ProjectManager.is_initialized():
-                ExperimentManager.set_config(response)
+            cache.cache(config_manager=ExperimentManager, response=response)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not load experiment `{}` info.'.format(_experiment))
             Printer.print_error('Error message `{}`.'.format(e))
@@ -152,9 +150,7 @@ def get(ctx, job):
                                                                 project_name,
                                                                 _experiment,
                                                                 _job)
-            # Set caching only if we have an initialized project
-            if ProjectManager.is_initialized():
-                ExperimentJobManager.set_config(response)
+            cache.cache(config_manager=ExperimentJobManager, response=response)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get job `{}`.'.format(_job))
             Printer.print_error('Error message `{}`.'.format(e))
