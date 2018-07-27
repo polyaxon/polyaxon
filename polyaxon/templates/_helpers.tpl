@@ -19,7 +19,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Return the appropriate apiVersion for networkpolicy.
 */}}
 {{- define "networkPolicy.apiVersion" -}}
-{{- if and (ge (int (.Capabilities.KubeVersion.Minor)) 4) (le (int (.Capabilities.KubeVersion.Minor)) 6) -}}
+{{- if and (ge (int (include "k8s.minor" .)) 4) (le (int (include "k8s.minor" .)) 6) -}}
 "extensions/v1beta1"
 {{- else if ge (int (.Capabilities.KubeVersion.Minor)) 7 -}}
 "networking.k8s.io/v1"
@@ -50,4 +50,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- define "rabbitmq.fullname" -}}
 {{- $name := "rabbitmq" -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+
+{{- define "k8s.minor" -}}
+{{ printf (.Capabilities.KubeVersion.Minor | initials) }}
 {{- end -}}
