@@ -14,6 +14,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name "polyaxon" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "k8s.minor" -}}
+{{ printf (.Capabilities.KubeVersion.Minor | initials) }}
+{{- end -}}
+
 
 {{/*
 Return the appropriate apiVersion for networkpolicy.
@@ -50,9 +54,4 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- define "rabbitmq.fullname" -}}
 {{- $name := "rabbitmq" -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-
-{{- define "k8s.minor" -}}
-{{ printf (.Capabilities.KubeVersion.Minor | initials) }}
 {{- end -}}
