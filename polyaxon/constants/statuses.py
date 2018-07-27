@@ -1,3 +1,19 @@
+class StatusOptions:
+    CREATED = 'created'
+    SCHEDULED = 'scheduled'
+    BUILDING = 'building'
+    RESUMING = 'resuming'
+    STARTING = 'starting'
+    RUNNING = 'running'
+    SUCCEEDED = 'succeeded'
+    FAILED = 'failed'
+    UPSTREAM_FAILED = 'upstream_failed'
+    STOPPED = 'stopped'
+    FINISHED = 'finished'
+    SKIPPED = 'skipped'
+    RETRYING = 'retrying'
+
+
 class BaseStatuses(object):
     VALUES = set([])
     CHOICES = ()

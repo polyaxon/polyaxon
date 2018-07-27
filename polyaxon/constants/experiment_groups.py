@@ -1,4 +1,4 @@
-from constants.statuses import BaseStatuses
+from constants.statuses import BaseStatuses, StatusOptions
 
 
 class ExperimentGroupLifeCycle(BaseStatuses):
@@ -11,11 +11,11 @@ class ExperimentGroupLifeCycle(BaseStatuses):
         * FAILED: one of the jobs has failed
         * STOPPED: was stopped/deleted/killed
     """
-    CREATED = 'created'
-    RUNNING = 'running'
-    SUCCEEDED = 'succeeded'
-    FAILED = 'failed'
-    STOPPED = 'stopped'
+    CREATED = StatusOptions.CREATED
+    RUNNING = StatusOptions.RUNNING
+    SUCCEEDED = StatusOptions.SUCCEEDED
+    FAILED = StatusOptions.FAILED
+    STOPPED = StatusOptions.STOPPED
 
     CHOICES = (
         (CREATED, CREATED),

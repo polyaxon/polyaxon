@@ -32,6 +32,7 @@ class Event(object):
     event_type = None  # The event type should ideally follow subject.action
     attributes = ()
     actor_id = None
+    actor_name = None
 
     def __init__(self, datetime=None, instance=None, **items):
         self.uuid = uuid1()

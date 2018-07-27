@@ -1,7 +1,7 @@
-from django.conf import settings
-
 from random import random
 from threading import local
+
+from django.conf import settings
 
 
 class BaseStatsBackend(local):

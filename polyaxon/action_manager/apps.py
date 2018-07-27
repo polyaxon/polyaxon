@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class EventManagerConfig(AppConfig):
-    name = 'event_manager'
-    verbose_name = 'Event Manager'
+    name = 'action_manager'
+    verbose_name = 'Action Manager'

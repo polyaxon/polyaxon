@@ -291,7 +291,7 @@ class PipelineRunStatus(StatusModel):
 
 class OperationRunStatus(StatusModel):
     """A model that represents an operation run status at certain time."""
-    STATUSES = PipelineStatuses
+    STATUSES = OperationStatuses
 
     status = models.CharField(
         max_length=64,
