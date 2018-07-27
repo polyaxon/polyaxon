@@ -16,7 +16,7 @@ declarations:
   momentum: 0.5
 
 build:
-  image: pytorch/pytorch:latest
+  image: pytorch/pytorch:v0.2
   build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
 
