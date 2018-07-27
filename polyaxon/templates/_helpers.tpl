@@ -15,7 +15,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "k8s.minor" -}}
-{{ printf (.Capabilities.KubeVersion.Minor | initials) }}
+{{ .Capabilities.KubeVersion.Minor |  trimSuffix "+" }}
 {{- end -}}
 
 
