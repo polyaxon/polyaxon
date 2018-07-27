@@ -32,6 +32,3 @@ class EmailAction(Action):
         body_template = ''
 
         send_template_mail(subject_template, body_template, {}, recipients)
-
-
-

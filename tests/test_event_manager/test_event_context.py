@@ -5,8 +5,12 @@ import pytest
 from event_manager import event_context
 from event_manager.event import Attribute, Event
 from event_manager.event_context import EventContextSpec
-from libs.unique_urls import get_experiment_url, get_experiment_group_url, get_job_url, \
-    get_project_url, get_user_url
+from libs.unique_urls import (
+    get_experiment_group_url,
+    get_experiment_url,
+    get_job_url,
+    get_project_url
+)
 from tests.utils import BaseTest
 
 
@@ -23,20 +27,20 @@ class TestEventContext(BaseTest):
         assert event_context.get_event_action('foo.bar.moo') == 'bar'
 
     def test_get_event_actor_context(self):
-        class DummyEvent(Event):
+        class DummyEvent1(Event):
             event_type = 'dummy.event'
             attributes = (
                 Attribute('attr1'),
             )
 
-        class DummyObject(object):
+        class DummyObject1(object):
             attr1 = 'test'
 
-        obj = DummyObject()
-        event = DummyEvent.from_instance(obj)
+        obj = DummyObject1()
+        event = DummyEvent1.from_instance(obj)
         assert event_context.get_event_actor_context(event=event) is None
 
-        class DummyEvent(Event):
+        class DummyEvent2(Event):
             event_type = 'dummy.event'
             actor_name = 'actor_name'
             attributes = (
@@ -44,12 +48,12 @@ class TestEventContext(BaseTest):
                 Attribute('actor_name'),
             )
 
-        class DummyObject(object):
+        class DummyObject2(object):
             attr1 = 'test'
             actor_name = 'test'
 
-        obj = DummyObject()
-        event = DummyEvent.from_instance(obj)
+        obj = DummyObject2()
+        event = DummyEvent2.from_instance(obj)
         event_spec = EventContextSpec('test', '/test', None)
         assert event_context.get_event_actor_context(event=event) == event_spec
 

@@ -64,7 +64,3 @@ class WebHookAction(Action):
                 safe_urlopen(url=web_hook['url'], method=web_hook['method'], json=data)
             else:
                 safe_urlopen(url=web_hook['url'], method=web_hook['method'], params=data)
-
-
-
-

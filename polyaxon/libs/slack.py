@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from event_manager import event_context
 from event_manager.event_colors import EventColor

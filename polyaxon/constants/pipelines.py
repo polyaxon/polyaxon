@@ -5,7 +5,7 @@ class PipelineStatuses(BaseStatuses):
     CREATED = StatusOptions.CREATED
     SCHEDULED = StatusOptions.SCHEDULED
     RUNNING = StatusOptions.RUNNING
-    FINISHED = StatusOptions.FAILED
+    FINISHED = StatusOptions.FINISHED
     STOPPED = StatusOptions.STOPPED
     SKIPPED = StatusOptions.SKIPPED
 
@@ -36,15 +36,15 @@ class PipelineStatuses(BaseStatuses):
 
 
 class OperationStatuses(BaseStatuses):
-    CREATED = 'created'
-    SCHEDULED = 'scheduled'
-    RUNNING = 'running'
-    SUCCEEDED = 'succeeded'
-    FAILED = 'failed'
-    UPSTREAM_FAILED = 'upstream_failed'
-    STOPPED = 'stopped'
-    SKIPPED = 'skipped'
-    RETRYING = 'retrying'
+    CREATED = StatusOptions.CREATED
+    SCHEDULED = StatusOptions.SCHEDULED
+    RUNNING = StatusOptions.RUNNING
+    SUCCEEDED = StatusOptions.SUCCEEDED
+    FAILED = StatusOptions.FAILED
+    UPSTREAM_FAILED = StatusOptions.UPSTREAM_FAILED
+    STOPPED = StatusOptions.STOPPED
+    SKIPPED = StatusOptions.SKIPPED
+    RETRYING = StatusOptions.RETRYING
 
     VALUES = {
         CREATED, SCHEDULED, RUNNING, SUCCEEDED, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED, RETRYING
