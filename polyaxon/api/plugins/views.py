@@ -337,11 +337,11 @@ class TensorboardView(PluginJobView):
             target = 'experiment_group'
         else:
             target = 'project'
-        # auditor.record(event_type=TENSORBOARD_VIEWED,
-        #                instance=instance.tensorboard,
-        #                target=target,
-        #                actor_id=self.request.user.id,
-        #                actor_name=self.request.user.username)
+        auditor.record(event_type=TENSORBOARD_VIEWED,
+                       instance=instance.tensorboard,
+                       target=target,
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
 
 
 class ProjectTensorboardListView(ListAPIView):
