@@ -1,7 +1,6 @@
 from uuid import uuid1
 
 from django.utils import timezone
-from django.utils.functional import cached_property
 
 from constants import user_system
 from event_manager import event_context
