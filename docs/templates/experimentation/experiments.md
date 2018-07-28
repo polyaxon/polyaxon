@@ -68,8 +68,6 @@ run:
 !!! info "More details"
     For more details about the `run section` check the [run section reference](/polyaxonfile_specification/sections#run)
 
-It
-
 
 To make sure that the polyaxon file is valid, you can run the following command,
 
@@ -85,7 +83,7 @@ This command validate the polyaxon file, and the option `-def` returns the exper
 in this case we have only one independent experiment.
 
 In some case you will need to change the directory before running a command, or you might need to run multiple commands,
-the best way to do that is to create executable file,
+the best way to do that is to create an executable file,
 e.g. `run.sh` where you will put all the commands you wish to run, and then just run that file:
 
 For example the `run.sh` could be:
