@@ -10,8 +10,13 @@ Polyaxon is currently running:
     {{- else }}
     export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     {{- end }}
+    {{- if .Values.ingress.tls.enabled }}
+    export POLYAXON_HTTP_PORT=443
+    export POLYAXON_WS_PORT=443
+    {{- else }}
     export POLYAXON_HTTP_PORT=80
     export POLYAXON_WS_PORT=80
+    {{- end }}
 
     echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
@@ -65,8 +70,11 @@ Polyaxon is currently running:
 
 2. Setup your cli by running theses commands:
 
+  {{- if .Values.ingress.tls.enabled }}
+  polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT --use_https=true
+  {{- else }}
   polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT
-
+  {{- end }}
 
 3. Log in with superuser
 
