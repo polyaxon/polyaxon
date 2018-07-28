@@ -125,7 +125,7 @@ class AuditorMixinView(object):
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        auditor.record(event_type=self.delete_event,
+        auditor.record(event_type=self.update_event,
                        instance=instance,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
