@@ -67,7 +67,8 @@ class StartTensorboardView(CreateAPIView):
         auditor.record(event_type=TENSORBOARD_STARTED_TRIGGERED,
                        instance=instance,
                        target='project',
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
 
     def _handle_project_tensorboard(self, project):
         if project.has_tensorboard:
@@ -152,7 +153,8 @@ class StopTensorboardView(PostAPIView):
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=tensorboard,
                            target='project',
-                           actor_id=self.request.user.id)
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -174,7 +176,8 @@ class StartNotebookView(CreateAPIView):
         auditor.record(event_type=NOTEBOOK_STARTED_TRIGGERED,
                        instance=instance,
                        target='project',
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -224,6 +227,7 @@ class StopNotebookView(PostAPIView):
                            instance=obj.notebook,
                            target='project',
                            actor_id=self.request.user.id,
+                           actor_name=self.request.user.username,
                            countdown=1)
         elif obj.notebook and obj.notebook.is_running:
             obj.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
@@ -299,7 +303,8 @@ class NotebookView(PluginJobView):
         auditor.record(event_type=NOTEBOOK_VIEWED,
                        instance=instance.notebook,
                        target='project',
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
 
 
 class TensorboardView(PluginJobView):
@@ -335,7 +340,8 @@ class TensorboardView(PluginJobView):
         auditor.record(event_type=TENSORBOARD_VIEWED,
                        instance=instance.tensorboard,
                        target=target,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
 
 
 class ProjectTensorboardListView(ListAPIView):
@@ -352,6 +358,7 @@ class ProjectTensorboardListView(ListAPIView):
         project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_TENSORBOARDS_VIEWED,
                        instance=project,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         queryset = queryset.filter(project=project)
         return super().filter_queryset(queryset=queryset)

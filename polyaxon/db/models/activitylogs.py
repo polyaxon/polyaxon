@@ -12,7 +12,10 @@ class ActivityLog(models.Model):
     actor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='+')
+        related_name='+',
+        null=True,
+        blank=True,
+        help_text='The user who triggered this activity, if null we assume a user `system`.')
     context = JSONField(help_text='Extra context information.')
     created_at = models.DateTimeField()
 

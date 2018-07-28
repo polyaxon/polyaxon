@@ -48,7 +48,8 @@ class ExperimentGroupListView(ListCreateAPIView):
         project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_EXPERIMENT_GROUPS_VIEWED,
                        instance=project,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         queryset = queryset.filter(project=project)
         return super().filter_queryset(queryset=queryset)
 
@@ -100,6 +101,7 @@ class ExperimentGroupStopView(CreateAPIView):
         auditor.record(event_type=EXPERIMENT_GROUP_STOPPED_TRIGGERED,
                        instance=obj,
                        actor_id=request.user.id,
+                       actor_name=request.user.username,
                        pending=pending)
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
@@ -140,5 +142,6 @@ class ExperimentGroupStatusListView(ListCreateAPIView):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_GROUP_STATUSES_VIEWED,
                        instance=self.group,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         return response

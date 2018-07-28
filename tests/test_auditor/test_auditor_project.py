@@ -41,6 +41,7 @@ class AuditorProjectTest(BaseTest):
     def test_project_updated(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_UPDATED,
                        instance=self.project,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -60,6 +61,7 @@ class AuditorProjectTest(BaseTest):
     def test_project_deleted_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_DELETED_TRIGGERED,
                        instance=self.project,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -70,6 +72,7 @@ class AuditorProjectTest(BaseTest):
     def test_project_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_VIEWED,
                        instance=self.project,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -80,6 +83,7 @@ class AuditorProjectTest(BaseTest):
     def test_project_unbookmarked(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_UNBOOKMARKED,
                        instance=self.project,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -90,6 +94,7 @@ class AuditorProjectTest(BaseTest):
     def test_project_bookmarked(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_BOOKMARKED,
                        instance=self.project,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -120,7 +125,8 @@ class AuditorProjectTest(BaseTest):
     def test_project_experiment_groups_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_EXPERIMENT_GROUPS_VIEWED,
                        instance=self.project,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -130,6 +136,7 @@ class AuditorProjectTest(BaseTest):
     def test_project_experiments_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_EXPERIMENTS_VIEWED,
                        instance=self.project,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -140,7 +147,8 @@ class AuditorProjectTest(BaseTest):
     def test_project_jobs_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_JOBS_VIEWED,
                        instance=self.project,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -150,7 +158,8 @@ class AuditorProjectTest(BaseTest):
     def test_project_builds_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_BUILDS_VIEWED,
                        instance=self.project,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -160,7 +169,8 @@ class AuditorProjectTest(BaseTest):
     def test_project_tensorboards_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_TENSORBOARDS_VIEWED,
                        instance=self.project,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1

@@ -51,7 +51,8 @@ class AuditorUserTest(BaseTest):
     def test_user_activated(self, activitylogs_record, tracker_record):
         auditor.record(event_type=user_events.USER_ACTIVATED,
                        instance=self.user,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -61,7 +62,8 @@ class AuditorUserTest(BaseTest):
     def test_user_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=user_events.USER_DELETED,
                        instance=self.user,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1

@@ -2,6 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from constants import user_system
 from event_manager import event_context
 from event_manager.event import Attribute, Event
 from event_manager.event_context import EventContextSpec
@@ -55,6 +56,11 @@ class TestEventContext(BaseTest):
         obj = DummyObject2()
         event = DummyEvent2.from_instance(obj)
         event_spec = EventContextSpec('test', '/test', None)
+        assert event_context.get_event_actor_context(event=event) == event_spec
+
+        obj.actor_name = user_system.USER_SYSTEM_NAME
+        event = DummyEvent2.from_instance(obj)
+        event_spec = EventContextSpec(user_system.USER_SYSTEM_NAME, None, None)
         assert event_context.get_event_actor_context(event=event) == event_spec
 
     def test_get_event_object_context(self):

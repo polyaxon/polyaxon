@@ -30,13 +30,12 @@ class TensorboardStartedEvent(Event):
 
 class TensorboardStartedTriggeredEvent(Event):
     event_type = TENSORBOARD_STARTED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('target'),  # project, experiment_group, experiment
     )
 
@@ -56,27 +55,25 @@ class TensorboardSoppedEvent(Event):
 
 class TensorboardSoppedTriggeredEvent(Event):
     event_type = TENSORBOARD_STOPPED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('target'),  # project, experiment_group, experiment
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
 
 class TensorboardViewedEvent(Event):
     event_type = TENSORBOARD_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
     )
@@ -84,13 +81,12 @@ class TensorboardViewedEvent(Event):
 
 class TensorboardBookmarkedEvent(Event):
     event_type = TENSORBOARD_BOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
     )
@@ -98,13 +94,12 @@ class TensorboardBookmarkedEvent(Event):
 
 class TensorboardUnBookmarkedEvent(Event):
     event_type = TENSORBOARD_UNBOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
     )

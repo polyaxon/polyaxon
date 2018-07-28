@@ -28,14 +28,13 @@ class NotebookStartedEvent(Event):
 
 class NotebookStartedTriggeredEvent(Event):
     event_type = NOTEBOOK_STARTED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('target'),  # project, experiment_group, experiment
-        Attribute('actor_id'),
     )
 
 
@@ -54,27 +53,25 @@ class NotebookSoppedEvent(Event):
 
 class NotebookSoppedTriggeredEvent(Event):
     event_type = NOTEBOOK_STOPPED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('target'),  # project, experiment_group, experiment
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
 
 class NotebookViewedEvent(Event):
     event_type = NOTEBOOK_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
     )

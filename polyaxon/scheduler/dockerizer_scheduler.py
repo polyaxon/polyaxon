@@ -60,7 +60,8 @@ def create_build_job(user, project, config, code_reference):
         # We need to build the image first
         auditor.record(event_type=BUILD_JOB_STARTED_TRIGGERED,
                        instance=build_job,
-                       actor_id=user.id)
+                       actor_id=user.id,
+                       actor_name=user.username)
         build_status = start_dockerizer(build_job=build_job)
     else:
         build_status = True

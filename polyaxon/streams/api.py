@@ -127,7 +127,8 @@ async def experiment_job_resources(request, ws, username, project_name, experime
     job_name = '{}.{}'.format(job.role, job.id)
     auditor.record(event_type=EXPERIMENT_JOB_RESOURCES_VIEWED,
                    instance=job,
-                   actor_id=request.app.user.id)
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
 
     if not RedisToStream.is_monitored_job_resources(job_uuid=job_uuid):
         _logger.info('Job resources with uuid `%s` is now being monitored', job_name)
@@ -191,7 +192,8 @@ async def experiment_resources(request, ws, username, project_name, experiment_i
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_RESOURCES_VIEWED,
                    instance=experiment,
-                   actor_id=request.app.user.id)
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
 
     if not RedisToStream.is_monitored_experiment_resources(experiment_uuid=experiment_uuid):
         _logger.info('Experiment resource with uuid `%s` is now being monitored', experiment_uuid)
@@ -263,7 +265,8 @@ async def experiment_job_logs(request, ws, username, project_name, experiment_id
     job_uuid = job.uuid.hex
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
                    instance=job,
-                   actor_id=request.app.user.id)
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
         _logger.info('Job uuid `%s` logs is now being monitored', job_uuid)
@@ -341,7 +344,8 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
     experiment_uuid = experiment.uuid.hex
     auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
                    instance=experiment,
-                   actor_id=request.app.user.id)
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
 
     if not RedisToStream.is_monitored_experiment_logs(experiment_uuid=experiment_uuid):
         _logger.info('Experiment uuid `%s` logs is now being monitored', experiment_uuid)
@@ -417,7 +421,8 @@ async def job_logs(request, ws, username, project_name, job_id):
     job_uuid = job.uuid.hex
     auditor.record(event_type=JOB_LOGS_VIEWED,
                    instance=job,
-                   actor_id=request.app.user.id)
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
         _logger.info('Job uuid `%s` logs is now being monitored', job_uuid)
@@ -492,7 +497,8 @@ async def build_logs(request, ws, username, project_name, build_id):
     job_uuid = job.uuid.hex
     auditor.record(event_type=BUILD_JOB_LOGS_VIEWED,
                    instance=job,
-                   actor_id=request.app.user.id)
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
         _logger.info('Job uuid `%s` logs is now being monitored', job_uuid)

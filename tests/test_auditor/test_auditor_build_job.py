@@ -42,6 +42,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_updated(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_UPDATED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -61,7 +62,8 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_started_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_STARTED_TRIGGERED,
                        instance=self.build_job,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -80,6 +82,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_triggered_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_DELETED_TRIGGERED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -99,6 +102,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_stopped_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_STOPPED_TRIGGERED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -109,6 +113,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_VIEWED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -119,6 +124,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_bookmarked(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_BOOKMARKED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -129,6 +135,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_unbookmarked(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_UNBOOKMARKED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -175,6 +182,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_logs_viewed_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_LOGS_VIEWED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -185,6 +193,7 @@ class AuditorBuildJobTest(BaseTest):
     def test_build_job_statuses_viewed_triggered(self, activitylogs_record, tracker_record):
         auditor.record(event_type=build_job_events.BUILD_JOB_STATUSES_VIEWED,
                        instance=self.build_job,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1

@@ -32,6 +32,7 @@ class AuditorPermissionTest(BaseTest):
                        id=1,
                        user_id=2,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -44,6 +45,7 @@ class AuditorPermissionTest(BaseTest):
                        project_id=1,
                        project_user_id=2,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -58,6 +60,7 @@ class AuditorPermissionTest(BaseTest):
                        project_id=1,
                        project_user_id=2,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -72,6 +75,7 @@ class AuditorPermissionTest(BaseTest):
                        project_id=1,
                        project_user_id=2,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -86,6 +90,7 @@ class AuditorPermissionTest(BaseTest):
                        project_id=1,
                        project_user_id=2,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -100,6 +105,22 @@ class AuditorPermissionTest(BaseTest):
                        project_id=1,
                        project_user_id=2,
                        actor_id=1,
+                       actor_name='foo',
+                       event='some.event')
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_permission_build_job_denied(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=permission_events.PERMISSION_BUILD_JOB_DENIED,
+                       id=1,
+                       user_id=2,
+                       project_id=1,
+                       project_user_id=2,
+                       actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -114,6 +135,7 @@ class AuditorPermissionTest(BaseTest):
                        project_id=1,
                        project_user_id=2,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -124,6 +146,7 @@ class AuditorPermissionTest(BaseTest):
     def test_permission_cluster_denied(self, activitylogs_record, tracker_record):
         auditor.record(event_type=permission_events.PERMISSION_CLUSTER_DENIED,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1
@@ -135,6 +158,7 @@ class AuditorPermissionTest(BaseTest):
         auditor.record(event_type=permission_events.PERMISSION_USER_ROLE_DENIED,
                        user_id=2,
                        actor_id=1,
+                       actor_name='foo',
                        event='some.event')
 
         assert tracker_record.call_count == 1

@@ -42,6 +42,7 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_updated(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_UPDATED,
                        instance=self.experiment,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -61,6 +62,7 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_VIEWED,
                        instance=self.experiment,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -71,6 +73,7 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_bookmarked(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_BOOKMARKED,
                        instance=self.experiment,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -81,6 +84,7 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_unbookmarked(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_UNBOOKMARKED,
                        instance=self.experiment,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -178,6 +182,7 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_resources_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_RESOURCES_VIEWED,
                        instance=self.experiment,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -188,6 +193,7 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_logs_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_LOGS_VIEWED,
                        instance=self.experiment,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -198,6 +204,7 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_outputs_downloaded(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_OUTPUTS_DOWNLOADED,
                        instance=self.experiment,
+                       actor_name='foo',
                        actor_id=1)
 
         assert tracker_record.call_count == 1
@@ -208,7 +215,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_statuses_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_STATUSES_VIEWED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -218,7 +226,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_jobs_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_JOBS_VIEWED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -228,7 +237,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_metrics_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_METRICS_VIEWED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -238,7 +248,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_triggered_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_DELETED_TRIGGERED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -248,7 +259,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_triggered_stopped(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_STOPPED_TRIGGERED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -258,7 +270,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_triggered_resumed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_RESUMED_TRIGGERED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -268,7 +281,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_triggered_restarted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_RESTARTED_TRIGGERED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -278,7 +292,8 @@ class AuditorExperimentTest(BaseTest):
     def test_experiment_triggered_copied(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_COPIED_TRIGGERED,
                        instance=self.experiment,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1

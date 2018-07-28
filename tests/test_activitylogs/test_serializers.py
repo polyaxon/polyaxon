@@ -38,18 +38,22 @@ class TestActivityLogsSerializer(BaseTest):
         self.project = ProjectFactory()
         activitylogs.record(event_type=USER_ACTIVATED,
                             instance=self.user,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         activitylogs.record(event_type=PROJECT_DELETED_TRIGGERED,
                             instance=self.project,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.experiment = ExperimentFactory()
         activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.job = JobFactory()
         activitylogs.record(event_type=JOB_VIEWED,
                             instance=self.job,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
 
     def test_serialize_one_with_name(self):
         obj = ActivityLog.objects.first()

@@ -31,6 +31,7 @@ class AuditorBookmarksTest(BaseTest):
     def test_build_bookmarks_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=bookmarks_events.BOOKMARK_BUILD_JOBS_VIEWED,
                        actor_id=1,
+                       actor_name='foo',
                        id=2)
 
         assert tracker_record.call_count == 1
@@ -41,6 +42,7 @@ class AuditorBookmarksTest(BaseTest):
     def test_job_bookmarks_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=bookmarks_events.BOOKMARK_JOBS_VIEWED,
                        actor_id=1,
+                       actor_name='foo',
                        id=1)
 
         assert tracker_record.call_count == 1
@@ -51,6 +53,7 @@ class AuditorBookmarksTest(BaseTest):
     def test_experiment_bookmarks_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=bookmarks_events.BOOKMARK_EXPERIMENTS_VIEWED,
                        actor_id=1,
+                       actor_name='foo',
                        id=2)
 
         assert tracker_record.call_count == 1
@@ -61,6 +64,7 @@ class AuditorBookmarksTest(BaseTest):
     def test_experiment_group_bookmarks_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=bookmarks_events.BOOKMARK_EXPERIMENT_GROUPS_VIEWED,
                        actor_id=1,
+                       actor_name='foo',
                        id=2)
 
         assert tracker_record.call_count == 1
@@ -71,6 +75,7 @@ class AuditorBookmarksTest(BaseTest):
     def test_project_bookmarks_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=bookmarks_events.BOOKMARK_PROJECTS_VIEWED,
                        actor_id=1,
+                       actor_name='foo',
                        id=1)
 
         assert tracker_record.call_count == 1

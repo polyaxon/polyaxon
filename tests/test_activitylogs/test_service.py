@@ -27,7 +27,8 @@ class ActivityLogsTest(BaseTest):
         assert ActivityLog.objects.count() == 0
         activitylogs.record(event_type=USER_ACTIVATED,
                             instance=self.user,
-                            actor_id=self.admin.id)
+                            actor_id=self.admin.id,
+                            actor_name=self.admin.username)
 
         assert ActivityLog.objects.count() == 1
         activity = ActivityLog.objects.last()
@@ -37,7 +38,8 @@ class ActivityLogsTest(BaseTest):
 
         activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
-                            actor_id=self.admin.id)
+                            actor_id=self.admin.id,
+                            actor_name=self.admin.username)
 
         assert ActivityLog.objects.count() == 2
         activity = ActivityLog.objects.last()

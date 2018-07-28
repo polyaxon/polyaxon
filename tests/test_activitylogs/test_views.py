@@ -29,18 +29,22 @@ class TestActivityLogsListViewV1(BaseViewTest):
         self.project = ProjectFactory()
         activitylogs.record(event_type=PROJECT_DELETED_TRIGGERED,
                             instance=self.project,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.experiment = ExperimentFactory()
         activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.job = JobFactory()
         activitylogs.record(event_type=JOB_CREATED,
                             instance=self.job,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         activitylogs.record(event_type=JOB_VIEWED,
                             instance=self.job,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
 
     def set_url(self):
         self.url = '/{}/activitylogs/'.format(API_V1)
@@ -104,18 +108,22 @@ class TestHistoryLogsListViewV1(TestActivityLogsListViewV1):
         self.project = ProjectFactory()
         activitylogs.record(event_type=PROJECT_VIEWED,
                             instance=self.project,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.experiment = ExperimentFactory()
         activitylogs.record(event_type=EXPERIMENT_VIEWED,
                             instance=self.experiment,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.job = JobFactory()
         activitylogs.record(event_type=JOB_CREATED,
                             instance=self.job,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         activitylogs.record(event_type=JOB_VIEWED,
                             instance=self.job,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
 
     def set_url(self):
         self.url = '/{}/historylogs/'.format(API_V1)
@@ -135,18 +143,22 @@ class TestProjectActivityLogsListViewV1(TestActivityLogsListViewV1):
         self.project = ProjectFactory(user=self.user)
         activitylogs.record(event_type=PROJECT_DELETED_TRIGGERED,
                             instance=self.project,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.experiment = ExperimentFactory(project=self.project)
         activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         self.job = JobFactory(project=self.project)
         activitylogs.record(event_type=JOB_CREATED,
                             instance=self.job,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
         activitylogs.record(event_type=JOB_VIEWED,
                             instance=self.job,
-                            actor_id=self.user.id)
+                            actor_id=self.user.id,
+                            actor_name=self.user.username)
 
     def set_url(self):
         self.url = '/{}/activitylogs/{}/{}/'.format(API_V1,

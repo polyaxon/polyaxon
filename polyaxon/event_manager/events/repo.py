@@ -8,32 +8,29 @@ REPO_NEW_COMMIT = '{}.new_commit'.format(event_subjects.REPO)
 
 class RepoCreatedEvent(Event):
     event_type = REPO_CREATED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
     )
 
 
 class RepoDownloadedEvent(Event):
     event_type = REPO_DOWNLOADED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
     )
 
 
 class RepoNewCommitEvent(Event):
     event_type = REPO_NEW_COMMIT
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
     )

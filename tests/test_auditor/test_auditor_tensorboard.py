@@ -44,6 +44,7 @@ class AuditorTensorboardTest(BaseTest):
         auditor.record(event_type=tensorboard_events.TENSORBOARD_STARTED_TRIGGERED,
                        instance=self.tensorboard,
                        actor_id=1,
+                       actor_name='foo',
                        target='project')
 
         assert tracker_record.call_count == 1
@@ -65,6 +66,7 @@ class AuditorTensorboardTest(BaseTest):
         auditor.record(event_type=tensorboard_events.TENSORBOARD_STOPPED_TRIGGERED,
                        instance=self.tensorboard,
                        actor_id=1,
+                       actor_name='foo',
                        target='project')
 
         assert tracker_record.call_count == 1
@@ -76,6 +78,7 @@ class AuditorTensorboardTest(BaseTest):
         auditor.record(event_type=tensorboard_events.TENSORBOARD_VIEWED,
                        instance=self.tensorboard,
                        actor_id=1,
+                       actor_name='foo',
                        target='project')
 
         assert tracker_record.call_count == 1
@@ -87,6 +90,7 @@ class AuditorTensorboardTest(BaseTest):
         auditor.record(event_type=tensorboard_events.TENSORBOARD_UNBOOKMARKED,
                        instance=self.tensorboard,
                        actor_id=1,
+                       actor_name='foo',
                        target='project')
 
         assert tracker_record.call_count == 1
@@ -98,6 +102,7 @@ class AuditorTensorboardTest(BaseTest):
         auditor.record(event_type=tensorboard_events.TENSORBOARD_BOOKMARKED,
                        instance=self.tensorboard,
                        actor_id=1,
+                       actor_name='foo',
                        target='project')
 
         assert tracker_record.call_count == 1

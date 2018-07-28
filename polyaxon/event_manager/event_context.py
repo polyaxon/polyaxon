@@ -1,5 +1,6 @@
 from collections import namedtuple
 
+from constants import user_system
 from event_manager import event_subjects
 from libs import unique_urls
 
@@ -37,6 +38,8 @@ def get_event_actor_context(event):
     username = event.data.get(event.actor_name)
     if username is None:
         return None
+    if username == user_system.USER_SYSTEM_NAME:
+        return EventContextSpec(name=username, url=None, object_id=None)
     return EventContextSpec(name=username, url='/{}'.format(username), object_id=None)
 
 

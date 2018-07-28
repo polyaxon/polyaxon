@@ -35,118 +35,108 @@ PERMISSION_USER_ROLE_DENIED = '{}.{}.{}'.format(event_subjects.SUPERUSER,
 
 class PermissionProjectDeniedEvent(Event):
     event_type = PERMISSION_PROJECT_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionRepoDeniedEvent(Event):
     event_type = PERMISSION_REPO_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionExperimentGroupDeniedEvent(Event):
     event_type = PERMISSION_EXPERIMENT_GROUP_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionExperimentDeniedEvent(Event):
     event_type = PERMISSION_EXPERIMENT_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionTensorboardDeniedEvent(Event):
     event_type = PERMISSION_TENSORBOARD_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionNotebookDeniedEvent(Event):
     event_type = PERMISSION_NOTEBOOK_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionBuildJobDeniedEvent(Event):
     event_type = PERMISSION_BUILD_JOB_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionExperimentJobDeniedEvent(Event):
     event_type = PERMISSION_EXPERIMENT_JOB_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('event')
     )
 
 
 class PermissionClusterDeniedEvent(Event):
     event_type = PERMISSION_CLUSTER_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
-        Attribute('actor_id'),
-        Attribute('event')
+        Attribute('event'),
     )
 
 
 class PermissionUserRoleEvent(Event):
     event_type = PERMISSION_USER_ROLE_DENIED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('user_id'),
-        Attribute('actor_id'),
         Attribute('event')
     )

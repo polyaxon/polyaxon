@@ -67,7 +67,8 @@ class ProjectBuildListView(ListCreateAPIView):
         project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_BUILDS_VIEWED,
                        instance=project,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         queryset = queryset.filter(project=project)
         return super().filter_queryset(queryset=queryset)
 
@@ -141,7 +142,8 @@ class BuildStatusListView(BuildViewMixin, ListCreateAPIView):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=BUILD_JOB_STATUSES_VIEWED,
                        instance=self.job,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         return response
 
 
@@ -161,7 +163,8 @@ class BuildLogsView(BuildViewMixin, RetrieveAPIView):
         job = self.get_job()
         auditor.record(event_type=BUILD_JOB_LOGS_VIEWED,
                        instance=self.job,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         log_path = get_job_logs_path(job.unique_name)
 
         filename = os.path.basename(log_path)
@@ -193,7 +196,8 @@ class BuildStopView(CreateAPIView):
         obj = self.get_object()
         auditor.record(event_type=BUILD_JOB_STOPPED_TRIGGERED,
                        instance=obj,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={

@@ -29,12 +29,13 @@ BUILD_JOB_STATUSES_VIEWED = '{}.{}'.format(event_subjects.BUILD_JOB,
 
 class BuildJobCreatedEvent(Event):
     event_type = BUILD_JOB_CREATED
+    actor = True
     actor_id = 'user.id'
+    actor_name = 'user.username'
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
     )
@@ -42,12 +43,11 @@ class BuildJobCreatedEvent(Event):
 
 class BuildJobUpdatedEvent(Event):
     event_type = BUILD_JOB_UPDATED
-    actor_id = 'user.id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
     )
@@ -65,13 +65,12 @@ class BuildJobStartedEvent(Event):
 
 class BuildJobStartedTriggeredEvent(Event):
     event_type = BUILD_JOB_STARTED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
     )
 
 
@@ -89,52 +88,48 @@ class BuildJobSoppedEvent(Event):
 
 class BuildJobSoppedTriggeredEvent(Event):
     event_type = BUILD_JOB_STOPPED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
 
 class BuildJobViewedEvent(Event):
     event_type = BUILD_JOB_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
 
 class BuildJobBookmarkedEvent(Event):
     event_type = BUILD_JOB_BOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
 
 class BuildJobUnBookmarkedEvent(Event):
     event_type = BUILD_JOB_UNBOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
@@ -191,26 +186,24 @@ class BuildJobDeletedEvent(Event):
 
 class BuildJobDeletedTriggeredEvent(Event):
     event_type = BUILD_JOB_DELETED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
 
 class BuildJobLogsViewedEvent(Event):
     event_type = BUILD_JOB_LOGS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -218,12 +211,11 @@ class BuildJobLogsViewedEvent(Event):
 
 class BuildJobStatusesViewedEvent(Event):
     event_type = BUILD_JOB_STATUSES_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )

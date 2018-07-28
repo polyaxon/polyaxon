@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from constants import user_system
 from db.models.activitylogs import ActivityLog
 from event_manager import event_context
 
@@ -23,6 +24,8 @@ class ActivityLogsSerializer(serializers.ModelSerializer):
         ]
 
     def get_actor(self, obj):
+        if not obj.actor:
+            return user_system.USER_SYSTEM_NAME
         return obj.actor.username
 
     def get_event_action(self, obj):

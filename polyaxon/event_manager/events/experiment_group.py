@@ -43,12 +43,13 @@ EXPERIMENT_GROUP_RESUMED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT
 
 class ExperimentGroupCreatedEvent(Event):
     event_type = EXPERIMENT_GROUP_CREATED
+    actor = True
     actor_id = 'user.id'
+    actor_name = 'user.username'
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('user.id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -59,13 +60,12 @@ class ExperimentGroupCreatedEvent(Event):
 
 class ExperimentGroupUpdatedEvent(Event):
     event_type = EXPERIMENT_GROUP_UPDATED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -89,13 +89,12 @@ class ExperimentGroupDeletedEvent(Event):
 
 class ExperimentGroupViewedEvent(Event):
     event_type = EXPERIMENT_GROUP_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -107,13 +106,12 @@ class ExperimentGroupViewedEvent(Event):
 
 class ExperimentGroupBookmarkedEvent(Event):
     event_type = EXPERIMENT_GROUP_BOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -125,13 +123,12 @@ class ExperimentGroupBookmarkedEvent(Event):
 
 class ExperimentGroupUnBookmarkedEvent(Event):
     event_type = EXPERIMENT_GROUP_UNBOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -226,13 +223,12 @@ class ExperimentGroupIterationEvent(Event):
 
 class ExperimentGroupExperimentsViewedEvent(Event):
     event_type = EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -260,13 +256,12 @@ class ExperimentGroupBOEvent(Event):
 
 class ExperimentGroupDeletedTriggeredEvent(Event):
     event_type = EXPERIMENT_GROUP_DELETED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -278,13 +273,12 @@ class ExperimentGroupDeletedTriggeredEvent(Event):
 
 class ExperimentGroupStoppedTriggeredEvent(Event):
     event_type = EXPERIMENT_GROUP_STOPPED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -297,13 +291,12 @@ class ExperimentGroupStoppedTriggeredEvent(Event):
 
 class ExperimentGroupResumedTriggeredEvent(Event):
     event_type = EXPERIMENT_GROUP_RESUMED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
@@ -315,12 +308,11 @@ class ExperimentGroupResumedTriggeredEvent(Event):
 
 class ExperimentGroupStatusesViewedEvent(Event):
     event_type = EXPERIMENT_GROUP_STATUSES_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )

@@ -853,13 +853,12 @@ class TestExperimentMetricListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
     HAS_INTERNAL = True
+    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
-        with patch.object(Experiment, 'set_status') as _:  # noqa
-            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
-                project = ProjectFactory(user=self.auth_client.user)
-                self.experiment = ExperimentFactory(project=project)
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/metrics/'.format(API_V1,
                                                               project.user.username,
                                                               project.name,

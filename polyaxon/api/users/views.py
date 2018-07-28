@@ -303,7 +303,8 @@ class ActivateView(PostAPIView):
         user.save()
         auditor.record(event_type=USER_ACTIVATED,
                        instance=user,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -317,7 +318,8 @@ class DeleteView(DestroyAPIView):
         instance = self.get_object()
         auditor.record(event_type=USER_DELETED,
                        instance=instance,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -335,7 +337,8 @@ class GrantSuperuserView(PostAPIView):
         user.save()
         auditor.record(event_type=SUPERUSER_ROLE_GRANTED,
                        instance=user,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -352,5 +355,6 @@ class RevokeSuperuserView(PostAPIView):
         user.save()
         auditor.record(event_type=SUPERUSER_ROLE_REVOKED,
                        instance=user,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         return Response(status=status.HTTP_200_OK)

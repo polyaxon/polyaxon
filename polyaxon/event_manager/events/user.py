@@ -14,70 +14,61 @@ USER_AZURE = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_ac
 
 class UserRegisteredEvent(Event):
     event_type = USER_REGISTERED
+    actor = True
     actor_id = 'id'
-    attributes = (
-        Attribute('id'),
-    )
+    actor_name = 'username'
 
 
 class UserUpdatedEvent(Event):
     event_type = USER_UPDATED
+    actor = True
     actor_id = 'id'
-    attributes = (
-        Attribute('id'),
-    )
+    actor_name = 'username'
 
 
 class UserActivatedEvent(Event):
     event_type = USER_ACTIVATED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
-        Attribute('actor_id')
     )
 
 
 class UserDeletedEvent(Event):
     event_type = USER_DELETED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
-        Attribute('actor_id')
     )
 
 
 class UserLDAPEvent(Event):
     event_type = USER_LDAP
-    attributes = ()
 
 
 class UserGITHUBEvent(Event):
     event_type = USER_GITHUB
+    actor = True
     actor_id = 'id'
-    attributes = (
-        Attribute('id'),
-    )
+    actor_name = 'username'
 
 
 class UserGITLABEvent(Event):
     event_type = USER_GITLAB
+    actor = True
     actor_id = 'id'
-    attributes = (
-        Attribute('id'),
-    )
+    actor_name = 'username'
 
 
 class UserBITBUCKETEvent(Event):
     event_type = USER_BITBUCKET
+    actor = True
     actor_id = 'id'
-    attributes = (
-        Attribute('id'),
-    )
+    actor_name = 'username'
 
 
 class UserAZUREEvent(Event):
     event_type = USER_AZURE
+    actor = True
     actor_id = 'id'
-    attributes = (
-        Attribute('id'),
-    )
+    actor_name = 'username'

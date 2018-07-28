@@ -59,7 +59,8 @@ class BookmarkListView(ListAPIView):
         if self.request.user.is_staff or self.request.user.username == username:
             auditor.record(event_type=self.event_type,
                            instance=user,
-                           actor_id=self.request.user.id,)
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username)
             queryset = queryset.filter(user=user,
                                        content_type__model=self.content_type,
                                        enabled=True)
@@ -118,7 +119,8 @@ class BookmarkCreateView(PostAPIView):
         obj = self.get_object()
         auditor.record(event_type=self.event_type,
                        instance=obj,
-                       actor_id=user.id)
+                       actor_id=user.id,
+                       actor_name=user.username)
         try:
             bookmark = Bookmark.objects.get(
                 user=user,
@@ -153,7 +155,8 @@ class BookmarkDeleteView(DestroyAPIView):
                                      object_id=obj.id)
         auditor.record(event_type=self.event_type,
                        instance=obj,
-                       actor_id=user.id)
+                       actor_id=user.id,
+                       actor_name=user.username)
         bookmark.enabled = False
         bookmark.save()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -44,7 +44,8 @@ class AuditorNotebookTest(BaseTest):
         auditor.record(event_type=notebook_events.NOTEBOOK_STARTED_TRIGGERED,
                        instance=self.notebook,
                        target='project',
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -65,7 +66,8 @@ class AuditorNotebookTest(BaseTest):
         auditor.record(event_type=notebook_events.NOTEBOOK_STOPPED_TRIGGERED,
                        instance=self.notebook,
                        target='project',
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -76,7 +78,8 @@ class AuditorNotebookTest(BaseTest):
         auditor.record(event_type=notebook_events.NOTEBOOK_VIEWED,
                        instance=self.notebook,
                        target='project',
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1

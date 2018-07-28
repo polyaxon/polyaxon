@@ -26,10 +26,11 @@ PROJECT_EXPERIMENT_GROUPS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
 
 class ProjectCreatedEvent(Event):
     event_type = PROJECT_CREATED
+    actor = True
     actor_id = 'user.id'
+    actor_name = 'user.username'
     attributes = (
         Attribute('id'),
-        Attribute('user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('is_public', attr_type=bool),
@@ -38,11 +39,10 @@ class ProjectCreatedEvent(Event):
 
 class ProjectUpdatedEvent(Event):
     event_type = PROJECT_UPDATED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('is_public', attr_type=bool),
@@ -59,44 +59,40 @@ class ProjectDeletedEvent(Event):
 
 class ProjectDeletedTriggeredEvent(Event):
     event_type = PROJECT_DELETED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
 
 class ProjectViewedEvent(Event):
     event_type = PROJECT_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
 
 class ProjectBookmarkedEvent(Event):
     event_type = PROJECT_BOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
 
 class ProjectUnBookmarkedEvent(Event):
     event_type = PROJECT_UNBOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
@@ -119,54 +115,49 @@ class ProjectSetPrivateEvent(Event):
 
 class ProjectExperimentsViewedEvent(Event):
     event_type = PROJECT_EXPERIMENTS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
 
 class ProjectJobsViewedEvent(Event):
     event_type = PROJECT_JOBS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
 
 class ProjectBuildsViewedEvent(Event):
     event_type = PROJECT_BUILDS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
 
 class ProjectTensorboardsViewedEvent(Event):
     event_type = PROJECT_TENSORBOARDS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
 
 class ProjectExperimentGroupsViewedEvent(Event):
     event_type = PROJECT_EXPERIMENT_GROUPS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )

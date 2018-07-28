@@ -1,4 +1,5 @@
 from activitylogs.manager import default_manager
+from constants import user_system
 from event_manager.event_service import EventService
 
 
@@ -10,9 +11,10 @@ class ActivityLogService(EventService):
 
     def record_event(self, event):
         assert event.actor_id is not None
+        actor_id = event.data[event.actor_id]
         return self.activity_log.objects.create(
             event_type=event.event_type,
-            actor_id=event.data[event.actor_id],
+            actor_id=actor_id if actor_id != user_system.USER_SYSTEM_ID else None,
             context=event.data,
             created_at=event.datetime,
             content_object=event.instance,

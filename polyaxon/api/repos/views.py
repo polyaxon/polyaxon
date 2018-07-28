@@ -54,7 +54,10 @@ class DownloadFilesView(ProtectedView):
         project = get_permissible_project(view=self)
         repo = get_object_or_404(Repo, project=project)
         if not is_internal_user(self.request.user):
-            auditor.record(event_type=REPO_DOWNLOADED, instance=repo, actor_id=self.request.user.id)
+            auditor.record(event_type=REPO_DOWNLOADED,
+                           instance=repo,
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username)
         return repo
 
     def get(self, request, *args, **kwargs):
@@ -77,7 +80,10 @@ class UploadFilesView(UploadView):
         if not created and not os.path.isdir(repo.project_path):
             set_git_repo(repo)
         else:
-            auditor.record(event_type=REPO_CREATED, instance=repo, actor_id=self.request.user.id)
+            auditor.record(event_type=REPO_CREATED,
+                           instance=repo,
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username)
         return repo
 
     def put(self, request, *args, **kwargs):

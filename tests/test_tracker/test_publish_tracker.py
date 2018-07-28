@@ -25,7 +25,8 @@ class PublishTrackerTest(BaseTest):
             with patch('analytics.track') as mock_track:
                 self.publisher.record(event_type=USER_ACTIVATED,
                                       instance=self.user,
-                                      actor_id=self.admin.id)
+                                      actor_id=self.admin.id,
+                                      actor_name=self.admin.username)
 
         assert mock_identify.call_count == 0
         assert mock_track.call_count == 1

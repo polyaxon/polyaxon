@@ -36,12 +36,13 @@ JOB_RESTARTED = '{}.{}'.format(event_subjects.JOB,
 
 class JobCreatedEvent(Event):
     event_type = JOB_CREATED
+    actor = True
     actor_id = 'user.id'
+    actor_name = 'user.username'
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
     )
@@ -49,12 +50,11 @@ class JobCreatedEvent(Event):
 
 class JobUpdatedEvent(Event):
     event_type = JOB_UPDATED
-    actor_id = 'user.id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
     )
@@ -73,13 +73,12 @@ class JobStartedEvent(Event):
 
 class JobStartedTriggeredEvent(Event):
     event_type = JOB_STARTED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
@@ -98,26 +97,24 @@ class JobSoppedEvent(Event):
 
 class JobSoppedTriggeredEvent(Event):
     event_type = JOB_STOPPED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 
 
 class JobViewedEvent(Event):
     event_type = JOB_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('has_description', attr_type=bool),
     )
@@ -125,13 +122,12 @@ class JobViewedEvent(Event):
 
 class JobBookmarkedEvent(Event):
     event_type = JOB_BOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('has_description', attr_type=bool),
     )
@@ -139,13 +135,12 @@ class JobBookmarkedEvent(Event):
 
 class JobUnBookmarkedEvent(Event):
     event_type = JOB_UNBOOKMARKED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
         Attribute('has_description', attr_type=bool),
     )
@@ -203,13 +198,12 @@ class JobDeletedEvent(Event):
 
 class JobDeletedTriggeredEvent(Event):
     event_type = JOB_DELETED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -217,13 +211,12 @@ class JobDeletedTriggeredEvent(Event):
 
 class JobLogsViewedEvent(Event):
     event_type = JOB_LOGS_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -231,13 +224,12 @@ class JobLogsViewedEvent(Event):
 
 class JobOutputsDownloadedEvent(Event):
     event_type = JOB_OUTPUTS_DOWNLOADED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -245,13 +237,12 @@ class JobOutputsDownloadedEvent(Event):
 
 class JobRestartedTriggeredEvent(Event):
     event_type = JOB_RESTARTED_TRIGGERED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -259,13 +250,12 @@ class JobRestartedTriggeredEvent(Event):
 
 class JobStatusesViewedEvent(Event):
     event_type = JOB_STATUSES_VIEWED
-    actor_id = 'actor_id'
+    actor = True
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('last_status'),
     )
 

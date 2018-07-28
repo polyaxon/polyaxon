@@ -67,4 +67,7 @@ def handle_new_files(user_id, repo_id, tar_file_name):
 
     # commit changes
     git.commit(repo.path, user.email, user.username)
-    auditor.record(event_type=REPO_NEW_COMMIT, instance=repo, actor_id=user.id)
+    auditor.record(event_type=REPO_NEW_COMMIT,
+                   instance=repo,
+                   actor_id=user.id,
+                   actor_name=user.username)

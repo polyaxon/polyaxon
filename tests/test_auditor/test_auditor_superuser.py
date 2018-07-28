@@ -30,7 +30,8 @@ class AuditorSuperUserTest(BaseTest):
     def test_superuser_granted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=superuser_events.SUPERUSER_ROLE_GRANTED,
                        id=2,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
@@ -40,7 +41,8 @@ class AuditorSuperUserTest(BaseTest):
     def test_superuser_revoked(self, activitylogs_record, tracker_record):
         auditor.record(event_type=superuser_events.SUPERUSER_ROLE_REVOKED,
                        id=2,
-                       actor_id=1)
+                       actor_id=1,
+                       actor_name='foo')
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1

@@ -51,8 +51,8 @@ from event_manager.events.experiment import (
     EXPERIMENT_STATUSES_VIEWED,
     EXPERIMENT_STOPPED_TRIGGERED,
     EXPERIMENT_UPDATED,
-    EXPERIMENT_VIEWED
-)
+    EXPERIMENT_VIEWED,
+    EXPERIMENT_METRICS_VIEWED)
 from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
 from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_STATUSES_VIEWED,
@@ -121,7 +121,8 @@ class ProjectExperimentListView(ListCreateAPIView):
         group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
         auditor.record(event_type=EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
                        instance=group,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
 
         return group
 
@@ -142,7 +143,8 @@ class ProjectExperimentListView(ListCreateAPIView):
             queryset = queryset.filter(experiment_group=group)
         auditor.record(event_type=PROJECT_EXPERIMENTS_VIEWED,
                        instance=project,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
@@ -190,7 +192,8 @@ class ExperimentCloneView(CreateAPIView):
         obj = self.get_object()
         auditor.record(event_type=self.event_type,
                        instance=obj,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
 
         description = None
         config = None
@@ -299,7 +302,8 @@ class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_STATUSES_VIEWED,
                        instance=self.experiment,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         return response
 
 
@@ -319,6 +323,14 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(experiment=self.get_experiment())
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        auditor.record(event_type=EXPERIMENT_METRICS_VIEWED,
+                       instance=self.experiment,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        return response
 
 
 class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
@@ -348,7 +360,8 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_JOBS_VIEWED,
                        instance=self.experiment,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         return response
 
 
@@ -376,7 +389,8 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
         experiment = self.get_experiment()
         auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
                        instance=self.experiment,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         log_path = get_experiment_logs_path(experiment.unique_name)
 
         filename = os.path.basename(log_path)
@@ -437,7 +451,8 @@ class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_JOB_STATUSES_VIEWED,
                        instance=self.job,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         return response
 
 
@@ -468,7 +483,8 @@ class ExperimentStopView(CreateAPIView):
         obj = self.get_object()
         auditor.record(event_type=EXPERIMENT_STOPPED_TRIGGERED,
                        instance=obj,
-                       actor_id=request.user.id)
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
         group = obj.experiment_group
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
@@ -495,7 +511,8 @@ class DownloadOutputsView(ProtectedView):
         experiment = get_object_or_404(Experiment, project=project, id=self.kwargs['id'])
         auditor.record(event_type=EXPERIMENT_OUTPUTS_DOWNLOADED,
                        instance=experiment,
-                       actor_id=self.request.user.id)
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         return experiment
 
     def get(self, request, *args, **kwargs):

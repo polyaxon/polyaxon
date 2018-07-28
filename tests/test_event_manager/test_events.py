@@ -1,5 +1,6 @@
 import pytest
 
+from constants import user_system
 from event_manager.event import Attribute, Event
 from event_manager.events import (
     bookmark,
@@ -514,16 +515,58 @@ class TestEvents(BaseTest):
         assert event_serialized['data']['attr2.attr4'] is None
 
     def test_actor(self):
-        class DummyEvent(Event):
+        class DummyEvent1(Event):
             event_type = 'dummy.event'
-            actor_id = 'actor_id'
+            actor = True
             attributes = (
                 Attribute('attr1'),
             )
 
-        class DummyObject(object):
+        class DummyEvent2(Event):
+            event_type = 'dummy.event'
+            actor = True
+            actor_id = 'some_actor_id'
+            actor_name = 'some_actor_name'
+            attributes = (
+                Attribute('attr1'),
+            )
+
+        class DummyObject1(object):
             attr1 = 'test'
 
-        obj = DummyObject()
+        class DummyObject2(object):
+            attr1 = 'test'
+            some_actor_id = 1
+            some_actor_name = 'foo'
+
+        # Not providing actor_id raises
+        obj = DummyObject1()
         with self.assertRaises(ValueError):
-            DummyEvent.from_instance(obj)
+            DummyEvent1.from_instance(obj)
+
+        # Providing actor_id and not actor_name raises
+        with self.assertRaises(ValueError):
+            DummyEvent1.from_instance(obj, actor_id=1)
+
+        # Providing system actor id without actor_name does not raise
+        event = DummyEvent1.from_instance(obj, actor_id=user_system.USER_SYSTEM_ID)
+        assert event.data['actor_id'] == user_system.USER_SYSTEM_ID
+        assert event.data['actor_name'] == user_system.USER_SYSTEM_NAME
+
+        # Providing actor_id and actor_name does not raise
+        event = DummyEvent1.from_instance(obj, actor_id=1, actor_name='foo')
+        assert event.data['actor_id'] == 1
+        assert event.data['actor_name'] == 'foo'
+
+        # Using an instance that has the actor properties
+        obj2 = DummyObject2()
+        event = DummyEvent2.from_instance(obj2)
+        assert event.data['some_actor_id'] == 1
+        assert event.data['some_actor_name'] == 'foo'
+
+        # Using an instance that has the actor properties and overriding the actor
+        event = DummyEvent2.from_instance(obj2,
+                                          some_actor_id=user_system.USER_SYSTEM_ID,
+                                          some_actor_name=user_system.USER_SYSTEM_NAME)
+        assert event.data['some_actor_id'] == user_system.USER_SYSTEM_ID
+        assert event.data['some_actor_name'] == user_system.USER_SYSTEM_NAME

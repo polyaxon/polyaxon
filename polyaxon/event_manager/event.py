@@ -1,7 +1,9 @@
 from uuid import uuid1
 
 from django.utils import timezone
+from django.utils.functional import cached_property
 
+from constants import user_system
 from event_manager import event_context
 from libs.date_utils import to_timestamp
 from libs.json_utils import dumps_htmlsafe
@@ -31,8 +33,16 @@ class Event(object):
 
     event_type = None  # The event type should ideally follow subject.action
     attributes = ()
-    actor_id = None
-    actor_name = None
+    actor = False
+    actor_id = 'actor_id'
+    actor_name = 'actor_name'
+
+    @classmethod
+    def get_event_attributes(cls):
+        if cls.actor:
+            return cls.attributes + (Attribute(cls.actor_id, attr_type=int),
+                                     Attribute(cls.actor_name, is_required=False))
+        return cls.attributes
 
     def __init__(self, datetime=None, instance=None, **items):
         self.uuid = uuid1()
@@ -43,8 +53,7 @@ class Event(object):
             raise ValueError('Event is missing a type')
 
         data = {}
-        has_actor = False
-        for attr in self.attributes:
+        for attr in self.get_event_attributes():
             # Check plain attr name
             item_value = items.pop(attr.name, None)
             if item_value is None:
@@ -55,14 +64,20 @@ class Event(object):
                 raise ValueError('{} is required (cannot be None)'.format(
                     attr.name,
                 ))
-            if self.actor_id and attr.name == self.actor_id:
-                has_actor = True
             data[attr.name] = attr.extract(item_value)
 
-        if self.actor_id and not has_actor:
-            raise ValueError('Event {} requires an attribute specifying the actor id'.format(
+        actor_id = data.get(self.actor_id)
+        actor_name = data.get(self.actor_name)
+        if self.actor and actor_id is None:
+            raise ValueError('Event {} requires an attribute specifying the actor_id'.format(
                 self.event_type
             ))
+        if self.actor and (actor_id != user_system.USER_SYSTEM_ID and actor_name is None):
+            raise ValueError('Event {} requires an attribute specifying the actor_name'.format(
+                self.event_type
+            ))
+        if self.actor and (actor_id == user_system.USER_SYSTEM_ID and actor_name is None):
+            data[self.actor_name] = user_system.USER_SYSTEM_NAME
 
         if items:
             raise ValueError('Unknown attributes: {}'.format(
@@ -91,7 +106,7 @@ class Event(object):
         >>> Event.event_type = 'experiment.deleted'
         >>> Event.get_event_action() == 'deleted'
         """
-        if not cls.actor_id:
+        if not cls.actor:
             return None
         return event_context.get_event_action(cls.event_type)
 
@@ -119,7 +134,7 @@ class Event(object):
     @classmethod
     def from_instance(cls, instance, **kwargs):
         values = {'instance': instance}
-        for attr in cls.attributes:
+        for attr in cls.get_event_attributes():
             # Convert dot notation
             value = kwargs.get(attr.name.replace('.', '_'))
             if value is None:
