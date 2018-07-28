@@ -308,6 +308,21 @@ A resources definition, is optional and made of three optional fields:
  * memory: {limits: value, requests: value}
  * gpu: {limits: value, requests: value}
 
+
+```yaml
+environment:
+  resources:
+    cpu:
+      requests: 1
+      limits: 2
+    memory:
+      requests: 256
+      limits: 1024
+    gpu:
+      request: 1
+      limits: 1
+```
+
 ### outputs
 
 Sometime you experiment or your job might depend on previous jobs or experiments,
@@ -329,7 +344,6 @@ environment:
     experiments: [12, 'experiment_name', 'my_other_project/experiment_name2']
 ```
 
-
 ### persistence
 
 The volumes to mount for data and outputs, this is only needed when Polyaxon was deployed
@@ -345,13 +359,49 @@ environment:
 ### node selectors
 
 The labels to use as node selectors for scheduling the job on a specific node.
-This subsection provides a way to override the default behavior of Polyaxon,
-which schedules experiments and jobs based on node selectors provided during the deployment if they were provided.
+You can also set default [node selectors](/reference_polyaxon_helm/#node-and-deployment-manipulation)
+during the deployment and use this subsection to override the default values.
 
 ```yaml
 environment:
   node_selector:
     node_label: node_value
+```
+
+### tolerations
+
+The tolrations to use for the scheduling the job.
+You can also set default [tolerations](/reference_polyaxon_helm/#node-and-deployment-manipulation)
+during the deployment and use this subsection to override the default values.
+
+```yaml
+environment:
+  tolerations:
+    - key: "key"
+      operator: "Exists"
+      effect: "NoSchedule"
+```
+
+### affinity
+
+The affinity to use for the scheduling the job.
+You can also set default [affinity](/reference_polyaxon_helm/#node-and-deployment-manipulation)
+during the deployment and use this subsection to override the default values.
+
+```yaml
+environment:
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-experiments"
+            topologyKey: "kubernetes.io/hostname"
 ```
 
 To enable a distributed run, the user can define one of the following framework:
@@ -371,10 +421,12 @@ The number of parameter server to use for an experiment.
 Default environment specification to use for all workers.
 
 ```yaml
-  resources:
-  node_selector:
-  affinity:
-  tolerations:
+environment:
+  default_worker:
+    resources:
+    node_selector:
+    affinity:
+    tolerations:
 ```
 
 #### default_ps
@@ -382,10 +434,12 @@ Default environment specification to use for all workers.
 Default environment specification to use for all ps.
 
 ```yaml
-  resources:
-  node_selector:
-  affinity:
-  tolerations:
+environment:
+  default_ps:
+    resources:
+    node_selector:
+    affinity:
+    tolerations:
 ```
 
 #### worker
@@ -393,11 +447,13 @@ Default environment specification to use for all ps.
 Defines a specific worker(s)' environment section defining, indicated by index:
 
 ```yaml
- index: i
-   resources:
-   node_selector:
-   affinity:
-   tolerations:
+environment:
+  worker:
+    - index: i
+      resources:
+      node_selector:
+      affinity:
+      tolerations:
 ```
 
 #### ps
@@ -405,11 +461,13 @@ Defines a specific worker(s)' environment section defining, indicated by index:
 Defines a specific ps(s)' environment section defining, indicated by index:
 
 ```yaml
- index: i
-   resources:
-   node_selector:
-   affinity:
-   tolerations:
+environment:
+  ps:
+    - index: i
+      resources:
+      node_selector:
+      affinity:
+      tolerations:
 ```
 
 Example:
@@ -431,7 +489,7 @@ environment:
               - key: type
                 operator: In
                 values:
-                - "polyaxon-core"
+                - "polyaxon-experiments"
             topologyKey: "kubernetes.io/hostname"
 
   tolerations:
@@ -506,10 +564,12 @@ The number of parameter server to use for an experiment.
 Default environment specification to use for all workers.
 
 ```yaml
-  resources:
-  node_selector:
-  affinity:
-  tolerations:
+environment:
+  default_worker:
+    resources:
+    node_selector:
+    affinity:
+    tolerations:
 ```
 
 #### default_ps
@@ -517,21 +577,26 @@ Default environment specification to use for all workers.
 Default environment specification to use for all ps.
 
 ```yaml
-  resources:
-  node_selector:
-  affinity:
-  tolerations:
+environment:
+  default_ps:
+    resources:
+    node_selector:
+    affinity:
+    tolerations:
 ```
+
 #### worker
 
 Defines a specific worker(s)' environment section defining, indicated by index:
 
 ```yaml
- index: i
-   resources:
-   node_selector:
-   affinity:
-   tolerations:
+environment:
+  worker:
+    - index: i
+      resources:
+      node_selector:
+      affinity:
+      tolerations:
 ```
 
 #### ps
@@ -539,11 +604,13 @@ Defines a specific worker(s)' environment section defining, indicated by index:
 Defines a specific ps(s)' environment section defining, indicated by index:
 
 ```yaml
- index: i
-   resources:
-   node_selector:
-   affinity:
-   tolerations:
+environment:
+  ps:
+    - index: i
+      resources:
+      node_selector:
+      affinity:
+      tolerations:
 ```
 
 Example:
@@ -571,10 +638,12 @@ The number of workers to use for an experiment.
 Default environment specification to use for all workers.
 
 ```yaml
-  resources:
-  node_selector:
-  affinity:
-  tolerations:
+environment:
+  default_worker:
+    resources:
+    node_selector:
+    affinity:
+    tolerations:
 ```
 
 #### worker
@@ -582,11 +651,13 @@ Default environment specification to use for all workers.
 Defines a specific worker(s)' environment section defining, indicated by index:
 
 ```yaml
- index: i
-   resources:
-   node_selector:
-   affinity:
-   tolerations:
+environment:
+  worker:
+    - index: i
+      resources:
+      node_selector:
+      affinity:
+      tolerations:
 ```
 
 Example:
@@ -610,10 +681,12 @@ The number of workers to use for an experiment.
 Default environment specification to use for all workers.
 
 ```yaml
-  resources:
-  node_selector:
-  affinity:
-  tolerations:
+environment:
+  default_worker:
+    resources:
+    node_selector:
+    affinity:
+    tolerations:
 ```
 
 #### worker
@@ -621,13 +694,14 @@ Default environment specification to use for all workers.
 Defines a specific worker(s)' environment section defining, indicated by index:
 
 ```yaml
- index: i
-   resources:
-   node_selector:
-   affinity:
-   tolerations:
+environment:
+  worker:
+    - index: i
+      resources:
+      node_selector:
+      affinity:
+      tolerations:
 ```
-
 
 Example:
 
