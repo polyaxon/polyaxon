@@ -260,7 +260,7 @@ class PluginJobView(ProtectedView):
         instance = self.get_object()
         if not self.has_plugin_job(instance):
             raise Http404
-        self.audit(instance=instance)
+        # self.audit(instance=instance)  TODO add later
         service_url = self.get_service_url(instance=instance)
         path = '/{}'.format(service_url.strip('/'))
         base_path = self.get_base_path(instance)
@@ -337,11 +337,11 @@ class TensorboardView(PluginJobView):
             target = 'experiment_group'
         else:
             target = 'project'
-        auditor.record(event_type=TENSORBOARD_VIEWED,
-                       instance=instance.tensorboard,
-                       target=target,
-                       actor_id=self.request.user.id,
-                       actor_name=self.request.user.username)
+        # auditor.record(event_type=TENSORBOARD_VIEWED,
+        #                instance=instance.tensorboard,
+        #                target=target,
+        #                actor_id=self.request.user.id,
+        #                actor_name=self.request.user.username)
 
 
 class ProjectTensorboardListView(ListAPIView):
