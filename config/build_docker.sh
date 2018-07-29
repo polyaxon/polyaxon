@@ -5,7 +5,7 @@ if [ $# -lt 1 ]
      exit 1
 fi
 
-body={"request": {"branch":$1}}
+body='{"request": {"branch":'$1'}}'
 
 if [ "$1" == "master" ] || [ "$1" == "dev" ]
     then
