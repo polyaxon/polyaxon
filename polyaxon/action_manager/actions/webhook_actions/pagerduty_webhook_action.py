@@ -4,7 +4,6 @@ from action_manager.actions.webhook_actions.webhook_action import (
     WebHookAction,
     WebHookActionExecutedEvent
 )
-from action_manager.exception import PolyaxonActionException
 from event_manager.event_actions import EXECUTED
 
 PAGER_DUTY_WEBHOOK_ACTION_EXECUTED = 'pagerduty_webhook_action.{}'.format(EXECUTED)
