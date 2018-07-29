@@ -18,12 +18,12 @@ class PagerDutyWebHookAction(WebHookAction):
     key = 'pagerduty_webhook'
     name = 'PagerDuty WebHook'
     event_type = PAGER_DUTY_WEBHOOK_ACTION_EXECUTED
-    description = "PagerDuty webhooks to send payload to a pagerduty room."
+    description = "PagerDuty webhooks to send event payload to pagerduty."
 
     def _get_config(self):
         """Configuration for pagerduty webhooks.
 
-        should be a list of urls and potentially a method.
+        should be a list of urls and potentially a method and service key.
 
         If no method is given, then by default we use POST.
         """
