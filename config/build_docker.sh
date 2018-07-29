@@ -7,10 +7,10 @@ fi
 
 body='{
 "request": {
-"branch":"master"
+"branch":"$1"
 }}'
 
-if [ "$1" == "master" ]
+if [ "$1" == "master" ] || [ "$1" == "dev" ]
     then
 
         curl -s -X POST \
