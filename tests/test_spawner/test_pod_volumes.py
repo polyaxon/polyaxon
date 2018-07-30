@@ -3,7 +3,7 @@ from unittest import TestCase
 from django.test import override_settings
 
 from libs.paths.exceptions import VolumeNotFoundError
-from scheduler.spawners.templates.volumes import get_pod_volumes
+from scheduler.spawners.templates.volumes import get_pod_volumes, get_shm_volumes
 
 
 class TestPodVolumes(TestCase):
@@ -103,3 +103,9 @@ class TestPodVolumes(TestCase):
         assert data_host_path == '/root/data'
         assert mount_path1 == '/data/1'
         assert mount_path2 == '/data/2'
+
+    def test_get_shm_volumes(self):
+        volumes, volume_mounts = get_shm_volumes()
+        assert len(volumes) == len(volume_mounts) == 1
+        assert volumes[0].empty_dir.medium == 'Memory'
+        assert volume_mounts[0].mount_path == '/dev/shm'

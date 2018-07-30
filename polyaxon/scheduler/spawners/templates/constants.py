@@ -19,3 +19,4 @@ JOB_NAME = 'plx-{name}-{job_uuid}'
 
 REPOS_VOLUME = 'repos'
 DOCKER_VOLUME = 'docker'
+SHM_VOLUME = 'shm'

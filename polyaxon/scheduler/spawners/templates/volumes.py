@@ -1,6 +1,5 @@
-from kubernetes import client
-
 from django.conf import settings
+from kubernetes import client
 
 from libs.paths.data_paths import validate_persistence_data
 from libs.paths.exceptions import VolumeNotFoundError
@@ -97,4 +96,23 @@ def get_docker_volumes():
     volumes = [get_volume(volume=constants.DOCKER_VOLUME, host_path=settings.MOUNT_PATHS_DOCKER)]
     volume_mounts = [get_volume_mount(volume=constants.DOCKER_VOLUME,
                                       volume_mount=settings.MOUNT_PATHS_DOCKER)]
+    return volumes, volume_mounts
+
+
+def get_shm_volumes():
+    """
+    Mount an tmpfs volume to /dev/shm.
+    This will set /dev/shm size to half of the RAM of node.
+    By default, /dev/shm is very small, only 64MB.
+    Some experiments will fail due to lack of share memory,
+    such as some experiments running on Pytorch.
+    """
+    volumes, volume_mounts = [], []
+    shm_volume = client.V1Volume(
+        name=constants.SHM_VOLUME,
+        empty_dir=client.V1EmptyDirVolumeSource(medium='Memory')
+    )
+    volumes.append(shm_volume)
+    shm_volume_mount = client.V1VolumeMount(name=shm_volume.name, mount_path='/dev/shm')
+    volume_mounts.append(shm_volume_mount)
     return volumes, volume_mounts
