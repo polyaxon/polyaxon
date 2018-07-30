@@ -1,5 +1,6 @@
-from django.conf import settings
 from kubernetes import client
+
+from django.conf import settings
 
 from libs.paths.data_paths import validate_persistence_data
 from libs.paths.exceptions import VolumeNotFoundError

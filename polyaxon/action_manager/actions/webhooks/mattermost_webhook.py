@@ -1,9 +1,6 @@
 from django.conf import settings
 
-from action_manager.actions.webhooks.webhook import (
-    WebHookAction,
-    WebHookActionExecutedEvent
-)
+from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from event_manager.event_actions import EXECUTED
 
 MATTERMOST_WEBHOOK_ACTION_EXECUTED = 'mattermost_webhook_action.{}'.format(EXECUTED)

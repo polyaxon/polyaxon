@@ -19,9 +19,10 @@ from scheduler.spawners.templates.project_jobs import deployments
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
+    get_shm_volumes,
     get_volume,
-    get_volume_mount,
-    get_shm_volumes)
+    get_volume_mount
+)
 
 
 class NotebookSpawner(ProjectJobSpawner):

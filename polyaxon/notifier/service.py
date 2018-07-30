@@ -1,5 +1,5 @@
 from event_manager.event_service import EventService
-from notifier.managers import default_event_manager, default_action_manager
+from notifier.managers import default_action_manager, default_event_manager
 
 
 class NotifierService(EventService):

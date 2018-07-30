@@ -1,9 +1,6 @@
 from django.conf import settings
 
-from action_manager.actions.webhooks.webhook import (
-    WebHookAction,
-    WebHookActionExecutedEvent
-)
+from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from action_manager.exception import PolyaxonActionException
 from event_manager.event_actions import EXECUTED
 

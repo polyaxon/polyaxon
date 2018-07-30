@@ -1,9 +1,6 @@
 from django.conf import settings
 
-from action_manager.actions.webhooks.webhook import (
-    WebHookAction,
-    WebHookActionExecutedEvent
-)
+from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from event_manager.event_actions import EXECUTED
 
 SLACK_WEBHOOK_ACTION_EXECUTED = 'slack_webhook_action.{}'.format(EXECUTED)

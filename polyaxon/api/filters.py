@@ -7,8 +7,8 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db.models.sql.constants import ORDER_PATTERN
 
 import query
-from libs.string_utils import strip_spaces
 
+from libs.string_utils import strip_spaces
 from query.exceptions import QueryError
 
 
