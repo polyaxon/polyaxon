@@ -208,7 +208,7 @@ def delete(ctx):
     try:
         response = PolyaxonClients().project.delete_project(user, project_name)
         local_project = ProjectManager.get_config()
-        if (user, project_name) == (local_project.user, local_project.name):
+        if local_project and (user, project_name) == (local_project.user, local_project.name):
             # Purge caching
             ProjectManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
