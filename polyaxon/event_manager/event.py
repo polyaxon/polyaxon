@@ -1,3 +1,4 @@
+import copy
 from uuid import uuid1
 
 from django.utils import timezone
@@ -109,12 +110,16 @@ class Event(object):
             return None
         return event_context.get_event_action(cls.event_type)
 
-    def serialize(self, dumps=False):
+    def serialize(self, dumps=False, include_actor_name=True):
+        _data = self.data
+        if not include_actor_name and self.actor and self.actor_name in _data:
+            _data = copy.deepcopy(self.data)
+            _data.pop(self.actor_name)
         data = {
             'uuid': self.uuid.hex,
             'timestamp': to_timestamp(self.datetime),
             'type': self.event_type,
-            'data': self.data,
+            'data': _data,
         }
         return dumps_htmlsafe(data) if dumps else data
 

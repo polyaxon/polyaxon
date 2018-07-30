@@ -36,7 +36,7 @@ class PublishTrackerService(TrackerService):
         self.analytics.track(
             cluster_id,
             event.event_type,
-            event.serialize(dumps=False),
+            event.serialize(dumps=False, include_actor_name=False),
         )
 
     def setup(self):
