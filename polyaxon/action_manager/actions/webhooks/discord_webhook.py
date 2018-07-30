@@ -17,16 +17,18 @@ class DiscordWebHookAction(WebHookAction):
     event_type = DISCORD_WEBHOOK_ACTION_EXECUTED
     description = "Discord webhooks to send payload to a discord room."
 
-    def _get_config(self):
+    @classmethod
+    def _get_config(cls):
         """Configuration for discord webhooks.
 
         should be a list of urls and potentially a method.
 
         If no method is given, then by default we use POST.
         """
-        return self._get_from_settings(settings.INTEGRATIONS_DISCORD_WEBHOOKS)
+        return cls._get_from_settings(settings.INTEGRATIONS_DISCORD_WEBHOOKS)
 
-    def _prepare(self, context):
+    @classmethod
+    def _prepare(cls, context):
         payload = {
             'username': 'Polyaxon',
             'avatar_url': context.get('avatar_url'),

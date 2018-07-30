@@ -19,10 +19,12 @@ class EmailAction(Action):
                    "by subscribing to certain events on Polyaxon, "
                    "or manually triggered by a user operation.")
 
-    def _get_config(self):
+    @classmethod
+    def _get_config(cls):
         pass
 
-    def _execute(self, data, config):
+    @classmethod
+    def _execute(cls, data, config):
         recipients = [email for email in config.get('addresses', '').split(',') if email]
 
         if not recipients:

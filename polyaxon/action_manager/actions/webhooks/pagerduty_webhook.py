@@ -16,16 +16,18 @@ class PagerDutyWebHookAction(WebHookAction):
     event_type = PAGER_DUTY_WEBHOOK_ACTION_EXECUTED
     description = "PagerDuty webhooks to send event payload to pagerduty."
 
-    def _get_config(self):
+    @classmethod
+    def _get_config(cls):
         """Configuration for pagerduty webhooks.
 
         should be a list of urls and potentially a method and service key.
 
         If no method is given, then by default we use POST.
         """
-        return self._get_from_settings(settings.INTEGRATIONS_PAGER_DUTY_WEBHOOKS, 'service_key')
+        return cls._get_from_settings(settings.INTEGRATIONS_PAGER_DUTY_WEBHOOKS, 'service_key')
 
-    def _prepare(self, context):
+    @classmethod
+    def _prepare(cls, context):
         return {
             'event_type': context.get('event_type'),
             'description': context.get('description'),
@@ -36,7 +38,8 @@ class PagerDutyWebHookAction(WebHookAction):
             'contexts': context.get('contexts'),
         }
 
-    def _pre_execute_web_hook(self, data, config):
+    @classmethod
+    def _pre_execute_web_hook(cls, data, config):
         service_key = config.get('service_key')
         if service_key:
             data['service_key'] = service_key

@@ -22,7 +22,8 @@ class WebHookAction(Action):
                    "by subscribing to certain events on Polyaxon, "
                    "or manually triggered by a user operation.")
 
-    def _get_from_settings(self, settings_env_var, *fields):
+    @classmethod
+    def _get_from_settings(cls, settings_env_var, *fields):
         web_hooks = []
         for web_hook in settings_env_var:
             if not web_hook.get('url'):
@@ -50,21 +51,24 @@ class WebHookAction(Action):
 
         return web_hooks
 
-    def _get_config(self):
+    @classmethod
+    def _get_config(cls):
         """Configuration for webhooks.
 
         Should be a list of urls and potentially a method.
 
         If no method is given, then by default we use POST.
         """
-        return self._get_from_settings(settings.INTEGRATIONS_WEBHOOKS)
+        return cls._get_from_settings(settings.INTEGRATIONS_WEBHOOKS)
 
-    def _pre_execute_web_hook(self, data, config):
+    @classmethod
+    def _pre_execute_web_hook(cls, data, config):
         return data
 
-    def _execute(self, data, config):
+    @classmethod
+    def _execute(cls, data, config):
         for web_hook in config:
-            data = self._pre_execute_web_hook(data=data, config=config)
+            data = cls._pre_execute_web_hook(data=data, config=config)
             if web_hook['method'] == 'POST':
                 safe_request(url=web_hook['url'], method=web_hook['method'], json=data)
             else:

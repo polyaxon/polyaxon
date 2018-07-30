@@ -16,16 +16,18 @@ class MattermostWebHookAction(WebHookAction):
     event_type = MATTERMOST_WEBHOOK_ACTION_EXECUTED
     description = "Mattermost webhooks to send payload to a Mattermost channel."
 
-    def _get_config(self):
+    @classmethod
+    def _get_config(cls):
         """Configuration for mattermost webhooks.
 
         should be a list of urls and potentially a method.
 
         If no method is given, then by default we use POST.
         """
-        return self._get_from_settings(settings.INTEGRATIONS_MATTERMOST_WEBHOOKS, 'channel')
+        return cls._get_from_settings(settings.INTEGRATIONS_MATTERMOST_WEBHOOKS, 'channel')
 
-    def _prepare(self, context):
+    @classmethod
+    def _prepare(cls, context):
         return {
             'message': context.get('message'),
             'message_format': context.get('message_format', 'html'),
@@ -36,7 +38,8 @@ class MattermostWebHookAction(WebHookAction):
             'card': context.get('card')
         }
 
-    def _pre_execute_web_hook(self, data, config):
+    @classmethod
+    def _pre_execute_web_hook(cls, data, config):
         channel = config.get('channel')
         if channel:
             data['channel'] = channel
