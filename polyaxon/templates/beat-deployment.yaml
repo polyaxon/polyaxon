@@ -39,6 +39,7 @@ spec:
         image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
         imagePullPolicy: {{ .Values.beat.imagePullPolicy }}
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}
@@ -62,6 +63,7 @@ spec:
         imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
         args: ["{{ .Values.queues.cronsExperiments }},{{ .Values.queues.cronsPipelines }},{{ .Values.queues.cronsClusters }}", "--concurrency={{ .Values.crons.concurrency }}"]
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}

@@ -41,6 +41,7 @@ spec:
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
         args: ["create_exchange"]
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}

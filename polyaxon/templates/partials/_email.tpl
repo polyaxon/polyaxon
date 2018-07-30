@@ -1,13 +1,15 @@
 {{/*
-Config dirs
+Config emails
 */}}
 {{- define "config.emails" }}
-- name: POLYAXON_ADMIN_NAME
-  value: {{ .Values.user.name | quote }}
-- name: POLYAXON_ADMIN_MAIL
-  value: {{ .Values.user.email | quote }}
+{{- if .Values.email.from }}
 - name: POLYAXON_EMAIL_FROM
-  value: {{ .Values.user.emailFrom | quote }}
+  value: {{ .Values.email.from | quote }}
+{{- end }}
+{{- if .Values.email.subjectPrefix }}
+- name: POLYAXON_EMAIL_SUBJECT_PREFIX
+  value: {{ .Values.email.subjectPrefix | quote }}
+{{- end }}
 - name: POLYAXON_ADMIN_PASSWORD
   valueFrom:
     secretKeyRef:
@@ -17,13 +19,18 @@ Config dirs
   value: {{ .Values.email.host | quote }}
 - name: POLYAXON_EMAIL_PORT
   value: {{ .Values.email.port | quote }}
-{{- if .Values.email.host_user }}
+- name: POLYAXON_EMAIL_USE_TLS
+  value: {{ .Values.email.useTls | quote }}
+{{- if .Values.email.hostUser }}
 - name: POLYAXON_EMAIL_HOST_USER
-  value: {{ .Values.email.host_user | quote }}
+  value: {{ .Values.email.hostUser | quote }}
 {{- end }}
-{{- if .Values.email.host_password }}
+{{- if .Values.email.hostPassword }}
 - name: POLYAXON_EMAIL_HOST_PASSWORD:
-  value: {{ .Values.email.host_password | quote }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: email-host-password
 {{- end }}
 {{- if .Values.email.backend }}
 - name: POLYAXON_EMAIL_BACKEND

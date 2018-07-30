@@ -29,7 +29,6 @@ limitResources: false
 # Initial admin user to create
 user:
   username: "root"
-  emailFrom: <root@polyaxon.local>
   email: "root@polyaxon.local"
   password: "rootpassword"
 
@@ -509,7 +508,9 @@ k8s: {}
 email:
   host: smtp
   port: 25
-  use_tls: false
+  useTls: false
+  hostUser: ""
+  hostPassword: ""
 
 intervals:  # in seconds
   experiments_scheduler: 15

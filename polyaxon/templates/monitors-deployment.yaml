@@ -68,6 +68,7 @@ spec:
         imagePullPolicy: {{ .Values.eventMonitors.statuses.imagePullPolicy }}
         args: ["--log_sleep_interval={{ .Values.eventMonitors.statuses.logSleepInterval }}", "--persist={{ .Values.eventMonitors.statuses.persists }}"]
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}

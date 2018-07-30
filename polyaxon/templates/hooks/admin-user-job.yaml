@@ -41,6 +41,7 @@ spec:
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
         args: ["createuser", "--username={{ .Values.user.username }}", "--email={{ .Values.user.email }}", "--password=$(POLYAXON_ADMIN_PASSWORD)", "--superuser",  "--force"]
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}

@@ -41,6 +41,7 @@ spec:
         ports:
         - containerPort: {{ .Values.api.service.internalPort }}
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}
@@ -97,6 +98,7 @@ spec:
         ports:
         - containerPort: {{ .Values.streams.service.internalPort }}
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}

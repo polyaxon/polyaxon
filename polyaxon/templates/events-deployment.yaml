@@ -40,6 +40,7 @@ spec:
         imagePullPolicy: {{ .Values.eventsHandlers.imagePullPolicy }}
         args: ["{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsJobStatuses }},{{ .Values.queues.logsSidecars }},{{ .Values.queues.streamLogsSidecars }}", "--concurrency={{ .Values.eventsHandlers.concurrency }}"]
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}

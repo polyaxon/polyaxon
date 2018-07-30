@@ -40,6 +40,7 @@ spec:
         imagePullPolicy: {{ .Values.hpsearch.imagePullPolicy }}
         args: ["{{ .Values.queues.hp }}", "--concurrency={{ .Values.hpsearch.concurrency }}"]
         env:
+        {{ include "config.admin" . | indent 8 }}
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.celery" . | indent 8 }}
