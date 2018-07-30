@@ -81,10 +81,10 @@ $ kubectl delete job ...
 ```
 
 > **Note**:
-You can delete the chart and skip the cleaning the hooks
+You can delete the chart and skip the cleaning hooks
 
 ```console
-helm del --purge  <RELEASE_NAME>  --no-hooks
+$ helm del --purge  <RELEASE_NAME>  --no-hooks
 ```
 
 This can be particularly if your deployment is not working, because the hooks will most probably fail.
