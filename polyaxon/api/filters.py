@@ -7,6 +7,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db.models.sql.constants import ORDER_PATTERN
 
 import query
+from libs.string_utils import strip_spaces
 
 from query.exceptions import QueryError
 
@@ -78,7 +79,7 @@ class OrderingFilter(BaseOrderingFilter):
         """
         params = request.query_params.get(self.ordering_param)
         if params:
-            fields = [param.strip() for param in params.split(',')]
+            fields = strip_spaces(value=params, sep=',', join=False)
             ordering, annotations = self.remove_invalid_fields(queryset, fields, view, request)
             if ordering:
                 return ordering, annotations

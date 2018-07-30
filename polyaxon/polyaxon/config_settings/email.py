@@ -2,7 +2,7 @@ from polyaxon.config_manager import config
 
 DEFAULT_FROM_EMAIL = config.get_string('POLYAXON_EMAIL_FROM',
                                        is_optional=True,
-                                       default='polyaxon@localhost')
+                                       default='<Polyaxon>')
 EMAIL_HOST = config.get_string('POLYAXON_EMAIL_HOST',
                                is_optional=True,
                                default='localhost')
@@ -20,9 +20,6 @@ EMAIL_SUBJECT_PREFIX = config.get_string('POLYAXON_EMAIL_SUBJECT_PREFIX',
                                          is_optional=True,
                                          default='[Polyaxon]')
 EMAIL_USE_TLS = config.get_boolean('POLYAXON_EMAIL_USE_TLS',
-                                   is_optional=True,
-                                   default=False)
-EMAIL_USE_SSL = config.get_boolean('POLYAXON_EMAIL_USE_SSL',
                                    is_optional=True,
                                    default=False)
 

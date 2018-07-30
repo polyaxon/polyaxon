@@ -1,8 +1,10 @@
 # Default configs
+from .admin import *
 from .celery_settings import *
 from .context_processors import *
 from .core import *
 from .debug import *
+from .email import *
 from .logging import *
 from .oauth import *
 from .secrets import *
