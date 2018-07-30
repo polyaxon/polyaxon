@@ -1,7 +1,7 @@
 from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
 from event_manager.event_actions import EXECUTED
-from libs.mail import send_template_mail
+from libs.mail import send_mass_template_mail
 
 EMAIL_ACTION_EXECUTED = 'email_action.{}'.format(EXECUTED)
 
@@ -31,4 +31,4 @@ class EmailAction(Action):
         subject_template = ''
         body_template = ''
 
-        send_template_mail(subject_template, body_template, {}, recipients)
+        send_mass_template_mail(subject_template, body_template, {}, recipients)
