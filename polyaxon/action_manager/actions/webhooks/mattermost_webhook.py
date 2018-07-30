@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from action_manager.actions.webhook_actions.webhook_action import (
+from action_manager.actions.webhooks.webhook import (
     WebHookAction,
     WebHookActionExecutedEvent
 )
