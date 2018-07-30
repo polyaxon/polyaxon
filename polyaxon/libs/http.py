@@ -1,4 +1,6 @@
 import os
+from urllib.parse import urlparse
+
 import requests
 import tarfile
 
@@ -10,7 +12,16 @@ from libs.api import get_service_api_url
 from libs.permissions.authentication import InternalAuthentication
 
 
-def safe_urlopen(
+def validate_url(url):
+    if not url.startswith(('http://', 'https://')):
+        return False
+    parsed = urlparse(url)
+    if not parsed.hostname:
+        return False
+    return True
+
+
+def safe_request(
     url,
     method=None,
     params=None,
@@ -21,10 +32,7 @@ def safe_urlopen(
     timeout=30,
     verify_ssl=True,
 ):
-    """
-    A slightly safer version of ``urlib2.urlopen`` which prevents redirection
-    and ensures the URL isn't attempting to hit a blacklisted IP range.
-    """
+    """A slightly safer version of `request`."""
 
     session = requests.Session()
 

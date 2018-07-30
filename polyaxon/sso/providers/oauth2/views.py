@@ -5,7 +5,7 @@ from urllib.parse import parse_qsl, urlencode
 from django.http import HttpResponseRedirect
 from django.views import View
 
-from libs.http import safe_urlopen
+from libs.http import safe_request
 from libs.json_utils import loads
 
 
@@ -86,7 +86,7 @@ class OAuth2CallbackView(View):
             code=code,
             redirect_uri=wizard.redirect_url(request=request),
         )
-        response = safe_urlopen(self.access_token_url, data=data)
+        response = safe_request(self.access_token_url, data=data)
         content = response.content.decode()
         if response.headers['Content-Type'].startswith('application/x-www-form-urlencoded'):
             return dict(parse_qsl(content))
