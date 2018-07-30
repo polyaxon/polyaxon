@@ -29,6 +29,10 @@ class AzureIdentityProvider(OAuth2Provider):
     def get_oauth_client_secret(self):
         return settings.OAUTH_PROVIDERS.AZURE.CLIENT_SECRET
 
+    def get_username(self, upn):
+        # userPrincipalName format is <alias>@<tenant>.com, we only want the alias
+        return upn.split("@")[0]
+
     def build_identity(self, state_data):
         data = state_data['data']
         access_token = data['access_token']
@@ -41,7 +45,7 @@ class AzureIdentityProvider(OAuth2Provider):
             'type': Providers.AZURE,
             'id': user_info['id'],
             'email': user_info['mail'],
-            'username': user_info['userPrincipalName'],
+            'username': self.get_username(user_info['userPrincipalName']),
             'first_name': user_info['givenName'],
             'last_name': user_info['surname'],
             'scopes': [],
