@@ -170,6 +170,12 @@ class SettingConfig(object):
         stats.validate()
         stats.setup()
 
+    def setup_notifier_service(self):
+        import notifier
+
+        notifier.validate()
+        notifier.setup()
+
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
         config = reader.read(config_values)  # pylint:disable=redefined-outer-name

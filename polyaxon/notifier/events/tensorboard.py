@@ -1,0 +1,9 @@
+import notifier
+
+from event_manager.events import tensorboard
+
+notifier.subscribe_event(tensorboard.TensorboardStartedEvent)
+notifier.subscribe_event(tensorboard.TensorboardSoppedEvent)
+notifier.subscribe_event(tensorboard.TensorboardNewStatusEvent)
+notifier.subscribe_event(tensorboard.TensorboardFailedEvent)
+notifier.subscribe_event(tensorboard.TensorboardSucceededEvent)
