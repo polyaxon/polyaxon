@@ -20,8 +20,8 @@ from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
     get_volume,
-    get_volume_mount
-)
+    get_volume_mount,
+    get_shm_volumes)
 
 
 class NotebookSpawner(ProjectJobSpawner):
@@ -110,6 +110,9 @@ class NotebookSpawner(ProjectJobSpawner):
             persistence_outputs=persistence_outputs)
         volumes += refs_volumes
         volume_mounts += refs_volume_mounts
+        shm_volumes, shm_volume_mounts = get_shm_volumes()
+        volumes += shm_volumes
+        volume_mounts += shm_volume_mounts
         env_vars = get_job_env_vars(
             outputs_path=get_notebook_job_outputs_path(persistence_outputs=persistence_outputs,
                                                        notebook_job=self.job_name),
