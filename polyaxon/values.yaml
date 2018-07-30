@@ -324,10 +324,6 @@ dockerizer:
   image: polyaxon/polyaxon-dockerizer
   imageTag: 0.1.6
 
-job:
-  image: polyaxon/polyaxon-lib
-  imageTag: 0.1.6
-
 hooks:
   image: polyaxon/polyaxon-manage
   imageTag: 0.1.6
