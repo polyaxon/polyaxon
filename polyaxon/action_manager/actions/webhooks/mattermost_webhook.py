@@ -11,7 +11,7 @@ class MattermostWebHookActionExecutedEvent(WebHookActionExecutedEvent):
 
 
 class MattermostWebHookAction(WebHookAction):
-    key = 'mattermost_webhook'
+    action_key = 'mattermost_webhook'
     name = 'Mattermost WebHook'
     event_type = MATTERMOST_WEBHOOK_ACTION_EXECUTED
     description = "Mattermost webhooks to send payload to a Mattermost channel."

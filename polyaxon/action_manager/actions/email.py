@@ -11,7 +11,7 @@ class EmailActionExecutedEvent(ActionExecutedEvent):
 
 
 class EmailAction(Action):
-    key = 'email'
+    action_key = 'email'
     name = 'Email'
     event_type = EMAIL_ACTION_EXECUTED
     description = ("Send emails."

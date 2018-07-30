@@ -14,7 +14,7 @@ class WebHookActionExecutedEvent(ActionExecutedEvent):
 
 
 class WebHookAction(Action):
-    key = 'webhook'
+    action_key = 'webhook'
     name = 'WebHook'
     event_type = WEBHOOK_ACTION_EXECUTED
     description = ("Webhooks send an HTTP payload to the webhook's configured URL."

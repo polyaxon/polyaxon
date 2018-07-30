@@ -11,7 +11,7 @@ class HipChatWebHookActionExecutedEvent(WebHookActionExecutedEvent):
 
 
 class HipChatWebHookAction(WebHookAction):
-    key = 'hipchat_webhook'
+    action_key = 'hipchat_webhook'
     name = 'HipChat WebHook'
     event_type = HIPCHAT_WEBHOOK_ACTION_EXECUTED
     description = "HipChat webhooks to send payload to a hipchat room."

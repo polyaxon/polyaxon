@@ -11,7 +11,7 @@ class PagerDutyWebHookActionExecutedEvent(WebHookActionExecutedEvent):
 
 
 class PagerDutyWebHookAction(WebHookAction):
-    key = 'pagerduty_webhook'
+    action_key = 'pagerduty_webhook'
     name = 'PagerDuty WebHook'
     event_type = PAGER_DUTY_WEBHOOK_ACTION_EXECUTED
     description = "PagerDuty webhooks to send event payload to pagerduty."

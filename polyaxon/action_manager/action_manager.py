@@ -12,8 +12,8 @@ class ActionManager(ManagerInterface):
         """
         super().subscribe(obj=action)
 
-    def knows(self, action):  # pylint:disable=arguments-differ
-        return super().knows(key=action)
+    def knows(self, action_key):  # pylint:disable=arguments-differ
+        return super().knows(key=action_key)
 
-    def get(self, action):  # pylint:disable=arguments-differ
-        return super().get(key=action)
+    def get(self, action_key):  # pylint:disable=arguments-differ
+        return super().get(key=action_key)

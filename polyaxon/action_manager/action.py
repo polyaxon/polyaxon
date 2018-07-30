@@ -6,7 +6,7 @@ logger = logging.getLogger("polyaxon.actions")
 
 
 class Action(object):
-    key = None
+    action_key = None
     name = None
     description = ''
     event_type = None

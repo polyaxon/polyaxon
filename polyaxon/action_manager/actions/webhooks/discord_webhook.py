@@ -12,7 +12,7 @@ class DiscordWebHookActionExecutedEvent(WebHookActionExecutedEvent):
 
 
 class DiscordWebHookAction(WebHookAction):
-    key = 'discord_webhook'
+    action_key = 'discord_webhook'
     name = 'Discord WebHook'
     event_type = DISCORD_WEBHOOK_ACTION_EXECUTED
     description = "Discord webhooks to send payload to a discord room."

@@ -11,7 +11,7 @@ class SlackWebHookActionExecutedEvent(WebHookActionExecutedEvent):
 
 
 class SlackWebHookAction(WebHookAction):
-    key = 'slack_webhook'
+    action_key = 'slack_webhook'
     name = 'Slack WebHook'
     event_type = SLACK_WEBHOOK_ACTION_EXECUTED
     description = "Slack webhooks to send payload to Slack Incoming Webhooks."
