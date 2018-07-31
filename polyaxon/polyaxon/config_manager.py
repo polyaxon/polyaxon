@@ -143,6 +143,7 @@ class SettingConfig(object):
         if not self.is_testing_env:
             import activitylogs
             import auditor
+            import notifier
             import tracker
 
             auditor.validate()
@@ -151,6 +152,8 @@ class SettingConfig(object):
             tracker.setup()
             activitylogs.validate()
             activitylogs.setup()
+            notifier.validate()
+            notifier.setup()
 
     def setup_publisher_service(self):
         import publisher
@@ -169,12 +172,6 @@ class SettingConfig(object):
 
         stats.validate()
         stats.setup()
-
-    def setup_notifier_service(self):
-        import notifier
-
-        notifier.validate()
-        notifier.setup()
 
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
