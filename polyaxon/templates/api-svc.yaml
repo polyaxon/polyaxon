@@ -20,13 +20,13 @@ spec:
   ports:
   - port: {{ .Values.api.service.externalPort }}
     targetPort: {{ .Values.api.service.internalPort }}
-{{ if eq .Values.serviceType "NodePort" -}}
+    {{ if eq .Values.serviceType "NodePort" -}}
     nodePort: {{ .Values.api.service.nodePort }}
-{{- end }}
+    {{- end }}
     name: {{ .Values.api.service.name }}
   - port: {{ .Values.streams.service.externalPort }}
     targetPort: {{ .Values.streams.service.internalPort }}
-{{ if eq .Values.serviceType "NodePort" -}}
+    {{ if eq .Values.serviceType "NodePort" -}}
     nodePort: {{ .Values.streams.service.nodePort }}
-{{- end }}
+    {{- end }}
     name: {{ .Values.streams.service.name }}
