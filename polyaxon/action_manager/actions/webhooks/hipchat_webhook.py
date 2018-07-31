@@ -15,6 +15,7 @@ class HipChatWebHookAction(WebHookAction):
     name = 'HipChat WebHook'
     event_type = HIPCHAT_WEBHOOK_ACTION_EXECUTED
     description = "HipChat webhooks to send payload to a hipchat room."
+    raise_empty_context = True
 
     @classmethod
     def _get_config(cls):
@@ -24,10 +25,12 @@ class HipChatWebHookAction(WebHookAction):
 
         If no method is given, then by default we use POST.
         """
-        return cls._get_from_settings(settings.INTEGRATIONS_HIPCHAT_WEBHOOKS)
+        return settings.INTEGRATIONS_HIPCHAT_WEBHOOKS
 
     @classmethod
     def _prepare(cls, context):
+        context = super()._prepare(context)
+
         return {
             'message': context.get('message'),
             'message_format': context.get('message_format', 'html'),

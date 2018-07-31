@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import pytest
 
 from event_manager.event_manager import EventManager
@@ -18,6 +16,7 @@ class TestEventManager(BaseTest):
 
     def setUp(self):
         self.manager = EventManager()
+        super().setUp()
 
     def test_subscribe(self):
         # pylint:disable=len-as-condition

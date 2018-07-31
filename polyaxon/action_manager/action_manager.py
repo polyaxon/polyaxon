@@ -4,7 +4,7 @@ from libs.managers import ManagerInterface
 class ActionManager(ManagerInterface):
 
     def _get_state_data(self, action):  # pylint:disable=arguments-differ
-        return action.key, action
+        return action.action_key, action
 
     def subscribe(self, action):  # pylint:disable=arguments-differ
         """

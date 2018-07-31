@@ -1,6 +1,7 @@
 import logging
 
 import auditor
+from action_manager.exception import PolyaxonActionException
 
 logger = logging.getLogger("polyaxon.actions")
 
@@ -10,10 +11,16 @@ class Action(object):
     name = None
     description = ''
     event_type = None
+    raise_empty_context = True
+
+    @classmethod
+    def _validate_config(cls, config):
+        """Validate that a given config is valid for the current config."""
+        raise NotImplementedError
 
     @classmethod
     def _get_config(cls):
-        """Getting config to be execute an action.
+        """Getting config to execute an action.
 
         Currently we get config from env vars.
         """
@@ -21,9 +28,9 @@ class Action(object):
 
     @classmethod
     def get_config(cls, config=None):
-        if config:
-            return config
-        return cls._get_config()
+        config = config or cls._get_config()
+        config = cls._validate_config(config)
+        return config
 
     @classmethod
     def _prepare(cls, context):
@@ -31,6 +38,9 @@ class Action(object):
 
         Default behaviour will leave the context as it is.
         """
+        if not context and cls.raise_empty_context:
+            raise PolyaxonActionException('{} received invalid payload context.'.format(cls.name))
+
         return context
 
     @classmethod

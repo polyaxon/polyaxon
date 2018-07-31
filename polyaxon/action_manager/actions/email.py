@@ -2,6 +2,7 @@ from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
 from event_manager.event_actions import EXECUTED
 from libs.mail import send_mass_template_mail
+from libs.string_utils import strip_spaces
 
 EMAIL_ACTION_EXECUTED = 'email_action.{}'.format(EXECUTED)
 
@@ -20,17 +21,53 @@ class EmailAction(Action):
                    "or manually triggered by a user operation.")
 
     @classmethod
+    def _validate_config(cls, config):
+        if not config:
+            return {}
+
+        recipients = config.get('recipients')
+        if not recipients:
+            return {}
+
+        if isinstance(recipients, str):
+            recipients = strip_spaces(recipients, sep=',', join=False)
+
+        config['recipients'] = [email for email in recipients if email]
+        return config
+
+    @classmethod
     def _get_config(cls):
-        pass
+        return None
+
+    @classmethod
+    def _prepare(cls, context):
+        context = context or {}
+        context['subject_template'] = (
+            context.get('subject_template') or
+            context.get('subject') or
+            ''
+        )
+        context['body_template'] = (
+            context.get('body_template') or
+            context.get('body') or
+            ''
+        )
+        context['context'] = (
+            context.get('context') or
+            None
+        )
+        return context
 
     @classmethod
     def _execute(cls, data, config):
-        recipients = [email for email in config.get('addresses', '').split(',') if email]
+        recipients = config.get('recipients')
 
         if not recipients:
-            logger.warning("No emails given. Skipping send.")
+            logger.warning("No emails given, skipping send.")
+            return
 
-        subject_template = ''
-        body_template = ''
+        subject_template = data['subject_template']
+        body_template = data['body_template']
+        context = data['context']
 
-        send_mass_template_mail(subject_template, body_template, {}, recipients)
+        send_mass_template_mail(subject_template, body_template, recipients, context=context)

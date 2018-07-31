@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from event_manager import event_context

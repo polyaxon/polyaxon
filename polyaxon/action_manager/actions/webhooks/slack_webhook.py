@@ -15,6 +15,13 @@ class SlackWebHookAction(WebHookAction):
     name = 'Slack WebHook'
     event_type = SLACK_WEBHOOK_ACTION_EXECUTED
     description = "Slack webhooks to send payload to Slack Incoming Webhooks."
+    raise_empty_context = True
+
+    @classmethod
+    def _validate_config(cls, config):
+        if not config:
+            return []
+        return cls._get_valid_config(config, 'channel')
 
     @classmethod
     def _get_config(cls):
@@ -24,12 +31,23 @@ class SlackWebHookAction(WebHookAction):
 
         If no method is given, then by default we use POST.
         """
-        return cls._get_from_settings(settings.INTEGRATIONS_SLACK_WEBHOOKS, 'channel')
+        return settings.INTEGRATIONS_SLACK_WEBHOOKS
 
     @classmethod
     def _prepare(cls, context):
-        # Add slack specific handling
-        return context
+        context = super()._prepare(context)
+
+        return {
+            'fallback': context.get('fallback'),
+            'title': context.get('title'),
+            'title_link': context.get('title_link'),
+            'text': context.get('text'),
+            'fields': context.get('fields'),
+            'mrkdwn_in': ['text'],
+            'footer_icon': context.get('footer_icon'),
+            'footer': context.get('footer'),
+            'color': context.get('color'),
+        }
 
     @classmethod
     def _pre_execute_web_hook(cls, data, config):

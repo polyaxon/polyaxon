@@ -15,6 +15,13 @@ class PagerDutyWebHookAction(WebHookAction):
     name = 'PagerDuty WebHook'
     event_type = PAGER_DUTY_WEBHOOK_ACTION_EXECUTED
     description = "PagerDuty webhooks to send event payload to pagerduty."
+    raise_empty_context = True
+
+    @classmethod
+    def _validate_config(cls, config):
+        if not config:
+            return []
+        return cls._get_valid_config(config, 'service_key')
 
     @classmethod
     def _get_config(cls):
@@ -24,17 +31,19 @@ class PagerDutyWebHookAction(WebHookAction):
 
         If no method is given, then by default we use POST.
         """
-        return cls._get_from_settings(settings.INTEGRATIONS_PAGER_DUTY_WEBHOOKS, 'service_key')
+        return settings.INTEGRATIONS_PAGER_DUTY_WEBHOOKS
 
     @classmethod
     def _prepare(cls, context):
+        context = super()._prepare(context)
+
         return {
             'event_type': context.get('event_type'),
             'description': context.get('description'),
             'details': context.get('details'),
             'incident_key': context.get('incident_key'),
             'client': 'polyaxon',
-            # 'client_url': get_absolute_uri(),
+            'client_url': '',  # get_absolute_uri(),
             'contexts': context.get('contexts'),
         }
 

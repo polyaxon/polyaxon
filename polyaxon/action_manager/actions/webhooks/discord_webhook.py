@@ -16,6 +16,7 @@ class DiscordWebHookAction(WebHookAction):
     name = 'Discord WebHook'
     event_type = DISCORD_WEBHOOK_ACTION_EXECUTED
     description = "Discord webhooks to send payload to a discord room."
+    raise_empty_context = True
 
     @classmethod
     def _get_config(cls):
@@ -25,21 +26,23 @@ class DiscordWebHookAction(WebHookAction):
 
         If no method is given, then by default we use POST.
         """
-        return cls._get_from_settings(settings.INTEGRATIONS_DISCORD_WEBHOOKS)
+        return settings.INTEGRATIONS_DISCORD_WEBHOOKS
 
     @classmethod
     def _prepare(cls, context):
+        context = super()._prepare(context)
+
         payload = {
             'username': 'Polyaxon',
             'avatar_url': context.get('avatar_url'),
             'tts': context.get('tts', False)
         }
-        message = context.get('message')
-        if message and len(message) <= 2000:
-            payload['content'] = message
+        content = context.get('content')
+        if content and len(content) <= 2000:
+            payload['content'] = content
         else:
             raise PolyaxonActionException(
-                'Discord message must non null and 2000 or fewer characters.')
+                'Discord content must non null and 2000 or fewer characters.')
 
         proxy = context.get('proxy')
         if proxy:

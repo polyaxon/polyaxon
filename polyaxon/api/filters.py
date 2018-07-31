@@ -6,6 +6,7 @@ from django.contrib.postgres.fields.jsonb import KeyTransform
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models.sql.constants import ORDER_PATTERN
 
+# pylint:disable=ungrouped-imports
 import query
 
 from libs.string_utils import strip_spaces
