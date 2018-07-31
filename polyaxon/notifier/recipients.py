@@ -19,4 +19,3 @@ def get_instance_and_project_recipients(instance):
     recipients = {RecipientSpec(instance.user.id, instance.user.email), }
     recipients |= get_project_recipients(instance.project)
     return recipients
-
