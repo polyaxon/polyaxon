@@ -22,14 +22,10 @@ class TestEmailAction(BaseTest):
         assert EmailAction._validate_config({'foo': 'bar'}) == {}
         assert EmailAction._validate_config({
             'recipients': 'bar@gmail.com, foo@gmail.com'
-        }) == {
-                   'recipients': ['bar@gmail.com', 'foo@gmail.com']
-               }
+        }) == {'recipients': ['bar@gmail.com', 'foo@gmail.com']}
         assert EmailAction._validate_config({
             'recipients': ['bar@gmail.com', 'foo@gmail.com']
-        }) == {
-                   'recipients': ['bar@gmail.com', 'foo@gmail.com']
-               }
+        }) == {'recipients': ['bar@gmail.com', 'foo@gmail.com']}
 
     def test_get_config(self):
         assert EmailAction.get_config() == {}
@@ -37,14 +33,10 @@ class TestEmailAction(BaseTest):
         assert EmailAction.get_config({'foo': 'bar'}) == {}
         assert EmailAction.get_config({
             'recipients': 'bar@gmail.com, foo@gmail.com'
-        }) == {
-                   'recipients': ['bar@gmail.com', 'foo@gmail.com']
-               }
+        }) == {'recipients': ['bar@gmail.com', 'foo@gmail.com']}
         assert EmailAction.get_config({
             'recipients': ['bar@gmail.com', 'foo@gmail.com']
-        }) == {
-                   'recipients': ['bar@gmail.com', 'foo@gmail.com']
-               }
+        }) == {'recipients': ['bar@gmail.com', 'foo@gmail.com']}
 
     def test_execute(self):
         with patch('action_manager.actions.email.send_mass_template_mail') as mock_execute:
