@@ -258,6 +258,7 @@ class TestDateTimeCondition(BaseTest):
         nrange_cond = DateTimeCondition(op='range', negation=True)
         assert nrange_cond.operator == DateTimeCondition._nrange_operator
 
+    @pytest.mark.filterwarnings('ignore::RuntimeWarning')
     def test_range_apply(self):
         ExperimentMetricFactory(created_at=datetime.datetime(2018, 1, 1))
         ExperimentMetricFactory(created_at=datetime.datetime(2010, 1, 1))

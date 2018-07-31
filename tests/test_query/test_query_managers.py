@@ -143,6 +143,7 @@ class TestQueryManager(BaseTest):
         built_query = ExperimentQueryManager.build(parsed_query)
         assert built_query == ExperimentQueryManager.handle_query(self.query1)
 
+    @pytest.mark.filterwarnings('ignore::RuntimeWarning')
     @flaky(max_runs=3)
     def test_apply(self):
         result_queryset = ExperimentQueryManager.apply(query_spec=self.query1,

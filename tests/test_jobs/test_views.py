@@ -99,6 +99,7 @@ class TestProjectJobListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
+    @pytest.mark.filterwarnings('ignore::RuntimeWarning')
     def test_get_filter(self):
         # Wrong filter raises
         resp = self.auth_client.get(self.url + '?query=created_at<2010-01-01')

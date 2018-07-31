@@ -925,6 +925,7 @@ class TestBOSearchManager(BaseTest):
         assert 1 <= suggestion['feature4'] <= 5
         assert suggestion['feature5'] in ['a', 'b', 'c']
 
+    @pytest.mark.filterwarnings('ignore::UserWarning')
     def test_concrete_example(self):
         hptuning_config = HPTuningConfig.from_dict({
             'concurrency': 2,
