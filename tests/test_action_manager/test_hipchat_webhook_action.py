@@ -8,6 +8,8 @@ from action_manager.exception import PolyaxonActionException
 from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
 
+# pylint:disable=protected-access
+
 @pytest.mark.actions_mark
 class TestHipChatWebHookAction(TestWebHookAction):
     DISABLE_RUNNER = True

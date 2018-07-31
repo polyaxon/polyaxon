@@ -4,7 +4,6 @@ from action_manager.action_event import ActionExecutedEvent
 from action_manager.action_manager import ActionManager
 from action_manager.actions.webhooks.pagerduty_webhook import PagerDutyWebHookAction
 from action_manager.actions.webhooks.webhook import WebHookAction
-
 from tests.utils import BaseTest
 
 

@@ -1,4 +1,5 @@
 import copy
+
 from uuid import uuid1
 
 from django.utils import timezone

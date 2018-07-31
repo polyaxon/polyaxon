@@ -1,12 +1,13 @@
-import pytest
-
 from unittest.mock import patch
 
-from action_manager.actions.webhooks.webhook import WebHookAction
-from action_manager.actions.webhooks.webhook import WEBHOOK_ACTION_EXECUTED
-from action_manager.exception import PolyaxonActionException
+import pytest
 
+from action_manager.actions.webhooks.webhook import WEBHOOK_ACTION_EXECUTED, WebHookAction
+from action_manager.exception import PolyaxonActionException
 from tests.utils import BaseTest
+
+
+# pylint:disable=protected-access
 
 
 @pytest.mark.actions_mark

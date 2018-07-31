@@ -1,11 +1,11 @@
 from django.conf import settings
-from polyaxon_schemas.utils import to_list
 
 from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
 from action_manager.exception import PolyaxonActionException
 from event_manager.event_actions import EXECUTED
 from libs.http import safe_request, validate_url
+from polyaxon_schemas.utils import to_list
 
 WEBHOOK_ACTION_EXECUTED = 'webhook_action.{}'.format(EXECUTED)
 

@@ -1,12 +1,14 @@
 import pytest
 
 from action_manager.actions.webhooks.mattermost_webhook import (
-    MattermostWebHookAction,
-    MATTERMOST_WEBHOOK_ACTION_EXECUTED
+    MATTERMOST_WEBHOOK_ACTION_EXECUTED,
+    MattermostWebHookAction
 )
 from action_manager.exception import PolyaxonActionException
 from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
+
+# pylint:disable=protected-access
 
 @pytest.mark.actions_mark
 class TestMattermostWebHookAction(TestWebHookAction):

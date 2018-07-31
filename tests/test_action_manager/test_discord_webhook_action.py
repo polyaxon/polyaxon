@@ -1,12 +1,16 @@
-import pytest
-
 from unittest.mock import patch
 
-from action_manager.actions.webhooks.discord_webhook import DiscordWebHookAction, \
-    DISCORD_WEBHOOK_ACTION_EXECUTED
+import pytest
+
+from action_manager.actions.webhooks.discord_webhook import (
+    DISCORD_WEBHOOK_ACTION_EXECUTED,
+    DiscordWebHookAction
+)
 from action_manager.exception import PolyaxonActionException
 from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
+
+# pylint:disable=protected-access
 
 @pytest.mark.actions_mark
 class TestDiscordWebHookAction(TestWebHookAction):
