@@ -1,0 +1,7 @@
+Dear {{ username }},
+
+{{ notification }}
+
+Thank you for using our service!
+
+Polyaxon.

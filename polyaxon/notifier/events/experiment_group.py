@@ -2,7 +2,6 @@ import notifier
 
 from event_manager.events import experiment_group
 
-notifier.subscribe_event(experiment_group.ExperimentGroupDeletedEvent)
 notifier.subscribe_event(experiment_group.ExperimentGroupStoppedEvent)
 notifier.subscribe_event(experiment_group.ExperimentGroupDoneEvent)
 notifier.subscribe_event(experiment_group.ExperimentGroupNewStatusEvent)
