@@ -10,11 +10,6 @@ Config emails
 - name: POLYAXON_EMAIL_SUBJECT_PREFIX
   value: {{ .Values.email.subjectPrefix | quote }}
 {{- end }}
-- name: POLYAXON_ADMIN_PASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-secret
-      key: user-password
 - name: POLYAXON_EMAIL_HOST
   value: {{ .Values.email.host | quote }}
 - name: POLYAXON_EMAIL_PORT
