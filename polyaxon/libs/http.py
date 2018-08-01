@@ -2,7 +2,7 @@ import os
 import requests
 import tarfile
 
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 from rest_framework.authentication import TokenAuthentication
 
@@ -10,6 +10,24 @@ from django.conf import settings
 
 from libs.api import get_service_api_url
 from libs.permissions.authentication import InternalAuthentication
+
+
+def absolute_uri(url):
+    if not url or not settings.API_HOST:
+        return None
+
+    return urljoin(settings.API_HOST.rstrip('/') + '/', url.lstrip('/'))
+
+
+def add_notification_referrer_param(url, provider, is_absolute=True):
+    if not is_absolute:
+        url = absolute_uri(url)
+    parsed_url = urlparse(url)
+    query = parse_qs(parsed_url.query)
+    query['referrer'] = provider
+    url_list = list(parsed_url)
+    url_list[4] = urlencode(query, doseq=True)
+    return urlunparse(url_list)
 
 
 def validate_url(url):

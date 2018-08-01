@@ -1,5 +1,6 @@
 # Default configs
 from .admin import *
+from .api_host import *
 from .celery_settings import *
 from .context_processors import *
 from .core import *
