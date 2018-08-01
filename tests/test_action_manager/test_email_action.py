@@ -5,7 +5,6 @@ import pytest
 from action_manager.actions.email import EMAIL_ACTION_EXECUTED, EmailAction
 from tests.utils import BaseTest
 
-
 # pylint:disable=protected-access
 
 @pytest.mark.actions_mark

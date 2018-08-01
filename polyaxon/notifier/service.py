@@ -40,13 +40,13 @@ class NotifierService(EventService):
         recipients = self.get_recipients(event)
         self.create_notification(event, recipients)
         for action in self.action_manager.values:
-            config = {}
+            config = None
             if action == EmailAction:
-                config['recipients'] = [r.email for r in recipients]
+                config = {'recipients': [r.email for r in recipients]}
 
             context = {'content': 'content'}
             context.update(event.data)
-            action.execute(context=context, config=None, from_user=None)
+            action.execute(context=context, config=config, from_user=None)
 
     def setup(self):
         super().setup()

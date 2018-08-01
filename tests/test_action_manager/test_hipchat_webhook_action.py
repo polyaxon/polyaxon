@@ -1,12 +1,11 @@
 import pytest
 
 from action_manager.actions.webhooks.hipchat_webhook import (
-    HipChatWebHookAction,
-    HIPCHAT_WEBHOOK_ACTION_EXECUTED
+    HIPCHAT_WEBHOOK_ACTION_EXECUTED,
+    HipChatWebHookAction
 )
 from action_manager.exception import PolyaxonActionException
 from tests.test_action_manager.test_webhook_action import TestWebHookAction
-
 
 # pylint:disable=protected-access
 

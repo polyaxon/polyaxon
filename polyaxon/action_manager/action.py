@@ -13,6 +13,7 @@ class Action(object):
     description = ''
     event_type = None
     raise_empty_context = True
+    check_config = True
 
     @classmethod
     def _validate_config(cls, config):
@@ -51,6 +52,9 @@ class Action(object):
     @classmethod
     def execute(cls, context, config=None, from_user=None):
         config = cls.get_config(config=config)
+        if cls.check_config and not config:
+            return False
+
         data = cls._prepare(context)
         result = cls._execute(data=data, config=config)
         auditor.record(event_type=cls.event_type,

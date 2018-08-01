@@ -6,7 +6,6 @@ from action_manager.actions.webhooks.webhook import WEBHOOK_ACTION_EXECUTED, Web
 from action_manager.exception import PolyaxonActionException
 from tests.utils import BaseTest
 
-
 # pylint:disable=protected-access
 
 
