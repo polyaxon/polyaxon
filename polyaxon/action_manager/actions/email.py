@@ -1,7 +1,8 @@
 from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
+from action_manager.utils.email import send_mass_template_mail
 from event_manager.event_actions import EXECUTED
-from libs.mail import send_mass_template_mail
+from event_manager.event_context import get_event_context, get_readable_event
 from libs.string_utils import strip_spaces
 
 EMAIL_ACTION_EXECUTED = 'email_action.{}'.format(EXECUTED)
@@ -38,6 +39,20 @@ class EmailAction(Action):
     @classmethod
     def _get_config(cls):
         return None
+
+    @classmethod
+    def serialize_event_to_context(cls, event):
+        event_context = get_event_context(event)
+
+        context = {
+            'subject': event_context.subject_action,
+            'body': get_readable_event(event_context),
+        }
+        return {
+            'subject_template': 'notifier/subject.txt',
+            'body_template': 'notifier/body.txt',
+            'context': context
+        }
 
     @classmethod
     def _prepare(cls, context):

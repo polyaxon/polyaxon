@@ -50,6 +50,11 @@ class Action(object):
         raise NotImplementedError
 
     @classmethod
+    def serialize_event_to_context(cls, event):
+        """Implementation for turning an event into actionable notification."""
+        pass
+
+    @classmethod
     def execute(cls, context, config=None, from_user=None):
         config = cls.get_config(config=config)
         if cls.check_config and not config:

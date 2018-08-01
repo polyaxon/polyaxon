@@ -2,6 +2,7 @@ from django.conf import settings
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from action_manager.exception import PolyaxonActionException
+from action_manager.utils import discord
 from event_manager.event_actions import EXECUTED
 
 DISCORD_WEBHOOK_ACTION_EXECUTED = 'discord_webhook_action.{}'.format(EXECUTED)
@@ -29,11 +30,15 @@ class DiscordWebHookAction(WebHookAction):
         return settings.INTEGRATIONS_DISCORD_WEBHOOKS
 
     @classmethod
+    def serialize_event_to_context(cls, event):
+        return discord.serialize_event_to_context(event)
+
+    @classmethod
     def _prepare(cls, context):
         context = super()._prepare(context)
 
         payload = {
-            'username': 'Polyaxon',
+            'username': context.get('username', 'Polyaxon'),
             'avatar_url': context.get('avatar_url'),
             'tts': context.get('tts', False)
         }

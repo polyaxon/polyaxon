@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
+from action_manager.utils import pagerduty
 from event_manager.event_actions import EXECUTED
 
 PAGER_DUTY_WEBHOOK_ACTION_EXECUTED = 'pagerduty_webhook_action.{}'.format(EXECUTED)
@@ -34,6 +35,10 @@ class PagerDutyWebHookAction(WebHookAction):
         return settings.INTEGRATIONS_PAGER_DUTY_WEBHOOKS
 
     @classmethod
+    def serialize_event_to_context(cls, event):
+        return pagerduty.serialize_event_to_context(event)
+
+    @classmethod
     def _prepare(cls, context):
         context = super()._prepare(context)
 
@@ -42,8 +47,8 @@ class PagerDutyWebHookAction(WebHookAction):
             'description': context.get('description'),
             'details': context.get('details'),
             'incident_key': context.get('incident_key'),
-            'client': 'polyaxon',
-            'client_url': '',  # get_absolute_uri(),
+            'client': context.get('client', 'Polyaxon'),
+            'client_url': context.get('client_url', 'https://polyaxon.com'),
             'contexts': context.get('contexts'),
         }
 

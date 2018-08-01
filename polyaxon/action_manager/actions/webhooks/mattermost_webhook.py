@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
+from action_manager.utils import mattermost
 from event_manager.event_actions import EXECUTED
 
 MATTERMOST_WEBHOOK_ACTION_EXECUTED = 'mattermost_webhook_action.{}'.format(EXECUTED)
@@ -34,18 +35,24 @@ class MattermostWebHookAction(WebHookAction):
         return settings.INTEGRATIONS_MATTERMOST_WEBHOOKS
 
     @classmethod
+    def serialize_event_to_context(cls, event):
+        return mattermost.serialize_event_to_context(event)
+
+    @classmethod
     def _prepare(cls, context):
         context = super()._prepare(context)
 
-        return {
-            'message': context.get('message'),
-            'message_format': context.get('message_format', 'html'),
+        data = {
+            'pretext': context.get('pretext'),
+            'title': context.get('title'),
+            'text': context.get('text'),
             'color': context.get('color'),
-            'from': 'Polyaxon',
-            'attach_to': context.get('attach_to'),
-            'notify': context.get('notify', False),
-            'card': context.get('card')
+            'fields': context.get('fields'),
+            'author_name': context.get('author_name', 'Polyaxon'),
+            'author_link': context.get('author_link', 'https://polyaxon.com'),
+            'author_icon': context.get('author_icon')
         }
+        return {'attachments': [data]}
 
     @classmethod
     def _pre_execute_web_hook(cls, data, config):

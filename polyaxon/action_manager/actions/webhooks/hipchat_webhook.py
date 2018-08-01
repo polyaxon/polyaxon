@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
+from action_manager.utils import hipchat
 from event_manager.event_actions import EXECUTED
 
 HIPCHAT_WEBHOOK_ACTION_EXECUTED = 'hipchat_webhook_action.{}'.format(EXECUTED)
@@ -28,6 +29,10 @@ class HipChatWebHookAction(WebHookAction):
         return settings.INTEGRATIONS_HIPCHAT_WEBHOOKS
 
     @classmethod
+    def serialize_event_to_context(cls, event):
+        return hipchat.serialize_event_to_context(event)
+
+    @classmethod
     def _prepare(cls, context):
         context = super()._prepare(context)
 
@@ -35,7 +40,7 @@ class HipChatWebHookAction(WebHookAction):
             'message': context.get('message'),
             'message_format': context.get('message_format', 'html'),
             'color': context.get('color'),
-            'from': 'Polyaxon',
+            'from': context.get('from', 'Polyaxon'),
             'attach_to': context.get('attach_to'),
             'notify': context.get('notify', False),
             'card': context.get('card')

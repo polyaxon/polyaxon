@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
+from action_manager.utils import slack
 from event_manager.event_actions import EXECUTED
 
 SLACK_WEBHOOK_ACTION_EXECUTED = 'slack_webhook_action.{}'.format(EXECUTED)
@@ -21,7 +22,7 @@ class SlackWebHookAction(WebHookAction):
     def _validate_config(cls, config):
         if not config:
             return []
-        return cls._get_valid_config(config, 'channel')
+        return cls._get_valid_config(config, 'channel', 'icon_url')
 
     @classmethod
     def _get_config(cls):
@@ -34,25 +35,34 @@ class SlackWebHookAction(WebHookAction):
         return settings.INTEGRATIONS_SLACK_WEBHOOKS
 
     @classmethod
+    def serialize_event_to_context(cls, event):
+        return slack.serialize_event_to_context(event)
+
+    @classmethod
     def _prepare(cls, context):
         context = super()._prepare(context)
 
-        return {
+        data = {
             'fallback': context.get('fallback'),
             'title': context.get('title'),
             'title_link': context.get('title_link'),
             'text': context.get('text'),
             'fields': context.get('fields'),
-            'mrkdwn_in': ['text'],
+            'mrkdwn_in': context.get('mrkdwn_in'),
             'footer_icon': context.get('footer_icon'),
-            'footer': context.get('footer'),
+            'footer': context.get('footer', 'Polyaxon'),
             'color': context.get('color'),
         }
+        return {'attachments': [data]}
 
     @classmethod
     def _pre_execute_web_hook(cls, data, config):
         channel = config.get('channel')
+        icon_url = config.get('channel')
         if channel:
             data['channel'] = channel
+
+        if icon_url:
+            data['icon_url'] = icon_url
 
         return data

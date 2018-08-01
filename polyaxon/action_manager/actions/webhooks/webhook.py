@@ -4,6 +4,7 @@ from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
 from action_manager.exception import PolyaxonActionException
 from event_manager.event_actions import EXECUTED
+from event_manager.event_context import get_event_context, get_readable_event
 from libs.http import safe_request, validate_url
 from polyaxon_schemas.utils import to_list
 
@@ -55,7 +56,8 @@ class WebHookAction(Action):
 
             result_web_hook = {'url': url, 'method': _method}
             for field in fields:
-                result_web_hook[field] = web_hook.get(field)
+                if field in web_hook:
+                    result_web_hook[field] = web_hook[field]
             web_hooks.append(result_web_hook)
 
         return web_hooks
@@ -69,6 +71,17 @@ class WebHookAction(Action):
         If no method is given, then by default we use POST.
         """
         return settings.INTEGRATIONS_WEBHOOKS
+
+    @classmethod
+    def serialize_event_to_context(cls, event):
+        event_context = get_event_context(event)
+
+        context = {
+            'subject': event_context.subject_action,
+            'body': get_readable_event(event_context),
+            'datetime': event_context.datetime
+        }
+        return context
 
     @classmethod
     def _pre_execute_web_hook(cls, data, config):
