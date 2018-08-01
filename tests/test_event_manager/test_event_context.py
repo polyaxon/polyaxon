@@ -5,7 +5,7 @@ import pytest
 from constants import user_system
 from event_manager import event_context
 from event_manager.event import Attribute, Event
-from event_manager.event_context import EventContextSpec
+from event_manager.event_context import EventItemContextSpec
 from libs.unique_urls import (
     get_experiment_group_url,
     get_experiment_url,
@@ -43,64 +43,64 @@ class TestEventContext(BaseTest):
 
         class DummyEvent2(Event):
             event_type = 'dummy.event'
-            actor_name = 'actor_name'
+            actor = True
             attributes = (
                 Attribute('attr1'),
-                Attribute('actor_name'),
             )
 
         class DummyObject2(object):
             attr1 = 'test'
             actor_name = 'test'
+            actor_id = 1
 
         obj = DummyObject2()
         event = DummyEvent2.from_instance(obj)
-        event_spec = EventContextSpec('test', '/test', None)
+        event_spec = EventItemContextSpec('test', '/test', None)
         assert event_context.get_event_actor_context(event=event) == event_spec
 
         obj.actor_name = user_system.USER_SYSTEM_NAME
         event = DummyEvent2.from_instance(obj)
-        event_spec = EventContextSpec(user_system.USER_SYSTEM_NAME, None, None)
+        event_spec = EventItemContextSpec(user_system.USER_SYSTEM_NAME, '/', None)
         assert event_context.get_event_actor_context(event=event) == event_spec
 
     def test_get_event_object_context(self):
         mock_object = MagicMock()
 
-        event_spec = EventContextSpec(None, None, None)
+        event_spec = EventItemContextSpec(None, None, None)
         assert event_context.get_event_object_context(None, 'event_type') == event_spec
 
         # Experiment
         mock_object.id = 1
         mock_object.unique_name = 'user.project.1'
-        event_spec = EventContextSpec(mock_object.unique_name,
-                                      get_experiment_url(mock_object.unique_name),
-                                      1)
+        event_spec = EventItemContextSpec(mock_object.unique_name,
+                                          get_experiment_url(mock_object.unique_name),
+                                          1)
         assert event_context.get_event_object_context(mock_object, 'experiment') == event_spec
 
         # Experiment inside group
         mock_object.unique_name = 'user.project.2.1'
-        event_spec = EventContextSpec(mock_object.unique_name,
-                                      get_experiment_url(mock_object.unique_name),
-                                      1)
+        event_spec = EventItemContextSpec(mock_object.unique_name,
+                                          get_experiment_url(mock_object.unique_name),
+                                          1)
         assert event_context.get_event_object_context(mock_object, 'experiment') == event_spec
 
         # Experiment group
         mock_object.unique_name = 'user.project.1'
-        event_spec = EventContextSpec(mock_object.unique_name,
-                                      get_experiment_group_url(mock_object.unique_name),
-                                      1)
+        event_spec = EventItemContextSpec(mock_object.unique_name,
+                                          get_experiment_group_url(mock_object.unique_name),
+                                          1)
         assert event_context.get_event_object_context(mock_object, 'experiment_group') == event_spec
 
         # Job
         mock_object.unique_name = 'user.project.1'
-        event_spec = EventContextSpec(mock_object.unique_name,
-                                      get_job_url(mock_object.unique_name),
-                                      1)
+        event_spec = EventItemContextSpec(mock_object.unique_name,
+                                          get_job_url(mock_object.unique_name),
+                                          1)
         assert event_context.get_event_object_context(mock_object, 'job') == event_spec
 
         # Project
         mock_object.unique_name = 'user.project'
-        event_spec = EventContextSpec(mock_object.unique_name,
-                                      get_project_url(mock_object.unique_name),
-                                      1)
+        event_spec = EventItemContextSpec(mock_object.unique_name,
+                                          get_project_url(mock_object.unique_name),
+                                          1)
         assert event_context.get_event_object_context(mock_object, 'project') == event_spec

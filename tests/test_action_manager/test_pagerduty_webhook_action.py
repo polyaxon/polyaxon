@@ -44,7 +44,6 @@ class TestPagerDutyWebHookAction(TestWebHookAction):
         }, {
             'url': 'http://pagerduty.com/webhook/bar',
             'method': 'GET',
-            'service_key': None
         }]
 
     def test_get_config(self):
@@ -90,15 +89,12 @@ class TestPagerDutyWebHookAction(TestWebHookAction):
             'description': context.get('description'),
             'details': context.get('details'),
             'incident_key': context.get('incident_key'),
-            'client': 'polyaxon',
-            'client_url': '',
+            'client': 'Polyaxon',
+            'client_url': 'https://polyaxon.com',
             'contexts': context.get('contexts'),
         }
 
-    def test_execute_empty_payload(self):
-        with self.assertRaises(PolyaxonActionException):
-            self.webhook.execute(context={})
-
+    def test_execute_empty_payload_with_config(self):
         with self.assertRaises(PolyaxonActionException):
             self.webhook.execute(
                 context=None,

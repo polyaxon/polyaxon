@@ -44,7 +44,6 @@ class TestMattermostWebHookAction(TestWebHookAction):
         }, {
             'url': 'http://mattermost.com/webhook/bar',
             'method': 'GET',
-            'channel': None
         }]
 
     def test_get_config(self):
@@ -86,19 +85,19 @@ class TestMattermostWebHookAction(TestWebHookAction):
             'text': 'text'
         }
         assert self.webhook._prepare(context) == {
-            'message': context.get('message'),
-            'message_format': context.get('message_format', 'html'),
-            'color': context.get('color'),
-            'from': 'Polyaxon',
-            'attach_to': context.get('attach_to'),
-            'notify': context.get('notify', False),
-            'card': context.get('card')
+            'attachments': [{
+                'pretext': context.get('pretext'),
+                'title': context.get('title'),
+                'text': context.get('text'),
+                'color': context.get('color'),
+                'fields': None,
+                'author_name': 'Polyaxon',
+                'author_link': 'https://polyaxon.com',
+                'author_icon': None
+            }]
         }
 
-    def test_execute_empty_payload(self):
-        with self.assertRaises(PolyaxonActionException):
-            self.webhook.execute(context={})
-
+    def test_execute_empty_payload_with_config(self):
         with self.assertRaises(PolyaxonActionException):
             self.webhook.execute(
                 context=None,

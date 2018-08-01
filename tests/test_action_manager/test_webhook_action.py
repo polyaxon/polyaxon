@@ -95,6 +95,7 @@ class TestWebHookAction(BaseTest):
 
         assert mock_execute.call_count == 0
 
+    def test_execute_empty_payload_with_config(self):
         with patch('action_manager.actions.webhooks.webhook.safe_request') as mock_execute:
             self.webhook.execute(
                 context=None,

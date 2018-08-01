@@ -44,7 +44,6 @@ class TestSlackWebHookAction(TestWebHookAction):
         }, {
             'url': 'http://slack.com/webhook/bar',
             'method': 'GET',
-            'channel': None
         }]
 
     def test_get_config(self):
@@ -86,21 +85,20 @@ class TestSlackWebHookAction(TestWebHookAction):
             'text': 'text'
         }
         assert self.webhook._prepare(context) == {
-            'fallback': context.get('fallback'),
-            'title': context.get('title'),
-            'title_link': context.get('title_link'),
-            'text': context.get('text'),
-            'fields': context.get('fields'),
-            'mrkdwn_in': ['text'],
-            'footer_icon': context.get('footer_icon'),
-            'footer': context.get('footer'),
-            'color': context.get('color'),
+            'attachments': [{
+                'fallback': context.get('fallback'),
+                'title': context.get('title'),
+                'title_link': context.get('title_link'),
+                'text': context.get('text'),
+                'fields': context.get('fields'),
+                'mrkdwn_in': None,
+                'footer_icon': context.get('footer_icon'),
+                'footer': context.get('footer', 'Polyaxon'),
+                'color': context.get('color'),
+            }]
         }
 
-    def test_execute_empty_payload(self):
-        with self.assertRaises(PolyaxonActionException):
-            self.webhook.execute(context={})
-
+    def test_execute_empty_payload_with_config(self):
         with self.assertRaises(PolyaxonActionException):
             self.webhook.execute(
                 context=None,

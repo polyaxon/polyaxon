@@ -38,10 +38,7 @@ class TestHipChatWebHookAction(TestWebHookAction):
             'card': context.get('card')
         }
 
-    def test_execute_empty_payload(self):
-        with self.assertRaises(PolyaxonActionException):
-            self.webhook.execute(context={})
-
+    def test_execute_empty_payload_with_config(self):
         with self.assertRaises(PolyaxonActionException):
             self.webhook.execute(
                 context=None,
