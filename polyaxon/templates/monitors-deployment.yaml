@@ -48,6 +48,7 @@ spec:
         {{ include "config.db" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
         {{ include "config.emails" . | indent 8 }}
+        {{ include "config.integrations" . | indent 8 }}
         {{ include "config.k8s" . | indent 8 }}
         {{ include "config.registry" . | indent 8 }}
         {{ include "config.spawner" . | indent 8 }}
@@ -75,6 +76,7 @@ spec:
         {{ include "config.db" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
         {{ include "config.emails" . | indent 8 }}
+        {{ include "config.integrations" . | indent 8 }}
         {{ include "config.k8s" . | indent 8 }}
         {{ include "config.registry" . | indent 8 }}
         {{ include "config.spawner" . | indent 8 }}

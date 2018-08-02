@@ -512,6 +512,20 @@ email:
   hostUser: ""
   hostPassword: ""
 
+integrations:
+  slack:
+  hipchat:
+  mattermost:
+  discord:
+  pagerduty:
+  webhooks:
+# e.g.
+  # slack:
+  #   - url: https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee
+  #   - url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
+  #     channel: channel12
+
+
 intervals:  # in seconds
   experiments_scheduler: 15
   experiments_sync: 60

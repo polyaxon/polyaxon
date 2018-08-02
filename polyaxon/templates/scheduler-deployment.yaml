@@ -47,6 +47,7 @@ spec:
         {{ include "config.db" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
         {{ include "config.emails" . | indent 8 }}
+        {{ include "config.integrations" . | indent 8 }}
         {{ include "config.k8s" . | indent 8 }}
         {{ include "config.persistence.outputs" . | indent 8 }}
         {{ include "config.persistence.data" . | indent 8 }}
