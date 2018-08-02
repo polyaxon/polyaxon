@@ -60,7 +60,7 @@ class Action(object):
         if from_event:
             context = cls.serialize_event_to_context(event=context)
             if not context:
-                logger.warning('{} could not serializer event.'.format(cls.name))
+                logger.warning('%s could not serializer event.', cls.name)
                 return False
 
         config = cls.get_config(config=config)
