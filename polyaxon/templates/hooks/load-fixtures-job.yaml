@@ -36,6 +36,7 @@ spec:
 {{ toYaml .Values.tolerations.core | indent 8 }}
       {{- end }}
       restartPolicy: Never
+      activeDeadlineSeconds: 360
       containers:
       - name: load-fixtures-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
