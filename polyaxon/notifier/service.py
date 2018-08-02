@@ -47,7 +47,7 @@ class NotifierService(EventService):
             try:
                 action.execute(context=event, config=config, from_user=None, from_event=True)
             except Exception as e:
-                action.logger.warning('Action execution failed %s' % e)
+                action.logger.warning('Action execution failed %s', e)
 
     def setup(self):
         super().setup()
