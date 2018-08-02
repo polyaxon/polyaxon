@@ -21,25 +21,25 @@ if config.is_monolith_service or config.is_api_service:
 
         LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.js_debug_processor',)
 
-    TEMPLATES_DEBUG = (config.get_boolean('DJANGO_TEMPLATE_DEBUG', is_optional=True) or
-                       config.is_debug_mode)
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [
-                ROOT_DIR.child('polyaxon').child('polyaxon').child('templates'),
-            ],
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'debug': TEMPLATES_DEBUG,
-                'context_processors': LIST_TEMPLATE_CONTEXT_PROCESSORS,
-            },
-        },
-    ]
-
 else:
     LIST_TEMPLATE_CONTEXT_PROCESSORS = [
         'django.contrib.auth.context_processors.auth',
         'polyaxon.context_processors.versions',
         'polyaxon.context_processors.cluster',
     ]
+
+TEMPLATES_DEBUG = (config.get_boolean('DJANGO_TEMPLATE_DEBUG', is_optional=True) or
+                   config.is_debug_mode)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            ROOT_DIR.child('polyaxon').child('polyaxon').child('templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'debug': TEMPLATES_DEBUG,
+            'context_processors': LIST_TEMPLATE_CONTEXT_PROCESSORS,
+        },
+    },
+]
