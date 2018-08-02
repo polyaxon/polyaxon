@@ -208,12 +208,16 @@ class StopNotebookView(PostAPIView):
         if obj.has_notebook:
             commit = request.data.get('commit')
             commit = to_bool(commit) if commit is not None else True
-            if commit:
-                # Commit changes
-                git.commit(obj.repo.path, request.user.email, request.user.username)
-            else:
-                # Reset changes
-                git.undo(obj.repo.path)
+            try:
+                if commit:
+                    # Commit changes
+                    git.commit(obj.repo.path, request.user.email, request.user.username)
+                else:
+                    # Reset changes
+                    git.undo(obj.repo.path)
+            except FileNotFoundError:
+                # Git probably was not found
+                pass
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
                 kwargs={
