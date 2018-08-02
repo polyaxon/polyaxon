@@ -35,6 +35,8 @@ spec:
 {{ toYaml .Values.tolerations.core | indent 8 }}
       {{- end }}
       restartPolicy: Never
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+      activeDeadlineSeconds: 360
       containers:
       - name: clean-tensorboards
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
