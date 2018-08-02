@@ -1,12 +1,10 @@
-from django.core.management import BaseCommand
-from django.db import ProgrammingError
-
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import Experiment
+from libs.base_clean import BaseCleanCommand
 from scheduler import experiment_scheduler
 
 
-class Command(BaseCommand):
+class Command(BaseCleanCommand):
     @staticmethod
     def _clean():
         for experiment in Experiment.objects.filter(
@@ -21,9 +19,3 @@ class Command(BaseCommand):
                 experiment_group_uuid=group.uuid.hex if group else None,
                 specification=experiment.specification)
             experiment.set_status(ExperimentLifeCycle.STOPPED, message='Cleanup')
-
-    def handle(self, *args, **options):
-        try:
-            self._clean()
-        except ProgrammingError:
-            pass

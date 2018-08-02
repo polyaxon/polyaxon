@@ -1,13 +1,12 @@
-from django.core.management import BaseCommand
-from django.db import ProgrammingError
 from django.db.models import Q
 
 from constants.jobs import JobLifeCycle
 from db.models.projects import Project
+from libs.base_clean import BaseCleanCommand
 from scheduler import notebook_scheduler, tensorboard_scheduler
 
 
-class Command(BaseCommand):
+class Command(BaseCleanCommand):
     @staticmethod
     def _clean():
         filters = Q(tensorboard_jobs=None) | Q(notebook_jobs=None)
@@ -28,9 +27,3 @@ class Command(BaseCommand):
                     tensorboard_job_uuid=project.tensorboard.uuid.hex)
                 project.tensorboard.set_status(status=JobLifeCycle.STOPPED,
                                                message='Cleanup')
-
-    def handle(self, *args, **options):
-        try:
-            self._clean()
-        except ProgrammingError:
-            pass

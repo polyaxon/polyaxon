@@ -1,12 +1,10 @@
-from django.core.management import BaseCommand
-from django.db import ProgrammingError
-
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job
+from libs.base_clean import BaseCleanCommand
 from scheduler import job_scheduler
 
 
-class Command(BaseCommand):
+class Command(BaseCleanCommand):
     @staticmethod
     def _clean():
         for job in Job.objects.filter(
@@ -18,9 +16,3 @@ class Command(BaseCommand):
                 job_uuid=job.unique_name,
                 specification=job.specification)
             job.set_status(JobLifeCycle.STOPPED, message='Cleanup')
-
-    def handle(self, *args, **options):
-        try:
-            self._clean()
-        except ProgrammingError:
-            pass
