@@ -13,6 +13,6 @@ class Command(BaseCleanCommand):
                 project_name=job.project.unique_name,
                 project_uuid=job.project.uuid.hex,
                 job_name=job.unique_name,
-                job_uuid=job.unique_name,
+                job_uuid=job.uuid.hex,
                 specification=job.specification)
             job.set_status(JobLifeCycle.STOPPED, message='Cleanup')

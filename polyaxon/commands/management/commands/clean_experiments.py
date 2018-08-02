@@ -14,7 +14,7 @@ class Command(BaseCleanCommand):
                 project_name=experiment.project.unique_name,
                 project_uuid=experiment.project.uuid.hex,
                 experiment_name=experiment.unique_name,
-                experiment_uuid=experiment.unique_name,
+                experiment_uuid=experiment.uuid.hex,
                 experiment_group_name=group.unique_name if group else None,
                 experiment_group_uuid=group.uuid.hex if group else None,
                 specification=experiment.specification)
