@@ -105,13 +105,13 @@ def get_readable_event(event_context):
     description = '{} on {}'.format(event_context.subject_action, event_context.datetime)
     if event_context.actor_context:
         description += '\nActor: [{}](/app/{})'.format(
-            event_context.actor_context.username,
+            event_context.actor_context.name,
             event_context.actor_context.url,
         )
 
     if event_context.object_context.name and event_context.object_context.url:
         description += '\nObject: [{}](/app/{})'.format(
-            event_context.object_context.username,
+            event_context.object_context.name,
             event_context.object_context.url,
         )
 
