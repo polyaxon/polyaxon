@@ -21,7 +21,7 @@ Config emails
   value: {{ .Values.email.hostUser | quote }}
 {{- end }}
 {{- if .Values.email.hostPassword }}
-- name: POLYAXON_EMAIL_HOST_PASSWORD:
+- name: POLYAXON_EMAIL_HOST_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ template "polyaxon.fullname" . }}-secret
