@@ -43,6 +43,9 @@ class NotifierTest(BaseTest):
                                                                         slack_execute,
                                                                         webhook_execute,
                                                                         email_execute):
+        notification_events = NotificationEvent.objects.count()
+        notifications = Notification.objects.count()
+
         notifier.record(event_type=EXPERIMENT_VIEWED,
                         instance=self.experiment)
 
@@ -54,8 +57,8 @@ class NotifierTest(BaseTest):
         assert webhook_execute.call_count == 0
         assert email_execute.call_count == 0
 
-        assert NotificationEvent.objects.count() == 0
-        assert Notification.objects.count() == 0
+        assert NotificationEvent.objects.count() == notification_events
+        assert Notification.objects.count() == notifications
 
     @patch.object(EmailAction, 'execute')
     @patch.object(WebHookAction, 'execute')
@@ -72,6 +75,9 @@ class NotifierTest(BaseTest):
                                          slack_execute,
                                          webhook_execute,
                                          email_execute):
+        notification_events = NotificationEvent.objects.count()
+        notifications = Notification.objects.count()
+
         notifier.record(event_type=EXPERIMENT_SUCCEEDED,
                         instance=self.experiment)
 
@@ -83,8 +89,8 @@ class NotifierTest(BaseTest):
         assert webhook_execute.call_count == 1
         assert email_execute.call_count == 1
 
-        assert NotificationEvent.objects.count() == 1
-        assert Notification.objects.count() == 2
+        assert NotificationEvent.objects.count() == notification_events + 1
+        assert Notification.objects.count() == notifications + 2
         notification_event = NotificationEvent.objects.last()
         notifications = Notification.objects.all()
         assert notification_event.event_type == EXPERIMENT_SUCCEEDED

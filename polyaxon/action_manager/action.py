@@ -14,6 +14,7 @@ class Action(object):
     event_type = None
     raise_empty_context = True
     check_config = True
+    logger = logger
 
     @classmethod
     def _validate_config(cls, config):
