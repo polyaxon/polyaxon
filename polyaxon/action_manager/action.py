@@ -55,7 +55,13 @@ class Action(object):
         pass
 
     @classmethod
-    def execute(cls, context, config=None, from_user=None):
+    def execute(cls, context, config=None, from_user=None, from_event=False):
+        if from_event:
+            context = cls.serialize_event_to_context(event=context)
+            if not context:
+                logger.warning('{} could not serializer event.'.format(cls.name))
+                return False
+
         config = cls.get_config(config=config)
         if cls.check_config and not config:
             return False
