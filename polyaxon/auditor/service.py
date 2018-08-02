@@ -8,6 +8,7 @@ class AuditorService(EventService):
     event_manager = default_manager
 
     def __init__(self):
+        self.notifier = None
         self.tracker = None
         self.activitylogs = None
 
@@ -19,6 +20,9 @@ class AuditorService(EventService):
         }
 
     def record_event(self, event):
+        self.notifier.record(event_type=event['event_type'],
+                             instance=event['instance'],
+                             **event['kwargs'])
         self.tracker.record(event_type=event['event_type'],
                             instance=event['instance'],
                             **event['kwargs'])
@@ -31,8 +35,10 @@ class AuditorService(EventService):
         # Load default event types
         import auditor.events  # noqa
 
+        import notifier
         import activitylogs
         import tracker
 
+        self.notifier = notifier
         self.tracker = tracker
         self.activitylogs = activitylogs
