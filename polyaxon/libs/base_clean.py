@@ -10,5 +10,7 @@ class BaseCleanCommand(BaseCommand):
     def handle(self, *args, **options):
         try:
             self._clean()
+            import time;
+            time.sleep(180)
         except DatabaseError:
             pass
