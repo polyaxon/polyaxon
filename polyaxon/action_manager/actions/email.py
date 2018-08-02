@@ -45,8 +45,9 @@ class EmailAction(Action):
         event_context = get_event_context(event)
 
         context = {
+            'username': event_context.actor_context.name,
             'subject': event_context.subject_action,
-            'body': get_readable_event(event_context),
+            'notification': get_readable_event(event_context),
         }
         return {
             'subject_template': 'notifier/subject.txt',
