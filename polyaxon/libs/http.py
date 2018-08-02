@@ -22,6 +22,8 @@ def absolute_uri(url):
 def add_notification_referrer_param(url, provider, is_absolute=True):
     if not is_absolute:
         url = absolute_uri(url)
+    if not url:
+        return None
     parsed_url = urlparse(url)
     query = parse_qs(parsed_url.query)
     query['referrer'] = provider
