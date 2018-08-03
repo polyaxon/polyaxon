@@ -1,9 +1,8 @@
 analytics-python==1.2.9
-celery==4.1.0
-Django==2.0.3
-django-cors-headers==2.2.0
-djangorestframework==3.7.7
-kombu==4.1.0
+celery==4.2.1
+Django==2.0.8
+django-cors-headers==2.4.0
+djangorestframework==3.8.2
 psycopg2-binary==2.7.4
 psutil==5.4.3
 raven==6.7.0
