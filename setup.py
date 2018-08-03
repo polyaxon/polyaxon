@@ -44,10 +44,9 @@ setup(name='polyaxon-client',
       install_requires=[
           "clint==0.5.1",
           "polyaxon-schemas==0.1.6",
-          "requests==2.18.4",
+          "requests==2.19.1",
           "requests-toolbelt==0.8.0",
-          "six==1.11.0",
-          "websocket-client==0.44.0",
+          "websocket-client==0.48.0",
       ],
       classifiers=[
           'Programming Language :: Python',
