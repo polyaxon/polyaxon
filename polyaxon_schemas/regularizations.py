@@ -20,7 +20,7 @@ class BaseRegularizerConfig(BaseConfig):
 
 
 class L1RegularizerSchema(BaseRegularizerSchema):
-    l = fields.Float(default=0.01, missing=0.01)
+    l = fields.Float(default=0.01, missing=0.01)  # noqa
 
     class Meta:
         ordered = True
@@ -70,13 +70,13 @@ class L1RegularizerConfig(BaseRegularizerConfig):
     IDENTIFIER = 'L1'
     SCHEMA = L1RegularizerSchema
 
-    def __init__(self, l=0.01, name='L1Regularizer', collect=True):
-        self.l = l
+    def __init__(self, l=0.01, name='L1Regularizer', collect=True):  # noqa
+        self.l = l  # noqa
         super(L1RegularizerConfig, self).__init__(name, collect)
 
 
 class L2RegularizerSchema(BaseRegularizerSchema):
-    l = fields.Float(default=0.01, missing=0.01)
+    l = fields.Float(default=0.01, missing=0.01)  # noqa
 
     class Meta:
         ordered = True
@@ -126,8 +126,8 @@ class L2RegularizerConfig(BaseRegularizerConfig):
     IDENTIFIER = 'L2'
     SCHEMA = L2RegularizerSchema
 
-    def __init__(self, l=0.01, name='L2Regularizer', collect=True):
-        self.l = l
+    def __init__(self, l=0.01, name='L2Regularizer', collect=True):  # noqa
+        self.l = l  # noqa
         super(L2RegularizerConfig, self).__init__(name, collect)
 
 
