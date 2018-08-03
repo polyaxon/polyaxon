@@ -177,7 +177,6 @@ You can also remove the value and Polyaxon will generate a random password that 
 | Parameter                       | Description                                 | Default
 | --------------------------------| --------------------------------------------| ----------------------------------------------------------
 | `user.username`                 | Default superuser username                  | `root`
-| `user.emailFrom`                | Default superuser email from                | `<root@polyaxon.local>`
 | `user.email`                    | Default superuser email                     | `root@polyaxon.local`
 | `user.password`                 | Default superuser password (could be null)  | `rootpassword`
 
