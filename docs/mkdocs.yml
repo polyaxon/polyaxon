@@ -109,6 +109,7 @@ pages:
   - Single Sign On: customization/single_sign_on.md
   - Replication: customization/replication.md
   - PostgreSQL HA: customization/postgresql_ha.md
+  - Notifications: customization/notifications.md
 - Reference Polyaxon CLI:
   - Introduction: polyaxon_cli/introduction.md
   - Commnands:

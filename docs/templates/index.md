@@ -50,6 +50,7 @@ Once you have a Polyaxon deployment, you can check polyaxon architecture and lea
  * [Single Sign On (SSO)](customization/single_sign_on)
  * [Replication](customization/replication)
  * [PostgreSQL HA](customization/postgresql_ha)
+ * [Notifications](customization/notifications)
 
 
 ## References
