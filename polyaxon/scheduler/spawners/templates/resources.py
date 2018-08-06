@@ -3,7 +3,7 @@ from kubernetes import client
 from django.conf import settings
 
 
-def get_resources(resources):
+def get_resources(resources):  # pylint:disable=too-many-branches
     """Create resources requirements.
 
     Args:
