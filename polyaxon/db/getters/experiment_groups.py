@@ -16,7 +16,7 @@ def get_valid_experiment_group(experiment_group_id):
 def get_running_experiment_group(experiment_group_id):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
 
-    if not experiment_group.is_running:
+    if not experiment_group or not experiment_group.is_running:
         _logger.info('ExperimentGroup `%s` is not running.', experiment_group_id)
         return None
 
