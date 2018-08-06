@@ -269,6 +269,10 @@ class DataFrameSummary(object):
     def get_bools(self):
         return self.df.columns[self.columns_stats.loc['types'] == 'bool']
     
+    @property
+    def get_missing_frac(self):
+        return self.columns_stats.loc['missing'].apply(lambda x: float(x)/self.length)
+    
     def get_columns(self, df, usage, columns=None):
         """
         Returns a `data_frame.columns`.
