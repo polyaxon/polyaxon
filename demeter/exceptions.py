@@ -1,0 +1,2 @@
+class DemeterException(Exception):
+    pass
