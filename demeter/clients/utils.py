@@ -5,6 +5,9 @@ import os
 
 
 def get_from_env(keys):
+    keys = keys or []
+    if not isinstance(keys, (list, tuple)):
+        keys = [keys]
     for key in keys:
         value = os.environ.get(key)
         if value:
