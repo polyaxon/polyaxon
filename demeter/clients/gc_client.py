@@ -6,7 +6,6 @@ import json
 from collections import Mapping
 
 import google.auth
-import google.auth
 import google.oauth2.service_account
 
 from google.cloud.storage.client import Client
@@ -50,7 +49,7 @@ def get_gc_credentials(key_path=None, keyfile_dict=None, scopes=None):
     if scopes is not None:
         scopes = [s.strip() for s in scopes.split(',')]
     else:
-        scopes = DEFAULT_SCOPE
+        scopes = DEFAULT_SCOPES
 
     if not key_path and not keyfile_dict:
         logger.info('Getting connection using `google.auth.default()` '

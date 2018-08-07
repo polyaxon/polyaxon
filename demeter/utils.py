@@ -1,4 +1,5 @@
 import datetime
+
 from decimal import Decimal
 
 
@@ -20,11 +21,9 @@ def force_bytes(value, encoding='utf-8', strings_only=False, errors='strict'):
     if isinstance(value, bytes):
         if encoding == 'utf-8':
             return value
-        else:
-            return value.decode('utf-8', errors).encode(encoding, errors)
+        return value.decode('utf-8', errors).encode(encoding, errors)
     if strings_only and is_protected_type(value):
         return value
     if isinstance(value, memoryview):
         return bytes(value)
-    else:
-        return value.encode(encoding, errors)
+    return value.encode(encoding, errors)

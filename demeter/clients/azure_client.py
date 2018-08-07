@@ -25,6 +25,6 @@ def get_blob_service_connection(account_name=None, account_key=None, connection_
     account_name = account_name or get_account_name()
     account_key = account_key or get_account_key()
     connection_string = connection_string or get_connection_string()
-    BlockBlobService(account_name=account_name,
-                     account_key=account_key,
-                     connection_string=connection_string)
+    return BlockBlobService(account_name=account_name,
+                            account_key=account_key,
+                            connection_string=connection_string)

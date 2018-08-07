@@ -175,31 +175,6 @@ class GCSStore(object):
 
         return results
 
-    def download(self, bucket, object, filename=None):
-        """
-        Get a file from Google Cloud Storage.
-
-        :param bucket: The bucket to fetch from.
-        :type bucket: string
-        :param object: The object to fetch.
-        :type object: string
-        :param filename: If set, a local file path where the file should be written to.
-        :type filename: string
-        """
-        service = self.get_conn()
-        downloaded_file_bytes = service \
-            .objects() \
-            .get_media(bucket=bucket, object=object) \
-            .execute()
-
-        # Write the file to local file path, if requested.
-        if filename:
-            write_argument = 'wb' if isinstance(downloaded_file_bytes, bytes) else 'w'
-            with open(filename, write_argument) as file_fd:
-                file_fd.write(downloaded_file_bytes)
-
-        return downloaded_file_bytes
-
     def download_file(self, blob, local_path, bucket_name=None):
         """
         Downloads a file from Google Cloud Storage.

@@ -14,3 +14,5 @@ def get_from_env(keys):
         value = os.environ.get(key)
         if value:
             return value
+
+    return None

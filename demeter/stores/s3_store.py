@@ -8,9 +8,9 @@ from six.moves import urllib
 
 from botocore.exceptions import ClientError
 
-from demeter.logger import logger
 from demeter.clients import aws_client
 from demeter.exceptions import DemeterException
+from demeter.logger import logger
 from demeter.utils import force_bytes
 
 
@@ -179,16 +179,16 @@ class S3Store(object):
                                       Delimiter=delimiter,
                                       PaginationConfig=config)
 
-        def get_keys():
+        def get_keys(contents):
             list_keys = []
-            for cont in page['Contents']:
+            for cont in contents:
                 list_keys.append((cont['Key'], cont.get('Size')))
 
             return list_keys
 
-        def get_prefixes():
+        def get_prefixes(page_prefixes):
             list_prefixes = []
-            for pref in page.get('CommonPrefixes', []):
+            for pref in page_prefixes:
                 list_prefixes.append(pref['Prefix'])
             return list_prefixes
 
@@ -198,9 +198,9 @@ class S3Store(object):
         }
         for page in response:
             if prefixes:
-                results['prefixes'] = get_prefixes()
+                results['prefixes'] = get_prefixes(page.get('CommonPrefixes', []))
             if keys:
-                results['keys'] = get_keys()
+                results['keys'] = get_keys(page['Contents'])
 
         return results
 
@@ -426,4 +426,4 @@ class S3Store(object):
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
         s3_path = os.path.join(key, file_path)
-        self.client('s3').download_file(bucket_name, s3_path, local_path)
+        self.client.download_file(bucket_name, s3_path, local_path)
