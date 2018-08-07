@@ -1,2 +1,3 @@
 -r requirements.txt
 -r requirements-base-test.txt
+moto==1.3.4

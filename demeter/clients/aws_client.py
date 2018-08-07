@@ -36,7 +36,7 @@ def get_aws_session(aws_access_key_id=None,
                     aws_session_token=None,
                     region_name=None):
     aws_access_key_id = aws_access_key_id or get_aws_access_key_id()
-    aws_secret_access_key = aws_secret_access_key or get_aws_secret_access_key
+    aws_secret_access_key = aws_secret_access_key or get_aws_secret_access_key()
     aws_session_token = aws_session_token or get_aws_security_token()
     region_name = region_name or get_region_name()
     return boto3.session.Session(
