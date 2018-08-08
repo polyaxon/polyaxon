@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+import tempfile
 from unittest import TestCase
 
 from boto3.resources.base import ServiceResource
@@ -158,3 +160,27 @@ class TestAwsStore(TestCase):
         body = store.resource.Object('bucket', 'my_key').get()['Body'].read()
 
         self.assertEqual(body, b'Content')
+
+    @mock_s3
+    def test_upload(self):
+        store = S3Store()
+        store.client.create_bucket(Bucket='bucket')
+
+        dir_name = tempfile.mkdtemp()
+        fpath1 = dir_name + '/test1.txt'
+        with open(fpath1, '+w') as f:
+            f.write('data1')
+
+        fpath2 = dir_name + '/test2.txt'
+        with open(fpath2, '+w') as f:
+            f.write('data2')
+
+        store.upload_file(fpath1, 'my_key1.txt', 'bucket')
+        store.upload_file(fpath2, 'my_key2.txt', 'bucket')
+
+        store.download_file('my_key1.txt',
+                            '',
+                            local_path=dir_name + '/foo1.txt',
+                            bucket_name='bucket')
+        assert os.path.basename(dir_name + '/foo1.txt') == 'foo1.txt'
+        assert open(os.path.join(dir_name + '/foo1.txt')).read() == 'data1'

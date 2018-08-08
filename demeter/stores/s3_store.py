@@ -193,8 +193,8 @@ class S3Store(object):
             return list_prefixes
 
         results = {
-            'keys': None,
-            'prefixes': None
+            'keys': [],
+            'prefixes': []
         }
         for page in response:
             if prefixes:
@@ -428,5 +428,8 @@ class S3Store(object):
     def download_file(self, key, file_path, local_path, bucket_name=None):
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
-        s3_path = os.path.join(key, file_path)
+
+        s3_path = key
+        if file_path:
+            s3_path = os.path.join(s3_path, file_path)
         self.client.download_file(bucket_name, s3_path, local_path)
