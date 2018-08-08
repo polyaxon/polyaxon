@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+
 from six.moves import urllib
 
 from demeter.clients import gc_client
@@ -61,6 +63,8 @@ class GCSStore(object):
     @staticmethod
     def parse_gcs_url(gcs_url):
         parsed_url = urllib.parse.urlparse(gcs_url)
+        if not parsed_url.netloc:
+            raise DemeterException('Received an invalid url `{}`'.format(gcs_url))
         if parsed_url.scheme != 'gs':
             raise DemeterException('Received an invalid url `{}`'.format(gcs_url))
         blob = parsed_url.path.lstrip('/')
@@ -120,7 +124,7 @@ class GCSStore(object):
 
         return obj
 
-    def list(self, key, bucket_name=None, delimiter='/', blobs=True, prefixes=True):
+    def list(self, key, bucket_name=None, path=None, delimiter='/', blobs=True, prefixes=True):
         """
         List prefixes and blobs in a bucket.
 
@@ -141,37 +145,43 @@ class GCSStore(object):
             bucket_name, key = self.parse_gcs_url(key)
 
         bucket = self.get_bucket(bucket_name)
+
+        prefix = key
+        if path:
+            prefix = os.path.join(prefix, path)
+
         # For bucket.list_blobs and logic below name needs to end in /
         # but for the root path "" we leave it as an empty string
-        if key and not key.endswith('/'):
-            key += '/'
+        if prefix and not prefix.endswith('/'):
+            prefix += '/'
 
-        iterator = bucket.list_blobs(prefix=key, delimiter=delimiter)
+        iterator = bucket.list_blobs(prefix=prefix, delimiter=delimiter)
 
         def get_blobs(_blobs):
             list_blobs = []
             for blob in _blobs:
-                parts = blob.name.split("/")
-                list_blobs.append(parts[-1])
+                name = blob.name[len(key) + 1:]
+                list_blobs.append((name, blob.size))
             return list_blobs
 
         def get_prefixes(_prefixes):
             list_prefixes = []
             for folder_path in _prefixes:
-                parts = folder_path.split("/")
-                list_prefixes.append(parts[-2])
+                name = folder_path[len(key) + 1: -1]
+                list_prefixes.append(name)
             return list_prefixes
 
         results = {
-            'blobs': None,
-            'prefixes': None
+            'blobs': [],
+            'prefixes': []
         }
 
         if blobs:
             results['blobs'] = get_blobs(list(iterator))
 
         if prefixes:
-            results['prefixes'] = get_prefixes(iterator.prefixes)
+            for page in iterator.pages:
+                results['prefixes'] = get_prefixes(page.prefixes)
 
         return results
 
@@ -184,7 +194,7 @@ class GCSStore(object):
         blob = self.get_blob(blob=blob, bucket_name=bucket_name)
         blob.download_to_filename(local_path)
 
-    def upload(self, blob, filename, bucket_name=None):
+    def upload_file(self, blob, filename, bucket_name=None):
         """
         Uploads a local file to Google Cloud Storage.
         """
