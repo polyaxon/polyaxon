@@ -2,19 +2,16 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+
 from unittest import TestCase
+
+import boto3
 
 from boto3.resources.base import ServiceResource
 from botocore.client import BaseClient
 from moto import mock_s3
 
-import boto3
-
-from demeter.clients.aws_client import (
-    get_aws_session,
-    get_aws_client,
-    get_aws_resource
-)
+from demeter.clients.aws_client import get_aws_client, get_aws_resource, get_aws_session
 
 
 class TestAwsClient(TestCase):

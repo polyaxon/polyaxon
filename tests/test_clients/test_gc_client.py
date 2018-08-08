@@ -5,7 +5,7 @@ import mock
 
 from unittest import TestCase
 
-from demeter.clients.gc_client import get_gc_credentials, get_gc_client
+from demeter.clients.gc_client import get_gc_client, get_gc_credentials
 from demeter.exceptions import DemeterException
 
 GCS_MODULE = 'demeter.clients.gc_client.{}'
@@ -51,4 +51,3 @@ class TestGCClient(TestCase):
         get_gc_client()
         assert gc_credentials.call_count == 1
         assert client.call_count == 1
-

@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import os
-import tempfile
-
 import mock
+import tempfile
 
 from unittest import TestCase
 
-from azure.storage.blob import BlobPrefix, BlobProperties, Blob
+from azure.storage.blob import Blob, BlobPrefix, BlobProperties
 
 from demeter.exceptions import DemeterException
 from demeter.stores.azure_store import AzureStore
@@ -121,4 +119,3 @@ class TestAzureStore(TestCase):
 
         client.return_value.get_blob_to_path.assert_called_with(
             "container", base_path, fpath)
-

@@ -1,7 +1,7 @@
 output-format: grouped
 
 strictness: high
-test-warnings: false
+test-warnings: true
 doc-warnings: true
 
 max-line-length: 100
