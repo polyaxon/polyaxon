@@ -200,7 +200,7 @@ class S3Store(object):
             if prefixes:
                 results['prefixes'] = get_prefixes(page.get('CommonPrefixes', []))
             if keys:
-                results['keys'] = get_keys(page['Contents'])
+                results['keys'] = get_keys(page.get('Contents', []))
 
         return results
 
@@ -283,9 +283,12 @@ class S3Store(object):
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
 
-        obj = self.resource.Object(bucket_name, key)
-        obj.load()
-        return obj
+        try:
+            obj = self.resource.Object(bucket_name, key)
+            obj.load()
+            return obj
+        except Exception as e:
+            raise DemeterException(e)
 
     def read_key(self, key, bucket_name=None):
         """

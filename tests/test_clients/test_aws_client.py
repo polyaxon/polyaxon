@@ -51,5 +51,5 @@ class TestAwsClient(TestCase):
 
     @mock_s3
     def test_get_resource(self):
-        s3_client = get_aws_resource('s3')
-        assert isinstance(s3_client, ServiceResource)
+        s3_resource = get_aws_resource('s3')
+        assert isinstance(s3_resource, ServiceResource)
