@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
 import re
 
 from six.moves import urllib
@@ -12,8 +13,8 @@ from demeter.clients.azure_client import get_blob_service_connection
 from demeter.exceptions import DemeterException
 
 
-class AzureStorage(object):
-    def __init__(self, connection, **kwargs):
+class AzureStore(object):
+    def __init__(self, connection=None, **kwargs):
         self._connection = connection
         self._account_name = kwargs.get('account_name')
         self._account_key = kwargs.get('account_key')
@@ -98,7 +99,7 @@ class AzureStorage(object):
         except AzureMissingResourceHttpError:
             pass
 
-    def list(self, key, container_name=None, delimiter='/', marker=None):
+    def list(self, key, container_name=None, path=None, delimiter='/', marker=None):
         """
         Checks if a blob exists.
 
@@ -115,23 +116,27 @@ class AzureStorage(object):
         if not container_name:
             container_name, _, key = self.parse_wasbs_url(key)
 
-        if key and not key.endswith('/'):
-            key += '/'
+        prefix = key
+        if path:
+            prefix = os.path.join(prefix, path)
+
+        if prefix and not prefix.endswith('/'):
+            prefix += '/'
 
         list_blobs = []
         list_prefixes = []
         while True:
             results = self.connection.list_blobs(container_name,
-                                                 prefix=key,
+                                                 prefix=prefix,
                                                  delimiter=delimiter,
                                                  marker=marker)
             for r in results:
                 if isinstance(r, BlobPrefix):
-                    parts = r.name.split('/')
-                    list_prefixes.append(parts[-1])
+                    name = r.name[len(key) + 1:]
+                    list_prefixes.append(name)
                 else:
-                    parts = r.name.split('/')
-                    list_blobs.append((parts[-1], r.properties.content_length))
+                    name = r.name[len(key) + 1:]
+                    list_blobs.append((name, r.properties.content_length))
             if results.next_marker:
                 marker = results.next_marker
             else:
@@ -141,7 +146,17 @@ class AzureStorage(object):
             'prefixes': list_prefixes
         }
 
-    def download(self, blob, local_path, container_name=None):
+    def upload_file(self, blob, local_file, path=None, container_name=None):
+        if not container_name:
+            container_name, _, blob = self.parse_wasbs_url(blob)
+
+        key = blob
+        if path:
+            key = os.path.join(path, key)
+
+        self.connection.create_blob_from_path(container_name, key, local_file)
+
+    def download_file(self, blob, local_path, container_name=None):
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
         self.connection.get_blob_to_path(container_name, blob, local_path)

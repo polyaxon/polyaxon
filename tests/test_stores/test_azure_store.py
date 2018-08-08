@@ -1,0 +1,124 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+import os
+import tempfile
+
+import mock
+
+from unittest import TestCase
+
+from azure.storage.blob import BlobPrefix, BlobProperties, Blob
+
+from demeter.exceptions import DemeterException
+from demeter.stores.azure_store import AzureStore
+
+AZURE_MODULE = 'demeter.clients.azure_client.{}'
+
+
+class MockBlobList(object):
+    def __init__(self, items, next_marker=None):
+        self.items = items
+        self.next_marker = next_marker
+
+    def __iter__(self):
+        return iter(self.items)
+
+
+class TestAzureStore(TestCase):
+    def setUp(self):
+        self.wasbs_base = 'wasbs://container@user.blob.core.windows.net/'
+
+    def test_parse_wasbs_url(self):
+        # Correct url
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net/path'
+        parsed_url = AzureStore.parse_wasbs_url(wasbs_url)
+        assert parsed_url == ('container', 'user', 'path')
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net/'
+        parsed_url = AzureStore.parse_wasbs_url(wasbs_url)
+        assert parsed_url == ('container', 'user', '')
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net'
+        parsed_url = AzureStore.parse_wasbs_url(wasbs_url)
+        assert parsed_url == ('container', 'user', '')
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net/path/to/file'
+        parsed_url = AzureStore.parse_wasbs_url(wasbs_url)
+        assert parsed_url == ('container', 'user', 'path/to/file')
+
+        # Wrong url
+        wasbs_url = 'wasbs://container@user.foo.bar.windows.net/path/to/file'
+        with self.assertRaises(DemeterException):
+            AzureStore.parse_wasbs_url(wasbs_url)
+
+        wasbs_url = 'wasbs://container@user.blob.core.foo.net/path/to/file'
+        with self.assertRaises(DemeterException):
+            AzureStore.parse_wasbs_url(wasbs_url)
+
+        wasbs_url = 'wasbs://container@user.blob.windows.net/path/to/file'
+        with self.assertRaises(DemeterException):
+            AzureStore.parse_wasbs_url(wasbs_url)
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_list_empty(self, client):
+        client.return_value.list_blobs.return_value = MockBlobList([])
+
+        store = AzureStore()
+        key_path = self.wasbs_base + 'path'
+        assert store.list(key=key_path) == {'blobs': [], 'prefixes': []}
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_list_non_empty(self, client):
+        base_path = 'path'
+        # Create some files to return
+        dir_prefix = BlobPrefix()
+        dir_prefix.name = base_path + "/dir"
+
+        blob_props = BlobProperties()
+        blob_props.content_length = 42
+        blob = Blob(base_path + "/file", props=blob_props)
+
+        client.return_value.list_blobs.return_value = MockBlobList([dir_prefix, blob])
+
+        store = AzureStore()
+        key_path = self.wasbs_base + base_path
+        results = store.list(key=key_path)
+        assert len(results['blobs']) == 1
+        assert len(results['prefixes']) == 1
+        assert results['prefixes'][0] == "dir"
+        assert results['blobs'][0][0] == "file"
+        assert results['blobs'][0][1] == 42
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_upload_file(self, client):
+        dir_name = tempfile.mkdtemp()
+        fpath = dir_name + '/test.txt'
+        open(fpath, '+w')
+
+        base_path = 'path/test.txt'
+        store = AzureStore()
+        key_path = self.wasbs_base + base_path
+
+        store.upload_file(key_path, fpath)
+        client.return_value.create_blob_from_path.assert_called_with(
+            'container', base_path, fpath)
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_download_file(self, client):
+        client.return_value.list_blobs.return_value = MockBlobList([])
+
+        dir_name = tempfile.mkdtemp()
+        fpath = dir_name + '/test.txt'
+
+        def mkfile(container, cloud_path, fname):
+            return open(fname, '+w')
+
+        client.return_value.get_blob_to_path.side_effect = mkfile
+
+        base_path = 'path/test.txt'
+        store = AzureStore()
+        key_path = self.wasbs_base + base_path
+
+        store.download_file(key_path, fpath)
+
+        client.return_value.get_blob_to_path.assert_called_with(
+            "container", base_path, fpath)
+
