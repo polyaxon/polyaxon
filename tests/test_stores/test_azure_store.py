@@ -89,7 +89,7 @@ class TestAzureStore(TestCase):
     def test_upload_file(self, client):
         dir_name = tempfile.mkdtemp()
         fpath = dir_name + '/test.txt'
-        open(fpath, '+w')
+        open(fpath, 'w')
 
         base_path = 'path/test.txt'
         store = AzureStore()
@@ -107,7 +107,7 @@ class TestAzureStore(TestCase):
         fpath = dir_name + '/test.txt'
 
         def mkfile(container, cloud_path, fname):
-            return open(fname, '+w')
+            return open(fname, 'w')
 
         client.return_value.get_blob_to_path.side_effect = mkfile
 

@@ -169,11 +169,11 @@ class TestAwsStore(TestCase):
 
         dir_name = tempfile.mkdtemp()
         fpath1 = dir_name + '/test1.txt'
-        with open(fpath1, '+w') as f:
+        with open(fpath1, 'w') as f:
             f.write('data1')
 
         fpath2 = dir_name + '/test2.txt'
-        with open(fpath2, '+w') as f:
+        with open(fpath2, 'w') as f:
             f.write('data2')
 
         store.upload_file(fpath1, 'my_key1.txt', 'bucket')

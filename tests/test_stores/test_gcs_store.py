@@ -189,7 +189,7 @@ class TestGCSStore(TestCase):
 
         dir_name = tempfile.mkdtemp()
         fpath = dir_name + '/test.txt'
-        open(fpath, '+w')
+        open(fpath, 'w')
 
         # This will call isfile on the code path being used,
         # thus testing that it's being called with an actually file path
@@ -217,7 +217,7 @@ class TestGCSStore(TestCase):
         fpath = dir_name + '/test.txt'
 
         def mkfile(fname):
-            return open(fname, '+w')
+            return open(fname, 'w')
 
         (client.return_value
          .get_bucket.return_value
