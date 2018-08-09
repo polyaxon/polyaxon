@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import tempfile
+
 from unittest import TestCase
 
-from polyaxon_stores.utils import is_protected_type, append_basename
+from polyaxon_stores.utils import append_basename, get_files_in_current_directory, is_protected_type
 
 
 class TestUtils(TestCase):
@@ -20,3 +22,21 @@ class TestUtils(TestCase):
         assert append_basename('/foo/moo', 'bar') == '/foo/moo/bar'
         assert append_basename('/foo/moo', 'boo/bar.txt') == '/foo/moo/bar.txt'
 
+    def test_get_files_in_current_directory(self):
+        dir_name = tempfile.mkdtemp()
+        fpath1 = dir_name + '/test1.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+
+        fpath2 = dir_name + '/test2.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+
+        dir_name2 = tempfile.mkdtemp(prefix=dir_name + '/')
+        fpath3 = dir_name2 + '/test3.txt'
+        with open(fpath3, 'w') as f:
+            f.write('data3')
+
+        with get_files_in_current_directory(dir_name) as files:
+            assert len(files) == 3
+            assert set(files) == {fpath1, fpath2, fpath3}

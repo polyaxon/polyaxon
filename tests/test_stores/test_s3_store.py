@@ -203,3 +203,28 @@ class TestAwsStore(TestCase):
                             use_basename=True)
         assert os.path.basename(dir_name2 + '/test3.txt') == 'test3.txt'
         assert open(os.path.join(dir_name2 + '/test3.txt')).read() == 'data3'
+
+    @mock_s3
+    def test_upload_files(self):
+        store = S3Store()
+        store.client.create_bucket(Bucket='bucket')
+
+        dir_name = tempfile.mkdtemp()
+        fpath1 = dir_name + '/test1.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+
+        fpath2 = dir_name + '/test2.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+
+        dir_name2 = tempfile.mkdtemp(prefix=dir_name + '/')
+        fpath3 = dir_name2 + '/test3.txt'
+        with open(fpath3, 'w') as f:
+            f.write('data3')
+
+        store.upload_files(dir_name, 'mykey', 'bucket')
+        assert store.check_key('mykey/test1.txt', 'bucket') is True
+        assert store.check_key('mykey/test2.txt', 'bucket') is True
+        rel_path = dir_name2.split('/')[-1]
+        assert store.check_key('mykey/{}/test3.txt'.format(rel_path), 'bucket') is True

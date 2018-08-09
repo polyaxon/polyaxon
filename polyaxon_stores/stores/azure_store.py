@@ -11,7 +11,7 @@ from azure.storage.blob.models import BlobPrefix
 
 from polyaxon_stores.clients.azure_client import get_blob_service_connection
 from polyaxon_stores.exceptions import PolyaxonStoresException
-from polyaxon_stores.utils import append_basename
+from polyaxon_stores.utils import append_basename, get_files_in_current_directory
 
 
 class AzureStore(object):
@@ -154,14 +154,14 @@ class AzureStore(object):
             'prefixes': list_prefixes
         }
 
-    def upload_file(self, blob, filename, container_name=None, use_basename=True):
+    def upload_file(self, filename, blob, container_name=None, use_basename=True):
         """
         Uploads a local file to Google Cloud Storage.
 
-        :param blob: blob to upload to.
-        :type blob: str
         :param filename: the file to upload.
         :type filename: str
+        :param blob: blob to upload to.
+        :type blob: str
         :param container_name: the name of the container.
         :type container_name: str
         :param use_basename: whether or not to use the basename of the filename.
@@ -195,3 +195,27 @@ class AzureStore(object):
             local_path = append_basename(local_path, blob)
 
         self.connection.get_blob_to_path(container_name, blob, local_path)
+
+    def upload_files(self, dir_name, blob, container_name=None):
+        """
+        Uploads a local directory to to Google Cloud Storage.
+
+        :param dir_name: name of the directory to upload.
+        :type dir_name: str
+        :param blob: blob to upload to.
+        :type blob: str
+        :param container_name: the name of the container.
+        :type container_name: str
+        """
+        if not container_name:
+            container_name, _, blob = self.parse_wasbs_url(blob)
+
+        # Turn the path to absolute paths
+        dir_name = os.path.abspath(dir_name)
+        with get_files_in_current_directory(dir_name) as files:
+            for f in files:
+                file_blob = os.path.join(blob, os.path.relpath(f, dir_name))
+                self.upload_file(filename=f,
+                                 blob=file_blob,
+                                 container_name=container_name,
+                                 use_basename=False)

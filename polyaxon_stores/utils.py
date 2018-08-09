@@ -1,7 +1,7 @@
 import datetime
 import os
-from contextlib import contextmanager
 
+from contextlib import contextmanager
 from decimal import Decimal
 
 from polyaxon_stores.logger import logger
@@ -63,4 +63,4 @@ def get_files_in_current_directory(path):
         for file_name in files:
             result_files.append(os.path.join(root, file_name))
 
-    return result_files
+    yield result_files

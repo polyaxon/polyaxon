@@ -189,8 +189,6 @@ class TestGCSStore(TestCase):
         fpath = dir_name + '/test.txt'
         open(fpath, 'w')
 
-        # This will call isfile on the code path being used,
-        # thus testing that it's being called with an actually file path
         (client.return_value
          .get_bucket.return_value
          .blob.return_value
@@ -200,7 +198,7 @@ class TestGCSStore(TestCase):
 
         # Test without basename
         gcs_url = 'gs://bucket/path/to/blob.txt'
-        store.upload_file(gcs_url, fpath, use_basename=False)
+        store.upload_file(filename=fpath, blob=gcs_url, use_basename=False)
         client.return_value.get_bucket.assert_called_with('bucket')
         client.return_value.get_bucket.return_value.get_blob.assert_called_with('path/to/blob.txt')
         (client.return_value
@@ -210,7 +208,7 @@ class TestGCSStore(TestCase):
 
         # Test with basename
         gcs_url = 'gs://bucket/path/to/'
-        store.upload_file(gcs_url, fpath, use_basename=True)
+        store.upload_file(filename=fpath, blob=gcs_url, use_basename=True)
         client.return_value.get_bucket.assert_called_with('bucket')
         client.return_value.get_bucket.return_value.get_blob.assert_called_with('path/to/test.txt')
         (client.return_value
@@ -249,3 +247,46 @@ class TestGCSStore(TestCase):
         client.return_value.get_bucket().get_blob().download_to_filename.assert_called_with(
             dir_name + '/blob.txt'
         )
+
+    @mock.patch(GCS_MODULE.format('get_gc_credentials'))
+    @mock.patch(GCS_MODULE.format('Client'))
+    def test_upload_files(self, client, _):
+        dir_name = tempfile.mkdtemp()
+        fpath1 = dir_name + '/test1.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+
+        fpath2 = dir_name + '/test2.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+
+        dir_name2 = tempfile.mkdtemp(prefix=dir_name + '/')
+        fpath3 = dir_name2 + '/test3.txt'
+        with open(fpath3, 'w') as f:
+            f.write('data3')
+
+        (client.return_value
+         .get_bucket.return_value
+         .blob.return_value
+         .upload_from_filename.side_effect) = os.path.isfile
+
+        store = GCSStore()
+
+        blob_path = 'path/to/'
+        gcs_url = 'gs://bucket/' + blob_path
+        rel_path = dir_name2.split('/')[-1]
+        store.upload_files(dir_name=dir_name, blob=gcs_url)
+        client.return_value.get_bucket.assert_called_with('bucket')
+        client.return_value.get_bucket.return_value.get_blob.assert_has_calls(
+            [
+                mock.call(blob_path + 'test1.txt'),
+                mock.call(blob_path + 'test2.txt'),
+                mock.call(blob_path + rel_path + '/test3.txt'),
+            ], any_order=True)
+        (client.return_value
+         .get_bucket.return_value
+         .get_blob.return_value
+         .upload_from_filename.assert_has_calls([mock.call(fpath1),
+                                                 mock.call(fpath2),
+                                                 mock.call(fpath3),
+                                                 ], any_order=True))

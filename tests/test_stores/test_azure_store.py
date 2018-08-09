@@ -97,13 +97,13 @@ class TestAzureStore(TestCase):
 
         # Test without basename
         key_path = self.wasbs_base + base_path_file
-        store.upload_file(key_path, fpath, use_basename=False)
+        store.upload_file(filename=fpath, blob=key_path, use_basename=False)
         client.return_value.create_blob_from_path.assert_called_with(
             'container', base_path_file, fpath)
 
         # Test with basename
         key_path = self.wasbs_base + base_path
-        store.upload_file(key_path, fpath, use_basename=True)
+        store.upload_file(filename=fpath, blob=key_path, use_basename=True)
         client.return_value.create_blob_from_path.assert_called_with(
             'container', base_path_file, fpath)
 
@@ -132,3 +132,31 @@ class TestAzureStore(TestCase):
         store.download_file(key_path, dir_name, use_basename=True)
         client.return_value.get_blob_to_path.assert_called_with(
             "container", base_path, fpath)
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_upload_files(self, client):
+        dir_name = tempfile.mkdtemp()
+        fpath1 = dir_name + '/test1.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+
+        fpath2 = dir_name + '/test2.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+
+        dir_name2 = tempfile.mkdtemp(prefix=dir_name + '/')
+        fpath3 = dir_name2 + '/test3.txt'
+        with open(fpath3, 'w') as f:
+            f.write('data3')
+
+        store = AzureStore()
+
+        blob_path = 'path/to/'
+        azure_url = self.wasbs_base + blob_path
+        rel_path = dir_name2.split('/')[-1]
+        store.upload_files(dir_name=dir_name, blob=azure_url)
+        client.return_value.create_blob_from_path.assert_has_calls([
+            mock.call('container', blob_path + 'test1.txt', fpath1),
+            mock.call('container', blob_path + 'test2.txt', fpath2),
+            mock.call('container', blob_path + rel_path + '/test3.txt', fpath3),
+        ])

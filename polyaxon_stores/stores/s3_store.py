@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 from polyaxon_stores.clients import aws_client
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
-from polyaxon_stores.utils import force_bytes, append_basename
+from polyaxon_stores.utils import append_basename, force_bytes, get_files_in_current_directory
 
 
 class S3Store(object):
@@ -400,7 +400,7 @@ class S3Store(object):
                     acl=None,
                     use_basename=True):
         """
-        Uploads a local file to S3
+        Uploads a local file to S3.
 
         :param filename: name of the file to upload.
         :type filename: str
@@ -421,7 +421,7 @@ class S3Store(object):
         :type use_basename: bool
         """
         if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
+            bucket_name, key = self.parse_s3_url(key)
 
         if use_basename:
             key = append_basename(key, filename)
@@ -451,9 +451,51 @@ class S3Store(object):
         :type use_basename: bool
         """
         if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
+            bucket_name, key = self.parse_s3_url(key)
 
         if use_basename:
             local_path = append_basename(local_path, key)
 
         self.client.download_file(bucket_name, key, local_path)
+
+    def upload_files(self,
+                     dir_name,
+                     key,
+                     bucket_name=None,
+                     overwrite=False,
+                     encrypt=False,
+                     acl=None):
+        """
+        Uploads a local directory to S3.
+
+        :param dir_name: name of the directory to upload.
+        :type dir_name: str
+        :param key: S3 key that will point to the file.
+        :type key: str
+        :param bucket_name: Name of the bucket in which to store the file.
+        :type bucket_name: str
+        :param overwrite: A flag to decide whether or not to overwrite the key
+            if it already exists. If replace is False and the key exists, an
+            error will be raised.
+        :type overwrite: bool
+        :param encrypt: If True, the file will be encrypted on the server-side
+            by S3 and will be stored in an encrypted form while at rest in S3.
+        :type encrypt: bool
+        :param acl: ACL to use for uploading, e.g. "public-read".
+        :type acl: str
+        """
+        if not bucket_name:
+            bucket_name, key = self.parse_s3_url(key)
+
+        # Turn the path to absolute paths
+        dir_name = os.path.abspath(dir_name)
+        with get_files_in_current_directory(dir_name) as files:
+            for f in files:
+                file_key = os.path.join(key, os.path.relpath(f, dir_name))
+                self.upload_file(filename=f,
+                                 key=file_key,
+                                 bucket_name=bucket_name,
+                                 overwrite=overwrite,
+                                 encrypt=encrypt,
+                                 acl=acl,
+                                 use_basename=False)
