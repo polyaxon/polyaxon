@@ -1,4 +1,4 @@
 azure-storage==0.36.0
-boto3==1.7.70
+boto3==1.7.73
 google-cloud-storage==1.10.0
 six==1.11.0
