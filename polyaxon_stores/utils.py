@@ -33,6 +33,19 @@ def force_bytes(value, encoding='utf-8', strings_only=False, errors='strict'):
     return value.encode(encoding, errors)
 
 
+def append_basename(path, filename):
+    """
+    Adds the basename of the filename to the path.
+
+    :param path: The path to append the basename to.
+    :type path: str
+    :param filename: The filename to extract the base name from.
+    :type filename: str
+    :return: str
+    """
+    return os.path.join(path, os.path.basename(filename))
+
+
 @contextmanager
 def get_files_in_current_directory(path):
     """
