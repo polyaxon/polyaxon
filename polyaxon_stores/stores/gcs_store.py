@@ -208,7 +208,7 @@ class GCSStore(object):
         blob = self.get_blob(blob=blob, bucket_name=bucket_name)
         blob.download_to_filename(local_path)
 
-    def upload_file(self, blob, filename, path=None, bucket_name=None):
+    def upload_file(self, blob, filename, bucket_name=None):
         """
         Uploads a local file to Google Cloud Storage.
 
@@ -216,17 +216,11 @@ class GCSStore(object):
         :type blob: str
         :param filename: the file to upload.
         :type filename: str
-        :param path: an extra path to append to the key.
-        :type path: str
         :param bucket_name: the name of the bucket.
         :type bucket_name: str
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
 
-        key = blob
-        if path:
-            key = os.path.join(path, key)
-
-        obj = self.get_blob(key, bucket_name)
+        obj = self.get_blob(blob, bucket_name)
         obj.upload_from_filename(filename)

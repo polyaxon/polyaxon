@@ -153,7 +153,7 @@ class AzureStore(object):
             'prefixes': list_prefixes
         }
 
-    def upload_file(self, blob, filename, path=None, container_name=None):
+    def upload_file(self, blob, filename, container_name=None):
         """
         Uploads a local file to Google Cloud Storage.
 
@@ -161,19 +161,13 @@ class AzureStore(object):
         :type blob: str
         :param filename: the file to upload.
         :type filename: str
-        :param path: an extra path to append to the key.
-        :type path: str
         :param container_name: the name of the container.
         :type container_name: str
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
 
-        key = blob
-        if path:
-            key = os.path.join(path, key)
-
-        self.connection.create_blob_from_path(container_name, key, filename)
+        self.connection.create_blob_from_path(container_name, blob, filename)
 
     def download_file(self, blob, local_path, container_name=None):
         """
