@@ -8,6 +8,7 @@ from six.moves import urllib
 from polyaxon_stores.clients import gc_client
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
+from polyaxon_stores.utils import append_basename
 
 
 class GCSStore(object):
@@ -192,23 +193,7 @@ class GCSStore(object):
 
         return results
 
-    def download_file(self, blob, local_path, bucket_name=None):
-        """
-        Downloads a file from Google Cloud Storage.
-
-        :param blob: blob to download.
-        :type blob: str
-        :param local_path: the path to download to.
-        :type local_path: str
-        :param bucket_name: the name of the bucket.
-        :type bucket_name: str
-        """
-        if not bucket_name:
-            (bucket_name, blob) = self.parse_gcs_url(blob)
-        blob = self.get_blob(blob=blob, bucket_name=bucket_name)
-        blob.download_to_filename(local_path)
-
-    def upload_file(self, blob, filename, bucket_name=None):
+    def upload_file(self, blob, filename, bucket_name=None, use_basename=True):
         """
         Uploads a local file to Google Cloud Storage.
 
@@ -218,9 +203,36 @@ class GCSStore(object):
         :type filename: str
         :param bucket_name: the name of the bucket.
         :type bucket_name: str
+        :param use_basename: whether or not to use the basename of the filename.
+        :type use_basename: bool
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
 
+        if use_basename:
+            blob = append_basename(blob, filename)
+
         obj = self.get_blob(blob, bucket_name)
         obj.upload_from_filename(filename)
+
+    def download_file(self, blob, local_path, bucket_name=None, use_basename=True):
+        """
+        Downloads a file from Google Cloud Storage.
+
+        :param blob: blob to download.
+        :type blob: str
+        :param local_path: the path to download to.
+        :type local_path: str
+        :param bucket_name: the name of the bucket.
+        :type bucket_name: str
+        :param use_basename: whether or not to use the basename of the blob.
+        :type use_basename: bool
+        """
+        if not bucket_name:
+            (bucket_name, blob) = self.parse_gcs_url(blob)
+
+        if use_basename:
+            local_path = append_basename(local_path, blob)
+
+        blob = self.get_blob(blob=blob, bucket_name=bucket_name)
+        blob.download_to_filename(local_path)

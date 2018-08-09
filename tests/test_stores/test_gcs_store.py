@@ -185,8 +185,6 @@ class TestGCSStore(TestCase):
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
     def test_upload(self, client, _):
-        gcs_url = 'gs://bucket/path/to/blob.txt'
-
         dir_name = tempfile.mkdtemp()
         fpath = dir_name + '/test.txt'
         open(fpath, 'w')
@@ -199,10 +197,22 @@ class TestGCSStore(TestCase):
          .upload_from_filename.side_effect) = os.path.isfile
 
         store = GCSStore()
-        store.upload_file(gcs_url, fpath)
 
+        # Test without basename
+        gcs_url = 'gs://bucket/path/to/blob.txt'
+        store.upload_file(gcs_url, fpath, use_basename=False)
         client.return_value.get_bucket.assert_called_with('bucket')
         client.return_value.get_bucket.return_value.get_blob.assert_called_with('path/to/blob.txt')
+        (client.return_value
+         .get_bucket.return_value
+         .get_blob.return_value
+         .upload_from_filename.assert_called_with(fpath))
+
+        # Test with basename
+        gcs_url = 'gs://bucket/path/to/'
+        store.upload_file(gcs_url, fpath, use_basename=True)
+        client.return_value.get_bucket.assert_called_with('bucket')
+        client.return_value.get_bucket.return_value.get_blob.assert_called_with('path/to/test.txt')
         (client.return_value
          .get_bucket.return_value
          .get_blob.return_value
@@ -211,8 +221,6 @@ class TestGCSStore(TestCase):
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
     def test_download(self, client, _):
-        gcs_url = 'gs://bucket/path/to/blob.txt'
-
         dir_name = tempfile.mkdtemp()
         fpath = dir_name + '/test.txt'
 
@@ -225,7 +233,19 @@ class TestGCSStore(TestCase):
          .download_to_filename.side_effect) = mkfile
 
         store = GCSStore()
-        store.download_file(gcs_url, fpath)
+
+        # Test without basename
+        gcs_url = 'gs://bucket/path/to/blob.txt'
+        store.download_file(gcs_url, fpath, use_basename=False)
         client.return_value.get_bucket.assert_called_with('bucket')
         client.return_value.get_bucket().get_blob.assert_called_with('path/to/blob.txt')
         client.return_value.get_bucket().get_blob().download_to_filename.assert_called_with(fpath)
+
+        # Test with basename
+        gcs_url = 'gs://bucket/path/to/blob.txt'
+        store.download_file(gcs_url, dir_name, use_basename=True)
+        client.return_value.get_bucket.assert_called_with('bucket')
+        client.return_value.get_bucket().get_blob.assert_called_with('path/to/blob.txt')
+        client.return_value.get_bucket().get_blob().download_to_filename.assert_called_with(
+            dir_name + '/blob.txt'
+        )

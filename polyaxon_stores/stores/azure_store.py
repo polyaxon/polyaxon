@@ -11,6 +11,7 @@ from azure.storage.blob.models import BlobPrefix
 
 from polyaxon_stores.clients.azure_client import get_blob_service_connection
 from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.utils import append_basename
 
 
 class AzureStore(object):
@@ -153,7 +154,7 @@ class AzureStore(object):
             'prefixes': list_prefixes
         }
 
-    def upload_file(self, blob, filename, container_name=None):
+    def upload_file(self, blob, filename, container_name=None, use_basename=True):
         """
         Uploads a local file to Google Cloud Storage.
 
@@ -163,13 +164,18 @@ class AzureStore(object):
         :type filename: str
         :param container_name: the name of the container.
         :type container_name: str
+        :param use_basename: whether or not to use the basename of the filename.
+        :type use_basename: bool
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
 
+        if use_basename:
+            blob = append_basename(blob, filename)
+
         self.connection.create_blob_from_path(container_name, blob, filename)
 
-    def download_file(self, blob, local_path, container_name=None):
+    def download_file(self, blob, local_path, container_name=None, use_basename=True):
         """
         Downloads a file from Google Cloud Storage.
 
@@ -179,7 +185,13 @@ class AzureStore(object):
         :type local_path: str
         :param container_name: the name of the container.
         :type container_name: str
+        :param use_basename: whether or not to use the basename of the blob.
+        :type use_basename: bool
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
+
+        if use_basename:
+            local_path = append_basename(local_path, blob)
+
         self.connection.get_blob_to_path(container_name, blob, local_path)

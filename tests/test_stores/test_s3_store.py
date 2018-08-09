@@ -163,7 +163,7 @@ class TestAwsStore(TestCase):
         self.assertEqual(body, b'Content')
 
     @mock_s3
-    def test_upload(self):
+    def test_upload_download(self):
         store = S3Store()
         store.client.create_bucket(Bucket='bucket')
 
@@ -176,12 +176,30 @@ class TestAwsStore(TestCase):
         with open(fpath2, 'w') as f:
             f.write('data2')
 
-        store.upload_file(fpath1, 'my_key1.txt', 'bucket')
-        store.upload_file(fpath2, 'my_key2.txt', 'bucket')
+        fpath3 = dir_name + '/test3.txt'
+        with open(fpath3, 'w') as f:
+            f.write('data3')
+
+        store.upload_file(fpath1, 'my_key1.txt', 'bucket', use_basename=False)
+        assert store.check_key('my_key1.txt', 'bucket') is True
+
+        store.upload_file(fpath2, 'my_key2.txt', 'bucket', use_basename=False)
+        assert store.check_key('my_key2.txt', 'bucket') is True
+
+        store.upload_file(fpath3, 'foo/', 'bucket', use_basename=True)
+        assert store.check_key('foo/test3.txt', 'bucket') is True
 
         store.download_file('my_key1.txt',
-                            '',
                             local_path=dir_name + '/foo1.txt',
-                            bucket_name='bucket')
+                            bucket_name='bucket',
+                            use_basename=False)
         assert os.path.basename(dir_name + '/foo1.txt') == 'foo1.txt'
         assert open(os.path.join(dir_name + '/foo1.txt')).read() == 'data1'
+
+        dir_name2 = tempfile.mkdtemp()
+        store.download_file('foo/test3.txt',
+                            local_path=dir_name2,
+                            bucket_name='bucket',
+                            use_basename=True)
+        assert os.path.basename(dir_name2 + '/test3.txt') == 'test3.txt'
+        assert open(os.path.join(dir_name2 + '/test3.txt')).read() == 'data3'

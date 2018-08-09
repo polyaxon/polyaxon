@@ -68,11 +68,11 @@ class TestAzureStore(TestCase):
         base_path = 'path'
         # Create some files to return
         dir_prefix = BlobPrefix()
-        dir_prefix.name = base_path + "/dir"
+        dir_prefix.name = base_path + '/dir'
 
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        blob = Blob(base_path + "/file", props=blob_props)
+        blob = Blob(base_path + '/file', props=blob_props)
 
         client.return_value.list_blobs.return_value = MockBlobList([dir_prefix, blob])
 
@@ -81,8 +81,8 @@ class TestAzureStore(TestCase):
         results = store.list(key=key_path)
         assert len(results['blobs']) == 1
         assert len(results['prefixes']) == 1
-        assert results['prefixes'][0] == "dir"
-        assert results['blobs'][0][0] == "file"
+        assert results['prefixes'][0] == 'dir'
+        assert results['blobs'][0][0] == 'file'
         assert results['blobs'][0][1] == 42
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
@@ -91,13 +91,21 @@ class TestAzureStore(TestCase):
         fpath = dir_name + '/test.txt'
         open(fpath, 'w')
 
-        base_path = 'path/test.txt'
+        base_path = 'path/'
+        base_path_file = base_path + 'test.txt'
         store = AzureStore()
-        key_path = self.wasbs_base + base_path
 
-        store.upload_file(key_path, fpath)
+        # Test without basename
+        key_path = self.wasbs_base + base_path_file
+        store.upload_file(key_path, fpath, use_basename=False)
         client.return_value.create_blob_from_path.assert_called_with(
-            'container', base_path, fpath)
+            'container', base_path_file, fpath)
+
+        # Test with basename
+        key_path = self.wasbs_base + base_path
+        store.upload_file(key_path, fpath, use_basename=True)
+        client.return_value.create_blob_from_path.assert_called_with(
+            'container', base_path_file, fpath)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
     def test_download_file(self, client):
@@ -115,7 +123,12 @@ class TestAzureStore(TestCase):
         store = AzureStore()
         key_path = self.wasbs_base + base_path
 
-        store.download_file(key_path, fpath)
+        # Test without basename
+        store.download_file(key_path, fpath, use_basename=False)
+        client.return_value.get_blob_to_path.assert_called_with(
+            "container", base_path, fpath)
 
+        # Test without basename
+        store.download_file(key_path, dir_name, use_basename=True)
         client.return_value.get_blob_to_path.assert_called_with(
             "container", base_path, fpath)

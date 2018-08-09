@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 from polyaxon_stores.clients import aws_client
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
-from polyaxon_stores.utils import force_bytes
+from polyaxon_stores.utils import force_bytes, append_basename
 
 
 class S3Store(object):
@@ -397,7 +397,8 @@ class S3Store(object):
                     bucket_name=None,
                     overwrite=False,
                     encrypt=False,
-                    acl=None):
+                    acl=None,
+                    use_basename=True):
         """
         Uploads a local file to S3
 
@@ -416,9 +417,14 @@ class S3Store(object):
         :type encrypt: bool
         :param acl: ACL to use for uploading, e.g. "public-read".
         :type acl: str
+        :param use_basename: whether or not to use the basename of the filename.
+        :type use_basename: bool
         """
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
+
+        if use_basename:
+            key = append_basename(key, filename)
 
         if not overwrite and self.check_key(key, bucket_name):
             raise PolyaxonStoresException("The key {} already exists.".format(key))
@@ -431,23 +437,23 @@ class S3Store(object):
 
         self.client.upload_file(filename, bucket_name, key, ExtraArgs=extra_args)
 
-    def download_file(self, key, file_path, local_path, bucket_name=None):
+    def download_file(self, key, local_path, bucket_name=None, use_basename=True):
         """
         Download a file from S3.
 
         :param key: S3 key that will point to the file.
         :type key: str
-        :param file_path: the file to download.
-        :type file_path: str
         :param local_path: the path to download to.
         :type local_path: str
         :param bucket_name: Name of the bucket in which to store the file.
         :type bucket_name: str
+        :param use_basename: whether or not to use the basename of the key.
+        :type use_basename: bool
         """
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
 
-        s3_path = key
-        if file_path:
-            s3_path = os.path.join(s3_path, file_path)
-        self.client.download_file(bucket_name, s3_path, local_path)
+        if use_basename:
+            local_path = append_basename(local_path, key)
+
+        self.client.download_file(bucket_name, key, local_path)
