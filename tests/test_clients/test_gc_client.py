@@ -5,10 +5,10 @@ import mock
 
 from unittest import TestCase
 
-from demeter.clients.gc_client import get_gc_client, get_gc_credentials
-from demeter.exceptions import DemeterException
+from polyaxon_stores.clients.gc_client import get_gc_client, get_gc_credentials
+from polyaxon_stores.exceptions import PolyaxonStoresException
 
-GCS_MODULE = 'demeter.clients.gc_client.{}'
+GCS_MODULE = 'polyaxon_stores.clients.gc_client.{}'
 
 
 class TestGCClient(TestCase):
@@ -22,7 +22,7 @@ class TestGCClient(TestCase):
     @mock.patch(GCS_MODULE.format('Credentials.from_service_account_info'))
     def test_get_key_path_gc_credentials(self, service_account):
 
-        with self.assertRaises(DemeterException):
+        with self.assertRaises(PolyaxonStoresException):
             get_gc_credentials(key_path='key_path')
 
         service_account.return_value = None
@@ -32,7 +32,7 @@ class TestGCClient(TestCase):
 
     @mock.patch(GCS_MODULE.format('Credentials.from_service_account_info'))
     def test_get_keyfile_dict_gc_credentials(self, service_account):
-        with self.assertRaises(DemeterException):
+        with self.assertRaises(PolyaxonStoresException):
             get_gc_credentials(keyfile_dict='keyfile_dict')
 
         service_account.return_value = None

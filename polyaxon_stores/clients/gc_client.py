@@ -11,9 +11,9 @@ import google.oauth2.service_account
 from google.cloud.storage.client import Client
 from google.oauth2.service_account import Credentials
 
-from demeter.clients.utils import get_from_env
-from demeter.exceptions import DemeterException
-from demeter.logger import logger
+from polyaxon_stores.clients.utils import get_from_env
+from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.logger import logger
 
 DEFAULT_SCOPES = ('https://www.googleapis.com/auth/cloud-platform',)
 
@@ -61,7 +61,7 @@ def get_gc_credentials(key_path=None, keyfile_dict=None, scopes=None):
             logger.info('Getting connection using a JSON key file.')
             credentials = Credentials.from_service_account_info(keyfile_dict, scopes=scopes)
         else:
-            raise DemeterException('Unrecognised extension for key file.')
+            raise PolyaxonStoresException('Unrecognised extension for key file.')
     else:
         # Get credentials from JSON data.
         try:
@@ -73,7 +73,7 @@ def get_gc_credentials(key_path=None, keyfile_dict=None, scopes=None):
 
             credentials = Credentials.from_service_account_info(keyfile_dict, scopes=scopes)
         except json.decoder.JSONDecodeError:
-            raise DemeterException('Invalid key JSON.')
+            raise PolyaxonStoresException('Invalid key JSON.')
 
     return credentials
 

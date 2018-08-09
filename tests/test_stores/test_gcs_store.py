@@ -7,10 +7,10 @@ import tempfile
 
 from unittest import TestCase
 
-from demeter.exceptions import DemeterException
-from demeter.stores.gcs_store import GCSStore
+from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.stores.gcs_store import GCSStore
 
-GCS_MODULE = 'demeter.clients.gc_client.{}'
+GCS_MODULE = 'polyaxon_stores.clients.gc_client.{}'
 
 
 class TestGCSStore(TestCase):
@@ -22,7 +22,7 @@ class TestGCSStore(TestCase):
 
         # Wrong url
         gcs_url = 'gs:/bucket/path/to/blob'
-        with self.assertRaises(DemeterException):
+        with self.assertRaises(PolyaxonStoresException):
             GCSStore.parse_gcs_url(gcs_url)
 
         # Trailing slash

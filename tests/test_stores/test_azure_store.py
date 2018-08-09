@@ -8,10 +8,10 @@ from unittest import TestCase
 
 from azure.storage.blob import Blob, BlobPrefix, BlobProperties
 
-from demeter.exceptions import DemeterException
-from demeter.stores.azure_store import AzureStore
+from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.stores.azure_store import AzureStore
 
-AZURE_MODULE = 'demeter.clients.azure_client.{}'
+AZURE_MODULE = 'polyaxon_stores.clients.azure_client.{}'
 
 
 class MockBlobList(object):
@@ -44,15 +44,15 @@ class TestAzureStore(TestCase):
 
         # Wrong url
         wasbs_url = 'wasbs://container@user.foo.bar.windows.net/path/to/file'
-        with self.assertRaises(DemeterException):
+        with self.assertRaises(PolyaxonStoresException):
             AzureStore.parse_wasbs_url(wasbs_url)
 
         wasbs_url = 'wasbs://container@user.blob.core.foo.net/path/to/file'
-        with self.assertRaises(DemeterException):
+        with self.assertRaises(PolyaxonStoresException):
             AzureStore.parse_wasbs_url(wasbs_url)
 
         wasbs_url = 'wasbs://container@user.blob.windows.net/path/to/file'
-        with self.assertRaises(DemeterException):
+        with self.assertRaises(PolyaxonStoresException):
             AzureStore.parse_wasbs_url(wasbs_url)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))

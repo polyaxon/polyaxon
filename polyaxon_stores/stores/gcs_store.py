@@ -5,9 +5,9 @@ import os
 
 from six.moves import urllib
 
-from demeter.clients import gc_client
-from demeter.exceptions import DemeterException
-from demeter.logger import logger
+from polyaxon_stores.clients import gc_client
+from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.logger import logger
 
 
 class GCSStore(object):
@@ -64,9 +64,9 @@ class GCSStore(object):
     def parse_gcs_url(gcs_url):
         parsed_url = urllib.parse.urlparse(gcs_url)
         if not parsed_url.netloc:
-            raise DemeterException('Received an invalid url `{}`'.format(gcs_url))
+            raise PolyaxonStoresException('Received an invalid url `{}`'.format(gcs_url))
         if parsed_url.scheme != 'gs':
-            raise DemeterException('Received an invalid url `{}`'.format(gcs_url))
+            raise PolyaxonStoresException('Received an invalid url `{}`'.format(gcs_url))
         blob = parsed_url.path.lstrip('/')
         return parsed_url.netloc, blob
 
@@ -120,7 +120,7 @@ class GCSStore(object):
         obj = bucket.get_blob(blob)
 
         if obj is None:
-            raise DemeterException('File does not exist: {}'.format(blob))
+            raise PolyaxonStoresException('File does not exist: {}'.format(blob))
 
         return obj
 

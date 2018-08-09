@@ -7,7 +7,7 @@ from unittest import TestCase
 
 from azure.storage.blob import BlockBlobService
 
-from demeter.clients.azure_client import get_blob_service_connection
+from polyaxon_stores.clients.azure_client import get_blob_service_connection
 
 
 class TestAzureClient(TestCase):

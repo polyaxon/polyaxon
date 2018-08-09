@@ -8,10 +8,10 @@ from six.moves import urllib
 
 from botocore.exceptions import ClientError
 
-from demeter.clients import aws_client
-from demeter.exceptions import DemeterException
-from demeter.logger import logger
-from demeter.utils import force_bytes
+from polyaxon_stores.clients import aws_client
+from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.logger import logger
+from polyaxon_stores.utils import force_bytes
 
 
 class S3Store(object):
@@ -114,7 +114,7 @@ class S3Store(object):
     def parse_s3_url(s3_url):
         parsed_url = urllib.parse.urlparse(s3_url)
         if not parsed_url.netloc:
-            raise DemeterException('Received an invalid url `{}`'.format(s3_url))
+            raise PolyaxonStoresException('Received an invalid url `{}`'.format(s3_url))
         else:
             bucket_name = parsed_url.netloc
             key = parsed_url.path.strip('/')
@@ -288,7 +288,7 @@ class S3Store(object):
             obj.load()
             return obj
         except Exception as e:
-            raise DemeterException(e)
+            raise PolyaxonStoresException(e)
 
     def read_key(self, key, bucket_name=None):
         """
@@ -333,7 +333,7 @@ class S3Store(object):
             (bucket_name, key) = self.parse_s3_url(key)
 
         if not overwrite and self.check_key(key, bucket_name):
-            raise DemeterException("The key {} already exists.".format(key))
+            raise PolyaxonStoresException("The key {} already exists.".format(key))
 
         extra_args = {}
         if encrypt:

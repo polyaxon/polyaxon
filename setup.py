@@ -18,7 +18,7 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
-setup(name='demeter',
+setup(name='polyaxon_stores',
       version='0.1.7',
       description='An abstraction to make seamless storage integrations '
                   'with variety of storage backends.',
@@ -26,7 +26,7 @@ setup(name='demeter',
       maintainer_email='mouradmourafiq@gmail.com',
       author='Mourad Mourafiq',
       author_email='mouradmourafiq@gmail.com',
-      url='https://github.com/polyaxon/demeter',
+      url='https://github.com/polyaxon/polyaxon_stores',
       license='MIT',
       platforms='any',
       packages=find_packages(),

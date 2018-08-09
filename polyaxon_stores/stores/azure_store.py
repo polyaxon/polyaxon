@@ -9,8 +9,8 @@ from six.moves import urllib
 from azure.common import AzureMissingResourceHttpError
 from azure.storage.blob.models import BlobPrefix
 
-from demeter.clients.azure_client import get_blob_service_connection
-from demeter.exceptions import DemeterException
+from polyaxon_stores.clients.azure_client import get_blob_service_connection
+from polyaxon_stores.exceptions import PolyaxonStoresException
 
 
 class AzureStore(object):
@@ -50,10 +50,10 @@ class AzureStore(object):
     def parse_wasbs_url(wasbs_url):
         parsed_url = urllib.parse.urlparse(wasbs_url)
         if parsed_url.scheme != "wasbs":
-            raise DemeterException('Received an invalid url `{}`'.format(wasbs_url))
+            raise PolyaxonStoresException('Received an invalid url `{}`'.format(wasbs_url))
         match = re.match("([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
         if match is None:
-            raise DemeterException(
+            raise PolyaxonStoresException(
                 'wasbs_url must be of the form <container>@<account>.blob.core.windows.net')
         container = match.group(1)
         storage_account = match.group(2)

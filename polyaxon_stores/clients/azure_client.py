@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from azure.storage.blob import BlockBlobService
 
-from demeter.clients.utils import get_from_env
+from polyaxon_stores.clients.utils import get_from_env
 
 
 def get_account_name(keys=None):

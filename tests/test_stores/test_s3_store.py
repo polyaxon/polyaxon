@@ -10,8 +10,8 @@ from boto3.resources.base import ServiceResource
 from botocore.client import BaseClient
 from moto import mock_s3
 
-from demeter.exceptions import DemeterException
-from demeter.stores.s3_store import S3Store
+from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.stores.s3_store import S3Store
 
 
 class TestAwsStore(TestCase):
@@ -131,7 +131,7 @@ class TestAwsStore(TestCase):
         assert store.get_key('s3://bucket/a').key == 'a'
 
         # No bucket
-        with self.assertRaises(DemeterException):
+        with self.assertRaises(PolyaxonStoresException):
             store.get_key('a', 'nobucket')
 
     @mock_s3

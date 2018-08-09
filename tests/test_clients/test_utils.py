@@ -5,7 +5,7 @@ import os
 
 from unittest import TestCase
 
-from demeter.clients.utils import get_from_env
+from polyaxon_stores.clients.utils import get_from_env
 
 
 class TestConstraintConfigs(TestCase):
