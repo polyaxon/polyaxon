@@ -21,13 +21,13 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
 
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy six pytest-cov
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION six pytest-cov
   - source activate test-environment
   - pip install -r requirements/requirements-test.txt
   - pip install codecov
 
 script:
-  - pytest tests
+  - python setup.py test
   - prospector
 
 after_success:
@@ -35,4 +35,4 @@ after_success:
 
 notifications:
   slack:
-    secure: XP+90QIU21qJTPJZW/d1TZqVo3jylcrB+UMsfs53RAz/3nlPNQpkswXPB/FD75IlcUaSwqJWvcZ2azDGEq/YyXHuDyzvINkmFhuDvOR/hfHi+Eyy8ilw7K3yoiBo/aQ4Nbkorp2KXpeQzQshEnL92vEzNbPUlaiI1JegkxQXUjgPn1hm7mK5eisZgWgXTWSZACTmz3TtI9Gh2JzYo0HcIosu2lyrOJHQL/brwA2TDp76O8GqBDB9lxYHr01iYok8iiZT0eNi7jKbexuX7l5BZkgjeaJuNeoJuVcP7vkX30GJVR5Wrm6NdOLjunkop2A2KBfgTxlJ3Lhx9nP29UMsOmhDtDB4o3xM2yHvSh1kSAF8xmaWolfwrPnI1x9s9GiZ4lJUifAWNntYT9HA4rdqaMxDFeBJIrUYHYhsqEBFRDUD8ldG82hy+QnWxrrm0Do2md0eP58oI/BGc4DHYXRSibhvbJfBAX/+A50pT8m3o+TwcrFsH9RHnjoPtPium79Bm85YxoCJzPN2puqKCuk39Mi4e854wIxKl5YkCilsJb4Hzi+o5Zd3IiBGH3URYoqHlmAb7TP8QsYiwlVhtqyZvjaXlrRmobnn1KTNYQfZawyfoPn0h9hjwPpVG3e1zFipNJnQGMSQN4yCprELzEqy9mKp/pW7WQVT7ZfqES2VOM0=
+    secure: zpCvVIqavQ+QkdXbjwRkr1+TbPVRvlD3w+HfjHLAXBX/HgzaObw76JqwGTQS8Nows4/97WxYJ7iOq8ikmLQjNSjhu2B1b4vpG1shnzUwbc9bRmLkbCrb3yZNjyFihEARGd+GsErZcgTgF2ix99aAYdY0fw8hH09gZHu0a6leN2Sz+xvE3+JaoguC6TysCMXsKIlJqe3+gelFgsr8uB7+cQ05SN8cXlnvxculJSGeurXLL/YYXnNCritnu6vgifB5zM+hXaOSW4XsBeiT1nfhHnRvIbEw1Rb1dbl1N+PzqN7XaNKBb0Ls2/yEd2WAxMRgLdzyFez1AvITCjVfOtpWNbK4JlswrBKrU5Kqc0zTFarjuz5Mo1yJ7YlJeZFGVqUYA59cRPLqaaiQ/cda0shxzvcsDbyNHi1PzIejCVgd7e2s8fKSu5Bk0XMxAZDBVFpGVIGG9fPDNSSxPitnH9vIDglgmSLMF2PFwe760Yxs4euUyRqyCLyECKy50VmbPHN1bK+Lwrx4WyfJGgHaqfIoa1epND+Zyg0R/Fzz1xtnV8Q/cU6xPzDH3htgIv7TZe/6jzjjRY6Z5Bhjg8Etf4r4vfYLeP+hc/Eb6Z/pLUYkcjiuuvGkwMUGBfHm7RZeKxsOoLwQRTtKN2r6cjlx+bkpGdhEgWwCYRLqiiIWtsxriYY=
