@@ -159,4 +159,4 @@ class TestAzureStore(TestCase):
             mock.call('container', blob_path + 'test1.txt', fpath1),
             mock.call('container', blob_path + 'test2.txt', fpath2),
             mock.call('container', blob_path + rel_path + '/test3.txt', fpath3),
-        ])
+        ], any_order=True)
