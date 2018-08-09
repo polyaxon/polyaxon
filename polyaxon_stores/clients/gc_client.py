@@ -72,7 +72,7 @@ def get_gc_credentials(key_path=None, keyfile_dict=None, scopes=None):
             keyfile_dict['private_key'] = keyfile_dict['private_key'].replace('\\n', '\n')
 
             credentials = Credentials.from_service_account_info(keyfile_dict, scopes=scopes)
-        except json.decoder.JSONDecodeError:
+        except ValueError:  # json.decoder.JSONDecodeError does not exist on py2
             raise PolyaxonStoresException('Invalid key JSON.')
 
     return credentials
