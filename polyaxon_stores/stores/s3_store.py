@@ -112,6 +112,11 @@ class S3Store(object):
 
     @staticmethod
     def parse_s3_url(s3_url):
+        """
+        Parses and validates an S3 url.
+
+        :return: tuple(bucket_name, key).
+        """
         parsed_url = urllib.parse.urlparse(s3_url)
         if not parsed_url.netloc:
             raise PolyaxonStoresException('Received an invalid url `{}`'.format(s3_url))
@@ -396,7 +401,7 @@ class S3Store(object):
                       acl=None,
                       encoding='utf-8'):
         """
-        Uploads a string to S3
+        Uploads a string to S3.
 
         This is provided as a convenience to drop a string in S3. It uses the
         boto infrastructure to ship a file to s3.
@@ -426,6 +431,18 @@ class S3Store(object):
                           acl=acl)
 
     def download_file(self, key, file_path, local_path, bucket_name=None):
+        """
+        Download a file from S3.
+
+        :param key: S3 key that will point to the file.
+        :type key: str
+        :param file_path: the file to download.
+        :type file_path: str
+        :param local_path: the path to download to.
+        :type local_path: str
+        :param bucket_name: Name of the bucket in which to store the file.
+        :type bucket_name: str
+        """
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
 

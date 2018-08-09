@@ -62,6 +62,11 @@ class GCSStore(object):
 
     @staticmethod
     def parse_gcs_url(gcs_url):
+        """
+        Parses and validates a google cloud storage url.
+
+        :return: tuple(bucket_name, blob).
+        """
         parsed_url = urllib.parse.urlparse(gcs_url)
         if not parsed_url.netloc:
             raise PolyaxonStoresException('Received an invalid url `{}`'.format(gcs_url))
@@ -132,6 +137,8 @@ class GCSStore(object):
         :type key: str
         :param bucket_name: the name of the bucket.
         :type bucket_name: str
+        :param path: an extra path to append to the key.
+        :type path: str
         :param delimiter: the delimiter marks key hierarchy.
         :type delimiter: str
         :param blobs: if it should include blobs.
@@ -188,18 +195,38 @@ class GCSStore(object):
     def download_file(self, blob, local_path, bucket_name=None):
         """
         Downloads a file from Google Cloud Storage.
+
+        :param blob: blob to download.
+        :type blob: str
+        :param local_path: the path to download to.
+        :type local_path: str
+        :param bucket_name: the name of the bucket.
+        :type bucket_name: str
         """
         if not bucket_name:
             (bucket_name, blob) = self.parse_gcs_url(blob)
         blob = self.get_blob(blob=blob, bucket_name=bucket_name)
         blob.download_to_filename(local_path)
 
-    def upload_file(self, blob, filename, bucket_name=None):
+    def upload_file(self, blob, filename, path=None, bucket_name=None):
         """
         Uploads a local file to Google Cloud Storage.
+
+        :param blob: blob to upload to.
+        :type blob: str
+        :param filename: the file to upload.
+        :type filename: str
+        :param path: an extra path to append to the key.
+        :type path: str
+        :param bucket_name: the name of the bucket.
+        :type bucket_name: str
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
 
-        obj = self.get_blob(blob, bucket_name)
+        key = blob
+        if path:
+            key = os.path.join(path, key)
+
+        obj = self.get_blob(key, bucket_name)
         obj.upload_from_filename(filename)
