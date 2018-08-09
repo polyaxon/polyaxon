@@ -1,6 +1,10 @@
 import datetime
+import os
+from contextlib import contextmanager
 
 from decimal import Decimal
+
+from polyaxon_stores.logger import logger
 
 
 def is_protected_type(obj):
@@ -27,3 +31,23 @@ def force_bytes(value, encoding='utf-8', strings_only=False, errors='strict'):
     if isinstance(value, memoryview):
         return bytes(value)
     return value.encode(encoding, errors)
+
+
+@contextmanager
+def get_files_in_current_directory(path):
+    """
+    Gets all the files under a certain path.
+
+    :param path: The path to traverse for collecting files.
+    :type path: str
+    :return: list of files collected under the path.
+    """
+    result_files = []
+
+    for root, dirs, files in os.walk(path):
+        logger.debug("Root:%s, Dirs:%s", root, dirs)
+
+        for file_name in files:
+            result_files.append(os.path.join(root, file_name))
+
+    return result_files

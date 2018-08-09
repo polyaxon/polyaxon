@@ -1,3 +1,3 @@
 import logging
 
-logger = logging.getLogger("polyaxon_stores")
+logger = logging.getLogger('polyaxon_stores')

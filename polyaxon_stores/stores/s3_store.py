@@ -156,7 +156,8 @@ class S3Store(object):
              max_items=None,
              keys=True,
              prefixes=True):
-        """Lists prefixes and contents in a bucket under prefix.
+        """
+        Lists prefixes and contents in a bucket under prefix.
 
         :param bucket_name: the name of the bucket
         :type bucket_name: str
@@ -308,46 +309,6 @@ class S3Store(object):
         obj = self.get_key(key, bucket_name)
         return obj.get()['Body'].read().decode('utf-8')
 
-    def upload_file(self,
-                    filename,
-                    key,
-                    bucket_name=None,
-                    overwrite=False,
-                    encrypt=False,
-                    acl=None):
-        """
-        Uploads a local file to S3
-
-        :param filename: name of the file to load.
-        :type filename: str
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param overwrite: A flag to decide whether or not to overwrite the key
-            if it already exists. If replace is False and the key exists, an
-            error will be raised.
-        :type overwrite: bool
-        :param encrypt: If True, the file will be encrypted on the server-side
-            by S3 and will be stored in an encrypted form while at rest in S3.
-        :type encrypt: bool
-        :param acl: ACL to use for uploading, e.g. "public-read".
-        :type acl: str
-        """
-        if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
-
-        if not overwrite and self.check_key(key, bucket_name):
-            raise PolyaxonStoresException("The key {} already exists.".format(key))
-
-        extra_args = {}
-        if encrypt:
-            extra_args['ServerSideEncryption'] = self.ENCRYPTION
-        if acl:
-            extra_args['ACL'] = acl
-
-        self.client.upload_file(filename, bucket_name, key, ExtraArgs=extra_args)
-
     def upload_bytes(self,
                      bytes_data,
                      key,
@@ -429,6 +390,46 @@ class S3Store(object):
                           overwrite=overwrite,
                           encrypt=encrypt,
                           acl=acl)
+
+    def upload_file(self,
+                    filename,
+                    key,
+                    bucket_name=None,
+                    overwrite=False,
+                    encrypt=False,
+                    acl=None):
+        """
+        Uploads a local file to S3
+
+        :param filename: name of the file to upload.
+        :type filename: str
+        :param key: S3 key that will point to the file.
+        :type key: str
+        :param bucket_name: Name of the bucket in which to store the file.
+        :type bucket_name: str
+        :param overwrite: A flag to decide whether or not to overwrite the key
+            if it already exists. If replace is False and the key exists, an
+            error will be raised.
+        :type overwrite: bool
+        :param encrypt: If True, the file will be encrypted on the server-side
+            by S3 and will be stored in an encrypted form while at rest in S3.
+        :type encrypt: bool
+        :param acl: ACL to use for uploading, e.g. "public-read".
+        :type acl: str
+        """
+        if not bucket_name:
+            (bucket_name, key) = self.parse_s3_url(key)
+
+        if not overwrite and self.check_key(key, bucket_name):
+            raise PolyaxonStoresException("The key {} already exists.".format(key))
+
+        extra_args = {}
+        if encrypt:
+            extra_args['ServerSideEncryption'] = self.ENCRYPTION
+        if acl:
+            extra_args['ACL'] = acl
+
+        self.client.upload_file(filename, bucket_name, key, ExtraArgs=extra_args)
 
     def download_file(self, key, file_path, local_path, bucket_name=None):
         """
