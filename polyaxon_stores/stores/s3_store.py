@@ -464,7 +464,8 @@ class S3Store(object):
                      bucket_name=None,
                      overwrite=False,
                      encrypt=False,
-                     acl=None):
+                     acl=None,
+                     use_basename=True):
         """
         Uploads a local directory to S3.
 
@@ -483,9 +484,14 @@ class S3Store(object):
         :type encrypt: bool
         :param acl: ACL to use for uploading, e.g. "public-read".
         :type acl: str
+        :param use_basename: whether or not to use the basename of the directory.
+        :type use_basename: bool
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)
+
+        if use_basename:
+            key = append_basename(key, dir_name)
 
         # Turn the path to absolute paths
         dir_name = os.path.abspath(dir_name)

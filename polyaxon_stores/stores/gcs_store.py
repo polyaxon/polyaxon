@@ -237,7 +237,7 @@ class GCSStore(object):
         blob = self.get_blob(blob=blob, bucket_name=bucket_name)
         blob.download_to_filename(local_path)
 
-    def upload_files(self, dir_name, blob, bucket_name=None):
+    def upload_files(self, dir_name, blob, bucket_name=None, use_basename=True):
         """
         Uploads a local directory to to Google Cloud Storage.
 
@@ -247,9 +247,14 @@ class GCSStore(object):
         :type blob: str
         :param bucket_name: the name of the bucket.
         :type bucket_name: str
+        :param use_basename: whether or not to use the basename of the directory.
+        :type use_basename: bool
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
+
+        if use_basename:
+            blob = append_basename(blob, dir_name)
 
         # Turn the path to absolute paths
         dir_name = os.path.abspath(dir_name)

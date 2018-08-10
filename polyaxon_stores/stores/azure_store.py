@@ -196,7 +196,7 @@ class AzureStore(object):
 
         self.connection.get_blob_to_path(container_name, blob, local_path)
 
-    def upload_files(self, dir_name, blob, container_name=None):
+    def upload_files(self, dir_name, blob, container_name=None, use_basename=True):
         """
         Uploads a local directory to to Google Cloud Storage.
 
@@ -206,9 +206,14 @@ class AzureStore(object):
         :type blob: str
         :param container_name: the name of the container.
         :type container_name: str
+        :param use_basename: whether or not to use the basename of the directory.
+        :type use_basename: bool
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
+
+        if use_basename:
+            blob = append_basename(blob, dir_name)
 
         # Turn the path to absolute paths
         dir_name = os.path.abspath(dir_name)

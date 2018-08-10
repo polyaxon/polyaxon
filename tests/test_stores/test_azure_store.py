@@ -135,16 +135,16 @@ class TestAzureStore(TestCase):
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
     def test_upload_files(self, client):
-        dir_name = tempfile.mkdtemp()
-        fpath1 = dir_name + '/test1.txt'
+        dir_name1 = tempfile.mkdtemp()
+        fpath1 = dir_name1 + '/test1.txt'
         with open(fpath1, 'w') as f:
             f.write('data1')
 
-        fpath2 = dir_name + '/test2.txt'
+        fpath2 = dir_name1 + '/test2.txt'
         with open(fpath2, 'w') as f:
             f.write('data2')
 
-        dir_name2 = tempfile.mkdtemp(prefix=dir_name + '/')
+        dir_name2 = tempfile.mkdtemp(prefix=dir_name1 + '/')
         fpath3 = dir_name2 + '/test3.txt'
         with open(fpath3, 'w') as f:
             f.write('data3')
@@ -153,10 +153,23 @@ class TestAzureStore(TestCase):
 
         blob_path = 'path/to/'
         azure_url = self.wasbs_base + blob_path
-        rel_path = dir_name2.split('/')[-1]
-        store.upload_files(dir_name=dir_name, blob=azure_url)
+        rel_path1 = dir_name1.split('/')[-1]
+        rel_path2 = dir_name2.split('/')[-1]
+
+        # Test without basename
+        store.upload_files(dir_name=dir_name1, blob=azure_url, use_basename=False)
         client.return_value.create_blob_from_path.assert_has_calls([
-            mock.call('container', blob_path + 'test1.txt', fpath1),
-            mock.call('container', blob_path + 'test2.txt', fpath2),
-            mock.call('container', blob_path + rel_path + '/test3.txt', fpath3),
+            mock.call('container', '{}test1.txt'.format(blob_path), fpath1),
+            mock.call('container', '{}test2.txt'.format(blob_path), fpath2),
+            mock.call('container', '{}{}/test3.txt'.format(blob_path, rel_path2), fpath3),
+        ], any_order=True)
+
+        # Test with basename
+        store.upload_files(dir_name=dir_name1, blob=azure_url, use_basename=True)
+        client.return_value.create_blob_from_path.assert_has_calls([
+            mock.call('container', '{}{}/test1.txt'.format(blob_path, rel_path1), fpath1),
+            mock.call('container', '{}{}/test2.txt'.format(blob_path, rel_path1), fpath2),
+            mock.call('container',
+                      '{}{}/{}/test3.txt'.format(blob_path, rel_path1, rel_path2),
+                      fpath3),
         ], any_order=True)
