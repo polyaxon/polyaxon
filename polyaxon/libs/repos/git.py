@@ -17,7 +17,7 @@ _logger = logging.getLogger('polyaxon.repos.git')
 
 def get_repos(user):
     user_repos_root = os.path.join(settings.REPOS_MOUNT_PATH, user)
-    repos = [get_git_repo(os.path.join(user, dir)) for dir in os.listdir(user_repos_root)]
+    repos = [get_git_repo(os.path.join(user, dir_name)) for dir_name in os.listdir(user_repos_root)]
     return [repo for repo in repos if repo is not None]
 
 
