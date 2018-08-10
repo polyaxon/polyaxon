@@ -245,7 +245,7 @@ class TestAwsStore(TestCase):
         # Download
         dirname3 = tempfile.mkdtemp()
         store.download_files('mykey', dirname3, 'bucket', use_basename=False)
-        assert os.listdir(dirname3) == [rel_path2, 'test1.txt', 'test2.txt']
+        assert sorted(os.listdir(dirname3)) == sorted([rel_path2, 'test1.txt', 'test2.txt'])
         assert os.listdir('{}/{}'.format(dirname3, rel_path2)) == ['test3.txt']
 
         # Test with using basename
@@ -258,6 +258,6 @@ class TestAwsStore(TestCase):
         dirname3 = tempfile.mkdtemp()
         store.download_files('mykey/{}'.format(rel_path1), dirname3, 'bucket', use_basename=True)
         assert os.listdir(dirname3) == [rel_path1]
-        assert os.listdir('{}/{}'.format(dirname3, rel_path1)) == [
-            rel_path2, 'test1.txt', 'test2.txt']
+        assert sorted(os.listdir('{}/{}'.format(dirname3, rel_path1))) == sorted(
+            [rel_path2, 'test1.txt', 'test2.txt'])
         assert os.listdir('{}/{}/{}'.format(dirname3, rel_path1, rel_path2)) == ['test3.txt']
