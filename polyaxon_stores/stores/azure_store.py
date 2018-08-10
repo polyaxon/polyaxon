@@ -11,7 +11,11 @@ from azure.storage.blob.models import BlobPrefix
 
 from polyaxon_stores.clients.azure_client import get_blob_service_connection
 from polyaxon_stores.exceptions import PolyaxonStoresException
-from polyaxon_stores.utils import append_basename, get_files_in_current_directory
+from polyaxon_stores.utils import (
+    append_basename,
+    check_dirname_exists,
+    get_files_in_current_directory
+)
 
 
 class AzureStore(object):
@@ -194,14 +198,16 @@ class AzureStore(object):
         if use_basename:
             local_path = append_basename(local_path, blob)
 
+        check_dirname_exists(local_path)
+
         self.connection.get_blob_to_path(container_name, blob, local_path)
 
-    def upload_files(self, dir_name, blob, container_name=None, use_basename=True):
+    def upload_files(self, dirname, blob, container_name=None, use_basename=True):
         """
         Uploads a local directory to to Google Cloud Storage.
 
-        :param dir_name: name of the directory to upload.
-        :type dir_name: str
+        :param dirname: name of the directory to upload.
+        :type dirname: str
         :param blob: blob to upload to.
         :type blob: str
         :param container_name: the name of the container.
@@ -213,13 +219,13 @@ class AzureStore(object):
             container_name, _, blob = self.parse_wasbs_url(blob)
 
         if use_basename:
-            blob = append_basename(blob, dir_name)
+            blob = append_basename(blob, dirname)
 
         # Turn the path to absolute paths
-        dir_name = os.path.abspath(dir_name)
-        with get_files_in_current_directory(dir_name) as files:
+        dirname = os.path.abspath(dirname)
+        with get_files_in_current_directory(dirname) as files:
             for f in files:
-                file_blob = os.path.join(blob, os.path.relpath(f, dir_name))
+                file_blob = os.path.join(blob, os.path.relpath(f, dirname))
                 self.upload_file(filename=f,
                                  blob=file_blob,
                                  container_name=container_name,

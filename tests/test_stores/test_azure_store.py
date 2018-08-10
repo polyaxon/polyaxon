@@ -87,8 +87,8 @@ class TestAzureStore(TestCase):
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
     def test_upload_file(self, client):
-        dir_name = tempfile.mkdtemp()
-        fpath = dir_name + '/test.txt'
+        dirname = tempfile.mkdtemp()
+        fpath = dirname + '/test.txt'
         open(fpath, 'w')
 
         base_path = 'path/'
@@ -111,8 +111,8 @@ class TestAzureStore(TestCase):
     def test_download_file(self, client):
         client.return_value.list_blobs.return_value = MockBlobList([])
 
-        dir_name = tempfile.mkdtemp()
-        fpath = dir_name + '/test.txt'
+        dirname = tempfile.mkdtemp()
+        fpath = dirname + '/test.txt'
 
         def mkfile(container, cloud_path, fname):
             return open(fname, 'w')
@@ -129,23 +129,23 @@ class TestAzureStore(TestCase):
             "container", base_path, fpath)
 
         # Test without basename
-        store.download_file(key_path, dir_name, use_basename=True)
+        store.download_file(key_path, dirname, use_basename=True)
         client.return_value.get_blob_to_path.assert_called_with(
             "container", base_path, fpath)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
     def test_upload_files(self, client):
-        dir_name1 = tempfile.mkdtemp()
-        fpath1 = dir_name1 + '/test1.txt'
+        dirname1 = tempfile.mkdtemp()
+        fpath1 = dirname1 + '/test1.txt'
         with open(fpath1, 'w') as f:
             f.write('data1')
 
-        fpath2 = dir_name1 + '/test2.txt'
+        fpath2 = dirname1 + '/test2.txt'
         with open(fpath2, 'w') as f:
             f.write('data2')
 
-        dir_name2 = tempfile.mkdtemp(prefix=dir_name1 + '/')
-        fpath3 = dir_name2 + '/test3.txt'
+        dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
+        fpath3 = dirname2 + '/test3.txt'
         with open(fpath3, 'w') as f:
             f.write('data3')
 
@@ -153,11 +153,11 @@ class TestAzureStore(TestCase):
 
         blob_path = 'path/to/'
         azure_url = self.wasbs_base + blob_path
-        rel_path1 = dir_name1.split('/')[-1]
-        rel_path2 = dir_name2.split('/')[-1]
+        rel_path1 = dirname1.split('/')[-1]
+        rel_path2 = dirname2.split('/')[-1]
 
         # Test without basename
-        store.upload_files(dir_name=dir_name1, blob=azure_url, use_basename=False)
+        store.upload_files(dirname=dirname1, blob=azure_url, use_basename=False)
         client.return_value.create_blob_from_path.assert_has_calls([
             mock.call('container', '{}test1.txt'.format(blob_path), fpath1),
             mock.call('container', '{}test2.txt'.format(blob_path), fpath2),
@@ -165,7 +165,7 @@ class TestAzureStore(TestCase):
         ], any_order=True)
 
         # Test with basename
-        store.upload_files(dir_name=dir_name1, blob=azure_url, use_basename=True)
+        store.upload_files(dirname=dirname1, blob=azure_url, use_basename=True)
         client.return_value.create_blob_from_path.assert_has_calls([
             mock.call('container', '{}{}/test1.txt'.format(blob_path, rel_path1), fpath1),
             mock.call('container', '{}{}/test2.txt'.format(blob_path, rel_path1), fpath2),

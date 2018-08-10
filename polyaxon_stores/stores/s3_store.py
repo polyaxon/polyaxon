@@ -11,7 +11,12 @@ from botocore.exceptions import ClientError
 from polyaxon_stores.clients import aws_client
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
-from polyaxon_stores.utils import append_basename, force_bytes, get_files_in_current_directory
+from polyaxon_stores.utils import (
+    append_basename,
+    check_dirname_exists,
+    force_bytes,
+    get_files_in_current_directory
+)
 
 
 class S3Store(object):
@@ -456,10 +461,12 @@ class S3Store(object):
         if use_basename:
             local_path = append_basename(local_path, key)
 
+        check_dirname_exists(local_path)
+
         self.client.download_file(bucket_name, key, local_path)
 
     def upload_files(self,
-                     dir_name,
+                     dirname,
                      key,
                      bucket_name=None,
                      overwrite=False,
@@ -469,8 +476,8 @@ class S3Store(object):
         """
         Uploads a local directory to S3.
 
-        :param dir_name: name of the directory to upload.
-        :type dir_name: str
+        :param dirname: name of the directory to upload.
+        :type dirname: str
         :param key: S3 key that will point to the file.
         :type key: str
         :param bucket_name: Name of the bucket in which to store the file.
@@ -491,13 +498,13 @@ class S3Store(object):
             bucket_name, key = self.parse_s3_url(key)
 
         if use_basename:
-            key = append_basename(key, dir_name)
+            key = append_basename(key, dirname)
 
         # Turn the path to absolute paths
-        dir_name = os.path.abspath(dir_name)
-        with get_files_in_current_directory(dir_name) as files:
+        dirname = os.path.abspath(dirname)
+        with get_files_in_current_directory(dirname) as files:
             for f in files:
-                file_key = os.path.join(key, os.path.relpath(f, dir_name))
+                file_key = os.path.join(key, os.path.relpath(f, dirname))
                 self.upload_file(filename=f,
                                  key=file_key,
                                  bucket_name=bucket_name,

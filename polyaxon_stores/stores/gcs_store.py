@@ -8,7 +8,11 @@ from six.moves import urllib
 from polyaxon_stores.clients import gc_client
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
-from polyaxon_stores.utils import append_basename, get_files_in_current_directory
+from polyaxon_stores.utils import (
+    append_basename,
+    check_dirname_exists,
+    get_files_in_current_directory
+)
 
 
 class GCSStore(object):
@@ -234,15 +238,17 @@ class GCSStore(object):
         if use_basename:
             local_path = append_basename(local_path, blob)
 
+        check_dirname_exists(local_path)
+
         blob = self.get_blob(blob=blob, bucket_name=bucket_name)
         blob.download_to_filename(local_path)
 
-    def upload_files(self, dir_name, blob, bucket_name=None, use_basename=True):
+    def upload_files(self, dirname, blob, bucket_name=None, use_basename=True):
         """
         Uploads a local directory to to Google Cloud Storage.
 
-        :param dir_name: name of the directory to upload.
-        :type dir_name: str
+        :param dirname: name of the directory to upload.
+        :type dirname: str
         :param blob: blob to upload to.
         :type blob: str
         :param bucket_name: the name of the bucket.
@@ -254,13 +260,13 @@ class GCSStore(object):
             bucket_name, blob = self.parse_gcs_url(blob)
 
         if use_basename:
-            blob = append_basename(blob, dir_name)
+            blob = append_basename(blob, dirname)
 
         # Turn the path to absolute paths
-        dir_name = os.path.abspath(dir_name)
-        with get_files_in_current_directory(dir_name) as files:
+        dirname = os.path.abspath(dirname)
+        with get_files_in_current_directory(dirname) as files:
             for f in files:
-                file_blob = os.path.join(blob, os.path.relpath(f, dir_name))
+                file_blob = os.path.join(blob, os.path.relpath(f, dirname))
                 self.upload_file(filename=f,
                                  blob=file_blob,
                                  bucket_name=bucket_name,

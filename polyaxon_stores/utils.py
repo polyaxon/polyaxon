@@ -4,6 +4,7 @@ import os
 from contextlib import contextmanager
 from decimal import Decimal
 
+from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
 
 
@@ -45,6 +46,11 @@ def append_basename(path, filename):
     """
     return os.path.join(path, os.path.basename(filename))
 
+
+def check_dirname_exists(filepath):
+    dirpath = os.path.dirname(os.path.abspath(filepath))
+    if not os.path.isdir(dirpath):
+        raise PolyaxonStoresException('The parent path is not a directory {}'.format(dirpath))
 
 @contextmanager
 def get_files_in_current_directory(path):

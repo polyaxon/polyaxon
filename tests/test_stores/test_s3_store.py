@@ -167,16 +167,16 @@ class TestAwsStore(TestCase):
         store = S3Store()
         store.client.create_bucket(Bucket='bucket')
 
-        dir_name = tempfile.mkdtemp()
-        fpath1 = dir_name + '/test1.txt'
+        dirname = tempfile.mkdtemp()
+        fpath1 = dirname + '/test1.txt'
         with open(fpath1, 'w') as f:
             f.write('data1')
 
-        fpath2 = dir_name + '/test2.txt'
+        fpath2 = dirname + '/test2.txt'
         with open(fpath2, 'w') as f:
             f.write('data2')
 
-        fpath3 = dir_name + '/test3.txt'
+        fpath3 = dirname + '/test3.txt'
         with open(fpath3, 'w') as f:
             f.write('data3')
 
@@ -190,50 +190,50 @@ class TestAwsStore(TestCase):
         assert store.check_key('foo/test3.txt', 'bucket') is True
 
         store.download_file('my_key1.txt',
-                            local_path=dir_name + '/foo1.txt',
+                            local_path=dirname + '/foo1.txt',
                             bucket_name='bucket',
                             use_basename=False)
-        assert os.path.basename(dir_name + '/foo1.txt') == 'foo1.txt'
-        assert open(os.path.join(dir_name + '/foo1.txt')).read() == 'data1'
+        assert os.path.basename(dirname + '/foo1.txt') == 'foo1.txt'
+        assert open(os.path.join(dirname + '/foo1.txt')).read() == 'data1'
 
-        dir_name2 = tempfile.mkdtemp()
+        dirname2 = tempfile.mkdtemp()
         store.download_file('foo/test3.txt',
-                            local_path=dir_name2,
+                            local_path=dirname2,
                             bucket_name='bucket',
                             use_basename=True)
-        assert os.path.basename(dir_name2 + '/test3.txt') == 'test3.txt'
-        assert open(os.path.join(dir_name2 + '/test3.txt')).read() == 'data3'
+        assert os.path.basename(dirname2 + '/test3.txt') == 'test3.txt'
+        assert open(os.path.join(dirname2 + '/test3.txt')).read() == 'data3'
 
     @mock_s3
     def test_upload_files(self):
         store = S3Store()
         store.client.create_bucket(Bucket='bucket')
 
-        dir_name1 = tempfile.mkdtemp()
-        fpath1 = dir_name1 + '/test1.txt'
+        dirname1 = tempfile.mkdtemp()
+        fpath1 = dirname1 + '/test1.txt'
         with open(fpath1, 'w') as f:
             f.write('data1')
 
-        fpath2 = dir_name1 + '/test2.txt'
+        fpath2 = dirname1 + '/test2.txt'
         with open(fpath2, 'w') as f:
             f.write('data2')
 
-        dir_name2 = tempfile.mkdtemp(prefix=dir_name1 + '/')
-        fpath3 = dir_name2 + '/test3.txt'
+        dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
+        fpath3 = dirname2 + '/test3.txt'
         with open(fpath3, 'w') as f:
             f.write('data3')
 
-        rel_path1 = dir_name1.split('/')[-1]
-        rel_path2 = dir_name2.split('/')[-1]
+        rel_path1 = dirname1.split('/')[-1]
+        rel_path2 = dirname2.split('/')[-1]
 
         # Test without using basename
-        store.upload_files(dir_name1, 'mykey', 'bucket', use_basename=False)
+        store.upload_files(dirname1, 'mykey', 'bucket', use_basename=False)
         assert store.check_key('mykey/test1.txt', 'bucket') is True
         assert store.check_key('mykey/test2.txt', 'bucket') is True
         assert store.check_key('mykey/{}/test3.txt'.format(rel_path2), 'bucket') is True
 
         # Test with using basename
-        store.upload_files(dir_name1, 'mykey', 'bucket', use_basename=True)
+        store.upload_files(dirname1, 'mykey', 'bucket', use_basename=True)
         assert store.check_key('mykey/{}/test1.txt'.format(rel_path1), 'bucket') is True
         assert store.check_key('mykey/{}/test2.txt'.format(rel_path1), 'bucket') is True
         assert store.check_key(
