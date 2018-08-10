@@ -128,6 +128,9 @@ class AzureStore(object):
         if not container_name:
             container_name, _, key = self.parse_wasbs_url(key)
 
+        if key and not key.endswith('/'):
+            key += '/'
+
         prefix = key
         if path:
             prefix = os.path.join(prefix, path)
@@ -230,3 +233,49 @@ class AzureStore(object):
                                  blob=file_blob,
                                  container_name=container_name,
                                  use_basename=False)
+
+    def download_files(self, blob, local_path, container_name=None, use_basename=True):
+        """
+        Download a directory from Google Cloud Storage.
+
+        :param blob: blob to download.
+        :type blob: str
+        :param local_path: the path to download to.
+        :type local_path: str
+        :param container_name: the name of the container.
+        :type container_name: str
+        :param use_basename: whether or not to use the basename of the key.
+        :type use_basename: bool
+        """
+        if not container_name:
+            container_name, _, blob = self.parse_wasbs_url(blob)
+
+        if use_basename:
+            local_path = append_basename(local_path, blob)
+
+        try:
+            check_dirname_exists(local_path, is_dir=True)
+        except PolyaxonStoresException:
+            os.mkdir(local_path)
+
+        results = self.list(container_name=container_name, key=blob, delimiter='/')
+
+        # Create directories
+        for prefix in sorted(results['prefixes']):
+            direname = os.path.join(local_path, prefix)
+            prefix = os.path.join(blob, prefix)
+            # Download files under
+            self.download_files(blob=prefix,
+                                local_path=direname,
+                                container_name=container_name,
+                                use_basename=False)
+
+        # Download files
+        for file_key in results['blobs']:
+            file_key = file_key[0]
+            filename = os.path.join(local_path, file_key)
+            file_key = os.path.join(blob, file_key)
+            self.download_file(blob=file_key,
+                               local_path=filename,
+                               container_name=container_name,
+                               use_basename=False)

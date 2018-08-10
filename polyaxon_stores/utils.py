@@ -47,10 +47,12 @@ def append_basename(path, filename):
     return os.path.join(path, os.path.basename(filename))
 
 
-def check_dirname_exists(filepath):
-    dirpath = os.path.dirname(os.path.abspath(filepath))
-    if not os.path.isdir(dirpath):
-        raise PolyaxonStoresException('The parent path is not a directory {}'.format(dirpath))
+def check_dirname_exists(path, is_dir=False):
+    if not is_dir:
+        path = os.path.dirname(os.path.abspath(path))
+    if not os.path.isdir(path):
+        raise PolyaxonStoresException('The parent path is not a directory {}'.format(path))
+
 
 @contextmanager
 def get_files_in_current_directory(path):

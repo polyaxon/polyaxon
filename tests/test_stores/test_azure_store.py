@@ -68,11 +68,11 @@ class TestAzureStore(TestCase):
         base_path = 'path'
         # Create some files to return
         dir_prefix = BlobPrefix()
-        dir_prefix.name = base_path + '/dir'
+        dir_prefix.name = '/' + base_path + '/dir'
 
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        blob = Blob(base_path + '/file', props=blob_props)
+        blob = Blob('/' + base_path + '/file', props=blob_props)
 
         client.return_value.list_blobs.return_value = MockBlobList([dir_prefix, blob])
 
@@ -173,3 +173,117 @@ class TestAzureStore(TestCase):
                       '{}{}/{}/test3.txt'.format(blob_path, rel_path1, rel_path2),
                       fpath3),
         ], any_order=True)
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_download_files(self, client):
+        dirname1 = tempfile.mkdtemp()
+        dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
+
+        def mkfile(container, cloud_path, fname):
+            return open(fname, 'w')
+
+        client.return_value.get_blob_to_path.side_effect = mkfile
+
+        store = AzureStore()
+
+        blob_path = 'path/to/'
+        azure_url = self.wasbs_base + blob_path
+        rel_path2 = dirname2.split('/')[-1]
+
+        # Mock return list
+        blob_props = BlobProperties()
+        blob_props.content_length = 42
+        obj_mock1 = Blob('/' + blob_path + 'test1.txt', props=blob_props)
+
+        blob_props = BlobProperties()
+        blob_props.content_length = 42
+        obj_mock2 = Blob('/' + blob_path + 'test2.txt', props=blob_props)
+
+        subdir_mock = BlobPrefix()
+        subdir_mock.name = '/' + blob_path + rel_path2
+
+        blob_props = BlobProperties()
+        blob_props.content_length = 42
+        obj_mock3 = Blob('/' + blob_path + rel_path2 + '/' + 'test3.txt', props=blob_props)
+
+        # Create some files to return
+        def list_side_effect(container_name, prefix, delimiter='/', marker=None):
+            if prefix == blob_path:
+                return MockBlobList([subdir_mock, obj_mock1, obj_mock2])
+            return MockBlobList([obj_mock3])
+
+        client.return_value.list_blobs.side_effect = list_side_effect
+
+        dirname3 = tempfile.mkdtemp()
+
+        # Test without basename
+        store.download_files(blob=azure_url, local_path=dirname3, use_basename=False)
+        client.return_value.get_blob_to_path.assert_has_calls(
+            [
+                mock.call('container',
+                          '{}test1.txt'.format(blob_path),
+                          '{}/test1.txt'.format(dirname3)),
+                mock.call('container',
+                          '{}test2.txt'.format(blob_path),
+                          '{}/test2.txt'.format(dirname3)),
+                mock.call('container',
+                          '{}{}/test3.txt'.format(blob_path, rel_path2),
+                          '{}/{}/test3.txt'.format(dirname3, rel_path2)),
+            ], any_order=True)
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_download_files_Z(self, client):
+        dirname1 = tempfile.mkdtemp()
+        dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
+
+        def mkfile(container, cloud_path, fname):
+            return open(fname, 'w')
+
+        client.return_value.get_blob_to_path.side_effect = mkfile
+
+        store = AzureStore()
+
+        blob_path = 'path/to/'
+        azure_url = self.wasbs_base + blob_path
+        rel_path2 = dirname2.split('/')[-1]
+
+        # Mock return list
+        blob_props = BlobProperties()
+        blob_props.content_length = 42
+        obj_mock1 = Blob('/' + blob_path + 'foo/test1.txt', props=blob_props)
+
+        blob_props = BlobProperties()
+        blob_props.content_length = 42
+        obj_mock2 = Blob('/' + blob_path + 'foo/test2.txt', props=blob_props)
+
+        subdir_mock = BlobPrefix()
+        subdir_mock.name = '/' + blob_path + 'foo/' + rel_path2
+
+        blob_props = BlobProperties()
+        blob_props.content_length = 42
+        obj_mock3 = Blob('/' + blob_path + 'foo/' + rel_path2 + '/' + 'test3.txt', props=blob_props)
+
+        # Create some files to return
+        def list_side_effect(container_name, prefix, delimiter='/', marker=None):
+            if prefix == blob_path + 'foo/':
+                return MockBlobList([subdir_mock, obj_mock1, obj_mock2])
+            return MockBlobList([obj_mock3])
+
+        client.return_value.list_blobs.side_effect = list_side_effect
+
+        dirname3 = tempfile.mkdtemp()
+
+        # Test without basename
+        store.download_files(blob=azure_url + 'foo', local_path=dirname3, use_basename=True)
+        client.return_value.get_blob_to_path.assert_has_calls(
+            [
+                mock.call('container',
+                          '{}foo/test1.txt'.format(blob_path),
+                          '{}/foo/test1.txt'.format(dirname3)),
+                mock.call('container',
+                          '{}foo/test2.txt'.format(blob_path),
+                          '{}/foo/test2.txt'.format(dirname3)),
+                mock.call('container',
+                          '{}foo/{}/test3.txt'.format(blob_path, rel_path2),
+                          '{}/foo/{}/test3.txt'.format(dirname3, rel_path2)),
+            ], any_order=True)

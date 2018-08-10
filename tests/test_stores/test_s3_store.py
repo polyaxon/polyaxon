@@ -30,6 +30,14 @@ class TestAwsStore(TestCase):
         parsed_url = S3Store.parse_s3_url(s3_url)
         assert parsed_url == ('test', 'this/is/bad/key.txt')
 
+    def test_check_prefix_format(self):
+        assert S3Store.check_prefix_format(prefix='foo', delimiter='') == 'foo'
+        assert S3Store.check_prefix_format(prefix='foo', delimiter='/') == 'foo/'
+        assert S3Store.check_prefix_format(prefix='foo/', delimiter='/') == 'foo/'
+        assert S3Store.check_prefix_format(prefix='/foo/', delimiter='/') == '/foo/'
+        assert S3Store.check_prefix_format(prefix='/foo/boo', delimiter='/') == '/foo/boo/'
+        assert S3Store.check_prefix_format(prefix='', delimiter='/') == ''
+
     @mock_s3
     def test_check_bucket(self):
         store = S3Store()
@@ -60,9 +68,9 @@ class TestAwsStore(TestCase):
         b.put_object(Key='dir/b', Body=b'b')
 
         assert store.list_prefixes(bucket_name='bucket', prefix='non-existent/') == []
-        assert store.list_prefixes(bucket_name='bucket', delimiter='/') == ['dir/']
+        assert store.list_prefixes(bucket_name='bucket', delimiter='/') == ['dir']
         assert store.list_keys(bucket_name='bucket', delimiter='/') == [('a', 1)]
-        assert store.list_keys(bucket_name='bucket', prefix='dir/') == [('dir/b', 1)]
+        assert store.list_keys(bucket_name='bucket', prefix='dir/') == [('b', 1)]
 
     @mock_s3
     def test_list_prefixes_paged(self):
@@ -71,7 +79,7 @@ class TestAwsStore(TestCase):
         b.create()
         # Test only one page
         keys = ['x/b', 'y/b']
-        dirs = ['x/', 'y/']
+        dirs = ['x', 'y']
         for key in keys:
             b.put_object(Key=key, Body=b'a')
 
@@ -91,7 +99,7 @@ class TestAwsStore(TestCase):
         assert store.list_keys(bucket_name='bucket', prefix='non-existent/') == []
         assert store.list_keys(bucket_name='bucket') == [('a', 1), ('dir/b', 1)]
         assert store.list_keys(bucket_name='bucket', delimiter='/') == [('a', 1)]
-        assert store.list_keys(bucket_name='bucket', prefix='dir/') == [('dir/b', 1)]
+        assert store.list_keys(bucket_name='bucket', prefix='dir/') == [('b', 1)]
 
     @mock_s3
     def test_list_keys_paged(self):
@@ -180,6 +188,7 @@ class TestAwsStore(TestCase):
         with open(fpath3, 'w') as f:
             f.write('data3')
 
+        # Upload
         store.upload_file(fpath1, 'my_key1.txt', 'bucket', use_basename=False)
         assert store.check_key('my_key1.txt', 'bucket') is True
 
@@ -189,6 +198,7 @@ class TestAwsStore(TestCase):
         store.upload_file(fpath3, 'foo/', 'bucket', use_basename=True)
         assert store.check_key('foo/test3.txt', 'bucket') is True
 
+        # Download
         store.download_file('my_key1.txt',
                             local_path=dirname + '/foo1.txt',
                             bucket_name='bucket',
@@ -205,7 +215,7 @@ class TestAwsStore(TestCase):
         assert open(os.path.join(dirname2 + '/test3.txt')).read() == 'data3'
 
     @mock_s3
-    def test_upload_files(self):
+    def test_upload_download_directory(self):
         store = S3Store()
         store.client.create_bucket(Bucket='bucket')
 
@@ -227,10 +237,16 @@ class TestAwsStore(TestCase):
         rel_path2 = dirname2.split('/')[-1]
 
         # Test without using basename
+        # Upload
         store.upload_files(dirname1, 'mykey', 'bucket', use_basename=False)
         assert store.check_key('mykey/test1.txt', 'bucket') is True
         assert store.check_key('mykey/test2.txt', 'bucket') is True
         assert store.check_key('mykey/{}/test3.txt'.format(rel_path2), 'bucket') is True
+        # Download
+        dirname3 = tempfile.mkdtemp()
+        store.download_files('mykey', dirname3, 'bucket', use_basename=False)
+        assert os.listdir(dirname3) == [rel_path2, 'test1.txt', 'test2.txt']
+        assert os.listdir('{}/{}'.format(dirname3, rel_path2)) == ['test3.txt']
 
         # Test with using basename
         store.upload_files(dirname1, 'mykey', 'bucket', use_basename=True)
@@ -238,3 +254,10 @@ class TestAwsStore(TestCase):
         assert store.check_key('mykey/{}/test2.txt'.format(rel_path1), 'bucket') is True
         assert store.check_key(
             'mykey/{}/{}/test3.txt'.format(rel_path1, rel_path2), 'bucket') is True
+        # Download
+        dirname3 = tempfile.mkdtemp()
+        store.download_files('mykey/{}'.format(rel_path1), dirname3, 'bucket', use_basename=True)
+        assert os.listdir(dirname3) == [rel_path1]
+        assert os.listdir('{}/{}'.format(dirname3, rel_path1)) == [
+            rel_path2, 'test1.txt', 'test2.txt']
+        assert os.listdir('{}/{}/{}'.format(dirname3, rel_path1, rel_path2)) == ['test3.txt']

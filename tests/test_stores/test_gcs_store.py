@@ -310,3 +310,140 @@ class TestGCSStore(TestCase):
                                                  mock.call(fpath2),
                                                  mock.call(fpath3),
                                                  ], any_order=True))
+
+    @mock.patch(GCS_MODULE.format('get_gc_credentials'))
+    @mock.patch(GCS_MODULE.format('Client'))
+    def test_download_files(self, client, _):
+        dirname1 = tempfile.mkdtemp()
+        dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
+
+        def mkfile(fname):
+            return open(fname, 'w')
+
+        (client.return_value
+         .get_bucket.return_value
+         .get_blob.return_value
+         .download_to_filename.side_effect) = mkfile
+
+        store = GCSStore()
+
+        blob_path = 'path/to/'
+        gcs_url = 'gs://bucket/' + blob_path
+        rel_path2 = dirname2.split('/')[-1]
+
+        # Mock return list
+        obj_mock1 = mock.Mock()
+        obj_mock1.configure_mock(name='/' + blob_path + 'test1.txt', size=1)
+
+        obj_mock2 = mock.Mock()
+        obj_mock2.configure_mock(name='/' + blob_path + 'test2.txt', size=1)
+
+        subdir_mock = mock.Mock()
+        subdirname = rel_path2 + '/'
+        subdir_mock.configure_mock(prefixes=('/' + blob_path + subdirname,))
+
+        obj_mock3 = mock.Mock()
+        obj_mock3.configure_mock(name='/' + blob_path + subdirname + 'test3.txt', size=1)
+
+        mock_results1 = mock.MagicMock()
+        mock_results1.configure_mock(pages=[subdir_mock])
+        mock_results1.__iter__.return_value = [obj_mock1, obj_mock2]
+
+        mock_results2 = mock.MagicMock()
+        mock_results2.configure_mock(pages=[])
+        mock_results2.__iter__.return_value = [obj_mock3]
+
+        def list_side_effect(prefix, delimiter='/'):
+            if prefix == blob_path:
+                return mock_results1
+            return mock_results2
+
+        client.return_value.get_bucket.return_value.list_blobs.side_effect = list_side_effect
+
+        dirname3 = tempfile.mkdtemp()
+
+        # Test without basename
+        store.download_files(blob=gcs_url, local_path=dirname3, use_basename=False)
+        client.return_value.get_bucket().get_blob.assert_has_calls(
+            [
+                mock.call('{}test1.txt'.format(blob_path)),
+                mock.call('{}test2.txt'.format(blob_path)),
+                mock.call('{}{}/test3.txt'.format(blob_path, rel_path2)),
+            ], any_order=True)
+
+        (client.return_value
+         .get_bucket.return_value
+         .get_blob.return_value
+         .download_to_filename
+         .assert_has_calls([mock.call('{}/test1.txt'.format(dirname3)),
+                            mock.call('{}/test2.txt'.format(dirname3)),
+                            mock.call('{}/{}/test3.txt'.format(dirname3, rel_path2))],
+                           any_order=True))
+
+    @mock.patch(GCS_MODULE.format('get_gc_credentials'))
+    @mock.patch(GCS_MODULE.format('Client'))
+    def test_download_files_with_basename(self, client, _):
+        dirname1 = tempfile.mkdtemp()
+        dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
+
+        def mkfile(fname):
+            return open(fname, 'w')
+
+        (client.return_value
+         .get_bucket.return_value
+         .get_blob.return_value
+         .download_to_filename.side_effect) = mkfile
+
+        store = GCSStore()
+
+        blob_path = 'path/to/'
+        gcs_url = 'gs://bucket/' + blob_path
+        rel_path2 = dirname2.split('/')[-1]
+
+        # Mock return list
+        obj_mock1 = mock.Mock()
+        obj_mock1.configure_mock(name='/' + blob_path + 'foo/test1.txt', size=1)
+
+        obj_mock2 = mock.Mock()
+        obj_mock2.configure_mock(name='/' + blob_path + 'foo/test2.txt', size=1)
+
+        subdir_mock = mock.Mock()
+        subdirname = rel_path2 + '/'
+        subdir_mock.configure_mock(prefixes=('/' + blob_path + 'foo/' + subdirname,))
+
+        obj_mock3 = mock.Mock()
+        obj_mock3.configure_mock(name='/' + blob_path + 'foo/' + subdirname + 'test3.txt', size=1)
+
+        mock_results1 = mock.MagicMock()
+        mock_results1.configure_mock(pages=[subdir_mock])
+        mock_results1.__iter__.return_value = [obj_mock1, obj_mock2]
+
+        mock_results2 = mock.MagicMock()
+        mock_results2.configure_mock(pages=[])
+        mock_results2.__iter__.return_value = [obj_mock3]
+
+        def list_side_effect(prefix, delimiter='/'):
+            if prefix == blob_path + 'foo/':
+                return mock_results1
+            return mock_results2
+
+        client.return_value.get_bucket.return_value.list_blobs.side_effect = list_side_effect
+
+        dirname3 = tempfile.mkdtemp()
+
+        # Test with basename
+        store.download_files(blob=gcs_url + 'foo', local_path=dirname3, use_basename=True)
+        client.return_value.get_bucket.assert_called_with('bucket')
+        client.return_value.get_bucket().get_blob.assert_has_calls(
+            [mock.call('{}foo/test1.txt'.format(blob_path)),
+             mock.call('{}foo/test2.txt'.format(blob_path)),
+             mock.call('{}foo/{}/test3.txt'.format(blob_path, rel_path2)), ], any_order=True)
+
+        (client.return_value
+         .get_bucket.return_value
+         .get_blob.return_value
+         .download_to_filename
+         .assert_has_calls([mock.call('{}/foo/test1.txt'.format(dirname3)),
+                            mock.call('{}/foo/test2.txt'.format(dirname3)),
+                            mock.call('{}/foo/{}/test3.txt'.format(dirname3, rel_path2))],
+                           any_order=True))

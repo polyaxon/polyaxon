@@ -130,6 +130,12 @@ class S3Store(object):
             key = parsed_url.path.strip('/')
             return bucket_name, key
 
+    @staticmethod
+    def check_prefix_format(prefix, delimiter):
+        if not delimiter or not prefix:
+            return prefix
+        return prefix + delimiter if prefix[-1] != delimiter else prefix
+
     def check_bucket(self, bucket_name):
         """
         Checks if a buckete exists.
@@ -185,6 +191,7 @@ class S3Store(object):
         }
 
         paginator = self.client.get_paginator('list_objects_v2')
+        prefix = self.check_prefix_format(prefix=prefix, delimiter=delimiter)
         response = paginator.paginate(Bucket=bucket_name,
                                       Prefix=prefix,
                                       Delimiter=delimiter,
@@ -193,14 +200,14 @@ class S3Store(object):
         def get_keys(contents):
             list_keys = []
             for cont in contents:
-                list_keys.append((cont['Key'], cont.get('Size')))
+                list_keys.append((cont['Key'][len(prefix):], cont.get('Size')))
 
             return list_keys
 
         def get_prefixes(page_prefixes):
             list_prefixes = []
             for pref in page_prefixes:
-                list_prefixes.append(pref['Prefix'])
+                list_prefixes.append(pref['Prefix'][len(prefix): -1])
             return list_prefixes
 
         results = {
@@ -512,3 +519,49 @@ class S3Store(object):
                                  encrypt=encrypt,
                                  acl=acl,
                                  use_basename=False)
+
+    def download_files(self, key, local_path, bucket_name=None, use_basename=True):
+        """
+        Download a directory from S3.
+
+        :param key: S3 key that will point to the file.
+        :type key: str
+        :param local_path: the path to download to.
+        :type local_path: str
+        :param bucket_name: Name of the bucket in which to store the file.
+        :type bucket_name: str
+        :param use_basename: whether or not to use the basename of the key.
+        :type use_basename: bool
+        """
+        if not bucket_name:
+            bucket_name, key = self.parse_s3_url(key)
+
+        if use_basename:
+            local_path = append_basename(local_path, key)
+
+        try:
+            check_dirname_exists(local_path, is_dir=True)
+        except PolyaxonStoresException:
+            os.mkdir(local_path)
+
+        results = self.list(bucket_name=bucket_name, prefix=key, delimiter='/')
+
+        # Create directories
+        for prefix in sorted(results['prefixes']):
+            direname = os.path.join(local_path, prefix)
+            prefix = os.path.join(key, prefix)
+            # Download files under
+            self.download_files(key=prefix,
+                                local_path=direname,
+                                bucket_name=bucket_name,
+                                use_basename=False)
+
+        # Download files
+        for file_key in results['keys']:
+            file_key = file_key[0]
+            filename = os.path.join(local_path, file_key)
+            file_key = os.path.join(key, file_key)
+            self.download_file(key=file_key,
+                               local_path=filename,
+                               bucket_name=bucket_name,
+                               use_basename=False)

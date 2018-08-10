@@ -158,12 +158,13 @@ class GCSStore(object):
 
         bucket = self.get_bucket(bucket_name)
 
+        if key and not key.endswith('/'):
+            key += '/'
+
         prefix = key
         if path:
             prefix = os.path.join(prefix, path)
 
-        # For bucket.list_blobs and logic below name needs to end in /
-        # but for the root path "" we leave it as an empty string
         if prefix and not prefix.endswith('/'):
             prefix += '/'
 
@@ -271,3 +272,49 @@ class GCSStore(object):
                                  blob=file_blob,
                                  bucket_name=bucket_name,
                                  use_basename=False)
+
+    def download_files(self, blob, local_path, bucket_name=None, use_basename=True):
+        """
+        Download a directory from Google Cloud Storage.
+
+        :param blob: blob to download.
+        :type blob: str
+        :param local_path: the path to download to.
+        :type local_path: str
+        :param bucket_name: Name of the bucket in which to store the file.
+        :type bucket_name: str
+        :param use_basename: whether or not to use the basename of the key.
+        :type use_basename: bool
+        """
+        if not bucket_name:
+            bucket_name, blob = self.parse_gcs_url(blob)
+
+        if use_basename:
+            local_path = append_basename(local_path, blob)
+
+        try:
+            check_dirname_exists(local_path, is_dir=True)
+        except PolyaxonStoresException:
+            os.mkdir(local_path)
+
+        results = self.list(bucket_name=bucket_name, key=blob, delimiter='/')
+
+        # Create directories
+        for prefix in sorted(results['prefixes']):
+            direname = os.path.join(local_path, prefix)
+            prefix = os.path.join(blob, prefix)
+            # Download files under
+            self.download_files(blob=prefix,
+                                local_path=direname,
+                                bucket_name=bucket_name,
+                                use_basename=False)
+
+        # Download files
+        for file_key in results['blobs']:
+            file_key = file_key[0]
+            filename = os.path.join(local_path, file_key)
+            file_key = os.path.join(blob, file_key)
+            self.download_file(blob=file_key,
+                               local_path=filename,
+                               bucket_name=bucket_name,
+                               use_basename=False)
