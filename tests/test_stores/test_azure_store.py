@@ -232,7 +232,7 @@ class TestAzureStore(TestCase):
             ], any_order=True)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
-    def test_download_files_Z(self, client):
+    def test_download_files_with_basename(self, client):
         dirname1 = tempfile.mkdtemp()
         dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
 
