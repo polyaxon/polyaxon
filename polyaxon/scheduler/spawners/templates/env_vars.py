@@ -50,7 +50,7 @@ def get_job_env_vars(outputs_path,
         get_env_var(name=API_KEY_NAME, value=get_settings_api_url()),
         get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
         get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME, value=data_paths),
-        get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'polyaxon-internal-secret-token'),
+        get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'POLYAXON_INTERNAL_SECRET_TOKEN'),
     ]
     if log_level:
         env_vars.append(
