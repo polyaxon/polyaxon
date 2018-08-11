@@ -24,7 +24,7 @@ ENV_VARS_DIR = ROOT_DIR.child('polyaxon').child('polyaxon').child('env_vars')
 TESTING = bool(strtobool(os.getenv('TESTING', "0")))
 
 
-class SettingConfig(object):
+class ConfigManager(object):
     _PASS = '-Z$Swjin_bdNPtaV4nQEn&gWb;T|'
 
     def __init__(self, **params):
@@ -433,4 +433,4 @@ if TESTING:
 elif os.path.isfile('{}/local.json'.format(ENV_VARS_DIR)):
     config_values.append('{}/local.json'.format(ENV_VARS_DIR))
 
-config = SettingConfig.read_configs(config_values)
+config = ConfigManager.read_configs(config_values)

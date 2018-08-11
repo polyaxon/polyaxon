@@ -19,11 +19,21 @@ TYPE_LABELS_CORE = config.get_string('POLYAXON_TYPE_LABELS_CORE')
 TYPE_LABELS_EXPERIMENT = config.get_string('POLYAXON_TYPE_LABELS_EXPERIMENT')
 
 # Labels
-APP_LABELS_TENSORBOARD = config.get_string('POLYAXON_APP_LABELS_TENSORBOARD')
-APP_LABELS_NOTEBOOK = config.get_string('POLYAXON_APP_LABELS_NOTEBOOK')
-APP_LABELS_DOCKERIZER = config.get_string('POLYAXON_APP_LABELS_DOCKERIZER')
-APP_LABELS_EXPERIMENT = config.get_string('POLYAXON_APP_LABELS_EXPERIMENT')
-APP_LABELS_JOB = config.get_string('POLYAXON_APP_LABELS_JOB')
+APP_LABELS_TENSORBOARD = config.get_string('POLYAXON_APP_LABELS_TENSORBOARD',
+                                           is_optional=True,
+                                           default='polyaxon-tensorboard')
+APP_LABELS_NOTEBOOK = config.get_string('POLYAXON_APP_LABELS_NOTEBOOK',
+                                        is_optional=True,
+                                        default='polyaxon-notebook')
+APP_LABELS_DOCKERIZER = config.get_string('POLYAXON_APP_LABELS_DOCKERIZER',
+                                          is_optional=True,
+                                          default='polyaxon-dockerizer')
+APP_LABELS_EXPERIMENT = config.get_string('POLYAXON_APP_LABELS_EXPERIMENT',
+                                          is_optional=True,
+                                          default='polyaxon-experiment')
+APP_LABELS_JOB = config.get_string('POLYAXON_APP_LABELS_JOB',
+                                   is_optional=True,
+                                   default='polyaxon-job')
 
 # Selectors
 NODE_SELECTOR_EXPERIMENTS = config.get_string(
@@ -55,12 +65,24 @@ TOLERATIONS_BUILDS = config.get_string(
 TOLERATIONS_CORE = config.get_string(
     'POLYAXON_TOLERATIONS_CORE', is_optional=True)
 
-CONTAINER_NAME_EXPERIMENT_JOB = config.get_string('POLYAXON_CONTAINER_NAME_EXPERIMENT_JOB')
-CONTAINER_NAME_JOB = config.get_string('POLYAXON_CONTAINER_NAME_JOB')
-CONTAINER_NAME_SIDECAR = config.get_string('POLYAXON_CONTAINER_NAME_SIDECAR')
-CONTAINER_NAME_INIT = config.get_string('POLYAXON_CONTAINER_NAME_INIT')
-CONTAINER_NAME_PLUGIN_JOB = config.get_string('POLYAXON_CONTAINER_NAME_PLUGIN_JOB')
-CONTAINER_NAME_DOCKERIZER_JOB = config.get_string('POLYAXON_CONTAINER_NAME_DOCKERIZER_JOB')
+CONTAINER_NAME_EXPERIMENT_JOB = config.get_string('POLYAXON_CONTAINER_NAME_EXPERIMENT_JOB',
+                                                  is_optional=True,
+                                                  default='polyaxon-experiment-job')
+CONTAINER_NAME_JOB = config.get_string('POLYAXON_CONTAINER_NAME_JOB',
+                                       is_optional=True,
+                                       default='polyaxon-job')
+CONTAINER_NAME_SIDECAR = config.get_string('POLYAXON_CONTAINER_NAME_SIDECAR',
+                                           is_optional=True,
+                                           default='polyaxon-job-sidecar')
+CONTAINER_NAME_INIT = config.get_string('POLYAXON_CONTAINER_NAME_INIT',
+                                        is_optional=True,
+                                        default='polyaxon-job-init')
+CONTAINER_NAME_PLUGIN_JOB = config.get_string('POLYAXON_CONTAINER_NAME_PLUGIN_JOB',
+                                              is_optional=True,
+                                              default='polyaxon-plugin-job')
+CONTAINER_NAME_DOCKERIZER_JOB = config.get_string('POLYAXON_CONTAINER_NAME_DOCKERIZER_JOB',
+                                                  is_optional=True,
+                                                  default='polyaxon-dockerizer-job')
 JOB_DOCKER_NAME = config.get_string('POLYAXON_JOB_DOCKER_NAME',
                                     is_optional=True,
                                     default='polyaxon/polyaxon-lib')
