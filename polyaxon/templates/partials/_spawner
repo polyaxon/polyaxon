@@ -14,36 +14,6 @@ Spawner config
   value: {{ .Values.nfsProvisioner.enabled | quote }}
 - name: POLYAXON_K8S_SERVICE_ACCOUNT_NAME
   value: {{ template "polyaxon.fullname" . }}-serviceaccount
-- name: POLYAXON_CONTAINER_NAME_EXPERIMENT_JOB
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: container-name-experiment-job
-- name: POLYAXON_CONTAINER_NAME_JOB
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: container-name-job
-- name: POLYAXON_CONTAINER_NAME_SIDECAR
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: container-name-sidecar
-- name: POLYAXON_CONTAINER_NAME_INIT
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: container-name-init
-- name: POLYAXON_CONTAINER_NAME_PLUGIN_JOB
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: container-name-plugin-job
-- name: POLYAXON_CONTAINER_NAME_DOCKERIZER_JOB
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: container-name-dockerizer-job
 - name: POLYAXON_JOB_SIDECAR_DOCKER_IMAGE
   value: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.imageTag }}"
 - name: POLYAXON_JOB_DOCKERIZER_IMAGE
@@ -89,14 +59,4 @@ Spawner config
   value: {{ .Values.types.core }}
 - name: POLYAXON_TYPE_LABELS_EXPERIMENT
   value: {{ .Values.types.experiment }}
-- name: POLYAXON_APP_LABELS_TENSORBOARD
-  value: {{ .Values.apps.tensorboard }}
-- name: POLYAXON_APP_LABELS_NOTEBOOK
-  value: {{ .Values.apps.notebook }}
-- name: POLYAXON_APP_LABELS_DOCKERIZER
-  value: {{ .Values.apps.dockerizer }}
-- name: POLYAXON_APP_LABELS_EXPERIMENT
-  value: {{ .Values.apps.experiment }}
-- name: POLYAXON_APP_LABELS_JOB
-  value: {{ .Values.apps.job }}
 {{- end -}}

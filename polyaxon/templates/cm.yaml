@@ -10,18 +10,10 @@ metadata:
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.api }}
 data:
-  debug: {{ .Values.debug | quote }}
-  cluster-id: ""
+  POLYAXON_CLUSTER_ID: {{ default "" .Values.clusterId | quote }}
   amqp-url: {{ template "rabbitmq.fullname" . }}:5672
   redis-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
   redis-job-containers-url: redis://{{ template "redis.fullname" . }}:6379/3
   redis-to-stream-url: redis://{{ template "redis.fullname" . }}:6379/4
   redis-sessions-url: redis://{{ template "redis.fullname" . }}:6379/5
-  container-name-experiment-job: "polyaxon-experiment-job"
-  container-name-sidecar: "polyaxon-job-sidecar"
-  container-name-init: "polyaxon-job-init"
-  container-name-job: "polyaxon-job"
-  container-name-plugin-job: "polyaxon-plugin-job"
-  container-name-dockerizer-job: "polyaxon-dockerizer-job"
-  sidecar-persist: "0"
   sidecar-log-sleep-interval: "1"

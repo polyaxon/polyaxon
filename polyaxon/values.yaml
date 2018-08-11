@@ -483,9 +483,6 @@ nfsProvisioner:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
 
-
-debug: 0
-
 types:
   core: "polyaxon-core"
   experiment: "polyaxon-experiment"
@@ -495,13 +492,6 @@ roles:
   log: "polyaxon-logs"
   worker: "polyaxon-workers"
   dashboard: "polyaxon-dashboard"
-
-apps:
-  tensorboard: "polyaxon-tensorboard"
-  notebook: "polyaxon-notebook"
-  dockerizer: "polyaxon-dockerizer"
-  experiment: "polyaxon-experiment"
-  job: "polyaxon-job"
 
 k8s: {}
 

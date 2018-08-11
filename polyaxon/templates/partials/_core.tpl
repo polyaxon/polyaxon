@@ -14,11 +14,6 @@ Core config
       key: polyaxon-internal-secret-token
 - name: POLYAXON_PASSWORD_LENGTH
   value: {{ default "6" .Values.passwordLength | quote }}
-- name: POLYAXON_DEBUG
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: debug
 - name: POLYAXON_ENVIRONMENT
 {{- if .Values.environment }}
   value:  {{ .Values.environment | quote }}
