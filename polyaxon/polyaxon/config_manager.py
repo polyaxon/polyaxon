@@ -21,7 +21,7 @@ def base_directory():
 ROOT_DIR = base_directory()
 DATA_DIR = ROOT_DIR.child('data')
 ENV_VARS_DIR = ROOT_DIR.child('polyaxon').child('polyaxon').child('env_vars')
-TESTING = bool(strtobool(os.getenv("TESTING", "0")))
+TESTING = bool(strtobool(os.getenv('TESTING', "0")))
 
 
 class SettingConfig(object):
