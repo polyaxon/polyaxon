@@ -5,7 +5,7 @@
 
 
 # Polyaxon-stores
-An abstraction to make seamless storage integrations with variety of storage backends.
+An abstraction to make seamless storage integration with variety of storage backends.
 
 
 # License
