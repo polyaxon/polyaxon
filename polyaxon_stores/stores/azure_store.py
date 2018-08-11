@@ -211,7 +211,7 @@ class AzureStore(Store):
 
         self.connection.get_blob_to_path(container_name, blob, local_path)
 
-    def upload_files(self, dirname, blob, container_name=None, use_basename=True):
+    def upload_dir(self, dirname, blob, container_name=None, use_basename=True):
         """
         Uploads a local directory to to Google Cloud Storage.
 
@@ -240,7 +240,7 @@ class AzureStore(Store):
                                  container_name=container_name,
                                  use_basename=False)
 
-    def download_files(self, blob, local_path, container_name=None, use_basename=True):
+    def download_dir(self, blob, local_path, container_name=None, use_basename=True):
         """
         Download a directory from Google Cloud Storage.
 
@@ -271,7 +271,7 @@ class AzureStore(Store):
             direname = os.path.join(local_path, prefix)
             prefix = os.path.join(blob, prefix)
             # Download files under
-            self.download_files(blob=prefix,
+            self.download_dir(blob=prefix,
                                 local_path=direname,
                                 container_name=container_name,
                                 use_basename=False)

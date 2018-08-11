@@ -134,7 +134,7 @@ class TestAzureStore(TestCase):
             "container", base_path, fpath)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
-    def test_upload_files(self, client):
+    def test_upload_dir(self, client):
         dirname1 = tempfile.mkdtemp()
         fpath1 = dirname1 + '/test1.txt'
         with open(fpath1, 'w') as f:
@@ -157,7 +157,7 @@ class TestAzureStore(TestCase):
         rel_path2 = dirname2.split('/')[-1]
 
         # Test without basename
-        store.upload_files(dirname=dirname1, blob=azure_url, use_basename=False)
+        store.upload_dir(dirname=dirname1, blob=azure_url, use_basename=False)
         client.return_value.create_blob_from_path.assert_has_calls([
             mock.call('container', '{}test1.txt'.format(blob_path), fpath1),
             mock.call('container', '{}test2.txt'.format(blob_path), fpath2),
@@ -165,7 +165,7 @@ class TestAzureStore(TestCase):
         ], any_order=True)
 
         # Test with basename
-        store.upload_files(dirname=dirname1, blob=azure_url, use_basename=True)
+        store.upload_dir(dirname=dirname1, blob=azure_url, use_basename=True)
         client.return_value.create_blob_from_path.assert_has_calls([
             mock.call('container', '{}{}/test1.txt'.format(blob_path, rel_path1), fpath1),
             mock.call('container', '{}{}/test2.txt'.format(blob_path, rel_path1), fpath2),
@@ -175,7 +175,7 @@ class TestAzureStore(TestCase):
         ], any_order=True)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
-    def test_download_files(self, client):
+    def test_download_dir(self, client):
         dirname1 = tempfile.mkdtemp()
         dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
 
@@ -217,7 +217,7 @@ class TestAzureStore(TestCase):
         dirname3 = tempfile.mkdtemp()
 
         # Test without basename
-        store.download_files(blob=azure_url, local_path=dirname3, use_basename=False)
+        store.download_dir(blob=azure_url, local_path=dirname3, use_basename=False)
         client.return_value.get_blob_to_path.assert_has_calls(
             [
                 mock.call('container',
@@ -232,7 +232,7 @@ class TestAzureStore(TestCase):
             ], any_order=True)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
-    def test_download_files_with_basename(self, client):
+    def test_download_dir_with_basename(self, client):
         dirname1 = tempfile.mkdtemp()
         dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
 
@@ -274,7 +274,7 @@ class TestAzureStore(TestCase):
         dirname3 = tempfile.mkdtemp()
 
         # Test without basename
-        store.download_files(blob=azure_url + 'foo', local_path=dirname3, use_basename=True)
+        store.download_dir(blob=azure_url + 'foo', local_path=dirname3, use_basename=True)
         client.return_value.get_blob_to_path.assert_has_calls(
             [
                 mock.call('container',

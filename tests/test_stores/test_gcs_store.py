@@ -250,7 +250,7 @@ class TestGCSStore(TestCase):
 
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
-    def test_upload_files(self, client, _):
+    def test_upload_dir(self, client, _):
         dirname1 = tempfile.mkdtemp()
         fpath1 = dirname1 + '/test1.txt'
         with open(fpath1, 'w') as f:
@@ -278,7 +278,7 @@ class TestGCSStore(TestCase):
         rel_path2 = dirname2.split('/')[-1]
 
         # Test without basename
-        store.upload_files(dirname=dirname1, blob=gcs_url, use_basename=False)
+        store.upload_dir(dirname=dirname1, blob=gcs_url, use_basename=False)
         client.return_value.get_bucket.assert_called_with('bucket')
         client.return_value.get_bucket.return_value.get_blob.assert_has_calls(
             [
@@ -295,7 +295,7 @@ class TestGCSStore(TestCase):
                                                  ], any_order=True))
 
         # Test with basename
-        store.upload_files(dirname=dirname1, blob=gcs_url, use_basename=True)
+        store.upload_dir(dirname=dirname1, blob=gcs_url, use_basename=True)
         client.return_value.get_bucket.assert_called_with('bucket')
         client.return_value.get_bucket.return_value.get_blob.assert_has_calls(
             [
@@ -313,7 +313,7 @@ class TestGCSStore(TestCase):
 
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
-    def test_download_files(self, client, _):
+    def test_download_dir(self, client, _):
         dirname1 = tempfile.mkdtemp()
         dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
 
@@ -363,7 +363,7 @@ class TestGCSStore(TestCase):
         dirname3 = tempfile.mkdtemp()
 
         # Test without basename
-        store.download_files(blob=gcs_url, local_path=dirname3, use_basename=False)
+        store.download_dir(blob=gcs_url, local_path=dirname3, use_basename=False)
         client.return_value.get_bucket().get_blob.assert_has_calls(
             [
                 mock.call('{}test1.txt'.format(blob_path)),
@@ -382,7 +382,7 @@ class TestGCSStore(TestCase):
 
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
-    def test_download_files_with_basename(self, client, _):
+    def test_download_dir_with_basename(self, client, _):
         dirname1 = tempfile.mkdtemp()
         dirname2 = tempfile.mkdtemp(prefix=dirname1 + '/')
 
@@ -432,7 +432,7 @@ class TestGCSStore(TestCase):
         dirname3 = tempfile.mkdtemp()
 
         # Test with basename
-        store.download_files(blob=gcs_url + 'foo', local_path=dirname3, use_basename=True)
+        store.download_dir(blob=gcs_url + 'foo', local_path=dirname3, use_basename=True)
         client.return_value.get_bucket.assert_called_with('bucket')
         client.return_value.get_bucket().get_blob.assert_has_calls(
             [mock.call('{}foo/test1.txt'.format(blob_path)),

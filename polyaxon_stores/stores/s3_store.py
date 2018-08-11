@@ -476,7 +476,7 @@ class S3Store(Store):
 
         self.client.download_file(bucket_name, key, local_path)
 
-    def upload_files(self,
+    def upload_dir(self,
                      dirname,
                      key,
                      bucket_name=None,
@@ -524,7 +524,7 @@ class S3Store(Store):
                                  acl=acl,
                                  use_basename=False)
 
-    def download_files(self, key, local_path, bucket_name=None, use_basename=True):
+    def download_dir(self, key, local_path, bucket_name=None, use_basename=True):
         """
         Download a directory from S3.
 
@@ -555,7 +555,7 @@ class S3Store(Store):
             direname = os.path.join(local_path, prefix)
             prefix = os.path.join(key, prefix)
             # Download files under
-            self.download_files(key=prefix,
+            self.download_dir(key=prefix,
                                 local_path=direname,
                                 bucket_name=bucket_name,
                                 use_basename=False)

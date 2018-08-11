@@ -238,25 +238,25 @@ class TestAwsStore(TestCase):
 
         # Test without using basename
         # Upload
-        store.upload_files(dirname1, 'mykey', 'bucket', use_basename=False)
+        store.upload_dir(dirname1, 'mykey', 'bucket', use_basename=False)
         assert store.check_key('mykey/test1.txt', 'bucket') is True
         assert store.check_key('mykey/test2.txt', 'bucket') is True
         assert store.check_key('mykey/{}/test3.txt'.format(rel_path2), 'bucket') is True
         # Download
         dirname3 = tempfile.mkdtemp()
-        store.download_files('mykey', dirname3, 'bucket', use_basename=False)
+        store.download_dir('mykey', dirname3, 'bucket', use_basename=False)
         assert sorted(os.listdir(dirname3)) == sorted([rel_path2, 'test1.txt', 'test2.txt'])
         assert os.listdir('{}/{}'.format(dirname3, rel_path2)) == ['test3.txt']
 
         # Test with using basename
-        store.upload_files(dirname1, 'mykey', 'bucket', use_basename=True)
+        store.upload_dir(dirname1, 'mykey', 'bucket', use_basename=True)
         assert store.check_key('mykey/{}/test1.txt'.format(rel_path1), 'bucket') is True
         assert store.check_key('mykey/{}/test2.txt'.format(rel_path1), 'bucket') is True
         assert store.check_key(
             'mykey/{}/{}/test3.txt'.format(rel_path1, rel_path2), 'bucket') is True
         # Download
         dirname3 = tempfile.mkdtemp()
-        store.download_files('mykey/{}'.format(rel_path1), dirname3, 'bucket', use_basename=True)
+        store.download_dir('mykey/{}'.format(rel_path1), dirname3, 'bucket', use_basename=True)
         assert os.listdir(dirname3) == [rel_path1]
         assert sorted(os.listdir('{}/{}'.format(dirname3, rel_path1))) == sorted(
             [rel_path2, 'test1.txt', 'test2.txt'])

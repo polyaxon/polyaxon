@@ -42,11 +42,11 @@ class Store(object):
     def download_file(self, *args, **kwargs):
         raise NotImplementedError
 
-    def download_files(self, *args, **kwargs):
+    def download_dir(self, *args, **kwargs):
         raise NotImplementedError
 
     def upload_file(self, *args, **kwargs):
         raise NotImplementedError
 
-    def upload_files(self, *args, **kwargs):
+    def upload_dir(self, *args, **kwargs):
         raise NotImplementedError

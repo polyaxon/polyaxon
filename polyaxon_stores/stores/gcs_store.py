@@ -250,7 +250,7 @@ class GCSStore(Store):
         blob = self.get_blob(blob=blob, bucket_name=bucket_name)
         blob.download_to_filename(local_path)
 
-    def upload_files(self, dirname, blob, bucket_name=None, use_basename=True):
+    def upload_dir(self, dirname, blob, bucket_name=None, use_basename=True):
         """
         Uploads a local directory to to Google Cloud Storage.
 
@@ -279,7 +279,7 @@ class GCSStore(Store):
                                  bucket_name=bucket_name,
                                  use_basename=False)
 
-    def download_files(self, blob, local_path, bucket_name=None, use_basename=True):
+    def download_dir(self, blob, local_path, bucket_name=None, use_basename=True):
         """
         Download a directory from Google Cloud Storage.
 
@@ -310,7 +310,7 @@ class GCSStore(Store):
             direname = os.path.join(local_path, prefix)
             prefix = os.path.join(blob, prefix)
             # Download files under
-            self.download_files(blob=prefix,
+            self.download_dir(blob=prefix,
                                 local_path=direname,
                                 bucket_name=bucket_name,
                                 use_basename=False)
