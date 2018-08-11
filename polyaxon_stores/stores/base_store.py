@@ -39,6 +39,9 @@ class Store(object):
             from polyaxon_stores.stores.gcs_store import GCSStore
             return GCSStore()
 
+        raise PolyaxonStoresException(
+            'Received an unrecognised store type `{}`.'.format(store_type))
+
     def download_file(self, *args, **kwargs):
         raise NotImplementedError
 

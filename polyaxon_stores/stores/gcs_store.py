@@ -16,6 +16,9 @@ from polyaxon_stores.utils import (
 )
 
 
+# pylint:disable=arguments-differ
+
+
 class GCSStore(Store):
     """
     Google cloud store Service.
@@ -311,9 +314,9 @@ class GCSStore(Store):
             prefix = os.path.join(blob, prefix)
             # Download files under
             self.download_dir(blob=prefix,
-                                local_path=direname,
-                                bucket_name=bucket_name,
-                                use_basename=False)
+                              local_path=direname,
+                              bucket_name=bucket_name,
+                              use_basename=False)
 
         # Download files
         for file_key in results['blobs']:

@@ -20,6 +20,9 @@ from polyaxon_stores.utils import (
 )
 
 
+# pylint:disable=arguments-differ
+
+
 class S3Store(Store):
     """
     S3 store Service using Boto3.
@@ -477,13 +480,13 @@ class S3Store(Store):
         self.client.download_file(bucket_name, key, local_path)
 
     def upload_dir(self,
-                     dirname,
-                     key,
-                     bucket_name=None,
-                     overwrite=False,
-                     encrypt=False,
-                     acl=None,
-                     use_basename=True):
+                   dirname,
+                   key,
+                   bucket_name=None,
+                   overwrite=False,
+                   encrypt=False,
+                   acl=None,
+                   use_basename=True):
         """
         Uploads a local directory to S3.
 
@@ -556,9 +559,9 @@ class S3Store(Store):
             prefix = os.path.join(key, prefix)
             # Download files under
             self.download_dir(key=prefix,
-                                local_path=direname,
-                                bucket_name=bucket_name,
-                                use_basename=False)
+                              local_path=direname,
+                              bucket_name=bucket_name,
+                              use_basename=False)
 
         # Download files
         for file_key in results['keys']:

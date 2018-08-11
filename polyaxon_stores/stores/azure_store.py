@@ -19,6 +19,9 @@ from polyaxon_stores.utils import (
 )
 
 
+# pylint:disable=arguments-differ
+
+
 class AzureStore(Store):
     """
     Azure store Service.
@@ -272,9 +275,9 @@ class AzureStore(Store):
             prefix = os.path.join(blob, prefix)
             # Download files under
             self.download_dir(blob=prefix,
-                                local_path=direname,
-                                container_name=container_name,
-                                use_basename=False)
+                              local_path=direname,
+                              container_name=container_name,
+                              use_basename=False)
 
         # Download files
         for file_key in results['blobs']:

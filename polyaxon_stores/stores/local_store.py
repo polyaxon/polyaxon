@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_stores.stores.base_store import Store
 
 
+# pylint:disable=arguments-differ
+
 class LocalStore(Store):
     """
     Local filesystem store.
