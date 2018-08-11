@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import boto3
 
-from polyaxon_stores.clients.utils import get_from_env
+from polyaxon_stores.utils import get_from_env
 
 
 def get_aws_access_key_id(keys=None):

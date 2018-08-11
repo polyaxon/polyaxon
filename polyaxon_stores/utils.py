@@ -8,6 +8,30 @@ from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
 
 
+def get_from_env(keys):
+    """
+    Returns an environment variable from one of the list of keys.
+
+    :param keys: list of keys to check in the environment
+    :type keys: list(str)
+    :return: str | None
+    """
+    keys = keys or []
+    if not isinstance(keys, (list, tuple)):
+        keys = [keys]
+    for key in keys:
+        value = os.environ.get(key)
+        if value:
+            return value
+        # Prepend POLYAXON
+        key = 'POLYAXON_{}'.format(key)
+        value = os.environ.get(key)
+        if value:
+            return value
+
+    return None
+
+
 def is_protected_type(obj):
     """
     A check for preserving a type as-is when passed to force_text(strings_only=True).

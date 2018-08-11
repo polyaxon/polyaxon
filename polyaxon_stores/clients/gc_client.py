@@ -11,7 +11,7 @@ import google.oauth2.service_account
 from google.cloud.storage.client import Client
 from google.oauth2.service_account import Credentials
 
-from polyaxon_stores.clients.utils import get_from_env
+from polyaxon_stores.utils import get_from_env
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
 
