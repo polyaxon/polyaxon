@@ -38,19 +38,13 @@ spec:
       - name: {{ .Chart.Name }}-beat
         image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
         imagePullPolicy: {{ .Values.beat.imagePullPolicy }}
+        envFrom:
+        - configMapRef:
+            name: {{ template "polyaxon.fullname" . }}-config
+        - secretRef:
+            name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.admin" . | indent 8 }}
-        {{ include "config.core" . | indent 8 }}
-        {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.celery" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
-        {{ include "config.emails" . | indent 8 }}
-        {{ include "config.k8s" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.spawner" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.envs" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.beat.resources.requests | indent 12 }}
@@ -62,19 +56,13 @@ spec:
         image: "{{ .Values.crons.image }}:{{ .Values.crons.imageTag }}"
         imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
         args: ["{{ .Values.queues.cronsExperiments }},{{ .Values.queues.cronsPipelines }},{{ .Values.queues.cronsClusters }}", "--concurrency={{ .Values.crons.concurrency }}"]
+        envFrom:
+        - configMapRef:
+            name: {{ template "polyaxon.fullname" . }}-config
+        - secretRef:
+            name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.admin" . | indent 8 }}
-        {{ include "config.core" . | indent 8 }}
-        {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.celery" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
-        {{ include "config.emails" . | indent 8 }}
-        {{ include "config.k8s" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.spawner" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.envs" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.crons.resources.requests | indent 12 }}
