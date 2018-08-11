@@ -20,7 +20,9 @@ if RABBITMQ_USER and RABBITMQ_PASSWORD:
 
 CELERY_BROKER_URL = 'amqp://{url}'.format(url=AMQP_URL)
 
-INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE')
+INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',
+                                      is_optional=True,
+                                      default='internal')
 
 # CELERY_RESULT_BACKEND = config.get_string('POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL')
 CELERYD_PREFETCH_MULTIPLIER = config.get_int('POLYAXON_CELERYD_PREFETCH_MULTIPLIER')
@@ -81,9 +83,15 @@ class Intervals(object):
 
 
 class RoutingKeys(object):
-    LOGS_SIDECARS_EXPERIMENTS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_EXPERIMENTS')
-    LOGS_SIDECARS_JOBS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_JOBS')
-    LOGS_SIDECARS_BUILDS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_BUILDS')
+    LOGS_SIDECARS_EXPERIMENTS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_EXPERIMENTS',
+                                                  is_optional=True,
+                                                  default='logs.sidecars.experiments')
+    LOGS_SIDECARS_JOBS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_JOBS',
+                                           is_optional=True,
+                                           default='logs.sidecars.jobs')
+    LOGS_SIDECARS_BUILDS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_BUILDS',
+                                             is_optional=True,
+                                             default='logs.sidecars.builds')
 
 
 class CeleryPublishTask(object):
