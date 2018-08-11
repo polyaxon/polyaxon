@@ -22,11 +22,6 @@ Core config
 {{- end }}
 - name: POLYAXON_TRACKER_BACKEND
   value: "publisher"
-- name: POLYAXON_CLUSTER_ID
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: cluster-id
 - name: POLYAXON_K8S_NODE_NAME
   valueFrom:
     fieldRef:
