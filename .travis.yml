@@ -11,13 +11,8 @@ env:
     - PIP_USE_MIRRORS=true
 
   matrix:
-    - TEST_MARK="actions_mark or activitylogs_mark or auditor_mark or bookmarks_mark"
-    - TEST_MARK="build_jobs_mark or clusters_mark or dockerizer_mark or events_mark"
-    - TEST_MARK="monitors_mark or experiment_groups_mark or experiments_mark or jobs_mark"
-    - TEST_MARK="notifier_mark or outputs_mark or paths_mark or pipelines_mark or plugins_mark"
-    - TEST_MARK="projects_mark or query_mark or redis_mark or repos_mark or spawner_mark or sso_mark"
-    - TEST_MARK="tracker_mark or users_mark or versions_mark"
-    - TEST_MARK=prospector
+    - OP="prospector"
+    - OP="tests"
 
 services:
   - postgresql
@@ -57,10 +52,10 @@ before_script:
   - cp config/local.json polyaxon/polyaxon/env_vars/local.json
 
 script:
-  - if [[ "$TEST_MARK" == "prospector" ]]; then
-      prospector -X polyaxon && prospector -X tests
+  - if [[ "$OP" == "prospector" ]]; then
+      prospector -X polyaxon && prospector -X tests;
     else
-      py.test tests -v -m "$TEST_MARK"
+      py.test tests;
     fi
 
 notifications:
