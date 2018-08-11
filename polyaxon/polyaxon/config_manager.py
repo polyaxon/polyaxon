@@ -34,7 +34,7 @@ class ConfigManager(object):
         self._local_keys = set()
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
         self._service = self.get_string('POLYAXON_SERVICE', is_local=True)
-        self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG')
+        self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG', is_optional=True, default=False)
         self._namespace = self.get_string('POLYAXON_K8S_NAMESPACE')
         if self.is_sidecar_service or self.is_dockerizer_service:
             self._node_name = None
