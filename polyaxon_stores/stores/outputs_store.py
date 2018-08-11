@@ -3,9 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon_stores.utils import get_from_env
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.stores.base_store import Store
+from polyaxon_stores.utils import get_from_env
 
 
 def get_outputs_path(keys=None):

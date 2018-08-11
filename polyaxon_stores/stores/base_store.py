@@ -50,4 +50,3 @@ class Store(object):
 
     def upload_files(self, *args, **kwargs):
         raise NotImplementedError
-
