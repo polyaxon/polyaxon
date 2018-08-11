@@ -136,7 +136,7 @@ Polyaxon is currently running:
   USER: root
   PASSWORD: Get login password with
 
-    kubectl get secret --namespace polyaxon polyaxon-polyaxon-secret -o jsonpath="{.data.user-password}" | base64 --decode
+    kubectl get secret --namespace polyaxon polyaxon-polyaxon-secret -o jsonpath="{.data.POLYAXON_ADMIN_PASSWORD}" | base64 --decode
 ```
 
 These notes are important for setting the CLI, and getting access to the dashboard.
