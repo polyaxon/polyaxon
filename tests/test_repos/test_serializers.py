@@ -1,9 +1,12 @@
+import pytest
+
 from api.repos.serializers import RepoSerializer
 from db.models.repos import Repo
 from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.repos_mark
 class TestRepoSerializer(BaseTest):
     serializer_class = RepoSerializer
     model_class = Repo

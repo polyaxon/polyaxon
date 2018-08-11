@@ -3,6 +3,8 @@ import os
 
 from unittest.mock import patch
 
+import pytest
+
 from rest_framework import status
 
 from django.conf import settings
@@ -23,6 +25,7 @@ from libs.repos import git
 from tests.utils import BaseViewTest
 
 
+@pytest.mark.repos_mark
 class TestRepoDetailViewV1(BaseViewTest):
     serializer_class = RepoSerializer
     model_class = Repo
@@ -63,6 +66,7 @@ class TestRepoDetailViewV1(BaseViewTest):
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
 
+@pytest.mark.repos_mark
 class TestUploadFilesView(BaseViewTest):
     model_class = Repo
     factory_class = RepoFactory
@@ -308,6 +312,7 @@ class TestUploadFilesView(BaseViewTest):
         self.assertFalse(os.path.exists(repo_path))
 
 
+@pytest.mark.repos_mark
 class DownloadRepoViewTest(BaseViewTest):
     model_class = Repo
     factory_class = RepoFactory

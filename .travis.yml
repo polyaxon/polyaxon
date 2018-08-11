@@ -10,6 +10,35 @@ env:
     - PYTHONPATH=$HOME/builds/polyaxon
     - PIP_USE_MIRRORS=true
 
+  - TEST_MARK=actions_mark
+  - TEST_MARK=activitylogs_mark
+  - TEST_MARK=auditor_mark
+  - TEST_MARK=bookmarks_mark
+  - TEST_MARK=build_jobs_mark
+  - TEST_MARK=clusters_mark
+  - TEST_MARK=dockerizer_mark
+  - TEST_MARK=events_mark
+  - TEST_MARK=monitors_mark
+  - TEST_MARK=experiment_groups_mark
+  - TEST_MARK=experiments_mark
+  - TEST_MARK=jobs_mark
+  - TEST_MARK=notifier_mark
+  - TEST_MARK=outputs_mark
+  - TEST_MARK=paths_mark
+  - TEST_MARK=pipelines_mark
+  - TEST_MARK=plugins_mark
+  - TEST_MARK=projects_mark
+  - TEST_MARK=query_mark
+  - TEST_MARK=redis_mark
+  - TEST_MARK=repos_mark
+  - TEST_MARK=spawner_mark
+  - TEST_MARK=sso_mark
+  - TEST_MARK=tracker_mark
+  - TEST_MARK=users_mark
+  - TEST_MARK=versions_mark
+  - TEST_MARK=prospector_polyaxon
+  - TEST_MARK=prospector_tests
+
 services:
   - postgresql
   - redis-server
@@ -48,9 +77,13 @@ before_script:
   - cp config/local.json polyaxon/polyaxon/env_vars/local.json
 
 script:
-  - py.test tests -v
-  - prospector -X polyaxon
-  - prospector -X tests
+  - if [[ "$TEST_MARK" == "prospector_polyaxon" ]]; then
+      prospector -X polyaxon
+    else if [[ "$TEST_MARK" == "prospector_tests" ]]; then
+      prospector -X tests
+    else
+      py.test tests -v -m "$TEST_MARK"
+    fi
 
 notifications:
   slack:

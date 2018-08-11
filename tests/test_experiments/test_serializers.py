@@ -372,6 +372,7 @@ class TestExperimentJobSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
+@pytest.mark.experiments_mark
 class TestExperimentJobDetailsSerializer(BaseTest):
     DISABLE_RUNNER = True
     serializer_class = ExperimentJobDetailSerializer

@@ -1,11 +1,14 @@
 from unittest import TestCase
 
+import pytest
+
 from django.test import override_settings
 
 from libs.paths.exceptions import VolumeNotFoundError
 from scheduler.spawners.templates.volumes import get_pod_volumes, get_shm_volumes
 
 
+@pytest.mark.spawner_mark
 class TestPodVolumes(TestCase):
     PERSISTENCE_OUTPUTS = {
         'outputs1': {

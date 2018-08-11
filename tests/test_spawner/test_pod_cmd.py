@@ -1,9 +1,12 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
+import pytest
+
 from scheduler.spawners.templates.base_pods import get_pod_command_args
 
 
+@pytest.mark.spawner_mark
 class TestPodCmdArgs(TestCase):
     def test_get_pod_command_args(self):
         cmd1 = MagicMock()

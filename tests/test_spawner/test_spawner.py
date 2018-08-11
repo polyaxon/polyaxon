@@ -12,6 +12,7 @@
 # from tests.utils import BaseTest
 #
 #
+# @pytest.mark.spawner_mark
 # class TestSpawner(BaseTest):
 #     def test_cluster(self):
 #         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures_static/advanced_file.yml'))

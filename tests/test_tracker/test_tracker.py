@@ -8,7 +8,7 @@ import tracker
 from tests.utils import BaseTest
 
 
-@pytest.mark.auditor_mark
+@pytest.mark.tracker_mark
 class TrackerTest(BaseTest):
     def test_default_backend_tracker(self):
         backend = tracker.get_tracker_backend()

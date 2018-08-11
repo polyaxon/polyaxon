@@ -1,5 +1,7 @@
 import os
 
+import pytest
+
 from django.conf import settings
 
 from db.models.repos import ExternalRepo
@@ -9,6 +11,7 @@ from libs.repos import git
 from tests.utils import BaseTest
 
 
+@pytest.mark.repos_mark
 class TestRepoModels(BaseTest):
     def setUp(self):
         super().setUp()

@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
+import pytest
+
 from kubernetes import client
 
 from libs.api import API_KEY_NAME
@@ -12,6 +14,7 @@ from scheduler.spawners.templates.env_vars import (
 )
 
 
+@pytest.mark.spawner_mark
 class TestEnvVars(TestCase):
     def test_env_vars(self):
         # String value

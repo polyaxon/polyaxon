@@ -54,6 +54,7 @@ class TestPipelineModel(BaseTest):
         )
 
 
+@pytest.mark.pipelines_mark
 class TestOperationModel(BaseTest):
     def test_get_countdown(self):
         operation = OperationFactory(retry_delay=5)
@@ -97,6 +98,7 @@ class TestOperationModel(BaseTest):
         }
 
 
+@pytest.mark.pipelines_mark
 class TestPipelineRunModel(BaseTest):
     def test_pipeline_run_creation_sets_created_status(self):
         assert PipelineRunStatus.objects.count() == 0
@@ -212,6 +214,7 @@ class TestPipelineRunModel(BaseTest):
         assert pipeline_run.check_concurrency() is False
 
 
+@pytest.mark.pipelines_mark
 class TestOperationRunModel(BaseTest):
     def test_operation_run_creation_sets_created_status(self):
         assert OperationRunStatus.objects.count() == 0

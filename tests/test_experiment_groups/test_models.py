@@ -587,6 +587,7 @@ class TestExperimentGroupModel(BaseTest):
         assert mock_fct1.call_count == 1
 
 
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupCommit(BaseViewTest):
     def setUp(self):
         super().setUp()

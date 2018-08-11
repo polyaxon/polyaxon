@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+import pytest
+
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -7,6 +9,7 @@ from scheduler.spawners.templates.pod_environment import (
 )
 
 
+@pytest.mark.spawner_mark
 class TestPodEnvironment(TestCase):
     def test_pod_affinity(self):
         assert get_affinity(None, None) is None
