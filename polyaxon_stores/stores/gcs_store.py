@@ -8,6 +8,7 @@ from six.moves import urllib
 from polyaxon_stores.clients import gc_client
 from polyaxon_stores.exceptions import PolyaxonStoresException
 from polyaxon_stores.logger import logger
+from polyaxon_stores.stores.base_store import Store
 from polyaxon_stores.utils import (
     append_basename,
     check_dirname_exists,
@@ -15,7 +16,12 @@ from polyaxon_stores.utils import (
 )
 
 
-class GCSStore(object):
+class GCSStore(Store):
+    """
+    Google cloud store Service.
+    """
+    STORE_TYPE = Store._GCS_STORE  # pylint:disable=protected-access
+
     def __init__(self, client=None, **kwargs):
         self._client = client
         self._project_id = kwargs.get('project_id')

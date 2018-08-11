@@ -11,6 +11,7 @@ from azure.storage.blob.models import BlobPrefix
 
 from polyaxon_stores.clients.azure_client import get_blob_service_connection
 from polyaxon_stores.exceptions import PolyaxonStoresException
+from polyaxon_stores.stores.base_store import Store
 from polyaxon_stores.utils import (
     append_basename,
     check_dirname_exists,
@@ -18,7 +19,12 @@ from polyaxon_stores.utils import (
 )
 
 
-class AzureStore(object):
+class AzureStore(Store):
+    """
+    Azure store Service.
+    """
+    STORE_TYPE = Store._AZURE_STORE  # pylint:disable=protected-access
+
     def __init__(self, connection=None, **kwargs):
         self._connection = connection
         self._account_name = kwargs.get('account_name')
