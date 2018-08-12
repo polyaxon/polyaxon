@@ -300,7 +300,8 @@ def send_status(build_job, status, message=None):
                 'job_name': build_job.unique_name,
                 'project_uuid': build_job.project.uuid.hex,
                 'project_name': build_job.project.unique_name,
-            }
+            },
+            'node_name': settings.K8S_NODE_NAME
         },
         'status': status,
         'message': message
