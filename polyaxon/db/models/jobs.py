@@ -13,8 +13,8 @@ from db.models.utils import (
     NameableModel,
     OutputsModel,
     PersistenceModel,
-    TagModel
-)
+    TagModel,
+    NodeSchedulingModel)
 from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification
@@ -23,6 +23,7 @@ from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 class Job(AbstractJob,
           OutputsModel,
           PersistenceModel,
+          NodeSchedulingModel,
           NameableModel,
           DescribableModel,
           TagModel,

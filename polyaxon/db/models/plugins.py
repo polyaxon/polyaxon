@@ -7,13 +7,15 @@ from db.models.utils import (
     NameableModel,
     OutputsModel,
     PersistenceModel,
-    TagModel
+    TagModel,
+    NodeSchedulingModel,
 )
 
 
 class PluginJobBase(AbstractJob,
                     OutputsModel,
                     PersistenceModel,
+                    NodeSchedulingModel,
                     NameableModel,
                     DescribableModel,
                     TagModel):

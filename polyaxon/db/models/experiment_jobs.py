@@ -6,8 +6,10 @@ from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
 from polyaxon_schemas.utils import TaskType
 
+from db.models.utils import NodeSchedulingModel
 
-class ExperimentJob(AbstractJob):
+
+class ExperimentJob(AbstractJob, NodeSchedulingModel):
     """A model that represents job related to an experiment"""
     experiment = models.ForeignKey(
         'db.Experiment',

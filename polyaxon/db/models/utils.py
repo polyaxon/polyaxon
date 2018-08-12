@@ -66,6 +66,18 @@ class DiffModel(models.Model):
         abstract = True
 
 
+class NodeSchedulingModel(models.Model):
+    node_scheduled = models.ForeignKey(
+        'db.ClusterNode',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='+')
+
+    class Meta:
+        abstract = True
+
+
 class RunTimeModel(models.Model):
     started_at = models.DateTimeField(blank=True, null=True)
     finished_at = models.DateTimeField(blank=True, null=True)
