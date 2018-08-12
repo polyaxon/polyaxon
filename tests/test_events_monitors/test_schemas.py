@@ -2,8 +2,9 @@ import uuid
 
 import pytest
 
-from monitor_statuses.schemas import JobLabelConfig, JobStateConfig, PodStateConfig
+from monitor_statuses.schemas import JobStateConfig, PodStateConfig
 from polyaxon_schemas.utils import local_now
+from schemas.job_labels import JobLabelConfig
 from tests.utils import BaseTest
 
 

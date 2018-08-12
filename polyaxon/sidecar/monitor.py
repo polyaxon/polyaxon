@@ -5,7 +5,7 @@ import publisher
 
 from constants.experiments import ExperimentLifeCycle
 from constants.pods import PodLifeCycle
-from polyaxon_schemas.experiment import JobLabelConfig
+from schemas.job_labels import JobLabelConfig
 
 logger = logging.getLogger('polyaxon.monitors.sidecar')
 
