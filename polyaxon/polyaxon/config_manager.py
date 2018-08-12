@@ -1,5 +1,6 @@
 import base64
 import os
+from collections import namedtuple
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
@@ -24,6 +25,10 @@ ENV_VARS_DIR = ROOT_DIR.child('polyaxon').child('polyaxon').child('env_vars')
 TESTING = bool(strtobool(os.getenv('TESTING', "0")))
 
 
+class UriSpec(namedtuple("UriSpec", "user password host")):
+    pass
+
+
 class ConfigManager(object):
     _PASS = '-Z$Swjin_bdNPtaV4nQEn&gWb;T|'
 
@@ -40,6 +45,12 @@ class ConfigManager(object):
             self._node_name = None
         else:
             self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
+
+    def params_startswith(self, term):
+        return [k for k in self._params if k.startswith(term)]
+
+    def params_endswith(self, term):
+        return [k for k in self._params if k.endswith(term)]
 
     @property
     def namespace(self):
@@ -408,6 +419,28 @@ class ConfigManager(object):
             self._check_options(key=key, value=value, options=options)
             return value
         raise ConfigurationError(key, value, target_type)
+
+    def parse_uri_spec(self, uri_spec):
+        parts = uri_spec.split('@')
+        if len(parts) != 2:
+            if self.is_debug_mode:
+                raise ConfigurationError(
+                    'Received invalid uri_spec `{}`. '
+                    'It must be in the format `user:pass@host`'.format(uri_spec))
+            else:
+                return None
+
+        user_pass, host = parts
+        user_pass = user_pass.split(':')
+        if len(user_pass) != 2:
+            if self.is_debug_mode:
+                raise ConfigurationError(
+                    'Received invalid uri_spec `{}`. '
+                    'It must be in the format `user:pass@host`'.format(uri_spec))
+            else:
+                return None
+
+        return UriSpec(user=user_pass[0], password=user_pass[1], host=host)
 
     @staticmethod
     def _decode(value, iteration=3):

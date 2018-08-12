@@ -71,14 +71,24 @@ class DockerBuilder(object):
         # Clean dockerfile
         delete_path(self.dockerfile_path)
 
-    def login(self, registry_user, registry_password, registry_host):
+    def login_internal_registry(self):
         try:
-            self.docker.login(username=registry_user,
-                              password=registry_password,
-                              registry=registry_host,
+            self.docker.login(username=settings.REGISTRY_USER,
+                              password=settings.REGISTRY_PASSWORD,
+                              registry=settings.REGISTRY_HOST,
                               reauth=True)
         except DockerException as e:
             _logger.exception('Failed to connect to registry %s\n', e)
+
+    def login_private_registries(self):
+        if not settings.PRIVATE_REGISTRIES:
+            return
+
+        for registry in settings.EXTERNAL_REGISTRIES:
+            self.docker.login(username=registry['username'],
+                              password=registry['password'],
+                              registry=registry['host'],
+                              reauth=True)
 
     @staticmethod
     def _prepare_log_lines(log_line):
@@ -261,9 +271,8 @@ def build(build_job):
         from_image=build_job.image,
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars)
-    docker_builder.login(registry_user=settings.REGISTRY_USER,
-                         registry_password=settings.REGISTRY_PASSWORD,
-                         registry_host=settings.REGISTRY_HOST)
+    docker_builder.login_internal_registry()
+    docker_builder.login_private_registries()
     if docker_builder.check_image():
         # Image already built
         docker_builder.clean()
