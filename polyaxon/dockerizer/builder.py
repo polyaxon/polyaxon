@@ -85,9 +85,9 @@ class DockerBuilder(object):
             return
 
         for registry in settings.PRIVATE_REGISTRIES:
-            self.docker.login(username=registry['username'],
-                              password=registry['password'],
-                              registry=registry['host'],
+            self.docker.login(username=registry.user,
+                              password=registry.password,
+                              registry=registry.host,
                               reauth=True)
 
     @staticmethod
