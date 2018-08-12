@@ -84,7 +84,7 @@ class DockerBuilder(object):
         if not settings.PRIVATE_REGISTRIES:
             return
 
-        for registry in settings.EXTERNAL_REGISTRIES:
+        for registry in settings.PRIVATE_REGISTRIES:
             self.docker.login(username=registry['username'],
                               password=registry['password'],
                               registry=registry['host'],
