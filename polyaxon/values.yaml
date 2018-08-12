@@ -515,6 +515,10 @@ integrations:
   #   - url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
   #     channel: channel12
 
+privateRegistries:
+# e.g.
+  # - user:pass@host:port
+  # - user:pass@host.com
 
 intervals:  # in seconds
   experiments_scheduler: 15
