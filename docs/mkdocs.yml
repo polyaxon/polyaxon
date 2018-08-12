@@ -13,6 +13,9 @@ theme:
   palette:
     primary: 'blue grey'
     accent: 'light blue'
+  font:
+    text: 'Open Sans'
+    code: 'Roboto Mono'
 
 extra:
   social:
