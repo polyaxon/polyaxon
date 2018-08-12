@@ -10,6 +10,6 @@ class Command(BaseCleanCommand):
         for experiment_group in ExperimentGroup.objects.filter(
                 status__status__in=ExperimentGroupLifeCycle.RUNNING_STATUS):
             experiments_group_stop_experiments(
-                experiment_group_id=experiment_group.project_id,
+                experiment_group_id=experiment_group.id,
                 pending=True,
                 message='Cleanup')

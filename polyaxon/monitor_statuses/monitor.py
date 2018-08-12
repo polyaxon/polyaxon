@@ -99,14 +99,14 @@ def run(k8s_manager):
 
             if experiment_job_condition:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_EXPERIMENT_JOB)
-                # Handle experiment job statuses differently than plugin job statuses
+                # Handle experiment job statuses
                 celery_app.send_task(
                     EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif job_condition:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
-                # Handle experiment job statuses differently than plugin job statuses
+                # Handle experiment job statuses
                 celery_app.send_task(
                     EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES,
                     kwargs={'payload': job_state})
