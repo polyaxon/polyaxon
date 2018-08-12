@@ -67,12 +67,7 @@ class DiffModel(models.Model):
 
 
 class NodeSchedulingModel(models.Model):
-    node_scheduled = models.ForeignKey(
-        'db.ClusterNode',
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name='+')
+    node_scheduled = models.CharField(max_length=256, blank=True, null=True)
 
     class Meta:
         abstract = True
