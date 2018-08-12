@@ -500,7 +500,8 @@ def get_status_event(name, container_name, labels):
                             'protocol': 'TCP'}],
                         'readiness_probe': None,
                     }],
-                'volumes': []
+                'volumes': [],
+                'node_name': None
             },
             'status': {
                 'conditions': None,
