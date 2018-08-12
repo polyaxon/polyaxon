@@ -37,7 +37,9 @@ def experiments_group_create(self, experiment_group_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
-def experiments_group_stop_experiments(experiment_group_id, pending, message=None):
+def experiments_group_stop_experiments(experiment_group_id,
+                                       pending,
+                                       message=None):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return
@@ -67,7 +69,7 @@ def experiments_group_stop_experiments(experiment_group_id, pending, message=Non
                 # Update experiment status to show that its stopped
                 experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
 
-    experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED)
+    experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED, message=message)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
