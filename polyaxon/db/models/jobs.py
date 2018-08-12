@@ -11,10 +11,11 @@ from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DescribableModel,
     NameableModel,
+    NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
-    TagModel,
-    NodeSchedulingModel)
+    TagModel
+)
 from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
 from polyaxon_schemas.polyaxonfile.specification import JobSpecification

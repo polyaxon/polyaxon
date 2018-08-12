@@ -5,10 +5,10 @@ from db.models.abstract_jobs import AbstractJob
 from db.models.utils import (
     DescribableModel,
     NameableModel,
+    NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
-    TagModel,
-    NodeSchedulingModel,
+    TagModel
 )
 
 

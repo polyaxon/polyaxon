@@ -1,7 +1,7 @@
 import base64
 import os
-from collections import namedtuple
 
+from collections import namedtuple
 from distutils.util import strtobool  # pylint:disable=import-error
 
 from unipath import Path
