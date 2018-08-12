@@ -46,12 +46,6 @@ class ConfigManager(object):
         else:
             self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
 
-    def params_startswith(self, term):
-        return [k for k in self._params if k.startswith(term)]
-
-    def params_endswith(self, term):
-        return [k for k in self._params if k.endswith(term)]
-
     @property
     def namespace(self):
         return self._namespace
@@ -224,6 +218,12 @@ class ConfigManager(object):
             is_local=True,
             is_optional=True)
         return self._decode(value) if value else None
+
+    def params_startswith(self, term):
+        return [k for k in self._params if k.startswith(term)]
+
+    def params_endswith(self, term):
+        return [k for k in self._params if k.endswith(term)]
 
     def get_requested_params(self, include_secrets=False, include_locals=False, to_str=False):
         params = {}
