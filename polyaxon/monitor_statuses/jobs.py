@@ -1,11 +1,12 @@
 from constants.containers import ContainerStatuses
 from constants.jobs import JobLifeCycle
 from constants.pods import PodConditions, PodLifeCycle
-from polyaxon_schemas.experiment import JobStateConfig, PodStateConfig
+from monitor_statuses.schemas import JobStateConfig, PodStateConfig
 
 
 def get_pod_state(event_type, event):
     labels = event['metadata']['labels']
+    node_name = event['spec']['node_name']
     pod_phase = event['status']['phase']
     deletion_timestamp = event['metadata']['deletion_timestamp']
     pod_conditions = event['status']['conditions']
@@ -29,7 +30,8 @@ def get_pod_state(event_type, event):
         'phase': pod_phase,
         'deletion_timestamp': str(deletion_timestamp) if deletion_timestamp else None,
         'pod_conditions': pod_conditions,
-        'container_statuses': container_statuses_by_name
+        'container_statuses': container_statuses_by_name,
+        'node_name': node_name
     })
 
 

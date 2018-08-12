@@ -31,6 +31,13 @@ def handle_events_resources(payload, persist):
     _logger.info(payload)
 
 
+def set_node_scheduling(job, node_name):
+    if job.node_scheduled or node_name is None:
+        return
+    job.node_scheduled = node_name
+    job.save()
+
+
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES)
 def events_handle_experiment_job_statuses(payload):
     """Experiment jobs statuses"""
@@ -52,6 +59,7 @@ def events_handle_experiment_job_statuses(payload):
 
     # Set the new status
     try:
+        set_node_scheduling(job, payload['node_name'])
         job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
@@ -81,6 +89,7 @@ def events_handle_job_statuses(payload):
 
     # Set the new status
     try:
+        set_node_scheduling(job, payload['node_name'])
         job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
@@ -116,6 +125,7 @@ def events_handle_plugin_job_statuses(payload):
 
     # Set the new status
     try:
+        set_node_scheduling(job, payload['node_name'])
         job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
@@ -145,6 +155,7 @@ def events_handle_build_job_statuses(payload):
 
     # Set the new status
     try:
+        set_node_scheduling(build_job, payload['node_name'])
         build_job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
