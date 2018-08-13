@@ -1,7 +1,7 @@
 ## 0.1.8
 
   * Enable users to pull image from private registries
-  * Add first version of an abstraction to use seamlessly cloud storage or persistent volumes for data, outputs, and logs
+  * Add first version of an abstraction to seamlessly use cloud storage or persistent volumes for data, outputs, and logs
   * Annotate jobs with node used for the scheduling
   * Remove some optional env vars and move them to default values
   * Use configMap and secret envFrom to populate environment
