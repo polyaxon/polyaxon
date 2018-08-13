@@ -7,7 +7,8 @@ import Description from './description';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import MetaInfo from './metaInfo/metaInfo';
+import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
+import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
 import GridList from './gridList';
 import { EmptyList } from './empty/emptyList';
 import { getExperimentTensorboardUrl } from '../constants/utils';
@@ -39,34 +40,13 @@ export default class ExperimentOverview extends React.Component<Props, Object> {
                 updatedAt={experiment.updated_at}
                 inline={true}
               />
-              <MetaInfo
-                icon="fa-cube"
-                name="Jobs"
-                value={experiment.num_jobs}
-                inline={true}
-              />
+              <JobCountMetaInfo count={experiment.num_jobs} inline={true}/>
             </div>
             <div className="meta">
               <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at} inline={true}/>
               <Status status={experiment.last_status}/>
             </div>
-            {experiment.resources &&
-            <div className="meta meta-resources">
-              {Object.keys(experiment.resources)
-                .filter(
-                  (res, idx) =>
-                    experiment.resources[res] != null
-                )
-                .map(
-                  (res, idx) =>
-                    <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"/>
-                <span className="title">{res}:</span>
-                      {experiment.resources[res].requests || ''} - {experiment.resources[res].limits || ''}
-              </span>
-                )}
-            </div>
-            }
+            <ResourcesMetaInfo resources={experiment.resources} />
             {experiment.has_tensorboard &&
             <div className="meta">
               <span className="meta-info meta-dashboard">

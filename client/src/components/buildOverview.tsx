@@ -7,7 +7,11 @@ import Description from './description';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import MetaInfo from './metaInfo/metaInfo';
+import NodeMetaInfo from './metaInfo/nodeMetaInfo';
+import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
+import CommitMetaInfo from './metaInfo/commitMetaInfo';
+import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
+import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
 import Tags from './tags';
 import { EmptyList } from './empty/emptyList';
 
@@ -37,34 +41,20 @@ export default class BuildOverview extends React.Component<Props, Object> {
                 updatedAt={build.updated_at}
                 inline={true}
               />
-              <MetaInfo
-                icon="fa-hashtag"
-                name="Commit"
-                value={build.commit}
-                inline={true}
-              />
+            </div>
+            <div className="meta">
+              <CommitMetaInfo commit={build.commit} inline={true}/>
+              <NodeMetaInfo node={build.node_scheduled} inline={true}/>
             </div>
             <div className="meta">
               <TaskRunMetaInfo startedAt={build.started_at} finishedAt={build.finished_at} inline={true}/>
               <Status status={build.last_status}/>
             </div>
-            {build.resources &&
-            <div className="meta meta-resources">
-              {Object.keys(build.resources)
-                .filter(
-                  (res, idx) =>
-                    build.resources[res] != null
-                )
-                .map(
-                  (res, idx) =>
-                    <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"/>
-                <span className="title">{res}:</span>
-                      {build.resources[res].requests || ''} - {build.resources[res].limits || ''}
-              </span>
-                )}
+            <div className="meta">
+              <ExperimentCountMetaInfo count={build.num_experiments} inline={true}/>
+              <JobCountMetaInfo count={build.num_jobs} inline={true}/>
             </div>
-            }
+            <ResourcesMetaInfo resources={build.resources} />
             <Tags tags={build.tags}/>
           </div>
         </div>

@@ -66,7 +66,12 @@ export default class GroupDetail extends React.Component<Props, Object> {
                   relUrl: ''
                 }, {
                   title: 'Experiments',
-                  component: <Experiments user={group.user} projectName={group.project} groupId={group.id} useFilters={true}/>,
+                  component: <Experiments
+                    user={group.user}
+                    projectName={group.project}
+                    groupId={group.id}
+                    useFilters={true}
+                  />,
                   relUrl: 'experiments'
                 }, {
                   title: 'Statuses',

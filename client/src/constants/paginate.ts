@@ -1,6 +1,6 @@
 import * as queryString from 'query-string';
 
-export const PAGE_SIZE = 30;
+export const PAGE_SIZE = 20;
 
 export function getOffset(page?: number): number | null {
   if (page == null || page <= 1) {

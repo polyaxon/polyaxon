@@ -15,6 +15,7 @@ export class ExperimentJobModel {
   public updated_at: string;
   public started_at: string;
   public finished_at: string;
+  public node_scheduled: string;
   public resources: {[key: string]: any};
 }
 

@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import { ExperimentJobModel } from '../models/experimentJob';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import NodeMetaInfo from './metaInfo/nodeMetaInfo';
+import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
 import Status from './status';
 
 export interface Props {
@@ -17,7 +19,7 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
       <div className="col-md-1 block">
         <Status status={experimentJob.last_status}/>
       </div>
-      <div className="col-md-9 block">
+      <div className="col-md-7 block">
         <span className="title">
           <i className="fa fa-tasks icon" aria-hidden="true"/>
           {experimentJob.unique_name}
@@ -34,23 +36,10 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
             {experimentJob.id}
           </span>
         </div>
-        {experimentJob.resources &&
-        <div className="meta meta-resources">
-          {Object.keys(experimentJob.resources)
-            .filter(
-              (res, idx) =>
-                experimentJob.resources[res] != null
-            )
-            .map(
-            (res, idx) =>
-              <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"/>
-                <span className="title">{res}:</span>
-                {experimentJob.resources[res].requests || ''} - {experimentJob.resources[res].limits || ''}
-              </span>
-          )}
-        </div>
-        }
+        <ResourcesMetaInfo resources={experimentJob.resources} />
+      </div>
+      <div className="col-md-2 block">
+        <NodeMetaInfo node={experimentJob.node_scheduled}/>
       </div>
       <div className="col-md-2 block">
         <TaskRunMetaInfo

@@ -7,6 +7,10 @@ import Tags from './tags';
 import Description from './description';
 import MetaInfo from './metaInfo/metaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
+import GroupCountMetaInfo from './metaInfo/counts/groupCountMetaInfo';
+import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
+import BuildCountMetaInfo from './metaInfo/counts/buildCountMetaInfo';
 import { EmptyList } from './empty/emptyList';
 
 export interface Props {
@@ -40,28 +44,20 @@ function ProjectOverview({project}: Props) {
             />
           </div>
           <div className="meta">
-            <MetaInfo
-              icon="fa-cube"
-              name="Experiments"
-              value={project.num_experiments}
+            <ExperimentCountMetaInfo
+              count={project.num_experiments}
               inline={true}
             />
-            <MetaInfo
-              icon="fa-cubes"
-              name="Experiment Groups"
-              value={project.num_experiment_groups}
+            <GroupCountMetaInfo
+              count={project.num_experiment_groups}
               inline={true}
             />
-             <MetaInfo
-              icon="fa-tasks"
-              name="Jobs"
-              value={project.num_jobs}
+             <JobCountMetaInfo
+              count={project.num_jobs}
               inline={true}
              />
-             <MetaInfo
-              icon="fa-gavel"
-              name="Builds"
-              value={project.num_builds}
+             <BuildCountMetaInfo
+              count={project.num_builds}
               inline={true}
              />
           </div>

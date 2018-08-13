@@ -15,7 +15,8 @@ import Description from './description';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import LinkMetaInfo from './metaInfo/linkMetaInfo';
+import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
+import GroupLinkMetaInfo from './metaInfo/groupLinkMetaInfo';
 import Tags from './tags';
 
 export interface Props {
@@ -61,15 +62,11 @@ function Experiment({experiment, onDelete}: Props) {
         <Tags tags={experiment.tags}/>
       </div>
       <div className="col-md-2 block">
-        <LinkMetaInfo
-          icon="fa-cubes"
-          name="Group"
+        <GroupLinkMetaInfo
           value={groupValues[2]}
           link={groupUrl}
         />
-        <LinkMetaInfo
-          icon="fa-gavel"
-          name="Build"
+        <BuildLinkMetaInfo
           value={buildValues[3]}
           link={buildUrl}
         />

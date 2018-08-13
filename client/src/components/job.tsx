@@ -9,7 +9,7 @@ import Tags from './tags';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
-import LinkMetaInfo from './metaInfo/linkMetaInfo';
+import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
 import { getJobUrl, splitUniqueName } from '../constants/utils';
 import { getBuildUrl } from '../constants/utils';
 
@@ -51,9 +51,7 @@ function Job({job, onDelete}: Props) {
         <Tags tags={job.tags}/>
       </div>
       <div className="col-md-2 block">
-        <LinkMetaInfo
-          icon="fa-gavel"
-          name="Build"
+        <BuildLinkMetaInfo
           value={buildValues[3]}
           link={buildUrl}
         />

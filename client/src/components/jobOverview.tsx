@@ -7,6 +7,8 @@ import Description from './description';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import NodeMetaInfo from './metaInfo/nodeMetaInfo';
+import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
 import Tags from './tags';
 import { EmptyList } from './empty/emptyList';
 
@@ -38,26 +40,16 @@ export default class JobOverview extends React.Component<Props, Object> {
               />
             </div>
             <div className="meta">
+              <NodeMetaInfo
+                node={job.node_scheduled}
+                inline={true}
+              />
+            </div>
+            <div className="meta">
               <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at} inline={true}/>
               <Status status={job.last_status}/>
             </div>
-            {job.resources &&
-            <div className="meta meta-resources">
-              {Object.keys(job.resources)
-                .filter(
-                  (res, idx) =>
-                    job.resources[res] != null
-                )
-                .map(
-                  (res, idx) =>
-                    <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"/>
-                <span className="title">{res}:</span>
-                      {job.resources[res].requests || ''} - {job.resources[res].limits || ''}
-              </span>
-                )}
-            </div>
-            }
+            <ResourcesMetaInfo resources={job.resources} />
             <Tags tags={job.tags}/>
           </div>
         </div>

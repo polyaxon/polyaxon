@@ -19,6 +19,9 @@ export class BuildModel {
   public commit: string;
   public dockerfile: string;
   public resources: {[key: string]: any};
+  public node_scheduled: string;
+  public num_jobs: number;
+  public num_experiments: number;
   public bookmarked: boolean;
 }
 

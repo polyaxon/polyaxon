@@ -9,10 +9,11 @@ import { GroupModel } from '../models/group';
 import Status from './status';
 import Description from './description';
 import Tags from './tags';
-import MetaInfo from './metaInfo/metaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
+import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
+import SearchAlgorithmMetaInfo from './metaInfo/searchAlgorithmMetaInfo';
 
 export interface Props {
   group: GroupModel;
@@ -45,16 +46,8 @@ function Group({group, onDelete}: Props) {
         <Tags tags={group.tags}/>
       </div>
       <div className="col-md-2 block">
-        <MetaInfo
-          icon="fa-asterisk"
-          name="Algorithm"
-          value={group.search_algorithm}
-        />
-        <MetaInfo
-          icon="fa-share-alt"
-          name="Concurrency"
-          value={group.concurrency}
-        />
+        <SearchAlgorithmMetaInfo searchAlgorithm={group.search_algorithm}/>
+        <ConcurrencyMetaInfo concurrency={group.concurrency}/>
       </div>
       <div className="col-md-2 block">
         <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>

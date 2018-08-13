@@ -9,6 +9,9 @@ import MetaInfo from './metaInfo/metaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
+import SearchAlgorithmMetaInfo from './metaInfo/searchAlgorithmMetaInfo';
+import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
+import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
 import { EmptyList } from './empty/emptyList';
 import { getGroupTensorboardUrl } from '../constants/utils';
 
@@ -43,16 +46,12 @@ export default class GroupOverview extends React.Component<Props, Object> {
               <Status status={group.last_status}/>
             </div>
             <div className="meta">
-              <MetaInfo
-                icon="fa-asterisk"
-                name="Algorithm"
-                value={group.search_algorithm}
+              <SearchAlgorithmMetaInfo
+                searchAlgorithm={group.search_algorithm}
                 inline={true}
               />
-              <MetaInfo
-                icon="fa-share-alt"
-                name="Concurrency"
-                value={group.concurrency}
+              <ConcurrencyMetaInfo
+                concurrency={group.concurrency}
                 inline={true}
               />
               {group.current_iteration > 0 &&
@@ -64,10 +63,8 @@ export default class GroupOverview extends React.Component<Props, Object> {
               />}
             </div>
             <div className="meta">
-              <MetaInfo
-                icon="fa-cube"
-                name="Experiments"
-                value={group.num_experiments}
+              <ExperimentCountMetaInfo
+                count={group.num_experiments}
                 inline={true}
               />
               <MetaInfo
