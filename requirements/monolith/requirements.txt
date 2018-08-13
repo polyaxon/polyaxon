@@ -2,4 +2,4 @@
 
 polyaxon-k8s==0.1.8
 polyaxon-gpustat==0.1.6
-polyaxon-schemas==0.1.6
+polyaxon-schemas==0.1.8
