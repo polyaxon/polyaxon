@@ -113,6 +113,7 @@ pages:
   - Replication: customization/replication.md
   - PostgreSQL HA: customization/postgresql_ha.md
   - Notifications: customization/notifications.md
+  - Private registries: customization/private_registries.md
 - Reference Polyaxon CLI:
   - Introduction: polyaxon_cli/introduction.md
   - Commnands:
@@ -173,6 +174,7 @@ pages:
     - Tensorboards: query_syntax/entities/tensorboards.md
     - Experiments: query_syntax/entities/experiments.md
     - Experiment groups: query_syntax/entities/experiment_groups.md
+- FAQ: faq.md
 #- Reference Polyaxon Lib:
 #  - Introduction: polyaxon_lib/introduction.md
 #  - Models: polyaxon_lib/models.md

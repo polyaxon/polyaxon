@@ -51,6 +51,7 @@ Once you have a Polyaxon deployment, you can check polyaxon architecture and lea
  * [Replication](customization/replication)
  * [PostgreSQL HA](customization/postgresql_ha)
  * [Notifications](customization/notifications)
+ * [Private registries](customization/private_registries)
 
 
 ## References
