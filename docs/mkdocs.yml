@@ -175,6 +175,7 @@ pages:
     - Experiments: query_syntax/entities/experiments.md
     - Experiment groups: query_syntax/entities/experiment_groups.md
 - FAQ: faq.md
+- Release Notes: release_notes.md
 #- Reference Polyaxon Lib:
 #  - Introduction: polyaxon_lib/introduction.md
 #  - Models: polyaxon_lib/models.md
