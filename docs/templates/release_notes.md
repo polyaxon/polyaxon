@@ -1,3 +1,24 @@
+## 0.1.8
+
+  * Enable users to pull image from private registries
+  * Add first version of an abstraction to use seamlessly cloud storage or persistent volumes for data, outputs, and logs
+  * Annotate jobs with node used for the scheduling
+  * Remove some optional env vars and move them to default values
+  * Use configMap and secret envFrom to populate environment
+  * Reduce number of partials
+  * Update default page size to 20
+  * Update usage of secrets and configs
+  * Update clean commands
+  * Fix an issue with check command
+  * Fix a bug related to checking running experiment groups
+  * Add missing tests for azure id creation
+  * Enhance build and test process
+  * Upgrade kubernetes client to 6.0.0
+  * Upgrade web socket and request libs
+  * Upgrade api and workers requirements
+  * Update test requirements
+  * Move label and pod/job states schemas to core
+
 ## 0.1.7
 
   * Add initial draft of actions
