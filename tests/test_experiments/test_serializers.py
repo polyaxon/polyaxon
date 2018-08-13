@@ -344,6 +344,7 @@ class TestExperimentJobSerializer(BaseTest):
         'started_at',
         'finished_at',
         'resources',
+        'node_scheduled',
     }
 
     def setUp(self):
@@ -391,6 +392,7 @@ class TestExperimentJobDetailsSerializer(BaseTest):
         'started_at',
         'finished_at',
         'resources',
+        'node_scheduled',
     }
 
     def setUp(self):

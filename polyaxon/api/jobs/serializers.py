@@ -62,6 +62,7 @@ class JobDetailSerializer(JobSerializer):
             'description',
             'config',
             'resources',
+            'node_scheduled',
             'bookmarked',
         )
         extra_kwargs = {'original_job': {'write_only': True}}

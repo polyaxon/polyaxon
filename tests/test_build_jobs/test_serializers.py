@@ -109,6 +109,7 @@ class TestBuildJobDetailSerializer(BaseTest):
         'started_at',
         'finished_at',
         'resources',
+        'node_scheduled',
         'num_jobs',
         'num_experiments',
         'dockerfile',

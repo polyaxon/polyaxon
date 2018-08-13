@@ -110,6 +110,7 @@ class TestJobDetailSerializer(BaseTest):
         'build_job',
         'original',
         'resources',
+        'node_scheduled',
         'bookmarked'
     }
 

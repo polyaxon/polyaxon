@@ -60,6 +60,7 @@ class BuildJobDetailSerializer(BuildJobSerializer):
             'description',
             'config',
             'resources',
+            'node_scheduled',
             'num_jobs',
             'num_experiments',
             'dockerfile',

@@ -38,6 +38,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
             'started_at',
             'finished_at',
             'resources',
+            'node_scheduled',
         )
 
 
