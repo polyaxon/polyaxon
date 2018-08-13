@@ -4,6 +4,7 @@ metadata:
   name: {{ template "polyaxon.fullname" . }}-monitors
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
+    checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
   labels:
     app: {{ template "polyaxon.fullname" . }}-monitors
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
