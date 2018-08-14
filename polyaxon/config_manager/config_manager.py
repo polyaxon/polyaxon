@@ -3,12 +3,11 @@ import base64
 from distutils.util import strtobool  # pylint:disable=import-error
 
 from django.utils.functional import cached_property
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-
-from polyaxon_schemas.polyaxonfile import reader
 
 from config_manager.exceptions import ConfigurationError
 from config_manager.uri_spec import UriSpec
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.polyaxonfile import reader
 
 
 class ConfigManager(object):

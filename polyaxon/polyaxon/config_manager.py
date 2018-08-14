@@ -1,9 +1,10 @@
 import os
 
 from distutils.util import strtobool  # pylint:disable=import-error
-from django.utils.functional import cached_property
 
 from unipath import Path
+
+from django.utils.functional import cached_property
 
 from config_manager.config_manager import ConfigManager
 
