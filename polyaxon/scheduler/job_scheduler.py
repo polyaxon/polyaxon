@@ -22,7 +22,8 @@ def start_job(job):
         image_name, image_tag = get_image_info(build_job=job.build_job)
     except (ValueError, AttributeError):
         _logger.error('Could not start the job.', exc_info=True)
-        job.set_status(JobLifeCycle.FAILED, message='External git repo was note found.')
+        job.set_status(JobLifeCycle.FAILED,
+                       message='Image info was not found.')
         return
     job_docker_image = '{}:{}'.format(image_name, image_tag)
     _logger.info('Start job with built image `%s`', job_docker_image)

@@ -239,13 +239,14 @@ class TestExperimentModel(BaseTest):
             build_experiment(experiment_id=experiment.id)
 
         assert mock_build.call_count == 1
-        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 4
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,
                                       ExperimentLifeCycle.BUILDING,
-                                      ExperimentLifeCycle.SCHEDULED]
+                                      ExperimentLifeCycle.SCHEDULED,
+                                      ExperimentLifeCycle.FAILED]
         experiment.refresh_from_db()
-        assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
+        assert experiment.last_status == ExperimentLifeCycle.FAILED
 
     @mock.patch('scheduler.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):

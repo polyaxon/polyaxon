@@ -21,7 +21,8 @@ def start_notebook(notebook):
         image_name, image_tag = get_image_info(build_job=notebook.build_job)
     except (ValueError, AttributeError):
         _logger.error('Could not start the notebook.', exc_info=True)
-        notebook.set_status(JobLifeCycle.FAILED, message='External git repo was note found.')
+        notebook.set_status(JobLifeCycle.FAILED,
+                            message='Image info was not found.')
         return
     job_docker_image = '{}:{}'.format(image_name, image_tag)
     _logger.info('Start notebook with built image `%s`', job_docker_image)
