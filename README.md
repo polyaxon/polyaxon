@@ -20,17 +20,17 @@ $ pip install -U polyaxon-client
 This module includes several clients that can be used to interact
 with Polyaxon API in a programmatic way.
 
- * [Auth](https://docs.polyaxon.com/polyaxon_client/auth): A client for handling authentication and user information.
- * [Cluster](https://docs.polyaxon.com/polyaxon_client/cluster): A client for getting cluster and cluster nodes information.
- * [User](https://docs.polyaxon.com/polyaxon_client/user): A client to manage users and superuser roles.
- * [Project](https://docs.polyaxon.com/polyaxon_client/project): A client for doing CRUD operations on projects, as well as getting and creating experiments and experiment groups, creating and stopping tensorboard/notebook, and uploading code.
- * [Experiment](https://docs.polyaxon.com/polyaxon_client/experiment): A client for doing CRUD operations on experiments, as well as statuses, jobs, resources, and logs.
- * [Experiment group](https://docs.polyaxon.com/polyaxon_client/experiment_group): A client for doing CRUD operations on experiment groups, as well as fetching experiments per group.
- * [Experiment Job](https://docs.polyaxon.com/polyaxon_client/experiment_job): A client for getting information, resources, and logs of experiment jobs.
- * [Job](https://docs.polyaxon.com/polyaxon_client/job): A client for getting information, resources, and logs of jobs.
- * [Build Job](https://docs.polyaxon.com/polyaxon_client/build_job): A client for getting information, resources, and logs of build jobs.
- * [Bookmark](https://docs.polyaxon.com/polyaxon_client/bookmark): A client for getting bookmarks.
- * [Version](https://docs.polyaxon.com/polyaxon_client/version): A client to get current and supported versions of several Polyaxon component.
+ * [Auth](https://docs.polyaxon.com/polyaxon_client/clients/auth): A client for handling authentication and user information.
+ * [Cluster](https://docs.polyaxon.com/polyaxon_client/clients/cluster): A client for getting cluster and cluster nodes information.
+ * [User](https://docs.polyaxon.com/polyaxon_client/clients/user): A client to manage users and superuser roles.
+ * [Project](https://docs.polyaxon.com/polyaxon_client/clients/project): A client for doing CRUD operations on projects, as well as getting and creating experiments and experiment groups, creating and stopping tensorboard/notebook, and uploading code.
+ * [Experiment](https://docs.polyaxon.com/polyaxon_client/clients/experiment): A client for doing CRUD operations on experiments, as well as statuses, jobs, resources, and logs.
+ * [Experiment group](https://docs.polyaxon.com/polyaxon_client/clients/experiment_group): A client for doing CRUD operations on experiment groups, as well as fetching experiments per group.
+ * [Experiment Job](https://docs.polyaxon.com/polyaxon_client/clients/experiment_job): A client for getting information, resources, and logs of experiment jobs.
+ * [Job](https://docs.polyaxon.com/polyaxon_client/clients/job): A client for getting information, resources, and logs of jobs.
+ * [Build Job](https://docs.polyaxon.com/polyaxon_client/clients/build_job): A client for getting information, resources, and logs of build jobs.
+ * [Bookmark](https://docs.polyaxon.com/polyaxon_client/clients/bookmark): A client for getting bookmarks.
+ * [Version](https://docs.polyaxon.com/polyaxon_client/clients/version): A client to get current and supported versions of several Polyaxon component.
 
 
 ## Usage
@@ -54,6 +54,27 @@ polyaxon_clients.job
 polyaxon_clients.build_job
 polyaxon_clients.bookmark
 polyaxon_clients.version
+```
+
+e.g. list projects for a user
+
+```python
+polyaxon_clients.project.list_projects(username, page=1)
+```
+
+e.g. list experiments for a project
+
+```python
+polyaxon_clients.project.list_experiments(
+    username,
+    project_name,
+    independent=None,
+    group=None,
+    metrics=None,
+    declarations=None,
+    query=None,
+    sort=None,
+    page=1)
 ```
 
 
