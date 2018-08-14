@@ -3,6 +3,7 @@ import base64
 from distutils.util import strtobool  # pylint:disable=import-error
 
 from django.utils.functional import cached_property
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 
 from polyaxon_schemas.polyaxonfile import reader
 
@@ -162,8 +163,11 @@ class ConfigManager(object):
 
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
-        config = reader.read(config_values)  # pylint:disable=redefined-outer-name
-        return cls(**config) if config else None
+        try:
+            config = reader.read(config_values)  # pylint:disable=redefined-outer-name
+            return cls(**config) if config else None
+        except PolyaxonConfigurationError as e:
+            raise ConfigurationError(e)
 
     @cached_property
     def decode_iterations(self):
