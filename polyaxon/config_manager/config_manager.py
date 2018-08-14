@@ -226,6 +226,7 @@ class ConfigManager(object):
         :param options: list/tuple if provided, the value must be one of these values.
         :return: `str`: value corresponding to the key.
         """
+
         def convert_to_dict(x):
             x = json.loads(x)
             if not isinstance(x, Mapping):
@@ -257,6 +258,45 @@ class ConfigManager(object):
             raise ConfigurationError("Cannot convert value `{}` (key: `{}`) "
                                      "to `dict`".format(value, key))
         return value
+
+    def get_uri(self,
+                key,
+                is_list=False,
+                is_optional=False,
+                is_secret=False,
+                is_local=False,
+                default=None,
+                options=None):
+        """
+        Get a the value corresponding to the key and converts it to `UriSpec`.
+
+        :param key: the dict key.
+        :param is_list: If this is one element or a list of elements.
+        :param is_optional: To raise an error if key was not found.
+        :param is_secret: If the key is a secret.
+        :param is_local: If the key is a local to this service.
+        :param default: default value if is_optional is True.
+        :param options: list/tuple if provided, the value must be one of these values.
+        :return: `str`: value corresponding to the key.
+        """
+        if is_list:
+            return self._get_typed_list_value(key=key,
+                                              target_type=UriSpec,
+                                              type_convert=self.parse_uri_spec,
+                                              is_optional=is_optional,
+                                              is_secret=is_secret,
+                                              is_local=is_local,
+                                              default=default,
+                                              options=options)
+
+        return self._get_typed_value(key=key,
+                                     target_type=UriSpec,
+                                     type_convert=self.parse_uri_spec,
+                                     is_optional=is_optional,
+                                     is_secret=is_secret,
+                                     is_local=is_local,
+                                     default=default,
+                                     options=options)
 
     def _get(self, key):
         """
@@ -389,22 +429,16 @@ class ConfigManager(object):
     def parse_uri_spec(self, uri_spec):
         parts = uri_spec.split('@')
         if len(parts) != 2:
-            if self.is_debug_mode:
-                raise ConfigurationError(
-                    'Received invalid uri_spec `{}`. '
-                    'It must be in the format `user:pass@host`'.format(uri_spec))
-            else:
-                return None
+            raise ConfigurationError(
+                'Received invalid uri_spec `{}`. '
+                'The uri must be in the format `user:pass@host`'.format(uri_spec))
 
         user_pass, host = parts
         user_pass = user_pass.split(':')
         if len(user_pass) != 2:
-            if self.is_debug_mode:
-                raise ConfigurationError(
-                    'Received invalid uri_spec `{}`. '
-                    'It must be in the format `user:pass@host`'.format(uri_spec))
-            else:
-                return None
+            raise ConfigurationError(
+                'Received invalid uri_spec `{}`. `user:host` is not conform.'
+                'The uri must be in the format `user:pass@host`'.format(uri_spec))
 
         return UriSpec(user=user_pass[0], password=user_pass[1], host=host)
 

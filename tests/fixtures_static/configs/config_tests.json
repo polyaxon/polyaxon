@@ -56,5 +56,20 @@
   "dict_list_error_key_1": ["123", {"key3": true}],
   "dict_list_error_key_2": [{"key3": true}, 12.3],
   "dict_list_error_key_3": [{"key3": true}, null],
-  "dict_list_error_key_4": [{"key3": true}, "123", false]
+  "dict_list_error_key_4": [{"key3": true}, "123", false],
+  "uri_key_1": "user:pass@siteweb.ca",
+  "uri_key_2": "user2:pass@localhost:8080",
+  "uri_key_3": "user2:pass@https://quay.io",
+  "uri_list_key_1": [
+    "user:pass@siteweb.ca",
+    "user2:pass@localhost:8080",
+    "user2:pass@https://quay.io"],
+  "uri_error_key_1": "foo",
+  "uri_error_key_2": 1,
+  "uri_error_key_3": false,
+  "uri_error_key_4": ["1", "foo"],
+  "uri_list_error_key_1": ["123", "user:pass@siteweb.ca"],
+  "uri_list_error_key_2": ["user:pass@siteweb.ca", 12.3],
+  "uri_list_error_key_3": ["user:pass@siteweb.ca", null],
+  "uri_list_error_key_4": ["user:pass@siteweb.ca", "123", false]
 }

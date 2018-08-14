@@ -4,6 +4,7 @@ import pytest
 
 from config_manager.config_manager import ConfigManager
 from config_manager.exceptions import ConfigurationError
+from config_manager.uri_spec import UriSpec
 from polyaxon.config_manager import SettingsConfigManager
 from tests.utils import BaseTest
 
@@ -322,6 +323,76 @@ class TestConfigManager(BaseTest):
             'dict_non_existing_key', is_list=True, is_optional=True, default=[
                 {'foo': 'bar'}, {'foo': 'boo'}]),
             [{'foo': 'bar'}, {'foo': 'boo'}])
+
+    def test_get_uri(self):
+        value = self.config.get_uri('uri_key_1')
+        self.assertEqual(value, UriSpec("user", "pass", "siteweb.ca"))
+
+        value = self.config.get_uri('uri_key_2')
+        self.assertEqual(value, UriSpec("user2", "pass", "localhost:8080"))
+
+        value = self.config.get_uri('uri_key_3')
+        self.assertEqual(value, UriSpec("user2", "pass", "https://quay.io"))
+
+        value = self.config.get_uri('uri_list_key_1', is_list=True)
+        self.assertEqual(value, [
+            UriSpec("user", "pass", "siteweb.ca"),
+            UriSpec("user2", "pass", "localhost:8080"),
+            UriSpec("user2", "pass", "https://quay.io")
+        ])
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_error_key_1')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_error_key_2')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_error_key_3')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_error_key_4')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_list_key_1')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_list_error_key_1', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_list_error_key_2', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_list_error_key_3', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_list_error_key_4', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_key_1', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_non_existing_key')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_uri('uri_non_existing_key', is_list=True)
+
+        self.assertEqual(self.config.get_uri('uri_non_existing_key', is_optional=True), None)
+        self.assertEqual(
+            self.config.get_uri('uri_non_existing_key',
+                                is_optional=True,
+                                default=UriSpec("user2", "pass", "localhost:8080")),
+            UriSpec("user2", "pass", "localhost:8080"))
+
+        self.assertEqual(
+            self.config.get_uri('uri_non_existing_key', is_list=True, is_optional=True), None)
+        self.assertEqual(
+            self.config.get_uri('uri_non_existing_key',
+                                is_list=True,
+                                is_optional=True,
+                                default=[UriSpec("user", "pass", "siteweb.ca"),
+                                         UriSpec("user2", "pass", "localhost:8080")]),
+            [UriSpec("user", "pass", "siteweb.ca"), UriSpec("user2", "pass", "localhost:8080")])
 
 
 @pytest.mark.config_manager_mark
