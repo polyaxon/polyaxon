@@ -59,19 +59,22 @@ class TestConfigManager(BaseTest):
             self.config.get_boolean('bool_list_key_1')
 
         with self.assertRaises(ConfigurationError):
-            self.config.get_boolean('bool_list_error_key_1')
+            self.config.get_boolean('bool_list_error_key_2', is_list=True)
 
         with self.assertRaises(ConfigurationError):
             self.config.get_boolean('bool_list_error_key_1', is_list=True)
-
-        with self.assertRaises(ConfigurationError):
-            self.config.get_boolean('bool_non_existing_key', is_list=True)
 
         with self.assertRaises(ConfigurationError):
             self.config.get_boolean('bool_key_1', is_list=True)
 
         with self.assertRaises(ConfigurationError):
             self.config.get_boolean('bool_key_2', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_boolean('bool_non_existing_key')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_boolean('bool_non_existing_key', is_list=True)
 
         self.assertEqual(self.config.get_boolean('bool_non_existing_key', is_optional=True), None)
         self.assertEqual(self.config.get_boolean(
@@ -122,6 +125,9 @@ class TestConfigManager(BaseTest):
 
         with self.assertRaises(ConfigurationError):
             self.config.get_int('int_non_existing_key')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_int('int_non_existing_key', is_list=True)
 
         self.assertEqual(self.config.get_int(
             'int_non_existing_key', is_optional=True), None)
@@ -178,6 +184,9 @@ class TestConfigManager(BaseTest):
 
         with self.assertRaises(ConfigurationError):
             self.config.get_float('float_non_existing_key')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_float('float_non_existing_key', is_list=True)
 
         self.assertEqual(self.config.get_float(
             'float_non_existing_key', is_optional=True), None)
@@ -242,6 +251,9 @@ class TestConfigManager(BaseTest):
         with self.assertRaises(ConfigurationError):
             self.config.get_string('string_non_existing_key')
 
+        with self.assertRaises(ConfigurationError):
+            self.config.get_string('string_non_existing_key', is_list=True)
+
         self.assertEqual(self.config.get_string(
             'string_non_existing_key', is_optional=True), None)
         self.assertEqual(self.config.get_string(
@@ -252,6 +264,64 @@ class TestConfigManager(BaseTest):
         self.assertEqual(self.config.get_string(
             'string_non_existing_key', is_list=True, is_optional=True, default=['foo', 'bar']),
             ['foo', 'bar'])
+
+    def test_get_dict(self):
+        value = self.config.get_dict('dict_key_1')
+        self.assertEqual(value, {"key1": "foo", "key2": 2, "key3": False, "key4": "1"})
+
+        value = self.config.get_dict('dict_list_key_1', is_list=True)
+        self.assertEqual(value, [
+            {"key1": "foo", "key2": 2, "key3": False, "key4": "1"},
+            {"key3": True, "key4": "2"},
+            {"key1": False, "key2": "3"}
+        ])
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_error_key_1')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_error_key_2')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_error_key_3')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_error_key_4')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_list_key_1')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_list_error_key_1', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_list_error_key_2', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_list_error_key_3', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_list_error_key_4', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_key_1', is_list=True)
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_non_existing_key')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict('dict_non_existing_key', is_list=True)
+
+        self.assertEqual(self.config.get_dict('dict_non_existing_key', is_optional=True), None)
+        self.assertEqual(self.config.get_dict(
+            'dict_non_existing_key', is_optional=True, default={'foo': 'bar'}), {'foo': 'bar'})
+
+        self.assertEqual(self.config.get_dict(
+            'dict_non_existing_key', is_list=True, is_optional=True), None)
+        self.assertEqual(self.config.get_dict(
+            'dict_non_existing_key', is_list=True, is_optional=True, default=[
+                {'foo': 'bar'}, {'foo': 'boo'}]),
+            [{'foo': 'bar'}, {'foo': 'boo'}])
 
 
 @pytest.mark.config_manager_mark

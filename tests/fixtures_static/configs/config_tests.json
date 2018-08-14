@@ -44,5 +44,17 @@
   "string_list_error_key_2": ["123", 12.3],
   "string_list_error_key_3": ["123", null],
   "string_list_error_key_4": ["123", false],
-  "string_error_key_5": [{"url":"https://hooks.slack.com/services/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"}]
+  "dict_key_1": {"key1": "foo", "key2": 2, "key3": false, "key4": "1"},
+  "dict_list_key_1": [
+    {"key1": "foo", "key2": 2, "key3": false, "key4": "1"},
+    {"key3": true, "key4": "2"},
+    {"key1": false, "key2": "3"}],
+  "dict_error_key_1": "foo",
+  "dict_error_key_2": 1,
+  "dict_error_key_3": false,
+  "dict_error_key_4": ["1", "foo"],
+  "dict_list_error_key_1": ["123", {"key3": true}],
+  "dict_list_error_key_2": [{"key3": true}, 12.3],
+  "dict_list_error_key_3": [{"key3": true}, null],
+  "dict_list_error_key_4": [{"key3": true}, "123", false]
 }

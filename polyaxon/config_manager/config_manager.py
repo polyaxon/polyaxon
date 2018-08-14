@@ -1,5 +1,6 @@
 import base64
 import json
+from collections import Mapping
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
@@ -58,7 +59,7 @@ class ConfigManager(object):
                 default=None,
                 options=None):
         """
-        Get a the value corresponding to the key and converts it to `int`.
+        Get a the value corresponding to the key and converts it to `int`/`list(int)`.
 
         :param key: the dict key.
         :param is_list: If this is one element or a list of elements.
@@ -97,7 +98,7 @@ class ConfigManager(object):
                   default=None,
                   options=None):
         """
-        Get a the value corresponding to the key and converts it to `float`.
+        Get a the value corresponding to the key and converts it to `float`/`list(float)`.
 
         :param key: the dict key.
         :param is_list: If this is one element or a list of elements.
@@ -136,7 +137,7 @@ class ConfigManager(object):
                     default=None,
                     options=None):
         """
-        Get a the value corresponding to the key and converts it to `bool`.
+        Get a the value corresponding to the key and converts it to `bool`/`list(str)`.
 
         :param key: the dict key.
         :param is_list: If this is one element or a list of elements.
@@ -175,7 +176,7 @@ class ConfigManager(object):
                    default=None,
                    options=None):
         """
-        Get a the value corresponding to the key and converts it to `str`.
+        Get a the value corresponding to the key and converts it to `str`/`list(str)`.
 
         :param key: the dict key.
         :param is_list: If this is one element or a list of elements.
@@ -204,6 +205,58 @@ class ConfigManager(object):
                                      is_local=is_local,
                                      default=default,
                                      options=options)
+
+    def get_dict(self,
+                 key,
+                 is_list=False,
+                 is_optional=False,
+                 is_secret=False,
+                 is_local=False,
+                 default=None,
+                 options=None):
+        """
+        Get a the value corresponding to the key and converts it to `str`.
+
+        :param key: the dict key.
+        :param is_list: If this is one element or a list of elements.
+        :param is_optional: To raise an error if key was not found.
+        :param is_secret: If the key is a secret.
+        :param is_local: If the key is a local to this service.
+        :param default: default value if is_optional is True.
+        :param options: list/tuple if provided, the value must be one of these values.
+        :return: `str`: value corresponding to the key.
+        """
+        def convert_to_dict(x):
+            x = json.loads(x)
+            if not isinstance(x, Mapping):
+                raise ValueError("Cannot convert value `{}` (key: `{}`) to `dict`".format(x, key))
+            return x
+
+        if is_list:
+            return self._get_typed_list_value(key=key,
+                                              target_type=Mapping,
+                                              type_convert=convert_to_dict,
+                                              is_optional=is_optional,
+                                              is_secret=is_secret,
+                                              is_local=is_local,
+                                              default=default,
+                                              options=options)
+        value = self._get_typed_value(key=key,
+                                      target_type=Mapping,
+                                      type_convert=convert_to_dict,
+                                      is_optional=is_optional,
+                                      is_secret=is_secret,
+                                      is_local=is_local,
+                                      default=default,
+                                      options=options)
+
+        if not value:
+            return default
+
+        if not isinstance(value, Mapping):
+            raise ConfigurationError("Cannot convert value `{}` (key: `{}`) "
+                                     "to `dict`".format(value, key))
+        return value
 
     def _get(self, key):
         """
@@ -311,9 +364,11 @@ class ConfigManager(object):
         if not value:
             return default
 
+        raise_type = 'dict' if target_type == Mapping else target_type
+
         if not isinstance(value, list):
-            raise ConfigurationError("Cannot convert value `{}` (key: `{}`)"
-                                     "to `{}`".format(value, key, target_type))
+            raise ConfigurationError("Cannot convert value `{}` (key: `{}`) "
+                                     "to `{}`".format(value, key, raise_type))
         # If we are here the value must be a list
         result = []
         for v in value:
@@ -321,14 +376,14 @@ class ConfigManager(object):
                 try:
                     result.append(type_convert(v))
                 except ValueError:
-                    raise ConfigurationError("Cannot convert value `{}` (found in list key: `{}`)"
-                                             "to `{}`".format(v, key, target_type))
+                    raise ConfigurationError("Cannot convert value `{}` (found in list key: `{}`) "
+                                             "to `{}`".format(v, key, raise_type))
             elif isinstance(v, target_type):
                 result.append(v)
 
             else:
-                raise ConfigurationError("Cannot convert value `{}` (found in list key: `{}`)"
-                                         "to `{}`".format(v, key, target_type))
+                raise ConfigurationError("Cannot convert value `{}` (found in list key: `{}`) "
+                                         "to `{}`".format(v, key, raise_type))
         return result
 
     def parse_uri_spec(self, uri_spec):
