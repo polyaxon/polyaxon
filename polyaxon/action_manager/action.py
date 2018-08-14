@@ -2,7 +2,7 @@ import logging
 
 import auditor
 
-from action_manager.exception import PolyaxonActionException
+from action_manager.exceptions import PolyaxonActionException
 
 logger = logging.getLogger("polyaxon.actions")
 

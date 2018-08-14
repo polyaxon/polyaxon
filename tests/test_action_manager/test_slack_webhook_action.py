@@ -5,7 +5,7 @@ from action_manager.actions.webhooks.slack_webhook import (
     SLACK_WEBHOOK_ACTION_EXECUTED,
     SlackWebHookAction
 )
-from action_manager.exception import PolyaxonActionException
+from action_manager.exceptions import PolyaxonActionException
 from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
 

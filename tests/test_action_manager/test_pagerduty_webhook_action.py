@@ -5,7 +5,7 @@ from action_manager.actions.webhooks.pagerduty_webhook import (
     PAGER_DUTY_WEBHOOK_ACTION_EXECUTED,
     PagerDutyWebHookAction
 )
-from action_manager.exception import PolyaxonActionException
+from action_manager.exceptions import PolyaxonActionException
 from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
 

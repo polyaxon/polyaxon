@@ -7,7 +7,7 @@ from action_manager.actions.webhooks.discord_webhook import (
     DISCORD_WEBHOOK_ACTION_EXECUTED,
     DiscordWebHookAction
 )
-from action_manager.exception import PolyaxonActionException
+from action_manager.exceptions import PolyaxonActionException
 from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
 

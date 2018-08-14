@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 
 from action_manager.actions.webhooks.webhook import WEBHOOK_ACTION_EXECUTED, WebHookAction
-from action_manager.exception import PolyaxonActionException
+from action_manager.exceptions import PolyaxonActionException
 from tests.utils import BaseTest
 
 
