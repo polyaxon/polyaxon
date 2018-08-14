@@ -1,6 +1,7 @@
 import os
 
 from distutils.util import strtobool  # pylint:disable=import-error
+from django.utils.functional import cached_property
 
 from unipath import Path
 
@@ -17,6 +18,187 @@ ENV_VARS_DIR = ROOT_DIR.child('polyaxon').child('polyaxon').child('env_vars')
 TESTING = bool(strtobool(os.getenv('TESTING', "0")))
 
 
+class SettingsConfigManager(ConfigManager):
+    def __init__(self, **params):
+        super().__init__(**params)
+        self._env = self.get_string('POLYAXON_ENVIRONMENT')
+        self._service = self.get_string('POLYAXON_SERVICE', is_local=True)
+        self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG', is_optional=True, default=False)
+        self._namespace = self.get_string('POLYAXON_K8S_NAMESPACE')
+        if self.is_sidecar_service or self.is_dockerizer_service:
+            self._node_name = None
+        else:
+            self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
+
+    @property
+    def namespace(self):
+        return self._namespace
+
+    @property
+    def node_name(self):
+        return self._node_name
+
+    @property
+    def service(self):
+        return self._service
+
+    @property
+    def is_monolith_service(self):
+        return self.service == 'monolith'
+
+    @property
+    def is_api_service(self):
+        return self.service == 'api'
+
+    @property
+    def is_commands_service(self):
+        return self.service == 'commands'
+
+    @property
+    def is_dockerizer_service(self):
+        return self.service == 'dockerizer'
+
+    @property
+    def is_crons_service(self):
+        return self.service == 'crons'
+
+    @property
+    def is_monitor_namespace_service(self):
+        return self.service == 'monitor_namespace'
+
+    @property
+    def is_monitor_resources_service(self):
+        return self.service == 'monitor_resources'
+
+    @property
+    def is_scheduler_service(self):
+        return self.service == 'scheduler'
+
+    @property
+    def is_monitor_statuses_service(self):
+        return self.service == 'monitor_statuses'
+
+    @property
+    def is_sidecar_service(self):
+        return self.service == 'sidecar'
+
+    @property
+    def is_streams_service(self):
+        return self.service == 'streams'
+
+    @property
+    def is_hpsearch_service(self):
+        return self.service == 'hpsearch'
+
+    @property
+    def is_events_handlers_service(self):
+        return self.service == 'events_handlers'
+
+    @property
+    def is_debug_mode(self):
+        return self._is_debug_mode
+
+    @property
+    def env(self):
+        return self._env
+
+    @property
+    def is_testing_env(self):
+        if TESTING:
+            return True
+        if self.env == 'testing':
+            return True
+        return False
+
+    @property
+    def is_local_env(self):
+        if self.env == 'local':
+            return True
+        return False
+
+    @property
+    def is_staging_env(self):
+        if self.env == 'staging':
+            return True
+        return False
+
+    @property
+    def is_production_env(self):
+        if self.env == 'production':
+            return True
+        return False
+
+    def setup_auditor_services(self):
+        if not self.is_testing_env:
+            import activitylogs
+            import auditor
+            import notifier
+            import tracker
+
+            auditor.validate()
+            auditor.setup()
+            tracker.validate()
+            tracker.setup()
+            activitylogs.validate()
+            activitylogs.setup()
+            notifier.validate()
+            notifier.setup()
+
+    def setup_publisher_service(self):
+        import publisher
+
+        publisher.validate()
+        publisher.setup()
+
+    def setup_query_service(self):
+        import query
+
+        query.validate()
+        query.setup()
+
+    def setup_stats_service(self):
+        import stats
+
+        stats.validate()
+        stats.setup()
+
+    @cached_property
+    def notification_url(self):
+        value = self.get_string(
+            '_POLYAXON_NOTIFICATION',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decode(value) if value else None
+
+    @cached_property
+    def platform_dns(self):
+        value = self.get_string(
+            '_POLYAXON_PLATFORM_DNS',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decode(value) if value else None
+
+    @cached_property
+    def cli_dns(self):
+        value = self.get_string(
+            '_POLYAXON_CLI_DNS',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decode(value, 2) if value else None
+
+    @cached_property
+    def tracker_key(self):
+        value = self.get_string(
+            '_POLYAXON_TRACKER_KEY',
+            is_secret=True,
+            is_local=True,
+            is_optional=True)
+        return self._decode(value) if value else None
+
+
 config_values = [
     '{}/defaults.json'.format(ENV_VARS_DIR),
     os.environ,
@@ -27,4 +209,4 @@ if TESTING:
 elif os.path.isfile('{}/local.json'.format(ENV_VARS_DIR)):
     config_values.append('{}/local.json'.format(ENV_VARS_DIR))
 
-config = ConfigManager.read_configs(config_values)
+config = SettingsConfigManager.read_configs(config_values)
