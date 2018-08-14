@@ -14,4 +14,4 @@ class Command(BaseCleanCommand):
                 project_uuid=job.project.uuid.hex,
                 tensorboard_job_name=job.unique_name,
                 tensorboard_job_uuid=job.uuid.hex)
-            job.set_status(JobLifeCycle.STOPPED, message='Cleanup')
+            job.set_status(JobLifeCycle.STOPPED, message='Stop triggered by the cleaning hook.')

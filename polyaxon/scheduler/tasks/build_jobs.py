@@ -27,7 +27,6 @@ def build_jobs_start(build_job_id):
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP, ignore_result=True)
 def build_jobs_stop(project_name, project_uuid, build_job_name, build_job_uuid, update_status=True):
-
     dockerizer_scheduler.stop_dockerizer(
         project_name=project_name,
         project_uuid=project_uuid,
@@ -45,12 +44,14 @@ def build_jobs_stop(project_name, project_uuid, build_job_name, build_job_uuid, 
 
     # Update build job status to show that its stopped
     build_job.set_status(status=JobLifeCycle.STOPPED,
-                         message='BuildJob was stopped')
+                         message='BuildJob was stopped.')
 
 
 def notify_build_job_failed(build_job):
     message = 'Build failed'
-    details = 'build_job_id: {}, {}'.format(build_job.id, build_job.uuid.hex)
+    details = 'build_job: id<{}>, uuid<{}>, failure time <{}>'.format(build_job.id,
+                                                                      build_job.uuid.hex,
+                                                                      build_job.finished_at)
 
     jobs = Job.objects.filter(build_job=build_job)
     for job in jobs:
@@ -71,8 +72,9 @@ def notify_build_job_failed(build_job):
 
 def notify_build_job_stopped(build_job):
     message = 'Build stopped'
-    details = 'build_job_id: {}, {}'.format(build_job.id, build_job.uuid.hex)
-
+    details = 'build_job: id<{}>, uuid<{}>, failure time <{}>'.format(build_job.id,
+                                                                      build_job.uuid.hex,
+                                                                      build_job.finished_at)
     jobs = Job.objects.filter(build_job=build_job)
     for job in jobs:
         job.set_status(JobLifeCycle.STOPPED, message=message, details=details)

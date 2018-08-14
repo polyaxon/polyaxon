@@ -18,4 +18,5 @@ class Command(BaseCleanCommand):
                 experiment_group_name=group.unique_name if group else None,
                 experiment_group_uuid=group.uuid.hex if group else None,
                 specification=experiment.specification)
-            experiment.set_status(ExperimentLifeCycle.STOPPED, message='Cleanup')
+            experiment.set_status(ExperimentLifeCycle.STOPPED,
+                                  message='Stop triggered by the cleaning hook.')

@@ -12,4 +12,4 @@ class Command(BaseCleanCommand):
             experiments_group_stop_experiments(
                 experiment_group_id=experiment_group.id,
                 pending=True,
-                message='Cleanup')
+                message='Stop triggered by the cleaning hook.')

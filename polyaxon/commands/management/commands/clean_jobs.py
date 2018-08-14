@@ -15,4 +15,5 @@ class Command(BaseCleanCommand):
                 job_name=job.unique_name,
                 job_uuid=job.uuid.hex,
                 specification=job.specification)
-            job.set_status(JobLifeCycle.STOPPED, message='Cleanup')
+            job.set_status(JobLifeCycle.STOPPED,
+                           message='Stop triggered by the cleaning hook.')

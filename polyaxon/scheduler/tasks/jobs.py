@@ -85,4 +85,4 @@ def jobs_stop(project_name, project_uuid, job_name, job_uuid, specification, upd
 
     # Update notebook status to show that its stopped
     job.set_status(status=JobLifeCycle.STOPPED,
-                   message='job was stopped')
+                   message='Job was stopped')

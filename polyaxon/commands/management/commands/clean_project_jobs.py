@@ -18,7 +18,7 @@ class Command(BaseCleanCommand):
                     notebook_job_name=project.notebook.unique_name,
                     notebook_job_uuid=project.notebook.uuid.hex)
                 project.notebook.set_status(status=JobLifeCycle.STOPPED,
-                                            message='Cleanup')
+                                            message='Stop triggered by the cleaning hook.')
             if project.has_tensorboard:
                 tensorboard_scheduler.stop_tensorboard(
                     project_name=project.unique_name,
@@ -26,4 +26,4 @@ class Command(BaseCleanCommand):
                     tensorboard_job_name=project.tensorboard.unique_name,
                     tensorboard_job_uuid=project.tensorboard.uuid.hex)
                 project.tensorboard.set_status(status=JobLifeCycle.STOPPED,
-                                               message='Cleanup')
+                                               message='Stop triggered by the cleaning hook.')

@@ -156,4 +156,5 @@ def experiments_stop(project_name,
         return
 
     # Update experiment status to show that its stopped
-    experiment.set_status(ExperimentLifeCycle.STOPPED)
+    experiment.set_status(ExperimentLifeCycle.STOPPED,
+                          message='Experiment was stopped')
