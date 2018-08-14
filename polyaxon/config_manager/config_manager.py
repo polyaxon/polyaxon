@@ -1,4 +1,5 @@
 import base64
+import json
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
@@ -50,14 +51,17 @@ class ConfigManager(object):
 
     def get_int(self,
                 key,
+                is_list=False,
                 is_optional=False,
                 is_secret=False,
                 is_local=False,
                 default=None,
                 options=None):
-        """Get a the value corresponding to the key and converts it to `int`.
+        """
+        Get a the value corresponding to the key and converts it to `int`.
 
         :param key: the dict key.
+        :param is_list: If this is one element or a list of elements.
         :param is_optional: To raise an error if key was not found.
         :param is_secret: If the key is a secret.
         :param is_local: If the key is a local to this service.
@@ -65,6 +69,16 @@ class ConfigManager(object):
         :param options: list/tuple if provided, the value must be one of these values.
         :return: `int`: value corresponding to the key.
         """
+        if is_list:
+            return self._get_typed_list_value(key=key,
+                                              target_type=int,
+                                              type_convert=int,
+                                              is_optional=is_optional,
+                                              is_secret=is_secret,
+                                              is_local=is_local,
+                                              default=default,
+                                              options=options)
+
         return self._get_typed_value(key=key,
                                      target_type=int,
                                      type_convert=int,
@@ -76,14 +90,17 @@ class ConfigManager(object):
 
     def get_float(self,
                   key,
+                  is_list=False,
                   is_optional=False,
                   is_secret=False,
                   is_local=False,
                   default=None,
                   options=None):
-        """Get a the value corresponding to the key and converts it to `float`.
+        """
+        Get a the value corresponding to the key and converts it to `float`.
 
         :param key: the dict key.
+        :param is_list: If this is one element or a list of elements.
         :param is_optional: To raise an error if key was not found.
         :param is_secret: If the key is a secret.
         :param is_local: If the key is a local to this service.
@@ -91,6 +108,16 @@ class ConfigManager(object):
         :param options: list/tuple if provided, the value must be one of these values.
         :return: `float`: value corresponding to the key.
         """
+        if is_list:
+            return self._get_typed_list_value(key=key,
+                                              target_type=float,
+                                              type_convert=float,
+                                              is_optional=is_optional,
+                                              is_secret=is_secret,
+                                              is_local=is_local,
+                                              default=default,
+                                              options=options)
+
         return self._get_typed_value(key=key,
                                      target_type=float,
                                      type_convert=float,
@@ -102,14 +129,17 @@ class ConfigManager(object):
 
     def get_boolean(self,
                     key,
+                    is_list=False,
                     is_optional=False,
                     is_secret=False,
                     is_local=False,
                     default=None,
                     options=None):
-        """Get a the value corresponding to the key and converts it to `bool`.
+        """
+        Get a the value corresponding to the key and converts it to `bool`.
 
         :param key: the dict key.
+        :param is_list: If this is one element or a list of elements.
         :param is_optional: To raise an error if key was not found.
         :param is_secret: If the key is a secret.
         :param is_local: If the key is a local to this service.
@@ -117,6 +147,16 @@ class ConfigManager(object):
         :param options: list/tuple if provided, the value must be one of these values.
         :return: `bool`: value corresponding to the key.
         """
+        if is_list:
+            return self._get_typed_list_value(key=key,
+                                              target_type=bool,
+                                              type_convert=lambda x: bool(strtobool(x)),
+                                              is_optional=is_optional,
+                                              is_secret=is_secret,
+                                              is_local=is_local,
+                                              default=default,
+                                              options=options)
+
         return self._get_typed_value(key=key,
                                      target_type=bool,
                                      type_convert=lambda x: bool(strtobool(x)),
@@ -126,15 +166,19 @@ class ConfigManager(object):
                                      default=default,
                                      options=options)
 
-    def get_string(self, key,
+    def get_string(self,
+                   key,
+                   is_list=False,
                    is_optional=False,
                    is_secret=False,
                    is_local=False,
                    default=None,
                    options=None):
-        """Get a the value corresponding to the key and converts it to `str`.
+        """
+        Get a the value corresponding to the key and converts it to `str`.
 
         :param key: the dict key.
+        :param is_list: If this is one element or a list of elements.
         :param is_optional: To raise an error if key was not found.
         :param is_secret: If the key is a secret.
         :param is_local: If the key is a local to this service.
@@ -142,6 +186,16 @@ class ConfigManager(object):
         :param options: list/tuple if provided, the value must be one of these values.
         :return: `str`: value corresponding to the key.
         """
+        if is_list:
+            return self._get_typed_list_value(key=key,
+                                              target_type=str,
+                                              type_convert=str,
+                                              is_optional=is_optional,
+                                              is_secret=is_secret,
+                                              is_local=is_local,
+                                              default=default,
+                                              options=options)
+
         return self._get_typed_value(key=key,
                                      target_type=str,
                                      type_convert=str,
@@ -152,7 +206,8 @@ class ConfigManager(object):
                                      options=options)
 
     def _get(self, key):
-        """Gets key from the dictionary made out of the configs passed.
+        """
+        Get key from the dictionary made out of the configs passed.
 
         :param key: the dict key.
         :return: The corresponding value of the key if found.
@@ -183,7 +238,8 @@ class ConfigManager(object):
                          is_local=False,
                          default=None,
                          options=None):
-        """Returns the value corresponding to the key converted to the given type.
+        """
+        Return the value corresponding to the key converted to the given type.
 
         :param key: the dict key.
         :param target_type: The type we expect the variable or key to be in.
@@ -218,6 +274,62 @@ class ConfigManager(object):
             self._check_options(key=key, value=value, options=options)
             return value
         raise ConfigurationError(key, value, target_type)
+
+    def _get_typed_list_value(self,
+                              key,
+                              target_type,
+                              type_convert,
+                              is_optional=False,
+                              is_secret=False,
+                              is_local=False,
+                              default=None,
+                              options=None):
+        """
+        Return the value corresponding to the key converted first to list
+        than each element to the given type.
+
+        :param key: the dict key.
+        :param target_type: The type we expect the variable or key to be in.
+        :param type_convert: A lambda expression that converts the key to the desired type.
+        :param is_optional: To raise an error if key was not found.
+        :param is_secret: If the key is a secret.
+        :param is_local: If the key is a local to this service.
+        :param default: default value if is_optional is True.
+        :param options: list/tuple if provided, the value must be one of these values.
+        :return:
+        """
+
+        value = self._get_typed_value(key=key,
+                                      target_type=list,
+                                      type_convert=json.loads,
+                                      is_optional=is_optional,
+                                      is_secret=is_secret,
+                                      is_local=is_local,
+                                      default=default,
+                                      options=options)
+
+        if not value:
+            return default
+
+        if not isinstance(value, list):
+            raise ConfigurationError("Cannot convert value `{}` (key: `{}`)"
+                                     "to `{}`".format(value, key, target_type))
+        # If we are here the value must be a list
+        result = []
+        for v in value:
+            if isinstance(v, str):
+                try:
+                    result.append(type_convert(v))
+                except ValueError:
+                    raise ConfigurationError("Cannot convert value `{}` (found in list key: `{}`)"
+                                             "to `{}`".format(v, key, target_type))
+            elif isinstance(v, target_type):
+                result.append(v)
+
+            else:
+                raise ConfigurationError("Cannot convert value `{}` (found in list key: `{}`)"
+                                         "to `{}`".format(v, key, target_type))
+        return result
 
     def parse_uri_spec(self, uri_spec):
         parts = uri_spec.split('@')
