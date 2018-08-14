@@ -20,8 +20,8 @@ def start_job(job):
 
     try:
         image_name, image_tag = get_image_info(build_job=job.build_job)
-    except ValueError as e:
-        _logger.warning('Could not start the job, %s', e)
+    except (ValueError, AttributeError):
+        _logger.error('Could not start the job.', exc_info=True)
         job.set_status(JobLifeCycle.FAILED, message='External git repo was note found.')
         return
     job_docker_image = '{}:{}'.format(image_name, image_tag)
@@ -49,21 +49,24 @@ def start_job(job):
                                     node_selector=job.node_selector,
                                     affinity=job.affinity,
                                     tolerations=job.tolerations)
-    except ApiException as e:
-        _logger.warning('Could not start job, please check your polyaxon spec %s', e)
+    except ApiException:
+        _logger.error('Could not start job, please check your polyaxon spec.',
+                      exc_info=True)
         job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start job, encountered a Kubernetes ApiException.')
         return
     except VolumeNotFoundError as e:
-        _logger.warning('Could not start the job, please check your volume definitions %s', e)
+        _logger.error('Could not start the job, please check your volume definitions.',
+                      exc_info=True)
         job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start the job, '
                     'encountered a volume definition problem. %s' % e)
         return False
     except Exception as e:
-        _logger.warning('Could not start job, please check your polyaxon spec %s', e)
+        _logger.error('Could not start job, please check your polyaxon spec.',
+                      exc_info=True)
         job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start job encountered an {} exception.'.format(

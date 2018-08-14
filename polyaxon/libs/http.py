@@ -120,7 +120,8 @@ def download(url,
                                 stream=True)
 
         if response.status_code != 200:
-            logger.warning("Failed to download file from %s: %s" % (url, response.status_code))
+            logger.error("Failed to download file from %s: %s" % (url, response.status_code),
+                         extra={'stack': True})
             return None
 
         with open(filename, 'wb') as f:
@@ -129,8 +130,8 @@ def download(url,
                     f.write(chunk)
         return filename
 
-    except requests.exceptions.RequestException as e:
-        logger.warning("Exception: %s" % e)
+    except requests.exceptions.RequestException:
+        logger.error("Download exception", exc_info=True)
         return None
 
 

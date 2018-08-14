@@ -88,20 +88,23 @@ def start_dockerizer(build_job):
                                            tolerations=build_job.tolerations)
         auditor.record(event_type=BUILD_JOB_STARTED,
                        instance=build_job)
-    except ApiException as e:
-        _logger.warning('Could not start build job, please check your polyaxon spec %s', e)
+    except ApiException:
+        _logger.error('Could not start build job, please check your polyaxon spec',
+                      exc_info=True)
         build_job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start build job, encountered a Kubernetes ApiException.')
         return False
     except VolumeNotFoundError as e:
-        _logger.warning('Could not start build job, please check your volume definitions %s', e)
+        _logger.error('Could not start build job, please check your volume definitions.',
+                      exc_info=True)
         build_job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start build job, encountered a volume definition problem. %s' % e)
         return False
     except Exception as e:
-        _logger.warning('Could not start build job, please check your polyaxon spec %s', e)
+        _logger.error('Could not start build job, please check your polyaxon spec.',
+                      exc_info=True)
         build_job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start build job encountered an {} exception.'.format(

@@ -14,7 +14,7 @@ class BaseIterationManger(object):
         iteration_config = self.experiment_group.iteration_config
         if iteration_config is None:
             _logger.warning(
-                'Experiment group `%s` attempt to update iteration, but has no iteration',
+                'Experiment group `%s` attempted to update iteration, but has no iteration',
                 self.experiment_group.id)
             return None
         return iteration_config

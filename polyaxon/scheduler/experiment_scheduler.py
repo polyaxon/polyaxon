@@ -393,10 +393,10 @@ def start_experiment(experiment):
     if experiment.specification.build:
         try:
             image_name, image_tag = get_image_info(build_job=experiment.build_job)
-        except ValueError as e:
-            _logger.warning('Could not start the experiment, %s', e)
+        except (ValueError, AttributeError):
+            _logger.error('Could not start the experiment.', exc_info=True)
             experiment.set_status(ExperimentLifeCycle.FAILED,
-                                  message='External git repo was note found.')
+                                  message='Image info was not found.')
             return
         job_docker_image = '{}:{}'.format(image_name, image_tag)
         _logger.info('Start experiment with built image `%s`', job_docker_image)
@@ -427,21 +427,23 @@ def start_experiment(experiment):
     try:
         response = spawner.start_experiment()
     except ApiException as e:
-        _logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
+        _logger.error('Could not start the experiment, please check your polyaxon spec.',
+                      exc_info=True)
         experiment.set_status(
             ExperimentLifeCycle.FAILED,
             message='Could not start the experiment, encountered a Kubernetes ApiException.')
         return
     except VolumeNotFoundError as e:
-        _logger.warning('Could not start the experiment, '
-                        'please check your volume definitions %s', e)
+        _logger.error('Could not start the experiment, please check your volume definitions.',
+                      exc_info=True)
         experiment.set_status(
             ExperimentLifeCycle.FAILED,
             message='Could not start the experiment, '
                     'encountered a volume definition problem. %s' % e)
         return False
     except Exception as e:
-        _logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
+        _logger.error('Could not start the experiment, please check your polyaxon spec',
+                      exc_info=True)
         experiment.set_status(
             ExperimentLifeCycle.FAILED,
             message='Could not start the experiment encountered an {} exception.'.format(

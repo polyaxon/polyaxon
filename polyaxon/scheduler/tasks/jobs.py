@@ -14,7 +14,6 @@ _logger = logging.getLogger(__name__)
 def jobs_build(job_id):
     job = get_valid_job(job_id=job_id)
     if not job:
-        _logger.warning('Job does not have a notebook.')
         return None
 
     if not JobLifeCycle.can_transition(status_from=job.last_status,
@@ -50,7 +49,6 @@ def jobs_build(job_id):
 def jobs_start(job_id):
     job = get_valid_job(job_id=job_id)
     if not job:
-        _logger.warning('Job does not exist.')
         return None
 
     if job.last_status == JobLifeCycle.RUNNING:

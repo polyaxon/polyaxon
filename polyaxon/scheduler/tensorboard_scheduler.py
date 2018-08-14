@@ -36,22 +36,24 @@ def start_tensorboard(tensorboard):
             node_selector=tensorboard.node_selector,
             affinity=tensorboard.affinity,
             tolerations=tensorboard.tolerations)
-    except ApiException as e:
-        _logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
+    except ApiException:
+        _logger.error('Could not start tensorboard, please check your polyaxon spec.',
+                      exc_info=True)
         tensorboard.set_status(
             JobLifeCycle.FAILED,
             message='Could not start tensorboard, encountered a Kubernetes ApiException.')
         return
     except VolumeNotFoundError as e:
-        _logger.warning('Could not start the tensorboard, '
-                        'please check your volume definitions %s', e)
+        _logger.error('Could not start the tensorboard, please check your volume definitions.',
+                      exc_info=True)
         tensorboard.set_status(
             JobLifeCycle.FAILED,
             message='Could not start the tensorboard, '
                     'encountered a volume definition problem. %s' % e)
         return False
     except Exception as e:
-        _logger.warning('Could not start tensorboard, please check your polyaxon spec %s', e)
+        _logger.error('Could not start tensorboard, please check your polyaxon spec.',
+                      exc_info=True)
         tensorboard.set_status(
             JobLifeCycle.FAILED,
             message='Could not start tensorboard encountered an {} exception.'.format(

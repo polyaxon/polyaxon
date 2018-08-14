@@ -23,8 +23,9 @@ def populate_user_handler(sender, **kwargs):
         try:
             value = ldap_user.attrs['mail'][0]
         except LookupError:
-            _logger.warning("%s does not have a value for the attribute %s",
-                            ldap_user.dn, 'mail')
+            _logger.error("%s does not have a value for the attribute %s",
+                          ldap_user.dn, 'mail',
+                          exc_info=True)
             user.email = '%s@%s' % (user.username, settings.DEFAULT_EMAIL_DOMAIN)
         else:
             user.email = value

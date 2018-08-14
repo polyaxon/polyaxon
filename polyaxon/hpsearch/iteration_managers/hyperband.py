@@ -53,9 +53,10 @@ class HyperbandIterationManager(BaseIterationManger):
         """Reduce the experiments to restart."""
         iteration_config = self.experiment_group.iteration_config
         if iteration_config is None:
-            _logger.warning(
+            _logger.error(
                 'Experiment group `%s` attempt to update iteration, but has no iteration',
-                self.experiment_group.id)
+                self.experiment_group.id,
+                extra={'stack': True})
             return
         search_manager = self.experiment_group.search_manager
 

@@ -19,8 +19,8 @@ def start_notebook(notebook):
 
     try:
         image_name, image_tag = get_image_info(build_job=notebook.build_job)
-    except ValueError as e:
-        _logger.warning('Could not start the notebook, %s', e)
+    except (ValueError, AttributeError):
+        _logger.error('Could not start the notebook.', exc_info=True)
         notebook.set_status(JobLifeCycle.FAILED, message='External git repo was note found.')
         return
     job_docker_image = '{}:{}'.format(image_name, image_tag)
@@ -49,21 +49,24 @@ def start_notebook(notebook):
                                          affinity=notebook.affinity,
                                          tolerations=notebook.tolerations,
                                          allow_commits=allow_commits)
-    except ApiException as e:
-        _logger.warning('Could not start notebook, please check your polyaxon spec %s', e)
+    except ApiException:
+        _logger.error('Could not start notebook, please check your polyaxon spec.',
+                      exc_info=True)
         notebook.set_status(
             JobLifeCycle.FAILED,
             message='Could not start notebook, encountered a Kubernetes ApiException.')
         return
     except VolumeNotFoundError as e:
-        _logger.warning('Could not start the notebook, please check your volume definitions %s', e)
+        _logger.error('Could not start the notebook, please check your volume definitions',
+                      exc_info=True)
         notebook.set_status(
             JobLifeCycle.FAILED,
             message='Could not start the notebook, '
                     'encountered a volume definition problem. %s' % e)
         return False
     except Exception as e:
-        _logger.warning('Could not start notebook, please check your polyaxon spec %s', e)
+        _logger.error('Could not start notebook, please check your polyaxon spec.',
+                      exc_info=True)
         notebook.set_status(
             JobLifeCycle.FAILED,
             message='Could not start notebook encountered an {} exception.'.format(
