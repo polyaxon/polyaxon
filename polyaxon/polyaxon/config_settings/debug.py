@@ -1,20 +1,12 @@
-import sys
-
 from polyaxon.config_manager import config
 
 from .apps import INSTALLED_APPS
+from .rest import REST_FRAMEWORK
 from .middlewares import MIDDLEWARE
 
-if config.is_debug_mode:
-
-    def show_toolbar(request):
-        # debug toolbar makes import take VERY long (because of SQL traces) and can break tests
-        if request.path.endswith('upload') or 'test' in sys.argv:
-            return False
-        return True
-
+if config.is_debug_mode and config.is_monolith_service and not config.is_testing_env:
     DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+        'SHOW_TOOLBAR_CALLBACK': lambda x: True,
         'INTERCEPT_REDIRECTS': False,
         'HIDE_DJANGO_SQL': False,
         'ENABLE_STACKTRACES': True,
@@ -35,3 +27,5 @@ if config.is_debug_mode:
     INSTALLED_APPS += (
         'debug_toolbar',
     )
+
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += ('rest_framework.renderers.BrowsableAPIRenderer',)

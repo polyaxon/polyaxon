@@ -14,6 +14,7 @@ from api.index.views import (  # noqa
 )
 from api.users.views import LogoutView
 from constants.urls import API_V1
+from polyaxon.config_manager import config
 
 api_patterns = [
     re_path(r'', include(
@@ -71,3 +72,9 @@ urlpatterns = [
 handler404 = Handler404View.as_view()
 handler403 = Handler403View.as_view()
 handler500 = Handler50xView.as_view()
+
+if config.is_debug_mode and config.is_monolith_service:
+
+    import debug_toolbar
+
+    urlpatterns += [re_path(r'^__debug__/', include(debug_toolbar.urls))]

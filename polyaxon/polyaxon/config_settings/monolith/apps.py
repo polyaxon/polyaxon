@@ -1,4 +1,4 @@
-from ..apps import *
+from ..debug import *
 from ..auditor_apps import AUDITOR_APPS
 
 PROJECT_APPS = AUDITOR_APPS + (

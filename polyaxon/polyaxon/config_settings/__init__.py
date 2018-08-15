@@ -4,7 +4,6 @@ from .api_host import *
 from .celery_settings import *
 from .context_processors import *
 from .core import *
-from .debug import *
 from .email import *
 from .integrations import *
 from .logging import *
