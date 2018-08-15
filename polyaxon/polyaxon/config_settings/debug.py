@@ -1,8 +1,8 @@
 from polyaxon.config_manager import config
 
 from .apps import INSTALLED_APPS
-from .rest import REST_FRAMEWORK
 from .middlewares import MIDDLEWARE
+from .rest import REST_FRAMEWORK
 
 if config.is_debug_mode and config.is_monolith_service and not config.is_testing_env:
     DEBUG_TOOLBAR_CONFIG = {

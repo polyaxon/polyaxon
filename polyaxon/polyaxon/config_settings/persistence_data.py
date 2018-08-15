@@ -1,5 +1,3 @@
-import json
-
 from polyaxon.config_manager import config
 
-PERSISTENCE_DATA = json.loads(config.get_string('POLYAXON_PERSISTENCE_DATA'))
+PERSISTENCE_DATA = config.get_dict('POLYAXON_PERSISTENCE_DATA')

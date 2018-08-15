@@ -1,7 +1,7 @@
 import base64
 import json
-from collections import Mapping
 
+from collections import Mapping
 from distutils.util import strtobool  # pylint:disable=import-error
 
 from django.utils.functional import cached_property

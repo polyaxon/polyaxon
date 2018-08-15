@@ -1,5 +1,5 @@
-from ..debug import *
 from ..auditor_apps import AUDITOR_APPS
+from ..debug import *
 
 PROJECT_APPS = AUDITOR_APPS + (
     'api.apps.APIConfig',
