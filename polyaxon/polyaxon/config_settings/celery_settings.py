@@ -7,10 +7,10 @@ from polyaxon.config_manager import config
 CELERY_TRACK_STARTED = True
 
 AMQP_URL = config.get_string('POLYAXON_AMQP_URL')
-RABBITMQ_USER = config.get_string(
-    'POLYAXON_RABBITMQ_USER', is_optional=True)
-RABBITMQ_PASSWORD = config.get_string(
-    'POLYAXON_RABBITMQ_PASSWORD', is_secret=True, is_optional=True)
+RABBITMQ_USER = config.get_string('POLYAXON_RABBITMQ_USER', is_optional=True)
+RABBITMQ_PASSWORD = config.get_string('POLYAXON_RABBITMQ_PASSWORD',
+                                      is_secret=True,
+                                      is_optional=True)
 if RABBITMQ_USER and RABBITMQ_PASSWORD:
     CELERY_BROKER_URL = 'amqp://{user}:{password}@{url}'.format(
         user=RABBITMQ_USER,

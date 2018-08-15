@@ -298,6 +298,43 @@ class ConfigManager(object):
                                      default=default,
                                      options=options)
 
+    def get_list(self,
+                 key,
+                 is_optional=False,
+                 is_secret=False,
+                 is_local=False,
+                 default=None,
+                 options=None):
+        """
+        Get a the value corresponding to the key and converts comma separated values to a list.
+
+        :param key: the dict key.
+        :param is_optional: To raise an error if key was not found.
+        :param is_secret: If the key is a secret.
+        :param is_local: If the key is a local to this service.
+        :param default: default value if is_optional is True.
+        :param options: list/tuple if provided, the value must be one of these values.
+        :return: `str`: value corresponding to the key.
+        """
+
+        def parse_list(v):
+            parts = v.split(',')
+            results = []
+            for part in parts:
+                part = part.strip()
+                if part:
+                    results.append(part)
+            return results
+
+        return self._get_typed_value(key=key,
+                                     target_type=list,
+                                     type_convert=parse_list,
+                                     is_optional=is_optional,
+                                     is_secret=is_secret,
+                                     is_local=is_local,
+                                     default=default,
+                                     options=options)
+
     def _get(self, key):
         """
         Get key from the dictionary made out of the configs passed.
@@ -359,7 +396,7 @@ class ConfigManager(object):
                 self._check_options(key=key, value=value, options=options)
                 return type_convert(value)
             except ValueError:
-                raise ConfigurationError("Cannot convert value `{}` (key: `{}`)"
+                raise ConfigurationError("Cannot convert value `{}` (key: `{}`) "
                                          "to `{}`".format(value, key, target_type))
 
         if isinstance(value, target_type):

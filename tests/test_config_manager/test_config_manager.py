@@ -394,6 +394,42 @@ class TestConfigManager(BaseTest):
                                          UriSpec("user2", "pass", "localhost:8080")]),
             [UriSpec("user", "pass", "siteweb.ca"), UriSpec("user2", "pass", "localhost:8080")])
 
+    def test_get_list(self):
+        value = self.config.get_list('list_key_1')
+        self.assertEqual(value, ['user:pass@siteweb.ca', "'pp'", '0.1', "'foo'"])
+
+        value = self.config.get_list('list_key_2')
+        self.assertEqual(value, ['user1', 'user2', 'user3', 'user4', 'user5'])
+
+        value = self.config.get_list('list_key_3')
+        self.assertEqual(value, [False])
+
+        value = self.config.get_list('list_key_4')
+        self.assertEqual(value, ['foo'])
+
+        value = self.config.get_list('list_key_5')
+        self.assertEqual(value, [])
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_list('list_error_key_1')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_list('list_error_key_2')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_list('list_error_key_3')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_list('list_error_key_4')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_list('list_non_existing_key')
+
+        self.assertEqual(self.config.get_list(
+            'list_non_existing_key', is_optional=True), None)
+        self.assertEqual(self.config.get_list(
+            'list_non_existing_key', is_optional=True, default=['foo']), ['foo'])
+
 
 @pytest.mark.config_manager_mark
 class TestSettingsConfigManager(BaseTest):

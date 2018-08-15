@@ -71,5 +71,14 @@
   "uri_list_error_key_1": ["123", "user:pass@siteweb.ca"],
   "uri_list_error_key_2": ["user:pass@siteweb.ca", 12.3],
   "uri_list_error_key_3": ["user:pass@siteweb.ca", null],
-  "uri_list_error_key_4": ["user:pass@siteweb.ca", "123", false]
+  "uri_list_error_key_4": ["user:pass@siteweb.ca", "123", false],
+  "list_key_1": "user:pass@siteweb.ca, 'pp', 0.1, 'foo'",
+  "list_key_2": "user1,user2 , user3,     user4    , user5",
+  "list_key_3": [false],
+  "list_key_4": "foo",
+  "list_key_5": "",
+  "list_error_key_1": true,
+  "list_error_key_2": {"key": "value"},
+  "list_error_key_3": null,
+  "list_error_key_4": 123
 }
