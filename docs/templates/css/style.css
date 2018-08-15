@@ -8,7 +8,7 @@
 }
 
 [data-md-color-primary=blue-grey] .md-nav__link--active{
-  color: #0f73ce;
+  color: #3c82c1;
   font-weight: bolder;
 }
 
@@ -68,6 +68,10 @@
   background-color: #ff8f05;
 }
 
+
+.md-nav__title {
+  font-weight: 500;
+}
 
 .md-nav__item {
   color: #0f5179;
