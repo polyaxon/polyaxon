@@ -1,5 +1,4 @@
-# pylint:disable=unused-import
-from polyaxon_schemas.exceptions import (
+from polyaxon_schemas.exceptions import (  # noqa
     PolyaxonConfigurationError,
     PolyaxonfileError,
     PolyaxonSchemaError

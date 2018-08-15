@@ -1,2 +1,1 @@
-# pylint:disable=unused-import
-from polyaxon_schemas.utils import UUID
+from polyaxon_schemas.utils import UUID  # noqa

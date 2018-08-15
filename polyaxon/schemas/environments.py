@@ -1,5 +1,4 @@
-# pylint:disable=unused-import
-from polyaxon_schemas.environments import (
+from polyaxon_schemas.environments import (  # noqa
     HorovodClusterConfig,
     MXNetClusterConfig,
     OutputsConfig,

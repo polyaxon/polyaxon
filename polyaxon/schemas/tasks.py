@@ -1,2 +1,1 @@
-# pylint:disable=unused-import
-from polyaxon_schemas.utils import TaskType
+from polyaxon_schemas.utils import TaskType  # noqa

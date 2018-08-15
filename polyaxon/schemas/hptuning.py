@@ -1,5 +1,4 @@
-# pylint:disable=unused-import
-from polyaxon_schemas.hptuning import (
+from polyaxon_schemas.hptuning import (  # noqa
     BOConfig,
     EarlyStoppingMetricConfig,
     GaussianProcessConfig,
@@ -11,8 +10,8 @@ from polyaxon_schemas.hptuning import (
     SearchMetricConfig,
     UtilityFunctionConfig
 )
-from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.utils import (
+from polyaxon_schemas.matrix import MatrixConfig  # noqa
+from polyaxon_schemas.utils import (  # noqa
     AcquisitionFunctions,
     GaussianProcessesKernels,
     Optimization,

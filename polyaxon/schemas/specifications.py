@@ -1,5 +1,4 @@
-# pylint:disable=unused-import
-from polyaxon_schemas.polyaxonfile.specification import (
+from polyaxon_schemas.polyaxonfile.specification import (  # noqa
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,
@@ -7,7 +6,7 @@ from polyaxon_schemas.polyaxonfile.specification import (
     NotebookSpecification,
     TensorboardSpecification
 )
-from polyaxon_schemas.polyaxonfile.specification.frameworks import (
+from polyaxon_schemas.polyaxonfile.specification.frameworks import (  # noqa
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,

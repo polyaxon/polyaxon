@@ -1,4 +1,3 @@
-# pylint:disable=unused-import
 from marshmallow import Schema, fields, post_dump, post_load
 
 from schemas.base import BaseConfig
