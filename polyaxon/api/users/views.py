@@ -32,7 +32,7 @@ from api.users.utils import login_user, logout_user
 from api.utils.views import PostAPIView
 from event_manager.events.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
 from event_manager.events.user import USER_ACTIVATED, USER_DELETED
-from polyaxon_schemas.user import UserConfig
+from schemas.user import UserConfig
 from signals import users as users_signals
 
 

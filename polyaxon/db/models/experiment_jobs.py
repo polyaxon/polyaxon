@@ -5,7 +5,7 @@ from django.utils.functional import cached_property
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
 from db.models.utils import NodeSchedulingModel
-from polyaxon_schemas.utils import TaskType
+from schemas.tasks import TaskType
 
 
 class ExperimentJob(AbstractJob, NodeSchedulingModel):

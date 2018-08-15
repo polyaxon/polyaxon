@@ -1,4 +1,4 @@
-from polyaxon_schemas.polyaxonfile.specification import (
+from schemas.specifications import (
     BuildSpecification,
     ExperimentSpecification,
     JobSpecification,

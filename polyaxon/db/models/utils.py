@@ -8,7 +8,7 @@ from django.utils.functional import cached_property
 
 from libs.blacklist import validate_blacklist_name
 from libs.spec_validation import validate_outputs_config, validate_persistence_config
-from polyaxon_schemas.environments import OutputsConfig, PersistenceConfig
+from schemas.environments import OutputsConfig, PersistenceConfig
 
 
 class DescribableModel(models.Model):

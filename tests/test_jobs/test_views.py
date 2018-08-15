@@ -24,7 +24,7 @@ from libs.paths.jobs import (
     get_job_logs_path,
     get_job_outputs_path
 )
-from polyaxon_schemas.polyaxonfile.specification import JobSpecification
+from schemas.specifications import JobSpecification
 from tests.utils import BaseViewTest
 
 

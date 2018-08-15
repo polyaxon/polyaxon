@@ -11,19 +11,20 @@ from db.models.job_resources import JobResources
 from docker_images.image_info import get_image_info
 from libs.paths.exceptions import VolumeNotFoundError
 from polyaxon.config_manager import config
-from polyaxon_schemas.polyaxonfile.specification.frameworks import (
-    HorovodSpecification,
-    MXNetSpecification,
-    PytorchSpecification,
-    TensorflowSpecification
-)
-from polyaxon_schemas.utils import Frameworks, TaskType
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
 from scheduler.spawners.utils import get_job_definition
+from schemas.frameworks import Frameworks
+from schemas.specifications import (
+    HorovodSpecification,
+    MXNetSpecification,
+    PytorchSpecification,
+    TensorflowSpecification
+)
+from schemas.tasks import TaskType
 
 _logger = logging.getLogger('polyaxon.scheduler.experiment')
 

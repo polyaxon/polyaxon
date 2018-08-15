@@ -18,7 +18,7 @@ from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
 from libs.paths.jobs import create_job_logs_path, get_job_logs_path
-from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
+from schemas.specifications import BuildSpecification
 from tests.utils import BaseViewTest
 
 

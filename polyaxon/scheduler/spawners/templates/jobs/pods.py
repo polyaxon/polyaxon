@@ -8,8 +8,6 @@ from libs.paths.data_paths import get_data_paths
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.utils import to_list
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
@@ -26,6 +24,8 @@ from scheduler.spawners.templates.pod_environment import (
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
 from scheduler.spawners.templates.volumes import get_pod_outputs_volume
+from schemas.exceptions import PolyaxonConfigurationError
+from schemas.utils import to_list
 
 
 class PodManager(object):

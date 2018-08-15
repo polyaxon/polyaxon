@@ -3,10 +3,10 @@ from rest_framework.exceptions import ValidationError
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 
-from polyaxon_schemas.environments import OutputsConfig, PersistenceConfig
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.hptuning import HPTuningConfig
-from polyaxon_schemas.polyaxonfile.specification import (
+from schemas.environments import OutputsConfig, PersistenceConfig
+from schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from schemas.hptuning import HPTuningConfig
+from schemas.specifications import (
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,

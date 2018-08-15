@@ -35,9 +35,9 @@ from factories.fixtures import (
     experiment_spec_content
 )
 from libs.paths.experiments import create_experiment_outputs_path, get_experiment_outputs_path
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
-from polyaxon_schemas.utils import TaskType
 from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
+from schemas.specifications import ExperimentSpecification
+from schemas.tasks import TaskType
 from tests.fixtures import start_experiment_value
 from tests.utils import BaseTest, BaseViewTest
 

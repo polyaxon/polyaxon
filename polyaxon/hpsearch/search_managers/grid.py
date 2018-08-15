@@ -1,7 +1,7 @@
 import itertools
 
 from hpsearch.search_managers.base import BaseSearchAlgorithmManager
-from polyaxon_schemas.utils import SearchAlgorithms
+from schemas.hptuning import SearchAlgorithms
 
 
 class GridSearchManager(BaseSearchAlgorithmManager):

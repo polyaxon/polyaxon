@@ -1,7 +1,8 @@
+# pylint:disable=unused-import
 from marshmallow import Schema, fields, post_dump, post_load
 
-from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import UUID
+from schemas.base import BaseConfig
+from schemas.fields import UUID
 
 
 class JobLabelSchema(Schema):

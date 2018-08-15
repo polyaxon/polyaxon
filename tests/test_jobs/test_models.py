@@ -14,8 +14,8 @@ from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import job_spec_content, job_spec_resources_content
-from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 from scheduler.tasks.jobs import jobs_build
+from schemas.specifications import JobSpecification
 from tests.utils import BaseTest, BaseViewTest
 
 

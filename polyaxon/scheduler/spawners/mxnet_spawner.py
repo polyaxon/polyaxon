@@ -1,8 +1,8 @@
-from polyaxon_schemas.environments import MXNetClusterConfig
-from polyaxon_schemas.polyaxonfile.specification.frameworks import MXNetSpecification
-from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
+from schemas.environments import MXNetClusterConfig
+from schemas.specifications import MXNetSpecification
+from schemas.tasks import TaskType
 
 
 class MXNetSpawner(ExperimentSpawner):

@@ -1,12 +1,12 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from libs.spec_validation import validate_notebook_spec_config
-from polyaxon_schemas.polyaxonfile.specification import NotebookSpecification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
+from schemas.specifications import NotebookSpecification
 
 
 class NotebookJob(PluginJobBase, JobMixin):

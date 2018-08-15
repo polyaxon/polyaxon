@@ -1,6 +1,6 @@
-from polyaxon_schemas.utils import SearchAlgorithms
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks
+from schemas.hptuning import SearchAlgorithms
 
 import auditor
 from db.getters.experiment_groups import get_running_experiment_group

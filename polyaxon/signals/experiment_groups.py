@@ -21,7 +21,7 @@ from libs.paths.experiment_groups import (
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from polyaxon_schemas.utils import SearchAlgorithms
+from schemas.hptuning import SearchAlgorithms
 from signals.run_time import set_finished_at, set_started_at
 from signals.utils import remove_bookmarks, set_persistence, set_tags
 

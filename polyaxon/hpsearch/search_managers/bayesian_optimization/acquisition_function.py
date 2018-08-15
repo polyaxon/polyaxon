@@ -6,8 +6,12 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, Matern
 
 from hpsearch.search_managers.utils import get_random_generator
-from polyaxon_schemas.hptuning import GaussianProcessConfig, UtilityFunctionConfig
-from polyaxon_schemas.utils import AcquisitionFunctions, GaussianProcessesKernels
+from schemas.hptuning import (
+    AcquisitionFunctions,
+    GaussianProcessConfig,
+    GaussianProcessesKernels,
+    UtilityFunctionConfig
+)
 
 
 class UtilityFunction(object):

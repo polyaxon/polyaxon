@@ -15,7 +15,7 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from libs.paths.experiments import get_experiment_logs_path
 from libs.paths.jobs import get_job_logs_path
-from polyaxon_schemas.utils import TaskType
+from schemas.tasks import TaskType
 from tests.utils import BaseTest
 
 

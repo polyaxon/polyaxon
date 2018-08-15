@@ -3,8 +3,8 @@ from collections import namedtuple
 from django.db.models import Q
 
 from libs.date_utils import DateTimeFormatter, DateTimeFormatterException
-from polyaxon_schemas.utils import to_list
 from query.exceptions import QueryConditionException
+from schemas.utils import to_list
 
 
 class QueryCondSpec(namedtuple("QueryCondSpec", "cond params")):

@@ -8,7 +8,7 @@ from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.models.utils import DescribableModel, NameableModel, NodeSchedulingModel, TagModel
 from libs.spec_validation import validate_build_spec_config
-from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
+from schemas.specifications import BuildSpecification
 
 
 class BuildJob(AbstractJob,

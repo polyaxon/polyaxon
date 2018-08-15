@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, post_dump, post_load, validate
 
-from polyaxon_schemas.base import BaseConfig
+from schemas.base import BaseConfig
 
 
 class HyperbandIterationSchema(Schema):

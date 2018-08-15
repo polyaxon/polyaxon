@@ -47,7 +47,7 @@ from libs.paths.experiments import (
     get_experiment_logs_path,
     get_experiment_outputs_path
 )
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
+from schemas.specifications import ExperimentSpecification
 from tests.utils import BaseViewTest
 
 

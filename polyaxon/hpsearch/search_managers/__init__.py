@@ -2,7 +2,7 @@ from hpsearch.search_managers.bayesian_optimization.manager import BOSearchManag
 from hpsearch.search_managers.grid import GridSearchManager
 from hpsearch.search_managers.hyperband import HyperbandSearchManager
 from hpsearch.search_managers.random import RandomSearchManager
-from polyaxon_schemas.utils import SearchAlgorithms
+from schemas.hptuning import SearchAlgorithms
 
 
 def get_search_algorithm_manager(hptuning_config):

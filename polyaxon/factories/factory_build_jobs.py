@@ -6,7 +6,7 @@ from db.models.build_jobs import BuildJob, BuildJobStatus
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from factories.factorycode_reference import CodeReferenceFactory
-from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
+from schemas.specifications import BuildSpecification
 
 fake = FakerFactory.create()
 

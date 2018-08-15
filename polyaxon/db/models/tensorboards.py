@@ -6,7 +6,7 @@ from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
 from libs.spec_validation import validate_tensorboard_spec_config
-from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
+from schemas.specifications import TensorboardSpecification
 
 
 class TensorboardJob(PluginJobBase, JobMixin):

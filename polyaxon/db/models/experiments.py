@@ -30,8 +30,8 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESUMED
 )
 from libs.spec_validation import validate_experiment_spec_config
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
-from polyaxon_schemas.utils import TaskType
+from schemas.specifications import ExperimentSpecification
+from schemas.tasks import TaskType
 
 
 class Experiment(DiffModel,

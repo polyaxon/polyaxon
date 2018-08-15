@@ -18,7 +18,7 @@ from db.models.utils import (
 )
 from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
-from polyaxon_schemas.polyaxonfile.specification import JobSpecification
+from schemas.specifications import JobSpecification
 
 
 class Job(AbstractJob,

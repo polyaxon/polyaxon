@@ -4,8 +4,8 @@ from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from polyaxon_schemas.polyaxonfile.specification import JobSpecification
 from scheduler import dockerizer_scheduler, job_scheduler
+from schemas.specifications import JobSpecification
 
 _logger = logging.getLogger(__name__)
 

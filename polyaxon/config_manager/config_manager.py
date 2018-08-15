@@ -8,8 +8,8 @@ from django.utils.functional import cached_property
 
 from config_manager.exceptions import ConfigurationError
 from config_manager.uri_spec import UriSpec
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.polyaxonfile import reader
+from schemas.exceptions import PolyaxonConfigurationError
+from schemas.reader import reader
 
 
 class ConfigManager(object):

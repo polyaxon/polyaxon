@@ -7,7 +7,7 @@ from libs.redis_db import RedisToStream
 from libs.services import Service
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks, RoutingKeys
-from polyaxon_schemas.utils import to_list
+from schemas.utils import to_list
 
 
 class PublisherService(Service):

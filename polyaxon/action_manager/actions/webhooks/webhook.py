@@ -6,7 +6,7 @@ from action_manager.exceptions import PolyaxonActionException
 from event_manager.event_actions import EXECUTED
 from event_manager.event_context import get_event_context, get_readable_event
 from libs.http import safe_request, validate_url
-from polyaxon_schemas.utils import to_list
+from schemas.utils import to_list
 
 WEBHOOK_ACTION_EXECUTED = 'webhook_action.{}'.format(EXECUTED)
 

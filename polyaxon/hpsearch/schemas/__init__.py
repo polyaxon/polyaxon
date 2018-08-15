@@ -1,6 +1,6 @@
 from hpsearch.schemas.bayesian_optimization import BOIterationConfig
 from hpsearch.schemas.hyperband import HyperbandIterationConfig
-from polyaxon_schemas.utils import SearchAlgorithms
+from schemas.hptuning import SearchAlgorithms
 
 
 def get_iteration_config(search_algorithm, iteration=None):

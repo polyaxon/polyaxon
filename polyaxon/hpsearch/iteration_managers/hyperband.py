@@ -2,7 +2,7 @@ import logging
 
 from hpsearch.iteration_managers.base import BaseIterationManger
 from hpsearch.schemas import HyperbandIterationConfig
-from polyaxon_schemas.utils import Optimization
+from schemas.hptuning import Optimization
 
 _logger = logging.getLogger('polyaxon.hpsearch.iteration_manager')
 

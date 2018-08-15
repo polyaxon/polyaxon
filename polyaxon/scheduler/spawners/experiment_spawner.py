@@ -1,5 +1,4 @@
 from polyaxon_k8s.manager import K8SManager
-from polyaxon_schemas.utils import TaskType
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
@@ -9,6 +8,7 @@ from scheduler.spawners.templates.volumes import (
     get_pod_volumes,
     get_shm_volumes
 )
+from schemas.tasks import TaskType
 
 
 class ExperimentSpawner(K8SManager):

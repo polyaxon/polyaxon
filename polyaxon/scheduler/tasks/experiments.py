@@ -8,8 +8,8 @@ from db.models.experiments import ExperimentMetric
 from libs.paths.experiments import copy_experiment_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from scheduler import dockerizer_scheduler, experiment_scheduler
+from schemas.specifications import ExperimentSpecification
 
 _logger = logging.getLogger('polyaxon.scheduler.experiments')
 

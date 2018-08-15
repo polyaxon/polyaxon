@@ -36,7 +36,7 @@ from libs.repos import git
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from polyaxon_schemas.polyaxonfile.specification import TensorboardSpecification
+from schemas.specifications import TensorboardSpecification
 
 
 class StartTensorboardView(CreateAPIView):

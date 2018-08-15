@@ -1,6 +1,6 @@
 from distutils.util import strtobool  # pylint:disable=import-error
 
-from polyaxon_schemas.utils import to_list
+from schemas.utils import to_list
 
 
 def to_bool(value, handle_none=False, exception=TypeError):
