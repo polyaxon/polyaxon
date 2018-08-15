@@ -71,7 +71,7 @@ markdown_extensions:
 pages:
 - Home: index.md
 - Quick Start With Polyaxon: quick_start.md
-- Installation Requirements & Setup:
+- Install Polyaxon:
   - Introduction: installation/introduction.md
   - Tools & Requirements: installation/tools_and_requirements.md
   - Install Kubernetes: installation/install_kubernetes.md
