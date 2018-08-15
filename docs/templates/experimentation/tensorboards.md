@@ -103,7 +103,7 @@ $ polyaxon tensorboard -xp 13 stop
 For experiment group tensorboard
 
 ```bash
-$ polyaxon tensorboard -f 3 stop
+$ polyaxon tensorboard -g 3 stop
 ```
 
 !!! info "More details"
