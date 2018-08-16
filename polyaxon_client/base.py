@@ -17,7 +17,7 @@ from polyaxon_client.logger import logger
 from polyaxon_schemas.utils import to_list
 
 
-class PolyaxonClient(object):
+class BaseClient(object):
     """Base client for all HTTP operations."""
     ENDPOINT = None
     BASE_URL = "{}/api/{}"

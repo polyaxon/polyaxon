@@ -3,14 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
-from polyaxon_client.base import PolyaxonClient
+from polyaxon_client.base import BaseClient
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_schemas.experiment import ExperimentConfig
 from polyaxon_schemas.job import JobConfig, TensorboardJobConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
 
-class ProjectClient(PolyaxonClient):
+class ProjectClient(BaseClient):
     """Client to get projects from the server"""
     ENDPOINT = "/"
 

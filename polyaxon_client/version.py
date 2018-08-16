@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.base import PolyaxonClient
+from polyaxon_client.base import BaseClient
 from polyaxon_client.logger import logger
 from polyaxon_schemas.log_handler import LogHandlerConfig
 from polyaxon_schemas.version import (
@@ -12,7 +12,7 @@ from polyaxon_schemas.version import (
 )
 
 
-class VersionClient(PolyaxonClient):
+class VersionClient(BaseClient):
     """Client to get API version from the server."""
     ENDPOINT = "/versions/"
 

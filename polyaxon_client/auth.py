@@ -3,12 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 import requests
 
-from polyaxon_client.base import PolyaxonClient
+from polyaxon_client.base import BaseClient
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
 from polyaxon_schemas.user import UserConfig
 
 
-class AuthClient(PolyaxonClient):
+class AuthClient(BaseClient):
     """Auth/User specific client
 
     Special case client because of the token is not acquired yet,

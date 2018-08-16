@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from faker import Faker
 from unittest import TestCase
 
-from polyaxon_client.base import PolyaxonClient
+from polyaxon_client.base import BaseClient
 
 faker = Faker()
 
@@ -14,13 +14,13 @@ class TestBaseClient(TestCase):
         self.host = 'localhost'
         self.http_port = 8000
         self.ws_port = 1337
-        self.client = PolyaxonClient(host=self.host,
-                                     http_port=self.http_port,
-                                     ws_port=self.ws_port,
-                                     version='v1',
-                                     token=None,
-                                     reraise=True,
-                                     use_https=False)
+        self.client = BaseClient(host=self.host,
+                                 http_port=self.http_port,
+                                 ws_port=self.ws_port,
+                                 version='v1',
+                                 token=None,
+                                 reraise=True,
+                                 use_https=False)
 
     def test_base_urls(self):
         assert self.client.http_host == 'http://{}:{}'.format(self.host, self.http_port)
