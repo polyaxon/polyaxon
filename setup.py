@@ -20,7 +20,7 @@ class PyTest(TestCommand):
 
 setup(name='polyaxon-client',
       version='0.1.8',
-      description='Python base clients to interact with Polyaxon API.',
+      description='Python client to interact with Polyaxon API.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mouradmourafiq@gmail.com',
       author='Mourad Mourafiq',

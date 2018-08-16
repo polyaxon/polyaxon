@@ -36,36 +36,36 @@ with Polyaxon API in a programmatic way.
 ## Usage
 
 ```python
-from polyaxon_client.clients import PolyaxonClients
+from polyaxon_client import PolyaxonClient
 
-polyaxon_clients = PolyaxonClients(
+polyaxon_client = PolyaxonClient(
     host=POLYAXON_IP,
     token=MY_TOKEN, http_port=POLYAXON_HTTP_PORT,
     ws_port=POLYAXON_WS_PORT)
 
-polyaxon_clients.auth
-polyaxon_clients.cluster
-polyaxon_clients.user
-polyaxon_clients.project
-polyaxon_clients.experiment
-polyaxon_clients.experiment_group
-polyaxon_clients.experiment_job
-polyaxon_clients.job
-polyaxon_clients.build_job
-polyaxon_clients.bookmark
-polyaxon_clients.version
+polyaxon_client.auth
+polyaxon_client.cluster
+polyaxon_client.user
+polyaxon_client.project
+polyaxon_client.experiment
+polyaxon_client.experiment_group
+polyaxon_client.experiment_job
+polyaxon_client.job
+polyaxon_client.build_job
+polyaxon_client.bookmark
+polyaxon_client.version
 ```
 
 e.g. list projects for a user
 
 ```python
-polyaxon_clients.project.list_projects(username, page=1)
+polyaxon_client.project.list_projects(username, page=1)
 ```
 
 e.g. list experiments for a project
 
 ```python
-polyaxon_clients.project.list_experiments(
+polyaxon_client.project.list_experiments(
     username,
     project_name,
     independent=None,
