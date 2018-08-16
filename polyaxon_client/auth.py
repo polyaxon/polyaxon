@@ -5,7 +5,7 @@ import requests
 
 from polyaxon_client.base import BaseClient
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
-from polyaxon_schemas.user import UserConfig
+from polyaxon_client.schemas import UserConfig
 
 
 class AuthClient(BaseClient):

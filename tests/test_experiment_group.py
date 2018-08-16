@@ -10,8 +10,7 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.experiment_group import ExperimentGroupClient
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, GroupStatusConfig
+from polyaxon_client.schemas import ExperimentConfig, ExperimentGroupConfig, GroupStatusConfig
 
 faker = Faker()
 

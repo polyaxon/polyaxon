@@ -3,11 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.base import BaseClient
 from polyaxon_client.logger import logger
-from polyaxon_schemas.log_handler import LogHandlerConfig
-from polyaxon_schemas.version import (
+from polyaxon_client.schemas import (
     ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,
+    LogHandlerConfig,
     PlatformVersionConfig
 )
 

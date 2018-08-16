@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.base import BaseClient
 from polyaxon_client.exceptions import PolyaxonException
-from polyaxon_schemas.job import JobConfig, JobStatusConfig
+from polyaxon_client.schemas import JobConfig, JobStatusConfig
 
 
 class BuildJobClient(BaseClient):

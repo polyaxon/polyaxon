@@ -10,7 +10,7 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.build_job import BuildJobClient
-from polyaxon_schemas.job import JobConfig, JobStatusConfig
+from polyaxon_client.schemas import JobConfig, JobStatusConfig
 
 faker = Faker()
 

@@ -9,9 +9,13 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.project import ProjectClient
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.job import JobConfig, TensorboardJobConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
+from polyaxon_client.schemas import (
+    ExperimentConfig,
+    ExperimentGroupConfig,
+    JobConfig,
+    ProjectConfig,
+    TensorboardJobConfig
+)
 
 faker = Faker()
 

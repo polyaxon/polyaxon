@@ -9,9 +9,12 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.bookmark import BookmarkClient
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.job import JobConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
+from polyaxon_client.schemas import (
+    ExperimentConfig,
+    ExperimentGroupConfig,
+    JobConfig,
+    ProjectConfig
+)
 
 faker = Faker()
 

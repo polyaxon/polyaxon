@@ -9,8 +9,7 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.auth import AuthClient
-from polyaxon_schemas.authentication import CredentialsConfig
-from polyaxon_schemas.user import UserConfig
+from polyaxon_client.schemas import CredentialsConfig, UserConfig
 
 faker = Faker()
 

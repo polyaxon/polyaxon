@@ -7,14 +7,14 @@ import json
 from faker import Faker
 from unittest import TestCase
 
-from polyaxon_client.version import VersionClient
-from polyaxon_schemas.log_handler import LogHandlerConfig
-from polyaxon_schemas.version import (
+from polyaxon_client.schemas import (
     ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,
+    LogHandlerConfig,
     PlatformVersionConfig
 )
+from polyaxon_client.version import VersionClient
 
 faker = Faker()
 

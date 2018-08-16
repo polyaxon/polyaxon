@@ -9,7 +9,7 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.cluster import ClusterClient
-from polyaxon_schemas.clusters import ClusterNodeConfig, PolyaxonClusterConfig
+from polyaxon_client.schemas import ClusterNodeConfig, PolyaxonClusterConfig
 
 faker = Faker()
 

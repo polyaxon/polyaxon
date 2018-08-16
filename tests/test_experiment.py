@@ -10,7 +10,7 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.experiment import ExperimentClient
-from polyaxon_schemas.experiment import (
+from polyaxon_client.schemas import (
     ExperimentConfig,
     ExperimentJobConfig,
     ExperimentMetricConfig,

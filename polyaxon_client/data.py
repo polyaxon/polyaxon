@@ -9,7 +9,7 @@ from polyaxon_client.exceptions import (
     PolyaxonException
 )
 from polyaxon_client.logger import logger
-from polyaxon_schemas.data import DatasetConfig
+from polyaxon_client.schemas import DatasetConfig
 
 
 class DatasetClient(BaseClient):

@@ -5,9 +5,13 @@ from collections import Mapping
 
 from polyaxon_client.base import BaseClient
 from polyaxon_client.exceptions import PolyaxonException
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.job import JobConfig, TensorboardJobConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
+from polyaxon_client.schemas import (
+    ExperimentConfig,
+    ExperimentGroupConfig,
+    JobConfig,
+    ProjectConfig,
+    TensorboardJobConfig
+)
 
 
 class ProjectClient(BaseClient):

@@ -14,7 +14,7 @@ from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon_client.exceptions import ERRORS_MAPPING, AuthenticationError, PolyaxonShouldExitError
 from polyaxon_client.logger import logger
-from polyaxon_schemas.utils import to_list
+from polyaxon_client.schemas.utils import to_list
 
 
 class BaseClient(object):

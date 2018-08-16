@@ -3,8 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.base import BaseClient
 from polyaxon_client.exceptions import PolyaxonException
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, GroupStatusConfig
+from polyaxon_client.schemas import ExperimentConfig, ExperimentGroupConfig, GroupStatusConfig
 
 
 class ExperimentGroupClient(BaseClient):
