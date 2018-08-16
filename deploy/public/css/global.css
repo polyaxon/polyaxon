@@ -1,0 +1,45 @@
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+}
+
+.layout {
+  width: 98%;
+  min-height: 65%;
+}
+
+
+#top {
+  padding: 0 36px 0 0;
+  margin-bottom: 10px;
+  background: #485563;
+  background: -webkit-linear-gradient(to left, #485563, #29323c);
+  background: linear-gradient(to left, #485563, #29323c);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  height: 45px;
+  font-size: 14px;
+}
+
+#top #top-brand img, #branding h1 img {
+    height: 40px;
+    width: 50px;
+    max-height: none;
+    vertical-align: middle;
+}
+
+
+#top #top-brand span,
+#top #top-brand a,
+#branding h1 a {
+  font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  color: white;
+  text-decoration: none;
+  background: none;
+  background-repeat: no-repeat;
+  font-weight: bold;
+}
+
+
+#top #top-brand a:hover {
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+}

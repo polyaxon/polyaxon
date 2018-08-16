@@ -117,10 +117,10 @@ static/rest_framework
 # npm modules and transpiled typescript files
 client/dist/
 client/node_modules/
-client/css/
-client/polyaxon/**/*.js
-client/polyaxon/**/*.js.map
 client/npm-debug.log
+deploy/dist/
+deploy/node_modules/
+deploy/npm-debug.log
 /examples/polyaxon-logs/
 # don't ignore static dist
 !/static/dist
