@@ -165,6 +165,9 @@ function Footer() {
             </div>
           </div>
         </div>
+        <div className="content">
+          <div className="has-text-centered">© 2018 Polyaxon. All rights reserved.</div>
+        </div>
       </footer>
     </div>
   );
