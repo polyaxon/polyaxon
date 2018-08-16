@@ -17,7 +17,7 @@ $ pip install -U polyaxon-client
 
 ## Clients
 
-This module includes several clients that can be used to interact
+This module includes a client that can be used to interact
 with Polyaxon API in a programmatic way.
 
  * [Auth](https://docs.polyaxon.com/polyaxon_client/clients/auth): A client for handling authentication and user information.
