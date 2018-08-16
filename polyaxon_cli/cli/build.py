@@ -9,7 +9,7 @@ from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.build_job import BuildJobManager
 from polyaxon_cli.utils import cache
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -79,7 +79,7 @@ def get(ctx):
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
-        response = PolyaxonClients().build_job.get_build(user, project_name, _build)
+        response = PolyaxonClient().build_job.get_build(user, project_name, _build)
         cache.cache(config_manager=BuildJobManager, response=response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get build job `{}`.'.format(_build))
@@ -115,7 +115,7 @@ def delete(ctx):
         sys.exit(1)
 
     try:
-        response = PolyaxonClients().build_job.delete_build(
+        response = PolyaxonClient().build_job.delete_build(
             user, project_name, _build)
         # Purge caching
         BuildJobManager.purge()
@@ -164,7 +164,7 @@ def update(ctx, name, description, tags):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().build_job.update_build(
+        response = PolyaxonClient().build_job.update_build(
             user, project_name, _build, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not update build `{}`.'.format(_build))
@@ -205,7 +205,7 @@ def stop(ctx, yes):
         sys.exit(0)
 
     try:
-        PolyaxonClients().build_job.stop(user, project_name, _build)
+        PolyaxonClient().build_job.stop(user, project_name, _build)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not stop build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -236,7 +236,7 @@ def bookmark(ctx):
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
-        PolyaxonClients().build_job.bookmark(user, project_name, _build)
+        PolyaxonClient().build_job.bookmark(user, project_name, _build)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not bookmark build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -267,7 +267,7 @@ def unbookmark(ctx):
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
-        PolyaxonClients().build_job.unbookmark(user, project_name, _build)
+        PolyaxonClient().build_job.unbookmark(user, project_name, _build)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not unbookmark build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -295,7 +295,7 @@ def statuses(ctx, page):
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     page = page or 1
     try:
-        response = PolyaxonClients().build_job.get_statuses(user, project_name, _build, page=page)
+        response = PolyaxonClient().build_job.get_statuses(user, project_name, _build, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get status for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -344,7 +344,7 @@ def resources(ctx, gpu):
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
     try:
         message_handler = Printer.gpu_resources if gpu else Printer.resources
-        PolyaxonClients().build_job.resources(user,
+        PolyaxonClient().build_job.resources(user,
                                               project_name,
                                               _build,
                                               message_handler=message_handler)
@@ -386,7 +386,7 @@ def logs(ctx, past, follow):
 
     if past:
         try:
-            response = PolyaxonClients().build_job.logs(
+            response = PolyaxonClient().build_job.logs(
                 user, project_name, _build, stream=False)
             for log_line in response.content.decode().split('\n'):
                 Printer.log(log_line, nl=True)
@@ -399,7 +399,7 @@ def logs(ctx, past, follow):
             sys.exit(1)
 
     try:
-        PolyaxonClients().build_job.logs(user,
+        PolyaxonClient().build_job.logs(user,
                                          project_name,
                                          _build,
                                          message_handler=message_handler)

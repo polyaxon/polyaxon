@@ -13,7 +13,7 @@ from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_job import ExperimentJobManager
 from polyaxon_cli.utils import cache
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -135,7 +135,7 @@ def get(ctx, job):
 
     def get_experiment():
         try:
-            response = PolyaxonClients().experiment.get_experiment(user, project_name, _experiment)
+            response = PolyaxonClient().experiment.get_experiment(user, project_name, _experiment)
             cache.cache(config_manager=ExperimentManager, response=response)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not load experiment `{}` info.'.format(_experiment))
@@ -146,7 +146,7 @@ def get(ctx, job):
 
     def get_experiment_job():
         try:
-            response = PolyaxonClients().experiment_job.get_job(user,
+            response = PolyaxonClient().experiment_job.get_job(user,
                                                                 project_name,
                                                                 _experiment,
                                                                 _job)
@@ -198,7 +198,7 @@ def delete(ctx):
         sys.exit(1)
 
     try:
-        response = PolyaxonClients().experiment.delete_experiment(
+        response = PolyaxonClient().experiment.delete_experiment(
             user, project_name, _experiment)
         # Purge caching
         ExperimentManager.purge()
@@ -253,7 +253,7 @@ def update(ctx, name, description, tags):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().experiment.update_experiment(
+        response = PolyaxonClient().experiment.update_experiment(
             user, project_name, _experiment, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not update experiment `{}`.'.format(_experiment))
@@ -295,7 +295,7 @@ def stop(ctx, yes):
         sys.exit(0)
 
     try:
-        PolyaxonClients().experiment.stop(user, project_name, _experiment)
+        PolyaxonClient().experiment.stop(user, project_name, _experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not stop experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -339,11 +339,11 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
                                                                       ctx.obj['experiment'])
     try:
         if copy:
-            response = PolyaxonClients().experiment.copy(
+            response = PolyaxonClient().experiment.copy(
                 user, project_name, _experiment, config=config, update_code=update_code)
             Printer.print_success('Experiment was copied with id {}'.format(response.id))
         else:
-            response = PolyaxonClients().experiment.restart(
+            response = PolyaxonClient().experiment.restart(
                 user, project_name, _experiment, config=config, update_code=update_code)
             Printer.print_success('Experiment was restarted with id {}'.format(response.id))
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -384,7 +384,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
                                                                       ctx.obj['experiment'])
     try:
-        response = PolyaxonClients().experiment.resume(
+        response = PolyaxonClient().experiment.resume(
             user, project_name, _experiment, config=config, update_code=update_code)
         Printer.print_success('Experiment was resumed with id {}'.format(response.id))
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -413,7 +413,7 @@ def jobs(ctx, page):
                                                                       ctx.obj['experiment'])
     page = page or 1
     try:
-        response = PolyaxonClients().experiment.list_jobs(
+        response = PolyaxonClient().experiment.list_jobs(
             user, project_name, _experiment, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get jobs for experiment `{}`.'.format(_experiment))
@@ -474,7 +474,7 @@ def statuses(ctx, job, page):
 
     def get_experiment_statuses():
         try:
-            response = PolyaxonClients().experiment.get_statuses(
+            response = PolyaxonClient().experiment.get_statuses(
                 user, project_name, _experiment, page=page)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could get status for experiment `{}`.'.format(_experiment))
@@ -499,7 +499,7 @@ def statuses(ctx, job, page):
 
     def get_experiment_job_statuses():
         try:
-            response = PolyaxonClients().experiment_job.get_statuses(user,
+            response = PolyaxonClient().experiment_job.get_statuses(user,
                                                                      project_name,
                                                                      _experiment,
                                                                      _job,
@@ -579,7 +579,7 @@ def resources(ctx, job, gpu):
     def get_experiment_resources():
         try:
             message_handler = Printer.gpu_resources if gpu else Printer.resources
-            PolyaxonClients().experiment.resources(
+            PolyaxonClient().experiment.resources(
                 user, project_name, _experiment, message_handler=message_handler)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get resources for experiment `{}`.'.format(_experiment))
@@ -589,7 +589,7 @@ def resources(ctx, job, gpu):
     def get_experiment_job_resources():
         try:
             message_handler = Printer.gpu_resources if gpu else Printer.resources
-            PolyaxonClients().experiment_job.resources(user,
+            PolyaxonClient().experiment_job.resources(user,
                                                        project_name,
                                                        _experiment,
                                                        _job,
@@ -674,7 +674,7 @@ def logs(ctx, job, past, follow):
 
         if past:
             try:
-                response = PolyaxonClients().experiment.logs(
+                response = PolyaxonClient().experiment.logs(
                     user, project_name, _experiment, stream=False)
                 for log_line in response.content.decode().split('\n'):
                     Printer.log(log_line)
@@ -688,7 +688,7 @@ def logs(ctx, job, past, follow):
                 sys.exit(1)
 
         try:
-            PolyaxonClients().experiment.logs(
+            PolyaxonClient().experiment.logs(
                 user, project_name, _experiment, message_handler=message_handler)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get logs for experiment `{}`.'.format(_experiment))
@@ -702,7 +702,7 @@ def logs(ctx, job, past, follow):
                 Printer.log(log_line, nl=True)
 
         try:
-            PolyaxonClients().experiment_job.logs(user,
+            PolyaxonClient().experiment_job.logs(user,
                                                   project_name,
                                                   _experiment,
                                                   _job,
@@ -740,7 +740,7 @@ def outputs(ctx):
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
                                                                       ctx.obj['experiment'])
     try:
-        PolyaxonClients().experiment.download_outputs(user, project_name, _experiment)
+        PolyaxonClient().experiment.download_outputs(user, project_name, _experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not download outputs for experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -771,7 +771,7 @@ def bookmark(ctx):
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
                                                                       ctx.obj['experiment'])
     try:
-        PolyaxonClients().experiment.bookmark(user, project_name, _experiment)
+        PolyaxonClient().experiment.bookmark(user, project_name, _experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not bookmark experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -803,7 +803,7 @@ def unbookmark(ctx):
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
                                                                       ctx.obj['experiment'])
     try:
-        PolyaxonClients().experiment.unbookmark(user, project_name, _experiment)
+        PolyaxonClient().experiment.unbookmark(user, project_name, _experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not unbookmark experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))

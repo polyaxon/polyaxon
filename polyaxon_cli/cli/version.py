@@ -13,7 +13,7 @@ import pkg_resources
 from polyaxon_cli.logger import clean_outputs, logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 from polyaxon_client.exceptions import (
     AuthorizationError,
@@ -48,7 +48,7 @@ def get_current_version():
 
 def get_server_version():
     try:
-        return PolyaxonClients().version.get_cli_version()
+        return PolyaxonClient().version.get_cli_version()
     except AuthorizationError:
         session_expired()
         sys.exit(1)
@@ -60,7 +60,7 @@ def get_server_version():
 
 def get_log_handler():
     try:
-        return PolyaxonClients().version.get_log_handler()
+        return PolyaxonClient().version.get_log_handler()
     except AuthorizationError:
         session_expired()
         sys.exit(1)
@@ -109,7 +109,7 @@ def check_cli_version():
 @clean_outputs
 def version(cli, platform):
     """Print the current version of the cli and platform."""
-    version_client = PolyaxonClients().version
+    version_client = PolyaxonClient().version
     cli = cli or not any([cli, platform])
     if cli:
         try:

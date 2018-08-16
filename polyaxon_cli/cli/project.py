@@ -11,7 +11,7 @@ from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils import constants
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -106,7 +106,7 @@ def create(name, description, tags, private):
         sys.exit(1)
 
     try:
-        _project = PolyaxonClients().project.create_project(project_config)
+        _project = PolyaxonClient().project.create_project(project_config)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not create project `{}`.'.format(name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -129,7 +129,7 @@ def list(page):  # pylint:disable=redefined-builtin
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_projects(user, page=page)
+        response = PolyaxonClient().project.list_projects(user, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get list of projects.')
         Printer.print_error('Error message `{}`.'.format(e))
@@ -182,7 +182,7 @@ def get(ctx):
     user, project_name = get_project_or_local(ctx.obj['project'])
 
     try:
-        response = PolyaxonClients().project.get_project(user, project_name)
+        response = PolyaxonClient().project.get_project(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -206,7 +206,7 @@ def delete(ctx):
         sys.exit(1)
 
     try:
-        response = PolyaxonClients().project.delete_project(user, project_name)
+        response = PolyaxonClient().project.delete_project(user, project_name)
         local_project = ProjectManager.get_config()
         if local_project and (user, project_name) == (local_project.user, local_project.name):
             # Purge caching
@@ -270,7 +270,7 @@ def update(ctx, name, description, tags, private):
         sys.exit(1)
 
     try:
-        response = PolyaxonClients().project.update_project(user, project_name, update_dict)
+        response = PolyaxonClient().project.update_project(user, project_name, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not update project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -322,7 +322,7 @@ def groups(ctx, query, sort, page):
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_experiment_groups(username=user,
+        response = PolyaxonClient().project.list_experiment_groups(username=user,
                                                                     project_name=project_name,
                                                                     query=query,
                                                                     sort=sort,
@@ -399,7 +399,7 @@ def jobs(ctx, query, sort, page):
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_jobs(username=user,
+        response = PolyaxonClient().project.list_jobs(username=user,
                                                        project_name=project_name,
                                                        query=query,
                                                        sort=sort,
@@ -475,7 +475,7 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_experiments(username=user,
+        response = PolyaxonClient().project.list_experiments(username=user,
                                                               project_name=project_name,
                                                               independent=independent,
                                                               group=group,
@@ -557,7 +557,7 @@ def builds(ctx, query, sort, page):
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_builds(username=user,
+        response = PolyaxonClient().project.list_builds(username=user,
                                                          project_name=project_name,
                                                          query=query,
                                                          sort=sort,
@@ -600,7 +600,7 @@ def tensorboards(ctx, query, sort, page):
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_tensorboards(username=user,
+        response = PolyaxonClient().project.list_tensorboards(username=user,
                                                                project_name=project_name,
                                                                query=query,
                                                                sort=sort,
@@ -635,7 +635,7 @@ def download(ctx):
     """Download code of the current project."""
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
-        PolyaxonClients().project.download_repo(user, project_name)
+        PolyaxonClient().project.download_repo(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not download code for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -654,7 +654,7 @@ def bookmark(ctx):
     user, project_name = get_project_or_local(ctx.obj['project'])
 
     try:
-        PolyaxonClients().project.bookmark(user, project_name)
+        PolyaxonClient().project.bookmark(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not bookmark project `{}/{}`.'.format(user, project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -674,7 +674,7 @@ def unbookmark(ctx):
     user, project_name = get_project_or_local(ctx.obj['project'])
 
     try:
-        PolyaxonClients().project.unbookmark(user, project_name)
+        PolyaxonClient().project.unbookmark(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not unbookmark project `{}/{}`.'.format(user, project_name))
         Printer.print_error('Error message `{}`.'.format(e))

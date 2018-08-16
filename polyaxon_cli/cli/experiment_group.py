@@ -9,7 +9,7 @@ from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.utils import cache
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -73,7 +73,7 @@ def get(ctx):
     """
     user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
     try:
-        response = PolyaxonClients().experiment_group.get_experiment_group(
+        response = PolyaxonClient().experiment_group.get_experiment_group(
             user, project_name, _group)
         cache.cache(config_manager=GroupManager, response=response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -99,7 +99,7 @@ def delete(ctx):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().experiment_group.delete_experiment_group(
+        response = PolyaxonClient().experiment_group.delete_experiment_group(
             user, project_name, _group)
         # Purge caching
         GroupManager.purge()
@@ -153,7 +153,7 @@ def update(ctx, name, description, tags):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().experiment_group.update_experiment_group(
+        response = PolyaxonClient().experiment_group.update_experiment_group(
             user, project_name, _group, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not update experiment group `{}`.'.format(_group))
@@ -182,7 +182,7 @@ def experiments(ctx, metrics, declarations, query, sort, page):
     user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
     page = page or 1
     try:
-        response = PolyaxonClients().experiment_group.list_experiments(username=user,
+        response = PolyaxonClient().experiment_group.list_experiments(username=user,
                                                                        project_name=project_name,
                                                                        group_id=_group,
                                                                        metrics=metrics,
@@ -259,7 +259,7 @@ def stop(ctx, yes, pending):
         sys.exit(0)
 
     try:
-        PolyaxonClients().experiment_group.stop(user, project_name, _group, pending=pending)
+        PolyaxonClient().experiment_group.stop(user, project_name, _group, pending=pending)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not stop experiments in group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -287,7 +287,7 @@ def statuses(ctx, page):
     user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
     page = page or 1
     try:
-        response = PolyaxonClients().experiment_group.get_statuses(user,
+        response = PolyaxonClient().experiment_group.get_statuses(user,
                                                                    project_name,
                                                                    _group,
                                                                    page=page)
@@ -336,7 +336,7 @@ def bookmark(ctx):
     user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
 
     try:
-        PolyaxonClients().experiment_group.bookmark(user, project_name, _group)
+        PolyaxonClient().experiment_group.bookmark(user, project_name, _group)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not bookmark group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -368,7 +368,7 @@ def unbookmark(ctx):
     user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
 
     try:
-        PolyaxonClients().experiment_group.unbookmark(user, project_name, _group)
+        PolyaxonClient().experiment_group.unbookmark(user, project_name, _group)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not unbookmark group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))

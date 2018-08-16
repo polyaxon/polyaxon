@@ -6,7 +6,7 @@ import sys
 import click
 
 from polyaxon_cli.logger import clean_outputs
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate, list_dicts_to_tabulate
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
@@ -49,7 +49,7 @@ def get_node_info(node_config):
 @clean_outputs
 def cluster(node):
     """Get cluster and nodes info."""
-    cluster_client = PolyaxonClients().cluster
+    cluster_client = PolyaxonClient().cluster
     if node:
         try:
             node_config = cluster_client.get_node(node)

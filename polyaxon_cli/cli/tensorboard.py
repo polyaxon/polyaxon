@@ -9,7 +9,7 @@ import clint
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
@@ -17,17 +17,17 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 def get_tensorboard_url(user, project_name, experiment=None, group=None):
     if experiment:
         return "{}/tensorboard/{}/{}/experiments/{}/\n".format(
-            PolyaxonClients().auth.http_host,
+            PolyaxonClient().auth.http_host,
             user,
             project_name,
             experiment)
     if group:
         return "{}/tensorboard/{}/{}/groups/{}/\n".format(
-            PolyaxonClients().auth.http_host,
+            PolyaxonClient().auth.http_host,
             user,
             project_name,
             group)
-    return "{}/tensorboard/{}/{}/\n".format(PolyaxonClients().auth.http_host, user, project_name)
+    return "{}/tensorboard/{}/{}/\n".format(PolyaxonClient().auth.http_host, user, project_name)
 
 
 @click.group()
@@ -82,7 +82,7 @@ def url(ctx):
     experiment = ctx.obj['experiment']
     if experiment:
         try:
-            response = PolyaxonClients().experiment.get_experiment(
+            response = PolyaxonClient().experiment.get_experiment(
                 username=user,
                 project_name=project_name,
                 experiment_id=experiment)
@@ -93,7 +93,7 @@ def url(ctx):
             sys.exit(1)
     elif group:
         try:
-            response = PolyaxonClients().experiment_group.get_experiment_group(
+            response = PolyaxonClient().experiment_group.get_experiment_group(
                 username=user,
                 project_name=project_name,
                 group_id=group)
@@ -104,7 +104,7 @@ def url(ctx):
             sys.exit(1)
     else:
         try:
-            response = PolyaxonClients().project.get_project(
+            response = PolyaxonClient().project.get_project(
                 username=user,
                 project_name=project_name)
             obj = 'project `{}`.'.format(project_name)
@@ -182,7 +182,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
     experiment = ctx.obj['experiment']
     if experiment:
         try:
-            response = PolyaxonClients().experiment.start_tensorboard(
+            response = PolyaxonClient().experiment.start_tensorboard(
                 username=user,
                 project_name=project_name,
                 experiment_id=experiment,
@@ -194,7 +194,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
             sys.exit(1)
     elif group:
         try:
-            response = PolyaxonClients().experiment_group.start_tensorboard(
+            response = PolyaxonClient().experiment_group.start_tensorboard(
                 username=user,
                 project_name=project_name,
                 group_id=group,
@@ -206,7 +206,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
             sys.exit(1)
     else:
         try:
-            response = PolyaxonClients().project.start_tensorboard(
+            response = PolyaxonClient().project.start_tensorboard(
                 username=user,
                 project_name=project_name,
                 job_config=job_config)
@@ -285,7 +285,7 @@ def stop(ctx, yes):
 
     if experiment:
         try:
-            PolyaxonClients().experiment.stop_tensorboard(
+            PolyaxonClient().experiment.stop_tensorboard(
                 username=user,
                 project_name=project_name,
                 experiment_id=experiment)
@@ -296,7 +296,7 @@ def stop(ctx, yes):
             sys.exit(1)
     elif group:
         try:
-            PolyaxonClients().experiment_group.stop_tensorboard(
+            PolyaxonClient().experiment_group.stop_tensorboard(
                 username=user,
                 project_name=project_name,
                 group_id=group)
@@ -307,7 +307,7 @@ def stop(ctx, yes):
             sys.exit(1)
     else:
         try:
-            PolyaxonClients().project.stop_tensorboard(
+            PolyaxonClient().project.stop_tensorboard(
                 username=user,
                 project_name=project_name)
             Printer.print_success('Tensorboard is being deleted')

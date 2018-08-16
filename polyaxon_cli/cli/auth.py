@@ -9,7 +9,7 @@ from polyaxon_cli.cli.version import get_current_version, get_log_handler, get_s
 from polyaxon_cli.logger import clean_outputs, logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
@@ -22,7 +22,7 @@ from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 @clean_outputs
 def login(token, username, password):
     """Login to Polyaxon."""
-    auth_client = PolyaxonClients().auth
+    auth_client = PolyaxonClient().auth
     if username:
         # Use username / password login
         if not password:
@@ -66,7 +66,7 @@ def login(token, username, password):
     # Set user
     try:
         AuthConfigManager.purge()
-        user = PolyaxonClients().auth.get_user(token=access_code)
+        user = PolyaxonClient().auth.get_user(token=access_code)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not load user info.')
         Printer.print_error('Error message `{}`.'.format(e))
@@ -99,7 +99,7 @@ def logout():
 def whoami():
     """Show current logged Polyaxon user."""
     try:
-        user = PolyaxonClients().auth.get_user()
+        user = PolyaxonClient().auth.get_user()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not load user info.')
         Printer.print_error('Error message `{}`.'.format(e))

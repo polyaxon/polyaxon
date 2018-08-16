@@ -6,7 +6,7 @@ import sys
 import click
 
 from polyaxon_cli.logger import clean_outputs
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
@@ -31,7 +31,7 @@ def grant(username):
     ```
     """
     try:
-        PolyaxonClients().user.grant_superuser(username)
+        PolyaxonClient().user.grant_superuser(username)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not grant superuser role to user `{}`.'.format(username))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -55,7 +55,7 @@ def revoke(username):
     ```
     """
     try:
-        PolyaxonClients().user.revoke_superuser(username)
+        PolyaxonClient().user.revoke_superuser(username)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not revoke superuser role from user `{}`.'.format(username))
         Printer.print_error('Error message `{}`.'.format(e))

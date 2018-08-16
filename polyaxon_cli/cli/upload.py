@@ -8,7 +8,7 @@ import click
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.managers.project import ProjectManager
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.files import create_tarfile, get_files_in_current_directory
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
@@ -24,7 +24,7 @@ def upload(async):  # pylint:disable=assign-to-new-keyword
     with create_tarfile(files, project.name) as file_path:
         with get_files_in_current_directory('repo', [file_path]) as (files, files_size):
             try:
-                PolyaxonClients().project.upload_repo(project.user,
+                PolyaxonClient().project.upload_repo(project.user,
                                                       project.name,
                                                       files,
                                                       files_size,

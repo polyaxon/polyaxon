@@ -14,7 +14,7 @@ from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils import cache
-from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.experiment import ExperimentConfig
@@ -86,7 +86,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
         ctx.invoke(upload, async=False)
 
     project = ProjectManager.get_config_or_raise()
-    project_client = PolyaxonClients().project
+    project_client = PolyaxonClient().project
 
     if tags:
         tags = tags.split(',')
@@ -99,7 +99,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             tags=tags,
             config=specification.parsed_data)
         try:
-            response = PolyaxonClients().project.create_experiment(project.user,
+            response = PolyaxonClient().project.create_experiment(project.user,
                                                                    project.name,
                                                                    experiment)
             cache.cache(config_manager=ExperimentManager, response=response)
