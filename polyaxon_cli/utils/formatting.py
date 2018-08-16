@@ -11,9 +11,9 @@ import click
 
 from tabulate import tabulate
 
-from polyaxon_schemas.environments import K8SResourcesConfig
-from polyaxon_schemas.experiment import ContainerResourcesConfig
-from polyaxon_schemas.utils import to_list, to_percentage, to_unit_memory
+from polyaxon_cli.schemas.containers import ContainerResourcesConfig
+from polyaxon_cli.schemas.environments import K8SResourcesConfig
+from polyaxon_cli.schemas.utils import to_list, to_percentage, to_unit_memory
 
 
 def get_meta_response(response):

@@ -12,13 +12,13 @@ from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.schemas.exceptions import PolyaxonfileError
+from polyaxon_cli.schemas.polyaxonfile import PolyaxonFile
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.files import create_init_file
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
 
 @click.command()

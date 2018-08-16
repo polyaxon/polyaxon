@@ -12,6 +12,8 @@ from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_job import ExperimentJobManager
+from polyaxon_cli.schemas.polyaxonfile import reader
+from polyaxon_cli.schemas.utils import to_list
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
@@ -22,8 +24,6 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.polyaxonfile import reader
-from polyaxon_schemas.utils import to_list
 
 
 def get_experiment_or_local(_experiment=None):
@@ -147,9 +147,9 @@ def get(ctx, job):
     def get_experiment_job():
         try:
             response = PolyaxonClient().experiment_job.get_job(user,
-                                                                project_name,
-                                                                _experiment,
-                                                                _job)
+                                                               project_name,
+                                                               _experiment,
+                                                               _job)
             cache.cache(config_manager=ExperimentJobManager, response=response)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get job `{}`.'.format(_job))
@@ -500,10 +500,10 @@ def statuses(ctx, job, page):
     def get_experiment_job_statuses():
         try:
             response = PolyaxonClient().experiment_job.get_statuses(user,
-                                                                     project_name,
-                                                                     _experiment,
-                                                                     _job,
-                                                                     page=page)
+                                                                    project_name,
+                                                                    _experiment,
+                                                                    _job,
+                                                                    page=page)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get status for job `{}`.'.format(job))
             Printer.print_error('Error message `{}`.'.format(e))
@@ -590,10 +590,10 @@ def resources(ctx, job, gpu):
         try:
             message_handler = Printer.gpu_resources if gpu else Printer.resources
             PolyaxonClient().experiment_job.resources(user,
-                                                       project_name,
-                                                       _experiment,
-                                                       _job,
-                                                       message_handler=message_handler)
+                                                      project_name,
+                                                      _experiment,
+                                                      _job,
+                                                      message_handler=message_handler)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get resources for job `{}`.'.format(_job))
             Printer.print_error('Error message `{}`.'.format(e))
@@ -703,10 +703,10 @@ def logs(ctx, job, past, follow):
 
         try:
             PolyaxonClient().experiment_job.logs(user,
-                                                  project_name,
-                                                  _experiment,
-                                                  _job,
-                                                  message_handler=message_handler)
+                                                 project_name,
+                                                 _experiment,
+                                                 _job,
+                                                 message_handler=message_handler)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get logs for job `{}`.'.format(_job))
             Printer.print_error('Error message `{}`.'.format(e))

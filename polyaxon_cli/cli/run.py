@@ -13,13 +13,13 @@ from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.schemas.experiment import ExperimentConfig
+from polyaxon_cli.schemas.group import ExperimentGroupConfig
+from polyaxon_cli.schemas.job import JobConfig
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.job import JobConfig
-from polyaxon_schemas.project import ExperimentGroupConfig
 
 
 @click.command()
@@ -100,8 +100,8 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             config=specification.parsed_data)
         try:
             response = PolyaxonClient().project.create_experiment(project.user,
-                                                                   project.name,
-                                                                   experiment)
+                                                                  project.name,
+                                                                  experiment)
             cache.cache(config_manager=ExperimentManager, response=response)
             Printer.print_success('Experiment `{}` was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:

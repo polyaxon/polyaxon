@@ -8,8 +8,12 @@ import click
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.utils.client import PolyaxonClient
-from polyaxon_cli.utils.formatting import Printer, dict_tabulate, list_dicts_to_tabulate, \
-    get_meta_response
+from polyaxon_cli.utils.formatting import (
+    Printer,
+    dict_tabulate,
+    get_meta_response,
+    list_dicts_to_tabulate
+)
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 

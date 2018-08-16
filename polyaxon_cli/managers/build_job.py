@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 from polyaxon_cli.managers.base import BaseConfigManager
+from polyaxon_cli.schemas.job import JobConfig
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_schemas.job import JobConfig
 
 
 class BuildJobManager(BaseConfigManager):

@@ -13,10 +13,10 @@ from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
+    get_experiments_with_declarations,
     get_experiments_with_metrics,
     get_meta_response,
-    list_dicts_to_tabulate,
-    get_experiments_with_declarations
+    list_dicts_to_tabulate
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
@@ -183,13 +183,13 @@ def experiments(ctx, metrics, declarations, query, sort, page):
     page = page or 1
     try:
         response = PolyaxonClient().experiment_group.list_experiments(username=user,
-                                                                       project_name=project_name,
-                                                                       group_id=_group,
-                                                                       metrics=metrics,
-                                                                       declarations=declarations,
-                                                                       query=query,
-                                                                       sort=sort,
-                                                                       page=page)
+                                                                      project_name=project_name,
+                                                                      group_id=_group,
+                                                                      metrics=metrics,
+                                                                      declarations=declarations,
+                                                                      query=query,
+                                                                      sort=sort,
+                                                                      page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiments for group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -288,9 +288,9 @@ def statuses(ctx, page):
     page = page or 1
     try:
         response = PolyaxonClient().experiment_group.get_statuses(user,
-                                                                   project_name,
-                                                                   _group,
-                                                                   page=page)
+                                                                  project_name,
+                                                                  _group,
+                                                                  page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get status for group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))

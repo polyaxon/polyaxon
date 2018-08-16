@@ -8,6 +8,7 @@ import click
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.build_job import BuildJobManager
+from polyaxon_cli.schemas.utils import to_list
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
@@ -18,7 +19,6 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.utils import to_list
 
 
 def get_build_or_local(project=None, _build=None):
@@ -345,9 +345,9 @@ def resources(ctx, gpu):
     try:
         message_handler = Printer.gpu_resources if gpu else Printer.resources
         PolyaxonClient().build_job.resources(user,
-                                              project_name,
-                                              _build,
-                                              message_handler=message_handler)
+                                             project_name,
+                                             _build,
+                                             message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get resources for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -400,9 +400,9 @@ def logs(ctx, past, follow):
 
     try:
         PolyaxonClient().build_job.logs(user,
-                                         project_name,
-                                         _build,
-                                         message_handler=message_handler)
+                                        project_name,
+                                        _build,
+                                        message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))

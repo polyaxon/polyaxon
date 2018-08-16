@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from polyaxon_cli.managers.experiment_job import ExperimentJobManager
-from polyaxon_schemas.experiment import ExperimentJobConfig
+from polyaxon_cli.schemas.experiment import ExperimentJobConfig
 
 
 class TestExperimentJobManager(TestCase):

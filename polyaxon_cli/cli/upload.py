@@ -25,10 +25,10 @@ def upload(async):  # pylint:disable=assign-to-new-keyword
         with get_files_in_current_directory('repo', [file_path]) as (files, files_size):
             try:
                 PolyaxonClient().project.upload_repo(project.user,
-                                                      project.name,
-                                                      files,
-                                                      files_size,
-                                                      async)
+                                                     project.name,
+                                                     files,
+                                                     files_size,
+                                                     async)
             except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
                 Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
                 Printer.print_error('Error message `{}`.'.format(e))

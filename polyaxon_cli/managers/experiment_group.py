@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 from polyaxon_cli.managers.base import BaseConfigManager
+from polyaxon_cli.schemas.group import ExperimentGroupConfig
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_schemas.project import ExperimentGroupConfig
 
 
 class GroupManager(BaseConfigManager):

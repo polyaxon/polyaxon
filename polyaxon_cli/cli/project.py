@@ -10,18 +10,18 @@ from marshmallow import ValidationError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.schemas.project import ProjectConfig
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
+    get_experiments_with_declarations,
     get_experiments_with_metrics,
     get_meta_response,
-    list_dicts_to_tabulate,
-    get_experiments_with_declarations
+    list_dicts_to_tabulate
 )
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.project import ProjectConfig
 
 
 def get_project_info(project):  # pylint:disable=redefined-outer-name
@@ -323,10 +323,10 @@ def groups(ctx, query, sort, page):
     page = page or 1
     try:
         response = PolyaxonClient().project.list_experiment_groups(username=user,
-                                                                    project_name=project_name,
-                                                                    query=query,
-                                                                    sort=sort,
-                                                                    page=page)
+                                                                   project_name=project_name,
+                                                                   query=query,
+                                                                   sort=sort,
+                                                                   page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error(
             'Could not get experiment groups for project `{}`.'.format(project_name))
@@ -400,10 +400,10 @@ def jobs(ctx, query, sort, page):
     page = page or 1
     try:
         response = PolyaxonClient().project.list_jobs(username=user,
-                                                       project_name=project_name,
-                                                       query=query,
-                                                       sort=sort,
-                                                       page=page)
+                                                      project_name=project_name,
+                                                      query=query,
+                                                      sort=sort,
+                                                      page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get jobs for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -476,14 +476,14 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
     page = page or 1
     try:
         response = PolyaxonClient().project.list_experiments(username=user,
-                                                              project_name=project_name,
-                                                              independent=independent,
-                                                              group=group,
-                                                              metrics=metrics,
-                                                              declarations=declarations,
-                                                              query=query,
-                                                              sort=sort,
-                                                              page=page)
+                                                             project_name=project_name,
+                                                             independent=independent,
+                                                             group=group,
+                                                             metrics=metrics,
+                                                             declarations=declarations,
+                                                             query=query,
+                                                             sort=sort,
+                                                             page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiments for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -558,10 +558,10 @@ def builds(ctx, query, sort, page):
     page = page or 1
     try:
         response = PolyaxonClient().project.list_builds(username=user,
-                                                         project_name=project_name,
-                                                         query=query,
-                                                         sort=sort,
-                                                         page=page)
+                                                        project_name=project_name,
+                                                        query=query,
+                                                        sort=sort,
+                                                        page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get builds for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -601,10 +601,10 @@ def tensorboards(ctx, query, sort, page):
     page = page or 1
     try:
         response = PolyaxonClient().project.list_tensorboards(username=user,
-                                                               project_name=project_name,
-                                                               query=query,
-                                                               sort=sort,
-                                                               page=page)
+                                                              project_name=project_name,
+                                                              query=query,
+                                                              sort=sort,
+                                                              page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get tensorboards for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))

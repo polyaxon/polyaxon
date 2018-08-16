@@ -9,10 +9,10 @@ from polyaxon_cli.cli.version import get_current_version, get_log_handler, get_s
 from polyaxon_cli.logger import clean_outputs, logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
+from polyaxon_cli.schemas.authentication import AccessTokenConfig, CredentialsConfig
 from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 
 
 @click.command()
