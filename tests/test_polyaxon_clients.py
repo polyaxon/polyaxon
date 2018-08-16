@@ -6,7 +6,7 @@ from unittest import TestCase
 from polyaxon_client.auth import AuthClient
 from polyaxon_client.bookmark import BookmarkClient
 from polyaxon_client.build_job import BuildJobClient
-from polyaxon_client.clients import PolyaxonClients
+from polyaxon_client.client import PolyaxonClient
 from polyaxon_client.cluster import ClusterClient
 from polyaxon_client.experiment import ExperimentClient
 from polyaxon_client.experiment_group import ExperimentGroupClient
@@ -17,23 +17,23 @@ from polyaxon_client.user import UserClient
 from polyaxon_client.version import VersionClient
 
 
-class TestPolyaxonClients(TestCase):
-    def test_clients(self):
-        clients = PolyaxonClients(host=None, token=None)
-        assert clients.host is None
-        assert clients.http_port == 80
-        assert clients.ws_port == 80
-        assert clients.use_https is False
-        assert clients.token is None
+class TestPolyaxonClient(TestCase):
+    def test_client(self):
+        client = PolyaxonClient(host=None, token=None)
+        assert client.host is None
+        assert client.http_port == 80
+        assert client.ws_port == 80
+        assert client.use_https is False
+        assert client.token is None
 
-        assert isinstance(clients.auth, AuthClient)
-        assert isinstance(clients.cluster, ClusterClient)
-        assert isinstance(clients.version, VersionClient)
-        assert isinstance(clients.project, ProjectClient)
-        assert isinstance(clients.experiment_group, ExperimentGroupClient)
-        assert isinstance(clients.experiment, ExperimentClient)
-        assert isinstance(clients.experiment_job, ExperimentJobClient)
-        assert isinstance(clients.job, JobClient)
-        assert isinstance(clients.build_job, BuildJobClient)
-        assert isinstance(clients.bookmark, BookmarkClient)
-        assert isinstance(clients.user, UserClient)
+        assert isinstance(client.auth, AuthClient)
+        assert isinstance(client.cluster, ClusterClient)
+        assert isinstance(client.version, VersionClient)
+        assert isinstance(client.project, ProjectClient)
+        assert isinstance(client.experiment_group, ExperimentGroupClient)
+        assert isinstance(client.experiment, ExperimentClient)
+        assert isinstance(client.experiment_job, ExperimentJobClient)
+        assert isinstance(client.job, JobClient)
+        assert isinstance(client.build_job, BuildJobClient)
+        assert isinstance(client.bookmark, BookmarkClient)
+        assert isinstance(client.user, UserClient)

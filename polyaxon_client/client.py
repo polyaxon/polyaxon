@@ -14,7 +14,7 @@ from polyaxon_client.user import UserClient
 from polyaxon_client.version import VersionClient
 
 
-class PolyaxonClients(object):
+class PolyaxonClient(object):
     def __init__(self, host, token, http_port=80, ws_port=80, use_https=False):
         self._updated = False
         self._host = host
