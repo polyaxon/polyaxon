@@ -5,13 +5,13 @@ import sys
 
 import click
 
+from polyaxon_cli.client import PolyaxonClient
+from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.managers.project import ProjectManager
-from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.files import create_tarfile, get_files_in_current_directory
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 @click.command()

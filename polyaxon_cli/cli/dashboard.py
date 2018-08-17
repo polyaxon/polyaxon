@@ -5,8 +5,8 @@ import sys
 
 import click
 
+from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.logger import clean_outputs
-from polyaxon_cli.utils.client import PolyaxonClient
 
 
 @click.command()

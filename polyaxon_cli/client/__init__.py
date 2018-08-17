@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.log_handler import LogHandlerSchema  # noqa
+from polyaxon_cli.client.client import PolyaxonClient

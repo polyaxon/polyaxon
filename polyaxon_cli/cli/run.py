@@ -7,6 +7,8 @@ import click
 
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
+from polyaxon_cli.client import PolyaxonClient
+from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.build_job import BuildJobManager
 from polyaxon_cli.managers.experiment import ExperimentManager
@@ -17,9 +19,7 @@ from polyaxon_cli.schemas.experiment import ExperimentConfig
 from polyaxon_cli.schemas.group import ExperimentGroupConfig
 from polyaxon_cli.schemas.job import JobConfig
 from polyaxon_cli.utils import cache
-from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 @click.command()

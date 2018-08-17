@@ -7,12 +7,13 @@ import click
 
 from marshmallow import ValidationError
 
+from polyaxon_cli.client import PolyaxonClient
+from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.schemas.project import ProjectConfig
 from polyaxon_cli.utils import constants
-from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -21,7 +22,6 @@ from polyaxon_cli.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate
 )
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 def get_project_info(project):  # pylint:disable=redefined-outer-name

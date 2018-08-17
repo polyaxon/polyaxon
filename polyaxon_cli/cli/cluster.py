@@ -5,10 +5,10 @@ import sys
 
 import click
 
+from polyaxon_cli.client import PolyaxonClient
+from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
-from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate, list_dicts_to_tabulate
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 def get_cluster_info(cluster_config):

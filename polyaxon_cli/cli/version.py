@@ -10,16 +10,16 @@ import clint
 import pip
 import pkg_resources
 
-from polyaxon_cli.logger import clean_outputs, logger
-from polyaxon_cli.managers.auth import AuthConfigManager
-from polyaxon_cli.managers.cli import CliConfigManager
-from polyaxon_cli.utils.client import PolyaxonClient
-from polyaxon_cli.utils.formatting import Printer, dict_tabulate
-from polyaxon_client.exceptions import (
+from polyaxon_cli.client import PolyaxonClient
+from polyaxon_cli.client.exceptions import (
     AuthorizationError,
     PolyaxonHTTPError,
     PolyaxonShouldExitError
 )
+from polyaxon_cli.logger import clean_outputs, logger
+from polyaxon_cli.managers.auth import AuthConfigManager
+from polyaxon_cli.managers.cli import CliConfigManager
+from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
 PROJECT_CLI_NAME = "polyaxon-cli"
 

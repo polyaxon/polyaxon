@@ -6,10 +6,11 @@ import sys
 import click
 
 from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.client import PolyaxonClient
+from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.utils import cache
-from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -18,7 +19,6 @@ from polyaxon_cli.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate
 )
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 def get_group_or_local(_group):

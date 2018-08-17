@@ -7,12 +7,13 @@ import click
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.cli.upload import upload
+from polyaxon_cli.client import PolyaxonClient
+from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.schemas.polyaxonfile import reader
 from polyaxon_cli.schemas.utils import to_list
 from polyaxon_cli.utils import cache
-from polyaxon_cli.utils.client import PolyaxonClient
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -20,7 +21,6 @@ from polyaxon_cli.utils.formatting import (
     get_resources,
     list_dicts_to_tabulate
 )
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 def get_job_or_local(project=None, _job=None):
