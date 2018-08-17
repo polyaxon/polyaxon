@@ -27,7 +27,7 @@ export default class RootUser extends React.Component<Props, State> {
     if (_.isNil(config.user)) {
       config.user = {} as UserInterface;
     }
-     if (key === 'username') {
+    if (key === 'username') {
       config.user.username = value;
     } else if (key === 'email') {
       config.user.email = value;
@@ -70,7 +70,7 @@ export default class RootUser extends React.Component<Props, State> {
                     className="input"
                     type="text"
                     value={this.state.config.user ? this.state.config.user.username || '' : ''}
-                    onChange={(event) =>  this.updateUser('username', event.target.value)}
+                    onChange={(event) => this.updateUser('username', event.target.value)}
                   />
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default class RootUser extends React.Component<Props, State> {
                     className="input"
                     type="text"
                     value={this.state.config.user ? this.state.config.user.email || '' : ''}
-                    onChange={(event) =>  this.updateUser('email', event.target.value)}
+                    onChange={(event) => this.updateUser('email', event.target.value)}
                   />
                 </div>
               </div>
@@ -104,14 +104,14 @@ export default class RootUser extends React.Component<Props, State> {
                     className="input"
                     type="text"
                     value={this.state.config.user ? this.state.config.user.password || '' : ''}
-                    onChange={(event) =>  this.updateUser('password', event.target.value)}
+                    onChange={(event) => this.updateUser('password', event.target.value)}
                   />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <PreviewForm currentConfig={currentConfig()} defaultConfig={defaultConfig} />
+        <PreviewForm currentConfig={currentConfig()} defaultConfig={defaultConfig}/>
       </div>
     );
   }

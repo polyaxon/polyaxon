@@ -30,10 +30,10 @@ export interface UserInterface {
 }
 
 export interface PersistenceDefInterface {
-  existingClaim: string;
-  mountPath: string;
-  hostPath: string;
-  readonly: boolean;
+  existingClaim?: string;
+  mountPath?: string;
+  hostPath?: string;
+  readonly?: boolean;
 }
 
 export interface PersistenceInterface {

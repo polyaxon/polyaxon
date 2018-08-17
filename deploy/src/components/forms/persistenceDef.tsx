@@ -1,34 +1,45 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { ResourcesInterface } from '../../interfaces/config';
+import { PersistenceDefInterface } from '../../interfaces/config';
 
 export interface Props {
-  config: ResourcesInterface;
-  updateConfig: (config: ResourcesInterface) => void;
+  config: PersistenceDefInterface;
+  updateConfig: (config: PersistenceDefInterface) => void;
 }
 
 interface State {
-  config: ResourcesInterface;
+  config: PersistenceDefInterface;
 }
 
-export default class Resources extends React.Component<Props, State> {
+export default class PersistenceDef extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      config: this.props.config || {limits: {}, requests: {}},
+      config: this.props.config,
     };
   }
 
-  public updateLimits = (value: { [key: string]: string }) => {
-    const config = _.cloneDeep(this.state.config);
-    config.limits = {...config.limits, ...value};
+  public updatePersistence = (key: string, value: string) => {
+    let config = _.cloneDeep(this.state.config);
+    if (_.isNil(config)) {
+      config = {} as PersistenceDefInterface;
+    }
+    if (key === 'existingClaim') {
+      config.existingClaim = value;
+      config.hostPath = undefined;
+    } else if (key === 'hostPath') {
+      config.hostPath = value;
+      config.existingClaim = undefined;
+    } else if (key === 'mountPath') {
+      config.mountPath = value;
+    }
     this.setState({config});
   };
 
-  public updateRequests = (value: { [key: string]: string }) => {
+  public updatePersistenceReadOnly = (value: boolean) => {
     const config = _.cloneDeep(this.state.config);
-    config.requests = {...config.requests, ...value};
+    config.readonly = value;
     this.setState({config});
   };
 
@@ -42,13 +53,9 @@ export default class Resources extends React.Component<Props, State> {
     return (
       <div className="columns">
         <div className="column">
-          <div className="content">
-            <hr className="navbar-divider"/>
-            <h6>Ingress resources</h6>
-          </div>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Limits cpu</label>
+              <label className="label">Existing Claim</label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -56,8 +63,8 @@ export default class Resources extends React.Component<Props, State> {
                   <input
                     className="input"
                     type="text"
-                    value={this.state.config.limits.cpu || ''}
-                    onChange={(event) => this.updateLimits({cpu: event.target.value})}
+                    value={this.state.config.existingClaim || ''}
+                    onChange={(event) => this.updatePersistence('existingClaim', event.target.value)}
                   />
                 </div>
               </div>
@@ -65,7 +72,7 @@ export default class Resources extends React.Component<Props, State> {
           </div>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Limits memory</label>
+              <label className="label">Mount Path</label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -73,8 +80,8 @@ export default class Resources extends React.Component<Props, State> {
                   <input
                     className="input"
                     type="text"
-                    value={this.state.config.limits.memory || ''}
-                    onChange={(event) => this.updateLimits({memory: event.target.value})}
+                    value={this.state.config.mountPath || ''}
+                    onChange={(event) => this.updatePersistence('mountPath', event.target.value)}
                   />
                 </div>
               </div>
@@ -82,7 +89,7 @@ export default class Resources extends React.Component<Props, State> {
           </div>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Requests cpu</label>
+              <label className="label">Host Path</label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -90,8 +97,8 @@ export default class Resources extends React.Component<Props, State> {
                   <input
                     className="input"
                     type="text"
-                    value={this.state.config.requests.cpu || ''}
-                    onChange={(event) => this.updateRequests({cpu: event.target.value})}
+                    value={this.state.config.hostPath || ''}
+                    onChange={(event) => this.updatePersistence('hostPath', event.target.value)}
                   />
                 </div>
               </div>
@@ -99,22 +106,21 @@ export default class Resources extends React.Component<Props, State> {
           </div>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Requests memory</label>
+              <label className="label">Read only</label>
             </div>
             <div className="field-body">
               <div className="field">
                 <div className="control">
-                  <input
-                    className="input"
-                    type="text"
-                    value={this.state.config.requests.memory || ''}
-                    onChange={(event) => this.updateRequests({memory: event.target.value})}
-                  />
+                  <div className="field-body">
+                    <input
+                      type="checkbox"
+                      onChange={(event) => this.updatePersistenceReadOnly(event.target.checked)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <hr className="navbar-divider"/>
         </div>
       </div>
     );

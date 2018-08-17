@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { ConfigInterface } from '../interfaces/config';
 import NamespaceRbacService from './forms/namespaceRbacService';
-import RootUser from './forms/rootUser';
 import NodeScheduling from './forms/nodeScheduling';
+import PersistenceLogs from './forms/persistenceLogs';
+import PersistenceRepos from './forms/persistenceRepos';
+import PersistenceUpload from './forms/persistenceUpload';
+import RootUser from './forms/rootUser';
 
 export interface State {
   currentTab: string;
@@ -166,6 +169,27 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'NodeScheduling' &&
           <NodeScheduling
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'PersistenceLogs' &&
+          <PersistenceLogs
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'PersistenceRepos' &&
+          <PersistenceRepos
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'PersistenceUpload' &&
+          <PersistenceUpload
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}

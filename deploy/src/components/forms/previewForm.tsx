@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as jsYaml from 'js-yaml';
+import * as React from 'react';
 
 export interface Props {
   currentConfig: { [key: string]: any; };

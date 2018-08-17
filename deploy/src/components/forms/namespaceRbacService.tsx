@@ -116,7 +116,7 @@ export default class NamespaceRbacService extends React.Component<Props, State> 
                     className="input"
                     type="text"
                     value={this.state.config.namespace || ''}
-                    onChange={(event) =>  this.updateNameSpace(event.target.value)}
+                    onChange={(event) => this.updateNameSpace(event.target.value)}
                   />
                 </div>
               </div>
@@ -145,7 +145,7 @@ export default class NamespaceRbacService extends React.Component<Props, State> 
             </div>
           </div>
           {this.state.config.ingress && this.state.config.ingress.enabled &&
-            <Resources config={this.state.config.ingress.resources} updateConfig={this.updateResources}/>
+          <Resources config={this.state.config.ingress.resources} updateConfig={this.updateResources}/>
           }
           <div className="field is-horizontal">
             <div className="field-label is-normal">
@@ -165,7 +165,7 @@ export default class NamespaceRbacService extends React.Component<Props, State> 
             </div>
           </div>
         </div>
-        <PreviewForm currentConfig={currentConfig()} defaultConfig={defaultConfig} />
+        <PreviewForm currentConfig={currentConfig()} defaultConfig={defaultConfig}/>
       </div>
     );
   }
