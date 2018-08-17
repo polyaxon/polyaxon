@@ -6,6 +6,7 @@ import { PersistenceDefInterface } from '../../interfaces/config';
 export interface Props {
   config: PersistenceDefInterface;
   updateConfig: (config: PersistenceDefInterface) => void;
+  useReadOnly: boolean;
 }
 
 interface State {
@@ -104,6 +105,7 @@ export default class PersistenceDef extends React.Component<Props, State> {
               </div>
             </div>
           </div>
+          {this.props.useReadOnly &&
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">Read only</label>
@@ -121,6 +123,7 @@ export default class PersistenceDef extends React.Component<Props, State> {
               </div>
             </div>
           </div>
+          }
         </div>
       </div>
     );

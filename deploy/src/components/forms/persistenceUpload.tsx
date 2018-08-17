@@ -78,7 +78,11 @@ export default class PersistenceUpload extends React.Component<Props, State> {
       <div className="columns">
         <div className="column is-7">
           {!_.isNil(this.state.config.persistence) &&
-          <PersistenceDef config={this.state.config.persistence.upload} updateConfig={this.update}/>
+          <PersistenceDef
+            config={this.state.config.persistence.upload}
+            updateConfig={this.update}
+            useReadOnly={false}
+          />
           }
         </div>
         <PreviewForm currentConfig={currentConfig()} defaultConfig={defaultConfig}/>

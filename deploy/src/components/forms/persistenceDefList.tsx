@@ -77,6 +77,7 @@ export default class PersistenceDefList extends React.Component<Props, State> {
                   <PersistenceDef
                     config={this.state.config[key]}
                     updateConfig={(persistence) => this.update(key, persistence)}
+                    useReadOnly={true}
                   />
                 </div>
               </div>
