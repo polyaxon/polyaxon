@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ConfigInterface } from '../interfaces/config';
 import NamespaceRbacService from './forms/namespaceRbacService';
+import RootUser from './forms/rootUser';
 
 export interface State {
   currentTab: string;
@@ -150,6 +151,13 @@ export default class Settings extends React.Component<Props, State> {
         <div className="column is-9">
           {this.state.currentTab === 'NamespaceRbacService' &&
           <NamespaceRbacService
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'RootUser' &&
+          <RootUser
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}

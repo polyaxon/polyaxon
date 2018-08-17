@@ -1,9 +1,9 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import { SERVICE_TYPES, IngressInterface, ConfigInterface, ResourcesInterface } from '../../interfaces/config';
-import Resources from './resources';
+import { ConfigInterface, IngressInterface, ResourcesInterface, SERVICE_TYPES } from '../../interfaces/config';
 import PreviewForm from './previewForm';
+import Resources from './resources';
 
 export interface Props {
   config: ConfigInterface;
@@ -66,6 +66,7 @@ export default class NamespaceRbacService extends React.Component<Props, State> 
       config.serviceType = 'ClusterIP';
     } else {
       config.serviceType = 'LoadBalancer';
+      config.ingress = undefined;
     }
     this.setState({config});
   };
