@@ -1,42 +1,42 @@
-interface EnabledInterface {
+export interface EnabledInterface {
   enabled: boolean;
 }
 
-interface ResourceDefInteface {
+export interface ResourceDefInterface {
   cpu: string;
   memory: string;
 }
 
-interface ResourcesInterface {
-  limits: ResourceDefInteface;
-  requests: ResourceDefInteface;
+export interface ResourcesInterface {
+  limits: ResourceDefInterface;
+  requests: ResourceDefInterface;
 }
 
-interface TlsInterface extends EnabledInterface{
+export interface TlsInterface extends EnabledInterface {
   hosts: string[];
   secretName: string;
 }
 
-interface IngressInterface extends EnabledInterface {
+export interface IngressInterface extends EnabledInterface {
   annotations: {[key: string]: string};
   resources: ResourcesInterface;
   tls: TlsInterface;
 }
 
-interface UserInterface {
+export interface UserInterface {
   username: string;
   email: string;
   password: string;
 }
 
-interface PersistenceDefInterface {
+export interface PersistenceDefInterface {
   existingClaim: string;
   mountPath: string;
   hostPath: string;
   readonly: boolean;
 }
 
-interface PersistenceInterface {
+export interface PersistenceInterface {
   logs: PersistenceDefInterface;
   repos: PersistenceDefInterface;
   upload: PersistenceDefInterface;
@@ -44,7 +44,7 @@ interface PersistenceInterface {
   outputs: {[key: string]: PersistenceDefInterface};
 }
 
-interface LDAPInterface extends EnabledInterface {
+export interface LDAPInterface extends EnabledInterface {
   serverUri: string;
   globalOptions: {[key: string]: string};
   connectionOptions: {[key: string]: string};
@@ -61,20 +61,20 @@ interface LDAPInterface extends EnabledInterface {
   denyGroup: string;
 }
 
-interface SSODefInterface extends EnabledInterface {
+export interface SSODefInterface extends EnabledInterface {
   clientId: string;
   clientSecret: string;
 }
 
-interface GitlabInterface extends SSODefInterface {
+export interface GitlabInterface extends SSODefInterface {
   url: string;
 }
 
-interface AzureInterface extends SSODefInterface {
+export interface AzureInterface extends SSODefInterface {
   tenantId: string;
 }
 
-interface AuthInterface {
+export interface AuthInterface {
   ldap: LDAPInterface;
   github: SSODefInterface;
   bitbucket: SSODefInterface;
@@ -82,21 +82,21 @@ interface AuthInterface {
   azure: AzureInterface;
 }
 
-interface NodeSelectorsInterface {
+export interface NodeSelectorsInterface {
   core: {[key: string]: string};
   experiments: {[key: string]: string};
   jobs: {[key: string]: string};
   builds: {[key: string]: string};
 }
 
-interface AffinityInterface {
+export interface AffinityInterface {
   core: {[key: string]: string};
   experiments: {[key: string]: string};
   jobs: {[key: string]: string};
   builds: {[key: string]: string};
 }
 
-interface TolerationsInterface {
+export interface TolerationsInterface {
   resourcesDaemon: Array<{[key: string]: string}>;
   core: Array<{[key: string]: string}>;
   experiments: Array<{[key: string]: string}>;
@@ -104,12 +104,12 @@ interface TolerationsInterface {
   builds: Array<{[key: string]: string}>;
 }
 
-interface ServiceInterface {
+export interface ServiceInterface {
   replicas: number;
   resources: ResourcesInterface;
 }
 
-interface EmailInterface {
+export interface EmailInterface {
   host: string;
   port: number;
   useTls: boolean;
@@ -117,14 +117,14 @@ interface EmailInterface {
   hostPassword: string;
 }
 
-interface WebHook {
+export interface WebHook {
   url: string;
   method: string;
   channel: string;
   roomid: string;
 }
 
-interface IntegrationsInterface {
+export interface IntegrationsInterface {
   slack: WebHook[];
   hipchat: WebHook[];
   mattermost: WebHook[];
@@ -133,10 +133,13 @@ interface IntegrationsInterface {
   webhooks: WebHook[];
 }
 
+export type SERVICE_TYPES = 'ClusterIP' | 'LoadBalancer' | 'NodePort';
+
 export interface ConfigInterface {
+  namespace?: string;
   rbac?: EnabledInterface;
   ingress?: IngressInterface;
-  serviceType?: 'ClusterIP' | 'LoadBalancer' | 'NodePort';
+  serviceType?: SERVICE_TYPES;
   limitResources?: boolean;
   user?: UserInterface;
   passwordLenght?:  number;

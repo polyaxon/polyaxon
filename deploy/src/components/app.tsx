@@ -1,6 +1,10 @@
 import * as React from 'react';
 
+import * as jsYaml from 'js-yaml';
+
 import { AppState } from '../interfaces/app';
+import { ConfigInterface } from '../interfaces/config';
+import { VALUES } from '../libs/artifacts';
 import './app.less';
 import Footer from './footer';
 import Header from './header';
@@ -14,12 +18,17 @@ export default class extends React.Component<Object, AppState> {
     this.state = {
       config: {},
       currentTab: 'settings',
+      defaultConfig: jsYaml.safeLoad(VALUES),
     };
   }
 
+  public updateConfig = (config: ConfigInterface) => {
+    this.setState({config});
+  };
+
   public setTab = (tab: 'settings' | 'preview') => {
     this.setState({currentTab: tab});
-  }
+  };
 
   public render() {
     return (
@@ -48,10 +57,14 @@ export default class extends React.Component<Object, AppState> {
               </div>
             </div>
             {this.state.currentTab === 'settings' &&
-            <Settings/>
+            <Settings
+              config={this.state.config}
+              defaultConfig={this.state.defaultConfig}
+              updateConfig={(config: ConfigInterface) => this.updateConfig(config)}
+            />
             }
             {this.state.currentTab === 'preview' &&
-            <Preview/>
+            <Preview config={this.state.config}/>
             }
           </div>
         </div>
