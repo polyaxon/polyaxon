@@ -11,13 +11,13 @@ import Header from './header';
 import Preview from './preview';
 import Settings from './settings';
 
-export default class extends React.Component<Object, AppState> {
+export default class extends React.Component<{}, AppState> {
 
   constructor(props: any) {
     super(props);
     this.state = {
       config: {},
-      currentTab: 'settings',
+      currentTab: 'Settings',
       defaultConfig: jsYaml.safeLoad(VALUES),
     };
   }
@@ -26,7 +26,7 @@ export default class extends React.Component<Object, AppState> {
     this.setState({config});
   };
 
-  public setTab = (tab: 'settings' | 'preview') => {
+  public setTab = (tab: string) => {
     this.setState({currentTab: tab});
   };
 
@@ -41,14 +41,14 @@ export default class extends React.Component<Object, AppState> {
                 <div className="tabs is-small">
                   <ul>
                     <li
-                      className={this.state.currentTab === 'settings' ? 'is-active' : ''}
-                      onClick={() => this.setTab('settings')}
+                      className={this.state.currentTab === 'Settings' ? 'is-active' : ''}
+                      onClick={() => this.setTab('Settings')}
                     >
                       <a>Settings</a>
                     </li>
                     <li
-                      className={this.state.currentTab === 'preview' ? 'is-active' : ''}
-                      onClick={() => this.setTab('preview')}
+                      className={this.state.currentTab === 'Preview' ? 'is-active' : ''}
+                      onClick={() => this.setTab('Preview')}
                     >
                       <a>Configuration File</a>
                     </li>
@@ -56,14 +56,14 @@ export default class extends React.Component<Object, AppState> {
                 </div>
               </div>
             </div>
-            {this.state.currentTab === 'settings' &&
+            {this.state.currentTab === 'Settings' &&
             <Settings
               config={this.state.config}
               defaultConfig={this.state.defaultConfig}
               updateConfig={(config: ConfigInterface) => this.updateConfig(config)}
             />
             }
-            {this.state.currentTab === 'preview' &&
+            {this.state.currentTab === 'Preview' &&
             <Preview config={this.state.config}/>
             }
           </div>

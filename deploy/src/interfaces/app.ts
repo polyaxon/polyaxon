@@ -1,7 +1,7 @@
 import { ConfigInterface } from './config';
 
 export interface AppState {
-  currentTab: 'settings' | 'preview';
+  currentTab: string;
   config: ConfigInterface;
   defaultConfig: ConfigInterface;
 }
