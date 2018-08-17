@@ -1,8 +1,7 @@
 {
   "extends": [
     "tslint:recommended",
-    "tslint-react",
-    "tslint-config-prettier"
+    "tslint-react"
   ],
   "rules": {
     "align": [
@@ -42,6 +41,7 @@
       "static-before-instance",
       "variables-before-functions"
     ],
+    "object-literal-sort-keys": false,
     "no-any": true,
     "no-arg": true,
     "no-bitwise": true,
@@ -82,7 +82,8 @@
     "radix": true,
     "semicolon": [
       true,
-      "always"
+      "always",
+      "ignore-bound-class-methods"
     ],
     "switch-default": true,
     "trailing-comma": false,

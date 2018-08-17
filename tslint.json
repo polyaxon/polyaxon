@@ -41,6 +41,7 @@
       "static-before-instance",
       "variables-before-functions"
     ],
+    "object-literal-sort-keys": false,
     "no-any": true,
     "no-arg": true,
     "no-bitwise": true,
@@ -81,7 +82,8 @@
     "radix": true,
     "semicolon": [
       true,
-      "always"
+      "always",
+      "ignore-bound-class-methods"
     ],
     "switch-default": true,
     "trailing-comma": false,
@@ -124,7 +126,7 @@
   },
   "linterOptions": {
     "exclude": [
-      "node_modules/**/*.ts"
+      "**/node_modules/**/*.ts"
     ]
   }
 }
