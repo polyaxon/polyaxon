@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ConfigInterface } from '../interfaces/config';
 import NamespaceRbacService from './forms/namespaceRbacService';
 import NodeScheduling from './forms/nodeScheduling';
+import PersistenceData from './forms/persistenceData';
 import PersistenceLogs from './forms/persistenceLogs';
 import PersistenceRepos from './forms/persistenceRepos';
 import PersistenceUpload from './forms/persistenceUpload';
@@ -84,8 +85,8 @@ export default class Settings extends React.Component<Props, State> {
               ><a>Data</a>
               </li>
               <li
-                className={this.state.currentTab === 'PersistenceData' ? 'is-active' : ''}
-                onClick={() => this.setTab('PersistenceData')}
+                className={this.state.currentTab === 'PersistenceOutputs' ? 'is-active' : ''}
+                onClick={() => this.setTab('PersistenceOutputs')}
               ><a>Outputs</a>
               </li>
             </ul>
@@ -190,6 +191,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'PersistenceUpload' &&
           <PersistenceUpload
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'PersistenceData' &&
+          <PersistenceData
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}
