@@ -8,6 +8,10 @@ import PersistenceLogs from './forms/persistenceLogs';
 import PersistenceRepos from './forms/persistenceRepos';
 import PersistenceUpload from './forms/persistenceUpload';
 import RootUser from './forms/rootUser';
+import AuthGithub from './forms/authGithub';
+import AuthGitlab from './forms/authGitlab';
+import AuthBitbucket from './forms/authBitbucket';
+import AuthAzure from './forms/authAzure';
 
 export interface State {
   currentTab: string;
@@ -114,6 +118,12 @@ export default class Settings extends React.Component<Props, State> {
                 <a>Bitbucket</a>
               </li>
               <li
+                className={this.state.currentTab === 'SSOAzure' ? 'is-active' : ''}
+                onClick={() => this.setTab('SSOAzure')}
+              >
+                <a>Azure</a>
+              </li>
+              <li
                 className={this.state.currentTab === 'SSOLDAP' ? 'is-active' : ''}
                 onClick={() => this.setTab('SSOLDAP')}
               >
@@ -206,6 +216,34 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'PersistenceOutputs' &&
           <PersistenceOutputs
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'SSOGithub' &&
+          <AuthGithub
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'SSOGitlab' &&
+          <AuthGitlab
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'SSOBitbucket' &&
+          <AuthBitbucket
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'SSOAzure' &&
+          <AuthAzure
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}

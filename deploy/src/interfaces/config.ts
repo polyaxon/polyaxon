@@ -75,11 +75,11 @@ export interface AzureInterface extends SSODefInterface {
 }
 
 export interface AuthInterface {
-  ldap: LDAPInterface;
-  github: SSODefInterface;
-  bitbucket: SSODefInterface;
-  gitlab: GitlabInterface;
-  azure: AzureInterface;
+  ldap?: LDAPInterface;
+  github?: SSODefInterface;
+  bitbucket?: SSODefInterface;
+  gitlab?: GitlabInterface;
+  azure?: AzureInterface;
 }
 
 export interface NodeSelectorsInterface {
