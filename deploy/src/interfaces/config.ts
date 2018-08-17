@@ -46,15 +46,15 @@ export interface PersistenceInterface {
 
 export interface LDAPInterface extends EnabledInterface {
   serverUri: string;
-  globalOptions: {[key: string]: string};
-  connectionOptions: {[key: string]: string};
+  globalOptions: string;
+  connectionOptions: string;
   bindDN: string;
   bindPassword: string;
   userSearchBaseDN: string;
   userSearchFilterStr: string;
   userDNTemplate: string;
   startTLS: boolean;
-  userAttrMap: {[key: string]: string};
+  userAttrMap: string;
   groupSearchBaseDN: string;
   groupSearchGroupType: string;
   requireGroup: string;

@@ -1,20 +1,37 @@
+import * as jsYaml from 'js-yaml';
 import * as React from 'react';
+
 import { ConfigInterface } from '../interfaces/config';
 
 export interface Props {
   config?: ConfigInterface;
 }
 
-function Preview({config}: Props) {
-  return (
-    <div className="columns">
-      <div className="column is-8 is-offset-2">
-        <div className="content">
-          {JSON.stringify(config, null, ' ')}
-        </div>
-      </div>
-    </div>
-  );
+export interface State {
+  json: boolean;
 }
 
-export default Preview;
+export default class Preview extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      json: false,
+    };
+  }
+
+  public render() {
+    return (
+      <div className="columns preview">
+        <div className="column is-8 is-offset-2">
+          <div className="content">
+            <p>
+              {this.state.json ?
+                JSON.stringify(this.props.config, null, ' ') :
+                jsYaml.dump(this.props.config)}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

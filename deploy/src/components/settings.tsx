@@ -12,6 +12,7 @@ import AuthGithub from './forms/authGithub';
 import AuthGitlab from './forms/authGitlab';
 import AuthBitbucket from './forms/authBitbucket';
 import AuthAzure from './forms/authAzure';
+import AuthLDAP from './forms/authLDAP';
 
 export interface State {
   currentTab: string;
@@ -244,6 +245,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'SSOAzure' &&
           <AuthAzure
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'SSOLDAP' &&
+          <AuthLDAP
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}
