@@ -83,25 +83,25 @@ export interface AuthInterface {
 }
 
 export interface NodeSelectorsInterface {
-  core: {[key: string]: string};
-  experiments: {[key: string]: string};
-  jobs: {[key: string]: string};
-  builds: {[key: string]: string};
+  core: string;
+  experiments: string;
+  jobs: string;
+  builds: string;
 }
 
 export interface AffinityInterface {
-  core: {[key: string]: string};
-  experiments: {[key: string]: string};
-  jobs: {[key: string]: string};
-  builds: {[key: string]: string};
+  core: string;
+  experiments: string;
+  jobs: string;
+  builds: string;
 }
 
 export interface TolerationsInterface {
-  resourcesDaemon: Array<{[key: string]: string}>;
-  core: Array<{[key: string]: string}>;
-  experiments: Array<{[key: string]: string}>;
-  jobs: Array<{[key: string]: string}>;
-  builds: Array<{[key: string]: string}>;
+  resourcesDaemon: string;
+  core: string;
+  experiments: string;
+  jobs: string;
+  builds: string;
 }
 
 export interface ServiceInterface {

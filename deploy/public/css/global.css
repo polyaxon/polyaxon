@@ -11,6 +11,7 @@ body {
 .hero.is-fullheight .hero-body.layout, .hero.is-halfheight .hero-body.layout {
   align-items: unset;
   padding: unset;
+  margin-bottom: 25px;
 }
 
 .layout .container {
@@ -54,7 +55,7 @@ body {
 /* Tabs */
 
 .tabs.is-small {
-    font-size: .8rem;
+  font-size: .8rem;
 }
 
 .hero .tabs ul {

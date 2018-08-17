@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ConfigInterface } from '../interfaces/config';
 import NamespaceRbacService from './forms/namespaceRbacService';
 import RootUser from './forms/rootUser';
+import NodeScheduling from './forms/nodeScheduling';
 
 export interface State {
   currentTab: string;
@@ -158,6 +159,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'RootUser' &&
           <RootUser
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'NodeScheduling' &&
+          <NodeScheduling
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}
