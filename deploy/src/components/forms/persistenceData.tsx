@@ -77,7 +77,7 @@ export default class PersistenceData extends React.Component<Props, State> {
       <div className="columns">
         <div className="column is-7">
           {!_.isNil(this.state.config.persistence) &&
-          <PersistenceDefList config={this.state.config.persistence.data} updateConfig={this.update}/>
+          <PersistenceDefList config={this.state.config.persistence.data} updateConfig={this.update} naming="data"/>
           }
         </div>
         <PreviewForm currentConfig={currentConfig()} defaultConfig={defaultConfig}/>

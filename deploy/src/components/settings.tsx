@@ -3,6 +3,7 @@ import { ConfigInterface } from '../interfaces/config';
 import NamespaceRbacService from './forms/namespaceRbacService';
 import NodeScheduling from './forms/nodeScheduling';
 import PersistenceData from './forms/persistenceData';
+import PersistenceOutputs from './forms/persistenceOutputs';
 import PersistenceLogs from './forms/persistenceLogs';
 import PersistenceRepos from './forms/persistenceRepos';
 import PersistenceUpload from './forms/persistenceUpload';
@@ -198,6 +199,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'PersistenceData' &&
           <PersistenceData
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'PersistenceOutputs' &&
+          <PersistenceOutputs
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}

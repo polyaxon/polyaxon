@@ -145,6 +145,7 @@ export interface ConfigInterface {
   passwordLenght?:  number;
   timeZone?: string;
   persistence?: PersistenceInterface;
+  defaultPersistence?: PersistenceInterface;
   auth?: AuthInterface;
   nodeSelectors?: NodeSelectorsInterface;
   affinity?: AffinityInterface;

@@ -7,6 +7,7 @@ import PersistenceDef from './persistenceDef';
 export interface Props {
   config: { [key: string]: PersistenceDefInterface };
   updateConfig: (config: { [key: string]: PersistenceDefInterface }) => void;
+  naming: string;
 }
 
 interface State {
@@ -26,7 +27,7 @@ export default class PersistenceDefList extends React.Component<Props, State> {
     if (_.isNil(config)) {
       config = {};
     }
-    const persistenceName = 'data' + Object.keys(this.state.config).length + 1;
+    const persistenceName = this.props.naming + (Object.keys(this.state.config).length + 1);
     config[persistenceName] = {} as PersistenceDefInterface;
     this.setState({config});
   };
