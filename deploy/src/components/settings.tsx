@@ -15,6 +15,7 @@ import AuthAzure from './forms/authAzure';
 import AuthLDAP from './forms/authLDAP';
 import ReplicationResources from './forms/replicationResources';
 import Email from './forms/email';
+import Notifications from './forms/notifications';
 
 export interface State {
   currentTab: string;
@@ -150,8 +151,8 @@ export default class Settings extends React.Component<Props, State> {
                 <a>Email</a>
               </li>
               <li
-                className={this.state.currentTab === 'Integrations' ? 'is-active' : ''}
-                onClick={() => this.setTab('Integrations')}
+                className={this.state.currentTab === 'Notifications' ? 'is-active' : ''}
+                onClick={() => this.setTab('Notifications')}
               >
                 <a>Notifications</a>
               </li>
@@ -273,6 +274,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'Email' &&
           <Email
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'Notifications' &&
+          <Notifications
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}
