@@ -44,10 +44,10 @@ export default class Settings extends React.Component<Props, State> {
   public render() {
     return (
       <div className="columns">
-        <div className="column is-3">
+        <div className="column is-2">
           <aside className="menu">
             <p className="menu-label">
-              Deployment configuration
+              General config
             </p>
             <ul className="menu-list">
               <li
@@ -173,7 +173,7 @@ export default class Settings extends React.Component<Props, State> {
             </ul>
           </aside>
         </div>
-        <div className="column is-9">
+        <div className="column is-10">
           {this.state.currentTab === 'NamespaceRbacService' &&
           <NamespaceRbacService
             config={this.props.config}
