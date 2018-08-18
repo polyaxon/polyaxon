@@ -3,11 +3,15 @@ import * as React from 'react';
 
 import {
   AffinityInterface,
+  AffinityStrInterface,
   ConfigInterface,
   NodeSelectorsInterface,
-  TolerationsInterface
+  NodeSelectorsStrInterface,
+  TolerationsInterface,
+  TolerationsStrInterface
 } from '../../interfaces/config';
 import PreviewForm from './previewForm';
+import { parseYaml } from '../../libs/utils';
 
 export interface Props {
   config: ConfigInterface;
@@ -29,56 +33,136 @@ export default class NodeScheduling extends React.Component<Props, State> {
 
   public updateNodeSelectors = (key: string, value: string) => {
     const config = _.cloneDeep(this.state.config);
+    const valueJson = parseYaml(value);
 
     if (_.isNil(config.nodeSelectors)) {
       config.nodeSelectors = {} as NodeSelectorsInterface;
     }
+    if (_.isNil(config.nodeSelectorsStr)) {
+      config.nodeSelectorsStr = {} as NodeSelectorsStrInterface;
+    }
+
     if (key === 'core') {
-      config.nodeSelectors.core = value;
+      config.nodeSelectorsStr.core = value;
+      if (_.isNil(valueJson)) {
+        delete config.nodeSelectors.core;
+      } else {
+        config.nodeSelectors.core = valueJson;
+      }
     } else if (key === 'experiments') {
-      config.nodeSelectors.experiments = value;
+      config.nodeSelectorsStr.experiments = value;
+      if (_.isNil(valueJson)) {
+        delete config.nodeSelectors.experiments;
+      } else {
+        config.nodeSelectors.experiments = valueJson;
+      }
     } else if (key === 'jobs') {
-      config.nodeSelectors.jobs = value;
+      config.nodeSelectorsStr.jobs = value;
+      if (_.isNil(valueJson)) {
+        delete config.nodeSelectors.jobs;
+      } else {
+        config.nodeSelectors.jobs = valueJson;
+      }
     } else if (key === 'builds') {
-      config.nodeSelectors.builds = value;
+      config.nodeSelectorsStr.builds = value;
+      if (_.isNil(valueJson)) {
+        delete config.nodeSelectors.jobs;
+      } else {
+        config.nodeSelectors.builds = valueJson;
+      }
     }
     this.setState({config});
   };
 
   public updateTolerations = (key: string, value: string) => {
     const config = _.cloneDeep(this.state.config);
+    const valueJson = parseYaml(value);
 
+    if (_.isNil(config.tolerationsStr)) {
+      config.tolerationsStr = {} as TolerationsStrInterface;
+    }
     if (_.isNil(config.tolerations)) {
       config.tolerations = {} as TolerationsInterface;
     }
+
     if (key === 'resourcesDaemon') {
-      config.tolerations.resourcesDaemon = value;
+      config.tolerationsStr.resourcesDaemon = value;
+      if (_.isNil(valueJson)) {
+        delete config.tolerations.resourcesDaemon;
+      } else {
+        config.tolerations.resourcesDaemon = valueJson;
+      }
     } else if (key === 'core') {
-      config.tolerations.experiments = value;
+      config.tolerationsStr.core = value;
+      if (_.isNil(valueJson)) {
+        delete config.tolerations.core;
+      } else {
+        config.tolerations.core = valueJson;
+      }
     } else if (key === 'experiments') {
-      config.tolerations.experiments = value;
+      config.tolerationsStr.experiments = value;
+      if (_.isNil(valueJson)) {
+        delete config.tolerations.experiments;
+      } else {
+        config.tolerations.experiments = valueJson;
+      }
     } else if (key === 'jobs') {
-      config.tolerations.jobs = value;
+      config.tolerationsStr.jobs = value;
+      if (_.isNil(valueJson)) {
+        delete config.tolerations.jobs;
+      } else {
+        config.tolerations.jobs = valueJson;
+      }
     } else if (key === 'builds') {
-      config.tolerations.builds = value;
+      config.tolerationsStr.builds = value;
+      if (_.isNil(valueJson)) {
+        delete config.tolerations.builds;
+      } else {
+        config.tolerations.builds = valueJson;
+      }
     }
     this.setState({config});
   };
 
   public updateAffinity = (key: string, value: string) => {
     const config = _.cloneDeep(this.state.config);
+    const valueJson = parseYaml(value);
 
+    if (_.isNil(config.affinityStr)) {
+      config.affinityStr = {} as AffinityStrInterface;
+    }
     if (_.isNil(config.affinity)) {
       config.affinity = {} as AffinityInterface;
     }
+
     if (key === 'core') {
-      config.affinity.core = value;
+      config.affinityStr.core = value;
+      if (_.isNil(valueJson)) {
+        delete config.affinity.core;
+      } else {
+        config.affinity.core = valueJson;
+      }
     } else if (key === 'experiments') {
-      config.affinity.experiments = value;
+      config.affinityStr.experiments = value;
+      if (_.isNil(valueJson)) {
+        delete config.affinity.experiments;
+      } else {
+        config.affinity.experiments = valueJson;
+      }
     } else if (key === 'jobs') {
-      config.affinity.jobs = value;
+      config.affinityStr.jobs = value;
+      if (_.isNil(valueJson)) {
+        delete config.affinity.jobs;
+      } else {
+        config.affinity.jobs = valueJson;
+      }
     } else if (key === 'builds') {
-      config.affinity.builds = value;
+      config.affinityStr.builds = value;
+      if (_.isNil(valueJson)) {
+        delete config.affinity.builds;
+      } else {
+        config.affinity.builds = valueJson;
+      }
     }
     this.setState({config});
   };
@@ -145,7 +229,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <input
                         className="input"
                         type="text"
-                        value={this.state.config.nodeSelectors ? this.state.config.nodeSelectors.core || '' : ''}
+                        value={this.state.config.nodeSelectorsStr ?
+                          this.state.config.nodeSelectorsStr.core || '' :
+                          ''}
                         onChange={(event) => this.updateNodeSelectors('core', event.target.value)}
                       />
                     </div>
@@ -162,7 +248,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <input
                         className="input"
                         type="text"
-                        value={this.state.config.nodeSelectors ? this.state.config.nodeSelectors.experiments || '' : ''}
+                        value={this.state.config.nodeSelectorsStr ?
+                          this.state.config.nodeSelectorsStr.experiments || '' :
+                          ''}
                         onChange={(event) => this.updateNodeSelectors('experiments', event.target.value)}
                       />
                     </div>
@@ -179,7 +267,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <input
                         className="input"
                         type="text"
-                        value={this.state.config.nodeSelectors ? this.state.config.nodeSelectors.jobs || '' : ''}
+                        value={this.state.config.nodeSelectorsStr ?
+                          this.state.config.nodeSelectorsStr.jobs || '' :
+                          ''}
                         onChange={(event) => this.updateNodeSelectors('jobs', event.target.value)}
                       />
                     </div>
@@ -196,7 +286,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <input
                         className="input"
                         type="text"
-                        value={this.state.config.nodeSelectors ? this.state.config.nodeSelectors.builds || '' : ''}
+                        value={this.state.config.nodeSelectorsStr ?
+                          this.state.config.nodeSelectorsStr.builds || '' :
+                          ''}
                         onChange={(event) => this.updateNodeSelectors('builds', event.target.value)}
                       />
                     </div>
@@ -226,7 +318,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.affinity ? this.state.config.affinity.core || '' : ''}
+                        value={this.state.config.affinityStr ?
+                          this.state.config.affinityStr.core || '' :
+                          ''}
                         onChange={(event) => this.updateAffinity('core', event.target.value)}
                       />
                     </div>
@@ -243,7 +337,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.affinity ? this.state.config.affinity.experiments || '' : ''}
+                        value={this.state.config.affinityStr ?
+                          this.state.config.affinityStr.experiments || '' :
+                          ''}
                         onChange={(event) => this.updateAffinity('experiments', event.target.value)}
                       />
                     </div>
@@ -260,7 +356,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.affinity ? this.state.config.affinity.jobs || '' : ''}
+                        value={this.state.config.affinityStr ?
+                          this.state.config.affinityStr.jobs || '' :
+                          ''}
                         onChange={(event) => this.updateAffinity('jobs', event.target.value)}
                       />
                     </div>
@@ -277,7 +375,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.affinity ? this.state.config.affinity.builds || '' : ''}
+                        value={this.state.config.affinityStr ?
+                          this.state.config.affinityStr.builds || '' :
+                          ''}
                         onChange={(event) => this.updateAffinity('builds', event.target.value)}
                       />
                     </div>
@@ -307,7 +407,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.tolerations ? this.state.config.tolerations.resourcesDaemon || '' : ''}
+                        value={this.state.config.tolerationsStr ?
+                          this.state.config.tolerationsStr.resourcesDaemon || '' :
+                          ''}
                         onChange={(event) => this.updateTolerations('resourcesDaemon', event.target.value)}
                       />
                     </div>
@@ -324,7 +426,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.tolerations ? this.state.config.tolerations.core || '' : ''}
+                        value={this.state.config.tolerationsStr ?
+                          this.state.config.tolerationsStr.core || '' :
+                          ''}
                         onChange={(event) => this.updateTolerations('core', event.target.value)}
                       />
                     </div>
@@ -341,7 +445,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.tolerations ? this.state.config.tolerations.experiments || '' : ''}
+                        value={this.state.config.tolerationsStr ?
+                          this.state.config.tolerationsStr.experiments || ''
+                          : ''}
                         onChange={(event) => this.updateTolerations('experiments', event.target.value)}
                       />
                     </div>
@@ -358,7 +464,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.tolerations ? this.state.config.tolerations.jobs || '' : ''}
+                        value={this.state.config.tolerationsStr ?
+                          this.state.config.tolerationsStr.jobs || '' :
+                          ''}
                         onChange={(event) => this.updateTolerations('jobs', event.target.value)}
                       />
                     </div>
@@ -375,7 +483,9 @@ export default class NodeScheduling extends React.Component<Props, State> {
                       <textarea
                         className="textarea"
                         rows={2}
-                        value={this.state.config.tolerations ? this.state.config.tolerations.builds || '' : ''}
+                        value={this.state.config.tolerationsStr ?
+                          this.state.config.tolerationsStr.builds || '' :
+                          ''}
                         onChange={(event) => this.updateTolerations('builds', event.target.value)}
                       />
                     </div>

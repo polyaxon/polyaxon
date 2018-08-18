@@ -1,3 +1,4 @@
+import * as jsYaml from 'js-yaml';
 import * as _ from 'lodash';
 
 export function b64DecodeUnicode(str: string) {
@@ -18,5 +19,21 @@ export function checkDefaultOrUndefined(value: any, configValue?: any, deep: boo
     return undefined;
   } else {
     return value;
+  }
+}
+
+export function parseJson(value: string) {
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return null;
+  }
+}
+
+export function parseYaml(value: string) {
+  try {
+    return jsYaml.safeLoad(value);
+  } catch (e) {
+    return null;
   }
 }
