@@ -165,6 +165,21 @@ export interface IntegrationsInterface {
   webhooks: WebHook[];
 }
 
+export interface PostgresPersistenceInterface {
+  enabled: boolean;
+  size: string;
+  existingClaim: string;
+}
+
+export interface PostgresInterface {
+  enabled: boolean;
+  postgresUser: string;
+  postgresPassword: string;
+  postgresDatabase: string;
+  externalPostgresHost: string;
+  persistence: PostgresPersistenceInterface;
+}
+
 export type SERVICE_TYPES = 'ClusterIP' | 'LoadBalancer' | 'NodePort';
 
 export interface ConfigInterface {
@@ -195,4 +210,5 @@ export interface ConfigInterface {
   integrations?: IntegrationsInterface;
   privateRegistries?: string[];
   privateRegistriesStr?: string;
+  postgresql?: PostgresInterface;
 }

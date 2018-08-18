@@ -17,6 +17,7 @@ import ReplicationResources from './forms/replicationResources';
 import Email from './forms/email';
 import Notifications from './forms/notifications';
 import Registries from './forms/registries';
+import Postgres from './forms/postgres';
 
 export interface State {
   currentTab: string;
@@ -72,6 +73,12 @@ export default class Settings extends React.Component<Props, State> {
                 onClick={() => this.setTab('ReplicationResources')}
               >
                 <a>Replication & Resources</a>
+              </li>
+              <li
+                className={this.state.currentTab === 'Postgres' ? 'is-active' : ''}
+                onClick={() => this.setTab('Postgres')}
+              >
+                <a>Postgres HA</a>
               </li>
             </ul>
             <p className="menu-label">
@@ -164,14 +171,6 @@ export default class Settings extends React.Component<Props, State> {
                 <a>Private Registries</a>
               </li>
             </ul>
-            <p className="menu-label">
-              Components
-            </p>
-            <ul className="menu-list">
-              <li><a>Postgres</a></li>
-              <li><a>Redis</a></li>
-              <li><a>Registry</a></li>
-            </ul>
           </aside>
         </div>
         <div className="column is-9">
@@ -198,6 +197,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'ReplicationResources' &&
           <ReplicationResources
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'Postgres' &&
+          <Postgres
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}
