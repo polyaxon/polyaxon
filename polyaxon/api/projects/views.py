@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework.permissions import IsAuthenticated
 
 import auditor
+from api.projects import queries
 
 from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from api.utils.views import AuditorMixinView
@@ -33,7 +34,7 @@ class ProjectCreateView(CreateAPIView):
 
 class ProjectListView(ListAPIView):
     """List projects for a user."""
-    queryset = Project.objects.order_by('-updated_at').all()
+    queryset = queries.projects.order_by('-updated_at')
     serializer_class = ProjectSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -56,7 +57,7 @@ class ProjectDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     delete:
         Delete a project.
     """
-    queryset = Project.objects.all()
+    queryset = queries.projects_details
     serializer_class = ProjectDetailSerializer
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'

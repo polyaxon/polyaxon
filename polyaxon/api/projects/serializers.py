@@ -21,7 +21,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'is_public',
-            'has_code',
         )
 
     def get_user(self, obj):
@@ -38,6 +37,7 @@ class ProjectDetailSerializer(ProjectSerializer):
 
     class Meta(ProjectSerializer.Meta):
         fields = ProjectSerializer.Meta.fields + (
+            'has_code',
             'has_tensorboard',
             'has_notebook',
             'num_experiment_groups',
@@ -49,19 +49,19 @@ class ProjectDetailSerializer(ProjectSerializer):
         )
 
     def get_num_independent_experiments(self, obj):
-        return obj.experiments.filter(experiment_group__isnull=True).count()
+        return obj.independent_experiments__count
 
     def get_num_experiment_groups(self, obj):
-        return obj.experiment_groups.count()
+        return obj.experiment_groups__count
 
     def get_num_experiments(self, obj):
-        return obj.experiments.count()
+        return obj.experiments__count
 
     def get_num_jobs(self, obj):
-        return obj.jobs.count()
+        return obj.jobs__count
 
     def get_num_builds(self, obj):
-        return obj.build_jobs.count()
+        return obj.build_jobs__count
 
     def get_bookmarked(self, obj):
         return Bookmark.objects.filter(
