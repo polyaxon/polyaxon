@@ -13,6 +13,7 @@ import AuthGitlab from './forms/authGitlab';
 import AuthBitbucket from './forms/authBitbucket';
 import AuthAzure from './forms/authAzure';
 import AuthLDAP from './forms/authLDAP';
+import ReplicationResources from './forms/replicationResources';
 
 export interface State {
   currentTab: string;
@@ -62,6 +63,12 @@ export default class Settings extends React.Component<Props, State> {
                 onClick={() => this.setTab('NodeScheduling')}
               >
                 <a>Node Scheduling</a>
+              </li>
+              <li
+                className={this.state.currentTab === 'ReplicationResources' ? 'is-active' : ''}
+                onClick={() => this.setTab('ReplicationResources')}
+              >
+                <a>Replication & Resources</a>
               </li>
             </ul>
             <p className="menu-label">
@@ -132,13 +139,6 @@ export default class Settings extends React.Component<Props, State> {
               </li>
             </ul>
             <p className="menu-label">
-              Services Replication & Resources
-            </p>
-            <ul className="menu-list">
-              <li><a>Api</a></li>
-              <li><a>Workers</a></li>
-            </ul>
-            <p className="menu-label">
               Integrations
             </p>
             <ul className="menu-list">
@@ -182,6 +182,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'NodeScheduling' &&
           <NodeScheduling
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'ReplicationResources' &&
+          <ReplicationResources
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}

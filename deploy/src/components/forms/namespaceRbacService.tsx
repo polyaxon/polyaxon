@@ -145,7 +145,11 @@ export default class NamespaceRbacService extends React.Component<Props, State> 
             </div>
           </div>
           {this.state.config.ingress && this.state.config.ingress.enabled &&
-          <Resources config={this.state.config.ingress.resources} updateConfig={this.updateResources}/>
+          <Resources
+            config={this.state.config.ingress.resources}
+            updateConfig={this.updateResources}
+            name="Ingress"
+          />
           }
           <div className="field is-horizontal">
             <div className="field-label is-normal">

@@ -6,6 +6,7 @@ import { ResourcesInterface } from '../../interfaces/config';
 export interface Props {
   config: ResourcesInterface;
   updateConfig: (config: ResourcesInterface) => void;
+  name: string;
 }
 
 interface State {
@@ -44,7 +45,7 @@ export default class Resources extends React.Component<Props, State> {
         <div className="column">
           <div className="content">
             <hr className="navbar-divider"/>
-            <h6>Ingress resources</h6>
+            <h6>{this.props.name} resources</h6>
           </div>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
