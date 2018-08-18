@@ -37,3 +37,8 @@ export function parseYaml(value: string) {
     return null;
   }
 }
+
+export const checkArray = (v: any) =>  _.isNil(v) || ! (v instanceof Array);
+export const checkObj = (v: any) =>  _.isNil(v) ||
+  ! (typeof v === 'object') ||
+  ((v instanceof Array) || (v instanceof Date));

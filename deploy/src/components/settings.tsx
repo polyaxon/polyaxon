@@ -16,6 +16,7 @@ import AuthLDAP from './forms/authLDAP';
 import ReplicationResources from './forms/replicationResources';
 import Email from './forms/email';
 import Notifications from './forms/notifications';
+import Registries from './forms/registries';
 
 export interface State {
   currentTab: string;
@@ -281,6 +282,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'Notifications' &&
           <Notifications
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'PrivateRegistries' &&
+          <Registries
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}

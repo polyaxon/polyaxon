@@ -11,7 +11,7 @@ import {
   TolerationsStrInterface
 } from '../../interfaces/config';
 import PreviewForm from './previewForm';
-import { parseYaml } from '../../libs/utils';
+import { checkArray, checkObj, parseYaml } from '../../libs/utils';
 
 export interface Props {
   config: ConfigInterface;
@@ -44,28 +44,28 @@ export default class NodeScheduling extends React.Component<Props, State> {
 
     if (key === 'core') {
       config.nodeSelectorsStr.core = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.nodeSelectors.core;
       } else {
         config.nodeSelectors.core = valueJson;
       }
     } else if (key === 'experiments') {
       config.nodeSelectorsStr.experiments = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.nodeSelectors.experiments;
       } else {
         config.nodeSelectors.experiments = valueJson;
       }
     } else if (key === 'jobs') {
       config.nodeSelectorsStr.jobs = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.nodeSelectors.jobs;
       } else {
         config.nodeSelectors.jobs = valueJson;
       }
     } else if (key === 'builds') {
       config.nodeSelectorsStr.builds = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.nodeSelectors.jobs;
       } else {
         config.nodeSelectors.builds = valueJson;
@@ -87,35 +87,35 @@ export default class NodeScheduling extends React.Component<Props, State> {
 
     if (key === 'resourcesDaemon') {
       config.tolerationsStr.resourcesDaemon = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.tolerations.resourcesDaemon;
       } else {
         config.tolerations.resourcesDaemon = valueJson;
       }
     } else if (key === 'core') {
       config.tolerationsStr.core = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.tolerations.core;
       } else {
         config.tolerations.core = valueJson;
       }
     } else if (key === 'experiments') {
       config.tolerationsStr.experiments = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.tolerations.experiments;
       } else {
         config.tolerations.experiments = valueJson;
       }
     } else if (key === 'jobs') {
       config.tolerationsStr.jobs = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.tolerations.jobs;
       } else {
         config.tolerations.jobs = valueJson;
       }
     } else if (key === 'builds') {
       config.tolerationsStr.builds = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.tolerations.builds;
       } else {
         config.tolerations.builds = valueJson;
@@ -137,28 +137,28 @@ export default class NodeScheduling extends React.Component<Props, State> {
 
     if (key === 'core') {
       config.affinityStr.core = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.affinity.core;
       } else {
         config.affinity.core = valueJson;
       }
     } else if (key === 'experiments') {
       config.affinityStr.experiments = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.affinity.experiments;
       } else {
         config.affinity.experiments = valueJson;
       }
     } else if (key === 'jobs') {
       config.affinityStr.jobs = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.affinity.jobs;
       } else {
         config.affinity.jobs = valueJson;
       }
     } else if (key === 'builds') {
       config.affinityStr.builds = value;
-      if (_.isNil(valueJson)) {
+      if (checkObj(valueJson)) {
         delete config.affinity.builds;
       } else {
         config.affinity.builds = valueJson;

@@ -2,16 +2,12 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import {
+  ConfigInterface,
   IntegrationsInterface,
   IntegrationsStrInterface,
-  ConfigInterface,
-  NodeSelectorsInterface,
-  NodeSelectorsStrInterface,
-  TolerationsInterface,
-  TolerationsStrInterface
 } from '../../interfaces/config';
+import { checkArray, parseYaml } from '../../libs/utils';
 import PreviewForm from './previewForm';
-import { parseYaml } from '../../libs/utils';
 
 export interface Props {
   config: ConfigInterface;
@@ -44,42 +40,42 @@ export default class Notifications extends React.Component<Props, State> {
 
     if (key === 'slack') {
       config.integrationsStr.slack = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.integrations.slack;
       } else {
         config.integrations.slack = valueJson;
       }
     } else if (key === 'hipchat') {
       config.integrationsStr.hipchat = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.integrations.hipchat;
       } else {
         config.integrations.hipchat = valueJson;
       }
     } else if (key === 'mattermost') {
       config.integrationsStr.mattermost = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.integrations.mattermost;
       } else {
         config.integrations.mattermost = valueJson;
       }
     } else if (key === 'discord') {
       config.integrationsStr.discord = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.integrations.discord;
       } else {
         config.integrations.discord = valueJson;
       }
     } else if (key === 'pagerduty') {
       config.integrationsStr.pagerduty = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.integrations.pagerduty;
       } else {
         config.integrations.pagerduty = valueJson;
       }
     } else if (key === 'webhooks') {
       config.integrationsStr.webhooks = value;
-      if (_.isNil(valueJson)) {
+      if (checkArray(valueJson)) {
         delete config.integrations.webhooks;
       } else {
         config.integrations.webhooks = valueJson;
