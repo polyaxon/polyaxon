@@ -14,6 +14,7 @@ import AuthBitbucket from './forms/authBitbucket';
 import AuthAzure from './forms/authAzure';
 import AuthLDAP from './forms/authLDAP';
 import ReplicationResources from './forms/replicationResources';
+import Email from './forms/email';
 
 export interface State {
   currentTab: string;
@@ -143,6 +144,12 @@ export default class Settings extends React.Component<Props, State> {
             </p>
             <ul className="menu-list">
               <li
+                className={this.state.currentTab === 'Email' ? 'is-active' : ''}
+                onClick={() => this.setTab('Email')}
+              >
+                <a>Email</a>
+              </li>
+              <li
                 className={this.state.currentTab === 'Integrations' ? 'is-active' : ''}
                 onClick={() => this.setTab('Integrations')}
               >
@@ -259,6 +266,13 @@ export default class Settings extends React.Component<Props, State> {
           }
           {this.state.currentTab === 'SSOLDAP' &&
           <AuthLDAP
+            config={this.props.config}
+            defaultConfig={this.props.defaultConfig}
+            updateConfig={this.props.updateConfig}
+          />
+          }
+          {this.state.currentTab === 'Email' &&
+          <Email
             config={this.props.config}
             defaultConfig={this.props.defaultConfig}
             updateConfig={this.props.updateConfig}
