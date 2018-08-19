@@ -20,6 +20,7 @@ from django.http import StreamingHttpResponse
 import auditor
 
 from api.filters import OrderingFilter, QueryFilter
+from api.jobs import queries
 from api.jobs.serializers import (
     JobCreateSerializer,
     JobDetailSerializer,
@@ -59,7 +60,7 @@ class ProjectJobListView(ListCreateAPIView):
     post:
         Create a job under a project.
     """
-    queryset = Job.objects.all()
+    queryset = queries.jobs
     serializer_class = JobSerializer
     create_serializer_class = JobCreateSerializer
     permission_classes = (IsAuthenticated,)
@@ -93,7 +94,7 @@ class JobDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     delete:
         Delete a job.
     """
-    queryset = Job.objects.all()
+    queryset = queries.jobs_details
     serializer_class = JobDetailSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
