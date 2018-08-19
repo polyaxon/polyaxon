@@ -10,6 +10,7 @@ from rest_framework import status
 
 from django.conf import settings
 
+from api.experiments import queries
 from api.experiments.serializers import (
     ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
@@ -684,11 +685,13 @@ class TestExperimentDetailViewV1(BaseViewTest):
         for _ in range(2):
             ExperimentJobFactory(experiment=self.object)
 
+        self.object_query = queries.experiments_details.get(id=self.object.id)
+
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         self.object.refresh_from_db()
-        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data == self.serializer_class(self.object_query).data
         assert resp.data['num_jobs'] == 2
 
     def test_get_with_resource_reg_90(self):
@@ -731,8 +734,8 @@ class TestExperimentDetailViewV1(BaseViewTest):
 
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
-        exp.refresh_from_db()
-        assert resp.data == self.serializer_class(exp).data
+        exp_query = queries.experiments_details.get(id=exp.id)
+        assert resp.data == self.serializer_class(exp_query).data
 
     def test_patch(self):
         new_description = 'updated_xp_name'

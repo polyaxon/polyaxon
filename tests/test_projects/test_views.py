@@ -5,6 +5,7 @@ import pytest
 from flaky import flaky
 from rest_framework import status
 
+from api.projects import queries
 from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
@@ -151,17 +152,20 @@ class TestProjectDetailViewV1(BaseViewTest):
                                                self.private.user.username,
                                                self.private.name)
 
+        self.object_query = queries.projects_details.get(id=self.object.id)
+        self.other_object_query = queries.projects_details.get(id=self.other_object.id)
+
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data == self.serializer_class(self.object_query).data
         assert resp.data['num_experiments'] == 2
         assert resp.data['num_experiment_groups'] == 2
 
         # Get other public project works
         resp = self.auth_client.get(self.url_other)
         assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == self.serializer_class(self.other_object).data
+        assert resp.data == self.serializer_class(self.other_object_query).data
 
         # Get other private project does not work
         resp = self.auth_client.get(self.url_private)

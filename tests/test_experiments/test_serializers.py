@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
+from api.experiments import queries
 from api.experiments.serializers import (
     ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
@@ -218,11 +219,12 @@ class TestExperimentDetailSerializer(BaseTest):
         super().setUp()
         self.job1 = ExperimentJobFactory()
         self.obj1 = self.job1.experiment
-        self.obj2 = ExperimentJobFactory()
-        self.obj2 = self.obj2.experiment
+        self.job2 = ExperimentJobFactory()
+        self.obj1.refresh_from_db()
+        self.obj1_query = queries.experiments_details.get(id=self.obj1.id)
 
     def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
+        data = self.serializer_class(self.obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
@@ -248,21 +250,24 @@ class TestExperimentDetailSerializer(BaseTest):
 
     def test_serialize_one_with_status(self):
         obj1 = self.factory_class()
-        data = self.serializer_class(obj1).data
+        obj1_query = queries.experiments_details.get(id=obj1.id)
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is None
         assert data['finished_at'] is None
 
         ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.STARTING)
-        data = self.serializer_class(obj1).data
+        obj1_query.refresh_from_db()
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
         ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
-        data = self.serializer_class(obj1).data
+        obj1_query.refresh_from_db()
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
@@ -270,7 +275,8 @@ class TestExperimentDetailSerializer(BaseTest):
 
     def test_cloned(self):
         obj1 = self.factory_class()
-        data = self.serializer_class(obj1).data
+        obj1_query = queries.experiments_details.get(id=obj1.id)
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['is_clone'] is False
@@ -278,13 +284,14 @@ class TestExperimentDetailSerializer(BaseTest):
         obj2 = self.factory_class()
         obj1.original_experiment = obj2
         obj1.save()
-        data = self.serializer_class(obj1).data
+        obj1_query.refresh_from_db()
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['is_clone'] is True
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        data = self.serializer_class(queries.experiments_details.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
@@ -321,7 +328,8 @@ class TestExperimentDetailSerializer(BaseTest):
         spec = ExperimentSpecification.read(spec_content)
 
         obj = self.factory_class(config=spec.parsed_data)
-        serializer = self.serializer_class(obj)
+        obj1_query = queries.experiments_details.get(id=obj.id)
+        serializer = self.serializer_class(obj1_query)
         data = serializer.data
         assert 'resources' in data
 
