@@ -55,6 +55,7 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
     num_succeeded_experiments = fields.SerializerMethodField()
     num_failed_experiments = fields.SerializerMethodField()
     num_stopped_experiments = fields.SerializerMethodField()
+    current_iteration = fields.SerializerMethodField()
     bookmarked = fields.SerializerMethodField()
 
     class Meta(ExperimentGroupSerializer.Meta):
@@ -74,25 +75,28 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
         )
 
     def get_num_experiments(self, obj):
-        return obj.experiments.count()
+        return obj.experiments__count
 
     def get_num_pending_experiments(self, obj):
-        return obj.pending_experiments.count()
+        return obj.pending_experiments__count
 
     def get_num_running_experiments(self, obj):
-        return obj.running_experiments.count()
+        return obj.running_experiments__count
 
     def get_num_scheduled_experiments(self, obj):
-        return obj.scheduled_experiments.count()
+        return obj.scheduled_experiments__count
 
     def get_num_succeeded_experiments(self, obj):
-        return obj.succeeded_experiments.count()
+        return obj.succeeded_experiments__count
 
     def get_num_failed_experiments(self, obj):
-        return obj.failed_experiments.count()
+        return obj.failed_experiments__count
 
     def get_num_stopped_experiments(self, obj):
-        return obj.stopped_experiments.count()
+        return obj.stopped_experiments__count
+
+    def get_current_iteration(self, obj):
+        return obj.iterations__count
 
     def get_bookmarked(self, obj):
         return Bookmark.objects.filter(

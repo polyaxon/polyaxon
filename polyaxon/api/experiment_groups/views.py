@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 import auditor
+from api.experiment_groups import queries
 
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
@@ -35,7 +36,7 @@ class ExperimentGroupListView(ListCreateAPIView):
     post:
         Create an experiment group under a project.
     """
-    queryset = ExperimentGroup.objects.all()
+    queryset = queries.groups
     serializer_class = ExperimentGroupSerializer
     create_serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated,)
@@ -66,7 +67,7 @@ class ExperimentGroupDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     delete:
         Delete an experiment group.
     """
-    queryset = ExperimentGroup.objects.all()
+    queryset = queries.groups_details
     serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
     lookup_field = 'id'
