@@ -1,7 +1,7 @@
 {
-  "name": "polyaxon-ui",
+  "name": "polyaxon-deploy",
   "version": "0.1.8",
-  "description": "Polyaxon ui",
+  "description": "Polyaxon deploy",
   "private": true,
   "scripts": {
     "clean": "rm -rf dist/* && rm -rf public/dist/* && mkdir -p public/dist/js && mkdir public/dist/css && mkdir public/dist/fonts",
