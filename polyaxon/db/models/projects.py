@@ -3,6 +3,7 @@ import uuid
 from django.conf import settings
 from django.core.validators import validate_slug
 from django.db import models
+from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT
@@ -45,20 +46,20 @@ class Project(DiffModel, DescribableModel, TagModel, TensorboardJobMixin):
     def has_code(self):
         return hasattr(self, 'repo')
 
-    @property
+    @cached_property
     def notebook(self):
         return self.notebook_jobs.last()
 
-    @property
+    @cached_property
     def has_notebook(self):
         notebook = self.notebook
         return notebook and notebook.is_running
 
-    @property
+    @cached_property
     def tensorboard(self):
         return self.tensorboard_jobs.filter(experiment=None, experiment_group=None).last()
 
-    @property
+    @cached_property
     def has_tensorboard(self):
         tensorboard = self.tensorboard
         return tensorboard and tensorboard.is_running

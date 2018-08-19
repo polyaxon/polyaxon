@@ -83,11 +83,11 @@ class JobMixin(object):
 
 
 class TensorboardJobMixin(object):
-    @property
+    @cached_property
     def tensorboard(self):
         return self.tensorboard_jobs.last()
 
-    @property
+    @cached_property
     def has_tensorboard(self):
         tensorboard = self.tensorboard
         return tensorboard and tensorboard.is_running
