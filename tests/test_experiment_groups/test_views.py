@@ -4,6 +4,7 @@ import pytest
 
 from rest_framework import status
 
+from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer,
@@ -47,7 +48,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
 
         self.objects = [self.factory_class(project=self.project)
                         for _ in range(self.num_objects)]
-        self.queryset = self.model_class.objects.filter(project=self.project)
+        self.queryset = queries.groups.filter(project=self.project)
         # Other objects
         self.other_object = self.factory_class(project=self.other_project)
         self.queryset = self.queryset.order_by('-updated_at')
@@ -57,7 +58,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
-        assert resp.data['count'] == len(self.objects)
+        assert resp.data['count'] == self.num_objects
 
         data = resp.data['results']
         assert len(data) == self.queryset.count()
@@ -358,11 +359,12 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         for _ in range(2):
             ExperimentFactory(experiment_group=self.object)
 
+        self.object_query = queries.groups_details.get(id=self.object.id)
+
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        self.object.refresh_from_db()
-        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data == self.serializer_class(self.object_query).data
         assert resp.data['num_pending_experiments'] == 2
 
     def test_patch(self):

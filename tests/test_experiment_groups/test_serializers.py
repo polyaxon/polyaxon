@@ -1,5 +1,6 @@
 import pytest
 
+from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer
@@ -37,10 +38,11 @@ class TestExperimentGroupSerializer(BaseTest):
     def setUp(self):
         super().setUp()
         self.obj1 = self.factory_class()
+        self.obj1_query = queries.groups.get(id=self.obj1.id)
         self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
+        data = self.serializer_class(self.obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         data.pop('created_at')
@@ -57,7 +59,7 @@ class TestExperimentGroupSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        data = self.serializer_class(queries.groups.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
@@ -102,10 +104,11 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     def setUp(self):
         super().setUp()
         self.obj1 = self.factory_class()
+        self.obj1_query = queries.groups_details.get(id=self.obj1.id)
         self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
+        data = self.serializer_class(self.obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         data.pop('created_at')
@@ -131,7 +134,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        data = self.serializer_class(queries.groups_details.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys

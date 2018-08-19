@@ -9,7 +9,8 @@ from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer,
-    ExperimentGroupStatusSerializer
+    ExperimentGroupStatusSerializer,
+    ExperimentGroupCreateSerializer
 )
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views import AuditorMixinView, ListCreateAPIView
@@ -38,7 +39,7 @@ class ExperimentGroupListView(ListCreateAPIView):
     """
     queryset = queries.groups
     serializer_class = ExperimentGroupSerializer
-    create_serializer_class = ExperimentGroupDetailSerializer
+    create_serializer_class = ExperimentGroupCreateSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)
     query_manager = 'experiment_group'
@@ -55,6 +56,7 @@ class ExperimentGroupListView(ListCreateAPIView):
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
+        # import pdb; pdb.set_trace()
         serializer.save(user=self.request.user, project=get_permissible_project(view=self))
 
 

@@ -112,3 +112,21 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
         if self.initial_data.get('check_specification') and not attrs.get('content'):
             raise ValidationError('Experiment group expects `content`.')
         return attrs
+
+
+class ExperimentGroupCreateSerializer(ExperimentGroupSerializer):
+
+    class Meta(ExperimentGroupSerializer.Meta):
+        fields = ExperimentGroupSerializer.Meta.fields + (
+            'search_algorithm',
+            'content',
+        )
+
+    def validate_content(self, content):
+        validate_group_spec_content(content)
+        return content
+
+    def validate(self, attrs):
+        if self.initial_data.get('check_specification') and not attrs.get('content'):
+            raise ValidationError('Experiment group expects `content`.')
+        return attrs
