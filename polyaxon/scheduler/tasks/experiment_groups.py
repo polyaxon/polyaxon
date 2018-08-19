@@ -33,7 +33,8 @@ def experiments_group_create(self, experiment_group_id):
     experiment_group.set_status(ExperimentGroupLifeCycle.RUNNING)
     celery_app.send_task(
         HPCeleryTasks.HP_CREATE,
-        kwargs={'experiment_group_id': experiment_group_id})
+        kwargs={'experiment_group_id': experiment_group_id},
+        countdown=1)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
