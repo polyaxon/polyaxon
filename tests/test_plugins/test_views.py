@@ -218,7 +218,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert isinstance(self.object.tensorboard, TensorboardJob)
 
     def test_spawner_start(self):
@@ -235,7 +235,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         config = self.object.tensorboard.config
 
         # Simulate stop the tensorboard
@@ -247,7 +247,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         # Check that still using same config
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert config == self.object.tensorboard.config
 
         # Simulate stop the tensorboard
@@ -262,7 +262,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         # Check that the image was update
         assert config != self.object.tensorboard.config
 
@@ -302,7 +302,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
 
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert start_mock.call_count == 1
         assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
         assert TensorboardJob.objects.count() == 2
@@ -334,7 +334,7 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert isinstance(self.object.tensorboard, TensorboardJob)
         assert self.project.tensorboard is None
 
@@ -365,7 +365,7 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         # Check that still using same config
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert config == self.object.tensorboard.config
 
         # Simulate stop the tensorboard
@@ -380,7 +380,7 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         # Check that the image was update
         assert config != self.object.tensorboard.config
 
@@ -421,7 +421,7 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
 
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert start_mock.call_count == 1
         assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
         assert TensorboardJob.objects.count() == 2
@@ -456,7 +456,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert isinstance(self.object.tensorboard, TensorboardJob)
         assert self.project.tensorboard is None
 
@@ -475,7 +475,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         config = self.object.tensorboard.config
 
         # Simulate stop the tensorboard
@@ -487,7 +487,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         # Check that still using same config
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert config == self.object.tensorboard.config
 
         # Simulate stop the tensorboard
@@ -502,7 +502,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         # Check that the image was update
         assert config != self.object.tensorboard.config
 
@@ -543,7 +543,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
 
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert start_mock.call_count == 1
         assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
         assert TensorboardJob.objects.count() == 2
@@ -693,7 +693,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert isinstance(self.object.notebook, NotebookJob)
 
     def test_start(self):
@@ -732,7 +732,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert mock_fct.call_count == 0
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         # Check that still using same config
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         assert self.object.notebook is None
 
         # Starting again the notebook with different config
@@ -740,7 +740,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as _:  # noqa
             self.auth_client.post(self.url, data)
 
-        self.object.refresh_from_db()
+        self.object.clear_cached_properties()
         # Check that the image was update
         assert config != self.object.notebook.config
 
@@ -787,6 +787,7 @@ class TestStartNotebookViewV1(BaseViewTest):
             self.auth_client.post(self.url, data=data)
         self.object.refresh_from_db()
         assert start_mock.call_count == 1
+        self.object.clear_cached_properties()
         assert self.object.notebook.last_status == JobLifeCycle.CREATED
         assert NotebookJob.objects.count() == 2
         assert NotebookJobStatus.objects.count() == 3

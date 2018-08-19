@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.jobs import JobLifeCycle
-from db.models.utils import DiffModel, LastStatusMixin, RunTimeModel, StatusModel
+from db.models.utils import DiffModel, LastStatusMixin, RunTimeModel, StatusModel, CachedMixin
 
 _logger = logging.getLogger('polyaxon.db.jobs')
 
@@ -82,7 +82,9 @@ class JobMixin(object):
         return self.specification.build.env_vars
 
 
-class TensorboardJobMixin(object):
+class TensorboardJobMixin(CachedMixin):
+    CACHED_PROPERTIES = ['tensorboard', 'has_tensorboard']
+
     @cached_property
     def tensorboard(self):
         return self.tensorboard_jobs.last()

@@ -74,18 +74,21 @@ class StartTensorboardView(CreateAPIView):
         if project.has_tensorboard:
             return None
         self._create_tensorboard(project=project)
+        project.clear_cached_properties()
         return project.tensorboard
 
     def _handle_group_tensorboard(self, project, group):
         if group.has_tensorboard:
             return None
         self._create_tensorboard(project=project, experiment_group=group)
+        group.clear_cached_properties()
         return group.tensorboard
 
     def _handle_experiment_tensorboard(self, project, experiment):
         if experiment.has_tensorboard:
             return None
         self._create_tensorboard(project=project, experiment=experiment)
+        experiment.clear_cached_properties()
         return experiment.tensorboard
 
     def post(self, request, *args, **kwargs):
@@ -184,6 +187,7 @@ class StartNotebookView(CreateAPIView):
         if obj.has_notebook:
             return Response(data='Notebook is already running', status=status.HTTP_200_OK)
         self._create_notebook(obj)
+        obj.clear_cached_properties()
         notebook = obj.notebook
         if not notebook.is_running:
             celery_app.send_task(

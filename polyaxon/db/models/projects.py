@@ -13,6 +13,8 @@ from libs.blacklist import validate_blacklist_name
 
 class Project(DiffModel, DescribableModel, TagModel, TensorboardJobMixin):
     """A model that represents a set of experiments to solve a specific problem."""
+    CACHED_PROPERTIES = ['notebook', 'has_notebook', 'tensorboard', 'has_tensorboard']
+
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
