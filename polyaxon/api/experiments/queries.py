@@ -1,6 +1,6 @@
 from django.db.models import Count
 
-from db.models.experiments import Experiment, ExperimentMetric
+from db.models.experiments import Experiment
 
 experiments = Experiment.objects.select_related(
     'user',
