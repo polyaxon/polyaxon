@@ -118,9 +118,6 @@ class Experiment(DiffModel,
         app_label = 'db'
         unique_together = (('project', 'name'),)
 
-    def __str__(self):
-        return self.unique_name
-
     @property
     def unique_name(self):
         if self.experiment_group:

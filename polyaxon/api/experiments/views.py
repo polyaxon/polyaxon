@@ -21,6 +21,7 @@ from rest_framework.settings import api_settings
 from django.http import StreamingHttpResponse
 
 import auditor
+from api.experiments import queries
 
 from api.experiments.serializers import (
     ExperimentCreateSerializer,
@@ -88,7 +89,7 @@ class ProjectExperimentListView(ListCreateAPIView):
     post:
         Create an experiment under a project.
     """
-    queryset = Experiment.objects.all()
+    queryset = queries.experiments
     serializer_class = ExperimentSerializer
     metrics_serializer_class = ExperimentLastMetricSerializer
     declarations_serializer_class = ExperimentDeclarationsSerializer
@@ -163,7 +164,7 @@ class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     delete:
         Delete an experiment.
     """
-    queryset = Experiment.objects.all()
+    queryset = queries.experiments_details
     serializer_class = ExperimentDetailSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
