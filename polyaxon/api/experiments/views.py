@@ -279,7 +279,9 @@ class ExperimentViewMixin(object):
         # Get project and check access
         self.project = get_permissible_project(view=self)
         experiment_id = self.kwargs['experiment_id']
-        self.experiment = get_object_or_404(Experiment, project=self.project, id=experiment_id)
+        self.experiment = get_object_or_404(queries.experiments_auditing,
+                                            project=self.project,
+                                            id=experiment_id)
         return self.experiment
 
     def filter_queryset(self, queryset):

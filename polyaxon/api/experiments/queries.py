@@ -1,6 +1,6 @@
 from django.db.models import Count
 
-from db.models.experiments import Experiment
+from db.models.experiments import Experiment, ExperimentMetric
 
 experiments = Experiment.objects.select_related(
     'user',
@@ -23,4 +23,14 @@ experiments = Experiment.objects.select_related(
 
 experiments_details = experiments.select_related('metric').annotate(
     Count('jobs', distinct=True)
+)
+
+experiments_auditing = experiments = Experiment.objects.select_related(
+    'user',
+    'project',
+    'project__user',
+    'experiment_group',
+    'experiment_group__project',
+    'experiment_group__project__user',
+    'status'
 )
