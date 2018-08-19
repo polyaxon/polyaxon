@@ -2,8 +2,6 @@ from rest_framework import fields, serializers
 
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
-from db.models.experiments import Experiment
-from db.models.jobs import Job
 from libs.spec_validation import validate_build_spec_config
 
 
@@ -75,10 +73,10 @@ class BuildJobDetailSerializer(BuildJobSerializer):
         return obj.resources.to_dict() if obj.resources else None
 
     def get_num_jobs(self, obj):
-        return Job.objects.filter(build_job=obj).count()
+        return obj.jobs__count
 
     def get_num_experiments(self, obj):
-        return Experiment.objects.filter(build_job=obj).count()
+        return obj.experiments__count
 
     def get_bookmarked(self, obj):
         return Bookmark.objects.filter(

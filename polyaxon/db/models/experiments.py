@@ -64,7 +64,7 @@ class Experiment(DiffModel,
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name='+')
+        related_name='experiments')
     experiment_group = models.ForeignKey(
         'db.ExperimentGroup',
         on_delete=models.CASCADE,

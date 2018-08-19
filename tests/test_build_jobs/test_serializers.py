@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
+from api.build_jobs import queries
 from api.build_jobs.serializers import (
     BuildJobDetailSerializer,
     BuildJobSerializer,
@@ -120,10 +121,11 @@ class TestBuildJobDetailSerializer(BaseTest):
     def setUp(self):
         super().setUp()
         self.obj1 = self.factory_class()
+        self.obj1_query = queries.builds_details.get(id=self.obj1.id)
         self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
+        data = self.serializer_class(self.obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
@@ -145,28 +147,31 @@ class TestBuildJobDetailSerializer(BaseTest):
 
     def test_serialize_one_with_status(self):
         obj1 = self.factory_class()
-        data = self.serializer_class(obj1).data
+        obj1_query = queries.builds_details.get(id=obj1.id)
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is None
         assert data['finished_at'] is None
 
         BuildJobStatus.objects.create(job=obj1, status=JobLifeCycle.SCHEDULED)
-        data = self.serializer_class(obj1).data
+        obj1_query.refresh_from_db()
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
         BuildJobStatus.objects.create(job=obj1, status=JobLifeCycle.SUCCEEDED)
-        data = self.serializer_class(obj1).data
+        obj1_query.refresh_from_db()
+        data = self.serializer_class(obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
         assert data['finished_at'] is not None
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        data = self.serializer_class(queries.builds_details.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys

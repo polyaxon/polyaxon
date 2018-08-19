@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from django.http import StreamingHttpResponse
 
 import auditor
+from api.build_jobs import queries
 
 from api.build_jobs.serializers import (
     BuildJobCreateSerializer,
@@ -54,7 +55,7 @@ class ProjectBuildListView(ListCreateAPIView):
     post:
         Create a build under a project.
     """
-    queryset = BuildJob.objects.all()
+    queryset = queries.builds
     serializer_class = BuildJobSerializer
     create_serializer_class = BuildJobCreateSerializer
     permission_classes = (IsAuthenticated,)
@@ -95,7 +96,7 @@ class BuildDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     delete:
         Delete a build.
     """
-    queryset = BuildJob.objects.all()
+    queryset = queries.builds_details
     serializer_class = BuildJobDetailSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'id'

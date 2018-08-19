@@ -52,7 +52,7 @@ class Job(AbstractJob,
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name='+')
+        related_name='jobs')
     original_job = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,

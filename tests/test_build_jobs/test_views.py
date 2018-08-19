@@ -6,6 +6,7 @@ import pytest
 
 from rest_framework import status
 
+from api.build_jobs import queries
 from api.build_jobs.serializers import (
     BuildJobDetailSerializer,
     BuildJobSerializer,
@@ -287,12 +288,12 @@ class TestBuildDetailViewV1(BaseViewTest):
                                                  project.name,
                                                  self.object.id)
         self.queryset = self.model_class.objects.all()
+        self.object_query = queries.builds_details.get(id=self.object.id)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        self.object.refresh_from_db()
-        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data == self.serializer_class(self.object_query).data
 
     def test_get_with_environment(self):
         spec_content = """---
@@ -321,16 +322,16 @@ class TestBuildDetailViewV1(BaseViewTest):
         spec_parsed_content = BuildSpecification.read(spec_content)
 
         project = ProjectFactory(user=self.auth_client.user)
-        exp = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
+        obj = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
         url = '/{}/{}/{}/builds/{}/'.format(API_V1,
                                             project.user.username,
                                             project.name,
-                                            exp.id)
+                                            obj.id)
+        obj_query = queries.builds_details.get(id=obj.id)
 
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
-        exp.refresh_from_db()
-        assert resp.data == self.serializer_class(exp).data
+        assert resp.data == self.serializer_class(obj_query).data
 
     def test_patch(self):
         new_description = 'updated_xp_name'
