@@ -215,7 +215,7 @@ class ConfigManager(object):
                  default=None,
                  options=None):
         """
-        Get a the value corresponding to the key and converts it to `str`.
+        Get a the value corresponding to the key and converts it to `dict`.
 
         :param key: the dict key.
         :param is_list: If this is one element or a list of elements.
@@ -257,6 +257,45 @@ class ConfigManager(object):
         if not isinstance(value, Mapping):
             raise ConfigurationError("Cannot convert value `{}` (key: `{}`) "
                                      "to `dict`".format(value, key))
+        return value
+
+    def get_dict_of_dicts(self,
+                          key,
+                          is_optional=False,
+                          is_secret=False,
+                          is_local=False,
+                          default=None,
+                          options=None):
+        """
+        Get a the value corresponding to the key and converts it to `dict`.
+
+        Add an extra validation that all keys have a dict as values.
+
+        :param key: the dict key.
+        :param is_optional: To raise an error if key was not found.
+        :param is_secret: If the key is a secret.
+        :param is_local: If the key is a local to this service.
+        :param default: default value if is_optional is True.
+        :param options: list/tuple if provided, the value must be one of these values.
+        :return: `str`: value corresponding to the key.
+        """
+        value = self.get_dict(
+            key=key,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
+        if not value:
+            return default
+
+        for k in value:
+            if not isinstance(value[k], Mapping):
+                raise ConfigurationError(
+                    "`{}` must be an object. "
+                    "Received a non valid configuration for key `{}`.".format(value[k], key))
+
         return value
 
     def get_uri(self,

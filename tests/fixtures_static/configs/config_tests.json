@@ -80,5 +80,17 @@
   "list_error_key_1": true,
   "list_error_key_2": {"key": "value"},
   "list_error_key_3": null,
-  "list_error_key_4": 123
+  "list_error_key_4": 123,
+  "dict_dicts_key_1": {"data1": {"mountPath": "/data/21", "existingClaim": "data-1-pvc"}},
+  "dict_dicts_key_2": {
+    "outputs1": {"mountPath": "/output/2", "existingClaim": "outputs-1-pvc"},
+    "outputs2": {"mountPath": "/output/2", "existingClaim": "output-2-pvc"}},
+  "dict_dicts_key_3": {},
+  "dict_dicts_error_key_1": true,
+  "dict_dicts_error_key_2": {"key": "value"},
+  "dict_dicts_error_key_3": null,
+  "dict_dicts_error_key_4": 123,
+  "dict_dicts_error_key_5": "foo",
+  "dict_dicts_error_key_6": "",
+  "dict_dicts_error_key_7": {"mountPath": "/data/2", "existingClaim": "data-2-pvc"}
 }

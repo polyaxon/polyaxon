@@ -430,6 +430,51 @@ class TestConfigManager(BaseTest):
         self.assertEqual(self.config.get_list(
             'list_non_existing_key', is_optional=True, default=['foo']), ['foo'])
 
+    def test_get_dict_of_dicts(self):
+        value = self.config.get_dict_of_dicts('dict_dicts_key_1')
+        self.assertEqual(value, {
+            'data': {'data1': {'mountPath': '/data/21', 'existingClaim': 'data-1-pvc'}}})
+
+        value = self.config.get_dict_of_dicts('dict_dicts_key_2')
+        self.assertEqual(value, {
+            'outputs': {'outputs1': {'mountPath': '/output/2', 'existingClaim': 'outputs-1-pvc'},
+                        'outputs2': {'mountPath': '/output/2', 'existingClaim': 'output-2-pvc'}}})
+
+        value = self.config.get_dict_of_dicts('list_key_3')
+        self.assertEqual(value, {})
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_1')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_2')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_3')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_4')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_4')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_5')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_6')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_error_key_7')
+
+        with self.assertRaises(ConfigurationError):
+            self.config.get_dict_of_dicts('dict_dicts_non_existing_key')
+
+        self.assertEqual(self.config.get_dict_of_dicts(
+            'dict_dicts_non_existing_key', is_optional=True), None)
+        self.assertEqual(self.config.get_dict_of_dicts(
+            'dict_dicts_non_existing_key', is_optional=True, default={}), {})
+
 
 @pytest.mark.config_manager_mark
 class TestSettingsConfigManager(BaseTest):
