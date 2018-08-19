@@ -36,6 +36,7 @@ from api.experiments.serializers import (
     ExperimentStatusSerializer
 )
 from api.filters import OrderingFilter, QueryFilter
+from api.paginator import LargeLimitOffsetPagination
 from api.utils.views import AuditorMixinView, ListCreateAPIView, ProtectedView
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
@@ -322,6 +323,7 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
         InternalAuthentication,
     ]
     permission_classes = (IsAuthenticatedOrInternal,)
+    pagination_class = LargeLimitOffsetPagination
 
     def perform_create(self, serializer):
         serializer.save(experiment=self.get_experiment())
