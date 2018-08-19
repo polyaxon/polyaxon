@@ -17,8 +17,8 @@ from rest_framework.response import Response
 from django.http import StreamingHttpResponse
 
 import auditor
-from api.build_jobs import queries
 
+from api.build_jobs import queries
 from api.build_jobs.serializers import (
     BuildJobCreateSerializer,
     BuildJobDetailSerializer,

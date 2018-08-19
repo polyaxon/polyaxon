@@ -21,8 +21,8 @@ from rest_framework.settings import api_settings
 from django.http import StreamingHttpResponse
 
 import auditor
-from api.experiments import queries
 
+from api.experiments import queries
 from api.experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentDeclarationsSerializer,

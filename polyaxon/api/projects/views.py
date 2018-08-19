@@ -3,8 +3,8 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework.permissions import IsAuthenticated
 
 import auditor
-from api.projects import queries
 
+from api.projects import queries
 from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from api.utils.views import AuditorMixinView
 from db.models.projects import Project
