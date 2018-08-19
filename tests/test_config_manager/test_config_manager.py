@@ -432,16 +432,15 @@ class TestConfigManager(BaseTest):
 
     def test_get_dict_of_dicts(self):
         value = self.config.get_dict_of_dicts('dict_dicts_key_1')
-        self.assertEqual(value, {
-            'data': {'data1': {'mountPath': '/data/21', 'existingClaim': 'data-1-pvc'}}})
+        self.assertEqual(value, {'data1': {'mountPath': '/data/21', 'existingClaim': 'data-1-pvc'}})
 
         value = self.config.get_dict_of_dicts('dict_dicts_key_2')
         self.assertEqual(value, {
-            'outputs': {'outputs1': {'mountPath': '/output/2', 'existingClaim': 'outputs-1-pvc'},
-                        'outputs2': {'mountPath': '/output/2', 'existingClaim': 'output-2-pvc'}}})
+            'outputs1': {'mountPath': '/output/2', 'existingClaim': 'outputs-1-pvc'},
+            'outputs2': {'mountPath': '/output/2', 'existingClaim': 'output-2-pvc'}})
 
-        value = self.config.get_dict_of_dicts('list_key_3')
-        self.assertEqual(value, {})
+        value = self.config.get_dict_of_dicts('dict_dicts_key_3')
+        self.assertEqual(value, None)
 
         with self.assertRaises(ConfigurationError):
             self.config.get_dict_of_dicts('dict_dicts_error_key_1')
