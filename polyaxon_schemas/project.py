@@ -20,6 +20,9 @@ class ExperimentGroupSchema(Schema):
     tags = fields.List(fields.Str(), allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
+    started_at = fields.LocalDateTime(allow_none=True)
+    finished_at = fields.LocalDateTime(allow_none=True)
+    total_run = fields.Str(allow_none=True)
     concurrency = fields.Int(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
     num_scheduled_experiments = fields.Int(allow_none=True)
@@ -48,8 +51,8 @@ class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'concurrency', 'num_experiments',
-        'num_pending_experiments', 'num_running_experiments', 'created_at', 'last_status'
+        'id', 'unique_name', 'user', 'concurrency', 'created_at', 'last_status',
+        'started_at', 'finished_at', 'total_run'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
@@ -74,8 +77,11 @@ class ExperimentGroupConfig(BaseConfig):
                  has_tensorboard=False,
                  created_at=None,
                  updated_at=None,
+                 started_at=None,
+                 finished_at=None,
                  concurrency=None,
-                 experiments=None):
+                 experiments=None,
+                 total_run=None):
         self.unique_name = unique_name
         self.id = id
         self.user = user
@@ -94,6 +100,8 @@ class ExperimentGroupConfig(BaseConfig):
         self.num_stopped_experiments = num_stopped_experiments
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
+        self.started_at = self.localize_date(started_at)
+        self.finished_at = self.localize_date(finished_at)
         self.has_tensorboard = has_tensorboard
         self.last_status = last_status
         self.concurrency = concurrency

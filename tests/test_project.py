@@ -90,6 +90,8 @@ class TestProjectConfigs(TestCase):
                        'num_experiments': 0,
                        'created_at': local_now().isoformat(),
                        'updated_at': local_now().isoformat(),
+                       'started_at': local_now().isoformat(),
+                       'finished_at': local_now().isoformat(),
                        'last_status': None,
                        'has_tensorboard': False,
                        'tags': ['tests'],
@@ -121,6 +123,13 @@ class TestProjectConfigs(TestCase):
         config_dict.pop('experiments')
         config_dict.pop('has_tensorboard')
         config_dict.pop('tags')
+        config_dict.pop('num_experiments', None)
+        config_dict.pop('num_failed_experiments', None)
+        config_dict.pop('num_pending_experiments', None)
+        config_dict.pop('num_running_experiments', None)
+        config_dict.pop('num_scheduled_experiments', None)
+        config_dict.pop('num_stopped_experiments', None)
+        config_dict.pop('num_succeeded_experiments', None)
         assert_equal_dict(config_dict, config.to_light_dict())
 
         config_to_dict = config.to_dict(humanize_values=True)
