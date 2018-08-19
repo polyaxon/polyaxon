@@ -12,7 +12,7 @@ from polyaxon_schemas.experiment import (
     ExperimentJobConfig,
     ExperimentJobStatusConfig,
     ExperimentMetricConfig,
-    ExperimentStatusConfig,
+    ExperimentStatusConfig
 )
 from polyaxon_schemas.utils import local_now
 

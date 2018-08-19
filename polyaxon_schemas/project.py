@@ -5,7 +5,7 @@ from marshmallow import Schema, fields, post_dump, post_load, validate
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.experiment import ExperimentSchema
-from polyaxon_schemas.utils import UUID
+from polyaxon_schemas.utils import UUID, humanize_timedelta
 
 
 class ExperimentGroupSchema(Schema):
@@ -54,7 +54,7 @@ class ExperimentGroupConfig(BaseConfig):
         'id', 'unique_name', 'user', 'concurrency', 'created_at', 'last_status',
         'started_at', 'finished_at', 'total_run'
     ]
-    DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
+    DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
                  unique_name=None,
@@ -106,6 +106,8 @@ class ExperimentGroupConfig(BaseConfig):
         self.last_status = last_status
         self.concurrency = concurrency
         self.experiments = experiments
+        if all([self.started_at, self.finished_at]):
+            self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
 class GroupStatusSchema(Schema):
