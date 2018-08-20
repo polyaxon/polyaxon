@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import {
@@ -9,23 +9,26 @@ import {
   splitUniqueName
 } from '../constants/utils';
 
+import { isDone } from '../constants/statuses';
 import { ExperimentModel } from '../models/experiment';
-import Status from './status';
+import Actions from './actions';
 import Description from './description';
+import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import GroupLinkMetaInfo from './metaInfo/groupLinkMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
-import GroupLinkMetaInfo from './metaInfo/groupLinkMetaInfo';
+import Status from './status';
 import Tags from './tags';
 
 export interface Props {
   experiment: ExperimentModel;
-  onDelete: () => void;
+  onDelete: () => any;
+  onStop: () => any;
 }
 
-function Experiment({experiment, onDelete}: Props) {
-  let values = splitUniqueName(experiment.project);
+function Experiment({experiment, onDelete, onStop}: Props) {
+  const values = splitUniqueName(experiment.project);
   let groupUrl = '';
   let groupValues: string[] = [];
   if (!_.isNil(experiment.experiment_group)) {
@@ -61,7 +64,7 @@ function Experiment({experiment, onDelete}: Props) {
         </div>
         <Tags tags={experiment.tags}/>
       </div>
-      <div className="col-md-2 block">
+      <div className="col-md-1 block">
         <GroupLinkMetaInfo
           value={groupValues[2]}
           link={groupUrl}
@@ -73,6 +76,13 @@ function Experiment({experiment, onDelete}: Props) {
       </div>
       <div className="col-md-2 block">
         <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at}/>
+      </div>
+      <div className="col-md-1 block">
+        <Actions
+          onDelete={onDelete}
+          onStop={onStop}
+          isRunning={!isDone(experiment.last_status)}
+        />
       </div>
     </div>
   );

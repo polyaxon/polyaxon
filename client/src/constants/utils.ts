@@ -120,6 +120,11 @@ export let getExperimentUniqueName = (username: string,
   return `${projectUniqueName}.${experimentId}`;
 };
 
+export let getExperimentUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getExperimentUrl(values[0], values[1], values[values.length - 1], app);
+};
+
 export let getJobUrl = (username: string,
                         projectName: string,
                         jobId: number | string,

@@ -4,7 +4,7 @@ import { Reducer } from 'redux';
 
 import { actionTypes, ExperimentAction } from '../actions/experiment';
 import { ExperimentSchema } from '../constants/schemas';
-import { getExperimentIndexName } from '../constants/utils';
+import { STOPPED } from '../constants/statuses';
 import { ExperimentModel, ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
@@ -14,8 +14,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
   (state: ExperimentStateSchema = ExperimentsEmptyState, action: ExperimentAction) => {
     let newState = {...state};
 
-    const processExperiment = function(experiment: ExperimentModel) {
-      const uniqueName = getExperimentIndexName(experiment.unique_name);
+    const processExperiment = (experiment: ExperimentModel) => {
+      const uniqueName = experiment.unique_name;
       newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
@@ -35,21 +35,26 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
         return {
           ...state,
           byUniqueNames: {
-            ...state.byUniqueNames, [getExperimentIndexName(action.experiment.unique_name)]: action.experiment
+            ...state.byUniqueNames, [action.experiment.unique_name]: action.experiment
           },
-          uniqueNames: [...state.uniqueNames, getExperimentIndexName(action.experiment.unique_name)]
+          uniqueNames: [...state.uniqueNames, action.experiment.unique_name]
         };
       case actionTypes.DELETE_EXPERIMENT:
         return {
           ...state,
+          uniqueNames: state.uniqueNames.filter((name) => name !== action.experimentName),
+          lastFetched: {
+            ...state.lastFetched,
+            names: state.lastFetched.names.filter((name) => name !== action.experimentName)},
+        };
+      case actionTypes.STOP_EXPERIMENT:
+        return {
+          ...state,
           byUniqueNames: {
             ...state.byUniqueNames,
-            [getExperimentIndexName(action.experiment.unique_name)]: {
-              ...state.byUniqueNames[getExperimentIndexName(action.experiment.unique_name)], deleted: true
-            }
+            [action.experimentName]: {
+              ...state.byUniqueNames[action.experimentName], last_status: STOPPED}
           },
-          uniqueNames: state.uniqueNames.filter(
-            (name) => name !== getExperimentIndexName(action.experiment.unique_name)),
         };
       case actionTypes.BOOKMARK_EXPERIMENT:
         return {
@@ -73,7 +78,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
         return {
           ...state,
           byUniqueNames: {
-            ...state.byUniqueNames, [getExperimentIndexName(action.experiment.unique_name)]: action.experiment
+            ...state.byUniqueNames, [action.experiment.unique_name]: action.experiment
           }
         };
       case actionTypes.RECEIVE_EXPERIMENTS:
@@ -98,7 +103,7 @@ export const ProjectExperimentsReducer: Reducer<ProjectStateSchema> =
     let newState = {...state};
 
     const processExperiment = function(experiment: ExperimentModel) {
-      const uniqueName = getExperimentIndexName(experiment.unique_name);
+      const uniqueName = experiment.unique_name;
       const projectName = experiment.project;
       if (_.includes(newState.uniqueNames, projectName) &&
         !_.includes(newState.byUniqueNames[projectName].experiments, uniqueName)) {
@@ -125,7 +130,7 @@ export const GroupExperimentsReducer: Reducer<GroupStateSchema> =
     let newState = {...state};
 
     const processExperiment = function(experiment: ExperimentModel) {
-      const uniqueName = getExperimentIndexName(experiment.unique_name);
+      const uniqueName = experiment.unique_name;
       const groupName = experiment.experiment_group;
       if (groupName != null &&
         _.includes(newState.uniqueNames, groupName) &&

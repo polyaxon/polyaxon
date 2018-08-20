@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import './action.less';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 export interface Props {
   onDelete: () => any;
@@ -10,25 +9,19 @@ export interface Props {
 
 function Actions({onDelete, onStop, isRunning = false}: Props) {
   return (
-    <div className="btn-group action">
-      <button
-        type="button"
-        className="btn btn-default dropdown-toggle"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        More <span className="caret"/>
+    <div className="btn-toolbar action" role="toolbar">
+      {onStop && isRunning &&
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">Stop</Tooltip>}>
+          <button className="btn btn-default btn-sm">
+            <i className="fa fa-stop icon" aria-hidden="true"/>
+          </button>
+        </OverlayTrigger>
+      }
+      <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">Delete</Tooltip>}>
+      <button className="btn btn-default btn-sm">
+        <i className="fa fa-trash icon" aria-hidden="true"/>
       </button>
-      <ul className="dropdown-menu">
-        {onStop && isRunning &&
-          <li><a onClick={onStop}>Stop</a></li>
-        }
-        {onStop && isRunning &&
-          <li role="separator" className="divider"/>
-        }
-        <li><a className="delete" onClick={onDelete}> Delete</a></li>
-      </ul>
+      </OverlayTrigger>
     </div>
 
   );

@@ -23,7 +23,8 @@ export interface Props {
   bookmarks: boolean;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
-  onDelete: (experiment: ExperimentModel) => actions.ExperimentAction;
+  onDelete: (experimentName: string) => actions.ExperimentAction;
+  onStop: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
 }
 
@@ -56,7 +57,11 @@ export default class Experiments extends React.Component<Props, Object> {
           ).map(
             (xp: ExperimentModel) =>
               <li className="list-item" key={xp.unique_name}>
-                <Experiment experiment={xp} onDelete={() => this.props.onDelete(xp)}/>
+                <Experiment
+                  experiment={xp}
+                  onDelete={() => this.props.onDelete(xp.unique_name)}
+                  onStop={() => this.props.onStop(xp.unique_name)}
+                />
               </li>)}
         </ul>
       );
