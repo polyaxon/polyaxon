@@ -261,7 +261,7 @@ class JobStopView(CreateAPIView):
                 'project_uuid': obj.project.uuid.hex,
                 'job_name': obj.unique_name,
                 'job_uuid': obj.uuid.hex,
-                'specification': obj.config,
+                'specification': obj.specification,
                 'update_status': True
             })
         return Response(status=status.HTTP_200_OK)
