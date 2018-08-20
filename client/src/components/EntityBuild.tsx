@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import * as actions from '../actions/build';
 import PaginatedList from '../components/paginatedList';
-import { EmptyList } from './empty/emptyList';
-import BuildHeader from './buildHeader';
-import Build from './build';
 import { BuildModel } from '../models/build';
+import Build from './build';
+import BuildHeader from './buildHeader';
+import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   build: BuildModel;
@@ -13,7 +13,7 @@ export interface Props {
 }
 
 export default class EntityBuild extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData();
   }
 

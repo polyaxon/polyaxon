@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
 import * as actions from '../actions/logs';
 import Logs from '../components/logs';
+import { AppState } from '../constants/types';
 
 export function mapStateToProps(state: AppState, params: any) {
   return {logs: state.logs};

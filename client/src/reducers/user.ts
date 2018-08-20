@@ -1,20 +1,20 @@
-import { Reducer } from 'redux';
-import { normalize } from 'normalizr';
 import * as _ from 'lodash';
+import { normalize } from 'normalizr';
+import { Reducer } from 'redux';
 
-import { UserAction, actionTypes } from '../actions/user';
-import { UserStateSchema, UserEmptyState, UserModel } from '../models/user';
+import { actionTypes, UserAction } from '../actions/user';
 import { UserSchema } from '../constants/schemas';
+import { UserEmptyState, UserModel, UserStateSchema } from '../models/user';
 
 export const userReducer: Reducer<UserStateSchema> =
   (state: UserStateSchema = UserEmptyState, action: UserAction) => {
-    let newState = {...state};
+    const newState = {...state};
 
-    let processUser = function (user: UserModel) {
+    const processUser = function(user: UserModel) {
       if (!_.includes(newState.userNames, user.username)) {
         newState.userNames.push(user.username);
       }
-      let normalizedUsers = normalize(user, UserSchema).entities.users;
+      const normalizedUsers = normalize(user, UserSchema).entities.users;
       newState.byUserNames[user.username] = {
         ...newState.byUserNames[user.username], ...normalizedUsers[user.username]
       };

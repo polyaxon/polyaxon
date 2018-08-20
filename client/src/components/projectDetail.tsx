@@ -1,19 +1,19 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import { ProjectModel } from '../models/project';
+import { Bookmark } from '../constants/bookmarks';
+import { getProjectUrl, getUserUrl, isTrue } from '../constants/utils';
+import ActivityLogs from '../containers/activityLogs';
+import Builds from '../containers/builds';
 import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
 import Jobs from '../containers/jobs';
-import Builds from '../containers/builds';
-import ActivityLogs from '../containers/activityLogs';
-import { isTrue, getUserUrl, getProjectUrl } from '../constants/utils';
-import { Bookmark } from '../constants/bookmarks';
+import { ProjectModel } from '../models/project';
 import Breadcrumb from './breadcrumb';
+import { EmptyList } from './empty/emptyList';
+import ProjectInstructions from './instructions/projectInstructions';
 import LinkedTab from './linkedTab';
 import ProjectOverview from './projectOverview';
-import ProjectInstructions from './instructions/projectInstructions';
-import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   project: ProjectModel;
@@ -24,7 +24,7 @@ export interface Props {
 }
 
 export default class ProjectDetail extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData();
   }
 
@@ -38,7 +38,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
       active: isTrue(this.props.project.bookmarked),
       callback: isTrue(this.props.project.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };
-    let projectUrl = getProjectUrl(project.user, project.name);
+    const projectUrl = getProjectUrl(project.user, project.name);
 
     return (
       <div className="row">

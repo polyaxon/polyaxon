@@ -1,9 +1,9 @@
 export class LastFetchedNames {
-  names: Array<string> = [];
-  count: number;
+  public names: string[] = [];
+  public count: number;
 }
 
 export class LastFetchedIds {
-  ids: Array<number> = [];
-  count: number;
+  public ids: number[] = [];
+  public count: number;
 }

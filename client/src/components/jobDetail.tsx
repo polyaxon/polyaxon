@@ -1,23 +1,23 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import { JobModel } from '../models/job';
-import Logs from '../containers/logs';
-import Statuses from '../containers/statuses';
+import { Bookmark } from '../constants/bookmarks';
 import {
-  isTrue,
   getJobUrl,
   getProjectUrl,
   getUserUrl,
+  isTrue,
   splitUniqueName,
 } from '../constants/utils';
-import { Bookmark } from '../constants/bookmarks';
-import Breadcrumb from './breadcrumb';
-import LinkedTab from './linkedTab';
-import JobOverview from './jobOverview';
 import EntityBuild from '../containers/EntityBuild';
+import Logs from '../containers/logs';
+import Statuses from '../containers/statuses';
+import { JobModel } from '../models/job';
+import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
 import JobInstructions from './instructions/jobInstructions';
+import JobOverview from './jobOverview';
+import LinkedTab from './linkedTab';
 
 export interface Props {
   job: JobModel;
@@ -28,7 +28,7 @@ export interface Props {
 }
 
 export default class JobDetail extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData();
   }
 
@@ -42,10 +42,10 @@ export default class JobDetail extends React.Component<Props, Object> {
       active: isTrue(this.props.job.bookmarked),
       callback: isTrue(this.props.job.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };
-    let values = splitUniqueName(job.project);
-    let jobUrl = getJobUrl(values[0], values[1], this.props.job.id);
-    let projectUrl = getProjectUrl(values[0], values[1]);
-    let breadcrumbLinks = [
+    const values = splitUniqueName(job.project);
+    const jobUrl = getJobUrl(values[0], values[1], this.props.job.id);
+    const projectUrl = getProjectUrl(values[0], values[1]);
+    const breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
       {name: values[1], value: projectUrl},
       {name: 'Jobs', value: `${projectUrl}#jobs`},

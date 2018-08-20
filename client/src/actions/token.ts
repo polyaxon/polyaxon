@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
-import { TokenModel } from '../models/token';
-import { BASE_API_URL } from '../constants/api';
 import { discardUser, fetchUser } from '../actions/user';
+import { BASE_API_URL } from '../constants/api';
+import { TokenModel } from '../models/token';
 
 export enum actionTypes {
   FETCH_TOKEN = 'FETCH_TOKEN',
@@ -60,7 +60,7 @@ export function logout(): any {
       credentials: 'include',
     })
       .then(handleErrors)
-      .then(json => dispatch(discardToken()));
+      .then((json) => dispatch(discardToken()));
   };
 }
 
@@ -78,9 +78,9 @@ export function fetchToken(username: string, password: string): any {
     return response;
   }
 
-  let credentials = {
-    username: username,
-    password: password,
+  const credentials = {
+    username,
+    password,
     login: true
   };
   return (dispatch: any) => {
@@ -94,8 +94,8 @@ export function fetchToken(username: string, password: string): any {
       credentials: 'include',
     })
       .then(handleErrors)
-      .then(response => response.json())
-      .then(json => dispatch(receiveTokenActionCreator(username, json)))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveTokenActionCreator(username, json)))
       .then(() => dispatch(fetchUser()));
   };
 }
@@ -106,7 +106,7 @@ export function discardToken(): any {
       dispatch(discardTokenActionCreator());
       dispatch(discardUser()).then(
         () => resolve()
-    ).catch((error: any) => reject(error))
+    ).catch((error: any) => reject(error));
     });
 }
 
@@ -121,7 +121,7 @@ export function refreshSession(): any {
   return (dispatch: any, getState: any) => fetch(BASE_API_URL + '/users/session/refresh', {
     method: 'POST',
     headers: {
-        'Authorization': 'token ' + getState().auth.token
+        Authorization: 'token ' + getState().auth.token
     },
     credentials: 'include'
   })

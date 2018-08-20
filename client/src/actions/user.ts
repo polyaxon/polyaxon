@@ -1,9 +1,9 @@
 import { Action } from 'redux';
 
-import { BASE_API_URL } from '../constants/api';
-import { UserModel } from '../models/user';
 import { discardToken } from '../actions/token';
-import { delay, getToken } from '../constants/utils';
+import { BASE_API_URL } from '../constants/api';
+import { getToken } from '../constants/utils';
+import { UserModel } from '../models/user';
 
 export enum actionTypes {
   RECEIVE_USER = 'RECEIVE_USER',
@@ -44,7 +44,7 @@ export function fetchUser(): any {
   }
 
   return (dispatch: any) => {
-    let token = getToken();
+    const token = getToken();
     if (token === null) {
       return dispatch(discardToken());
     }
@@ -57,14 +57,14 @@ export function fetchUser(): any {
         'Authorization': 'token ' + token.token
       }
     })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json =>
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) =>
         new Promise(function(resolve: any, reject: any) {
           dispatch(receiveUserActionCreator(json));
           resolve();
         }))
-      .catch(error => undefined);
+      .catch((error) => undefined);
   };
 }
 

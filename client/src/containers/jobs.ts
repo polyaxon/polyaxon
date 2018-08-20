@@ -1,10 +1,10 @@
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as _ from 'lodash';
 
+import Jobs from '../components/jobs';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
-import Jobs from '../components/jobs';
 import { JobModel } from '../models/job';
 
 import * as actions from '../actions/job';
@@ -31,17 +31,17 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   //   return {jobs: jobs, count: project.num_jobs};
   // };
 
-  let useLastFetched = () => {
-    let jobNames = state.jobs.lastFetched.names;
-    let count = state.jobs.lastFetched.count;
-    let jobs: JobModel[] = [];
+  const useLastFetched = () => {
+    const jobNames = state.jobs.lastFetched.names;
+    const count = state.jobs.lastFetched.count;
+    const jobs: JobModel[] = [];
     jobNames.forEach(
-      function (job: string, idx: number) {
+      function(job: string, idx: number) {
         jobs.push(state.jobs.byUniqueNames[job]);
       });
-    return {jobs: jobs, count: count};
+    return {jobs, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === ownProps.user,
@@ -65,7 +65,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownPro
     onDelete: (job: JobModel) => dispatch(actions.deleteJobActionCreator(job)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
-      let filters: {[key: string]: number|boolean|string} = {};
+      const filters: {[key: string]: number|boolean|string} = {};
       if (query) {
         filters.query = query;
       }

@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 
-import { ModalAction, actionTypes } from '../actions/modal';
+import { actionTypes, ModalAction } from '../actions/modal';
 import { ModalEmptyState, ModalStateSchema } from '../models/modal';
 
 export const modalReducer: Reducer<ModalStateSchema> =

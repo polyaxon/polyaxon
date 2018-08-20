@@ -1,14 +1,14 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
 import * as actions from '../actions/job';
-import Job from './job';
 import { JobModel } from '../models/job';
-import { DEFAULT_FILTERS } from './filters/constants';
-import PaginatedList from './paginatedList';
-import { EmptyList } from './empty/emptyList';
-import JobHeader from './jobHeader';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
+import { EmptyList } from './empty/emptyList';
+import { DEFAULT_FILTERS } from './filters/constants';
+import Job from './job';
+import JobHeader from './jobHeader';
+import PaginatedList from './paginatedList';
 
 export interface Props {
   isCurrentUser: boolean;

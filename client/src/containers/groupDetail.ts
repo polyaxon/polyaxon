@@ -1,15 +1,15 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { withRouter } from 'react-router-dom';
 import * as _ from 'lodash';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
-import GroupDetail from '../components/groupDetail';
 import * as actions from '../actions/group';
+import GroupDetail from '../components/groupDetail';
+import { AppState } from '../constants/types';
 import { getGroupUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let groupUniqueName = getGroupUniqueName(
+  const groupUniqueName = getGroupUniqueName(
     params.match.params.user,
     params.match.params.projectName,
     params.match.params.groupId);

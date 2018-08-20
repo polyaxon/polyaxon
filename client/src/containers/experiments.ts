@@ -1,10 +1,10 @@
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as _ from 'lodash';
 
+import Experiments from '../components/experiments';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
-import Experiments from '../components/experiments';
 import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
@@ -49,17 +49,17 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   //   return {experiments: experiments, count: count};
   // };
 
-  let useLastFetched = () => {
-    let experimentNames = state.experiments.lastFetched.names;
-    let count = state.experiments.lastFetched.count;
-    let experiments: ExperimentModel[] = [];
+  const useLastFetched = () => {
+    const experimentNames = state.experiments.lastFetched.names;
+    const count = state.experiments.lastFetched.count;
+    const experiments: ExperimentModel[] = [];
     experimentNames.forEach(
-      function (experiment: string, idx: number) {
+      (experiment: string, idx: number) => {
         experiments.push(state.experiments.byUniqueNames[experiment]);
       });
-    return {experiments: experiments, count: count};
+    return {experiments, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === ownProps.user,
@@ -86,7 +86,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
                 query?: string,
                 sort?: string,
                 extraFilters?:  {[key: string]: number|boolean|string}) => {
-      let filters: {[key: string]: number|boolean|string} = {};
+      const filters: {[key: string]: number|boolean|string} = {};
       if (ownProps.groupId) {
         filters.group = ownProps.groupId;
       }

@@ -1,16 +1,16 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { withRouter } from 'react-router-dom';
 import * as _ from 'lodash';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { AppState } from '../constants/types';
 
 import * as actions from '../actions/build';
-import { getBuildUniqueName } from '../constants/utils';
 import buildDetail from '../components/buildDetail';
+import { getBuildUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let buildUniqueName = getBuildUniqueName(
+  const buildUniqueName = getBuildUniqueName(
     params.match.params.user,
     params.match.params.projectName,
     params.match.params.buildId);

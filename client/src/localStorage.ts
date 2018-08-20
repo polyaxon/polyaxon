@@ -1,5 +1,5 @@
-import { AppState } from './constants/types';
 import * as Cookies from 'js-cookie';
+import { AppState } from './constants/types';
 
 export const loadState = () => {
   try {

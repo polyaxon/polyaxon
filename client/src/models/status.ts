@@ -10,9 +10,9 @@ export class StatusModel {
 }
 
 export class StatusStateSchema {
-  byIds: {[id: number]: StatusModel};
-  ids: number[];
-  lastFetched: LastFetchedIds;
+  public byIds: {[id: number]: StatusModel};
+  public ids: number[];
+  public lastFetched: LastFetchedIds;
 }
 
 export const StatusEmptyState = {

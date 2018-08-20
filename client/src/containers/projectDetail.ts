@@ -1,16 +1,16 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { withRouter } from 'react-router-dom';
 import * as _ from 'lodash';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
-import { ProjectModel } from '../models/project';
-import ProjectDetail from '../components/projectDetail';
 import * as actions from '../actions/project';
+import ProjectDetail from '../components/projectDetail';
+import { AppState } from '../constants/types';
 import { getProjectUniqueName } from '../constants/utils';
+import { ProjectModel } from '../models/project';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let projectUniqueName = getProjectUniqueName(
+  const projectUniqueName = getProjectUniqueName(
     params.match.params.user,
     params.match.params.projectName);
   return _.includes(state.projects.uniqueNames, projectUniqueName) ?

@@ -8,17 +8,17 @@ import * as actions from '../actions/statuses';
 import Statuses from '../components/statuses';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let useLastFetched = () => {
-    let statusIds = state.statuses.lastFetched.ids;
-    let count = state.statuses.lastFetched.count;
-    let statuses: StatusModel[] = [];
+  const useLastFetched = () => {
+    const statusIds = state.statuses.lastFetched.ids;
+    const count = state.statuses.lastFetched.count;
+    const statuses: StatusModel[] = [];
     statusIds.forEach(
-      function (statusId: number, idx: number) {
+      (statusId: number, idx: number) => {
         statuses.push(state.statuses.byIds[statusId]);
       });
-    return {statuses: statuses, count: count};
+    return {statuses, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     statuses: results.statuses,

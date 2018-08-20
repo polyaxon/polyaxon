@@ -1,42 +1,42 @@
 import * as Cookies from 'js-cookie';
-import * as moment from 'moment';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
-import { TokenStateSchema } from '../models/token';
 import { fetchUser } from '../actions/user';
 import { BASE_URL } from '../constants/api';
+import { TokenStateSchema } from '../models/token';
 
 export const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
-export let urlifyProjectName = function (projectName: string) {
+export let urlifyProjectName = (projectName: string) => {
   // Replaces . by /
-  let re = /\./gi;
+  const re = /\./gi;
   return projectName.replace(re, '\/');
 };
 
-export let splitUniqueName = function (uniqueName: string) {
+export let splitUniqueName = (uniqueName: string) => {
   return uniqueName.split('.');
 };
 
-export let sortByUpdatedAt = function (a: any, b: any): any {
-  let dateB: any = new Date(b.updated_at);
-  let dateA: any = new Date(a.updated_at);
+export let sortByUpdatedAt = (a: any, b: any) => {
+  const dateB: any = new Date(b.updated_at);
+  const dateA: any = new Date(a.updated_at);
   return dateB - dateA;
 };
 
-export let pluralize = function (name: string, numObjects: number): string {
+export let pluralize = (name: string, numObjects: number): string => {
   if (numObjects !== 1) {
     return name + 's';
   }
   return name;
 };
 
-export let getToken = function (): TokenStateSchema | null {
-  let user = Cookies.get('user');
-  let token = Cookies.get('token');
-  let csrftoken = Cookies.get('csrftoken');
+export let getToken = (): TokenStateSchema | null => {
+  const user = Cookies.get('user');
+  const token = Cookies.get('token');
+  const csrftoken = Cookies.get('csrftoken');
   if (user !== undefined && token !== undefined && csrftoken !== undefined) {
-    return {token: token, user: user, csrftoken: csrftoken};
+    return {token, user, csrftoken};
   }
   return null;
 };
@@ -48,131 +48,125 @@ export let getHomeUrl = () => {
   return `/app/${user}/`;
 };
 
-export let getLoginUrl = function (external?: boolean) {
+export let getLoginUrl = (external?: boolean): string => {
   external = external || false;
-  let loginUrl = '/users/login/';
+  const loginUrl = '/users/login/';
   return external ? `${BASE_URL}${loginUrl}` : loginUrl;
 };
 
-export let getLogoutUrl = function () {
-  return `/users/logout/`;
-};
+export let getLogoutUrl = () => `/users/logout/`;
 
-export let getUserUrl = function (username: string, app: boolean = true) {
+export let getUserUrl = (username: string, app: boolean = true) => {
   return app ? `/app/${username}` : `/${username}`;
 };
 
-export let getProjectUrl = function (username: string, projectName: string, app: boolean = true) {
+export let getProjectUrl = (username: string, projectName: string, app: boolean = true) => {
   return `${getUserUrl(username, app)}/${projectName}`;
 };
 
-export let getBookmarksUrl = function (username: string) {
-  return `/app/bookmarks/${username}`;
-};
+export let getBookmarksUrl = (username: string) => `/app/bookmarks/${username}`;
 
-export let getProjectTensorboardUrl = function (projectName: string) {
-  let values = splitUniqueName(projectName);
+export let getProjectTensorboardUrl = (projectName: string) => {
+  const values = splitUniqueName(projectName);
   return `/tensorboard/${values[0]}/${values[1]}/`;
 };
 
-export let getExperimentTensorboardUrl = function (projectName: string,
-                                                   experimentId: string | number) {
-  let values = splitUniqueName(projectName);
+export let getExperimentTensorboardUrl = (projectName: string, experimentId: string | number) => {
+  const values = splitUniqueName(projectName);
   return `/tensorboard/${values[0]}/${values[1]}/experiments/${experimentId}/`;
 };
 
-export let getGroupTensorboardUrl = function (projectName: string,
-                                              groupId: string | number) {
-  let values = splitUniqueName(projectName);
+export let getGroupTensorboardUrl = (projectName: string, groupId: string | number) => {
+  const values = splitUniqueName(projectName);
   return `/tensorboard/${values[0]}/${values[1]}/groups/${groupId}/`;
 };
 
-export let getNotebookUrl = function (projectName: string) {
-  let values = splitUniqueName(projectName);
+export let getNotebookUrl = (projectName: string) => {
+  const values = splitUniqueName(projectName);
   return `/notebook/${values[0]}/${values[1]}/`;
 };
 
-export let getProjectUniqueName = function (username: string, projectName: string) {
+export let getProjectUniqueName = (username: string, projectName: string) => {
   return `${username}.${projectName}`;
 };
 
-export let getGroupUrl = function (username: string,
-                                   projectName: string,
-                                   groupId: number | string,
-                                   app: boolean = true) {
-  let projectUrl = getProjectUrl(username, projectName, app);
+export let getGroupUrl = (username: string,
+                          projectName: string,
+                          groupId: number | string,
+                          app: boolean = true) => {
+  const projectUrl = getProjectUrl(username, projectName, app);
   return `${projectUrl}/groups/${groupId}/`;
 };
 
-export let getGroupUniqueName = function (username: string,
-                                          projectName: string,
-                                          groupId: number | string) {
-  let projectUniqueName = getProjectUniqueName(username, projectName);
+export let getGroupUniqueName = (username: string,
+                                 projectName: string,
+                                 groupId: number | string) => {
+  const projectUniqueName = getProjectUniqueName(username, projectName);
   return `${projectUniqueName}.${groupId}`;
 };
 
-export let getExperimentUrl = function (username: string,
-                                        projectName: string,
-                                        experimentId: number | string,
-                                        app: boolean = true) {
-  let projectUrl = getProjectUrl(username, projectName, app);
+export let getExperimentUrl = (username: string,
+                               projectName: string,
+                               experimentId: number | string,
+                               app: boolean = true) => {
+  const projectUrl = getProjectUrl(username, projectName, app);
   return `${projectUrl}/experiments/${experimentId}/`;
 };
 
-export let getExperimentUniqueName = function (username: string,
-                                               projectName: string,
-                                               experimentId: number | string) {
-  let projectUniqueName = getProjectUniqueName(username, projectName);
+export let getExperimentUniqueName = (username: string,
+                                      projectName: string,
+                                      experimentId: number | string) => {
+  const projectUniqueName = getProjectUniqueName(username, projectName);
   return `${projectUniqueName}.${experimentId}`;
 };
 
-export let getJobUrl = function (username: string,
-                                 projectName: string,
-                                 jobId: number | string,
-                                 app: boolean = true) {
-  let projectUrl = getProjectUrl(username, projectName, app);
+export let getJobUrl = (username: string,
+                        projectName: string,
+                        jobId: number | string,
+                        app: boolean = true) => {
+  const projectUrl = getProjectUrl(username, projectName, app);
 
   return `${projectUrl}/jobs/${jobId}/`;
 };
 
-export let getBuildUrl = function (username: string,
-                                   projectName: string,
-                                   buildId: number | string,
-                                   app: boolean = true) {
-  let projectUrl = getProjectUrl(username, projectName, app);
+export let getBuildUrl = (username: string,
+                          projectName: string,
+                          buildId: number | string,
+                          app: boolean = true) => {
+  const projectUrl = getProjectUrl(username, projectName, app);
 
   return `${projectUrl}/builds/${buildId}/`;
 };
 
-export let getExperimentJobUrl = function (username: string,
-                                           projectName: string,
-                                           experimentId: number,
-                                           jobId: number,
-                                           app: boolean = true) {
-  let experimentUrl = getExperimentUrl(username, projectName, experimentId, app);
+export let getExperimentJobUrl = (username: string,
+                                  projectName: string,
+                                  experimentId: number,
+                                  jobId: number,
+                                  app: boolean = true) => {
+  const experimentUrl = getExperimentUrl(username, projectName, experimentId, app);
 
   return `${experimentUrl}/jobs/${jobId}/`;
 };
 
-export let getExperimentJobUniqueName = function (username: string,
-                                                  projectName: string,
-                                                  experimentId: number,
-                                                  jobId: number) {
-  let experimentUrl = getExperimentUniqueName(username, projectName, experimentId);
+export let getExperimentJobUniqueName = (username: string,
+                                         projectName: string,
+                                         experimentId: number,
+                                         jobId: number) => {
+  const experimentUrl = getExperimentUniqueName(username, projectName, experimentId);
   return `${experimentUrl}.${jobId}`;
 };
 
-export let getJobUniqueName = function (username: string,
-                                        projectName: string,
-                                        jobId: number | string) {
-  let projectUrl = getProjectUniqueName(username, projectName);
+export let getJobUniqueName = (username: string,
+                               projectName: string,
+                               jobId: number | string) => {
+  const projectUrl = getProjectUniqueName(username, projectName);
   return `${projectUrl}.jobs.${jobId}`;
 };
 
-export let getBuildUniqueName = function (username: string,
-                                          projectName: string,
-                                          buildId: number | string) {
-  let projectUrl = getProjectUniqueName(username, projectName);
+export let getBuildUniqueName = (username: string,
+                                 projectName: string,
+                                 buildId: number | string) => {
+  const projectUrl = getProjectUniqueName(username, projectName);
   return `${projectUrl}.builds.${buildId}`;
 };
 
@@ -192,7 +186,7 @@ export function handleAuthError(response: any, dispatch: any) {
   Convert an experiment unique name to an index by ignoring the group if it exists on the unique name.
 */
 export function getExperimentIndexName(uniqueName: string, fromJob: boolean = false): string {
-  let values = uniqueName.split('.');
+  const values = uniqueName.split('.');
   if (fromJob) {
     values.pop();
   }
@@ -206,7 +200,7 @@ export function getExperimentIndexName(uniqueName: string, fromJob: boolean = fa
   Convert a job unique name to an index by ignoring the group if it exists on the unique name, and task type.
 */
 export function getExperimentJobIndexName(uniqueName: string): string {
-  let values = uniqueName.split('.');
+  const values = uniqueName.split('.');
   if (values.length === 6) {
     values.splice(2, 1);
   }
@@ -222,7 +216,7 @@ export function humanizeTimeDelta(startDate: string | Date, endtDate: string | D
   let seconds = moment(endtDate).diff(moment(startDate), 'seconds');
   let minutes = moment(endtDate).diff(moment(startDate), 'minutes');
   let hours = moment(endtDate).diff(moment(startDate), 'hours');
-  let days = moment(endtDate).diff(moment(startDate), 'days');
+  const days = moment(endtDate).diff(moment(startDate), 'days');
 
   hours = hours % 24;
   minutes = minutes % 60;
@@ -259,13 +253,13 @@ export function humanizeTimeDelta(startDate: string | Date, endtDate: string | D
   return `${seconds}s`;
 }
 
-export const delay = (ms?: number) => new Promise(resolve =>
+export const delay = (ms?: number) => new Promise((resolve) =>
   setTimeout(resolve, ms || 0)
 );
 
 export function b64DecodeUnicode(str: string) {
   // Going backwards: from bytestream, to percent-encoding, to original string.
-  return decodeURIComponent(atob(str).split('').map(function (c) {
+  return decodeURIComponent(atob(str).split('').map( (c) => {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
 }

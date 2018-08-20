@@ -1,17 +1,17 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import { ProjectModel } from '../models/project';
 import { getNotebookUrl, getProjectTensorboardUrl } from '../constants/utils';
-import Tags from './tags';
+import { ProjectModel } from '../models/project';
 import Description from './description';
-import MetaInfo from './metaInfo/metaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import { EmptyList } from './empty/emptyList';
+import BuildCountMetaInfo from './metaInfo/counts/buildCountMetaInfo';
 import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
 import GroupCountMetaInfo from './metaInfo/counts/groupCountMetaInfo';
 import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
-import BuildCountMetaInfo from './metaInfo/counts/buildCountMetaInfo';
-import { EmptyList } from './empty/emptyList';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import MetaInfo from './metaInfo/metaInfo';
+import Tags from './tags';
 
 export interface Props {
   project: ProjectModel;
@@ -21,7 +21,7 @@ function ProjectOverview({project}: Props) {
   if (_.isNil(project)) {
     return EmptyList(false, 'project', 'project');
   }
-  let visibility = project.is_public ? 'Public' : 'Private';
+  const visibility = project.is_public ? 'Public' : 'Private';
   return (
     <div className="entity-details">
       <div className="row">

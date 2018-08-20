@@ -1,17 +1,17 @@
 // import { FormReducer } from 'redux-form';
 
-import { ProjectStateSchema, ProjectsEmptyState } from '../models/project';
-import { ExperimentStateSchema, ExperimentsEmptyState } from '../models/experiment';
-import { ExperimentJobStateSchema, ExperimentJobsEmptyState } from '../models/experimentJob';
-import { JobStateSchema, JobsEmptyState } from '../models/job';
-import { GroupStateSchema, GroupsEmptyState } from '../models/group';
-import { TokenStateSchema, TokenEmptyState } from '../models/token';
-import { ModalStateSchema } from '../models/modal';
-import { UserEmptyState, UserStateSchema } from '../models/user';
-import { BuildsEmptyState, BuildStateSchema } from '../models/build';
-import { StatusEmptyState, StatusStateSchema } from '../models/status';
-import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activitylog';
+import { BuildsEmptyState, BuildStateSchema } from '../models/build';
+import { ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
+import { ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/experimentJob';
+import { GroupsEmptyState, GroupStateSchema } from '../models/group';
+import { JobsEmptyState, JobStateSchema } from '../models/job';
+import { MetricEmptyState, MetricStateSchema } from '../models/metric';
+import { ModalStateSchema } from '../models/modal';
+import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
+import { StatusEmptyState, StatusStateSchema } from '../models/status';
+import { TokenEmptyState, TokenStateSchema } from '../models/token';
+import { UserEmptyState, UserStateSchema } from '../models/user';
 
 export interface AppState {
   projects: ProjectStateSchema;

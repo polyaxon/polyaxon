@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import './bookmarkStar.less';
 

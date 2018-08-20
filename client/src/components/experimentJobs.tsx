@@ -1,11 +1,11 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
 import * as actions from '../actions/experimentJob';
-import ExperimentJob from './experimentJob';
-import { ExperimentJobModel } from '../models/experimentJob';
 import PaginatedList from '../components/paginatedList';
+import { ExperimentJobModel } from '../models/experimentJob';
 import { EmptyList } from './empty/emptyList';
+import ExperimentJob from './experimentJob';
 import JobHeader from './jobHeader';
 
 export interface Props {

@@ -10,7 +10,7 @@ export class BuildModel {
   public description: string;
   public deleted?: boolean;
   public project: string;
-  public tags: Array<string> = [];
+  public tags: string[] = [];
   public last_status: string;
   public created_at: string;
   public updated_at: string;
@@ -26,9 +26,9 @@ export class BuildModel {
 }
 
 export class BuildStateSchema {
-  byUniqueNames: {[uniqueName: string]: BuildModel};
-  uniqueNames: string[];
-  lastFetched: LastFetchedNames;
+  public byUniqueNames: {[uniqueName: string]: BuildModel};
+  public uniqueNames: string[];
+  public lastFetched: LastFetchedNames;
 }
 
 export const BuildsEmptyState = {

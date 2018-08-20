@@ -6,7 +6,7 @@ export interface Props {
 }
 
 function Status({status}: Props) {
-  let getCssClassForStatus = (): string => {
+  const getCssClassForStatus = (): string => {
     if (status === 'succeeded') {
       return 'success';
     } else if (status === 'stopped') {

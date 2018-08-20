@@ -9,7 +9,7 @@ export class GroupModel {
   public user: string;
   public concurrency: number;
   public content: string;
-  public tags: Array<string> = [];
+  public tags: string[] = [];
   public num_scheduled_experiments: number;
   public num_pending_experiments: number;
   public num_running_experiments: number;
@@ -26,14 +26,14 @@ export class GroupModel {
   public search_algorithm: string;
   public project: string;
   public has_tensorboard: boolean;
-  public experiments: Array<string> = [];
+  public experiments: string[] = [];
   public bookmarked: boolean;
 }
 
 export class GroupStateSchema {
-  byUniqueNames: {[uniqueName: string]: GroupModel};
-  uniqueNames: string[];
-  lastFetched: LastFetchedNames;
+  public byUniqueNames: {[uniqueName: string]: GroupModel};
+  public uniqueNames: string[];
+  public lastFetched: LastFetchedNames;
 }
 
 export const GroupsEmptyState = {

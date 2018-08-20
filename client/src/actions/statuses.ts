@@ -1,6 +1,6 @@
 import { Action } from 'redux';
-import { urlifyProjectName } from '../constants/utils';
 import { BASE_API_URL } from '../constants/api';
+import { urlifyProjectName } from '../constants/utils';
 import { StatusModel } from '../models/status';
 
 export enum actionTypes {
@@ -58,7 +58,7 @@ export function fetchStatuses(projectUniqueName: string, resources: string, id: 
   return (dispatch: any, getState: any) => {
     dispatch(requestStatusesActionCreator());
 
-    let statusesUrl =
+    const statusesUrl =
       `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/statuses`;
 
     function handleError(response: Response, dispatch: any): any {
@@ -80,8 +80,8 @@ export function fetchStatuses(projectUniqueName: string, resources: string, id: 
         'Authorization': 'token ' + getState().auth.token
       }
     })
-      .then(response => handleError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveStatusesActionCreator(json.results, json.count)));
+      .then((response) => handleError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveStatusesActionCreator(json.results, json.count)));
   };
 }

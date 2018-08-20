@@ -1,16 +1,16 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
 import { JobModel } from '../models/job';
-import Status from './status';
 import Description from './description';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import { EmptyList } from './empty/emptyList';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import NodeMetaInfo from './metaInfo/nodeMetaInfo';
 import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import UserMetaInfo from './metaInfo/userMetaInfo';
+import Status from './status';
 import Tags from './tags';
-import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   job: JobModel;

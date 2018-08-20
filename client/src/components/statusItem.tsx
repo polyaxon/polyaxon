@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import { StatusModel } from '../models/status';
-import Status from './status';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import Description from './description';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import Status from './status';
 
 export interface Props {
   status: StatusModel;

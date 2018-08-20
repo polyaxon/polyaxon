@@ -1,12 +1,12 @@
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as _ from 'lodash';
 
+import * as actions from '../actions/group';
+import Groups from '../components/groups';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
-import Groups from '../components/groups';
 import { GroupModel } from '../models/group';
-import * as actions from '../actions/group';
 
 interface OwnProps {
   user: string;
@@ -29,17 +29,17 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   //   return {groups: groups, count: project.num_experiment_groups};
   // };
 
-  let useLastFetched = () => {
-    let groupNames = state.groups.lastFetched.names;
-    let count = state.groups.lastFetched.count;
-    let groups: GroupModel[] = [];
+  const useLastFetched = () => {
+    const groupNames = state.groups.lastFetched.names;
+    const count = state.groups.lastFetched.count;
+    const groups: GroupModel[] = [];
     groupNames.forEach(
-      function (group: string, idx: number) {
+      (group: string, idx: number) => {
         groups.push(state.groups.byUniqueNames[group]);
       });
-    return {groups: groups, count: count};
+    return {groups, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === ownProps.user,
@@ -63,7 +63,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onDelete: (group: GroupModel) => dispatch(actions.deleteGroupActionCreator(group)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
-      let filters: {[key: string]: number|boolean|string} = {};
+      const filters: {[key: string]: number|boolean|string} = {};
       if (query) {
         filters.query = query;
       }

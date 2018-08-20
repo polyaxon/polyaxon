@@ -4,8 +4,8 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 
 import * as actions from '../actions/activityLog';
-import { ActivityLogModel } from '../models/activitylog';
 import ActivityLogs from '../components/activityLogs';
+import { ActivityLogModel } from '../models/activitylog';
 
 interface OwnProps {
   user?: string;
@@ -15,17 +15,17 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  let useLastFetched = () => {
-    let activityLogIds = state.activityLogs.lastFetched.ids;
-    let count = state.activityLogs.lastFetched.count;
-    let activityLogs: ActivityLogModel[] = [];
+  const useLastFetched = () => {
+    const activityLogIds = state.activityLogs.lastFetched.ids;
+    const count = state.activityLogs.lastFetched.count;
+    const activityLogs: ActivityLogModel[] = [];
     activityLogIds.forEach(
-      function (activityLogId: number, idx: number) {
+      (activityLogId: number, idx: number) => {
         activityLogs.push(state.activityLogs.byIds[activityLogId]);
       });
-    return {activityLogs: activityLogs, count: count};
+    return {activityLogs, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === ownProps.user,
@@ -41,7 +41,7 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.ActivityLogAction>, ownProps: OwnProps): DispatchProps {
   return {
     fetchData: (offset?: number) => {
-      let filters: {[key: string]: number|boolean|string} = {};
+      const filters: {[key: string]: number|boolean|string} = {};
       if (offset) {
         filters.offset = offset;
       }

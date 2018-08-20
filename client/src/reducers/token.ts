@@ -1,8 +1,8 @@
-import { Reducer } from 'redux';
 import * as Cookies from 'js-cookie';
+import { Reducer } from 'redux';
 
-import { TokenAction, actionTypes } from '../actions/token';
-import { TokenStateSchema, TokenEmptyState } from '../models/token';
+import { actionTypes, TokenAction } from '../actions/token';
+import { TokenEmptyState, TokenStateSchema } from '../models/token';
 
 export const tokenReducer: Reducer<TokenStateSchema> =
   (state: TokenStateSchema = TokenEmptyState, action: TokenAction) => {

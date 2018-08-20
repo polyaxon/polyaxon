@@ -9,7 +9,7 @@ export interface Props {
 }
 
 export default class Logout extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.logout().then(() => delay(1).then(() => {
         this.props.history.push(getLoginUrl());
     }));

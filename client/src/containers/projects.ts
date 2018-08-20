@@ -1,13 +1,13 @@
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as _ from 'lodash';
 
+import * as modalActions from '../actions/modal';
+import * as actions from '../actions/project';
+import Projects from '../components/projects';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
-import Projects from '../components/projects';
 import { ProjectModel } from '../models/project';
-import * as actions from '../actions/project';
-import * as modalActions from '../actions/modal';
 
 interface OwnProps {
   user: string;
@@ -31,17 +31,17 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   //   return {projects: projects, count: user.num_projects};
   // };
 
-  let useLastFetched = () => {
-    let projectNames = state.projects.lastFetched.names;
-    let count = state.projects.lastFetched.count;
-    let projects: ProjectModel[] = [];
+  const useLastFetched = () => {
+    const projectNames = state.projects.lastFetched.names;
+    const count = state.projects.lastFetched.count;
+    const projects: ProjectModel[] = [];
     projectNames.forEach(
-      function (project: string, idx: number) {
+      (project: string, idx: number) => {
         projects.push(state.projects.byUniqueNames[project]);
       });
-    return {projects: projects, count: count};
+    return {projects, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === ownProps.user,
@@ -64,7 +64,7 @@ export function mapDispatchToProps(
     onDelete: (project: ProjectModel) => dispatch(actions.deleteProject(project)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
     fetchData: (offset?: number) => {
-      let filters: { [key: string]: number | boolean | string } = {};
+      const filters: { [key: string]: number | boolean | string } = {};
       if (offset) {
         filters.offset = offset;
       }

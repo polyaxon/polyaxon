@@ -1,26 +1,26 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import { ExperimentModel } from '../models/experiment';
-import ExperimentJobs from '../containers/experimentJobs';
-import Logs from '../containers/logs';
-import Statuses from '../containers/statuses';
-import Metrics from '../containers/metrics';
+import { Bookmark } from '../constants/bookmarks';
 import {
-  isTrue,
   getExperimentUrl,
   getGroupUrl,
   getProjectUrl,
   getUserUrl,
+  isTrue,
   splitUniqueName,
 } from '../constants/utils';
-import { Bookmark } from '../constants/bookmarks';
-import Breadcrumb from './breadcrumb';
-import LinkedTab from './linkedTab';
-import ExperimentOverview from './experimentOverview';
 import EntityBuild from '../containers/EntityBuild';
+import ExperimentJobs from '../containers/experimentJobs';
+import Logs from '../containers/logs';
+import Metrics from '../containers/metrics';
+import Statuses from '../containers/statuses';
+import { ExperimentModel } from '../models/experiment';
+import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
+import ExperimentOverview from './experimentOverview';
 import ExperimentInstructions from './instructions/experimentInstructions';
+import LinkedTab from './linkedTab';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -31,7 +31,7 @@ export interface Props {
 }
 
 export default class ExperimentDetail extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData();
   }
 
@@ -45,19 +45,19 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
       active: isTrue(this.props.experiment.bookmarked),
       callback: isTrue(this.props.experiment.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };
-    let values = splitUniqueName(experiment.project);
-    let experimentUrl = getExperimentUrl(values[0], values[1], this.props.experiment.id);
+    const values = splitUniqueName(experiment.project);
+    const experimentUrl = getExperimentUrl(values[0], values[1], this.props.experiment.id);
     let group = null;
     if (!_.isNil(experiment.experiment_group)) {
       group = parseInt(splitUniqueName(experiment.experiment_group)[2], 10);
     }
-    let projectUrl = getProjectUrl(values[0], values[1]);
-    let breadcrumbLinks: {name: string; value?: string|undefined}[];
+    const projectUrl = getProjectUrl(values[0], values[1]);
+    let breadcrumbLinks: Array<{name: string; value?: string|undefined}>;
     breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
       {name: values[1], value: projectUrl}];
     if (group) {
-      let groupUrl = getGroupUrl(values[0], values[1], group);
+      const groupUrl = getGroupUrl(values[0], values[1], group);
       breadcrumbLinks.push(
         {name: `Group ${group}`, value: groupUrl},
         {name: 'Experiments', value: `${groupUrl}#experiments`});

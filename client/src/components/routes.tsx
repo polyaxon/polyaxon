@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Bookmarks from '../containers/bookmarks';
-import ProjectDetail from '../containers/projectDetail';
+import BuildDetail from '../containers/buildDetail';
 import ExperimentDetail from '../containers/experimentDetail';
+import ExperimentJobDetail from '../containers/experimentJobDetail';
 import GroupDetail from '../containers/groupDetail';
 import JobDetail from '../containers/jobDetail';
-import BuildDetail from '../containers/buildDetail';
-import ExperimentJobDetail from '../containers/experimentJobDetail';
-import User from '../containers/user';
+import ProjectDetail from '../containers/projectDetail';
 import Token from '../containers/token';
+import User from '../containers/user';
 import ClusterActivityLogs from './clusterActivityLogs';
 import HistoryLogs from './histroyLogs';
 
 import { getHomeUrl } from '../constants/utils';
 
 function Routes() {
-  let tokenRoute = '/app/token';
-  let clusterActivityLogsRoute = '/app/activitylogs';
-  let historyLogsRoute = '/app/historylogs';
-  let userRoute = '/app/:user/';
-  let bookmarksRoute = '/app/bookmarks/:user/';
-  let projectDetailRoute = '/app/:user/:projectName/';
-  let buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
-  let jobDetailRoute = '/app/:user/:projectName/jobs/:jobId/';
-  let experimentDetailRoute = '/app/:user/:projectName/experiments/:experimentId/';
-  let groupDetailRoute = '/app/:user/:projectName/groups/:groupId/';
-  let experimentJobDetailRoute = '/app/:user/:projectName/experiments/:experimentId/jobs/:jobId/';
+  const tokenRoute = '/app/token';
+  const clusterActivityLogsRoute = '/app/activitylogs';
+  const historyLogsRoute = '/app/historylogs';
+  const userRoute = '/app/:user/';
+  const bookmarksRoute = '/app/bookmarks/:user/';
+  const projectDetailRoute = '/app/:user/:projectName/';
+  const buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
+  const jobDetailRoute = '/app/:user/:projectName/jobs/:jobId/';
+  const experimentDetailRoute = '/app/:user/:projectName/experiments/:experimentId/';
+  const groupDetailRoute = '/app/:user/:projectName/groups/:groupId/';
+  const experimentJobDetailRoute = '/app/:user/:projectName/experiments/:experimentId/jobs/:jobId/';
 
   /**
    * in the future if we want to reactivate login redirection we can do something like this:

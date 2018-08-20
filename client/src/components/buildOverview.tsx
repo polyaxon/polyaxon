@@ -1,19 +1,19 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
 import { BuildModel } from '../models/build';
-import Status from './status';
 import Description from './description';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import NodeMetaInfo from './metaInfo/nodeMetaInfo';
-import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
+import { EmptyList } from './empty/emptyList';
 import CommitMetaInfo from './metaInfo/commitMetaInfo';
 import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
 import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
+import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import NodeMetaInfo from './metaInfo/nodeMetaInfo';
+import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import UserMetaInfo from './metaInfo/userMetaInfo';
+import Status from './status';
 import Tags from './tags';
-import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   build: BuildModel;

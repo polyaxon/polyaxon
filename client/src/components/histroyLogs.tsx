@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import Breadcrumb from './breadcrumb';
 import ActivityLogs from '../containers/activityLogs';
+import Breadcrumb from './breadcrumb';
 
 function HistoryLogs() {
   return (

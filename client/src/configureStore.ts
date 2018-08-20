@@ -1,19 +1,19 @@
-import { createStore, applyMiddleware } from 'redux';
 import * as _ from 'lodash';
+import { applyMiddleware, createStore } from 'redux';
 
-import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 
-import appReducer from './reducers/app';
+import { receiveTokenActionCreator } from './actions/token';
+import { getToken } from './constants/utils';
 // import { AppState } from './constants/types';
 import { loadState, saveState, setLocalUser } from './localStorage';
-import { getToken } from './constants/utils';
-import { receiveTokenActionCreator } from './actions/token';
+import appReducer from './reducers/app';
 
 const configureStore = () => {
   // const persistedState = loadState();
 
-  let middleware = [thunk];
+  const middleware = [thunk];
   let newMiddleware = [];
   if (process.env.NODE_ENV !== 'production') {
     setLocalUser();
@@ -29,7 +29,7 @@ const configureStore = () => {
     applyMiddleware(...newMiddleware)
   );
 
-  let token = getToken();
+  const token = getToken();
   if (token !== null) {
     store.dispatch(receiveTokenActionCreator(token.user, token));
   }

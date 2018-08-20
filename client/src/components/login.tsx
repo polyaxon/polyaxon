@@ -7,15 +7,15 @@ export interface Props {
   history: any;
   fetchUser: () => any;
   login: (username: string, password: string) => any;
-  refreshSession: () =>any;
+  refreshSession: () => any;
 }
 
 export default class Login extends React.Component<Props, Object> {
 
-  handleSubmit = (event: any) => {
+  public handleSubmit = (event: any) => {
     event.preventDefault();
-    let username = (document.getElementById('username') as HTMLInputElement).value;
-    let password = (document.getElementById('password') as HTMLInputElement).value;
+    const username = (document.getElementById('username') as HTMLInputElement).value;
+    const password = (document.getElementById('password') as HTMLInputElement).value;
 
     this.props.login(username, password).then((resp: any) => {
       if (this.props.next) {
@@ -30,7 +30,7 @@ export default class Login extends React.Component<Props, Object> {
     });
   }
 
-  componentWillMount() {
+  public componentWillMount() {
     this.props.fetchUser().then(
       () => {
         if (this.props.isLoggedIn) {

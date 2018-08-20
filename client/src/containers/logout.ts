@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
 import * as actions from '../actions/token';
 import Logout from '../components/logout';
+import { AppState } from '../constants/types';
 
 export function mapStateToProps(state: AppState, params: any) {
   return {};

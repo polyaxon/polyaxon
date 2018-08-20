@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
 import { JobModel } from '../models/job';
 import { EmptyList } from './empty/emptyList';
@@ -11,7 +11,7 @@ export interface Props {
 }
 
 export default class JobDetail extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData();
   }
 

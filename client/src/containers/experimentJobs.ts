@@ -1,37 +1,37 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { getExperimentIndexName } from '../constants/utils';
-import { AppState } from '../constants/types';
 import ExperimentJobs from '../components/experimentJobs';
+import { AppState } from '../constants/types';
+import { getExperimentIndexName } from '../constants/utils';
 import { ExperimentJobModel } from '../models/experimentJob';
 
 import * as actions from '../actions/experimentJob';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let useFilter = () => {
-    let experimentName = getExperimentIndexName(params.experiment.unique_name);
-    let jobs: ExperimentJobModel[] = [];
-    let experiment = state.experiments.byUniqueNames[experimentName];
-    let jobNames = experiment.jobs;
+  const useFilter = () => {
+    const experimentName = getExperimentIndexName(params.experiment.unique_name);
+    const jobs: ExperimentJobModel[] = [];
+    const experiment = state.experiments.byUniqueNames[experimentName];
+    const jobNames = experiment.jobs;
     jobNames.forEach(
-      function (job: string, idx: number) {
+      function(job: string, idx: number) {
         jobs.push(state.experimentJobs.byUniqueNames[job]);
       });
-    return {jobs: jobs, count: experiment.num_jobs};
+    return {jobs, count: experiment.num_jobs};
   };
 
-  let useLastFetched = () => {
-    let jobNames = state.experimentJobs.lastFetched.names;
-    let count = state.experimentJobs.lastFetched.count;
-    let jobs: ExperimentJobModel[] = [];
+  const useLastFetched = () => {
+    const jobNames = state.experimentJobs.lastFetched.names;
+    const count = state.experimentJobs.lastFetched.count;
+    const jobs: ExperimentJobModel[] = [];
     jobNames.forEach(
-      function (job: string, idx: number) {
+      function(job: string, idx: number) {
         jobs.push(state.experimentJobs.byUniqueNames[job]);
       });
-    return {jobs: jobs, count: count};
+    return {jobs, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {jobs: results.jobs, count: results.count};
 }
@@ -49,7 +49,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobActio
     onDelete: (job: ExperimentJobModel) => dispatch(actions.deleteExperimentJobActionCreator(job)),
     onUpdate: (job: ExperimentJobModel) => dispatch(actions.updateExperimentJobActionCreator(job)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
-      let filters: { [key: string]: number | boolean | string } = {};
+      const filters: { [key: string]: number | boolean | string } = {};
       if (query) {
         filters.query = query;
       }

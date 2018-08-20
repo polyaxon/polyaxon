@@ -1,14 +1,14 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import Group from './group';
-import { GroupModel } from '../models/group';
-import { DEFAULT_FILTERS } from './filters/constants';
-import PaginatedList from './paginatedList';
-import { EmptyList } from './empty/emptyList';
-import GroupHeader from './groupHeader';
 import * as actions from '../actions/group';
+import { GroupModel } from '../models/group';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
+import { EmptyList } from './empty/emptyList';
+import { DEFAULT_FILTERS } from './filters/constants';
+import Group from './group';
+import GroupHeader from './groupHeader';
+import PaginatedList from './paginatedList';
 
 export interface Props {
   isCurrentUser: boolean;

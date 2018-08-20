@@ -20,9 +20,9 @@ export class ExperimentJobModel {
 }
 
 export class ExperimentJobStateSchema {
-  byUniqueNames: {[uniqueName: string]: ExperimentJobModel};
-  uniqueNames: string[];
-  lastFetched: LastFetchedNames;
+  public byUniqueNames: {[uniqueName: string]: ExperimentJobModel};
+  public uniqueNames: string[];
+  public lastFetched: LastFetchedNames;
 }
 
 export const ExperimentJobsEmptyState = {

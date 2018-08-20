@@ -1,17 +1,17 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { getJobUrl, splitUniqueName } from '../constants/utils';
+import { getBuildUrl } from '../constants/utils';
 import { JobModel } from '../models/job';
-import Status from './status';
 import Description from './description';
-import Tags from './tags';
+import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
-import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
-import { getJobUrl, splitUniqueName } from '../constants/utils';
-import { getBuildUrl } from '../constants/utils';
+import Status from './status';
+import Tags from './tags';
 
 export interface Props {
   job: JobModel;
@@ -19,7 +19,7 @@ export interface Props {
 }
 
 function Job({job, onDelete}: Props) {
-  let values = splitUniqueName(job.project);
+  const values = splitUniqueName(job.project);
   let buildUrl = '';
   let buildValues: string[] = [];
   if (!_.isNil(job.build_job)) {

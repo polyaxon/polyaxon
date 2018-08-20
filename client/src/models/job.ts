@@ -11,7 +11,7 @@ export class JobModel {
   public description: string;
   public deleted?: boolean;
   public project: string;
-  public tags: Array<string> = [];
+  public tags: string[] = [];
   public build_job: string;
   public created_at: string;
   public updated_at: string;
@@ -23,9 +23,9 @@ export class JobModel {
 }
 
 export class JobStateSchema {
-  byUniqueNames: {[uniqueName: string]: JobModel};
-  uniqueNames: string[];
-  lastFetched: LastFetchedNames;
+  public byUniqueNames: {[uniqueName: string]: JobModel};
+  public uniqueNames: string[];
+  public lastFetched: LastFetchedNames;
 }
 
 export const JobsEmptyState = {

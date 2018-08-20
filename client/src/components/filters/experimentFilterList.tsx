@@ -38,14 +38,14 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
     this.state = {
       query: props.query || '',
       sort: props.sort || '',
-      dataRadio: dataRadio,
-      independent: independent
+      dataRadio,
+      independent
     };
   }
 
-  handleFilter = (event: any) => {
+  public handleFilter = (event: any) => {
     event.preventDefault();
-    let extraFilters: {[key: string]: number|boolean|string} = {};
+    const extraFilters: {[key: string]: number|boolean|string} = {};
     if (this.state.dataRadio === 'metrics') {
       extraFilters.metrics = true;
     } else if (this.state.dataRadio === 'declarations') {
@@ -59,21 +59,21 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
     this.props.handleFilter(this.state.query, this.state.sort, extraFilters);
   }
 
-  onQueryInput = (value: string) => {
+  public onQueryInput = (value: string) => {
     this.setState((prevState, prevProps) => ({
       query: value,
       sort: prevState.sort,
     }));
   }
 
-  onSortInput = (value: string) => {
+  public onSortInput = (value: string) => {
     this.setState((prevState, prevProps) => ({
       query: prevState.query,
       sort: value,
     }));
   }
 
-  onIndependentInput = (value: string) => {
+  public onIndependentInput = (value: string) => {
     this.setState((prevState, prevProps) => ({
       query: prevState.query,
       sort: prevState.sort,
@@ -81,7 +81,7 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
     }));
   }
 
-  onDataRadioChange = (value: string) => {
+  public onDataRadioChange = (value: string) => {
     this.setState((prevState, prevProps) => ({
       query: prevState.query,
       sort: prevState.sort,
@@ -91,7 +91,7 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
 
   public render() {
     const filterId = Math.floor((Math.random() * 100) + 1).toString();
-    let getFilter = () => {
+    const getFilter = () => {
       return (
         <div className="filter-list">
             <div className="col-md-offset-10 col-md-2">

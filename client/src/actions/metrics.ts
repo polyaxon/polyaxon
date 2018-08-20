@@ -1,6 +1,6 @@
 import { Action } from 'redux';
-import { urlifyProjectName } from '../constants/utils';
 import { BASE_API_URL } from '../constants/api';
+import { urlifyProjectName } from '../constants/utils';
 import { MetricModel } from '../models/metric';
 
 export enum actionTypes {
@@ -58,7 +58,7 @@ export function fetchMetrics(projectUniqueName: string, resources: string, id: n
   return (dispatch: any, getState: any) => {
     dispatch(requestMetricsActionCreator());
 
-    let metricsUrl =
+    const metricsUrl =
       `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/metrics`;
 
     function handleError(response: Response, dispatch: any): any {
@@ -80,8 +80,8 @@ export function fetchMetrics(projectUniqueName: string, resources: string, id: n
         'Authorization': 'token ' + getState().auth.token
       }
     })
-      .then(response => handleError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveMetricsActionCreator(json.results, json.count)));
+      .then((response) => handleError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveMetricsActionCreator(json.results, json.count)));
   };
 }

@@ -2,21 +2,21 @@
 import { Action, combineReducers } from 'redux';
 // import {reducer as formReducer } from 'redux-form';
 
-import { projectsReducer, UserProjectsReducer } from './projects';
+import { ExperimentJobExperimentsReducer, ExperimentJobsReducer } from './experimentJobs';
 import { experimentsReducer, GroupExperimentsReducer, ProjectExperimentsReducer } from './experiments';
 import { groupsReducer, ProjectGroupsReducer } from './groups';
 import { jobsReducer, ProjectJobsReducer } from './jobs';
-import { ExperimentJobsReducer, ExperimentJobExperimentsReducer } from './experimentJobs';
+import { projectsReducer, UserProjectsReducer } from './projects';
 
-import { tokenReducer } from './token';
 import { AppState } from '../constants/types';
-import { modalReducer } from './modal';
-import { userReducer } from './user';
-import { logsReducer } from './logs';
-import { buildsReducer, ProjectBuildsReducer } from './builds';
-import { StatusesReducer } from './statuses';
-import { MetricsReducer } from './metrics';
 import { activityLogsReducer } from './activityLogs';
+import { buildsReducer, ProjectBuildsReducer } from './builds';
+import { logsReducer } from './logs';
+import { MetricsReducer } from './metrics';
+import { modalReducer } from './modal';
+import { StatusesReducer } from './statuses';
+import { tokenReducer } from './token';
+import { userReducer } from './user';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,

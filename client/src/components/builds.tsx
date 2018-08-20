@@ -1,14 +1,14 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
 import * as actions from '../actions/build';
-import Build from './build';
 import { BuildModel } from '../models/build';
+import Build from './build';
+import BuildHeader from './buildHeader';
+import { EmptyBookmarks } from './empty/emptyBookmarks';
+import { EmptyList } from './empty/emptyList';
 import { DEFAULT_FILTERS } from './filters/constants';
 import PaginatedList from './paginatedList';
-import { EmptyList } from './empty/emptyList';
-import { EmptyBookmarks } from './empty/emptyBookmarks';
-import BuildHeader from './buildHeader';
 
 export interface Props {
   isCurrentUser: boolean;

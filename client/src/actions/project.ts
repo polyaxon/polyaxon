@@ -1,11 +1,11 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
-import history from '../history';
-import { ProjectModel } from '../models/project';
-import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
-import { handleAuthError, getProjectUniqueName, getProjectUrl } from '../constants/utils';
+import { getProjectUniqueName, getProjectUrl, handleAuthError } from '../constants/utils';
+import history from '../history';
+import { BookmarkModel } from '../models/bookmark';
+import { ProjectModel } from '../models/project';
 
 export enum actionTypes {
   CREATE_PROJECT = 'CREATE_PROJECT',
@@ -101,8 +101,8 @@ export function receiveProjectsActionCreator(projects: ProjectModel[], count: nu
 
 export function receiveBookmarkedProjectsActionCreator(bookmarkedProjects: BookmarkModel[],
                                                        count: number): ReceiveProjectsAction {
-  let projects: ProjectModel[] = [];
-  for (let bookmarkedProject of bookmarkedProjects) {
+  const projects: ProjectModel[] = [];
+  for (const bookmarkedProject of bookmarkedProjects) {
     projects.push(bookmarkedProject.content_object as ProjectModel);
   }
   return {
@@ -126,7 +126,6 @@ export function unbookmarkProjectActionCreator(projectName: string) {
   };
 }
 
-
 export function createProject(user: string, project: ProjectModel): any {
   return (dispatch: any, getState: any) => {
     // FIX ME: We need to add a first dispatch here so we show it to the user before
@@ -141,14 +140,14 @@ export function createProject(user: string, project: ProjectModel): any {
         'X-CSRFToken': getState().auth.csrftoken
       }
     })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveProjectActionCreator(json)));
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveProjectActionCreator(json)));
   };
 }
 
 export function deleteProject(project: ProjectModel): any {
-  let projectUrl = getProjectUrl(project.user, project.name, false);
+  const projectUrl = getProjectUrl(project.user, project.name, false);
   return (dispatch: any, getState: any) => {
     dispatch(deleteProjectActionCreator(project));
     return fetch(`/${BASE_API_URL}${projectUrl}`, {
@@ -158,7 +157,7 @@ export function deleteProject(project: ProjectModel): any {
         'X-CSRFToken': getState().auth.csrftoken
       }
     })
-      .then(response => handleAuthError(response, dispatch))
+      .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(receiveProjectsActionCreator([], 0)));
   };
 }
@@ -169,8 +168,8 @@ function _fetchProjects(projectsUrl: string,
                         dispatch: any,
                         getState: any): any {
   dispatch(requestProjectsActionCreator());
-  let urlPieces = location.hash.split('?');
-  let baseUrl = urlPieces[0];
+  const urlPieces = location.hash.split('?');
+  const baseUrl = urlPieces[0];
   if (Object.keys(filters).length) {
     projectsUrl += url.format({query: filters});
     if (baseUrl) {
@@ -181,21 +180,21 @@ function _fetchProjects(projectsUrl: string,
   }
   return fetch(projectsUrl, {
     headers: {
-      'Authorization': 'token ' + getState().auth.token
+      Authorization: 'token ' + getState().auth.token
     }
   })
-    .then(response => handleAuthError(response, dispatch))
-    .then(response => response.json())
-    .then(json => dispatch(bookmarks ?
+    .then((response) => handleAuthError(response, dispatch))
+    .then((response) => response.json())
+    .then((json) => dispatch(bookmarks ?
       receiveBookmarkedProjectsActionCreator(json.results, json.count) :
       receiveProjectsActionCreator(json.results, json.count)))
-    .catch(error => undefined);
+    .catch((error) => undefined);
 }
 
 export function fetchBookmarkedProjects(user: string,
                                         filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let projectsUrl = `${BASE_API_URL}/bookmarks/${user}/projects`;
+    const projectsUrl = `${BASE_API_URL}/bookmarks/${user}/projects`;
     return _fetchProjects(projectsUrl, true, filters, dispatch, getState);
   };
 }
@@ -203,30 +202,30 @@ export function fetchBookmarkedProjects(user: string,
 export function fetchProjects(user: string,
                               filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let projectsUrl = `${BASE_API_URL}/${user}`;
+    const projectsUrl = `${BASE_API_URL}/${user}`;
 
     return _fetchProjects(projectsUrl, false, filters, dispatch, getState);
   };
 }
 
 export function fetchProject(user: string, projectName: string): any {
-  let projectUrl = getProjectUrl(user, projectName, false);
+  const projectUrl = getProjectUrl(user, projectName, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectActionCreator());
     return fetch(`${BASE_API_URL}${projectUrl}`, {
       headers: {
-        'Authorization': 'token ' + getState().auth.token
+        Authorization: 'token ' + getState().auth.token
       }
     })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveProjectActionCreator(json)));
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveProjectActionCreator(json)));
   };
 }
 
 export function bookmark(user: string, projectName: string): any {
-  let projectUniqueName = getProjectUniqueName(user, projectName);
-  let projectUrl = getProjectUrl(user, projectName, false);
+  const projectUniqueName = getProjectUniqueName(user, projectName);
+  const projectUrl = getProjectUrl(user, projectName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${projectUrl}/bookmark`, {
@@ -236,14 +235,14 @@ export function bookmark(user: string, projectName: string): any {
           'X-CSRFToken': getState().auth.csrftoken
         },
       })
-      .then(response => handleAuthError(response, dispatch))
+      .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(bookmarkProjectActionCreator(projectUniqueName)));
   };
 }
 
 export function unbookmark(user: string, projectName: string): any {
-  let projectUniqueName = getProjectUniqueName(user, projectName);
-  let projectUrl = getProjectUrl(user, projectName, false);
+  const projectUniqueName = getProjectUniqueName(user, projectName);
+  const projectUrl = getProjectUrl(user, projectName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${projectUrl}/unbookmark`, {
@@ -253,7 +252,7 @@ export function unbookmark(user: string, projectName: string): any {
           'X-CSRFToken': getState().auth.csrftoken
         },
       })
-      .then(response => handleAuthError(response, dispatch))
+      .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(unbookmarkProjectActionCreator(projectUniqueName)));
   };
 }

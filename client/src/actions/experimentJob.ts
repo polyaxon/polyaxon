@@ -1,10 +1,10 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
-import history from '../history';
-import { handleAuthError, urlifyProjectName } from '../constants/utils';
-import { ExperimentJobModel } from '../models/experimentJob';
 import { BASE_API_URL } from '../constants/api';
+import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import history from '../history';
+import { ExperimentJobModel } from '../models/experimentJob';
 
 export enum actionTypes {
   CREATE_EXPERIMENT_JOB = 'CREATE_EXPERIMENT_JOB',
@@ -100,8 +100,8 @@ export function fetchExperimentJobs(projectUniqueName: string,
     dispatch(requestExperimentJobsActionCreator());
     let jobsUrl =
       `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/${experimentId}/jobs`;
-    let urlPieces = location.hash.split('?');
-    let baseUrl = urlPieces[0];
+    const urlPieces = location.hash.split('?');
+    const baseUrl = urlPieces[0];
     if (Object.keys(filters).length) {
       jobsUrl += url.format({query: filters});
       if (baseUrl) {
@@ -113,12 +113,12 @@ export function fetchExperimentJobs(projectUniqueName: string,
     return fetch(
       jobsUrl, {
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          Authorization: 'token ' + getState().auth.token
         }
       })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveExperimentJobsActionCreator(json.results, json.count)));
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveExperimentJobsActionCreator(json.results, json.count)));
   };
 }
 
@@ -131,11 +131,11 @@ export function fetchExperimentJob(user: string,
     return fetch(
       `${BASE_API_URL}/${user}/${projectName}/experiments/${experimentId}/jobs/${jobId}`, {
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          Authorization: 'token ' + getState().auth.token
         }
       })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveExperimentJobActionCreator(json)));
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveExperimentJobActionCreator(json)));
   };
 }

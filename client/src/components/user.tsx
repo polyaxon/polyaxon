@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import RootModal from '../containers/modal';
 import Projects from '../containers/projects';
-import { ProjectModel } from '../models/project';
 import Breadcrumb from './breadcrumb';
 
 export interface Props {

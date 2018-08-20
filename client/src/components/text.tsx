@@ -8,7 +8,7 @@ export interface Props {
 }
 
 function Text({text, title}: Props) {
-  let processedText = (text && text.length > 0) ?
+  const processedText = (text && text.length > 0) ?
     text.split('\n').map((line, i) => <p key={i}>{line}</p>) :
     <p>No content!</p>;
   function getText() {

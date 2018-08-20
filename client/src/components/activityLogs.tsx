@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { ActivityLogModel } from '../models/activitylog';
-import PaginatedList from './paginatedList';
-import { EmptyList } from './empty/emptyList';
 import ActivityLog from './activityLog';
 import ActivityLogHeader from './activityLogHeader';
+import { EmptyList } from './empty/emptyList';
+import PaginatedList from './paginatedList';
 
 export interface Props {
   activityLogs: ActivityLogModel[];
@@ -22,7 +22,7 @@ export default class ActivityLogs extends React.Component<Props, State> {
     this.state = {offset: 0};
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData(this.state.offset);
   }
 

@@ -1,11 +1,11 @@
-import { Reducer } from 'redux';
 import { normalize } from 'normalizr';
+import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
+import { actionTypes, JobAction } from '../actions/job';
 import { JobSchema } from '../constants/schemas';
-import { JobAction, actionTypes } from '../actions/job';
-import { JobStateSchema, JobsEmptyState, JobModel } from '../models/job';
+import { JobModel, JobsEmptyState, JobStateSchema } from '../models/job';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
 
@@ -13,13 +13,13 @@ export const jobsReducer: Reducer<JobStateSchema> =
   (state: JobStateSchema = JobsEmptyState, action: JobAction) => {
     let newState = {...state};
 
-    let processJob = function (job: JobModel) {
-      let uniqueName = job.unique_name;
+    const processJob = function(job: JobModel) {
+      const uniqueName = job.unique_name;
       newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
-      let normalizedJobs = normalize(job, JobSchema).entities.jobs;
+      const normalizedJobs = normalize(job, JobSchema).entities.jobs;
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedJobs[job.unique_name]
       };
@@ -42,7 +42,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
               ...state.byUniqueNames[action.job.unique_name], deleted: true}
           },
           uniqueNames: state.uniqueNames.filter(
-            name => name !== action.job.unique_name),
+            (name) => name !== action.job.unique_name),
         };
       case actionTypes.BOOKMARK_JOB:
         return {
@@ -74,7 +74,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
       case actionTypes.RECEIVE_JOBS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
-        for (let job of action.jobs) {
+        for (const job of action.jobs) {
           newState = processJob(job);
         }
         return newState;
@@ -89,9 +89,9 @@ export const ProjectJobsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: JobAction) => {
     let newState = {...state};
 
-    let processJob = function (job: JobModel) {
-      let uniqueName = job.unique_name;
-      let projectName = job.project;
+    const processJob = function(job: JobModel) {
+      const uniqueName = job.unique_name;
+      const projectName = job.project;
       if (_.includes(newState.uniqueNames, projectName) &&
         !_.includes(newState.byUniqueNames[projectName].jobs, uniqueName)) {
         newState.byUniqueNames[projectName].jobs.push(uniqueName);
@@ -103,7 +103,7 @@ export const ProjectJobsReducer: Reducer<ProjectStateSchema> =
       case actionTypes.RECEIVE_JOB:
         return processJob(action.job);
       case actionTypes.RECEIVE_JOBS:
-        for (let job of action.jobs) {
+        for (const job of action.jobs) {
           newState = processJob(job);
         }
         return newState;

@@ -1,12 +1,12 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
-import history from '../history';
-import {
-  handleAuthError,
-  getProjectUrl
-} from '../constants/utils';
 import { BASE_API_URL } from '../constants/api';
+import {
+  getProjectUrl,
+  handleAuthError
+} from '../constants/utils';
+import history from '../history';
 import { ActivityLogModel } from '../models/activitylog';
 
 export enum actionTypes {
@@ -48,8 +48,8 @@ function _fetchActivityLogs(activityLogsUrl: string,
                             dispatch: any,
                             getState: any): any {
   dispatch(requestActivityLogsActionCreator());
-  let urlPieces = location.hash.split('?');
-  let baseUrl = urlPieces[0];
+  const urlPieces = location.hash.split('?');
+  const baseUrl = urlPieces[0];
   if (Object.keys(filters).length) {
     activityLogsUrl += url.format({query: filters});
     if (baseUrl) {
@@ -61,24 +61,24 @@ function _fetchActivityLogs(activityLogsUrl: string,
   return fetch(
     activityLogsUrl, {
       headers: {
-        'Authorization': 'token ' + getState().auth.token
+        Authorization: 'token ' + getState().auth.token
       }
     })
-    .then(response => handleAuthError(response, dispatch))
-    .then(response => response.json())
-    .then(json => dispatch(receiveActivityLogsActionCreator(json.results, json.count)));
+    .then((response) => handleAuthError(response, dispatch))
+    .then((response) => response.json())
+    .then((json) => dispatch(receiveActivityLogsActionCreator(json.results, json.count)));
 }
 
 export function fetchActivityLogs(filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let activityLogsUrl = `${BASE_API_URL}/activitylogs`;
+    const activityLogsUrl = `${BASE_API_URL}/activitylogs`;
     return _fetchActivityLogs(activityLogsUrl, filters, dispatch, getState);
   };
 }
 
 export function fetchHistoryLogs(filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let activityLogsUrl = `${BASE_API_URL}/historylogs`;
+    const activityLogsUrl = `${BASE_API_URL}/historylogs`;
     return _fetchActivityLogs(activityLogsUrl, filters, dispatch, getState);
   };
 }
@@ -87,7 +87,7 @@ export function fetchProjectActivityLogs(user: string,
                                          projectName: string,
                                          filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let activityLogsUrl = `${BASE_API_URL}/activitylogs/${getProjectUrl(user, projectName, false)}`;
+    const activityLogsUrl = `${BASE_API_URL}/activitylogs/${getProjectUrl(user, projectName, false)}`;
     return _fetchActivityLogs(activityLogsUrl, filters, dispatch, getState);
   };
 }

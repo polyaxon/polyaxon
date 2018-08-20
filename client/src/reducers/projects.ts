@@ -1,10 +1,10 @@
-import { Reducer } from 'redux';
-import { normalize } from 'normalizr';
 import * as _ from 'lodash';
+import { normalize } from 'normalizr';
+import { Reducer } from 'redux';
 
+import { actionTypes, ProjectAction } from '../actions/project';
 import { ProjectSchema } from '../constants/schemas';
-import { ProjectAction, actionTypes } from '../actions/project';
-import { ProjectStateSchema, ProjectsEmptyState, ProjectModel } from '../models/project';
+import { ProjectModel, ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { UserEmptyState, UserModel, UserStateSchema } from '../models/user';
 import { LastFetchedNames } from '../models/utils';
 
@@ -12,13 +12,13 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ProjectAction) => {
     let newState = {...state};
 
-    let processProject = function(project: ProjectModel) {
-      let uniqueName = project.unique_name;
+    const processProject = function(project: ProjectModel) {
+      const uniqueName = project.unique_name;
       newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
-      let normalizedProjects = normalize(project, ProjectSchema).entities.projects;
+      const normalizedProjects = normalize(project, ProjectSchema).entities.projects;
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedProjects[uniqueName]
       };
@@ -54,7 +54,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
             }
           },
           uniqueNames: state.uniqueNames.filter(
-            name => name !== action.project.unique_name),
+            (name) => name !== action.project.unique_name),
         };
       case actionTypes.BOOKMARK_PROJECT:
         return {
@@ -85,7 +85,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
       case actionTypes.RECEIVE_PROJECTS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
-        for (let project of action.projects) {
+        for (const project of action.projects) {
           newState = processProject(project);
         }
         return newState;
@@ -100,9 +100,9 @@ export const UserProjectsReducer: Reducer<UserStateSchema> =
   (state: UserStateSchema = UserEmptyState, action: ProjectAction) => {
     let newState = {...state};
 
-    let processProject = function (project: ProjectModel, count?: number) {
-      let username = project.user;
-      let uniqueName = project.unique_name;
+    const processProject = function(project: ProjectModel, count?: number) {
+      const username = project.user;
+      const uniqueName = project.unique_name;
       if (!_.includes(newState.userNames, username)) {
         newState.userNames.push(username);
         newState.byUserNames[username] = new UserModel();
@@ -120,7 +120,7 @@ export const UserProjectsReducer: Reducer<UserStateSchema> =
       case actionTypes.RECEIVE_PROJECT:
         return processProject(action.project);
       case actionTypes.RECEIVE_PROJECTS:
-        for (let experiment of action.projects) {
+        for (const experiment of action.projects) {
           newState = processProject(experiment, action.count);
         }
         return newState;

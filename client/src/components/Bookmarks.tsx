@@ -1,11 +1,11 @@
 import * as React from 'react';
 
+import { getBookmarksUrl, getUserUrl } from '../constants/utils';
+import Builds from '../containers/builds';
 import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
 import Jobs from '../containers/jobs';
-import Builds from '../containers/builds';
 import Projects from '../containers/projects';
-import { getUserUrl, getBookmarksUrl } from '../constants/utils';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 
@@ -15,7 +15,7 @@ export interface Props {
 
 export default class Bookmarks extends React.Component<Props, Object> {
   public render() {
-    let bookmarksUrl = getBookmarksUrl(this.props.user);
+    const bookmarksUrl = getBookmarksUrl(this.props.user);
 
     return (
       <div className="row">

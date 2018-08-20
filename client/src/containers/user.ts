@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
-import User from '../components/user';
-import { ProjectModel } from '../models/project';
-import * as actions from '../actions/project';
 import * as modalActions from '../actions/modal';
-import { modalTypes, modalPropsByTypes } from '../models/modal';
+import * as actions from '../actions/project';
+import User from '../components/user';
+import { AppState } from '../constants/types';
+import { modalPropsByTypes, modalTypes } from '../models/modal';
+import { ProjectModel } from '../models/project';
 
 export function mapStateToProps(state: AppState, params: any) {
   return {user: params.match.params.user};

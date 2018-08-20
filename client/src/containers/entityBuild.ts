@@ -1,11 +1,11 @@
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as _ from 'lodash';
 
-import { AppState } from '../constants/types';
 import * as actions from '../actions/build';
-import { splitUniqueName } from '../constants/utils';
 import EntityBuild from '../components/EntityBuild';
+import { AppState } from '../constants/types';
+import { splitUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   return _.includes(state.builds.uniqueNames, params.buildName) ?
@@ -21,7 +21,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
   return {
     fetchData: () => {
       if (params.buildName) {
-        let buildValues = splitUniqueName(params.buildName);
+        const buildValues = splitUniqueName(params.buildName);
         return dispatch(actions.fetchBuild(
           buildValues[0],
           buildValues[1],

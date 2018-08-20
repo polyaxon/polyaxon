@@ -17,18 +17,18 @@ export class ProjectModel {
   public updated_at: string;
   public has_tensorboard: boolean;
   public has_notebook: boolean;
-  public tags: Array<string> = [];
-  public groups: Array<string> = [];
-  public experiments: Array<string> = [];
-  public jobs: Array<string> = [];
-  public builds: Array<string> = [];
+  public tags: string[] = [];
+  public groups: string[] = [];
+  public experiments: string[] = [];
+  public jobs: string[] = [];
+  public builds: string[] = [];
   public bookmarked: boolean;
 }
 
 export class ProjectStateSchema {
-  byUniqueNames: {[uniqueName: string]: ProjectModel};
-  uniqueNames: string[];
-  lastFetched: LastFetchedNames;
+  public byUniqueNames: {[uniqueName: string]: ProjectModel};
+  public uniqueNames: string[];
+  public lastFetched: LastFetchedNames;
 
 }
 

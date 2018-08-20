@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tab, Nav, NavItem, Col, Row } from 'react-bootstrap';
+import { Col, Nav, NavItem, Row, Tab } from 'react-bootstrap';
 
 import './linkedTab.less';
 
@@ -11,15 +11,15 @@ export interface Props {
 
 export default class LinkedTab extends React.Component<Props, Object> {
   public render() {
-    let tabId = this.props.tabId ? this.props.tabId : Math.floor((Math.random() * 100) + 1).toString();
-    let getActiveTab = () => {
-      let pieces = location.hash.split('?')[0].split('#');
+    const tabId = this.props.tabId ? this.props.tabId : Math.floor((Math.random() * 100) + 1).toString();
+    const getActiveTab = () => {
+      const pieces = location.hash.split('?')[0].split('#');
       if (pieces.length === 1) {
         return 1;
       }
-      let activeTab: string = pieces[1];
+      const activeTab: string = pieces[1];
       let eventKey = 1;
-      for (let tab of this.props.tabs) {
+      for (const tab of this.props.tabs) {
         if (tab.relUrl === activeTab) {
           break;
         }
@@ -48,5 +48,5 @@ export default class LinkedTab extends React.Component<Props, Object> {
         </Row>
       </Tab.Container>
     );
-  };
+  }
 }

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { getBuildUrl, splitUniqueName } from '../constants/utils';
 import { BuildModel } from '../models/build';
-import Status from './status';
 import Description from './description';
-import Tags from './tags';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
-import { getBuildUrl, splitUniqueName } from '../constants/utils';
+import Status from './status';
+import Tags from './tags';
 
 export interface Props {
   build: BuildModel;
@@ -16,7 +16,7 @@ export interface Props {
 }
 
 function Build({build, onDelete}: Props) {
-  let values = splitUniqueName(build.project);
+  const values = splitUniqueName(build.project);
 
   return (
     <div className="row">

@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { LogsAction, actionTypes } from '../actions/logs';
+import { actionTypes, LogsAction } from '../actions/logs';
 
 export const logsReducer: Reducer<string> =
   (state: string = '', action: LogsAction) => {

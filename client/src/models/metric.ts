@@ -7,9 +7,9 @@ export class MetricModel {
 }
 
 export class MetricStateSchema {
-  byIds: {[id: number]: MetricModel};
-  ids: number[];
-  lastFetched: LastFetchedIds;
+  public byIds: {[id: number]: MetricModel};
+  public ids: number[];
+  public lastFetched: LastFetchedIds;
 }
 
 export const MetricEmptyState = {

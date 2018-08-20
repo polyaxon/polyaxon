@@ -8,17 +8,17 @@ import * as actions from '../actions/metrics';
 import Metrics from '../components/metrics';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let useLastFetched = () => {
-    let metricIds = state.metrics.lastFetched.ids;
-    let count = state.metrics.lastFetched.count;
-    let metrics: MetricModel[] = [];
+  const useLastFetched = () => {
+    const metricIds = state.metrics.lastFetched.ids;
+    const count = state.metrics.lastFetched.count;
+    const metrics: MetricModel[] = [];
     metricIds.forEach(
-      function (metricId: number, idx: number) {
+      function(metricId: number, idx: number) {
         metrics.push(state.metrics.byIds[metricId]);
       });
-    return {metrics: metrics, count: count};
+    return {metrics, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     metrics: results.metrics,

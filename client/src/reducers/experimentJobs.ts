@@ -1,26 +1,26 @@
-import { Reducer } from 'redux';
 import { normalize } from 'normalizr';
+import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
+import { actionTypes, ExperimentJobAction } from '../actions/experimentJob';
 import { JobSchema } from '../constants/schemas';
-import { ExperimentJobAction, actionTypes } from '../actions/experimentJob';
-import { ExperimentJobStateSchema, ExperimentJobsEmptyState, ExperimentJobModel } from '../models/experimentJob';
 import { getExperimentIndexName, getExperimentJobIndexName } from '../constants/utils';
 import { ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
+import { ExperimentJobModel, ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/experimentJob';
 import { LastFetchedNames } from '../models/utils';
 
 export const ExperimentJobsReducer: Reducer<ExperimentJobStateSchema> =
   (state: ExperimentJobStateSchema = ExperimentJobsEmptyState, action: ExperimentJobAction) => {
     let newState = {...state};
 
-    let processJob = function (experimentJob: ExperimentJobModel) {
-      let uniqueName = getExperimentJobIndexName(experimentJob.unique_name);
+    const processJob = function(experimentJob: ExperimentJobModel) {
+      const uniqueName = getExperimentJobIndexName(experimentJob.unique_name);
       newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
-      let normalizedJobs = normalize(experimentJob, JobSchema).entities.jobs;
+      const normalizedJobs = normalize(experimentJob, JobSchema).entities.jobs;
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedJobs[experimentJob.unique_name]
       };
@@ -51,7 +51,7 @@ export const ExperimentJobsReducer: Reducer<ExperimentJobStateSchema> =
             }
           },
           uniqueNames: state.uniqueNames.filter(
-            name => name !== getExperimentJobIndexName(action.job.unique_name)),
+            (name) => name !== getExperimentJobIndexName(action.job.unique_name)),
         };
       case actionTypes.UPDATE_EXPERIMENT_JOB:
         return {
@@ -66,7 +66,7 @@ export const ExperimentJobsReducer: Reducer<ExperimentJobStateSchema> =
       case actionTypes.RECEIVE_EXPERIMENT_JOBS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
-        for (let job of action.jobs) {
+        for (const job of action.jobs) {
           newState = processJob(job);
         }
         return newState;
@@ -81,9 +81,9 @@ export const ExperimentJobExperimentsReducer: Reducer<ExperimentStateSchema> =
   (state: ExperimentStateSchema = ExperimentsEmptyState, action: ExperimentJobAction) => {
     let newState = {...state};
 
-    let processJob = function (experimentJob: ExperimentJobModel) {
-      let uniqueName = getExperimentJobIndexName(experimentJob.unique_name);
-      let experimentName = getExperimentIndexName(uniqueName, true);
+    const processJob = function(experimentJob: ExperimentJobModel) {
+      const uniqueName = getExperimentJobIndexName(experimentJob.unique_name);
+      const experimentName = getExperimentIndexName(uniqueName, true);
       if (_.includes(newState.uniqueNames, experimentName) &&
         !_.includes(newState.byUniqueNames[experimentName].jobs, uniqueName)) {
         newState.byUniqueNames[experimentName].jobs.push(uniqueName);
@@ -95,7 +95,7 @@ export const ExperimentJobExperimentsReducer: Reducer<ExperimentStateSchema> =
       case actionTypes.RECEIVE_EXPERIMENT_JOB:
         return processJob(action.job);
       case actionTypes.RECEIVE_EXPERIMENT_JOBS:
-        for (let job of action.jobs) {
+        for (const job of action.jobs) {
           newState = processJob(job);
         }
         return newState;

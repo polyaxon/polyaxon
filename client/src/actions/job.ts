@@ -1,16 +1,16 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
-import history from '../history';
-import {
-  handleAuthError,
-  urlifyProjectName,
-  getJobUniqueName,
-  getJobUrl
-} from '../constants/utils';
-import { JobModel } from '../models/job';
-import { BookmarkModel } from '../models/bookmark';
 import { BASE_API_URL } from '../constants/api';
+import {
+  getJobUniqueName,
+  getJobUrl,
+  handleAuthError,
+  urlifyProjectName
+} from '../constants/utils';
+import history from '../history';
+import { BookmarkModel } from '../models/bookmark';
+import { JobModel } from '../models/job';
 
 export enum actionTypes {
   CREATE_JOB = 'CREATE_JOB',
@@ -106,8 +106,8 @@ export function receiveJobsActionCreator(jobs: JobModel[], count: number): Recei
 
 export function receiveBookmarkedJobsActionCreator(bookmarkedJobs: BookmarkModel[],
                                                    count: number): ReceiveJobsAction {
-  let jobs: JobModel[] = [];
-  for (let bookmarkedJob of bookmarkedJobs) {
+  const jobs: JobModel[] = [];
+  for (const bookmarkedJob of bookmarkedJobs) {
     jobs.push(bookmarkedJob.content_object as JobModel);
   }
   return {
@@ -137,8 +137,8 @@ function _fetchJobs(jobsUrl: string,
                     dispatch: any,
                     getState: any): any {
   dispatch(requestJobsActionCreator());
-  let urlPieces = location.hash.split('?');
-  let baseUrl = urlPieces[0];
+  const urlPieces = location.hash.split('?');
+  const baseUrl = urlPieces[0];
   if (Object.keys(filters).length) {
     jobsUrl += url.format({query: filters});
     if (baseUrl) {
@@ -150,12 +150,12 @@ function _fetchJobs(jobsUrl: string,
   return fetch(
     jobsUrl, {
       headers: {
-        'Authorization': 'token ' + getState().auth.token
+        Authorization: 'token ' + getState().auth.token
       }
     })
-    .then(response => handleAuthError(response, dispatch))
-    .then(response => response.json())
-    .then(json => bookmarks ?
+    .then((response) => handleAuthError(response, dispatch))
+    .then((response) => response.json())
+    .then((json) => bookmarks ?
       dispatch(receiveBookmarkedJobsActionCreator(json.results, json.count)) :
       dispatch(receiveJobsActionCreator(json.results, json.count)));
 }
@@ -163,7 +163,7 @@ function _fetchJobs(jobsUrl: string,
 export function fetchBookmarkedJobs(user: string,
                                     filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let jobsUrl = `${BASE_API_URL}/bookmarks/${user}/jobs/`;
+    const jobsUrl = `${BASE_API_URL}/bookmarks/${user}/jobs/`;
     return _fetchJobs(jobsUrl, true, filters, dispatch, getState);
   };
 }
@@ -171,30 +171,30 @@ export function fetchBookmarkedJobs(user: string,
 export function fetchJobs(projectUniqueName: string,
                           filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let jobsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/jobs`;
+    const jobsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/jobs`;
     return _fetchJobs(jobsUrl, false, filters, dispatch, getState);
   };
 }
 
 export function fetchJob(user: string, projectName: string, jobId: number): any {
-  let jobUrl = getJobUrl(user, projectName, jobId, false);
+  const jobUrl = getJobUrl(user, projectName, jobId, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestJobActionCreator());
     return fetch(
       `${BASE_API_URL}${jobUrl}`, {
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          Authorization: 'token ' + getState().auth.token
         }
       })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveJobActionCreator(json)));
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveJobActionCreator(json)));
   };
 }
 
 export function bookmark(user: string, projectName: string, jobId: number | string): any {
-  let jobName = getJobUniqueName(user, projectName, jobId);
-  let jobUrl = getJobUrl(user, projectName, jobId, false);
+  const jobName = getJobUniqueName(user, projectName, jobId);
+  const jobUrl = getJobUrl(user, projectName, jobId, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${jobUrl}/bookmark`, {
@@ -204,14 +204,14 @@ export function bookmark(user: string, projectName: string, jobId: number | stri
           'X-CSRFToken': getState().auth.csrftoken
         },
       })
-      .then(response => handleAuthError(response, dispatch))
+      .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(bookmarkJobActionCreator(jobName)));
   };
 }
 
 export function unbookmark(user: string, projectName: string, jobId: number | string): any {
-  let jobName = getJobUniqueName(user, projectName, jobId);
-  let jobUrl = getJobUrl(user, projectName, jobId, false);
+  const jobName = getJobUniqueName(user, projectName, jobId);
+  const jobUrl = getJobUrl(user, projectName, jobId, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${jobUrl}/unbookmark`, {
@@ -221,7 +221,7 @@ export function unbookmark(user: string, projectName: string, jobId: number | st
           'X-CSRFToken': getState().auth.csrftoken
         },
       })
-      .then(response => handleAuthError(response, dispatch))
+      .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(unbookmarkJobActionCreator(jobName)));
   };
 }

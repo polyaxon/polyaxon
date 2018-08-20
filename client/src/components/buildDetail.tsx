@@ -1,23 +1,23 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import { BuildModel } from '../models/build';
-import Logs from '../containers/logs';
-import Statuses from '../containers/statuses';
+import { Bookmark } from '../constants/bookmarks';
 import {
-  isTrue,
   getBuildUrl,
   getProjectUrl,
   getUserUrl,
+  isTrue,
   splitUniqueName,
 } from '../constants/utils';
+import Logs from '../containers/logs';
+import Statuses from '../containers/statuses';
+import { BuildModel } from '../models/build';
 import Breadcrumb from './breadcrumb';
-import LinkedTab from './linkedTab';
 import BuildOverview from './buildOverview';
-import Text from './text';
 import { EmptyList } from './empty/emptyList';
 import BuildInstructions from './instructions/buildInstructions';
-import { Bookmark } from '../constants/bookmarks';
+import LinkedTab from './linkedTab';
+import Text from './text';
 
 export interface Props {
   build: BuildModel;
@@ -28,7 +28,7 @@ export interface Props {
 }
 
 export default class BuildDetail extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData();
   }
 
@@ -42,10 +42,10 @@ export default class BuildDetail extends React.Component<Props, Object> {
       active: isTrue(this.props.build.bookmarked),
       callback: isTrue(this.props.build.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };
-    let values = splitUniqueName(build.project);
-    let buildUrl = getBuildUrl(values[0], values[1], this.props.build.id);
-    let projectUrl = getProjectUrl(values[0], values[1]);
-    let breadcrumbLinks = [
+    const values = splitUniqueName(build.project);
+    const buildUrl = getBuildUrl(values[0], values[1], this.props.build.id);
+    const projectUrl = getProjectUrl(values[0], values[1]);
+    const breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
       {name: values[1], value: projectUrl},
       {name: 'Builds', value: `${projectUrl}#builds`},

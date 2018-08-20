@@ -2,7 +2,7 @@ import * as React from 'react';
 import './tags.less';
 
 export interface Props {
-  tags: Array<string>;
+  tags: string[];
 }
 
 function Tags({tags}: Props) {

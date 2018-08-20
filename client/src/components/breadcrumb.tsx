@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { Bookmark } from '../constants/bookmarks';
 import BookmarkStar from './bookmarkStar';
 import './breadcrumb.less';
-import { Bookmark } from '../constants/bookmarks';
 
 export interface Props {
   icon?: string;

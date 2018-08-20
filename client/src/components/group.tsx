@@ -6,14 +6,14 @@ import {
   splitUniqueName
 } from '../constants/utils';
 import { GroupModel } from '../models/group';
-import Status from './status';
 import Description from './description';
-import Tags from './tags';
+import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import SearchAlgorithmMetaInfo from './metaInfo/searchAlgorithmMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
-import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
-import SearchAlgorithmMetaInfo from './metaInfo/searchAlgorithmMetaInfo';
+import Status from './status';
+import Tags from './tags';
 
 export interface Props {
   group: GroupModel;
@@ -21,7 +21,7 @@ export interface Props {
 }
 
 function Group({group, onDelete}: Props) {
-  let values = splitUniqueName(group.project);
+  const values = splitUniqueName(group.project);
   return (
     <div className="row">
       <div className="col-md-1 block">

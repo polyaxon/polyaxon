@@ -1,11 +1,11 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import Project from './project';
-import { ProjectModel } from '../models/project';
 import PaginatedList from '../components/paginatedList';
-import { EmptyList } from './empty/emptyList';
+import { ProjectModel } from '../models/project';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
+import { EmptyList } from './empty/emptyList';
+import Project from './project';
 import ProjectHeader from './projectHeader';
 
 export interface Props {

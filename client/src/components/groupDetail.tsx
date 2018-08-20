@@ -1,22 +1,22 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
-import { GroupModel } from '../models/group';
+import { Bookmark } from '../constants/bookmarks';
 import {
-  isTrue,
   getProjectUrl,
   getUserUrl,
+  isTrue,
   splitUniqueName
 } from '../constants/utils';
-import { Bookmark } from '../constants/bookmarks';
+import { getGroupUrl } from '../constants/utils';
 import Experiments from '../containers/experiments';
 import Statuses from '../containers/statuses';
+import { GroupModel } from '../models/group';
 import Breadcrumb from './breadcrumb';
-import LinkedTab from './linkedTab';
-import GroupOverview from './groupOverview';
-import { getGroupUrl } from '../constants/utils';
 import { EmptyList } from './empty/emptyList';
+import GroupOverview from './groupOverview';
 import GroupInstructions from './instructions/groupInstructions';
+import LinkedTab from './linkedTab';
 
 export interface Props {
   group: GroupModel;
@@ -27,7 +27,7 @@ export interface Props {
 }
 
 export default class GroupDetail extends React.Component<Props, Object> {
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData();
   }
 
@@ -41,9 +41,9 @@ export default class GroupDetail extends React.Component<Props, Object> {
       active: isTrue(this.props.group.bookmarked),
       callback: isTrue(this.props.group.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };
-    let values = splitUniqueName(group.project);
-    let groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
-    let projectUrl = getProjectUrl(values[0], values[1]);
+    const values = splitUniqueName(group.project);
+    const groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
+    const projectUrl = getProjectUrl(values[0], values[1]);
     return (
       <div className="row">
         <div className="col-md-12">

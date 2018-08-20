@@ -11,9 +11,9 @@ export class ActivityLogModel {
 }
 
 export class ActivityLogsStateSchema {
-  byIds: {[id: number]: ActivityLogModel};
-  ids: number[];
-  lastFetched: LastFetchedIds;
+  public byIds: {[id: number]: ActivityLogModel};
+  public ids: number[];
+  public lastFetched: LastFetchedIds;
 }
 
 export const ActivityLogsEmptyState = {

@@ -1,16 +1,16 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { withRouter } from 'react-router-dom';
 import * as _ from 'lodash';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { AppState } from '../constants/types';
 
-import ExperimentJobDetail from '../components/experimentJobDetail';
 import * as actions from '../actions/experimentJob';
+import ExperimentJobDetail from '../components/experimentJobDetail';
 import { getExperimentJobUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let jobUniqueName = getExperimentJobUniqueName(
+  const jobUniqueName = getExperimentJobUniqueName(
     params.match.params.user,
     params.match.params.projectName,
     params.match.params.experimentId,

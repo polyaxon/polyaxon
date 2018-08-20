@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import { ExperimentJobModel } from '../models/experimentJob';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import NodeMetaInfo from './metaInfo/nodeMetaInfo';
 import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import Status from './status';
 
 export interface Props {
@@ -12,8 +12,6 @@ export interface Props {
 }
 
 function ExperimentJob({experimentJob, onDelete}: Props) {
-  let jobDetailUrl = `jobs/${experimentJob.id}/`;
-
   return (
     <div className="row">
       <div className="col-md-1 block">

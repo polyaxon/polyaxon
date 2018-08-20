@@ -5,10 +5,10 @@ import * as deepEqual from 'deep-equal';
 import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
-import './paginatedList.less';
-import FilterList from './filters/filterList';
-import ExperimentFilterList from './filters/experimentFilterList';
 import { DEFAULT_FILTERS, EXPERIMENT_FILTERS } from './filters/constants';
+import ExperimentFilterList from './filters/experimentFilterList';
+import FilterList from './filters/filterList';
+import './paginatedList.less';
 
 export interface Props {
   count: number;
@@ -32,11 +32,11 @@ export default class PaginatedList extends React.Component<Props, State> {
     this.state = this.getFilters();
   }
 
-  getFilters() {
-    let filters = {offset: 0, query: '', sort: '', extraFilters: {}};
-    let pieces = location.href.split('?');
+  public getFilters() {
+    const filters = {offset: 0, query: '', sort: '', extraFilters: {}};
+    const pieces = location.href.split('?');
     if (pieces.length > 1) {
-      let search = queryString.parse(pieces[1]);
+      const search = queryString.parse(pieces[1]);
       if (search.offset) {
         filters.offset = parseInt(search.offset, 10);
         delete search.offset;
@@ -56,7 +56,7 @@ export default class PaginatedList extends React.Component<Props, State> {
     return filters;
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.props.fetchData(
         this.state.offset,
         this.state.query,
@@ -64,7 +64,7 @@ export default class PaginatedList extends React.Component<Props, State> {
         this.state.extraFilters);
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     let changed = false;
     if (this.state.offset !== prevState.offset) {
       changed = true;
@@ -92,28 +92,28 @@ export default class PaginatedList extends React.Component<Props, State> {
     }
   }
 
-  handleNextPage = () => {
+  public handleNextPage = () => {
     this.setState((prevState, prevProps) => ({
       offset: prevState.offset + PAGE_SIZE,
     }));
   }
 
-  handlePreviousPage = () => {
+  public handlePreviousPage = () => {
     this.setState((prevState, prevProps) => ({
       offset: prevState.offset - PAGE_SIZE,
     }));
   }
 
-  handleFilter = (query: string, sort: string, extraFilters?: {[key: string]: number|boolean|string}) => {
+  public handleFilter = (query: string, sort: string, extraFilters?: {[key: string]: number|boolean|string}) => {
     this.setState((prevState, prevProps) => ({
-      query: query,
-      sort: sort,
-      extraFilters: extraFilters,
+      query,
+      sort,
+      extraFilters,
     }));
   }
 
   public render() {
-    let getFilters = () => {
+    const getFilters = () => {
       if (this.props.filters === DEFAULT_FILTERS) {
         return (
           <FilterList
@@ -135,11 +135,11 @@ export default class PaginatedList extends React.Component<Props, State> {
       }
     };
 
-    let enableFilter = () => {
+    const enableFilter = () => {
       return this.props.filters !== false;
     };
 
-    let getContent = () => {
+    const getContent = () => {
       return (
         <div className="paginated-list">
           {(enableFilter()) &&

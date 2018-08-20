@@ -3,12 +3,12 @@ export class UserModel {
   public email: string;
   public isSuperuser: boolean;
   public num_projects: number;
-  public projects: Array<string> = [];
+  public projects: string[] = [];
 }
 
 export class UserStateSchema {
-  byUserNames: {[username: string]: UserModel};
-  userNames: string[];
+  public byUserNames: {[username: string]: UserModel};
+  public userNames: string[];
 }
 
 export const UserEmptyState = {byUserNames: {}, userNames: []};

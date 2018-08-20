@@ -1,10 +1,10 @@
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as _ from 'lodash';
 
+import Builds from '../components/builds';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
-import Builds from '../components/builds';
 import { BuildModel } from '../models/build';
 
 import * as actions from '../actions/build';
@@ -29,17 +29,17 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   //   return {builds: builds, count: project.num_builds};
   // };
 
-  let useLastFetched = () => {
-    let buildNames = state.builds.lastFetched.names;
-    let count = state.builds.lastFetched.count;
-    let builds: BuildModel[] = [];
+  const useLastFetched = () => {
+    const buildNames = state.builds.lastFetched.names;
+    const count = state.builds.lastFetched.count;
+    const builds: BuildModel[] = [];
     buildNames.forEach(
-      function (build: string, idx: number) {
+      (build: string, idx: number) => {
         builds.push(state.builds.byUniqueNames[build]);
       });
-    return {builds: builds, count: count};
+    return {builds, count};
   };
-  let results = useLastFetched();
+  const results = useLastFetched();
 
   return {
     isCurrentUser: state.auth.user === ownProps.user,
@@ -63,7 +63,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
     onDelete: (build: BuildModel) => dispatch(actions.deleteBuildActionCreator(build)),
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
-      let filters: {[key: string]: number|boolean|string} = {};
+      const filters: {[key: string]: number|boolean|string} = {};
       if (query) {
         filters.query = query;
       }

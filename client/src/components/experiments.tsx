@@ -1,19 +1,19 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import * as queryString from 'query-string';
 
-import Experiment from './experiment';
-import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
-import { EXPERIMENT_FILTERS } from './filters/constants';
-import PaginatedList from './paginatedList';
-import { EmptyList } from './empty/emptyList';
-import ExperimentHeader from './experimentHeader';
-import GridList from './gridList';
 import { getExperimentUrl, splitUniqueName } from '../constants/utils';
+import { ExperimentModel } from '../models/experiment';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
+import { EmptyList } from './empty/emptyList';
+import Experiment from './experiment';
+import ExperimentHeader from './experimentHeader';
+import { EXPERIMENT_FILTERS } from './filters/constants';
+import GridList from './gridList';
+import PaginatedList from './paginatedList';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -28,14 +28,14 @@ export interface Props {
 }
 
 export default class Experiments extends React.Component<Props, Object> {
-  shouldComponentUpdate(nextProps: Props, nextState: Object) {
-    let baseUrl = location.hash.split('?')[0];
+  public shouldComponentUpdate(nextProps: Props, nextState: Object) {
+    const baseUrl = location.hash.split('?')[0];
     return baseUrl === '#experiments';
   }
 
   public render() {
     const getExperimentLink = (experimentName: string, experimentId: string | number) => {
-      let values = splitUniqueName(experimentName);
+      const values = splitUniqueName(experimentName);
       return(
         <LinkContainer to={getExperimentUrl(values[0], values[1], experimentId)}>
           <a className="title">
@@ -89,10 +89,10 @@ export default class Experiments extends React.Component<Props, Object> {
       );
     };
 
-    let getListType = () => {
-      let pieces = location.href.split('?');
+    const getListType = () => {
+      const pieces = location.href.split('?');
       if (pieces.length > 1) {
-        let search = queryString.parse(pieces[1]);
+        const search = queryString.parse(pieces[1]);
         if (search.metrics === true || search.metrics === 'true') {
           return 'metrics';
         } else if (search.declarations === true || search.declarations === 'true') {
@@ -103,7 +103,7 @@ export default class Experiments extends React.Component<Props, Object> {
     };
     const listType = getListType();
 
-    let getList = () => {
+    const getList = () => {
       if (listType === 'metrics') {
         return listExperimentMetrics();
       } else if (listType === 'declarations') {

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import { ProjectModel } from '../models/project';
 import { getProjectUrl } from '../constants/utils';
-import Tags from './tags';
+import { ProjectModel } from '../models/project';
 import Description from './description';
-import MetaInfo from './metaInfo/metaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
+import MetaInfo from './metaInfo/metaInfo';
+import Tags from './tags';
 
 export interface Props {
   project: ProjectModel;
@@ -14,7 +14,7 @@ export interface Props {
 }
 
 function Project({project, onDelete}: Props) {
-  let visibility = project.is_public ? 'Public' : 'Private';
+  const visibility = project.is_public ? 'Public' : 'Private';
   return (
     <div className="row">
       <div className="col-md-10 block">

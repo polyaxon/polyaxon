@@ -19,17 +19,17 @@ export class ExperimentModel {
   public started_at: string;
   public finished_at: string;
   public declarations: {[key: string]: any};
-  public tags: Array<string> = [];
+  public tags: string[] = [];
   public last_metric: {[metric: string]: number};
   public resources: {[key: string]: any};
-  public jobs: Array<string> = [];
+  public jobs: string[] = [];
   public bookmarked: boolean;
 }
 
 export class ExperimentStateSchema {
-  byUniqueNames: {[uniqueName: string]: ExperimentModel};
-  uniqueNames: string[];
-  lastFetched: LastFetchedNames;
+  public byUniqueNames: {[uniqueName: string]: ExperimentModel};
+  public uniqueNames: string[];
+  public lastFetched: LastFetchedNames;
 }
 
 export const ExperimentsEmptyState = {
