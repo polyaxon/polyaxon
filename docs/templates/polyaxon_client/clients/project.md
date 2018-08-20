@@ -1,37 +1,37 @@
 ## List projects for user
 
 ```python
-polyaxon_clients.project.list_projects(username, page=1)
+polyaxon_client.project.list_projects(username, page=1)
 ```
 
 ## Get project
 
 ```python
-polyaxon_clients.project.get_projects(username, project_name)
+polyaxon_client.project.get_projects(username, project_name)
 ```
 
 ## Create project
 
 ```python
-polyaxon_clients.project.create_project(project_config)
+polyaxon_client.project.create_project(project_config)
 ```
 
 ## Update project
 
 ```python
-polyaxon_clients.project.update_project(username, project_name, patch_dict)
+polyaxon_client.project.update_project(username, project_name, patch_dict)
 ```
 
 ## Delete project
 
 ```python
-polyaxon_clients.project.delete_project(username, project_name)
+polyaxon_client.project.delete_project(username, project_name)
 ```
 
 ## Upload repo for a project
 
 ```python
-polyaxon_clients.project.upload_repo(
+polyaxon_client.project.upload_repo(
     username,
     project_name,
     files,
@@ -41,13 +41,13 @@ polyaxon_clients.project.upload_repo(
 ## Download repo for a project
 
 ```python
-polyaxon_clients.project.download_repo(username, project_name)
+polyaxon_client.project.download_repo(username, project_name)
 ```
 
 ## List experiment groups
 
 ```python
-polyaxon_clients.project.list_experiment_groups(
+polyaxon_client.project.list_experiment_groups(
     username,
     project_name,
     query=None,
@@ -58,7 +58,7 @@ polyaxon_clients.project.list_experiment_groups(
 ## Create experiment groups
 
 ```python
-polyaxon_clients.project.create_experiment_group(
+polyaxon_client.project.create_experiment_group(
     username,
     project_name,
     experiment_group_config)
@@ -67,7 +67,7 @@ polyaxon_clients.project.create_experiment_group(
 ## List experiments
 
 ```python
-polyaxon_clients.project.list_experiments(
+polyaxon_client.project.list_experiments(
     username,
     project_name,
     independent=None,
@@ -82,7 +82,7 @@ polyaxon_clients.project.list_experiments(
 ## Create experiment
 
 ```python
-polyaxon_clients.project.create_experiment(
+polyaxon_client.project.create_experiment(
     username,
     project_name,
     experiment_config)
@@ -91,7 +91,7 @@ polyaxon_clients.project.create_experiment(
 ## List Jobs
 
 ```python
-polyaxon_clients.project.list_jobs(
+polyaxon_client.project.list_jobs(
     username,
     project_name,
     query=None,
@@ -102,7 +102,7 @@ polyaxon_clients.project.list_jobs(
 ## Create Job
 
 ```python
-polyaxon_clients.project.create_job(
+polyaxon_client.project.create_job(
     username,
     project_name,
     job_config)
@@ -111,7 +111,7 @@ polyaxon_clients.project.create_job(
 ## List Builds
 
 ```python
-polyaxon_clients.project.list_builds(
+polyaxon_client.project.list_builds(
     username,
     project_name,
     query=None,
@@ -122,7 +122,7 @@ polyaxon_clients.project.list_builds(
 ## Create Build
 
 ```python
-polyaxon_clients.project.create_build(
+polyaxon_client.project.create_build(
     username,
     project_name,
     build_config)
@@ -132,7 +132,7 @@ polyaxon_clients.project.create_build(
 ## List tensorboards
 
 ```python
-polyaxon_clients.project.list_tensorboards(
+polyaxon_client.project.list_tensorboards(
     username,
     project_name,
     query=None,
@@ -143,7 +143,7 @@ polyaxon_clients.project.list_tensorboards(
 ## Start project tensorboard
 
 ```python
-polyaxon_clients.project.start_tensorboard(
+polyaxon_client.project.start_tensorboard(
     username,
     project_name,
     job_config)
@@ -152,13 +152,13 @@ polyaxon_clients.project.start_tensorboard(
 ## Stop project tensorboard
 
 ```python
-polyaxon_clients.project.stop_tensorboard(username, project_name)
+polyaxon_client.project.stop_tensorboard(username, project_name)
 ```
 
 ## Start notebook
 
 ```python
-polyaxon_clients.project.start_notebook(
+polyaxon_client.project.start_notebook(
     username,
     project_name,
     job_config)
@@ -167,17 +167,17 @@ polyaxon_clients.project.start_notebook(
 ## Stop notebook
 
 ```python
-polyaxon_clients.project.stop_notebook(username, project_name, commit=True)
+polyaxon_client.project.stop_notebook(username, project_name, commit=True)
 ```
 
 ## Bookmark notebook
 
 ```python
-polyaxon_clients.project.bookmark(username, project_name)
+polyaxon_client.project.bookmark(username, project_name)
 ```
 
 ## Unbookmark notebook
 
 ```python
-polyaxon_clients.project.unbookmark(username, project_name)
+polyaxon_client.project.unbookmark(username, project_name)
 ```

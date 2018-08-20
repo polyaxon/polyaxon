@@ -1,19 +1,19 @@
 ## Get experiment job
 
 ```python
-polyaxon_clients.experiment_job.get_job(username, project_name, experiment_id, job_id)
+polyaxon_client.experiment_job.get_job(username, project_name, experiment_id, job_id)
 ```
 
 ## Get experiment job statuses
 
 ```python
-polyaxon_clients.experiment_job.get_statuses(username, project_name, experiment_id, job_id, page=1)
+polyaxon_client.experiment_job.get_statuses(username, project_name, experiment_id, job_id, page=1)
 ```
 
 ## Get experiment job resources
 
 ```python
-polyaxon_clients.experiment_job.resources(
+polyaxon_client.experiment_job.resources(
     username,
     project_name,
     experiment_id,
@@ -24,7 +24,7 @@ polyaxon_clients.experiment_job.resources(
 ## Get experiment job logs
 
 ```python
-polyaxon_clients.experiment_job.logs(
+polyaxon_client.experiment_job.logs(
     username,
     project_name,
     experiment_id,

@@ -1,37 +1,37 @@
 ## Get build
 
 ```python
-polyaxon_clients.build_job.get_job(username, project_name, job_id)
+polyaxon_client.build_job.get_job(username, project_name, job_id)
 ```
 
 ## Update build
 
 ```python
-polyaxon_clients.build_job.update_job(username, project_name, job_id, patch_dict)
+polyaxon_client.build_job.update_job(username, project_name, job_id, patch_dict)
 ```
 
 ## Delete build
 
 ```python
-polyaxon_clients.build_job.delete_job(username, project_name, job_id)
+polyaxon_client.build_job.delete_job(username, project_name, job_id)
 ```
 
 ## Get build statuses
 
 ```python
-polyaxon_clients.build_job.get_statuses(username, project_name, job_id, page=1)
+polyaxon_client.build_job.get_statuses(username, project_name, job_id, page=1)
 ```
 
 ## Stop build
 
 ```python
-polyaxon_clients.build_job.stop(username, project_name, job_id)
+polyaxon_client.build_job.stop(username, project_name, job_id)
 ```
 
 ## Get build logs
 
 ```python
-polyaxon_clients.build_job.logs(
+polyaxon_client.build_job.logs(
     username,
     project_name,
     job_id,
@@ -42,11 +42,11 @@ polyaxon_clients.build_job.logs(
 ## Bookmark build
 
 ```python
-polyaxon_clients.build_job.bookmark(username, project_name, job_id)
+polyaxon_client.build_job.bookmark(username, project_name, job_id)
 ```
 
 ## Unbookmark build
 
 ```python
-polyaxon_clients.build_job.unbookmark(username, project_name, job_id)
+polyaxon_client.build_job.unbookmark(username, project_name, job_id)
 ```

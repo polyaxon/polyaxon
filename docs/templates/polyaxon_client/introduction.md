@@ -1,5 +1,4 @@
-Polyaxon client is python module that includes several clients that can be used to interact
-with Polyaxon API in a programmatic way.
+Polyaxon client is python module that can be used to interact with Polyaxon API in a programmatic way.
 
 ## Install
 
@@ -15,8 +14,8 @@ $ pip3 install -U polyaxon-client
 
 ## Clients
 
-This module includes several clients that can be used to interact
-with Polyaxon API in a programmatic way.
+This module includes a client that can be used to interact with Polyaxon API in a programmatic way.
+
 
  * [Auth](clients/auth): A client for handling authentication and user information.
  * [Cluster](clients/cluster): A client for getting cluster and cluster nodes information.
@@ -36,20 +35,20 @@ with Polyaxon API in a programmatic way.
 ```python
 from polyaxon_client.clients import PolyaxonClients
 
-polyaxon_clients = PolyaxonClients(
+polyaxon_client = PolyaxonClients(
     host=POLYAXON_IP,
     token=MY_TOKEN, http_port=POLYAXON_HTTP_PORT,
     ws_port=POLYAXON_WS_PORT)
 
-polyaxon_clients.auth
-polyaxon_clients.cluster
-polyaxon_clients.user
-polyaxon_clients.project
-polyaxon_clients.experiment
-polyaxon_clients.experiment_group
-polyaxon_clients.experiment_job
-polyaxon_clients.job
-polyaxon_clients.build_job
-polyaxon_clients.bookmark
-polyaxon_clients.version
+polyaxon_client.auth
+polyaxon_client.cluster
+polyaxon_client.user
+polyaxon_client.project
+polyaxon_client.experiment
+polyaxon_client.experiment_group
+polyaxon_client.experiment_job
+polyaxon_client.job
+polyaxon_client.build_job
+polyaxon_client.bookmark
+polyaxon_client.version
 ```

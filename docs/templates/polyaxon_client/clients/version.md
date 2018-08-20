@@ -7,17 +7,17 @@ get_cli_version()
 ## Get platform version
 
 ```python
-get_platform_version()
+polyaxon_client.version.get_platform_version()
 ```
 
 ## Get lib version
 
 ```python
-get_lib_version()
+polyaxon_client.version.get_lib_version()
 ```
 
 ## Get chart version
 
 ```python
-get_chart_version()
+polyaxon_client.version.get_chart_version()
 ```

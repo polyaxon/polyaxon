@@ -1,32 +1,32 @@
 ## Get bookmarked builds
 
 ```python
-polyaxon_clients.bookmark.builds(username)
+polyaxon_client.bookmark.builds(username)
 ```
 
 ## Get bookmarked jobs
 
 ```python
-polyaxon_clients.bookmark.jobs(username)
+polyaxon_client.bookmark.jobs(username)
 ```
 
 
 ## Get bookmarked experiments
 
 ```python
-polyaxon_clients.bookmark.experiments(username)
+polyaxon_client.bookmark.experiments(username)
 ```
 
 
 ## Get bookmarked experiment groups
 
 ```python
-polyaxon_clients.bookmark.groups(username)
+polyaxon_client.bookmark.groups(username)
 ```
 
 
 ## Get bookmarked projects
 
 ```python
-polyaxon_clients.bookmark.projects(username)
+polyaxon_client.bookmark.projects(username)
 ```

@@ -1,13 +1,13 @@
 ## Get experiment
 
 ```python
-get_experiment(username, project_name, experiment_id)
+polyaxon_client.experiment.get_experiment(username, project_name, experiment_id)
 ```
 
 ## Update experiment
 
 ```python
-polyaxon_clients.experiment.update_experiment(
+polyaxon_client.experiment.update_experiment(
     username,
     project_name,
     experiment_id,
@@ -17,13 +17,13 @@ polyaxon_clients.experiment.update_experiment(
 ## Delete experiment
 
 ```python
-polyaxon_clients.experiment.delete_experiment(username, project_name, experiment_id)
+polyaxon_client.experiment.delete_experiment(username, project_name, experiment_id)
 ```
 
 ## Get experiment statuses
 
 ```python
-polyaxon_clients.experiment.get_statuses(
+polyaxon_client.experiment.get_statuses(
     username,
     project_name,
     experiment_id,
@@ -33,7 +33,7 @@ polyaxon_clients.experiment.get_statuses(
 ## Get experiment metrics
 
 ```python
-polyaxon_clients.experiment.get_metrics(
+polyaxon_client.experiment.get_metrics(
     username,
     project_name,
     experiment_id,
@@ -43,7 +43,7 @@ polyaxon_clients.experiment.get_metrics(
 ## Create experiment metric
 
 ```python
-polyaxon_clients.experiment.create_metric(
+polyaxon_client.experiment.create_metric(
     username,
     project_name,
     experiment_id,
@@ -53,7 +53,7 @@ polyaxon_clients.experiment.create_metric(
 ## List experiment jobs
 
 ```python
-polyaxon_clients.experiment.list_jobs(
+polyaxon_client.experiment.list_jobs(
     username,
     project_name,
     experiment_id,
@@ -63,7 +63,7 @@ polyaxon_clients.experiment.list_jobs(
 ## Restart experiment
 
 ```python
-polyaxon_clients.experiment.restart(
+polyaxon_client.experiment.restart(
     username,
     project_name,
     experiment_id,
@@ -74,7 +74,7 @@ polyaxon_clients.experiment.restart(
 ## Resume experiment
 
 ```python
-polyaxon_clients.experiment.resume(
+polyaxon_client.experiment.resume(
     username,
     project_name,
     experiment_id,
@@ -85,7 +85,7 @@ polyaxon_clients.experiment.resume(
 ## Copy experiment
 
 ```python
-polyaxon_clients.experiment.copy(
+polyaxon_client.experiment.copy(
     username,
     project_name,
     experiment_id,
@@ -96,13 +96,13 @@ polyaxon_clients.experiment.copy(
 ## Stop experiment
 
 ```python
-polyaxon_clients.experiment.stop(username, project_name, experiment_id)
+polyaxon_client.experiment.stop(username, project_name, experiment_id)
 ```
 
 ## Get experiment resources
 
 ```python
-polyaxon_clients.experiment.resources(
+polyaxon_client.experiment.resources(
     username,
     project_name,
     experiment_id,
@@ -112,7 +112,7 @@ polyaxon_clients.experiment.resources(
 ## Get experiment logs
 
 ```python
-polyaxon_clients.experiment.logs(
+polyaxon_client.experiment.logs(
     username,
     project_name,
     experiment_id,
@@ -123,7 +123,7 @@ polyaxon_clients.experiment.logs(
 ## Start experiment tensorboard
 
 ```python
-polyaxon_clients.experiment.start_tensorboard(
+polyaxon_client.experiment.start_tensorboard(
     username,
     project_name,
     experiment_id,
@@ -133,19 +133,19 @@ polyaxon_clients.experiment.start_tensorboard(
 ## Stop experiment tensorboard
 
 ```python
-polyaxon_clients.experiment.stop_tensorboard(username, project_name, experiment_id)
+polyaxon_client.experiment.stop_tensorboard(username, project_name, experiment_id)
 ```
 
 ## Download experiment outputs
 
 ```python
-polyaxon_clients.experiment.download_outputs(username, project_name, experiment_id)
+polyaxon_client.experiment.download_outputs(username, project_name, experiment_id)
 ```
 
 ## Bookmark experiment
 
 ```python
-polyaxon_clients.experiment.bookmark(
+polyaxon_client.experiment.bookmark(
     username,
     project_name,
     experiment_id)
@@ -155,7 +155,7 @@ polyaxon_clients.experiment.bookmark(
 ## Unbookmark experiment
 
 ```python
-polyaxon_clients.experiment.unbookmark(
+polyaxon_client.experiment.unbookmark(
     username,
     project_name,
     experiment_id)
