@@ -18,7 +18,8 @@ export interface Props {
   bookmarks: boolean;
   onCreate: (job: JobModel) => actions.JobAction;
   onUpdate: (job: JobModel) => actions.JobAction;
-  onDelete: (job: JobModel) => actions.JobAction;
+  onDelete: (jobName: string) => actions.JobAction;
+  onStop: (jobName: string) => actions.JobAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.JobAction;
 }
 
@@ -34,7 +35,11 @@ export default class Jobs extends React.Component<Props, Object> {
           ).map(
             (job: JobModel) =>
               <li className="list-item" key={job.unique_name}>
-                <Job job={job} onDelete={() => this.props.onDelete(job)}/>
+                <Job
+                  job={job}
+                  onDelete={() => this.props.onDelete(job.unique_name)}
+                  onStop={() => this.props.onStop(job.unique_name)}
+                />
               </li>)}
         </ul>
       );

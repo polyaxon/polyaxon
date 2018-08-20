@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 
 import { actionTypes, JobAction } from '../actions/job';
 import { JobSchema } from '../constants/schemas';
+import { STOPPED } from '../constants/statuses';
 import { JobModel, JobsEmptyState, JobStateSchema } from '../models/job';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
@@ -13,7 +14,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
   (state: JobStateSchema = JobsEmptyState, action: JobAction) => {
     let newState = {...state};
 
-    const processJob = function(job: JobModel) {
+    const processJob = (job: JobModel) => {
       const uniqueName = job.unique_name;
       newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
@@ -36,13 +37,22 @@ export const jobsReducer: Reducer<JobStateSchema> =
       case actionTypes.DELETE_JOB:
         return {
           ...state,
+          uniqueNames: state.uniqueNames.filter(
+            (name) => name !== action.jobName),
+          lastFetched: {
+            ...state.lastFetched,
+            names: state.lastFetched.names.filter((name) => name !== action.jobName)
+          },
+        };
+      case actionTypes.STOP_JOB:
+        return {
+          ...state,
           byUniqueNames: {
             ...state.byUniqueNames,
-            [action.job.unique_name]: {
-              ...state.byUniqueNames[action.job.unique_name], deleted: true}
+            [action.jobName]: {
+              ...state.byUniqueNames[action.jobName], last_status: STOPPED
+            }
           },
-          uniqueNames: state.uniqueNames.filter(
-            (name) => name !== action.job.unique_name),
         };
       case actionTypes.BOOKMARK_JOB:
         return {
@@ -50,7 +60,8 @@ export const jobsReducer: Reducer<JobStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.jobName]: {
-              ...state.byUniqueNames[action.jobName], bookmarked: true}
+              ...state.byUniqueNames[action.jobName], bookmarked: true
+            }
           },
         };
       case actionTypes.UNBOOKMARK_JOB:
@@ -59,7 +70,8 @@ export const jobsReducer: Reducer<JobStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.jobName]: {
-              ...state.byUniqueNames[action.jobName], bookmarked: false}
+              ...state.byUniqueNames[action.jobName], bookmarked: false
+            }
           },
         };
       case actionTypes.UPDATE_JOB:
@@ -89,7 +101,7 @@ export const ProjectJobsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: JobAction) => {
     let newState = {...state};
 
-    const processJob = function(job: JobModel) {
+    const processJob = (job: JobModel) => {
       const uniqueName = job.unique_name;
       const projectName = job.project;
       if (_.includes(newState.uniqueNames, projectName) &&

@@ -8,6 +8,7 @@ import {
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
+import { getJobUrlFromName } from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { JobModel } from '../models/job';
@@ -15,6 +16,7 @@ import { JobModel } from '../models/job';
 export enum actionTypes {
   CREATE_JOB = 'CREATE_JOB',
   DELETE_JOB = 'DELETE_JOB',
+  STOP_JOB = 'STOP_JOB',
   UPDATE_JOB = 'UPDATE_JOB',
   RECEIVE_JOB = 'RECEIVE_JOB',
   RECEIVE_JOBS = 'RECEIVE_JOBS',
@@ -31,7 +33,12 @@ export interface CreateUpdateReceiveJobAction extends Action {
 
 export interface DeleteJobAction extends Action {
   type: actionTypes.DELETE_JOB;
-  job: JobModel;
+  jobName: string;
+}
+
+export interface StopJobAction extends Action {
+  type: actionTypes.STOP_JOB;
+  jobName: string;
 }
 
 export interface ReceiveJobsAction extends Action {
@@ -52,6 +59,7 @@ export interface BookmarkJobAction extends Action {
 export type JobAction =
   CreateUpdateReceiveJobAction
   | DeleteJobAction
+  | StopJobAction
   | ReceiveJobsAction
   | RequestJobsAction
   | BookmarkJobAction;
@@ -70,10 +78,17 @@ export function updateJobActionCreator(job: JobModel): CreateUpdateReceiveJobAct
   };
 }
 
-export function deleteJobActionCreator(job: JobModel): DeleteJobAction {
+export function deleteJobActionCreator(jobName: string): DeleteJobAction {
   return {
     type: actionTypes.DELETE_JOB,
-    job
+    jobName
+  };
+}
+
+export function stopJobActionCreator(jobName: string): StopJobAction {
+  return {
+    type: actionTypes.STOP_JOB,
+    jobName
   };
 }
 
@@ -189,6 +204,38 @@ export function fetchJob(user: string, projectName: string, jobId: number): any 
       .then((response) => handleAuthError(response, dispatch))
       .then((response) => response.json())
       .then((json) => dispatch(receiveJobActionCreator(json)));
+  };
+}
+
+export function deleteJob(jobName: string): any {
+  const jobUrl = getJobUrlFromName(jobName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${jobUrl}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(deleteJobActionCreator(jobName)));
+  };
+}
+
+export function stopJob(jobName: string): any {
+  const jobUrl = getJobUrlFromName(jobName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${jobUrl}/stop`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(stopJobActionCreator(jobName)));
   };
 }
 

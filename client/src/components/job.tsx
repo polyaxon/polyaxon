@@ -2,9 +2,11 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { isDone } from '../constants/statuses';
 import { getJobUrl, splitUniqueName } from '../constants/utils';
 import { getBuildUrl } from '../constants/utils';
 import { JobModel } from '../models/job';
+import Actions from './actions';
 import Description from './description';
 import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
@@ -16,9 +18,10 @@ import Tags from './tags';
 export interface Props {
   job: JobModel;
   onDelete: () => void;
+  onStop: () => void;
 }
 
-function Job({job, onDelete}: Props) {
+function Job({job, onDelete, onStop}: Props) {
   const values = splitUniqueName(job.project);
   let buildUrl = '';
   let buildValues: string[] = [];
@@ -32,7 +35,7 @@ function Job({job, onDelete}: Props) {
       <div className="col-md-1 block">
         <Status status={job.last_status}/>
       </div>
-      <div className="col-md-7 block">
+      <div className="col-md-6 block">
         <LinkContainer to={getJobUrl(values[0], values[1], job.id)}>
           <a className="title">
             <i className="fa fa-tasks icon" aria-hidden="true"/>
@@ -58,6 +61,13 @@ function Job({job, onDelete}: Props) {
       </div>
       <div className="col-md-2 block">
         <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>
+      </div>
+      <div className="col-md-1 block">
+        <Actions
+          onDelete={onDelete}
+          onStop={onStop}
+          isRunning={!isDone(job.last_status)}
+        />
       </div>
     </div>
   );

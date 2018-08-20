@@ -54,7 +54,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
 export interface DispatchProps {
   onCreate?: (job: JobModel) => actions.JobAction;
-  onDelete?: (job: JobModel) => actions.JobAction;
+  onDelete: (jobName: string) => actions.JobAction;
+  onStop: (jobName: string) => actions.JobAction;
   onUpdate?: (job: JobModel) => actions.JobAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.JobAction;
 }
@@ -62,7 +63,8 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownProps: OwnProps): DispatchProps {
   return {
     onCreate: (job: JobModel) => dispatch(actions.createJobActionCreator(job)),
-    onDelete: (job: JobModel) => dispatch(actions.deleteJobActionCreator(job)),
+    onDelete: (jobName: string) => dispatch(actions.deleteJob(jobName)),
+    onStop: (jobName: string) => dispatch(actions.stopJob(jobName)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: {[key: string]: number|boolean|string} = {};
