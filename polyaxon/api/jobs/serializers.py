@@ -1,7 +1,6 @@
 from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
-from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_job_spec_config
 
