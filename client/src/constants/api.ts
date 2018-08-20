@@ -1,6 +1,6 @@
 let baseUrl;
 if (process.env.NODE_ENV !== 'production') {
-  baseUrl = 'http://35.193.198.132/';
+  baseUrl = 'http://localhost:8000/';
 } else {
   baseUrl = location.origin;
 }

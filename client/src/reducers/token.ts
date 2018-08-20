@@ -14,7 +14,8 @@ export const tokenReducer: Reducer<TokenStateSchema> =
         return {
           ...state,
           user: action.username,
-          token: action.token.token
+          token: action.token.token,
+          csrftoken: action.token.csrftoken
         };
       case actionTypes.DISCARD_TOKEN:
         Cookies.remove('token');

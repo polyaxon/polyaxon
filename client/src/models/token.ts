@@ -1,5 +1,6 @@
 export class TokenModel {
   public token: string;
+  public csrftoken: string;
 }
 
 export class TokenStateSchema {
