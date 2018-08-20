@@ -7,7 +7,6 @@ import * as actions from '../actions/project';
 import ProjectDetail from '../components/projectDetail';
 import { AppState } from '../constants/types';
 import { getProjectUniqueName } from '../constants/utils';
-import { ProjectModel } from '../models/project';
 
 export function mapStateToProps(state: AppState, params: any) {
   const projectUniqueName = getProjectUniqueName(
@@ -19,16 +18,16 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  onDelete?: (project: ProjectModel) => any;
-  fetchData?: () => any;
-  bookmark: () => any;
-  unbookmark: () => any;
+  onDelete: (projectName: string) => actions.ProjectAction;
+  fetchData?: () => actions.ProjectAction;
+  bookmark: () => actions.ProjectAction;
+  unbookmark: () => actions.ProjectAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
-    onDelete: (project: ProjectModel) => dispatch(
-      actions.deleteProject(project)),
+    onDelete: (projectName: string) => dispatch(
+      actions.deleteProject(projectName)),
     fetchData: () => dispatch(
       actions.fetchProject(
         params.match.params.user,

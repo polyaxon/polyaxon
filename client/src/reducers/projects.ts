@@ -12,7 +12,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ProjectAction) => {
     let newState = {...state};
 
-    const processProject = function(project: ProjectModel) {
+    const processProject = (project: ProjectModel) => {
       const uniqueName = project.unique_name;
       newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
@@ -47,14 +47,12 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
       case actionTypes.DELETE_PROJECT:
         return {
           ...state,
-          byUniqueNames: {
-            ...state.byUniqueNames,
-            [action.project.unique_name]: {
-              ...state.byUniqueNames[action.project.unique_name], deleted: true
-            }
-          },
           uniqueNames: state.uniqueNames.filter(
-            (name) => name !== action.project.unique_name),
+            (name) => name !== action.projectName),
+          lastFetched: {
+            ...state.lastFetched,
+            names: state.lastFetched.names.filter((name) => name !== action.projectName)
+          },
         };
       case actionTypes.BOOKMARK_PROJECT:
         return {

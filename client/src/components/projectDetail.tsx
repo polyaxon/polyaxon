@@ -17,8 +17,8 @@ import ProjectOverview from './projectOverview';
 
 export interface Props {
   project: ProjectModel;
-  onDelete: (project: ProjectModel) => undefined;
-  fetchData: () => undefined;
+  onDelete: (projectName: string) => any;
+  fetchData: () => any;
   bookmark: () => any;
   unbookmark: () => any;
 }

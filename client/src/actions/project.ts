@@ -2,7 +2,12 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import { BASE_API_URL } from '../constants/api';
-import { getProjectUniqueName, getProjectUrl, handleAuthError } from '../constants/utils';
+import {
+  getProjectUniqueName,
+  getProjectUrl,
+  getProjectUrlFromName,
+  handleAuthError
+} from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { ProjectModel } from '../models/project';
@@ -26,7 +31,7 @@ export interface CreateUpdateReceiveProjectAction extends Action {
 
 export interface DeleteProjectAction extends Action {
   type: actionTypes.DELETE_PROJECT;
-  project: ProjectModel;
+  projectName: string;
 }
 
 export interface ReceiveProjectsAction extends Action {
@@ -58,10 +63,10 @@ export function createProjectActionCreator(project: ProjectModel): CreateUpdateR
   };
 }
 
-export function deleteProjectActionCreator(project: ProjectModel): DeleteProjectAction {
+export function deleteProjectActionCreator(projectName: string): DeleteProjectAction {
   return {
     type: actionTypes.DELETE_PROJECT,
-    project
+    projectName
   };
 }
 
@@ -146,11 +151,10 @@ export function createProject(user: string, project: ProjectModel): any {
   };
 }
 
-export function deleteProject(project: ProjectModel): any {
-  const projectUrl = getProjectUrl(project.user, project.name, false);
+export function deleteProject(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
   return (dispatch: any, getState: any) => {
-    dispatch(deleteProjectActionCreator(project));
-    return fetch(`/${BASE_API_URL}${projectUrl}`, {
+    return fetch(`${BASE_API_URL}${projectUrl}`, {
       method: 'DELETE',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
@@ -158,7 +162,7 @@ export function deleteProject(project: ProjectModel): any {
       }
     })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(receiveProjectsActionCreator([], 0)));
+      .then(() => dispatch(deleteProjectActionCreator(projectName)));
   };
 }
 

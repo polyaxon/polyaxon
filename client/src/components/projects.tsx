@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import * as actions from '../actions/project';
 import PaginatedList from '../components/paginatedList';
 import { ProjectModel } from '../models/project';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
@@ -14,9 +15,9 @@ export interface Props {
   projects: ProjectModel[];
   count: number;
   bookmarks: boolean;
-  onUpdate: (project: ProjectModel) => any;
-  onDelete: (project: ProjectModel) => any;
-  fetchData: () => any;
+  onUpdate: (project: ProjectModel) => actions.ProjectAction;
+  onDelete: (projectName: string) => actions.ProjectAction;
+  fetchData: () => actions.ProjectAction;
 }
 
 export default class Projects extends React.Component<Props, Object> {
@@ -29,7 +30,10 @@ export default class Projects extends React.Component<Props, Object> {
               (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
             ).map(
               (project: ProjectModel) => <li className="list-item" key={project.unique_name}>
-                <Project project={project} onDelete={() => this.props.onDelete(project)}/></li>)}
+                <Project
+                  project={project}
+                  onDelete={() => this.props.onDelete(project.unique_name)}
+                /></li>)}
           </ul>
         );
       };

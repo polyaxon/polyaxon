@@ -53,7 +53,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 }
 
 export interface DispatchProps {
-  onDelete?: (project: ProjectModel) => actions.ProjectAction;
+  onDelete: (projectName: string) => actions.ProjectAction;
   onUpdate?: (project: ProjectModel) => actions.ProjectAction;
   fetchData?: () => actions.ProjectAction;
 }
@@ -61,7 +61,7 @@ export interface DispatchProps {
 export function mapDispatchToProps(
   dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, ownProps: OwnProps): DispatchProps {
   return {
-    onDelete: (project: ProjectModel) => dispatch(actions.deleteProject(project)),
+    onDelete: (projectName: string) => dispatch(actions.deleteProject(projectName)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
     fetchData: (offset?: number) => {
       const filters: { [key: string]: number | boolean | string } = {};
