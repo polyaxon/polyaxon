@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { CREATED, FAILED, STOPPED, SUCCEEDED } from '../constants/statuses';
 import './status.less';
 
 export interface Props {
@@ -7,13 +8,13 @@ export interface Props {
 
 function Status({status}: Props) {
   const getCssClassForStatus = (): string => {
-    if (status === 'succeeded') {
+    if (status === SUCCEEDED) {
       return 'success';
-    } else if (status === 'stopped') {
+    } else if (status === STOPPED) {
       return 'danger';
-    } else if (status === 'failed') {
+    } else if (status === FAILED) {
       return 'danger';
-    } else if (status === 'created') {
+    } else if (status === CREATED) {
       return 'info';
     }
     return 'running';
