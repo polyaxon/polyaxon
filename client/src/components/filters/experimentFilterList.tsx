@@ -16,6 +16,7 @@ interface State {
   sort: string;
   dataRadio?: string;
   independent?: boolean;
+  showFilters?: boolean;
 }
 
 export default class ExperimentFilterList extends React.Component<Props, State> {
@@ -39,7 +40,8 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
       query: props.query || '',
       sort: props.sort || '',
       dataRadio,
-      independent
+      independent,
+      showFilters: false
     };
   }
 
@@ -89,8 +91,13 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
     }));
   }
 
+  public onHideFilters = () => {
+    this.setState((prevState, prevProps) => ({
+      showFilters: !prevState.showFilters
+    }));
+  }
+
   public render() {
-    const filterId = Math.floor((Math.random() * 100) + 1).toString();
     const getFilter = () => {
       return (
         <div className="filter-list">
@@ -98,14 +105,14 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
               <div className="col-md-offset-2 col-md-10">
               <button
                 className="btn btn-default btn-filters"
-                data-toggle="collapse"
-                data-target={`#filters-${filterId}`}
+                onClick={this.onHideFilters}
               >
                 <i className="fa fa-sliders icon" aria-hidden="true"/>
               </button>
               </div>
           </div>
-          <form className="form-horizontal collapse" id={`filters-${filterId}`}  onSubmit={this.handleFilter}>
+          {this.state.showFilters &&
+          <form className="form-horizontal" onSubmit={this.handleFilter}>
             <div className="col-md-10">
               <div className="form-group">
                 <label htmlFor="query" className="col-md-1 control-label">Query</label>
@@ -116,7 +123,7 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
                     id="query"
                     placeholder="metrics.loss:<=0.1, status:~running|scheduled, created_at:2018-01-01..2018-02-01"
                     value={this.state.query}
-                    onChange={(event) =>  this.onQueryInput(event.target.value)}
+                    onChange={(event) => this.onQueryInput(event.target.value)}
                   />
                 </div>
               </div>
@@ -193,6 +200,7 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
               </div>
             </div>
           </form>
+          }
         </div>
       );
     };

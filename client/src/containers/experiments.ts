@@ -8,6 +8,7 @@ import { isTrue } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
+import { getExperimentIndexName } from '../constants/utils';
 
 interface OwnProps {
   user: string;
@@ -55,7 +56,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     const experiments: ExperimentModel[] = [];
     experimentNames.forEach(
       (experiment: string, idx: number) => {
-        experiments.push(state.experiments.byUniqueNames[experiment]);
+        experiments.push(state.experiments.byUniqueNames[getExperimentIndexName(experiment)]);
       });
     return {experiments, count};
   };
