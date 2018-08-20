@@ -1,5 +1,6 @@
 from rest_framework import fields, serializers
 
+from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_job_spec_config
@@ -49,7 +50,9 @@ class JobSerializer(serializers.ModelSerializer):
         return obj.build_job.unique_name if obj.build_job else None
 
 
-class JobDetailSerializer(JobSerializer):
+class JobDetailSerializer(JobSerializer, BookmarkedSerializerMixin):
+    bookmarked_model = 'job'
+
     original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
     bookmarked = fields.SerializerMethodField()
@@ -72,12 +75,6 @@ class JobDetailSerializer(JobSerializer):
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
-
-    def get_bookmarked(self, obj):
-        return Bookmark.objects.filter(
-            content_type__model='job',
-            object_id=obj.id,
-            enabled=True).exists()
 
 
 class JobCreateSerializer(serializers.ModelSerializer):

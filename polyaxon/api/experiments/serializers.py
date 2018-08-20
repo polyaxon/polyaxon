@@ -1,6 +1,7 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
+from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
 from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
@@ -142,7 +143,9 @@ class ExperimentSerializer(serializers.ModelSerializer):
         return obj.build_job.unique_name if obj.build_job else None
 
 
-class ExperimentDetailSerializer(ExperimentSerializer):
+class ExperimentDetailSerializer(ExperimentSerializer, BookmarkedSerializerMixin):
+    bookmarked_model = 'experiment'
+
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
@@ -174,12 +177,6 @@ class ExperimentDetailSerializer(ExperimentSerializer):
 
     def get_last_metric(self, obj):
         return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
-
-    def get_bookmarked(self, obj):
-        return Bookmark.objects.filter(
-            content_type__model='experiment',
-            object_id=obj.id,
-            enabled=True).exists()
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):

@@ -1,5 +1,6 @@
 from rest_framework import fields, serializers
 
+from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from libs.spec_validation import validate_build_spec_config
@@ -46,12 +47,13 @@ class BuildJobSerializer(serializers.ModelSerializer):
         return obj.project.unique_name
 
 
-class BuildJobDetailSerializer(BuildJobSerializer):
+class BuildJobDetailSerializer(BuildJobSerializer, BookmarkedSerializerMixin):
+    bookmarked_model = 'buildjob'
+
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
     commit = fields.SerializerMethodField()
-    bookmarked = fields.SerializerMethodField()
 
     class Meta(BuildJobSerializer.Meta):
         fields = BuildJobSerializer.Meta.fields + (
@@ -77,12 +79,6 @@ class BuildJobDetailSerializer(BuildJobSerializer):
 
     def get_num_experiments(self, obj):
         return obj.experiments__count
-
-    def get_bookmarked(self, obj):
-        return Bookmark.objects.filter(
-            content_type__model='buildjob',
-            object_id=obj.id,
-            enabled=True).exists()
 
 
 class BuildJobCreateSerializer(serializers.ModelSerializer):
