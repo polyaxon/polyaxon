@@ -57,7 +57,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           ...state,
           byUniqueNames: {
             ...state.byUniqueNames,
-            [action.experimentName]: {
+            [getExperimentIndexName(action.experimentName)]: {
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], last_status: STOPPED}
           },
         };
@@ -66,7 +66,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           ...state,
           byUniqueNames: {
             ...state.byUniqueNames,
-            [action.experimentName]: {
+            [getExperimentIndexName(action.experimentName)]: {
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: true}
           },
         };
@@ -75,7 +75,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           ...state,
           byUniqueNames: {
             ...state.byUniqueNames,
-            [action.experimentName]: {
+            [getExperimentIndexName(action.experimentName)]: {
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: false}
           },
         };
