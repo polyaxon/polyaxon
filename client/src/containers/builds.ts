@@ -52,7 +52,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
 export interface DispatchProps {
   onCreate?: (build: BuildModel) => actions.BuildAction;
-  onDelete?: (build: BuildModel) => actions.BuildAction;
+  onDelete: (buildName: string) => actions.BuildAction;
+  onStop: (buildName: string) => actions.BuildAction;
   onUpdate?: (build: BuildModel) => actions.BuildAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
 }
@@ -60,7 +61,8 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownProps: OwnProps): DispatchProps {
   return {
     onCreate: (build: BuildModel) => dispatch(actions.createBuildActionCreator(build)),
-    onDelete: (build: BuildModel) => dispatch(actions.deleteBuildActionCreator(build)),
+    onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
+    onStop: (buildName: string) => dispatch(actions.stopBuild(buildName)),
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: {[key: string]: number|boolean|string} = {};

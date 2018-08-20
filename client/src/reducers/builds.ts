@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 
 import { actionTypes, BuildAction } from '../actions/build';
 import { BuildSchema } from '../constants/schemas';
+import { STOPPED } from '../constants/statuses';
 import { BuildModel, BuildsEmptyState, BuildStateSchema } from '../models/build';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
@@ -13,7 +14,7 @@ export const buildsReducer: Reducer<BuildStateSchema> =
   (state: BuildStateSchema = BuildsEmptyState, action: BuildAction) => {
     let newState = {...state};
 
-    const processBuild = function(build: BuildModel) {
+    const processBuild = (build: BuildModel) => {
       const uniqueName = build.unique_name;
       newState.lastFetched.names.push(uniqueName);
       if (!_.includes(newState.uniqueNames, uniqueName)) {
@@ -36,13 +37,22 @@ export const buildsReducer: Reducer<BuildStateSchema> =
       case actionTypes.DELETE_BUILD:
         return {
           ...state,
+          uniqueNames: state.uniqueNames.filter(
+            (name) => name !== action.buildName),
+          lastFetched: {
+            ...state.lastFetched,
+            names: state.lastFetched.names.filter((name) => name !== action.buildName)
+          },
+        };
+      case actionTypes.STOP_BUILD:
+        return {
+          ...state,
           byUniqueNames: {
             ...state.byUniqueNames,
-            [action.build.unique_name]: {
-              ...state.byUniqueNames[action.build.unique_name], deleted: true}
+            [action.buildName]: {
+              ...state.byUniqueNames[action.buildName], last_status: STOPPED
+            }
           },
-          uniqueNames: state.uniqueNames.filter(
-            (name) => name !== action.build.unique_name),
         };
       case actionTypes.BOOKMARK_BUILD:
         return {
@@ -50,7 +60,8 @@ export const buildsReducer: Reducer<BuildStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.buildName]: {
-              ...state.byUniqueNames[action.buildName], bookmarked: true}
+              ...state.byUniqueNames[action.buildName], bookmarked: true
+            }
           },
         };
       case actionTypes.UNBOOKMARK_BUILD:
@@ -59,7 +70,8 @@ export const buildsReducer: Reducer<BuildStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.buildName]: {
-              ...state.byUniqueNames[action.buildName], bookmarked: false}
+              ...state.byUniqueNames[action.buildName], bookmarked: false
+            }
           },
         };
       case actionTypes.UPDATE_BUILD:
@@ -88,7 +100,7 @@ export const ProjectBuildsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: BuildAction) => {
     let newState = {...state};
 
-    const processBuild = function(build: BuildModel) {
+    const processBuild = (build: BuildModel) => {
       const uniqueName = build.unique_name;
       const projectName = build.project;
       if (_.includes(newState.uniqueNames, projectName) &&

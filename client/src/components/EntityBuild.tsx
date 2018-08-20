@@ -10,6 +10,8 @@ import { EmptyList } from './empty/emptyList';
 export interface Props {
   build: BuildModel;
   fetchData: () => actions.BuildAction;
+  onDelete: (buildName: string) => actions.BuildAction;
+  onStop: (buildName: string) => actions.BuildAction;
 }
 
 export default class EntityBuild extends React.Component<Props, Object> {
@@ -23,7 +25,11 @@ export default class EntityBuild extends React.Component<Props, Object> {
         return (
           <ul>
             <li className="list-item">
-              <Build build={this.props.build} onDelete={() => undefined}/>
+              <Build
+                build={this.props.build}
+                onDelete={() => this.props.onDelete(this.props.build.unique_name)}
+                onStop={() => this.props.onStop(this.props.build.unique_name)}
+              />
             </li>
           </ul>
         );

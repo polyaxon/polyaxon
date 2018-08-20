@@ -18,7 +18,8 @@ export interface Props {
   bookmarks: boolean;
   onCreate: (build: BuildModel) => actions.BuildAction;
   onUpdate: (build: BuildModel) => actions.BuildAction;
-  onDelete: (build: BuildModel) => actions.BuildAction;
+  onDelete: (buildName: string) => actions.BuildAction;
+  onStop: (buildName: string) => actions.BuildAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
 }
 
@@ -34,7 +35,11 @@ export default class Builds extends React.Component<Props, Object> {
           ).map(
             (build: BuildModel) =>
               <li className="list-item" key={build.unique_name}>
-                <Build build={build} onDelete={() => this.props.onDelete(build)}/>
+                <Build
+                  build={build}
+                  onDelete={() => this.props.onDelete(build.unique_name)}
+                  onStop={() => this.props.onStop(build.unique_name)}
+                />
               </li>)}
         </ul>
       );
