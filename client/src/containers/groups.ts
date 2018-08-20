@@ -52,7 +52,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
 export interface DispatchProps {
   onCreate?: (group: GroupModel) => actions.GroupAction;
-  onDelete?: (group: GroupModel) => actions.GroupAction;
+  onDelete: (groupName: string) => actions.GroupAction;
+  onStop: (groupName: string) => actions.GroupAction;
   onUpdate?: (group: GroupModel) => actions.GroupAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
 }
@@ -60,7 +61,8 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownProps: OwnProps): DispatchProps {
   return {
     onCreate: (group: GroupModel) => dispatch(actions.createGroupActionCreator(group)),
-    onDelete: (group: GroupModel) => dispatch(actions.deleteGroupActionCreator(group)),
+    onDelete: (groupName: string) => dispatch(actions.deleteGroup(groupName)),
+    onStop: (groupName: string) => dispatch(actions.stopGroup(groupName)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: {[key: string]: number|boolean|string} = {};

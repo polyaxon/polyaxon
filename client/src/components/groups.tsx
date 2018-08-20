@@ -18,7 +18,8 @@ export interface Props {
   bookmarks: boolean;
   onCreate: (group: GroupModel) => actions.GroupAction;
   onUpdate: (group: GroupModel) => actions.GroupAction;
-  onDelete: (group: GroupModel) => actions.GroupAction;
+  onDelete: (GroupName: string) => actions.GroupAction;
+  onStop: (GroupName: string) => actions.GroupAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
 }
 
@@ -34,7 +35,11 @@ export default class Groups extends React.Component<Props, Object> {
           ).map(
             (group: GroupModel) =>
               <li className="list-item" key={group.unique_name}>
-                <Group group={group} onDelete={() => this.props.onDelete(group)}/>
+                <Group
+                  group={group}
+                  onDelete={() => this.props.onDelete(group.unique_name)}
+                  onStop={() => this.props.onStop(group.unique_name)}
+                />
               </li>)}
         </ul>
       );

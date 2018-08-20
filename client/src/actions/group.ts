@@ -8,6 +8,7 @@ import {
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
+import { getGroupUrlFromName } from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { GroupModel } from '../models/group';
@@ -15,6 +16,7 @@ import { GroupModel } from '../models/group';
 export enum actionTypes {
   CREATE_GROUP = 'CREATE_GROUP',
   DELETE_GROUP = 'DELETE_GROUP',
+  STOP_GROUP = 'STOP_GROUP',
   UPDATE_GROUP = 'UPDATE_GROUP',
   RECEIVE_GROUP = 'RECEIVE_GROUP',
   RECEIVE_GROUPS = 'RECEIVE_GROUPS',
@@ -31,7 +33,12 @@ export interface CreateUpdateReceiveGroupAction extends Action {
 
 export interface DeleteGroupAction extends Action {
   type: actionTypes.DELETE_GROUP;
-  group: GroupModel;
+  groupName: string;
+}
+
+export interface StopGroupAction extends Action {
+  type: actionTypes.STOP_GROUP;
+  groupName: string;
 }
 
 export interface ReceiveGroupsAction extends Action {
@@ -52,6 +59,7 @@ export interface BookmarkGroupAction extends Action {
 export type GroupAction =
   CreateUpdateReceiveGroupAction
   | DeleteGroupAction
+  | StopGroupAction
   | ReceiveGroupsAction
   | RequestGroupsAction
   | BookmarkGroupAction;
@@ -70,10 +78,17 @@ export function updateGroupActionCreator(group: GroupModel): CreateUpdateReceive
   };
 }
 
-export function deleteGroupActionCreator(group: GroupModel): DeleteGroupAction {
+export function deleteGroupActionCreator(groupName: string): DeleteGroupAction {
   return {
     type: actionTypes.DELETE_GROUP,
-    group
+    groupName
+  };
+}
+
+export function stopGroupActionCreator(groupName: string): StopGroupAction {
+  return {
+    type: actionTypes.STOP_GROUP,
+    groupName
   };
 }
 
@@ -181,6 +196,38 @@ export function fetchGroup(user: string, projectName: string, groupId: number): 
       .then((response) => handleAuthError(response, dispatch))
       .then((response) => response.json())
       .then((json) => dispatch(receiveGroupActionCreator(json)));
+  };
+}
+
+export function deleteGroup(groupName: string): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${groupUrl}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(deleteGroupActionCreator(groupName)));
+  };
+}
+
+export function stopGroup(groupName: string): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${groupUrl}/stop`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(stopGroupActionCreator(groupName)));
   };
 }
 

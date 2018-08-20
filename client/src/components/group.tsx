@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { isDone } from '../constants/statuses';
 import {
   getGroupUrl,
   splitUniqueName
 } from '../constants/utils';
 import { GroupModel } from '../models/group';
+import Actions from './actions';
 import Description from './description';
 import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
@@ -18,16 +20,17 @@ import Tags from './tags';
 export interface Props {
   group: GroupModel;
   onDelete: () => void;
+  onStop: () => void;
 }
 
-function Group({group, onDelete}: Props) {
+function Group({group, onDelete, onStop}: Props) {
   const values = splitUniqueName(group.project);
   return (
     <div className="row">
       <div className="col-md-1 block">
         <Status status={group.last_status}/>
       </div>
-      <div className="col-md-7 block">
+      <div className="col-md-6 block">
         <LinkContainer to={getGroupUrl(values[0], values[1], group.id)}>
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
@@ -51,6 +54,13 @@ function Group({group, onDelete}: Props) {
       </div>
       <div className="col-md-2 block">
         <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>
+      </div>
+      <div className="col-md-1 block">
+        <Actions
+          onDelete={onDelete}
+          onStop={onStop}
+          isRunning={!isDone(group.last_status)}
+        />
       </div>
     </div>
   );
