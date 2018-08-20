@@ -137,7 +137,8 @@ export function createProject(user: string, project: ProjectModel): any {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
-        'Authorization': 'token ' + getState().auth.token
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then(response => handleAuthError(response, dispatch))
@@ -153,7 +154,8 @@ export function deleteProject(project: ProjectModel): any {
     return fetch(`/${BASE_API_URL}${projectUrl}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': 'token ' + getState().auth.token
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then(response => handleAuthError(response, dispatch))
@@ -230,7 +232,8 @@ export function bookmark(user: string, projectName: string): any {
       `${BASE_API_URL}${projectUrl}/bookmark`, {
         method: 'POST',
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then(response => handleAuthError(response, dispatch))
@@ -246,7 +249,8 @@ export function unbookmark(user: string, projectName: string): any {
       `${BASE_API_URL}${projectUrl}/unbookmark`, {
         method: 'DELETE',
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then(response => handleAuthError(response, dispatch))

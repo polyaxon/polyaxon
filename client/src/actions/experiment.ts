@@ -1,12 +1,12 @@
 import { Action } from 'redux';
 import * as url from 'url';
 
-import history from '../history';
+import { BASE_API_URL } from '../constants/api';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { getExperimentUniqueName, getExperimentUrl } from '../constants/utils';
-import { ExperimentModel } from '../models/experiment';
-import { BASE_API_URL } from '../constants/api';
+import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
+import { ExperimentModel } from '../models/experiment';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
@@ -89,8 +89,8 @@ export function receiveExperimentsActionCreator(experiments: ExperimentModel[],
 
 export function receiveBookmarkedExperimentsActionCreator(bookmarkedExperiments: BookmarkModel[],
                                                           count: number): ReceiveExperimentsAction {
-  let experiments: ExperimentModel[] = [];
-  for (let bookmarkedExperiment of bookmarkedExperiments) {
+  const experiments: ExperimentModel[] = [];
+  for (const bookmarkedExperiment of bookmarkedExperiments) {
     experiments.push(bookmarkedExperiment.content_object as ExperimentModel);
   }
   return {
@@ -127,8 +127,8 @@ function _fetchExperiments(experimentsUrl: string,
                            dispatch: any,
                            getState: any): any {
   dispatch(requestExperimentsActionCreator());
-  let urlPieces = location.hash.split('?');
-  let baseUrl = urlPieces[0];
+  const urlPieces = location.hash.split('?');
+  const baseUrl = urlPieces[0];
   if (Object.keys(filters).length) {
     experimentsUrl += url.format({query: filters});
     if (baseUrl) {
@@ -139,12 +139,12 @@ function _fetchExperiments(experimentsUrl: string,
   }
   return fetch(experimentsUrl, {
     headers: {
-      'Authorization': 'token ' + getState().auth.token
+      Authorization: 'token ' + getState().auth.token
     }
   })
-    .then(response => handleAuthError(response, dispatch))
-    .then(response => response.json())
-    .then(json => bookmarks ?
+    .then((response) => handleAuthError(response, dispatch))
+    .then((response) => response.json())
+    .then((json) => bookmarks ?
       dispatch(receiveBookmarkedExperimentsActionCreator(json.results, json.count)) :
       dispatch(receiveExperimentsActionCreator(json.results, json.count)));
 }
@@ -152,7 +152,7 @@ function _fetchExperiments(experimentsUrl: string,
 export function fetchBookmarkedExperiments(user: string,
                                            filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let experimentsUrl = `${BASE_API_URL}/bookmarks/${user}/experiments/`;
+    const experimentsUrl = `${BASE_API_URL}/bookmarks/${user}/experiments/`;
     return _fetchExperiments(experimentsUrl, true, filters, dispatch, getState);
   };
 }
@@ -160,54 +160,56 @@ export function fetchBookmarkedExperiments(user: string,
 export function fetchExperiments(projectUniqueName: string,
                                  filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
+    const experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
     return _fetchExperiments(experimentsUrl, false, filters, dispatch, getState);
   };
 }
 
 export function fetchExperiment(user: string, projectName: string, experimentId: number): any {
-  let experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
+  const experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
     return fetch(`${BASE_API_URL}${experimentUrl}`, {
       headers: {
-        'Authorization': 'token ' + getState().auth.token
+        Authorization: 'token ' + getState().auth.token
       }
     })
-      .then(response => handleAuthError(response, dispatch))
-      .then(response => response.json())
-      .then(json => dispatch(receiveExperimentActionCreator(json)));
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveExperimentActionCreator(json)));
   };
 }
 
 export function bookmark(user: string, projectName: string, experimentId: number | string): any {
-  let experimentName = getExperimentUniqueName(user, projectName, experimentId);
-  let experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
+  const experimentName = getExperimentUniqueName(user, projectName, experimentId);
+  const experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${experimentUrl}/bookmark`, {
         method: 'POST',
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
-      .then(response => handleAuthError(response, dispatch))
+      .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(bookmarkExperimentActionCreator(experimentName)));
   };
 }
 
 export function unbookmark(user: string, projectName: string, experimentId: number | string): any {
-  let experimentName = getExperimentUniqueName(user, projectName, experimentId);
-  let experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
+  const experimentName = getExperimentUniqueName(user, projectName, experimentId);
+  const experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${experimentUrl}/unbookmark`, {
         method: 'DELETE',
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
-      .then(response => handleAuthError(response, dispatch))
+      .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(unbookmarkExperimentActionCreator(experimentName)));
   };
 }

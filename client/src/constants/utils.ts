@@ -34,18 +34,17 @@ export let pluralize = function (name: string, numObjects: number): string {
 export let getToken = function (): TokenStateSchema | null {
   let user = Cookies.get('user');
   let token = Cookies.get('token');
-  if (user !== undefined && token !== undefined) {
-    return {token: token, user: user};
+  let csrftoken = Cookies.get('csrftoken');
+  if (user !== undefined && token !== undefined && csrftoken !== undefined) {
+    return {token: token, user: user, csrftoken: csrftoken};
   }
   return null;
 };
 
-export let isUserAuthenticated = function () {
-  return getToken() !== null;
-};
+export let isUserAuthenticated = () => getToken() !== null;
 
-export let getHomeUrl = function () {
-  let user = Cookies.get('user');
+export let getHomeUrl = () => {
+  const user = Cookies.get('user');
   return `/app/${user}/`;
 };
 

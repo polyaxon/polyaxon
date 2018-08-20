@@ -192,7 +192,8 @@ export function bookmark(user: string, projectName: string, groupId: number | st
       `${BASE_API_URL}${groupUrl}/bookmark`, {
         method: 'POST',
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then(response => handleAuthError(response, dispatch))
@@ -208,7 +209,8 @@ export function unbookmark(user: string, projectName: string, groupId: number | 
       `${BASE_API_URL}${groupUrl}/unbookmark`, {
         method: 'DELETE',
         headers: {
-          'Authorization': 'token ' + getState().auth.token
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then(response => handleAuthError(response, dispatch))

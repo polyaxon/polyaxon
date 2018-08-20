@@ -24,7 +24,8 @@ export const tokenReducer: Reducer<TokenStateSchema> =
         return {
           ...state,
           user: '',
-          token: ''
+          token: '',
+          csrftoken: ''
         };
       default:
         return state;

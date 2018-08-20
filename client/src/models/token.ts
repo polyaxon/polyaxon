@@ -3,8 +3,9 @@ export class TokenModel {
 }
 
 export class TokenStateSchema {
-  user: string;
-  token: string;
+  public user: string;
+  public token: string;
+  public csrftoken: string;
 }
 
-export const TokenEmptyState = {token: '', user: ''};
+export const TokenEmptyState = {token: '', user: '', csrftoken: ''};
