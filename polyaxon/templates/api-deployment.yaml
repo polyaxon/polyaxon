@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "polyaxon.fullname" . }}-api
   annotations:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
     checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
   labels:
@@ -16,6 +17,10 @@ spec:
   replicas: {{ .Values.api.replicas }}
   template:
     metadata:
+      annotations:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
+        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       labels:
         app: {{ template "polyaxon.fullname" . }}-api
         release: "{{ .Release.Name }}"
