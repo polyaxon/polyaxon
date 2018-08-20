@@ -265,3 +265,22 @@ a.brand {
 .open .header-user-dropdown-toggle {
   background-color: #fdfdfd21 !important;
 }
+
+.nav.navbar-nav.navbar-menu ul
+{
+	display: none;
+}
+.nav.navbar-nav.navbar-menu ul li
+{
+	float: none;
+}
+.nav.navbar-nav.navbar-menu a:link, .nav.navbar-nav.navbar-menu a:visited
+{
+	display: block;
+}
+.nav.navbar-nav.navbar-menu li:hover ul
+{
+  left: auto;
+  right: 0;
+	display: block;
+}
