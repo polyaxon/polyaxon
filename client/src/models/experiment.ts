@@ -6,7 +6,7 @@ export class ExperimentModel {
   public id: number;
   public description: string;
   public user: string;
-  public config: string;
+  public config: {[key: string]: any};
   public num_jobs: number;
   public last_status: string;
   public deleted?: boolean;

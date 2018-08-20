@@ -18,6 +18,7 @@ import { EmptyList } from './empty/emptyList';
 import BuildInstructions from './instructions/buildInstructions';
 import LinkedTab from './linkedTab';
 import Text from './text';
+import YamlText from './yamlText';
 
 export interface Props {
   build: BuildModel;
@@ -89,6 +90,10 @@ export default class BuildDetail extends React.Component<Props, Object> {
                     id={build.id}
                   />,
                   relUrl: 'statuses'
+                }, {
+                  title: 'Config',
+                  component: <YamlText title="Config" config={build.config}/>,
+                  relUrl: 'config'
                 }, {
                   title: 'Instructions',
                   component: <BuildInstructions id={build.id}/>,

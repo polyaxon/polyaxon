@@ -18,6 +18,7 @@ import { EmptyList } from './empty/emptyList';
 import JobInstructions from './instructions/jobInstructions';
 import JobOverview from './jobOverview';
 import LinkedTab from './linkedTab';
+import YamlText from './yamlText';
 
 export interface Props {
   job: JobModel;
@@ -89,6 +90,10 @@ export default class JobDetail extends React.Component<Props, Object> {
                     id={job.id}
                   />,
                   relUrl: 'statuses'
+                }, {
+                  title: 'Config',
+                  component: <YamlText title="Config" config={job.config}/>,
+                  relUrl: 'config'
                 }, {
                   title: 'Instructions',
                   component: <JobInstructions id={job.id}/>,

@@ -21,6 +21,7 @@ import { EmptyList } from './empty/emptyList';
 import ExperimentOverview from './experimentOverview';
 import ExperimentInstructions from './instructions/experimentInstructions';
 import LinkedTab from './linkedTab';
+import YamlText from './yamlText';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -121,6 +122,10 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                     id={experiment.id}
                   />,
                   relUrl: 'metrics'
+                }, {
+                  title: 'Config',
+                  component: <YamlText title="Config" config={experiment.config}/>,
+                  relUrl: 'config'
                 }, {
                   title: 'Instructions',
                   component: <ExperimentInstructions id={experiment.id}/>,

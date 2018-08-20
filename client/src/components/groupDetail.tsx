@@ -17,6 +17,7 @@ import { EmptyList } from './empty/emptyList';
 import GroupOverview from './groupOverview';
 import GroupInstructions from './instructions/groupInstructions';
 import LinkedTab from './linkedTab';
+import YamlText from './yamlText';
 
 export interface Props {
   group: GroupModel;
@@ -81,6 +82,10 @@ export default class GroupDetail extends React.Component<Props, Object> {
                     id={group.id}
                   />,
                   relUrl: 'statuses'
+                }, {
+                  title: 'Config',
+                  component: <YamlText title="Config" configText={group.content}/>,
+                  relUrl: 'config'
                 }, {
                   title: 'Instructions',
                   component: <GroupInstructions id={group.id}/>,
