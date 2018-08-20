@@ -125,6 +125,26 @@ export let getExperimentUrlFromName = (uniqueName: string, app: boolean = true):
   return getExperimentUrl(values[0], values[1], values[values.length - 1], app);
 };
 
+export let getProjectUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getProjectUrl(values[0], values[1], app);
+};
+
+export let getBuildUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getBuildUrl(values[0], values[1], values[values.length - 1], app);
+};
+
+export let getGroupUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getGroupUrl(values[0], values[1], values[values.length - 1], app);
+};
+
+export let getJobUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getJobUrl(values[0], values[1], values[values.length - 1], app);
+};
+
 export let getJobUrl = (username: string,
                         projectName: string,
                         jobId: number | string,

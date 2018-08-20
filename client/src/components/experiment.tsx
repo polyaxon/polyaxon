@@ -46,7 +46,7 @@ function Experiment({experiment, onDelete, onStop}: Props) {
       <div className="col-md-1 block">
         <Status status={experiment.last_status}/>
       </div>
-      <div className="col-md-7 block">
+      <div className="col-md-6 block">
         <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.id)}>
           <a className="title">
             <i className="fa fa-cube icon" aria-hidden="true"/>
@@ -64,7 +64,7 @@ function Experiment({experiment, onDelete, onStop}: Props) {
         </div>
         <Tags tags={experiment.tags}/>
       </div>
-      <div className="col-md-1 block">
+      <div className="col-md-2 block">
         <GroupLinkMetaInfo
           value={groupValues[2]}
           link={groupUrl}

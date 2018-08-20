@@ -6,10 +6,10 @@ function ExperimentHeader() {
       <div className="col-md-1 block">
         Status
       </div>
-      <div className="col-md-7 block">
+      <div className="col-md-6 block">
         Name
       </div>
-      <div className="col-md-1 block">
+      <div className="col-md-2 block">
         Info
       </div>
       <div className="col-md-2 block">
