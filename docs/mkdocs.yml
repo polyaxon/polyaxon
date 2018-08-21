@@ -14,7 +14,7 @@ theme:
     primary: 'blue grey'
     accent: 'light blue'
   font:
-    text: 'Open Sans'
+    text: 'PT Sans'
     code: 'Roboto Mono'
 
 extra:
@@ -132,6 +132,7 @@ pages:
     - Notebook: polyaxon_cli/commands/notebook.md
     - Tensorboard: polyaxon_cli/commands/tensorboard.md
     - User: polyaxon_cli/commands/user.md
+    - Superuser: polyaxon_cli/commands/superuser.md
     - Cluster: polyaxon_cli/commands/cluster.md
     - Bookmark: polyaxon_cli/commands/bookmark.md
     - Version: polyaxon_cli/commands/version.md
