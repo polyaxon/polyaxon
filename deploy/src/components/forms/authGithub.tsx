@@ -35,7 +35,7 @@ export default class AuthGithub extends React.Component<Props, State> {
     if (value) {
       config.auth.github.enabled = value;
     } else {
-      config.auth.github = undefined;
+      delete config.auth.github;
     }
     this.setState({config});
   };

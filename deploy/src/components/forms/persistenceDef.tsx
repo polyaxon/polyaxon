@@ -28,10 +28,10 @@ export default class PersistenceDef extends React.Component<Props, State> {
     }
     if (key === 'existingClaim') {
       config.existingClaim = value;
-      config.hostPath = undefined;
+      delete config.hostPath;
     } else if (key === 'hostPath') {
       config.hostPath = value;
-      config.existingClaim = undefined;
+      delete config.existingClaim;
     } else if (key === 'mountPath') {
       config.mountPath = value;
     }

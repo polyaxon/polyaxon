@@ -4,8 +4,8 @@ import * as React from 'react';
 import {
   ConfigInterface,
 } from '../../interfaces/config';
-import PreviewForm from './previewForm';
 import { checkArray, parseYaml } from '../../libs/utils';
+import PreviewForm from './previewForm';
 
 export interface Props {
   config: ConfigInterface;

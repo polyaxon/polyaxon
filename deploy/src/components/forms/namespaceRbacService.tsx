@@ -66,7 +66,7 @@ export default class NamespaceRbacService extends React.Component<Props, State> 
       config.serviceType = 'ClusterIP';
     } else {
       config.serviceType = 'LoadBalancer';
-      config.ingress = undefined;
+      delete config.ingress;
     }
     this.setState({config});
   };

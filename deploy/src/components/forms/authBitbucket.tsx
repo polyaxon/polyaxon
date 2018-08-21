@@ -35,7 +35,7 @@ export default class AuthBitbucket extends React.Component<Props, State> {
     if (value) {
       config.auth.bitbucket.enabled = value;
     } else {
-      config.auth.bitbucket = undefined;
+      delete config.auth.bitbucket;
     }
     this.setState({config});
   };

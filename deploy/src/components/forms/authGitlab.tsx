@@ -35,7 +35,7 @@ export default class AuthGitlab extends React.Component<Props, State> {
     if (value) {
       config.auth.gitlab.enabled = value;
     } else {
-      config.auth.gitlab = undefined;
+      delete config.auth.gitlab;
     }
     this.setState({config});
   };

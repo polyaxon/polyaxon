@@ -36,7 +36,7 @@ export default class AuthLDAP extends React.Component<Props, State> {
       if (value) {
         config.auth.ldap.enabled = value;
       } else {
-        config.auth.ldap = undefined;
+        delete config.auth.ldap;
       }
     } else if (key === 'startTLS') {
       config.auth.ldap.startTLS = value;

@@ -35,7 +35,7 @@ export default class AuthAzure extends React.Component<Props, State> {
     if (value) {
       config.auth.azure.enabled = value;
     } else {
-      config.auth.azure = undefined;
+      delete config.auth.azure;
     }
     this.setState({config});
   };
