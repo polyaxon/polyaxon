@@ -4,13 +4,10 @@
   "description": "Polyaxon deploy",
   "private": true,
   "scripts": {
-    "clean": "rm -rf dist/* && rm -rf public/dist/* && mkdir -p public/dist/js && mkdir public/dist/css && mkdir public/dist/fonts",
-    "_copy_react": "cp node_modules/react/umd/react.production.min.js node_modules/react-dom/umd/react-dom.production.min.js public/dist/js",
-    "_copy_css": "cp node_modules/bulma/css/bulma.min.css public/dist/css",
-    "copy": "npm run _copy_react && npm run _copy_css",
-    "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output public/dist/js/bundle.min.js",
+    "clean": "rm -rf js/* && mkdir -p public/js",
+    "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output public/js/bundle.min.js",
     "dev": "webpack-dev-server --host 0.0.0.0 --port 8001 --env.dev --config webpack.config.dev.js  --output-public-path=dist/",
-    "build": "npm run clean && webpack --env.prod --config webpack.config.prod.js && npm run minify && npm run copy"
+    "build": "npm run clean && webpack --env.prod --config webpack.config.prod.js && npm run minify"
   },
   "author": "mourad mourafiq",
   "license": "MIT",
