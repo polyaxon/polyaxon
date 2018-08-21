@@ -1,3 +1,18 @@
+## 0.1.9
+
+ * Add config deployment app to help guide users through the configuration options when deploying Polyaxon
+ * Add possibility to delete/stop jobs/experiments from dashboards
+ * Update charts to support rolling updates
+ * Optimize and fix some issues in some API endpoints
+ * Optimize and reduce number of generated queries (More queries to optimize)
+ * Update SDK to expose only one client
+ * Add a delay before creating the experiment group's experiment to avoid not finding running status
+ * Extend config manager to validate different generic specs and raise errors on bad config deployments
+ * Abstract serialization of bookmarks to be used for lists
+ * Fix an issue with the metrics api's pagination
+ * Enhanced the filters ui
+ * Consolidate installed libraries
+
 ## 0.1.8
 
   * Enable users to pull image from private registries

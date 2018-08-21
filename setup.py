@@ -19,7 +19,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon',
-      version='0.1.8',
+      version='0.1.9',
       description='Deep Learning library for TensorFlow for '
                   'building end to end db and experiments.',
       maintainer='Mourad Mourafiq',
