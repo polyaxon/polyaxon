@@ -14,32 +14,6 @@ function Header() {
             /> Polyaxon
           </a>
         </div>
-
-        <div id="navbarExampleTransparentExample" className="navbar-menu">
-          <div className="navbar-end">
-            <div className="navbar-item has-dropdown is-transparent is-hoverable">
-              <a className="navbar-link">
-                Right
-              </a>
-
-              <div className="navbar-dropdown is-right is-boxed">
-                <a className="navbar-item">
-                  Overview
-                </a>
-                <a className="navbar-item">
-                  Elements
-                </a>
-                <a className="navbar-item">
-                  Components
-                </a>
-                <hr className="navbar-divider"/>
-                <div className="navbar-item">
-                  Version 0.7.1
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </nav>
     </div>
   );
