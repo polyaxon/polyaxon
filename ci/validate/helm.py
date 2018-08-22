@@ -15,7 +15,7 @@ def helm(values, output_dir, debug):
     ])
 
     helm_lint_cmd = [
-        'helm', 'lint', '../polyaxon',
+        'helm', 'lint', '../../polyaxon',
         '--values', values,
     ]
     if debug:
@@ -23,7 +23,7 @@ def helm(values, output_dir, debug):
     subprocess.check_call(helm_lint_cmd)
 
     helm_template_cmd = [
-        'helm', 'template', '../polyaxon',
+        'helm', 'template', '../../polyaxon',
         '--values', values,
         '--output-dir', output_dir
     ]
