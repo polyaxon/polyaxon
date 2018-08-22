@@ -1,6 +1,10 @@
 If you are here, it means that you have a Kubernetes cluster and helm setup,
 if not please read how you can [install kubernetes](install_kubernetes), and [setup helm](setup_helm).
 
+Please consider using this [small interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
+
+Please also note that the [helm reference](/reference_polyaxon_helm) to check all default values.
+
 ## Create a namespace for Polyaxon
 
 Polyaxon is installed and relies on the namespace to run experiments

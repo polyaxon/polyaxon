@@ -14,6 +14,8 @@ It also packages some required dependencies for Polyaxon:
 
 > **Note**: It's possible to provide your own database host.
 > **Warning**: This chart does not yet allow for you to specify your redis host, rabbitmq host.
+> **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
+> **Tip**: We created a [small interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
 
 This chart can be installed on single node or multi-nodes cluster,
 in which case you need to provide some volumes with `ReadWriteMany`.
@@ -524,4 +526,3 @@ Alternatively, a YAML file that specifies the values for the above parameters ca
 $ helm install --name my-release -f values.yaml polyaxon
 ```
 
-> **Tip**: You can use the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)

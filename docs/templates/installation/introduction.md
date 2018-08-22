@@ -11,6 +11,7 @@ This guide will help you connect and configure the following things:
  * install polyaxon cli
  * turn off polyaxon
 
+We created a [small interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
 
 If you find any problems during the installation process, please [contact us](mailto:contact@polyaxon.com).
 
