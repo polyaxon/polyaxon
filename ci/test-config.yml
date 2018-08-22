@@ -8,46 +8,108 @@ ingress:
 
 serviceType: NodePort
 
+
+postgresql:
+  imageTag: 9.6.1-alpine
+  resources:
+    requests:
+      memory: 40Mi
+      cpu: 20m
+
+redis:
+  imageTag: 4.0.2-alpine
+  resources:
+    requests:
+      memory: 40Mi
+      cpu: 20m
+
+rabbitmq:
+  imageTag: 3.6.12-management-alpine
+  resources:
+    requests:
+      memory: 40Mi
+      cpu: 20m
+
 api:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 streams:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 scheduler:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 hpsearch:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 eventsHandlers:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 beat:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 crons:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 eventMonitors:
   namespace:
     imageTag: latest
     imagePullPolicy: Always
+    resources:
+      requests:
+        memory: 80Mi
+        cpu: 30m
 
   statuses:
     imageTag: latest
     imagePullPolicy: Always
+    resources:
+      requests:
+        memory: 80Mi
+        cpu: 30m
 
 resourcesDaemon:
   imageTag: latest
   imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
 
 sidecar:
   imageTag: latest
