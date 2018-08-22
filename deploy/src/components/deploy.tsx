@@ -40,7 +40,7 @@ export default class Deploy extends React.Component<{}, DeployState> {
           <div className="column">
             {this.state.currentTab === 'Settings' &&
             <button
-              className="button is-small is-pulled-right"
+              className="button is-small is-info is-pulled-right"
               onClick={() => this.setTab('Preview')}
             >
                 <span className="icon is-small">
@@ -50,7 +50,7 @@ export default class Deploy extends React.Component<{}, DeployState> {
             }
             {this.state.currentTab === 'Preview' &&
             <button
-              className="button is-small is-pulled-right"
+              className="button is-small is-info is-pulled-right"
               onClick={() => this.setTab('Settings')}
             >
               <span className="icon is-small">
