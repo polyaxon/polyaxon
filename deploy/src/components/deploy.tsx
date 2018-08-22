@@ -68,7 +68,7 @@ export default class Deploy extends React.Component<{}, DeployState> {
         />
         }
         {this.state.currentTab === 'Preview' &&
-        <Preview config={this.state.config}/>
+        <Preview config={this.state.config} defaultConfig={this.state.defaultConfig}/>
         }
       </div>
     );

@@ -6,7 +6,7 @@ export interface Props {
   defaultConfig: { [key: string]: any; };
 }
 
-export default class PreviewForm extends React.Component<Props, Object> {
+export default class PreviewForm extends React.Component<Props, {}> {
   public render() {
     return (
       <div className="column is-5 preview">
@@ -14,9 +14,11 @@ export default class PreviewForm extends React.Component<Props, Object> {
           <div className="column">
             <div className="content">
               <h4> Preview Override config </h4>
-              <p>
-                {jsYaml.dump(this.props.currentConfig)}
-              </p>
+              <figure className="content-figure">
+                <pre className="content content-output content-preview">
+                  <p>{jsYaml.dump(this.props.currentConfig)}</p>
+                  </pre>
+              </figure>
             </div>
           </div>
         </div>
@@ -24,9 +26,11 @@ export default class PreviewForm extends React.Component<Props, Object> {
           <div className="column">
             <div className="content">
               <h4> Default config Section </h4>
-              <p>
-                {jsYaml.dump(this.props.defaultConfig)}
-              </p>
+              <figure className="content-figure">
+                <pre className="content content-output content-preview">
+                  <p>{jsYaml.dump(this.props.defaultConfig)}</p>
+                </pre>
+              </figure>
             </div>
           </div>
         </div>

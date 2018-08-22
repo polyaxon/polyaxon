@@ -27,19 +27,13 @@ export default class Cli extends React.Component<{}, CliState> {
     } else if (key === 'pythonVersion') {
       this.setState({pythonVersion: value});
     }
-  }
+  };
 
   public useVirtualenv = (value: boolean) => {
     this.setState({useVirtualenv: value});
   };
 
   public render() {
-    const command = () => {
-      if (this.state.install === 'pip') {
-        return 'pip install -U polyaxon-cli';
-      }
-      return '';
-    }
     return (
       <div className="columns">
         <div className="column is-7">
@@ -53,7 +47,7 @@ export default class Cli extends React.Component<{}, CliState> {
                   <div className="field is-grouped">
                     <p className="control">
                       <a
-                        className={'button ' + (this.state.os === 'macOS' ? 'is-link is-active' : '')}
+                        className={'button ' + (this.state.os === 'macOS' ? 'is-info is-active' : '')}
                         onClick={() => this.setKey('os', 'macOS')}
                       >
                         macOS
@@ -61,7 +55,7 @@ export default class Cli extends React.Component<{}, CliState> {
                     </p>
                     <p className="control">
                       <a
-                        className={'button ' + (this.state.os === 'Windows' ? 'is-link is-active' : '')}
+                        className={'button ' + (this.state.os === 'Windows' ? 'is-info is-active' : '')}
                         onClick={() => this.setKey('os', 'Windows')}
                       >
                         Windows
@@ -69,7 +63,7 @@ export default class Cli extends React.Component<{}, CliState> {
                     </p>
                     <p className="control">
                       <a
-                        className={'button ' + (this.state.os === 'Linux' ? 'is-link is-active' : '')}
+                        className={'button ' + (this.state.os === 'Linux' ? 'is-info is-active' : '')}
                         onClick={() => this.setKey('os', 'Linux')}
                       >
                         Linux
@@ -90,7 +84,7 @@ export default class Cli extends React.Component<{}, CliState> {
                   <div className="field is-grouped">
                     <p className="control">
                       <a
-                        className={'button ' + (this.state.install === 'pip' ? 'is-link is-active' : '')}
+                        className={'button ' + (this.state.install === 'pip' ? 'is-info is-active' : '')}
                         onClick={() => this.setKey('install', 'pip')}
                       >
                         With pip
@@ -98,7 +92,7 @@ export default class Cli extends React.Component<{}, CliState> {
                     </p>
                     <p className="control">
                       <a
-                        className={'button ' + (this.state.install === 'source' ? 'is-link is-active' : '')}
+                        className={'button ' + (this.state.install === 'source' ? 'is-info is-active' : '')}
                         onClick={() => this.setKey('install', 'source')}
                       >
                         From source
@@ -119,7 +113,7 @@ export default class Cli extends React.Component<{}, CliState> {
                   <div className="field is-grouped">
                     <p className="control">
                       <a
-                        className={'button ' + (this.state.pythonVersion === '2.x' ? 'is-link is-active' : '')}
+                        className={'button ' + (this.state.pythonVersion === '2.x' ? 'is-info is-active' : '')}
                         onClick={() => this.setKey('pythonVersion', '2.x')}
                       >
                         2.x
@@ -127,7 +121,7 @@ export default class Cli extends React.Component<{}, CliState> {
                     </p>
                     <p className="control">
                       <a
-                        className={'button ' + (this.state.pythonVersion === '3.x' ? 'is-link is-active' : '')}
+                        className={'button ' + (this.state.pythonVersion === '3.x' ? 'is-info is-active' : '')}
                         onClick={() => this.setKey('pythonVersion', '3.x')}
                       >
                         3.x
@@ -152,11 +146,56 @@ export default class Cli extends React.Component<{}, CliState> {
         </div>
         <div className="column is-5 preview">
           <figure className="content-figure">
-                <pre className="content content-output">
-                  <p>
-                     fooo
-                  </p>
-                </pre>
+            <pre className="content content-output code">
+              {this.state.useVirtualenv && this.state.pythonVersion === '2.x' &&
+              <code>
+                  <span className="bash">
+                    python -m pip install -U virtualenv
+                  </span>
+                <span className="bash">
+                    virtualenv .python-env
+                  </span>
+                {this.state.os === 'Windows' ?
+                  <span className="bash">
+                    .env\Scripts\activate
+                  </span> :
+                  <span className="bash">
+                    source .env/bin/activate
+                  </span>
+                }
+              </code>
+              }
+              {this.state.useVirtualenv && this.state.pythonVersion === '3.x' &&
+              <code>
+                  <span className="bash">
+                    python -m pip install -U venv
+                  </span>
+                <span className="bash">
+                    python -m venv .env
+                  </span>
+              </code>
+              }
+              {this.state.install === 'pip' &&
+              <code>
+                <span className="bash">
+                  pip install -U polyaxon-cli
+                </span>
+              </code>
+              }
+              {this.state.install === 'source' &&
+              <code>
+                <span className="bash">
+                  git clone https://github.com/polyaxon/polyaxon-cli
+                </span>
+                <span className="bash">
+                  cd polyaxon-cli
+                </span>
+                <span className="bash">
+                  python setup.py install
+                </span>
+              </code>
+              }
+            </pre>
           </figure>
         </div>
       </div>

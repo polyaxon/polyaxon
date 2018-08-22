@@ -6,6 +6,7 @@ import { ConfigInterface } from '../interfaces/config';
 
 export interface Props {
   config: ConfigInterface;
+  defaultConfig: ConfigInterface;
 }
 
 export interface State {
@@ -129,11 +130,41 @@ export default class Preview extends React.Component<Props, State> {
           </div>
           <div className="columns">
             <div className="column">
+              <div className="content">
+                <hr className="navbar-divider"/>
+                <h6>config.yml</h6>
+              </div>
               <figure className="content-figure">
-                <pre className="content content-output">
+                <pre className="content content-output content-preview">
                   <p>
                     {renderConfig()}
                   </p>
+                </pre>
+              </figure>
+            </div>
+          </div>
+          <div className="columns">
+            <div className="column">
+              <div className="content">
+                <hr className="navbar-divider"/>
+                <h6>Commands</h6>
+              </div>
+              <figure className="content-figure">
+                <pre className="content content-output code">
+                  <code>
+                    <span className="bash">
+                      helm repo add polyaxon https://charts.polyaxon.com
+                    </span>
+                    <span className="bash">
+                      helm repo update
+                    </span>
+                    <span className="bash">
+                      kubectl create namespace {this.props.config.namespace || this.props.defaultConfig.namespace}
+                    </span>
+                    <span className="bash">
+                      helm install polyaxon/polyaxon --name=polyaxon --namespace={this.props.config.namespace || this.props.defaultConfig.namespace} -f config.yml
+                    </span>
+                  </code>
                 </pre>
               </figure>
             </div>

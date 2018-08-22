@@ -17,14 +17,31 @@
     white-space: pre-wrap;
   }
 
-  .column .content-output {
+  .content-preview {
     padding: 10px;
     border: 1px solid #eceff3;
     border-radius: 5px;
     background: #f7fafd;
   }
 
-  .column .content-figure {
+  .content-figure {
     position: relative;
+    text-align: unset;
+  }
+
+  .code {
+    background-color: #000;
+    border-radius: 5px;
+    font-size: 1.1em;
+
+    .bash {
+      display: block;
+      color: #fff;
+    }
+    .bash:before {
+      content: "$";
+      margin-right: 5px;
+      color: #a1b8d0;
+    }
   }
 }
