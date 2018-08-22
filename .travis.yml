@@ -1,0 +1,26 @@
+language: python
+
+python:
+  - "3.6"
+
+services:
+  - docker
+
+env:
+  global:
+    - MINIKUBE_VERSION=0.28.0
+    - HELM_VERSION=2.9.1
+    - PATH="$PWD/bin:$PATH"
+  matrix:
+    - KUBE_VERSION=1.10.0
+    - KUBE_VERSION=1.9.4
+
+install:
+  - ./ci/install.sh
+
+script:
+  - python3 ci/validate/helm.py
+  - git diff
+  - ./ci/test.sh
+
+

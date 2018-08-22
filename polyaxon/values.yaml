@@ -337,7 +337,7 @@ postgresql:
   #     postgresUser:
   #     postgresPassword:
   #     postgresDatabase:
-  enabled: True
+  enabled: true
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: polyaxon
