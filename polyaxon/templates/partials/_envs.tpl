@@ -1,11 +1,11 @@
-{{/*
+{{- /*
 secrets config
 */}}
-{{- define "config.envs" }}
+{{- define "config.envs" -}}
 - name: POLYAXON_K8S_NODE_NAME
   valueFrom:
     fieldRef:
-     fieldPath: spec.nodeName
+      fieldPath: spec.nodeName
 - name: POLYAXON_RABBITMQ_PASSWORD
   valueFrom:
     secretKeyRef:
@@ -21,10 +21,10 @@ secrets config
 - name: POLYAXON_DB_PASSWORD
   valueFrom:
     secretKeyRef:
-{{ if .Values.postgresql.enabled }}
+{{- if .Values.postgresql.enabled }}
       name: {{ template "postgresql.fullname" . }}
-{{ else }}
+{{- else }}
       name: {{ template "polyaxon.fullname" . }}-postgres-secret
-{{- end}}
+{{- end }}
       key: postgres-password
 {{- end -}}

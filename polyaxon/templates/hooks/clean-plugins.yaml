@@ -48,7 +48,7 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}
       - name: clean-tensorboards
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
@@ -59,4 +59,4 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}

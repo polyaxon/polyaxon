@@ -1,7 +1,7 @@
-{{/*
+{{- /*
 Volume mounts
 */}}
-{{- define "volumes.volumeMounts.upload" }}
+{{- define "volumes.volumeMounts.upload" -}}
 {{- if .Values.persistence.upload }}
 - mountPath: {{ .Values.persistence.upload.mountPath | quote }}
   name: upload
@@ -13,7 +13,7 @@ Volume mounts
   name: upload
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumeMounts.logs" }}
+{{- define "volumes.volumeMounts.logs" -}}
 {{- if .Values.persistence.logs }}
 - mountPath: {{ .Values.persistence.logs.mountPath | quote }}
   name: logs
@@ -25,7 +25,7 @@ Volume mounts
   name: logs
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumeMounts.repos" }}
+{{- define "volumes.volumeMounts.repos" -}}
 {{- if .Values.persistence.repos }}
 - mountPath: {{ .Values.persistence.repos.mountPath | quote }}
   name: repos
@@ -37,7 +37,7 @@ Volume mounts
   name: repos
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumeMounts.data" }}
+{{- define "volumes.volumeMounts.data" -}}
 {{- if .Values.persistence.data }}
 {{- range $key, $val := .Values.persistence.data }}
 - mountPath: {{ $val.mountPath | quote }}
@@ -54,7 +54,7 @@ Volume mounts
   name: data
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumeMounts.outputs" }}
+{{- define "volumes.volumeMounts.outputs" -}}
 {{- if .Values.persistence.outputs }}
 {{- range $key, $val := .Values.persistence.outputs }}
 - mountPath: {{ $val.mountPath | quote }}
@@ -72,10 +72,10 @@ Volume mounts
 {{- end }}
 {{- end -}}
 
-{{/*
+{{- /*
 Volumes
 */}}
-{{- define "volumes.volumes.upload" }}
+{{- define "volumes.volumes.upload" -}}
 - name: upload
 {{- if .Values.persistence.upload }}
 {{- if .Values.persistence.upload.existingClaim }}
@@ -83,14 +83,14 @@ Volumes
     claimName: {{ .Values.persistence.upload.existingClaim | quote}}
 {{- else }}
   hostPath:
-    path:  {{ .Values.persistence.upload.hostPath | default .Values.persistence.upload.mountPath | quote }}
+    path: {{ .Values.persistence.upload.hostPath | default .Values.persistence.upload.mountPath | quote }}
 {{- end }}
 {{- else if .Values.nfsProvisioner.enabled }}
   persistentVolumeClaim:
     claimName: {{ .Values.nfsProvisioner.pvc.upload.name | quote}}
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumes.repos" }}
+{{- define "volumes.volumes.repos" -}}
 - name: repos
 {{- if .Values.persistence.repos }}
 {{- if .Values.persistence.repos.existingClaim }}
@@ -105,7 +105,7 @@ Volumes
     claimName: {{ .Values.nfsProvisioner.pvc.repos.name | quote }}
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumes.logs" }}
+{{- define "volumes.volumes.logs" -}}
 - name: logs
 {{- if .Values.persistence.logs }}
 {{- if .Values.persistence.logs.existingClaim }}
@@ -120,7 +120,7 @@ Volumes
     claimName: {{ .Values.nfsProvisioner.pvc.logs.name | quote }}
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumes.data" }}
+{{- define "volumes.volumes.data" -}}
 {{- if .Values.persistence.data }}
 {{- range $key, $val := .Values.persistence.data }}
 - name: {{ $key }}
@@ -142,7 +142,7 @@ Volumes
     path: {{ .Values.defaultPersistence.data.data.hostPath | quote }}
 {{- end }}
 {{- end -}}
-{{- define "volumes.volumes.outputs" }}
+{{- define "volumes.volumes.outputs" -}}
 {{- if .Values.persistence.outputs }}
 {{- range $key, $val := .Values.persistence.outputs }}
 - name: {{ $key }}
@@ -166,10 +166,10 @@ Volumes
 {{- end -}}
 
 
-{{/*
+{{- /*
 Dirs
 */}}
-{{- define "volumes.dirs" }}
+{{- define "volumes.dirs" -}}
 - name: docker
   hostPath:
     path: {{ .Values.dirs.docker | quote }}
@@ -187,10 +187,10 @@ Dirs
 {{- end -}}
 
 
-{{/*
+{{- /*
 Dir mounts
 */}}
-{{- define "volumes.dirMounts" }}
+{{- define "volumes.dirMounts" -}}
 - name: docker
   mountPath: {{ .Values.mountPaths.docker }}
 {{- if and .Values.dirs.nvidia.lib .Values.dirs.nvidia.bin .Values.dirs.nvidia.libcuda }}

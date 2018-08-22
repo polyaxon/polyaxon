@@ -48,5 +48,5 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}
 {{- end }}

@@ -50,7 +50,7 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.beat.resources.requests | indent 12 }}
@@ -68,7 +68,7 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.crons.resources.requests | indent 12 }}

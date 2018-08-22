@@ -56,7 +56,7 @@ rules:
     verbs: ["create"]
   - apiGroups: [""]
     resources: ["endpoints"]
-    verbs: ["get",  "create",  "update"]
+    verbs: ["get", "create", "update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding

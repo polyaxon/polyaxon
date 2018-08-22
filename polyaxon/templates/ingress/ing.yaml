@@ -14,7 +14,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
   annotations:
-{{ toYaml .Values.ingress.annotations | indent 6 }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 spec:
   {{ if .Values.ingress.tls.enabled -}}
   tls:
@@ -39,7 +39,7 @@ spec:
           servicePort: {{ $.Values.streams.service.externalPort }}
     {{- end }} {{- /* end range .hosts */ -}}
   {{- end }}  {{- /* end with loop */ -}}
-  {{- else -}} {{- /* else of if tls.enabled */ -}}
+  {{- else }} {{- /* else of if tls.enabled */ -}}
   rules:
   - http:
       paths:
@@ -52,4 +52,4 @@ spec:
           serviceName: {{ template "polyaxon.fullname" . }}-api
           servicePort: {{ .Values.streams.service.externalPort }}
   {{- end -}} {{- /* end if tls.enabled */ -}}
-{{- end -}}
+{{- end }}

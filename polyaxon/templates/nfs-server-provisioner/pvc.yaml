@@ -1,3 +1,4 @@
+{{- if .Values.nfsProvisioner.enabled }}
 {{ if and .Values.nfsProvisioner.enabled (not .Values.persistence.repos) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -96,4 +97,5 @@ spec:
     requests:
       storage: {{ .Values.nfsProvisioner.pvc.data.size | quote }}
   storageClassName: polyaxon-nfs
+{{- end }}
 {{- end }}

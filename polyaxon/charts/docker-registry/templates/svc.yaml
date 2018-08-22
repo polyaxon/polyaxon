@@ -18,7 +18,6 @@ spec:
       name: {{ .Values.service.name }}
       nodePort: {{ .Values.service.nodePort }}
       protocol: TCP
-      nodePort: {{ .Values.service.nodePort }}
   selector:
     app: {{ template "docker-registry.name" . }}
     release: {{ .Release.Name }}

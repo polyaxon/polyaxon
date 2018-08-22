@@ -40,11 +40,11 @@ spec:
       - name: admin-user-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
-        args: ["createuser", "--username={{ .Values.user.username }}", "--email={{ .Values.user.email }}", "--password=$(POLYAXON_ADMIN_PASSWORD)", "--superuser",  "--force"]
+        args: ["createuser", "--username={{ .Values.user.username }}", "--email={{ .Values.user.email }}", "--password=$(POLYAXON_ADMIN_PASSWORD)", "--superuser", "--force"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}

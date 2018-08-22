@@ -51,10 +51,10 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
-        {{ include "config.persistence.logs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}
+{{ include "config.persistence.logs" . | indent 8 }}
         volumeMounts:
-        {{ include "volumes.volumeMounts.logs" . | indent 8}}
+{{ include "volumes.volumeMounts.logs" . | indent 8}}
         resources:
           requests:
 {{ toYaml .Values.eventsHandlers.resources.requests | indent 12 }}
@@ -63,4 +63,4 @@ spec:
 {{ toYaml .Values.eventsHandlers.resources.limits | indent 12 }}
           {{- end }}
       volumes:
-      {{ include "volumes.volumes.logs" . | indent 6 }}
+{{ include "volumes.volumes.logs" . | indent 6 }}

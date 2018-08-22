@@ -45,4 +45,4 @@ spec:
             claimName: {{ .Values.persistence.existingClaim | default (include "docker-registry.fullname" .) }}
       {{- else }}
           emptyDir: {}
-      {{- end -}}
+      {{- end }}

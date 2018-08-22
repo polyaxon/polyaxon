@@ -47,7 +47,7 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
-        {{ include "config.envs" . | indent 8 }}
+{{ include "config.envs" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.resourcesDaemon.resources.requests | indent 12 }}
@@ -56,7 +56,7 @@ spec:
 {{ toYaml .Values.resourcesDaemon.resources.limits | indent 12 }}
           {{- end }}
         volumeMounts:
-        {{ include "volumes.dirMounts" . | indent 8}}
+{{ include "volumes.dirMounts" . | indent 8}}
       volumes:
-      {{ include "volumes.dirs" . | indent 6 }}
+{{ include "volumes.dirs" . | indent 6 }}
 {{- end }}
