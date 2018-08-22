@@ -58,24 +58,40 @@
 }
 
 .api {
-  color: white;
-  padding: 5px;
+  padding: 5px 5px 5px 0;
   border-radius: 3px;
+  background-color: hsla(0, 0.3%, 93%, .5);
 }
 
-.api-post {
+.api:before {
+  margin-right: 5px;
+  color: #fff;
+  padding: 4px;
+  border-radius: 3px 0 0 3px;
+}
+
+.api-post:before {
+  content: "POST";
   background-color: #0d904f;
 }
 
-.api-get {
+.api-get:before {
+  content: "GET";
   background-color: #415f90;
 }
 
-.api-delete {
+.api-delete:before {
+  content: "DELETE";
   background-color: #902722;
 }
 
-.api-patch, .api-put {
+.api-patch:before {
+  content: "PATCH";
+  background-color: #ff8f05;
+}
+
+.api-put:before {
+  content: "PUT";
   background-color: #ff8f05;
 }
 
