@@ -38,3 +38,6 @@ helm init --service-account tiller
 echo "waiting for tiller"
 kubectl --namespace=kube-system rollout status --watch deployment/tiller-deploy
 
+echo "Install dep"
+helm dependency update ./polyaxon/
+
