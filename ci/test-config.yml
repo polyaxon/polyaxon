@@ -119,3 +119,25 @@ dockerizer:
 
 job:
   imageTag: latest
+
+
+persistence:
+  logs:
+    mountPath: "/tmp/logs"
+    hostPath: "/tmp/logs"
+  repos:
+    existingClaim:
+    mountPath: "/tmp/repos"
+    hostPath: "/tmp/repos"
+  upload:
+    existingClaim:
+    mountPath: "/tmp/upload"
+    hostPath: "/tmp/upload"
+  data:
+    data:
+      mountPath: "/tmp/data"
+      hostPath: "/tmp/data"
+  outputs:
+    outputs:
+      mountPath: "/tmp/outputs"
+      hostPath: "/tmp/outputs"
