@@ -1,365 +1,557 @@
 ## Get experiment
 
-### Method
+<span class="api api-get">
+/api/v1/{username}/{project_name}/experiments/{id}/
+</span>
 
-<span class="api api-get">GET</span>
-
-### Url
+### Example curl request
 
 ```
-GET /api/v1/{username}/{project_name}/experiments/{id}/
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1' \
+  --header 'Authorization: token {{token}}'
 ```
 
-### Headers
+### Example response
 
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
+```json
+{
+  "id": 1,
+  "uuid": "d26f9c63ee9b492885c8c679e3ca06ff",
+  "name": null,
+  "unique_name": "root.quick-start.1",
+  "user": "root",
+  "description": null,
+  "created_at": "2018-08-22T21:25:05.764283+02:00",
+  "updated_at": "2018-08-22T21:27:54.669279+02:00",
+  "started_at": "2018-08-22T21:26:36.583432+02:00",
+  "finished_at": "2018-08-22T21:27:54.669115+02:00",
+  "last_status": "succeeded",
+  "original": null,
+  "project": "root.quick-start",
+  "experiment_group": null,
+  "build_job": "root.quick-start.builds.1",
+  "tags": null,
+  "config": {
+    "build": {
+      "image": "tensorflow/tensorflow:1.4.1-py3",
+      "build_steps": [
+        "pip3 install --no-cache-dir -U polyaxon-helper"
+      ]
+    },
+    "version": 1,
+    "kind": "experiment",
+    "run": {
+      "cmd": "python3 model.py"
+    }
+  },
+  "declarations": null,
+  "resources": null,
+  "last_metric": {
+    "loss": 0.0502114,
+    "precision": 0.9986705,
+    "accuracy": 0.9827
+  },
+  "num_jobs": 1,
+  "is_clone": false,
+  "has_tensorboard": null,
+  "bookmarked": false
+}
+```
 
 ## Update experiment
 
-<span class="api api-patch">PATCH</span>
+<span class="api api-patch">
+/api/v1/{username}/{project_name}/experiments/{id}/
+</span>
 
-### Url
+### Example curl request
 
 ```
-PATCH /api/v1/{username}/{project_name}/experiments/{id}/
+curl --request PATCH \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/' \
+  --header 'Authorization: token {{token}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "description": "new description"
+}'
 ```
 
-### Headers
+### Example response
 
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
+```json
+{
+  "id": 1,
+  "uuid": "d26f9c63ee9b492885c8c679e3ca06ff",
+  "name": null,
+  "unique_name": "root.quick-start.1",
+  "user": "root",
+  "description": "new description",
+  "created_at": "2018-08-22T21:25:05.764283+02:00",
+  "updated_at": "2018-08-22T21:32:10.408021+02:00",
+  "started_at": "2018-08-22T21:26:36.583432+02:00",
+  "finished_at": "2018-08-22T21:27:54.669115+02:00",
+  "last_status": "succeeded",
+  "original": null,
+  "project": "root.quick-start",
+  "experiment_group": null,
+  "build_job": "root.quick-start.builds.1",
+  "tags": null,
+  "config": {
+    "build": {
+      "image": "tensorflow/tensorflow:1.4.1-py3",
+      "build_steps": [
+        "pip3 install --no-cache-dir -U polyaxon-helper"
+      ]
+    },
+    "version": 1,
+    "kind": "experiment",
+    "run": {
+      "cmd": "python3 model.py"
+    }
+  },
+  "declarations": null,
+  "resources": null,
+  "last_metric": {
+    "loss": 0.0502114,
+    "precision": 0.9986705,
+    "accuracy": 0.9827
+  },
+  "num_jobs": 1,
+  "is_clone": false,
+  "has_tensorboard": null,
+  "bookmarked": false
+}
+```
 
 ## Delete experiment
 
-<span class="api api-delete">DELETE</span>
+<span class="api api-delete">
+/api/v1/{username}/{project_name}/experiments/{id}/
+</span>
 
-### Url
 
-```
-DELETE /api/v1/{username}/{project_name}/experiments/{id}/
-```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
-## Get experiment metrics
-
-<span class="api api-get">GET</span>
-
-### Url
+### Example curl request
 
 ```
-GET /api/v1/{username}/{project_name}/experiments/{id}/metrics
+curl --request DELETE \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/100' \
+  --header 'Authorization: token {{token}}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
-
-## Create experiment metric
-
-<span class="api api-get">POST</span>
-
-### Url
-
-```
-POST /api/v1/{username}/{project_name}/experiments/{id}/metrics
-```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 201 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
-
-## List experiment jobs
-
-
-<span class="api api-get">GET</span>
-
-### Url
-
-```
-GET /api/v1/{username}/{project_name}/experiments/{id}/jobs
-```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
 
 
 ## Restart experiment
 
-<span class="api api-get">POST</span>
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{id}/restart/
+</span>
 
-### Url
+### Example curl request
 
 ```
-POST /api/v1/{username}/{project_name}/experiments/{id}/restart/
+curl --request POST \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/restart' \
+  --header 'Authorization: token {{token}}'
 ```
 
-### Headers
+### Example response
 
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
+```json
+{
+  "id": 3,
+  "uuid": "0a63969440a446699aa082e654a94010",
+  "name": null,
+  "unique_name": "root.quick-start.3",
+  "user": "root",
+  "description": "new description",
+  "created_at": "2018-08-22T21:35:16.560243+02:00",
+  "updated_at": "2018-08-22T21:35:16.562301+02:00",
+  "started_at": null,
+  "finished_at": null,
+  "last_status": "created",
+  "original": "root.quick-start.1",
+  "project": "root.quick-start",
+  "experiment_group": null,
+  "build_job": null,
+  "tags": null
+}
+```
 
 ## Resume experiment
 
-<span class="api api-get">POST</span>
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{id}/resume/
+</span>
 
-### Url
+### Example curl request
 
 ```
-POST /api/v1/{username}/{project_name}/experiments/{id}/resume/
+curl --request POST \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/resume' \
+  --header 'Authorization: token {{token}}'
 ```
 
-### Headers
+### Example response
 
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
+```json
+{
+  "id": 3,
+  "uuid": "0a63969440a446699aa082e654a94010",
+  "name": null,
+  "unique_name": "root.quick-start.3",
+  "user": "root",
+  "description": "new description",
+  "created_at": "2018-08-22T21:35:16.560243+02:00",
+  "updated_at": "2018-08-22T21:35:16.562301+02:00",
+  "started_at": null,
+  "finished_at": null,
+  "last_status": "created",
+  "original": "root.quick-start.1",
+  "project": "root.quick-start",
+  "experiment_group": null,
+  "build_job": null,
+  "tags": null
+}
+```
 
 ## Copy experiment
 
-<span class="api api-get">POST</span>
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{id}/copy
+</span>
 
-### Url
+### Example curl request
 
 ```
-POST /api/v1/{username}/{project_name}/experiments/{id}/copy
+curl --request POST \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/resume' \
+  --header 'Authorization: token {{token}}'
 ```
 
-### Headers
+### Example response
 
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
+```json
+{
+  "id": 3,
+  "uuid": "0a63969440a446699aa082e654a94010",
+  "name": null,
+  "unique_name": "root.quick-start.3",
+  "user": "root",
+  "description": "new description",
+  "created_at": "2018-08-22T21:35:16.560243+02:00",
+  "updated_at": "2018-08-22T21:35:16.562301+02:00",
+  "started_at": null,
+  "finished_at": null,
+  "last_status": "created",
+  "original": "root.quick-start.1",
+  "project": "root.quick-start",
+  "experiment_group": null,
+  "build_job": null,
+  "tags": null
+}
+```
 
 ## Stop experiment
 
-<span class="api api-get">POST</span>
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{id}/stop
+</span>
 
-### Url
+### Example curl request
 
 ```
-POST /api/v1/{username}/{project_name}/experiments/{id}/stop
+curl --request POST \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/stop' \
+  --header 'Authorization: token {{token}}'
 ```
 
-### Headers
+## Get experiment statuses
 
-  * Authorization: Token "token"
+<span class="api api-get">
+/api/v1/{username}/{project_name}/experiments/{id}/statuses
+</span>
 
-### Responses
+### Example curl request
 
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
+```
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/statuses' \
+  --header 'Authorization: token {{token}}'
+```
+
+### Example response
+
+```json
+{
+    "count": 6,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "uuid": "0cc6f8c7622842b09be0878d9d4a8089",
+            "created_at": "2018-08-22T21:25:05.767070+02:00",
+            "message": null,
+            "status": "created",
+            "experiment": 1
+        },
+        {
+            "id": 2,
+            "uuid": "656a889d42104fc2b46685a15dcdfa1c",
+            "created_at": "2018-08-22T21:25:07.646364+02:00",
+            "message": null,
+            "status": "building",
+            "experiment": 1
+        },
+        {
+            "id": 3,
+            "uuid": "51fadf52068a4dd19598dd3d6b70b897",
+            "created_at": "2018-08-22T21:26:33.768065+02:00",
+            "message": null,
+            "status": "scheduled",
+            "experiment": 1
+        },
+        {
+            "id": 4,
+            "uuid": "63715940647f44efbb7260bef766e33e",
+            "created_at": "2018-08-22T21:26:36.581108+02:00",
+            "message": null,
+            "status": "starting",
+            "experiment": 1
+        },
+        {
+            "id": 5,
+            "uuid": "e6cb3da1cbbb4b9e919169ddaec03e50",
+            "created_at": "2018-08-22T21:26:46.587029+02:00",
+            "message": null,
+            "status": "running",
+            "experiment": 1
+        },
+        {
+            "id": 6,
+            "uuid": "2261fd8b4c8a44fdb24411c9e29b0632",
+            "created_at": "2018-08-22T21:27:54.666729+02:00",
+            "message": null,
+            "status": "succeeded",
+            "experiment": 1
+        }
+    ]
+}
+```
+
+## Get experiment metrics
+
+<span class="api api-get">
+/api/v1/{username}/{project_name}/experiments/{id}/metrics
+</span>
+
+### Example curl request
+
+```
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/metrics' \
+  --header 'Authorization: token {{token}}'
+```
+
+### Example response
+
+```json
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "created_at": "2018-08-22T21:27:52.732286+02:00",
+            "values": {
+                "loss": 0.050211381167173386,
+                "precision": 0.9986705183982849,
+                "accuracy": 0.982699990272522
+            },
+            "experiment": 1
+        },
+        {
+            "id": 2,
+            "created_at": "2018-08-22T21:32:29.765700+02:00",
+            "values": {
+                "precision": 0.9,
+                "accuracy": 0.85
+            },
+            "experiment": 1
+        }
+    ]
+}
+```
+
+## Create experiment metric
+
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{id}/metrics
+</span>
+
+### Example curl request
+
+```
+curl --request POST \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/metrics' \
+  --header 'Authorization: token {{token}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"values": {"precision": 0.9, "accuracy": 0.85}
+}'
+```
+
+### Example response
+
+```json
+{
+    "id": 6,
+    "created_at": "2018-08-22T23:15:30.637932+02:00",
+    "values": {
+        "precision": 0.9,
+        "accuracy": 0.85
+    },
+    "experiment": 1
+}
+```
+
+
+## List experiment jobs
+
+<span class="api api-get">
+/api/v1/{username}/{project_name}/experiments/{id}/jobs
+</span>
+
+
+### Example curl request
+
+```
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/jobs' \
+  --header 'Authorization: token {{token}}'
+```
+
+### Example response
+
+```json
+
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "uuid": "41429e2b877447769ebc78be6a6b1c2b",
+      "unique_name": "root.quick-start.1.1.master",
+      "role": "master",
+      "experiment": 1,
+      "last_status": "succeeded",
+      "created_at": "2018-08-22T21:26:33.862708+02:00",
+      "updated_at": "2018-08-22T21:27:53.234997+02:00",
+      "started_at": "2018-08-22T21:26:39.594738+02:00",
+      "finished_at": "2018-08-22T21:27:53.234843+02:00",
+      "resources": null,
+      "node_scheduled": "gke-cluster-1-default-pool-001a34db-h8nj"
+    }
+  ]
+}
+```
 
 ## Get experiment logs
 
-<span class="api api-get">GET</span>
+<span class="api api-get">
+/api/v1/{username}/{project_name}/experiments/{id}/logs/
+</span>
 
-### Url
+### Example curl request
 
 ```
-GET /api/v1/{username}/{project_name}/experiments/{id}/logs/
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1' \
+  --header 'Authorization: token {{token}}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
 
 ## Start experiment tensorboard
 
-<span class="api api-get">POST</span>
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{id}/tensorboard/start
+</span>
 
-### Url
+### Example curl request
 
 ```
-POST /api/v1/{username}/{project_name}/experiments/{id}/tensorboard/start
+curl --request POST \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/metrics' \
+  --header 'Authorization: token {{token}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"values": {"precision": 0.9, "accuracy": 0.85}
+}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
 
 ## Stop experiment tensorboard
 
-<span class="api api-get">POST</span>
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{id}/tensorboard/stop
+</span>
 
-### Url
+### Example curl request
 
 ```
-POST /api/v1/{username}/{project_name}/experiments/{id}/tensorboard/stop
+curl --request POST \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/tensorboard/start' \
+  --header 'Authorization: token {{token}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"values": {"precision": 0.9, "accuracy": 0.85}
+}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
 
 ## Download experiment outputs
 
-<span class="api api-get">GET</span>
+<span class="api api-get">
+ /api/v1/{username}/{project_name}/experiments/{id}/outputs
+</span>
 
-### Url
+### Example curl request
 
 ```
-GET /api/v1/{username}/{project_name}/experiments/{id}/outputs
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/outputs' \
+  --header 'Authorization: token {{token}}'
 ```
 
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
 
 ## Get experiment job
 
 ### Method
 
-<span class="api api-get">GET</span>
+<span class="api api-get">
+/api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/
+</span>
 
-### Url
+### Example curl request
 
 ```
-GET /api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/jobs/1' \
+  --header 'Authorization: token {{token}}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
 
 ## Get experiment job statuses
 
 ### Method
 
-<span class="api api-get">GET</span>
+<span class="api api-get">
+/api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/statuses/
+</span>
 
-### Url
+
+### Example curl request
 
 ```
-GET /api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/statuses/
+curl --request GET \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/jobs/1/statuses' \
+  --header 'Authorization: token {{token}}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
