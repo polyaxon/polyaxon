@@ -216,8 +216,8 @@ export default class NodeScheduling extends React.Component<Props, State> {
           <div className="columns">
             <div className="column is-7">
               <div className="content">
-                <h4>Node selectors</h4>
                 <hr className="navbar-divider"/>
+                <h6>Node selectors</h6>
               </div>
               <div className="field is-horizontal">
                 <div className="field-label is-normal">
@@ -305,8 +305,8 @@ export default class NodeScheduling extends React.Component<Props, State> {
           <div className="columns">
             <div className="column is-7">
               <div className="content">
-                <h4>Affinity</h4>
                 <hr className="navbar-divider"/>
+                <h6>Affinity</h6>
               </div>
               <div className="field is-horizontal">
                 <div className="field-label is-normal">
@@ -394,8 +394,8 @@ export default class NodeScheduling extends React.Component<Props, State> {
           <div className="columns">
             <div className="column is-7">
               <div className="content">
-                <h4>Tolerations</h4>
                 <hr className="navbar-divider"/>
+                <h6>Tolerations</h6>
               </div>
               <div className="field is-horizontal">
                 <div className="field-label is-normal">

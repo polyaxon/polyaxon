@@ -167,12 +167,20 @@ export default class Cli extends React.Component<{}, CliState> {
               }
               {this.state.useVirtualenv && this.state.pythonVersion === '3.x' &&
               <code>
-                  <span className="bash">
-                    python -m pip install -U venv
-                  </span>
                 <span className="bash">
-                    python -m venv .env
+                  python -m pip install -U venv
+                </span>
+                <span className="bash">
+                  python -m venv .env
+                </span>
+                {this.state.os === 'Windows' ?
+                  <span className="bash">
+                    .env\Scripts\activate
+                  </span> :
+                  <span className="bash">
+                    source .env/bin/activate
                   </span>
+                }
               </code>
               }
               {this.state.install === 'pip' &&

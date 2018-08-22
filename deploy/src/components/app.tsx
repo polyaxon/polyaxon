@@ -17,7 +17,7 @@ export default class App extends React.Component<{}, AppState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      currentTab: location.pathname
+      currentTab: location.pathname === '/cli' ? '/cli' : '/deploy'
     };
   }
 
