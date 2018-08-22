@@ -24,6 +24,7 @@ It also packages some required dependencies for Polyaxon:
  * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq)
  * [Docker-Registry](https://github.com/kubernetes/charts/tree/master/incubator/docker-registry)
 
+
 > **Note**: It's possible to provide your own database host.
 
 > **Warning**: This chart does not yet allow for you to specify your redis host, rabbitmq host.
@@ -34,6 +35,11 @@ An nfs provisioner can be enabled in cases where you want to try the platform on
 without the need to create your own volumes.
 
 > **Warning**: You should know that using the nfs provisioner is not meant to be a production option.
+
+> **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
+
+> **Tip**: We created a [small interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
+
 
 ## Prerequisites
 
@@ -537,10 +543,6 @@ Alternatively, a YAML file that specifies the values for the above parameters ca
 ```console
 $ helm install --name my-release -f values.yaml polyaxon
 ```
-
-> **Tip**: You can use the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
-
-> **Tip**: You can use the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
 
 ## License
 
