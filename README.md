@@ -537,8 +537,8 @@ Alternatively, a YAML file that specifies the values for the above parameters ca
 $ helm install --name my-release -f values.yaml polyaxon
 ```
 
-> **Tip**: You can use the default [values.yaml](polyaxon/values.yaml)
-
+> **Tip**: You can use the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
+> **Tip**: You can use the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
 
 ## License
 
