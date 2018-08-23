@@ -354,6 +354,12 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
         await ws.send(get_error_message(message))
         return
 
+    if experiment.is_done:
+        await ws.send(get_error_message('Experiment is not running, current status: {}'.format(
+            experiment.last_status
+        )))
+        return
+
     experiment_uuid = experiment.uuid.hex
 
     auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
