@@ -143,3 +143,5 @@ persistence:
     outputs:
       mountPath: "/tmp/outputs"
       hostPath: "/tmp/outputs"
+
+environment: testing
