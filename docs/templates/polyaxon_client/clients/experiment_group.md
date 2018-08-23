@@ -40,6 +40,12 @@ polyaxon_client.experiment_group.delete_experiment_group(username, project_name,
 polyaxon_client.experiment_group.stop(username, project_name, group_id, pending=False)
 ```
 
+## Get experiment group statuses
+
+```python
+polyaxon_client.experiment_group.get_statuses(username, project_name, group_id)
+```
+
 ## Start experiment group tensorboard
 
 ```python
