@@ -8,7 +8,7 @@ TEST_URL=http://$IP:31811
 
 kubectl create namespace $TEST_NAMESPACE
 
-helm install --name polyaxon-test --namespace $TEST_NAMESPACE ./polyaxon/ -f ./ci/test-config.yml
+helm install --name polyaxon-test --namespace $TEST_NAMESPACE ./polyaxon/ -f ./ci/test-config.yml &
 
 echo "waiting for servers to become responsive"
 until curl --fail -s $TEST_URL/api/v1/versions/cli/; do
