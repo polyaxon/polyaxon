@@ -68,8 +68,13 @@ class Action(object):
             return False
 
         data = cls._prepare(context)
-        result = cls._execute(data=data, config=config)
-        auditor.record(event_type=cls.event_type,
-                       automatic=from_user is None,
-                       user=from_user)
+        try:
+            result = cls._execute(data=data, config=config)
+            auditor.record(event_type=cls.event_type,
+                           automatic=from_user is None,
+                           user=from_user)
+        except Exception:
+            # Todo we need to show this somewhere in the dashboard
+            logger.error('Exception during the execution of the action `{}`'.format(cls),
+                         exc_info=True)
         return result
