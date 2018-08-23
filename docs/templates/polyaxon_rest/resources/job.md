@@ -8,7 +8,7 @@
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/jobs/1' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/jobs/{{id}}' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -61,14 +61,13 @@ curl --request GET \
 
 ```
 curl --request PATCH \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/jobs/1/' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/jobs/{{id}}/' \
   --header 'Authorization: token {{token}}' \
   --header 'Content-Type: application/json' \
   --data '{
   "description": "new description"
 }'
 ```
-
 
 <b>Example response</b>
 
@@ -120,7 +119,7 @@ curl --request PATCH \
 
 ```
 curl --request DELETE \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/jobs/100' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/jobs/{{id}}' \
   --header 'Authorization: token {{token}}'
 ```
 
