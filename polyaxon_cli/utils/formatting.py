@@ -87,8 +87,8 @@ class Printer(object):
             return cls.add_color(status, color='green')
         elif status in ['failed', 'stopped']:
             return cls.add_color(status, color='red')
-        else:
-            return cls.add_color(status, color='yellow')
+
+        return cls.add_color(status, color='yellow')
 
     @classmethod
     def add_status_color(cls, obj_dict, status_key='last_status'):
