@@ -8,7 +8,7 @@
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -69,7 +69,7 @@ curl --request GET \
 
 ```
 curl --request PATCH \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}/' \
   --header 'Authorization: token {{token}}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -135,7 +135,7 @@ curl --request PATCH \
 
 ```
 curl --request DELETE \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/100' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -150,7 +150,7 @@ curl --request DELETE \
 
 ```
 curl --request POST \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/restart' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}/restart' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -187,7 +187,7 @@ curl --request POST \
 
 ```
 curl --request POST \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/resume' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}/resume' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -224,7 +224,7 @@ curl --request POST \
 
 ```
 curl --request POST \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/resume' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}/resume' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -261,7 +261,7 @@ curl --request POST \
 
 ```
 curl --request POST \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/stop' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}/stop' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -275,7 +275,7 @@ curl --request POST \
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/statuses' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{id}}/statuses' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -468,7 +468,7 @@ curl --request GET \
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}/logs' \
   --header 'Authorization: token {{token}}'
 ```
 
