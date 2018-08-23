@@ -15,7 +15,7 @@ curl -X GET \
 
 ### Example responses
 
-```
+```json
 {
     "uuid": "2d78d354419d4ff2b1eac1c6333cb197",
     "version_api": {
