@@ -75,6 +75,6 @@ class Action(object):
                            user=from_user)
         except Exception:
             # Todo we need to show this somewhere in the dashboard
-            logger.error('Exception during the execution of the action `{}`'.format(cls),
+            logger.error('Exception during the execution of the action %s', cls,
                          exc_info=True)
         return result
