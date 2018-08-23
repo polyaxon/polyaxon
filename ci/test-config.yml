@@ -120,6 +120,8 @@ dockerizer:
 job:
   imageTag: latest
 
+hooks:
+  imageTag: latest
 
 persistence:
   logs:

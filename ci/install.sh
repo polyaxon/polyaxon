@@ -33,6 +33,9 @@ until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do
 done
 kubectl get nodes
 
+minikube addons list
+sudo CHANGE_MINIKUBE_NONE_USER=true $PWD/bin/minikube addons enable coredns
+
 echo "installing helm"
 curl -ssL https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
   | tar -xz -C bin --strip-components 1 linux-amd64/helm

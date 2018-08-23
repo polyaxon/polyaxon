@@ -8,7 +8,7 @@ services:
 
 env:
   global:
-    - MINIKUBE_VERSION=0.28.0
+    - MINIKUBE_VERSION=0.28.2
     - HELM_VERSION=2.9.1
     - PATH="$PWD/bin:$PATH"
   matrix:

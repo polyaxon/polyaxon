@@ -12,7 +12,7 @@ helm install --name polyaxon-test --namespace $TEST_NAMESPACE ./polyaxon/ -f ./c
 
 echo "waiting for servers to become responsive"
 until curl --fail -s $TEST_URL/api/v1/versions/cli/; do
-    kubectl --namespace=$TEST_NAMESPACE describe pod
+    kubectl --namespace=$TEST_NAMESPACE logs -l type=polyaxon-core
     sleep 10
 done
 
