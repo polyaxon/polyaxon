@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 import auditor
 
 from constants.experiments import ExperimentLifeCycle
+from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment
@@ -47,6 +48,16 @@ def get_status_message(status):
     return json.dumps({'status': status, 'log_lines': None})
 
 
+async def notify(consumer, message):
+    disconnected_ws = set()
+    for _ws in consumer.ws:
+        try:
+            await _ws.send(message)
+        except ConnectionClosed:
+            disconnected_ws.add(_ws)
+    consumer.remove_sockets(disconnected_ws)
+
+
 def validate_project(request, username, project_name):
     try:
         project = Project.objects.get(name=project_name, user__username=username)
@@ -67,6 +78,10 @@ def validate_experiment(request, username, project_name, experiment_id):
         experiment = Experiment.objects.get(project=project, id=experiment_id)
     except (Experiment.DoesNotExist, ValidationError):
         return None, 'Experiment was not found'
+    if experiment.is_done:
+        return None, 'Experiment is not running, current status: {}'.format(
+            experiment.last_status
+        )
     return experiment, None
 
 
@@ -81,8 +96,10 @@ def validate_experiment_job(request, username, project_name, experiment_id, job_
         job = ExperimentJob.objects.get(experiment=experiment, id=job_id)
     except (ExperimentJob.DoesNotExist, ValidationError):
         return None, None, 'Experiment was not found'
-    if not job.is_running:
-        return None, None, 'Job was not running'
+    if job.is_done:
+        return None, 'Experiment job is not running, current status: {}'.format(
+            job.last_status
+        )
     return job, experiment, None
 
 
@@ -96,8 +113,10 @@ def validate_job(request, username, project_name, job_id):
         job = Job.objects.get(project=project, id=job_id)
     except (Experiment.DoesNotExist, ValidationError):
         return None, 'Job was not found'
-    if not job.is_running:
-        return None, 'Job was not running'
+    if job.is_done:
+        return None, 'Experiment is not running, current status: {}'.format(
+            job.last_status
+        )
     return job, None
 
 
@@ -111,8 +130,10 @@ def validate_build(request, username, project_name, build_id):
         job = BuildJob.objects.get(project=project, id=build_id)
     except (Experiment.DoesNotExist, ValidationError):
         return None, 'Build was not found'
-    if not job.is_running:
-        return None, 'Build was not running'
+    if job.is_done:
+        return None, 'Job is not running, current status: {}'.format(
+            job.last_status
+        )
     return job, None
 
 
@@ -296,13 +317,7 @@ async def experiment_job_logs(request, ws, username, project_name, experiment_id
         num_message_retries += 1
         for message in consumer.get_messages():
             num_message_retries = 0
-            disconnected_ws = set()
-            for _ws in consumer.ws:
-                try:
-                    await _ws.send(message)
-                except ConnectionClosed:
-                    disconnected_ws.add(_ws)
-            consumer.remove_sockets(disconnected_ws)
+            await notify(consumer=consumer, message=message)
 
         # After trying a couple of time, we must check the status of the experiment
         if num_message_retries > MAX_RETRIES:
@@ -334,16 +349,6 @@ async def experiment_job_logs(request, ws, username, project_name, experiment_id
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-async def notify(consumer, message):
-    disconnected_ws = set()
-    for _ws in consumer.ws:
-        try:
-            await _ws.send(message)
-        except ConnectionClosed:
-            disconnected_ws.add(_ws)
-    consumer.remove_sockets(disconnected_ws)
-
-
 @authorized()
 async def experiment_logs(request, ws, username, project_name, experiment_id):
     experiment, message = validate_experiment(request=request,
@@ -352,12 +357,6 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
                                               experiment_id=experiment_id)
     if experiment is None:
         await ws.send(get_error_message(message))
-        return
-
-    if experiment.is_done:
-        await ws.send(get_error_message('Experiment is not running, current status: {}'.format(
-            experiment.last_status
-        )))
         return
 
     experiment_uuid = experiment.uuid.hex
@@ -414,8 +413,6 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
         RedisToStream.remove_experiment_logs(experiment_uuid=experiment_uuid)
         return
 
-    await notify(consumer=consumer, message=get_status_message(status))
-
     while True:
         num_message_retries += 1
         for message in consumer.get_messages():
@@ -456,7 +453,9 @@ async def job_logs(request, ws, username, project_name, job_id):
     if job is None:
         await ws.send(get_error_message(message))
         return
+
     job_uuid = job.uuid.hex
+
     auditor.record(event_type=JOB_LOGS_VIEWED,
                    instance=job,
                    actor_id=request.app.user.id,
@@ -477,21 +476,43 @@ async def job_logs(request, ws, username, project_name, job_id):
         request.app.job_logs_consumers[job_uuid] = consumer
         consumer.run()
 
+    def should_disconnect():
+        if not consumer.ws:
+            _logger.info('Stopping logs monitor for job uuid %s', job_uuid)
+            RedisToStream.remove_job_logs(job_uuid=job_uuid)
+            # if job_uuid in request.app.job_logs_consumers:
+            #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
+            #     if consumer:
+            #         consumer.stop()
+            return True
+        return False
+
     # add socket manager
     consumer.add_socket(ws)
     should_quite = False
     num_message_retries = 0
+
+    # Stream phase changes
+    status = None
+    while status != JobLifeCycle.RUNNING and not JobLifeCycle.is_done(status):
+        job.refresh_from_db()
+        if status != job.last_status:
+            status = job.last_status
+            await notify(consumer=consumer, message=get_status_message(status))
+            if should_disconnect():
+                return
+        await asyncio.sleep(SOCKET_SLEEP)
+
+    if JobLifeCycle.is_done(status):
+        await notify(consumer=consumer, message=get_status_message(status))
+        RedisToStream.remove_job_logs(job_uuid=job_uuid)
+        return
+
     while True:
         num_message_retries += 1
         for message in consumer.get_messages():
             num_message_retries = 0
-            disconnected_ws = set()
-            for _ws in consumer.ws:
-                try:
-                    await _ws.send(message)
-                except ConnectionClosed:
-                    disconnected_ws.add(_ws)
-            consumer.remove_sockets(disconnected_ws)
+            await notify(consumer=consumer, message=message)
 
         # After trying a couple of time, we must check the status of the experiment
         if num_message_retries > MAX_RETRIES:
@@ -508,13 +529,7 @@ async def job_logs(request, ws, username, project_name, job_id):
             consumer.remove_sockets({ws, })
             should_quite = True
 
-        if not consumer.ws:
-            _logger.info('Stopping logs monitor for job uuid %s', job_uuid)
-            RedisToStream.remove_job_logs(job_uuid=job_uuid)
-            # if job_uuid in request.app.job_logs_consumers:
-            #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
-            #     if consumer:
-            #         consumer.stop()
+        if should_disconnect():
             should_quite = True
 
         if should_quite:
@@ -532,7 +547,9 @@ async def build_logs(request, ws, username, project_name, build_id):
     if job is None:
         await ws.send(get_error_message(message))
         return
+
     job_uuid = job.uuid.hex
+
     auditor.record(event_type=BUILD_JOB_LOGS_VIEWED,
                    instance=job,
                    actor_id=request.app.user.id,
@@ -553,21 +570,43 @@ async def build_logs(request, ws, username, project_name, build_id):
         request.app.job_logs_consumers[job_uuid] = consumer
         consumer.run()
 
+    def should_disconnect():
+        if not consumer.ws:
+            _logger.info('Stopping logs monitor for job uuid %s', job_uuid)
+            RedisToStream.remove_job_logs(job_uuid=job_uuid)
+            # if job_uuid in request.app.job_logs_consumers:
+            #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
+            #     if consumer:
+            #         consumer.stop()
+            return True
+        return False
+
     # add socket manager
     consumer.add_socket(ws)
     should_quite = False
     num_message_retries = 0
+
+    # Stream phase changes
+    status = None
+    while status != JobLifeCycle.RUNNING and not JobLifeCycle.is_done(status):
+        job.refresh_from_db()
+        if status != job.last_status:
+            status = job.last_status
+            await notify(consumer=consumer, message=get_status_message(status))
+            if should_disconnect():
+                return
+        await asyncio.sleep(SOCKET_SLEEP)
+
+    if JobLifeCycle.is_done(status):
+        await notify(consumer=consumer, message=get_status_message(status))
+        RedisToStream.remove_job_logs(job_uuid=job_uuid)
+        return
+
     while True:
         num_message_retries += 1
         for message in consumer.get_messages():
             num_message_retries = 0
-            disconnected_ws = set()
-            for _ws in consumer.ws:
-                try:
-                    await _ws.send(message)
-                except ConnectionClosed:
-                    disconnected_ws.add(_ws)
-            consumer.remove_sockets(disconnected_ws)
+            await notify(consumer=consumer, message=message)
 
         # After trying a couple of time, we must check the status of the experiment
         if num_message_retries > MAX_RETRIES:
@@ -584,13 +623,7 @@ async def build_logs(request, ws, username, project_name, build_id):
             consumer.remove_sockets({ws, })
             should_quite = True
 
-        if not consumer.ws:
-            _logger.info('Stopping logs monitor for job uuid %s', job_uuid)
-            RedisToStream.remove_job_logs(job_uuid=job_uuid)
-            # if job_uuid in request.app.job_logs_consumers:
-            #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
-            #     if consumer:
-            #         consumer.stop()
+        if should_disconnect():
             should_quite = True
 
         if should_quite:
