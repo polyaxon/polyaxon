@@ -4,7 +4,7 @@
 /api/v1/{username}/{project_name}/experiments/{id}/
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
@@ -12,7 +12,7 @@ curl --request GET \
   --header 'Authorization: token {{token}}'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -65,7 +65,7 @@ curl --request GET \
 /api/v1/{username}/{project_name}/experiments/{id}/
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request PATCH \
@@ -77,7 +77,7 @@ curl --request PATCH \
 }'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -131,7 +131,7 @@ curl --request PATCH \
 </span>
 
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request DELETE \
@@ -146,7 +146,7 @@ curl --request DELETE \
 /api/v1/{username}/{project_name}/experiments/{id}/restart/
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request POST \
@@ -154,7 +154,7 @@ curl --request POST \
   --header 'Authorization: token {{token}}'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -183,7 +183,7 @@ curl --request POST \
 /api/v1/{username}/{project_name}/experiments/{id}/resume/
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request POST \
@@ -191,7 +191,7 @@ curl --request POST \
   --header 'Authorization: token {{token}}'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -220,7 +220,7 @@ curl --request POST \
 /api/v1/{username}/{project_name}/experiments/{id}/copy
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request POST \
@@ -228,7 +228,7 @@ curl --request POST \
   --header 'Authorization: token {{token}}'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -257,7 +257,7 @@ curl --request POST \
 /api/v1/{username}/{project_name}/experiments/{id}/stop
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request POST \
@@ -271,7 +271,7 @@ curl --request POST \
 /api/v1/{username}/{project_name}/experiments/{id}/statuses
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
@@ -279,7 +279,7 @@ curl --request GET \
   --header 'Authorization: token {{token}}'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -345,15 +345,15 @@ curl --request GET \
 /api/v1/{username}/{project_name}/experiments/{id}/metrics
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/metrics' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}/metrics' \
   --header 'Authorization: token {{token}}'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -390,11 +390,11 @@ curl --request GET \
 /api/v1/{username}/{project_name}/experiments/{id}/metrics
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request POST \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/metrics' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}/metrics' \
   --header 'Authorization: token {{token}}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -402,7 +402,7 @@ curl --request POST \
 }'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 {
@@ -424,15 +424,15 @@ curl --request POST \
 </span>
 
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/jobs' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}/jobs' \
   --header 'Authorization: token {{token}}'
 ```
 
-### Example response
+<b>Example response</b>
 
 ```json
 
@@ -464,11 +464,11 @@ curl --request GET \
 /api/v1/{username}/{project_name}/experiments/{id}/logs/
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}' \
   --header 'Authorization: token {{token}}'
 ```
 
@@ -478,11 +478,11 @@ curl --request GET \
 /api/v1/{username}/{project_name}/experiments/{id}/tensorboard/start
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request POST \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/metrics' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}/metrics' \
   --header 'Authorization: token {{token}}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -496,11 +496,11 @@ curl --request POST \
 /api/v1/{username}/{project_name}/experiments/{id}/tensorboard/stop
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request POST \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/tensorboard/start' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}/tensorboard/start' \
   --header 'Authorization: token {{token}}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -514,44 +514,74 @@ curl --request POST \
  /api/v1/{username}/{project_name}/experiments/{id}/outputs
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/outputs' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}/outputs' \
   --header 'Authorization: token {{token}}'
 ```
 
 
 ## Get experiment job
 
-### Method
-
 <span class="api api-get">
 /api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/
 </span>
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/jobs/1' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}//jobs/{{job_id}}' \
   --header 'Authorization: token {{token}}'
 ```
 
 ## Get experiment job statuses
-
-### Method
 
 <span class="api api-get">
 /api/v1/{username}/{project_name}/experiments/{experiment_id}/jobs/{id}/statuses/
 </span>
 
 
-### Example curl request
+<b>Example curl request</b>
 
 ```
 curl --request GET \
-  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/1/jobs/1/statuses' \
+  --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}//experiments/{{experiment_id}}//jobs/{{job_id}}/statuses' \
   --header 'Authorization: token {{token}}'
+```
+
+
+## Bookmark experiment
+
+<span class="api api-post">
+/api/v1/{username}/{project_name}/experiments/{experiment_id}/bookmark/
+</span>
+
+<b>Example curl request</b>
+
+```
+curl -X POST \
+  http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{experiment_id}}/bookmark \
+  -H 'Authorization: token a9a75b9c12a79da3c38c0540d0bf0ae43cc94d8a' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+```
+
+## Unbookmark experiment
+
+
+<span class="api api-delete">
+/api/v1/{username}/{project_name}/experiments/{experiment_id}/unbookmark/
+</span>
+
+<b>Example curl request</b>
+
+```
+curl -X DELETE \
+  http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{experiment_id}}/unbookmark \
+  -H 'Authorization: token a9a75b9c12a79da3c38c0540d0bf0ae43cc94d8a' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
 ```
