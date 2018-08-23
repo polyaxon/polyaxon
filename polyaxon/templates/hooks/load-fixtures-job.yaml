@@ -8,7 +8,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
+    type: {{ .Values.types.hooks }}
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.

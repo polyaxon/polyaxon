@@ -484,6 +484,7 @@ nfsProvisioner:
             topologyKey: "kubernetes.io/hostname"
 
 types:
+  hooks: "polyaxon-hooks"
   core: "polyaxon-core"
   experiment: "polyaxon-experiment"
 
