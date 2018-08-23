@@ -20,45 +20,6 @@ polyaxon_client.experiment.update_experiment(
 polyaxon_client.experiment.delete_experiment(username, project_name, experiment_id)
 ```
 
-## Get experiment statuses
-
-```python
-polyaxon_client.experiment.get_statuses(
-    username,
-    project_name,
-    experiment_id,
-    page=1)
-```
-
-## Get experiment metrics
-
-```python
-polyaxon_client.experiment.get_metrics(
-    username,
-    project_name,
-    experiment_id,
-    page=1)
-```
-
-## Create experiment metric
-
-```python
-polyaxon_client.experiment.create_metric(
-    username,
-    project_name,
-    experiment_id,
-    values)
-```
-
-## List experiment jobs
-
-```python
-polyaxon_client.experiment.list_jobs(
-    username,
-    project_name,
-    experiment_id,
-    page=1)
-```
 
 ## Restart experiment
 
@@ -97,6 +58,46 @@ polyaxon_client.experiment.copy(
 
 ```python
 polyaxon_client.experiment.stop(username, project_name, experiment_id)
+```
+
+## Get experiment statuses
+
+```python
+polyaxon_client.experiment.get_statuses(
+    username,
+    project_name,
+    experiment_id,
+    page=1)
+```
+
+## Get experiment metrics
+
+```python
+polyaxon_client.experiment.get_metrics(
+    username,
+    project_name,
+    experiment_id,
+    page=1)
+```
+
+## Create experiment metric
+
+```python
+polyaxon_client.experiment.create_metric(
+    username,
+    project_name,
+    experiment_id,
+    values)
+```
+
+## List experiment jobs
+
+```python
+polyaxon_client.experiment.list_jobs(
+    username,
+    project_name,
+    experiment_id,
+    page=1)
 ```
 
 ## Get experiment resources
