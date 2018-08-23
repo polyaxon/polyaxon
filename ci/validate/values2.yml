@@ -1,0 +1,85 @@
+rbac:
+  enabled: false
+
+ingress:
+  enabled: false
+
+serviceType: NodePort
+
+environment: staging
+
+user:
+  password: root
+
+
+postgresql:
+  persistence:
+    enabled: true
+    size: 10Gi
+
+nodeSelectors:
+  core:
+    polyaxon: core
+  builds:
+    polyaxon: core
+
+
+api:
+  replicas: 3
+
+scheduler:
+  replicas: 3
+
+hpsearch:
+  replicas: 3
+
+eventsHandlers:
+  replicas: 3
+
+eventMonitors:
+  replicas: 3
+
+auth:
+  github:
+    enabled: false
+    clientId: "593b4e1bfc3f4742cc23"
+    clientSecret: "c20621355af0c9f2032ee4bb20d0c3f12bf0cac6"
+
+
+persistence:
+  logs:
+    mountPath: "/tmp/logs"
+    hostPath: "/tmp/logs"
+  repos:
+    existingClaim:
+    mountPath: "/tmp/repos"
+    hostPath: "/tmp/repos"
+  upload:
+    existingClaim:
+    mountPath: "/tmp/upload"
+    hostPath: "/tmp/upload"
+  data:
+    data:
+      mountPath: "/tmp/data"
+      hostPath: "/tmp/data"
+  outputs:
+    outputs:
+      mountPath: "/tmp/outputs"
+      hostPath: "/tmp/outputs"
+
+
+email:
+  host: "smtp.gmail.com"
+  port: 587
+  useTls: true
+  hostUser: "foo"
+  hostPassword: "bar"
+
+integrations:
+  slack:
+    - url: https://hooks.slack.com/services/sdfdfdsfsdf/sdflsdklfj
+    - url: https://hooks.slack.com/services/sdlkfjsdlk/lkjsdlkfjdklsjf2
+
+privateRegistries:
+  - "foo:secret@cloud.foobar.io:5000"
+

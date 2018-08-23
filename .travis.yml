@@ -18,9 +18,8 @@ install:
   - ./ci/install.sh
 
 script:
-  - python3 ci/validate/helm.py
-  - git diff
-  - ./ci/test.sh
+  - ./ci/test-helm.sh
+  - ./ci/test-deploy.sh
 
 notifications:
   slack:

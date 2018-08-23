@@ -36,7 +36,7 @@ if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
     argparser.add_argument('--debug', action='store_true',
                            help='Run helm lint and helm template with the --debug flag')
-    argparser.add_argument('--values', default='values.yml',
+    argparser.add_argument('--values',
                            help='Specify Helm values in a YAML file (can specify multiple)')
     argparser.add_argument('--output-dir', default='rendered-templates',
                            help='Output directory for the rendered templates. '
