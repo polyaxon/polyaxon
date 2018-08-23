@@ -1,127 +1,59 @@
-## Login user and return user's token
-
-### Method
-
-<span class="api api-post">POST</span>
-
-### Url
-
-```
-POST /api/v1/users/token/
-```
-
-### Body
-
-param | type | optional
-------|------|------------
-username | string | False
-password | string | False
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
-
 ## Activate user
 
-### Method
+<span class="api api-post">
+/api/v1/users/activate/{username}/
+</span>
 
-<span class="api api-post">POST</span>
-
-### Url
+<b>Example curl request</b>
 
 ```
-DELETE /api/v1/users/activate/{username}/
+curl -X POST \
+  'http://localhost:8000/api/v1/users/activate/{{user}}' \
+  -H 'Authorization: token {{token}}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
 
 ## Delete user
 
-### Method
+<span class="api api-delete">
+/api/v1/users/delete/{username}/
+</span>
 
-<span class="api api-delete">DELETE</span>
-
-### Url
+<b>Example curl request</b>
 
 ```
-DELETE /api/v1/users/delete/{username}/
+curl -X DELETE \
+  'http://localhost:8000/api/v1/users/delete/{{user}}' \
+  -H 'Authorization: token {{token}}' \
+  -H 'Cache-Control: no-cache' \
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 204 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
 
 
 ## Grant a user the superuser role
 
-### Method
+<span class="api api-post">
+/api/v1/superusers/grant/{username}/
+</span>
 
-<span class="api api-post">POST</span>
-
-### Url
+<b>Example curl request</b>
 
 ```
-POST /api/v1/superusers/grant/{username}/
+curl -X POST \
+  'http://localhost:8000/api/v1/superusers/grant/{{user}}' \
+  -H 'Authorization: token {{token}}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)
-
 
 
 ## Revoke the superuser role from user
 
 
-### Method
+<span class="api api-post">
+/api/v1/superusers/revoke/{username}/
+</span>
 
-<span class="api api-post">POST</span>
-
-### Url
+<b>Example curl request</b>
 
 ```
-POST /api/v1/superusers/revoke/{username}/
+curl -X DELETE \
+  'http://localhost:8000/api/v1/superusers/grant/{{user}}' \
+  -H 'Authorization: token {{token}}'
 ```
-
-### Headers
-
-  * Authorization: Token "token"
-
-### Responses
-
- * Response 200 (application/json)
- * Response 400 (application/json)
- * Response 401 (application/json)
- * Response 403 (application/json)
- * Response 404 (application/json)

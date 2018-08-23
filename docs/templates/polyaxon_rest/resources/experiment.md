@@ -564,7 +564,7 @@ curl --request GET \
 ```
 curl -X POST \
   http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{experiment_id}}/bookmark \
-  -H 'Authorization: token a9a75b9c12a79da3c38c0540d0bf0ae43cc94d8a' \
+  -H 'Authorization: token {{token}}' \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
 ```
@@ -581,7 +581,7 @@ curl -X POST \
 ```
 curl -X DELETE \
   http://{{base_api_url}}/api/v1/{{username}}/{{project}}/experiments/{{experiment_id}}/unbookmark \
-  -H 'Authorization: token a9a75b9c12a79da3c38c0540d0bf0ae43cc94d8a' \
+  -H 'Authorization: token {{token}}' \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
 ```
