@@ -644,12 +644,11 @@ def logs(ctx, job, past, follow):
     def get_experiment_logs():
         colors = deque(Printer.COLORS)
         job_to_color = {}
-        sign = {'current': '-', 'values': ['-', '|']}
 
         def message_handler(message):
             status = message['status']
-            log_lines = to_list(message['log_lines'])
-            if status == 'running':
+            if status == 'running' and message['log_lines']:
+                log_lines = to_list(message['log_lines'])
                 job_info = '{}.{}'.format(message['task_type'], int(message['task_idx']) + 1)
                 if job_info in job_to_color:
                     color = job_to_color[job_info]
@@ -661,16 +660,11 @@ def logs(ctx, job, past, follow):
                 for log_line in log_lines:
                     log_line = '{} -- {}'.format(Printer.add_color(job_info, color), log_line)
                     Printer.log(log_line, nl=True)
-            elif status == 'building':
-                sign['current'] = (sign['values'][0]
-                                   if sign['current'] == sign['values'][1]
-                                   else sign['values'][1])
-                status = Printer.add_color(status, 'yellow')
-                Printer.log("{} -- creating image {}\r".format(status, sign['current']))
-                sys.stdout.flush()
             else:
+                log_lines = to_list(message['log_lines'])
                 for log_line in log_lines:
-                    Printer.log('{} -- {}'.format(status, log_line), nl=True)
+                    status = Printer.get_colored_status(status)
+                    Printer.log('{} -- {}'.format(status, log_line or ''), nl=True)
 
         if past:
             try:

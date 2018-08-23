@@ -10,7 +10,6 @@ from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.build_job import BuildJobManager
-from polyaxon_cli.schemas.utils import to_list
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -19,6 +18,7 @@ from polyaxon_cli.utils.formatting import (
     get_resources,
     list_dicts_to_tabulate
 )
+from polyaxon_cli.utils.log_handler import handle_job_logs
 
 
 def get_build_or_local(project=None, _build=None):
@@ -379,11 +379,6 @@ def logs(ctx, past, follow):
     """
     user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
 
-    def message_handler(message):
-        log_lines = to_list(message['log_lines'])
-        for log_line in log_lines:
-            Printer.log(log_line, nl=True)
-
     if past:
         try:
             response = PolyaxonClient().build_job.logs(
@@ -402,7 +397,7 @@ def logs(ctx, past, follow):
         PolyaxonClient().build_job.logs(user,
                                         project_name,
                                         _build,
-                                        message_handler=message_handler)
+                                        message_handler=handle_job_logs)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))

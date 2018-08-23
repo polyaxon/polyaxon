@@ -80,18 +80,22 @@ class Printer(object):
         return click.style('{}'.format(value), fg=color)
 
     @classmethod
+    def get_colored_status(cls, status):
+        if status == 'created':
+            return cls.add_color(status, 'cyan')
+        elif status == 'succeeded':
+            return cls.add_color(status, color='green')
+        elif status in ['failed', 'stopped']:
+            return cls.add_color(status, color='red')
+        else:
+            return cls.add_color(status, color='yellow')
+
+    @classmethod
     def add_status_color(cls, obj_dict, status_key='last_status'):
         if obj_dict.get(status_key) is None:
             return obj_dict
 
-        if obj_dict[status_key] == 'created':
-            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='cyan')
-        elif obj_dict[status_key] == 'succeeded':
-            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='green')
-        elif obj_dict[status_key] in ['failed', 'stopped']:
-            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='red')
-        else:
-            obj_dict[status_key] = cls.add_color(obj_dict[status_key], color='yellow')
+        obj_dict[status_key] = cls.get_colored_status(obj_dict[status_key])
         return obj_dict
 
     @classmethod
