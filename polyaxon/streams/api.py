@@ -44,7 +44,7 @@ def get_error_message(message):
 
 
 def get_status_message(status):
-    return json.dumps({'status': status, 'log_lines': ['']})
+    return json.dumps({'status': status, 'log_lines': None})
 
 
 def validate_project(request, username, project_name):
