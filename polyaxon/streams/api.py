@@ -350,7 +350,11 @@ async def experiment_job_logs(request, ws, username, project_name, experiment_id
 
 
 @authorized()
-async def experiment_logs(request, ws, username, project_name, experiment_id):
+async def experiment_logs(request,
+                          ws,
+                          username,
+                          project_name,
+                          experiment_id):  # pylint:disable=too-many-branches
     experiment, message = validate_experiment(request=request,
                                               username=username,
                                               project_name=project_name,
@@ -445,7 +449,11 @@ async def experiment_logs(request, ws, username, project_name, experiment_id):
 
 
 @authorized()
-async def job_logs(request, ws, username, project_name, job_id):
+async def job_logs(request,
+                   ws,
+                   username,
+                   project_name,
+                   job_id):  # pylint:disable=too-many-branches
     job, message = validate_job(request=request,
                                 username=username,
                                 project_name=project_name,
@@ -539,7 +547,11 @@ async def job_logs(request, ws, username, project_name, job_id):
 
 
 @authorized()
-async def build_logs(request, ws, username, project_name, build_id):
+async def build_logs(request,
+                     ws,
+                     username,
+                     project_name,
+                     build_id):  # pylint:disable=too-many-branches
     job, message = validate_build(request=request,
                                   username=username,
                                   project_name=project_name,
