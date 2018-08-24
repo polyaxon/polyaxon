@@ -2,17 +2,17 @@ import * as React from 'react';
 
 function ProjectHeader() {
   return (
-    <div className="row">
-      <div className="col-md-9 block">
+    <tr className="list-header">
+      <th className="block">
         Name
-      </div>
-      <div className="col-md-2 block">
+      </th>
+      <th className="block">
         Info
-      </div>
-      <div className="col-md-1 block">
+      </th>
+      <th className="block">
         Actions
-      </div>
-    </div>
+      </th>
+    </tr>
   );
 }
 

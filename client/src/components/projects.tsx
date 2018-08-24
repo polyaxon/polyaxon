@@ -1,8 +1,7 @@
-import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/project';
-import PaginatedList from '../components/paginatedList';
+import PaginatedTable from '../components/paginatedTable';
 import { ProjectModel } from '../models/project';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
@@ -24,19 +23,19 @@ export default class Projects extends React.Component<Props, Object> {
   public render() {
     const projects = this.props.projects;
     const listProjects = () => {
-        return (
-          <ul>
-            {projects.filter(
-              (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
-            ).map(
-              (project: ProjectModel) => <li className="list-item" key={project.unique_name}>
-                <Project
-                  project={project}
-                  onDelete={() => this.props.onDelete(project.unique_name)}
-                /></li>)}
-          </ul>
-        );
-      };
+      return (
+        <tbody>
+        {ProjectHeader()}
+        {projects.map(
+          (project: ProjectModel) =>
+            <Project
+              key={project.unique_name}
+              project={project}
+              onDelete={() => this.props.onDelete(project.unique_name)}
+            />)}
+        </tbody>
+      );
+    };
 
     const empty = this.props.bookmarks ?
       EmptyBookmarks(
@@ -50,10 +49,9 @@ export default class Projects extends React.Component<Props, Object> {
         'polyaxon project create --help');
 
     return (
-      <PaginatedList
+      <PaginatedTable
         count={this.props.count}
         componentList={listProjects()}
-        componentHeader={ProjectHeader()}
         componentEmpty={empty}
         filters={false}
         fetchData={this.props.fetchData}

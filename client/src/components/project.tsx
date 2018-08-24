@@ -17,8 +17,8 @@ export interface Props {
 function Project({project, onDelete}: Props) {
   const visibility = project.is_public ? 'Public' : 'Private';
   return (
-    <div className="row">
-      <div className="col-md-9 block">
+    <tr className="list-item">
+      <td className="block">
         <LinkContainer to={getProjectUrl(project.user, project.name)}>
           <a className="title">
             <i className="fa fa-server icon" aria-hidden="true"/>
@@ -27,23 +27,23 @@ function Project({project, onDelete}: Props) {
         </LinkContainer>
         <Description description={project.description}/>
         <Tags tags={project.tags} />
-      </div>
+      </td>
 
-      <div className="col-md-2 block">
+      <td className="block">
         <MetaInfo
           icon="fa-lock"
           name="Visibility"
           value={visibility}
         />
         <DatesMetaInfo createdAt={project.created_at} updatedAt={project.updated_at}/>
-      </div>
-      <div className="col-md-1 block">
+      </td>
+      <td className="block">
         <Actions
           onDelete={onDelete}
           isRunning={false}
         />
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }
 
