@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { Bookmark } from '../constants/bookmarks';
 import {
   getBuildUrl,
   getProjectUrl,
@@ -11,6 +10,7 @@ import {
 } from '../constants/utils';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { BuildModel } from '../models/build';
 import Breadcrumb from './breadcrumb';
 import BuildOverview from './buildOverview';
@@ -39,7 +39,7 @@ export default class BuildDetail extends React.Component<Props, Object> {
       return EmptyList(false, 'build', 'build');
     }
 
-    const bookmark: Bookmark = {
+    const bookmark: BookmarkInterface = {
       active: isTrue(this.props.build.bookmarked),
       callback: isTrue(this.props.build.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };
