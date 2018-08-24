@@ -31,11 +31,11 @@ function Job({job, onDelete, onStop}: Props) {
   }
 
   return (
-    <div className="row">
-      <div className="col-md-1 block">
+    <tr className="list-item">
+      <td className="block">
         <Status status={job.last_status}/>
-      </div>
-      <div className="col-md-6 block">
+      </td>
+      <td className="block">
         <LinkContainer to={getJobUrl(values[0], values[1], job.id)}>
           <a className="title">
             <i className="fa fa-tasks icon" aria-hidden="true"/>
@@ -52,24 +52,24 @@ function Job({job, onDelete, onStop}: Props) {
           />
         </div>
         <Tags tags={job.tags}/>
-      </div>
-      <div className="col-md-2 block">
+      </td>
+      <td className="block">
         <BuildLinkMetaInfo
           value={buildValues[3]}
           link={buildUrl}
         />
-      </div>
-      <div className="col-md-2 block">
+      </td>
+      <td className="block">
         <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>
-      </div>
-      <div className="col-md-1 block">
+      </td>
+      <td className="block">
         <Actions
           onDelete={onDelete}
           onStop={onStop}
           isRunning={!isDone(job.last_status)}
         />
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }
 

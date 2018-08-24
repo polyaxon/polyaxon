@@ -8,7 +8,7 @@ import { EmptyList } from './empty/emptyList';
 import { DEFAULT_FILTERS } from './filters/constants';
 import Job from './job';
 import JobHeader from './jobHeader';
-import PaginatedList from './paginatedList';
+import PaginatedTable from './paginatedTable';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -29,19 +29,17 @@ export default class Jobs extends React.Component<Props, Object> {
     const jobs = this.props.jobs;
     const listJobs = () => {
       return (
-        <ul>
-          {jobs.filter(
-            (xp: JobModel) => _.isNil(xp.deleted) || !xp.deleted
-          ).map(
-            (job: JobModel) =>
-              <li className="list-item" key={job.unique_name}>
-                <Job
-                  job={job}
-                  onDelete={() => this.props.onDelete(job.unique_name)}
-                  onStop={() => this.props.onStop(job.unique_name)}
-                />
-              </li>)}
-        </ul>
+        <tbody>
+        {JobHeader()}
+        {jobs.map(
+          (job: JobModel) =>
+            <Job
+              key={job.unique_name}
+              job={job}
+              onDelete={() => this.props.onDelete(job.unique_name)}
+              onStop={() => this.props.onStop(job.unique_name)}
+            />)}
+        </tbody>
       );
     };
 
@@ -57,10 +55,9 @@ export default class Jobs extends React.Component<Props, Object> {
         'polyaxon run --help');
 
     return (
-      <PaginatedList
+      <PaginatedTable
         count={this.props.count}
         componentList={listJobs()}
-        componentHeader={JobHeader()}
         componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}
