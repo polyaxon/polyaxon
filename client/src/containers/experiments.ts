@@ -16,7 +16,7 @@ interface OwnProps {
   groupId?: string | number;
   useFilters?: boolean;
   bookmarks?: boolean;
-  fetchData?: () => any;
+  fetchData?: () => actions.ExperimentAction;
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {

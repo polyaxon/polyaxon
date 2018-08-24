@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { Bookmark } from '../constants/bookmarks';
+import * as actions from '../actions/job';
 import {
   getJobUrl,
   getProjectUrl,
@@ -12,6 +12,7 @@ import {
 import EntityBuild from '../containers/EntityBuild';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { JobModel } from '../models/job';
 import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
@@ -22,10 +23,10 @@ import YamlText from './yamlText';
 
 export interface Props {
   job: JobModel;
-  onDelete: () => any;
-  fetchData: () => any;
-  bookmark: () => any;
-  unbookmark: () => any;
+  onDelete: () => actions.JobAction;
+  fetchData: () => actions.JobAction;
+  bookmark: () => actions.JobAction;
+  unbookmark: () => actions.JobAction;
 }
 
 export default class JobDetail extends React.Component<Props, Object> {
@@ -39,7 +40,7 @@ export default class JobDetail extends React.Component<Props, Object> {
       return EmptyList(false, 'job', 'job');
     }
 
-    const bookmark: Bookmark = {
+    const bookmark: BookmarkInterface = {
       active: isTrue(this.props.job.bookmarked),
       callback: isTrue(this.props.job.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };

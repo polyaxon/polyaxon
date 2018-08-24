@@ -1,16 +1,17 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { Bookmark } from '../constants/bookmarks';
+import * as actions from '../actions/group';
+import { getGroupUrl } from '../constants/utils';
 import {
   getProjectUrl,
   getUserUrl,
   isTrue,
   splitUniqueName
 } from '../constants/utils';
-import { getGroupUrl } from '../constants/utils';
 import Experiments from '../containers/experiments';
 import Statuses from '../containers/statuses';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { GroupModel } from '../models/group';
 import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
@@ -21,10 +22,10 @@ import YamlText from './yamlText';
 
 export interface Props {
   group: GroupModel;
-  onDelete: () => undefined;
-  fetchData: () => undefined;
-  bookmark: () => any;
-  unbookmark: () => any;
+  onDelete: () => actions.GroupAction;
+  fetchData: () => actions.GroupAction;
+  bookmark: () => actions.GroupAction;
+  unbookmark: () => actions.GroupAction;
 }
 
 export default class GroupDetail extends React.Component<Props, Object> {
@@ -38,7 +39,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
       return EmptyList(false, 'experiment group', 'group');
     }
 
-    const bookmark: Bookmark = {
+    const bookmark: BookmarkInterface = {
       active: isTrue(this.props.group.bookmarked),
       callback: isTrue(this.props.group.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };

@@ -20,10 +20,10 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  onDelete?: () => any;
-  fetchData?: () => any;
-  bookmark: () => any;
-  unbookmark: () => any;
+  onDelete?: () => actions.JobAction;
+  fetchData?: () => actions.JobAction;
+  bookmark: () => actions.JobAction;
+  unbookmark: () => actions.JobAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
