@@ -18,7 +18,7 @@ function Actions({onDelete, onStop, isRunning = false}: Props) {
         </OverlayTrigger>
       }
       <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">Delete</Tooltip>}>
-      <button className="btn btn-default btn-sm" onClick={onDelete}>
+      <button className="btn btn-default btn-sm btn-danger" onClick={onDelete}>
         <i className="fa fa-trash icon" aria-hidden="true"/>
       </button>
       </OverlayTrigger>
