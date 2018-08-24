@@ -1,4 +1,4 @@
-export interface Bookmark {
+export interface BookmarkInterface {
   active: boolean;
   callback: () => any;
 }
