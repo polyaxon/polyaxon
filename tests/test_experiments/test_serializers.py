@@ -124,6 +124,8 @@ class TestExperimentSerializer(BaseTest):
         'project',
         'experiment_group',
         'build_job',
+        'last_metric',
+        'declarations',
     }
 
     def setUp(self):
@@ -145,6 +147,7 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('original') == (self.obj1.original_experiment.unique_name if
                                         self.obj1.original_experiment else None)
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('last_metric') == self.obj1.last_metric
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)
