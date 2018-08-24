@@ -2,6 +2,7 @@
 from unittest.mock import patch
 
 import pytest
+
 from django.test import override_settings
 
 from action_manager.actions.email import EMAIL_ACTION_EXECUTED, EmailAction

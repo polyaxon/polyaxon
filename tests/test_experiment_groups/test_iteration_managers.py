@@ -1,5 +1,7 @@
 import pytest
 
+from flaky import flaky
+
 from db.models.experiment_groups import ExperimentGroupIteration
 from db.models.experiments import ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -54,6 +56,7 @@ class TestHyperbandIterationManagers(BaseTest):
             ExperimentFactory(experiment_group=self.experiment_group)
         self.iteration_manager = HyperbandIterationManager(experiment_group=self.experiment_group)
 
+    @flaky(max_runs=3)
     def test_create_iteration(self):
         assert ExperimentGroupIteration.objects.count() == 0
         experiment_ids = [self.experiment_group.experiments.first().id]
