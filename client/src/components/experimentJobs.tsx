@@ -6,7 +6,7 @@ import PaginatedList from '../components/paginatedList';
 import { ExperimentJobModel } from '../models/experimentJob';
 import { EmptyList } from './empty/emptyList';
 import ExperimentJob from './experimentJob';
-import JobHeader from './jobHeader';
+import ExperimentJobHeader from './experimentJobHeader';
 
 export interface Props {
   jobs: ExperimentJobModel[];
@@ -40,7 +40,7 @@ export default class ExperimentJobs extends React.Component<Props, Object> {
       <PaginatedList
         count={this.props.count}
         componentList={listExperimentJobs()}
-        componentHeader={JobHeader()}
+        componentHeader={ExperimentJobHeader()}
         componentEmpty={EmptyList(false, 'job', 'job')}
         filters={false}
         fetchData={this.props.fetchData}
