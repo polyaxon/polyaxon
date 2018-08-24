@@ -1,3 +1,5 @@
+from requests import RequestException
+
 from django.conf import settings
 
 from action_manager.action import Action, logger
@@ -91,7 +93,10 @@ class WebHookAction(Action):
     def _execute(cls, data, config):
         for web_hook in config:
             data = cls._pre_execute_web_hook(data=data, config=web_hook)
-            if web_hook['method'] == 'POST':
-                safe_request(url=web_hook['url'], method=web_hook['method'], json=data)
-            else:
-                safe_request(url=web_hook['url'], method=web_hook['method'], params=data)
+            try:
+                if web_hook['method'] == 'POST':
+                    safe_request(url=web_hook['url'], method=web_hook['method'], json=data)
+                else:
+                    safe_request(url=web_hook['url'], method=web_hook['method'], params=data)
+            except RequestException:
+                logger.warning("Could not send web hook, execption.", exc_info=True)

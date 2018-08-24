@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
 from action_manager.utils.email import send_mass_template_mail
@@ -75,6 +77,10 @@ class EmailAction(Action):
 
     @classmethod
     def _execute(cls, data, config):
+        if not all([settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD]):
+            logger.warning("Email was not setup, skipping send.")
+            return
+
         recipients = config.get('recipients')
 
         if not recipients:
