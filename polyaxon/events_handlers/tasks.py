@@ -1,7 +1,7 @@
 import logging
 
 from django.conf import settings
-from django.db import IntegrityError
+from django.db import IntegrityError, OperationalError
 
 from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
@@ -21,7 +21,10 @@ _logger = logging.getLogger(__name__)
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE)
 def handle_events_namespace(cluster_id, payload):
     _logger.debug('handling events namespace for cluster: %s', cluster_id)
-    ClusterEvent.objects.create(cluster_id=cluster_id, **payload)
+    try:
+        ClusterEvent.objects.create(cluster_id=cluster_id, **payload)
+    except OperationalError:
+        pass
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_RESOURCES)
