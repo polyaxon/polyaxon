@@ -1,0 +1,28 @@
+.paginated-table {
+  .block {
+    border-top: unset;
+    vertical-align: middle;
+  }
+  th {
+    color: #585b69;
+  }
+
+  .list-header {
+    background: #f9fafb;
+    border: 1px solid #f0f4ff;
+    border-radius: 4px 4px 0 0;
+    &:hover {
+      background-color: #f9fafb;
+    }
+  }
+  .list-item {
+    border-radius: 4px;
+    border: 1px solid #f0f4ff;
+    &:hover {
+      background-color: #f9fafe;
+    }
+  }
+  .list-item:not(:last-child) {
+    border-bottom: 1px solid #f5f5f5;
+  }
+}
