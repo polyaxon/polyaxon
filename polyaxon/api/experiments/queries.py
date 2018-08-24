@@ -19,13 +19,14 @@ experiments = Experiment.objects.select_related(
     'original_experiment__experiment_group',
     'original_experiment__experiment_group__project',
     'original_experiment__experiment_group__project__user',
-    'status')
+    'status',
+    'metric')
 
-experiments_details = experiments.select_related('metric').annotate(
+experiments_details = experiments.annotate(
     Count('jobs', distinct=True)
 )
 
-experiments_auditing = experiments = Experiment.objects.select_related(
+experiments_auditing = Experiment.objects.select_related(
     'user',
     'project',
     'project__user',

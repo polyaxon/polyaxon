@@ -124,6 +124,8 @@ class ExperimentSerializer(serializers.ModelSerializer):
             'experiment_group',
             'build_job',
             'tags',
+            'last_metric',
+            'declarations',
         )
 
     def get_user(self, obj):
