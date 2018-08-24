@@ -8,7 +8,7 @@ import BuildHeader from './buildHeader';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
 import { DEFAULT_FILTERS } from './filters/constants';
-import PaginatedList from './paginatedList';
+import PaginatedTable from './paginatedTable';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -29,19 +29,17 @@ export default class Builds extends React.Component<Props, Object> {
     const builds = this.props.builds;
     const listBuilds = () => {
       return (
-        <ul>
-          {builds.filter(
-            (xp: BuildModel) => _.isNil(xp.deleted) || !xp.deleted
-          ).map(
-            (build: BuildModel) =>
-              <li className="list-item" key={build.unique_name}>
-                <Build
-                  build={build}
-                  onDelete={() => this.props.onDelete(build.unique_name)}
-                  onStop={() => this.props.onStop(build.unique_name)}
-                />
-              </li>)}
-        </ul>
+        <tbody>
+        {BuildHeader()}
+        {builds.map(
+          (build: BuildModel) =>
+            <Build
+              key={build.unique_name}
+              build={build}
+              onDelete={() => this.props.onDelete(build.unique_name)}
+              onStop={() => this.props.onStop(build.unique_name)}
+            />)}
+        </tbody>
       );
     };
 
@@ -51,16 +49,15 @@ export default class Builds extends React.Component<Props, Object> {
         'build',
         'build')
       : EmptyList(
-            this.props.isCurrentUser,
-            'build',
-            'build',
-            'polyaxon run --help');
+        this.props.isCurrentUser,
+        'build',
+        'build',
+        'polyaxon run --help');
 
     return (
-      <PaginatedList
+      <PaginatedTable
         count={this.props.count}
         componentList={listBuilds()}
-        componentHeader={BuildHeader()}
         componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}

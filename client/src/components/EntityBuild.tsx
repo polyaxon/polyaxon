@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import * as actions from '../actions/build';
-import PaginatedList from '../components/paginatedList';
+import PaginatedTable from '../components/paginatedTable';
 import { BuildModel } from '../models/build';
 import Build from './build';
 import BuildHeader from './buildHeader';
@@ -23,24 +23,22 @@ export default class EntityBuild extends React.Component<Props, Object> {
     const listBuilds = () => {
       if (this.props.build) {
         return (
-          <ul>
-            <li className="list-item">
-              <Build
-                build={this.props.build}
-                onDelete={() => this.props.onDelete(this.props.build.unique_name)}
-                onStop={() => this.props.onStop(this.props.build.unique_name)}
-              />
-            </li>
-          </ul>
+          <tbody>
+          {BuildHeader()}
+          <Build
+            build={this.props.build}
+            onDelete={() => this.props.onDelete(this.props.build.unique_name)}
+            onStop={() => this.props.onStop(this.props.build.unique_name)}
+          />
+          </tbody>
         );
       }
       return (null);
     };
     return (
-      <PaginatedList
+      <PaginatedTable
         count={this.props.build ? 1 : 0}
         componentList={listBuilds()}
-        componentHeader={BuildHeader()}
         componentEmpty={EmptyList(false, 'build', 'build')}
         filters={false}
         fetchData={(offset: number, query?: string, sort?: string, extraFilters?: Object) => null}

@@ -2,20 +2,20 @@ import * as React from 'react';
 
 function BuildHeader() {
   return (
-    <div className="row">
-      <div className="col-md-1 block">
+    <tr className="list-header">
+      <th className="block">
         Status
-      </div>
-      <div className="col-md-8 block">
+      </th>
+      <th className="block">
         Name
-      </div>
-      <div className="col-md-2 block">
+      </th>
+      <th className="block">
         Run
-      </div>
-      <div className="col-md-1 block">
+      </th>
+      <th className="block">
         Actions
-      </div>
-    </div>
+      </th>
+    </tr>
   );
 }
 

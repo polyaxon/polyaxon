@@ -22,11 +22,11 @@ function Build({build, onDelete, onStop}: Props) {
   const values = splitUniqueName(build.project);
 
   return (
-    <div className="row">
-      <div className="col-md-1 block">
+    <tr className="list-item">
+      <td className="block">
         <Status status={build.last_status}/>
-      </div>
-      <div className="col-md-8 block">
+      </td>
+      <td className="block">
         <LinkContainer to={getBuildUrl(values[0], values[1], build.id)}>
           <a className="title">
             <i className="fa fa-gavel icon" aria-hidden="true"/>
@@ -43,18 +43,18 @@ function Build({build, onDelete, onStop}: Props) {
           />
         </div>
         <Tags tags={build.tags}/>
-      </div>
-      <div className="col-md-2 block">
+      </td>
+      <td className="block">
         <TaskRunMetaInfo startedAt={build.started_at} finishedAt={build.finished_at}/>
-      </div>
-      <div className="col-md-1 block">
+      </td>
+      <td className="block">
         <Actions
           onDelete={onDelete}
           onStop={onStop}
           isRunning={!isDone(build.last_status)}
         />
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }
 
