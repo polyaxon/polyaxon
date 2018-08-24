@@ -52,7 +52,7 @@ export default class FilterList extends React.Component<Props, State> {
             <div className="col-md-offset-10 col-md-2">
               <div className="col-md-offset-2 col-md-10">
               <button
-                className="btn btn-default btn-filters"
+                className="btn btn-default btn-filters btn-sm"
                 onClick={this.onHideFilters}
               >
                 <i className="fa fa-sliders icon" aria-hidden="true"/>
