@@ -8,7 +8,7 @@ import {
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
-import { getBuildUrlFromName } from '../constants/utils';
+import { getBuildUrlFromName, getProjectUrl } from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { BuildModel } from '../models/build';
@@ -207,7 +207,7 @@ export function fetchBuild(user: string, projectName: string, buildId: number | 
   };
 }
 
-export function deleteBuild(buildName: string): any {
+export function deleteBuild(buildName: string, redirect: boolean = false): any {
   const buildUrl = getBuildUrlFromName(buildName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
@@ -219,7 +219,14 @@ export function deleteBuild(buildName: string): any {
         },
       })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(deleteBuildActionCreator(buildName)));
+      .then(() => {
+        const dispatched = dispatch(deleteBuildActionCreator(buildName));
+        if (redirect) {
+          const values = buildName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#builds');
+        }
+        return dispatched;
+      });
   };
 }
 

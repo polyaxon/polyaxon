@@ -6,6 +6,7 @@ import {
   getProjectUniqueName,
   getProjectUrl,
   getProjectUrlFromName,
+  getUserUrl,
   handleAuthError
 } from '../constants/utils';
 import history from '../history';
@@ -151,7 +152,7 @@ export function createProject(user: string, project: ProjectModel): any {
   };
 }
 
-export function deleteProject(projectName: string): any {
+export function deleteProject(projectName: string, redirect: boolean = false): any {
   const projectUrl = getProjectUrlFromName(projectName, false);
   return (dispatch: any, getState: any) => {
     return fetch(`${BASE_API_URL}${projectUrl}`, {
@@ -162,7 +163,14 @@ export function deleteProject(projectName: string): any {
       }
     })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(deleteProjectActionCreator(projectName)));
+      .then(() => {
+        const dispatched = dispatch(deleteProjectActionCreator(projectName));
+        if (redirect) {
+          const values = projectName.split('.');
+          history.push(getUserUrl(values[0], true));
+        }
+        return dispatched;
+      });
   };
 }
 

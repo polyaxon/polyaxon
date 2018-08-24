@@ -14,12 +14,13 @@ export function mapStateToProps(state: AppState, params: any) {
     params.match.params.projectName,
     params.match.params.groupId);
   return _.includes(state.groups.uniqueNames, groupUniqueName) ?
-      {group: state.groups.byUniqueNames[groupUniqueName]} :
-      {group: null};
+    {group: state.groups.byUniqueNames[groupUniqueName]} :
+    {group: null};
 }
 
 export interface DispatchProps {
-  onDelete?: () => actions.GroupAction;
+  onDelete: () => actions.GroupAction;
+  onStop: () => actions.GroupAction;
   fetchData?: () => actions.GroupAction;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
@@ -32,6 +33,19 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.groupId)),
+    onDelete: () => dispatch(actions.deleteGroup(
+      getGroupUniqueName(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.groupId),
+      true
+    )),
+    onStop: () => dispatch(actions.stopGroup(
+      getGroupUniqueName(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.groupId)
+    )),
     bookmark: () => dispatch(
       actions.bookmark(
         params.match.params.user,

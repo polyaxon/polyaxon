@@ -2,8 +2,14 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import { BASE_API_URL } from '../constants/api';
-import { getExperimentUrlFromName, handleAuthError, urlifyProjectName } from '../constants/utils';
-import { getExperimentUniqueName, getExperimentUrl } from '../constants/utils';
+import {
+  getExperimentUniqueName,
+  getExperimentUrl,
+  getExperimentUrlFromName,
+  getProjectUrl,
+  handleAuthError,
+  urlifyProjectName
+} from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { ExperimentModel } from '../models/experiment';
@@ -194,7 +200,7 @@ export function fetchExperiment(user: string, projectName: string, experimentId:
   };
 }
 
-export function deleteExperiment(experimentName: string): any {
+export function deleteExperiment(experimentName: string, redirect: boolean = false): any {
   const experimentUrl = getExperimentUrlFromName(experimentName, false);
   return (dispatch: any, getState: any) => {
     return fetch(`${BASE_API_URL}${experimentUrl}`, {
@@ -205,7 +211,14 @@ export function deleteExperiment(experimentName: string): any {
       }
     })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(deleteExperimentActionCreator(experimentName)));
+      .then(() => {
+        const dispatched = dispatch(deleteExperimentActionCreator(experimentName));
+        if (redirect) {
+          const values = experimentName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#experiments');
+        }
+        return dispatched;
+      });
   };
 }
 

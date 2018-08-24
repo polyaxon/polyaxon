@@ -20,7 +20,8 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  onDelete?: () => actions.JobAction;
+  onDelete: () => actions.JobAction;
+  onStop: () => actions.JobAction;
   fetchData?: () => actions.JobAction;
   bookmark: () => actions.JobAction;
   unbookmark: () => actions.JobAction;
@@ -33,6 +34,19 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.jobId)),
+    onDelete: () => dispatch(actions.deleteJob(
+      getJobUniqueName(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.jobId),
+      true
+    )),
+    onStop: () => dispatch(actions.stopJob(
+      getJobUniqueName(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.jobId)
+    )),
     bookmark: () => dispatch(
       actions.bookmark(
         params.match.params.user,

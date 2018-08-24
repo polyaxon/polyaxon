@@ -12,6 +12,7 @@ import {
 import EntityBuild from '../containers/EntityBuild';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
+import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { JobModel } from '../models/job';
 import Breadcrumb from './breadcrumb';
@@ -24,6 +25,7 @@ import YamlText from './yamlText';
 export interface Props {
   job: JobModel;
   onDelete: () => actions.JobAction;
+  onStop: () => actions.JobAction;
   fetchData: () => actions.JobAction;
   bookmark: () => actions.JobAction;
   unbookmark: () => actions.JobAction;
@@ -39,6 +41,13 @@ export default class JobDetail extends React.Component<Props, Object> {
     if (_.isNil(job)) {
       return EmptyList(false, 'job', 'job');
     }
+
+    const action: ActionInterface = {
+      last_status: this.props.job.last_status,
+      onDelete: this.props.onDelete,
+      onStop: this.props.onStop
+
+    };
 
     const bookmark: BookmarkInterface = {
       active: isTrue(this.props.job.bookmarked),
@@ -60,6 +69,7 @@ export default class JobDetail extends React.Component<Props, Object> {
               icon="fa-tasks"
               links={breadcrumbLinks}
               bookmark={bookmark}
+              actions={action}
             />
             <LinkedTab
               baseUrl={jobUrl}

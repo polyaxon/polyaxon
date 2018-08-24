@@ -13,12 +13,12 @@ export function mapStateToProps(state: AppState, params: any) {
     params.match.params.user,
     params.match.params.projectName);
   return _.includes(state.projects.uniqueNames, projectUniqueName) ?
-      {project: state.projects.byUniqueNames[projectUniqueName]} :
-      {project: null};
+    {project: state.projects.byUniqueNames[projectUniqueName]} :
+    {project: null};
 }
 
 export interface DispatchProps {
-  onDelete: (projectName: string) => actions.ProjectAction;
+  onDelete: () => actions.ProjectAction;
   fetchData?: () => actions.ProjectAction;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
@@ -26,8 +26,12 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
-    onDelete: (projectName: string) => dispatch(
-      actions.deleteProject(projectName)),
+    onDelete: () => dispatch(
+      actions.deleteProject(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName),
+        true)),
     fetchData: () => dispatch(
       actions.fetchProject(
         params.match.params.user,

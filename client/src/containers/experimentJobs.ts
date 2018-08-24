@@ -15,7 +15,7 @@ export function mapStateToProps(state: AppState, params: any) {
     const experiment = state.experiments.byUniqueNames[experimentName];
     const jobNames = experiment.jobs;
     jobNames.forEach(
-      function(job: string, idx: number) {
+      (job: string, idx: number) => {
         jobs.push(state.experimentJobs.byUniqueNames[job]);
       });
     return {jobs, count: experiment.num_jobs};

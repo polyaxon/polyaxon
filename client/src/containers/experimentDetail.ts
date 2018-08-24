@@ -8,7 +8,7 @@ import ExperimentDetail from '../components/experimentDetail';
 import { AppState } from '../constants/types';
 import { getExperimentUniqueName } from '../constants/utils';
 
-export function mapStateToProps(state: AppState, params: any)  {
+export function mapStateToProps(state: AppState, params: any) {
   const experimentUniqueName = getExperimentUniqueName(
     params.match.params.user,
     params.match.params.projectName,
@@ -19,10 +19,11 @@ export function mapStateToProps(state: AppState, params: any)  {
 }
 
 export interface DispatchProps {
-  onDelete?: () => any;
-  fetchData?: () => any;
-  bookmark: () => any;
-  unbookmark: () => any;
+  fetchData?: () => actions.ExperimentAction;
+  onDelete: () => actions.ExperimentAction;
+  onStop: () => actions.ExperimentAction;
+  bookmark: () => actions.ExperimentAction;
+  unbookmark: () => actions.ExperimentAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, params: any): DispatchProps {
@@ -32,6 +33,19 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.experimentId)),
+    onDelete: () => dispatch(
+      actions.deleteExperiment(
+        getExperimentUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.experimentId),
+        true)),
+    onStop: () => dispatch(
+      actions.stopExperiment(
+        getExperimentUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.experimentId))),
     bookmark: () => dispatch(
       actions.bookmark(
         params.match.params.user,

@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import * as actions from '../actions/build';
 import {
   getBuildUrl,
   getProjectUrl,
@@ -10,6 +11,7 @@ import {
 } from '../constants/utils';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
+import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { BuildModel } from '../models/build';
 import Breadcrumb from './breadcrumb';
@@ -22,10 +24,11 @@ import YamlText from './yamlText';
 
 export interface Props {
   build: BuildModel;
-  onDelete: () => any;
-  fetchData: () => any;
-  bookmark: () => any;
-  unbookmark: () => any;
+  onDelete: () => actions.BuildAction;
+  onStop: () => actions.BuildAction;
+  fetchData: () => actions.BuildAction;
+  bookmark: () => actions.BuildAction;
+  unbookmark: () => actions.BuildAction;
 }
 
 export default class BuildDetail extends React.Component<Props, Object> {
@@ -38,6 +41,13 @@ export default class BuildDetail extends React.Component<Props, Object> {
     if (_.isNil(build)) {
       return EmptyList(false, 'build', 'build');
     }
+
+    const action: ActionInterface = {
+      last_status: this.props.build.last_status,
+      onDelete: this.props.onDelete,
+      onStop: this.props.onStop
+
+    };
 
     const bookmark: BookmarkInterface = {
       active: isTrue(this.props.build.bookmarked),
@@ -59,6 +69,7 @@ export default class BuildDetail extends React.Component<Props, Object> {
               icon="fa-gavel"
               links={breadcrumbLinks}
               bookmark={bookmark}
+              actions={action}
             />
             <LinkedTab
               baseUrl={buildUrl}

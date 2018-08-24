@@ -15,10 +15,12 @@ import { EmptyList } from './empty/emptyList';
 import ProjectInstructions from './instructions/projectInstructions';
 import LinkedTab from './linkedTab';
 import ProjectOverview from './projectOverview';
+import { ActionInterface } from '../interfaces/actions';
 
 export interface Props {
   project: ProjectModel;
-  onDelete: (projectName: string) => any;
+  onDelete: () => actions.ProjectAction;
+  onStop: () => actions.ProjectAction;
   fetchData: () => actions.ProjectAction;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
@@ -35,6 +37,10 @@ export default class ProjectDetail extends React.Component<Props, Object> {
       return EmptyList(false, 'project', 'project');
     }
 
+    const action: ActionInterface = {
+      onDelete: this.props.onDelete,
+    };
+
     const bookmark: BookmarkInterface = {
       active: isTrue(this.props.project.bookmarked),
       callback: isTrue(this.props.project.bookmarked) ? this.props.unbookmark : this.props.bookmark
@@ -50,6 +56,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               {name: project.user, value: getUserUrl(project.user)},
               {name: project.name}]}
             bookmark={bookmark}
+            actions={action}
           />
           <LinkedTab
             baseUrl={projectUrl}

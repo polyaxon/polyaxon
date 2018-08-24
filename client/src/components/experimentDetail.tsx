@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { Bookmark } from '../constants/bookmarks';
+import * as actions from '../actions/experiment';
 import {
   getExperimentUrl,
   getGroupUrl,
@@ -15,6 +15,8 @@ import ExperimentJobs from '../containers/experimentJobs';
 import Logs from '../containers/logs';
 import Metrics from '../containers/metrics';
 import Statuses from '../containers/statuses';
+import { ActionInterface } from '../interfaces/actions';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { ExperimentModel } from '../models/experiment';
 import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
@@ -25,10 +27,11 @@ import YamlText from './yamlText';
 
 export interface Props {
   experiment: ExperimentModel;
-  onDelete: () => any;
-  fetchData: () => any;
-  bookmark: () => any;
-  unbookmark: () => any;
+  onDelete: () => actions.ExperimentAction;
+  onStop: () => actions.ExperimentAction;
+  fetchData: () => actions.ExperimentAction;
+  bookmark: () => actions.ExperimentAction;
+  unbookmark: () => actions.ExperimentAction;
 }
 
 export default class ExperimentDetail extends React.Component<Props, Object> {
@@ -42,7 +45,13 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
       return EmptyList(false, 'experiment', 'experiment');
     }
 
-    const bookmark: Bookmark = {
+    const action: ActionInterface = {
+      last_status: this.props.experiment.last_status,
+      onDelete: this.props.onDelete,
+      onStop: this.props.onStop
+
+    };
+    const bookmark: BookmarkInterface = {
       active: isTrue(this.props.experiment.bookmarked),
       callback: isTrue(this.props.experiment.bookmarked) ? this.props.unbookmark : this.props.bookmark
     };
@@ -75,6 +84,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
               icon="fa-cube"
               links={breadcrumbLinks}
               bookmark={bookmark}
+              actions={action}
             />
             <LinkedTab
               baseUrl={experimentUrl}

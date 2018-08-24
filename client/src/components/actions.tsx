@@ -1,29 +1,30 @@
 import * as React from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 export interface Props {
   onDelete: () => any;
   onStop?: () => any;
   isRunning: boolean;
+  pullRight?: boolean;
 }
 
-function Actions({onDelete, onStop, isRunning = false}: Props) {
+function Actions({onDelete, onStop, isRunning = false, pullRight = false}: Props) {
   return (
-    <div className="btn-toolbar action" role="toolbar">
-      {onStop && isRunning &&
-        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">Stop</Tooltip>}>
-          <button className="btn btn-default btn-sm" onClick={onStop}>
-            <i className="fa fa-stop icon" aria-hidden="true"/>
-          </button>
-        </OverlayTrigger>
-      }
-      <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">Delete</Tooltip>}>
-      <button className="btn btn-default btn-sm btn-danger" onClick={onDelete}>
-        <i className="fa fa-trash icon" aria-hidden="true"/>
-      </button>
-      </OverlayTrigger>
-    </div>
-
+    <span className={pullRight ? 'pull-right' : ''}>
+      <DropdownButton
+        bsStyle="default"
+        bsSize="small"
+        pullRight={true}
+        title=""
+        key={1}
+        id={`dropdown-basic-1`}
+      >
+        {onStop && isRunning &&
+        <MenuItem eventKey="1" onClick={onStop}><i className="fa fa-stop icon" aria-hidden="true"/> Stop</MenuItem>
+        }
+        <MenuItem eventKey="2" onClick={onDelete}><i className="fa fa-trash icon" aria-hidden="true"/> Delete</MenuItem>
+      </DropdownButton>
+    </span>
   );
 }
 

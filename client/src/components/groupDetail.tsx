@@ -2,15 +2,16 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/group';
-import { getGroupUrl } from '../constants/utils';
 import {
   getProjectUrl,
   getUserUrl,
   isTrue,
   splitUniqueName
 } from '../constants/utils';
+import { getGroupUrl } from '../constants/utils';
 import Experiments from '../containers/experiments';
 import Statuses from '../containers/statuses';
+import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { GroupModel } from '../models/group';
 import Breadcrumb from './breadcrumb';
@@ -23,6 +24,7 @@ import YamlText from './yamlText';
 export interface Props {
   group: GroupModel;
   onDelete: () => actions.GroupAction;
+  onStop: () => actions.GroupAction;
   fetchData: () => actions.GroupAction;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
@@ -38,6 +40,13 @@ export default class GroupDetail extends React.Component<Props, Object> {
     if (_.isNil(group)) {
       return EmptyList(false, 'experiment group', 'group');
     }
+
+    const action: ActionInterface = {
+      last_status: this.props.group.last_status,
+      onDelete: this.props.onDelete,
+      onStop: this.props.onStop
+
+    };
 
     const bookmark: BookmarkInterface = {
       active: isTrue(this.props.group.bookmarked),
@@ -58,6 +67,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
                 {name: 'Groups', value: `${projectUrl}#groups`},
                 {name: `Group ${group.id}`}]}
               bookmark={bookmark}
+              actions={action}
             />
             <LinkedTab
               baseUrl={groupUrl}

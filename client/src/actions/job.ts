@@ -5,6 +5,7 @@ import { BASE_API_URL } from '../constants/api';
 import {
   getJobUniqueName,
   getJobUrl,
+  getProjectUrl,
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
@@ -207,10 +208,10 @@ export function fetchJob(user: string, projectName: string, jobId: number): any 
   };
 }
 
-export function deleteJob(jobName: string): any {
+export function deleteJob(jobName: string, redirect: boolean = false): any {
   const jobUrl = getJobUrlFromName(jobName, false);
   return (dispatch: any, getState: any) => {
-    return fetch(
+    fetch(
       `${BASE_API_URL}${jobUrl}`, {
         method: 'DELETE',
         headers: {
@@ -219,7 +220,14 @@ export function deleteJob(jobName: string): any {
         },
       })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(deleteJobActionCreator(jobName)));
+      .then(() => {
+        const dispatched = dispatch(deleteJobActionCreator(jobName));
+        if (redirect) {
+          const values = jobName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#jobs');
+        }
+        return dispatched;
+      });
   };
 }
 

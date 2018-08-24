@@ -5,6 +5,7 @@ import { BASE_API_URL } from '../constants/api';
 import {
   getGroupUniqueName,
   getGroupUrl,
+  getProjectUrl,
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
@@ -199,7 +200,7 @@ export function fetchGroup(user: string, projectName: string, groupId: number): 
   };
 }
 
-export function deleteGroup(groupName: string): any {
+export function deleteGroup(groupName: string, redirect: boolean = false): any {
   const groupUrl = getGroupUrlFromName(groupName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
@@ -211,7 +212,14 @@ export function deleteGroup(groupName: string): any {
         },
       })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(deleteGroupActionCreator(groupName)));
+      .then(() => {
+        const dispatched = dispatch(deleteGroupActionCreator(groupName));
+        if (redirect) {
+          const values = groupName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#group');
+        }
+        return dispatched;
+      });
   };
 }
 
