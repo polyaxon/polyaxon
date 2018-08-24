@@ -143,11 +143,8 @@ class Experiment(DiffModel,
     @property
     def last_job_statuses(self):
         """The last constants of the job in this experiment."""
-        # TODO: use F to calculate this property in one query
-
         statuses = []
-        for job in self.jobs.all():
-            status = job.last_status
+        for status in self.jobs.values_list('status__status', flat=True):
             if status is not None:
                 statuses.append(status)
         return statuses
