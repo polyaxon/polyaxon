@@ -25,12 +25,13 @@ export interface Props {
 
 function Group({group, onDelete, onStop}: Props) {
   const values = splitUniqueName(group.project);
+
   return (
-    <div className="row">
-      <div className="col-md-1 block">
+    <tr className="list-item">
+      <td className="block">
         <Status status={group.last_status}/>
-      </div>
-      <div className="col-md-6 block">
+      </td>
+      <td className="block">
         <LinkContainer to={getGroupUrl(values[0], values[1], group.id)}>
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
@@ -47,22 +48,22 @@ function Group({group, onDelete, onStop}: Props) {
           />
         </div>
         <Tags tags={group.tags}/>
-      </div>
-      <div className="col-md-2 block">
+      </td>
+      <td className="block">
         <SearchAlgorithmMetaInfo searchAlgorithm={group.search_algorithm}/>
         <ConcurrencyMetaInfo concurrency={group.concurrency}/>
-      </div>
-      <div className="col-md-2 block">
+      </td>
+      <td className="block">
         <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>
-      </div>
-      <div className="col-md-1 block">
+      </td>
+      <td className="block">
         <Actions
           onDelete={onDelete}
           onStop={onStop}
           isRunning={!isDone(group.last_status)}
         />
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }
 
