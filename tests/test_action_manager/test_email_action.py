@@ -62,4 +62,3 @@ class TestEmailAction(BaseTest):
                                 config={'recipients': ['bar@gmail.com', 'foo@gmail.com']})
 
         assert mock_execute.call_count == 1
-
