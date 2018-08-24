@@ -2,6 +2,7 @@
 from unittest.mock import patch
 
 import pytest
+from django.test import override_settings
 
 from action_manager.actions.email import EMAIL_ACTION_EXECUTED, EmailAction
 from tests.utils import BaseTest
@@ -37,6 +38,19 @@ class TestEmailAction(BaseTest):
             'recipients': ['bar@gmail.com', 'foo@gmail.com']
         }) == {'recipients': ['bar@gmail.com', 'foo@gmail.com']}
 
+    def test_execute_no_settings(self):
+        with patch('action_manager.actions.email.send_mass_template_mail') as mock_execute:
+            EmailAction.execute(context={})
+
+        assert mock_execute.call_count == 0
+
+        with patch('action_manager.actions.email.send_mass_template_mail') as mock_execute:
+            EmailAction.execute(context=None,
+                                config={'recipients': ['bar@gmail.com', 'foo@gmail.com']})
+
+        assert mock_execute.call_count == 0
+
+    @override_settings(EMAIL_HOST_USER='foo', EMAIL_HOST_PASSWORD='bar')
     def test_execute(self):
         with patch('action_manager.actions.email.send_mass_template_mail') as mock_execute:
             EmailAction.execute(context={})
@@ -48,3 +62,4 @@ class TestEmailAction(BaseTest):
                                 config={'recipients': ['bar@gmail.com', 'foo@gmail.com']})
 
         assert mock_execute.call_count == 1
+

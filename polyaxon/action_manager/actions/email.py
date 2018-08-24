@@ -78,7 +78,7 @@ class EmailAction(Action):
     @classmethod
     def _execute(cls, data, config):
         if not all([settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD]):
-            logger.warning("Email was not setup, skipping send.")
+            logger.debug("Email was not setup, skipping send.")
             return
 
         recipients = config.get('recipients')
