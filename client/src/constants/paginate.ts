@@ -18,7 +18,7 @@ export function getNumPages(count: number): number {
 }
 
 export function paginateNext(offset: number, count: number): boolean {
-  return offset < count;
+  return offset * 2 < count;
 }
 
 export function paginatePrevious(offset: number): boolean {
