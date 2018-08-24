@@ -41,7 +41,7 @@ spec:
       - name: load-fixtures-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
-        args: ["loaddata", "polyaxon/db/fixtures/users.json", "polyaxon/db/fixtures/authtoken.json", "polyaxon/db/fixtures/projects.json", "polyaxon/db/fixtures/experiment_groups.json", "polyaxon/db/fixtures/experiment_jobs.json", "polyaxon/db/fixtures/experiments.json"]
+        args: ["loaddata", "polyaxon/fixtures/users.json", "polyaxon/fixtures/authtoken.json", "polyaxon/fixtures/db.json"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
