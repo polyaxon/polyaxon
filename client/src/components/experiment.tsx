@@ -23,11 +23,13 @@ import Tags from './tags';
 
 export interface Props {
   experiment: ExperimentModel;
+  metrics: string[];
+  declarations: string[];
   onDelete: () => any;
   onStop: () => any;
 }
 
-function Experiment({experiment, onDelete, onStop}: Props) {
+function Experiment({experiment, metrics, declarations, onDelete, onStop}: Props) {
   const values = splitUniqueName(experiment.project);
   let groupUrl = '';
   let groupValues: string[] = [];
@@ -77,6 +79,16 @@ function Experiment({experiment, onDelete, onStop}: Props) {
       <td className="block">
         <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at}/>
       </td>
+      {declarations.length > 0 && declarations.map((declaration: string, idx: number) =>
+        <td className="block" key={idx}>
+          {experiment.declarations ? experiment.declarations[declaration] : ''}
+        </td>)
+      }
+      {metrics.length > 0 && metrics.map((metric: string, idx: number) =>
+        <td className="block" key={idx}>
+          {experiment.last_metric ? experiment.last_metric[metric] : ''}
+        </td>)
+      }
       <td className="block pull-right">
         <Actions
           onDelete={onDelete}
