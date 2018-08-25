@@ -14,7 +14,6 @@ export interface Props {
 interface State {
   query: string;
   sort: string;
-  dataRadio?: string;
   independent?: boolean;
   showFilters?: boolean;
 }
@@ -22,16 +21,7 @@ interface State {
 export default class ExperimentFilterList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    let dataRadio = 'info';
     let independent = false;
-    if (props.extraFilters &&
-        (props.extraFilters.metrics === true || props.extraFilters.metrics === 'true')) {
-      dataRadio = 'metrics';
-    }
-    if (props.extraFilters &&
-        (props.extraFilters.declarations === true || props.extraFilters.declarations === 'true')) {
-      dataRadio = 'declarations';
-    }
     if (props.extraFilters &&
         (props.extraFilters.independent === true || props.extraFilters.independent === 'true')) {
       independent = true;
@@ -39,7 +29,6 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
     this.state = {
       query: props.query || '',
       sort: props.sort || '',
-      dataRadio,
       independent,
       showFilters: false
     };
@@ -48,12 +37,6 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
   public handleFilter = (event: any) => {
     event.preventDefault();
     const extraFilters: {[key: string]: number|boolean|string} = {};
-    if (this.state.dataRadio === 'metrics') {
-      extraFilters.metrics = true;
-    } else if (this.state.dataRadio === 'declarations') {
-      extraFilters.declarations = true;
-    }
-
     if (this.state.independent === true) {
       extraFilters.independent = true;
     }
@@ -80,14 +63,6 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
       query: prevState.query,
       sort: prevState.sort,
       independent: !prevState.independent
-    }));
-  }
-
-  public onDataRadioChange = (value: string) => {
-    this.setState((prevState, prevProps) => ({
-      query: prevState.query,
-      sort: prevState.sort,
-      dataRadio: value
     }));
   }
 
@@ -151,44 +126,6 @@ export default class ExperimentFilterList extends React.Component<Props, State> 
                     />
                     <span className="slider round"/>
                   </label>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-md-offset-1 col-md-1">
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value="info"
-                        checked={this.state.dataRadio === 'info'}
-                        onChange={(event) => this.onDataRadioChange(event.target.value)}
-                      /> Info
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-1">
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value="metrics"
-                        checked={this.state.dataRadio === 'metrics'}
-                        onChange={(event) => this.onDataRadioChange(event.target.value)}
-                      /> Metrics
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-1">
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value="declarations"
-                        checked={this.state.dataRadio === 'declarations'}
-                        onChange={(event) => this.onDataRadioChange(event.target.value)}
-                      /> Declarations
-                    </label>
-                  </div>
                 </div>
               </div>
             </div>
