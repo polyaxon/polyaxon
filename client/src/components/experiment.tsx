@@ -77,7 +77,7 @@ function Experiment({experiment, onDelete, onStop}: Props) {
       <td className="block">
         <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at}/>
       </td>
-      <td className="block">
+      <td className="block pull-right">
         <Actions
           onDelete={onDelete}
           onStop={onStop}

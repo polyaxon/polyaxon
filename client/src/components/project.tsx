@@ -37,7 +37,7 @@ function Project({project, onDelete}: Props) {
         />
         <DatesMetaInfo createdAt={project.created_at} updatedAt={project.updated_at}/>
       </td>
-      <td className="block">
+      <td className="block pull-right">
         <Actions
           onDelete={onDelete}
           isRunning={false}

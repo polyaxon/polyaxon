@@ -56,7 +56,7 @@ function Group({group, onDelete, onStop}: Props) {
       <td className="block">
         <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>
       </td>
-      <td className="block">
+      <td className="block pull-right">
         <Actions
           onDelete={onDelete}
           onStop={onStop}

@@ -62,7 +62,7 @@ function Job({job, onDelete, onStop}: Props) {
       <td className="block">
         <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>
       </td>
-      <td className="block">
+      <td className="block pull-right">
         <Actions
           onDelete={onDelete}
           onStop={onStop}

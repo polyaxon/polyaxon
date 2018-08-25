@@ -47,7 +47,7 @@ function Build({build, onDelete, onStop}: Props) {
       <td className="block">
         <TaskRunMetaInfo startedAt={build.started_at} finishedAt={build.finished_at}/>
       </td>
-      <td className="block">
+      <td className="block pull-right">
         <Actions
           onDelete={onDelete}
           onStop={onStop}

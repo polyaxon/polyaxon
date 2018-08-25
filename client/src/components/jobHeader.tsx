@@ -15,7 +15,7 @@ function JobHeader() {
       <th className="block">
         Run
       </th>
-      <th className="block">
+      <th className="block pull-right">
         Actions
       </th>
     </tr>

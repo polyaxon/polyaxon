@@ -9,7 +9,7 @@ function ProjectHeader() {
       <th className="block">
         Info
       </th>
-      <th className="block">
+      <th className="block pull-right">
         Actions
       </th>
     </tr>
