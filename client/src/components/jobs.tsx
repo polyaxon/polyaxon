@@ -29,17 +29,19 @@ export default class Jobs extends React.Component<Props, Object> {
     const jobs = this.props.jobs;
     const listJobs = () => {
       return (
-        <tbody>
-        {JobHeader()}
-        {jobs.map(
-          (job: JobModel) =>
-            <Job
-              key={job.unique_name}
-              job={job}
-              onDelete={() => this.props.onDelete(job.unique_name)}
-              onStop={() => this.props.onStop(job.unique_name)}
-            />)}
-        </tbody>
+        <table className="table table-hover table-responsive">
+          <tbody>
+          {JobHeader()}
+          {jobs.map(
+            (job: JobModel) =>
+              <Job
+                key={job.unique_name}
+                job={job}
+                onDelete={() => this.props.onDelete(job.unique_name)}
+                onStop={() => this.props.onStop(job.unique_name)}
+              />)}
+          </tbody>
+        </table>
       );
     };
 

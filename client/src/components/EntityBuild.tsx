@@ -23,14 +23,16 @@ export default class EntityBuild extends React.Component<Props, Object> {
     const listBuilds = () => {
       if (this.props.build) {
         return (
-          <tbody>
-          {BuildHeader()}
-          <Build
-            build={this.props.build}
-            onDelete={() => this.props.onDelete(this.props.build.unique_name)}
-            onStop={() => this.props.onStop(this.props.build.unique_name)}
-          />
-          </tbody>
+          <table className="table table-hover table-responsive">
+            <tbody>
+            {BuildHeader()}
+            <Build
+              build={this.props.build}
+              onDelete={() => this.props.onDelete(this.props.build.unique_name)}
+              onStop={() => this.props.onStop(this.props.build.unique_name)}
+            />
+            </tbody>
+          </table>
         );
       }
       return (null);

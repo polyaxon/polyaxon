@@ -28,17 +28,19 @@ export default class Groups extends React.Component<Props, Object> {
     const groups = this.props.groups;
     const listGroups = () => {
       return (
-        <tbody>
-        {GroupHeader()}
-        {groups.map(
-          (group: GroupModel) =>
-            <Group
-              key={group.unique_name}
-              group={group}
-              onDelete={() => this.props.onDelete(group.unique_name)}
-              onStop={() => this.props.onStop(group.unique_name)}
-            />)}
-        </tbody>
+        <table className="table table-hover table-responsive">
+          <tbody>
+          {GroupHeader()}
+          {groups.map(
+            (group: GroupModel) =>
+              <Group
+                key={group.unique_name}
+                group={group}
+                onDelete={() => this.props.onDelete(group.unique_name)}
+                onStop={() => this.props.onStop(group.unique_name)}
+              />)}
+          </tbody>
+        </table>
       );
     };
 

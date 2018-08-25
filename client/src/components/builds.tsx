@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/build';
@@ -29,17 +28,19 @@ export default class Builds extends React.Component<Props, Object> {
     const builds = this.props.builds;
     const listBuilds = () => {
       return (
-        <tbody>
-        {BuildHeader()}
-        {builds.map(
-          (build: BuildModel) =>
-            <Build
-              key={build.unique_name}
-              build={build}
-              onDelete={() => this.props.onDelete(build.unique_name)}
-              onStop={() => this.props.onStop(build.unique_name)}
-            />)}
-        </tbody>
+        <table className="table table-hover table-responsive">
+          <tbody>
+          {BuildHeader()}
+          {builds.map(
+            (build: BuildModel) =>
+              <Build
+                key={build.unique_name}
+                build={build}
+                onDelete={() => this.props.onDelete(build.unique_name)}
+                onStop={() => this.props.onStop(build.unique_name)}
+              />)}
+          </tbody>
+        </table>
       );
     };
 

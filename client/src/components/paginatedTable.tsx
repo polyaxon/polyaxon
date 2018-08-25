@@ -151,9 +151,7 @@ export default class PaginatedTable extends React.Component<Props, State> {
 
           <div className="row">
             <div className="col-md-12">
-              {this.props.count > 0 &&
-              <table className="table table-hover table-responsive">{this.props.componentList}</table>
-              }
+              {this.props.count > 0 && this.props.componentList}
               {!this.props.count && this.props.componentEmpty}
             </div>
           </div>

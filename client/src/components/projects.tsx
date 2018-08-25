@@ -24,16 +24,18 @@ export default class Projects extends React.Component<Props, Object> {
     const projects = this.props.projects;
     const listProjects = () => {
       return (
-        <tbody>
-        {ProjectHeader()}
-        {projects.map(
-          (project: ProjectModel) =>
-            <Project
-              key={project.unique_name}
-              project={project}
-              onDelete={() => this.props.onDelete(project.unique_name)}
-            />)}
-        </tbody>
+        <table className="table table-hover table-responsive">
+          <tbody>
+          {ProjectHeader()}
+          {projects.map(
+            (project: ProjectModel) =>
+              <Project
+                key={project.unique_name}
+                project={project}
+                onDelete={() => this.props.onDelete(project.unique_name)}
+              />)}
+          </tbody>
+        </table>
       );
     };
 
