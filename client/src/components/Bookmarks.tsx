@@ -13,7 +13,7 @@ export interface Props {
   user: string;
 }
 
-export default class Bookmarks extends React.Component<Props, Object> {
+export default class Bookmarks extends React.Component<Props, {}> {
   public render() {
     const bookmarksUrl = getBookmarksUrl(this.props.user);
 

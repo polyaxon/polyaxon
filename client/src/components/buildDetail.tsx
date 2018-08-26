@@ -31,7 +31,7 @@ export interface Props {
   unbookmark: () => actions.BuildAction;
 }
 
-export default class BuildDetail extends React.Component<Props, Object> {
+export default class BuildDetail extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchData();
   }

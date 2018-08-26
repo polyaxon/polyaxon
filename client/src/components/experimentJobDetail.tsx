@@ -10,7 +10,7 @@ export interface Props {
   fetchData: () => any;
 }
 
-export default class JobDetail extends React.Component<Props, Object> {
+export default class JobDetail extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchData();
   }

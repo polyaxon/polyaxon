@@ -15,7 +15,7 @@ export interface Props {
   fetchData: () => actions.MetricsAction;
 }
 
-export default class Metrics extends React.Component<Props, Object> {
+export default class Metrics extends React.Component<Props, {}> {
   componentDidMount() {
     this.props.fetchData();
   }

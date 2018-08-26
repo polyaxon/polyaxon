@@ -16,7 +16,7 @@ export interface Props {
   job: JobModel;
 }
 
-export default class JobOverview extends React.Component<Props, Object> {
+export default class JobOverview extends React.Component<Props, {}> {
   public render() {
     const job = this.props.job;
 

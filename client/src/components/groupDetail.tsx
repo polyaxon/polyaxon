@@ -30,7 +30,7 @@ export interface Props {
   unbookmark: () => actions.GroupAction;
 }
 
-export default class GroupDetail extends React.Component<Props, Object> {
+export default class GroupDetail extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchData();
   }

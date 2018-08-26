@@ -9,7 +9,7 @@ export interface Props {
   tabId?: string;
 }
 
-export default class LinkedTab extends React.Component<Props, Object> {
+export default class LinkedTab extends React.Component<Props, {}> {
   public render() {
     const tabId = this.props.tabId ? this.props.tabId : Math.floor((Math.random() * 100) + 1).toString();
     const getActiveTab = () => {

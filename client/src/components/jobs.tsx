@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/job';
@@ -24,7 +23,7 @@ export interface Props {
   fetchData: (offset?: number, query?: string, sort?: string) => actions.JobAction;
 }
 
-export default class Jobs extends React.Component<Props, Object> {
+export default class Jobs extends React.Component<Props, {}> {
   public render() {
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const jobs = this.props.jobs;

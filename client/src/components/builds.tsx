@@ -23,7 +23,7 @@ export interface Props {
   fetchData: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
 }
 
-export default class Builds extends React.Component<Props, Object> {
+export default class Builds extends React.Component<Props, {}> {
   public render() {
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const builds = this.props.builds;

@@ -13,7 +13,7 @@ export interface Props {
   fetchData: () => actions.StatusesAction;
 }
 
-export default class Statuses extends React.Component<Props, Object> {
+export default class Statuses extends React.Component<Props, {}> {
   public render() {
     const statuses = this.props.statuses;
     const listStatuses = () => {

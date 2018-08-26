@@ -18,7 +18,7 @@ export interface Props {
   experiment: ExperimentModel;
 }
 
-export default class ExperimentOverview extends React.Component<Props, Object> {
+export default class ExperimentOverview extends React.Component<Props, {}> {
   public render() {
     const experiment = this.props.experiment;
 

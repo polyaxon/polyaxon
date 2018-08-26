@@ -14,7 +14,7 @@ export interface Props {
   onStop: (buildName: string) => actions.BuildAction;
 }
 
-export default class EntityBuild extends React.Component<Props, Object> {
+export default class EntityBuild extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchData();
   }

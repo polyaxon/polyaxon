@@ -17,7 +17,7 @@ export interface Props {
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
 }
 
-export default class ExperimentJobs extends React.Component<Props, Object> {
+export default class ExperimentJobs extends React.Component<Props, {}> {
   public render() {
     const jobs = this.props.jobs;
     const listExperimentJobs = () => {

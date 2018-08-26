@@ -19,7 +19,7 @@ export interface Props {
   fetchData: () => actions.ProjectAction;
 }
 
-export default class Projects extends React.Component<Props, Object> {
+export default class Projects extends React.Component<Props, {}> {
   public render() {
     const projects = this.props.projects;
     const listProjects = () => {

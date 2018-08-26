@@ -19,7 +19,7 @@ export interface Props {
   group: GroupModel;
 }
 
-export default class GroupOverview extends React.Component<Props, Object> {
+export default class GroupOverview extends React.Component<Props, {}> {
   public render() {
     const group = this.props.group;
     if (_.isNil(group)) {

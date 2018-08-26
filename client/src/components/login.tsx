@@ -10,7 +10,7 @@ export interface Props {
   refreshSession: () => any;
 }
 
-export default class Login extends React.Component<Props, Object> {
+export default class Login extends React.Component<Props, {}> {
 
   public handleSubmit = (event: any) => {
     event.preventDefault();

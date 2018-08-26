@@ -10,7 +10,7 @@ export interface Props {
   hideModal: () => any;
 }
 
-export default class User extends React.Component<Props, Object> {
+export default class User extends React.Component<Props, {}> {
   public render() {
     return (
       <div className="row">

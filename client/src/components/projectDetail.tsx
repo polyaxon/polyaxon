@@ -26,7 +26,7 @@ export interface Props {
   unbookmark: () => actions.ProjectAction;
 }
 
-export default class ProjectDetail extends React.Component<Props, Object> {
+export default class ProjectDetail extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchData();
   }

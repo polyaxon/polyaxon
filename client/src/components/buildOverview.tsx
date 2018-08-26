@@ -19,7 +19,7 @@ export interface Props {
   build: BuildModel;
 }
 
-export default class BuildOverview extends React.Component<Props, Object> {
+export default class BuildOverview extends React.Component<Props, {}> {
   public render() {
     const build = this.props.build;
 

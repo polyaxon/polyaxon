@@ -7,7 +7,7 @@ export interface Props {
   fetchData: () => any;
 }
 
-export default class Logs extends React.Component<Props, Object> {
+export default class Logs extends React.Component<Props, {}> {
 
   componentDidMount() {
     this.props.fetchData();

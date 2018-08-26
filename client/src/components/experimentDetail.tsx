@@ -34,7 +34,7 @@ export interface Props {
   unbookmark: () => actions.ExperimentAction;
 }
 
-export default class ExperimentDetail extends React.Component<Props, Object> {
+export default class ExperimentDetail extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchData();
   }
