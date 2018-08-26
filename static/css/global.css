@@ -1,6 +1,9 @@
 body {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
 }
+body>#container {
+  height: 100%;
+}
 
 .layout {
   width: 98%;

@@ -164,3 +164,7 @@ body.modal {
 .modal .password-reset-link {
   text-align: center;
 }
+
+form {
+ margin-bottom: 1em;
+}
