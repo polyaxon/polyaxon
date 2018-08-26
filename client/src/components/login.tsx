@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { getHomeUrl } from '../constants/utils';
+import './login.less';
 
 export interface Props {
   next: string | null;
