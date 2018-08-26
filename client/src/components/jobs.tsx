@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import * as actions from '../actions/job';
+import { JOB_FILTER_OPTIONS } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { JobModel } from '../models/job';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
@@ -64,6 +65,7 @@ export default class Jobs extends React.Component<Props, {}> {
         filters={filters}
         fetchData={this.props.fetchData}
         sortOptions={DEFAULT_SORT_OPTIONS}
+        filterOptions={JOB_FILTER_OPTIONS}
       />
     );
   }

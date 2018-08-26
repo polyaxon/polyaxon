@@ -5,6 +5,7 @@ import * as deepEqual from 'deep-equal';
 import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
+import { FilterOption } from '../interfaces/filterOptions';
 import { DEFAULT_FILTERS, EXPERIMENT_FILTERS } from './filters/constants';
 import ExperimentFilterList from './filters/experimentFilterList';
 import FilterList from './filters/filterList';
@@ -16,8 +17,9 @@ export interface Props {
   componentHeader?: React.ReactNode;
   componentEmpty: React.ReactNode;
   filters: boolean | string;
-  fetchData: (offset: number, query?: string, sort?: string, extraFilters?: Object) => any;
+  fetchData: (offset: number, query?: string, sort?: string, extraFilters?: {}) => any;
   sortOptions?: string[];
+  filterOptions?: FilterOption[];
 }
 
 interface State {
@@ -122,6 +124,7 @@ export default class PaginatedList extends React.Component<Props, State> {
             sort={this.state.sort}
             handleFilter={(query, sort) => this.handleFilter(query, sort)}
             sortOptions={this.props.sortOptions || []}
+            filterOptions={this.props.filterOptions || []}
           />);
       } else if (this.props.filters === EXPERIMENT_FILTERS) {
         return (

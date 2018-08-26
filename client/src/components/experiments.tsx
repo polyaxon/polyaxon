@@ -2,7 +2,9 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/experiment';
+import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
+import { FilterOption } from '../interfaces/filterOptions';
 import { ExperimentModel } from '../models/experiment';
 import AutocompleteDropdown from './autocomplete/autocomplteDorpdown';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
@@ -128,6 +130,21 @@ export default class Experiments extends React.Component<Props, State> {
   };
 
   public render() {
+    const filterOptions = [
+      ...DEFAULT_FILTER_OPTIONS,
+      {
+        filter: 'declarations.*',
+        type: 'value',
+        desc: 'declarations.activation: sigmoid or declarations.activation: sigmoid|relu',
+        icon: 'gear'
+      },
+      {
+        filter: 'metric.*',
+        type: 'scalar',
+        desc: FILTER_EXAMPLES.scalar('metric.loss'),
+        icon: 'area-chart',
+      },
+    ] as FilterOption[];
     const filters = this.props.useFilters ? EXPERIMENT_FILTERS : false;
     const experiments = this.props.experiments;
     const listExperiments = () => {
@@ -218,7 +235,7 @@ export default class Experiments extends React.Component<Props, State> {
                     (idx === 0 ? 'border-left ' : ' ') +
                     (idx === this.state.metrics.length - 1 ? 'border-right ' : ' ')}
                 >
-                    {metric}
+                  {metric}
                 </th>
               )}
               <th className="block pull-right">
@@ -259,6 +276,7 @@ export default class Experiments extends React.Component<Props, State> {
         filters={filters}
         fetchData={this.props.fetchData}
         sortOptions={DEFAULT_SORT_OPTIONS}
+        filterOptions={filterOptions}
       />
     );
   }

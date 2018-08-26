@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
+import { FilterOption } from '../../interfaces/filterOptions';
 import './filterList.less';
 
 export interface Props {
@@ -8,6 +9,7 @@ export interface Props {
   sort?: string;
   handleFilter: (query: string, sort: string) => any;
   sortOptions: string[];
+  filterOptions: FilterOption[];
   defaultSort?: string;
 }
 
@@ -22,7 +24,7 @@ export default class FilterList extends React.Component<Props, State> {
     super(props);
     this.state = {
       query: props.query || '',
-      sort: props.sort || props.defaultSort ||  '-updated_at',
+      sort: props.sort || props.defaultSort || '-updated_at',
       showFilters: false
     };
   }
@@ -32,19 +34,24 @@ export default class FilterList extends React.Component<Props, State> {
     this.props.handleFilter(this.state.query, this.state.sort);
   };
 
-  public onQueryInput = (value: string) => {
+  public onQueryInput = (query: string) => {
     this.setState((prevState, prevProps) => ({
-      query: value,
-      sort: prevState.sort,
+      ...prevState, ...{query}
     }));
   };
 
-  public onSortInput = (value: string) => {
+  public onSortInput = (sort: string) => {
     this.setState((prevState, prevProps) => ({
-      query: prevState.query,
-      sort: value,
+      ...prevState, ...{sort}
     }));
-    this.props.handleFilter(this.state.query, value);
+    this.props.handleFilter(this.state.query, sort);
+  };
+
+  public addFilter = (filter: string) => {
+    const query = this.state.query ? this.state.query + ', ' + filter + ': ' : filter + ': ';
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...{query}
+    }));
   };
 
   public render() {
@@ -55,13 +62,12 @@ export default class FilterList extends React.Component<Props, State> {
             <div className="form-group search-group">
               <div className="input-group search-query">
                 <span className="input-group-btn">
-                  <Dropdown id={`dropdown-actions-1`} className="search-history">
+                  <Dropdown id={`dropdown-searches`}>
                     <Dropdown.Toggle
                       bsStyle="default"
                       bsSize="small"
-                      noCaret={true}
                     >
-                      <i className="fa fa-search icon" aria-hidden="true"/> Searches
+                      <i className="fa fa-history icon" aria-hidden="true"/> Searches
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <MenuItem eventKey="2">
@@ -79,17 +85,52 @@ export default class FilterList extends React.Component<Props, State> {
                   onChange={(event) => this.onQueryInput(event.target.value)}
                 />
                 <span className="input-group-btn">
+                  <Dropdown
+                    id={`dropdown-add`}
+                    pullRight={true}
+                    className="search-add"
+                  >
+                    <Dropdown.Toggle
+                      bsStyle="default"
+                      bsSize="small"
+                      noCaret={true}
+                    >
+                      <i className="fa fa-chevron-down icon" aria-hidden="true"/>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      {this.props.filterOptions.map(
+                        (filterOption: FilterOption, idx: number) =>
+                          <MenuItem
+                            key={idx}
+                            className="search-filter"
+                            onClick={() => this.addFilter(filterOption.filter)}
+                          >
+                            <span>
+                              <i
+                                className={'fa fa-' + filterOption.icon + ' icon'}
+                                aria-hidden="true"
+                              /> {filterOption.filter}
+                            </span>
+                            <p className="filter-desc">{filterOption.desc}</p>
+                          </MenuItem>
+                      )}
+                      <MenuItem href="https://docs.polyaxon.com/query_syntax/introduction" target="_blank">
+                        <i className="fa fa-external-link icon" aria-hidden="true"/> View advanced search syntax
+                      </MenuItem>
+                    </Dropdown.Menu>
+                  </Dropdown>
                   <button
                     type="button"
                     className="btn btn-default btn-sm btn-search"
                     aria-label="Help"
+                    onClick={this.handleFilter}
                   >
-                    <i className="fa fa-plus icon" aria-hidden="true"/>
+                    <i className="fa fa-search icon" aria-hidden="true"/>
                   </button>
                 </span>
               </div>
               <Dropdown
-                id={`dropdown-actions-1`}
+                id={`dropdown-sort`}
                 pullRight={true}
                 className="search-sort"
               >
@@ -102,16 +143,15 @@ export default class FilterList extends React.Component<Props, State> {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   {this.props.sortOptions.map((sortOption: string) =>
-                  <MenuItem
-                    key={sortOption}
-                    eventKey="2"
-                    onClick={() => this.onSortInput(this.state.sort === sortOption ? `-${sortOption}` : sortOption)}
-                  >
-                    {this.state.sort === sortOption &&
-                    <i className="fa fa-long-arrow-up icon" aria-hidden="true"/>
-                    }{this.state.sort === `-${sortOption}` &&
+                    <MenuItem
+                      key={sortOption}
+                      onClick={() => this.onSortInput(this.state.sort === sortOption ? `-${sortOption}` : sortOption)}
+                    >
+                      {this.state.sort === sortOption &&
+                      <i className="fa fa-long-arrow-up icon" aria-hidden="true"/>
+                      }{this.state.sort === `-${sortOption}` &&
                     <i className="fa fa-long-arrow-down icon" aria-hidden="true"/>} {sortOption}
-                  </MenuItem>
+                    </MenuItem>
                   )}
                 </Dropdown.Menu>
               </Dropdown>
