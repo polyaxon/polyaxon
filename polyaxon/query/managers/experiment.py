@@ -1,6 +1,22 @@
-from query.builder import ArrayCondition, ComparisonCondition, DateTimeCondition, ValueCondition
+from polyaxon_schemas.utils import to_list
+
+from libs.utils import to_bool
+from query.builder import (
+    ArrayCondition,
+    CallbackCondition,
+    ComparisonCondition,
+    DateTimeCondition,
+    ValueCondition,
+)
 from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_scalar_operation, parse_value_operation
+
+
+def _indepenent_condition(queryset, params, negation):
+    params = to_list(params)
+    if len(params) == 1 and to_bool(params[0]) is True:
+        return queryset.filter(experiment_group__isnull=True)
+    return queryset
 
 
 class ExperimentQueryManager(BaseQueryManager):
@@ -34,6 +50,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'tags': parse_value_operation,
         # Metrics
         'metric': parse_scalar_operation,
+        # Idependent
+        'independent': parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Dates
@@ -57,4 +75,6 @@ class ExperimentQueryManager(BaseQueryManager):
         'tags': ArrayCondition,
         # Metrics
         'metric': ComparisonCondition,
+        # Independent
+        'independent': CallbackCondition(_indepenent_condition),
     }

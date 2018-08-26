@@ -112,6 +112,10 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url + '?independent=true')
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['count'] == independent_count
+        # Through query
+        resp = self.auth_client.get(self.url + '?query=independent:true')
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == independent_count
 
         # Getting only group experiments
         resp = self.auth_client.get(self.url + '?group={}'.format(group.id))
