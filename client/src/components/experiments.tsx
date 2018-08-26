@@ -11,7 +11,7 @@ import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
 import Experiment from './experiment';
 import './experiments.less';
-import { EXPERIMENT_FILTERS } from './filters/constants';
+import { DEFAULT_FILTERS } from './filters/constants';
 import PaginatedTable from './paginatedTable';
 
 interface TableColumnProps {
@@ -37,6 +37,7 @@ function TableColumn({type, value, onClick}: TableColumnProps) {
 export interface Props {
   isCurrentUser: boolean;
   experiments: ExperimentModel[];
+  groupId?: string | number;
   count: number;
   useFilters: boolean;
   bookmarks: boolean;
@@ -130,9 +131,12 @@ export default class Experiments extends React.Component<Props, State> {
   };
 
   public render() {
-    const filterOptions = [
-      ...DEFAULT_FILTER_OPTIONS,
-      {
+    let additionalFilters: FilterOption[] = this.props.groupId ?
+      [] :
+      [{filter: 'independent', type: 'scalar', desc: 'independent: true, default is false', icon: 'minus'}];
+    additionalFilters = [
+      ...additionalFilters,
+      ...[{
         filter: 'declarations.*',
         type: 'value',
         desc: 'declarations.activation: sigmoid or declarations.activation: sigmoid|relu',
@@ -144,8 +148,12 @@ export default class Experiments extends React.Component<Props, State> {
         desc: FILTER_EXAMPLES.scalar('metric.loss'),
         icon: 'area-chart',
       },
+    ]] as FilterOption[];
+    const filterOptions = [
+      ...DEFAULT_FILTER_OPTIONS,
+      ...additionalFilters
     ] as FilterOption[];
-    const filters = this.props.useFilters ? EXPERIMENT_FILTERS : false;
+    const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const experiments = this.props.experiments;
     const listExperiments = () => {
       return (

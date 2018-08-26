@@ -65,6 +65,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     experiments: results.experiments,
+    groupId: ownProps.groupId,
     count: results.count,
     useFilters: isTrue(ownProps.useFilters),
     bookmarks: isTrue(ownProps.bookmarks),
