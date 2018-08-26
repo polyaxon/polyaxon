@@ -133,6 +133,7 @@ class TestBOIterationManagers(BaseTest):
             for i in range(2)]
         self.iteration_manager = BOIterationManager(experiment_group=self.experiment_group)
 
+    @flaky(max_runs=3)
     def test_create_iteration(self):
         assert ExperimentGroupIteration.objects.count() == 0
         assert self.experiment_group.current_iteration == 0
