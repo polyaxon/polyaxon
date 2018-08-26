@@ -6,8 +6,7 @@ import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
 import { FilterOption } from '../interfaces/filterOptions';
-import { DEFAULT_FILTERS, EXPERIMENT_FILTERS } from './filters/constants';
-import ExperimentFilterList from './filters/experimentFilterList';
+import { DEFAULT_FILTERS } from './filters/constants';
 import FilterList from './filters/filterList';
 import './paginatedTable.less';
 
@@ -125,15 +124,6 @@ export default class PaginatedTable extends React.Component<Props, State> {
             sortOptions={this.props.sortOptions || []}
             filterOptions={this.props.filterOptions || []}
           />);
-      } else if (this.props.filters === EXPERIMENT_FILTERS) {
-        return (
-          <ExperimentFilterList
-            query={this.state.query}
-            sort={this.state.sort}
-            extraFilters={this.state.extraFilters}
-            handleFilter={(query, sort, extraFilters) => this.handleFilter(query, sort, extraFilters)}
-          />
-        );
       } else {
         return (null);
       }
