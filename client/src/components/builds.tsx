@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import * as actions from '../actions/build';
+import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { BuildModel } from '../models/build';
 import Build from './build';
 import BuildHeader from './buildHeader';
@@ -62,6 +63,7 @@ export default class Builds extends React.Component<Props, Object> {
         componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}
+        sortOptions={DEFAULT_SORT_OPTIONS}
       />
     );
   }

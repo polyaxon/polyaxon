@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/experiment';
+import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { ExperimentModel } from '../models/experiment';
 import AutocompleteDropdown from './autocomplete/autocomplteDorpdown';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
@@ -257,6 +258,7 @@ export default class Experiments extends React.Component<Props, State> {
         componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}
+        sortOptions={DEFAULT_SORT_OPTIONS}
       />
     );
   }

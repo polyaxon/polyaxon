@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/job';
+import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { JobModel } from '../models/job';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
@@ -63,6 +64,7 @@ export default class Jobs extends React.Component<Props, Object> {
         componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}
+        sortOptions={DEFAULT_SORT_OPTIONS}
       />
     );
   }

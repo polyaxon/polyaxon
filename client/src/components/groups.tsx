@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import * as actions from '../actions/group';
+import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { GroupModel } from '../models/group';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
@@ -22,7 +23,7 @@ export interface Props {
   fetchData: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
 }
 
-export default class Groups extends React.Component<Props, Object> {
+export default class Groups extends React.Component<Props, {}> {
   public render() {
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const groups = this.props.groups;
@@ -62,6 +63,7 @@ export default class Groups extends React.Component<Props, Object> {
         componentList={listGroups()}
         filters={filters}
         fetchData={this.props.fetchData}
+        sortOptions={DEFAULT_SORT_OPTIONS}
       />
     );
   }

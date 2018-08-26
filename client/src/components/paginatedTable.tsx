@@ -16,6 +16,7 @@ export interface Props {
   componentEmpty: React.ReactNode;
   filters: boolean | string;
   fetchData: (offset: number, query?: string, sort?: string, extraFilters?: Object) => any;
+  sortOptions?: string[];
 }
 
 interface State {
@@ -119,6 +120,7 @@ export default class PaginatedTable extends React.Component<Props, State> {
             query={this.state.query}
             sort={this.state.sort}
             handleFilter={(query, sort) => this.handleFilter(query, sort)}
+            sortOptions={this.props.sortOptions || []}
           />);
       } else if (this.props.filters === EXPERIMENT_FILTERS) {
         return (
