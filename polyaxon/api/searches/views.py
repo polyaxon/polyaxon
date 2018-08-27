@@ -1,4 +1,4 @@
-from rest_framework.generics import DestroyAPIView, get_object_or_404
+from rest_framework.generics import DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
 import auditor
