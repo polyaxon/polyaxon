@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Dropdown, MenuItem } from 'react-bootstrap';
+import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
+import * as actions from '../../actions/search';
 import { FilterOption } from '../../interfaces/filterOptions';
+import { SearchModel } from '../../models/search';
 import './filterList.less';
 
 export interface Props {
@@ -11,12 +13,17 @@ export interface Props {
   sortOptions: string[];
   filterOptions: FilterOption[];
   defaultSort?: string;
+  fetchSearches?: () => actions.SearchAction;
+  searches: SearchModel[];
+  searchesCount: number;
 }
 
 interface State {
   query: string;
   sort: string;
   showFilters: boolean;
+  showSearchModal: boolean;
+  saveQueryForm: {name: string, query: string, sort: string, isDefault: boolean};
 }
 
 export default class FilterList extends React.Component<Props, State> {
@@ -25,13 +32,42 @@ export default class FilterList extends React.Component<Props, State> {
     this.state = {
       query: props.query || '',
       sort: props.sort || props.defaultSort || '-updated_at',
-      showFilters: false
+      showFilters: false,
+      showSearchModal: false,
+      saveQueryForm: {
+        query: '',
+        sort: '',
+        isDefault: false,
+        name: '',
+      }
     };
+  }
+
+  public componentDidMount() {
+    if (this.props.fetchSearches) {
+      this.props.fetchSearches();
+    }
   }
 
   public handleFilter = (event: any) => {
     event.preventDefault();
     this.props.handleFilter(this.state.query, this.state.sort);
+  };
+
+  public saveSearch = (event: any) => {
+    event.preventDefault();
+    this.handleClose();
+  };
+
+  public selectSearch = (query: string, sort: string) => {
+     const state = {
+       query,
+       sort: sort || this.props.defaultSort || '-updated_at',
+     };
+
+     this.setState((prevState, prevProps) => ({
+      ...prevState, ...state
+    }));
   };
 
   public onQueryInput = (query: string) => {
@@ -54,6 +90,40 @@ export default class FilterList extends React.Component<Props, State> {
     }));
   };
 
+  public handleClose = () => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...{showSearchModal: false}
+    }));
+  };
+
+  public handleShow = () => {
+    const saveQueryForm = {
+      query: this.state.query,
+      sort: this.state.sort,
+      name: '',
+      isDefault: false
+    };
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...{showSearchModal: true, saveQueryForm}
+    }));
+  };
+
+  public updateQueryForm = (key: string, value: string | boolean) => {
+    const saveQueryForm = {...this.state.saveQueryForm};
+    if (key === 'name') {
+      saveQueryForm.name = value as string;
+    } else if (key === 'query') {
+      saveQueryForm.query = value as string;
+    } else if (key === 'sort') {
+      saveQueryForm.sort = value as string;
+    } else if (key === 'isDefault') {
+      saveQueryForm.isDefault = value as boolean;
+    }
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...{saveQueryForm}
+    }));
+  };
+
   public render() {
     const getFilter = () => {
       return (
@@ -61,8 +131,9 @@ export default class FilterList extends React.Component<Props, State> {
           <form onSubmit={this.handleFilter}>
             <div className="form-group search-group">
               <div className="input-group search-query">
+                {this.props.fetchSearches &&
                 <span className="input-group-btn">
-                  <Dropdown id={`dropdown-searches`}>
+                  <Dropdown id="dropdown-searches" className="saved-searches">
                     <Dropdown.Toggle
                       bsStyle="default"
                       bsSize="small"
@@ -70,12 +141,42 @@ export default class FilterList extends React.Component<Props, State> {
                       <i className="fa fa-history icon" aria-hidden="true"/> Searches
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <MenuItem eventKey="2">
-                        item
+                      {this.props.searches.map(
+                        (search: SearchModel, idx: number) =>
+                          <MenuItem
+                            key={idx}
+                            className="search-saved-query"
+                            onClick={() => this.selectSearch(search.query.query, search.query.sort)}
+                          >
+                            <button type="button" className="close pull-right" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <span>
+                                {search.name || 'untitled'}:
+                              </span>
+                            <p className="query-desc">
+                              Query: {search.query.query && search.query.query}
+                            </p>
+                            <p>
+                              Sort: {search.query.sort || this.props.defaultSort || '-update_at'}
+                            </p>
+                          </MenuItem>
+                      )}
+                      {!this.props.searches &&
+                      <MenuItem>
+                        No saved searches
+                      </MenuItem>
+                      }
+                      <MenuItem className="searches-save" onClick={() => this.handleShow()}>
+                        <i
+                          className={'fa fa-search-plus icon'}
+                          aria-hidden="true"
+                        /> Save current search
                       </MenuItem>
                     </Dropdown.Menu>
                   </Dropdown>
                 </span>
+                }
                 <input
                   type="text"
                   className="form-control input-sm"
@@ -86,7 +187,7 @@ export default class FilterList extends React.Component<Props, State> {
                 />
                 <span className="input-group-btn">
                   <Dropdown
-                    id={`dropdown-add`}
+                    id="dropdown-add"
                     pullRight={true}
                     className="search-add"
                   >
@@ -130,7 +231,7 @@ export default class FilterList extends React.Component<Props, State> {
                 </span>
               </div>
               <Dropdown
-                id={`dropdown-sort`}
+                id="dropdown-sort"
                 pullRight={true}
                 className="search-sort"
               >
@@ -157,6 +258,68 @@ export default class FilterList extends React.Component<Props, State> {
               </Dropdown>
             </div>
           </form>
+          <Modal show={this.state.showSearchModal} onHide={this.handleClose}>
+            <Modal.Header closeButton={true}>
+              <Modal.Title>Save search query</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form className="form-horizontal" onSubmit={this.saveSearch}>
+                <div className="form-group">
+                  <label className="col-sm-2 control-label">Name</label>
+                  <div className="col-sm-10">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="untitled"
+                      value={this.state.saveQueryForm.name}
+                      onChange={(event) => this.updateQueryForm('name', event.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="col-sm-2 control-label">Query</label>
+                  <div className="col-sm-10">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="query"
+                      value={this.state.saveQueryForm.query}
+                      onChange={(event) => this.updateQueryForm('query', event.target.value)}
+                    />
+                  </div>
+                </div>
+                 <div className="form-group">
+                  <label className="col-sm-2 control-label">Sort</label>
+                  <div className="col-sm-10">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="sort"
+                      value={this.state.saveQueryForm.sort}
+                      onChange={(event) => this.updateQueryForm('sort', event.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="col-sm-offset-2 col-sm-10">
+                    <div className="checkbox">
+                      <label>
+                        <input
+                          type="checkbox"
+                          onChange={(event) => this.updateQueryForm('isDefault', event.target.checked)}
+                        /> Make default
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="col-sm-offset-2 col-sm-10">
+                    <button type="submit" className="btn btn-default" onClick={this.saveSearch}>Save</button>
+                  </div>
+                </div>
+              </form>
+            </Modal.Body>
+          </Modal>
         </div>
       );
     };
