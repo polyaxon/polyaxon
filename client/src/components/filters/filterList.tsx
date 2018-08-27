@@ -177,10 +177,12 @@ export default class FilterList extends React.Component<Props, State> {
                                 {search.name || 'untitled'}:
                               </span>
                             <p className="query-desc">
-                              Query: {search.query.query && search.query.query}
-                            </p>
-                            <p className="query-desc">
-                              Sort: {search.query.sort || this.props.defaultSort || '-update_at'}
+                              <span className="label label-search">
+                                Query:
+                              </span> {search.query.query && search.query.query}
+                              <span className="label label-search">
+                                Sort:
+                              </span> {search.query.sort || this.props.defaultSort || '-update_at'}
                             </p>
                           </MenuItem>
                       )}

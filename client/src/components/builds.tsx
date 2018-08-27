@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as actions from '../actions/build';
 import * as search_actions from '../actions/search';
-import { JOB_FILTER_OPTIONS } from '../constants/filtering';
+import { BUILD_FILTER_OPTIONS } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { BuildModel } from '../models/build';
 import { SearchModel } from '../models/search';
@@ -73,7 +73,7 @@ export default class Builds extends React.Component<Props, {}> {
         createSearch={this.props.createSearch}
         deleteSearch={this.props.deleteSearch}
         sortOptions={DEFAULT_SORT_OPTIONS}
-        filterOptions={JOB_FILTER_OPTIONS}
+        filterOptions={BUILD_FILTER_OPTIONS}
       />
     );
   }

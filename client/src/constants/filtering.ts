@@ -83,7 +83,7 @@ export const DEFAULT_FILTER_OPTIONS = [
   ]
 ] as FilterOption[];
 
-export const JOB_FILTER_OPTIONS = [
+export const BUILD_FILTER_OPTIONS = [
   ...DEFAULT_FILTER_OPTIONS,
   ...[
     {
@@ -92,5 +92,23 @@ export const JOB_FILTER_OPTIONS = [
       desc: 'commit: 7afbc6aaf1054d4113b4a740396fb861518da044 or commit: hash1|hash2',
       icon: 'hashtag',
     }
+  ]
+] as FilterOption[];
+
+export const JOB_FILTER_OPTIONS = [
+  ...BUILD_FILTER_OPTIONS,
+  ...[
+    {
+      filter: 'build.id',
+      type: 'value',
+      desc: FILTER_EXAMPLES.id('build.id'),
+      icon: 'gavel',
+    },
+    {
+      filter: 'build.name',
+      type: 'value',
+      desc: FILTER_EXAMPLES.name('build.name'),
+      icon: 'gavel',
+    },
   ]
 ] as FilterOption[];

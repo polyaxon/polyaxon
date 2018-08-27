@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import * as actions from '../actions/experiment';
 import * as search_actions from '../actions/search';
-import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering';
+import { JOB_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { FilterOption } from '../interfaces/filterOptions';
 import { ExperimentModel } from '../models/experiment';
@@ -147,15 +147,27 @@ export default class Experiments extends React.Component<Props, State> {
         desc: 'declarations.activation: sigmoid or declarations.activation: sigmoid|relu',
         icon: 'gear'
       },
-      {
-        filter: 'metric.*',
-        type: 'scalar',
-        desc: FILTER_EXAMPLES.scalar('metric.loss'),
-        icon: 'area-chart',
-      },
-    ]] as FilterOption[];
+        {
+          filter: 'metric.*',
+          type: 'scalar',
+          desc: FILTER_EXAMPLES.scalar('metric.loss'),
+          icon: 'area-chart',
+        },
+        {
+          filter: 'group.id',
+          type: 'value',
+          desc: FILTER_EXAMPLES.id('group.id'),
+          icon: 'cubes',
+        },
+        {
+          filter: 'group.name',
+          type: 'value',
+          desc: FILTER_EXAMPLES.name('group.name'),
+          icon: 'cubes',
+        },
+      ]] as FilterOption[];
     const filterOptions = [
-      ...DEFAULT_FILTER_OPTIONS,
+      ...JOB_FILTER_OPTIONS,
       ...additionalFilters
     ] as FilterOption[];
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;

@@ -37,7 +37,8 @@ export default class Groups extends React.Component<Props, {}> {
       {
         filter: 'search_algorithm',
         type: 'value',
-        desc: 'search_algorithm: bo or search_algorithm: random|hyperband'
+        desc: 'search_algorithm: bo or search_algorithm: random|hyperband',
+        icon: 'asterisk'
       },
       {
         filter: 'concurrency',
