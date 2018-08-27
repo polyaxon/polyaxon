@@ -9,6 +9,7 @@ import { JobsEmptyState, JobStateSchema } from '../models/job';
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ModalStateSchema } from '../models/modal';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
+import { SearchesEmptyState, SearchesStateSchema, } from '../models/search';
 import { StatusEmptyState, StatusStateSchema } from '../models/status';
 import { TokenEmptyState, TokenStateSchema } from '../models/token';
 import { UserEmptyState, UserStateSchema } from '../models/user';
@@ -28,6 +29,7 @@ export interface AppState {
   statuses: StatusStateSchema;
   metrics: MetricStateSchema;
   activityLogs: ActivityLogsStateSchema;
+  searches: SearchesStateSchema;
 }
 
 export const AppEmptyState = {
@@ -43,4 +45,5 @@ export const AppEmptyState = {
   statuses: StatusEmptyState,
   metrics: MetricEmptyState,
   activityLogs: ActivityLogsEmptyState,
+  searches: SearchesEmptyState
 };

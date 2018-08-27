@@ -69,3 +69,10 @@ export const activityLogSchema = new schema.Entity(
   {
     idAttribute: 'id'
   });
+
+export const searchSchema = new schema.Entity(
+  'searches',
+  {},
+  {
+    idAttribute: 'id'
+  });
