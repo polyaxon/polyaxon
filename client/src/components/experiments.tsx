@@ -194,22 +194,22 @@ export default class Experiments extends React.Component<Props, State> {
             <tbody>
             {(this.state.metrics.length > 0 || this.state.declarations.length > 0) &&
             <tr className="list-header">
-              <th className="top-header" scope="colgroup" colSpan={4}/>
+              <th className="top-header block" scope="colgroup" colSpan={4}/>
               {this.state.declarations.length > 0 &&
               <th
-                className="top-header border-left border-right"
+                className="top-header border-left border-right block"
                 scope="colgroup"
                 colSpan={this.state.declarations.length}
               > Params
               </th>}
               {this.state.metrics.length > 0 &&
               <th
-                className="top-header border-left border-right"
+                className="top-header border-left border-right block"
                 scope="colgroup"
                 colSpan={this.state.metrics.length}
               > Metrics
               </th>}
-              <th className="top-header" scope="colgroup" colSpan={1}/>
+              <th className="top-header block" scope="colgroup" colSpan={1}/>
             </tr>}
             <tr className="list-header">
               <th className="block">
