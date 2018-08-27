@@ -1,17 +1,17 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 
+import { getExperimentTensorboardUrl } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
-import Status from './status';
 import Description from './description';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import { EmptyList } from './empty/emptyList';
+import GridTable from './gridTable';
+import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
-import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
-import GridList from './gridList';
-import { EmptyList } from './empty/emptyList';
-import { getExperimentTensorboardUrl } from '../constants/utils';
+import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
+import UserMetaInfo from './metaInfo/userMetaInfo';
+import Status from './status';
 import Tags from './tags';
 
 export interface Props {
@@ -66,7 +66,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
                 <i className="fa fa-gear icon" aria-hidden="true"/>
                 <span className="title">Declarations:</span>
               </span>
-              <GridList rows={[experiment.declarations]}/>
+              <GridTable values={experiment.declarations}/>
             </div>
             }
             {experiment.last_metric &&
@@ -75,7 +75,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
                 <i className="fa fa-area-chart icon" aria-hidden="true"/>
                 <span className="title">Metrics:</span>
               </span>
-              <GridList rows={[experiment.last_metric]}/>
+              <GridTable values={experiment.last_metric}/>
             </div>
             }
           </div>
