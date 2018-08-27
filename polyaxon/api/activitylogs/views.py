@@ -6,6 +6,7 @@ from django.db.models import Q
 import activitylogs
 
 from api.activitylogs.serializers import ActivityLogsSerializer
+from constants import content_types
 from db.models.activitylogs import ActivityLog
 from db.models.projects import Project
 
@@ -44,7 +45,7 @@ class ProjectActivityLogsView(ActivityLogsView):
         project_id = '{}'.format(project.id)
         # Filter for project/all events
         queryset = queryset.filter(
-            Q(content_type__model='project', context__id=project_id) |
+            Q(content_type__model=content_types.PROJECT, context__id=project_id) |
             Q(**{'context__project.id': project_id})
         )
         return super().filter_queryset(queryset=queryset)

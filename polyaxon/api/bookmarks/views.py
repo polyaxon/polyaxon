@@ -16,6 +16,7 @@ from api.bookmarks.serializers import (
 )
 from api.filters import OrderingFilter
 from api.utils.views import PostAPIView
+from constants import content_types
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
@@ -71,35 +72,35 @@ class BookmarkListView(ListAPIView):
 class BuildBookmarkListView(BookmarkListView):
     """List build bookmarks for a user."""
     event_type = BOOKMARK_BUILD_JOBS_VIEWED
-    content_type = 'buildjob'
+    content_type = content_types.BUILD_JOB
     serializer_class = BuildJobBookmarkSerializer
 
 
 class JobBookmarkListView(BookmarkListView):
     """List job bookmarks for a user."""
     event_type = BOOKMARK_JOBS_VIEWED
-    content_type = 'job'
+    content_type = content_types.JOB
     serializer_class = JobBookmarkSerializer
 
 
 class ExperimentBookmarkListView(BookmarkListView):
     """List experiment bookmarks for a user."""
     event_type = BOOKMARK_EXPERIMENTS_VIEWED
-    content_type = 'experiment'
+    content_type = content_types.EXPERIMENT
     serializer_class = ExperimentBookmarkSerializer
 
 
 class ExperimentGroupBookmarkListView(BookmarkListView):
     """List experiment group bookmarks for a user."""
     event_type = BOOKMARK_EXPERIMENT_GROUPS_VIEWED
-    content_type = 'experimentgroup'
+    content_type = content_types.EXPERIMENT_GROUP
     serializer_class = ExperimentGroupBookmarkSerializer
 
 
 class ProjectBookmarkListView(BookmarkListView):
     """List project bookmarks for a user."""
     event_type = BOOKMARK_PROJECTS_VIEWED
-    content_type = 'project'
+    content_type = content_types.PROJECT
     serializer_class = ProjectBookmarkSerializer
 
 
@@ -166,56 +167,56 @@ class BuildJobBookmarkCreateView(BookmarkCreateView):
     """Bookmark build view."""
     event_type = BUILD_JOB_BOOKMARKED
     queryset = BuildJob.objects.filter()
-    content_type = 'buildjob'
+    content_type = content_types.BUILD_JOB
 
 
 class BuildJobBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark build view."""
     event_type = BUILD_JOB_UNBOOKMARKED
     queryset = BuildJob.objects.filter()
-    content_type = 'buildjob'
+    content_type = content_types.BUILD_JOB
 
 
 class JobBookmarkCreateView(BookmarkCreateView):
     """Bookmark job view."""
     event_type = JOB_BOOKMARKED
     queryset = Job.objects.filter()
-    content_type = 'job'
+    content_type = content_types.JOB
 
 
 class JobBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark job view."""
     event_type = JOB_UNBOOKMARKED
     queryset = Job.objects.filter()
-    content_type = 'job'
+    content_type = content_types.JOB
 
 
 class ExperimentBookmarkCreateView(BookmarkCreateView):
     """Bookmark experiment view."""
     event_type = EXPERIMENT_BOOKMARKED
     queryset = Experiment.objects.filter()
-    content_type = 'experiment'
+    content_type = content_types.EXPERIMENT
 
 
 class ExperimentBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark experiment view."""
     event_type = EXPERIMENT_UNBOOKMARKED
     queryset = Experiment.objects.filter()
-    content_type = 'experiment'
+    content_type = content_types.EXPERIMENT
 
 
 class ExperimentGroupBookmarkCreateView(BookmarkCreateView):
     """Bookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_BOOKMARKED
     queryset = ExperimentGroup.objects.filter()
-    content_type = 'experimentgroup'
+    content_type = content_types.EXPERIMENT_GROUP
 
 
 class ExperimentGroupBookmarkDeleteView(BookmarkDeleteView):
     """Unbookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_UNBOOKMARKED
     queryset = ExperimentGroup.objects.filter()
-    content_type = 'experimentgroup'
+    content_type = content_types.EXPERIMENT_GROUP
 
 
 class ProjectBookmarkCreateView(BookmarkCreateView):
@@ -224,7 +225,7 @@ class ProjectBookmarkCreateView(BookmarkCreateView):
     queryset = Project.objects.filter()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
-    content_type = 'project'
+    content_type = content_types.PROJECT
 
     def filter_queryset(self, queryset):
         username = self.kwargs['username']
@@ -237,7 +238,7 @@ class ProjectBookmarkDeleteView(BookmarkDeleteView):
     queryset = Project.objects.filter()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
-    content_type = 'project'
+    content_type = content_types.PROJECT
 
     def filter_queryset(self, queryset):
         username = self.kwargs['username']
