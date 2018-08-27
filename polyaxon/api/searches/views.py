@@ -2,12 +2,11 @@ from rest_framework.generics import DestroyAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 
 import auditor
-from api.paginator import LargeLimitOffsetPagination
-
-from api.utils.views import ListCreateAPIView
 
 from api.filters import OrderingFilter
+from api.paginator import LargeLimitOffsetPagination
 from api.searches.serializers import SearchSerializer
+from api.utils.views import ListCreateAPIView
 from constants import content_types
 from db.models.searches import Search
 from event_manager.events.search import SEARCH_CREATED

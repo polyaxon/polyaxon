@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from django.urls import re_path
 
 from api.searches import views
-from constants.urls import USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN
+from constants.urls import ID_PATTERN, NAME_PATTERN, USERNAME_PATTERN
 
 searches_urlpatterns = [
     re_path(r'^searches/{}/{}/groups/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
