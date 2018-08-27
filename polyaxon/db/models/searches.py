@@ -22,7 +22,6 @@ class Search(DiffModel, NameableModel):
         on_delete=models.CASCADE,
         related_name='+')
     query = JSONField()
-    is_default = models.BooleanField(default=False)
 
     class Meta:
         app_label = 'db'

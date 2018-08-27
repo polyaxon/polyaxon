@@ -26,7 +26,7 @@ interface State {
   searches: SearchModel[];
   showFilters: boolean;
   showSearchModal: boolean;
-  saveQueryForm: { name: string, query: string, sort: string, isDefault: boolean };
+  saveQueryForm: { name: string, query: string, sort: string};
 }
 
 export default class FilterList extends React.Component<Props, State> {
@@ -41,7 +41,6 @@ export default class FilterList extends React.Component<Props, State> {
       saveQueryForm: {
         query: '',
         sort: '',
-        isDefault: false,
         name: '',
       }
     };
@@ -67,8 +66,7 @@ export default class FilterList extends React.Component<Props, State> {
         query: {
           query: this.state.saveQueryForm.query,
           sort: this.state.saveQueryForm.sort
-        },
-        is_default: this.state.saveQueryForm.isDefault,
+        }
       });
     }
     this.handleClose();
@@ -123,23 +121,20 @@ export default class FilterList extends React.Component<Props, State> {
       query: this.state.query,
       sort: this.state.sort,
       name: '',
-      isDefault: false
     };
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{showSearchModal: true, saveQueryForm}
     }));
   };
 
-  public updateQueryForm = (key: string, value: string | boolean) => {
+  public updateQueryForm = (key: string, value: string) => {
     const saveQueryForm = {...this.state.saveQueryForm};
     if (key === 'name') {
-      saveQueryForm.name = value as string;
+      saveQueryForm.name = value;
     } else if (key === 'query') {
-      saveQueryForm.query = value as string;
+      saveQueryForm.query = value;
     } else if (key === 'sort') {
-      saveQueryForm.sort = value as string;
-    } else if (key === 'isDefault') {
-      saveQueryForm.isDefault = value as boolean;
+      saveQueryForm.sort = value;
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{saveQueryForm}
@@ -325,18 +320,6 @@ export default class FilterList extends React.Component<Props, State> {
                       value={this.state.saveQueryForm.sort}
                       onChange={(event) => this.updateQueryForm('sort', event.target.value)}
                     />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <div className="col-sm-offset-2 col-sm-10">
-                    <div className="checkbox">
-                      <label>
-                        <input
-                          type="checkbox"
-                          onChange={(event) => this.updateQueryForm('isDefault', event.target.checked)}
-                        /> Make default
-                      </label>
-                    </div>
                   </div>
                 </div>
                 <div className="form-group">

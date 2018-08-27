@@ -7,4 +7,4 @@ class SearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Search
-        fields = ['id', 'name', 'query', 'is_default']
+        fields = ['id', 'name', 'query']

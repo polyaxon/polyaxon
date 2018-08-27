@@ -4,7 +4,6 @@ export class SearchModel {
   public id: number;
   public name: string;
   public query: {[key: string]: string};
-  public is_default: boolean;
 }
 
 export class SearchesStateSchema {

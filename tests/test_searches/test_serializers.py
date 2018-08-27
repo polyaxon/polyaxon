@@ -16,7 +16,6 @@ class TestSearchSerializer(BaseTest):
         'id',
         'name',
         'query',
-        'is_default'
     }
 
     def setUp(self):
