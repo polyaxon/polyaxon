@@ -38,7 +38,6 @@
     "webpack-dev-server": "2.11.2"
   },
   "dependencies": {
-    "@types/deep-equal": "1.0.1",
     "@types/history": "4.6.2",
     "@types/js-cookie": "2.1.0",
     "@types/js-yaml": "^3.11.2",
@@ -56,7 +55,6 @@
     "@types/recharts": "^1.0.23",
     "@types/redux-form": "7.3.0",
     "@types/sprintf-js": "0.0.27",
-    "deep-equal": "1.0.1",
     "history": "4.7.2",
     "js-cookie": "2.2.0",
     "js-yaml": "^3.12.0",

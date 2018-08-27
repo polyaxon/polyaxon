@@ -1,7 +1,7 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 import { Pager } from 'react-bootstrap';
 
-import * as deepEqual from 'deep-equal';
 import * as queryString from 'query-string';
 
 import * as search_actions from '../actions/search';
@@ -85,7 +85,7 @@ export default class PaginatedTable extends React.Component<Props, State> {
     }
     if (this.state.extraFilters &&
       prevState.extraFilters &&
-      !deepEqual(this.state.extraFilters, prevState.extraFilters)) {
+      !_.isEqual(this.state.extraFilters, prevState.extraFilters)) {
       changed = true;
       this.setState({offset: 0});
     }
