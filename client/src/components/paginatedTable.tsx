@@ -5,9 +5,9 @@ import * as deepEqual from 'deep-equal';
 import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
+import FilterList from '../containers/filterList';
 import { FilterOption } from '../interfaces/filterOptions';
 import { DEFAULT_FILTERS } from './filters/constants';
-import FilterList from './filters/filterList';
 import './paginatedTable.less';
 
 export interface Props {
@@ -16,6 +16,7 @@ export interface Props {
   componentEmpty: React.ReactNode;
   filters: boolean | string;
   fetchData: (offset: number, query?: string, sort?: string, extraFilters?: {}) => any;
+  fetchSearches?: () => any;
   sortOptions?: string[];
   filterOptions?: FilterOption[];
 }
@@ -120,9 +121,10 @@ export default class PaginatedTable extends React.Component<Props, State> {
           <FilterList
             query={this.state.query}
             sort={this.state.sort}
-            handleFilter={(query, sort) => this.handleFilter(query, sort)}
+            handleFilter={(query: string, sort: string) => this.handleFilter(query, sort)}
             sortOptions={this.props.sortOptions || []}
             filterOptions={this.props.filterOptions || []}
+            fetchSearches={this.props.fetchSearches}
           />);
       } else {
         return (null);

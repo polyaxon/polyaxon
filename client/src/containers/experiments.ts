@@ -8,6 +8,7 @@ import { isTrue } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
+import * as search_actions from '../actions/search';
 import { getExperimentIndexName } from '../constants/utils';
 
 interface OwnProps {
@@ -78,6 +79,7 @@ export interface DispatchProps {
   onStop: (experimentName: string) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -86,6 +88,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onDelete: (experimentName: string) => dispatch(actions.deleteExperiment(experimentName)),
     onStop: (experimentName: string) => dispatch(actions.stopExperiment(experimentName)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
+    fetchSearches: () => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.fetchProjectExperimentSearches(ownProps.projectName));
+      } else {
+        throw new Error('Experiments container does not have project.');
+      }
+    },
     fetchData: (offset?: number,
                 query?: string,
                 sort?: string,

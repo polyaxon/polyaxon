@@ -8,6 +8,7 @@ import { isTrue } from '../constants/utils';
 import { JobModel } from '../models/job';
 
 import * as actions from '../actions/job';
+import * as search_actions from '../actions/search';
 
 interface OwnProps {
   user: string;
@@ -58,6 +59,7 @@ export interface DispatchProps {
   onStop: (jobName: string) => actions.JobAction;
   onUpdate?: (job: JobModel) => actions.JobAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.JobAction;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownProps: OwnProps): DispatchProps {
@@ -66,6 +68,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownPro
     onDelete: (jobName: string) => dispatch(actions.deleteJob(jobName)),
     onStop: (jobName: string) => dispatch(actions.stopJob(jobName)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
+    fetchSearches: () => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.fetchProjectJobSearches(ownProps.projectName));
+      } else {
+        throw new Error('Jobs container does not have project.');
+      }
+    },
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: {[key: string]: number|boolean|string} = {};
       if (query) {

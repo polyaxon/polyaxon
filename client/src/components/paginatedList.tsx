@@ -5,9 +5,9 @@ import * as deepEqual from 'deep-equal';
 import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
+import FilterList from '../containers/filterList';
 import { FilterOption } from '../interfaces/filterOptions';
 import { DEFAULT_FILTERS } from './filters/constants';
-import FilterList from './filters/filterList';
 import './paginatedList.less';
 
 export interface Props {
@@ -121,7 +121,7 @@ export default class PaginatedList extends React.Component<Props, State> {
           <FilterList
             query={this.state.query}
             sort={this.state.sort}
-            handleFilter={(query, sort) => this.handleFilter(query, sort)}
+            handleFilter={(query: string, sort: string) => this.handleFilter(query, sort)}
             sortOptions={this.props.sortOptions || []}
             filterOptions={this.props.filterOptions || []}
           />);

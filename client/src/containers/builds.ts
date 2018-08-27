@@ -8,6 +8,7 @@ import { isTrue } from '../constants/utils';
 import { BuildModel } from '../models/build';
 
 import * as actions from '../actions/build';
+import * as search_actions from '../actions/search';
 
 interface OwnProps {
   user: string;
@@ -56,6 +57,7 @@ export interface DispatchProps {
   onStop: (buildName: string) => actions.BuildAction;
   onUpdate?: (build: BuildModel) => actions.BuildAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownProps: OwnProps): DispatchProps {
@@ -64,6 +66,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
     onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
     onStop: (buildName: string) => dispatch(actions.stopBuild(buildName)),
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
+    fetchSearches: () => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.fetchProjectBuildSearches(ownProps.projectName));
+      } else {
+        throw new Error('Builds container does not have project.');
+      }
+    },
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: {[key: string]: number|boolean|string} = {};
       if (query) {

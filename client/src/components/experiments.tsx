@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/experiment';
+import * as search_actions from '../actions/search';
 import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { FilterOption } from '../interfaces/filterOptions';
@@ -46,6 +47,7 @@ export interface Props {
   onDelete: (experimentName: string) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 interface State {
@@ -283,6 +285,7 @@ export default class Experiments extends React.Component<Props, State> {
         componentEmpty={empty}
         filters={filters}
         fetchData={this.props.fetchData}
+        fetchSearches={this.props.fetchSearches}
         sortOptions={DEFAULT_SORT_OPTIONS}
         filterOptions={filterOptions}
       />

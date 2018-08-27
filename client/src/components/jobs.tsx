@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import * as actions from '../actions/job';
+import * as search_actions from '../actions/search';
 import { JOB_FILTER_OPTIONS } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { JobModel } from '../models/job';
@@ -22,6 +23,7 @@ export interface Props {
   onDelete: (jobName: string) => actions.JobAction;
   onStop: (jobName: string) => actions.JobAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.JobAction;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 export default class Jobs extends React.Component<Props, {}> {
@@ -66,6 +68,7 @@ export default class Jobs extends React.Component<Props, {}> {
         fetchData={this.props.fetchData}
         sortOptions={DEFAULT_SORT_OPTIONS}
         filterOptions={JOB_FILTER_OPTIONS}
+        fetchSearches={this.props.fetchSearches}
       />
     );
   }

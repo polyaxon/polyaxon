@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import * as actions from '../actions/group';
+import * as search_actions from '../actions/search';
 import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { FilterOption } from '../interfaces/filterOptions';
@@ -23,6 +24,7 @@ export interface Props {
   onDelete: (GroupName: string) => actions.GroupAction;
   onStop: (GroupName: string) => actions.GroupAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 export default class Groups extends React.Component<Props, {}> {
@@ -79,6 +81,7 @@ export default class Groups extends React.Component<Props, {}> {
         componentList={listGroups()}
         filters={filters}
         fetchData={this.props.fetchData}
+        fetchSearches={this.props.fetchSearches}
         sortOptions={DEFAULT_SORT_OPTIONS}
         filterOptions={filterOptions}
       />

@@ -2,11 +2,13 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as actions from '../actions/group';
 import Groups from '../components/groups';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
 import { GroupModel } from '../models/group';
+
+import * as actions from '../actions/group';
+import * as search_actions from '../actions/search';
 
 interface OwnProps {
   user: string;
@@ -14,6 +16,7 @@ interface OwnProps {
   useFilters?: boolean;
   bookmarks?: boolean;
   fetchData?: () => any;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
@@ -56,6 +59,7 @@ export interface DispatchProps {
   onStop: (groupName: string) => actions.GroupAction;
   onUpdate?: (group: GroupModel) => actions.GroupAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
+  fetchSearches?: () => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownProps: OwnProps): DispatchProps {
@@ -64,6 +68,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onDelete: (groupName: string) => dispatch(actions.deleteGroup(groupName)),
     onStop: (groupName: string) => dispatch(actions.stopGroup(groupName)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
+    fetchSearches: () => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.fetchProjectExperimentGroupSearches(ownProps.projectName));
+      } else {
+        throw new Error('Groups container does not have project.');
+      }
+    },
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: {[key: string]: number|boolean|string} = {};
       if (query) {
