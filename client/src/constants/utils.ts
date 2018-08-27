@@ -35,8 +35,8 @@ export let getToken = (): TokenStateSchema | null => {
   const user = Cookies.get('user');
   const token = Cookies.get('token');
   const csrftoken = Cookies.get('csrftoken');
-  if (user !== undefined && token !== undefined && csrftoken !== undefined) {
-    return {token, user, csrftoken};
+  if (user !== undefined && token !== undefined) {
+    return {token, user, csrftoken: csrftoken || ''};
   }
   return null;
 };
