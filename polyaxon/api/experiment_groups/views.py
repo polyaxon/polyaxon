@@ -56,7 +56,6 @@ class ExperimentGroupListView(ListCreateAPIView):
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
-        # import pdb; pdb.set_trace()
         serializer.save(user=self.request.user, project=get_permissible_project(view=self))
 
 
