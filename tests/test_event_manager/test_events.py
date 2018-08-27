@@ -14,6 +14,7 @@ from event_manager.events import (
     permission,
     project,
     repo,
+    search,
     superuser,
     tensorboard,
     user
@@ -168,6 +169,9 @@ class TestEvents(BaseTest):
         assert bookmark.BookmarkExperimentsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkExperimentGroupsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkProjectsViewedEvent.get_event_subject() == 'bookmark'
+
+        # Searches
+        assert search.SearchCreatedEvent.get_event_subject() == 'search'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
@@ -358,6 +362,9 @@ class TestEvents(BaseTest):
         assert (bookmark.BookmarkExperimentGroupsViewedEvent.get_event_action() ==
                 'experiment_groups_viewed')
         assert bookmark.BookmarkProjectsViewedEvent.get_event_action() == 'projects_viewed'
+
+        # Searches
+        assert search.SearchCreatedEvent.get_event_action() == 'created'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'
