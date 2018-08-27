@@ -170,6 +170,10 @@ export default class Experiments extends React.Component<Props, State> {
       ...JOB_FILTER_OPTIONS,
       ...additionalFilters
     ] as FilterOption[];
+    const sortOptions = [
+      ...DEFAULT_SORT_OPTIONS,
+      ...this.state.metrics.map((metric) => `metric.${metric}`),
+    ];
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const experiments = this.props.experiments;
     const listExperiments = () => {
@@ -303,7 +307,7 @@ export default class Experiments extends React.Component<Props, State> {
         fetchSearches={this.props.fetchSearches}
         createSearch={this.props.createSearch}
         deleteSearch={this.props.deleteSearch}
-        sortOptions={DEFAULT_SORT_OPTIONS}
+        sortOptions={sortOptions}
         filterOptions={filterOptions}
       />
     );
