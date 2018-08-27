@@ -9,6 +9,7 @@ import { BuildModel } from '../models/build';
 
 import * as actions from '../actions/build';
 import * as search_actions from '../actions/search';
+import { SearchModel } from '../models/search';
 
 interface OwnProps {
   user: string;
@@ -58,6 +59,8 @@ export interface DispatchProps {
   onUpdate?: (build: BuildModel) => actions.BuildAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
   fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownProps: OwnProps): DispatchProps {
@@ -68,7 +71,21 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
     fetchSearches: () => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.fetchProjectBuildSearches(ownProps.projectName));
+        return dispatch(search_actions.fetchBuildSearches(ownProps.projectName));
+      } else {
+        throw new Error('Builds container does not have project.');
+      }
+    },
+    createSearch: (data: SearchModel) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.createBuildSearch(ownProps.projectName, data));
+      } else {
+        throw new Error('Builds container does not have project.');
+      }
+    },
+    deleteSearch: (searchId: number) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.deleteBuildSearch(ownProps.projectName, searchId));
       } else {
         throw new Error('Builds container does not have project.');
       }

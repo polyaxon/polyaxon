@@ -9,6 +9,7 @@ import { JobModel } from '../models/job';
 
 import * as actions from '../actions/job';
 import * as search_actions from '../actions/search';
+import { SearchModel } from '../models/search';
 
 interface OwnProps {
   user: string;
@@ -37,7 +38,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     const count = state.jobs.lastFetched.count;
     const jobs: JobModel[] = [];
     jobNames.forEach(
-      function(job: string, idx: number) {
+      (job: string, idx: number) => {
         jobs.push(state.jobs.byUniqueNames[job]);
       });
     return {jobs, count};
@@ -60,6 +61,8 @@ export interface DispatchProps {
   onUpdate?: (job: JobModel) => actions.JobAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.JobAction;
   fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownProps: OwnProps): DispatchProps {
@@ -70,13 +73,27 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownPro
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
     fetchSearches: () => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.fetchProjectJobSearches(ownProps.projectName));
+        return dispatch(search_actions.fetchJobSearches(ownProps.projectName));
       } else {
         throw new Error('Jobs container does not have project.');
       }
     },
+    createSearch: (data: SearchModel) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.createJobSearch(ownProps.projectName, data));
+      } else {
+        throw new Error('Builds container does not have project.');
+      }
+    },
+    deleteSearch: (searchId: number) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.deleteJobSearch(ownProps.projectName, searchId));
+      } else {
+        throw new Error('Builds container does not have project.');
+      }
+    },
     fetchData: (offset?: number, query?: string, sort?: string) => {
-      const filters: {[key: string]: number|boolean|string} = {};
+      const filters: { [key: string]: number | boolean | string } = {};
       if (query) {
         filters.query = query;
       }

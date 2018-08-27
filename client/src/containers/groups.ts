@@ -9,6 +9,7 @@ import { GroupModel } from '../models/group';
 
 import * as actions from '../actions/group';
 import * as search_actions from '../actions/search';
+import { SearchModel } from '../models/search';
 
 interface OwnProps {
   user: string;
@@ -60,6 +61,8 @@ export interface DispatchProps {
   onUpdate?: (group: GroupModel) => actions.GroupAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
   fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownProps: OwnProps): DispatchProps {
@@ -70,9 +73,23 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
     fetchSearches: () => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.fetchProjectExperimentGroupSearches(ownProps.projectName));
+        return dispatch(search_actions.fetchExperimentGroupSearches(ownProps.projectName));
       } else {
         throw new Error('Groups container does not have project.');
+      }
+    },
+    createSearch: (data: SearchModel) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.createExperimentGroupSearch(ownProps.projectName, data));
+      } else {
+        throw new Error('Builds container does not have project.');
+      }
+    },
+    deleteSearch: (searchId: number) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.deleteExperimentGroupSearch(ownProps.projectName, searchId));
+      } else {
+        throw new Error('Builds container does not have project.');
       }
     },
     fetchData: (offset?: number, query?: string, sort?: string) => {

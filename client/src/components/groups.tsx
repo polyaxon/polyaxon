@@ -6,6 +6,7 @@ import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering'
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { FilterOption } from '../interfaces/filterOptions';
 import { GroupModel } from '../models/group';
+import { SearchModel } from '../models/search';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
 import { DEFAULT_FILTERS } from './filters/constants';
@@ -25,6 +26,8 @@ export interface Props {
   onStop: (GroupName: string) => actions.GroupAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
   fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 export default class Groups extends React.Component<Props, {}> {
@@ -82,6 +85,8 @@ export default class Groups extends React.Component<Props, {}> {
         filters={filters}
         fetchData={this.props.fetchData}
         fetchSearches={this.props.fetchSearches}
+        createSearch={this.props.createSearch}
+        deleteSearch={this.props.deleteSearch}
         sortOptions={DEFAULT_SORT_OPTIONS}
         filterOptions={filterOptions}
       />

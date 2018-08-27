@@ -32,11 +32,24 @@ export const searchesReducer: Reducer<SearchesStateSchema> =
       case actionTypes.REQUEST_SEARCHES:
         newState.lastFetched = new LastFetchedIds();
         return newState;
+      case actionTypes.RECEIVE_SEARCH:
+        return processSearch(action.search);
+      case actionTypes.DELETE_SEARCH:
+        return {
+          ...state,
+          ids: state.ids.filter(
+            (id) => id !== action.searchId),
+          lastFetched: {
+            ...state.lastFetched,
+            ids: state.lastFetched.ids.filter(
+              (id) => id !== action.searchId)
+          },
+        };
       case actionTypes.RECEIVE_SEARCHES:
         newState.lastFetched = new LastFetchedIds();
         newState.lastFetched.count = action.count;
-        for (const build of action.searches) {
-          newState = processSearch(build);
+        for (const search of action.searches) {
+          newState = processSearch(search);
         }
         return newState;
       default:

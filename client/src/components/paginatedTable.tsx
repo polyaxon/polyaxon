@@ -4,9 +4,11 @@ import { Pager } from 'react-bootstrap';
 import * as deepEqual from 'deep-equal';
 import * as queryString from 'query-string';
 
+import * as search_actions from '../actions/search';
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
 import FilterList from '../containers/filterList';
 import { FilterOption } from '../interfaces/filterOptions';
+import { SearchModel } from '../models/search';
 import { DEFAULT_FILTERS } from './filters/constants';
 import './paginatedTable.less';
 
@@ -16,7 +18,9 @@ export interface Props {
   componentEmpty: React.ReactNode;
   filters: boolean | string;
   fetchData: (offset: number, query?: string, sort?: string, extraFilters?: {}) => any;
-  fetchSearches?: () => any;
+  fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
   sortOptions?: string[];
   filterOptions?: FilterOption[];
 }
@@ -125,6 +129,8 @@ export default class PaginatedTable extends React.Component<Props, State> {
             sortOptions={this.props.sortOptions || []}
             filterOptions={this.props.filterOptions || []}
             fetchSearches={this.props.fetchSearches}
+            createSearch={this.props.createSearch}
+            deleteSearch={this.props.deleteSearch}
           />);
       } else {
         return (null);

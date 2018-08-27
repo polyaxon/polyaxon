@@ -10,6 +10,7 @@ import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
 import * as search_actions from '../actions/search';
 import { getExperimentIndexName } from '../constants/utils';
+import { SearchModel } from '../models/search';
 
 interface OwnProps {
   user: string;
@@ -80,6 +81,8 @@ export interface DispatchProps {
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
   fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -90,9 +93,23 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
     fetchSearches: () => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.fetchProjectExperimentSearches(ownProps.projectName));
+        return dispatch(search_actions.fetchExperimentSearches(ownProps.projectName));
       } else {
         throw new Error('Experiments container does not have project.');
+      }
+    },
+    createSearch: (data: SearchModel) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.createExperimentSearch(ownProps.projectName, data));
+      } else {
+        throw new Error('Builds container does not have project.');
+      }
+    },
+    deleteSearch: (searchId: number) => {
+      if (ownProps.projectName) {
+        return dispatch(search_actions.deleteExperimentSearch(ownProps.projectName, searchId));
+      } else {
+        throw new Error('Builds container does not have project.');
       }
     },
     fetchData: (offset?: number,

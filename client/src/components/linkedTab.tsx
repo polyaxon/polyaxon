@@ -37,7 +37,7 @@ export default class LinkedTab extends React.Component<Props, {}> {
                 <NavItem eventKey={idx + 1} href={`${this.props.baseUrl}#${tab.relUrl}`} key={idx}>{tab.title}</NavItem>
               )}
             </Nav>
-            <Tab.Content animation={true} mountOnEnter={true}>
+            <Tab.Content animation={true} mountOnEnter={true} unmountOnExit={true}>
               {this.props.tabs.map((tab, idx) =>
                 <Tab.Pane eventKey={idx + 1} key={idx}>
                   {tab.component}

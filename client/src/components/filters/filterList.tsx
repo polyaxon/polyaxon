@@ -14,6 +14,8 @@ export interface Props {
   filterOptions: FilterOption[];
   defaultSort?: string;
   fetchSearches?: () => actions.SearchAction;
+  createSearch?: (data: SearchModel) => actions.SearchAction;
+  deleteSearch?: (searchId: number) => actions.SearchAction;
   searches: SearchModel[];
   searchesCount: number;
 }
@@ -21,9 +23,10 @@ export interface Props {
 interface State {
   query: string;
   sort: string;
+  searches: SearchModel[];
   showFilters: boolean;
   showSearchModal: boolean;
-  saveQueryForm: {name: string, query: string, sort: string, isDefault: boolean};
+  saveQueryForm: { name: string, query: string, sort: string, isDefault: boolean };
 }
 
 export default class FilterList extends React.Component<Props, State> {
@@ -32,6 +35,7 @@ export default class FilterList extends React.Component<Props, State> {
     this.state = {
       query: props.query || '',
       sort: props.sort || props.defaultSort || '-updated_at',
+      searches: [...props.searches],
       showFilters: false,
       showSearchModal: false,
       saveQueryForm: {
@@ -56,16 +60,34 @@ export default class FilterList extends React.Component<Props, State> {
 
   public saveSearch = (event: any) => {
     event.preventDefault();
+    if (this.props.createSearch) {
+      this.props.createSearch({
+        id: -1,
+        name: this.state.saveQueryForm.name,
+        query: {
+          query: this.state.saveQueryForm.query,
+          sort: this.state.saveQueryForm.sort
+        },
+        is_default: this.state.saveQueryForm.isDefault,
+      });
+    }
     this.handleClose();
   };
 
-  public selectSearch = (query: string, sort: string) => {
-     const state = {
-       query,
-       sort: sort || this.props.defaultSort || '-updated_at',
-     };
+  public deleteSearch = (event: any, search: SearchModel) => {
+    event.preventDefault();
+    if (this.props.deleteSearch) {
+      this.props.deleteSearch(search.id);
+    }
+  };
 
-     this.setState((prevState, prevProps) => ({
+  public selectSearch = (query: string, sort: string) => {
+    const state = {
+      query,
+      sort: sort || this.props.defaultSort || '-updated_at',
+    };
+
+    this.setState((prevState, prevProps) => ({
       ...prevState, ...state
     }));
   };
@@ -148,7 +170,12 @@ export default class FilterList extends React.Component<Props, State> {
                             className="search-saved-query"
                             onClick={() => this.selectSearch(search.query.query, search.query.sort)}
                           >
-                            <button type="button" className="close pull-right" aria-label="Close">
+                            <button
+                              type="button"
+                              className="close pull-right"
+                              aria-label="Close"
+                              onClick={(event) => this.deleteSearch(event, search)}
+                            >
                               <span aria-hidden="true">&times;</span>
                             </button>
                             <span>
@@ -157,13 +184,13 @@ export default class FilterList extends React.Component<Props, State> {
                             <p className="query-desc">
                               Query: {search.query.query && search.query.query}
                             </p>
-                            <p>
+                            <p className="query-desc">
                               Sort: {search.query.sort || this.props.defaultSort || '-update_at'}
                             </p>
                           </MenuItem>
                       )}
-                      {!this.props.searches &&
-                      <MenuItem>
+                      {this.props.searches.length === 0 &&
+                      <MenuItem className="search-saved-query">
                         No saved searches
                       </MenuItem>
                       }
@@ -288,7 +315,7 @@ export default class FilterList extends React.Component<Props, State> {
                     />
                   </div>
                 </div>
-                 <div className="form-group">
+                <div className="form-group">
                   <label className="col-sm-2 control-label">Sort</label>
                   <div className="col-sm-10">
                     <input

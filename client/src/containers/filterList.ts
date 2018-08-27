@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import * as actions from '../actions/search';
+import * as search_actions from '../actions/search';
 import FilterList from '../components/filters/filterList';
 import { AppState } from '../constants/types';
 import { FilterOption } from '../interfaces/filterOptions';
@@ -14,6 +15,8 @@ export interface Params {
   filterOptions: FilterOption[];
   defaultSort?: string;
   fetchSearches?: () => actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 export function mapStateToProps(state: AppState, params: Params) {
@@ -32,6 +35,8 @@ export function mapStateToProps(state: AppState, params: Params) {
     filterOptions: params.filterOptions,
     defaultSort: params.defaultSort,
     fetchSearches: params.fetchSearches,
+    createSearch: params.createSearch,
+    deleteSearch: params.deleteSearch,
     searches,
     searchesCount: count,
   };

@@ -5,6 +5,7 @@ import * as search_actions from '../actions/search';
 import { JOB_FILTER_OPTIONS } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { JobModel } from '../models/job';
+import { SearchModel } from '../models/search';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
 import { DEFAULT_FILTERS } from './filters/constants';
@@ -24,6 +25,8 @@ export interface Props {
   onStop: (jobName: string) => actions.JobAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.JobAction;
   fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 export default class Jobs extends React.Component<Props, {}> {
@@ -69,6 +72,8 @@ export default class Jobs extends React.Component<Props, {}> {
         sortOptions={DEFAULT_SORT_OPTIONS}
         filterOptions={JOB_FILTER_OPTIONS}
         fetchSearches={this.props.fetchSearches}
+        createSearch={this.props.createSearch}
+        deleteSearch={this.props.deleteSearch}
       />
     );
   }

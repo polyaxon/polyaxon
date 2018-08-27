@@ -7,6 +7,7 @@ import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering'
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { FilterOption } from '../interfaces/filterOptions';
 import { ExperimentModel } from '../models/experiment';
+import { SearchModel } from '../models/search';
 import AutocompleteDropdown from './autocomplete/autocomplteDorpdown';
 import { EmptyBookmarks } from './empty/emptyBookmarks';
 import { EmptyList } from './empty/emptyList';
@@ -48,6 +49,8 @@ export interface Props {
   onStop: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
   fetchSearches?: () => search_actions.SearchAction;
+  createSearch?: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
 interface State {
@@ -286,6 +289,8 @@ export default class Experiments extends React.Component<Props, State> {
         filters={filters}
         fetchData={this.props.fetchData}
         fetchSearches={this.props.fetchSearches}
+        createSearch={this.props.createSearch}
+        deleteSearch={this.props.deleteSearch}
         sortOptions={DEFAULT_SORT_OPTIONS}
         filterOptions={filterOptions}
       />
