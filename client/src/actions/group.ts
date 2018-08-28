@@ -239,9 +239,8 @@ export function stopGroup(groupName: string): any {
   };
 }
 
-export function bookmark(user: string, projectName: string, groupId: number | string): any {
-  const groupName = getGroupUniqueName(user, projectName, groupId);
-  const groupUrl = getGroupUrl(user, projectName, groupId, false);
+export function bookmark(groupName: string): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${groupUrl}/bookmark`, {
@@ -256,9 +255,8 @@ export function bookmark(user: string, projectName: string, groupId: number | st
   };
 }
 
-export function unbookmark(user: string, projectName: string, groupId: number | string): any {
-  const groupName = getGroupUniqueName(user, projectName, groupId);
-  const groupUrl = getGroupUrl(user, projectName, groupId, false);
+export function unbookmark(groupName: string): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${groupUrl}/unbookmark`, {

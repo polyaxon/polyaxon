@@ -2,11 +2,15 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import * as actions from '../actions/job';
 import { isDone } from '../constants/statuses';
-import { getJobUrl, splitUniqueName } from '../constants/utils';
 import { getBuildUrl } from '../constants/utils';
+import { getJobUrl, splitUniqueName } from '../constants/utils';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { JobModel } from '../models/job';
+import { getBookmark } from '../utils/bookmarks';
 import Actions from './actions';
+import BookmarkStar from './bookmarkStar';
 import Description from './description';
 import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
@@ -17,11 +21,13 @@ import Tags from './tags';
 
 export interface Props {
   job: JobModel;
-  onDelete: () => void;
-  onStop: () => void;
+  onDelete: () => actions.JobAction;
+  onStop: () => actions.JobAction;
+  bookmark: () => actions.JobAction;
+  unbookmark: () => actions.JobAction;
 }
 
-function Job({job, onDelete, onStop}: Props) {
+function Job({job, onDelete, onStop, bookmark, unbookmark}: Props) {
   const values = splitUniqueName(job.project);
   let buildUrl = '';
   let buildValues: string[] = [];
@@ -29,6 +35,8 @@ function Job({job, onDelete, onStop}: Props) {
     buildValues = splitUniqueName(job.build_job);
     buildUrl = getBuildUrl(buildValues[0], buildValues[1], buildValues[3]);
   }
+  const bookmarkStar: BookmarkInterface = getBookmark(
+      job.bookmarked,  bookmark, unbookmark);
 
   return (
     <tr className="list-item">
@@ -42,6 +50,7 @@ function Job({job, onDelete, onStop}: Props) {
             {job.unique_name}
           </a>
         </LinkContainer>
+        <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         <Description description={job.description}/>
         <div className="meta">
           <UserMetaInfo user={job.user} inline={true}/>

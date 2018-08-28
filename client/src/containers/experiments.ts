@@ -78,6 +78,8 @@ export interface DispatchProps {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experimentName: string) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
+  bookmark: (experimentName: string) => actions.ExperimentAction;
+  unbookmark: (experimentName: string) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
   fetchSearches?: () => search_actions.SearchAction;
@@ -90,6 +92,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experimentName: string) => dispatch(actions.deleteExperiment(experimentName)),
     onStop: (experimentName: string) => dispatch(actions.stopExperiment(experimentName)),
+    bookmark: (experimentName: string) => dispatch(actions.bookmark(experimentName)),
+    unbookmark: (experimentName: string) => dispatch(actions.unbookmark(experimentName)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
     fetchSearches: () => {
       if (ownProps.projectName) {

@@ -17,7 +17,7 @@ interface OwnProps {
   groupId?: string;
   useFilters?: boolean;
   bookmarks?: boolean;
-  fetchData?: () => any;
+  fetchData?: () => actions.JobAction;
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
@@ -58,6 +58,8 @@ export interface DispatchProps {
   onCreate?: (job: JobModel) => actions.JobAction;
   onDelete: (jobName: string) => actions.JobAction;
   onStop: (jobName: string) => actions.JobAction;
+  bookmark: (jobName: string) => actions.JobAction;
+  unbookmark: (jobName: string) => actions.JobAction;
   onUpdate?: (job: JobModel) => actions.JobAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.JobAction;
   fetchSearches?: () => search_actions.SearchAction;
@@ -70,6 +72,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownPro
     onCreate: (job: JobModel) => dispatch(actions.createJobActionCreator(job)),
     onDelete: (jobName: string) => dispatch(actions.deleteJob(jobName)),
     onStop: (jobName: string) => dispatch(actions.stopJob(jobName)),
+    bookmark: (jobName: string) => dispatch(actions.bookmark(jobName)),
+    unbookmark: (jobName: string) => dispatch(actions.unbookmark(jobName)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
     fetchSearches: () => {
       if (ownProps.projectName) {

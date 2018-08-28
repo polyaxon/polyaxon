@@ -23,6 +23,8 @@ export interface Props {
   onUpdate: (job: JobModel) => actions.JobAction;
   onDelete: (jobName: string) => actions.JobAction;
   onStop: (jobName: string) => actions.JobAction;
+  bookmark: (jobName: string) => actions.JobAction;
+  unbookmark: (jobName: string) => actions.JobAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.JobAction;
   fetchSearches?: () => search_actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
@@ -45,6 +47,8 @@ export default class Jobs extends React.Component<Props, {}> {
                 job={job}
                 onDelete={() => this.props.onDelete(job.unique_name)}
                 onStop={() => this.props.onStop(job.unique_name)}
+                bookmark={() => this.props.bookmark(job.unique_name)}
+                unbookmark={() => this.props.unbookmark(job.unique_name)}
               />)}
           </tbody>
         </table>

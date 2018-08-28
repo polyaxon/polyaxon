@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import * as actions from '../actions/experiment';
 import * as search_actions from '../actions/search';
-import { JOB_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering';
+import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
 import { FilterOption } from '../interfaces/filterOptions';
 import { ExperimentModel } from '../models/experiment';
@@ -47,6 +47,8 @@ export interface Props {
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experimentName: string) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
+  bookmark: (experimentName: string) => actions.ExperimentAction;
+  unbookmark: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
   fetchSearches?: () => search_actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
@@ -280,6 +282,8 @@ export default class Experiments extends React.Component<Props, State> {
                   metrics={this.state.metrics}
                   onDelete={() => this.props.onDelete(xp.unique_name)}
                   onStop={() => this.props.onStop(xp.unique_name)}
+                  bookmark={() => this.props.bookmark(xp.unique_name)}
+                  unbookmark={() => this.props.unbookmark(xp.unique_name)}
                 />)}
             </tbody>
           </table>

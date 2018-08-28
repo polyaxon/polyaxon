@@ -15,7 +15,9 @@ export const groupsReducer: Reducer<GroupStateSchema> =
 
     const processGroup = (group: GroupModel) => {
       const uniqueName = group.unique_name;
-      newState.lastFetched.names.push(uniqueName);
+      if (!_.includes(newState.lastFetched.names, uniqueName)) {
+        newState.lastFetched.names.push(uniqueName);
+      }
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }

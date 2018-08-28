@@ -16,6 +16,8 @@ export function mapStateToProps(state: AppState, params: any) {
 export interface DispatchProps {
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
+  bookmark: (buildName: string) => actions.BuildAction;
+  unbookmark: (buildName: string) => actions.BuildAction;
   fetchData: () => actions.BuildAction;
 }
 
@@ -23,6 +25,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
   return {
     onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
     onStop: (buildName: string) => dispatch(actions.stopBuild(buildName)),
+    bookmark: (buildName: string) => dispatch(actions.bookmark(buildName)),
+    unbookmark: (buildName: string) => dispatch(actions.unbookmark(buildName)),
     fetchData: () => {
       if (params.buildName) {
         const buildValues = splitUniqueName(params.buildName);
@@ -31,7 +35,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
           buildValues[1],
           buildValues[3]));
       }
-    }
+    },
   };
 }
 

@@ -5,11 +5,11 @@ import { Reducer } from 'redux';
 import { actionTypes, ExperimentAction } from '../actions/experiment';
 import { ExperimentSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
+import { getExperimentIndexName } from '../constants/utils';
 import { ExperimentModel, ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
-import { getExperimentIndexName } from '../constants/utils';
 
 export const experimentsReducer: Reducer<ExperimentStateSchema> =
   (state: ExperimentStateSchema = ExperimentsEmptyState, action: ExperimentAction) => {
@@ -17,7 +17,9 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
 
     const processExperiment = (experiment: ExperimentModel) => {
       const uniqueName = getExperimentIndexName(experiment.unique_name);
-      newState.lastFetched.names.push(uniqueName);
+      if (!_.includes(newState.lastFetched.names, uniqueName)) {
+        newState.lastFetched.names.push(uniqueName);
+      }
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }

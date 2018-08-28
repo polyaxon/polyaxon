@@ -16,7 +16,9 @@ export const buildsReducer: Reducer<BuildStateSchema> =
 
     const processBuild = (build: BuildModel) => {
       const uniqueName = build.unique_name;
-      newState.lastFetched.names.push(uniqueName);
+      if (!_.includes(newState.lastFetched.names, uniqueName)) {
+        newState.lastFetched.names.push(uniqueName);
+      }
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }

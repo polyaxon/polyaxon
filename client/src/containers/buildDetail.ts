@@ -45,15 +45,15 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
       params.match.params.projectName,
       params.match.params.buildId))),
     bookmark: () => dispatch(
-      actions.bookmark(
+      actions.bookmark(getBuildUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.buildId)),
+        params.match.params.buildId))),
     unbookmark: () => dispatch(
-      actions.unbookmark(
+      actions.unbookmark(getBuildUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.buildId)),
+        params.match.params.buildId))),
   };
 }
 

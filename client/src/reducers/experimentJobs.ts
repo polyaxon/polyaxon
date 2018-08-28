@@ -14,9 +14,11 @@ export const ExperimentJobsReducer: Reducer<ExperimentJobStateSchema> =
   (state: ExperimentJobStateSchema = ExperimentJobsEmptyState, action: ExperimentJobAction) => {
     let newState = {...state};
 
-    const processJob = function(experimentJob: ExperimentJobModel) {
+    const processJob = (experimentJob: ExperimentJobModel) => {
       const uniqueName = getExperimentJobIndexName(experimentJob.unique_name);
-      newState.lastFetched.names.push(uniqueName);
+      if (!_.includes(newState.lastFetched.names, uniqueName)) {
+        newState.lastFetched.names.push(uniqueName);
+      }
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }

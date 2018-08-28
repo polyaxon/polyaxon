@@ -237,9 +237,8 @@ export function stopExperiment(experimentName: string): any {
   };
 }
 
-export function bookmark(user: string, projectName: string, experimentId: number | string): any {
-  const experimentName = getExperimentUniqueName(user, projectName, experimentId);
-  const experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
+export function bookmark(experimentName: string): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${experimentUrl}/bookmark`, {
@@ -254,9 +253,8 @@ export function bookmark(user: string, projectName: string, experimentId: number
   };
 }
 
-export function unbookmark(user: string, projectName: string, experimentId: number | string): any {
-  const experimentName = getExperimentUniqueName(user, projectName, experimentId);
-  const experimentUrl = getExperimentUrl(user, projectName, experimentId, false);
+export function unbookmark(experimentName: string): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${experimentUrl}/unbookmark`, {

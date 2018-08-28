@@ -37,13 +37,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, pa
         params.match.params.user,
         params.match.params.projectName)),
     bookmark: () => dispatch(
-      actions.bookmark(
+      actions.bookmark(getProjectUniqueName(
         params.match.params.user,
-        params.match.params.projectName)),
+        params.match.params.projectName))),
     unbookmark: () => dispatch(
-      actions.unbookmark(
+      actions.unbookmark(getProjectUniqueName(
         params.match.params.user,
-        params.match.params.projectName)),
+        params.match.params.projectName))),
   };
 }
 

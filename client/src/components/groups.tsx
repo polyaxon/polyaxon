@@ -24,6 +24,8 @@ export interface Props {
   onUpdate: (group: GroupModel) => actions.GroupAction;
   onDelete: (GroupName: string) => actions.GroupAction;
   onStop: (GroupName: string) => actions.GroupAction;
+  bookmark: (GroupName: string) => actions.GroupAction;
+  unbookmark: (GroupName: string) => actions.GroupAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
   fetchSearches?: () => search_actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
@@ -61,6 +63,8 @@ export default class Groups extends React.Component<Props, {}> {
                 group={group}
                 onDelete={() => this.props.onDelete(group.unique_name)}
                 onStop={() => this.props.onStop(group.unique_name)}
+                bookmark={() => this.props.bookmark(group.unique_name)}
+                unbookmark={() => this.props.unbookmark(group.unique_name)}
               />)}
           </tbody>
         </table>

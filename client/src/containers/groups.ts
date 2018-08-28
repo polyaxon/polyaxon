@@ -16,7 +16,7 @@ interface OwnProps {
   projectName?: string;
   useFilters?: boolean;
   bookmarks?: boolean;
-  fetchData?: () => any;
+  fetchData?: () => search_actions.SearchAction;
   fetchSearches?: () => search_actions.SearchAction;
 }
 
@@ -58,6 +58,8 @@ export interface DispatchProps {
   onCreate?: (group: GroupModel) => actions.GroupAction;
   onDelete: (groupName: string) => actions.GroupAction;
   onStop: (groupName: string) => actions.GroupAction;
+  bookmark: (groupName: string) => actions.GroupAction;
+  unbookmark: (groupName: string) => actions.GroupAction;
   onUpdate?: (group: GroupModel) => actions.GroupAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
   fetchSearches?: () => search_actions.SearchAction;
@@ -70,6 +72,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onCreate: (group: GroupModel) => dispatch(actions.createGroupActionCreator(group)),
     onDelete: (groupName: string) => dispatch(actions.deleteGroup(groupName)),
     onStop: (groupName: string) => dispatch(actions.stopGroup(groupName)),
+    bookmark: (groupName: string) => dispatch(actions.bookmark(groupName)),
+    unbookmark: (groupName: string) => dispatch(actions.unbookmark(groupName)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
     fetchSearches: () => {
       if (ownProps.projectName) {

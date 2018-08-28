@@ -23,6 +23,8 @@ export interface Props {
   onUpdate: (build: BuildModel) => actions.BuildAction;
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
+  bookmark: (buildName: string) => actions.BuildAction;
+  unbookmark: (buildName: string) => actions.BuildAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
   fetchSearches?: () => search_actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
@@ -45,6 +47,8 @@ export default class Builds extends React.Component<Props, {}> {
                 build={build}
                 onDelete={() => this.props.onDelete(build.unique_name)}
                 onStop={() => this.props.onStop(build.unique_name)}
+                bookmark={() => this.props.bookmark(build.unique_name)}
+                unbookmark={() => this.props.unbookmark(build.unique_name)}
               />)}
           </tbody>
         </table>

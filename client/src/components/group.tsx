@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import * as actions from '../actions/group';
 import { isDone } from '../constants/statuses';
 import {
   getGroupUrl,
   splitUniqueName
 } from '../constants/utils';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { GroupModel } from '../models/group';
+import { getBookmark } from '../utils/bookmarks';
 import Actions from './actions';
+import BookmarkStar from './bookmarkStar';
 import Description from './description';
 import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
@@ -19,12 +23,16 @@ import Tags from './tags';
 
 export interface Props {
   group: GroupModel;
-  onDelete: () => void;
-  onStop: () => void;
+  onDelete: () => actions.GroupAction;
+  onStop: () => actions.GroupAction;
+  bookmark: () => actions.GroupAction;
+  unbookmark: () => actions.GroupAction;
 }
 
-function Group({group, onDelete, onStop}: Props) {
+function Group({group, onDelete, onStop, bookmark, unbookmark}: Props) {
   const values = splitUniqueName(group.project);
+  const bookmarkStar: BookmarkInterface = getBookmark(
+      group.bookmarked,  bookmark, unbookmark);
 
   return (
     <tr className="list-item">
@@ -38,6 +46,7 @@ function Group({group, onDelete, onStop}: Props) {
             {group.unique_name}
           </a>
         </LinkContainer>
+        <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         <Description description={group.description}/>
         <div className="meta">
           <UserMetaInfo user={group.user} inline={true}/>

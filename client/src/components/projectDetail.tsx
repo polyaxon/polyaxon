@@ -8,14 +8,15 @@ import Builds from '../containers/builds';
 import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
 import Jobs from '../containers/jobs';
+import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { ProjectModel } from '../models/project';
+import { getBookmark } from '../utils/bookmarks';
 import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
 import ProjectInstructions from './instructions/projectInstructions';
 import LinkedTab from './linkedTab';
 import ProjectOverview from './projectOverview';
-import { ActionInterface } from '../interfaces/actions';
 
 export interface Props {
   project: ProjectModel;
@@ -41,10 +42,8 @@ export default class ProjectDetail extends React.Component<Props, {}> {
       onDelete: this.props.onDelete,
     };
 
-    const bookmark: BookmarkInterface = {
-      active: isTrue(this.props.project.bookmarked),
-      callback: isTrue(this.props.project.bookmarked) ? this.props.unbookmark : this.props.bookmark
-    };
+    const bookmark: BookmarkInterface = getBookmark(
+      this.props.project.bookmarked, this.props.bookmark, this.props.unbookmark);
     const projectUrl = getProjectUrl(project.user, project.name);
 
     return (

@@ -235,9 +235,8 @@ export function fetchProject(user: string, projectName: string): any {
   };
 }
 
-export function bookmark(user: string, projectName: string): any {
-  const projectUniqueName = getProjectUniqueName(user, projectName);
-  const projectUrl = getProjectUrl(user, projectName, false);
+export function bookmark(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${projectUrl}/bookmark`, {
@@ -248,13 +247,12 @@ export function bookmark(user: string, projectName: string): any {
         },
       })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(bookmarkProjectActionCreator(projectUniqueName)));
+      .then(() => dispatch(bookmarkProjectActionCreator(projectName)));
   };
 }
 
-export function unbookmark(user: string, projectName: string): any {
-  const projectUniqueName = getProjectUniqueName(user, projectName);
-  const projectUrl = getProjectUrl(user, projectName, false);
+export function unbookmark(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${projectUrl}/unbookmark`, {
@@ -265,6 +263,6 @@ export function unbookmark(user: string, projectName: string): any {
         },
       })
       .then((response) => handleAuthError(response, dispatch))
-      .then(() => dispatch(unbookmarkProjectActionCreator(projectUniqueName)));
+      .then(() => dispatch(unbookmarkProjectActionCreator(projectName)));
   };
 }

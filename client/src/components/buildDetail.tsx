@@ -6,7 +6,6 @@ import {
   getBuildUrl,
   getProjectUrl,
   getUserUrl,
-  isTrue,
   splitUniqueName,
 } from '../constants/utils';
 import Logs from '../containers/logs';
@@ -14,6 +13,7 @@ import Statuses from '../containers/statuses';
 import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { BuildModel } from '../models/build';
+import { getBookmark } from '../utils/bookmarks';
 import Breadcrumb from './breadcrumb';
 import BuildOverview from './buildOverview';
 import { EmptyList } from './empty/emptyList';
@@ -49,10 +49,8 @@ export default class BuildDetail extends React.Component<Props, {}> {
 
     };
 
-    const bookmark: BookmarkInterface = {
-      active: isTrue(this.props.build.bookmarked),
-      callback: isTrue(this.props.build.bookmarked) ? this.props.unbookmark : this.props.bookmark
-    };
+    const bookmark: BookmarkInterface = getBookmark(
+      this.props.build.bookmarked,  this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(build.project);
     const buildUrl = getBuildUrl(values[0], values[1], this.props.build.id);
     const projectUrl = getProjectUrl(values[0], values[1]);

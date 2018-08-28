@@ -7,7 +7,6 @@ import {
   getGroupUrl,
   getProjectUrl,
   getUserUrl,
-  isTrue,
   splitUniqueName,
 } from '../constants/utils';
 import EntityBuild from '../containers/EntityBuild';
@@ -18,6 +17,7 @@ import Statuses from '../containers/statuses';
 import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { ExperimentModel } from '../models/experiment';
+import { getBookmark } from '../utils/bookmarks';
 import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
 import ExperimentOverview from './experimentOverview';
@@ -51,10 +51,8 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
       onStop: this.props.onStop
 
     };
-    const bookmark: BookmarkInterface = {
-      active: isTrue(this.props.experiment.bookmarked),
-      callback: isTrue(this.props.experiment.bookmarked) ? this.props.unbookmark : this.props.bookmark
-    };
+    const bookmark: BookmarkInterface = getBookmark(
+      this.props.experiment.bookmarked, this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(experiment.project);
     const experimentUrl = getExperimentUrl(values[0], values[1], this.props.experiment.id);
     let group = null;

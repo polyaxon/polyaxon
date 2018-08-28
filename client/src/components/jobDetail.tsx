@@ -6,7 +6,6 @@ import {
   getJobUrl,
   getProjectUrl,
   getUserUrl,
-  isTrue,
   splitUniqueName,
 } from '../constants/utils';
 import EntityBuild from '../containers/EntityBuild';
@@ -15,6 +14,7 @@ import Statuses from '../containers/statuses';
 import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { JobModel } from '../models/job';
+import { getBookmark } from '../utils/bookmarks';
 import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
 import JobInstructions from './instructions/jobInstructions';
@@ -49,10 +49,8 @@ export default class JobDetail extends React.Component<Props, {}> {
 
     };
 
-    const bookmark: BookmarkInterface = {
-      active: isTrue(this.props.job.bookmarked),
-      callback: isTrue(this.props.job.bookmarked) ? this.props.unbookmark : this.props.bookmark
-    };
+    const bookmark: BookmarkInterface = getBookmark(
+      this.props.job.bookmarked, this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(job.project);
     const jobUrl = getJobUrl(values[0], values[1], this.props.job.id);
     const projectUrl = getProjectUrl(values[0], values[1]);

@@ -57,6 +57,8 @@ export interface DispatchProps {
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
   onUpdate?: (build: BuildModel) => actions.BuildAction;
+  bookmark?: (buildName: string) => actions.BuildAction;
+  unbookmark?: (buildName: string) => actions.BuildAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
   fetchSearches?: () => search_actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
@@ -68,6 +70,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
     onCreate: (build: BuildModel) => dispatch(actions.createBuildActionCreator(build)),
     onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
     onStop: (buildName: string) => dispatch(actions.stopBuild(buildName)),
+    bookmark: (buildName: string) => dispatch(actions.bookmark(buildName)),
+    unbookmark: (buildName: string) => dispatch(actions.unbookmark(buildName)),
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
     fetchSearches: () => {
       if (ownProps.projectName) {

@@ -12,6 +12,8 @@ export interface Props {
   fetchData: () => actions.BuildAction;
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
+  bookmark: (buildName: string) => actions.BuildAction;
+  unbookmark: (buildName: string) => actions.BuildAction;
 }
 
 export default class EntityBuild extends React.Component<Props, {}> {
@@ -30,6 +32,8 @@ export default class EntityBuild extends React.Component<Props, {}> {
               build={this.props.build}
               onDelete={() => this.props.onDelete(this.props.build.unique_name)}
               onStop={() => this.props.onStop(this.props.build.unique_name)}
+              bookmark={() => this.props.bookmark(this.props.build.unique_name)}
+              unbookmark={() => this.props.unbookmark(this.props.build.unique_name)}
             />
             </tbody>
           </table>
@@ -43,7 +47,7 @@ export default class EntityBuild extends React.Component<Props, {}> {
         componentList={listBuilds()}
         componentEmpty={EmptyList(false, 'build', 'build')}
         filters={false}
-        fetchData={(offset: number, query?: string, sort?: string, extraFilters?: Object) => null}
+        fetchData={(offset: number, query?: string, sort?: string, extraFilters?: {}) => null}
       />
     );
   }

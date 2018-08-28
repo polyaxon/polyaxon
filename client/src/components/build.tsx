@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import * as actions from '../actions/build';
 import { isDone } from '../constants/statuses';
 import { getBuildUrl, splitUniqueName } from '../constants/utils';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { BuildModel } from '../models/build';
+import { getBookmark } from '../utils/bookmarks';
 import Actions from './actions';
+import BookmarkStar from './bookmarkStar';
 import Description from './description';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
@@ -14,12 +18,16 @@ import Tags from './tags';
 
 export interface Props {
   build: BuildModel;
-  onDelete: () => void;
-  onStop: () => void;
+  onDelete: () => actions.BuildAction;
+  onStop: () => actions.BuildAction;
+  bookmark: () => actions.BuildAction;
+  unbookmark: () => actions.BuildAction;
 }
 
-function Build({build, onDelete, onStop}: Props) {
+function Build({build, onDelete, onStop, bookmark, unbookmark}: Props) {
   const values = splitUniqueName(build.project);
+  const bookmarkStar: BookmarkInterface = getBookmark(
+      build.bookmarked,  bookmark, unbookmark);
 
   return (
     <tr className="list-item">
@@ -33,6 +41,7 @@ function Build({build, onDelete, onStop}: Props) {
             {build.unique_name}
           </a>
         </LinkContainer>
+        <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         <Description description={build.description}/>
         <div className="meta">
           <UserMetaInfo user={build.user} inline={true}/>

@@ -14,7 +14,9 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
 
     const processProject = (project: ProjectModel) => {
       const uniqueName = project.unique_name;
-      newState.lastFetched.names.push(uniqueName);
+      if (!_.includes(newState.lastFetched.names, uniqueName)) {
+        newState.lastFetched.names.push(uniqueName);
+      }
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }

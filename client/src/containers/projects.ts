@@ -12,7 +12,7 @@ import { ProjectModel } from '../models/project';
 interface OwnProps {
   user: string;
   bookmarks?: boolean;
-  fetchData?: () => any;
+  fetchData?: () => actions.ProjectAction;
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
@@ -54,6 +54,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
 export interface DispatchProps {
   onDelete: (projectName: string) => actions.ProjectAction;
+  bookmark: (projectName: string) => actions.ProjectAction;
+  unbookmark: (projectName: string) => actions.ProjectAction;
   onUpdate?: (project: ProjectModel) => actions.ProjectAction;
   fetchData?: () => actions.ProjectAction;
 }
@@ -62,6 +64,8 @@ export function mapDispatchToProps(
   dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, ownProps: OwnProps): DispatchProps {
   return {
     onDelete: (projectName: string) => dispatch(actions.deleteProject(projectName)),
+    bookmark: (projectName: string) => dispatch(actions.bookmark(projectName)),
+    unbookmark: (projectName: string) => dispatch(actions.unbookmark(projectName)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
     fetchData: (offset?: number) => {
       const filters: { [key: string]: number | boolean | string } = {};

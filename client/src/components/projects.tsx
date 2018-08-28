@@ -16,6 +16,8 @@ export interface Props {
   bookmarks: boolean;
   onUpdate: (project: ProjectModel) => actions.ProjectAction;
   onDelete: (projectName: string) => actions.ProjectAction;
+  bookmark: (projectName: string) => actions.ProjectAction;
+  unbookmark: (projectName: string) => actions.ProjectAction;
   fetchData: () => actions.ProjectAction;
 }
 
@@ -33,6 +35,8 @@ export default class Projects extends React.Component<Props, {}> {
                 key={project.unique_name}
                 project={project}
                 onDelete={() => this.props.onDelete(project.unique_name)}
+                bookmark={() => this.props.bookmark(project.unique_name)}
+                unbookmark={() => this.props.unbookmark(project.unique_name)}
               />)}
           </tbody>
         </table>

@@ -247,9 +247,8 @@ export function stopJob(jobName: string): any {
   };
 }
 
-export function bookmark(user: string, projectName: string, jobId: number | string): any {
-  const jobName = getJobUniqueName(user, projectName, jobId);
-  const jobUrl = getJobUrl(user, projectName, jobId, false);
+export function bookmark(jobName: string): any {
+  const jobUrl = getJobUrlFromName(jobName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${jobUrl}/bookmark`, {
@@ -264,9 +263,8 @@ export function bookmark(user: string, projectName: string, jobId: number | stri
   };
 }
 
-export function unbookmark(user: string, projectName: string, jobId: number | string): any {
-  const jobName = getJobUniqueName(user, projectName, jobId);
-  const jobUrl = getJobUrl(user, projectName, jobId, false);
+export function unbookmark(jobName: string): any {
+  const jobUrl = getJobUrlFromName(jobName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${jobUrl}/unbookmark`, {

@@ -47,15 +47,15 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
         params.match.params.groupId)
     )),
     bookmark: () => dispatch(
-      actions.bookmark(
+      actions.bookmark(getGroupUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.groupId)),
+        params.match.params.groupId))),
     unbookmark: () => dispatch(
-      actions.unbookmark(
+      actions.unbookmark(getGroupUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.groupId))
+        params.match.params.groupId)))
   };
 }
 

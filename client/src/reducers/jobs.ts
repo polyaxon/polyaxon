@@ -16,7 +16,9 @@ export const jobsReducer: Reducer<JobStateSchema> =
 
     const processJob = (job: JobModel) => {
       const uniqueName = job.unique_name;
-      newState.lastFetched.names.push(uniqueName);
+      if (!_.includes(newState.lastFetched.names, uniqueName)) {
+        newState.lastFetched.names.push(uniqueName);
+      }
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }

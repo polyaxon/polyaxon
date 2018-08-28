@@ -246,9 +246,8 @@ export function stopBuild(buildName: string): any {
   };
 }
 
-export function bookmark(user: string, projectName: string, buildId: number | string): any {
-  const buildName = getBuildUniqueName(user, projectName, buildId);
-  const buildUrl = getBuildUrl(user, projectName, buildId, false);
+export function bookmark(buildName: string): any {
+  const buildUrl = getBuildUrlFromName(buildName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${buildUrl}/bookmark`, {
@@ -263,9 +262,8 @@ export function bookmark(user: string, projectName: string, buildId: number | st
   };
 }
 
-export function unbookmark(user: string, projectName: string, buildId: number | string): any {
-  const buildName = getBuildUniqueName(user, projectName, buildId);
-  const buildUrl = getBuildUrl(user, projectName, buildId, false);
+export function unbookmark(buildName: string): any {
+  const buildUrl = getBuildUrlFromName(buildName, false);
   return (dispatch: any, getState: any) => {
     return fetch(
       `${BASE_API_URL}${buildUrl}/unbookmark`, {

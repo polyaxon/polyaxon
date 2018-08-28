@@ -9,9 +9,13 @@ import {
   splitUniqueName
 } from '../constants/utils';
 
+import * as actions from '../actions/experiment';
 import { isDone } from '../constants/statuses';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { ExperimentModel } from '../models/experiment';
+import { getBookmark } from '../utils/bookmarks';
 import Actions from './actions';
+import BookmarkStar from './bookmarkStar';
 import Description from './description';
 import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
@@ -25,12 +29,16 @@ export interface Props {
   experiment: ExperimentModel;
   metrics: string[];
   declarations: string[];
-  onDelete: () => any;
-  onStop: () => any;
+  onDelete: () => actions.ExperimentAction;
+  onStop: () => actions.ExperimentAction;
+  bookmark: () => actions.ExperimentAction;
+  unbookmark: () => actions.ExperimentAction;
 }
 
-function Experiment({experiment, metrics, declarations, onDelete, onStop}: Props) {
+function Experiment({experiment, metrics, declarations, onDelete, onStop, bookmark, unbookmark}: Props) {
   const values = splitUniqueName(experiment.project);
+  const bookmarkStar: BookmarkInterface = getBookmark(
+      experiment.bookmarked,  bookmark, unbookmark);
   let groupUrl = '';
   let groupValues: string[] = [];
   if (!_.isNil(experiment.experiment_group)) {
@@ -55,6 +63,7 @@ function Experiment({experiment, metrics, declarations, onDelete, onStop}: Props
             {experiment.unique_name}
           </a>
         </LinkContainer>
+        <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         <Description description={experiment.description}/>
         <div className="meta">
           <UserMetaInfo user={experiment.user} inline={true}/>

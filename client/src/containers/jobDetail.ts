@@ -48,15 +48,15 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
         params.match.params.jobId)
     )),
     bookmark: () => dispatch(
-      actions.bookmark(
+      actions.bookmark(getJobUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.jobId)),
+        params.match.params.jobId))),
     unbookmark: () => dispatch(
-      actions.unbookmark(
+      actions.unbookmark(getJobUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.jobId))
+        params.match.params.jobId)))
   };
 }
 

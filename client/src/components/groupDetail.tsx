@@ -2,18 +2,18 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../actions/group';
+import { getGroupUrl } from '../constants/utils';
 import {
   getProjectUrl,
   getUserUrl,
-  isTrue,
   splitUniqueName
 } from '../constants/utils';
-import { getGroupUrl } from '../constants/utils';
 import Experiments from '../containers/experiments';
 import Statuses from '../containers/statuses';
 import { ActionInterface } from '../interfaces/actions';
 import { BookmarkInterface } from '../interfaces/bookmarks';
 import { GroupModel } from '../models/group';
+import { getBookmark } from '../utils/bookmarks';
 import Breadcrumb from './breadcrumb';
 import { EmptyList } from './empty/emptyList';
 import GroupOverview from './groupOverview';
@@ -48,10 +48,8 @@ export default class GroupDetail extends React.Component<Props, {}> {
 
     };
 
-    const bookmark: BookmarkInterface = {
-      active: isTrue(this.props.group.bookmarked),
-      callback: isTrue(this.props.group.bookmarked) ? this.props.unbookmark : this.props.bookmark
-    };
+    const bookmark: BookmarkInterface = getBookmark(
+      this.props.group.bookmarked, this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(group.project);
     const groupUrl = getGroupUrl(values[0], values[1], this.props.group.id);
     const projectUrl = getProjectUrl(values[0], values[1]);

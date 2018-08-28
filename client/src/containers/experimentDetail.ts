@@ -47,15 +47,15 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
           params.match.params.projectName,
           params.match.params.experimentId))),
     bookmark: () => dispatch(
-      actions.bookmark(
+      actions.bookmark(getExperimentUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.experimentId)),
+        params.match.params.experimentId))),
     unbookmark: () => dispatch(
-      actions.unbookmark(
+      actions.unbookmark(getExperimentUniqueName(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.params.experimentId))
+        params.match.params.experimentId)))
   };
 }
 

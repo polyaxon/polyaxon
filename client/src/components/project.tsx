@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import * as actions from '../actions/project';
 import { getProjectUrl } from '../constants/utils';
+import { BookmarkInterface } from '../interfaces/bookmarks';
 import { ProjectModel } from '../models/project';
+import { getBookmark } from '../utils/bookmarks';
 import Actions from './actions';
+import BookmarkStar from './bookmarkStar';
 import Description from './description';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import MetaInfo from './metaInfo/metaInfo';
@@ -11,11 +15,15 @@ import Tags from './tags';
 
 export interface Props {
   project: ProjectModel;
-  onDelete: () => void;
+  onDelete: () => actions.ProjectAction;
+  bookmark: () => actions.ProjectAction;
+  unbookmark: () => actions.ProjectAction;
 }
 
-function Project({project, onDelete}: Props) {
+function Project({project, onDelete, bookmark, unbookmark}: Props) {
   const visibility = project.is_public ? 'Public' : 'Private';
+  const bookmarkStar: BookmarkInterface = getBookmark(
+      project.bookmarked,  bookmark, unbookmark);
   return (
     <tr className="list-item">
       <td className="block">
@@ -25,6 +33,7 @@ function Project({project, onDelete}: Props) {
             {project.name}
           </a>
         </LinkContainer>
+        <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         <Description description={project.description}/>
         <Tags tags={project.tags} />
       </td>
