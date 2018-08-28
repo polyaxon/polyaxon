@@ -1,3 +1,23 @@
+## 0.2.0
+
+ * Enhance filtering and sorting: better UI and dropdown with filter/sort options
+ * Add saved queries
+ * Experiments table dashboard can include optional columns: metrics and declarations/params. This will allow to compare experiments in one table.
+ * Update log stream to show phase changes instead of disconnecting the session (now you can run and log without providing any id or checking the build)
+ * Add REST API docs
+ * Include bookmark indicator in dashboard lists
+ * Refetch on tab changes to get latest updates
+ * Remove some javascript dependencies and reduce bundle size
+ * Add cli install to `install.polyaxon.com`
+ * Add exception handling for actions, errors were preventing experiments/jobs from running
+ * Lint helm chart
+ * Add helm chart CI
+ * Fix an issue with csrf token collection
+ * Fix issue in reducer that made the state inconsistent
+ * Fix an issue with dashboard pagination
+ * Fix issue with bookmark page not loading experiments, and only loading when navigating tabs
+ * Fix a bug that made loading experiments slow
+
 ## 0.1.9
 
  * Add config deployment app to help guide users through the configuration options when deploying Polyaxon

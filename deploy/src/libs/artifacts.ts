@@ -166,7 +166,7 @@ passwordLenght: 8
 
 api:
   image: polyaxon/polyaxon-api
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -186,7 +186,7 @@ api:
 
 streams:
   image: polyaxon/polyaxon-streams
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -204,7 +204,7 @@ streams:
 
 scheduler:
   image: polyaxon/polyaxon-scheduler
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -218,7 +218,7 @@ scheduler:
 
 hpsearch:
   image: polyaxon/polyaxon-hpsearch
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -229,7 +229,7 @@ hpsearch:
 
 eventsHandlers:
   image: polyaxon/polyaxon-events-handlers
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -243,7 +243,7 @@ eventsHandlers:
 
 beat:
   image: polyaxon/polyaxon-beat
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -256,7 +256,7 @@ beat:
 
 crons:
   image: polyaxon/polyaxon-crons
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -274,7 +274,7 @@ eventMonitors:
   namespace:
     enabled: true
     image: polyaxon/polyaxon-monitor-namespace
-    imageTag: 0.1.9
+    imageTag: 0.2.0
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -289,7 +289,7 @@ eventMonitors:
   statuses:
     enabled: true
     image: polyaxon/polyaxon-monitor-statuses
-    imageTag: 0.1.9
+    imageTag: 0.2.0
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -304,7 +304,7 @@ eventMonitors:
 resourcesDaemon:
   enabled: true
   image: polyaxon/polyaxon-monitor-resources
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -318,15 +318,15 @@ resourcesDaemon:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 0.1.9
+  imageTag: 0.2.0
 
 dockerizer:
   image: polyaxon/polyaxon-dockerizer
-  imageTag: 0.1.9
+  imageTag: 0.2.0
 
 hooks:
   image: polyaxon/polyaxon-manage
-  imageTag: 0.1.9
+  imageTag: 0.2.0
   imagePullPolicy: IfNotPresent
 
 postgresql:
