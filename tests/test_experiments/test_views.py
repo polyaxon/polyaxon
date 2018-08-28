@@ -248,6 +248,21 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
 
+        # Name
+        self.objects[0].name = 'exp_foo'
+        self.objects[0].save()
+
+        resp = self.auth_client.get(self.url +
+                                    '?query=name:exp_foo')
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 1
+
+        resp = self.auth_client.get(self.url +
+                                    '?query=project.name:{}'.format(self.project.name))
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
         # Set metrics
         optimizers = ['sgd', 'sgd', 'adam']
         tags = [['tag1'], ['tag1', 'tag2'], ['tag2']]

@@ -16,10 +16,14 @@ class JobQueryManager(BaseQueryManager):
         'updated_at': parse_datetime_operation,
         'started_at': parse_datetime_operation,
         'finished_at': parse_datetime_operation,
+        # Name
+        'name': parse_value_operation,
         # User
         'user': parse_value_operation,
         # Status
         'status': parse_value_operation,
+        # Project
+        'project': parse_value_operation,
         # Builds
         'build': parse_value_operation,
         # Commit
@@ -33,10 +37,14 @@ class JobQueryManager(BaseQueryManager):
         'updated_at': DateTimeCondition,
         'started_at': DateTimeCondition,
         'finished_at': DateTimeCondition,
+        # Name
+        'name': ValueCondition,
         # User
         'user': ValueCondition,
         # Status
         'status': ValueCondition,
+        # Project
+        'project': ValueCondition,
         # Builds
         'build': ValueCondition,
         # Commit
