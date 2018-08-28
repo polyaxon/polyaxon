@@ -79,7 +79,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
 
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 0
+        self.assertEqual(len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]), 0)
 
         # Authenticated user bookmark
         Bookmark.objects.create(

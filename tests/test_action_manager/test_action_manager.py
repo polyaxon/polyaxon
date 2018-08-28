@@ -16,8 +16,7 @@ class TestActionManager(BaseTest):
         super().setUp()
 
     def test_subscribe(self):
-        # pylint:disable=len-as-condition
-        assert len(self.manager.state) == 0
+        self.assertEqual(len(self.manager.state), 0)
         self.manager.subscribe(WebHookAction)
         assert len(self.manager.state) == 1
         assert len(self.manager.items) == 1

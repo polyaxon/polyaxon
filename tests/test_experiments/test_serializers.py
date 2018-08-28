@@ -2,7 +2,6 @@ from unittest.mock import patch
 
 import pytest
 
-from api.experiment_groups.serializers import BookmarkedExperimentGroupSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,

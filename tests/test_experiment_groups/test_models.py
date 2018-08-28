@@ -165,12 +165,11 @@ class TestExperimentGroupModel(BaseTest):
     def test_get_ordered_experiments_by_metric(self, _):
         experiment_group = ExperimentGroupFactory()
 
-        assert len(  # pylint:disable=len-as-condition
+        self.assertEqual(len(
             experiment_group.get_ordered_experiments_by_metric(
                 experiment_ids=[],
                 metric='precision',
-                optimization='maximize'
-            )) == 0
+                optimization='maximize')), 0)
 
         experiments = []
         experiment_ids = []
@@ -212,18 +211,17 @@ class TestExperimentGroupModel(BaseTest):
             optimization='maximize'
         )
 
-        assert len(experiment_metrics) == 5  # pylint:disable=len-as-condition
-        assert len(  # pylint:disable=len-as-condition
-            [m for m in experiment_metrics if m.accuracy is not None]) == 0
+        self.assertEqual(len(experiment_metrics), 5)
+        self.assertEqual(len([m for m in experiment_metrics if m.accuracy is not None]), 0)
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     def test_get_experiments_metrics(self, _):
         experiment_group = ExperimentGroupFactory()
 
-        assert len(experiment_group.get_experiments_metrics(  # pylint:disable=len-as-condition
+        self.assertEqual(len(experiment_group.get_experiments_metrics(
             experiment_ids=[],
             metric='precision'
-        )) == 0
+        )), 0)
 
         experiments = []
         experiment_ids = []
