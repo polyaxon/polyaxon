@@ -31,19 +31,39 @@ export default class Bookmarks extends React.Component<Props, {}> {
             tabs={[
               {
                 title: 'Experiments',
-                component: <Experiments user={this.props.user} bookmarks={true} useFilters={false}/>,
+                component: <Experiments
+                  user={this.props.user}
+                  bookmarks={true}
+                  useFilters={false}
+                  showBookmarks={false}
+                />,
                 relUrl: 'experiments'
               }, {
                 title: 'Experiment groups',
-                component: <Groups user={this.props.user} bookmarks={true} useFilters={false}/>,
+                component: <Groups
+                  user={this.props.user}
+                  bookmarks={true}
+                  useFilters={false}
+                  showBookmarks={false}
+                />,
                 relUrl: 'groups'
               }, {
                 title: 'Jobs',
-                component: <Jobs user={this.props.user} bookmarks={true} useFilters={false}/>,
+                component: <Jobs
+                  user={this.props.user}
+                  bookmarks={true}
+                  useFilters={false}
+                  showBookmarks={false}
+                />,
                 relUrl: 'jobs'
               }, {
                 title: 'Builds',
-                component: <Builds user={this.props.user} bookmarks={true} useFilters={false}/>,
+                component: <Builds
+                  user={this.props.user}
+                  bookmarks={true}
+                  useFilters={false}
+                  showBookmarks={false}
+                />,
                 relUrl: 'builds'
               }, {
                 title: 'Projects',

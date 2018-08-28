@@ -9,8 +9,8 @@ import { splitUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   return _.includes(state.builds.uniqueNames, params.buildName) ?
-  {build: state.builds.byUniqueNames[params.buildName]} :
-  {build: null};
+  {build: state.builds.byUniqueNames[params.buildName], showBookmarks: false} :
+  {build: null, showBookmarks: false};
 }
 
 export interface DispatchProps {

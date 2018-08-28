@@ -18,6 +18,7 @@ export interface Props {
   builds: BuildModel[];
   count: number;
   useFilters: boolean;
+  showBookmarks: boolean;
   bookmarks: boolean;
   onCreate: (build: BuildModel) => actions.BuildAction;
   onUpdate: (build: BuildModel) => actions.BuildAction;
@@ -47,6 +48,7 @@ export default class Builds extends React.Component<Props, {}> {
                 build={build}
                 onDelete={() => this.props.onDelete(build.unique_name)}
                 onStop={() => this.props.onStop(build.unique_name)}
+                showBookmarks={this.props.showBookmarks}
                 bookmark={() => this.props.bookmark(build.unique_name)}
                 unbookmark={() => this.props.unbookmark(build.unique_name)}
               />)}

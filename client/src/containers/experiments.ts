@@ -17,6 +17,7 @@ interface OwnProps {
   projectName?: string;
   groupId?: string | number;
   useFilters?: boolean;
+  showBookmarks?: boolean;
   bookmarks?: boolean;
   fetchData?: () => actions.ExperimentAction;
 }
@@ -70,6 +71,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     groupId: ownProps.groupId,
     count: results.count,
     useFilters: isTrue(ownProps.useFilters),
+    showBookmarks: isTrue(ownProps.showBookmarks),
     bookmarks: isTrue(ownProps.bookmarks),
   };
 }

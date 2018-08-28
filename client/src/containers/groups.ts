@@ -16,6 +16,7 @@ interface OwnProps {
   projectName?: string;
   useFilters?: boolean;
   bookmarks?: boolean;
+  showBookmarks?: boolean;
   fetchData?: () => search_actions.SearchAction;
   fetchSearches?: () => search_actions.SearchAction;
 }
@@ -50,6 +51,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     groups: results.groups,
     count: results.count,
     useFilters: isTrue(ownProps.useFilters),
+    showBookmarks: isTrue(ownProps.showBookmarks),
     bookmarks: isTrue(ownProps.bookmarks),
   };
 }

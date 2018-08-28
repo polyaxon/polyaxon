@@ -23,11 +23,12 @@ export interface Props {
   job: JobModel;
   onDelete: () => actions.JobAction;
   onStop: () => actions.JobAction;
+  showBookmarks: boolean;
   bookmark: () => actions.JobAction;
   unbookmark: () => actions.JobAction;
 }
 
-function Job({job, onDelete, onStop, bookmark, unbookmark}: Props) {
+function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
   const values = splitUniqueName(job.project);
   let buildUrl = '';
   let buildValues: string[] = [];
@@ -36,7 +37,7 @@ function Job({job, onDelete, onStop, bookmark, unbookmark}: Props) {
     buildUrl = getBuildUrl(buildValues[0], buildValues[1], buildValues[3]);
   }
   const bookmarkStar: BookmarkInterface = getBookmark(
-      job.bookmarked,  bookmark, unbookmark);
+    job.bookmarked, bookmark, unbookmark);
 
   return (
     <tr className="list-item">
@@ -50,7 +51,9 @@ function Job({job, onDelete, onStop, bookmark, unbookmark}: Props) {
             {job.unique_name}
           </a>
         </LinkContainer>
+        {showBookmarks &&
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
+        }
         <Description description={job.description}/>
         <div className="meta">
           <UserMetaInfo user={job.user} inline={true}/>

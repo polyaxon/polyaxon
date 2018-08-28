@@ -31,14 +31,15 @@ export interface Props {
   declarations: string[];
   onDelete: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
+  showBookmarks: boolean;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
 }
 
-function Experiment({experiment, metrics, declarations, onDelete, onStop, bookmark, unbookmark}: Props) {
+function Experiment({experiment, metrics, declarations, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
   const values = splitUniqueName(experiment.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
-      experiment.bookmarked,  bookmark, unbookmark);
+    experiment.bookmarked, bookmark, unbookmark);
   let groupUrl = '';
   let groupValues: string[] = [];
   if (!_.isNil(experiment.experiment_group)) {
@@ -63,7 +64,9 @@ function Experiment({experiment, metrics, declarations, onDelete, onStop, bookma
             {experiment.unique_name}
           </a>
         </LinkContainer>
+        {showBookmarks &&
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
+        }
         <Description description={experiment.description}/>
         <div className="meta">
           <UserMetaInfo user={experiment.user} inline={true}/>

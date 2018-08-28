@@ -19,6 +19,7 @@ export interface Props {
   groups: GroupModel[];
   count: number;
   useFilters: boolean;
+  showBookmarks: boolean;
   bookmarks: boolean;
   onCreate: (group: GroupModel) => actions.GroupAction;
   onUpdate: (group: GroupModel) => actions.GroupAction;
@@ -63,6 +64,7 @@ export default class Groups extends React.Component<Props, {}> {
                 group={group}
                 onDelete={() => this.props.onDelete(group.unique_name)}
                 onStop={() => this.props.onStop(group.unique_name)}
+                showBookmarks={this.props.showBookmarks}
                 bookmark={() => this.props.bookmark(group.unique_name)}
                 unbookmark={() => this.props.unbookmark(group.unique_name)}
               />)}

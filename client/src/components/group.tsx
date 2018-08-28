@@ -25,14 +25,15 @@ export interface Props {
   group: GroupModel;
   onDelete: () => actions.GroupAction;
   onStop: () => actions.GroupAction;
+  showBookmarks: boolean;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
 }
 
-function Group({group, onDelete, onStop, bookmark, unbookmark}: Props) {
+function Group({group, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
   const values = splitUniqueName(group.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
-      group.bookmarked,  bookmark, unbookmark);
+    group.bookmarked, bookmark, unbookmark);
 
   return (
     <tr className="list-item">
@@ -46,7 +47,9 @@ function Group({group, onDelete, onStop, bookmark, unbookmark}: Props) {
             {group.unique_name}
           </a>
         </LinkContainer>
+        {showBookmarks &&
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
+        }
         <Description description={group.description}/>
         <div className="meta">
           <UserMetaInfo user={group.user} inline={true}/>

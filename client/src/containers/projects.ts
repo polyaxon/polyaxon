@@ -12,6 +12,7 @@ import { ProjectModel } from '../models/project';
 interface OwnProps {
   user: string;
   bookmarks?: boolean;
+  showBookmarks?: boolean;
   fetchData?: () => actions.ProjectAction;
 }
 
@@ -48,6 +49,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     user: ownProps.user,
     projects: results.projects,
     count: results.count,
+    showBookmarks: isTrue(ownProps.showBookmarks),
     bookmarks: isTrue(ownProps.bookmarks),
   };
 }

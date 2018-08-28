@@ -12,6 +12,7 @@ export interface Props {
   fetchData: () => actions.BuildAction;
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
+  showBookmarks: boolean;
   bookmark: (buildName: string) => actions.BuildAction;
   unbookmark: (buildName: string) => actions.BuildAction;
 }
@@ -34,6 +35,7 @@ export default class EntityBuild extends React.Component<Props, {}> {
               onStop={() => this.props.onStop(this.props.build.unique_name)}
               bookmark={() => this.props.bookmark(this.props.build.unique_name)}
               unbookmark={() => this.props.unbookmark(this.props.build.unique_name)}
+              showBookmarks={this.props.showBookmarks}
             />
             </tbody>
           </table>

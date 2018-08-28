@@ -42,6 +42,7 @@ export interface Props {
   groupId?: string | number;
   count: number;
   useFilters: boolean;
+  showBookmarks: boolean;
   bookmarks: boolean;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
@@ -282,6 +283,7 @@ export default class Experiments extends React.Component<Props, State> {
                   metrics={this.state.metrics}
                   onDelete={() => this.props.onDelete(xp.unique_name)}
                   onStop={() => this.props.onStop(xp.unique_name)}
+                  showBookmarks={this.props.showBookmarks}
                   bookmark={() => this.props.bookmark(xp.unique_name)}
                   unbookmark={() => this.props.unbookmark(xp.unique_name)}
                 />)}

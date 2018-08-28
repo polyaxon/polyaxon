@@ -16,14 +16,15 @@ import Tags from './tags';
 export interface Props {
   project: ProjectModel;
   onDelete: () => actions.ProjectAction;
+  showBookmarks: boolean;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
 }
 
-function Project({project, onDelete, bookmark, unbookmark}: Props) {
+function Project({project, onDelete, bookmark, unbookmark, showBookmarks}: Props) {
   const visibility = project.is_public ? 'Public' : 'Private';
   const bookmarkStar: BookmarkInterface = getBookmark(
-      project.bookmarked,  bookmark, unbookmark);
+    project.bookmarked, bookmark, unbookmark);
   return (
     <tr className="list-item">
       <td className="block">
@@ -33,9 +34,11 @@ function Project({project, onDelete, bookmark, unbookmark}: Props) {
             {project.name}
           </a>
         </LinkContainer>
+        {showBookmarks &&
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
+        }
         <Description description={project.description}/>
-        <Tags tags={project.tags} />
+        <Tags tags={project.tags}/>
       </td>
 
       <td className="block">

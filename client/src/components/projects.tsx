@@ -13,6 +13,7 @@ export interface Props {
   user: string;
   projects: ProjectModel[];
   count: number;
+  showBookmarks: boolean;
   bookmarks: boolean;
   onUpdate: (project: ProjectModel) => actions.ProjectAction;
   onDelete: (projectName: string) => actions.ProjectAction;
@@ -35,6 +36,7 @@ export default class Projects extends React.Component<Props, {}> {
                 key={project.unique_name}
                 project={project}
                 onDelete={() => this.props.onDelete(project.unique_name)}
+                showBookmarks={this.props.showBookmarks}
                 bookmark={() => this.props.bookmark(project.unique_name)}
                 unbookmark={() => this.props.unbookmark(project.unique_name)}
               />)}

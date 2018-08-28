@@ -20,14 +20,15 @@ export interface Props {
   build: BuildModel;
   onDelete: () => actions.BuildAction;
   onStop: () => actions.BuildAction;
+  showBookmarks: boolean;
   bookmark: () => actions.BuildAction;
   unbookmark: () => actions.BuildAction;
 }
 
-function Build({build, onDelete, onStop, bookmark, unbookmark}: Props) {
+function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
   const values = splitUniqueName(build.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
-      build.bookmarked,  bookmark, unbookmark);
+    build.bookmarked, bookmark, unbookmark);
 
   return (
     <tr className="list-item">
@@ -41,7 +42,9 @@ function Build({build, onDelete, onStop, bookmark, unbookmark}: Props) {
             {build.unique_name}
           </a>
         </LinkContainer>
+        {showBookmarks &&
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
+        }
         <Description description={build.description}/>
         <div className="meta">
           <UserMetaInfo user={build.user} inline={true}/>

@@ -18,6 +18,7 @@ export interface Props {
   jobs: JobModel[];
   count: number;
   useFilters: boolean;
+  showBookmarks: boolean;
   bookmarks: boolean;
   onCreate: (job: JobModel) => actions.JobAction;
   onUpdate: (job: JobModel) => actions.JobAction;
@@ -47,6 +48,7 @@ export default class Jobs extends React.Component<Props, {}> {
                 job={job}
                 onDelete={() => this.props.onDelete(job.unique_name)}
                 onStop={() => this.props.onStop(job.unique_name)}
+                showBookmarks={this.props.showBookmarks}
                 bookmark={() => this.props.bookmark(job.unique_name)}
                 unbookmark={() => this.props.unbookmark(job.unique_name)}
               />)}

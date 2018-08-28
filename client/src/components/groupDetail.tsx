@@ -80,6 +80,7 @@ export default class GroupDetail extends React.Component<Props, {}> {
                     user={group.user}
                     projectName={group.project}
                     groupId={group.id}
+                    showBookmarks={true}
                     useFilters={true}
                   />,
                   relUrl: 'experiments'
