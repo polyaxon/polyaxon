@@ -15,7 +15,7 @@ from api.bookmarks.serializers import (
     ProjectBookmarkSerializer
 )
 from api.filters import OrderingFilter
-from api.utils.views import PostAPIView
+from api.utils.views.post import PostAPIView
 from constants import content_types
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob

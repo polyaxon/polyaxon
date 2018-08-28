@@ -10,10 +10,16 @@ from rest_framework import status
 
 from django.conf import settings
 
-from api.jobs.serializers import JobDetailSerializer, JobSerializer, JobStatusSerializer
-from api.utils.views import ProtectedView
+from api.jobs.serializers import (
+    BookmarkedJobSerializer,
+    JobDetailSerializer,
+    JobSerializer,
+    JobStatusSerializer
+)
+from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
@@ -30,7 +36,7 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.jobs_mark
 class TestProjectJobListViewV1(BaseViewTest):
-    serializer_class = JobSerializer
+    serializer_class = BookmarkedJobSerializer
     model_class = Job
     factory_class = JobFactory
     num_objects = 3
@@ -76,6 +82,25 @@ class TestProjectJobListViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['count'] == jobs_count
+
+    def test_get_with_bookmarked_objects(self):
+        # Other user bookmark
+        Bookmark.objects.create(
+            user=self.other_project.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 0
+
+        # Authenticated user bookmark
+        Bookmark.objects.create(
+            user=self.auth_client.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 1
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -227,7 +252,7 @@ class TestProjectJobListViewV1(BaseViewTest):
 
 @pytest.mark.jobs_mark
 class TestJobListViewV1(BaseViewTest):
-    serializer_class = JobSerializer
+    serializer_class = BookmarkedJobSerializer
     model_class = Job
     factory_class = JobFactory
     num_objects = 3

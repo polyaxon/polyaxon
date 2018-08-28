@@ -13,7 +13,8 @@ import auditor
 
 from api.repos.serializers import RepoSerializer
 from api.repos.tasks import handle_new_files
-from api.utils.views import ProtectedView, UploadView
+from api.utils.views.protected import ProtectedView
+from api.utils.views.upload import UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.archive import archive_repo

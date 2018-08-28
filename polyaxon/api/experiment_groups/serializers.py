@@ -47,9 +47,14 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
         return obj.user.username
 
 
-class ExperimentGroupDetailSerializer(ExperimentGroupSerializer, BookmarkedSerializerMixin):
+class BookmarkedExperimentGroupSerializer(ExperimentGroupSerializer, BookmarkedSerializerMixin):
     bookmarked_model = 'experimentgroup'
 
+    class Meta(ExperimentGroupSerializer.Meta):
+        fields = ExperimentGroupSerializer.Meta.fields + ('bookmarked',)
+
+
+class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer):
     num_experiments = fields.SerializerMethodField()
     num_pending_experiments = fields.SerializerMethodField()
     num_running_experiments = fields.SerializerMethodField()
@@ -59,8 +64,8 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer, BookmarkedSeria
     num_stopped_experiments = fields.SerializerMethodField()
     current_iteration = fields.SerializerMethodField()
 
-    class Meta(ExperimentGroupSerializer.Meta):
-        fields = ExperimentGroupSerializer.Meta.fields + (
+    class Meta(BookmarkedExperimentGroupSerializer.Meta):
+        fields = BookmarkedExperimentGroupSerializer.Meta.fields + (
             'current_iteration',
             'content',
             'hptuning',
@@ -72,7 +77,6 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer, BookmarkedSeria
             'num_succeeded_experiments',
             'num_failed_experiments',
             'num_stopped_experiments',
-            'bookmarked',
         )
 
     def get_num_experiments(self, obj):

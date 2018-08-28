@@ -7,7 +7,7 @@ import pytest
 from rest_framework import status
 
 from api.plugins.serializers import ProjectTensorboardJobSerializer
-from api.utils.views import ProtectedView
+from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup

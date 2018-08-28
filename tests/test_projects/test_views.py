@@ -6,10 +6,11 @@ from flaky import flaky
 from rest_framework import status
 
 from api.projects import queries
-from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from api.projects.serializers import BookmarkedProjectSerializer, ProjectDetailSerializer
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
@@ -28,7 +29,7 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.projects_mark
 class TestProjectCreateViewV1(BaseViewTest):
-    serializer_class = ProjectSerializer
+    serializer_class = BookmarkedProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
     num_objects = 3
@@ -52,7 +53,7 @@ class TestProjectCreateViewV1(BaseViewTest):
 
 @pytest.mark.projects_mark
 class TestProjectListViewV1(BaseViewTest):
-    serializer_class = ProjectSerializer
+    serializer_class = BookmarkedProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
     num_objects = 3
@@ -82,6 +83,25 @@ class TestProjectListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_get_with_bookmarked_objects(self):
+        # Other user bookmark
+        Bookmark.objects.create(
+            user=self.other_object.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 0
+
+        # Authenticated user bookmark
+        Bookmark.objects.create(
+            user=self.auth_client.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 1
 
     @flaky(max_runs=3)
     def test_get_others(self):

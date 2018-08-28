@@ -46,16 +46,21 @@ class BuildJobSerializer(serializers.ModelSerializer):
         return obj.project.unique_name
 
 
-class BuildJobDetailSerializer(BuildJobSerializer, BookmarkedSerializerMixin):
+class BookmarkedBuildJobSerializer(BuildJobSerializer, BookmarkedSerializerMixin):
     bookmarked_model = 'buildjob'
 
+    class Meta(BuildJobSerializer.Meta):
+        fields = BuildJobSerializer.Meta.fields + ('bookmarked',)
+
+
+class BuildJobDetailSerializer(BookmarkedBuildJobSerializer):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
     commit = fields.SerializerMethodField()
 
-    class Meta(BuildJobSerializer.Meta):
-        fields = BuildJobSerializer.Meta.fields + (
+    class Meta(BookmarkedBuildJobSerializer.Meta):
+        fields = BookmarkedBuildJobSerializer.Meta.fields + (
             'description',
             'config',
             'resources',
@@ -64,7 +69,6 @@ class BuildJobDetailSerializer(BuildJobSerializer, BookmarkedSerializerMixin):
             'num_experiments',
             'dockerfile',
             'commit',
-            'bookmarked'
         )
 
     def get_commit(self, obj):

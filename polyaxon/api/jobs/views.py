@@ -22,12 +22,15 @@ import auditor
 from api.filters import OrderingFilter, QueryFilter
 from api.jobs import queries
 from api.jobs.serializers import (
+    BookmarkedJobSerializer,
     JobCreateSerializer,
     JobDetailSerializer,
     JobSerializer,
     JobStatusSerializer
 )
-from api.utils.views import AuditorMixinView, ListCreateAPIView, ProtectedView
+from api.utils.views.auditor_mixin import AuditorMixinView
+from api.utils.views.list_create import ListCreateAPIView
+from api.utils.views.protected import ProtectedView
 from db.models.jobs import Job, JobStatus
 from event_manager.events.job import (
     JOB_CREATED,
@@ -61,7 +64,7 @@ class ProjectJobListView(ListCreateAPIView):
         Create a job under a project.
     """
     queryset = queries.jobs
-    serializer_class = JobSerializer
+    serializer_class = BookmarkedJobSerializer
     create_serializer_class = JobCreateSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)

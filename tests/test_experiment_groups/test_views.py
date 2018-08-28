@@ -6,13 +6,14 @@ from rest_framework import status
 
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
+    BookmarkedExperimentGroupSerializer,
     ExperimentGroupDetailSerializer,
-    ExperimentGroupSerializer,
     ExperimentGroupStatusSerializer
 )
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
+from db.models.bookmarks import Bookmark
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from db.models.experiments import Experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
@@ -28,7 +29,7 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.experiment_groups_mark
 class TestProjectExperimentGroupListViewV1(BaseViewTest):
-    serializer_class = ExperimentGroupSerializer
+    serializer_class = BookmarkedExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     num_objects = 3
@@ -69,6 +70,25 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         data = resp.data['results']
         self.other_object.refresh_from_db()
         assert data[0] == self.serializer_class(self.other_object).data
+
+    def test_get_with_bookmarked_objects(self):
+        # Other user bookmark
+        Bookmark.objects.create(
+            user=self.other_project.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 0
+
+        # Authenticated user bookmark
+        Bookmark.objects.create(
+            user=self.auth_client.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 1
 
     def test_pagination(self):
         limit = self.num_objects - 1

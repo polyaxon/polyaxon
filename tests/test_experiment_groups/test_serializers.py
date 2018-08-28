@@ -2,6 +2,7 @@ import pytest
 
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
+    BookmarkedExperimentGroupSerializer,
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer
 )
@@ -63,6 +64,30 @@ class TestExperimentGroupSerializer(BaseTest):
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.experiment_groups_mark
+class TestBookmarkedExperimentGroupSerializer(TestExperimentGroupSerializer):
+    serializer_class = BookmarkedExperimentGroupSerializer
+    expected_keys = TestExperimentGroupSerializer.expected_keys | {'bookmarked', }
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        data.pop('created_at')
+        data.pop('updated_at')
+        data.pop('started_at')
+        data.pop('finished_at')
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('project') == self.obj1.project.unique_name
+        assert data.pop('user') == self.obj1.user.username
+        assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('search_algorithm') == self.obj1.search_algorithm
+        assert data.pop('bookmarked') is False
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
 
 
 @pytest.mark.experiment_groups_mark

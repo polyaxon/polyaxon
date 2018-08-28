@@ -6,7 +6,7 @@ import auditor
 from api.filters import OrderingFilter
 from api.paginator import LargeLimitOffsetPagination
 from api.searches.serializers import SearchSerializer
-from api.utils.views import ListCreateAPIView
+from api.utils.views.list_create import ListCreateAPIView
 from constants import content_types
 from db.models.searches import Search
 from event_manager.events.search import SEARCH_CREATED

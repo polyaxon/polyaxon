@@ -20,13 +20,16 @@ import auditor
 
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
+    BookmarkedBuildJobSerializer,
     BuildJobCreateSerializer,
     BuildJobDetailSerializer,
     BuildJobSerializer,
     BuildJobStatusSerializer
 )
 from api.filters import OrderingFilter, QueryFilter
-from api.utils.views import AuditorMixinView, ListCreateAPIView
+from api.utils.views.auditor_mixin import AuditorMixinView
+from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
+from api.utils.views.list_create import ListCreateAPIView
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from event_manager.events.build_job import (
     BUILD_JOB_CREATED,
@@ -47,7 +50,7 @@ from polyaxon.settings import SchedulerCeleryTasks
 _logger = logging.getLogger("polyaxon.views.builds")
 
 
-class ProjectBuildListView(ListCreateAPIView):
+class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
     """
     get:
         List builds under a project.
@@ -56,7 +59,7 @@ class ProjectBuildListView(ListCreateAPIView):
         Create a build under a project.
     """
     queryset = queries.builds
-    serializer_class = BuildJobSerializer
+    serializer_class = BookmarkedBuildJobSerializer
     create_serializer_class = BuildJobCreateSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)

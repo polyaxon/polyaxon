@@ -13,7 +13,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
 from api.repos.serializers import RepoSerializer
-from api.utils.views import ProtectedView
+from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.repos import Repo

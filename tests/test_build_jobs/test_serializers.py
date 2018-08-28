@@ -4,6 +4,7 @@ import pytest
 
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
+    BookmarkedBuildJobSerializer,
     BuildJobDetailSerializer,
     BuildJobSerializer,
     BuildJobStatusSerializer
@@ -86,6 +87,29 @@ class TestBuildJobSerializer(BaseTest):
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.build_jobs_mark
+class TestBookmarkedBuildJobSerializer(TestBuildJobSerializer):
+    serializer_class = BookmarkedBuildJobSerializer
+    expected_keys = TestBuildJobSerializer.expected_keys | {'bookmarked', }
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('user') == self.obj1.user.username
+        assert data.pop('project') == self.obj1.project.unique_name
+        assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('bookmarked') is False
+        data.pop('created_at')
+        data.pop('updated_at')
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
 
 
 @pytest.mark.build_jobs_mark

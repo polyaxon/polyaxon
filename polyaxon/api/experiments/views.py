@@ -24,6 +24,7 @@ import auditor
 
 from api.experiments import queries
 from api.experiments.serializers import (
+    BookmarkedExperimentSerializer,
     ExperimentCreateSerializer,
     ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
@@ -37,7 +38,9 @@ from api.experiments.serializers import (
 )
 from api.filters import OrderingFilter, QueryFilter
 from api.paginator import LargeLimitOffsetPagination
-from api.utils.views import AuditorMixinView, ListCreateAPIView, ProtectedView
+from api.utils.views.auditor_mixin import AuditorMixinView
+from api.utils.views.list_create import ListCreateAPIView
+from api.utils.views.protected import ProtectedView
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
@@ -91,7 +94,7 @@ class ProjectExperimentListView(ListCreateAPIView):
         Create an experiment under a project.
     """
     queryset = queries.experiments
-    serializer_class = ExperimentSerializer
+    serializer_class = BookmarkedExperimentSerializer
     metrics_serializer_class = ExperimentLastMetricSerializer
     declarations_serializer_class = ExperimentDeclarationsSerializer
     create_serializer_class = ExperimentCreateSerializer

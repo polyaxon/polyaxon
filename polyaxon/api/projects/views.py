@@ -5,8 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 import auditor
 
 from api.projects import queries
-from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
-from api.utils.views import AuditorMixinView
+from api.projects.serializers import (
+    BookmarkedProjectSerializer,
+    ProjectDetailSerializer,
+    ProjectSerializer
+)
+from api.utils.views.auditor_mixin import AuditorMixinView
 from db.models.projects import Project
 from event_manager.events.project import (
     PROJECT_CREATED,
@@ -35,7 +39,7 @@ class ProjectCreateView(CreateAPIView):
 class ProjectListView(ListAPIView):
     """List projects for a user."""
     queryset = queries.projects.order_by('-updated_at')
-    serializer_class = ProjectSerializer
+    serializer_class = BookmarkedProjectSerializer
     permission_classes = (IsAuthenticated,)
 
     def filter_queryset(self, queryset):

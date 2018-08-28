@@ -144,16 +144,20 @@ class ExperimentSerializer(serializers.ModelSerializer):
         return obj.build_job.unique_name if obj.build_job else None
 
 
-class ExperimentDetailSerializer(ExperimentSerializer, BookmarkedSerializerMixin):
+class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerMixin):
     bookmarked_model = 'experiment'
 
+    class Meta(ExperimentSerializer.Meta):
+        fields = ExperimentSerializer.Meta.fields + ('bookmarked',)
+
+
+class ExperimentDetailSerializer(BookmarkedExperimentSerializer):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
-    bookmarked = fields.SerializerMethodField()
 
-    class Meta(ExperimentSerializer.Meta):
-        fields = ExperimentSerializer.Meta.fields + (
+    class Meta(BookmarkedExperimentSerializer.Meta):
+        fields = BookmarkedExperimentSerializer.Meta.fields + (
             'original_experiment',
             'description',
             'config',
@@ -163,7 +167,6 @@ class ExperimentDetailSerializer(ExperimentSerializer, BookmarkedSerializerMixin
             'num_jobs',
             'is_clone',
             'has_tensorboard',
-            'bookmarked',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
 

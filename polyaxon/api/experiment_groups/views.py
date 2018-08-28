@@ -7,13 +7,16 @@ import auditor
 
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
+    BookmarkedExperimentGroupSerializer,
     ExperimentGroupCreateSerializer,
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer,
     ExperimentGroupStatusSerializer
 )
 from api.filters import OrderingFilter, QueryFilter
-from api.utils.views import AuditorMixinView, ListCreateAPIView
+from api.utils.views.auditor_mixin import AuditorMixinView
+from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
+from api.utils.views.list_create import ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
@@ -29,7 +32,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
-class ExperimentGroupListView(ListCreateAPIView):
+class ExperimentGroupListView(BookmarkedListMixinView, ListCreateAPIView):
     """
     get:
         List experiment groups under a project.
@@ -38,7 +41,7 @@ class ExperimentGroupListView(ListCreateAPIView):
         Create an experiment group under a project.
     """
     queryset = queries.groups
-    serializer_class = ExperimentGroupSerializer
+    serializer_class = BookmarkedExperimentGroupSerializer
     create_serializer_class = ExperimentGroupCreateSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)

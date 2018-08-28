@@ -8,12 +8,13 @@ from rest_framework import status
 
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
+    BookmarkedBuildJobSerializer,
     BuildJobDetailSerializer,
-    BuildJobSerializer,
     BuildJobStatusSerializer
 )
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
@@ -25,7 +26,7 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.build_jobs_mark
 class TestProjectBuildListViewV1(BaseViewTest):
-    serializer_class = BuildJobSerializer
+    serializer_class = BookmarkedBuildJobSerializer
     model_class = BuildJob
     factory_class = BuildJobFactory
     num_objects = 3
@@ -70,6 +71,25 @@ class TestProjectBuildListViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['count'] == jobs_count
+
+    def test_get_with_bookmarked_objects(self):
+        # Other user bookmark
+        Bookmark.objects.create(
+            user=self.other_project.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 0
+
+        # Authenticated user bookmark
+        Bookmark.objects.create(
+            user=self.auth_client.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 1
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -221,7 +241,7 @@ class TestProjectBuildListViewV1(BaseViewTest):
 
 @pytest.mark.build_jobs_mark
 class TestBuildListViewV1(BaseViewTest):
-    serializer_class = BuildJobSerializer
+    serializer_class = BookmarkedBuildJobSerializer
     model_class = BuildJob
     factory_class = BuildJobFactory
     num_objects = 3

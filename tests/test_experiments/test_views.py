@@ -12,6 +12,7 @@ from django.conf import settings
 
 from api.experiments import queries
 from api.experiments.serializers import (
+    BookmarkedExperimentSerializer,
     ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
@@ -22,10 +23,11 @@ from api.experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from api.utils.views import ProtectedView
+from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -54,7 +56,7 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.experiments_mark
 class TestProjectExperimentListViewV1(BaseViewTest):
-    serializer_class = ExperimentSerializer
+    serializer_class = BookmarkedExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3
@@ -125,6 +127,25 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         # Filtering for independent and group experiments should raise
         resp = self.auth_client.get(self.url + '?independent=true&group={}'.format(group.id))
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_get_with_bookmarked_objects(self):
+        # Other user bookmark
+        Bookmark.objects.create(
+            user=self.other_project.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 0
+
+        # Authenticated user bookmark
+        Bookmark.objects.create(
+            user=self.auth_client.user,
+            content_object=self.objects[0])
+
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 1
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -426,7 +447,7 @@ class TestProjectExperimentLastMetricListViewV1(BaseViewTest):
 
 @pytest.mark.experiments_mark
 class TestExperimentGroupExperimentListViewV1(BaseViewTest):
-    serializer_class = ExperimentSerializer
+    serializer_class = BookmarkedExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3
@@ -524,7 +545,7 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
 
 @pytest.mark.experiments_mark
 class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
-    serializer_class = ExperimentSerializer
+    serializer_class = BookmarkedExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3

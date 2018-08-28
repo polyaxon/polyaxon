@@ -2,7 +2,12 @@ from unittest.mock import patch
 
 import pytest
 
-from api.jobs.serializers import JobDetailSerializer, JobSerializer, JobStatusSerializer
+from api.jobs.serializers import (
+    BookmarkedJobSerializer,
+    JobDetailSerializer,
+    JobSerializer,
+    JobStatusSerializer
+)
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory, JobStatusFactory
@@ -82,6 +87,31 @@ class TestJobSerializer(BaseTest):
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.jobs_mark
+class TestBookmarkedJobSerializer(TestJobSerializer):
+    serializer_class = BookmarkedJobSerializer
+    expected_keys = TestJobSerializer.expected_keys | {'bookmarked', }
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('user') == self.obj1.user.username
+        assert data.pop('project') == self.obj1.project.unique_name
+        assert data.pop('build_job') == (
+            self.obj1.build_job.unique_name if self.obj1.build_job else None)
+        assert data.pop('last_status') == self.obj1.last_status
+        data.pop('created_at')
+        data.pop('updated_at')
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
+        assert data.pop('bookmarked') is False
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
 
 
 @pytest.mark.jobs_mark

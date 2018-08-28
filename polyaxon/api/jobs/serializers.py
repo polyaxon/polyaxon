@@ -49,15 +49,19 @@ class JobSerializer(serializers.ModelSerializer):
         return obj.build_job.unique_name if obj.build_job else None
 
 
-class JobDetailSerializer(JobSerializer, BookmarkedSerializerMixin):
+class BookmarkedJobSerializer(JobSerializer, BookmarkedSerializerMixin):
     bookmarked_model = 'job'
 
+    class Meta(JobSerializer.Meta):
+        fields = JobSerializer.Meta.fields + ('bookmarked',)
+
+
+class JobDetailSerializer(BookmarkedJobSerializer):
     original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
-    bookmarked = fields.SerializerMethodField()
 
-    class Meta(JobSerializer.Meta):
-        fields = JobSerializer.Meta.fields + (
+    class Meta(BookmarkedJobSerializer.Meta):
+        fields = BookmarkedJobSerializer.Meta.fields + (
             'is_clone',
             'original',
             'original_job',
@@ -65,7 +69,6 @@ class JobDetailSerializer(JobSerializer, BookmarkedSerializerMixin):
             'config',
             'resources',
             'node_scheduled',
-            'bookmarked',
         )
         extra_kwargs = {'original_job': {'write_only': True}}
 

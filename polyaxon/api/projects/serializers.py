@@ -27,18 +27,22 @@ class ProjectSerializer(serializers.ModelSerializer):
         return obj.user.username
 
 
-class ProjectDetailSerializer(ProjectSerializer, BookmarkedSerializerMixin):
+class BookmarkedProjectSerializer(ProjectSerializer, BookmarkedSerializerMixin):
     bookmarked_model = 'project'
 
+    class Meta(ProjectSerializer.Meta):
+        fields = ProjectSerializer.Meta.fields + ('bookmarked',)
+
+
+class ProjectDetailSerializer(BookmarkedProjectSerializer):
     num_experiment_groups = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
     num_independent_experiments = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_builds = fields.SerializerMethodField()
-    bookmarked = fields.SerializerMethodField()
 
-    class Meta(ProjectSerializer.Meta):
-        fields = ProjectSerializer.Meta.fields + (
+    class Meta(BookmarkedProjectSerializer.Meta):
+        fields = BookmarkedProjectSerializer.Meta.fields + (
             'has_code',
             'has_tensorboard',
             'has_notebook',
@@ -47,7 +51,6 @@ class ProjectDetailSerializer(ProjectSerializer, BookmarkedSerializerMixin):
             'num_experiments',
             'num_jobs',
             'num_builds',
-            'bookmarked',
         )
 
     def get_num_independent_experiments(self, obj):

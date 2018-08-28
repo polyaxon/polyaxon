@@ -1,7 +1,11 @@
 import pytest
 
 from api.projects import queries
-from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from api.projects.serializers import (
+    BookmarkedProjectSerializer,
+    ProjectDetailSerializer,
+    ProjectSerializer
+)
 from db.models.projects import Project
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
@@ -50,6 +54,25 @@ class TestProjectSerializer(BaseTest):
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.projects_mark
+class TestBookmarkedProjectSerializer(TestProjectSerializer):
+    serializer_class = BookmarkedProjectSerializer
+    expected_keys = TestProjectSerializer.expected_keys | {'bookmarked', }
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1_query).data
+
+        assert set(data.keys()) == self.expected_keys
+        data.pop('created_at')
+        data.pop('updated_at')
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('user') == self.obj1.user.username
+        assert data.pop('bookmarked') is False
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
 
 
 @pytest.mark.projects_mark
