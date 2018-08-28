@@ -286,6 +286,7 @@ export default class Experiments extends React.Component<Props, State> {
                   showBookmarks={this.props.showBookmarks}
                   bookmark={() => this.props.bookmark(xp.unique_name)}
                   unbookmark={() => this.props.unbookmark(xp.unique_name)}
+                  reducedForm={(this.state.metrics.length + this.state.declarations.length) > 4}
                 />)}
             </tbody>
           </table>

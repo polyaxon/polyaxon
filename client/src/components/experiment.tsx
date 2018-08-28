@@ -34,9 +34,18 @@ export interface Props {
   showBookmarks: boolean;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
+  reducedForm: boolean;
 }
 
-function Experiment({experiment, metrics, declarations, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
+function Experiment({experiment,
+                      metrics,
+                      declarations,
+                      onDelete,
+                      onStop,
+                      bookmark,
+                      unbookmark,
+                      showBookmarks,
+                      reducedForm}: Props) {
   const values = splitUniqueName(experiment.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
     experiment.bookmarked, bookmark, unbookmark);
@@ -67,7 +76,8 @@ function Experiment({experiment, metrics, declarations, onDelete, onStop, bookma
         {showBookmarks &&
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         }
-        <Description description={experiment.description}/>
+        {!reducedForm && <Description description={experiment.description}/>}
+        {!reducedForm &&
         <div className="meta">
           <UserMetaInfo user={experiment.user} inline={true}/>
           <DatesMetaInfo
@@ -76,7 +86,8 @@ function Experiment({experiment, metrics, declarations, onDelete, onStop, bookma
             inline={true}
           />
         </div>
-        <Tags tags={experiment.tags}/>
+        }
+        {!reducedForm && <Tags tags={experiment.tags}/>}
       </td>
       <td className="block">
         <GroupLinkMetaInfo
