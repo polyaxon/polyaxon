@@ -74,7 +74,7 @@ export default class Experiments extends React.Component<Props, State> {
 
   public shouldComponentUpdate(nextProps: Props, nextState: State) {
     const baseUrl = location.hash.split('?')[0];
-    return baseUrl === '#experiments';
+    return baseUrl === '#experiments' || (this.props.bookmarks && baseUrl === '');
   }
 
   public addColumn = (column: string) => {
