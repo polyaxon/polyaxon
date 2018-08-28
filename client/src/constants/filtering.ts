@@ -62,18 +62,18 @@ export const PROJECT_FILTER_OPTIONS = [
 export const DEFAULT_FILTER_OPTIONS = [
   ...PROJECT_FILTER_OPTIONS,
   ...[
-    {
-      filter: 'project.id',
-      type: 'value',
-      desc: FILTER_EXAMPLES.datetime('created_at'),
-      icon: 'server',
-    },
-    {
-      filter: 'project.name',
-      type: 'value',
-      desc: FILTER_EXAMPLES.name('project.name'),
-      icon: 'server',
-    },
+    // {
+    //   filter: 'project.id',
+    //   type: 'value',
+    //   desc: FILTER_EXAMPLES.datetime('created_at'),
+    //   icon: 'server',
+    // },
+    // {
+    //   filter: 'project.name',
+    //   type: 'value',
+    //   desc: FILTER_EXAMPLES.name('project.name'),
+    //   icon: 'server',
+    // },
     {
       filter: 'status',
       type: 'value',
