@@ -138,7 +138,6 @@ experiment_group_spec_content_hyperband = """---
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
-
 experiment_group_spec_content_hyperband_trigger_reschedule = """---
     version: 1
 
@@ -181,7 +180,6 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
-
 experiment_group_spec_content_bo = """---
     version: 1
 
@@ -221,7 +219,6 @@ experiment_group_spec_content_bo = """---
     run:
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
-
 
 experiment_spec_content = """---
     version: 1
@@ -382,7 +379,6 @@ exec_experiment_resources_content = """---
 exec_experiment_resources_parsed_content = ExperimentSpecification.read(
     exec_experiment_resources_content)
 
-
 tensorboard_spec_content = """---
     version: 1
     
@@ -396,7 +392,6 @@ tensorboard_spec_content = """---
 
 tensorboard_spec_parsed_content = TensorboardSpecification.read(tensorboard_spec_content)
 
-
 notebook_spec_content = """---
     version: 1
 
@@ -409,7 +404,6 @@ notebook_spec_content = """---
 """
 
 notebook_spec_parsed_content = NotebookSpecification.read(notebook_spec_content)
-
 
 job_spec_content = """---
     version: 1
@@ -426,7 +420,6 @@ job_spec_content = """---
 """
 
 job_spec_parsed_content = JobSpecification.read(job_spec_content)
-
 
 job_spec_resources_content = """---
     version: 1

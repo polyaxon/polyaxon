@@ -1,4 +1,4 @@
-from django.contrib.postgres.fields import ArrayField, JSONField
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
@@ -28,8 +28,7 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
     affinity = JSONField(
         null=True,
         blank=True)
-    tolerations = ArrayField(
-        base_field=JSONField(),
+    tolerations = JSONField(
         blank=True,
         null=True)
     status = models.OneToOneField(
