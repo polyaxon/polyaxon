@@ -25,7 +25,14 @@ class TensorflowClusterSchema(Schema):
 
 
 class TensorflowClusterConfig(BaseConfig):
-    """Tensorflow cluster definition"""
+    """
+    Tensorflow cluster config.
+
+    Args:
+        master: list(str). The list of master host in a tensorflow cluster.
+        worker: list(str). The list of worker host in a tensorflow cluster.
+        ps: list(str). The list of ps host in a tensorflow cluster.
+    """
     IDENTIFIER = 'tensorflow_cluster'
     SCHEMA = TensorflowClusterSchema
 
@@ -52,7 +59,13 @@ class HorovodClusterSchema(Schema):
 
 
 class HorovodClusterConfig(BaseConfig):
-    """Horovod cluster definition"""
+    """
+    Horovod cluster config.
+
+    Args:
+        master: list(str). The list of master host in a Horovod cluster.
+        worker: list(str). The list of worker host in a Horovod cluster.
+    """
     IDENTIFIER = 'horovod_cluster'
     SCHEMA = HorovodClusterSchema
 
@@ -78,7 +91,13 @@ class PytorchClusterSchema(Schema):
 
 
 class PytorchClusterConfig(BaseConfig):
-    """Pytorch cluster definition"""
+    """
+    Pytorch cluster config.
+
+    Args:
+        master: list(str). The list of master host in a Pytorch cluster.
+        worker: list(str). The list of worker host in a Pytorch cluster.
+    """
     IDENTIFIER = 'pytorch_cluster'
     SCHEMA = PytorchClusterSchema
 
@@ -105,7 +124,14 @@ class MXNetClusterSchema(Schema):
 
 
 class MXNetClusterConfig(BaseConfig):
-    """MXNet cluster definition"""
+    """
+    MXNet cluster config.
+
+    Args:
+        master: list(str). The list of master host in a tensorflow cluster.
+        worker: list(str). The list of worker host in a tensorflow cluster.
+        server: list(str). The list of server host in a tensorflow cluster.
+    """
     IDENTIFIER = 'mxnet_cluster'
     SCHEMA = MXNetClusterSchema
 
@@ -132,6 +158,13 @@ class K8SResourcesSchema(Schema):
 
 
 class K8SResourcesConfig(BaseConfig):
+    """
+    K8S resources config.
+
+    Args:
+        limits: `float`.
+        requests: `float`.
+    """
     IDENTIFIER = 'resources'
     SCHEMA = K8SResourcesSchema
 
@@ -176,6 +209,14 @@ class PodResourcesSchema(Schema):
 
 
 class PodResourcesConfig(BaseConfig):
+    """
+    Pod resources config.
+
+    Args:
+        cpu: `K8SResourcesConfig`.
+        memory: `K8SResourcesConfig`.
+        gpu: `K8SResourcesConfig`.
+    """
     IDENTIFIER = 'pod_resources'
     SCHEMA = PodResourcesSchema
 
@@ -344,6 +385,16 @@ class PodEnvironmentSchema(Schema):
 
 
 class PodEnvironmentConfig(BaseConfig):
+    """
+    Pod environment config.
+
+    Args:
+        index: `int | None`. The index of the pod.
+        resources: `PodResourcesConfig`.
+        node_selector: `dict`.
+        affinity: `dict`.
+        tolerations: `list(dict)`.
+    """
     IDENTIFIER = 'pod_environment'
     SCHEMA = PodEnvironmentSchema
     REDUCED_ATTRIBUTES = ['index', 'resources', 'node_selector', 'affinity', 'tolerations']
@@ -511,6 +562,19 @@ class TensorflowSchema(Schema):
 
 
 class TensorflowConfig(BaseConfig, FrameworkEnvironmentMixin):
+    """
+    Tensorflow environment config.
+
+    Args:
+        n_workers: `int`. The number of workers requested for training the model.
+        n_ps: `int`. The number of ps requested for training the model.
+        default_worker: `PodEnvironment`. The default pod environment to use for all workers.
+        default_ps: `PodEnvironment`. The default pod environment to use for all ps.
+        worker: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific worker.
+        ps: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific ps.
+    """
     IDENTIFIER = 'tensorflow'
     SCHEMA = TensorflowSchema
 
@@ -552,6 +616,15 @@ class HorovodSchema(Schema):
 
 
 class HorovodConfig(BaseConfig, FrameworkEnvironmentMixin):
+    """
+    Horovod environment config.
+
+    Args:
+        n_workers: `int`. The number of workers requested for training the model.
+        default_worker: `PodEnvironment`. The default pod environment to use for all workers.
+        worker: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific worker.
+    """
     IDENTIFIER = 'horovod'
     SCHEMA = HorovodSchema
 
@@ -583,6 +656,15 @@ class PytorchSchema(Schema):
 
 
 class PytorchConfig(BaseConfig, FrameworkEnvironmentMixin):
+    """
+    Pytorch environment config.
+
+    Args:
+        n_workers: `int`. The number of workers requested for training the model.
+        default_worker: `PodEnvironment`. The default pod environment to use for all workers.
+        worker: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific worker.
+    """
     IDENTIFIER = 'pytorch'
     SCHEMA = PytorchSchema
 
@@ -617,6 +699,19 @@ class MXNetSchema(Schema):
 
 
 class MXNetConfig(BaseConfig, FrameworkEnvironmentMixin):
+    """
+    MXNet environment config.
+
+    Args:
+        n_workers: `int`. The number of workers requested for training the model.
+        n_ps: `int`. The number of ps requested for training the model.
+        default_worker: `PodEnvironment`. The default pod environment to use for all workers.
+        default_ps: `PodEnvironment`. The default pod environment to use for all ps.
+        worker: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific worker.
+        ps: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific ps.
+    """
     IDENTIFIER = 'mxnet'
     SCHEMA = MXNetSchema
 
@@ -658,6 +753,15 @@ class PersistenceSchema(Schema):
 
 
 class PersistenceConfig(BaseConfig):
+    """
+    Persistence config.
+
+    Defines the list of persistent volumes to mount for this specific run.
+
+    Args:
+        data: `list(str)`. The list of the names of data persistence to mount.
+        outputs: `list(str)`. The list of the names of outputs persistence to mount.
+    """
     IDENTIFIER = 'persistence'
     SCHEMA = PersistenceSchema
 
@@ -683,6 +787,17 @@ class OutputsSchema(Schema):
 
 
 class OutputsConfig(BaseConfig):
+    """
+    Outputs config.
+
+    Defines the list of previous jobs/experiments outputs paths
+    to make available to other experiments/jobs.
+
+    Args:
+        jobs: `list(str)`. The list of the names of jobs to make available for the current run.
+        experiments: `list(str)`. The list of the names of experiments
+            to make available for the current run.
+    """
     IDENTIFIER = 'outputs'
     SCHEMA = OutputsSchema
 
@@ -720,6 +835,22 @@ class EnvironmentSchema(PodEnvironmentSchema):
 
 
 class EnvironmentConfig(PodEnvironmentConfig):
+    """
+    Environment config.
+
+    Args:
+        cluster_uuid: `str`. The cluster uuid.
+        persistence: `PersistenceConfig`. The persistence config definition.
+        outputs: `OutputsConfig`. The outputs config definition.
+        resources: `PodResourcesConfig`. The resources config definition.
+        node_selector: `dict`.
+        affinity: `dict`.
+        tolerations: `list(dict)`.
+        tensorflow: `TensorflowConfig`.
+        horovod: `HorovodConfig`.
+        pytorch: `PytorchConfig`.
+        mxnet: `MXNetConfig`.
+    """
     IDENTIFIER = 'environment'
     SCHEMA = EnvironmentSchema
 

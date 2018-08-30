@@ -49,11 +49,24 @@ class BuildSchema(Schema):
 
 
 class BuildConfig(BaseConfig):
+    """
+    Build config.
+
+    Args:
+        image: str. The name of the image to use during the build step.
+        build_steps: list(str). The build steps to apply to your docker image.
+            (translate to multiple RUN ...)
+        env_vars: list((str, str)) The environment variable to set on you docker image.
+        nocache: `bool`. To not use cache when building the image.
+        git: `str`. A url to git code, in case you are not using upload.
+        commit: `str`. The commit to use.
+
+    """
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
     REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'git', 'nocache', 'commit']
 
-    def __init__(self, image, build_steps=None, env_vars=None, git=None, nocache=None, commit=None):
+    def __init__(self, image, build_steps=None, env_vars=None, nocache=None, git=None, commit=None):
         validate_image(image)
         self.image = image
         self.build_steps = build_steps

@@ -46,6 +46,14 @@ class EarlyStoppingMetricSchema(Schema):
 
 
 class EarlyStoppingMetricConfig(BaseConfig):
+    """
+    Early stopping metric config.
+
+    Args:
+        metric: `str`. The metric to use for early stopping.
+        value: `float`. The metric value to use for the condition.
+        optimization: `string`. The optimization to do: maximize or minimize.
+    """
     SCHEMA = EarlyStoppingMetricSchema
     IDENTIFIER = 'early_stopping_metric'
 

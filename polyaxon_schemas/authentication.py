@@ -23,6 +23,14 @@ class AccessTokenSchema(Schema):
 
 
 class AccessTokenConfig(BaseConfig):
+    """
+    Access token config.
+
+
+    Args:
+        username: `str`. The user's username.
+        token: `str`. The user's token.
+    """
     SCHEMA = AccessTokenSchema
     IDENTIFIER = 'token'
 
@@ -48,6 +56,14 @@ class CredentialsSchema(Schema):
 
 
 class CredentialsConfig(BaseConfig):
+    """
+    Credentials config.
+
+
+    Args:
+        username: `str`. The user's username.
+        password: `str`. The user's password.
+    """
     SCHEMA = CredentialsSchema
     IDENTIFIER = 'credentials'
 

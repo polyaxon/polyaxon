@@ -28,6 +28,17 @@ class NodeGPUSchema(Schema):
 
 
 class NodeGPUConfig(BaseConfig):
+    """
+    Node gpu config.
+
+    Args:
+        index: `int`. The index of the gpu during the discovery.
+        name: `str`. The name of gpu.
+        uuid: `UUID`. The uuid of gpu.
+        memory: `int`. The memory size of the gpu.
+        serial: `str`. The serial of the gpu.
+        cluster_node: `UUID`. the uuid of the cluster node. 
+    """
     SCHEMA = NodeGPUSchema
     IDENTIFIER = 'NodeGPU'
     DEFAULT_EXCLUDE_ATTRIBUTES = ['uuid', 'cluster_node']
@@ -72,6 +83,27 @@ class ClusterNodeSchema(Schema):
 
 
 class ClusterNodeConfig(BaseConfig):
+    """
+    Node gpu config.
+
+    Args:
+        uuid: `UUID`. the uuid of the cluster node. 
+        sequence: `int`. The sequence of the node in the cluster.
+        name: `str`. The name of node.
+        hostname: `str`. The node hostname.
+        role: `str`. The role of the node.
+        docker_version: `str`. The docker version used in the node.
+        kubelet_version: `str`. The kubelet version used in the node.
+        os_image: `str`. The os image used of the node.
+        kernel_version: `str`. The kernel version of the node.
+        schedulable_taints: `bool`. The schedulable taints of the node.
+        schedulable_state: `bool`. The schedulable state of the node.
+        memory: `int`. The memory size of the node.
+        cpu: `float`. The cpu of the node.
+        n_gpus: `int`. The number of gpus in the node.
+        status: `str`. The status of the node (ready or ...)
+        gpus: `list(NodeGPUConfig)`. The node gpus.
+    """
     SCHEMA = ClusterNodeSchema
     IDENTIFIER = 'ClusterNode'
     DEFAULT_INCLUDE_ATTRIBUTES = [
@@ -130,7 +162,13 @@ class PolyaxonClusterSchema(Schema):
 
 
 class PolyaxonClusterConfig(BaseConfig):
-    """Polyaxon cluster definition"""
+    """
+    Polyaxon cluster config.
+
+    Args:
+        version_api: `dict`. The cluster's version api.
+        nodes: list(ClusterNodeConfig). The nodes in the cluster.
+    """
     SCHEMA = PolyaxonClusterSchema
     IDENTIFIER = 'PolyaxonCluster'
 
