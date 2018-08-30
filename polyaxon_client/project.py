@@ -12,6 +12,7 @@ from polyaxon_client.schemas import (
     ProjectConfig,
     TensorboardJobConfig
 )
+from polyaxon_client.utils import validate_config
 
 
 class ProjectClient(BaseClient):
@@ -37,6 +38,7 @@ class ProjectClient(BaseClient):
             return None
 
     def create_project(self, project_config):
+        project_config = validate_config(config=project_config, config_schema=ProjectConfig)
         try:
             response = self.post(self._get_http_url('/projects'),
                                  json_data=project_config.to_dict())
@@ -111,12 +113,8 @@ class ProjectClient(BaseClient):
             return []
 
     def create_experiment_group(self, username, project_name, experiment_group_config):
-        if isinstance(experiment_group_config, Mapping):
-            experiment_group_config = ExperimentGroupConfig.from_dict(experiment_group_config)
-        elif not isinstance(experiment_group_config, ExperimentGroupConfig):
-            raise PolyaxonException('create_experiment_group received an invalid '
-                                    'experiment_group_config.')
-
+        experiment_group_config = validate_config(config=experiment_group_config,
+                                                  config_schema=ExperimentGroupConfig)
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'groups')
 
@@ -161,11 +159,8 @@ class ProjectClient(BaseClient):
             return []
 
     def create_experiment(self, username, project_name, experiment_config):
-        if isinstance(experiment_config, Mapping):
-            experiment_config = ExperimentConfig.from_dict(experiment_config)
-        elif not isinstance(experiment_config, ExperimentConfig):
-            raise PolyaxonException('create_experiment received an invalid experiment_config.')
-
+        experiment_config = validate_config(config=experiment_config,
+                                            config_schema=ExperimentConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
@@ -193,11 +188,7 @@ class ProjectClient(BaseClient):
             return []
 
     def create_job(self, username, project_name, job_config):
-        if isinstance(job_config, Mapping):
-            job_config = JobConfig.from_dict(job_config)
-        elif not isinstance(job_config, JobConfig):
-            raise PolyaxonException('create_job received an invalid job_config.')
-
+        job_config = validate_config(config=job_config, config_schema=JobConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'jobs')
 
         try:
@@ -225,11 +216,7 @@ class ProjectClient(BaseClient):
             return []
 
     def create_build(self, username, project_name, build_config):
-        if isinstance(build_config, Mapping):
-            build_config = JobConfig.from_dict(build_config)
-        elif not isinstance(build_config, JobConfig):
-            raise PolyaxonException('create_build received an invalid build_config.')
-
+        build_config = validate_config(config=build_config, config_schema=JobConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'builds')
 
         try:

@@ -44,21 +44,15 @@ class DatasetClient(BaseClient):
         the end of the operation.
         """
         try:
-            logger.info("Making create request to server...")
             post_body = data.to_dict()
             post_body["resumable"] = True
             response = self.post(self._get_http_url(), json_data=post_body)
             return response.json()
         except BadRequestError as e:
-            if 'Dataset not found, ID' in e.message:
-                logger.error(
-                    "Data create: ERROR! "
-                    "Please run 'polyaxon data init DATASET_NAME' before upload.")
-            else:
-                logger.error('Data create: ERROR! %s', e.message)
+            logger.error('Could not create data %s', e.message)
             return None
         except PolyaxonException as e:
-            logger.error("Data create: ERROR! %s", e.message)
+            logger.error('Could not create data %s', e.message)
             return None
 
     def delete_dataset(self, data_uuid):
@@ -68,5 +62,5 @@ class DatasetClient(BaseClient):
             self.delete(request_url, timeout=60)
             return True
         except PolyaxonException as e:
-            logger.error("Data %s: ERROR! %s", data_uuid, e.message)
+            logger.error('Could not create data %s', e.message)
             return False

@@ -5,7 +5,8 @@ import requests
 
 from polyaxon_client.base import BaseClient
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
-from polyaxon_client.schemas import UserConfig
+from polyaxon_client.schemas import UserConfig, CredentialsConfig
+from polyaxon_client.utils import validate_config
 
 
 class AuthClient(BaseClient):
@@ -41,6 +42,7 @@ class AuthClient(BaseClient):
         return UserConfig.from_dict(user_dict)
 
     def login(self, credentials):
+        credentials = validate_config(config=credentials, config_schema=CredentialsConfig)
         request_url = self._build_url(self._get_http_url(), 'token')
         try:
             response = requests.post(request_url, data=credentials.to_dict())
