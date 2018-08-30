@@ -5,7 +5,7 @@ import os
 
 from unittest import TestCase
 
-from polyaxon_schemas.bridges import NoOpBridgeConfig
+from polyaxon_schemas.ml.bridges import NoOpBridgeConfig
 from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.environments import (
     EnvironmentConfig,
@@ -15,13 +15,13 @@ from polyaxon_schemas.environments import (
     TFRunConfig
 )
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.graph import GraphConfig
+from polyaxon_schemas.ml.graph import GraphConfig
 from polyaxon_schemas.hptuning import EarlyStoppingMetricConfig, HPTuningConfig
 from polyaxon_schemas.logging import LoggingConfig
-from polyaxon_schemas.losses import AbsoluteDifferenceConfig, MeanSquaredErrorConfig
+from polyaxon_schemas.ml.losses import AbsoluteDifferenceConfig, MeanSquaredErrorConfig
 from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.models import ClassifierConfig, GeneratorConfig, RegressorConfig
-from polyaxon_schemas.optimizers import AdamConfig
+from polyaxon_schemas.ml.models import ClassifierConfig, GeneratorConfig, RegressorConfig
+from polyaxon_schemas.ml.optimizers import AdamConfig
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,
@@ -29,7 +29,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     PytorchSpecification,
     TensorflowSpecification
 )
-from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
+from polyaxon_schemas.ml.processing.pipelines import TFRecordImagePipelineConfig
 from polyaxon_schemas.run_exec import RunConfig
 from polyaxon_schemas.utils import Frameworks, SearchAlgorithms, TaskType
 

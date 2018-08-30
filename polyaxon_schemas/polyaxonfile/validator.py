@@ -5,12 +5,12 @@ import copy
 
 from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.environments import EnvironmentConfig
-from polyaxon_schemas.eval import EvalConfig
+from polyaxon_schemas.ml.eval import EvalConfig
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.logging import LoggingConfig
-from polyaxon_schemas.models import ModelConfig
+from polyaxon_schemas.ml.models import ModelConfig
 from polyaxon_schemas.run_exec import RunConfig
-from polyaxon_schemas.train import TrainConfig
+from polyaxon_schemas.ml.train import TrainConfig
 
 
 def validate_headers(spec, data):
