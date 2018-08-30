@@ -20,6 +20,7 @@ from polyaxon_cli.schemas.group import ExperimentGroupConfig
 from polyaxon_cli.schemas.job import JobConfig
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_cli.utils.validation import validate_tags
 
 
 @click.command()
@@ -88,8 +89,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClient().project
 
-    if tags:
-        tags = tags.split(',')
+    tags = validate_tags(tags)
 
     def run_experiment():
         click.echo('Creating an independent experiment.')

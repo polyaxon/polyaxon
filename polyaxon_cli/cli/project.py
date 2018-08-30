@@ -22,6 +22,7 @@ from polyaxon_cli.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate
 )
+from polyaxon_cli.utils.validation import validate_tags
 
 
 def get_project_info(project):  # pylint:disable=redefined-outer-name
@@ -262,8 +263,9 @@ def update(ctx, name, description, tags, private):
     if private is not None:
         update_dict['is_public'] = not private
 
+    tags = validate_tags(tags)
     if tags:
-        update_dict['tags'] = tags.split(',')
+        update_dict['tags'] = tags
 
     if not update_dict:
         Printer.print_warning('No argument was provided to update the project.')

@@ -19,6 +19,7 @@ from polyaxon_cli.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate
 )
+from polyaxon_cli.utils.validation import validate_tags
 
 
 def get_group_or_local(_group):
@@ -145,8 +146,9 @@ def update(ctx, name, description, tags):
     if description:
         update_dict['description'] = description
 
+    tags = validate_tags(tags)
     if tags:
-        update_dict['tags'] = tags.split(',')
+        update_dict['tags'] = tags
 
     if not update_dict:
         Printer.print_warning('No argument was provided to update the experiment group.')

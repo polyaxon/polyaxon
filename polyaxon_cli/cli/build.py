@@ -19,6 +19,7 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_cli.utils.log_handler import handle_job_logs
+from polyaxon_cli.utils.validation import validate_tags
 
 
 def get_build_or_local(project=None, _build=None):
@@ -156,8 +157,9 @@ def update(ctx, name, description, tags):
     if description:
         update_dict['description'] = description
 
+    tags = validate_tags(tags)
     if tags:
-        update_dict['tags'] = tags.split(',')
+        update_dict['tags'] = tags
 
     if not update_dict:
         Printer.print_warning('No argument was provided to update the build.')
