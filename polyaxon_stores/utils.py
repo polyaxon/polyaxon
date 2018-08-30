@@ -11,10 +11,11 @@ from polyaxon_stores.logger import logger
 def get_from_env(keys):
     """
     Returns an environment variable from one of the list of keys.
+    Args:
+        keys: list(str). list of keys to check in the environment
 
-    :param keys: list of keys to check in the environment
-    :type keys: list(str)
-    :return: str | None
+    Returns:
+        str | None
     """
     keys = keys or []
     if not isinstance(keys, (list, tuple)):
@@ -62,11 +63,12 @@ def append_basename(path, filename):
     """
     Adds the basename of the filename to the path.
 
-    :param path: The path to append the basename to.
-    :type path: str
-    :param filename: The filename to extract the base name from.
-    :type filename: str
-    :return: str
+    Args:
+        path: `str`. The path to append the basename to.
+        filename: `str`. The filename to extract the base name from.
+
+    Returns:
+         str
     """
     return os.path.join(path, os.path.basename(filename))
 
@@ -83,9 +85,11 @@ def get_files_in_current_directory(path):
     """
     Gets all the files under a certain path.
 
-    :param path: The path to traverse for collecting files.
-    :type path: str
-    :return: list of files collected under the path.
+    Args:
+        path: `str`. The path to traverse for collecting files.
+
+    Returns:
+         list of files collected under the path.
     """
     result_files = []
 

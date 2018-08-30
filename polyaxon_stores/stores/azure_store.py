@@ -46,15 +46,14 @@ class AzureStore(Store):
         """
         Sets a new Blob service connection.
 
-        :param account_name: The storage account name.
-        :type account_name: str
-        :param account_key: The storage account key.
-        :type account_key: str
-        :param connection_string: If specified, this will override all other parameters besides
+        Args:
+        account_name: `str`. The storage account name.
+        account_key: `str`. The storage account key.
+        connection_string: `str`. If specified, this will override all other parameters besides
         request session.
-        :type connection_string: str
 
-        :return: BlockBlobService instance
+        Returns:
+            BlockBlobService instance
         """
         self._connection = get_blob_service_connection(account_name=account_name,
                                                        account_key=account_key,
@@ -65,7 +64,8 @@ class AzureStore(Store):
         """
         Parses and validates a wasbs url.
 
-        :return: tuple(container, storage_account, path).
+        Returns:
+            tuple(container, storage_account, path).
         """
         parsed_url = urllib.parse.urlparse(wasbs_url)
         if parsed_url.scheme != "wasbs":
@@ -85,11 +85,12 @@ class AzureStore(Store):
         """
         Checks if a blob exists.
 
-        :param blob: Name of existing blob.
-        :type container_name: str
-        :param container_name: Name of existing container.
-        :type container_name: str
-        :return: bool
+        Args:
+            blob: `str`. Name of existing blob.
+            container_name: `str`. Name of existing container.
+
+        Returns:
+            bool
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
@@ -105,10 +106,9 @@ class AzureStore(Store):
         """
         Deletes if a blob exists.
 
-        :param blob: Name of existing blob.
-        :type container_name: str
-        :param container_name: Name of existing container.
-        :type container_name: str
+        Args:
+            blob: `str`. Name of existing blob.
+            container_name: `str`. Name of existing container.
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
@@ -122,17 +122,12 @@ class AzureStore(Store):
         """
         Checks if a blob exists.
 
-        :param key: key prefix.
-        :type container_name: str
-        :param container_name: Name of existing container.
-        :type container_name: str
-        :param path: an extra path to append to the key.
-        :type path: str
-        :param delimiter: the delimiter marks key hierarchy.
-        :type delimiter: str
-        :param marker: An opaque continuation token.
-        :type delimiter: str
-        :return:
+        Args:
+            key: `str`. key prefix.
+            container_name: `str`. Name of existing container.
+            path: `str`. an extra path to append to the key.
+            delimiter: `str`. the delimiter marks key hierarchy.
+            marker: `str`. An opaque continuation token.
         """
         if not container_name:
             container_name, _, key = self.parse_wasbs_url(key)
@@ -174,14 +169,11 @@ class AzureStore(Store):
         """
         Uploads a local file to Google Cloud Storage.
 
-        :param filename: the file to upload.
-        :type filename: str
-        :param blob: blob to upload to.
-        :type blob: str
-        :param container_name: the name of the container.
-        :type container_name: str
-        :param use_basename: whether or not to use the basename of the filename.
-        :type use_basename: bool
+        Args:
+            filename: `str`. the file to upload.
+            blob: `str`. blob to upload to.
+            container_name: `str`. the name of the container.
+            use_basename: `bool`. whether or not to use the basename of the filename.
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
@@ -195,14 +187,11 @@ class AzureStore(Store):
         """
         Downloads a file from Google Cloud Storage.
 
-        :param blob: blob to download.
-        :type blob: str
-        :param local_path: the path to download to.
-        :type local_path: str
-        :param container_name: the name of the container.
-        :type container_name: str
-        :param use_basename: whether or not to use the basename of the blob.
-        :type use_basename: bool
+        Args:
+            blob: `str`. blob to download.
+            local_path: `str`. the path to download to.
+            container_name: `str`. the name of the container.
+            use_basename: `bool`. whether or not to use the basename of the blob.
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
@@ -218,14 +207,11 @@ class AzureStore(Store):
         """
         Uploads a local directory to to Google Cloud Storage.
 
-        :param dirname: name of the directory to upload.
-        :type dirname: str
-        :param blob: blob to upload to.
-        :type blob: str
-        :param container_name: the name of the container.
-        :type container_name: str
-        :param use_basename: whether or not to use the basename of the directory.
-        :type use_basename: bool
+        Args:
+            dirname: `str`. name of the directory to upload.
+            blob: `str`. blob to upload to.
+            container_name: `str`. the name of the container.
+            use_basename: `bool`. whether or not to use the basename of the directory.
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
@@ -247,14 +233,11 @@ class AzureStore(Store):
         """
         Download a directory from Google Cloud Storage.
 
-        :param blob: blob to download.
-        :type blob: str
-        :param local_path: the path to download to.
-        :type local_path: str
-        :param container_name: the name of the container.
-        :type container_name: str
-        :param use_basename: whether or not to use the basename of the key.
-        :type use_basename: bool
+        Args:
+            blob: `str`. blob to download.
+            local_path: `str`. the path to download to.
+            container_name: `str`. the name of the container.
+            use_basename: `bool`. whether or not to use the basename of the key.
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)

@@ -69,19 +69,16 @@ class S3Store(Store):
         """
         Sets a new s3 boto3 client.
 
-        :param endpoint_url: The complete URL to use for the constructed client.
-        :type endpoint_url: str
-        :param aws_access_key_id: The access key to use when creating the client.
-        :type aws_access_key_id: str
-        :param aws_secret_access_key: The secret key to use when creating the client.
-        :type aws_secret_access_key: str
-        :param aws_session_token: The session token to use when creating the client.
-        :type aws_session_token: str
-        :param region_name: The name of the region associated with the client.
-            A client is associated with a single region.
-        :type region_name: str
+        Args:
+            endpoint_url: `str`. The complete URL to use for the constructed client.
+            aws_access_key_id: `str`. The access key to use when creating the client.
+            aws_secret_access_key: `str`. The secret key to use when creating the client.
+            aws_session_token: `str`. The session token to use when creating the client.
+            region_name: `str`. The name of the region associated with the client.
+                A client is associated with a single region.
 
-        :return: Service client instance
+        Returns:
+            Service client instance
         """
         self._client = aws_client.get_aws_client(
             's3',
@@ -100,19 +97,16 @@ class S3Store(Store):
         """
         Sets a new s3 boto3 resource.
 
-        :param endpoint_url: The complete URL to use for the constructed client.
-        :type endpoint_url: str
-        :param aws_access_key_id: The access key to use when creating the client.
-        :type aws_access_key_id: str
-        :param aws_secret_access_key: The secret key to use when creating the client.
-        :type aws_secret_access_key: str
-        :param aws_session_token: The session token to use when creating the client.
-        :type aws_session_token: str
-        :param region_name: The name of the region associated with the client.
-            A client is associated with a single region.
-        :type region_name: str
+        Args:
+            endpoint_url: `str`. The complete URL to use for the constructed client.
+            aws_access_key_id: `str`. The access key to use when creating the client.
+            aws_secret_access_key: `str`. The secret key to use when creating the client.
+            aws_session_token: `str`. The session token to use when creating the client.
+            region_name: `str`. The name of the region associated with the client.
+                A client is associated with a single region.
 
-        :return: Service resource instance
+        Returns:
+             Service resource instance
         """
         self._resource = aws_client.get_aws_resource(
             's3',
@@ -127,7 +121,8 @@ class S3Store(Store):
         """
         Parses and validates an S3 url.
 
-        :return: tuple(bucket_name, key).
+        Returns:
+             tuple(bucket_name, key).
         """
         parsed_url = urllib.parse.urlparse(s3_url)
         if not parsed_url.netloc:
@@ -147,8 +142,8 @@ class S3Store(Store):
         """
         Checks if a buckete exists.
 
-        :param bucket_name: Name of the bucket
-        :type bucket_name: str
+        Args:
+            bucket_name: `str`. Name of the bucket
         """
         try:
             self.client.head_bucket(Bucket=bucket_name)
@@ -161,8 +156,8 @@ class S3Store(Store):
         """
         Gets a bucket by name.
 
-        :param bucket_name: Name of the bucket
-        :type bucket_name: str
+        Args:
+            bucket_name: `str`. Name of the bucket
         """
         return self.resource.Bucket(bucket_name)
 
@@ -177,20 +172,14 @@ class S3Store(Store):
         """
         Lists prefixes and contents in a bucket under prefix.
 
-        :param bucket_name: the name of the bucket
-        :type bucket_name: str
-        :param prefix: a key prefix
-        :type prefix: str
-        :param delimiter: the delimiter marks key hierarchy.
-        :type delimiter: str
-        :param page_size: pagination size
-        :type page_size: int
-        :param max_items: maximum items to return
-        :type max_items: int
-        :param keys: if it should include keys
-        :type keys: bool
-        :param prefixes: if it should include prefixes
-        :type prefixes: bool
+        Args:
+            bucket_name: `str`. the name of the bucket
+            prefix: `str`. a key prefix
+            delimiter: `str`. the delimiter marks key hierarchy.
+            page_size: `str`. pagination size
+            max_items: `int`. maximum items to return
+            keys: `bool`. if it should include keys
+            prefixes: `boll`. if it should include prefixes
         """
         config = {
             'PageSize': page_size,
@@ -233,16 +222,12 @@ class S3Store(Store):
         """
         Lists prefixes in a bucket under prefix
 
-        :param bucket_name: the name of the bucket
-        :type bucket_name: str
-        :param prefix: a key prefix
-        :type prefix: str
-        :param delimiter: the delimiter marks key hierarchy.
-        :type delimiter: str
-        :param page_size: pagination size
-        :type page_size: int
-        :param max_items: maximum items to return
-        :type max_items: int
+        Args:
+            bucket_name: `str`. the name of the bucket
+            prefix: `str`. a key prefix
+            delimiter: `str`. the delimiter marks key hierarchy.
+            page_size: `int`. pagination size
+            max_items: `int`. maximum items to return
         """
         results = self.list(bucket_name=bucket_name,
                             prefix=prefix,
@@ -257,16 +242,12 @@ class S3Store(Store):
         """
         Lists keys in a bucket under prefix and not containing delimiter
 
-        :param bucket_name: the name of the bucket
-        :type bucket_name: str
-        :param prefix: a key prefix
-        :type prefix: str
-        :param delimiter: the delimiter marks key hierarchy.
-        :type delimiter: str
-        :param page_size: pagination size
-        :type page_size: int
-        :param max_items: maximum items to return
-        :type max_items: int
+        Args:
+            bucket_name: `str`. the name of the bucket
+            prefix: `str`. a key prefix
+            delimiter: `str`. the delimiter marks key hierarchy.
+            page_size: `int`. pagination size
+            max_items: `int`. maximum items to return
         """
         results = self.list(bucket_name=bucket_name,
                             prefix=prefix,
@@ -281,10 +262,9 @@ class S3Store(Store):
         """
         Checks if a key exists in a bucket
 
-        :param key: S3 key that will point to the file
-        :type key: str
-        :param bucket_name: Name of the bucket in which the file is stored
-        :type bucket_name: str
+        Args:
+            key: `str`. S3 key that will point to the file
+            bucket_name: `str`. Name of the bucket in which the file is stored
         """
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
@@ -300,10 +280,9 @@ class S3Store(Store):
         """
         Returns a boto3.s3.Object
 
-        :param key: the path to the key.
-        :type key: str
-        :param bucket_name: the name of the bucket.
-        :type bucket_name: str
+        Args:
+            key: `str`. the path to the key.
+            bucket_name: `str`. the name of the bucket.
         """
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
@@ -319,10 +298,9 @@ class S3Store(Store):
         """
         Reads a key from S3
 
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param bucket_name: Name of the bucket in which the file is stored.
-        :type bucket_name: str
+        Args:
+            key: `str`. S3 key that will point to the file.
+            bucket_name: `str`. Name of the bucket in which the file is stored.
         """
 
         obj = self.get_key(key, bucket_name)
@@ -341,20 +319,15 @@ class S3Store(Store):
         This is provided as a convenience to drop a string in S3. It uses the
         boto infrastructure to ship a file to s3.
 
-        :param bytes_data: bytes to set as content for the key.
-        :type bytes_data: bytes
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param overwrite: A flag to decide whether or not to overwrite the key
-            if it already exists.
-        :type overwrite: bool
-        :param encrypt: If True, the file will be encrypted on the server-side
-            by S3 and will be stored in an encrypted form while at rest in S3.
-        :type encrypt: bool
-        :param acl: ACL to use for uploading, e.g. "public-read".
-        :type acl: str
+        Args:
+            bytes_data: `bytes`. bytes to set as content for the key.
+            key: `str`. S3 key that will point to the file.
+            bucket_name: `str`. Name of the bucket in which to store the file.
+            overwrite: `bool`. A flag to decide whether or not to overwrite the key
+                if it already exists.
+            encrypt: `bool`. If True, the file will be encrypted on the server-side
+                by S3 and will be stored in an encrypted form while at rest in S3.
+            acl: `str`. ACL to use for uploading, e.g. "public-read".
         """
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
@@ -386,22 +359,16 @@ class S3Store(Store):
         This is provided as a convenience to drop a string in S3. It uses the
         boto infrastructure to ship a file to s3.
 
-        :param string_data: string to set as content for the key.
-        :type string_data: str
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param overwrite: A flag to decide whether or not to overwrite the key
-            if it already exists.
-        :type overwrite: bool
-        :param encrypt: If True, the file will be encrypted on the server-side
-            by S3 and will be stored in an encrypted form while at rest in S3.
-        :type encrypt: bool
-        :param acl: ACL to use for uploading, e.g. "public-read".
-        :type acl: str
-        :param encoding: Encoding to use.
-        :type encoding: str
+        Args:
+            string_data: `str`. string to set as content for the key.
+            key: `str`. S3 key that will point to the file.
+            bucket_name: `str`. Name of the bucket in which to store the file.
+            overwrite: `bool`. A flag to decide whether or not to overwrite the key
+                if it already exists.
+            encrypt: `bool`. If True, the file will be encrypted on the server-side
+                by S3 and will be stored in an encrypted form while at rest in S3.
+            acl: `str`. ACL to use for uploading, e.g. "public-read".
+            encoding: `str`. Encoding to use.
         """
         self.upload_bytes(force_bytes(string_data, encoding=encoding),
                           key=key,
@@ -421,23 +388,17 @@ class S3Store(Store):
         """
         Uploads a local file to S3.
 
-        :param filename: name of the file to upload.
-        :type filename: str
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param overwrite: A flag to decide whether or not to overwrite the key
-            if it already exists. If replace is False and the key exists, an
-            error will be raised.
-        :type overwrite: bool
-        :param encrypt: If True, the file will be encrypted on the server-side
-            by S3 and will be stored in an encrypted form while at rest in S3.
-        :type encrypt: bool
-        :param acl: ACL to use for uploading, e.g. "public-read".
-        :type acl: str
-        :param use_basename: whether or not to use the basename of the filename.
-        :type use_basename: bool
+        Args:
+            filename: `str`. name of the file to upload.
+            key: `str`. S3 key that will point to the file.
+            bucket_name: `str`. Name of the bucket in which to store the file.
+            overwrite: `bool`. A flag to decide whether or not to overwrite the key
+                if it already exists. If replace is False and the key exists, an
+                error will be raised.
+            encrypt: `bool`. If True, the file will be encrypted on the server-side
+                by S3 and will be stored in an encrypted form while at rest in S3.
+            acl: `str`. ACL to use for uploading, e.g. "public-read".
+            use_basename: `bool`. whether or not to use the basename of the filename.
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)
@@ -460,14 +421,11 @@ class S3Store(Store):
         """
         Download a file from S3.
 
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param local_path: the path to download to.
-        :type local_path: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param use_basename: whether or not to use the basename of the key.
-        :type use_basename: bool
+        Args:
+            key: `str`. S3 key that will point to the file.
+            local_path: `str`. the path to download to.
+            bucket_name: `str`. Name of the bucket in which to store the file.
+            use_basename: `bool`. whether or not to use the basename of the key.
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)
@@ -490,23 +448,17 @@ class S3Store(Store):
         """
         Uploads a local directory to S3.
 
-        :param dirname: name of the directory to upload.
-        :type dirname: str
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param overwrite: A flag to decide whether or not to overwrite the key
-            if it already exists. If replace is False and the key exists, an
-            error will be raised.
-        :type overwrite: bool
-        :param encrypt: If True, the file will be encrypted on the server-side
-            by S3 and will be stored in an encrypted form while at rest in S3.
-        :type encrypt: bool
-        :param acl: ACL to use for uploading, e.g. "public-read".
-        :type acl: str
-        :param use_basename: whether or not to use the basename of the directory.
-        :type use_basename: bool
+        Args:
+            dirname: `str`. name of the directory to upload.
+            key: `str`. S3 key that will point to the file.
+            bucket_name: `str`. Name of the bucket in which to store the file.
+            overwrite: `bool`. A flag to decide whether or not to overwrite the key
+                if it already exists. If replace is False and the key exists, an
+                error will be raised.
+            encrypt: `bool`. If True, the file will be encrypted on the server-side
+                by S3 and will be stored in an encrypted form while at rest in S3.
+            acl: `str`. ACL to use for uploading, e.g. "public-read".
+            use_basename: `bool`. whether or not to use the basename of the directory.
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)
@@ -531,14 +483,11 @@ class S3Store(Store):
         """
         Download a directory from S3.
 
-        :param key: S3 key that will point to the file.
-        :type key: str
-        :param local_path: the path to download to.
-        :type local_path: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param use_basename: whether or not to use the basename of the key.
-        :type use_basename: bool
+        Args:
+            key: `str`. S3 key that will point to the file.
+            local_path: `str`. the path to download to.
+            bucket_name: `str`. Name of the bucket in which to store the file.
+            use_basename: `bool`. whether or not to use the basename of the key.
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)

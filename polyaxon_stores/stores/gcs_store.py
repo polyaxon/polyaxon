@@ -53,18 +53,15 @@ class GCSStore(Store):
         """
         Sets a new gc client.
 
-        :param project_id: The project if.
-        :type project_id: str
-        :param key_path: The path to the json key file.
-        :type key_path: str
-        :param keyfile_dict: The dict containing the auth data.
-        :type keyfile_dict: str | dict
-        :param credentials: The credentials to use.
-        :type credentials: Credentials instance
-        :param scopes: The scopes.
-        :type scopes: list
+        Args:
+            project_id: `str`. The project if.
+            key_path: `str`. The path to the json key file.
+            keyfile_dict: `str`. The dict containing the auth data.
+            credentials: `Credentials instance`. The credentials to use.
+            scopes: `list`. The scopes.
 
-        :return: Service client instance
+        Returns:
+            Service client instance
         """
         self._client = gc_client.get_gc_client(
             project_id=project_id,
@@ -79,7 +76,8 @@ class GCSStore(Store):
         """
         Parses and validates a google cloud storage url.
 
-        :return: tuple(bucket_name, blob).
+        Returns:
+            tuple(bucket_name, blob).
         """
         parsed_url = urllib.parse.urlparse(gcs_url)
         if not parsed_url.netloc:
@@ -93,8 +91,8 @@ class GCSStore(Store):
         """
         Gets a bucket by name.
 
-        :param bucket_name: Name of the bucket
-        :type bucket_name: str
+        Args:
+            bucket_name: `str`. Name of the bucket
         """
         return self.client.get_bucket(bucket_name)
 
@@ -108,10 +106,9 @@ class GCSStore(Store):
         """
         Checks for the existence of a file in Google Cloud Storage.
 
-        :param blob: the path to the object to check in the Google cloud storage bucket.
-        :type blob: string
-        :param bucket_name: Name of the bucket in which the file is stored
-        :type bucket_name: str
+        Args:
+            blob: `str`. the path to the object to check in the Google cloud storage bucket.
+            bucket_name: `str`. Name of the bucket in which the file is stored
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
@@ -126,10 +123,9 @@ class GCSStore(Store):
         """
         Get a file in Google Cloud Storage.
 
-        :param blob: the path to the object to check in the Google cloud storage bucket.
-        :type blob: string
-        :param bucket_name: Name of the bucket in which the file is stored
-        :type bucket_name: str
+        Args:
+            blob: `str`. the path to the object to check in the Google cloud storage bucket.
+            bucket_name: `str`. Name of the bucket in which the file is stored
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
@@ -147,20 +143,16 @@ class GCSStore(Store):
         """
         List prefixes and blobs in a bucket.
 
-        :param key: a key prefix.
-        :type key: str
-        :param bucket_name: the name of the bucket.
-        :type bucket_name: str
-        :param path: an extra path to append to the key.
-        :type path: str
-        :param delimiter: the delimiter marks key hierarchy.
-        :type delimiter: str
-        :param blobs: if it should include blobs.
-        :type blobs: bool
-        :param prefixes: if it should include prefixes.
-        :type prefixes: bool
+        Args:
+            key: `str`. a key prefix.
+            bucket_name: `str`. the name of the bucket.
+            path: `str`. an extra path to append to the key.
+            delimiter: `str`. the delimiter marks key hierarchy.
+            blobs: `bool`. if it should include blobs.
+            prefixes: `bool`. if it should include prefixes.
 
-        :return: Service client instance
+        Returns:
+             Service client instance
         """
         if not bucket_name:
             bucket_name, key = self.parse_gcs_url(key)
@@ -211,14 +203,11 @@ class GCSStore(Store):
         """
         Uploads a local file to Google Cloud Storage.
 
-        :param filename: the file to upload.
-        :type filename: str
-        :param blob: blob to upload to.
-        :type blob: str
-        :param bucket_name: the name of the bucket.
-        :type bucket_name: str
-        :param use_basename: whether or not to use the basename of the filename.
-        :type use_basename: bool
+        Args:
+            filename: `str`. the file to upload.
+            blob: `str`. blob to upload to.
+            bucket_name: `str`. the name of the bucket.
+            use_basename: `bool`. whether or not to use the basename of the filename.
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
@@ -233,14 +222,11 @@ class GCSStore(Store):
         """
         Downloads a file from Google Cloud Storage.
 
-        :param blob: blob to download.
-        :type blob: str
-        :param local_path: the path to download to.
-        :type local_path: str
-        :param bucket_name: the name of the bucket.
-        :type bucket_name: str
-        :param use_basename: whether or not to use the basename of the blob.
-        :type use_basename: bool
+        Args:
+            blob: `str`. blob to download.
+            local_path: `str`. the path to download to.
+            bucket_name: `str`. the name of the bucket.
+            use_basename: `bool`. whether or not to use the basename of the blob.
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
@@ -257,14 +243,11 @@ class GCSStore(Store):
         """
         Uploads a local directory to to Google Cloud Storage.
 
-        :param dirname: name of the directory to upload.
-        :type dirname: str
-        :param blob: blob to upload to.
-        :type blob: str
-        :param bucket_name: the name of the bucket.
-        :type bucket_name: str
-        :param use_basename: whether or not to use the basename of the directory.
-        :type use_basename: bool
+        Args:
+            dirname: `str`. name of the directory to upload.
+            blob: `str`. blob to upload to.
+            bucket_name: `str`. the name of the bucket.
+            use_basename: `bool`. whether or not to use the basename of the directory.
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
@@ -286,14 +269,11 @@ class GCSStore(Store):
         """
         Download a directory from Google Cloud Storage.
 
-        :param blob: blob to download.
-        :type blob: str
-        :param local_path: the path to download to.
-        :type local_path: str
-        :param bucket_name: Name of the bucket in which to store the file.
-        :type bucket_name: str
-        :param use_basename: whether or not to use the basename of the key.
-        :type use_basename: bool
+        Args:
+            blob: `str`. blob to download.
+            local_path: `str`. the path to download to.
+            bucket_name: `str`. Name of the bucket in which to store the file.
+            use_basename: `bool`. whether or not to use the basename of the key.
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
