@@ -10,7 +10,10 @@ from polyaxon_schemas.ml.initializations import (
     OrthogonalInitializerConfig,
     ZerosInitializerConfig
 )
-from polyaxon_schemas.ml.layers.convolutional_recurrent import ConvLSTM2DConfig, ConvRecurrent2DConfig
+from polyaxon_schemas.ml.layers.convolutional_recurrent import (
+    ConvLSTM2DConfig,
+    ConvRecurrent2DConfig
+)
 
 
 class TestConvolutionalRecurrentConfigs(TestCase):

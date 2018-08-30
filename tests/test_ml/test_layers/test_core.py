@@ -5,7 +5,10 @@ from unittest import TestCase
 
 from tests.utils import assert_equal_layers
 
-from polyaxon_schemas.ml.initializations import GlorotNormalInitializerConfig, ZerosInitializerConfig
+from polyaxon_schemas.ml.initializations import (
+    GlorotNormalInitializerConfig,
+    ZerosInitializerConfig
+)
 from polyaxon_schemas.ml.layers.core import (
     ActivationConfig,
     ActivityRegularizationConfig,

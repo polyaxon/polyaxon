@@ -25,7 +25,10 @@ from polyaxon_schemas.ml.layers.convolutional import (
     ZeroPadding2DConfig,
     ZeroPadding3DConfig
 )
-from polyaxon_schemas.ml.layers.convolutional_recurrent import ConvLSTM2DConfig, ConvRecurrent2DConfig
+from polyaxon_schemas.ml.layers.convolutional_recurrent import (
+    ConvLSTM2DConfig,
+    ConvRecurrent2DConfig
+)
 from polyaxon_schemas.ml.layers.core import (
     ActivationConfig,
     ActivityRegularizationConfig,
