@@ -1,40 +1,35 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import httpretty
 import json
 import uuid
 
-from faker import Faker
-from unittest import TestCase
+import httpretty
 
-from polyaxon_client.cluster import ClusterClient
+from polyaxon_client.api.base import BaseApiHandler
+from polyaxon_client.api.cluster import ClusterApi
 from polyaxon_client.schemas import ClusterNodeConfig, PolyaxonClusterConfig
+from tests.test_api.utils import TestBaseApi
 
-faker = Faker()
 
+class TestClusterApi(TestBaseApi):
 
-class TestClusterClient(TestCase):
     def setUp(self):
-        self.client = ClusterClient(host='localhost',
-                                    http_port=8000,
-                                    ws_port=1337,
-                                    version='v1',
-                                    token=faker.uuid4(),
-                                    reraise=True)
+        super(TestClusterApi, self).setUp()
+        self.api_handler = ClusterApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_get_cluster(self):
         obj = PolyaxonClusterConfig(version_api={})
         httpretty.register_uri(
             httpretty.GET,
-            ClusterClient._build_url(
-                self.client.base_url,
-                ClusterClient.ENDPOINT),
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/cluster'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.get_cluster()
+        result = self.api_handler.get_cluster()
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
@@ -56,12 +51,12 @@ class TestClusterClient(TestCase):
 
         httpretty.register_uri(
             httpretty.GET,
-            ClusterClient._build_url(
-                self.client.base_url,
-                ClusterClient.ENDPOINT_NODES,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/nodes',
                 1),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.get_node(1)
+        result = self.api_handler.get_node(1)
         assert result.to_dict() == obj.to_dict()

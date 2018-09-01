@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import httpretty
 import json
 import uuid
 
+import httpretty
 from faker import Faker
-from unittest import TestCase
 
-from polyaxon_client.project import ProjectClient
+from polyaxon_client.api.base import BaseApiHandler
+from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.schemas import (
     ExperimentConfig,
     ExperimentGroupConfig,
@@ -16,34 +16,32 @@ from polyaxon_client.schemas import (
     ProjectConfig,
     TensorboardJobConfig
 )
+from tests.test_api.utils import TestBaseApi
 
 faker = Faker()
 
 
-class TestProjectClient(TestCase):
+class TestProjectApi(TestBaseApi):
+
     def setUp(self):
-        self.client = ProjectClient(host='localhost',
-                                    http_port=8000,
-                                    ws_port=1337,
-                                    version='v1',
-                                    token=faker.uuid4(),
-                                    reraise=True)
+        super(TestProjectApi, self).setUp()
+        self.api_handler = ProjectApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_list_projects(self):
         projects = [ProjectConfig(faker.word).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user'
             ),
             body=json.dumps({'results': projects, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_projects('user')
+        response = self.api_handler.list_projects('user')
         assert len(response['results']) == 10
         assert response['count'] == 10
         assert response['next'] is None
@@ -54,15 +52,15 @@ class TestProjectClient(TestCase):
         obj = ProjectConfig(faker.word()).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project'),
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
-        result = self.client.get_project('user', 'project')
+        result = self.api_handler.get_project('user', 'project')
         assert obj == result.to_dict()
 
     @httpretty.activate
@@ -70,13 +68,13 @@ class TestProjectClient(TestCase):
         obj = ProjectConfig(faker.word())
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
                 'projects'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_project(obj)
+        result = self.api_handler.create_project(obj)
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
@@ -84,38 +82,38 @@ class TestProjectClient(TestCase):
         obj = ProjectConfig(faker.word())
         httpretty.register_uri(
             httpretty.PATCH,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_project('user', 'project', {'name': 'new'})
+        result = self.api_handler.update_project('user', 'project', {'name': 'new'})
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
     def test_delete_project(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project'),
             content_type='application/json',
             status=204)
-        result = self.client.delete_project('user', 'project')
+        result = self.api_handler.delete_project('user', 'project')
         assert result.status_code == 204
 
     @httpretty.activate
     def test_upload_repo(self):
         httpretty.register_uri(
             httpretty.PUT,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'repo',
@@ -125,16 +123,16 @@ class TestProjectClient(TestCase):
         files = [('code', ('repo',
                            open('./tests/fixtures_static/repo.tar.gz', 'rb'),
                            'text/plain'))]
-        result = self.client.upload_repo('user', 'project', files=files, files_size=10)
+        result = self.api_handler.upload_repo('user', 'project', files=files, files_size=10)
         assert result.status_code == 204
 
     @httpretty.activate
     def test_upload_repo_synchronous(self):
         httpretty.register_uri(
             httpretty.PUT,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'repo',
@@ -144,11 +142,11 @@ class TestProjectClient(TestCase):
         files = [('code', ('repo',
                            open('./tests/fixtures_static/repo.tar.gz', 'rb'),
                            'text/plain'))]
-        result = self.client.upload_repo('user',
-                                         'project',
-                                         files=files,
-                                         files_size=10,
-                                         upload_async=False)
+        result = self.api_handler.upload_repo('user',
+                                              'project',
+                                              files=files,
+                                              files_size=10,
+                                              upload_async=False)
         assert result.status_code == 204
 
     @httpretty.activate
@@ -159,9 +157,9 @@ class TestProjectClient(TestCase):
             for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'groups'),
@@ -169,7 +167,7 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiment_groups('user', 'project')
+        response = self.api_handler.list_experiment_groups('user', 'project')
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -178,31 +176,31 @@ class TestProjectClient(TestCase):
         obj = ExperimentGroupConfig(content=faker.word(), project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'groups'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment_group('user', 'project', obj)
+        result = self.api_handler.create_experiment_group('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
 
         # Test create with dict
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'groups'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment_group('user', 'project', obj.to_dict())
+        result = self.api_handler.create_experiment_group('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
@@ -213,9 +211,9 @@ class TestProjectClient(TestCase):
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'experiments'),
@@ -223,15 +221,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments('user', 'project')
+        response = self.api_handler.list_experiments('user', 'project')
         assert len(response['results']) == 10
 
         # pagination
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'experiments') + '?offset=2',
@@ -239,7 +237,7 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments('user', 'project', page=2)
+        response = self.api_handler.list_experiments('user', 'project', page=2)
         assert len(response['results']) == 10
 
         # metrics & declarations
@@ -249,9 +247,9 @@ class TestProjectClient(TestCase):
 
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'experiments') + '?metrics=true',
@@ -259,14 +257,14 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments('user', 'project', metrics=True, page=2)
+        response = self.api_handler.list_experiments('user', 'project', metrics=True, page=2)
 
         assert len(response['results']) == 10
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'experiments') + '?declarations=true',
@@ -274,15 +272,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments('user', 'project', declarations=True, page=2)
+        response = self.api_handler.list_experiments('user', 'project', declarations=True, page=2)
         assert len(response['results']) == 10
 
         # query, sort
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments') + '?independent=true&query=started_at:>=2010-10-10,sort=created_at',
@@ -290,11 +288,11 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments('user',
-                                                'project',
-                                                True,
-                                                query='started_at:>=2010-10-10',
-                                                sort='created_at')
+        response = self.api_handler.list_experiments('user',
+                                                     'project',
+                                                     True,
+                                                     query='started_at:>=2010-10-10',
+                                                     sort='created_at')
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -303,31 +301,31 @@ class TestProjectClient(TestCase):
         obj = ExperimentConfig(project=project_uuid, config={})
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'experiments'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment('user', 'project', obj)
+        result = self.api_handler.create_experiment('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
 
         # Test create experiment with dict
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'experiments'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment('user', 'project', obj.to_dict())
+        result = self.api_handler.create_experiment('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
@@ -338,9 +336,9 @@ class TestProjectClient(TestCase):
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'jobs'),
@@ -348,15 +346,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_jobs('user', 'project')
+        response = self.api_handler.list_jobs('user', 'project')
         assert len(response['results']) == 10
 
         # pagination
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'jobs') + '?offset=2',
@@ -364,15 +362,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_jobs('user', 'project', page=2)
+        response = self.api_handler.list_jobs('user', 'project', page=2)
         assert len(response['results']) == 10
 
         # query, sort
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs') + '?query=started_at:>=2010-10-10,sort=created_at',
@@ -380,10 +378,10 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_jobs('user',
-                                         'project',
-                                         query='started_at:>=2010-10-10',
-                                         sort='created_at')
+        response = self.api_handler.list_jobs('user',
+                                              'project',
+                                              query='started_at:>=2010-10-10',
+                                              sort='created_at')
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -392,31 +390,31 @@ class TestProjectClient(TestCase):
         obj = JobConfig(project=project_uuid, config={})
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'jobs'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_job('user', 'project', obj)
+        result = self.api_handler.create_job('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
 
         # Test create experiment with dict
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'jobs'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_job('user', 'project', obj.to_dict())
+        result = self.api_handler.create_job('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
@@ -427,9 +425,9 @@ class TestProjectClient(TestCase):
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'tensorboards'),
@@ -437,15 +435,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_tensorboards('user', 'project')
+        response = self.api_handler.list_tensorboards('user', 'project')
         assert len(response['results']) == 10
 
         # pagination
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'tensorboards') + '?offset=2',
@@ -453,15 +451,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_tensorboards('user', 'project', page=2)
+        response = self.api_handler.list_tensorboards('user', 'project', page=2)
         assert len(response['results']) == 10
 
         # query, sort
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'tensorboards') + '?query=started_at:>=2010-10-10,sort=created_at',
@@ -469,10 +467,10 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_tensorboards('user',
-                                                 'project',
-                                                 query='started_at:>=2010-10-10',
-                                                 sort='created_at')
+        response = self.api_handler.list_tensorboards('user',
+                                                      'project',
+                                                      query='started_at:>=2010-10-10',
+                                                      sort='created_at')
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -483,9 +481,9 @@ class TestProjectClient(TestCase):
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'builds'),
@@ -493,15 +491,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_builds('user', 'project')
+        response = self.api_handler.list_builds('user', 'project')
         assert len(response['results']) == 10
 
         # pagination
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'builds') + '?offset=2',
@@ -509,15 +507,15 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_builds('user', 'project', page=2)
+        response = self.api_handler.list_builds('user', 'project', page=2)
         assert len(response['results']) == 10
 
         # query, sort
         httpretty.register_uri(
             httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'builds') + '?query=started_at:>=2010-10-10,sort=created_at',
@@ -525,10 +523,10 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_builds('user',
-                                           'project',
-                                           query='started_at:>=2010-10-10',
-                                           sort='created_at')
+        response = self.api_handler.list_builds('user',
+                                                'project',
+                                                query='started_at:>=2010-10-10',
+                                                sort='created_at')
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -537,47 +535,47 @@ class TestProjectClient(TestCase):
         obj = JobConfig(project=project_uuid, config={})
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'builds'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_build('user', 'project', obj)
+        result = self.api_handler.create_build('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
 
         # Test create experiment with dict
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'user',
                 'project',
                 'builds'),
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_build('user', 'project', obj.to_dict())
+        result = self.api_handler.create_build('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
     def test_start_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'tensorboard',
                 'start'),
             content_type='application/json',
             status=200)
-        result = self.client.start_tensorboard('username', 'project_name')
+        result = self.api_handler.start_tensorboard('username', 'project_name')
         assert result.status_code == 200
 
     @httpretty.activate
@@ -585,9 +583,9 @@ class TestProjectClient(TestCase):
         obj = {}
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'tensorboard',
@@ -595,39 +593,39 @@ class TestProjectClient(TestCase):
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
-        result = self.client.start_tensorboard('username', 'project_name', obj)
+        result = self.api_handler.start_tensorboard('username', 'project_name', obj)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_stop_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'tensorboard',
                 'stop'),
             content_type='application/json',
             status=200)
-        result = self.client.stop_tensorboard('username', 'project_name')
+        result = self.api_handler.stop_tensorboard('username', 'project_name')
         assert result.status_code == 200
 
     @httpretty.activate
     def test_start_notebook(self):
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'notebook',
                 'start'),
             content_type='application/json',
             status=200)
-        result = self.client.start_notebook('username', 'project_name')
+        result = self.api_handler.start_notebook('username', 'project_name')
         assert result.status_code == 200
 
     @httpretty.activate
@@ -635,9 +633,9 @@ class TestProjectClient(TestCase):
         obj = {}
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'notebook',
@@ -645,67 +643,67 @@ class TestProjectClient(TestCase):
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
-        result = self.client.start_notebook('username', 'project_name', obj)
+        result = self.api_handler.start_notebook('username', 'project_name', obj)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_stop_notebook(self):
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'notebook',
                 'stop'),
             content_type='application/json',
             status=200)
-        result = self.client.stop_notebook('username', 'project_name')
+        result = self.api_handler.stop_notebook('username', 'project_name')
         assert result.status_code == 200
 
     @httpretty.activate
     def test_stop_notebook_without_commit(self):
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'notebook',
                 'stop'),
             content_type='application/json',
             status=200)
-        result = self.client.stop_notebook('username', 'project_name', commit=False)
+        result = self.api_handler.stop_notebook('username', 'project_name', commit=False)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_bookmark_project(self):
         httpretty.register_uri(
             httpretty.POST,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'bookmark'),
             content_type='application/json',
             status=200)
-        result = self.client.bookmark('username', 'project_name')
+        result = self.api_handler.bookmark('username', 'project_name')
         assert result.status_code == 200
 
     @httpretty.activate
     def test_unbookmark_project(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'unbookmark'),
             content_type='application/json',
             status=200)
-        result = self.client.unbookmark('username', 'project_name')
+        result = self.api_handler.unbookmark('username', 'project_name')
         assert result.status_code == 200

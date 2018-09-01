@@ -2,48 +2,43 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-import httpretty
 import json
 import uuid
 
-from faker import Faker
-from unittest import TestCase
+import httpretty
 
-from polyaxon_client.experiment import ExperimentClient
+from polyaxon_client.api.base import BaseApiHandler
+from polyaxon_client.api.experiment import ExperimentApi
 from polyaxon_client.schemas import (
     ExperimentConfig,
     ExperimentJobConfig,
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
+from tests.test_api.utils import TestBaseApi
 
-faker = Faker()
 
+class TestExperimentApi(TestBaseApi):
 
-class TestExperimentClient(TestCase):
     def setUp(self):
-        self.client = ExperimentClient(host='localhost',
-                                       http_port=8000,
-                                       ws_port=1337,
-                                       version='v1',
-                                       token=faker.uuid4(),
-                                       reraise=True)
+        super(TestExperimentApi, self).setUp()
+        self.api_handler = ExperimentApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_list_experiments(self):
         experiments = [ExperimentConfig(config={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'experiments'
             ),
             body=json.dumps({'results': experiments, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments()
+        response = self.api_handler.list_experiments()
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -51,9 +46,9 @@ class TestExperimentClient(TestCase):
         exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -62,7 +57,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp),
             content_type='application/json',
             status=200)
-        result = self.client.get_experiment('username', 'project_name', 1)
+        result = self.api_handler.get_experiment('username', 'project_name', 1)
         assert exp == result.to_dict()
 
     @httpretty.activate
@@ -70,9 +65,9 @@ class TestExperimentClient(TestCase):
         exp = ExperimentConfig(config={})
         httpretty.register_uri(
             httpretty.PATCH,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -80,23 +75,23 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_experiment('username', 'project_name', 1, {'name': 'new'})
+        result = self.api_handler.update_experiment('username', 'project_name', 1, {'name': 'new'})
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
     def test_delete_experiment(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
                 1),
             content_type='application/json',
             status=204)
-        result = self.client.delete_experiment('username', 'project_name', 1)
+        result = self.api_handler.delete_experiment('username', 'project_name', 1)
         assert result.status_code == 204
 
     @httpretty.activate
@@ -108,9 +103,9 @@ class TestExperimentClient(TestCase):
                                      status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -119,7 +114,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps({'results': [exp], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        response = self.client.get_statuses('username', 'project_name', 1)
+        response = self.api_handler.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
 
     @httpretty.activate
@@ -131,9 +126,9 @@ class TestExperimentClient(TestCase):
                                      values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -142,7 +137,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps({'results': [exp], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        response = self.client.get_metrics('username', 'project_name', 1)
+        response = self.api_handler.get_metrics('username', 'project_name', 1)
         assert len(response['results']) == 1
 
     @httpretty.activate
@@ -154,9 +149,9 @@ class TestExperimentClient(TestCase):
                                      values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -165,8 +160,8 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp),
             content_type='application/json',
             status=200)
-        response = self.client.create_metric('username', 'project_name', 1,
-                                             values={'accuracy': 0.9})
+        response = self.api_handler.create_metric('username', 'project_name', 1,
+                                                  values={'accuracy': 0.9})
         assert response.to_dict() == exp
 
     @httpretty.activate
@@ -179,9 +174,9 @@ class TestExperimentClient(TestCase):
                                    definition={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -192,16 +187,16 @@ class TestExperimentClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_jobs('username', 'project_name', 1)
+        response = self.api_handler.list_jobs('username', 'project_name', 1)
         assert len(response['results']) == 10
 
         # pagination
 
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -211,7 +206,7 @@ class TestExperimentClient(TestCase):
             content_type='application/json',
             status=200)
 
-        response = self.client.list_jobs('username', 'project_name', 1, page=2)
+        response = self.api_handler.list_jobs('username', 'project_name', 1, page=2)
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -219,9 +214,9 @@ class TestExperimentClient(TestCase):
         exp = ExperimentConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -230,7 +225,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.restart('username', 'project_name', 1)
+        result = self.api_handler.restart('username', 'project_name', 1)
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
@@ -239,9 +234,9 @@ class TestExperimentClient(TestCase):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -250,7 +245,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.restart('username', 'project_name', 1, config, update_code=True)
+        result = self.api_handler.restart('username', 'project_name', 1, config, update_code=True)
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
@@ -258,9 +253,9 @@ class TestExperimentClient(TestCase):
         exp = ExperimentConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -269,7 +264,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.resume('username', 'project_name', 1)
+        result = self.api_handler.resume('username', 'project_name', 1)
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
@@ -278,9 +273,9 @@ class TestExperimentClient(TestCase):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -289,7 +284,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.resume('username', 'project_name', 1, config)
+        result = self.api_handler.resume('username', 'project_name', 1, config)
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
@@ -297,9 +292,9 @@ class TestExperimentClient(TestCase):
         exp = ExperimentConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -308,7 +303,7 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.copy('username', 'project_name', 1)
+        result = self.api_handler.copy('username', 'project_name', 1)
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
@@ -317,9 +312,9 @@ class TestExperimentClient(TestCase):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -328,16 +323,16 @@ class TestExperimentClient(TestCase):
             body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.copy('username', 'project_name', 1, config)
+        result = self.api_handler.copy('username', 'project_name', 1, config)
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
     def test_stop_experiment(self):
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -345,16 +340,16 @@ class TestExperimentClient(TestCase):
                 'stop'),
             content_type='application/json',
             status=200)
-        result = self.client.stop('username', 'project_name', 1)
+        result = self.api_handler.stop('username', 'project_name', 1)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_experiment_logs(self):
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -365,16 +360,16 @@ class TestExperimentClient(TestCase):
             content_type='text/plain',
             status=200)
 
-        response = self.client.logs('username', 'project_name', 1, stream=False)
+        response = self.api_handler.logs('username', 'project_name', 1, stream=False)
         assert response.content.decode() == 'some text'
 
     @httpretty.activate
     def test_start_experiment_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -383,7 +378,7 @@ class TestExperimentClient(TestCase):
                 'start'),
             content_type='application/json',
             status=200)
-        result = self.client.start_tensorboard('username', 'project_name', 1)
+        result = self.api_handler.start_tensorboard('username', 'project_name', 1)
         assert result.status_code == 200
 
     @httpretty.activate
@@ -391,9 +386,9 @@ class TestExperimentClient(TestCase):
         obj = {}
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -403,16 +398,16 @@ class TestExperimentClient(TestCase):
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
-        result = self.client.start_tensorboard('username', 'project_name', 1, obj)
+        result = self.api_handler.start_tensorboard('username', 'project_name', 1, obj)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_stop_experiment_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -421,16 +416,16 @@ class TestExperimentClient(TestCase):
                 'stop'),
             content_type='application/json',
             status=200)
-        result = self.client.stop_tensorboard('username', 'project_name', 1)
+        result = self.api_handler.stop_tensorboard('username', 'project_name', 1)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_bookmark_experiment(self):
         httpretty.register_uri(
             httpretty.POST,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -438,16 +433,16 @@ class TestExperimentClient(TestCase):
                 'bookmark'),
             content_type='application/json',
             status=200)
-        result = self.client.bookmark('username', 'project_name', 1)
+        result = self.api_handler.bookmark('username', 'project_name', 1)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_unbookmark_experiment(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -455,5 +450,5 @@ class TestExperimentClient(TestCase):
                 'unbookmark'),
             content_type='application/json',
             status=200)
-        result = self.client.unbookmark('username', 'project_name', 1)
+        result = self.api_handler.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200

@@ -1,32 +1,30 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import httpretty
 import json
 import uuid
 
+import httpretty
 from faker import Faker
-from unittest import TestCase
 
-from polyaxon_client.bookmark import BookmarkClient
+from polyaxon_client.api.base import BaseApiHandler
+from polyaxon_client.api.bookmark import BookmarkApi
 from polyaxon_client.schemas import (
     ExperimentConfig,
     ExperimentGroupConfig,
     JobConfig,
     ProjectConfig
 )
+from tests.test_api.utils import TestBaseApi
 
 faker = Faker()
 
 
-class TestBookmarkClient(TestCase):
+class TestBookmarkApi(TestBaseApi):
+
     def setUp(self):
-        self.client = BookmarkClient(host='localhost',
-                                     http_port=8000,
-                                     ws_port=1337,
-                                     version='v1',
-                                     token=faker.uuid4(),
-                                     reraise=True)
+        super(TestBookmarkApi, self).setUp()
+        self.api_handler = BookmarkApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_get_bookmarked_builds(self):
@@ -38,15 +36,15 @@ class TestBookmarkClient(TestCase):
                 for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BookmarkClient._build_url(
-                self.client.base_url,
-                BookmarkClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/bookmarks',
                 'user',
                 'builds'),
             body=json.dumps({'results': objs, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
-        result = self.client.builds('user')
+        result = self.api_handler.builds('user')
         assert len(result['results']) == 10
 
     @httpretty.activate
@@ -59,15 +57,15 @@ class TestBookmarkClient(TestCase):
                 for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BookmarkClient._build_url(
-                self.client.base_url,
-                BookmarkClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/bookmarks',
                 'user',
                 'jobs'),
             body=json.dumps({'results': objs, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
-        result = self.client.jobs('user')
+        result = self.api_handler.jobs('user')
         assert len(result['results']) == 10
 
     @httpretty.activate
@@ -80,15 +78,15 @@ class TestBookmarkClient(TestCase):
                 for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BookmarkClient._build_url(
-                self.client.base_url,
-                BookmarkClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/bookmarks',
                 'user',
                 'experiments'),
             body=json.dumps({'results': objs, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
-        result = self.client.experiments('user')
+        result = self.api_handler.experiments('user')
         assert len(result['results']) == 10
 
     @httpretty.activate
@@ -100,15 +98,15 @@ class TestBookmarkClient(TestCase):
             for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BookmarkClient._build_url(
-                self.client.base_url,
-                BookmarkClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/bookmarks',
                 'user',
                 'groups'),
             body=json.dumps({'results': experiment_groups, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
-        result = self.client.groups('user')
+        result = self.api_handler.groups('user')
         assert len(result['results']) == 10
 
     @httpretty.activate
@@ -116,13 +114,13 @@ class TestBookmarkClient(TestCase):
         projects = [{'content_object': ProjectConfig(faker.word).to_dict()} for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BookmarkClient._build_url(
-                self.client.base_url,
-                BookmarkClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/bookmarks',
                 'user',
                 'projects'),
             body=json.dumps({'results': projects, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
-        result = self.client.projects('user')
+        result = self.api_handler.projects('user')
         assert len(result['results']) == 10

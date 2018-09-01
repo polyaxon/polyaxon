@@ -2,36 +2,31 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-import httpretty
 import json
 import uuid
 
-from faker import Faker
-from unittest import TestCase
+import httpretty
 
-from polyaxon_client.job import JobClient
+from polyaxon_client.api.base import BaseApiHandler
+from polyaxon_client.api.job import JobApi
 from polyaxon_client.schemas import JobConfig, JobStatusConfig
+from tests.test_api.utils import TestBaseApi
 
-faker = Faker()
 
+class TestJobApi(TestBaseApi):
 
-class TestJobClient(TestCase):
     def setUp(self):
-        self.client = JobClient(host='localhost',
-                                http_port=8000,
-                                ws_port=1337,
-                                version='v1',
-                                token=faker.uuid4(),
-                                reraise=True)
+        super(TestJobApi, self).setUp()
+        self.api_handler = JobApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_get_job(self):
         job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -40,7 +35,7 @@ class TestJobClient(TestCase):
             body=json.dumps(job),
             content_type='application/json',
             status=200)
-        result = self.client.get_job('username', 'project_name', 1)
+        result = self.api_handler.get_job('username', 'project_name', 1)
         assert job == result.to_dict()
 
     @httpretty.activate
@@ -48,9 +43,9 @@ class TestJobClient(TestCase):
         job = JobConfig(config={})
         httpretty.register_uri(
             httpretty.PATCH,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -58,23 +53,23 @@ class TestJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_job('username', 'project_name', 1, {'name': 'new'})
+        result = self.api_handler.update_job('username', 'project_name', 1, {'name': 'new'})
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
     def test_delete_job(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
                 1),
             content_type='application/json',
             status=204)
-        result = self.client.delete_job('username', 'project_name', 1)
+        result = self.api_handler.delete_job('username', 'project_name', 1)
         assert result.status_code == 204
 
     @httpretty.activate
@@ -86,9 +81,9 @@ class TestJobClient(TestCase):
                               status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -97,7 +92,7 @@ class TestJobClient(TestCase):
             body=json.dumps({'results': [job], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        response = self.client.get_statuses('username', 'project_name', 1)
+        response = self.api_handler.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
 
     @httpretty.activate
@@ -105,9 +100,9 @@ class TestJobClient(TestCase):
         job = JobConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -116,7 +111,7 @@ class TestJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.restart('username', 'project_name', 1)
+        result = self.api_handler.restart('username', 'project_name', 1)
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
@@ -125,9 +120,9 @@ class TestJobClient(TestCase):
         config = {'config': {'logging': {'level': 'error'}}}
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -136,7 +131,7 @@ class TestJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.resume('username', 'project_name', 1, config, update_code=True)
+        result = self.api_handler.resume('username', 'project_name', 1, config, update_code=True)
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
@@ -144,9 +139,9 @@ class TestJobClient(TestCase):
         job = JobConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -155,7 +150,7 @@ class TestJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.resume('username', 'project_name', 1)
+        result = self.api_handler.resume('username', 'project_name', 1)
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
@@ -164,9 +159,9 @@ class TestJobClient(TestCase):
         config = {'config': {'logging': {'level': 'error'}}}
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -175,7 +170,7 @@ class TestJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.resume('username', 'project_name', 1, config)
+        result = self.api_handler.resume('username', 'project_name', 1, config)
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
@@ -183,9 +178,9 @@ class TestJobClient(TestCase):
         job = JobConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -194,7 +189,7 @@ class TestJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.copy('username', 'project_name', 1)
+        result = self.api_handler.copy('username', 'project_name', 1)
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
@@ -203,9 +198,9 @@ class TestJobClient(TestCase):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -214,16 +209,16 @@ class TestJobClient(TestCase):
             body=json.dumps(job.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.copy('username', 'project_name', 1, config)
+        result = self.api_handler.copy('username', 'project_name', 1, config)
         assert result.to_dict() == job.to_dict()
 
     @httpretty.activate
     def test_stop_job(self):
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -231,16 +226,16 @@ class TestJobClient(TestCase):
                 'stop'),
             content_type='application/json',
             status=200)
-        result = self.client.stop('username', 'project_name', 1)
+        result = self.api_handler.stop('username', 'project_name', 1)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_job_logs(self):
         httpretty.register_uri(
             httpretty.GET,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -251,16 +246,16 @@ class TestJobClient(TestCase):
             content_type='text/plain',
             status=200)
 
-        response = self.client.logs('username', 'project_name', 1, stream=False)
+        response = self.api_handler.logs('username', 'project_name', 1, stream=False)
         assert response.content.decode() == 'some text'
 
     @httpretty.activate
     def test_bookmark_job(self):
         httpretty.register_uri(
             httpretty.POST,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -268,16 +263,16 @@ class TestJobClient(TestCase):
                 'bookmark'),
             content_type='application/json',
             status=200)
-        result = self.client.bookmark('username', 'project_name', 1)
+        result = self.api_handler.bookmark('username', 'project_name', 1)
         assert result.status_code == 200
 
     @httpretty.activate
     def test_unbookmark_job(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            JobClient._build_url(
-                self.client.base_url,
-                JobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_handler.base_url,
+                '/',
                 'username',
                 'project_name',
                 'jobs',
@@ -285,5 +280,5 @@ class TestJobClient(TestCase):
                 'unbookmark'),
             content_type='application/json',
             status=200)
-        result = self.client.unbookmark('username', 'project_name', 1)
+        result = self.api_handler.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200

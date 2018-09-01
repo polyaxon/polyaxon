@@ -1,41 +1,35 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import httpretty
 import json
 import uuid
 
-from faker import Faker
-from unittest import TestCase
+import httpretty
 
-from polyaxon_client.auth import AuthClient
+from polyaxon_client.api.auth import AuthApi
+from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
+from tests.test_api.utils import TestBaseApi
 
-faker = Faker()
 
-
-class TestAuthClient(TestCase):
+class TestAuthApi(TestBaseApi):
 
     def setUp(self):
-        self.client = AuthClient(host='localhost',
-                                 http_port=8000,
-                                 ws_port=1337,
-                                 version='v1',
-                                 token=faker.uuid4(),
-                                 reraise=True)
+        super(TestAuthApi, self).setUp()
+        self.api_handler = AuthApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_get_user(self):
         user = UserConfig('user', 'user@test.com').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            AuthClient._build_url(
-                self.client.base_url,
-                AuthClient.ENDPOINT),
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/users'),
             body=json.dumps(user),
             content_type='application/json', status=200)
 
-        user_result = self.client.get_user('token_value')
+        user_result = self.api_handler.get_user('token_value')
         assert user == user_result.to_dict()
 
     @httpretty.activate
@@ -43,13 +37,13 @@ class TestAuthClient(TestCase):
         token = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,
-            AuthClient._build_url(
-                self.client.base_url,
-                AuthClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/users',
                 'token'
             ),
             body=json.dumps({'token': token}),
             content_type='application/json', status=200)
 
         credentials = CredentialsConfig('user', 'password')
-        assert token == self.client.login(credentials=credentials)
+        assert token == self.api_handler.login(credentials=credentials)

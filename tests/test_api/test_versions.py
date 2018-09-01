@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import httpretty
 import json
 
-from faker import Faker
-from unittest import TestCase
+import httpretty
 
+from polyaxon_client.api.base import BaseApiHandler
+from polyaxon_client.api.version import VersionApi
 from polyaxon_client.schemas import (
     ChartVersionConfig,
     CliVersionConfig,
@@ -14,32 +14,27 @@ from polyaxon_client.schemas import (
     LogHandlerConfig,
     PlatformVersionConfig
 )
-from polyaxon_client.version import VersionClient
-
-faker = Faker()
+from tests.test_api.utils import TestBaseApi
 
 
-class TestVersionClient(TestCase):
+class TestVersionApi(TestBaseApi):
+
     def setUp(self):
-        self.client = VersionClient(host='localhost',
-                                    http_port=8000,
-                                    ws_port=1337,
-                                    version='v1',
-                                    token=faker.uuid4(),
-                                    reraise=True)
+        super(TestVersionApi, self).setUp()
+        self.api_handler = VersionApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_get_cli_version(self):
         obj = CliVersionConfig(latest_version='1.0', min_version='0.5').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            VersionClient._build_url(
-                self.client.base_url,
-                VersionClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/versions/',
                 'cli'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
-        result = self.client.get_cli_version()
+        result = self.api_handler.get_cli_version()
         assert obj == result.to_dict()
 
     @httpretty.activate
@@ -47,13 +42,13 @@ class TestVersionClient(TestCase):
         obj = PlatformVersionConfig(latest_version='1.0', min_version='0.5').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            VersionClient._build_url(
-                self.client.base_url,
-                VersionClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/versions/',
                 'platform'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
-        result = self.client.get_platform_version()
+        result = self.api_handler.get_platform_version()
         assert obj == result.to_dict()
 
     @httpretty.activate
@@ -61,13 +56,13 @@ class TestVersionClient(TestCase):
         obj = LibVersionConfig(latest_version='1.0', min_version='0.5').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            VersionClient._build_url(
-                self.client.base_url,
-                VersionClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/versions/',
                 'lib'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
-        result = self.client.get_lib_version()
+        result = self.api_handler.get_lib_version()
         assert obj == result.to_dict()
 
     @httpretty.activate
@@ -75,13 +70,13 @@ class TestVersionClient(TestCase):
         obj = ChartVersionConfig(version='1.0').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            VersionClient._build_url(
-                self.client.base_url,
-                VersionClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/versions/',
                 'chart'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
-        result = self.client.get_chart_version()
+        result = self.api_handler.get_chart_version()
         assert obj == result.to_dict()
 
     @httpretty.activate
@@ -99,10 +94,10 @@ class TestVersionClient(TestCase):
         ).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            VersionClient._build_url(
-                self.client.base_url,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
                 '/log_handler'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
-        result = self.client.get_log_handler()
+        result = self.api_handler.get_log_handler()
         assert obj == result.to_dict()

@@ -20,6 +20,3 @@ class TestBaseApi(TestCase):
                                     reraise=True,
                                     use_https=False)
         self.transport = Transport()
-
-
-del TestBaseApi

@@ -2,27 +2,22 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-import httpretty
 import json
 import uuid
 
-from faker import Faker
-from unittest import TestCase
+import httpretty
 
-from polyaxon_client.experiment_job import ExperimentJobClient
+from polyaxon_client.api.base import BaseApiHandler
+from polyaxon_client.api.experiment_job import ExperimentJobApi
 from polyaxon_client.schemas import ExperimentJobConfig, ExperimentJobStatusConfig
+from tests.test_api.utils import TestBaseApi
 
-faker = Faker()
 
+class TestExperimentJobClient(TestBaseApi):
 
-class TestExperimentJobClient(TestCase):
     def setUp(self):
-        self.client = ExperimentJobClient(host='localhost',
-                                          http_port=8000,
-                                          ws_port=1337,
-                                          version='v1',
-                                          token=faker.uuid4(),
-                                          reraise=True)
+        super(TestExperimentJobClient, self).setUp()
+        self.api_handler = ExperimentJobApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
     def test_get_job(self):
@@ -33,9 +28,9 @@ class TestExperimentJobClient(TestCase):
                                   definition={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentJobClient._build_url(
-                self.client.base_url,
-                ExperimentJobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -45,7 +40,7 @@ class TestExperimentJobClient(TestCase):
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
-        result = self.client.get_job('username', 'project_name', 1, 'uuid')
+        result = self.api_handler.get_job('username', 'project_name', 1, 'uuid')
         assert obj == result.to_dict()
 
     @httpretty.activate
@@ -57,9 +52,9 @@ class TestExperimentJobClient(TestCase):
                                         status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            ExperimentJobClient._build_url(
-                self.client.base_url,
-                ExperimentJobClient.ENDPOINT,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
                 'username',
                 'project_name',
                 'experiments',
@@ -70,5 +65,5 @@ class TestExperimentJobClient(TestCase):
             body=json.dumps({'results': [obj], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        response = self.client.get_statuses('username', 'project_name', 1, 1)
+        response = self.api_handler.get_statuses('username', 'project_name', 1, 1)
         assert len(response['results']) == 1
