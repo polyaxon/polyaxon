@@ -1,59 +1,79 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.auth import AuthClient
-from polyaxon_client.bookmark import BookmarkClient
-from polyaxon_client.build_job import BuildJobClient
-from polyaxon_client.cluster import ClusterClient
-from polyaxon_client.experiment import ExperimentClient
-from polyaxon_client.experiment_group import ExperimentGroupClient
-from polyaxon_client.experiment_job import ExperimentJobClient
-from polyaxon_client.job import JobClient
-from polyaxon_client.project import ProjectClient
-from polyaxon_client.user import UserClient
-from polyaxon_client.version import VersionClient
+from polyaxon_client.api.auth import AuthApi
+from polyaxon_client.api.bookmark import BookmarkApi
+from polyaxon_client.api.build_job import BuildJobApi
+from polyaxon_client.api.cluster import ClusterApi
+from polyaxon_client.api.experiment import ExperimentApi
+from polyaxon_client.api.experiment_group import ExperimentGroupApi
+from polyaxon_client.api.experiment_job import ExperimentJobApi
+from polyaxon_client.api.job import JobApi
+from polyaxon_client.api_config import ApiConfig
+from polyaxon_client.api.project import ProjectApi
+from polyaxon_client.api.user import UserApi
+from polyaxon_client.api.version import VersionApi
+
+from polyaxon_client.transport.http_transport import Transport
+
+DEFAULT_HTTP_PORT = 80
+DEFAULT_HTTPS_PORT = 443
 
 
 class PolyaxonClient(object):
-    def __init__(self, host, token, http_port=80, ws_port=80, use_https=False):
+    def __init__(self,
+                 host,
+                 token,
+                 http_port=None,
+                 ws_port=None,
+                 use_https=False,
+                 authentication_type='token',
+                 version='v1',
+                 reraise=False):
         self._updated = False
         self._host = host
-        self._http_port = http_port
-        self._ws_port = ws_port
+        self._http_port = http_port or (DEFAULT_HTTPS_PORT
+                                        if self._use_https
+                                        else DEFAULT_HTTP_PORT)
+        self._ws_port = ws_port or (DEFAULT_HTTPS_PORT
+                                    if self._use_https
+                                    else DEFAULT_HTTP_PORT)
         self._use_https = use_https
         self._token = token
-        self.params = dict(
-            host=self.host,
-            http_port=self.http_port,
-            ws_port=self.ws_port,
-            token=self.token,
-            use_https=self.use_https,
-            reraise=True)
+        self._authentication_type = authentication_type
+        self._version = version
+        self._reraise = reraise
 
-        self._auth_client = None
-        self._cluster_client = None
-        self._version_client = None
-        self._project_client = None
-        self._experiment_group_client = None
-        self._experiment_client = None
-        self._experiment_job_client = None
-        self._job_client = None
-        self._build_job_client = None
-        self._user_client = None
-        self._bookmark_client = None
+        self._transport = None
+        self._api_config = None
+
+        self._auth_api = None
+        self._cluster_api = None
+        self._version_api = None
+        self._project_api = None
+        self._experiment_group_api = None
+        self._experiment_api = None
+        self._experiment_job_api = None
+        self._job_api = None
+        self._build_job_api = None
+        self._user_api = None
+        self._bookmark_api = None
 
     def reset(self):
-        self._auth_client = None
-        self._cluster_client = None
-        self._version_client = None
-        self._project_client = None
-        self._experiment_group_client = None
-        self._experiment_client = None
-        self._experiment_job_client = None
-        self._job_client = None
-        self._build_job_client = None
-        self._user_client = None
-        self._bookmark_client = None
+        self._transport = None
+        self._api_config = None
+
+        self._auth_api = None
+        self._cluster_api = None
+        self._version_api = None
+        self._project_api = None
+        self._experiment_group_api = None
+        self._experiment_api = None
+        self._experiment_job_api = None
+        self._job_api = None
+        self._build_job_api = None
+        self._user_api = None
+        self._bookmark_api = None
 
     @property
     def host(self):
@@ -75,6 +95,18 @@ class PolyaxonClient(object):
     def token(self):
         return self._token
 
+    @property
+    def authentication_type(self):
+        return self._authentication_type
+
+    @property
+    def version(self):
+        return self._version
+
+    @property
+    def reraise(self):
+        return self._reraise
+
     def set_host(self, host):
         self._host = host
         self.reset()
@@ -95,68 +127,101 @@ class PolyaxonClient(object):
         self._token = token
         self.reset()
 
+    def authentication_type(self, authentication_type):
+        self._authentication_type = authentication_type
+        self.reset()
+
+    def version(self, version):
+        self._version = version
+        self.reset()
+
+    def set_reraise(self, reraise):
+        self._reraise = reraise
+        self.reset()
+
+    @property
+    def transport(self):
+        if not self._transport:
+            self._transport = Transport(token=self.token,
+                                        authentication_type=self.authentication_type,
+                                        reraise=self.reraise)
+        return self._transport
+
+    @property
+    def api_config(self):
+        if self._api_config:
+            self._api_config = ApiConfig(host=self.host,
+                                         http_port=self.http_port,
+                                         ws_port=self.ws_port,
+                                         token=self.token,
+                                         authentication_type=self.authentication_type,
+                                         version=self.version,
+                                         use_https=self.use_https,
+                                         reraise=self.reraise)
+        return self._api_config
+
     @property
     def auth(self):
-        if not self._auth_client:
-            self._auth_client = AuthClient(**self.params)
-        return self._auth_client
+        if not self._auth_api:
+            self._auth_api = AuthApi(**self.params)
+        return self._auth_api
 
     @property
     def cluster(self):
-        if not self._cluster_client:
-            self._cluster_client = ClusterClient(**self.params)
-        return self._cluster_client
+        if not self._cluster_api:
+            self._cluster_api = ClusterApi(**self.params)
+        return self._cluster_api
 
     @property
     def version(self):
-        if not self._version_client:
-            self._version_client = VersionClient(**self.params)
-        return self._version_client
+        if not self._version_api:
+            self._version_api = VersionApi(**self.params)
+        return self._version_api
 
     @property
     def project(self):
-        if not self._project_client:
-            self._project_client = ProjectClient(**self.params)
-        return self._project_client
+        if not self._project_api:
+            self._project_api = ProjectApi(**self.params)
+        return self._project_api
 
     @property
     def experiment_group(self):
-        if not self._experiment_group_client:
-            self._experiment_group_client = ExperimentGroupClient(**self.params)
-        return self._experiment_group_client
+        if not self._experiment_group_api:
+            self._experiment_group_api = ExperimentGroupApi(**self.params)
+        return self._experiment_group_api
 
     @property
     def experiment(self):
-        if not self._experiment_client:
-            self._experiment_client = ExperimentClient(**self.params)
-        return self._experiment_client
+        if not self._experiment_api:
+            self._experiment_api = ExperimentApi(**self.params)
+        return self._experiment_api
 
     @property
     def experiment_job(self):
-        if not self._experiment_job_client:
-            self._experiment_job_client = ExperimentJobClient(**self.params)
-        return self._experiment_job_client
+        if not self._experiment_job_api:
+            self._experiment_job_api = ExperimentJobApi(**self.params)
+        return self._experiment_job_api
 
     @property
     def job(self):
-        if not self._job_client:
-            self._job_client = JobClient(**self.params)
-        return self._job_client
+        if not self._job_api:
+            self._job_api = JobApi(**self.params)
+        return self._job_api
 
     @property
     def build_job(self):
-        if not self._build_job_client:
-            self._build_job_client = BuildJobClient(**self.params)
-        return self._build_job_client
+        if not self._build_job_api:
+            self._build_job_api = BuildJobApi(**self.params)
+        return self._build_job_api
 
     @property
     def user(self):
-        if not self._user_client:
-            self._user_client = UserClient(**self.params)
-        return self._user_client
+        if not self._user_api:
+            self._user_api = UserApi(**self.params)
+        return self._user_api
 
     @property
     def bookmark(self):
-        if not self._bookmark_client:
-            self._bookmark_client = BookmarkClient(**self.params)
-        return self._bookmark_client
+        if not self._bookmark_api:
+            self._bookmark_api = BookmarkApi(**self.params)
+        return self._bookmark_api
