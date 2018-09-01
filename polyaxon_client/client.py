@@ -14,7 +14,7 @@ from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.api.user import UserApi
 from polyaxon_client.api.version import VersionApi
 
-from polyaxon_client.transport.http_transport import Transport
+from polyaxon_client.transport import Transport
 
 DEFAULT_HTTP_PORT = 80
 DEFAULT_HTTPS_PORT = 443
@@ -28,20 +28,20 @@ class PolyaxonClient(object):
                  ws_port=None,
                  use_https=False,
                  authentication_type='token',
-                 version='v1',
+                 api_version='v1',
                  reraise=False):
         self._updated = False
         self._host = host
         self._http_port = http_port or (DEFAULT_HTTPS_PORT
-                                        if self._use_https
+                                        if use_https
                                         else DEFAULT_HTTP_PORT)
         self._ws_port = ws_port or (DEFAULT_HTTPS_PORT
-                                    if self._use_https
+                                    if use_https
                                     else DEFAULT_HTTP_PORT)
         self._use_https = use_https
         self._token = token
         self._authentication_type = authentication_type
-        self._version = version
+        self._api_version = api_version
         self._reraise = reraise
 
         self._transport = None
@@ -100,8 +100,8 @@ class PolyaxonClient(object):
         return self._authentication_type
 
     @property
-    def version(self):
-        return self._version
+    def api_version(self):
+        return self._api_version
 
     @property
     def reraise(self):
@@ -149,13 +149,13 @@ class PolyaxonClient(object):
 
     @property
     def api_config(self):
-        if self._api_config:
+        if not self._api_config:
             self._api_config = ApiConfig(host=self.host,
                                          http_port=self.http_port,
                                          ws_port=self.ws_port,
                                          token=self.token,
                                          authentication_type=self.authentication_type,
-                                         version=self.version,
+                                         version=self.api_version,
                                          use_https=self.use_https,
                                          reraise=self.reraise)
         return self._api_config
@@ -163,65 +163,76 @@ class PolyaxonClient(object):
     @property
     def auth(self):
         if not self._auth_api:
-            self._auth_api = AuthApi(**self.params)
+            self._auth_api = AuthApi(transport=self.transport,
+                                     config=self.api_config)
         return self._auth_api
 
     @property
     def cluster(self):
         if not self._cluster_api:
-            self._cluster_api = ClusterApi(**self.params)
+            self._cluster_api = ClusterApi(transport=self.transport,
+                                           config=self.api_config)
         return self._cluster_api
 
     @property
     def version(self):
         if not self._version_api:
-            self._version_api = VersionApi(**self.params)
+            self._version_api = VersionApi(transport=self.transport,
+                                           config=self.api_config)
         return self._version_api
 
     @property
     def project(self):
         if not self._project_api:
-            self._project_api = ProjectApi(**self.params)
+            self._project_api = ProjectApi(transport=self.transport,
+                                           config=self.api_config)
         return self._project_api
 
     @property
     def experiment_group(self):
         if not self._experiment_group_api:
-            self._experiment_group_api = ExperimentGroupApi(**self.params)
+            self._experiment_group_api = ExperimentGroupApi(transport=self.transport,
+                                                            config=self.api_config)
         return self._experiment_group_api
 
     @property
     def experiment(self):
         if not self._experiment_api:
-            self._experiment_api = ExperimentApi(**self.params)
+            self._experiment_api = ExperimentApi(transport=self.transport,
+                                                 config=self.api_config)
         return self._experiment_api
 
     @property
     def experiment_job(self):
         if not self._experiment_job_api:
-            self._experiment_job_api = ExperimentJobApi(**self.params)
+            self._experiment_job_api = ExperimentJobApi(transport=self.transport,
+                                                        config=self.api_config)
         return self._experiment_job_api
 
     @property
     def job(self):
         if not self._job_api:
-            self._job_api = JobApi(**self.params)
+            self._job_api = JobApi(transport=self.transport,
+                                   config=self.api_config)
         return self._job_api
 
     @property
     def build_job(self):
         if not self._build_job_api:
-            self._build_job_api = BuildJobApi(**self.params)
+            self._build_job_api = BuildJobApi(transport=self.transport,
+                                              config=self.api_config)
         return self._build_job_api
 
     @property
     def user(self):
         if not self._user_api:
-            self._user_api = UserApi(**self.params)
+            self._user_api = UserApi(transport=self.transport,
+                                     config=self.api_config)
         return self._user_api
 
     @property
     def bookmark(self):
         if not self._bookmark_api:
-            self._bookmark_api = BookmarkApi(**self.params)
+            self._bookmark_api = BookmarkApi(transport=self.transport,
+                                             config=self.api_config)
         return self._bookmark_api
