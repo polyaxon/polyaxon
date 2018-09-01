@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import mock
-from clint.textui.progress import Bar
-
 from unittest import TestCase
+
+import mock
+
+from clint.textui.progress import Bar
 
 from polyaxon_client.transport import Transport
 

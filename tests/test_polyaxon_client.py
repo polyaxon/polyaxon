@@ -6,8 +6,6 @@ from unittest import TestCase
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.bookmark import BookmarkApi
 from polyaxon_client.api.build_job import BuildJobApi
-from polyaxon_client.api_config import ApiConfig
-from polyaxon_client.client import PolyaxonClient
 from polyaxon_client.api.cluster import ClusterApi
 from polyaxon_client.api.experiment import ExperimentApi
 from polyaxon_client.api.experiment_group import ExperimentGroupApi
@@ -16,6 +14,8 @@ from polyaxon_client.api.job import JobApi
 from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.api.user import UserApi
 from polyaxon_client.api.version import VersionApi
+from polyaxon_client.api_config import ApiConfig
+from polyaxon_client.client import PolyaxonClient
 from polyaxon_client.transport import Transport
 
 

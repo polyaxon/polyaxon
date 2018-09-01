@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import httpretty
 import json
 
-import httpretty
+from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.version import VersionApi
@@ -14,7 +15,6 @@ from polyaxon_client.schemas import (
     LogHandlerConfig,
     PlatformVersionConfig
 )
-from tests.test_api.utils import TestBaseApi
 
 
 class TestVersionApi(TestBaseApi):

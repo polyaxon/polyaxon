@@ -2,15 +2,15 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
+import httpretty
 import json
 import uuid
 
-import httpretty
+from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment_job import ExperimentJobApi
 from polyaxon_client.schemas import ExperimentJobConfig, ExperimentJobStatusConfig
-from tests.test_api.utils import TestBaseApi
 
 
 class TestExperimentJobClient(TestBaseApi):

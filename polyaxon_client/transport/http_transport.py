@@ -8,7 +8,6 @@ import tarfile
 
 from clint.textui import progress
 from clint.textui.progress import Bar
-
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError

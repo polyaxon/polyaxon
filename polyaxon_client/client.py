@@ -9,11 +9,10 @@ from polyaxon_client.api.experiment import ExperimentApi
 from polyaxon_client.api.experiment_group import ExperimentGroupApi
 from polyaxon_client.api.experiment_job import ExperimentJobApi
 from polyaxon_client.api.job import JobApi
-from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.api.user import UserApi
 from polyaxon_client.api.version import VersionApi
-
+from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport import Transport
 
 DEFAULT_HTTP_PORT = 80
@@ -127,12 +126,12 @@ class PolyaxonClient(object):
         self._token = token
         self.reset()
 
-    def authentication_type(self, authentication_type):
+    def set_authentication_type(self, authentication_type):
         self._authentication_type = authentication_type
         self.reset()
 
-    def version(self, version):
-        self._version = version
+    def set_version_api(self, version_api):
+        self._api_version = version_api
         self.reset()
 
     def set_reraise(self, reraise):
