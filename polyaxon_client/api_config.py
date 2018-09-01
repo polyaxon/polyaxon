@@ -6,8 +6,6 @@ class ApiConfig(object):
     PAGE_SIZE = 20
     BASE_URL = "{}/api/{}"
     BASE_WS_URL = "{}/ws/{}"
-    MAX_UPLOAD_SIZE = 1024 * 1024 * 150
-    TIME_OUT = 25
 
     def __init__(self,
                  host,

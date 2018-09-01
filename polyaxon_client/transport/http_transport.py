@@ -5,26 +5,21 @@ import json
 import os
 import requests
 import tarfile
-import websocket
 
 from clint.textui import progress
 from clint.textui.progress import Bar
 
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
-from polyaxon_client.exceptions import ERRORS_MAPPING, AuthenticationError, PolyaxonShouldExitError
+from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
 from polyaxon_client.logger import logger
 from polyaxon_client.schemas.utils import to_list
 
 
-class Transport(object):
+class HttpTransportMixin(object):
     """HTTP operations transport."""
     TIME_OUT = 25
-
-    def __init__(self, token=None, authentication_type='token', reraise=False):
-        self.authentication_type = authentication_type
-        self.token = token
-        self.reraise = reraise
+    MAX_UPLOAD_SIZE = 1024 * 1024 * 150
 
     @staticmethod
     def create_progress_callback(encoder):
@@ -46,14 +41,6 @@ class Transport(object):
                 return "%3.1f%s%s" % (num, unit, suffix)
             num /= 1024.0
         return "%.1f%s%s" % (num, 'Yi', suffix)
-
-    def _get_headers(self, headers=None):
-        request_headers = headers or {}
-        # Auth headers if access_token is present
-        if self.token:
-            request_headers.update({"Authorization": "{} {}".format(self.authentication_type,
-                                                                    self.token)})
-        return request_headers
 
     def request(self,
                 method,
@@ -220,16 +207,6 @@ class Transport(object):
                         message=response.text,
                         status_code=response.status_code)
 
-    def handle_exception(self, e, log_message=None):
-        logger.info("%s: %s", log_message, e.message)
-
-        if self.reraise:
-            raise e
-
-        if isinstance(e, AuthenticationError):
-            # exit now since there is nothing we can do without login
-            raise e
-
     def get(self,
             url,
             params=None,
@@ -319,26 +296,3 @@ class Transport(object):
                             json=json_data,
                             timeout=timeout,
                             headers=headers)
-
-    def socket(self, url, message_handler, headers=None):
-        wes = websocket.WebSocketApp(
-            url,
-            on_message=lambda ws, message: self._on_message(message_handler, message),
-            on_error=self._on_error,
-            on_close=self._on_close,
-            header=self._get_headers(headers)
-        )
-        wes.run_forever()
-
-    def _on_message(self, message_handler, message):
-        message_handler(json.loads(message))
-
-    def _on_error(self, ws, error):
-        if isinstance(error, (KeyboardInterrupt, SystemExit)):
-            logger.info('Quitting... The session will be running in the background.')
-        else:
-            logger.debug('Termination cause: %s', error)
-            logger.debug('Session disconnected.')
-
-    def _on_close(self, ws):
-        logger.info('Session ended')
