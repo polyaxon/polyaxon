@@ -2,10 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+
 import os
 import requests
 import tarfile
-
 from clint.textui import progress
 from clint.textui.progress import Bar
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
@@ -15,10 +15,17 @@ from polyaxon_client.logger import logger
 from polyaxon_client.schemas.utils import to_list
 
 
-class HttpTransportMixin(object):
+class HttpTransport(object):
     """HTTP operations transport."""
     TIME_OUT = 25
     MAX_UPLOAD_SIZE = 1024 * 1024 * 150
+
+    def __init__(self):
+        self._session = requests.Session()
+
+    @property
+    def session(self):
+        return self._session
 
     @staticmethod
     def create_progress_callback(encoder):
@@ -74,14 +81,14 @@ class HttpTransportMixin(object):
         request_headers = self._get_headers(headers=headers)
 
         try:
-            response = requests.request(method,
-                                        url,
-                                        params=params,
-                                        data=data,
-                                        json=json,
-                                        headers=request_headers,
-                                        files=files,
-                                        timeout=timeout)
+            response = self._session.request(method,
+                                             url,
+                                             params=params,
+                                             data=data,
+                                             json=json,
+                                             headers=request_headers,
+                                             files=files,
+                                             timeout=timeout)
         except (requests.exceptions.RequestException, requests.exceptions.HTTPError) as exception:
             try:
                 logger.debug("Exception: %s", exception, exc_info=True)
@@ -136,10 +143,10 @@ class HttpTransportMixin(object):
         request_headers = self._get_headers(headers=headers)
 
         try:
-            response = requests.get(url,
-                                    headers=request_headers,
-                                    timeout=timeout,
-                                    stream=True)
+            response = self._session.get(url,
+                                         headers=request_headers,
+                                         timeout=timeout,
+                                         stream=True)
             self.check_response_status(response, url)
             with open(filename, 'wb') as f:
                 # chunk mode response doesn't have content-length so we are
