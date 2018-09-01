@@ -101,7 +101,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -121,7 +121,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -140,7 +140,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -160,7 +160,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -179,7 +179,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -199,7 +199,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -217,7 +217,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -234,7 +234,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -254,7 +254,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',
@@ -271,7 +271,7 @@ class TestJobApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.DELETE,
             BaseApiHandler._build_url(
-                self.api_handler.base_url,
+                self.api_config.base_url,
                 '/',
                 'username',
                 'project_name',

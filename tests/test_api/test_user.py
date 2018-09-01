@@ -20,7 +20,7 @@ class TestUserApi(TestBaseApi):
             httpretty.POST,
             BaseApiHandler._build_url(
                 self.api_config.base_url,
-                '/user',
+                '/users',
                 'activate',
                 'test-username'
             ),
@@ -36,7 +36,7 @@ class TestUserApi(TestBaseApi):
             httpretty.DELETE,
             BaseApiHandler._build_url(
                 self.api_config.base_url,
-                '/user',
+                '/users',
                 'delete',
                 'test-username'
             ),
