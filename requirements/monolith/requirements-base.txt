@@ -10,4 +10,4 @@ sanic==0.7.0
 scikit-learn==0.19.2
 scipy==1.1.0
 uWSGI==2.0.17.1
-websockets==5.0.1
+websockets==6.0
