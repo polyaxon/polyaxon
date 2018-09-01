@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.base import BaseClient
+from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import (
     AuthenticationError,
     BadRequestError,
@@ -12,13 +12,15 @@ from polyaxon_client.logger import logger
 from polyaxon_client.schemas import DatasetConfig
 
 
-class DatasetClient(BaseClient):
-    """Client to get datasets from the server"""
+class DatasetApi(BaseApiHandler):
+    """
+    Api handler to get datasets from the server.
+    """
     ENDPOINT = "/datasets"
 
     def get_datasets(self):
         try:
-            response = self.get(self._get_http_url())
+            response = self.transport.get(self._get_http_url())
             datasets_dict = response.json()
             return [DatasetConfig.from_dict(dataset)
                     for dataset in datasets_dict.get("datasets", [])]
@@ -33,7 +35,7 @@ class DatasetClient(BaseClient):
         request_url = self._build_url(username, datasetname)
         request_url = self._get_http_url(request_url)
         try:
-            response = self.get(request_url)
+            response = self.transport.get(request_url)
             return DatasetConfig.from_dict(response.json())
         except NotFoundError:
             return None
@@ -46,7 +48,7 @@ class DatasetClient(BaseClient):
         try:
             post_body = data.to_dict()
             post_body["resumable"] = True
-            response = self.post(self._get_http_url(), json_data=post_body)
+            response = self.transport.post(self._get_http_url(), json_data=post_body)
             return response.json()
         except BadRequestError as e:
             logger.error('Could not create data %s', e.message)
@@ -59,7 +61,7 @@ class DatasetClient(BaseClient):
         request_url = self._get_http_url(data_uuid)
         try:
             # data delete is a synchronous process, it can take a long time
-            self.delete(request_url, timeout=60)
+            self.transport.delete(request_url, timeout=60)
             return True
         except PolyaxonException as e:
             logger.error('Could not create data %s', e.message)

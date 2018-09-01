@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.base import BaseClient
+from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.schemas import JobConfig, JobStatusConfig
 
 
-class JobClient(BaseClient):
-    """Client to get jobs from the server"""
+class JobApi(BaseApiHandler):
+    """
+    Api handler to get jobs from the server.
+    """
     ENDPOINT = "/"
 
     def get_job(self, username, project_name, job_id):
@@ -17,10 +19,10 @@ class JobClient(BaseClient):
                                       'jobs',
                                       job_id)
         try:
-            response = self.get(request_url)
+            response = self.transport.get(request_url)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving job.')
             return None
 
     def update_job(self, username, project_name, job_id, patch_dict):
@@ -30,10 +32,10 @@ class JobClient(BaseClient):
                                       'jobs',
                                       job_id)
         try:
-            response = self.patch(request_url, json_data=patch_dict)
+            response = self.transport.patch(request_url, json_data=patch_dict)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating job.')
+            self.transport.handle_exception(e=e, log_message='Error while updating job.')
             return None
 
     def delete_job(self, username, project_name, job_id):
@@ -43,9 +45,9 @@ class JobClient(BaseClient):
                                       'jobs',
                                       job_id)
         try:
-            return self.delete(request_url)
+            return self.transport.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting job.')
+            self.transport.handle_exception(e=e, log_message='Error while deleting job.')
             return None
 
     def get_statuses(self, username, project_name, job_id, page=1):
@@ -56,10 +58,10 @@ class JobClient(BaseClient):
                                       job_id,
                                       'statuses')
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobStatusConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job statuses.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving job statuses.')
             return None
 
     def restart(self, username, project_name, job_id, config=None, update_code=None):
@@ -78,10 +80,10 @@ class JobClient(BaseClient):
             data['update_code'] = update_code
 
         try:
-            response = self.post(request_url, json_data=data)
+            response = self.transport.post(request_url, json_data=data)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while restarting the job.')
+            self.transport.handle_exception(e=e, log_message='Error while restarting the job.')
             return None
 
     def resume(self, username, project_name, job_id, config=None, update_code=None):
@@ -100,10 +102,10 @@ class JobClient(BaseClient):
             data['update_code'] = update_code
 
         try:
-            response = self.post(request_url, json_data=data)
+            response = self.transport.post(request_url, json_data=data)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while resuming the job.')
+            self.transport.handle_exception(e=e, log_message='Error while resuming the job.')
             return None
 
     def copy(self, username, project_name, job_id, config=None, update_code=None):
@@ -122,10 +124,10 @@ class JobClient(BaseClient):
             data['update_code'] = update_code
 
         try:
-            response = self.post(request_url, json_data=data)
+            response = self.transport.post(request_url, json_data=data)
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while copying the job.')
+            self.transport.handle_exception(e=e, log_message='Error while copying the job.')
             return None
 
     def stop(self, username, project_name, job_id):
@@ -136,9 +138,9 @@ class JobClient(BaseClient):
                                       job_id,
                                       'stop')
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping job.')
+            self.transport.handle_exception(e=e, log_message='Error while stopping job.')
             return None
 
     def bookmark(self, username, project_name, job_id):
@@ -149,9 +151,9 @@ class JobClient(BaseClient):
                                       job_id,
                                       'bookmark')
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while bookmarking job.')
+            self.transport.handle_exception(e=e, log_message='Error while bookmarking job.')
             return None
 
     def unbookmark(self, username, project_name, job_id):
@@ -162,9 +164,9 @@ class JobClient(BaseClient):
                                       job_id,
                                       'unbookmark')
         try:
-            return self.delete(request_url)
+            return self.transport.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while unbookmarking job.')
+            self.transport.handle_exception(e=e, log_message='Error while unbookmarking job.')
             return None
 
     def resources(self, username, project_name, job_id, message_handler=None):
@@ -179,7 +181,7 @@ class JobClient(BaseClient):
                                       'jobs',
                                       job_id,
                                       'resources')
-        self.socket(request_url, message_handler=message_handler)
+        self.transport.socket(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
     def logs(self, username, project_name, job_id, stream=True, message_handler=None):
@@ -197,9 +199,9 @@ class JobClient(BaseClient):
                                           'logs')
 
             try:
-                return self.get(request_url)
+                return self.transport.get(request_url)
             except PolyaxonException as e:
-                self.handle_exception(e=e, log_message='Error while retrieving jobs.')
+                self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
                 return []
 
         request_url = self._build_url(self._get_ws_url(),
@@ -208,7 +210,7 @@ class JobClient(BaseClient):
                                       'jobs',
                                       job_id,
                                       'logs')
-        self.socket(request_url, message_handler=message_handler)
+        self.transport.socket(request_url, message_handler=message_handler)
 
     def download_outputs(self, username, project_name, job_id):
         """Downloads outputs for this job to the current dir."""
@@ -220,10 +222,10 @@ class JobClient(BaseClient):
                                       'outputs')
 
         try:
-            response = self.download(
+            response = self.transport.download(
                 request_url,
                 '{}.{}.{}.tar.gz'.format(username, project_name, job_id))
             return response
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while downloading job outputs.')
+            self.transport.handle_exception(e=e, log_message='Error while downloading job outputs.')
             return None

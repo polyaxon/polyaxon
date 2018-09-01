@@ -21,9 +21,10 @@ class Transport(object):
     """HTTP operations transport."""
     TIME_OUT = 25
 
-    def __init__(self, token=None, authentication_type='token'):
+    def __init__(self, token=None, authentication_type='token', reraise=False):
         self.authentication_type = authentication_type
         self.token = token
+        self.reraise = reraise
 
     @staticmethod
     def create_progress_callback(encoder):

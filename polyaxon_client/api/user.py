@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.base import BaseClient
+from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonException
 
 
-class UserClient(BaseClient):
-    """Client to manange users."""
+class UserApi(BaseApiHandler):
+    """
+    Api handler to manage users.
+    """
     ENDPOINT = "/users"
     ENDPOINT_SUPERUSERS = "/superusers"
 
@@ -15,9 +17,9 @@ class UserClient(BaseClient):
         request_url = self._build_url(self._get_http_url(), 'activate', username)
 
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while activating user.')
+            self.transport.handle_exception(e=e, log_message='Error while activating user.')
             return None
 
     def delete_user(self, username):
@@ -25,9 +27,9 @@ class UserClient(BaseClient):
         request_url = self._build_url(self._get_http_url(), 'delete', username)
 
         try:
-            return self.delete(request_url)
+            return self.transport.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting user.')
+            self.transport.handle_exception(e=e, log_message='Error while deleting user.')
             return None
 
     def grant_superuser(self, username):
@@ -37,9 +39,10 @@ class UserClient(BaseClient):
                                       username)
 
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while grating superuser to user.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while grating superuser to user.')
             return None
 
     def revoke_superuser(self, username):
@@ -49,7 +52,8 @@ class UserClient(BaseClient):
                                       username)
 
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while revoking superuser to user.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while revoking superuser to user.')
             return None

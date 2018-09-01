@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.base import BaseClient
+from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.schemas import (
     ExperimentConfig,
@@ -11,18 +11,20 @@ from polyaxon_client.schemas import (
 )
 
 
-class ExperimentClient(BaseClient):
-    """Client to get experiments from the server"""
+class ExperimentApi(BaseApiHandler):
+    """
+    Api handler to get experiments from the server.
+    """
     ENDPOINT = "/"
 
     def list_experiments(self, page=1):
         """This gets all experiments visible to the user from the server."""
         try:
-            response = self.get(self._get_http_url('/experiments'),
-                                params=self.get_page(page=page))
+            response = self.transport.get(self._get_http_url('/experiments'),
+                                          params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiments.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving experiments.')
             return []
 
     def get_experiment(self, username, project_name, experiment_id):
@@ -32,10 +34,10 @@ class ExperimentClient(BaseClient):
                                       'experiments',
                                       experiment_id)
         try:
-            response = self.get(request_url)
+            response = self.transport.get(request_url)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving experiment.')
             return None
 
     def update_experiment(self, username, project_name, experiment_id, patch_dict):
@@ -45,10 +47,10 @@ class ExperimentClient(BaseClient):
                                       'experiments',
                                       experiment_id)
         try:
-            response = self.patch(request_url, json_data=patch_dict)
+            response = self.transport.patch(request_url, json_data=patch_dict)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while updating experiment.')
             return None
 
     def delete_experiment(self, username, project_name, experiment_id):
@@ -58,9 +60,9 @@ class ExperimentClient(BaseClient):
                                       'experiments',
                                       experiment_id)
         try:
-            return self.delete(request_url)
+            return self.transport.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while deleting experiment.')
             return None
 
     def get_statuses(self, username, project_name, experiment_id, page=1):
@@ -71,10 +73,11 @@ class ExperimentClient(BaseClient):
                                       experiment_id,
                                       'statuses')
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentStatusConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment statuses.')
+            self.transport.handle_exception(e=e,
+                                            log_message='Error while retrieving experiment statuses.')
             return None
 
     def get_metrics(self, username, project_name, experiment_id, page=1):
@@ -85,10 +88,11 @@ class ExperimentClient(BaseClient):
                                       experiment_id,
                                       'metrics')
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentMetricConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment status.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving experiment status.')
             return None
 
     def create_metric(self, username, project_name, experiment_id, values):
@@ -99,10 +103,11 @@ class ExperimentClient(BaseClient):
                                       experiment_id,
                                       'metrics')
         try:
-            response = self.post(request_url, data={'values': values})
+            response = self.transport.post(request_url, data={'values': values})
             return ExperimentMetricConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment status.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving experiment status.')
             return None
 
     def list_jobs(self, username, project_name, experiment_id, page=1):
@@ -115,10 +120,10 @@ class ExperimentClient(BaseClient):
                                       'jobs')
 
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentJobConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving jobs.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
             return []
 
     def restart(self, username, project_name, experiment_id, config=None, update_code=None):
@@ -137,10 +142,11 @@ class ExperimentClient(BaseClient):
             data['update_code'] = update_code
 
         try:
-            response = self.post(request_url, json_data=data)
+            response = self.transport.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while restarting the experiment.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while restarting the experiment.')
             return None
 
     def resume(self, username, project_name, experiment_id, config=None, update_code=None):
@@ -159,10 +165,10 @@ class ExperimentClient(BaseClient):
             data['update_code'] = update_code
 
         try:
-            response = self.post(request_url, json_data=data)
+            response = self.transport.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while resuming the experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while resuming the experiment.')
             return None
 
     def copy(self, username, project_name, experiment_id, config=None, update_code=None):
@@ -181,10 +187,10 @@ class ExperimentClient(BaseClient):
             data['update_code'] = update_code
 
         try:
-            response = self.post(request_url, json_data=data)
+            response = self.transport.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while copying the experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while copying the experiment.')
             return None
 
     def stop(self, username, project_name, experiment_id):
@@ -195,9 +201,9 @@ class ExperimentClient(BaseClient):
                                       experiment_id,
                                       'stop')
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while stopping experiment.')
             return None
 
     def resources(self, username, project_name, experiment_id, message_handler=None):
@@ -212,7 +218,7 @@ class ExperimentClient(BaseClient):
                                       'experiments',
                                       experiment_id,
                                       'resources')
-        self.socket(request_url, message_handler=message_handler)
+        self.transport.socket(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
     def logs(self, username, project_name, experiment_id, stream=True, message_handler=None):
@@ -230,9 +236,9 @@ class ExperimentClient(BaseClient):
                                           'logs')
 
             try:
-                return self.get(request_url)
+                return self.transport.get(request_url)
             except PolyaxonException as e:
-                self.handle_exception(e=e, log_message='Error while retrieving jobs.')
+                self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
                 return []
 
         request_url = self._build_url(self._get_ws_url(),
@@ -241,7 +247,7 @@ class ExperimentClient(BaseClient):
                                       'experiments',
                                       experiment_id,
                                       'logs')
-        self.socket(request_url, message_handler=message_handler)
+        self.transport.socket(request_url, message_handler=message_handler)
 
     def start_tensorboard(self, username, project_name, experiment_id, job_config=None):
         request_url = self._build_url(self._get_http_url(),
@@ -254,9 +260,9 @@ class ExperimentClient(BaseClient):
 
         try:
             job_config = {'config': job_config} if job_config else {}
-            return self.post(request_url, json_data=job_config)
+            return self.transport.post(request_url, json_data=job_config)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while starting tensorboard.')
+            self.transport.handle_exception(e=e, log_message='Error while starting tensorboard.')
             return None
 
     def stop_tensorboard(self, username, project_name, experiment_id):
@@ -268,9 +274,9 @@ class ExperimentClient(BaseClient):
                                       'tensorboard',
                                       'stop')
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping tensorboard.')
+            self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
     def bookmark(self, username, project_name, experiment_id):
@@ -281,9 +287,9 @@ class ExperimentClient(BaseClient):
                                       experiment_id,
                                       'bookmark')
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while bookmarking experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while bookmarking experiment.')
             return None
 
     def unbookmark(self, username, project_name, experiment_id):
@@ -294,9 +300,10 @@ class ExperimentClient(BaseClient):
                                       experiment_id,
                                       'unbookmark')
         try:
-            return self.delete(request_url)
+            return self.transport.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while unbookmarking experiment.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while unbookmarking experiment.')
             return None
 
     def download_outputs(self, username, project_name, experiment_id):
@@ -309,10 +316,11 @@ class ExperimentClient(BaseClient):
                                       'outputs')
 
         try:
-            response = self.download(
+            response = self.transport.download(
                 request_url,
                 '{}.{}.{}.tar.gz'.format(username, project_name, experiment_id))
             return response
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while downloading experiment outputs.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while downloading experiment outputs.')
             return None

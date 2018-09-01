@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
-
-from polyaxon_client.base import BaseClient
+from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.schemas import (
     ExperimentConfig,
@@ -12,57 +10,58 @@ from polyaxon_client.schemas import (
     ProjectConfig,
     TensorboardJobConfig
 )
-from polyaxon_client.utils import validate_config
 
 
-class ProjectClient(BaseClient):
-    """Client to get projects from the server"""
+class ProjectApi(BaseApiHandler):
+    """
+    Api handler to get projects from the server.
+    """
     ENDPOINT = "/"
 
     def list_projects(self, username, page=1):
         request_url = self._build_url(self._get_http_url(), username)
         try:
-            response = self.get(request_url, params=self.get_page(page=page))
+            response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ProjectConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving projects.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving projects.')
             return []
 
     def get_project(self, username, project_name):
         request_url = self._build_url(self._get_http_url(), username, project_name)
         try:
-            response = self.get(request_url)
+            response = self.transport.get(request_url)
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving project.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving project.')
             return None
 
     def create_project(self, project_config):
-        project_config = validate_config(config=project_config, config_schema=ProjectConfig)
+        project_config = self.validate_config(config=project_config, config_schema=ProjectConfig)
         try:
-            response = self.post(self._get_http_url('/projects'),
-                                 json_data=project_config.to_dict())
+            response = self.transport.post(self._get_http_url('/projects'),
+                                           json_data=project_config.to_dict())
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while creating project.')
+            self.transport.handle_exception(e=e, log_message='Error while creating project.')
             return None
 
     def update_project(self, username, project_name, patch_dict):
         request_url = self._build_url(self._get_http_url(), username, project_name)
         try:
-            response = self.patch(request_url, json_data=patch_dict)
+            response = self.transport.patch(request_url, json_data=patch_dict)
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating project.')
+            self.transport.handle_exception(e=e, log_message='Error while updating project.')
             return None
 
     def delete_project(self, username, project_name):
         request_url = self._build_url(self._get_http_url(), username, project_name)
         try:
-            response = self.delete(request_url)
+            response = self.transport.delete(request_url)
             return response
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting project.')
+            self.transport.handle_exception(e=e, log_message='Error while deleting project.')
             return None
 
     def upload_repo(self, username, project_name, files, files_size=None, upload_async=True):
@@ -74,13 +73,13 @@ class ProjectClient(BaseClient):
         if upload_async is False:
             json_data = {'async': upload_async}
         try:
-            response = self.upload(request_url,
-                                   files=files,
-                                   files_size=files_size,
-                                   json_data=json_data)
+            response = self.transport.upload(request_url,
+                                             files=files,
+                                             files_size=files_size,
+                                             json_data=json_data)
             return response
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating project repo.')
+            self.transport.handle_exception(e=e, log_message='Error while updating project repo.')
             return None
 
     def download_repo(self, username, project_name):
@@ -89,10 +88,11 @@ class ProjectClient(BaseClient):
             self._get_http_url(), username, project_name, 'repo', 'download')
 
         try:
-            response = self.download(request_url, 'repo.tar.gz')
+            response = self.transport.download(request_url, 'repo.tar.gz')
             return response
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while downloading project repo.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while downloading project repo.')
             return None
 
     def list_experiment_groups(self, username, project_name, query=None, sort=None, page=1):
@@ -106,23 +106,25 @@ class ProjectClient(BaseClient):
                 params['query'] = query
             if sort:
                 params['sort'] = sort
-            response = self.get(request_url, params=params)
+            response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, ExperimentGroupConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiment groups.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving experiment groups.')
             return []
 
     def create_experiment_group(self, username, project_name, experiment_group_config):
-        experiment_group_config = validate_config(config=experiment_group_config,
-                                                  config_schema=ExperimentGroupConfig)
+        experiment_group_config = self.validate_config(config=experiment_group_config,
+                                                       config_schema=ExperimentGroupConfig)
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'groups')
 
         try:
-            response = self.post(request_url, json_data=experiment_group_config.to_dict())
+            response = self.transport.post(request_url, json_data=experiment_group_config.to_dict())
             return ExperimentGroupConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while creating experiment group.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while creating experiment group.')
             return None
 
     def list_experiments(self,
@@ -152,22 +154,22 @@ class ProjectClient(BaseClient):
                 params['query'] = query
             if sort:
                 params['sort'] = sort
-            response = self.get(request_url, params=params)
+            response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving experiments.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving experiments.')
             return []
 
     def create_experiment(self, username, project_name, experiment_config):
-        experiment_config = validate_config(config=experiment_config,
-                                            config_schema=ExperimentConfig)
+        experiment_config = self.validate_config(config=experiment_config,
+                                                 config_schema=ExperimentConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
-            response = self.post(request_url, json_data=experiment_config.to_dict())
+            response = self.transport.post(request_url, json_data=experiment_config.to_dict())
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while creating experiment.')
+            self.transport.handle_exception(e=e, log_message='Error while creating experiment.')
             return None
 
     def list_jobs(self, username, project_name, query=None, sort=None, page=1):
@@ -181,21 +183,21 @@ class ProjectClient(BaseClient):
                 params['query'] = query
             if sort:
                 params['sort'] = sort
-            response = self.get(request_url, params=params)
+            response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, JobConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving jobs.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
             return []
 
     def create_job(self, username, project_name, job_config):
-        job_config = validate_config(config=job_config, config_schema=JobConfig)
+        job_config = self.validate_config(config=job_config, config_schema=JobConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'jobs')
 
         try:
-            response = self.post(request_url, json_data=job_config.to_dict())
+            response = self.transport.post(request_url, json_data=job_config.to_dict())
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while creating job.')
+            self.transport.handle_exception(e=e, log_message='Error while creating job.')
             return None
 
     def list_builds(self, username, project_name, query=None, sort=None, page=1):
@@ -209,21 +211,21 @@ class ProjectClient(BaseClient):
                 params['query'] = query
             if sort:
                 params['sort'] = sort
-            response = self.get(request_url, params=params)
+            response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, JobConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving build jobs.')
+            self.transport.handle_exception(e=e, log_message='Error while retrieving build jobs.')
             return []
 
     def create_build(self, username, project_name, build_config):
-        build_config = validate_config(config=build_config, config_schema=JobConfig)
+        build_config = self.validate_config(config=build_config, config_schema=JobConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'builds')
 
         try:
-            response = self.post(request_url, json_data=build_config.to_dict())
+            response = self.transport.post(request_url, json_data=build_config.to_dict())
             return JobConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while creating build job.')
+            self.transport.handle_exception(e=e, log_message='Error while creating build job.')
             return None
 
     def list_tensorboards(self, username, project_name, query=None, sort=None, page=1):
@@ -237,10 +239,11 @@ class ProjectClient(BaseClient):
                 params['query'] = query
             if sort:
                 params['sort'] = sort
-            response = self.get(request_url, params=params)
+            response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, TensorboardJobConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving tensorboard jobs.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving tensorboard jobs.')
             return []
 
     def start_tensorboard(self, username, project_name, job_config=None):
@@ -252,9 +255,9 @@ class ProjectClient(BaseClient):
 
         try:
             job_config = {'config': job_config} if job_config else {}
-            return self.post(request_url, json_data=job_config)
+            return self.transport.post(request_url, json_data=job_config)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while starting tensorboard.')
+            self.transport.handle_exception(e=e, log_message='Error while starting tensorboard.')
             return None
 
     def stop_tensorboard(self, username, project_name):
@@ -264,9 +267,9 @@ class ProjectClient(BaseClient):
                                       'tensorboard',
                                       'stop')
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping tensorboard.')
+            self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
     def start_notebook(self, username, project_name, job_config=None):
@@ -278,9 +281,9 @@ class ProjectClient(BaseClient):
 
         try:
             job_config = {'config': job_config} if job_config else {}
-            return self.post(request_url, json_data=job_config)
+            return self.transport.post(request_url, json_data=job_config)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while starting notebook.')
+            self.transport.handle_exception(e=e, log_message='Error while starting notebook.')
             return None
 
     def stop_notebook(self, username, project_name, commit=True):
@@ -293,9 +296,9 @@ class ProjectClient(BaseClient):
         if commit is False:
             json_data = {'commit': commit}
         try:
-            return self.post(request_url, json_data=json_data)
+            return self.transport.post(request_url, json_data=json_data)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while stopping notebook.')
+            self.transport.handle_exception(e=e, log_message='Error while stopping notebook.')
             return None
 
     def bookmark(self, username, project_name):
@@ -304,9 +307,9 @@ class ProjectClient(BaseClient):
                                       project_name,
                                       'bookmark')
         try:
-            return self.post(request_url)
+            return self.transport.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while bookmarking project.')
+            self.transport.handle_exception(e=e, log_message='Error while bookmarking project.')
             return None
 
     def unbookmark(self, username, project_name):
@@ -315,7 +318,7 @@ class ProjectClient(BaseClient):
                                       project_name,
                                       'unbookmark')
         try:
-            return self.delete(request_url)
+            return self.transport.delete(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while unbookmarking project.')
+            self.transport.handle_exception(e=e, log_message='Error while unbookmarking project.')
             return None

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.base import BaseClient
+from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.schemas import (
     ExperimentConfig,
@@ -11,8 +11,10 @@ from polyaxon_client.schemas import (
 )
 
 
-class BookmarkClient(BaseClient):
-    """Client to list or create bookmarks for experiment/jobs/projects/builds/groups"""
+class BookmarkApi(BaseApiHandler):
+    """
+    Api handler to list or create bookmarks for experiment/jobs/projects/builds/groups
+    """
     ENDPOINT = "/bookmarks"
 
     @staticmethod
@@ -30,11 +32,12 @@ class BookmarkClient(BaseClient):
                                       username,
                                       'builds')
         try:
-            response = self.get(request_url,
-                                params=self.get_page(page=page))
+            response = self.transport.get(request_url,
+                                          params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving bookmarked builds.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving bookmarked builds.')
             return []
 
     def jobs(self, username, page=1):
@@ -43,11 +46,12 @@ class BookmarkClient(BaseClient):
                                       username,
                                       'jobs')
         try:
-            response = self.get(request_url,
-                                params=self.get_page(page=page))
+            response = self.transport.get(request_url,
+                                          params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving bookmarked jobs.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving bookmarked jobs.')
             return []
 
     def experiments(self, username, page=1):
@@ -56,11 +60,12 @@ class BookmarkClient(BaseClient):
                                       username,
                                       'experiments')
         try:
-            response = self.get(request_url,
-                                params=self.get_page(page=page))
+            response = self.transport.get(request_url,
+                                          params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving bookmarked experiments.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving bookmarked experiments.')
             return []
 
     def groups(self, username, page=1):
@@ -69,11 +74,12 @@ class BookmarkClient(BaseClient):
                                       username,
                                       'groups')
         try:
-            response = self.get(request_url,
-                                params=self.get_page(page=page))
+            response = self.transport.get(request_url,
+                                          params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentGroupConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving bookmarked groups.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving bookmarked groups.')
             return []
 
     def projects(self, username, page=1):
@@ -82,9 +88,10 @@ class BookmarkClient(BaseClient):
                                       username,
                                       'projects')
         try:
-            response = self.get(request_url,
-                                params=self.get_page(page=page))
+            response = self.transport.get(request_url,
+                                          params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ProjectConfig)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving bookmarked projects.')
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving bookmarked projects.')
             return []
