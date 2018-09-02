@@ -22,7 +22,7 @@ class HttpTransportMixin(object):
 
     @property
     def session(self):
-        if not self._session:
+        if not hasattr(self, '_session'):
             self._session = requests.Session()
         return self._session
 

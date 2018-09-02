@@ -9,11 +9,11 @@ from polyaxon_client.workers.base_worker import BaseWorker
 class PeriodicWorker(BaseWorker):
     NAME = 'polyaxon.PeriodicWorker'
 
-    def __init__(self, interval, function, *args, **kwargs):
+    def __init__(self, interval, callback, *args, **kwargs):
         super(PeriodicWorker, self).__init__()
         self._interval = interval
         self._finished = threading.Event()
-        self._function = function
+        self._callback = callback
         self._args = args
         self._kwargs = kwargs
 
@@ -25,7 +25,7 @@ class PeriodicWorker(BaseWorker):
                 self._thread = None
                 self._thread_for_pid = None
 
-    def atexist(self):
+    def atexit(self):
         self.stop()
 
     def _target(self):
@@ -33,4 +33,4 @@ class PeriodicWorker(BaseWorker):
             if not self.is_alive() or self._finished.isSet():
                 break
             self._finished.wait(self._interval)
-            self._function(*self._args, **self._kwargs)
+            self._callback(*self._args, **self._kwargs)

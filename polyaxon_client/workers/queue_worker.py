@@ -22,7 +22,7 @@ class QueueWorker(BaseWorker):
         self._queue = Queue(queue_size or self.QUEUE_SIZE)
         self._timeout = timeout or self.TIMEOUT
 
-    def atexist(self):
+    def atexit(self):
         with self._lock:
             if not self.is_alive():
                 return
@@ -49,9 +49,7 @@ class QueueWorker(BaseWorker):
                     queue.all_tasks_done.release()
 
             if not timeout_join(timeout=initial_timeout, queue=self._queue):
-                # if that didn't work, wait a bit longer
-                # NB that size is an approximation, because other threads may
-                # add or remove items
+                # Queue still has message, try another time
                 size = self._queue.qsize()
 
                 print("Polyaxon worker is attempting to send %i pending messages" % size)

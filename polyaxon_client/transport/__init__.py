@@ -15,11 +15,6 @@ class Transport(HttpTransportMixin, ThreadedTransportMixin, SocketTransportMixin
         self.authentication_type = authentication_type
         self.token = token
         self.reraise = reraise
-        # Http transport session
-        self._session = None
-        # Threaded transport worker and session
-        self._worker = None
-        self._retry_session = None
 
     def _get_headers(self, headers=None):
         request_headers = headers or {}

@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import mock
+import requests
 
 from clint.textui.progress import Bar
 
@@ -26,3 +27,8 @@ class TestHttpTransport(TestCase):
         assert self.transport.format_sizeof(100000) == '97.7KiB'
         assert self.transport.format_sizeof(10000000) == '9.5MiB'
         assert self.transport.format_sizeof(10000000000) == '9.3GiB'
+
+    def test_session(self):
+        assert hasattr(self.transport, '_session') is False
+        assert isinstance(self.transport.session, requests.Session)
+        assert isinstance(self.transport._session, requests.Session)

@@ -20,7 +20,7 @@ class BaseWorker(object):
     def is_alive(self):
         if self._thread_for_pid != os.getpid():
             return False
-        return self._thread and self._thread.is_alive()
+        return bool(self._thread and self._thread.is_alive())
 
     def is_running(self):
         if self.is_alive():
@@ -37,9 +37,9 @@ class BaseWorker(object):
                 self._thread_for_pid = os.getpid()
         finally:
             self._lock.release()
-            atexit.register(self.atexist)
+            atexit.register(self.atexit)
 
-    def atexist(self):
+    def atexit(self):
         raise NotImplementedError('Worker must implement a target function.')
 
     def _target(self):

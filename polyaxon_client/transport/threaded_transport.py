@@ -10,9 +10,10 @@ from polyaxon_client.workers.queue_worker import QueueWorker
 
 class ThreadedTransportMixin(object):
     """Threads operations transport."""
+
     @property
     def retry_session(self):
-        if not self._retry_session:
+        if not hasattr(self, '_retry_session'):
             self._retry_session = requests.Session()
             retry = Retry(
                 total=3,
@@ -28,7 +29,7 @@ class ThreadedTransportMixin(object):
 
     @property
     def worker(self):
-        if not self._worker or not self._worker.is_alive():
+        if not hasattr(self, '_worker') or not self._worker.is_alive():
             self._worker = QueueWorker()
             self._worker.start()
         return self._worker
@@ -42,15 +43,15 @@ class ThreadedTransportMixin(object):
                    timeout=None,
                    headers=None):
         """Call request with a post."""
-        return self.post(self,
-                         url,
-                         params=params,
-                         data=data,
-                         files=files,
-                         json_data=json_data,
-                         timeout=timeout,
-                         headers=headers,
-                         session=self.retry_session)
+        return self.worker.queue(self.post,
+                                 url,
+                                 params=params,
+                                 data=data,
+                                 files=files,
+                                 json_data=json_data,
+                                 timeout=timeout,
+                                 headers=headers,
+                                 session=self.retry_session)
 
     def async_patch(self,
                     url,
@@ -61,15 +62,15 @@ class ThreadedTransportMixin(object):
                     timeout=None,
                     headers=None):
         """Call request with a patch."""
-        return self.patch(self,
-                          url,
-                          params=params,
-                          data=data,
-                          files=files,
-                          json_data=json_data,
-                          timeout=timeout,
-                          headers=headers,
-                          session=self.retry_session)
+        return self.worker.queue(self.patch,
+                                 url,
+                                 params=params,
+                                 data=data,
+                                 files=files,
+                                 json_data=json_data,
+                                 timeout=timeout,
+                                 headers=headers,
+                                 session=self.retry_session)
 
     def async_delete(self,
                      url,
@@ -80,14 +81,15 @@ class ThreadedTransportMixin(object):
                      timeout=None,
                      headers=None):
         """Call request with a delete."""
-        return self.delete(url,
-                           params=params,
-                           data=data,
-                           files=files,
-                           json_data=json_data,
-                           timeout=timeout,
-                           headers=headers,
-                           session=self.retry_session)
+        return self.worker.queue(self.delete,
+                                 url,
+                                 params=params,
+                                 data=data,
+                                 files=files,
+                                 json_data=json_data,
+                                 timeout=timeout,
+                                 headers=headers,
+                                 session=self.retry_session)
 
     def async_put(self,
                   url,
@@ -98,11 +100,12 @@ class ThreadedTransportMixin(object):
                   timeout=None,
                   headers=None):
         """Call request with a put."""
-        return self.put(url,
-                        params=params,
-                        data=data,
-                        files=files,
-                        json_data=json_data,
-                        timeout=timeout,
-                        headers=headers,
-                        session=self.retry_session)
+        return self.worker.queue(self.put,
+                                 url,
+                                 params=params,
+                                 data=data,
+                                 files=files,
+                                 json_data=json_data,
+                                 timeout=timeout,
+                                 headers=headers,
+                                 session=self.retry_session)
