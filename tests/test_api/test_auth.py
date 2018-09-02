@@ -5,6 +5,7 @@ import httpretty
 import json
 import uuid
 
+from polyaxon_client.settings import AuthenticationTypes
 from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.auth import AuthApi
@@ -40,9 +41,9 @@ class TestAuthApi(TestBaseApi):
             BaseApiHandler._build_url(
                 self.api_config.base_url,
                 '/users',
-                'token'
+                AuthenticationTypes.TOKEN
             ),
-            body=json.dumps({'token': token}),
+            body=json.dumps({AuthenticationTypes.TOKEN: token}),
             content_type='application/json', status=200)
 
         credentials = CredentialsConfig('user', 'password')

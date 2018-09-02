@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.exceptions import AuthenticationError
 from polyaxon_client.logger import logger
+from polyaxon_client.settings import AuthenticationTypes
 from polyaxon_client.transport.http_transport import HttpTransportMixin
 from polyaxon_client.transport.socket_transport import SocketTransportMixin
 from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
@@ -11,7 +12,7 @@ from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
 class Transport(HttpTransportMixin, ThreadedTransportMixin, SocketTransportMixin):
     """Transport for handling http/ws operations."""
 
-    def __init__(self, token=None, authentication_type='token', reraise=False):
+    def __init__(self, token=None, authentication_type=AuthenticationTypes.TOKEN, reraise=False):
         self.authentication_type = authentication_type
         self.token = token
         self.reraise = reraise

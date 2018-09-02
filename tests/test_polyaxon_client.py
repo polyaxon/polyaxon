@@ -16,12 +16,15 @@ from polyaxon_client.api.user import UserApi
 from polyaxon_client.api.version import VersionApi
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.client import PolyaxonClient
+from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.transport import Transport
 
 
 class TestPolyaxonClient(TestCase):
     def test_client(self):
-        client = PolyaxonClient(host=None, token=None)
+        with self.assertRaises(PolyaxonException):
+            PolyaxonClient(host=None, token=None)
+        client = PolyaxonClient(host=None, token=None, in_cluster=True)
         assert client.host is None
         assert client.http_port == 80
         assert client.ws_port == 80

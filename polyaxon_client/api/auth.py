@@ -6,6 +6,7 @@ import requests
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
+from polyaxon_client.settings import AuthenticationTypes
 
 
 class AuthApi(BaseApiHandler):
@@ -43,7 +44,7 @@ class AuthApi(BaseApiHandler):
 
     def login(self, credentials):
         credentials = self.validate_config(config=credentials, config_schema=CredentialsConfig)
-        request_url = self._build_url(self._get_http_url(), 'token')
+        request_url = self._build_url(self._get_http_url(), AuthenticationTypes.TOKEN)
         try:
             response = self.transport.session.post(request_url, data=credentials.to_dict())
         except requests.ConnectionError:

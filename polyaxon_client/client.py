@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_client import settings
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.bookmark import BookmarkApi
 from polyaxon_client.api.build_job import BuildJobApi
@@ -13,6 +14,7 @@ from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.api.user import UserApi
 from polyaxon_client.api.version import VersionApi
 from polyaxon_client.api_config import ApiConfig
+from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.transport import Transport
 
 DEFAULT_HTTP_PORT = 80
@@ -21,15 +23,19 @@ DEFAULT_HTTPS_PORT = 443
 
 class PolyaxonClient(object):
     def __init__(self,
-                 host,
-                 token,
+                 host=None,
+                 token=None,
                  http_port=None,
                  ws_port=None,
                  use_https=False,
-                 authentication_type='token',
+                 in_cluster=settings.IN_CLUSTER,
+                 authentication_type=settings.AuthenticationTypes.TOKEN,
                  api_version='v1',
                  reraise=False):
-        self._updated = False
+        if not all([host, token]) and not in_cluster:
+            raise PolyaxonException(
+                'Client requires at least a host and a token if not running in-cluster.')
+
         self._host = host
         self._http_port = http_port or (DEFAULT_HTTPS_PORT
                                         if use_https
@@ -39,6 +45,7 @@ class PolyaxonClient(object):
                                     else DEFAULT_HTTP_PORT)
         self._use_https = use_https
         self._token = token
+        self._in_cluster = in_cluster
         self._authentication_type = authentication_type
         self._api_version = api_version
         self._reraise = reraise
@@ -59,6 +66,10 @@ class PolyaxonClient(object):
         self._bookmark_api = None
 
     def reset(self):
+        if not all([self.host, self.token]) and not self.in_cluster:
+            raise PolyaxonException(
+                'Client requires at least a host and a token if not running in-cluster.')
+
         self._transport = None
         self._api_config = None
 
@@ -99,6 +110,10 @@ class PolyaxonClient(object):
         return self._authentication_type
 
     @property
+    def in_cluster(self):
+        return self._in_cluster
+
+    @property
     def api_version(self):
         return self._api_version
 
@@ -126,6 +141,10 @@ class PolyaxonClient(object):
         self._token = token
         self.reset()
 
+    def set_in_cluster(self, in_cluster):
+        self._in_cluster = in_cluster
+        self.reset()
+
     def set_authentication_type(self, authentication_type):
         self._authentication_type = authentication_type
         self.reset()
@@ -141,9 +160,9 @@ class PolyaxonClient(object):
     @property
     def transport(self):
         if not self._transport:
-            self._transport = Transport(token=self.token,
-                                        authentication_type=self.authentication_type,
-                                        reraise=self.reraise)
+            self._transport = Transport(token=self.api_config.token,
+                                        authentication_type=self.api_config.authentication_type,
+                                        reraise=self.api_config.reraise)
         return self._transport
 
     @property
@@ -156,7 +175,8 @@ class PolyaxonClient(object):
                                          authentication_type=self.authentication_type,
                                          version=self.api_version,
                                          use_https=self.use_https,
-                                         reraise=self.reraise)
+                                         reraise=self.reraise,
+                                         in_cluster=self.in_cluster)
         return self._api_config
 
     @property
