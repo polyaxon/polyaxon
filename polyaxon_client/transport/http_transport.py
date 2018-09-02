@@ -15,16 +15,15 @@ from polyaxon_client.logger import logger
 from polyaxon_client.schemas.utils import to_list
 
 
-class HttpTransport(object):
+class HttpTransportMixin(object):
     """HTTP operations transport."""
     TIME_OUT = 25
     MAX_UPLOAD_SIZE = 1024 * 1024 * 150
 
-    def __init__(self):
-        self._session = requests.Session()
-
     @property
     def session(self):
+        if not self._session:
+            self._session = requests.Session()
         return self._session
 
     @staticmethod
@@ -55,8 +54,9 @@ class HttpTransport(object):
                 data=None,
                 files=None,
                 json=None,  # noqa
-                timeout=TIME_OUT,
-                headers=None):
+                timeout=None,
+                headers=None,
+                session=None):
         """Send a request with the given data as json to the given URL.
 
         Args:
@@ -79,16 +79,18 @@ class HttpTransport(object):
                      url, params, data)
 
         request_headers = self._get_headers(headers=headers)
+        timeout = timeout or self.TIME_OUT
+        session = session or self.session
 
         try:
-            response = self._session.request(method,
-                                             url,
-                                             params=params,
-                                             data=data,
-                                             json=json,
-                                             headers=request_headers,
-                                             files=files,
-                                             timeout=timeout)
+            response = session.request(method,
+                                       url,
+                                       params=params,
+                                       data=data,
+                                       json=json,
+                                       headers=request_headers,
+                                       files=files,
+                                       timeout=timeout)
         except (requests.exceptions.RequestException, requests.exceptions.HTTPError) as exception:
             try:
                 logger.debug("Exception: %s", exception, exc_info=True)
@@ -102,13 +104,20 @@ class HttpTransport(object):
         self.check_response_status(response, url)
         return response
 
-    def upload(self, url, files, files_size, params=None, json_data=None, timeout=3600):
+    def upload(self,
+               url,
+               files,
+               files_size,
+               params=None,
+               json_data=None,
+               timeout=3600,
+               session=None):
         if files_size > self.MAX_UPLOAD_SIZE:
             raise PolyaxonShouldExitError(
                 "Files too large to sync, please keep it under {}.\n"
                 "If you have data files in the current directory, "
                 "please add them directly to your data volume, or upload them "
-                "separately using `polyxon data` command and remove them from here.\n".format(
+                "separately using `polyaxon data` command and remove them from here.\n".format(
                     self.format_sizeof(self.MAX_UPLOAD_SIZE)))
 
         files = to_list(files)
@@ -127,26 +136,29 @@ class HttpTransport(object):
                                 params=params,
                                 data=multipart_encoder_monitor,
                                 headers={"Content-Type": multipart_encoder.content_type},
-                                timeout=timeout)
+                                timeout=timeout,
+                                session=session)
         finally:
             # always make sure we clear the console
             progress_bar.done()
 
         return response
 
-    def download(self, url, filename, headers=None, timeout=TIME_OUT):
+    def download(self, url, filename, headers=None, timeout=None, session=None):
         """
         Download the file from the given url at the current path
         """
         logger.debug("Downloading files from url: %s", url)
 
         request_headers = self._get_headers(headers=headers)
+        timeout = timeout or self.TIME_OUT
+        session = session or self.session
 
         try:
-            response = self._session.get(url,
-                                         headers=request_headers,
-                                         timeout=timeout,
-                                         stream=True)
+            response = session.get(url,
+                                   headers=request_headers,
+                                   timeout=timeout,
+                                   stream=True)
             self.check_response_status(response, url)
             with open(filename, 'wb') as f:
                 # chunk mode response doesn't have content-length so we are
@@ -219,8 +231,9 @@ class HttpTransport(object):
             data=None,
             files=None,
             json_data=None,
-            timeout=TIME_OUT,
-            headers=None):
+            timeout=None,
+            headers=None,
+            session=None):
         """Call request with a get."""
         return self.request('GET',
                             url=url,
@@ -229,7 +242,8 @@ class HttpTransport(object):
                             files=files,
                             json=json_data,
                             timeout=timeout,
-                            headers=headers)
+                            headers=headers,
+                            session=session)
 
     def post(self,
              url,
@@ -237,8 +251,9 @@ class HttpTransport(object):
              data=None,
              files=None,
              json_data=None,
-             timeout=TIME_OUT,
-             headers=None):
+             timeout=None,
+             headers=None,
+             session=None):
         """Call request with a post."""
         return self.request('POST',
                             url=url,
@@ -247,7 +262,8 @@ class HttpTransport(object):
                             files=files,
                             json=json_data,
                             timeout=timeout,
-                            headers=headers)
+                            headers=headers,
+                            session=session)
 
     def patch(self,
               url,
@@ -255,8 +271,9 @@ class HttpTransport(object):
               data=None,
               files=None,
               json_data=None,
-              timeout=TIME_OUT,
-              headers=None):
+              timeout=None,
+              headers=None,
+              session=None):
         """Call request with a patch."""
         return self.request('PATCH',
                             url=url,
@@ -265,7 +282,8 @@ class HttpTransport(object):
                             files=files,
                             json=json_data,
                             timeout=timeout,
-                            headers=headers)
+                            headers=headers,
+                            session=session)
 
     def delete(self,
                url,
@@ -273,8 +291,9 @@ class HttpTransport(object):
                data=None,
                files=None,
                json_data=None,
-               timeout=TIME_OUT,
-               headers=None):
+               timeout=None,
+               headers=None,
+               session=None):
         """Call request with a delete."""
         return self.request('DELETE',
                             url=url,
@@ -283,7 +302,8 @@ class HttpTransport(object):
                             files=files,
                             json=json_data,
                             timeout=timeout,
-                            headers=headers)
+                            headers=headers,
+                            session=session)
 
     def put(self,
             url,
@@ -291,8 +311,9 @@ class HttpTransport(object):
             data=None,
             files=None,
             json_data=None,
-            timeout=TIME_OUT,
-            headers=None):
+            timeout=None,
+            headers=None,
+            session=None):
         """Call request with a put."""
         return self.request('PUT',
                             url=url,
@@ -301,4 +322,5 @@ class HttpTransport(object):
                             files=files,
                             json=json_data,
                             timeout=timeout,
-                            headers=headers)
+                            headers=headers,
+                            session=session)
