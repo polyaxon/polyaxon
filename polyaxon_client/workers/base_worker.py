@@ -2,9 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import atexit
-import threading
-
 import os
+import threading
 
 
 class BaseWorker(object):
@@ -40,7 +39,7 @@ class BaseWorker(object):
             atexit.register(self.atexit)
 
     def atexit(self):
-        raise NotImplementedError('Worker must implement a target function.')
+        raise NotImplementedError('Worker must implement `atexit` function.')
 
     def _target(self):
-        raise NotImplementedError('Worker must implement a target function.')
+        raise NotImplementedError('Worker must implement `target` function.')

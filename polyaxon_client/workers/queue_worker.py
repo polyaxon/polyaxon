@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from time import sleep, time
-
 import os
+
 from six.moves.queue import Queue
+from time import sleep, time
 
 from polyaxon_client.logger import logger
 from polyaxon_client.workers.base_worker import BaseWorker

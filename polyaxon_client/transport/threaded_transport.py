@@ -2,7 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import requests
+
 from requests.adapters import HTTPAdapter
+
 from urllib3 import Retry
 
 from polyaxon_client.workers.queue_worker import QueueWorker

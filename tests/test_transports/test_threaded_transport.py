@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import time
-from unittest import TestCase
-
 import requests
+import time
+
+from unittest import TestCase
 
 from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
 from polyaxon_client.workers.queue_worker import QueueWorker
@@ -81,7 +81,3 @@ class TestThreadedTransport(TestCase):
         self.transport.worker.atexit()
         assert self.transport.queue == [('post', 'url_post')]
         assert self.transport._worker.is_alive() is False
-
-
-
-

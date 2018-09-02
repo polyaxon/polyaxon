@@ -2,10 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-
 import os
 import requests
 import tarfile
+
 from clint.textui import progress
 from clint.textui.progress import Bar
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
