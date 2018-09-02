@@ -8,6 +8,7 @@ from polyaxon_client.logger import logger
 
 
 class SocketTransportMixin(object):
+    """Socket operations transport."""
     def socket(self, url, message_handler, headers=None):
         wes = websocket.WebSocketApp(
             url,
