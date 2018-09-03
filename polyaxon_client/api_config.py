@@ -21,10 +21,10 @@ class ApiConfig(object):
                  use_https=False,
                  in_cluster=False):
         if in_cluster:
-            if not settings.API_HOST:
+            if not settings.API_HTTP_HOST:
                 print('Could get api host info, '
                       'please make sure this is running inside a polyaxon job.')
-            self.http_host = settings.API_HOST
+            self.http_host = settings.API_HTTP_HOST
             self.ws_host = settings.API_WS_HOST
         else:
             http_protocol = 'https' if use_https else 'http'
