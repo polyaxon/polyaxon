@@ -5,7 +5,8 @@ import json
 
 import os
 
-from polyaxon_client import PolyaxonClient
+from polyaxon_client import PolyaxonClient, settings
+from polyaxon_client.exceptions import PolyaxonException
 
 
 class BaseTracker(object):
@@ -66,3 +67,8 @@ class BaseTracker(object):
     def get_log_level():
         """If set on the polyaxonfile it will return the log level."""
         return os.getenv('POLYAXON_LOG_LEVEL', None)
+
+
+def ensure_in_custer():
+    if not settings.IN_CLUSTER:
+        raise PolyaxonException('This experiment/job is not running inside a Polyaxon job.')

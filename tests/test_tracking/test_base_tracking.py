@@ -22,7 +22,7 @@ class TestTracker(TestEnvVarsCase):
     def test_empty_outputs_refs_paths(self):
         self.check_empty_value('POLYAXON_REFS_OUTPUTS_PATHS', BaseTracker.get_outputs_refs_paths)
 
-    def test_valid_data_path(self):
+    def test_valid_outputs_refs_paths(self):
         self.check_valid_dict_value('POLYAXON_REFS_OUTPUTS_PATHS',
                                     BaseTracker.get_outputs_refs_paths,
                                     {
