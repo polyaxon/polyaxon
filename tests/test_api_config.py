@@ -16,7 +16,7 @@ class TestApiConfig(TestCase):
                                     http_port=self.http_port,
                                     ws_port=self.ws_port,
                                     version='v1',
-                                    token=None,
+                                    token='toekn',
                                     reraise=True,
                                     use_https=False)
 
@@ -30,6 +30,7 @@ class TestApiConfig(TestCase):
         settings.API_HTTP_HOST = 'api_host'
         settings.API_WS_HOST = 'ws_host'
         api_config = ApiConfig(host=None, http_port=None, ws_port=None, in_cluster=True)
+        assert api_config.version == 'v1'
         assert api_config.http_host == 'api_host'
         assert api_config.ws_host == 'ws_host'
         assert api_config.base_url == 'api_host/api/v1'

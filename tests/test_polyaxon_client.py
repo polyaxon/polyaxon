@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from polyaxon_client import settings
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.bookmark import BookmarkApi
 from polyaxon_client.api.build_job import BuildJobApi
@@ -45,3 +46,61 @@ class TestPolyaxonClient(TestCase):
         assert isinstance(client.build_job, BuildJobApi)
         assert isinstance(client.bookmark, BookmarkApi)
         assert isinstance(client.user, UserApi)
+
+    def test_from_config(self):
+        settings.SECRET_TOKEN = 'token'
+        settings.API_HOST = 'localhost'
+        client = PolyaxonClient(api_config=ApiConfig())
+        assert client.in_cluster is False
+        assert client.host == 'localhost'
+        assert client.http_port == 80
+        assert client.ws_port == 80
+        assert client.use_https is False
+        assert client.token == 'token'
+        assert client.api_config.http_host == 'http://localhost:80'
+        assert client.api_config.ws_host == 'ws://localhost:80'
+
+        settings.IN_CLUSTER = True
+        settings.API_HTTP_HOST = 'api_host'
+        settings.API_WS_HOST = 'ws_host'
+        settings.API_HOST = None
+        client = PolyaxonClient(api_config=ApiConfig())
+        assert client.in_cluster is True
+        assert client.host is None
+        assert client.http_port == 80
+        assert client.ws_port == 80
+        assert client.use_https is False
+        assert client.token == 'token'
+        assert client.api_config.http_host == 'api_host'
+        assert client.api_config.ws_host == 'ws_host'
+
+    def test_from_env(self):
+        settings.IN_CLUSTER = False
+        with self.assertRaises(PolyaxonException):
+            PolyaxonClient()
+
+        settings.SECRET_TOKEN = 'token'
+        settings.API_HOST = 'localhost'
+        client = PolyaxonClient()
+        assert client.in_cluster is False
+        assert client.host == 'localhost'
+        assert client.http_port == 80
+        assert client.ws_port == 80
+        assert client.use_https is False
+        assert client.token == 'token'
+        assert client.api_config.http_host == 'http://localhost:80'
+        assert client.api_config.ws_host == 'ws://localhost:80'
+
+        settings.IN_CLUSTER = True
+        settings.API_HTTP_HOST = 'api_host'
+        settings.API_WS_HOST = 'ws_host'
+        settings.API_HOST = None
+        client = PolyaxonClient()
+        assert client.in_cluster is True
+        assert client.host is None
+        assert client.http_port == 80
+        assert client.ws_port == 80
+        assert client.use_https is False
+        assert client.token == 'token'
+        assert client.api_config.http_host == 'api_host'
+        assert client.api_config.ws_host == 'ws_host'

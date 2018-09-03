@@ -16,7 +16,8 @@ class TestBaseApi(TestCase):
                                     http_port=self.http_port,
                                     ws_port=self.ws_port,
                                     version='v1',
-                                    token=None,
+                                    token='token',
                                     reraise=True,
-                                    use_https=False)
+                                    use_https=False,
+                                    in_cluster=False)
         self.transport = Transport()
