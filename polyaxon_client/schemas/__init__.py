@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
 from polyaxon_schemas.authentication import CredentialsConfig
 from polyaxon_schemas.clusters import ClusterNodeConfig, PolyaxonClusterConfig
 from polyaxon_schemas.data import DatasetConfig
