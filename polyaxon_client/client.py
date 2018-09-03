@@ -14,45 +14,33 @@ from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.api.user import UserApi
 from polyaxon_client.api.version import VersionApi
 from polyaxon_client.api_config import ApiConfig
-from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.transport import Transport
-
-DEFAULT_HTTP_PORT = 80
-DEFAULT_HTTPS_PORT = 443
 
 
 class PolyaxonClient(object):
     def __init__(self,
+                 api_config=None,
                  host=None,
                  token=None,
                  http_port=None,
                  ws_port=None,
                  use_https=False,
-                 in_cluster=settings.IN_CLUSTER,
+                 in_cluster=None,
                  authentication_type=settings.AuthenticationTypes.TOKEN,
-                 api_version='v1',
+                 api_version=None,
                  reraise=False):
-        if not all([host, token]) and not in_cluster:
-            raise PolyaxonException(
-                'Client requires at least a host and a token if not running in-cluster.')
 
-        self._host = host
-        self._http_port = http_port or (DEFAULT_HTTPS_PORT
-                                        if use_https
-                                        else DEFAULT_HTTP_PORT)
-        self._ws_port = ws_port or (DEFAULT_HTTPS_PORT
-                                    if use_https
-                                    else DEFAULT_HTTP_PORT)
-        self._use_https = use_https
-        self._token = token
-        self._in_cluster = in_cluster
-        self._authentication_type = authentication_type
-        self._api_version = api_version
-        self._reraise = reraise
+        self._api_config = api_config or ApiConfig(host=host,
+                                                   http_port=http_port,
+                                                   ws_port=ws_port,
+                                                   token=token,
+                                                   authentication_type=authentication_type,
+                                                   version=api_version,
+                                                   use_https=use_https,
+                                                   reraise=reraise,
+                                                   in_cluster=in_cluster)
 
         self._transport = None
-        self._api_config = None
-
         self._auth_api = None
         self._cluster_api = None
         self._version_api = None
@@ -66,13 +54,7 @@ class PolyaxonClient(object):
         self._bookmark_api = None
 
     def reset(self):
-        if not all([self.host, self.token]) and not self.in_cluster:
-            raise PolyaxonException(
-                'Client requires at least a host and a token if not running in-cluster.')
-
         self._transport = None
-        self._api_config = None
-
         self._auth_api = None
         self._cluster_api = None
         self._version_api = None
@@ -87,96 +69,86 @@ class PolyaxonClient(object):
 
     @property
     def host(self):
-        return self._host
+        return self.api_config.host
 
     @property
     def http_port(self):
-        return self._http_port
+        return self.api_config.http_port
 
     @property
     def ws_port(self):
-        return self._ws_port
+        return self.api_config.ws_port
 
     @property
     def use_https(self):
-        return self._use_https
+        return self.api_config.use_https
 
     @property
     def token(self):
-        return self._token
+        return self.api_config.token
 
     @property
     def authentication_type(self):
-        return self._authentication_type
+        return self.api_config.authentication_type
 
     @property
     def in_cluster(self):
-        return self._in_cluster
+        return self.api_config.in_cluster
 
     @property
     def api_version(self):
-        return self._api_version
+        return self.api_config.version
 
     @property
     def reraise(self):
-        return self._reraise
+        return self.api_config.reraise
 
     def set_host(self, host):
-        self._host = host
+        self.api_config.host = host
         self.reset()
 
     def set_http_port(self, http_port):
-        self._http_port = http_port
+        self.api_config.http_port = http_port
         self.reset()
 
     def set_ws_port(self, ws_port):
-        self._ws_port = ws_port
+        self.api_config.ws_port = ws_port
         self.reset()
 
     def set_use_https(self, use_https):
-        self._use_https = use_https
+        self.api_config.use_https = use_https
         self.reset()
 
     def set_token(self, token):
-        self._token = token
+        self.api_config.token = token
         self.reset()
 
     def set_in_cluster(self, in_cluster):
-        self._in_cluster = in_cluster
+        self.api_config.in_cluster = in_cluster
         self.reset()
 
     def set_authentication_type(self, authentication_type):
-        self._authentication_type = authentication_type
+        self.api_config.authentication_type = authentication_type
         self.reset()
 
     def set_version_api(self, version_api):
-        self._api_version = version_api
+        self.api_config.version = version_api
         self.reset()
 
     def set_reraise(self, reraise):
-        self._reraise = reraise
+        self.api_config.reraise = reraise
         self.reset()
 
     @property
     def transport(self):
         if not self._transport:
-            self._transport = Transport(token=self.api_config.token,
-                                        authentication_type=self.api_config.authentication_type,
-                                        reraise=self.api_config.reraise)
+            self._transport = Transport(token=self.token,
+                                        authentication_type=self.authentication_type,
+                                        reraise=self.reraise)
         return self._transport
 
     @property
     def api_config(self):
-        if not self._api_config:
-            self._api_config = ApiConfig(host=self.host,
-                                         http_port=self.http_port,
-                                         ws_port=self.ws_port,
-                                         token=self.token,
-                                         authentication_type=self.authentication_type,
-                                         version=self.api_version,
-                                         use_https=self.use_https,
-                                         reraise=self.reraise,
-                                         in_cluster=self.in_cluster)
         return self._api_config
 
     @property
