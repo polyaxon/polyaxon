@@ -119,7 +119,7 @@ class ExperimentApi(BaseApiHandler):
                                       'metrics')
 
         if background:
-            self.transport.async_post(request_url, data={'values': values})
+            self.transport.async_post(request_url, json_data={'values': values})
             return None
 
         try:
