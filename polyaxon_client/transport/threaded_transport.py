@@ -2,16 +2,26 @@
 from __future__ import absolute_import, division, print_function
 
 import requests
-
 from requests.adapters import HTTPAdapter
-
 from urllib3 import Retry
 
+from polyaxon_client.logger import logger
 from polyaxon_client.workers.queue_worker import QueueWorker
 
 
 class ThreadedTransportMixin(object):
     """Threads operations transport."""
+    @property
+    def done(self):
+        if hasattr(self, '_done'):
+            return self._done
+        return None
+
+    @property
+    def exceptions(self):
+        if hasattr(self, '_exceptions'):
+            return self._exceptions
+        return None
 
     @property
     def retry_session(self):
@@ -27,7 +37,40 @@ class ThreadedTransportMixin(object):
             adapter = HTTPAdapter(max_retries=retry)
             self._retry_session.mount('http://', adapter)
             self._retry_session.mount('https://', adapter)
+            self._done = 0
+            self._exceptions = 0
         return self._retry_session
+
+    def queue_request(self,
+                      request,
+                      url,
+                      params=None,
+                      data=None,
+                      files=None,
+                      json_data=None,
+                      timeout=None,
+                      headers=None):
+        try:
+            request(url=url,
+                    params=params,
+                    data=data,
+                    files=files,
+                    json_data=json_data,
+                    timeout=timeout,
+                    headers=headers,
+                    session=self.retry_session)
+        except Exception as e:
+            params = {'url': url,
+                      'params': params,
+                      'data': data,
+                      'files': files,
+                      'json_data': json_data,
+                      'timeout': timeout,
+                      'headers': headers}
+            self._exceptions += 1
+            logger.debug('Error making request url: %s, params: params', url, params, e)
+        finally:
+            self._done += 1
 
     @property
     def worker(self):
@@ -45,15 +88,15 @@ class ThreadedTransportMixin(object):
                    timeout=None,
                    headers=None):
         """Call request with a post."""
-        return self.worker.queue(self.post,
-                                 url,
+        return self.worker.queue(self.queue_request,
+                                 request=self.post,
+                                 url=url,
                                  params=params,
                                  data=data,
                                  files=files,
                                  json_data=json_data,
                                  timeout=timeout,
-                                 headers=headers,
-                                 session=self.retry_session)
+                                 headers=headers)
 
     def async_patch(self,
                     url,
@@ -64,15 +107,15 @@ class ThreadedTransportMixin(object):
                     timeout=None,
                     headers=None):
         """Call request with a patch."""
-        return self.worker.queue(self.patch,
-                                 url,
+        return self.worker.queue(self.queue_request,
+                                 request=self.patch,
+                                 url=url,
                                  params=params,
                                  data=data,
                                  files=files,
                                  json_data=json_data,
                                  timeout=timeout,
-                                 headers=headers,
-                                 session=self.retry_session)
+                                 headers=headers)
 
     def async_delete(self,
                      url,
@@ -83,15 +126,15 @@ class ThreadedTransportMixin(object):
                      timeout=None,
                      headers=None):
         """Call request with a delete."""
-        return self.worker.queue(self.delete,
-                                 url,
+        return self.worker.queue(self.queue_request,
+                                 request=self.delete,
+                                 url=url,
                                  params=params,
                                  data=data,
                                  files=files,
                                  json_data=json_data,
                                  timeout=timeout,
-                                 headers=headers,
-                                 session=self.retry_session)
+                                 headers=headers)
 
     def async_put(self,
                   url,
@@ -102,12 +145,12 @@ class ThreadedTransportMixin(object):
                   timeout=None,
                   headers=None):
         """Call request with a put."""
-        return self.worker.queue(self.put,
-                                 url,
+        return self.worker.queue(self.queue_request,
+                                 request=self.put,
+                                 url=url,
                                  params=params,
                                  data=data,
                                  files=files,
                                  json_data=json_data,
                                  timeout=timeout,
-                                 headers=headers,
-                                 session=self.retry_session)
+                                 headers=headers)
