@@ -33,6 +33,10 @@ class DummyTransport(ThreadedTransportMixin):
         time.sleep(self.delay)
         self.queue.append(('put', url))
 
+    def upload(self, url, **kwargs):
+        time.sleep(self.delay)
+        self.queue.append(('upload', url))
+
 
 class ExceptionTransport(ThreadedTransportMixin):
     def __init__(self, delay=0):
@@ -53,6 +57,10 @@ class ExceptionTransport(ThreadedTransportMixin):
         raise requests.exceptions.HTTPError('error')
 
     def put(self, **kwargs):
+        time.sleep(self.delay)
+        raise requests.exceptions.HTTPError('error')
+
+    def upload(self, **kwargs):
         time.sleep(self.delay)
         raise requests.exceptions.HTTPError('error')
 
@@ -103,6 +111,16 @@ class TestThreadedTransport(TestCase):
                                         ('delete', 'url_delete')]
         assert self.transport.done == 4
         assert self.transport.exceptions == 0
+
+        self.transport.async_upload(url='url_upload', files=['file'], files_size=200)
+        time.sleep(0.001)
+        assert self.transport.queue == [('post', 'url_post'),
+                                        ('patch', 'url_patch'),
+                                        ('put', 'url_put'),
+                                        ('delete', 'url_delete'),
+                                        ('upload', 'url_upload')]
+        assert self.transport.done == 5
+        assert self.transport.exceptions == 0
         assert self.transport.worker.is_alive() is True
 
     def test_async_exceptions(self):
@@ -125,6 +143,11 @@ class TestThreadedTransport(TestCase):
         time.sleep(0.001)
         assert self.exception_transport.done == 4
         assert self.exception_transport.exceptions == 4
+
+        self.exception_transport.async_delete(url='url_upload')
+        time.sleep(0.001)
+        assert self.exception_transport.done == 5
+        assert self.exception_transport.exceptions == 5
 
     def test_worker_atexit_handle_queue_before_stopping(self):
         # Transport

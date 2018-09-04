@@ -11,6 +11,7 @@ from polyaxon_client.workers.queue_worker import QueueWorker
 
 class ThreadedTransportMixin(object):
     """Threads operations transport."""
+
     @property
     def done(self):
         if hasattr(self, '_done'):
@@ -41,34 +42,12 @@ class ThreadedTransportMixin(object):
             self._exceptions = 0
         return self._retry_session
 
-    def queue_request(self,
-                      request,
-                      url,
-                      params=None,
-                      data=None,
-                      files=None,
-                      json_data=None,
-                      timeout=None,
-                      headers=None):
+    def queue_request(self, request, url, **kwargs):
         try:
-            request(url=url,
-                    params=params,
-                    data=data,
-                    files=files,
-                    json_data=json_data,
-                    timeout=timeout,
-                    headers=headers,
-                    session=self.retry_session)
+            request(url=url, session=self.retry_session, **kwargs)
         except Exception as e:
-            params = {'url': url,
-                      'params': params,
-                      'data': data,
-                      'files': files,
-                      'json_data': json_data,
-                      'timeout': timeout,
-                      'headers': headers}
             self._exceptions += 1
-            logger.debug('Error making request url: %s, params: params', url, params, e)
+            logger.debug('Error making request url: %s, params: params %s, exp: e', url, kwargs, e)
         finally:
             self._done += 1
 
@@ -87,7 +66,7 @@ class ThreadedTransportMixin(object):
                    json_data=None,
                    timeout=None,
                    headers=None):
-        """Call request with a post."""
+        """Async Call request with a post."""
         return self.worker.queue(self.queue_request,
                                  request=self.post,
                                  url=url,
@@ -106,7 +85,7 @@ class ThreadedTransportMixin(object):
                     json_data=None,
                     timeout=None,
                     headers=None):
-        """Call request with a patch."""
+        """Async Call request with a patch."""
         return self.worker.queue(self.queue_request,
                                  request=self.patch,
                                  url=url,
@@ -125,7 +104,7 @@ class ThreadedTransportMixin(object):
                      json_data=None,
                      timeout=None,
                      headers=None):
-        """Call request with a delete."""
+        """Async Call request with a delete."""
         return self.worker.queue(self.queue_request,
                                  request=self.delete,
                                  url=url,
@@ -144,13 +123,31 @@ class ThreadedTransportMixin(object):
                   json_data=None,
                   timeout=None,
                   headers=None):
-        """Call request with a put."""
+        """Async Call request with a put."""
         return self.worker.queue(self.queue_request,
                                  request=self.put,
                                  url=url,
                                  params=params,
                                  data=data,
                                  files=files,
+                                 json_data=json_data,
+                                 timeout=timeout,
+                                 headers=headers)
+
+    def async_upload(self,
+                     url,
+                     files,
+                     files_size,
+                     params=None,
+                     json_data=None,
+                     timeout=3600,
+                     headers=None):
+        return self.worker.queue(self.queue_request,
+                                 request=self.upload,
+                                 url=url,
+                                 files=files,
+                                 files_size=files_size,
+                                 params=params,
                                  json_data=json_data,
                                  timeout=timeout,
                                  headers=headers)

@@ -111,7 +111,9 @@ class HttpTransportMixin(object):
                params=None,
                json_data=None,
                timeout=3600,
+               headers=None,
                session=None):
+
         if files_size > self.MAX_UPLOAD_SIZE:
             raise PolyaxonShouldExitError(
                 "Files too large to sync, please keep it under {}.\n"
@@ -127,15 +129,18 @@ class HttpTransportMixin(object):
         multipart_encoder = MultipartEncoder(
             fields=files
         )
+        request_headers = headers or {}
+        request_headers.update({"Content-Type": multipart_encoder.content_type})
 
         # Attach progress bar
         progress_callback, progress_bar = self.create_progress_callback(multipart_encoder)
         multipart_encoder_monitor = MultipartEncoderMonitor(multipart_encoder, progress_callback)
+
         try:
             response = self.put(url=url,
                                 params=params,
                                 data=multipart_encoder_monitor,
-                                headers={"Content-Type": multipart_encoder.content_type},
+                                headers=request_headers,
                                 timeout=timeout,
                                 session=session)
         finally:
