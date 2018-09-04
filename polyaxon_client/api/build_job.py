@@ -25,12 +25,17 @@ class BuildJobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving build')
             return None
 
-    def update_build(self, username, project_name, job_id, patch_dict):
+    def update_build(self, username, project_name, job_id, patch_dict, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'builds',
                                       job_id)
+
+        if background:
+            self.transport.async_patch(request_url, json_data=patch_dict)
+            return None
+
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
@@ -38,12 +43,17 @@ class BuildJobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while updating build')
             return None
 
-    def delete_build(self, username, project_name, job_id):
+    def delete_build(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'builds',
                                       job_id)
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:
@@ -65,39 +75,54 @@ class BuildJobApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving build statuses')
             return None
 
-    def stop(self, username, project_name, job_id):
+    def stop(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'builds',
                                       job_id,
                                       'stop')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping build')
             return None
 
-    def bookmark(self, username, project_name, job_id):
+    def bookmark(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'builds',
                                       job_id,
                                       'bookmark')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking build')
             return None
 
-    def unbookmark(self, username, project_name, job_id):
+    def unbookmark(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'builds',
                                       job_id,
                                       'unbookmark')
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:

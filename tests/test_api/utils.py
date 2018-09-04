@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import time
 from unittest import TestCase
+from unittest.mock import patch
 
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport import Transport
@@ -28,3 +30,9 @@ class TestBaseApi(TestCase):
 
     def set_schema_response(self):
         self.api_config.schema_response = True
+
+    def assert_async_call(self, api_handler_call, method):
+        with patch.object(Transport, method) as mock_fct:
+            api_handler_call()
+        time.sleep(0.001)
+        assert mock_fct.call_count == 1

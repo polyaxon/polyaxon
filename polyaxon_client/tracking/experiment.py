@@ -18,8 +18,7 @@ class Experiment(BaseTracker):
                  track_logs=None,
                  track_git=None,
                  track_env=None,
-                 auto_status=None,
-                 schema_response=None):
+                 auto_status=None):
         super(Experiment, self).__init__(client=client,
                                          track_logs=track_logs,
                                          track_git=track_git,
@@ -27,7 +26,6 @@ class Experiment(BaseTracker):
         self.project = project
         self.experiment_id = experiment_id
         self.auto_status = auto_status
-        self.schema_response = schema_response
 
     def log_metrics(self, **metrics):
         pass

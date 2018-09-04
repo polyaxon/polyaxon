@@ -101,6 +101,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.update_experiment('username', 'project_name', 1, {'name': 'new'})
         assert result == exp
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.update_experiment(
+                'username', 'project_name', 1, {'name': 'new'}, background=True),
+            method='patch')
+
     @httpretty.activate
     def test_delete_experiment(self):
         httpretty.register_uri(
@@ -116,6 +122,12 @@ class TestExperimentApi(TestBaseApi):
             status=204)
         result = self.api_handler.delete_experiment('username', 'project_name', 1)
         assert result.status_code == 204
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.delete_experiment(
+                'username', 'project_name', 1, background=True),
+            method='delete')
 
     @httpretty.activate
     def test_get_experiment_statuses_and_latest_code(self):
@@ -213,6 +225,12 @@ class TestExperimentApi(TestBaseApi):
                                                   values={'accuracy': 0.9})
         assert response == exp
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_metric(
+                'username', 'project_name', 1, values={'accuracy': 0.9}, background=True),
+            method='post')
+
     @httpretty.activate
     def test_list_experiment_jobs(self):
         job_uuid = uuid.uuid4().hex
@@ -300,6 +318,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.restart('username', 'project_name', 1)
         assert result == exp
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.restart(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_restart_experiment_with_config(self):
         exp = ExperimentConfig(config={}).to_dict()
@@ -327,6 +351,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.restart('username', 'project_name', 1, config, update_code=True)
         assert result == exp
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.restart(
+                'username', 'project_name', 1, config, background=True),
+            method='post')
+
     @httpretty.activate
     def test_resume_experiment(self):
         exp = ExperimentConfig(config={}).to_dict()
@@ -352,6 +382,12 @@ class TestExperimentApi(TestBaseApi):
         self.set_raw_response()
         result = self.api_handler.resume('username', 'project_name', 1)
         assert result == exp
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.resume(
+                'username', 'project_name', 1, background=True),
+            method='post')
 
     @httpretty.activate
     def test_resume_experiment_with_config(self):
@@ -380,6 +416,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.resume('username', 'project_name', 1, config)
         assert result == exp
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.resume(
+                'username', 'project_name', 1, config, background=True),
+            method='post')
+
     @httpretty.activate
     def test_copy_experiment(self):
         exp = ExperimentConfig(config={}).to_dict()
@@ -405,6 +447,12 @@ class TestExperimentApi(TestBaseApi):
         self.set_raw_response()
         result = self.api_handler.copy('username', 'project_name', 1)
         assert result == exp
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.copy(
+                'username', 'project_name', 1, background=True),
+            method='post')
 
     @httpretty.activate
     def test_copy_experiment_with_config(self):
@@ -433,6 +481,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.copy('username', 'project_name', 1, config)
         assert result == exp
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.copy(
+                'username', 'project_name', 1, config, background=True),
+            method='post')
+
     @httpretty.activate
     def test_stop_experiment(self):
         httpretty.register_uri(
@@ -449,6 +503,12 @@ class TestExperimentApi(TestBaseApi):
             status=200)
         result = self.api_handler.stop('username', 'project_name', 1)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop(
+                'username', 'project_name', 1, background=True),
+            method='post')
 
     @httpretty.activate
     def test_experiment_logs(self):
@@ -488,6 +548,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.start_tensorboard('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_tensorboard(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_start_experiment_tensorboard_with_config(self):
         obj = {}
@@ -508,6 +574,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.start_tensorboard('username', 'project_name', 1, obj)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_tensorboard(
+                'username', 'project_name', 1, obj, background=True),
+            method='post')
+
     @httpretty.activate
     def test_stop_experiment_tensorboard(self):
         httpretty.register_uri(
@@ -526,6 +598,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.stop_tensorboard('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop_tensorboard(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_bookmark_experiment(self):
         httpretty.register_uri(
@@ -543,6 +621,12 @@ class TestExperimentApi(TestBaseApi):
         result = self.api_handler.bookmark('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.bookmark(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_unbookmark_experiment(self):
         httpretty.register_uri(
@@ -559,3 +643,9 @@ class TestExperimentApi(TestBaseApi):
             status=200)
         result = self.api_handler.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.unbookmark(
+                'username', 'project_name', 1, background=True),
+            method='delete')

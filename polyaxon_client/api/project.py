@@ -46,8 +46,13 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while creating project.')
             return None
 
-    def update_project(self, username, project_name, patch_dict):
+    def update_project(self, username, project_name, patch_dict, background=False):
         request_url = self._build_url(self._get_http_url(), username, project_name)
+
+        if background:
+            self.transport.async_patch(request_url, json_data=patch_dict)
+            return None
+
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=ProjectConfig)
@@ -55,8 +60,13 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while updating project.')
             return None
 
-    def delete_project(self, username, project_name):
+    def delete_project(self, username, project_name, background=False):
         request_url = self._build_url(self._get_http_url(), username, project_name)
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             response = self.transport.delete(request_url)
             return response
@@ -64,19 +74,17 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while deleting project.')
             return None
 
-    def upload_repo(self, username, project_name, files, files_size=None, upload_async=True):
+    def upload_repo(self, username, project_name, files, files_size=None, background=False):
         """Uploads code data related for this project from the current dir."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'repo', 'upload')
 
-        json_data = None
-        if upload_async is False:
-            json_data = {'async': upload_async}
+        if background:
+            self.transport.async_upload(request_url, files=files, files_size=files_size)
+            return None
+
         try:
-            response = self.transport.upload(request_url,
-                                             files=files,
-                                             files_size=files_size,
-                                             json_data=json_data)
+            response = self.transport.upload(request_url, files=files, files_size=files_size)
             return response
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating project repo.')
@@ -113,11 +121,18 @@ class ProjectApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving experiment groups.')
             return []
 
-    def create_experiment_group(self, username, project_name, experiment_group_config):
+    def create_experiment_group(self,
+                                username,
+                                project_name,
+                                experiment_group_config,
+                                background=False):
         experiment_group_config = self.validate_config(config=experiment_group_config,
                                                        config_schema=ExperimentGroupConfig)
-        request_url = self._build_url(
-            self._get_http_url(), username, project_name, 'groups')
+        request_url = self._build_url(self._get_http_url(), username, project_name, 'groups')
+
+        if background:
+            self.transport.async_post(request_url, json_data=experiment_group_config.to_dict())
+            return None
 
         try:
             response = self.transport.post(request_url, json_data=experiment_group_config.to_dict())
@@ -160,10 +175,14 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiments.')
             return []
 
-    def create_experiment(self, username, project_name, experiment_config):
+    def create_experiment(self, username, project_name, experiment_config, background=False):
         experiment_config = self.validate_config(config=experiment_config,
                                                  config_schema=ExperimentConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
+
+        if background:
+            self.transport.async_post(request_url, json_data=experiment_config.to_dict())
+            return None
 
         try:
             response = self.transport.post(request_url, json_data=experiment_config.to_dict())
@@ -189,9 +208,13 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
             return []
 
-    def create_job(self, username, project_name, job_config):
+    def create_job(self, username, project_name, job_config, background=False):
         job_config = self.validate_config(config=job_config, config_schema=JobConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'jobs')
+
+        if background:
+            self.transport.async_post(request_url, json_data=job_config.to_dict())
+            return None
 
         try:
             response = self.transport.post(request_url, json_data=job_config.to_dict())
@@ -217,9 +240,13 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving build jobs.')
             return []
 
-    def create_build(self, username, project_name, build_config):
+    def create_build(self, username, project_name, build_config, background=False):
         build_config = self.validate_config(config=build_config, config_schema=JobConfig)
         request_url = self._build_url(self._get_http_url(), username, project_name, 'builds')
+
+        if background:
+            self.transport.async_post(request_url, json_data=build_config.to_dict())
+            return None
 
         try:
             response = self.transport.post(request_url, json_data=build_config.to_dict())
@@ -246,47 +273,62 @@ class ProjectApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving tensorboard jobs.')
             return []
 
-    def start_tensorboard(self, username, project_name, job_config=None):
+    def start_tensorboard(self, username, project_name, job_config=None, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'tensorboard',
                                       'start')
 
+        job_config = {'config': job_config} if job_config else {}
+
+        if background:
+            self.transport.async_post(request_url, json_data=job_config)
+            return None
+
         try:
-            job_config = {'config': job_config} if job_config else {}
             return self.transport.post(request_url, json_data=job_config)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while starting tensorboard.')
             return None
 
-    def stop_tensorboard(self, username, project_name):
+    def stop_tensorboard(self, username, project_name, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'tensorboard',
                                       'stop')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
-    def start_notebook(self, username, project_name, job_config=None):
+    def start_notebook(self, username, project_name, job_config=None, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'notebook',
                                       'start')
 
+        job_config = {'config': job_config} if job_config else {}
+
+        if background:
+            self.transport.async_post(request_url, json_data=job_config)
+            return None
+
         try:
-            job_config = {'config': job_config} if job_config else {}
             return self.transport.post(request_url, json_data=job_config)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while starting notebook.')
             return None
 
-    def stop_notebook(self, username, project_name, commit=True):
+    def stop_notebook(self, username, project_name, commit=True, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -295,28 +337,43 @@ class ProjectApi(BaseApiHandler):
         json_data = None
         if commit is False:
             json_data = {'commit': commit}
+
+        if background:
+            self.transport.async_post(request_url, json_data=json_data)
+            return None
+
         try:
             return self.transport.post(request_url, json_data=json_data)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping notebook.')
             return None
 
-    def bookmark(self, username, project_name):
+    def bookmark(self, username, project_name, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'bookmark')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking project.')
             return None
 
-    def unbookmark(self, username, project_name):
+    def unbookmark(self, username, project_name, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'unbookmark')
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:

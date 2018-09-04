@@ -2,17 +2,19 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
+import json
+import time
+import uuid
 from collections import Mapping
+from unittest.mock import patch
 
 import httpretty
-import json
-import uuid
-
-from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.build_job import BuildJobApi
 from polyaxon_client.schemas import JobConfig, JobStatusConfig
+from polyaxon_client.transport import Transport
+from tests.test_api.utils import TestBaseApi
 
 
 class TestBuildJobApi(TestBaseApi):
@@ -72,6 +74,12 @@ class TestBuildJobApi(TestBaseApi):
         result = self.api_handler.update_build('username', 'project_name', 1, {'name': 'new'})
         assert result == job
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.update_build(
+                'username', 'project_name', 1, {'name': 'new'}, background=True),
+            method='patch')
+
     @httpretty.activate
     def test_delete_build(self):
         httpretty.register_uri(
@@ -87,6 +95,12 @@ class TestBuildJobApi(TestBaseApi):
             status=204)
         result = self.api_handler.delete_build('username', 'project_name', 1)
         assert result.status_code == 204
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.delete_build(
+                'username', 'project_name', 1, background=True),
+            method='delete')
 
     @httpretty.activate
     def test_get_job_statuses(self):
@@ -137,6 +151,12 @@ class TestBuildJobApi(TestBaseApi):
         result = self.api_handler.stop('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_bookmark_build(self):
         httpretty.register_uri(
@@ -154,6 +174,12 @@ class TestBuildJobApi(TestBaseApi):
         result = self.api_handler.bookmark('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.bookmark(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_unbookmark_build(self):
         httpretty.register_uri(
@@ -170,6 +196,12 @@ class TestBuildJobApi(TestBaseApi):
             status=200)
         result = self.api_handler.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.unbookmark(
+                'username', 'project_name', 1, background=True),
+            method='delete')
 
     @httpretty.activate
     def test_job_logs(self):

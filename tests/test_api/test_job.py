@@ -72,6 +72,12 @@ class TestJobApi(TestBaseApi):
         result = self.api_handler.update_job('username', 'project_name', 1, {'name': 'new'})
         assert result == job
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.update_job(
+                'username', 'project_name', 1, {'name': 'new'}, background=True),
+            method='patch')
+
     @httpretty.activate
     def test_delete_job(self):
         httpretty.register_uri(
@@ -87,6 +93,12 @@ class TestJobApi(TestBaseApi):
             status=204)
         result = self.api_handler.delete_job('username', 'project_name', 1)
         assert result.status_code == 204
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.delete_job(
+                'username', 'project_name', 1, background=True),
+            method='delete')
 
     @httpretty.activate
     def test_get_job_statuses(self):
@@ -146,6 +158,12 @@ class TestJobApi(TestBaseApi):
         result = self.api_handler.restart('username', 'project_name', 1)
         assert result == job
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.restart(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_restart_job_with_config_and_latest_code(self):
         job = JobConfig(config={}).to_dict()
@@ -173,6 +191,12 @@ class TestJobApi(TestBaseApi):
         result = self.api_handler.restart('username', 'project_name', 1, config, update_code=True)
         assert result == job
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.restart(
+                'username', 'project_name', 1, config, background=True),
+            method='post')
+
     @httpretty.activate
     def test_resume_job(self):
         job = JobConfig(config={}).to_dict()
@@ -198,6 +222,12 @@ class TestJobApi(TestBaseApi):
         self.set_raw_response()
         result = self.api_handler.resume('username', 'project_name', 1)
         assert result == job
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.restart(
+                'username', 'project_name', 1, background=True),
+            method='post')
 
     @httpretty.activate
     def test_resume_job_with_config(self):
@@ -226,6 +256,12 @@ class TestJobApi(TestBaseApi):
         result = self.api_handler.resume('username', 'project_name', 1, config)
         assert result == job
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.resume(
+                'username', 'project_name', 1, config, background=True),
+            method='post')
+
     @httpretty.activate
     def test_copy_job(self):
         job = JobConfig(config={}).to_dict()
@@ -251,6 +287,12 @@ class TestJobApi(TestBaseApi):
         self.set_raw_response()
         result = self.api_handler.copy('username', 'project_name', 1)
         assert result == job
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.copy(
+                'username', 'project_name', 1, background=True),
+            method='post')
 
     @httpretty.activate
     def test_copy_job_with_config(self):
@@ -279,6 +321,12 @@ class TestJobApi(TestBaseApi):
         result = self.api_handler.copy('username', 'project_name', 1, config)
         assert result == job
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.copy(
+                'username', 'project_name', 1, config, background=True),
+            method='post')
+
     @httpretty.activate
     def test_stop_job(self):
         httpretty.register_uri(
@@ -295,6 +343,12 @@ class TestJobApi(TestBaseApi):
             status=200)
         result = self.api_handler.stop('username', 'project_name', 1)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop(
+                'username', 'project_name', 1, background=True),
+            method='post')
 
     @httpretty.activate
     def test_job_logs(self):
@@ -333,6 +387,12 @@ class TestJobApi(TestBaseApi):
         result = self.api_handler.bookmark('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.bookmark(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_unbookmark_job(self):
         httpretty.register_uri(
@@ -349,3 +409,9 @@ class TestJobApi(TestBaseApi):
             status=200)
         result = self.api_handler.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.unbookmark(
+                'username', 'project_name', 1, background=True),
+            method='delete')

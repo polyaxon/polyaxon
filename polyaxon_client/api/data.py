@@ -55,8 +55,13 @@ class DatasetApi(BaseApiHandler):
             logger.error('Could not create data %s', e.message)
             return None
 
-    def delete_dataset(self, data_uuid):
+    def delete_dataset(self, data_uuid, background=False):
         request_url = self._get_http_url(data_uuid)
+
+        if background:
+            self.transport.async_delete(request_url, timeout=60)
+            return None
+
         try:
             return self.transport.delete(request_url, timeout=60)
         except PolyaxonException as e:

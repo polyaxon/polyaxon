@@ -40,12 +40,22 @@ class ExperimentApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiment.')
             return None
 
-    def update_experiment(self, username, project_name, experiment_id, patch_dict):
+    def update_experiment(self,
+                          username,
+                          project_name,
+                          experiment_id,
+                          patch_dict,
+                          background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
                                       experiment_id)
+
+        if background:
+            self.transport.async_patch(request_url, json_data=patch_dict)
+            return None
+
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
@@ -53,12 +63,17 @@ class ExperimentApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while updating experiment.')
             return None
 
-    def delete_experiment(self, username, project_name, experiment_id):
+    def delete_experiment(self, username, project_name, experiment_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
                                       experiment_id)
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:
@@ -95,13 +110,18 @@ class ExperimentApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving experiment status.')
             return None
 
-    def create_metric(self, username, project_name, experiment_id, values):
+    def create_metric(self, username, project_name, experiment_id, values, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
                                       experiment_id,
                                       'metrics')
+
+        if background:
+            self.transport.async_post(request_url, data={'values': values})
+            return None
+
         try:
             response = self.transport.post(request_url, data={'values': values})
             return self.prepare_results(response_json=response.json(),
@@ -127,7 +147,13 @@ class ExperimentApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
             return []
 
-    def restart(self, username, project_name, experiment_id, config=None, update_code=None):
+    def restart(self,
+                username,
+                project_name,
+                experiment_id,
+                config=None,
+                update_code=None,
+                background=False):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -142,6 +168,10 @@ class ExperimentApi(BaseApiHandler):
         if update_code:
             data['update_code'] = update_code
 
+        if background:
+            self.transport.async_post(request_url, json_data=data)
+            return None
+
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
@@ -150,7 +180,13 @@ class ExperimentApi(BaseApiHandler):
                 e=e, log_message='Error while restarting the experiment.')
             return None
 
-    def resume(self, username, project_name, experiment_id, config=None, update_code=None):
+    def resume(self,
+               username,
+               project_name,
+               experiment_id,
+               config=None,
+               update_code=None,
+               background=False):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -165,6 +201,10 @@ class ExperimentApi(BaseApiHandler):
         if update_code:
             data['update_code'] = update_code
 
+        if background:
+            self.transport.async_post(request_url, json_data=data)
+            return None
+
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
@@ -172,7 +212,13 @@ class ExperimentApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while resuming the experiment.')
             return None
 
-    def copy(self, username, project_name, experiment_id, config=None, update_code=None):
+    def copy(self,
+             username,
+             project_name,
+             experiment_id,
+             config=None,
+             update_code=None,
+             background=False):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -187,6 +233,10 @@ class ExperimentApi(BaseApiHandler):
         if update_code:
             data['update_code'] = update_code
 
+        if background:
+            self.transport.async_post(request_url, json_data=data)
+            return None
+
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
@@ -194,13 +244,18 @@ class ExperimentApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while copying the experiment.')
             return None
 
-    def stop(self, username, project_name, experiment_id):
+    def stop(self, username, project_name, experiment_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
                                       experiment_id,
                                       'stop')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
@@ -250,7 +305,12 @@ class ExperimentApi(BaseApiHandler):
                                       'logs')
         self.transport.socket(request_url, message_handler=message_handler)
 
-    def start_tensorboard(self, username, project_name, experiment_id, job_config=None):
+    def start_tensorboard(self,
+                          username,
+                          project_name,
+                          experiment_id,
+                          job_config=None,
+                          background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -259,14 +319,19 @@ class ExperimentApi(BaseApiHandler):
                                       'tensorboard',
                                       'start')
 
+        job_config = {'config': job_config} if job_config else {}
+
+        if background:
+            self.transport.async_post(request_url, json_data=job_config)
+            return None
+
         try:
-            job_config = {'config': job_config} if job_config else {}
             return self.transport.post(request_url, json_data=job_config)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while starting tensorboard.')
             return None
 
-    def stop_tensorboard(self, username, project_name, experiment_id):
+    def stop_tensorboard(self, username, project_name, experiment_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -274,32 +339,47 @@ class ExperimentApi(BaseApiHandler):
                                       experiment_id,
                                       'tensorboard',
                                       'stop')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
-    def bookmark(self, username, project_name, experiment_id):
+    def bookmark(self, username, project_name, experiment_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
                                       experiment_id,
                                       'bookmark')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking experiment.')
             return None
 
-    def unbookmark(self, username, project_name, experiment_id):
+    def unbookmark(self, username, project_name, experiment_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'experiments',
                                       experiment_id,
                                       'unbookmark')
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:

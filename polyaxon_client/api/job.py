@@ -25,12 +25,17 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving job.')
             return None
 
-    def update_job(self, username, project_name, job_id, patch_dict):
+    def update_job(self, username, project_name, job_id, patch_dict, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
                                       job_id)
+
+        if background:
+            self.transport.async_patch(request_url, json_data=patch_dict)
+            return None
+
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
@@ -38,12 +43,17 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while updating job.')
             return None
 
-    def delete_job(self, username, project_name, job_id):
+    def delete_job(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
                                       job_id)
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:
@@ -64,7 +74,13 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving job statuses.')
             return None
 
-    def restart(self, username, project_name, job_id, config=None, update_code=None):
+    def restart(self,
+                username,
+                project_name,
+                job_id,
+                config=None,
+                update_code=None,
+                background=False):
         """Restart an job."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -79,6 +95,10 @@ class JobApi(BaseApiHandler):
         if update_code:
             data['update_code'] = update_code
 
+        if background:
+            self.transport.async_post(request_url, json_data=data)
+            return None
+
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
@@ -86,7 +106,13 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while restarting the job.')
             return None
 
-    def resume(self, username, project_name, job_id, config=None, update_code=None):
+    def resume(self,
+               username,
+               project_name,
+               job_id,
+               config=None,
+               update_code=None,
+               background=False):
         """Resume a job."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -101,6 +127,10 @@ class JobApi(BaseApiHandler):
         if update_code:
             data['update_code'] = update_code
 
+        if background:
+            self.transport.async_post(request_url, json_data=data)
+            return None
+
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
@@ -108,7 +138,13 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while resuming the job.')
             return None
 
-    def copy(self, username, project_name, job_id, config=None, update_code=None):
+    def copy(self,
+             username,
+             project_name,
+             job_id,
+             config=None,
+             update_code=None,
+             background=False):
         """Copy an job."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -123,6 +159,10 @@ class JobApi(BaseApiHandler):
         if update_code:
             data['update_code'] = update_code
 
+        if background:
+            self.transport.async_post(request_url, json_data=data)
+            return None
+
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
@@ -130,39 +170,54 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while copying the job.')
             return None
 
-    def stop(self, username, project_name, job_id):
+    def stop(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
                                       job_id,
                                       'stop')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping job.')
             return None
 
-    def bookmark(self, username, project_name, job_id):
+    def bookmark(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
                                       job_id,
                                       'bookmark')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking job.')
             return None
 
-    def unbookmark(self, username, project_name, job_id):
+    def unbookmark(self, username, project_name, job_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'jobs',
                                       job_id,
                                       'unbookmark')
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:

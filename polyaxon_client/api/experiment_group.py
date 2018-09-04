@@ -54,12 +54,21 @@ class ExperimentGroupApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
 
-    def update_experiment_group(self, username, project_name, group_id, patch_dict):
+    def update_experiment_group(self,
+                                username,
+                                project_name,
+                                group_id,
+                                patch_dict,
+                                background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
                                       group_id)
+
+        if background:
+            self.transport.async_patch(request_url, json_data=patch_dict)
+            return None
 
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
@@ -68,12 +77,17 @@ class ExperimentGroupApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while updating project')
             return None
 
-    def delete_experiment_group(self, username, project_name, group_id):
+    def delete_experiment_group(self, username, project_name, group_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
                                       group_id)
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             response = self.transport.delete(request_url)
             return response
@@ -97,7 +111,7 @@ class ExperimentGroupApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving group statuses')
             return None
 
-    def stop(self, username, project_name, group_id, pending=False):
+    def stop(self, username, project_name, group_id, pending=False, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -108,6 +122,10 @@ class ExperimentGroupApi(BaseApiHandler):
         if pending is True:
             json_data = {'pending': pending}
 
+        if background:
+            self.transport.async_post(request_url, json_data=json_data)
+            return None
+
         try:
             return self.transport.post(request_url, json_data=json_data)
         except PolyaxonException as e:
@@ -115,7 +133,12 @@ class ExperimentGroupApi(BaseApiHandler):
                 e=e, log_message='Error while stopping experiments in group')
             return None
 
-    def start_tensorboard(self, username, project_name, group_id, job_config=None):
+    def start_tensorboard(self,
+                          username,
+                          project_name,
+                          group_id,
+                          job_config=None,
+                          background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -124,14 +147,19 @@ class ExperimentGroupApi(BaseApiHandler):
                                       'tensorboard',
                                       'start')
 
+        job_config = {'config': job_config} if job_config else {}
+
+        if background:
+            self.transport.async_post(request_url, json_data=job_config)
+            return None
+
         try:
-            job_config = {'config': job_config} if job_config else {}
             return self.transport.post(request_url, json_data=job_config)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while starting tensorboard')
             return None
 
-    def stop_tensorboard(self, username, project_name, group_id):
+    def stop_tensorboard(self, username, project_name, group_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -139,32 +167,47 @@ class ExperimentGroupApi(BaseApiHandler):
                                       group_id,
                                       'tensorboard',
                                       'stop')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
 
-    def bookmark(self, username, project_name, group_id):
+    def bookmark(self, username, project_name, group_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
                                       group_id,
                                       'bookmark')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
         try:
             return self.transport.post(request_url)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking group')
             return None
 
-    def unbookmark(self, username, project_name, group_id):
+    def unbookmark(self, username, project_name, group_id, background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'groups',
                                       group_id,
                                       'unbookmark')
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
         try:
             return self.transport.delete(request_url)
         except PolyaxonException as e:

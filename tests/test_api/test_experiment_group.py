@@ -176,6 +176,12 @@ class TestExperimentGroupApi(TestBaseApi):
             'username', 'project_name', 1, {'content': 'new'})
         assert result == obj
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.update_experiment_group(
+                'username', 'project_name', 1, {'content': 'new'}, background=True),
+            method='patch')
+
     @httpretty.activate
     def test_delete_experiment_group(self):
         httpretty.register_uri(
@@ -191,6 +197,12 @@ class TestExperimentGroupApi(TestBaseApi):
             status=204)
         result = self.api_handler.delete_experiment_group('username', 'project_name', 1)
         assert result.status_code == 204
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.delete_experiment_group(
+                'username', 'project_name', 1, background=True),
+            method='delete')
 
     @httpretty.activate
     def test_get_experiment_group_statuses(self):
@@ -241,6 +253,12 @@ class TestExperimentGroupApi(TestBaseApi):
         result = self.api_handler.stop('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_stop_experiment_group_pending(self):
         httpretty.register_uri(
@@ -257,6 +275,12 @@ class TestExperimentGroupApi(TestBaseApi):
             status=200)
         result = self.api_handler.stop('username', 'project_name', 1, pending=True)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop(
+                'username', 'project_name', 1, pending=True, background=True),
+            method='post')
 
     @httpretty.activate
     def test_start_experiment_group_tensorboard(self):
@@ -275,6 +299,12 @@ class TestExperimentGroupApi(TestBaseApi):
             status=200)
         result = self.api_handler.start_tensorboard('username', 'project_name', 1)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_tensorboard(
+                'username', 'project_name', 1, background=True),
+            method='post')
 
     @httpretty.activate
     def test_start_experiment_group_tensorboard_with_config(self):
@@ -296,6 +326,12 @@ class TestExperimentGroupApi(TestBaseApi):
         result = self.api_handler.start_tensorboard('username', 'project_name', 1, obj)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_tensorboard(
+                'username', 'project_name', 1, obj, background=True),
+            method='post')
+
     @httpretty.activate
     def test_stop_experiment_group_tensorboard(self):
         httpretty.register_uri(
@@ -314,6 +350,12 @@ class TestExperimentGroupApi(TestBaseApi):
         result = self.api_handler.stop_tensorboard('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop_tensorboard(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_bookmark_experiment(self):
         httpretty.register_uri(
@@ -331,6 +373,12 @@ class TestExperimentGroupApi(TestBaseApi):
         result = self.api_handler.bookmark('username', 'project_name', 1)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.bookmark(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
     @httpretty.activate
     def test_unbookmark_experiment(self):
         httpretty.register_uri(
@@ -347,3 +395,9 @@ class TestExperimentGroupApi(TestBaseApi):
             status=200)
         result = self.api_handler.unbookmark('username', 'project_name', 1)
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.unbookmark(
+                'username', 'project_name', 1, background=True),
+            method='delete')

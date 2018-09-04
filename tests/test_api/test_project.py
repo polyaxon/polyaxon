@@ -128,6 +128,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.update_project('user', 'project', {'name': 'new'})
         assert result == obj
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.update_project(
+                'user', 'project', {'name': 'new'}, background=True),
+            method='patch')
+
     @httpretty.activate
     def test_delete_project(self):
         httpretty.register_uri(
@@ -141,6 +147,12 @@ class TestProjectApi(TestBaseApi):
             status=204)
         result = self.api_handler.delete_project('user', 'project')
         assert result.status_code == 204
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.delete_project(
+                'user', 'project', background=True),
+            method='delete')
 
     @httpretty.activate
     def test_upload_repo(self):
@@ -161,28 +173,11 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.upload_repo('user', 'project', files=files, files_size=10)
         assert result.status_code == 204
 
-    @httpretty.activate
-    def test_upload_repo_synchronous(self):
-        httpretty.register_uri(
-            httpretty.PUT,
-            BaseApiHandler._build_url(
-                self.api_config.base_url,
-                '/',
-                'user',
-                'project',
-                'repo',
-                'upload'),
-            content_type='application/json',
-            status=204)
-        files = [('code', ('repo',
-                           open('./tests/fixtures_static/repo.tar.gz', 'rb'),
-                           'text/plain'))]
-        result = self.api_handler.upload_repo('user',
-                                              'project',
-                                              files=files,
-                                              files_size=10,
-                                              upload_async=False)
-        assert result.status_code == 204
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.upload_repo(
+                'user', 'project', files=files, files_size=10, background=True),
+            method='upload')
 
     @httpretty.activate
     def test_list_experiment_groups(self):
@@ -238,6 +233,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.create_experiment_group('user', 'project', obj)
         assert result == obj.to_dict()
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_experiment_group(
+                'user', 'project', obj, background=True),
+            method='post')
+
         # Test create with dict
         httpretty.register_uri(
             httpretty.POST,
@@ -260,6 +261,12 @@ class TestProjectApi(TestBaseApi):
         self.set_raw_response()
         result = self.api_handler.create_experiment_group('user', 'project', obj.to_dict())
         assert result == obj.to_dict()
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_experiment_group(
+                'user', 'project', obj.to_dict(), background=True),
+            method='post')
 
     @httpretty.activate
     def test_list_experiments(self):
@@ -408,6 +415,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.create_experiment('user', 'project', obj)
         assert result == obj.to_dict()
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_experiment(
+                'user', 'project', obj, background=True),
+            method='post')
+
         # Test create experiment with dict
         httpretty.register_uri(
             httpretty.POST,
@@ -430,6 +443,12 @@ class TestProjectApi(TestBaseApi):
         self.set_raw_response()
         result = self.api_handler.create_experiment('user', 'project', obj.to_dict())
         assert result == obj.to_dict()
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_experiment(
+                'user', 'project', obj.to_dict(), background=True),
+            method='post')
 
     @httpretty.activate
     def test_list_jobs(self):
@@ -541,6 +560,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.create_job('user', 'project', obj)
         assert result == obj.to_dict()
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_job(
+                'user', 'project', obj, background=True),
+            method='post')
+
         # Test create experiment with dict
         httpretty.register_uri(
             httpretty.POST,
@@ -563,6 +588,12 @@ class TestProjectApi(TestBaseApi):
         self.set_raw_response()
         result = self.api_handler.create_job('user', 'project', obj.to_dict())
         assert result == obj.to_dict()
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_job(
+                'user', 'project', obj.to_dict(), background=True),
+            method='post')
 
     @httpretty.activate
     def test_list_tensorboards(self):
@@ -759,6 +790,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.create_build('user', 'project', obj)
         assert result == obj.to_dict()
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_build(
+                'user', 'project', obj, background=True),
+            method='post')
+
         # Test create experiment with dict
         httpretty.register_uri(
             httpretty.POST,
@@ -782,6 +819,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.create_build('user', 'project', obj.to_dict())
         assert result == obj.to_dict()
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_build(
+                'user', 'project', obj.to_dict(), background=True),
+            method='post')
+
     @httpretty.activate
     def test_start_tensorboard(self):
         httpretty.register_uri(
@@ -797,6 +840,12 @@ class TestProjectApi(TestBaseApi):
             status=200)
         result = self.api_handler.start_tensorboard('username', 'project_name')
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_tensorboard(
+                'user', 'project', background=True),
+            method='post')
 
     @httpretty.activate
     def test_start_tensorboard_with_config(self):
@@ -816,6 +865,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.start_tensorboard('username', 'project_name', obj)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_tensorboard(
+                'user', 'project', obj, background=True),
+            method='post')
+
     @httpretty.activate
     def test_stop_tensorboard(self):
         httpretty.register_uri(
@@ -832,6 +887,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.stop_tensorboard('username', 'project_name')
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop_tensorboard(
+                'user', 'project', background=True),
+            method='post')
+
     @httpretty.activate
     def test_start_notebook(self):
         httpretty.register_uri(
@@ -847,6 +908,12 @@ class TestProjectApi(TestBaseApi):
             status=200)
         result = self.api_handler.start_notebook('username', 'project_name')
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_notebook(
+                'user', 'project', background=True),
+            method='post')
 
     @httpretty.activate
     def test_start_notebook_with_config(self):
@@ -866,6 +933,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.start_notebook('username', 'project_name', obj)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.start_notebook(
+                'user', 'project_name', obj, background=True),
+            method='post')
+
     @httpretty.activate
     def test_stop_notebook(self):
         httpretty.register_uri(
@@ -881,6 +954,12 @@ class TestProjectApi(TestBaseApi):
             status=200)
         result = self.api_handler.stop_notebook('username', 'project_name')
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop_notebook(
+                'user', 'project_name', background=True),
+            method='post')
 
     @httpretty.activate
     def test_stop_notebook_without_commit(self):
@@ -898,6 +977,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.stop_notebook('username', 'project_name', commit=False)
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.stop_notebook(
+                'user', 'project_name', background=True),
+            method='post')
+
     @httpretty.activate
     def test_bookmark_project(self):
         httpretty.register_uri(
@@ -913,6 +998,12 @@ class TestProjectApi(TestBaseApi):
         result = self.api_handler.bookmark('username', 'project_name')
         assert result.status_code == 200
 
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.bookmark(
+                'user', 'project_name', background=True),
+            method='post')
+
     @httpretty.activate
     def test_unbookmark_project(self):
         httpretty.register_uri(
@@ -927,3 +1018,9 @@ class TestProjectApi(TestBaseApi):
             status=200)
         result = self.api_handler.unbookmark('username', 'project_name')
         assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.unbookmark(
+                'user', 'project_name', background=True),
+            method='delete')
