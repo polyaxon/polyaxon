@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+
 import os
 
 from polyaxon_client import PolyaxonClient, settings
@@ -11,6 +12,12 @@ from polyaxon_client.exceptions import PolyaxonException
 class BaseTracker(object):
     def __init__(self, client=None, track_logs=None, track_git=None, track_env=None):
         self.client = client or PolyaxonClient()
+        if settings.IN_CLUSTER:
+            self.user = None
+        else:
+            self.user = (self.client.auth.get_user().username
+                         if self.client.api_config.schema_response
+                         else self.client.auth.get_user().get('username'))
         self._track_logs = track_logs
         self._track_git = track_git
         self._track_env = track_env

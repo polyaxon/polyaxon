@@ -7,11 +7,14 @@ import os
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
+from polyaxon_client.tracking.utils.env import get_run_env
+from polyaxon_client.tracking.utils.git import get_git_info
+from polyaxon_client.tracking.utils.project import get_project_info
 
 
 class Experiment(BaseTracker):
     def __init__(self,
-                 project=None,
+                 project,
                  experiment_id=None,
                  client=None,
                  track_logs=None,
@@ -22,21 +25,95 @@ class Experiment(BaseTracker):
                                          track_logs=track_logs,
                                          track_git=track_git,
                                          track_env=track_env)
+        username, project_name = get_project_info(current_user=self.user, project=project)
         self.project = project
+        self.username = username
+        self.project_name = project_name
         self.experiment_id = experiment_id
+        self.experiment = None
         self.auto_status = auto_status
 
+    def create(self, name=None, tags=None, description=None, config=None):
+        experiment_config = {}
+        if not settings.IN_CLUSTER:
+            experiment_config['run_env'] = get_run_env()
+            experiment_config['git_info'] = get_git_info()
+        if name:
+            experiment_config['name'] = name
+        if tags:
+            experiment_config['tags'] = tags
+        if description:
+            experiment_config['description'] = description
+        if config:
+            experiment_config['config'] = config
+        experiment = self.client.project.create_experiment(
+            username=self.username,
+            project_name=self.project_name,
+            experiment_config=experiment_config)
+        self.experiment_id = (experiment.id
+                              if self.client.api_config.schema_response
+                              else experiment.get('id'))
+        self.experiment = experiment
+        return self
+
+    def start(self):
+        self.client.experiment.create_status(username=self.username,
+                                             project_name=self.project_name,
+                                             experiment_id=self.experiment_id,
+                                             status='running',
+                                             background=True)
+
+    def end(self):
+        self.client.experiment.create_status(username=self.username,
+                                             project_name=self.project_name,
+                                             experiment_id=self.experiment_id,
+                                             status='succeeded',
+                                             background=True)
+
+    def stop(self):
+        self.client.experiment.create_status(username=self.username,
+                                             project_name=self.project_name,
+                                             experiment_id=self.experiment_id,
+                                             status='stopped',
+                                             background=True)
+
     def log_metrics(self, **metrics):
-        pass
+        self.client.experiment.create_metric(username=self.username,
+                                             project_name=self.project_name,
+                                             experiment_id=self.experiment_id,
+                                             values=metrics,
+                                             background=True)
 
     def log_tags(self, tags, reset=False):
-        pass
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict={'tags': tags},
+                                                 background=True)
 
     def log_params(self, reset=False, **params):
-        pass
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict={'declarations': params},
+                                                 background=True)
 
     def log_status(self, status):
         pass
+
+    def set_description(self, description):
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict={'description': description},
+                                                 background=True)
+
+    def set_name(self, name):
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict={'name': name},
+                                                 background=True)
 
     def log_data_hash(self, data, data_name='data'):
         try:
