@@ -19,6 +19,7 @@ class ApiConfig(object):
                  authentication_type=None,
                  use_https=None,
                  in_cluster=None,
+                 schema_response=None,
                  reraise=False):
 
         self.token = token or settings.SECRET_TOKEN
@@ -52,6 +53,7 @@ class ApiConfig(object):
         self.base_url = self.BASE_URL.format(self.http_host, self.version)
         self.base_ws_url = self.BASE_WS_URL.format(self.ws_host, self.version)
         self.authentication_type = authentication_type or settings.AUTHENTICATION_TYPE
+        self.schema_response = schema_response or settings.SCHEMA_RESPONSE
         self.reraise = reraise
 
     @staticmethod
