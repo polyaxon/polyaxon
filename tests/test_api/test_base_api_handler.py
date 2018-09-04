@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from tests.test_api.utils import TestBaseApi
-
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import ERRORS_MAPPING
+from tests.test_api.utils import TestBaseApi
+
+
+class DummyConfig(object):
+    @staticmethod
+    def from_dict(value):
+        return 'from_dict', value
 
 
 class TestBaseApiHandler(TestBaseApi):
@@ -31,3 +36,32 @@ class TestBaseApiHandler(TestBaseApi):
             self.api_config.base_url)
         assert self.api_handler._get_ws_url('endpoint') == '{}/endpoint/'.format(
             self.api_config.base_ws_url)
+
+    def test_prepare_results(self):
+        # Schema response
+        results = self.api_handler.prepare_results(response_json={'foo': 'bar'},
+                                                   config=DummyConfig)
+        assert results == ('from_dict', {'foo': 'bar'})
+
+        # Raw response
+        self.api_config.schema_response = False
+        results = self.api_handler.prepare_results(response_json={'foo': 'bar'},
+                                                   config=DummyConfig)
+        assert results == {'foo': 'bar'}
+
+    def test_prepare_list_results(self):
+        # Schema response
+        results = self.api_handler.prepare_list_results(response_json={'results': ['bar']},
+                                                        current_page=1,
+                                                        config=DummyConfig)
+        assert results == {'count': 0,
+                           'next': None,
+                           'previous': None,
+                           'results': [('from_dict', 'bar')]}
+
+        # Raw response
+        self.api_config.schema_response = False
+        results = self.api_handler.prepare_list_results(response_json={'results': ['bar']},
+                                                        current_page=1,
+                                                        config=DummyConfig)
+        assert results == {'count': 0, 'next': None, 'previous': None, 'results': ['bar']}

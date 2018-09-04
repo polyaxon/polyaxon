@@ -19,5 +19,6 @@ class TestBaseApi(TestCase):
                                     token='token',
                                     reraise=True,
                                     use_https=False,
-                                    in_cluster=False)
+                                    in_cluster=False,
+                                    schema_response=True)
         self.transport = Transport()

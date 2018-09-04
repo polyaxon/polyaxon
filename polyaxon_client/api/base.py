@@ -62,7 +62,7 @@ class BaseApiHandler(object):
         return list_results
 
     def prepare_results(self, response_json, config):
-        return config.from_dict(response_json) if self.config.schema_response else config
+        return config.from_dict(response_json) if self.config.schema_response else response_json
 
     @staticmethod
     def validate_config(config, config_schema):
