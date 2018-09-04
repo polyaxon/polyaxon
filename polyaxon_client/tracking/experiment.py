@@ -57,24 +57,19 @@ class Experiment(BaseTracker):
         return self
 
     def start(self):
-        self.client.experiment.create_status(username=self.username,
-                                             project_name=self.project_name,
-                                             experiment_id=self.experiment_id,
-                                             status='running',
-                                             background=True)
+        self.log_status('running')
 
     def end(self):
-        self.client.experiment.create_status(username=self.username,
-                                             project_name=self.project_name,
-                                             experiment_id=self.experiment_id,
-                                             status='succeeded',
-                                             background=True)
+        self.log_status('succeeded')
 
     def stop(self):
+        self.log_status('stopped')
+
+    def log_status(self, status):
         self.client.experiment.create_status(username=self.username,
                                              project_name=self.project_name,
                                              experiment_id=self.experiment_id,
-                                             status='stopped',
+                                             status=status,
                                              background=True)
 
     def log_metrics(self, **metrics):
@@ -97,9 +92,6 @@ class Experiment(BaseTracker):
                                                  experiment_id=self.experiment_id,
                                                  patch_dict={'declarations': params},
                                                  background=True)
-
-    def log_status(self, status):
-        pass
 
     def set_description(self, description):
         self.client.experiment.update_experiment(username=self.username,
