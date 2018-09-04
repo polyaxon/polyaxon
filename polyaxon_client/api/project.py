@@ -31,7 +31,7 @@ class ProjectApi(BaseApiHandler):
         request_url = self._build_url(self._get_http_url(), username, project_name)
         try:
             response = self.transport.get(request_url)
-            return ProjectConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ProjectConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving project.')
             return None
@@ -41,7 +41,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.post(self._get_http_url('/projects'),
                                            json_data=project_config.to_dict())
-            return ProjectConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ProjectConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating project.')
             return None
@@ -50,7 +50,7 @@ class ProjectApi(BaseApiHandler):
         request_url = self._build_url(self._get_http_url(), username, project_name)
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
-            return ProjectConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ProjectConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating project.')
             return None
@@ -121,7 +121,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=experiment_group_config.to_dict())
-            return ExperimentGroupConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while creating experiment group.')
@@ -167,7 +167,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=experiment_config.to_dict())
-            return ExperimentConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating experiment.')
             return None
@@ -195,7 +195,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=job_config.to_dict())
-            return JobConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=JobConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating job.')
             return None
@@ -223,7 +223,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=build_config.to_dict())
-            return JobConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=JobConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating build job.')
             return None

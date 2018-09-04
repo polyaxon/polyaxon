@@ -35,7 +35,7 @@ class ExperimentApi(BaseApiHandler):
                                       experiment_id)
         try:
             response = self.transport.get(request_url)
-            return ExperimentConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiment.')
             return None
@@ -48,7 +48,7 @@ class ExperimentApi(BaseApiHandler):
                                       experiment_id)
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
-            return ExperimentConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating experiment.')
             return None
@@ -104,7 +104,8 @@ class ExperimentApi(BaseApiHandler):
                                       'metrics')
         try:
             response = self.transport.post(request_url, data={'values': values})
-            return ExperimentMetricConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(),
+                                        config=ExperimentMetricConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while retrieving experiment status.')
@@ -143,7 +144,7 @@ class ExperimentApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=data)
-            return ExperimentConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while restarting the experiment.')
@@ -166,7 +167,7 @@ class ExperimentApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=data)
-            return ExperimentConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while resuming the experiment.')
             return None
@@ -188,7 +189,7 @@ class ExperimentApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=data)
-            return ExperimentConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while copying the experiment.')
             return None

@@ -18,12 +18,10 @@ class DatasetApi(BaseApiHandler):
     """
     ENDPOINT = "/datasets"
 
-    def get_datasets(self):
+    def get_datasets(self, page=1):
         try:
             response = self.transport.get(self._get_http_url())
-            datasets_dict = response.json()
-            return [DatasetConfig.from_dict(dataset)
-                    for dataset in datasets_dict.get("datasets", [])]
+            return self.prepare_list_results(response.json(), page, DatasetConfig)
         except PolyaxonException as e:
             if isinstance(e, AuthenticationError):
                 # exit now since there is nothing we can do without login
@@ -36,7 +34,7 @@ class DatasetApi(BaseApiHandler):
         request_url = self._get_http_url(request_url)
         try:
             response = self.transport.get(request_url)
-            return DatasetConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=DatasetConfig)
         except NotFoundError:
             return None
 
@@ -60,9 +58,7 @@ class DatasetApi(BaseApiHandler):
     def delete_dataset(self, data_uuid):
         request_url = self._get_http_url(data_uuid)
         try:
-            # data delete is a synchronous process, it can take a long time
-            self.transport.delete(request_url, timeout=60)
-            return True
+            return self.transport.delete(request_url, timeout=60)
         except PolyaxonException as e:
             logger.error('Could not create data %s', e.message)
             return False

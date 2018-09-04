@@ -47,15 +47,22 @@ class BaseApiHandler(object):
             return {}
         return {'offset': (page - 1) * self.config.PAGE_SIZE}
 
-    @staticmethod
-    def prepare_list_results(response_json, current_page, config):
-        return {
+    def prepare_list_results(self, response_json, current_page, config):
+        list_results = {
             'count': response_json.get('count', 0),
             'next': current_page + 1 if response_json.get('next') else None,
             'previous': current_page - 1 if response_json.get('previous') else None,
-            'results': [config.from_dict(obj)
-                        for obj in response_json.get('results', [])]
         }
+        if self.config.schema_response:
+            list_results['results'] = [
+                config.from_dict(obj) for obj in response_json.get('results', [])]
+        else:
+            list_results['results'] = response_json.get('results', [])
+
+        return list_results
+
+    def prepare_results(self, response_json, config):
+        return config.from_dict(response_json) if self.config.schema_response else config
 
     @staticmethod
     def validate_config(config, config_schema):

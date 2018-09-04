@@ -40,7 +40,7 @@ class AuthApi(BaseApiHandler):
                 "Login failed.\nSee http://docs.polyaxon.com/faqs/authentication/ for help",
                 response.status_code)
 
-        return UserConfig.from_dict(user_dict)
+        return self.prepare_results(response_json=user_dict, config=UserConfig)
 
     def login(self, credentials):
         credentials = self.validate_config(config=credentials, config_schema=CredentialsConfig)

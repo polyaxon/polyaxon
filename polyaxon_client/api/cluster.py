@@ -17,7 +17,7 @@ class ClusterApi(BaseApiHandler):
         request_url = self._build_url(self._get_http_url())
         try:
             response = self.transport.get(request_url)
-            return PolyaxonClusterConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=PolyaxonClusterConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving cluster')
             return None
@@ -26,7 +26,7 @@ class ClusterApi(BaseApiHandler):
         request_url = self._build_url(self._get_http_url(self.ENDPOINT_NODES), node_sequence)
         try:
             response = self.transport.get(request_url)
-            return ClusterNodeConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ClusterNodeConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving node')
             return None

@@ -22,7 +22,7 @@ class ExperimentJobApi(BaseApiHandler):
                                       job_id)
         try:
             response = self.transport.get(request_url)
-            return ExperimentJobConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentJobConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving job')
             return None

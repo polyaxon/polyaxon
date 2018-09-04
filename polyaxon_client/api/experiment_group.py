@@ -20,7 +20,7 @@ class ExperimentGroupApi(BaseApiHandler):
                                       group_id)
         try:
             response = self.transport.get(request_url)
-            return ExperimentGroupConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving project')
             return None
@@ -63,7 +63,7 @@ class ExperimentGroupApi(BaseApiHandler):
 
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
-            return ExperimentGroupConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating project')
             return None

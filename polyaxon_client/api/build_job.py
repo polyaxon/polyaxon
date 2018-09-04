@@ -20,7 +20,7 @@ class BuildJobApi(BaseApiHandler):
                                       job_id)
         try:
             response = self.transport.get(request_url)
-            return JobConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=JobConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving build')
             return None
@@ -33,7 +33,7 @@ class BuildJobApi(BaseApiHandler):
                                       job_id)
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
-            return JobConfig.from_dict(response.json())
+            return self.prepare_results(response_json=response.json(), config=JobConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating build')
             return None
