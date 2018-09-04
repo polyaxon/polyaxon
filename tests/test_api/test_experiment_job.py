@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
+from collections import Mapping
+
 import httpretty
 import json
 import uuid
@@ -40,8 +42,15 @@ class TestExperimentJobClient(TestBaseApi):
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.get_job('username', 'project_name', 1, 'uuid')
-        assert obj == result.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_job('username', 'project_name', 1, 'uuid')
+        assert result == obj
 
     @httpretty.activate
     def test_get_experiment_job_status(self):
@@ -65,5 +74,14 @@ class TestExperimentJobClient(TestBaseApi):
             body=json.dumps({'results': [obj], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         response = self.api_handler.get_statuses('username', 'project_name', 1, 1)
         assert len(response['results']) == 1
+        assert isinstance(response['results'][0], ExperimentJobStatusConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.get_statuses('username', 'project_name', 1, 1)
+        assert len(response['results']) == 1
+        assert isinstance(response['results'][0], Mapping)

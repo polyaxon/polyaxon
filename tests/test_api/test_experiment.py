@@ -2,11 +2,11 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-import httpretty
 import json
 import uuid
+from collections import Mapping
 
-from tests.test_api.utils import TestBaseApi
+import httpretty
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment import ExperimentApi
@@ -16,6 +16,7 @@ from polyaxon_client.schemas import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
+from tests.test_api.utils import TestBaseApi
 
 
 class TestExperimentApi(TestBaseApi):
@@ -38,8 +39,16 @@ class TestExperimentApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_experiments()
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiments()
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_get_experiment(self):
@@ -57,12 +66,19 @@ class TestExperimentApi(TestBaseApi):
             body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.get_experiment('username', 'project_name', 1)
-        assert exp == result.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_experiment('username', 'project_name', 1)
+        assert result == exp
 
     @httpretty.activate
     def test_update_experiment(self):
-        exp = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler._build_url(
@@ -72,11 +88,18 @@ class TestExperimentApi(TestBaseApi):
                 'project_name',
                 'experiments',
                 1),
-            body=json.dumps(exp.to_dict()),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.update_experiment('username', 'project_name', 1, {'name': 'new'})
-        assert result.to_dict() == exp.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.update_experiment('username', 'project_name', 1, {'name': 'new'})
+        assert result == exp
 
     @httpretty.activate
     def test_delete_experiment(self):
@@ -114,8 +137,17 @@ class TestExperimentApi(TestBaseApi):
             body=json.dumps({'results': [exp], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         response = self.api_handler.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
+        assert isinstance(response['results'][0], ExperimentStatusConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.get_statuses('username', 'project_name', 1)
+        assert len(response['results']) == 1
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_get_experiment_metrics(self):
@@ -137,8 +169,17 @@ class TestExperimentApi(TestBaseApi):
             body=json.dumps({'results': [exp], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         response = self.api_handler.get_metrics('username', 'project_name', 1)
         assert len(response['results']) == 1
+        assert isinstance(response['results'][0], ExperimentMetricConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.get_metrics('username', 'project_name', 1)
+        assert len(response['results']) == 1
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_create_experiment_metric(self):
@@ -160,9 +201,17 @@ class TestExperimentApi(TestBaseApi):
             body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         response = self.api_handler.create_metric('username', 'project_name', 1,
                                                   values={'accuracy': 0.9})
         assert response.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.create_metric('username', 'project_name', 1,
+                                                  values={'accuracy': 0.9})
+        assert response == exp
 
     @httpretty.activate
     def test_list_experiment_jobs(self):
@@ -187,11 +236,18 @@ class TestExperimentApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_jobs('username', 'project_name', 1)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentJobConfig)
 
-        # pagination
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_jobs('username', 'project_name', 1)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
+        # Pagination
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -206,12 +262,21 @@ class TestExperimentApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_jobs('username', 'project_name', 1, page=2)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentJobConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_jobs('username', 'project_name', 1, page=2)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_restart_experiment(self):
-        exp = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
@@ -222,15 +287,22 @@ class TestExperimentApi(TestBaseApi):
                 'experiments',
                 1,
                 'restart'),
-            body=json.dumps(exp.to_dict()),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.restart('username', 'project_name', 1)
-        assert result.to_dict() == exp.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.restart('username', 'project_name', 1)
+        assert result == exp
 
     @httpretty.activate
-    def test_resume_experiment_with_config(self):
-        exp = ExperimentConfig(config={})
+    def test_restart_experiment_with_config(self):
+        exp = ExperimentConfig(config={}).to_dict()
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
@@ -241,16 +313,23 @@ class TestExperimentApi(TestBaseApi):
                 'project_name',
                 'experiments',
                 1,
-                'resume'),
-            body=json.dumps(exp.to_dict()),
+                'restart'),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.restart('username', 'project_name', 1, config, update_code=True)
-        assert result.to_dict() == exp.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.restart('username', 'project_name', 1, config, update_code=True)
+        assert result == exp
 
     @httpretty.activate
     def test_resume_experiment(self):
-        exp = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
@@ -261,15 +340,22 @@ class TestExperimentApi(TestBaseApi):
                 'experiments',
                 1,
                 'resume'),
-            body=json.dumps(exp.to_dict()),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.resume('username', 'project_name', 1)
-        assert result.to_dict() == exp.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.resume('username', 'project_name', 1)
+        assert result == exp
 
     @httpretty.activate
     def test_resume_experiment_with_config(self):
-        exp = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={}).to_dict()
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
@@ -281,15 +367,22 @@ class TestExperimentApi(TestBaseApi):
                 'experiments',
                 1,
                 'resume'),
-            body=json.dumps(exp.to_dict()),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.resume('username', 'project_name', 1, config)
-        assert result.to_dict() == exp.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.resume('username', 'project_name', 1, config)
+        assert result == exp
 
     @httpretty.activate
     def test_copy_experiment(self):
-        exp = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
@@ -300,15 +393,22 @@ class TestExperimentApi(TestBaseApi):
                 'experiments',
                 1,
                 'copy'),
-            body=json.dumps(exp.to_dict()),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.copy('username', 'project_name', 1)
-        assert result.to_dict() == exp.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.copy('username', 'project_name', 1)
+        assert result == exp
 
     @httpretty.activate
     def test_copy_experiment_with_config(self):
-        exp = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={}).to_dict()
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
@@ -320,11 +420,18 @@ class TestExperimentApi(TestBaseApi):
                 'experiments',
                 1,
                 'copy'),
-            body=json.dumps(exp.to_dict()),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.copy('username', 'project_name', 1, config)
-        assert result.to_dict() == exp.to_dict()
+        assert result.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.copy('username', 'project_name', 1, config)
+        assert result == exp
 
     @httpretty.activate
     def test_stop_experiment(self):

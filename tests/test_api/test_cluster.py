@@ -20,17 +20,24 @@ class TestClusterApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_cluster(self):
-        obj = PolyaxonClusterConfig(version_api={})
+        obj = PolyaxonClusterConfig(version_api={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
                 self.api_config.base_url,
                 '/cluster'),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.get_cluster()
-        assert result.to_dict() == obj.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_cluster()
+        assert result == obj
 
     @httpretty.activate
     def test_get_node(self):
@@ -47,7 +54,7 @@ class TestClusterApi(TestBaseApi):
                                 memory=10,
                                 cpu=2,
                                 n_gpus=1,
-                                status=1)
+                                status=1).to_dict()
 
         httpretty.register_uri(
             httpretty.GET,
@@ -55,8 +62,15 @@ class TestClusterApi(TestBaseApi):
                 self.api_config.base_url,
                 '/nodes',
                 1),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.get_node(1)
-        assert result.to_dict() == obj.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_node(1)
+        assert result == obj

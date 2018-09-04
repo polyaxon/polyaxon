@@ -22,3 +22,9 @@ class TestBaseApi(TestCase):
                                     in_cluster=False,
                                     schema_response=True)
         self.transport = Transport()
+
+    def set_raw_response(self):
+        self.api_config.schema_response = False
+
+    def set_schema_response(self):
+        self.api_config.schema_response = True

@@ -30,8 +30,14 @@ class TestAuthApi(TestBaseApi):
             body=json.dumps(user),
             content_type='application/json', status=200)
 
-        user_result = self.api_handler.get_user('token_value')
-        assert user == user_result.to_dict()
+        # Schema response
+        result = self.api_handler.get_user('token_value')
+        assert result.to_dict() == user
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_user('token_value')
+        assert result == user
 
     @httpretty.activate
     def test_login(self):

@@ -2,17 +2,17 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-import httpretty
 import json
 import uuid
+from collections import Mapping
 
+import httpretty
 from faker import Faker
-
-from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment_group import ExperimentGroupApi
 from polyaxon_client.schemas import ExperimentConfig, ExperimentGroupConfig, GroupStatusConfig
+from tests.test_api.utils import TestBaseApi
 
 faker = Faker()
 
@@ -40,8 +40,15 @@ class TestExperimentGroupApi(TestBaseApi):
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.get_experiment_group('username', 'project_name', 1)
         assert obj == result.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_experiment_group('username', 'project_name', 1)
+        assert obj == result
 
     @httpretty.activate
     def test_list_experiments(self):
@@ -65,14 +72,24 @@ class TestExperimentGroupApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_experiments('username', 'project_name', 1)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentConfig)
         assert response['count'] == 10
         assert response['next'] is None
         assert response['previous'] is None
 
-        # pagination
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiments('username', 'project_name', 1)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+        assert response['count'] == 10
+        assert response['next'] is None
+        assert response['previous'] is None
 
+        # Pagination
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -85,11 +102,19 @@ class TestExperimentGroupApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_experiments('username', 'project_name', 1, page=2)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentConfig)
 
-        # query, sort
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiments('username', 'project_name', 1, page=2)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
+        # Query, Sort
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -102,18 +127,31 @@ class TestExperimentGroupApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_experiments('username',
                                                      'project_name',
                                                      1,
                                                      query='started_at:>=2010-10-10',
                                                      sort='created_at')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiments('username',
+                                                     'project_name',
+                                                     1,
+                                                     query='started_at:>=2010-10-10',
+                                                     sort='created_at')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_update_experiment_group(self):
         obj = ExperimentGroupConfig(content=faker.word(),
                                     uuid=uuid.uuid4().hex,
-                                    project=uuid.uuid4().hex)
+                                    project=uuid.uuid4().hex).to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler._build_url(
@@ -123,12 +161,20 @@ class TestExperimentGroupApi(TestBaseApi):
                 'project_name',
                 'groups',
                 1),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.update_experiment_group(
             'username', 'project_name', 1, {'content': 'new'})
-        assert result.to_dict() == obj.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.update_experiment_group(
+            'username', 'project_name', 1, {'content': 'new'})
+        assert result == obj
 
     @httpretty.activate
     def test_delete_experiment_group(self):
@@ -166,8 +212,17 @@ class TestExperimentGroupApi(TestBaseApi):
             body=json.dumps({'results': [group], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         response = self.api_handler.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
+        assert isinstance(response['results'][0], GroupStatusConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.get_statuses('username', 'project_name', 1)
+        assert len(response['results']) == 1
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_stop_experiment_group_all(self):

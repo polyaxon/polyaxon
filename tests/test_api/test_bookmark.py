@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import Mapping
+
 import httpretty
 import json
 import uuid
@@ -45,8 +47,17 @@ class TestBookmarkApi(TestBaseApi):
             body=json.dumps({'results': objs, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.builds('user')
         assert len(result['results']) == 10
+        assert isinstance(result['results'][0], JobConfig)
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.builds('user')
+        assert len(result['results']) == 10
+        assert isinstance(result['results'][0], Mapping)
 
     @httpretty.activate
     def test_get_bookmarked_jobs(self):
@@ -66,8 +77,17 @@ class TestBookmarkApi(TestBaseApi):
             body=json.dumps({'results': objs, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.jobs('user')
         assert len(result['results']) == 10
+        assert isinstance(result['results'][0], JobConfig)
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.jobs('user')
+        assert len(result['results']) == 10
+        assert isinstance(result['results'][0], Mapping)
 
     @httpretty.activate
     def test_get_bookmarked_experiments(self):
@@ -87,8 +107,17 @@ class TestBookmarkApi(TestBaseApi):
             body=json.dumps({'results': objs, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.experiments('user')
         assert len(result['results']) == 10
+        assert isinstance(result['results'][0], ExperimentConfig)
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.experiments('user')
+        assert len(result['results']) == 10
+        assert isinstance(result['results'][0], Mapping)
 
     @httpretty.activate
     def test_get_bookmarked_groups(self):
@@ -107,8 +136,17 @@ class TestBookmarkApi(TestBaseApi):
             body=json.dumps({'results': experiment_groups, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.groups('user')
         assert len(result['results']) == 10
+        assert isinstance(result['results'][0], ExperimentGroupConfig)
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.groups('user')
+        assert len(result['results']) == 10
+        assert isinstance(result['results'][0], Mapping)
 
     @httpretty.activate
     def test_get_bookmarked_projects(self):
@@ -123,5 +161,15 @@ class TestBookmarkApi(TestBaseApi):
             body=json.dumps({'results': projects, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.projects('user')
         assert len(result['results']) == 10
+        assert isinstance(result['results'][0], ProjectConfig)
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.projects('user')
+        assert len(result['results']) == 10
+        assert isinstance(result['results'][0], Mapping)
+

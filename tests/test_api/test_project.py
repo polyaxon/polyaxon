@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import Mapping
+
 import httpretty
 import json
 import uuid
@@ -42,8 +44,19 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_projects('user')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ProjectConfig)
+        assert response['count'] == 10
+        assert response['next'] is None
+        assert response['previous'] is None
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_projects('user')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
         assert response['count'] == 10
         assert response['next'] is None
         assert response['previous'] is None
@@ -61,26 +74,40 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.get_project('user', 'project')
-        assert obj == result.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_project('user', 'project')
+        assert result == obj
 
     @httpretty.activate
     def test_create_project(self):
-        obj = ProjectConfig(faker.word())
+        obj = ProjectConfig(faker.word()).to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler._build_url(
                 self.api_config.base_url,
                 'projects'),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.create_project(obj)
-        assert result.to_dict() == obj.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_project(obj)
+        assert result == obj
 
     @httpretty.activate
     def test_update_project(self):
-        obj = ProjectConfig(faker.word())
+        obj = ProjectConfig(faker.word()).to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler._build_url(
@@ -88,11 +115,18 @@ class TestProjectApi(TestBaseApi):
                 '/',
                 'user',
                 'project'),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.update_project('user', 'project', {'name': 'new'})
-        assert result.to_dict() == obj.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.update_project('user', 'project', {'name': 'new'})
+        assert result == obj
 
     @httpretty.activate
     def test_delete_project(self):
@@ -168,8 +202,16 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_experiment_groups('user', 'project')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentGroupConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiment_groups('user', 'project')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_create_experiment_group(self):
@@ -186,8 +228,15 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.create_experiment_group('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_experiment_group('user', 'project', obj)
+        assert result == obj.to_dict()
 
         # Test create with dict
         httpretty.register_uri(
@@ -201,8 +250,16 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
+        self.set_schema_response()
         result = self.api_handler.create_experiment_group('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_experiment_group('user', 'project', obj.to_dict())
+        assert result == obj.to_dict()
 
     @httpretty.activate
     def test_list_experiments(self):
@@ -222,10 +279,18 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_experiments('user', 'project')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentConfig)
 
-        # pagination
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiments('user', 'project')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Pagination
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -238,10 +303,19 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_experiments('user', 'project', page=2)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentConfig)
 
-        # metrics & declarations
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiments('user', 'project', page=2)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Metrics & Declarations
         for xp in xps:
             xp['metrics'] = {'loss': 0.1}
             xp['declarations'] = {'foo': 'bar'}
@@ -259,8 +333,8 @@ class TestProjectApi(TestBaseApi):
             status=200)
 
         response = self.api_handler.list_experiments('user', 'project', metrics=True, page=2)
-
         assert len(response['results']) == 10
+
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -276,7 +350,7 @@ class TestProjectApi(TestBaseApi):
         response = self.api_handler.list_experiments('user', 'project', declarations=True, page=2)
         assert len(response['results']) == 10
 
-        # query, sort
+        # Query, Sort
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -289,12 +363,25 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_experiments('user',
                                                      'project',
                                                      True,
                                                      query='started_at:>=2010-10-10',
                                                      sort='created_at')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], ExperimentConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_experiments('user',
+                                                     'project',
+                                                     True,
+                                                     query='started_at:>=2010-10-10',
+                                                     sort='created_at')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_create_experiment(self):
@@ -311,8 +398,15 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.create_experiment('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_experiment('user', 'project', obj)
+        assert result == obj.to_dict()
 
         # Test create experiment with dict
         httpretty.register_uri(
@@ -326,8 +420,16 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
+        self.set_schema_response()
         result = self.api_handler.create_experiment('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_experiment('user', 'project', obj.to_dict())
+        assert result == obj.to_dict()
 
     @httpretty.activate
     def test_list_jobs(self):
@@ -347,10 +449,18 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_jobs('user', 'project')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], JobConfig)
 
-        # pagination
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_jobs('user', 'project')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Pagination
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -363,10 +473,19 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_jobs('user', 'project', page=2)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], JobConfig)
 
-        # query, sort
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_jobs('user', 'project', page=2)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Query, Sort
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -379,11 +498,23 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_jobs('user',
                                               'project',
                                               query='started_at:>=2010-10-10',
                                               sort='created_at')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], JobConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_jobs('user',
+                                             'project',
+                                             query='started_at:>=2010-10-10',
+                                             sort='created_at')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_create_job(self):
@@ -400,8 +531,15 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.create_job('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_job('user', 'project', obj)
+        assert result == obj.to_dict()
 
         # Test create experiment with dict
         httpretty.register_uri(
@@ -415,8 +553,16 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
+        self.set_schema_response()
         result = self.api_handler.create_job('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_job('user', 'project', obj.to_dict())
+        assert result == obj.to_dict()
 
     @httpretty.activate
     def test_list_tensorboards(self):
@@ -436,10 +582,18 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_tensorboards('user', 'project')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], TensorboardJobConfig)
 
-        # pagination
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_tensorboards('user', 'project')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Pagination
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -452,10 +606,19 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_tensorboards('user', 'project', page=2)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], TensorboardJobConfig)
 
-        # query, sort
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_tensorboards('user', 'project', page=2)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Query, Sort
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -468,11 +631,23 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_tensorboards('user',
                                                       'project',
                                                       query='started_at:>=2010-10-10',
                                                       sort='created_at')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], TensorboardJobConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_tensorboards('user',
+                                                      'project',
+                                                      query='started_at:>=2010-10-10',
+                                                      sort='created_at')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_list_builds(self):
@@ -492,10 +667,18 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
         response = self.api_handler.list_builds('user', 'project')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], JobConfig)
 
-        # pagination
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_builds('user', 'project')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Pagination
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -508,10 +691,19 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_builds('user', 'project', page=2)
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], JobConfig)
 
-        # query, sort
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_builds('user', 'project', page=2)
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
+
+        # Query, Sort
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler._build_url(
@@ -524,11 +716,23 @@ class TestProjectApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Schema response
+        self.set_schema_response()
         response = self.api_handler.list_builds('user',
                                                 'project',
                                                 query='started_at:>=2010-10-10',
                                                 sort='created_at')
         assert len(response['results']) == 10
+        assert isinstance(response['results'][0], JobConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.list_builds('user',
+                                                'project',
+                                                query='started_at:>=2010-10-10',
+                                                sort='created_at')
+        assert len(response['results']) == 10
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_create_build(self):
@@ -545,8 +749,15 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.create_build('user', 'project', obj)
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_build('user', 'project', obj)
+        assert result == obj.to_dict()
 
         # Test create experiment with dict
         httpretty.register_uri(
@@ -560,8 +771,16 @@ class TestProjectApi(TestBaseApi):
             body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
+
+        # Schema response
+        self.set_schema_response()
         result = self.api_handler.create_build('user', 'project', obj.to_dict())
         assert result.to_dict() == obj.to_dict()
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_build('user', 'project', obj.to_dict())
+        assert result == obj.to_dict()
 
     @httpretty.activate
     def test_start_tensorboard(self):

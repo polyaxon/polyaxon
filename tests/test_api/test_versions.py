@@ -34,8 +34,15 @@ class TestVersionApi(TestBaseApi):
                 'cli'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
+
+        # Schema response
         result = self.api_handler.get_cli_version()
-        assert obj == result.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_cli_version()
+        assert result == obj
 
     @httpretty.activate
     def test_get_platform_version(self):
@@ -48,8 +55,15 @@ class TestVersionApi(TestBaseApi):
                 'platform'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
+
+        # Schema response
         result = self.api_handler.get_platform_version()
-        assert obj == result.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_platform_version()
+        assert result == obj
 
     @httpretty.activate
     def test_get_lib_version(self):
@@ -62,8 +76,15 @@ class TestVersionApi(TestBaseApi):
                 'lib'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
+
+        # Schema response
         result = self.api_handler.get_lib_version()
-        assert obj == result.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_lib_version()
+        assert result == obj
 
     @httpretty.activate
     def test_get_chart_version(self):
@@ -76,8 +97,15 @@ class TestVersionApi(TestBaseApi):
                 'chart'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
+
+        # Schema response
         result = self.api_handler.get_chart_version()
-        assert obj == result.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_chart_version()
+        assert result == obj
 
     @httpretty.activate
     def test_get_log_handler(self):
@@ -99,5 +127,12 @@ class TestVersionApi(TestBaseApi):
                 '/log_handler'),
             body=json.dumps(obj),
             content_type='application/json', status=200)
+
+        # Schema response
         result = self.api_handler.get_log_handler()
-        assert obj == result.to_dict()
+        assert result.to_dict() == obj
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_log_handler()
+        assert result == obj

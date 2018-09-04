@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
+from collections import Mapping
+
 import httpretty
 import json
 import uuid
@@ -35,12 +37,19 @@ class TestBuildJobApi(TestBaseApi):
             body=json.dumps(job),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.get_build('username', 'project_name', 1)
-        assert job == result.to_dict()
+        assert result.to_dict() == job
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.get_build('username', 'project_name', 1)
+        assert result == job
 
     @httpretty.activate
     def test_update_build(self):
-        job = JobConfig(config={})
+        job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler._build_url(
@@ -50,11 +59,18 @@ class TestBuildJobApi(TestBaseApi):
                 'project_name',
                 'builds',
                 1),
-            body=json.dumps(job.to_dict()),
+            body=json.dumps(job),
             content_type='application/json',
             status=200)
+
+        # Schema response
         result = self.api_handler.update_build('username', 'project_name', 1, {'name': 'new'})
-        assert result.to_dict() == job.to_dict()
+        assert result.to_dict() == job
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.update_build('username', 'project_name', 1, {'name': 'new'})
+        assert result == job
 
     @httpretty.activate
     def test_delete_build(self):
@@ -92,8 +108,17 @@ class TestBuildJobApi(TestBaseApi):
             body=json.dumps({'results': [job], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
+
+        # Schema response
         response = self.api_handler.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
+        assert isinstance(response['results'][0], JobStatusConfig)
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.get_statuses('username', 'project_name', 1)
+        assert len(response['results']) == 1
+        assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
     def test_stop_build(self):
