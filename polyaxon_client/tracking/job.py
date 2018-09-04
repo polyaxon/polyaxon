@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-
 import os
 
 from polyaxon_client.tracking.base import ensure_in_custer

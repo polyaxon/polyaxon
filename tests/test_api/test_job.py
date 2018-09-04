@@ -2,11 +2,11 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-from collections import Mapping
-
 import httpretty
 import json
 import uuid
+
+from collections import Mapping
 
 from tests.test_api.utils import TestBaseApi
 

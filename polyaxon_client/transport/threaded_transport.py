@@ -2,7 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import requests
+
 from requests.adapters import HTTPAdapter
+
 from urllib3 import Retry
 
 from polyaxon_client.logger import logger
@@ -47,7 +49,7 @@ class ThreadedTransportMixin(object):
             request(url=url, session=self.retry_session, **kwargs)
         except Exception as e:
             self._exceptions += 1
-            logger.debug('Error making request url: %s, params: params %s, exp: e', url, kwargs, e)
+            logger.debug('Error making request url: %s, params: params %s, exp: %s', url, kwargs, e)
         finally:
             self._done += 1
 

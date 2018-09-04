@@ -3,10 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import uuid
 
+from tests.utils import TestEnvVarsCase
+
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.tracking.job import get_job_info
-from tests.utils import TestEnvVarsCase
 
 
 class TestJobTracking(TestEnvVarsCase):

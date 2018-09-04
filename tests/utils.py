@@ -2,9 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-from unittest import TestCase
-
 import os
+
+from unittest import TestCase
 
 
 class TestEnvVarsCase(TestCase):

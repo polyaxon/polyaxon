@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
-
 import httpretty
 import json
 import uuid
 
+from collections import Mapping
 from faker import Faker
 
 from tests.test_api.utils import TestBaseApi
@@ -172,4 +171,3 @@ class TestBookmarkApi(TestBaseApi):
         result = self.api_handler.projects('user')
         assert len(result['results']) == 10
         assert isinstance(result['results'][0], Mapping)
-

@@ -2,15 +2,20 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+import os
 import uuid
 
-import os
+from tests.utils import TestEnvVarsCase
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonException
-from polyaxon_client.tracking.experiment import get_cluster_def, get_declarations, \
-    get_experiment_info, get_task_info, get_tf_config
-from tests.utils import TestEnvVarsCase
+from polyaxon_client.tracking.experiment import (
+    get_cluster_def,
+    get_declarations,
+    get_experiment_info,
+    get_task_info,
+    get_tf_config
+)
 
 
 class TestExperimentTracking(TestEnvVarsCase):

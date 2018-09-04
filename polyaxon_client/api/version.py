@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.logger import logger
 from polyaxon_client.schemas import (
     ChartVersionConfig,
     CliVersionConfig,

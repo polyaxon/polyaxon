@@ -35,4 +35,3 @@ class TestApiConfig(TestCase):
         assert api_config.ws_host == 'ws_host'
         assert api_config.base_url == 'api_host/api/v1'
         assert api_config.base_ws_url == 'ws_host/ws/v1'
-
