@@ -57,7 +57,7 @@ def is_dirty(path='.'):
                             chw=True))
 
 
-def get_git_info(path='.'):
+def get_code_reference(path='.'):
     if not is_git_initialized(path):
         return None
 

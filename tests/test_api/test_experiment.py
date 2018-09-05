@@ -2,13 +2,12 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-import httpretty
 import json
 import uuid
-
 from collections import Mapping
 
-from tests.test_api.utils import TestBaseApi
+import httpretty
+from polyaxon_schemas.code_reference import CodeReferenceConfig
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment import ExperimentApi
@@ -18,6 +17,7 @@ from polyaxon_client.schemas import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
+from tests.test_api.utils import TestBaseApi
 
 
 class TestExperimentApi(TestBaseApi):
@@ -196,6 +196,44 @@ class TestExperimentApi(TestBaseApi):
         self.assert_async_call(
             api_handler_call=lambda: self.api_handler.create_status(
                 'username', 'project_name', 1, status='running', background=True),
+            method='post')
+
+    @httpretty.activate
+    def test_create_experiment_code_reference(self):
+        coderef = CodeReferenceConfig(commit='3783ab36703b14b91b15736fe4302bfb8d52af1c',
+                                      head='3783ab36703b14b91b15736fe4302bfb8d52af1c',
+                                      branch='feature1',
+                                      git_url='https://bitbucket.org:foo/bar.git',
+                                      is_dirty=True).to_dict()
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler._build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'coderef'),
+            body=json.dumps(coderef),
+            content_type='application/json',
+            status=200)
+
+        # Schema response
+        response = self.api_handler.create_code_reference(
+            'username', 'project_name', 1, coderef=coderef)
+        assert response.to_dict() == coderef
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.create_code_reference(
+            'username', 'project_name', 1, coderef=coderef)
+        assert response == coderef
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_code_reference(
+                'username', 'project_name', 1, coderef=coderef, background=True),
             method='post')
 
     @httpretty.activate

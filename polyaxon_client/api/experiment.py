@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.code_reference import CodeReferenceConfig
+
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.schemas import (
@@ -125,6 +127,31 @@ class ExperimentApi(BaseApiHandler):
                 e=e, log_message='Error while creating experiment status.')
             return None
 
+    def create_code_reference(self,
+                              username,
+                              project_name,
+                              experiment_id,
+                              coderef,
+                              background=False):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_id,
+                                      'coderef')
+        if background:
+            self.transport.async_post(request_url, json_data=coderef)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=coderef)
+            return self.prepare_results(response_json=response.json(),
+                                        config=CodeReferenceConfig)
+        except PolyaxonException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while creating experiment coderef.')
+            return None
+
     def get_metrics(self, username, project_name, experiment_id, page=1):
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -137,7 +164,7 @@ class ExperimentApi(BaseApiHandler):
             return self.prepare_list_results(response.json(), page, ExperimentMetricConfig)
         except PolyaxonException as e:
             self.transport.handle_exception(
-                e=e, log_message='Error while retrieving experiment status.')
+                e=e, log_message='Error while retrieving experiment metric.')
             return None
 
     def create_metric(self, username, project_name, experiment_id, values, background=False):

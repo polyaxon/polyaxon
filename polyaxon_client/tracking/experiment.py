@@ -3,15 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 import atexit
 import json
-import os
 import sys
 import time
+
+import os
 
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
+from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
-from polyaxon_client.tracking.utils.git import get_git_info
 from polyaxon_client.tracking.utils.project import get_project_info
 from polyaxon_client.tracking.utils.tags import validate_tags
 
@@ -37,7 +38,7 @@ class Experiment(BaseTracker):
         self.last_status = None
 
     def create(self, name=None, tags=None, description=None, config=None):
-        experiment_config = {'run_env': get_run_env(), 'git_info': get_git_info()}
+        experiment_config = {'run_env': get_run_env()}
         if name:
             experiment_config['name'] = name
         if tags:
@@ -55,6 +56,7 @@ class Experiment(BaseTracker):
                               else experiment.get('id'))
         self.experiment = experiment
         self.last_status = 'created'
+        self.log_code_ref()
 
         if not settings.IN_CLUSTER:
             self._start()
@@ -94,6 +96,13 @@ class Experiment(BaseTracker):
 
     def failed(self, message=None):
         self.end(status='failed', message=message)
+
+    def log_code_ref(self):
+        self.client.experiment.create_code_reference(username=self.username,
+                                                     project_name=self.project_name,
+                                                     experiment_id=self.experiment_id,
+                                                     coderef=get_code_reference(),
+                                                     background=True)
 
     def log_status(self, status, message=None):
         self.client.experiment.create_status(username=self.username,
