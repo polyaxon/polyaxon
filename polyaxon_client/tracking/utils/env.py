@@ -2,11 +2,11 @@
 from __future__ import absolute_import, division, print_function
 
 import getpass
+import os
 import platform
 import socket
 import sys
 
-import os
 import pkg_resources
 
 from polyaxon_client.logger import logger
@@ -38,7 +38,7 @@ def get_module_path():
 
 def get_packages():
     try:
-        installed_packages = [d for d in pkg_resources.working_set]
+        installed_packages = [d for d in pkg_resources.working_set]  # noqa
         return sorted(["{}=={}".format(pkg.key, pkg.version) for pkg in installed_packages])
     except Exception as e:
         logger.debug('Could not detect installed packages, %s', e)
