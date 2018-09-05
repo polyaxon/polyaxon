@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from db.models.repos import ExternalRepo, Repo
+from db.models.repos import ExternalRepo, Repo, CodeReference
 
 
 class RepoAdmin(admin.ModelAdmin):
@@ -13,3 +13,4 @@ class ExternalRepoAdmin(admin.ModelAdmin):
 
 admin.site.register(Repo, RepoAdmin)
 admin.site.register(ExternalRepo, ExternalRepoAdmin)
+admin.site.register(CodeReference)
