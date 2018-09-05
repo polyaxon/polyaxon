@@ -14,6 +14,7 @@ class DummyTransport(ThreadedTransportMixin):
     def __init__(self, delay=0):
         self.queue = []
         self.delay = delay
+        self.timeout = 0
         self._exceptions = 0
         self._done = 0
 
@@ -41,6 +42,7 @@ class DummyTransport(ThreadedTransportMixin):
 class ExceptionTransport(ThreadedTransportMixin):
     def __init__(self, delay=0):
         self.delay = delay
+        self.timeout = 0
         self._exceptions = 0
         self._done = 0
 
