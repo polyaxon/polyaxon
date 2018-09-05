@@ -1,3 +1,9 @@
+## 0.2.1
+
+This is a patch release on top of 0.2.0 containing only bug fixes and no breaking changes or features.
+
+ * Fix issue with serializing experiment jobs' tolerations
+
 ## 0.2.0
 
  * Enhance filtering and sorting: better UI and dropdown with filter/sort options
