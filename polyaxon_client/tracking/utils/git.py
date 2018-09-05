@@ -64,8 +64,7 @@ def get_git_info(path='.'):
     return {
         'commit': get_commit(path),
         'head': get_head(path),
-        'url': get_remote(path),
-        'repo': get_repo_name(path),
         'branch': get_branch_name(path),
-        'is_dirty': is_dirty(path)
+        'git_url': get_remote(path),
+        'is_dirty': is_dirty(path),
     }
