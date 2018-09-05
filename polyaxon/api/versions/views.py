@@ -42,7 +42,7 @@ class ClusterLogHandlerView(RetrieveAPIView):
         chart_version = ChartVersionConfig.obj_to_dict(ChartVersion.load())
         platform_version = PlatformVersionConfig.obj_to_dict(PlatformVersion.load())
         handler_config = LogHandlerConfig(
-            dns=config.cli_dns,
+            dsn=config.cli_dsn,
             environment=config.env,
             tags={
                 'cli_min_version': cli_version['min_version'],
