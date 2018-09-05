@@ -6,13 +6,14 @@ import os
 from six.moves.queue import Queue
 from time import sleep, time
 
+from polyaxon_client import settings
 from polyaxon_client.logger import logger
 from polyaxon_client.workers.base_worker import BaseWorker
 
 
 class QueueWorker(BaseWorker):
-    TIMEOUT = 10
     MIN_TIMEOUT = 0.1
+    TIMEOUT_ATTEMPTS = 5
     QUEUE_SIZE = -1  # inf
     END_EVENT = object()
     NAME = 'polyaxon.QueueWorker'
@@ -20,7 +21,7 @@ class QueueWorker(BaseWorker):
     def __init__(self, timeout=None, queue_size=None):
         super(QueueWorker, self).__init__()
         self._queue = Queue(queue_size or self.QUEUE_SIZE)
-        self._timeout = timeout or self.TIMEOUT
+        self._timeout = timeout or settings.TIMEOUT
 
     def atexit(self):
         with self._lock:
@@ -28,8 +29,6 @@ class QueueWorker(BaseWorker):
                 return
 
             self._queue.put_nowait(self.END_EVENT)
-            # ensure wait
-            initial_timeout = min(self.MIN_TIMEOUT, self._timeout)
 
             def timeout_join(timeout, queue):
                 end = time() + timeout
@@ -48,18 +47,28 @@ class QueueWorker(BaseWorker):
                 finally:
                     queue.all_tasks_done.release()
 
-            if not timeout_join(timeout=initial_timeout, queue=self._queue):
+            # ensure wait
+            timeout = min(self.MIN_TIMEOUT, self._timeout / self.TIMEOUT_ATTEMPTS)
+            if timeout_join(timeout=timeout, queue=self._queue):
+                timeout = 0
+            else:
                 # Queue still has message, try another time
                 size = self._queue.qsize()
 
-                print("Polyaxon worker is attempting to send %i pending messages" % size)
-                print("Waiting up to {} seconds".format(self._timeout))
+                print('Polyaxon worker is attempting to send %i pending messages' % size)
+                print('Waiting up to {} seconds'.format(self._timeout))
                 if os.name == 'nt':
-                    print("Press Ctrl-Break to quit")
+                    print('Press Ctrl-Break to quit')
                 else:
-                    print("Press Ctrl-C to quit")
+                    print('Press Ctrl-C to quit')
 
-                timeout_join(timeout=self._timeout - initial_timeout, queue=self._queue)
+            while timeout > 0 and not timeout_join(timeout=timeout, queue=self._queue):
+                timeout = min(timeout + self._timeout / self.TIMEOUT_ATTEMPTS,
+                              self._timeout - timeout)
+
+            size = self._queue.qsize()
+            if size > 0:
+                print('Polyaxon worker timed out and did not manage to send %i messages' % size)
 
             self._thread = None
 
