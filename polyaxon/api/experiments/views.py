@@ -22,6 +22,7 @@ from django.http import StreamingHttpResponse
 
 import auditor
 
+from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
@@ -290,6 +291,22 @@ class ExperimentViewMixin(object):
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
         return queryset.filter(experiment=self.get_experiment())
+
+
+class ExperimentCodeReferenceView(ExperimentViewMixin, CreateAPIView):
+    """
+    post:
+        Create an experiment metric.
+    """
+    queryset = ExperimentMetric.objects.all()
+    serializer_class = CodeReferenceSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        experiment = self.get_experiment()
+        instance = serializer.save()
+        experiment.code_reference = instance
+        experiment.save()
 
 
 class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):

@@ -5,8 +5,8 @@ import pytest
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from factories.factory_build_jobs import BuildJobFactory
+from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_projects import ProjectFactory
-from factories.factorycode_reference import CodeReferenceFactory
 from scheduler import dockerizer_scheduler
 from schemas.specifications import BuildSpecification
 from tests.utils import BaseTest

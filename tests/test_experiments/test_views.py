@@ -10,6 +10,7 @@ from rest_framework import status
 
 from django.conf import settings
 
+from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
@@ -30,6 +31,8 @@ from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
+from db.models.repos import CodeReference
+from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -853,6 +856,61 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert ExperimentJob.objects.count() == 0
+
+
+@pytest.mark.experiments_mark
+class TestExperimentCodeReferenceViewV1(BaseViewTest):
+    serializer_class = CodeReferenceSerializer
+    model_class = CodeReference
+    factory_class = CodeReferenceFactory
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/coderef/'.format(API_V1,
+                                                              project.user.username,
+                                                              project.name,
+                                                              self.experiment.id)
+        self.queryset = self.model_class.objects.all()
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == 1
+        last_object = self.model_class.objects.last()
+        self.experiment.refresh_from_db()
+        assert last_object == self.experiment.code_reference
+        assert last_object.branch == 'master'
+        assert last_object.commit is None
+        assert last_object.head is None
+        assert last_object.is_dirty is False
+        assert last_object.git_url is None
+        assert last_object.repo is None
+        assert last_object.external_repo is None
+
+        data = {
+            'commit': '3783ab36703b14b91b15736fe4302bfb8d52af1c',
+            'head': '3783ab36703b14b91b15736fe4302bfb8d52af1c',
+            'branch': 'feature1',
+            'git_url': 'https://bitbucket.org:foo/bar.git',
+            'is_dirty': True
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == 2
+        last_object = self.model_class.objects.last()
+        self.experiment.refresh_from_db()
+        assert last_object == self.experiment.code_reference
+        assert last_object.branch == 'feature1'
+        assert last_object.commit == '3783ab36703b14b91b15736fe4302bfb8d52af1c'
+        assert last_object.head == '3783ab36703b14b91b15736fe4302bfb8d52af1c'
+        assert last_object.is_dirty is True
+        assert last_object.git_url == 'https://bitbucket.org:foo/bar.git'
+        assert last_object.repo is None
+        assert last_object.external_repo is None
 
 
 @pytest.mark.experiments_mark
