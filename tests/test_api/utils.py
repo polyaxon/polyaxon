@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import time
 
 from unittest import TestCase
-from unittest.mock import patch
+from mock import patch
 
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport import Transport
