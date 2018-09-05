@@ -15,9 +15,8 @@ from polyaxon_cli.utils.formatting import Printer
 
 
 @click.command()
-@click.option('--async', is_flag=True, default=False, help='Upload asynchronously.')
 @clean_outputs
-def upload(async):  # pylint:disable=assign-to-new-keyword
+def upload():  # pylint:disable=assign-to-new-keyword
     """Upload code of the current directory while respecting the .polyaxonignore file."""
     project = ProjectManager.get_config_or_raise()
     files = IgnoreManager.get_unignored_file_paths()
@@ -27,8 +26,7 @@ def upload(async):  # pylint:disable=assign-to-new-keyword
                 PolyaxonClient().project.upload_repo(project.user,
                                                      project.name,
                                                      files,
-                                                     files_size,
-                                                     async)
+                                                     files_size)
             except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
                 Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
                 Printer.print_error('Error message `{}`.'.format(e))
