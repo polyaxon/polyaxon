@@ -95,7 +95,13 @@ class ExperimentApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving experiment statuses.')
             return None
 
-    def create_status(self, username, project_name, experiment_id, status, background=False):
+    def create_status(self,
+                      username,
+                      project_name,
+                      experiment_id,
+                      status,
+                      message=None,
+                      background=False):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -103,12 +109,15 @@ class ExperimentApi(BaseApiHandler):
                                       experiment_id,
                                       'statuses')
 
+        json_data = {'status': status}
+        if message:
+            json_data['message'] = message
         if background:
-            self.transport.async_post(request_url, json_data={'status': status})
+            self.transport.async_post(request_url, json_data=json_data)
             return None
 
         try:
-            response = self.transport.post(request_url, json_data={'status': status})
+            response = self.transport.post(request_url, json_data=json_data)
             return self.prepare_results(response_json=response.json(),
                                         config=ExperimentStatusConfig)
         except PolyaxonException as e:
