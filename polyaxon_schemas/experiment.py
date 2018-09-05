@@ -98,6 +98,7 @@ class ExperimentSchema(Schema):
     declarations = fields.Dict(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    run_env = fields.Dict(allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
     class Meta:
@@ -144,6 +145,7 @@ class ExperimentConfig(BaseConfig):
                  declarations=None,
                  tags=None,
                  resources=None,
+                 run_env=None,
                  jobs=None,
                  total_run=None):
         self.id = id
@@ -168,6 +170,7 @@ class ExperimentConfig(BaseConfig):
         self.declarations = declarations
         self.tags = tags
         self.resources = resources
+        self.run_env = run_env
         self.jobs = jobs
         self.total_run = None
         if all([self.started_at, self.finished_at]):
