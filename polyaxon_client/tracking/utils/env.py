@@ -9,6 +9,7 @@ import sys
 
 import pkg_resources
 
+from polyaxon_client import settings
 from polyaxon_client.logger import logger
 
 PROJECT_CLIENT_NAME = 'polyaxon-client'
@@ -63,5 +64,6 @@ def get_run_env():
         'is_notebook': is_notebook(),
         'filename': get_filename(),
         'module_path': get_module_path(),
-        'packages': get_packages()
+        'packages': get_packages(),
+        'in_cluster': settings.IN_CLUSTER,
     }
