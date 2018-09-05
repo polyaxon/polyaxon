@@ -13,6 +13,7 @@ from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
 from polyaxon_client.tracking.utils.env import get_run_env
 from polyaxon_client.tracking.utils.git import get_git_info
 from polyaxon_client.tracking.utils.project import get_project_info
+from polyaxon_client.tracking.utils.tags import validate_tags
 
 
 class Experiment(BaseTracker):
@@ -110,17 +111,23 @@ class Experiment(BaseTracker):
                                              background=True)
 
     def log_tags(self, tags, reset=False):
+        patch_dict = {'tags': validate_tags(tags)}
+        if reset is False:
+            patch_dict['merge'] = True
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
-                                                 patch_dict={'tags': tags},
+                                                 patch_dict=patch_dict,
                                                  background=True)
 
     def log_params(self, reset=False, **params):
+        patch_dict = {'declarations': params}
+        if reset is False:
+            patch_dict['merge'] = True
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
-                                                 patch_dict={'declarations': params},
+                                                 patch_dict=patch_dict,
                                                  background=True)
 
     def set_description(self, description):
