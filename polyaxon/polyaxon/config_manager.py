@@ -173,18 +173,18 @@ class SettingsConfigManager(ConfigManager):
         return self._decode(value) if value else None
 
     @cached_property
-    def platform_dns(self):
+    def platform_dsn(self):
         value = self.get_string(
-            '_POLYAXON_PLATFORM_DNS',
+            '_POLYAXON_PLATFORM_DSN',
             is_secret=True,
             is_local=True,
             is_optional=True)
         return self._decode(value) if value else None
 
     @cached_property
-    def cli_dns(self):
+    def cli_dsn(self):
         value = self.get_string(
-            '_POLYAXON_CLI_DNS',
+            '_POLYAXON_CLI_DSN',
             is_secret=True,
             is_local=True,
             is_optional=True)
