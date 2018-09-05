@@ -1,6 +1,7 @@
 from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.projects import Project
 
 
@@ -34,15 +35,17 @@ class BookmarkedProjectSerializer(ProjectSerializer, BookmarkedSerializerMixin):
         fields = ProjectSerializer.Meta.fields + ('bookmarked',)
 
 
-class ProjectDetailSerializer(BookmarkedProjectSerializer):
+class ProjectDetailSerializer(BookmarkedProjectSerializer, TagsSerializerMixin):
     num_experiment_groups = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
     num_independent_experiments = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_builds = fields.SerializerMethodField()
+    merge = fields.BooleanField(write_only=True, required=False)
 
     class Meta(BookmarkedProjectSerializer.Meta):
         fields = BookmarkedProjectSerializer.Meta.fields + (
+            'merge',
             'has_code',
             'has_tensorboard',
             'has_notebook',
@@ -67,3 +70,9 @@ class ProjectDetailSerializer(BookmarkedProjectSerializer):
 
     def get_num_builds(self, obj):
         return obj.build_jobs__count
+
+    def update(self, instance, validated_data):
+        validated_data = self.validated_tags(validated_data=validated_data,
+                                             tags=instance.tags)
+
+        return super().update(instance=instance, validated_data=validated_data)

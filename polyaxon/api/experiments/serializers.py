@@ -3,6 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
+from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from libs.spec_validation import validate_experiment_spec_config
@@ -151,14 +152,16 @@ class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerM
         fields = ExperimentSerializer.Meta.fields + ('bookmarked',)
 
 
-class ExperimentDetailSerializer(BookmarkedExperimentSerializer):
+class ExperimentDetailSerializer(BookmarkedExperimentSerializer, TagsSerializerMixin):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
+    merge = fields.BooleanField(write_only=True, required=False)
 
     class Meta(BookmarkedExperimentSerializer.Meta):
         fields = BookmarkedExperimentSerializer.Meta.fields + (
             'original_experiment',
+            'merge',
             'description',
             'config',
             'declarations',
@@ -181,6 +184,24 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer):
 
     def get_last_metric(self, obj):
         return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
+
+    def validated_declarations(self, validated_data, declarations):
+        new_declarations = validated_data.get('declarations')
+        if not validated_data.get('merge') or not declarations or not new_declarations:
+            # This is the default behavior
+            return validated_data
+
+        declarations.update(new_declarations)
+        validated_data['declarations'] = declarations
+        return validated_data
+
+    def update(self, instance, validated_data):
+        validated_data = self.validated_tags(validated_data=validated_data,
+                                             tags=instance.tags)
+        validated_data = self.validated_declarations(validated_data=validated_data,
+                                                     declarations=instance.declarations)
+
+        return super().update(instance=instance, validated_data=validated_data)
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):

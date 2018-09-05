@@ -1,6 +1,7 @@
 from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_job_spec_config
 
@@ -56,12 +57,14 @@ class BookmarkedJobSerializer(JobSerializer, BookmarkedSerializerMixin):
         fields = JobSerializer.Meta.fields + ('bookmarked',)
 
 
-class JobDetailSerializer(BookmarkedJobSerializer):
+class JobDetailSerializer(BookmarkedJobSerializer, TagsSerializerMixin):
     original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
+    merge = fields.BooleanField(write_only=True, required=False)
 
     class Meta(BookmarkedJobSerializer.Meta):
         fields = BookmarkedJobSerializer.Meta.fields + (
+            'merge',
             'is_clone',
             'original',
             'original_job',
@@ -77,6 +80,12 @@ class JobDetailSerializer(BookmarkedJobSerializer):
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
+
+    def update(self, instance, validated_data):
+        validated_data = self.validated_tags(validated_data=validated_data,
+                                             tags=instance.tags)
+
+        return super().update(instance=instance, validated_data=validated_data)
 
 
 class JobCreateSerializer(serializers.ModelSerializer):

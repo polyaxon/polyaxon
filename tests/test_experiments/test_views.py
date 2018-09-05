@@ -777,7 +777,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         exp_query = queries.experiments_details.get(id=exp.id)
         assert resp.data == self.serializer_class(exp_query).data
 
-    def test_patch(self):
+    def test_patch_exp(self):
         new_description = 'updated_xp_name'
         data = {'description': new_description}
         assert self.object.description != data['description']
@@ -801,6 +801,46 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert new_object.jobs.count() == 2
         assert new_object.is_clone is True
         assert new_object.original_experiment == new_experiment
+
+        # Update tags
+        assert new_object.tags == ['fixtures']
+        data = {'tags': ['foo', 'bar']}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.tags == ['foo', 'bar']
+
+        data = {'tags': ['foo_new', 'bar_new'], 'merge': False}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.tags == ['foo_new', 'bar_new']
+
+        data = {'tags': ['foo', 'bar'], 'merge': True}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.tags == ['foo_new', 'bar_new', 'foo', 'bar']
+
+        # Update declarations
+        assert new_object.declarations is None
+        data = {'declarations': {'foo': 'bar'}}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.declarations == {'foo': 'bar'}
+
+        data = {'declarations': {'foo_new': 'bar_new'}, 'merge': False}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.declarations == {'foo_new': 'bar_new'}
+
+        data = {'declarations': {'foo': 'bar'}, 'merge': True}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.declarations == {'foo_new': 'bar_new', 'foo': 'bar'}
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1

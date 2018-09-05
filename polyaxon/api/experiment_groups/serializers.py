@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from libs.spec_validation import validate_group_spec_content
 
@@ -54,7 +55,7 @@ class BookmarkedExperimentGroupSerializer(ExperimentGroupSerializer, BookmarkedS
         fields = ExperimentGroupSerializer.Meta.fields + ('bookmarked',)
 
 
-class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer):
+class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer, TagsSerializerMixin):
     num_experiments = fields.SerializerMethodField()
     num_pending_experiments = fields.SerializerMethodField()
     num_running_experiments = fields.SerializerMethodField()
@@ -63,9 +64,11 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer):
     num_failed_experiments = fields.SerializerMethodField()
     num_stopped_experiments = fields.SerializerMethodField()
     current_iteration = fields.SerializerMethodField()
+    merge = fields.BooleanField(write_only=True, required=False)
 
     class Meta(BookmarkedExperimentGroupSerializer.Meta):
         fields = BookmarkedExperimentGroupSerializer.Meta.fields + (
+            'merge',
             'current_iteration',
             'content',
             'hptuning',
@@ -111,6 +114,12 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer):
         if self.initial_data.get('check_specification') and not attrs.get('content'):
             raise ValidationError('Experiment group expects `content`.')
         return attrs
+
+    def update(self, instance, validated_data):
+        validated_data = self.validated_tags(validated_data=validated_data,
+                                             tags=instance.tags)
+
+        return super().update(instance=instance, validated_data=validated_data)
 
 
 class ExperimentGroupCreateSerializer(ExperimentGroupSerializer):
