@@ -875,6 +875,14 @@ class TestExperimentCodeReferenceViewV1(BaseViewTest):
                                                               self.experiment.id)
         self.queryset = self.model_class.objects.all()
 
+    def test_get(self):
+        coderef = CodeReferenceFactory()
+        self.experiment.code_reference = coderef
+        self.experiment.save()
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(coderef).data
+
     def test_create(self):
         data = {}
         resp = self.auth_client.post(self.url, data)
