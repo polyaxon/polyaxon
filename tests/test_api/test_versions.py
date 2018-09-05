@@ -110,7 +110,7 @@ class TestVersionApi(TestBaseApi):
     @httpretty.activate
     def test_get_log_handler(self):
         obj = LogHandlerConfig(
-            dns='test',
+            dsn='test',
             environment='staging',
             tags={
                 'cli_min_version': '0.0.1',
