@@ -20,11 +20,11 @@ def configure_logger(verbose):
         from polyaxon_cli.managers.cli import CliConfigManager
 
         cli_config = CliConfigManager.get_config()
-        if cli_config and cli_config.log_handler and cli_config.log_handler.decoded_dns:
+        if cli_config and cli_config.log_handler and cli_config.log_handler.decoded_dsn:
             import raven
 
             return raven.Client(
-                dsn=cli_config.log_handler.decoded_dns,
+                dsn=cli_config.log_handler.decoded_dsn,
                 release=cli_config.current_version,
                 environment=cli_config.log_handler.environment,
                 tags=cli_config.log_handler.tags,
