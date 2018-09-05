@@ -20,7 +20,8 @@ class ApiConfig(object):
                  use_https=None,
                  in_cluster=None,
                  schema_response=None,
-                 reraise=False):
+                 reraise=False,
+                 timeout=None):
 
         self.token = token or settings.SECRET_TOKEN
         self.host = host or settings.API_HOST
@@ -55,6 +56,7 @@ class ApiConfig(object):
         self.authentication_type = authentication_type or settings.AUTHENTICATION_TYPE
         self.schema_response = schema_response or settings.SCHEMA_RESPONSE
         self.reraise = reraise
+        self.timeout = timeout or settings.TIMEOUT
 
     @staticmethod
     def _get_bool(value, default_value):

@@ -28,7 +28,8 @@ class PolyaxonClient(object):
                  in_cluster=None,
                  authentication_type=settings.AuthenticationTypes.TOKEN,
                  api_version=None,
-                 reraise=False):
+                 reraise=False,
+                 timeout=None):
 
         self._api_config = api_config or ApiConfig(host=host,
                                                    http_port=http_port,
@@ -38,7 +39,8 @@ class PolyaxonClient(object):
                                                    version=api_version,
                                                    use_https=use_https,
                                                    reraise=reraise,
-                                                   in_cluster=in_cluster)
+                                                   in_cluster=in_cluster,
+                                                   timeout=timeout)
 
         self._transport = None
         self._auth_api = None
@@ -103,6 +105,10 @@ class PolyaxonClient(object):
     def reraise(self):
         return self.api_config.reraise
 
+    @property
+    def timeout(self):
+        return self.api_config.timeout
+
     def set_host(self, host):
         self.api_config.host = host
         self.reset()
@@ -144,7 +150,8 @@ class PolyaxonClient(object):
         if not self._transport:
             self._transport = Transport(token=self.token,
                                         authentication_type=self.authentication_type,
-                                        reraise=self.reraise)
+                                        reraise=self.reraise,
+                                        timeout=self.timeout)
         return self._transport
 
     @property
