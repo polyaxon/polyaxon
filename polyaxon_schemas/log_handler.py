@@ -9,7 +9,7 @@ from polyaxon_schemas.base import BaseConfig
 
 
 class LogHandlerSchema(Schema):
-    dns = fields.Str(allow_none=True)
+    dsn = fields.Str(allow_none=True)
     environment = fields.Str()
     tags = fields.Dict()
 
@@ -29,12 +29,12 @@ class LogHandlerConfig(BaseConfig):
     SCHEMA = LogHandlerSchema
     IDENTIFIER = 'log_handler'
 
-    def __init__(self, environment, tags, dns=None):
-        self.dns = dns
+    def __init__(self, environment, tags, dsn=None):
+        self.dsn = dsn
         self.environment = environment
         self.tags = tags
 
     @property
-    def decoded_dns(self):
-        if self.dns:
-            return base64.b64decode(self.dns.encode('utf-8')).decode('utf-8')
+    def decoded_dsn(self):
+        if self.dsn:
+            return base64.b64decode(self.dsn.encode('utf-8')).decode('utf-8')

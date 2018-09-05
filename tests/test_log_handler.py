@@ -8,7 +8,7 @@ from polyaxon_schemas.log_handler import LogHandlerConfig
 
 class TestLogHandlerConfig(TestCase):
     def test_log_handler_config(self):
-        config_dict = {'dns': 'https//foo:bar',
+        config_dict = {'dsn': 'https//foo:bar',
                        'environment': 'staging',
                        'tags': {}}
         config = LogHandlerConfig.from_dict(config_dict)
