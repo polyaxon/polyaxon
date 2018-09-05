@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import atexit
 import json
+import sys
+import time
+
 import os
 
 from polyaxon_client import settings
@@ -19,8 +23,7 @@ class Experiment(BaseTracker):
                  client=None,
                  track_logs=None,
                  track_git=None,
-                 track_env=None,
-                 auto_status=None):
+                 track_env=None):
         super(Experiment, self).__init__(client=client,
                                          track_logs=track_logs,
                                          track_git=track_git,
@@ -31,13 +34,10 @@ class Experiment(BaseTracker):
         self.project_name = project_name
         self.experiment_id = experiment_id
         self.experiment = None
-        self.auto_status = auto_status
+        self.last_status = None
 
     def create(self, name=None, tags=None, description=None, config=None):
-        experiment_config = {}
-        if not settings.IN_CLUSTER:
-            experiment_config['run_env'] = get_run_env()
-            experiment_config['git_info'] = get_git_info()
+        experiment_config = {'run_env': get_run_env(), 'git_info': get_git_info()}
         if name:
             experiment_config['name'] = name
         if tags:
@@ -54,22 +54,53 @@ class Experiment(BaseTracker):
                               if self.client.api_config.schema_response
                               else experiment.get('id'))
         self.experiment = experiment
+        self.last_status = 'created'
+
+        if not settings.IN_CLUSTER:
+            self._start()
+
         return self
+
+    def _start(self):
+        atexit.register(self._end)
+        self.start()
+
+        def excepthook(exception, value, tb):
+            self.failed(message='Type: {}, Value: {}'.format(exception, value))
+            # Resume normal work
+            sys.__excepthook__(exception, value, tb)
+
+        sys.excepthook = excepthook
+
+    def _end(self):
+        self.succeeded()
+
+    def end(self, status, message=None):
+        if self.last_status in ['succeeded', 'failed', 'stopped']:
+            return
+        self.log_status(status, message)
+        self.last_status = status
+        time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
 
     def start(self):
         self.log_status('running')
+        self.last_status = 'running'
 
-    def end(self):
-        self.log_status('succeeded')
+    def succeeded(self):
+        self.end('succeeded')
 
     def stop(self):
-        self.log_status('stopped')
+        self.end('stopped')
 
-    def log_status(self, status):
+    def failed(self, message=None):
+        self.end(status='failed', message=message)
+
+    def log_status(self, status, message=None):
         self.client.experiment.create_status(username=self.username,
                                              project_name=self.project_name,
                                              experiment_id=self.experiment_id,
                                              status=status,
+                                             message=message,
                                              background=True)
 
     def log_metrics(self, **metrics):
