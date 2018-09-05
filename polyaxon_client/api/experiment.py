@@ -127,6 +127,24 @@ class ExperimentApi(BaseApiHandler):
                 e=e, log_message='Error while creating experiment status.')
             return None
 
+    def get_code_reference(self,
+                           username,
+                           project_name,
+                           experiment_id):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_id,
+                                      'coderef')
+        try:
+            response = self.transport.get(request_url)
+            return self.prepare_results(response.json(), CodeReferenceConfig)
+        except PolyaxonException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving experiment code reference.')
+            return None
+
     def create_code_reference(self,
                               username,
                               project_name,
