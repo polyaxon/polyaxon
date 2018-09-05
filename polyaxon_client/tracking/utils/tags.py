@@ -13,7 +13,7 @@ def validate_tags(tags):
 
     if isinstance(tags, six.string_types):
         tags = [tag.strip() for tag in tags.split(',')]
-    
+
     for tag in to_list(tags):
         if not (tag and isinstance(tag, six.string_types)):
             raise PolyaxonException(
