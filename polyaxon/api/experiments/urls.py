@@ -27,7 +27,7 @@ experiments_urlpatterns = [
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.ExperimentCopyView.as_view()),
     re_path(r'^{}/{}/experiments/{}/coderef/?$'.format(
-        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.ExperimentCodeReferenceView.as_view()),
     re_path(r'^{}/{}/experiments/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),

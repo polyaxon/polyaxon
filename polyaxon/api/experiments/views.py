@@ -1,9 +1,11 @@
 import logging
 import mimetypes
 import os
-
 from wsgiref.util import FileWrapper
 
+from django.http import StreamingHttpResponse
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import SchedulerCeleryTasks
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
@@ -18,10 +20,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
-from django.http import StreamingHttpResponse
-
 import auditor
-
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
@@ -73,8 +72,6 @@ from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
-from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
 
 _logger = logging.getLogger("polyaxon.views.experiments")
 
@@ -274,6 +271,28 @@ class ExperimentCopyView(ExperimentCloneView):
                         description=description)
 
 
+class ExperimentCodeReferenceView(CreateAPIView, RetrieveAPIView):
+    """
+    post:
+        Create an experiment metric.
+    """
+    queryset = Experiment.objects.all()
+    serializer_class = CodeReferenceSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
+
+    def perform_create(self, serializer):
+        experiment = self.get_object()
+        instance = serializer.save()
+        experiment.code_reference = instance
+        experiment.save()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance.code_reference)
+        return Response(serializer.data)
+
+
 class ExperimentViewMixin(object):
     """A mixin to filter by experiment."""
     project = None
@@ -291,22 +310,6 @@ class ExperimentViewMixin(object):
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
         return queryset.filter(experiment=self.get_experiment())
-
-
-class ExperimentCodeReferenceView(ExperimentViewMixin, CreateAPIView):
-    """
-    post:
-        Create an experiment metric.
-    """
-    queryset = ExperimentMetric.objects.all()
-    serializer_class = CodeReferenceSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def perform_create(self, serializer):
-        experiment = self.get_experiment()
-        instance = serializer.save()
-        experiment.code_reference = instance
-        experiment.save()
 
 
 class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
