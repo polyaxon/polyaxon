@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import uuid
 
-from datetime import datetime
 from unittest import TestCase
 
 from polyaxon_schemas.data import DataConfig, DataDetailsConfig, DatasetConfig
