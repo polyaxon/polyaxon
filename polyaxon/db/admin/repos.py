@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from db.models.repos import ExternalRepo, Repo, CodeReference
+from db.models.repos import CodeReference, ExternalRepo, Repo
 
 
 class RepoAdmin(admin.ModelAdmin):

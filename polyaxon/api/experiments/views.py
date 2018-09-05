@@ -1,11 +1,9 @@
 import logging
 import mimetypes
 import os
+
 from wsgiref.util import FileWrapper
 
-from django.http import StreamingHttpResponse
-from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
@@ -20,7 +18,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
+from django.http import StreamingHttpResponse
+
 import auditor
+
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
@@ -72,6 +73,8 @@ from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import SchedulerCeleryTasks
 
 _logger = logging.getLogger("polyaxon.views.experiments")
 
