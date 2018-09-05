@@ -81,6 +81,11 @@ class Experiment(DiffModel,
         blank=True,
         help_text='The compiled polyaxon with specific values for this experiment.',
         validators=[validate_experiment_spec_config])
+    run_env = JSONField(
+        blank=True,
+        null=True,
+        default={'in_cluster': True},
+        help_text='The run environment of the experiment.')
     original_experiment = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,

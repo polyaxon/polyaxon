@@ -164,6 +164,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer, TagsSerializerM
             'merge',
             'config',
             'resources',
+            'run_env',
             'num_jobs',
             'is_clone',
             'has_tensorboard',
@@ -214,6 +215,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
             'original_experiment',
             'config',
             'declarations',
+            'run_env',
             'tags',
         )
 
