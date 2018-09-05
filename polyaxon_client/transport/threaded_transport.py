@@ -56,7 +56,7 @@ class ThreadedTransportMixin(object):
     @property
     def worker(self):
         if not hasattr(self, '_worker') or not self._worker.is_alive():
-            self._worker = QueueWorker()
+            self._worker = QueueWorker(timeout=self.timeout)
             self._worker.start()
         return self._worker
 
