@@ -107,10 +107,21 @@ class CodeReference(DiffModel):
         null=True,
         on_delete=models.SET_NULL,
         related_name='references')
+    branch = models.CharField(
+        max_length=124,
+        default='master',
+        blank=True,
+        null=True)
     commit = models.CharField(
         max_length=40,
         blank=True,
         null=True)
+    head = models.CharField(
+        max_length=40,
+        blank=True,
+        null=True)
+    is_dirty = models.BooleanField(default=False)
+    git_url = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
         app_label = 'db'

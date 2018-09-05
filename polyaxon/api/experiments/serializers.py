@@ -162,11 +162,8 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer, TagsSerializerM
         fields = BookmarkedExperimentSerializer.Meta.fields + (
             'original_experiment',
             'merge',
-            'description',
             'config',
-            'declarations',
             'resources',
-            'last_metric',
             'num_jobs',
             'is_clone',
             'has_tensorboard',
