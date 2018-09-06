@@ -9,6 +9,7 @@ from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    DataReference,
     DescribableModel,
     NameableModel,
     NodeSchedulingModel,
@@ -22,6 +23,7 @@ from schemas.specifications import JobSpecification
 
 
 class Job(AbstractJob,
+          DataReference,
           OutputsModel,
           PersistenceModel,
           NodeSchedulingModel,

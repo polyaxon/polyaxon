@@ -188,6 +188,16 @@ class OutputsModel(models.Model):
         return refs
 
 
+class DataReference(models.Model):
+    data_refs = JSONField(
+        null=True,
+        blank=True,
+        help_text='The data hashes used.')
+
+    class Meta:
+        abstract = True
+
+
 class Singleton(DiffModel):
     """A base model to represents a singleton."""
 

@@ -811,19 +811,19 @@ class TestExperimentDetailViewV1(BaseViewTest):
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.tags == ['foo', 'bar']
+        assert sorted(new_object.tags) == sorted(['foo', 'bar'])
 
         data = {'tags': ['foo_new', 'bar_new'], 'merge': False}
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.tags == ['foo_new', 'bar_new']
+        assert sorted(new_object.tags) == sorted(['foo_new', 'bar_new'])
 
         data = {'tags': ['foo', 'bar'], 'merge': True}
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.tags == ['foo_new', 'bar_new', 'foo', 'bar']
+        assert sorted(new_object.tags) == sorted(['foo_new', 'bar_new', 'foo', 'bar'])
 
         # Update declarations
         assert new_object.declarations is None
