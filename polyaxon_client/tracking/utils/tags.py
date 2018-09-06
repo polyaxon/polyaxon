@@ -20,4 +20,4 @@ def validate_tags(tags):
                 'Received an invalid tag {}. '
                 'Please make sure that the tags are list of strings, '
                 'or a string containing comma separated values.'.format(tag))
-    return set(tags)
+    return tags
