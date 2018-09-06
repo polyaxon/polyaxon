@@ -2,6 +2,11 @@ class TagsSerializerMixin(object):
 
     def validated_tags(self, validated_data, tags):
         new_tags = validated_data.get('tags')
+
+        if new_tags:
+            new_tags = list(set(new_tags))
+            validated_data['tags'] = new_tags
+
         if not validated_data.get('merge') or not tags or not new_tags:
             # This is the default behavior
             return validated_data
