@@ -11,9 +11,8 @@ CORS_ORIGIN_WHITELIST = config.get_list('POLYAXON_CORS_ORIGIN_WHITELIST',
                                         is_optional=True,
                                         default=[])
 
-
 HEADERS_CLI_VERSION = 'X_POLYAXON_CLI_VERSION'
-HEADERS_CLIENT_VERSION = 'X_POLYAXON_CLIENT-VERSION'
+HEADERS_CLIENT_VERSION = 'X_POLYAXON_CLIENT_VERSION'
 HEADERS_INTERNAL = 'X_POLYAXON_INTERNAL'
 
 CORS_ALLOW_HEADERS = default_headers + (
@@ -30,7 +29,13 @@ if SSL_ENABLED:
     PROTOCOL = 'https'
 
 
-INTERNAL_SERVICES = [
-    'dockerizer',
-    'helper'
-]
+class INTERNAL_SERVICES(object):  # noqa
+    DOCKERIZER = 'dockerizer'
+    HELPER = 'helper'
+    TRACKER = 'tracker'
+
+    VALUES = [
+        DOCKERIZER,
+        HELPER,
+        TRACKER,
+    ]
