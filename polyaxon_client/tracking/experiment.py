@@ -152,14 +152,21 @@ class Experiment(BaseTracker):
                                                  patch_dict={'name': name},
                                                  background=True)
 
-    def log_data_hash(self, data, data_name='data'):
+    def log_data_ref(self, data, data_name='data', reset=False):
         try:
             import hashlib
 
             params = {
                 data_name: hashlib.md5(str(data).encode("utf-8")).hexdigest()[:settings.HASH_LENGTH]
             }
-            self.log_params(**params)
+            patch_dict = {'data_refs': params}
+            if reset is False:
+                patch_dict['merge'] = True
+            self.client.experiment.update_experiment(username=self.username,
+                                                     project_name=self.project_name,
+                                                     experiment_id=self.experiment_id,
+                                                     patch_dict=patch_dict,
+                                                     background=True)
         except Exception as e:
             logger.warning('Could create data hash %s', e)
 
