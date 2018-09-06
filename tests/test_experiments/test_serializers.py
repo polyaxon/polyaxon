@@ -246,6 +246,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'num_jobs',
         'declarations',
         'resources',
+        'data_refs',
         'run_env',
         'bookmarked',
     }

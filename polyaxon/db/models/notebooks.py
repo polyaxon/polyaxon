@@ -5,11 +5,12 @@ from django.utils.functional import cached_property
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
+from db.models.utils import DataReference
 from libs.spec_validation import validate_notebook_spec_config
 from schemas.specifications import NotebookSpecification
 
 
-class NotebookJob(PluginJobBase, JobMixin):
+class NotebookJob(PluginJobBase, DataReference, JobMixin):
     """A model that represents the configuration for tensorboard job."""
     JOBS_NAME = 'notebooks'
 

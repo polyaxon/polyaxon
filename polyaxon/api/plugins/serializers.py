@@ -14,7 +14,7 @@ class PluginJobBaseSerializer(serializers.ModelSerializer):
             'user',
             'name',
             'config',
-            'tags',
+            'tags',  # Need ti implement TagsSerializerMixin
         )
 
     def get_user(self, obj):
@@ -47,6 +47,7 @@ class NotebookJobSerializer(PluginJobBaseSerializer):
 
     class Meta(PluginJobBaseSerializer.Meta):
         model = NotebookJob
+        fields = PluginJobBaseSerializer.Meta.fields + ('data_refs',)
 
 
 class ProjectTensorboardJobSerializer(serializers.ModelSerializer):

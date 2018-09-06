@@ -14,6 +14,7 @@ from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    DataReference,
     DescribableModel,
     DiffModel,
     LastStatusMixin,
@@ -37,6 +38,7 @@ from schemas.tasks import TaskType
 class Experiment(DiffModel,
                  RunTimeModel,
                  NameableModel,
+                 DataReference,
                  OutputsModel,
                  PersistenceModel,
                  DescribableModel,

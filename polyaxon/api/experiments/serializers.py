@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
@@ -152,7 +153,9 @@ class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerM
         fields = ExperimentSerializer.Meta.fields + ('bookmarked',)
 
 
-class ExperimentDetailSerializer(BookmarkedExperimentSerializer, TagsSerializerMixin):
+class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
+                                 TagsSerializerMixin,
+                                 DataRefsSerializerMixin):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
@@ -165,6 +168,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer, TagsSerializerM
             'config',
             'resources',
             'run_env',
+            'data_refs',
             'num_jobs',
             'is_clone',
             'has_tensorboard',
@@ -196,6 +200,8 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer, TagsSerializerM
     def update(self, instance, validated_data):
         validated_data = self.validated_tags(validated_data=validated_data,
                                              tags=instance.tags)
+        validated_data = self.validated_data_refs(validated_data=validated_data,
+                                                  data_refs=instance.data_refs)
         validated_data = self.validated_declarations(validated_data=validated_data,
                                                      declarations=instance.declarations)
 
@@ -216,6 +222,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
             'config',
             'declarations',
             'run_env',
+            'data_refs',
             'tags',
         )
 
