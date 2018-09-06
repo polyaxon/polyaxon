@@ -23,7 +23,7 @@ class TestClusterApi(TestBaseApi):
         obj = PolyaxonClusterConfig(version_api={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/cluster'),
             body=json.dumps(obj),
@@ -58,7 +58,7 @@ class TestClusterApi(TestBaseApi):
 
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/nodes',
                 1),

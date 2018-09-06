@@ -28,7 +28,7 @@ class TestVersionApi(TestBaseApi):
         obj = CliVersionConfig(latest_version='1.0', min_version='0.5').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/versions/',
                 'cli'),
@@ -49,7 +49,7 @@ class TestVersionApi(TestBaseApi):
         obj = PlatformVersionConfig(latest_version='1.0', min_version='0.5').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/versions/',
                 'platform'),
@@ -70,7 +70,7 @@ class TestVersionApi(TestBaseApi):
         obj = LibVersionConfig(latest_version='1.0', min_version='0.5').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/versions/',
                 'lib'),
@@ -91,7 +91,7 @@ class TestVersionApi(TestBaseApi):
         obj = ChartVersionConfig(version='1.0').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/versions/',
                 'chart'),
@@ -122,7 +122,7 @@ class TestVersionApi(TestBaseApi):
         ).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/log_handler'),
             body=json.dumps(obj),

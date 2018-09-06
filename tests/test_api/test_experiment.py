@@ -2,12 +2,13 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
+import httpretty
 import json
 import uuid
+
 from collections import Mapping
 
-import httpretty
-from polyaxon_schemas.code_reference import CodeReferenceConfig
+from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment import ExperimentApi
@@ -17,7 +18,7 @@ from polyaxon_client.schemas import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
-from tests.test_api.utils import TestBaseApi
+from polyaxon_schemas.code_reference import CodeReferenceConfig
 
 
 class TestExperimentApi(TestBaseApi):
@@ -31,7 +32,7 @@ class TestExperimentApi(TestBaseApi):
         experiments = [ExperimentConfig(config={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'experiments'
@@ -56,7 +57,7 @@ class TestExperimentApi(TestBaseApi):
         exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -82,7 +83,7 @@ class TestExperimentApi(TestBaseApi):
         exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -112,7 +113,7 @@ class TestExperimentApi(TestBaseApi):
     def test_delete_experiment(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -139,7 +140,7 @@ class TestExperimentApi(TestBaseApi):
                                      status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -171,7 +172,7 @@ class TestExperimentApi(TestBaseApi):
                                      status='Running').to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -207,7 +208,7 @@ class TestExperimentApi(TestBaseApi):
                                       is_dirty=True).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -245,7 +246,7 @@ class TestExperimentApi(TestBaseApi):
                                      values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -277,7 +278,7 @@ class TestExperimentApi(TestBaseApi):
                                      values={'accuracy': 0.9}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -316,7 +317,7 @@ class TestExperimentApi(TestBaseApi):
                                    definition={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -343,7 +344,7 @@ class TestExperimentApi(TestBaseApi):
         # Pagination
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -372,7 +373,7 @@ class TestExperimentApi(TestBaseApi):
         exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -405,7 +406,7 @@ class TestExperimentApi(TestBaseApi):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -437,7 +438,7 @@ class TestExperimentApi(TestBaseApi):
         exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -470,7 +471,7 @@ class TestExperimentApi(TestBaseApi):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -502,7 +503,7 @@ class TestExperimentApi(TestBaseApi):
         exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -535,7 +536,7 @@ class TestExperimentApi(TestBaseApi):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -566,7 +567,7 @@ class TestExperimentApi(TestBaseApi):
     def test_stop_experiment(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -589,7 +590,7 @@ class TestExperimentApi(TestBaseApi):
     def test_experiment_logs(self):
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -609,7 +610,7 @@ class TestExperimentApi(TestBaseApi):
     def test_start_experiment_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -634,7 +635,7 @@ class TestExperimentApi(TestBaseApi):
         obj = {}
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -659,7 +660,7 @@ class TestExperimentApi(TestBaseApi):
     def test_stop_experiment_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -683,7 +684,7 @@ class TestExperimentApi(TestBaseApi):
     def test_bookmark_experiment(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -706,7 +707,7 @@ class TestExperimentApi(TestBaseApi):
     def test_unbookmark_experiment(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',

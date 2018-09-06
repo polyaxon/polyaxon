@@ -5,16 +5,15 @@ import os
 
 from six.moves import urllib
 
+from polyaxon_client.logger import logger
 from polyaxon_client.stores.clients import gc_client
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
-from polyaxon_client.logger import logger
 from polyaxon_client.stores.stores.base_store import Store
 from polyaxon_client.stores.utils import (
     append_basename,
     check_dirname_exists,
     get_files_in_current_directory
 )
-
 
 # pylint:disable=arguments-differ
 

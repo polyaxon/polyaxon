@@ -4,8 +4,8 @@ import os
 from contextlib import contextmanager
 from decimal import Decimal
 
-from polyaxon_client.stores.exceptions import PolyaxonStoresException
 from polyaxon_client.logger import logger
+from polyaxon_client.stores.exceptions import PolyaxonStoresException
 
 
 def get_from_env(keys):

@@ -14,7 +14,7 @@ class ClusterApi(BaseApiHandler):
     ENDPOINT_NODES = "/nodes"
 
     def get_cluster(self):
-        request_url = self._build_url(self._get_http_url())
+        request_url = self.build_url(self._get_http_url())
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=PolyaxonClusterConfig)
@@ -23,7 +23,7 @@ class ClusterApi(BaseApiHandler):
             return None
 
     def get_node(self, node_sequence):
-        request_url = self._build_url(self._get_http_url(self.ENDPOINT_NODES), node_sequence)
+        request_url = self.build_url(self._get_http_url(self.ENDPOINT_NODES), node_sequence)
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ClusterNodeConfig)

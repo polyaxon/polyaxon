@@ -19,7 +19,7 @@ class ProjectApi(BaseApiHandler):
     ENDPOINT = "/"
 
     def list_projects(self, username, page=1):
-        request_url = self._build_url(self._get_http_url(), username)
+        request_url = self.build_url(self._get_http_url(), username)
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ProjectConfig)
@@ -28,7 +28,7 @@ class ProjectApi(BaseApiHandler):
             return []
 
     def get_project(self, username, project_name):
-        request_url = self._build_url(self._get_http_url(), username, project_name)
+        request_url = self.build_url(self._get_http_url(), username, project_name)
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ProjectConfig)
@@ -47,7 +47,7 @@ class ProjectApi(BaseApiHandler):
             return None
 
     def update_project(self, username, project_name, patch_dict, background=False):
-        request_url = self._build_url(self._get_http_url(), username, project_name)
+        request_url = self.build_url(self._get_http_url(), username, project_name)
 
         if background:
             self.transport.async_patch(request_url, json_data=patch_dict)
@@ -61,7 +61,7 @@ class ProjectApi(BaseApiHandler):
             return None
 
     def delete_project(self, username, project_name, background=False):
-        request_url = self._build_url(self._get_http_url(), username, project_name)
+        request_url = self.build_url(self._get_http_url(), username, project_name)
 
         if background:
             self.transport.async_delete(request_url)
@@ -76,7 +76,7 @@ class ProjectApi(BaseApiHandler):
 
     def upload_repo(self, username, project_name, files, files_size=None, background=False):
         """Uploads code data related for this project from the current dir."""
-        request_url = self._build_url(
+        request_url = self.build_url(
             self._get_http_url(), username, project_name, 'repo', 'upload')
 
         if background:
@@ -92,7 +92,7 @@ class ProjectApi(BaseApiHandler):
 
     def download_repo(self, username, project_name):
         """Downloads code for this project to the current dir."""
-        request_url = self._build_url(
+        request_url = self.build_url(
             self._get_http_url(), username, project_name, 'repo', 'download')
 
         try:
@@ -105,7 +105,7 @@ class ProjectApi(BaseApiHandler):
 
     def list_experiment_groups(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of experiment groups related to this project."""
-        request_url = self._build_url(
+        request_url = self.build_url(
             self._get_http_url(), username, project_name, 'groups')
 
         try:
@@ -128,7 +128,7 @@ class ProjectApi(BaseApiHandler):
                                 background=False):
         experiment_group_config = self.validate_config(config=experiment_group_config,
                                                        config_schema=ExperimentGroupConfig)
-        request_url = self._build_url(self._get_http_url(), username, project_name, 'groups')
+        request_url = self.build_url(self._get_http_url(), username, project_name, 'groups')
 
         if background:
             self.transport.async_post(request_url, json_data=experiment_group_config.to_dict())
@@ -153,7 +153,7 @@ class ProjectApi(BaseApiHandler):
                          sort=None,
                          page=1):
         """Fetch list of experiments related to this project."""
-        request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
+        request_url = self.build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
             params = self.get_page(page=page)
@@ -178,7 +178,7 @@ class ProjectApi(BaseApiHandler):
     def create_experiment(self, username, project_name, experiment_config, background=False):
         experiment_config = self.validate_config(config=experiment_config,
                                                  config_schema=ExperimentConfig)
-        request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
+        request_url = self.build_url(self._get_http_url(), username, project_name, 'experiments')
 
         if background:
             self.transport.async_post(request_url, json_data=experiment_config.to_dict())
@@ -193,7 +193,7 @@ class ProjectApi(BaseApiHandler):
 
     def list_jobs(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of jobs related to this project."""
-        request_url = self._build_url(
+        request_url = self.build_url(
             self._get_http_url(), username, project_name, 'jobs')
 
         try:
@@ -210,7 +210,7 @@ class ProjectApi(BaseApiHandler):
 
     def create_job(self, username, project_name, job_config, background=False):
         job_config = self.validate_config(config=job_config, config_schema=JobConfig)
-        request_url = self._build_url(self._get_http_url(), username, project_name, 'jobs')
+        request_url = self.build_url(self._get_http_url(), username, project_name, 'jobs')
 
         if background:
             self.transport.async_post(request_url, json_data=job_config.to_dict())
@@ -225,7 +225,7 @@ class ProjectApi(BaseApiHandler):
 
     def list_builds(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of build jobs related to this project."""
-        request_url = self._build_url(
+        request_url = self.build_url(
             self._get_http_url(), username, project_name, 'builds')
 
         try:
@@ -242,7 +242,7 @@ class ProjectApi(BaseApiHandler):
 
     def create_build(self, username, project_name, build_config, background=False):
         build_config = self.validate_config(config=build_config, config_schema=JobConfig)
-        request_url = self._build_url(self._get_http_url(), username, project_name, 'builds')
+        request_url = self.build_url(self._get_http_url(), username, project_name, 'builds')
 
         if background:
             self.transport.async_post(request_url, json_data=build_config.to_dict())
@@ -257,7 +257,7 @@ class ProjectApi(BaseApiHandler):
 
     def list_tensorboards(self, username, project_name, query=None, sort=None, page=1):
         """Fetch list of tensorboard jobs related to this project."""
-        request_url = self._build_url(
+        request_url = self.build_url(
             self._get_http_url(), username, project_name, 'tensorboards')
 
         try:
@@ -274,11 +274,11 @@ class ProjectApi(BaseApiHandler):
             return []
 
     def start_tensorboard(self, username, project_name, job_config=None, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'tensorboard',
-                                      'start')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'tensorboard',
+                                     'start')
 
         job_config = {'config': job_config} if job_config else {}
 
@@ -293,11 +293,11 @@ class ProjectApi(BaseApiHandler):
             return None
 
     def stop_tensorboard(self, username, project_name, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'tensorboard',
-                                      'stop')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'tensorboard',
+                                     'stop')
 
         if background:
             self.transport.async_post(request_url)
@@ -310,11 +310,11 @@ class ProjectApi(BaseApiHandler):
             return None
 
     def start_notebook(self, username, project_name, job_config=None, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'notebook',
-                                      'start')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'notebook',
+                                     'start')
 
         job_config = {'config': job_config} if job_config else {}
 
@@ -329,11 +329,11 @@ class ProjectApi(BaseApiHandler):
             return None
 
     def stop_notebook(self, username, project_name, commit=True, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'notebook',
-                                      'stop')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'notebook',
+                                     'stop')
         json_data = None
         if commit is False:
             json_data = {'commit': commit}
@@ -349,10 +349,10 @@ class ProjectApi(BaseApiHandler):
             return None
 
     def bookmark(self, username, project_name, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'bookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'bookmark')
 
         if background:
             self.transport.async_post(request_url)
@@ -365,10 +365,10 @@ class ProjectApi(BaseApiHandler):
             return None
 
     def unbookmark(self, username, project_name, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'unbookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'unbookmark')
 
         if background:
             self.transport.async_delete(request_url)

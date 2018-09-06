@@ -30,7 +30,7 @@ class TestExperimentJobClient(TestBaseApi):
                                   definition={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -61,7 +61,7 @@ class TestExperimentJobClient(TestBaseApi):
                                         status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',

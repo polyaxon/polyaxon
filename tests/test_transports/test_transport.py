@@ -8,6 +8,7 @@ from polyaxon_client.transport import Transport
 
 
 class TestTransport(TestCase):
+    # pylint:disable=protected-access
     def setUp(self):
         self.transport = Transport()
 

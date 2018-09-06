@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.code_reference import CodeReferenceConfig
-
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.schemas import (
@@ -11,6 +9,7 @@ from polyaxon_client.schemas import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
+from polyaxon_schemas.code_reference import CodeReferenceConfig
 
 
 class ExperimentApi(BaseApiHandler):
@@ -30,11 +29,11 @@ class ExperimentApi(BaseApiHandler):
             return []
 
     def get_experiment(self, username, project_name, experiment_id):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id)
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
@@ -48,11 +47,11 @@ class ExperimentApi(BaseApiHandler):
                           experiment_id,
                           patch_dict,
                           background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id)
 
         if background:
             self.transport.async_patch(request_url, json_data=patch_dict)
@@ -66,11 +65,11 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def delete_experiment(self, username, project_name, experiment_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id)
 
         if background:
             self.transport.async_delete(request_url)
@@ -83,12 +82,12 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def get_statuses(self, username, project_name, experiment_id, page=1):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'statuses')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'statuses')
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentStatusConfig)
@@ -104,12 +103,12 @@ class ExperimentApi(BaseApiHandler):
                       status,
                       message=None,
                       background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'statuses')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'statuses')
 
         json_data = {'status': status}
         if message:
@@ -131,12 +130,12 @@ class ExperimentApi(BaseApiHandler):
                            username,
                            project_name,
                            experiment_id):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'coderef')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'coderef')
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response.json(), CodeReferenceConfig)
@@ -151,12 +150,12 @@ class ExperimentApi(BaseApiHandler):
                               experiment_id,
                               coderef,
                               background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'coderef')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'coderef')
         if background:
             self.transport.async_post(request_url, json_data=coderef)
             return None
@@ -171,12 +170,12 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def get_metrics(self, username, project_name, experiment_id, page=1):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'metrics')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'metrics')
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentMetricConfig)
@@ -186,12 +185,12 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def create_metric(self, username, project_name, experiment_id, values, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'metrics')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'metrics')
 
         if background:
             self.transport.async_post(request_url, json_data={'values': values})
@@ -208,12 +207,12 @@ class ExperimentApi(BaseApiHandler):
 
     def list_jobs(self, username, project_name, experiment_id, page=1):
         """Fetch list of jobs related to this experiment."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'jobs')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'jobs')
 
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
@@ -230,12 +229,12 @@ class ExperimentApi(BaseApiHandler):
                 update_code=None,
                 background=False):
         """Restart an experiment."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'restart')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'restart')
 
         data = {}
         if config:
@@ -263,12 +262,12 @@ class ExperimentApi(BaseApiHandler):
                update_code=None,
                background=False):
         """Restart an experiment."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'resume')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'resume')
 
         data = {}
         if config:
@@ -295,12 +294,12 @@ class ExperimentApi(BaseApiHandler):
              update_code=None,
              background=False):
         """Restart an experiment."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'copy')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'copy')
 
         data = {}
         if config:
@@ -320,12 +319,12 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def stop(self, username, project_name, experiment_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'stop')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'stop')
 
         if background:
             self.transport.async_post(request_url)
@@ -343,12 +342,12 @@ class ExperimentApi(BaseApiHandler):
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
-        request_url = self._build_url(self._get_ws_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'resources')
+        request_url = self.build_url(self._get_ws_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'resources')
         self.transport.socket(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
@@ -359,12 +358,12 @@ class ExperimentApi(BaseApiHandler):
             e.g. def f(x): print(x)
         """
         if not stream:
-            request_url = self._build_url(self._get_http_url(),
-                                          username,
-                                          project_name,
-                                          'experiments',
-                                          experiment_id,
-                                          'logs')
+            request_url = self.build_url(self._get_http_url(),
+                                         username,
+                                         project_name,
+                                         'experiments',
+                                         experiment_id,
+                                         'logs')
 
             try:
                 return self.transport.get(request_url)
@@ -372,12 +371,12 @@ class ExperimentApi(BaseApiHandler):
                 self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
                 return []
 
-        request_url = self._build_url(self._get_ws_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'logs')
+        request_url = self.build_url(self._get_ws_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'logs')
         self.transport.socket(request_url, message_handler=message_handler)
 
     def start_tensorboard(self,
@@ -386,13 +385,13 @@ class ExperimentApi(BaseApiHandler):
                           experiment_id,
                           job_config=None,
                           background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'tensorboard',
-                                      'start')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'tensorboard',
+                                     'start')
 
         job_config = {'config': job_config} if job_config else {}
 
@@ -407,13 +406,13 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def stop_tensorboard(self, username, project_name, experiment_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'tensorboard',
-                                      'stop')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'tensorboard',
+                                     'stop')
 
         if background:
             self.transport.async_post(request_url)
@@ -426,12 +425,12 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def bookmark(self, username, project_name, experiment_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'bookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'bookmark')
 
         if background:
             self.transport.async_post(request_url)
@@ -444,12 +443,12 @@ class ExperimentApi(BaseApiHandler):
             return None
 
     def unbookmark(self, username, project_name, experiment_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'unbookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'unbookmark')
 
         if background:
             self.transport.async_delete(request_url)
@@ -464,12 +463,12 @@ class ExperimentApi(BaseApiHandler):
 
     def download_outputs(self, username, project_name, experiment_id):
         """Downloads outputs for this experiment to the current dir."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'outputs')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'outputs')
 
         try:
             response = self.transport.download(

@@ -38,7 +38,7 @@ class TestBookmarkApi(TestBaseApi):
                 for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/bookmarks',
                 'user',
@@ -68,7 +68,7 @@ class TestBookmarkApi(TestBaseApi):
                 for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/bookmarks',
                 'user',
@@ -98,7 +98,7 @@ class TestBookmarkApi(TestBaseApi):
                 for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/bookmarks',
                 'user',
@@ -127,7 +127,7 @@ class TestBookmarkApi(TestBaseApi):
             for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/bookmarks',
                 'user',
@@ -152,7 +152,7 @@ class TestBookmarkApi(TestBaseApi):
         projects = [{'content_object': ProjectConfig(faker.word).to_dict()} for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/bookmarks',
                 'user',

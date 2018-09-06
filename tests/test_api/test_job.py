@@ -26,7 +26,7 @@ class TestJobApi(TestBaseApi):
         job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -52,7 +52,7 @@ class TestJobApi(TestBaseApi):
         job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -82,7 +82,7 @@ class TestJobApi(TestBaseApi):
     def test_delete_job(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -109,7 +109,7 @@ class TestJobApi(TestBaseApi):
                               status='Running').to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -137,7 +137,7 @@ class TestJobApi(TestBaseApi):
         job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -170,7 +170,7 @@ class TestJobApi(TestBaseApi):
         config = {'config': {'logging': {'level': 'error'}}}
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -202,7 +202,7 @@ class TestJobApi(TestBaseApi):
         job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -235,7 +235,7 @@ class TestJobApi(TestBaseApi):
         config = {'config': {'logging': {'level': 'error'}}}
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -267,7 +267,7 @@ class TestJobApi(TestBaseApi):
         job = JobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -300,7 +300,7 @@ class TestJobApi(TestBaseApi):
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -331,7 +331,7 @@ class TestJobApi(TestBaseApi):
     def test_stop_job(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -354,7 +354,7 @@ class TestJobApi(TestBaseApi):
     def test_job_logs(self):
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -374,7 +374,7 @@ class TestJobApi(TestBaseApi):
     def test_bookmark_job(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',
@@ -397,7 +397,7 @@ class TestJobApi(TestBaseApi):
     def test_unbookmark_job(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/',
                 'username',

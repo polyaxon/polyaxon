@@ -14,7 +14,7 @@ class UserApi(BaseApiHandler):
 
     def activate_user(self, username):
         """Activate a user account."""
-        request_url = self._build_url(self._get_http_url(), 'activate', username)
+        request_url = self.build_url(self._get_http_url(), 'activate', username)
 
         try:
             return self.transport.post(request_url)
@@ -24,7 +24,7 @@ class UserApi(BaseApiHandler):
 
     def delete_user(self, username):
         """Delete a user account."""
-        request_url = self._build_url(self._get_http_url(), 'delete', username)
+        request_url = self.build_url(self._get_http_url(), 'delete', username)
 
         try:
             return self.transport.delete(request_url)
@@ -34,9 +34,9 @@ class UserApi(BaseApiHandler):
 
     def grant_superuser(self, username):
         """Activate a user account."""
-        request_url = self._build_url(self._get_http_url(self.ENDPOINT_SUPERUSERS),
-                                      'grant',
-                                      username)
+        request_url = self.build_url(self._get_http_url(self.ENDPOINT_SUPERUSERS),
+                                     'grant',
+                                     username)
 
         try:
             return self.transport.post(request_url)
@@ -47,9 +47,9 @@ class UserApi(BaseApiHandler):
 
     def revoke_superuser(self, username):
         """Activate a user account."""
-        request_url = self._build_url(self._get_http_url(self.ENDPOINT_SUPERUSERS),
-                                      'revoke',
-                                      username)
+        request_url = self.build_url(self._get_http_url(self.ENDPOINT_SUPERUSERS),
+                                     'revoke',
+                                     username)
 
         try:
             return self.transport.post(request_url)

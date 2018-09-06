@@ -13,13 +13,13 @@ class ExperimentJobApi(BaseApiHandler):
     ENDPOINT = "/"
 
     def get_job(self, username, project_name, experiment_id, job_id):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'jobs',
-                                      job_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'jobs',
+                                     job_id)
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ExperimentJobConfig)
@@ -28,14 +28,14 @@ class ExperimentJobApi(BaseApiHandler):
             return None
 
     def get_statuses(self, username, project_name, experiment_id, job_id, page=1):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'jobs',
-                                      job_id,
-                                      'statuses')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'jobs',
+                                     job_id,
+                                     'statuses')
 
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
@@ -51,14 +51,14 @@ class ExperimentJobApi(BaseApiHandler):
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
-        request_url = self._build_url(self._get_ws_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'jobs',
-                                      job_id,
-                                      'resources')
+        request_url = self.build_url(self._get_ws_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'jobs',
+                                     job_id,
+                                     'resources')
         self.transport.socket(request_url, message_handler=message_handler)
 
     def logs(self, username, project_name, experiment_id, job_id, message_handler=None):
@@ -67,12 +67,12 @@ class ExperimentJobApi(BaseApiHandler):
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
-        request_url = self._build_url(self._get_ws_url(),
-                                      username,
-                                      project_name,
-                                      'experiments',
-                                      experiment_id,
-                                      'jobs',
-                                      job_id,
-                                      'logs')
+        request_url = self.build_url(self._get_ws_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'jobs',
+                                     job_id,
+                                     'logs')
         self.transport.socket(request_url, message_handler=message_handler)

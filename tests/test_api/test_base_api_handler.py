@@ -14,6 +14,7 @@ class DummyConfig(object):
 
 
 class TestBaseApiHandler(TestBaseApi):
+    # pylint:disable=protected-access
     def setUp(self):
         super(TestBaseApiHandler, self).setUp()
         self.api_handler = BaseApiHandler(transport=self.transport, config=self.api_config)
@@ -25,8 +26,8 @@ class TestBaseApiHandler(TestBaseApi):
         assert self.api_handler.get_page(page=3) == {'offset': self.api_config.PAGE_SIZE * 2}
 
     def test_build_url(self):
-        assert self.api_handler._build_url('a') == 'a/'
-        assert self.api_handler._build_url('a', 'b') == 'a/b/'
+        assert self.api_handler.build_url('a') == 'a/'
+        assert self.api_handler.build_url('a', 'b') == 'a/b/'
 
     def test_get_url(self):
         with self.assertRaises(ERRORS_MAPPING['base']):

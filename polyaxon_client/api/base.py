@@ -19,7 +19,7 @@ class BaseApiHandler(object):
         self.config = config
 
     @staticmethod
-    def _build_url(*parts):
+    def build_url(*parts):
         url = ''
         for part in parts:
             part = part.rstrip('/').lstrip('/') if isinstance(part, six.string_types) else part
@@ -34,7 +34,7 @@ class BaseApiHandler(object):
             raise ERRORS_MAPPING['base'](
                 "This function expects `ENDPOINT` attribute to be set, "
                 "or an `endpoint` argument to be passed.")
-        return self._build_url(base_url, endpoint)
+        return self.build_url(base_url, endpoint)
 
     def _get_http_url(self, endpoint=None):
         return self._get_url(self.config.base_url, endpoint)

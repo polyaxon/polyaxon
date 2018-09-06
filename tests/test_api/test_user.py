@@ -19,7 +19,7 @@ class TestUserApi(TestBaseApi):
     def test_activate_user(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/users',
                 'activate',
@@ -35,7 +35,7 @@ class TestUserApi(TestBaseApi):
     def test_delete_user(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/users',
                 'delete',
@@ -51,7 +51,7 @@ class TestUserApi(TestBaseApi):
     def test_grant_superuser(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/superusers',
                 'grant',
@@ -67,7 +67,7 @@ class TestUserApi(TestBaseApi):
     def test_revoke_superuser(self):
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler._build_url(
+            BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/superusers',
                 'revoke',

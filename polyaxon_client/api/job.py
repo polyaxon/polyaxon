@@ -13,11 +13,11 @@ class JobApi(BaseApiHandler):
     ENDPOINT = "/"
 
     def get_job(self, username, project_name, job_id):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id)
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
@@ -26,11 +26,11 @@ class JobApi(BaseApiHandler):
             return None
 
     def update_job(self, username, project_name, job_id, patch_dict, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id)
 
         if background:
             self.transport.async_patch(request_url, json_data=patch_dict)
@@ -44,11 +44,11 @@ class JobApi(BaseApiHandler):
             return None
 
     def delete_job(self, username, project_name, job_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id)
 
         if background:
             self.transport.async_delete(request_url)
@@ -61,12 +61,12 @@ class JobApi(BaseApiHandler):
             return None
 
     def get_statuses(self, username, project_name, job_id, page=1):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'statuses')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'statuses')
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobStatusConfig)
@@ -82,12 +82,12 @@ class JobApi(BaseApiHandler):
                 update_code=None,
                 background=False):
         """Restart an job."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'restart')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'restart')
 
         data = {}
         if config:
@@ -114,12 +114,12 @@ class JobApi(BaseApiHandler):
                update_code=None,
                background=False):
         """Resume a job."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'resume')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'resume')
 
         data = {}
         if config:
@@ -146,12 +146,12 @@ class JobApi(BaseApiHandler):
              update_code=None,
              background=False):
         """Copy an job."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'copy')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'copy')
 
         data = {}
         if config:
@@ -171,12 +171,12 @@ class JobApi(BaseApiHandler):
             return None
 
     def stop(self, username, project_name, job_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'stop')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'stop')
 
         if background:
             self.transport.async_post(request_url)
@@ -189,12 +189,12 @@ class JobApi(BaseApiHandler):
             return None
 
     def bookmark(self, username, project_name, job_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'bookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'bookmark')
 
         if background:
             self.transport.async_post(request_url)
@@ -207,12 +207,12 @@ class JobApi(BaseApiHandler):
             return None
 
     def unbookmark(self, username, project_name, job_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'unbookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'unbookmark')
 
         if background:
             self.transport.async_delete(request_url)
@@ -230,12 +230,12 @@ class JobApi(BaseApiHandler):
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
-        request_url = self._build_url(self._get_ws_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'resources')
+        request_url = self.build_url(self._get_ws_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'resources')
         self.transport.socket(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
@@ -246,12 +246,12 @@ class JobApi(BaseApiHandler):
             e.g. def f(x): print(x)
         """
         if not stream:
-            request_url = self._build_url(self._get_http_url(),
-                                          username,
-                                          project_name,
-                                          'jobs',
-                                          job_id,
-                                          'logs')
+            request_url = self.build_url(self._get_http_url(),
+                                         username,
+                                         project_name,
+                                         'jobs',
+                                         job_id,
+                                         'logs')
 
             try:
                 return self.transport.get(request_url)
@@ -259,22 +259,22 @@ class JobApi(BaseApiHandler):
                 self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
                 return []
 
-        request_url = self._build_url(self._get_ws_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'logs')
+        request_url = self.build_url(self._get_ws_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'logs')
         self.transport.socket(request_url, message_handler=message_handler)
 
     def download_outputs(self, username, project_name, job_id):
         """Downloads outputs for this job to the current dir."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'jobs',
-                                      job_id,
-                                      'outputs')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'outputs')
 
         try:
             response = self.transport.download(

@@ -13,11 +13,11 @@ class ExperimentGroupApi(BaseApiHandler):
     ENDPOINT = "/"
 
     def get_experiment_group(self, username, project_name, group_id):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id)
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
@@ -35,7 +35,7 @@ class ExperimentGroupApi(BaseApiHandler):
                          sort=None,
                          page=1):
         """Fetch list of experiments related to this experiment group."""
-        request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
+        request_url = self.build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
             params = self.get_page(page=page)
@@ -60,11 +60,11 @@ class ExperimentGroupApi(BaseApiHandler):
                                 group_id,
                                 patch_dict,
                                 background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id)
 
         if background:
             self.transport.async_patch(request_url, json_data=patch_dict)
@@ -78,11 +78,11 @@ class ExperimentGroupApi(BaseApiHandler):
             return None
 
     def delete_experiment_group(self, username, project_name, group_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id)
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id)
 
         if background:
             self.transport.async_delete(request_url)
@@ -97,12 +97,12 @@ class ExperimentGroupApi(BaseApiHandler):
             return None
 
     def get_statuses(self, username, project_name, group_id, page=1):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id,
-                                      'statuses')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id,
+                                     'statuses')
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, GroupStatusConfig)
@@ -112,12 +112,12 @@ class ExperimentGroupApi(BaseApiHandler):
             return None
 
     def stop(self, username, project_name, group_id, pending=False, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id,
-                                      'stop')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id,
+                                     'stop')
         json_data = None
         if pending is True:
             json_data = {'pending': pending}
@@ -139,13 +139,13 @@ class ExperimentGroupApi(BaseApiHandler):
                           group_id,
                           job_config=None,
                           background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id,
-                                      'tensorboard',
-                                      'start')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id,
+                                     'tensorboard',
+                                     'start')
 
         job_config = {'config': job_config} if job_config else {}
 
@@ -160,13 +160,13 @@ class ExperimentGroupApi(BaseApiHandler):
             return None
 
     def stop_tensorboard(self, username, project_name, group_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id,
-                                      'tensorboard',
-                                      'stop')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id,
+                                     'tensorboard',
+                                     'stop')
 
         if background:
             self.transport.async_post(request_url)
@@ -179,12 +179,12 @@ class ExperimentGroupApi(BaseApiHandler):
             return None
 
     def bookmark(self, username, project_name, group_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id,
-                                      'bookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id,
+                                     'bookmark')
 
         if background:
             self.transport.async_post(request_url)
@@ -197,12 +197,12 @@ class ExperimentGroupApi(BaseApiHandler):
             return None
 
     def unbookmark(self, username, project_name, group_id, background=False):
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      project_name,
-                                      'groups',
-                                      group_id,
-                                      'unbookmark')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id,
+                                     'unbookmark')
 
         if background:
             self.transport.async_delete(request_url)

@@ -30,7 +30,7 @@ class DatasetApi(BaseApiHandler):
             return []
 
     def get_by_name(self, username, datasetname):
-        request_url = self._build_url(username, datasetname)
+        request_url = self.build_url(username, datasetname)
         request_url = self._get_http_url(request_url)
         try:
             response = self.transport.get(request_url)

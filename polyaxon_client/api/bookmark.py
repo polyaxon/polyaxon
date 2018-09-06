@@ -33,9 +33,9 @@ class BookmarkApi(BaseApiHandler):
 
     def builds(self, username, page=1):
         """This gets all bookmarked builds from the server."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      'builds')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     'builds')
         try:
             response = self.transport.get(request_url,
                                           params=self.get_page(page=page))
@@ -47,9 +47,9 @@ class BookmarkApi(BaseApiHandler):
 
     def jobs(self, username, page=1):
         """This gets all bookmarked jobs from the server."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      'jobs')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     'jobs')
         try:
             response = self.transport.get(request_url,
                                           params=self.get_page(page=page))
@@ -61,9 +61,9 @@ class BookmarkApi(BaseApiHandler):
 
     def experiments(self, username, page=1):
         """This gets all bookmarked experiments from the server."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      'experiments')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     'experiments')
         try:
             response = self.transport.get(request_url,
                                           params=self.get_page(page=page))
@@ -75,9 +75,9 @@ class BookmarkApi(BaseApiHandler):
 
     def groups(self, username, page=1):
         """This gets all bookmarked groups from the server."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      'groups')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     'groups')
         try:
             response = self.transport.get(request_url,
                                           params=self.get_page(page=page))
@@ -89,9 +89,9 @@ class BookmarkApi(BaseApiHandler):
 
     def projects(self, username, page=1):
         """This gets all bookmarked projects from the server."""
-        request_url = self._build_url(self._get_http_url(),
-                                      username,
-                                      'projects')
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     'projects')
         try:
             response = self.transport.get(request_url,
                                           params=self.get_page(page=page))

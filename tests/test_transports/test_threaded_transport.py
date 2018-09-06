@@ -11,6 +11,7 @@ from polyaxon_client.workers.queue_worker import QueueWorker
 
 
 class DummyTransport(ThreadedTransportMixin):
+    # pylint:disable=protected-access
     def __init__(self, delay=0):
         self.queue = []
         self.delay = delay
@@ -40,6 +41,7 @@ class DummyTransport(ThreadedTransportMixin):
 
 
 class ExceptionTransport(ThreadedTransportMixin):
+    # pylint:disable=protected-access
     def __init__(self, delay=0):
         self.delay = delay
         self.timeout = 0
@@ -68,6 +70,7 @@ class ExceptionTransport(ThreadedTransportMixin):
 
 
 class TestThreadedTransport(TestCase):
+    # pylint:disable=protected-access
     def setUp(self):
         self.transport = DummyTransport()
         self.exception_transport = ExceptionTransport()

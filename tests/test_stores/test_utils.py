@@ -5,7 +5,11 @@ import tempfile
 
 from unittest import TestCase
 
-from polyaxon_client.stores.utils import append_basename, get_files_in_current_directory, is_protected_type
+from polyaxon_client.stores.utils import (
+    append_basename,
+    get_files_in_current_directory,
+    is_protected_type
+)
 
 
 class TestUtils(TestCase):

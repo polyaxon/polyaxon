@@ -8,9 +8,9 @@ from six.moves import urllib
 
 from botocore.exceptions import ClientError
 
+from polyaxon_client.logger import logger
 from polyaxon_client.stores.clients import aws_client
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
-from polyaxon_client.logger import logger
 from polyaxon_client.stores.stores.base_store import Store
 from polyaxon_client.stores.utils import (
     append_basename,
@@ -18,7 +18,6 @@ from polyaxon_client.stores.utils import (
     force_bytes,
     get_files_in_current_directory
 )
-
 
 # pylint:disable=arguments-differ
 
