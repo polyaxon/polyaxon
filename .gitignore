@@ -24,6 +24,7 @@ lib64/
 parts/
 sdist/
 var/
+public/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -81,8 +82,11 @@ target/
 # pyenv
 .python-version
 
+# locals
+local.py
+
 # celery beat schedule file
-celerybeat-schedule
+celerybeat-schedule*
 celeryev.pid
 celeryd*pid
 celeryd*log
@@ -104,6 +108,15 @@ static/
 reports/
 logs/
 media/
+data/
+
+# environment vars
+polyaxon/polyaxon/env_vars/local.json
+
+# project
+logs/*
+static/debug_toolbar
+static/rest_framework
 
 # npm modules and transpiled typescript files
 client/dist/
@@ -112,4 +125,6 @@ client/css/
 client/polyaxon/**/*.js
 client/polyaxon/**/*.js.map
 /examples/polyaxon-logs/
-lastfailed
+client/npm-debug.log
+# don't ignore static dist
+!/static/dist

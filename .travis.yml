@@ -1,5 +1,6 @@
 esudo: required
 dist: trusty
+sudo: false
 language: python
 python:
   - "2.7"
