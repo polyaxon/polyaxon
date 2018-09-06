@@ -70,7 +70,7 @@ class InternalAuthentication(BaseAuthentication):
                    'internal_service string should not contain invalid characters.')
             raise exceptions.AuthenticationFailed(msg)
 
-        if internal_service not in settings.INTERNAL_SERVICES:
+        if internal_service not in settings.INTERNAL_SERVICES.VALUES:
             return None
 
         if not auth or auth[0].lower() != self.keyword.lower().encode():

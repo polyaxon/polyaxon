@@ -8,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from django.conf import settings
 
-from libs.api import get_service_api_url
+from libs.api import get_http_api_url
 from libs.permissions.authentication import InternalAuthentication
 
 
@@ -111,7 +111,7 @@ def download(url,
         request_headers.update(headers)
 
     try:
-        api_url = get_service_api_url()
+        api_url = get_http_api_url()
         url = '{}/{}'.format(api_url, url)
         logger.info("Downloading file from %s using %s" % (url, authentication_type))
         response = requests.get(url,

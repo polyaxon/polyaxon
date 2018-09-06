@@ -4,8 +4,9 @@ from kubernetes import client
 
 from django.conf import settings
 
+from constants.urls import VERSION_V1
 from db.models.outputs import get_paths_from_specs
-from libs.api import API_KEY_NAME, get_settings_api_url
+from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
 from scheduler.spawners.templates import constants
 
 
@@ -20,7 +21,7 @@ def get_env_var(name, value, reraise=True):
     return client.V1EnvVar(name=name, value=value)
 
 
-def get_from_app_secret(key_name, secret_key_name, secret_ref_name=None):
+def get_from_secret(key_name, secret_key_name, secret_ref_name=None):
     secret_ref_name = secret_ref_name or settings.POLYAXON_K8S_APP_SECRET_NAME
     secret_key_ref = client.V1SecretKeySelector(name=secret_ref_name, key=secret_key_name)
     value_from = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
@@ -30,13 +31,16 @@ def get_from_app_secret(key_name, secret_key_name, secret_ref_name=None):
 def get_service_env_vars(namespace='default'):
     return [
         get_env_var(name='POLYAXON_K8S_NAMESPACE', value=namespace),
-        get_from_app_secret('POLYAXON_SECRET_KEY', 'POLYAXON_SECRET_KEY'),
-        get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'POLYAXON_INTERNAL_SECRET_TOKEN'),
-        get_from_app_secret('POLYAXON_RABBITMQ_PASSWORD', 'rabbitmq-password',
-                            settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME),
-        get_from_app_secret('POLYAXON_DB_PASSWORD', 'postgres-password',
-                            settings.POLYAXON_K8S_DB_SECRET_NAME),
-        get_env_var(name=API_KEY_NAME, value=get_settings_api_url()),
+        get_from_secret('POLYAXON_SECRET_KEY', 'POLYAXON_SECRET_KEY'),
+        get_from_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'POLYAXON_INTERNAL_SECRET_TOKEN'),
+        get_from_secret('POLYAXON_RABBITMQ_PASSWORD', 'rabbitmq-password',
+                        settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME),
+        get_from_secret('POLYAXON_DB_PASSWORD', 'postgres-password',
+                        settings.POLYAXON_K8S_DB_SECRET_NAME),
+        get_env_var(name=API_HTTP_URL, value=get_settings_http_api_url()),
+        get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
+        get_env_var(name=constants.CONFIG_MAP_IN_CLUSTER, value=True),
+        get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
     ]
 
 
@@ -47,10 +51,17 @@ def get_job_env_vars(outputs_path,
                      outputs_refs_jobs=None,
                      outputs_refs_experiments=None):
     env_vars = [
-        get_env_var(name=API_KEY_NAME, value=get_settings_api_url()),
+        get_env_var(name=API_HTTP_URL, value=get_settings_http_api_url()),
+        get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
+        get_env_var(name=constants.CONFIG_MAP_IN_CLUSTER, value=True),
+        get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
+        get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
+                    value=settings.HEADERS_INTERNAL.replace('_', '-')),
+        get_env_var(name=settings.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
+                    value=settings.INTERNAL_SERVICES.TRACKER),
         get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
         get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME, value=data_paths),
-        get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'POLYAXON_INTERNAL_SECRET_TOKEN'),
+        get_from_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'POLYAXON_INTERNAL_SECRET_TOKEN'),
     ]
     if log_level:
         env_vars.append(
@@ -69,7 +80,8 @@ def get_job_env_vars(outputs_path,
         refs_outputs['experiments'] = outputs_experiments_paths
     if refs_outputs:
         env_vars.append(
-            get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME, value=refs_outputs))
+            get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME,
+                        value=refs_outputs))
     return env_vars
 
 

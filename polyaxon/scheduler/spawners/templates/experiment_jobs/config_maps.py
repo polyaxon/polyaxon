@@ -3,7 +3,7 @@ import json
 
 from kubernetes import client
 
-from libs.api import API_KEY_NAME, get_settings_api_url
+from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
@@ -58,10 +58,11 @@ def get_config_map(namespace,
         constants.CONFIG_MAP_DECLARATIONS_KEY_NAME: json.dumps(declarations) or '{}',
         constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME: json.dumps(labels),
         constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME: log_level,
-        API_KEY_NAME: get_settings_api_url(),
         constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path,
         constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME: experiment_logs_path,
         constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME: persistence_data,
+        API_HTTP_URL: get_settings_http_api_url(),
+        API_WS_HOST: get_settings_ws_api_url(),
     }
     return client.V1ConfigMap(api_version=k8s_constants.K8S_API_VERSION_V1,
                               kind=k8s_constants.K8S_CONFIG_MAP_KIND,

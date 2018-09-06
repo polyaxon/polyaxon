@@ -3,11 +3,7 @@ from django.conf import settings
 from polyaxon.config_manager import config
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.env_vars import (
-    get_env_var,
-    get_from_app_secret,
-    get_service_env_vars
-)
+from scheduler.spawners.templates.env_vars import get_env_var, get_from_secret, get_service_env_vars
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -27,7 +23,7 @@ class DockerizerSpawner(ProjectJobSpawner):
 
         # Add private registries secrets keys
         for key in config.params_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
-            env_vars.append(get_from_app_secret(key, key))
+            env_vars.append(get_from_secret(key, key))
 
         return env_vars
 

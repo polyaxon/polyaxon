@@ -2,14 +2,25 @@ from django.conf import settings
 
 from polyaxon.config_manager import config
 
-API_KEY_NAME = 'POLYAXON_API'
+API_HTTP_URL = 'POLYAXON_API_HTTP_HOST'
+API_WS_HOST = 'POLYAXON_API_WS_HOST'
 
 
-def get_settings_api_url():
+def get_settings_http_api_url():
     return '{}://{}:{}'.format(settings.PROTOCOL,
                                settings.POLYAXON_K8S_API_HOST,
-                               settings.POLYAXON_K8S_API_PORT)
+                               settings.POLYAXON_K8S_API_HTTP_PORT)
 
 
-def get_service_api_url():
-    return config.get_string(API_KEY_NAME, is_optional=True)
+def get_settings_ws_api_url():
+    return '{}://{}:{}'.format(settings.PROTOCOL,
+                               settings.POLYAXON_K8S_API_HOST,
+                               settings.POLYAXON_K8S_API_WS_PORT)
+
+
+def get_http_api_url():
+    return config.get_string(API_HTTP_URL, is_optional=True)
+
+
+def get_ws_api_url():
+    return config.get_string(API_WS_HOST, is_optional=True)

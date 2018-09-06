@@ -247,7 +247,9 @@ def download_code(build_job, build_path, filename):
         url=download_url,
         filename=filename,
         logger=_logger,
-        headers={settings.HEADERS_INTERNAL.replace('_', '-'): 'dockerizer'})
+        headers={
+            settings.HEADERS_INTERNAL.replace('_', '-'): settings.INTERNAL_SERVICES.DOCKERIZER
+        })
     untar_file(build_path=build_path, filename=filename, logger=_logger, delete_tar=True)
     if not repo_file:
         send_status(build_job=build_job,
