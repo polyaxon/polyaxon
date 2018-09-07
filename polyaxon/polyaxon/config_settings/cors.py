@@ -32,10 +32,10 @@ if SSL_ENABLED:
 class INTERNAL_SERVICES(object):  # noqa
     DOCKERIZER = 'dockerizer'
     HELPER = 'helper'
-    TRACKER = 'tracker'
+    RUNNER = 'runner'
 
     VALUES = [
         DOCKERIZER,
         HELPER,
-        TRACKER,
+        RUNNER,
     ]
