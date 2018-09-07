@@ -34,7 +34,7 @@ class Experiment(BaseTracker):
                                          track_env=track_env)
 
         if project is None and settings.IN_CLUSTER:
-            experiment_info = get_experiment_info()
+            experiment_info = self.get_experiment_info()
             project = experiment_info['project_name']
             experiment_id = experiment_info['experiment_name'].split('.')[-1]
         username, project_name = get_project_info(current_user=self.user, project=project)
@@ -179,96 +179,96 @@ class Experiment(BaseTracker):
         except Exception as e:
             logger.warning('Could create data hash %s', e)
 
+    @staticmethod
+    def get_cluster_def():
+        """Returns cluster definition created by polyaxon.
+        {
+            "master": ["plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
+            "worker": ["plxjob-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000",
+                       "plxjob-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
+            "ps": ["plxjob-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
+        }
+        :return: dict
+        """
+        ensure_in_custer()
 
-def get_cluster_def():
-    """Returns cluster definition created by polyaxon.
-    {
-        "master": ["plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-        "worker": ["plxjob-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000",
-                   "plxjob-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-        "ps": ["plxjob-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-    }
-    :return: dict
-    """
-    ensure_in_custer()
+        cluster = os.getenv('POLYAXON_CLUSTER', None)
+        try:
+            return json.loads(cluster) if cluster else None
+        except (ValueError, TypeError):
+            print('Could get cluster definition, '
+                  'please make sure this is running inside a polyaxon job.')
+            return None
 
-    cluster = os.getenv('POLYAXON_CLUSTER', None)
-    try:
-        return json.loads(cluster) if cluster else None
-    except (ValueError, TypeError):
-        print('Could get cluster definition, '
-              'please make sure this is running inside a polyaxon job.')
-        return None
+    @staticmethod
+    def get_task_info():
+        """Returns the task info: {"type": str, "index": int}."""
+        ensure_in_custer()
 
+        info = os.getenv('POLYAXON_TASK_INFO', None)
+        try:
+            return json.loads(info) if info else None
+        except (ValueError, TypeError):
+            print('Could get task info, '
+                  'please make sure this is running inside a polyaxon job.')
+            return None
 
-def get_task_info():
-    """Returns the task info: {"type": str, "index": int}."""
-    ensure_in_custer()
+    @classmethod
+    def get_tf_config(cls, envvar='TF_CONFIG'):
+        """
+        Returns the TF_CONFIG defining the cluster and the current task.
+        if `envvar` is not null, it will set and env variable with `envvar`.
+        """
+        ensure_in_custer()
 
-    info = os.getenv('POLYAXON_TASK_INFO', None)
-    try:
-        return json.loads(info) if info else None
-    except (ValueError, TypeError):
-        print('Could get task info, '
-              'please make sure this is running inside a polyaxon job.')
-        return None
+        cluster_def = cls.get_cluster_def()
+        task_info = cls.get_task_info()
+        tf_config = {
+            'cluster': cluster_def,
+            'task': task_info,
+            'model_dir': Experiment.get_outputs_path(),
+            'environment': 'cloud'
+        }
 
+        if envvar:
+            os.environ[envvar] = json.dumps(tf_config)
 
-def get_tf_config(envvar='TF_CONFIG'):
-    """
-    Returns the TF_CONFIG defining the cluster and the current task.
-    if `envvar` is not null, it will set and env variable with `envvar`.
-    """
-    ensure_in_custer()
+        return tf_config
 
-    cluster_def = get_cluster_def()
-    task_info = get_task_info()
-    tf_config = {
-        'cluster': cluster_def,
-        'task': task_info,
-        'model_dir': Experiment.get_outputs_path(),
-        'environment': 'cloud'
-    }
+    @staticmethod
+    def get_experiment_info():
+        """
+        Returns information about the experiment:
+            * project_name
+            * experiment_group_name
+            * experiment_name
+            * project_uuid
+            * experiment_group_uuid
+            * experiment_uuid
+        """
+        ensure_in_custer()
 
-    if envvar:
-        os.environ[envvar] = json.dumps(tf_config)
+        info = os.getenv('POLYAXON_EXPERIMENT_INFO', None)
+        try:
+            return json.loads(info) if info else None
+        except (ValueError, TypeError):
+            print('Could get experiment info, '
+                  'please make sure this is running inside a polyaxon job.')
+            return None
 
-    return tf_config
+    @staticmethod
+    def get_declarations():
+        """
+        Returns all the experiment declarations based on both:
+            * declarations section
+            * matrix section
+        """
+        ensure_in_custer()
 
-
-def get_experiment_info():
-    """
-    Returns information about the experiment:
-        * project_name
-        * experiment_group_name
-        * experiment_name
-        * project_uuid
-        * experiment_group_uuid
-        * experiment_uuid
-    """
-    ensure_in_custer()
-
-    info = os.getenv('POLYAXON_EXPERIMENT_INFO', None)
-    try:
-        return json.loads(info) if info else None
-    except (ValueError, TypeError):
-        print('Could get experiment info, '
-              'please make sure this is running inside a polyaxon job.')
-        return None
-
-
-def get_declarations():
-    """
-    Returns all the experiment declarations based on both:
-        * declarations section
-        * matrix section
-    """
-    ensure_in_custer()
-
-    declarations = os.getenv('POLYAXON_DECLARATIONS', None)
-    try:
-        return json.loads(declarations) if declarations else None
-    except (ValueError, TypeError):
-        print('Could get declarations, '
-              'please make sure this is running inside a polyaxon job.')
-        return None
+        declarations = os.getenv('POLYAXON_DECLARATIONS', None)
+        try:
+            return json.loads(declarations) if declarations else None
+        except (ValueError, TypeError):
+            print('Could get declarations, '
+                  'please make sure this is running inside a polyaxon job.')
+            return None
