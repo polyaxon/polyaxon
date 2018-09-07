@@ -10,7 +10,6 @@ from tests.test_api.utils import TestBaseApi
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
-from polyaxon_client.settings import AuthenticationTypes
 
 
 class TestAuthApi(TestBaseApi):

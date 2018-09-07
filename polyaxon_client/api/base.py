@@ -69,7 +69,7 @@ class BaseApiHandler(object):
         if isinstance(config, Mapping):
             return config_schema.from_dict(config)
         elif not isinstance(config, config_schema):
-            raise PolyaxonException(
+            raise PolyaxonClientException(
                 'Received an invalid config. '
                 'Expects a Mapping or an instance of `{}`.'.format(config_schema.__name__))
 

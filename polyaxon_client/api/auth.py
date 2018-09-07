@@ -6,7 +6,6 @@ import requests
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
-from polyaxon_client.settings import AuthenticationTypes
 
 
 class AuthApi(BaseApiHandler):
