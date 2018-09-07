@@ -114,4 +114,4 @@ class UploadFilesView(UploadView):
         file_handler(user_id=user.id, repo_id=repo.id, tar_file_name=tar_file_name)
 
         # do some stuff with uploaded file
-        return Response(status=204)
+        return Response(status=200)
