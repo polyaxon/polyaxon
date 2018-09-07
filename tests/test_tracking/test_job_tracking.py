@@ -7,7 +7,7 @@ from tests.utils import TestEnvVarsCase
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonException
-from polyaxon_client.tracking.job import get_job_info
+from polyaxon_client.tracking.job import Job
 
 
 class TestJobTracking(TestEnvVarsCase):
@@ -18,13 +18,13 @@ class TestJobTracking(TestEnvVarsCase):
     def test_job_info_checks_in_cluster(self):
         settings.IN_CLUSTER = False
         with self.assertRaises(PolyaxonException):
-            get_job_info()
+            Job.get_job_info()
 
     def test_empty_job_info(self):
-        self.check_empty_value('POLYAXON_JOB_INFO', get_job_info)
+        self.check_empty_value('POLYAXON_JOB_INFO', Job.get_job_info)
 
     def test_non_dict_job_info(self):
-        self.check_non_dict_value('POLYAXON_JOB_INFO', get_job_info)
+        self.check_non_dict_value('POLYAXON_JOB_INFO', Job.get_job_info)
 
     def test_dict_job_info(self):
         job_info = {
@@ -34,5 +34,5 @@ class TestJobTracking(TestEnvVarsCase):
             "job_uuid": uuid.uuid4().hex,
         }
         self.check_valid_dict_value('POLYAXON_JOB_INFO',
-                                    get_job_info,
+                                    Job.get_job_info,
                                     job_info)

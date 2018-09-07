@@ -8,12 +8,10 @@ import sys
 import time
 
 from polyaxon_client import settings
-from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
-from polyaxon_client.tracking.utils.project import get_project_info
 from polyaxon_client.tracking.utils.tags import validate_tags
 
 
@@ -25,22 +23,16 @@ class Experiment(BaseTracker):
                  track_logs=None,
                  track_git=None,
                  track_env=None):
-        if not settings.IN_CLUSTER and project is None:
-            raise PolyaxonException('Please provide a valid project.')
-
-        super(Experiment, self).__init__(client=client,
-                                         track_logs=track_logs,
-                                         track_git=track_git,
-                                         track_env=track_env)
-
         if project is None and settings.IN_CLUSTER:
             experiment_info = self.get_experiment_info()
             project = experiment_info['project_name']
             experiment_id = experiment_info['experiment_name'].split('.')[-1]
-        username, project_name = get_project_info(current_user=self.user, project=project)
-        self.project = project
-        self.username = username
-        self.project_name = project_name
+        super(Experiment, self).__init__(project=project,
+                                         client=client,
+                                         track_logs=track_logs,
+                                         track_git=track_git,
+                                         track_env=track_env)
+
         self.experiment_id = experiment_id
         self.experiment = None
         self.last_status = None

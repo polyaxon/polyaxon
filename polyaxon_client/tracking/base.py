@@ -6,10 +6,14 @@ import os
 
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.tracking.utils.project import get_project_info
 
 
 class BaseTracker(object):
-    def __init__(self, client=None, track_logs=None, track_git=None, track_env=None):
+    def __init__(self, project=None, client=None, track_logs=None, track_git=None, track_env=None):
+        if not settings.IN_CLUSTER and project is None:
+            raise PolyaxonException('Please provide a valid project.')
+
         self.client = client or PolyaxonClient()
         if settings.IN_CLUSTER:
             self.user = None
@@ -17,9 +21,14 @@ class BaseTracker(object):
             self.user = (self.client.auth.get_user().username
                          if self.client.api_config.schema_response
                          else self.client.auth.get_user().get('username'))
-        self._track_logs = track_logs
-        self._track_git = track_git
-        self._track_env = track_env
+
+        username, project_name = get_project_info(current_user=self.user, project=project)
+        self.track_logs = track_logs
+        self.track_git = track_git
+        self.track_env = track_env
+        self.project = project
+        self.username = username
+        self.project_name = project_name
 
     @staticmethod
     def get_data_paths():
