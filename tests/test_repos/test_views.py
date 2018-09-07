@@ -124,7 +124,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
+        with patch('api.repos.views.handle_new_files') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
@@ -150,7 +150,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
+        with patch('api.repos.views.handle_new_files') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
@@ -295,7 +295,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
+        with patch('api.repos.views.handle_new_files') as mock_task:
             response = self.auth_client.put(self.url,
                                             data={'repo': uploaded_file},
                                             content_type=MULTIPART_CONTENT)
