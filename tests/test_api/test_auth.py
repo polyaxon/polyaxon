@@ -47,9 +47,9 @@ class TestAuthApi(TestBaseApi):
             BaseApiHandler.build_url(
                 self.api_config.base_url,
                 '/users',
-                AuthenticationTypes.TOKEN
+                'token'
             ),
-            body=json.dumps({AuthenticationTypes.TOKEN: token}),
+            body=json.dumps({'token': token}),
             content_type='application/json', status=200)
 
         credentials = CredentialsConfig('user', 'password')
