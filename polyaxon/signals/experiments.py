@@ -271,4 +271,5 @@ def handle_new_experiment_status(sender, **kwargs):
                 'experiment_group_uuid': group.uuid.hex if group else None,
                 'specification': experiment.config,
                 'update_status': False
-            })
+            },
+            countdown=2)
