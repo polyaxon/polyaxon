@@ -29,6 +29,7 @@ class PolyaxonClient(object):
                  authentication_type=settings.AuthenticationTypes.TOKEN,
                  api_version=None,
                  reraise=False,
+                 schema_response=None,
                  timeout=None):
 
         self._api_config = api_config or ApiConfig(host=host,
@@ -38,8 +39,9 @@ class PolyaxonClient(object):
                                                    authentication_type=authentication_type,
                                                    version=api_version,
                                                    use_https=use_https,
-                                                   reraise=reraise,
                                                    in_cluster=in_cluster,
+                                                   schema_response=schema_response,
+                                                   reraise=reraise,
                                                    timeout=timeout)
 
         self._transport = None

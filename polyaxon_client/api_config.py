@@ -54,7 +54,7 @@ class ApiConfig(object):
         self.base_url = self.BASE_URL.format(self.http_host, self.version)
         self.base_ws_url = self.BASE_WS_URL.format(self.ws_host, self.version)
         self.authentication_type = authentication_type or settings.AUTHENTICATION_TYPE
-        self.schema_response = schema_response or settings.SCHEMA_RESPONSE
+        self.schema_response = self._get_bool(schema_response, settings.SCHEMA_RESPONSE)
         self.reraise = reraise
         self.timeout = timeout or settings.TIMEOUT
 
