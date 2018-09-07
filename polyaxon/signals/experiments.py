@@ -272,4 +272,4 @@ def handle_new_experiment_status(sender, **kwargs):
                 'specification': experiment.config,
                 'update_status': False
             },
-            countdown=2)
+            countdown=1)
