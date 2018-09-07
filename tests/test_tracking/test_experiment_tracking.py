@@ -52,7 +52,9 @@ class TestExperimentTracking(TestEnvVarsCase):
         declarations = {
             "foo": "bar"
         }
-        self.check_valid_dict_value('POLYAXON_DECLARATIONS', Experiment.get_declarations, declarations)
+        self.check_valid_dict_value('POLYAXON_DECLARATIONS',
+                                    Experiment.get_declarations,
+                                    declarations)
 
     def test_experiment_info_checks_in_cluster(self):
         settings.IN_CLUSTER = False
