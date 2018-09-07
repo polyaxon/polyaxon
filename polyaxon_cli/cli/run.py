@@ -84,7 +84,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
 
     # Check if we need to upload
     if u:
-        ctx.invoke(upload, async=False)
+        ctx.invoke(upload)
 
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClient().project

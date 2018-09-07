@@ -18,5 +18,7 @@ class PolyaxonClient(BasePolyaxonClient):
             http_port=http_port,
             ws_port=ws_port,
             use_https=use_https,
-            token=token
+            token=token,
+            schema_response=True,
+            reraise=True,
         )
