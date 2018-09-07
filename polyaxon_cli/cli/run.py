@@ -21,6 +21,7 @@ from polyaxon_cli.schemas.job import JobConfig
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_cli.utils.validation import validate_tags
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 @click.command()
@@ -104,7 +105,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
                                                                   experiment)
             cache.cache(config_manager=ExperimentManager, response=response)
             Printer.print_success('Experiment `{}` was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not create experiment.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -124,7 +125,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
                                                               experiment_group)
             cache.cache(config_manager=GroupManager, response=response)
             Printer.print_success('Experiment group {} was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not create experiment group.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -142,7 +143,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
                                                  job)
             cache.cache(config_manager=JobManager, response=response)
             Printer.print_success('Job {} was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not create job.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -160,7 +161,7 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
                                                    job)
             cache.cache(config_manager=BuildJobManager, response=response)
             Printer.print_success('Build {} was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not create build.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)

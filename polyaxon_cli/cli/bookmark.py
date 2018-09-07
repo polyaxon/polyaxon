@@ -15,6 +15,7 @@ from polyaxon_cli.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate
 )
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_username_or_local(username):
@@ -57,7 +58,7 @@ def projects(ctx, page):
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.projects(username=user, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
             'Could not get bookmarked projects for user `{}`.'.format(user))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -105,7 +106,7 @@ def groups(ctx, page):
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.groups(username=user, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
             'Could not get bookmarked experiment groups for user `{}`.'.format(user))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -153,7 +154,7 @@ def experiments(ctx, page):
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.experiments(username=user, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
             'Could not get bookmarked experiments for user `{}`.'.format(user))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -201,7 +202,7 @@ def jobs(ctx, page):
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.jobs(username=user, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
             'Could not get bookmarked jobs for user `{}`.'.format(user))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -249,7 +250,7 @@ def builds(ctx, page):
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.builds(username=user, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
             'Could not get bookmarked builds for user `{}`.'.format(user))
         Printer.print_error('Error message `{}`.'.format(e))

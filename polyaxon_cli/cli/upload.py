@@ -12,6 +12,7 @@ from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.files import create_tarfile, get_files_in_current_directory
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 @click.command()
@@ -27,7 +28,7 @@ def upload():  # pylint:disable=assign-to-new-keyword
                                                      project.name,
                                                      files,
                                                      files_size)
-            except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
                 Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
                 Printer.print_error('Error message `{}`.'.format(e))
                 sys.exit(1)

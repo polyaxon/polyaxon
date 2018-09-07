@@ -12,6 +12,7 @@ from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_tensorboard_url(user, project_name, experiment=None, group=None):
@@ -87,7 +88,7 @@ def url(ctx):
                 project_name=project_name,
                 experiment_id=experiment)
             obj = 'experiment {}'.format(experiment)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get experiment `{}`.'.format(experiment))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -98,7 +99,7 @@ def url(ctx):
                 project_name=project_name,
                 group_id=group)
             obj = 'group `{}`.'.format(group)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get group `{}`.'.format(group))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -108,7 +109,7 @@ def url(ctx):
                 username=user,
                 project_name=project_name)
             obj = 'project `{}`.'.format(project_name)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get project `{}`.'.format(project_name))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -188,7 +189,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                 experiment_id=experiment,
                 job_config=job_config)
             obj = 'experiment `{}`'.format(experiment)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not start tensorboard experiment `{}`.'.format(experiment))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -200,7 +201,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                 group_id=group,
                 job_config=job_config)
             obj = 'group `{}`'.format(group)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not start tensorboard group `{}`.'.format(group))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -211,7 +212,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                 project_name=project_name,
                 job_config=job_config)
             obj = 'project `{}`'.format(project_name)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not start tensorboard project `{}`.'.format(project_name))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -290,7 +291,7 @@ def stop(ctx, yes):
                 project_name=project_name,
                 experiment_id=experiment)
             Printer.print_success('Tensorboard is being deleted')
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not stop tensorboard {}.'.format(obj))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -301,7 +302,7 @@ def stop(ctx, yes):
                 project_name=project_name,
                 group_id=group)
             Printer.print_success('Tensorboard is being deleted')
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not stop tensorboard {}.'.format(obj))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -311,7 +312,7 @@ def stop(ctx, yes):
                 username=user,
                 project_name=project_name)
             Printer.print_success('Tensorboard is being deleted')
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not stop tensorboard {}.'.format(obj))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)

@@ -13,6 +13,7 @@ from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_notebook_url(user, project_name):
@@ -46,7 +47,7 @@ def url(ctx):
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         response = PolyaxonClient().project.get_project(user, project_name)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -101,7 +102,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         response = PolyaxonClient().project.start_notebook(user, project_name, job_config)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not start notebook project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -148,7 +149,7 @@ def stop(ctx, commit, yes):
     try:
         PolyaxonClient().project.stop_notebook(user, project_name, commit)
         Printer.print_success('Notebook is being deleted')
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not stop notebook project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)

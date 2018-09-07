@@ -20,6 +20,7 @@ from polyaxon_cli.logger import clean_outputs, logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
+from polyaxon_client.exceptions import PolyaxonClientException
 
 PROJECT_CLI_NAME = "polyaxon-cli"
 
@@ -52,7 +53,7 @@ def get_server_version():
     except AuthorizationError:
         session_expired()
         sys.exit(1)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get cli version.')
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -64,7 +65,7 @@ def get_log_handler():
     except AuthorizationError:
         session_expired()
         sys.exit(1)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get cli version.')
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -117,7 +118,7 @@ def version(cli, platform):
         except AuthorizationError:
             session_expired()
             sys.exit(1)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get cli version.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -132,7 +133,7 @@ def version(cli, platform):
         except AuthorizationError:
             session_expired()
             sys.exit(1)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get platform version.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)

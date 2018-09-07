@@ -19,6 +19,7 @@ from polyaxon_cli.schemas.polyaxonfile import PolyaxonFile
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.files import create_init_file
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 @click.command()
@@ -33,7 +34,7 @@ def init(project, run, model):
     user, project_name = get_project_or_local(project)
     try:
         project_config = PolyaxonClient().project.get_project(user, project_name)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Make sure you have a project with this name `{}`'.format(project))
         Printer.print_error(
             'You can a create new project with this command: '

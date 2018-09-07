@@ -13,6 +13,7 @@ from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.schemas.authentication import AccessTokenConfig, CredentialsConfig
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 @click.command()
@@ -36,7 +37,7 @@ def login(token, username, password):
         credentials = CredentialsConfig(username=username, password=password)
         try:
             access_code = auth_client.login(credentials=credentials)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not login.')
             Printer.print_error(e)
             sys.exit(1)
@@ -46,7 +47,7 @@ def login(token, username, password):
             return
     else:
         if not token:
-            token_url = "{}/app/token".format(auth_client.http_host)
+            token_url = "{}/app/token".format(auth_client.config.http_host)
             click.confirm('Authentication token page will now open in your browser. Continue?',
                           abort=True, default=True)
 
@@ -67,7 +68,7 @@ def login(token, username, password):
     try:
         AuthConfigManager.purge()
         user = PolyaxonClient().auth.get_user(token=access_code)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not load user info.')
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -100,7 +101,7 @@ def whoami():
     """Show current logged Polyaxon user."""
     try:
         user = PolyaxonClient().auth.get_user()
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not load user info.')
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)

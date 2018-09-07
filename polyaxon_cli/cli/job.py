@@ -22,6 +22,7 @@ from polyaxon_cli.utils.formatting import (
 )
 from polyaxon_cli.utils.log_handler import handle_job_logs
 from polyaxon_cli.utils.validation import validate_tags
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_job_or_local(project=None, _job=None):
@@ -84,7 +85,7 @@ def get(ctx):
     try:
         response = PolyaxonClient().job.get_job(user, project_name, _job)
         cache.cache(config_manager=JobManager, response=response)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -117,7 +118,7 @@ def delete(ctx):
             user, project_name, _job)
         # Purge caching
         JobManager.purge()
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not delete job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -165,7 +166,7 @@ def update(ctx, name, description, tags):
     try:
         response = PolyaxonClient().build_job.update_job(
             user, project_name, _job, update_dict)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not update job  `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -205,7 +206,7 @@ def stop(ctx, yes):
 
     try:
         PolyaxonClient().job.stop(user, project_name, _job)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not stop job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -252,7 +253,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
         else:
             response = PolyaxonClient().job.restart(
                 user, project_name, _job, config=config, update_code=update_code)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not restart job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -294,7 +295,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     try:
         response = PolyaxonClient().job.resume(
             user, project_name, _job, config=config, update_code=update_code)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not resume job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -322,7 +323,7 @@ def statuses(ctx, page):
     page = page or 1
     try:
         response = PolyaxonClient().job.get_statuses(user, project_name, _job, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get status for job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -374,7 +375,7 @@ def resources(ctx, gpu):
                                        project_name,
                                        _job,
                                        message_handler=message_handler)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get resources for job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -414,7 +415,7 @@ def logs(ctx, past, follow):
 
             if not follow:
                 return
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get logs for job `{}`.'.format(_job))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
@@ -424,7 +425,7 @@ def logs(ctx, past, follow):
                                   project_name,
                                   _job,
                                   message_handler=handle_job_logs)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get logs for job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -448,7 +449,7 @@ def outputs(ctx):
     user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
     try:
         PolyaxonClient().job.download_outputs(user, project_name, _job)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not download outputs for job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -478,7 +479,7 @@ def bookmark(ctx):
     user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
     try:
         PolyaxonClient().job.bookmark(user, project_name, _job)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not bookmark job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -509,7 +510,7 @@ def unbookmark(ctx):
     user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
     try:
         PolyaxonClient().job.unbookmark(user, project_name, _job)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not unbookmark job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)

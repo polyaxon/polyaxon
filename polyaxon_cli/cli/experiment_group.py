@@ -20,6 +20,7 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_cli.utils.validation import validate_tags
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_group_or_local(_group):
@@ -77,7 +78,7 @@ def get(ctx):
         response = PolyaxonClient().experiment_group.get_experiment_group(
             user, project_name, _group)
         cache.cache(config_manager=GroupManager, response=response)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get experiment group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -104,7 +105,7 @@ def delete(ctx):
             user, project_name, _group)
         # Purge caching
         GroupManager.purge()
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not delete experiment group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -157,7 +158,7 @@ def update(ctx, name, description, tags):
     try:
         response = PolyaxonClient().experiment_group.update_experiment_group(
             user, project_name, _group, update_dict)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not update experiment group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -192,7 +193,7 @@ def experiments(ctx, metrics, declarations, query, sort, page):
                                                                       query=query,
                                                                       sort=sort,
                                                                       page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get experiments for group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -262,7 +263,7 @@ def stop(ctx, yes, pending):
 
     try:
         PolyaxonClient().experiment_group.stop(user, project_name, _group, pending=pending)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not stop experiments in group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -293,7 +294,7 @@ def statuses(ctx, page):
                                                                   project_name,
                                                                   _group,
                                                                   page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get status for group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -339,7 +340,7 @@ def bookmark(ctx):
 
     try:
         PolyaxonClient().experiment_group.bookmark(user, project_name, _group)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not bookmark group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
@@ -371,7 +372,7 @@ def unbookmark(ctx):
 
     try:
         PolyaxonClient().experiment_group.unbookmark(user, project_name, _group)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not unbookmark group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
