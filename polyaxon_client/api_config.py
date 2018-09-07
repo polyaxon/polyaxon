@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client import settings
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 class ApiConfig(object):
@@ -29,7 +29,7 @@ class ApiConfig(object):
         self.use_https = self._get_bool(use_https, settings.USE_HTTPS)
 
         if not self.host and not self.in_cluster:
-            raise PolyaxonException(
+            raise PolyaxonClientException(
                 'Api config requires at least a host if not running in-cluster.')
 
         self.http_port = http_port or settings.HTTP_PORT or (settings.DEFAULT_HTTPS_PORT

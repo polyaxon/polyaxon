@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import ExperimentConfig, ExperimentGroupConfig, GroupStatusConfig
 
 
@@ -21,7 +21,7 @@ class ExperimentGroupApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving project')
             return None
 
@@ -50,7 +50,7 @@ class ExperimentGroupApi(BaseApiHandler):
                 params['sort'] = sort
             response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
 
@@ -73,7 +73,7 @@ class ExperimentGroupApi(BaseApiHandler):
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating project')
             return None
 
@@ -91,7 +91,7 @@ class ExperimentGroupApi(BaseApiHandler):
         try:
             response = self.transport.delete(request_url)
             return response
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while deleting experiment group')
             return None
@@ -106,7 +106,7 @@ class ExperimentGroupApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, GroupStatusConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while retrieving group statuses')
             return None
@@ -128,7 +128,7 @@ class ExperimentGroupApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url, json_data=json_data)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while stopping experiments in group')
             return None
@@ -155,7 +155,7 @@ class ExperimentGroupApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url, json_data=job_config)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while starting tensorboard')
             return None
 
@@ -174,7 +174,7 @@ class ExperimentGroupApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
 
@@ -192,7 +192,7 @@ class ExperimentGroupApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking group')
             return None
 
@@ -210,6 +210,6 @@ class ExperimentGroupApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while unbookmarking group')
             return None

@@ -6,7 +6,7 @@ import uuid
 from tests.utils import TestEnvVarsCase
 
 from polyaxon_client import settings
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking.job import Job
 
 
@@ -17,7 +17,7 @@ class TestJobTracking(TestEnvVarsCase):
 
     def test_job_info_checks_in_cluster(self):
         settings.IN_CLUSTER = False
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             Job.get_job_info()
 
     def test_empty_job_info(self):

@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 class UserApi(BaseApiHandler):
@@ -18,7 +18,7 @@ class UserApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while activating user.')
             return None
 
@@ -28,7 +28,7 @@ class UserApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while deleting user.')
             return None
 
@@ -40,7 +40,7 @@ class UserApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while grating superuser to user.')
             return None
@@ -53,7 +53,7 @@ class UserApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while revoking superuser to user.')
             return None

@@ -17,13 +17,13 @@ from polyaxon_client.api.user import UserApi
 from polyaxon_client.api.version import VersionApi
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.client import PolyaxonClient
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.transport import Transport
 
 
 class TestPolyaxonClient(TestCase):
     def test_client(self):
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             PolyaxonClient(host=None, token=None)
         client = PolyaxonClient(host=None, token=None, in_cluster=True)
         assert client.host is None
@@ -76,7 +76,7 @@ class TestPolyaxonClient(TestCase):
 
     def test_from_env(self):
         settings.IN_CLUSTER = False
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             PolyaxonClient()
 
         settings.SECRET_TOKEN = 'token'  # noqa

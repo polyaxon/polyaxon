@@ -5,7 +5,7 @@ import six
 
 from collections import Mapping
 
-from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonException
+from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonClientException
 
 
 class BaseApiHandler(object):

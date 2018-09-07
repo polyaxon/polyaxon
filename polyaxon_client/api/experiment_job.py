@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import ExperimentJobConfig, ExperimentJobStatusConfig
 
 
@@ -23,7 +23,7 @@ class ExperimentJobApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ExperimentJobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving job')
             return None
 
@@ -40,7 +40,7 @@ class ExperimentJobApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentJobStatusConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving job statuses')
             return []
 

@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas.utils import to_list
 
 
@@ -16,7 +16,7 @@ def validate_tags(tags):
 
     for tag in to_list(tags):
         if not (tag and isinstance(tag, six.string_types)):
-            raise PolyaxonException(
+            raise PolyaxonClientException(
                 'Received an invalid tag {}. '
                 'Please make sure that the tags are list of strings, '
                 'or a string containing comma separated values.'.format(tag))

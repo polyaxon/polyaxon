@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import ClusterNodeConfig, PolyaxonClusterConfig
 
 
@@ -18,7 +18,7 @@ class ClusterApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=PolyaxonClusterConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving cluster')
             return None
 
@@ -27,6 +27,6 @@ class ClusterApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ClusterNodeConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving node')
             return None

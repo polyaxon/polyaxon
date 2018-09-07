@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
     ExperimentConfig,
     ExperimentGroupConfig,
@@ -23,7 +23,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ProjectConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving projects.')
             return []
 
@@ -32,7 +32,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=ProjectConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving project.')
             return None
 
@@ -42,7 +42,7 @@ class ProjectApi(BaseApiHandler):
             response = self.transport.post(self._get_http_url('/projects'),
                                            json_data=project_config.to_dict())
             return self.prepare_results(response_json=response.json(), config=ProjectConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating project.')
             return None
 
@@ -56,7 +56,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=ProjectConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating project.')
             return None
 
@@ -70,7 +70,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.delete(request_url)
             return response
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while deleting project.')
             return None
 
@@ -86,7 +86,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.upload(request_url, files=files, files_size=files_size)
             return response
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating project repo.')
             return None
 
@@ -98,7 +98,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.download(request_url, 'repo.tar.gz')
             return response
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while downloading project repo.')
             return None
@@ -116,7 +116,7 @@ class ProjectApi(BaseApiHandler):
                 params['sort'] = sort
             response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, ExperimentGroupConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while retrieving experiment groups.')
             return []
@@ -137,7 +137,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.post(request_url, json_data=experiment_group_config.to_dict())
             return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while creating experiment group.')
             return None
@@ -171,7 +171,7 @@ class ProjectApi(BaseApiHandler):
                 params['sort'] = sort
             response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiments.')
             return []
 
@@ -187,7 +187,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.post(request_url, json_data=experiment_config.to_dict())
             return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating experiment.')
             return None
 
@@ -204,7 +204,7 @@ class ProjectApi(BaseApiHandler):
                 params['sort'] = sort
             response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
             return []
 
@@ -219,7 +219,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.post(request_url, json_data=job_config.to_dict())
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating job.')
             return None
 
@@ -236,7 +236,7 @@ class ProjectApi(BaseApiHandler):
                 params['sort'] = sort
             response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving build jobs.')
             return []
 
@@ -251,7 +251,7 @@ class ProjectApi(BaseApiHandler):
         try:
             response = self.transport.post(request_url, json_data=build_config.to_dict())
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating build job.')
             return None
 
@@ -268,7 +268,7 @@ class ProjectApi(BaseApiHandler):
                 params['sort'] = sort
             response = self.transport.get(request_url, params=params)
             return self.prepare_list_results(response.json(), page, TensorboardJobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while retrieving tensorboard jobs.')
             return []
@@ -288,7 +288,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url, json_data=job_config)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while starting tensorboard.')
             return None
 
@@ -305,7 +305,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
@@ -324,7 +324,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url, json_data=job_config)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while starting notebook.')
             return None
 
@@ -344,7 +344,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url, json_data=json_data)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping notebook.')
             return None
 
@@ -360,7 +360,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking project.')
             return None
 
@@ -376,6 +376,6 @@ class ProjectApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while unbookmarking project.')
             return None

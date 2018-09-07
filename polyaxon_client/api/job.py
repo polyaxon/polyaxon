@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import JobConfig, JobStatusConfig
 
 
@@ -21,7 +21,7 @@ class JobApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving job.')
             return None
 
@@ -39,7 +39,7 @@ class JobApi(BaseApiHandler):
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating job.')
             return None
 
@@ -56,7 +56,7 @@ class JobApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while deleting job.')
             return None
 
@@ -70,7 +70,7 @@ class JobApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobStatusConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving job statuses.')
             return None
 
@@ -102,7 +102,7 @@ class JobApi(BaseApiHandler):
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while restarting the job.')
             return None
 
@@ -134,7 +134,7 @@ class JobApi(BaseApiHandler):
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while resuming the job.')
             return None
 
@@ -166,7 +166,7 @@ class JobApi(BaseApiHandler):
         try:
             response = self.transport.post(request_url, json_data=data)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while copying the job.')
             return None
 
@@ -184,7 +184,7 @@ class JobApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping job.')
             return None
 
@@ -202,7 +202,7 @@ class JobApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking job.')
             return None
 
@@ -220,7 +220,7 @@ class JobApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while unbookmarking job.')
             return None
 
@@ -255,7 +255,7 @@ class JobApi(BaseApiHandler):
 
             try:
                 return self.transport.get(request_url)
-            except PolyaxonException as e:
+            except PolyaxonClientException as e:
                 self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
                 return []
 
@@ -281,6 +281,6 @@ class JobApi(BaseApiHandler):
                 request_url,
                 '{}.{}.{}.tar.gz'.format(username, project_name, job_id))
             return response
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while downloading job outputs.')
             return None

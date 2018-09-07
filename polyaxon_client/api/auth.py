@@ -69,4 +69,4 @@ class AuthApi(BaseApiHandler):
                 "Login failed.\nSee http://docs.polyaxon.com/faqs/authentication/ for help",
                 response.status_code)
 
-        return token_dict.get(self.config.authentication_type)
+        return token_dict.get('token')

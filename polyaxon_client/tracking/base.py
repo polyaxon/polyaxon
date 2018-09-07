@@ -5,14 +5,14 @@ import json
 import os
 
 from polyaxon_client import PolyaxonClient, settings
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking.utils.project import get_project_info
 
 
 class BaseTracker(object):
     def __init__(self, project=None, client=None, track_logs=None, track_git=None, track_env=None):
         if not settings.IN_CLUSTER and project is None:
-            raise PolyaxonException('Please provide a valid project.')
+            raise PolyaxonClientException('Please provide a valid project.')
 
         self.client = client or PolyaxonClient()
         if settings.IN_CLUSTER:
@@ -85,4 +85,4 @@ class BaseTracker(object):
 
 def ensure_in_custer():
     if not settings.IN_CLUSTER:
-        raise PolyaxonException('This experiment/job is not running inside a Polyaxon job.')
+        raise PolyaxonClientException('This experiment/job is not running inside a Polyaxon job.')

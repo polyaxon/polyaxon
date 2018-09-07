@@ -8,7 +8,7 @@ import uuid
 from tests.utils import TestEnvVarsCase
 
 from polyaxon_client import settings
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking.experiment import Experiment
 
 
@@ -19,7 +19,7 @@ class TestExperimentTracking(TestEnvVarsCase):
 
     def test_cluster_def_checks_in_cluster(self):
         settings.IN_CLUSTER = False
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             Experiment.get_cluster_def()
 
     def test_empty_cluster_def(self):
@@ -39,7 +39,7 @@ class TestExperimentTracking(TestEnvVarsCase):
 
     def test_declarations_checks_in_cluster(self):
         settings.IN_CLUSTER = False
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             Experiment.get_declarations()
 
     def test_empty_declarations(self):
@@ -58,7 +58,7 @@ class TestExperimentTracking(TestEnvVarsCase):
 
     def test_experiment_info_checks_in_cluster(self):
         settings.IN_CLUSTER = False
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             Experiment.get_experiment_info()
 
     def test_empty_experiment_info(self):
@@ -82,7 +82,7 @@ class TestExperimentTracking(TestEnvVarsCase):
 
     def test_task_info_checks_in_cluster(self):
         settings.IN_CLUSTER = False
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             Experiment.get_task_info()
 
     def test_empty_task_info(self):
@@ -99,7 +99,7 @@ class TestExperimentTracking(TestEnvVarsCase):
 
     def test_tf_config_checks_in_cluster(self):
         settings.IN_CLUSTER = False
-        with self.assertRaises(PolyaxonException):
+        with self.assertRaises(PolyaxonClientException):
             Experiment.get_tf_config()
 
     def test_empty_tf_config(self):

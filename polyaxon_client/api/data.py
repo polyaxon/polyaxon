@@ -6,7 +6,7 @@ from polyaxon_client.exceptions import (
     AuthenticationError,
     BadRequestError,
     NotFoundError,
-    PolyaxonException
+    PolyaxonClientException
 )
 from polyaxon_client.logger import logger
 from polyaxon_client.schemas import DatasetConfig
@@ -22,7 +22,7 @@ class DatasetApi(BaseApiHandler):
         try:
             response = self.transport.get(self._get_http_url())
             return self.prepare_list_results(response.json(), page, DatasetConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             if isinstance(e, AuthenticationError):
                 # exit now since there is nothing we can do without login
                 raise e
@@ -51,7 +51,7 @@ class DatasetApi(BaseApiHandler):
         except BadRequestError as e:
             logger.error('Could not create data %s', e.message)
             return None
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             logger.error('Could not create data %s', e.message)
             return None
 
@@ -64,6 +64,6 @@ class DatasetApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url, timeout=60)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             logger.error('Could not create data %s', e.message)
             return False

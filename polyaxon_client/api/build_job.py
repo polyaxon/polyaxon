@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import JobConfig, JobStatusConfig
 
 
@@ -21,7 +21,7 @@ class BuildJobApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving build')
             return None
 
@@ -39,7 +39,7 @@ class BuildJobApi(BaseApiHandler):
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
             return self.prepare_results(response_json=response.json(), config=JobConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating build')
             return None
 
@@ -56,7 +56,7 @@ class BuildJobApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while deleting build')
             return None
 
@@ -70,7 +70,7 @@ class BuildJobApi(BaseApiHandler):
         try:
             response = self.transport.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, JobStatusConfig)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while retrieving build statuses')
             return None
@@ -89,7 +89,7 @@ class BuildJobApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while stopping build')
             return None
 
@@ -107,7 +107,7 @@ class BuildJobApi(BaseApiHandler):
 
         try:
             return self.transport.post(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while bookmarking build')
             return None
 
@@ -125,7 +125,7 @@ class BuildJobApi(BaseApiHandler):
 
         try:
             return self.transport.delete(request_url)
-        except PolyaxonException as e:
+        except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while unbookmarking build')
             return None
 
@@ -160,7 +160,7 @@ class BuildJobApi(BaseApiHandler):
 
             try:
                 return self.transport.get(request_url)
-            except PolyaxonException as e:
+            except PolyaxonClientException as e:
                 self.transport.handle_exception(e=e, log_message='Error while retrieving builds')
                 return []
 

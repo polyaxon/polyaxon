@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 
-class PolyaxonException(Exception):
+class PolyaxonClientException(Exception):
     def __init__(self, message=None):
         Exception.__init__(self, message)
         self.message = message
@@ -11,11 +11,11 @@ class PolyaxonException(Exception):
         return self.message
 
 
-class PolyaxonShouldExitError(PolyaxonException):
+class PolyaxonShouldExitError(PolyaxonClientException):
     pass
 
 
-class PolyaxonHTTPError(PolyaxonException):
+class PolyaxonHTTPError(PolyaxonClientException):
     def __init__(self, endpoint, response, message=None, status_code=None):
         super(PolyaxonHTTPError, self).__init__()
         self.endpoint = endpoint
@@ -78,7 +78,7 @@ class SSLHandshakeError(PolyaxonHTTPError):
 
 
 ERRORS_MAPPING = {
-    'base': PolyaxonException,
+    'base': PolyaxonClientException,
     'http': PolyaxonHTTPError,
     400: BadRequestError,
     401: AuthenticationError,
