@@ -104,7 +104,7 @@ class UploadFilesView(UploadView):
             return HttpResponseServerError()
 
         json_data = self._handle_json_data(request)
-        is_async = json_data.get('async')
+        is_async = json_data.get('async', False)
 
         if is_async is False:
             file_handler = handle_new_files
