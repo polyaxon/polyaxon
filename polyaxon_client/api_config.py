@@ -28,9 +28,9 @@ class ApiConfig(object):
         self.in_cluster = self._get_bool(in_cluster, settings.IN_CLUSTER)
         self.use_https = self._get_bool(use_https, settings.USE_HTTPS)
 
-        if not all([self.host, self.token]) and not self.in_cluster:
+        if not self.host and not self.in_cluster:
             raise PolyaxonException(
-                'Api config requires at least a host and a token if not running in-cluster.')
+                'Api config requires at least a host if not running in-cluster.')
 
         self.http_port = http_port or settings.HTTP_PORT or (settings.DEFAULT_HTTPS_PORT
                                                              if self.use_https
