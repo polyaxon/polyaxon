@@ -14,7 +14,7 @@ class TestAuth(BaseCommandTestCase):
         self.runner.invoke(logout)
         assert purge_patch.call_count == 1
 
-    @patch('polyaxon_client.auth.AuthClient.get_user')
+    @patch('polyaxon_client.api.auth.AuthApi.get_user')
     def test_whoami(self, purge_patch):
         self.runner.invoke(whoami)
         assert purge_patch.call_count == 1
