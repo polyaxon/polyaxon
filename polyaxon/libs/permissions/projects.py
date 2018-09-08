@@ -4,7 +4,7 @@ from rest_framework import permissions
 from rest_framework.generics import get_object_or_404
 
 from db.models.projects import Project
-from libs.permissions.authentication import is_internal_user
+from libs.authentication.internal import is_internal_user
 from libs.permissions.internal import IsAuthenticatedOrInternal, IsInternal
 
 _logger = logging.getLogger(__name__)

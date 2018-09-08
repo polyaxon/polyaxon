@@ -18,7 +18,7 @@ from api.utils.views.upload import UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.archive import archive_repo
-from libs.permissions.authentication import InternalAuthentication, is_internal_user
+from libs.authentication.internal import InternalAuthentication, is_internal_user
 from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.repos.git import set_git_repo
