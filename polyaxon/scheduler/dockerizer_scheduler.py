@@ -126,7 +126,6 @@ def start_dockerizer(build_job):
                 JobLifeCycle.FAILED,
                 message=error.get('message'),
                 traceback=error.get('traceback'))
-            return False
 
 
 def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):

@@ -86,7 +86,6 @@ def start_notebook(notebook):
                 JobLifeCycle.FAILED,
                 message=error.get('message'),
                 traceback=error.get('traceback'))
-            return False
 
 
 def stop_notebook(project_name,
