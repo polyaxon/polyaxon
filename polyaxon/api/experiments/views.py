@@ -68,7 +68,7 @@ from event_manager.events.experiment_job import (
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_experiment_outputs
 from libs.paths.experiments import get_experiment_logs_path
-from libs.permissions.authentication import InternalAuthentication
+from libs.authentication.internal import InternalAuthentication
 from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config

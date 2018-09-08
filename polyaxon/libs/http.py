@@ -9,7 +9,7 @@ from rest_framework.authentication import TokenAuthentication
 from django.conf import settings
 
 from libs.api import get_http_api_url
-from libs.permissions.authentication import InternalAuthentication
+from libs.authentication.internal import InternalAuthentication
 
 
 def absolute_uri(url):

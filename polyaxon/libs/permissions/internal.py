@@ -1,6 +1,6 @@
 from rest_framework import permissions
 
-from libs.permissions.authentication import is_internal_user
+from libs.authentication.internal import is_internal_user
 
 
 class IsInternal(permissions.BasePermission):
