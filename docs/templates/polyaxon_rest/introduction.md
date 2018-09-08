@@ -4,7 +4,7 @@ This is the documentation of the resources that make up the Polyaxon’s REST AP
 
 This module includes several Resources.
 
- * [Auth](resources/user): Authentication
+ * [Auth](resources/auth): Authentication
  * [Users](resources/user): Users and user roles resources
  * [Cluster](resources/cluster): Cluster and cluster nodes information resources.
  * [Project](resources/project): Projects resources.
