@@ -293,7 +293,7 @@ def build(build_job):
     return True
 
 
-def send_status(build_job, status, message=None):
+def send_status(build_job, status, message=None, traceback=None):
     payload = {
         'details': {
             'labels': {
@@ -306,7 +306,8 @@ def send_status(build_job, status, message=None):
             'node_name': settings.K8S_NODE_NAME
         },
         'status': status,
-        'message': message
+        'message': message,
+        'traceback': traceback
     }
     celery_app.send_task(
         EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,

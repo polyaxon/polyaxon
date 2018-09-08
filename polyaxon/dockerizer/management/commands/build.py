@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 from docker.errors import DockerException
 
@@ -30,28 +31,36 @@ class Command(BaseCommand):
             return
 
         # Building the docker image
+        error = {}
         try:
             status = builder.build(build_job=build_job)
+            if not status:
+                error = {
+                    'raised': True,
+                    'message': 'Failed to build job.'
+                }
         except DockerException as e:
-            builder.send_status(
-                build_job=build_job,
-                status=JobLifeCycle.FAILED,
-                message='Failed to build job %s' % e)
-            _logger.exception('Failed to build job %s', e)
-            status = False
+            error = {
+                'raised': True,
+                'traceback': traceback.format_exc(),
+                'message': 'Failed to build job encountered an {} exception'.format(
+                    e.__class__.__name__)
+            }
         except Exception as e:  # Other exceptions
-            builder.send_status(
-                build_job=build_job,
-                status=JobLifeCycle.FAILED,
-                message='Failed to build job %s' % e)
-            _logger.exception('Failed to create build job %s', e)
-            status = False
+            error = {
+                'raised': True,
+                'traceback': traceback.format_exc(),
+                'message': 'Failed to build job encountered an {} exception'.format(
+                    e.__class__.__name__)
+            }
 
-        if not status:
+        if error.get('raised'):
             builder.send_status(
                 build_job=build_job,
                 status=JobLifeCycle.FAILED,
-                message='Failed to build job.')
+                message=error.get('message'),
+                traceback=error.get('traceback'))
+            _logger.exception('Failed to create build job %s', error.get('traceback'))
             return
 
         builder.send_status(

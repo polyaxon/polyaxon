@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 from kubernetes.client.rest import ApiException
 
@@ -81,6 +82,8 @@ def start_dockerizer(build_job):
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
+
+    error = {}
     try:
         results = spawner.start_dockerizer(resources=build_job.resources,
                                            node_selector=build_job.node_selector,
@@ -88,32 +91,42 @@ def start_dockerizer(build_job):
                                            tolerations=build_job.tolerations)
         auditor.record(event_type=BUILD_JOB_STARTED,
                        instance=build_job)
+        build_job.definition = get_job_definition(results)
+        build_job.save()
+        return True
     except ApiException:
         _logger.error('Could not start build job, please check your polyaxon spec',
                       exc_info=True)
-        build_job.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start build job, encountered a Kubernetes ApiException.')
-        return False
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start build job, encountered a Kubernetes ApiException.'
+        }
     except VolumeNotFoundError as e:
         _logger.error('Could not start build job, please check your volume definitions.',
                       exc_info=True)
-        build_job.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start build job, encountered a volume definition problem. %s' % e)
-        return False
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start build job, encountered a volume definition problem. %s' % e
+        }
     except Exception as e:
         _logger.error('Could not start build job, please check your polyaxon spec.',
                       exc_info=True)
-        build_job.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start build job encountered an {} exception.'.format(
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start build job encountered an {} exception.'.format(
                 e.__class__.__name__
-            ))
-        return False
-    build_job.definition = get_job_definition(results)
-    build_job.save()
-    return True
+            )
+        }
+    finally:
+        if error.get('raised'):
+            build_job.set_status(
+                JobLifeCycle.FAILED,
+                message=error.get('message'),
+                traceback=error.get('traceback'))
+            return False
 
 
 def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):

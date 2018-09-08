@@ -209,8 +209,11 @@ class Experiment(DiffModel,
             return True
         return False
 
-    def set_status(self, status, message=None, **kwargs):
-        ExperimentStatus.objects.create(experiment=self, status=status, message=message)
+    def set_status(self, status, message=None, traceback=None, **kwargs):
+        ExperimentStatus.objects.create(experiment=self,
+                                        status=status,
+                                        message=message,
+                                        traceback=traceback)
 
     def _clone(self,
                cloning_strategy,

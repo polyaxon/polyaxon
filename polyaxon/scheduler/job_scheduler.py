@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 from kubernetes.client.rest import ApiException
 
@@ -41,6 +42,7 @@ def start_job(job):
         use_sidecar=True,
         sidecar_config=config.get_requested_params(to_str=True))
 
+    error = {}
     try:
         results = spawner.start_job(persistence_data=job.persistence_data,
                                     persistence_outputs=job.persistence_outputs,
@@ -50,32 +52,41 @@ def start_job(job):
                                     node_selector=job.node_selector,
                                     affinity=job.affinity,
                                     tolerations=job.tolerations)
+        job.definition = get_job_definition(results)
+        job.save()
+        return
     except ApiException:
         _logger.error('Could not start job, please check your polyaxon spec.',
                       exc_info=True)
-        job.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start job, encountered a Kubernetes ApiException.')
-        return
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the job, encountered a Kubernetes ApiException.',
+        }
     except VolumeNotFoundError as e:
         _logger.error('Could not start the job, please check your volume definitions.',
                       exc_info=True)
-        job.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start the job, '
-                    'encountered a volume definition problem. %s' % e)
-        return False
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the job, encountered a volume definition problem. %s' % e,
+        }
     except Exception as e:
         _logger.error('Could not start job, please check your polyaxon spec.',
                       exc_info=True)
-        job.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start job encountered an {} exception.'.format(
-                e.__class__.__name__
-            ))
-        return
-    job.definition = get_job_definition(results)
-    job.save()
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start job encountered an {} exception.'.format(
+                e.__class__.__name__)
+        }
+    finally:
+        if error.get('raised'):
+            job.set_status(
+                JobLifeCycle.FAILED,
+                message=error.get('message'),
+                traceback=error.get('traceback'))
+            return False
 
 
 def stop_job(project_name, project_uuid, job_name, job_uuid, specification):

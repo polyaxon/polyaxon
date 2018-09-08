@@ -48,26 +48,23 @@ def build_jobs_stop(project_name, project_uuid, build_job_name, build_job_uuid, 
 
 
 def notify_build_job_failed(build_job):
-    message = 'Build failed'
-    details = 'build_job: id<{}>, uuid<{}>, failure time <{}>'.format(build_job.id,
-                                                                      build_job.uuid.hex,
-                                                                      build_job.finished_at)
+    message = 'build_job: id<{}>, failure time <{}>'.format(build_job.id, build_job.finished_at)
 
     jobs = Job.objects.filter(build_job=build_job)
     for job in jobs:
-        job.set_status(JobLifeCycle.FAILED, message=message, details=details)
+        job.set_status(JobLifeCycle.FAILED, message=message)
 
     tensorboard_jobs = TensorboardJob.objects.filter(build_job=build_job)
     for tensorboard_job in tensorboard_jobs:
-        tensorboard_job.set_status(JobLifeCycle.FAILED, message=message, details=details)
+        tensorboard_job.set_status(JobLifeCycle.FAILED, message=message)
 
     notebook_jobs = NotebookJob.objects.filter(build_job=build_job)
     for notebook_job in notebook_jobs:
-        notebook_job.set_status(JobLifeCycle.FAILED, message=message, details=details)
+        notebook_job.set_status(JobLifeCycle.FAILED, message=message)
 
     experiments = Experiment.objects.filter(build_job=build_job)
     for experiment in experiments:
-        experiment.set_status(ExperimentLifeCycle.FAILED, message=message, details=details)
+        experiment.set_status(ExperimentLifeCycle.FAILED, message=message)
 
 
 def notify_build_job_stopped(build_job):

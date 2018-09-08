@@ -25,7 +25,7 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
     class Meta:
         abstract = True
 
-    def _set_status(self, status_model, status, message=None, details=None):
+    def _set_status(self, status_model, status, message=None, traceback=None, details=None):
         current_status = self.last_status
         if self.is_done:
             # We should not update statuses anymore
@@ -39,6 +39,7 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
             status_model.objects.create(job=self,
                                         status=status,
                                         message=message,
+                                        traceback=traceback,
                                         details=details)
             return True
         return False

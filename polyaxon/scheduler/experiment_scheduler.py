@@ -1,4 +1,5 @@
 import logging
+import traceback
 import uuid
 
 from kubernetes.client.rest import ApiException
@@ -425,34 +426,43 @@ def start_experiment(experiment):
                             job_docker_image=job_docker_image,
                             use_sidecar=True,
                             sidecar_config=config.get_requested_params(to_str=True))
+    error = {}
     try:
         response = spawner.start_experiment()
+        handle_experiment(experiment=experiment, spawner=spawner, response=response)
     except ApiException as e:
         _logger.error('Could not start the experiment, please check your polyaxon spec.',
                       exc_info=True)
-        experiment.set_status(
-            ExperimentLifeCycle.FAILED,
-            message='Could not start the experiment, encountered a Kubernetes ApiException.')
-        return
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the experiment, encountered a Kubernetes ApiException.'
+        }
     except VolumeNotFoundError as e:
         _logger.error('Could not start the experiment, please check your volume definitions.',
                       exc_info=True)
-        experiment.set_status(
-            ExperimentLifeCycle.FAILED,
-            message='Could not start the experiment, '
-                    'encountered a volume definition problem. %s' % e)
-        return False
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the experiment, '
+                       'encountered a volume definition problem, %s.' % e
+        }
     except Exception as e:
         _logger.error('Could not start the experiment, please check your polyaxon spec',
                       exc_info=True)
-        experiment.set_status(
-            ExperimentLifeCycle.FAILED,
-            message='Could not start the experiment encountered an {} exception.'.format(
-                e.__class__.__name__
-            ))
-        return
-
-    handle_experiment(experiment=experiment, spawner=spawner, response=response)
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the experiment encountered an {} exception.'.format(
+                e.__class__.__name__)
+        }
+    finally:
+        if error.get('raised'):
+            experiment.set_status(
+                ExperimentLifeCycle.FAILED,
+                message=error.get('message'),
+                traceback=error.get('traceback'))
+            return False
 
 
 def stop_experiment(project_name,

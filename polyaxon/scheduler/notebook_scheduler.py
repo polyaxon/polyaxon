@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 from kubernetes.client.rest import ApiException
 
@@ -36,6 +37,7 @@ def start_notebook(notebook):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
+    error = {}
     try:
         allow_commits = False
         if settings.REPOS_CLAIM_NAME or notebook.node_selector:
@@ -50,32 +52,41 @@ def start_notebook(notebook):
                                          affinity=notebook.affinity,
                                          tolerations=notebook.tolerations,
                                          allow_commits=allow_commits)
+        notebook.definition = get_job_definition(results)
+        notebook.save()
+        return
     except ApiException:
         _logger.error('Could not start notebook, please check your polyaxon spec.',
                       exc_info=True)
-        notebook.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start notebook, encountered a Kubernetes ApiException.')
-        return
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the job, encountered a Kubernetes ApiException.',
+        }
     except VolumeNotFoundError as e:
         _logger.error('Could not start the notebook, please check your volume definitions',
                       exc_info=True)
-        notebook.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start the notebook, '
-                    'encountered a volume definition problem. %s' % e)
-        return False
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the job, encountered a volume definition problem. %s' % e,
+        }
     except Exception as e:
         _logger.error('Could not start notebook, please check your polyaxon spec.',
                       exc_info=True)
-        notebook.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start notebook encountered an {} exception.'.format(
-                e.__class__.__name__
-            ))
-        return
-    notebook.definition = get_job_definition(results)
-    notebook.save()
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start notebook encountered an {} exception.'.format(
+                e.__class__.__name__)
+        }
+    finally:
+        if error.get('raised'):
+            notebook.set_status(
+                JobLifeCycle.FAILED,
+                message=error.get('message'),
+                traceback=error.get('traceback'))
+            return False
 
 
 def stop_notebook(project_name,

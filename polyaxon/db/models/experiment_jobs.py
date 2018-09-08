@@ -50,10 +50,15 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
             role=self.role
         )
 
-    def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
+    def set_status(self,  # pylint:disable=arguments-differ
+                   status,
+                   message=None,
+                   traceback=None,
+                   details=None):
         return self._set_status(status_model=ExperimentJobStatus,
                                 status=status,
                                 message=message,
+                                traceback=traceback,
                                 details=details)
 
 

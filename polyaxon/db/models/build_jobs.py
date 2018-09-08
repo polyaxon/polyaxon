@@ -61,10 +61,15 @@ class BuildJob(AbstractJob,
     def specification(self):
         return BuildSpecification(values=self.config)
 
-    def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
+    def set_status(self,  # pylint:disable=arguments-differ
+                   status,
+                   message=None,
+                   traceback=None,
+                   details=None):
         return self._set_status(status_model=BuildJobStatus,
                                 status=status,
                                 message=message,
+                                traceback=traceback,
                                 details=details)
 
     @staticmethod

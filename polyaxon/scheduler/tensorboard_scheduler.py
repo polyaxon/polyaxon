@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 from kubernetes.client.rest import ApiException
 
@@ -25,6 +26,7 @@ def start_tensorboard(tensorboard):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
+    error = {}
     try:
         results = spawner.start_tensorboard(
             image=tensorboard.image,
@@ -36,32 +38,41 @@ def start_tensorboard(tensorboard):
             node_selector=tensorboard.node_selector,
             affinity=tensorboard.affinity,
             tolerations=tensorboard.tolerations)
+        tensorboard.definition = get_job_definition(results)
+        tensorboard.save()
+        return
     except ApiException:
         _logger.error('Could not start tensorboard, please check your polyaxon spec.',
                       exc_info=True)
-        tensorboard.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start tensorboard, encountered a Kubernetes ApiException.')
-        return
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the job, encountered a Kubernetes ApiException.',
+        }
     except VolumeNotFoundError as e:
         _logger.error('Could not start the tensorboard, please check your volume definitions.',
                       exc_info=True)
-        tensorboard.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start the tensorboard, '
-                    'encountered a volume definition problem. %s' % e)
-        return False
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start the job, encountered a volume definition problem. %s' % e,
+        }
     except Exception as e:
         _logger.error('Could not start tensorboard, please check your polyaxon spec.',
                       exc_info=True)
-        tensorboard.set_status(
-            JobLifeCycle.FAILED,
-            message='Could not start tensorboard encountered an {} exception.'.format(
-                e.__class__.__name__
-            ))
-        return
-    tensorboard.definition = get_job_definition(results)
-    tensorboard.save()
+        error = {
+            'raised': True,
+            'traceback': traceback.format_exc(),
+            'message': 'Could not start tensorboard encountered an {} exception.'.format(
+                e.__class__.__name__)
+        }
+    finally:
+        if error.get('raised'):
+            tensorboard.set_status(
+                JobLifeCycle.FAILED,
+                message=error.get('message'),
+                traceback=error.get('traceback'))
+            return False
 
 
 def stop_tensorboard(project_name,
