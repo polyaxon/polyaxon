@@ -97,6 +97,14 @@ class Experiment(BaseTracker):
     def failed(self, message=None):
         self.end(status='failed', message=message)
 
+    def log_run_env(self):
+        patch_dict = {'run_env': get_run_env()}
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict=patch_dict,
+                                                 background=True)
+
     def log_code_ref(self):
         self.client.experiment.create_code_reference(username=self.username,
                                                      project_name=self.project_name,
