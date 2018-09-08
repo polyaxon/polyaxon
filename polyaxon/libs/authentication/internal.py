@@ -1,7 +1,9 @@
-from rest_framework import HTTP_HEADER_ENCODING, exceptions
+from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 
 from django.conf import settings
+
+from libs.headers import get_header
 
 
 class InternalUser(object):
@@ -29,24 +31,19 @@ def is_internal_user(user):
 
 
 def get_internal_header(request):
-    """Return request's 'X_POLYAXON_INTERNAL:' header, as a bytestring.
-
-    Hide some test client ickyness where the header can be unicode.
     """
-    service = request.META.get('HTTP_{}'.format(settings.HEADERS_INTERNAL), b'')
-    if isinstance(service, str):
-        # Work around django test client oddness
-        service = service.encode(HTTP_HEADER_ENCODING)
-    return service
+    Return request's 'X_POLYAXON_INTERNAL:' header, as a bytestring.
+    """
+    return get_header(request=request, header_service=settings.HEADERS_INTERNAL)
 
 
 class InternalAuthentication(BaseAuthentication):
     """Simple authentication based on internal secret token.
 
     Clients should authenticate by passing the token key in the "Authorization"
-    HTTP header, prepended with the string "Token ".  For example:
+    HTTP header, prepended with the string "InternalToken ".  For example:
 
-        Authorization: Token 401f7ac837da42b97f613d789819ff93537bee6a
+        Authorization: InternalToken 401f7ac837da42b97f613d789819ff93537bee6a
 
     As well as one of the supported internal service. For example:
 
