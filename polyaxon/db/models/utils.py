@@ -249,6 +249,7 @@ class StatusModel(models.Model):
         null=False)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     message = models.CharField(max_length=256, null=True, blank=True)
+    traceback = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return '{} <{}>'.format(str(self), self.status)
@@ -301,7 +302,7 @@ class LastStatusMixin(object):
     def stopped(self):
         return self.STATUSES.stopped(self.last_status)
 
-    def set_status(self, status, message=None, **kwargs):
+    def set_status(self, status, message=None, traceback=None, **kwargs):
         raise NotImplemented  # noqa
 
 

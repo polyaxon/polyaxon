@@ -471,7 +471,7 @@ class TestExperimentStatusSerializer(BaseTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory
-    expected_keys = {'id', 'uuid', 'experiment', 'created_at', 'status', 'message', }
+    expected_keys = {'id', 'uuid', 'experiment', 'created_at', 'status', 'traceback', 'message', }
 
     def setUp(self):
         super().setUp()

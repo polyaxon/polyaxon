@@ -207,7 +207,7 @@ class TestBuildJobStatusSerializer(BaseTest):
     serializer_class = BuildJobStatusSerializer
     model_class = BuildJobStatus
     factory_class = BuildJobStatusFactory
-    expected_keys = {'id', 'uuid', 'job', 'created_at', 'status', 'message', 'details'}
+    expected_keys = {'id', 'uuid', 'job', 'created_at', 'status', 'traceback', 'message', 'details'}
 
     def setUp(self):
         super().setUp()

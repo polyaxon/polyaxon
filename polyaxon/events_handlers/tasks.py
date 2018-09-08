@@ -63,7 +63,10 @@ def events_handle_experiment_job_statuses(payload):
     # Set the new status
     try:
         set_node_scheduling(job, details['node_name'])
-        job.set_status(status=payload['status'], message=payload['message'], details=details)
+        job.set_status(status=payload['status'],
+                       message=payload['message'],
+                       traceback=payload.get('traceback'),
+                       details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
         pass
@@ -93,7 +96,10 @@ def events_handle_job_statuses(payload):
     # Set the new status
     try:
         set_node_scheduling(job, details['node_name'])
-        job.set_status(status=payload['status'], message=payload['message'], details=details)
+        job.set_status(status=payload['status'],
+                       message=payload['message'],
+                       traceback=payload.get('traceback'),
+                       details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
         pass
@@ -129,7 +135,10 @@ def events_handle_plugin_job_statuses(payload):
     # Set the new status
     try:
         set_node_scheduling(job, details['node_name'])
-        job.set_status(status=payload['status'], message=payload['message'], details=details)
+        job.set_status(status=payload['status'],
+                       message=payload['message'],
+                       traceback=payload.get('traceback'),
+                       details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
         pass
@@ -159,7 +168,10 @@ def events_handle_build_job_statuses(payload):
     # Set the new status
     try:
         set_node_scheduling(build_job, details['node_name'])
-        build_job.set_status(status=payload['status'], message=payload['message'], details=details)
+        build_job.set_status(status=payload['status'],
+                             message=payload['message'],
+                             traceback=payload.get('traceback'),
+                             details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
         pass

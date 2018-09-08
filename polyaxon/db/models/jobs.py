@@ -110,7 +110,11 @@ class Job(AbstractJob,
     def is_copy(self):
         return self.is_clone and self.cloning_strategy == CloningStrategy.COPY
 
-    def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
+    def set_status(self,  # pylint:disable=arguments-differ
+                   status,
+                   message=None,
+                   traceback=None,
+                   details=None):
         return self._set_status(status_model=JobStatus,
                                 status=status,
                                 message=message,

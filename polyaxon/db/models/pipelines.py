@@ -403,14 +403,17 @@ class PipelineRun(RunModel):
     def on_finished(self, message=None):
         self.set_status(status=self.STATUSES.FINISHED, message=message)
 
-    def set_status(self, status, message=None, **kwargs):
+    def set_status(self, status, message=None, traceback=None, **kwargs):
         if not self.can_transition(status):
             return
 
         if PipelineStatuses.FINISHED != status:
             # If the status that we want to transition to is not a final state,
             # then no further checks are required
-            PipelineRunStatus.objects.create(pipeline_run=self, status=status, message=message)
+            PipelineRunStatus.objects.create(pipeline_run=self,
+                                             status=status,
+                                             message=message,
+                                             traceback=traceback)
             return
 
         # If we reached a final state,
@@ -480,9 +483,12 @@ class OperationRun(RunModel):
     class Meta:
         app_label = 'db'
 
-    def set_status(self, status, message=None, **kwargs):
+    def set_status(self, status, message=None, traceback=None, **kwargs):
         if self.can_transition(status):
-            OperationRunStatus.objects.create(operation_run=self, status=status, message=message)
+            OperationRunStatus.objects.create(operation_run=self,
+                                              status=status,
+                                              traceback=traceback,
+                                              message=message)
 
     def check_concurrency(self):
         """Checks the concurrency of the operation run.

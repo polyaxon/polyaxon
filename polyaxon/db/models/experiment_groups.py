@@ -108,11 +108,14 @@ class ExperimentGroup(DiffModel,
 
         return True
 
-    def set_status(self, status, message=None, **kwargs):
+    def set_status(self, status, message=None, traceback=None, **kwargs):
         if not self.can_transition(status):
             return
 
-        ExperimentGroupStatus.objects.create(experiment_group=self, status=status, message=message)
+        ExperimentGroupStatus.objects.create(experiment_group=self,
+                                             status=status,
+                                             message=message,
+                                             traceback=traceback)
 
     @cached_property
     def hptuning_config(self):
