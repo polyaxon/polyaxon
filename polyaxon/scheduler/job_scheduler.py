@@ -86,7 +86,6 @@ def start_job(job):
                 JobLifeCycle.FAILED,
                 message=error.get('message'),
                 traceback=error.get('traceback'))
-            return False
 
 
 def stop_job(project_name, project_uuid, job_name, job_uuid, specification):

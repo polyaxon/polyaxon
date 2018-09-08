@@ -462,7 +462,6 @@ def start_experiment(experiment):
                 ExperimentLifeCycle.FAILED,
                 message=error.get('message'),
                 traceback=error.get('traceback'))
-            return False
 
 
 def stop_experiment(project_name,

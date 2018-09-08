@@ -72,7 +72,6 @@ def start_tensorboard(tensorboard):
                 JobLifeCycle.FAILED,
                 message=error.get('message'),
                 traceback=error.get('traceback'))
-            return False
 
 
 def stop_tensorboard(project_name,
