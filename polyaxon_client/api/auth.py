@@ -41,17 +41,8 @@ class AuthApi(BaseApiHandler):
 
         return self.prepare_results(response_json=user_dict, config=UserConfig)
 
-    def login(self, credentials):
-        credentials = self.validate_config(config=credentials, config_schema=CredentialsConfig)
-        request_url = self.build_url(self._get_http_url(), 'token')
-        try:
-            response = self.transport.session.post(request_url, data=credentials.to_dict())
-        except requests.ConnectionError:
-            raise PolyaxonHTTPError(
-                request_url,
-                None,
-                "Connection error.",
-                None)
+    @staticmethod
+    def _get_token(request_url, response):
         try:
             token_dict = response.json()
             response.raise_for_status()
@@ -69,3 +60,27 @@ class AuthApi(BaseApiHandler):
                 response.status_code)
 
         return token_dict.get('token')
+
+    def login(self, credentials):
+        credentials = self.validate_config(config=credentials, config_schema=CredentialsConfig)
+        request_url = self.build_url(self._get_http_url(), 'token')
+        try:
+            response = self.transport.session.post(request_url, data=credentials.to_dict())
+        except requests.ConnectionError:
+            raise PolyaxonHTTPError(
+                request_url,
+                None,
+                "Connection error.",
+                None)
+        return self._get_token(request_url=request_url, response=response)
+
+    def login_using_ephemeral_token(self, url, ephemeral_token):
+        try:
+            response = self.transport.session.post(url, {'token': ephemeral_token})
+        except requests.ConnectionError:
+            raise PolyaxonHTTPError(
+                url,
+                None,
+                "Connection error.",
+                None)
+        return self._get_token(request_url=url, response=response)
