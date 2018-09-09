@@ -149,10 +149,7 @@ class PolyaxonClient(object):
     @property
     def transport(self):
         if not self._transport:
-            self._transport = Transport(token=self.token,
-                                        authentication_type=self.authentication_type,
-                                        reraise=self.reraise,
-                                        timeout=self.timeout)
+            self._transport = Transport(config=self.api_config)
         return self._transport
 
     @property

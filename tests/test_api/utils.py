@@ -24,7 +24,7 @@ class TestBaseApi(TestCase):
                                     use_https=False,
                                     in_cluster=False,
                                     schema_response=True)
-        self.transport = Transport()
+        self.transport = Transport(config=self.api_config)
 
     def set_raw_response(self):
         self.api_config.schema_response = False

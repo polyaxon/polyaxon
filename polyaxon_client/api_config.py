@@ -39,6 +39,7 @@ class ApiConfig(object):
                                                        if self.use_https
                                                        else settings.DEFAULT_HTTP_PORT)
         self.version = version or settings.API_VERSION
+        self.internal_header = None
 
         if self.in_cluster:
             if not settings.API_HTTP_HOST:
@@ -46,6 +47,8 @@ class ApiConfig(object):
                       'please make sure this is running inside a polyaxon job.')
             self.http_host = settings.API_HTTP_HOST
             self.ws_host = settings.API_WS_HOST
+            if all([settings.INTERNAL_HEADER, settings.INTERNAL_HEADER_SERVICE]):
+                self.internal_header = {settings.INTERNAL_HEADER: settings.INTERNAL_HEADER_SERVICE}
         else:
             http_protocol = 'https' if self.use_https else 'http'
             ws_protocol = 'wss' if self.use_https else 'ws'

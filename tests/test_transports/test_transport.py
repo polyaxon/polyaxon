@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.settings import AuthenticationTypes
 from polyaxon_client.transport import Transport
 
@@ -16,7 +17,7 @@ class TestTransport(TestCase):
         assert self.transport._get_headers() == {}
         assert self.transport._get_headers({'foo': 'bar'}) == {'foo': 'bar'}
 
-        self.transport.token = 'token'
+        self.transport.config = ApiConfig(token='token', host='host')
 
         assert self.transport._get_headers() == {
             'Authorization': "{} {}".format(AuthenticationTypes.TOKEN, 'token')
@@ -26,7 +27,7 @@ class TestTransport(TestCase):
             'Authorization': "{} {}".format(AuthenticationTypes.TOKEN, 'token')
         }
 
-        self.transport.authentication_type = AuthenticationTypes.INTERNAL_TOKEN
+        self.transport.config.authentication_type = AuthenticationTypes.INTERNAL_TOKEN
         assert self.transport._get_headers() == {
             'Authorization': "{} {}".format(AuthenticationTypes.INTERNAL_TOKEN, 'token')
         }

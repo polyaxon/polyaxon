@@ -13,28 +13,24 @@ from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
 class Transport(HttpTransportMixin, ThreadedTransportMixin, SocketTransportMixin):
     """Transport for handling http/ws operations."""
 
-    def __init__(self,
-                 token=None,
-                 authentication_type=AuthenticationTypes.TOKEN,
-                 reraise=False,
-                 timeout=None):
-        self.authentication_type = authentication_type
-        self.token = token
-        self.reraise = reraise
-        self.timeout = timeout or settings.TIMEOUT
+    def __init__(self, config=None):
+        self.config = config
 
     def _get_headers(self, headers=None):
         request_headers = headers or {}
         # Auth headers if access_token is present
-        if 'Authorization' not in request_headers and self.token:
-            request_headers.update({'Authorization': '{} {}'.format(self.authentication_type,
-                                                                    self.token)})
+        if self.config:
+            if 'Authorization' not in request_headers and self.config.token:
+                request_headers.update({'Authorization': '{} {}'.format(
+                    self.config.authentication_type, self.config.token)})
+            if self.config.internal_header:
+                request_headers.update(self.config.internal_header)
         return request_headers
 
     def handle_exception(self, e, log_message=None):
         logger.info("%s: %s", log_message, e.message)
 
-        if self.reraise:
+        if self.config.reraise:
             raise e
 
         if isinstance(e, AuthenticationError):

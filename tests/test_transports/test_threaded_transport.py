@@ -6,6 +6,7 @@ import time
 
 from unittest import TestCase
 
+from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
 from polyaxon_client.workers.queue_worker import QueueWorker
 
@@ -15,7 +16,7 @@ class DummyTransport(ThreadedTransportMixin):
     def __init__(self, delay=0):
         self.queue = []
         self.delay = delay
-        self.timeout = 0
+        self.config = ApiConfig(in_cluster=True, timeout=0)
         self._exceptions = 0
         self._done = 0
 
@@ -44,7 +45,7 @@ class ExceptionTransport(ThreadedTransportMixin):
     # pylint:disable=protected-access
     def __init__(self, delay=0):
         self.delay = delay
-        self.timeout = 0
+        self.config = ApiConfig(in_cluster=True, timeout=0)
         self._exceptions = 0
         self._done = 0
 
