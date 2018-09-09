@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client import settings
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.bookmark import BookmarkApi
 from polyaxon_client.api.build_job import BuildJobApi
