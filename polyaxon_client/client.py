@@ -26,7 +26,7 @@ class PolyaxonClient(object):
                  ws_port=None,
                  use_https=False,
                  in_cluster=None,
-                 authentication_type=settings.AuthenticationTypes.TOKEN,
+                 authentication_type=None,
                  api_version=None,
                  reraise=False,
                  schema_response=None,
