@@ -11,6 +11,7 @@ from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
+from db.redis.tll import RedisTTL
 from event_manager.events.experiment import (
     EXPERIMENT_DELETED,
     EXPERIMENT_DONE,
@@ -272,4 +273,4 @@ def handle_new_experiment_status(sender, **kwargs):
                 'specification': experiment.config,
                 'update_status': False
             },
-            countdown=2)
+            countdown=RedisTTL.get_for_experiment(experiment_id=experiment.id))
