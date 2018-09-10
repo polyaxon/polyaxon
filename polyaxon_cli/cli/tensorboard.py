@@ -18,7 +18,7 @@ from polyaxon_client.exceptions import PolyaxonClientException
 def get_tensorboard_url(user, project_name, experiment=None, group=None):
     if experiment:
         return "{}/tensorboard/{}/{}/experiments/{}/\n".format(
-            PolyaxonClient().auth.http_host,
+            PolyaxonClient().api_config.http_host,
             user,
             project_name,
             experiment)
@@ -28,7 +28,9 @@ def get_tensorboard_url(user, project_name, experiment=None, group=None):
             user,
             project_name,
             group)
-    return "{}/tensorboard/{}/{}/\n".format(PolyaxonClient().auth.http_host, user, project_name)
+    return "{}/tensorboard/{}/{}/\n".format(PolyaxonClient().api_config.http_host,
+                                            user,
+                                            project_name)
 
 
 @click.group()

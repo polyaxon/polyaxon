@@ -17,7 +17,7 @@ from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_notebook_url(user, project_name):
-    return "{}/notebook/{}/{}/\n".format(PolyaxonClient().auth.http_host, user, project_name)
+    return "{}/notebook/{}/{}/\n".format(PolyaxonClient().api_config.http_host, user, project_name)
 
 
 @click.group()
