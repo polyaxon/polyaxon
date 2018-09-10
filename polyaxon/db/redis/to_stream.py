@@ -1,7 +1,7 @@
 import json
 
 from db.redis.base import BaseRedisDb
-from polyaxon.settings import RedisPools, redis
+from polyaxon.settings import RedisPools
 
 
 class RedisToStream(BaseRedisDb):

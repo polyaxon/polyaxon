@@ -2,7 +2,7 @@ import uuid
 
 from db.redis.base import BaseRedisDb
 from libs.json_utils import dumps, loads
-from polyaxon.settings import RedisPools, redis
+from polyaxon.settings import RedisPools
 
 
 class RedisSessions(BaseRedisDb):
