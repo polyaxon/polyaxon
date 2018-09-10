@@ -1,16 +1,17 @@
 import base64
 import binascii
 
-from django.conf import settings
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
+
+from django.conf import settings
 
 from libs.authentication.internal import get_internal_header
 from libs.redis_db import RedisEphemeralTokens
 
 
 class EphemeralUser(object):
-    def __init__(self, token):
+    def __init__(self, scope):
         self.username = 'ephemeral_user'
         self.pk = -1
         self.id = -1
@@ -18,11 +19,11 @@ class EphemeralUser(object):
         self.is_anonymous = False
         self.is_authenticated = True
         self.is_staff = False
-        self.token = token
+        self.scope = scope or []
 
     @property
     def access_token(self):
-        return self.token
+        return None
 
     def __eq__(self, other):
         return isinstance(other, EphemeralUser) and other.username == self.username
@@ -107,7 +108,7 @@ class EphemeralAuthentication(BaseAuthentication):
             msg = 'Invalid token header'
             raise exceptions.AuthenticationFailed(msg)
 
-        return EphemeralUser(token=scope), None
+        return EphemeralUser(scope=scope), None
 
     def authenticate_header(self, request):
         return self.keyword
