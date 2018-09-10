@@ -16,6 +16,7 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.projects import Project
+from db.redis.to_stream import RedisToStream
 from event_manager.events.build_job import BUILD_JOB_LOGS_VIEWED
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
 from event_manager.events.experiment_job import (
@@ -24,7 +25,6 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.job import JOB_LOGS_VIEWED
 from libs.permissions.projects import has_project_permissions
-from db.redis.to_stream import RedisToStream
 from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
 from streams.consumers import Consumer

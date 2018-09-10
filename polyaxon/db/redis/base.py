@@ -1,5 +1,6 @@
 from polyaxon.settings import redis
 
+
 class BaseRedisDb(object):
     REDIS_POOL = None
 

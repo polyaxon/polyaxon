@@ -2,11 +2,11 @@ import base64
 import uuid
 
 from django.utils.crypto import constant_time_compare
-from polyaxon.settings import RedisPools
 
 from db.redis.base import BaseRedisDb
 from libs.crypto import get_hmac
 from libs.json_utils import dumps, loads
+from polyaxon.settings import RedisPools
 
 
 class RedisEphemeralTokens(BaseRedisDb):
