@@ -577,6 +577,7 @@ class ExperimentScopeTokenView(PostAPIView):
         experiment = self.get_object()
 
         if experiment.last_status not in [ExperimentLifeCycle.SCHEDULED,
+                                          ExperimentLifeCycle.STARTING,
                                           ExperimentLifeCycle.RUNNING]:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
