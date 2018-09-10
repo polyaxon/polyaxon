@@ -45,7 +45,7 @@ class TestEnvVars(TestCase):
         env_var_names = [env_var.name for env_var in env_vars]
         assert 'POLYAXON_K8S_NAMESPACE' in env_var_names
         assert 'POLYAXON_SECRET_KEY' in env_var_names
-        assert 'POLYAXON_INTERNAL_SECRET_TOKEN' in env_var_names
+        assert 'POLYAXON_SECRET_INTERNAL_TOKEN' in env_var_names
         assert 'POLYAXON_RABBITMQ_PASSWORD' in env_var_names
         assert 'POLYAXON_DB_PASSWORD' in env_var_names
         assert API_HTTP_URL in env_var_names
