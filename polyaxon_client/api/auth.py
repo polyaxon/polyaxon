@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import requests
 
+from polyaxon_client import settings
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
@@ -41,8 +42,7 @@ class AuthApi(BaseApiHandler):
 
         return self.prepare_results(response_json=user_dict, config=UserConfig)
 
-    @staticmethod
-    def _get_token(request_url, response):
+    def _process_token(self, request_url, response, set_token=False):
         try:
             token_dict = response.json()
             response.raise_for_status()
@@ -59,9 +59,12 @@ class AuthApi(BaseApiHandler):
                 "Login failed.\nSee http://docs.polyaxon.com/faqs/authentication/ for help",
                 response.status_code)
 
-        return token_dict.get('token')
+        token = token_dict.get('token')
+        if set_token:
+            self.config.token = token
+        return token
 
-    def login(self, credentials):
+    def login(self, credentials, set_token=False):
         credentials = self.validate_config(config=credentials, config_schema=CredentialsConfig)
         request_url = self.build_url(self._get_http_url(), 'token')
         try:
@@ -72,15 +75,28 @@ class AuthApi(BaseApiHandler):
                 None,
                 "Connection error.",
                 None)
-        return self._get_token(request_url=request_url, response=response)
+        return self._process_token(request_url=request_url, response=response, set_token=set_token)
 
-    def login_using_ephemeral_token(self, url, ephemeral_token):
+    def login_experiment_ephemeral_token(self,
+                                         username,
+                                         project_name,
+                                         experiment_id,
+                                         ephemeral_token,
+                                         set_token=False):
+        request_url = self.build_url(self._get_http_url('/'),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'token')
         try:
-            response = self.transport.session.post(url, {'token': ephemeral_token})
+            response = self.transport.session.post(
+                request_url,
+                headers={settings.AuthenticationTypes.EPHEMERAL_TOKEM: ephemeral_token})
         except requests.ConnectionError:
             raise PolyaxonHTTPError(
-                url,
+                request_url,
                 None,
                 "Connection error.",
                 None)
-        return self._get_token(request_url=url, response=response)
+        return self._process_token(request_url=request_url, response=response, set_token=set_token)
