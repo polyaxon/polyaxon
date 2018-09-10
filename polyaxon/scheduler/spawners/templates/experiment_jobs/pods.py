@@ -53,7 +53,8 @@ class PodManager(object):
                  use_sidecar=False,
                  sidecar_config=None,
                  log_level=None,
-                 declarations=None):
+                 declarations=None,
+                 ephemeral_token=None):
         self.namespace = namespace
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
@@ -81,6 +82,7 @@ class PodManager(object):
         self.sidecar_config = sidecar_config
         self.log_level = log_level
         self.declarations = declarations
+        self.ephemeral_token = ephemeral_token
         self.experiment_labels = self.get_experiment_labels()
         self.cluster_def = None
 

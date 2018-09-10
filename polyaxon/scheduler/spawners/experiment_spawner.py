@@ -39,7 +39,8 @@ class ExperimentSpawner(K8SManager):
                  ports=None,
                  use_sidecar=False,
                  sidecar_config=None,
-                 persist=False):
+                 persist=False,
+                 ephemeral_token=None):
         self.spec = spec
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
@@ -71,7 +72,8 @@ class ExperimentSpawner(K8SManager):
                                            log_level=self.spec.log_level,
                                            original_name=self.original_name,
                                            cloning_strategy=self.cloning_strategy,
-                                           declarations=self.spec.declarations)
+                                           declarations=self.spec.declarations,
+                                           ephemeral_token=ephemeral_token)
         self.persist = persist
 
         super().__init__(k8s_config=k8s_config,
