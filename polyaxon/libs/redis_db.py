@@ -397,5 +397,5 @@ class RedisEphemeralTokens(BaseRedisDb):
         return cls.create_header_token(ephemeral_token=ephemeral_token)
 
     @staticmethod
-    def get_scope(username, model, object_id):
-        return ['username:{}'.format(username), '{}:{}'.format(model, object_id)]
+    def get_scope(user, model, object_id):
+        return ['user:{}'.format(user), '{}:{}'.format(model, object_id)]

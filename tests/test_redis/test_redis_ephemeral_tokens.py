@@ -16,22 +16,22 @@ class TestRedisEphemeralTokens(BaseTest):
         assert token.ttl is None
         assert token.scope is None
 
-        token = RedisEphemeralTokens.generate(scope=token.get_scope('user', 'experiment', 1))
+        token = RedisEphemeralTokens.generate(scope=token.get_scope(1, 'experiment', 1))
 
         assert token.get_state() is not None
         assert token.salt is not None
         assert token.ttl == RedisEphemeralTokens.EXPIRATION_TTL
-        assert token.scope == token.get_scope('user', 'experiment', 1)
+        assert token.scope == token.get_scope(1, 'experiment', 1)
         assert token.check_token('foo') is False
         # Checking delete the token
         assert token.get_state() is None
 
-        token = RedisEphemeralTokens.generate(scope=token.get_scope('user', 'experiment', 1))
+        token = RedisEphemeralTokens.generate(scope=token.get_scope(1, 'experiment', 1))
         assert token.check_token(None) is False
         # Checking delete the token
         assert token.get_state() is None
 
-        token = RedisEphemeralTokens.generate(scope=token.get_scope('user', 'experiment', 1))
+        token = RedisEphemeralTokens.generate(scope=token.get_scope(1, 'experiment', 1))
         valid = RedisEphemeralTokens.make_token(token)
         assert token.check_token(valid) is True
 

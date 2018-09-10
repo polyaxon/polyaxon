@@ -579,7 +579,7 @@ class ExperimentScopeTokenView(PostAPIView):
         if experiment.last_status != ExperimentLifeCycle.RUNNING:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        scope = RedisEphemeralTokens.get_scope(username=experiment.user.id,
+        scope = RedisEphemeralTokens.get_scope(user=experiment.user.id,
                                                model='experiment',
                                                object_id=experiment.id)
         if sorted(user.scope) != sorted(scope):

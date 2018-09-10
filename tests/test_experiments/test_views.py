@@ -1685,7 +1685,7 @@ class TestExperimentTokenViewV1(BaseViewTest):
 
     @staticmethod
     def create_ephemeral_token(experiment, **kwargs):
-        scope = RedisEphemeralTokens.get_scope(username=experiment.user.id,
+        scope = RedisEphemeralTokens.get_scope(user=experiment.user.id,
                                                model='experiment',
                                                object_id=experiment.id)
         return RedisEphemeralTokens.generate(scope=scope, **kwargs)
