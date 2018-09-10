@@ -42,7 +42,7 @@ class AuthApi(BaseApiHandler):
 
         return self.prepare_results(response_json=user_dict, config=UserConfig)
 
-    def _process_token(self, request_url, response, set_token=False):
+    def _process_token(self, request_url, response, set_token=True):
         try:
             token_dict = response.json()
             response.raise_for_status()
@@ -82,7 +82,7 @@ class AuthApi(BaseApiHandler):
                                          project_name,
                                          experiment_id,
                                          ephemeral_token,
-                                         set_token=False):
+                                         set_token=True):
         request_url = self.build_url(self._get_http_url('/'),
                                      username,
                                      project_name,

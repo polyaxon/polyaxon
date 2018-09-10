@@ -43,7 +43,8 @@ class Experiment(BaseTracker):
                 username=self.username,
                 project_name=self.project_name,
                 experiment_id=self.experiment_id,
-                ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN)
+                ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
+                set_token=True)
 
     def create(self, name=None, tags=None, description=None, config=None):
         experiment_config = {'run_env': get_run_env()}
