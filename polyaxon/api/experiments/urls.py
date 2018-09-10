@@ -54,6 +54,9 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/unbookmark/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         bookmark_views.ExperimentBookmarkDeleteView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/token/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+        views.ExperimentScopeTokenView.as_view()),
 ]
 
 jobs_urlpatterns = [

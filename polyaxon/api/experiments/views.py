@@ -5,6 +5,7 @@ import os
 from wsgiref.util import FileWrapper
 
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
@@ -41,7 +42,9 @@ from api.filters import OrderingFilter, QueryFilter
 from api.paginator import LargeLimitOffsetPagination
 from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.list_create import ListCreateAPIView
+from api.utils.views.post import PostAPIView
 from api.utils.views.protected import ProtectedView
+from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
@@ -67,10 +70,13 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_experiment_outputs
-from libs.paths.experiments import get_experiment_logs_path
+from libs.authentication.ephemeral import EphemeralAuthentication
 from libs.authentication.internal import InternalAuthentication
+from libs.paths.experiments import get_experiment_logs_path
+from libs.permissions.ephemeral import IsEphemeral
 from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
+from libs.redis_db import RedisEphemeralTokens
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
@@ -553,3 +559,31 @@ class DownloadOutputsView(ProtectedView):
             persistence_outputs=experiment.persistence_outputs,
             experiment_name=experiment.unique_name)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
+
+
+class ExperimentScopeTokenView(PostAPIView):
+    """Validate scope token and return user's token."""
+    queryset = Experiment.objects.all()
+    authentication_classes = [EphemeralAuthentication, ]
+    permission_classes = (IsEphemeral,)
+    lookup_field = 'id'
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+
+        if user.token is None:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        experiment = self.get_object()
+
+        if experiment.last_status != ExperimentLifeCycle.RUNNING:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        scope = RedisEphemeralTokens.get_scope(username=experiment.user.id,
+                                               model='experiment',
+                                               object_id=experiment.id)
+        if sorted(user.scope) != sorted(scope):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        token, _ = Token.objects.get_or_create(user=experiment.user)
+        return Response({'token': token.key}, status=status.HTTP_200_OK)

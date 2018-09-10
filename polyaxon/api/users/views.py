@@ -38,6 +38,7 @@ from signals import users as users_signals
 
 class AuthTokenLogin(ObtainAuthToken):
     """Login user and return user's token."""
+
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
@@ -286,6 +287,7 @@ class TokenView(TemplateView):
 
 class UserView(RetrieveAPIView):
     """Get user details."""
+
     def retrieve(self, request, *args, **kwargs):
         user = request.user
         return Response(UserConfig.obj_to_dict(user))
