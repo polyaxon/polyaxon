@@ -37,5 +37,13 @@ class INTERNAL_SERVICES(object):  # noqa
     VALUES = [
         DOCKERIZER,
         HELPER,
+        RUNNER
+    ]
+
+
+class EPHEMERAL_SERVICES(object):  # noqa
+    RUNNER = 'runner'
+
+    VALUES = [
         RUNNER,
     ]
