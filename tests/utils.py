@@ -109,7 +109,7 @@ class InternalClient(BaseClient):
         super().__init__(**defaults)
         self.service = service or settings.INTERNAL_SERVICES.HELPER
         self.authorization_header = '{} {}'.format(authentication_type,
-                                                   settings.INTERNAL_SECRET_TOKEN)
+                                                   settings.SECRET_INTERNAL_TOKEN)
 
     def request(self, **request):
         updated_request = {

@@ -98,7 +98,7 @@ def download(url,
     """Download the file from the given url at the current path"""
     authentication_type = authentication_type or InternalAuthentication.keyword
     if authentication_type == InternalAuthentication.keyword and not access_token:
-        access_token = settings.INTERNAL_SECRET_TOKEN
+        access_token = settings.SECRET_INTERNAL_TOKEN
     elif authentication_type == TokenAuthentication.keyword and not access_token:
         raise ValueError('Access token is required')
 
