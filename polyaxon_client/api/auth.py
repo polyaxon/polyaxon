@@ -92,7 +92,10 @@ class AuthApi(BaseApiHandler):
         try:
             response = self.transport.session.post(
                 request_url,
-                headers={settings.AuthenticationTypes.EPHEMERAL_TOKEM: ephemeral_token})
+                headers={
+                    'Authorization': '{} {}'.format(
+                        settings.AuthenticationTypes.EPHEMERAL_TOKEM, ephemeral_token)
+                })
         except requests.ConnectionError:
             raise PolyaxonHTTPError(
                 request_url,
