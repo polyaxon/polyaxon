@@ -54,7 +54,7 @@ class TestAuthApi(TestBaseApi):
         # Login without updating the token
         assert self.api_config.token == 'token'
         credentials = CredentialsConfig('user', 'password')
-        assert token == self.api_handler.login(credentials=credentials)
+        assert token == self.api_handler.login(credentials=credentials, set_token=False)
         assert self.api_config.token == 'token'
 
         # Login and update the token
@@ -85,7 +85,8 @@ class TestAuthApi(TestBaseApi):
             username='user',
             project_name='project',
             experiment_id=1,
-            ephemeral_token='foo')
+            ephemeral_token='foo',
+            set_token=False)
         assert self.api_config.token == 'token'
 
         # Login and update the token
