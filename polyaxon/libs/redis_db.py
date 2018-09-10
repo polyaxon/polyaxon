@@ -3,10 +3,10 @@ import json
 import uuid
 
 from django.utils.crypto import constant_time_compare
-from polyaxon.settings import RedisPools, redis
 
 from libs.crypto import get_hmac
 from libs.json_utils import dumps, loads
+from polyaxon.settings import RedisPools, redis
 
 
 class BaseRedisDb(object):

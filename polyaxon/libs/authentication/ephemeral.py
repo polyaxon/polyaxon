@@ -19,7 +19,7 @@ class EphemeralUser(object):
         self.is_anonymous = False
         self.is_authenticated = True
         self.is_staff = False
-        self.scope = scope or []
+        self.scope = scope
 
     @property
     def access_token(self):
