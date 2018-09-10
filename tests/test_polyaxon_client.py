@@ -48,7 +48,7 @@ class TestPolyaxonClient(TestCase):
         assert isinstance(client.user, UserApi)
 
     def test_from_config(self):
-        settings.SECRET_TOKEN = 'token'  # noqa
+        settings.SECRET_USER_TOKEN = 'token'  # noqa
         settings.API_HOST = 'localhost'
         client = PolyaxonClient(api_config=ApiConfig())
         assert client.in_cluster is False
@@ -79,7 +79,7 @@ class TestPolyaxonClient(TestCase):
         with self.assertRaises(PolyaxonClientException):
             PolyaxonClient()
 
-        settings.SECRET_TOKEN = 'token'  # noqa
+        settings.SECRET_USER_TOKEN = 'token'  # noqa
         settings.API_HOST = 'localhost'
         client = PolyaxonClient()
         assert client.in_cluster is False

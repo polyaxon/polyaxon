@@ -23,7 +23,7 @@ class ApiConfig(object):
                  reraise=False,
                  timeout=None):
 
-        self.token = token or settings.SECRET_TOKEN
+        self.token = token or settings.SECRET_USER_TOKEN
         self.host = host or settings.API_HOST
         self.in_cluster = self._get_bool(in_cluster, settings.IN_CLUSTER)
         self.use_https = self._get_bool(use_https, settings.USE_HTTPS)
