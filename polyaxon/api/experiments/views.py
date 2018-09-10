@@ -571,7 +571,7 @@ class ExperimentScopeTokenView(PostAPIView):
     def post(self, request, *args, **kwargs):
         user = request.user
 
-        if user.token is None:
+        if user.scope is None:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         experiment = self.get_object()
