@@ -16,6 +16,7 @@ from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.redis.tll import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
@@ -205,6 +206,17 @@ class TestProjectBuildListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create_ttl(self):
+        data = {'config': build_spec_parsed_content.parsed_data, 'ttl': 10}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        job = BuildJob.objects.last()
+        assert RedisTTL.get_for_build(job.id) == 10
+
+        data = {'config': build_spec_parsed_content.parsed_data, 'ttl': 'foo'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_create(self):
         data = {}

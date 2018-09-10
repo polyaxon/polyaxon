@@ -32,6 +32,7 @@ from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.list_create import ListCreateAPIView
 from api.utils.views.protected import ProtectedView
 from db.models.jobs import Job, JobStatus
+from db.redis.tll import RedisTTL
 from event_manager.events.job import (
     JOB_CREATED,
     JOB_DELETED_TRIGGERED,
@@ -82,10 +83,17 @@ class ProjectJobListView(ListCreateAPIView):
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
+        ttl = None
+        if RedisTTL.TTL_KEY in self.request.data:
+            try:
+                ttl = RedisTTL.validate_ttl(self.request.data[RedisTTL.TTL_KEY])
+            except ValueError:
+                raise ValidationError('ttl must be an integer.')
         instance = serializer.save(user=self.request.user,
                                    project=get_permissible_project(view=self))
-
         auditor.record(event_type=JOB_CREATED, instance=instance)
+        if ttl:
+            RedisTTL.set_for_job(job_id=instance.id, value=ttl)
 
 
 class JobDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
@@ -124,6 +132,13 @@ class JobCloneView(CreateAPIView):
         pass
 
     def post(self, request, *args, **kwargs):
+        ttl = None
+        if RedisTTL.TTL_KEY in self.request.data:
+            try:
+                ttl = RedisTTL.validate_ttl(self.request.data[RedisTTL.TTL_KEY])
+            except ValueError:
+                raise ValidationError('ttl must be an integer.')
+
         obj = self.get_object()
         auditor.record(event_type=self.event_type,
                        instance=obj,
@@ -148,6 +163,8 @@ class JobCloneView(CreateAPIView):
                              config=config,
                              update_code_reference=update_code_reference,
                              description=description)
+        if ttl:
+            RedisTTL.set_for_job(job_id=new_obj.id, value=ttl)
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 

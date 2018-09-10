@@ -33,6 +33,7 @@ from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from db.models.repos import CodeReference
+from db.redis.tll import RedisTTL
 from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
@@ -343,6 +344,23 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create_ttl(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Experiment.objects.last()
+        assert RedisTTL.get_for_experiment(xp.id) == 2
+
+        data = {'ttl': 10}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Experiment.objects.last()
+        assert RedisTTL.get_for_experiment(xp.id) == 10
+
+        data = {'ttl': 'foo'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_create(self):
         data = {'check_specification': True}
