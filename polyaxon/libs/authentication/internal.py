@@ -18,7 +18,7 @@ class InternalUser(object):
 
     @property
     def access_token(self):
-        return settings.INTERNAL_SECRET_TOKEN
+        return settings.SECRET_INTERNAL_TOKEN
 
     def __eq__(self, other):
         return isinstance(other, InternalUser) and other.username == self.username
