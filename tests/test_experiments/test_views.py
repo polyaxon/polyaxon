@@ -1664,6 +1664,7 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
 @pytest.mark.users_mark
 class TestExperimentTokenViewV1(BaseViewTest):
     HAS_AUTH = False
+    DISABLE_RUNNER = True
     factory_class = ExperimentFactory
 
     def setUp(self):
@@ -1690,7 +1691,7 @@ class TestExperimentTokenViewV1(BaseViewTest):
                                                object_id=experiment.id)
         return RedisEphemeralTokens.generate(scope=scope, **kwargs)
 
-    def test_is_forbidden_for_non_running_experiment(self):
+    def test_is_forbidden_for_non_running_or_scheduled_experiment(self):
         ephemeral_token = self.create_ephemeral_token(self.experiment)
         token = RedisEphemeralTokens.create_header_token(ephemeral_token)
         ephemeral_client = EphemeralClient(token=token)
@@ -1724,6 +1725,16 @@ class TestExperimentTokenViewV1(BaseViewTest):
         ephemeral_client = EphemeralClient(token=token)
         resp = ephemeral_client.post(self.url)
         assert resp.status_code == status.HTTP_401_UNAUTHORIZED
+        self.assertEqual(ephemeral_token.get_state(), None)
+
+    def test_using_scheduled_experiment_token(self):
+        self.experiment.set_status(status=JobLifeCycle.SCHEDULED)
+        ephemeral_token = self.create_ephemeral_token(self.experiment)
+        token = RedisEphemeralTokens.create_header_token(ephemeral_token)
+        ephemeral_client = EphemeralClient(token=token)
+        resp = ephemeral_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == {'token': self.experiment.user.auth_token.key}
         self.assertEqual(ephemeral_token.get_state(), None)
 
     def test_using_running_experiment_token(self):
