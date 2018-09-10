@@ -90,7 +90,7 @@ class AuthApi(BaseApiHandler):
                                      experiment_id,
                                      'token')
         try:
-            response = self.transport.session.post(
+            response = self.transport.post(
                 request_url,
                 headers={
                     'Authorization': '{} {}'.format(
