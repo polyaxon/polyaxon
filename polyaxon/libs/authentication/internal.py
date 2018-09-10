@@ -12,6 +12,7 @@ class InternalUser(object):
         self.pk = -1
         self.id = -1
         self.is_internal = True
+        self.is_anonymous = False
         self.is_authenticated = True
         self.is_staff = False
 
