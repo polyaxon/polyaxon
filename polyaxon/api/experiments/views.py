@@ -576,7 +576,8 @@ class ExperimentScopeTokenView(PostAPIView):
 
         experiment = self.get_object()
 
-        if experiment.last_status != ExperimentLifeCycle.RUNNING:
+        if experiment.last_status not in [ExperimentLifeCycle.SCHEDULED,
+                                          ExperimentLifeCycle.RUNNING]:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         scope = RedisEphemeralTokens.get_scope(user=experiment.user.id,
