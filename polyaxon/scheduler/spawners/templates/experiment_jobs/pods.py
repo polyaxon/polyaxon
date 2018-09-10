@@ -141,7 +141,8 @@ class PodManager(object):
             data_paths=get_data_paths(persistence_data),
             logs_path=get_experiment_logs_path(self.experiment_name),
             outputs_refs_jobs=outputs_refs_jobs,
-            outputs_refs_experiments=outputs_refs_experiments
+            outputs_refs_experiments=outputs_refs_experiments,
+            ephemeral_token=self.ephemeral_token,
         )
         env_vars += [
             get_env_var(name=constants.CONFIG_MAP_CLUSTER_KEY_NAME,
