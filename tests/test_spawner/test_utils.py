@@ -6,7 +6,7 @@ from constants.jobs import JobLifeCycle
 from constants.pods import EventTypes, PodConditions, PodLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from factories.factory_experiments import ExperimentJobFactory
-from libs.redis_db import RedisJobContainers
+from db.redis.containers import RedisJobContainers
 from monitor_statuses.jobs import get_job_state
 from monitor_statuses.monitor import update_job_containers
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig

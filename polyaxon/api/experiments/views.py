@@ -76,7 +76,7 @@ from libs.paths.experiments import get_experiment_logs_path
 from libs.permissions.ephemeral import IsEphemeral
 from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
-from libs.redis_db import RedisEphemeralTokens
+from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app

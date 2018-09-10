@@ -3,7 +3,7 @@ from redis import RedisError
 
 from django.conf import settings
 
-from libs.redis_db import RedisToStream
+from db.redis.to_stream import RedisToStream
 from libs.services import Service
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks, RoutingKeys

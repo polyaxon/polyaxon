@@ -24,7 +24,7 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.job import JOB_LOGS_VIEWED
 from libs.permissions.projects import has_project_permissions
-from libs.redis_db import RedisToStream
+from db.redis.to_stream import RedisToStream
 from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
 from streams.consumers import Consumer

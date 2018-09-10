@@ -129,7 +129,7 @@ def experiment_job_status_post_save(sender, **kwargs):
 
     # check if the new status is done to remove the containers from the monitors
     if job.is_done:
-        from libs.redis_db import RedisJobContainers
+        from db.redis.containers import RedisJobContainers
 
         RedisJobContainers.remove_job(job.uuid.hex)
 
