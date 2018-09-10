@@ -7,7 +7,7 @@ from rest_framework.authentication import BaseAuthentication, get_authorization_
 from django.conf import settings
 
 from libs.authentication.internal import get_internal_header
-from libs.redis_db import RedisEphemeralTokens
+from db.redis.ephemeral_tokens import RedisEphemeralTokens
 
 
 class EphemeralUser(object):

@@ -1,6 +1,6 @@
 import pytest
 
-from libs.redis_db import RedisEphemeralTokens
+from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from tests.utils import BaseTest
 
 

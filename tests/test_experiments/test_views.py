@@ -54,7 +54,7 @@ from libs.paths.experiments import (
     get_experiment_logs_path,
     get_experiment_outputs_path
 )
-from libs.redis_db import RedisEphemeralTokens
+from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from schemas.specifications import ExperimentSpecification
 from tests.utils import BaseViewTest, EphemeralClient
 

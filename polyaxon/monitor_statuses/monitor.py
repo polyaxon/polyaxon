@@ -5,7 +5,7 @@ from kubernetes import watch
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
-from libs.redis_db import RedisJobContainers
+from db.redis.containers import RedisJobContainers
 from monitor_statuses.jobs import get_job_state
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks

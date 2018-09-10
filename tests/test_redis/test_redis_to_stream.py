@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from libs.redis_db import RedisToStream
+from db.redis.to_stream import RedisToStream
 from tests.utils import BaseTest
 
 

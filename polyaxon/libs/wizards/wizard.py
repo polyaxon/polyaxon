@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 
 from libs.hashing import md5_text
-from libs.redis_db import RedisSessions
+from db.redis.sessions import RedisSessions
 
 
 class Wizard(object):
