@@ -12,3 +12,5 @@ class RedisPools(object):
         config.get_string('POLYAXON_REDIS_SESSIONS_URL'))
     EPHEMERAL_TOKENS = redis.ConnectionPool.from_url(
         config.get_string('POLYAXON_REDIS_EPHEMERAL_TOKENS_URL'))
+    TTL = redis.ConnectionPool.from_url(
+        config.get_string('POLYAXON_REDIS_TTL_URL'))
