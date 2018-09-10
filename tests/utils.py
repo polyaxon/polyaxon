@@ -1,3 +1,4 @@
+import base64
 import datetime
 import json
 import tempfile
@@ -86,10 +87,28 @@ class BaseClient(Client):
         return request
 
 
+class EphemeralClient(BaseClient):
+    def __init__(self, token, authentication_type='EphemeralToken', service=None, **defaults):
+        super().__init__(**defaults)
+        self.service = service or settings.EPHEMERAL_SERVICES.RUNNER
+        self.authorization_header = '{} {}'.format(authentication_type, token)
+
+    def request(self, **request):
+        updated_request = {
+            'HTTP_AUTHORIZATION': self.authorization_header,
+            'HTTP_X_POLYAXON_INTERNAL': self.service,
+        }
+        if 'HTTP_X_REQUEST_ID' not in request:
+            request['HTTP_X_REQUEST_ID'] = str(uuid.uuid4())
+
+        updated_request.update(request)
+        return super().request(**updated_request)
+
+
 class InternalClient(BaseClient):
     def __init__(self, authentication_type='InternalToken', service=None, **defaults):
         super().__init__(**defaults)
-        self.service = service or 'helper'
+        self.service = service or settings.INTERNAL_SERVICES.HELPER
         self.authorization_header = '{} {}'.format(authentication_type,
                                                    settings.INTERNAL_SECRET_TOKEN)
 

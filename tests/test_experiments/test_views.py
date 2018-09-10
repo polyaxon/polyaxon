@@ -1,5 +1,6 @@
 # pylint:disable=too-many-lines
 import os
+import time
 
 from faker import Faker
 from unittest.mock import patch
@@ -53,8 +54,9 @@ from libs.paths.experiments import (
     get_experiment_logs_path,
     get_experiment_outputs_path
 )
+from libs.redis_db import RedisEphemeralTokens
 from schemas.specifications import ExperimentSpecification
-from tests.utils import BaseViewTest
+from tests.utils import BaseViewTest, EphemeralClient
 
 
 @pytest.mark.experiments_mark
@@ -1657,3 +1659,79 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
                          '{}/{}.tar.gz'.format(settings.OUTPUTS_ARCHIVE_ROOT,
                                                self.experiment.unique_name.replace('.', '_')))
+
+
+@pytest.mark.users_mark
+class TestExperimentTokenViewV1(BaseViewTest):
+    HAS_AUTH = False
+    factory_class = ExperimentFactory
+
+    def setUp(self):
+        super().setUp()
+        self.auth_user = self.auth_client.user
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = self.factory_class(project=self.project)
+        self.other_experiment = self.factory_class(project=self.project)
+        self.url = '/{}/{}/{}/experiments/{}/token'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.experiment.id)
+        self.other_url = '/{}/{}/{}/experiments/{}/token'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.other_experiment.id)
+
+    @staticmethod
+    def create_ephemeral_token(experiment, **kwargs):
+        scope = RedisEphemeralTokens.get_scope(username=experiment.user.id,
+                                               model='experiment',
+                                               object_id=experiment.id)
+        return RedisEphemeralTokens.generate(scope=scope, **kwargs)
+
+    def test_is_forbidden_for_non_running_experiment(self):
+        ephemeral_token = self.create_ephemeral_token(self.experiment)
+        token = RedisEphemeralTokens.create_header_token(ephemeral_token)
+        ephemeral_client = EphemeralClient(token=token)
+        resp = ephemeral_client.post(self.url)
+        assert resp.status_code == status.HTTP_403_FORBIDDEN
+        self.assertEqual(ephemeral_token.get_state(), None)
+
+    def test_using_other_experiment_token(self):
+        ephemeral_token = self.create_ephemeral_token(self.other_experiment)
+        token = RedisEphemeralTokens.create_header_token(ephemeral_token)
+        ephemeral_client = EphemeralClient(token=token)
+        resp = ephemeral_client.post(self.url)
+        assert resp.status_code == status.HTTP_403_FORBIDDEN
+        self.assertEqual(ephemeral_token.get_state(), None)
+
+    def test_using_timed_out_experiment_token(self):
+        self.experiment.set_status(status=JobLifeCycle.RUNNING)
+        ephemeral_token = self.create_ephemeral_token(self.experiment, ttl=1)
+        token = RedisEphemeralTokens.create_header_token(ephemeral_token)
+        ephemeral_client = EphemeralClient(token=token)
+        time.sleep(1.1)
+        resp = ephemeral_client.post(self.url)
+        assert resp.status_code == status.HTTP_401_UNAUTHORIZED
+        self.assertEqual(ephemeral_token.get_state(), None)
+
+    def test_using_used_experiment_token(self):
+        self.experiment.set_status(status=JobLifeCycle.RUNNING)
+        ephemeral_token = self.create_ephemeral_token(self.experiment)
+        token = RedisEphemeralTokens.create_header_token(ephemeral_token)
+        ephemeral_token.clear()
+        ephemeral_client = EphemeralClient(token=token)
+        resp = ephemeral_client.post(self.url)
+        assert resp.status_code == status.HTTP_401_UNAUTHORIZED
+        self.assertEqual(ephemeral_token.get_state(), None)
+
+    def test_using_running_experiment_token(self):
+        self.experiment.set_status(status=JobLifeCycle.RUNNING)
+        ephemeral_token = self.create_ephemeral_token(self.experiment)
+        token = RedisEphemeralTokens.create_header_token(ephemeral_token)
+        ephemeral_client = EphemeralClient(token=token)
+        resp = ephemeral_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == {'token': self.experiment.user.auth_token.key}
+        self.assertEqual(ephemeral_token.get_state(), None)
