@@ -1,9 +1,8 @@
 import uuid
 
+from db.redis.base import BaseRedisDb
 from libs.json_utils import dumps, loads
 from polyaxon.settings import RedisPools, redis
-
-from db.redis.base import BaseRedisDb
 
 
 class RedisSessions(BaseRedisDb):
@@ -94,4 +93,3 @@ class RedisSessions(BaseRedisDb):
 
         state[key] = value
         self._red.setex(name=self.redis_key, time=self.ttl, value=dumps(state))
-

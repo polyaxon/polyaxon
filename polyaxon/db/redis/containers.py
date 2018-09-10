@@ -1,5 +1,5 @@
-from polyaxon.settings import RedisPools, redis
 from db.redis.base import BaseRedisDb
+from polyaxon.settings import RedisPools, redis
 
 
 class RedisJobContainers(BaseRedisDb):
@@ -75,4 +75,3 @@ class RedisJobContainers(BaseRedisDb):
             red.sadd(cls.KEY_JOBS_TO_CONTAINERS.format(job_uuid), container_id)
             # Add job to experiment
             red.hset(cls.KEY_JOBS_TO_EXPERIMENTS, job_uuid, job.experiment.uuid.hex)
-

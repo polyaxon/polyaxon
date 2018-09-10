@@ -1,6 +1,5 @@
-from polyaxon.settings import RedisPools
-
 from db.redis.base import BaseRedisDb
+from polyaxon.settings import RedisPools
 
 
 class RedisTTL(BaseRedisDb):

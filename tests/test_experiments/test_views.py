@@ -33,6 +33,7 @@ from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from db.models.repos import CodeReference
+from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.tll import RedisTTL
 from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -55,7 +56,6 @@ from libs.paths.experiments import (
     get_experiment_logs_path,
     get_experiment_outputs_path
 )
-from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from schemas.specifications import ExperimentSpecification
 from tests.utils import BaseViewTest, EphemeralClient
 
