@@ -51,5 +51,49 @@ class TestAuthApi(TestBaseApi):
             body=json.dumps({'token': token}),
             content_type='application/json', status=200)
 
+        # Login without updating the token
+        assert self.api_config.token == 'token'
         credentials = CredentialsConfig('user', 'password')
         assert token == self.api_handler.login(credentials=credentials)
+        assert self.api_config.token == 'token'
+
+        # Login and update the token
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login(credentials=credentials, set_token=True)
+        assert self.api_config.token == token
+
+    @httpretty.activate
+    def test_login_experiment_ephemeral_token(self):
+        token = uuid.uuid4().hex
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'user',
+                'project',
+                'experiments',
+                '1',
+                'token'
+            ),
+            body=json.dumps({'token': token}),
+            content_type='application/json', status=200)
+
+        # Login without updating the token
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_experiment_ephemeral_token(
+            username='user',
+            project_name='project',
+            experiment_id=1,
+            ephemeral_token='foo')
+        assert self.api_config.token == 'token'
+
+        # Login and update the token
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_experiment_ephemeral_token(
+            username='user',
+            project_name='project',
+            experiment_id=1,
+            ephemeral_token='foo',
+            set_token=True)
+        assert self.api_config.token == token
