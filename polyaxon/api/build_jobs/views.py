@@ -5,6 +5,7 @@ import os
 from wsgiref.util import FileWrapper
 
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
     RetrieveAPIView,
@@ -31,6 +32,7 @@ from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.list_create import ListCreateAPIView
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.redis.tll import RedisTTL
 from event_manager.events.build_job import (
     BUILD_JOB_CREATED,
     BUILD_JOB_DELETED_TRIGGERED,
@@ -77,12 +79,21 @@ class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
+        ttl = None
+        if RedisTTL.TTL_KEY in self.request.data:
+            try:
+                ttl = RedisTTL.validate_ttl(self.request.data[RedisTTL.TTL_KEY])
+            except ValueError:
+                raise ValidationError('ttl must be an integer.')
+
         project = get_permissible_project(view=self)
         code_reference = get_project_latest_code_reference(project=project)
         instance = serializer.save(user=self.request.user,
                                    project=project,
                                    code_reference=code_reference)
         auditor.record(event_type=BUILD_JOB_CREATED, instance=instance)
+        if ttl:
+            RedisTTL.set_for_build(build_id=instance.id, value=ttl)
         # Trigger build scheduling
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_START,
