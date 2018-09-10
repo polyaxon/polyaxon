@@ -7,6 +7,7 @@ import auditor
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.redis.tll import RedisTTL
 from event_manager.events.build_job import (
     BUILD_JOB_DELETED,
     BUILD_JOB_DONE,
@@ -85,7 +86,8 @@ def build_job_status_post_save(sender, **kwargs):
                 'build_job_name': job.unique_name,
                 'build_job_uuid': job.uuid.hex,
                 'update_status': False
-            })
+            },
+            countdown=RedisTTL.get_for_build(build_id=job.id))
 
     # handle done status
     if JobLifeCycle.is_done(instance.status):

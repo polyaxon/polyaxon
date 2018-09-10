@@ -7,6 +7,7 @@ import auditor
 
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
+from db.redis.tll import RedisTTL
 from event_manager.events.job import (
     JOB_DELETED,
     JOB_DONE,
@@ -117,7 +118,8 @@ def job_status_post_save(sender, **kwargs):
                 'job_uuid': job.uuid.hex,
                 'specification': job.config,
                 'update_status': False
-            })
+            },
+            countdown=RedisTTL.get_for_job(job_id=job.id))
 
 
 @receiver(pre_delete, sender=Job, dispatch_uid="job_pre_delete")
