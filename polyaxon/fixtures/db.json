@@ -4520,14 +4520,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": null,
@@ -5365,14 +5365,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": null,
@@ -13958,14 +13958,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -14077,14 +14077,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -15029,14 +15029,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -15148,14 +15148,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -16100,14 +16100,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -16226,14 +16226,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -17178,14 +17178,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -17303,14 +17303,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -18256,14 +18256,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -18381,14 +18381,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -19334,14 +19334,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -19459,14 +19459,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -20412,14 +20412,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -20537,14 +20537,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -21490,14 +21490,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -21615,14 +21615,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -22568,14 +22568,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -22693,14 +22693,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -23646,14 +23646,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -23771,14 +23771,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -24724,14 +24724,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -24849,14 +24849,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -25802,14 +25802,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -25927,14 +25927,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -26880,14 +26880,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -27005,14 +27005,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -27958,14 +27958,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": "INFO",
@@ -28084,14 +28084,14 @@
                                     "value_from": {
                                         "secret_key_ref": {
                                             "optional": null,
-                                            "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                            "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                             "name": "polyaxon-polyaxon-secret"
                                         },
                                         "config_map_key_ref": null,
                                         "resource_field_ref": null,
                                         "field_ref": null
                                     },
-                                    "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                    "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                                 },
                                 {
                                     "value": null,
@@ -37170,14 +37170,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": "INFO",
@@ -37272,14 +37272,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": null,
@@ -38200,14 +38200,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": "INFO",
@@ -38302,14 +38302,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": null,
@@ -39230,14 +39230,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": "INFO",
@@ -39332,14 +39332,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": null,
@@ -40306,14 +40306,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": "INFO",
@@ -40408,14 +40408,14 @@
                                 "value_from": {
                                     "secret_key_ref": {
                                         "optional": null,
-                                        "key": "POLYAXON_INTERNAL_SECRET_TOKEN",
+                                        "key": "POLYAXON_SECRET_INTERNAL_TOKEN",
                                         "name": "polyaxon-polyaxon-secret"
                                     },
                                     "config_map_key_ref": null,
                                     "resource_field_ref": null,
                                     "field_ref": null
                                 },
-                                "name": "POLYAXON_INTERNAL_SECRET_TOKEN"
+                                "name": "POLYAXON_SECRET_INTERNAL_TOKEN"
                             },
                             {
                                 "value": null,

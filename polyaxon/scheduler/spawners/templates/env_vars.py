@@ -32,7 +32,7 @@ def get_service_env_vars(namespace='default'):
     return [
         get_env_var(name='POLYAXON_K8S_NAMESPACE', value=namespace),
         get_from_secret('POLYAXON_SECRET_KEY', 'POLYAXON_SECRET_KEY'),
-        get_from_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'POLYAXON_INTERNAL_SECRET_TOKEN'),
+        get_from_secret('POLYAXON_SECRET_INTERNAL_TOKEN', 'POLYAXON_SECRET_INTERNAL_TOKEN'),
         get_from_secret('POLYAXON_RABBITMQ_PASSWORD', 'rabbitmq-password',
                         settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME),
         get_from_secret('POLYAXON_DB_PASSWORD', 'postgres-password',
