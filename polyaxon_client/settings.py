@@ -7,7 +7,7 @@ import os
 class AuthenticationTypes(object):
     TOKEN = 'Token'
     INTERNAL_TOKEN = 'Internaltoken'
-    EPHEMERAL_TOKEM = 'EphemeralToken'
+    EPHEMERAL_TOKEN = 'EphemeralToken'
 
 
 IN_CLUSTER = os.getenv('POLYAXON_IN_CLUSTER', False)

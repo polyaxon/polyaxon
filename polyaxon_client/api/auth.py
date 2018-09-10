@@ -28,12 +28,12 @@ class AuthApi(BaseApiHandler):
             user_dict = response.json()
             response.raise_for_status()
         except Exception:
-            if response.status_code == 401:
+            if response.status_code in [401, 403]:
                 raise AuthenticationError(
                     request_url,
                     response,
                     "Invalid Token.\nSee http://docs.polyaxon.com/faqs/authentication/ for help",
-                    401)
+                    response.status_code)
             raise AuthenticationError(
                 request_url,
                 response,
@@ -47,12 +47,12 @@ class AuthApi(BaseApiHandler):
             token_dict = response.json()
             response.raise_for_status()
         except Exception:
-            if response.status_code == 401:
+            if response.status_code in [401, 403]:
                 raise AuthenticationError(
                     request_url,
                     response,
                     "Invalid credentials.",
-                    401)
+                    response.status_code)
             raise AuthenticationError(
                 request_url,
                 response,
@@ -94,7 +94,7 @@ class AuthApi(BaseApiHandler):
                 request_url,
                 headers={
                     'Authorization': '{} {}'.format(
-                        settings.AuthenticationTypes.EPHEMERAL_TOKEM, ephemeral_token)
+                        settings.AuthenticationTypes.EPHEMERAL_TOKEN, ephemeral_token)
                 })
         except requests.ConnectionError:
             raise PolyaxonHTTPError(
