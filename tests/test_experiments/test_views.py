@@ -1728,7 +1728,17 @@ class TestExperimentTokenViewV1(BaseViewTest):
         self.assertEqual(ephemeral_token.get_state(), None)
 
     def test_using_scheduled_experiment_token(self):
-        self.experiment.set_status(status=JobLifeCycle.SCHEDULED)
+        self.experiment.set_status(status=ExperimentLifeCycle.SCHEDULED)
+        ephemeral_token = self.create_ephemeral_token(self.experiment)
+        token = RedisEphemeralTokens.create_header_token(ephemeral_token)
+        ephemeral_client = EphemeralClient(token=token)
+        resp = ephemeral_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == {'token': self.experiment.user.auth_token.key}
+        self.assertEqual(ephemeral_token.get_state(), None)
+
+    def test_using_starting_experiment_token(self):
+        self.experiment.set_status(status=ExperimentLifeCycle.STARTING)
         ephemeral_token = self.create_ephemeral_token(self.experiment)
         token = RedisEphemeralTokens.create_header_token(ephemeral_token)
         ephemeral_client = EphemeralClient(token=token)
@@ -1738,7 +1748,7 @@ class TestExperimentTokenViewV1(BaseViewTest):
         self.assertEqual(ephemeral_token.get_state(), None)
 
     def test_using_running_experiment_token(self):
-        self.experiment.set_status(status=JobLifeCycle.RUNNING)
+        self.experiment.set_status(status=ExperimentLifeCycle.RUNNING)
         ephemeral_token = self.create_ephemeral_token(self.experiment)
         token = RedisEphemeralTokens.create_header_token(ephemeral_token)
         ephemeral_client = EphemeralClient(token=token)
