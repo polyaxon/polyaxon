@@ -3,9 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import atexit
 import json
-import os
 import sys
 import time
+
+import os
 
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
@@ -36,6 +37,13 @@ class Experiment(BaseTracker):
         self.experiment_id = experiment_id
         self.experiment = None
         self.last_status = None
+        # Check if there's an ephemeral token
+        if settings.IN_CLUSTER and settings.SECRET_EPHEMERAL_TOKEN:
+            self.client.auth.login_experiment_ephemeral_token(
+                username=self.username,
+                project_name=self.project_name,
+                experiment_id=self.experiment_id,
+                ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN)
 
     def create(self, name=None, tags=None, description=None, config=None):
         experiment_config = {'run_env': get_run_env()}

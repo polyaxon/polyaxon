@@ -7,6 +7,7 @@ import os
 class AuthenticationTypes(object):
     TOKEN = 'Token'
     INTERNAL_TOKEN = 'Internaltoken'
+    EPHEMERAL_TOKEM = 'EphemeralToken'
 
 
 IN_CLUSTER = os.getenv('POLYAXON_IN_CLUSTER', False)
@@ -17,6 +18,7 @@ USE_HTTPS = os.getenv('POLYAXON_USE_HTTPS', False)
 API_HTTP_HOST = os.getenv('POLYAXON_API_HTTP_HOST', None)
 API_WS_HOST = os.getenv('POLYAXON_API_WS_HOST', None)
 SECRET_TOKEN = os.getenv('POLYAXON_SECRET_TOKEN', None)
+SECRET_EPHEMERAL_TOKEN = os.getenv('POLYAXON_SECRET_EPHEMERAL_TOKEN', None)
 AUTHENTICATION_TYPE = os.getenv('POLYAXON_AUTHENTICATION_TYPE', AuthenticationTypes.TOKEN)
 API_VERSION = os.getenv('POLYAXON_API_VERSION', 'v1')
 HASH_LENGTH = os.getenv('POLYAXON_HASH_LENGTH', 12)
