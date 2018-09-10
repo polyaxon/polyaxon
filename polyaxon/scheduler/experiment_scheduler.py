@@ -11,6 +11,7 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from docker_images.image_info import get_image_info
 from libs.paths.exceptions import VolumeNotFoundError
+from libs.redis_db import RedisEphemeralTokens
 from polyaxon.config_manager import config
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
@@ -406,6 +407,8 @@ def start_experiment(experiment):
         _logger.info('Start experiment with default image.')
 
     spawner_class = get_spawner_class(experiment.specification.framework)
+    token_scope = RedisEphemeralTokens.get_scope(experiment.user.user, 'experiment', experiment.id)
+    ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=token_scope)
 
     # Use spawners to start the experiment
     spawner = spawner_class(project_name=project.unique_name,
@@ -425,7 +428,8 @@ def start_experiment(experiment):
                             in_cluster=True,
                             job_docker_image=job_docker_image,
                             use_sidecar=True,
-                            sidecar_config=config.get_requested_params(to_str=True))
+                            sidecar_config=config.get_requested_params(to_str=True),
+                            ephemeral_token=ephemeral_token)
     error = {}
     try:
         response = spawner.start_experiment()

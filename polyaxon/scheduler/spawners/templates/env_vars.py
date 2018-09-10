@@ -49,7 +49,8 @@ def get_job_env_vars(outputs_path,
                      log_level=None,
                      logs_path=None,
                      outputs_refs_jobs=None,
-                     outputs_refs_experiments=None):
+                     outputs_refs_experiments=None,
+                     ephemeral_token=None):
     env_vars = [
         get_env_var(name=API_HTTP_URL, value=get_settings_http_api_url()),
         get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
@@ -61,7 +62,6 @@ def get_job_env_vars(outputs_path,
                     value=settings.INTERNAL_SERVICES.RUNNER),
         get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
         get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME, value=data_paths),
-        get_from_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'POLYAXON_INTERNAL_SECRET_TOKEN'),
     ]
     if log_level:
         env_vars.append(
@@ -82,6 +82,10 @@ def get_job_env_vars(outputs_path,
         env_vars.append(
             get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME,
                         value=refs_outputs))
+    if ephemeral_token:
+        env_vars.append(
+            get_env_var(name=constants.SECRET_EPHEMERAL_TOKEN,
+                        value=ephemeral_token))
     return env_vars
 
 
