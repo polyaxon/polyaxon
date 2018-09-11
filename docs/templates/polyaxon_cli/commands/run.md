@@ -18,6 +18,12 @@ Upload before running
 $ polyaxon run -f file -u
 ```
 
+Run and add a ttl of 60 seconds after the experiment is done (succeeds or fails)
+
+```bash
+$ polyaxon run -f file --ttl=60
+```
+
 Run and set description and tags for this run
 
 ```bash
@@ -37,5 +43,6 @@ option | type | description
   --name [optional] | TEXT | Name to give to this run, must be unique within the project, could be none.
   --description [optional] | TEXT | The description to give to this run.
   --tags [optional] | TEXT | Tags of this run, comma separated values.
+  --ttl [optional] | INT | Time to live for the current run after it's done.
   -u [optional] | | To upload the repo before running.
   --help | | Show this message and exit.
