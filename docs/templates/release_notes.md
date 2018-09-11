@@ -1,3 +1,9 @@
+## 0.2.2
+
+This is a patch release on top of 0.2.0 containing only bug fixes and no breaking changes or features.
+
+ * Fix issue with web hooks not serializing events correctly
+
 ## 0.2.1
 
 This is a patch release on top of 0.2.0 containing only bug fixes and no breaking changes or features.
