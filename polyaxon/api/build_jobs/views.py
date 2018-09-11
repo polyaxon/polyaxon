@@ -79,10 +79,10 @@ class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
-        ttl = None
-        if RedisTTL.TTL_KEY in self.request.data:
+        ttl = self.request.data.get(RedisTTL.TTL_KEY)
+        if ttl:
             try:
-                ttl = RedisTTL.validate_ttl(self.request.data[RedisTTL.TTL_KEY])
+                ttl = RedisTTL.validate_ttl(ttl)
             except ValueError:
                 raise ValidationError('ttl must be an integer.')
 
