@@ -1,6 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/polyaxon/polyaxon-cli.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon-cli)
 [![PyPI version](https://badge.fury.io/py/polyaxon-cli.svg)](https://badge.fury.io/py/polyaxon-cli)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/71ac59d072a241e8aa25d01dd45773a0)](https://www.codacy.com/app/polyaxon/polyaxon-cli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon-cli&amp;utm_campaign=Badge_Grade)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
 
 # Polyaxon-cli
