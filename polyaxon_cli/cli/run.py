@@ -29,14 +29,16 @@ from polyaxon_client.exceptions import PolyaxonClientException
               help='The polyaxon files to run.')
 @click.option('--name', type=str,
               help='Name to give to this run, must be unique within the project, could be none.')
+@click.option('--tags', type=str, help='Tags of this run, comma separated values.')
 @click.option('--description', type=str,
               help='The description to give to this run.')
-@click.option('--tags', type=str, help='Tags of this run, comma separated values.')
+@click.option('--ttl', type=int,
+              help="TTL for this run after it's done.")
 @click.option('-u', is_flag=True, default=False,
               help='To upload the repo before running.')
 @click.pass_context
 @clean_outputs
-def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-builtin
+def run(ctx, file, name, tags, description, ttl, u):  # pylint:disable=redefined-builtin
     """Run polyaxonfile specification.
 
     Examples:
@@ -98,7 +100,8 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             name=name,
             description=description,
             tags=tags,
-            config=specification.parsed_data)
+            config=specification.parsed_data,
+            ttl=ttl)
         try:
             response = PolyaxonClient().project.create_experiment(project.user,
                                                                   project.name,
@@ -136,7 +139,8 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             name=name,
             description=description,
             tags=tags,
-            config=specification.parsed_data)
+            config=specification.parsed_data,
+            ttl=ttl)
         try:
             response = project_client.create_job(project.user,
                                                  project.name,
@@ -154,7 +158,8 @@ def run(ctx, file, name, tags, description, u):  # pylint:disable=redefined-buil
             name=name,
             description=description,
             tags=tags,
-            config=specification.parsed_data)
+            config=specification.parsed_data,
+            ttl=ttl)
         try:
             response = project_client.create_build(project.user,
                                                    project.name,
