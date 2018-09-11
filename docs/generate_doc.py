@@ -3,7 +3,7 @@ import os.path
 import re
 import shutil
 
-from polyaxon_schemas import (
+from polyaxon_schemas.ml import (
     bridges,
     constraints,
     initializations,
@@ -13,7 +13,7 @@ from polyaxon_schemas import (
     optimizers,
     regularizations
 )
-from polyaxon_schemas.layers import (
+from polyaxon_schemas.ml.layers import (
     advanced_activations,
     convolutional,
     convolutional_recurrent,
@@ -27,7 +27,7 @@ from polyaxon_schemas.layers import (
     recurrent,
     wrappers
 )
-from polyaxon_schemas.processing.image import (
+from polyaxon_schemas.ml.processing.image import (
     AdjustBrightnessConfig,
     AdjustContrastConfig,
     AdjustGammaConfig,
@@ -47,7 +47,7 @@ from polyaxon_schemas.processing.image import (
     TotalVariationConfig,
     TransposeConfig
 )
-from polyaxon_schemas.processing.pipelines import (
+from polyaxon_schemas.ml.processing.pipelines import (
     ImageCaptioningPipelineConfig,
     ParallelTextPipelineConfig,
     TFRecordImagePipelineConfig,

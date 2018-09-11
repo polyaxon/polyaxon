@@ -1,4 +1,4 @@
 -r requirements-base.txt
 
 -e git+https://github.com/polyaxon/polyaxon-gpustat.git@248b693c2a525272fa37a185024ca6db0513df7f#egg=polyaxon-gpustat==0.2.0
--e git+https://github.com/polyaxon/polyaxon-schemas.git@d502c64dfdfe57f6a9504e2c53fee9c63a32c0ef#egg=polyaxon-schemas==0.2.0
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@70f094cce1571e691ed7227edb9ab4cbe7ff2ccd#egg=polyaxon-schemas==0.2.0
