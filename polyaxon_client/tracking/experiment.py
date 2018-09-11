@@ -3,10 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import atexit
 import json
+import os
 import sys
 import time
-
-import os
 
 from polyaxon_client import settings
 from polyaxon_client.logger import logger

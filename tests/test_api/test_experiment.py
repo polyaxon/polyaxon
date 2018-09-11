@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import datetime
 import httpretty
 import json
+import numpy as np
 import uuid
 
 from collections import Mapping
@@ -12,6 +13,7 @@ from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment import ExperimentApi
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
     ExperimentConfig,
     ExperimentJobConfig,
@@ -243,7 +245,9 @@ class TestExperimentApi(TestBaseApi):
                                      uuid=uuid.uuid4().hex,
                                      experiment=1,
                                      created_at=datetime.datetime.now(),
-                                     values={'accuracy': 0.9}).to_dict()
+                                     values={'accuracy': 0.9,
+                                             'loss': np.float64(0.34),
+                                             'step': 1}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -275,7 +279,9 @@ class TestExperimentApi(TestBaseApi):
                                      uuid=uuid.uuid4().hex,
                                      experiment=1,
                                      created_at=datetime.datetime.now(),
-                                     values={'accuracy': 0.9}).to_dict()
+                                     values={'accuracy': 0.9,
+                                             'loss': np.float64(0.34),
+                                             'step': 1}).to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -290,21 +296,36 @@ class TestExperimentApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
+        # Raises
+        with self.assertRaises(PolyaxonClientException):
+            self.api_handler.create_metric('username', 'project_name', 1,
+                                           values={'wrong_metric': 'foo',
+                                                   'loss': np.float64(0.34),
+                                                   'step': 1})
+
         # Schema response
         response = self.api_handler.create_metric('username', 'project_name', 1,
-                                                  values={'accuracy': 0.9})
+                                                  values={'accuracy': 0.9,
+                                                          'loss': np.float64(0.34),
+                                                          'step': 1})
         assert response.to_dict() == exp
 
         # Raw response
         self.set_raw_response()
         response = self.api_handler.create_metric('username', 'project_name', 1,
-                                                  values={'accuracy': 0.9})
+                                                  values={'accuracy': 0.9,
+                                                          'loss': np.float64(0.34),
+                                                          'step': 1})
         assert response == exp
 
         # Async
         self.assert_async_call(
             api_handler_call=lambda: self.api_handler.create_metric(
-                'username', 'project_name', 1, values={'accuracy': 0.9}, background=True),
+                'username', 'project_name', 1,
+                values={'accuracy': 0.9,
+                        'loss': np.float64(0.34),
+                        'step': 1},
+                background=True),
             method='post')
 
     @httpretty.activate

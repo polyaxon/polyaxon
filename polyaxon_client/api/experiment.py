@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import numpy as np
+
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
@@ -192,12 +194,24 @@ class ExperimentApi(BaseApiHandler):
                                      experiment_id,
                                      'metrics')
 
+        # Validate metric values
+        def parse_numbers(value):
+            if isinstance(value, (int, float, complex, type(None))):
+                return value
+            if isinstance(value, np.integer):
+                return int(value)
+            if isinstance(value, np.floating):
+                return float(value)
+            raise PolyaxonClientException(
+                'Client could not parse the value `{}`, it expects a number.'.format(value))
+        _values = {key: parse_numbers(values[key]) for key in values}
+
         if background:
-            self.transport.async_post(request_url, json_data={'values': values})
+            self.transport.async_post(request_url, json_data={'values': _values})
             return None
 
         try:
-            response = self.transport.post(request_url, json_data={'values': values})
+            response = self.transport.post(request_url, json_data={'values': _values})
             return self.prepare_results(response_json=response.json(),
                                         config=ExperimentMetricConfig)
         except PolyaxonClientException as e:
