@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import os
-
 from unittest import TestCase
 
 from polyaxon_schemas.build import BuildConfig
@@ -631,7 +630,7 @@ class TestPolyaxonfile(TestCase):
             spec.environment.tensorflow.default_worker_resources,
             spec.environment.tensorflow.worker_resources[3]}
 
-        ps_tolerations= TensorflowSpecification.get_ps_tolerations(
+        ps_tolerations = TensorflowSpecification.get_ps_tolerations(
             environment=spec.environment,
             cluster=cluster,
             is_distributed=is_distributed

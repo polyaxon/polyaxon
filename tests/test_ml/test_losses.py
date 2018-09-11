@@ -25,7 +25,6 @@ class TestLossConfigs(TestCase):
     def assert_equal_losses(l1, l2):
         assert_tensors(l1.pop('input_layer', None), l2.pop('input_layer', None))
         assert_tensors(l1.pop('output_layer', None), l2.pop('output_layer', None))
-
         assert_equal_dict(l1, l2)
     
     def test_base_losses_config(self):

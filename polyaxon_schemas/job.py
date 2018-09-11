@@ -146,6 +146,7 @@ class TensorboardJobConfig(JobConfig):
                  config=None,
                  num_jobs=0,
                  resources=None,
+                 ttl=None,
                  jobs=None,
                  total_run=None):
         super(TensorboardJobConfig, self).__init__(

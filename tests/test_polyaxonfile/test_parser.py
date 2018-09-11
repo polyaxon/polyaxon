@@ -21,7 +21,8 @@ class TestParser(TestCase):
     def test_parse_context_expression(self):
         parser = Parser()
         assert parser.parse_expression(ExperimentSpecification, '{{ something }}', {}) == ''
-        assert parser.parse_expression(ExperimentSpecification, '{{ something }}', {'something': 1}) == 1
+        assert parser.parse_expression(ExperimentSpecification, '{{ something }}',
+                                       {'something': 1}) == 1
 
     def test_parse_graph_expression(self):
         expression = {
@@ -115,7 +116,11 @@ class TestParser(TestCase):
 
         parser = Parser()
         result_expression = parser.parse_expression(
-            ExperimentSpecification, expression, declarations, check_operators=True, check_graph=True)
+            ExperimentSpecification,
+            expression,
+            declarations,
+            check_operators=True,
+            check_graph=True)
         expected_result = {'graph': {
             'input_layers': ['images'],
             'layers': [
@@ -176,29 +181,30 @@ class TestParser(TestCase):
         assert parser.parse_expression(ExperimentSpecification, expression, {}) == expression
 
         expected_expression = {
-            'graph': {'input_layers': ['images'],
-                      'layers': [
-                          {'Conv2D': {'activation': 'relu',
-                                      'filters': 64,
-                                      'kernel_size': [3, 3],
-                                      'name': 'Conv2D_1',
-                                      'strides': [1, 1],
-                                      'inbound_nodes': ['images']}
-                           },
-                          {'MaxPooling2D': {'inbound_nodes': ['Conv2D_1'],
-                                            'kernels': 2,
-                                            'name': 'MaxPooling2D_1'}
-                           },
-                          {'Flatten': {'inbound_nodes': ['MaxPooling2D_1'],
-                                       'name': 'Flatten_1'}
-                           },
-                          {'Dense': {'activation': 'softmax',
-                                     'inbound_nodes': ['Flatten_1'],
-                                     'name': 'Dense_1',
-                                     'units': 10}
-                           }
-                      ],
-                      'output_layers': ['Dense_1']}
+            'graph': {
+                'input_layers': ['images'],
+                'layers': [
+                    {'Conv2D': {'activation': 'relu',
+                                'filters': 64,
+                                'kernel_size': [3, 3],
+                                'name': 'Conv2D_1',
+                                'strides': [1, 1],
+                                'inbound_nodes': ['images']}
+                     },
+                    {'MaxPooling2D': {'inbound_nodes': ['Conv2D_1'],
+                                      'kernels': 2,
+                                      'name': 'MaxPooling2D_1'}
+                     },
+                    {'Flatten': {'inbound_nodes': ['MaxPooling2D_1'],
+                                 'name': 'Flatten_1'}
+                     },
+                    {'Dense': {'activation': 'softmax',
+                               'inbound_nodes': ['Flatten_1'],
+                               'name': 'Dense_1',
+                               'units': 10}
+                     }
+                ],
+                'output_layers': ['Dense_1']}
         }
         assert parser.parse_expression(
             ExperimentSpecification, expression, {}, check_graph=True) == expected_expression
