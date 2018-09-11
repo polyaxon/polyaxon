@@ -34,6 +34,7 @@ class TestJobConfigs(TestCase):
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
         config_to_dict.pop('name')
+        config_to_dict.pop('ttl')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict()
@@ -105,6 +106,7 @@ class TestTensorboardJobConfigs(TestCase):
         config_to_dict.pop('config')
         config_to_dict.pop('definition')
         config_to_dict.pop('description')
+        config_to_dict.pop('ttl')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict()

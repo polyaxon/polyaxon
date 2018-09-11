@@ -43,6 +43,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('last_metric')
         config_to_dict.pop('resources')
         config_to_dict.pop('run_env')
+        config_to_dict.pop('ttl')
         config_to_dict.pop('id')
         config_to_dict.pop('started_at')
         config_to_dict.pop('total_run')
@@ -102,6 +103,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('user')
         config_to_dict.pop('name')
         config_to_dict.pop('build_job')
+        config_to_dict.pop('ttl')
         assert config_to_dict == config_dict
 
         config_dict.pop('tags')

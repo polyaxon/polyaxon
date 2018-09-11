@@ -26,6 +26,7 @@ class JobSchema(Schema):
     total_run = fields.Str(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
+    ttl = fields.Int(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     definition = fields.Dict(allow_none=True)
 
@@ -70,6 +71,7 @@ class JobConfig(BaseConfig):
                  config=None,
                  num_jobs=0,
                  resources=None,
+                 ttl=None,
                  jobs=None,
                  total_run=None):
         self.id = id
@@ -91,6 +93,7 @@ class JobConfig(BaseConfig):
         self.config = config  # The json compiled content of this experiment
         self.num_jobs = num_jobs
         self.resources = resources
+        self.ttl = ttl
         self.jobs = jobs
         self.total_run = None
         if all([self.started_at, self.finished_at]):

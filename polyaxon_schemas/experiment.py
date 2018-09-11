@@ -99,6 +99,7 @@ class ExperimentSchema(Schema):
     tags = fields.List(fields.Str(), allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     run_env = fields.Dict(allow_none=True)
+    ttl = fields.Int(allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
     class Meta:
@@ -147,6 +148,7 @@ class ExperimentConfig(BaseConfig):
                  resources=None,
                  run_env=None,
                  jobs=None,
+                 ttl=None,
                  total_run=None):
         self.id = id
         self.user = user
@@ -172,6 +174,7 @@ class ExperimentConfig(BaseConfig):
         self.resources = resources
         self.run_env = run_env
         self.jobs = jobs
+        self.ttl = ttl
         self.total_run = None
         if all([self.started_at, self.finished_at]):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
