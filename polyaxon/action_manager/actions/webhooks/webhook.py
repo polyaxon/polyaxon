@@ -7,6 +7,7 @@ from action_manager.action_event import ActionExecutedEvent
 from action_manager.exceptions import PolyaxonActionException
 from event_manager.event_actions import EXECUTED
 from event_manager.event_context import get_event_context, get_readable_event
+from libs.date_utils import to_timestamp
 from libs.http import safe_request, validate_url
 from schemas.utils import to_list
 
@@ -81,7 +82,7 @@ class WebHookAction(Action):
         context = {
             'subject': event_context.subject_action,
             'body': get_readable_event(event_context),
-            'datetime': event_context.datetime
+            'datetime': to_timestamp(event_context.datetime)
         }
         return context
 
