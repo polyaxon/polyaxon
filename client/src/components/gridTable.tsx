@@ -8,7 +8,7 @@ export interface Props {
 
 function GridTable({values}: Props) {
   const columnValues: string[] = [];
-  Object.keys(values)
+  Object.keys(values).sort()
     .filter((v: string) => columnValues.indexOf(v) === -1)
     .map((v: string) => columnValues.push(v));
   return (
