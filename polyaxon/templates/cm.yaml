@@ -15,7 +15,13 @@ data:
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_APP_NAME: {{ template "polyaxon.fullname" . }}
   POLYAXON_K8S_API_HOST: {{ template "polyaxon.fullname" . }}-api
-  POLYAXON_K8S_API_PORT: {{ .Values.api.service.externalPort | quote }}
+  {{- if contains "NodePort" .Values.serviceType }}
+  POLYAXON_K8S_API_HTTP_PORT: {{ .Values.api.service.nodePort | quote }}
+  POLYAXON_K8S_API_WS_PORT: {{ .Values.streams.service.nodePort | quote }}
+  {{- else }}
+  POLYAXON_K8S_API_HTTP_PORT: {{ .Values.api.service.externalPort | quote }}
+  POLYAXON_K8S_API_WS_PORT: {{ .Values.streams.service.externalPort | quote }}
+  {{- end }}
   POLYAXON_K8S_APP_CONFIG_NAME: {{ template "polyaxon.fullname" . }}-config
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "polyaxon.fullname" . }}-secret
   POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "rabbitmq.fullname" . }}
@@ -113,6 +119,8 @@ data:
   POLYAXON_REDIS_JOB_CONTAINERS_URL: redis://{{ template "redis.fullname" . }}:6379/3
   POLYAXON_REDIS_TO_STREAM_URL: redis://{{ template "redis.fullname" . }}:6379/4
   POLYAXON_REDIS_SESSIONS_URL: redis://{{ template "redis.fullname" . }}:6379/5
+  POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: redis://{{ template "redis.fullname" . }}:6379/6
+  POLYAXON_REDIS_TTL_URL: redis://{{ template "redis.fullname" . }}:6379/7
   POLYAXON_REDIS_HOST: {{ template "redis.fullname" . }}
   POLYAXON_REDIS_PORT: "6379"
   # Spawner
