@@ -26,7 +26,7 @@ class TestLossConfigs(TestCase):
         assert_tensors(l1.pop('input_layer', None), l2.pop('input_layer', None))
         assert_tensors(l1.pop('output_layer', None), l2.pop('output_layer', None))
         assert_equal_dict(l1, l2)
-    
+
     def test_base_losses_config(self):
         config_dict = {
             'input_layer': 'images',

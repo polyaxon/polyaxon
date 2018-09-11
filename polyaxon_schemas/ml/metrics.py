@@ -1285,7 +1285,7 @@ class MeanAbsoluteErrorConfig(BaseMetricConfig):
             sampled. Rank must be 0, or the same rank as `labels`, and must be
             broadcastable to `labels` (i.e., all dimensions must be either `1`, or
             the same as the corresponding `labels` dimension).
-        metrics_collections: An optional list of collections that 
+        metrics_collections: An optional list of collections that
             `mean_absolute_error` should be added to.
         updates_collections: An optional list of collections that `update_op` should be added to.
         name: An optional variable_scope name.

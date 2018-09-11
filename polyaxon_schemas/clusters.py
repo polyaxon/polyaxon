@@ -37,7 +37,7 @@ class NodeGPUConfig(BaseConfig):
         uuid: `UUID`. The uuid of gpu.
         memory: `int`. The memory size of the gpu.
         serial: `str`. The serial of the gpu.
-        cluster_node: `UUID`. the uuid of the cluster node. 
+        cluster_node: `UUID`. the uuid of the cluster node.
     """
     SCHEMA = NodeGPUSchema
     IDENTIFIER = 'NodeGPU'
@@ -87,7 +87,7 @@ class ClusterNodeConfig(BaseConfig):
     Node gpu config.
 
     Args:
-        uuid: `UUID`. the uuid of the cluster node. 
+        uuid: `UUID`. the uuid of the cluster node.
         sequence: `int`. The sequence of the node in the cluster.
         name: `str`. The name of node.
         hostname: `str`. The node hostname.
