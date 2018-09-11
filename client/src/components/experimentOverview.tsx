@@ -78,6 +78,15 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               <GridTable values={experiment.last_metric}/>
             </div>
             }
+            {experiment.data_refs &&
+            <div className="meta meta-data-refs">
+              <span className="meta-info">
+                <i className="fa fa-database icon" aria-hidden="true"/>
+                <span className="title">Data refs:</span>
+              </span>
+              <GridTable values={experiment.data_refs}/>
+            </div>
+            }
           </div>
         </div>
       </div>
