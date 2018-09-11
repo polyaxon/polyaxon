@@ -6,6 +6,7 @@ export class StatusModel {
   public created_at: string;
   public status: string;
   public message: string;
+  public traceback: string;
   public details: Object;
 }
 

@@ -7,9 +7,10 @@ import Status from './status';
 
 export interface Props {
   status: StatusModel;
+  onClick: () => void;
 }
 
-function StatusItem({status}: Props) {
+function StatusItem({status, onClick}: Props) {
   return (
     <div className="row">
       <div className="col-md-2 block">
@@ -24,7 +25,11 @@ function StatusItem({status}: Props) {
         </div>
       </div>
       <div className="col-md-7 block">
-        <Description description={status.message}/>
+        {status.traceback &&
+        <button className="btn btn-xs btn-default pull-left btn-traceback" onClick={onClick}>
+          <i className="fa fa-question icon" aria-hidden="true"/>
+        </button>
+        }<Description description={status.message}/>
       </div>
     </div>
   );
