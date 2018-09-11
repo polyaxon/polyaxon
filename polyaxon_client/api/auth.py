@@ -19,7 +19,7 @@ class AuthApi(BaseApiHandler):
     ENDPOINT = "/users"
 
     def get_user(self, token=None):
-        token = token or self.transport.token
+        token = token or self.config.token
         request_url = self._get_http_url()
         response = self.transport.get(request_url,
                                       headers={"Authorization": "{} {}".format(
