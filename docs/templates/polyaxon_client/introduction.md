@@ -33,9 +33,9 @@ This module includes a client that can be used to interact with Polyaxon API in 
 ## Usage
 
 ```python
-from polyaxon_client.clients import PolyaxonClients
+from polyaxon_client.client import PolyaxonClient
 
-polyaxon_client = PolyaxonClients(
+polyaxon_client = PolyaxonClient(
     host=POLYAXON_IP,
     token=MY_TOKEN, http_port=POLYAXON_HTTP_PORT,
     ws_port=POLYAXON_WS_PORT)
