@@ -5,7 +5,6 @@ import { getExperimentTensorboardUrl } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 import Description from './description';
 import { EmptyList } from './empty/emptyList';
-import GridTable from './gridTable';
 import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
 import DatesMetaInfo from './metaInfo/datesMetaInfo';
 import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
@@ -13,6 +12,7 @@ import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
 import UserMetaInfo from './metaInfo/userMetaInfo';
 import Status from './status';
 import Tags from './tags';
+import VerticalTable from './verticalTable';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -66,7 +66,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
                 <i className="fa fa-gear icon" aria-hidden="true"/>
                 <span className="title">Declarations:</span>
               </span>
-              <GridTable values={experiment.declarations}/>
+              <VerticalTable values={experiment.declarations}/>
             </div>
             }
             {experiment.last_metric &&
@@ -75,7 +75,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
                 <i className="fa fa-area-chart icon" aria-hidden="true"/>
                 <span className="title">Metrics:</span>
               </span>
-              <GridTable values={experiment.last_metric}/>
+              <VerticalTable values={experiment.last_metric}/>
             </div>
             }
             {experiment.data_refs &&
@@ -84,7 +84,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
                 <i className="fa fa-database icon" aria-hidden="true"/>
                 <span className="title">Data refs:</span>
               </span>
-              <GridTable values={experiment.data_refs}/>
+              <VerticalTable values={experiment.data_refs}/>
             </div>
             }
           </div>
