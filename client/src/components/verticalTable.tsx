@@ -5,12 +5,13 @@ import './paginatedTable.less';
 
 export interface Props {
   values: { [key: string]: string | number | boolean; };
+  keys?: string[];
 }
 
-function VerticalTable({values}: Props) {
+function VerticalTable({values, keys}: Props) {
   const columnValues: string[] = [];
-  Object.keys(values).sort()
-    .filter((v: string) => columnValues.indexOf(v) === -1)
+  const columns = keys || Object.keys(values).sort();
+  columns.filter((v: string) => columnValues.indexOf(v) === -1)
     .map((v: string) => columnValues.push(v));
   return (
     <div className="vertical-table">
