@@ -3,7 +3,6 @@ import * as url from 'url';
 
 import { BASE_API_URL } from '../constants/api';
 import {
-  getJobUniqueName,
   getJobUrl,
   getProjectUrl,
   handleAuthError,
