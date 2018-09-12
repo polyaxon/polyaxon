@@ -1,6 +1,8 @@
+import { DEV_BASE_URL } from './dev.env';
+
 let baseUrl;
 if (process.env.NODE_ENV !== 'production') {
-  baseUrl = 'http://localhost:8000';
+  baseUrl = DEV_BASE_URL;
 } else {
   baseUrl = location.origin;
 }

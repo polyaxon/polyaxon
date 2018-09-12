@@ -1,4 +1,5 @@
 import * as Cookies from 'js-cookie';
+import { DEV_TOKEN, DEV_USER } from './constants/dev.env';
 import { AppState } from './constants/types';
 
 export const loadState = () => {
@@ -23,6 +24,6 @@ export const saveState = (state: AppState) => {
 };
 
 export const setLocalUser = () => {
-  Cookies.set('token', '8ff04973157b2a5831329fbb1befd37f93e4de4f');
-  Cookies.set('user', 'admin');
+  Cookies.set('token', DEV_TOKEN);
+  Cookies.set('user', DEV_USER);
 };
