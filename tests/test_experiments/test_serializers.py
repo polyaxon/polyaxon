@@ -239,6 +239,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'started_at',
         'finished_at',
         'is_clone',
+        'code_reference',
         'tags',
         'has_tensorboard',
         'build_job',
