@@ -24,6 +24,7 @@ export class ExperimentModel {
   public last_metric: {[metric: string]: number};
   public data_refs: {[key: string]: string};
   public resources: {[key: string]: any};
+  public run_env: {[key: string]: any};
   public jobs: string[] = [];
   public bookmarked: boolean;
 }

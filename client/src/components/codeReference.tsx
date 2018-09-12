@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import * as actions from '../actions/codeReference';
 import { CodeReferenceModel } from '../models/codeReference';
+import { EmptyList } from './empty/emptyList';
 import VerticalTable from './verticalTable';
 
 export interface Props {
@@ -26,14 +27,26 @@ export default class CodeReference extends React.Component<Props, {}> {
           'repo': this.props.codeReference.repo
         };
         return (
-          <VerticalTable values={values}/>
+          <div className="row">
+            <div className="col-md-12">
+              <VerticalTable values={values}/>
+            </div>
+          </div>
         );
       }
-      return (null);
+      return (
+        <div className="row">
+          <div className="col-md-12">
+            {EmptyList(false, 'code reference', '')}
+          </div>
+        </div>
+      );
     };
     return (
-      <div>
-        {getComponent()}
+      <div className="row">
+        <div className="col-md-12">
+          {getComponent()}
+        </div>
       </div>
     );
   }

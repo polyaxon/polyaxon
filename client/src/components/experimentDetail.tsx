@@ -25,6 +25,7 @@ import { EmptyList } from './empty/emptyList';
 import ExperimentOverview from './experimentOverview';
 import ExperimentInstructions from './instructions/experimentInstructions';
 import LinkedTab from './linkedTab';
+import RunEnv from './runEnv';
 import YamlText from './yamlText';
 
 export interface Props {
@@ -118,6 +119,12 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                   component: <CodeReference
                     fetchData={this.props.fetchCodeReference}
                     codeReferenceId={experiment.code_reference}
+                  />,
+                  relUrl: 'codeRef'
+                }, {
+                  title: 'RunEnv',
+                  component: <RunEnv
+                    runEnv={experiment.run_env}
                   />,
                   relUrl: 'build'
                 }, {
