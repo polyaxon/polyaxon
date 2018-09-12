@@ -76,3 +76,10 @@ export const searchSchema = new schema.Entity(
   {
     idAttribute: 'id'
   });
+
+export const codeReferenceSchema = new schema.Entity(
+  'codeReferences',
+  {},
+  {
+    idAttribute: 'id'
+  });

@@ -12,6 +12,7 @@ import {
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { ExperimentModel } from '../models/experiment';
+import { fetchCodeReference } from './codeReference';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
@@ -266,4 +267,10 @@ export function unbookmark(experimentName: string): any {
       .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(unbookmarkExperimentActionCreator(experimentName)));
   };
+}
+
+export function fetchExperimentCodeReference(experimentName: string): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
+  const codeRefUrl = `${experimentUrl}/coderef`;
+  return fetchCodeReference(codeRefUrl);
 }

@@ -10,6 +10,7 @@ import { projectsReducer, UserProjectsReducer } from './projects';
 import { AppState } from '../constants/types';
 import { activityLogsReducer } from './activityLogs';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
+import { codeReferencesReducer } from './codeReferences';
 import { logsReducer } from './logs';
 import { MetricsReducer } from './metrics';
 import { modalReducer } from './modal';
@@ -33,7 +34,8 @@ const combinedReducer = combineReducers<AppState>({
   statuses: StatusesReducer,
   metrics: MetricsReducer,
   activityLogs: activityLogsReducer,
-  searches: searchesReducer
+  searches: searchesReducer,
+  codeReferences: codeReferencesReducer,
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -61,6 +63,7 @@ function SliceReducer(state: AppState, action: Action) {
     metrics: state.metrics,
     activityLogs: state.activityLogs,
     searches: state.searches,
+    codeReferences: state.codeReferences,
   };
 }
 

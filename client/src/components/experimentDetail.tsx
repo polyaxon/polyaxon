@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import * as codeRefActions from '../actions/codeReference';
 import * as actions from '../actions/experiment';
 import {
   getExperimentUrl,
@@ -9,6 +10,7 @@ import {
   getUserUrl,
   splitUniqueName,
 } from '../constants/utils';
+import CodeReference from '../containers/codeReference';
 import EntityBuild from '../containers/EntityBuild';
 import ExperimentJobs from '../containers/experimentJobs';
 import Logs from '../containers/logs';
@@ -32,6 +34,7 @@ export interface Props {
   fetchData: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
+  fetchCodeReference: () => codeRefActions.CodeReferenceAction;
 }
 
 export default class ExperimentDetail extends React.Component<Props, {}> {
@@ -110,6 +113,13 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                     experiment={experiment}
                   />,
                   relUrl: 'jobs'
+                }, {
+                  title: 'CodeRef',
+                  component: <CodeReference
+                    fetchData={this.props.fetchCodeReference}
+                    codeReferenceId={experiment.code_reference}
+                  />,
+                  relUrl: 'build'
                 }, {
                   title: 'Build',
                   component: <EntityBuild buildName={experiment.build_job}/>,
