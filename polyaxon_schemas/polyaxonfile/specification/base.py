@@ -2,13 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 import abc
+import rhea
 import six
 
 from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.operators import ForConfig, IfConfig
-from polyaxon_schemas.polyaxonfile import reader, validator
+from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import to_list
@@ -73,7 +74,10 @@ class BaseSpecification(object):
     def __init__(self, values):
         self._values = to_list(values)
 
-        self._data = reader.read(self._values)
+        try:
+            self._data = rhea.read(self._values)
+        except rhea.RheaError as e:
+            raise PolyaxonConfigurationError(e)
         self.check_data()
         headers = Parser.get_headers(spec=self, data=self._data)
         try:
