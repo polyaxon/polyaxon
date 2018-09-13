@@ -1,0 +1,39 @@
+esudo: required
+dist: trusty
+sudo: false
+language: python
+python:
+  - "2.7"
+  - "3.5"
+
+install:
+  # http://conda.pydata.org/docs/travis.html
+  - sudo apt-get update
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy six pytest-cov
+  - source activate test-environment
+  - pip install -r requirements/requirements-test.txt
+  - pip install codecov
+
+script:
+  - pytest tests
+  - prospector
+
+after_success:
+  - codecovv
+
+notifications:
+  slack:
+    secure: E29J0lnbAB10cOcV2xJjr47+X17xt2Zs1NN+oWMU8YNFVXFczTF0zZEVar4CQjnRUhUsIEDWqA6I2wwk3t5g0fdTP+eRytl22ckYtl+v4rsJwZjKVFtItR7uNHu3za7aSXR8UNainFSXG+fJraBbzKLJFmSP+lpS8Tv43HdeyxetXcNp01q32kAFcT6l/4LxAbC6V0Png3oESLe/iN6OSo50FMXbDC+LmEh+MMXdCZp3LB2d9jjdLFweauXbYzZj78MDuLupAmQMj5J5WTtwx0xjdhhZObE1rAn3FxVVKKRprxjsxMTFHcR53mblw6pBujfOD1tgOyg25yoLqDvXYxIDth7Tlo72JlZOQg2AsOIrI+Ys8ZfYQuV8FqgVXSMxbFgM5WxRCotP/8d+BUuXdEr4dQvMWSxFNopFsalCNWmoRlIg/RZG5TqbTvi+F1xvwSD/j59JISvXFx4aCHQu8QX7NJgeuQ3Mj4nbwL/4fD7rpbayPWol6qVeuN7Ad2ZU/3/SSmygPvxoTILRv7TMiQIDZWba0uBFpXS8ajLad/YW03FZRqs3RQy7BM+XxMNCclHXbXd3ZN8wv6RaA/x32fRzzxGj62jfnLluLcHEKaOC2No0ENpPYnStoHJBKwFZHyKEkiqLdtOP2jf0N/1H9QLFG4pe1CBxjeLwv5Rxpb4=
