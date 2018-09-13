@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+import six
+
 from collections import Mapping
 from distutils.util import strtobool  # pylint:disable=import-error
 
@@ -449,7 +451,7 @@ class Rhea(object):
                     'No value was provided for the non optional key `{}`.'.format(key))
             return default
 
-        if isinstance(value, str):
+        if isinstance(value, six.string_types):
             try:
                 self._add_key(key, is_secret=is_secret, is_local=is_local)
                 self._check_options(key=key, value=value, options=options)
