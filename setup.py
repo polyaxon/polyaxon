@@ -47,7 +47,7 @@ setup(name='rhea',
           'Operating System :: OS Independent',
           'Intended Audience :: Developers',
           'Intended Audience :: Science/Research',
-          'Topic :: Scientific/Engineering :: Artificial Intelligence'
+          'Topic :: Scientific/Engineering :: Artificial Intelligence',
           'Development Status :: 5 - Production/Stable',
           'Environment :: Web Environment',
           'Programming Language :: Python :: 2',

@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-
 from collections import Mapping
 from distutils.util import strtobool  # pylint:disable=import-error
 
@@ -463,7 +462,8 @@ class Rhea(object):
             self._add_key(key, is_secret=is_secret, is_local=is_local)
             self._check_options(key=key, value=value, options=options)
             return value
-        raise RheaError(key, value, target_type)
+        raise RheaError("Cannot convert value `{}` (key: `{}`) "
+                        "to `{}`".format(value, key, target_type))
 
     def _get_typed_list_value(self,
                               key,
