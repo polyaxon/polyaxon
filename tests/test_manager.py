@@ -2,8 +2,8 @@ import os
 
 from unittest import TestCase
 
-from rhea.manager import Rhea
 from rhea.exceptions import RheaError
+from rhea.manager import Rhea
 from rhea.specs import UriSpec
 
 
