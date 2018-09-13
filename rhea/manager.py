@@ -511,7 +511,7 @@ class Rhea(object):
         # If we are here the value must be a list
         result = []
         for v in value:
-            if isinstance(v, str):
+            if isinstance(v, six.string_types):
                 try:
                     result.append(type_convert(v))
                 except ValueError:
