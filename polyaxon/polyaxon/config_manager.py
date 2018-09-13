@@ -1,12 +1,12 @@
+import base64
 import os
+import rhea
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
 from unipath import Path
 
 from django.utils.functional import cached_property
-
-from config_manager.config_manager import ConfigManager
 
 
 def base_directory():
@@ -19,7 +19,27 @@ ENV_VARS_DIR = ROOT_DIR.child('polyaxon').child('polyaxon').child('env_vars')
 TESTING = bool(strtobool(os.getenv('TESTING', "0")))
 
 
-class SettingsConfigManager(ConfigManager):
+class ConfigManager(rhea.Rhea):
+    _PASS = '-Z$Swjin_bdNPtaV4nQEn&gWb;T|'
+
+    @cached_property
+    def decode_iterations(self):
+        return self.get_int('_POLYAXON_DECODE_ITERATION', is_optional=True, default=1)
+
+    def _decode(self, value, iteration=3):
+        iteration = iteration or self.decode_iterations
+
+        def _decode_once():
+            return base64.b64decode(value).decode('utf-8')
+
+        for _ in range(iteration):
+            value = _decode_once()
+        return value
+
+    @staticmethod
+    def _encode(value):
+        return base64.b64encode(value.encode('utf-8')).decode('utf-8')
+
     def __init__(self, **params):
         super().__init__(**params)
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
@@ -210,4 +230,4 @@ if TESTING:
 elif os.path.isfile('{}/local.json'.format(ENV_VARS_DIR)):
     config_values.append('{}/local.json'.format(ENV_VARS_DIR))
 
-config = SettingsConfigManager.read_configs(config_values)
+config = ConfigManager.read_configs(config_values)

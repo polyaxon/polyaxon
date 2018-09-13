@@ -1,5 +1,5 @@
-from query.service import QueryService
 from libs.services import LazyServiceWrapper
+from query.service import QueryService
 
 backend = LazyServiceWrapper(
     backend_base=QueryService,

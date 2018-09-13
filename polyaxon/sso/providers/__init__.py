@@ -1,8 +1,8 @@
 from libs.wizards import WizardManager
+from sso.providers.azure_provider import AzureIdentityProvider
 from sso.providers.bitbucket_provider import BitbucketIdentityProvider
 from sso.providers.github_provider import GitHubIdentityProvider
 from sso.providers.gitlab_provider import GitLabIdentityProvider
-from sso.providers.azure_provider import AzureIdentityProvider
 
 default_manager = WizardManager()
 subscribe = default_manager.subscribe

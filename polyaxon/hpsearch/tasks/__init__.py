@@ -1,17 +1,16 @@
+import auditor
+
+from db.getters.experiment_groups import get_running_experiment_group
+from event_manager.events.experiment_group import (
+    EXPERIMENT_GROUP_BO,
+    EXPERIMENT_GROUP_GRID,
+    EXPERIMENT_GROUP_HYPERBAND,
+    EXPERIMENT_GROUP_RANDOM
+)
+from hpsearch.tasks import bo, grid, hyperband, random
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks
 from schemas.hptuning import SearchAlgorithms
-
-import auditor
-from db.getters.experiment_groups import get_running_experiment_group
-
-from event_manager.events.experiment_group import (
-    EXPERIMENT_GROUP_GRID,
-    EXPERIMENT_GROUP_RANDOM,
-    EXPERIMENT_GROUP_HYPERBAND,
-    EXPERIMENT_GROUP_BO
-)
-from hpsearch.tasks import grid, hyperband, bo, random
 
 
 @celery_app.task(name=HPCeleryTasks.HP_CREATE)

@@ -1,5 +1,5 @@
 from libs.services import LazyServiceWrapper
-from notifier.managers import default_event_manager, default_action_manager
+from notifier.managers import default_action_manager, default_event_manager
 from notifier.service import NotifierService
 
 backend = LazyServiceWrapper(

@@ -1,5 +1,5 @@
-from publisher.service import PublisherService
 from libs.services import LazyServiceWrapper
+from publisher.service import PublisherService
 
 MESSAGES_COUNT = 50
 MESSAGES_TIMEOUT = 5

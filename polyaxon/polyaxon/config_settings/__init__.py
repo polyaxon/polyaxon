@@ -1,4 +1,6 @@
 # Default configs
+from polyaxon.config_manager import config
+
 from .admin import *
 from .api_host import *
 from .celery_settings import *
@@ -8,12 +10,10 @@ from .email import *
 from .integrations import *
 from .logging import *
 from .oauth import *
-from .secrets import *
 from .redis_settings import *
+from .secrets import *
 from .tracker import *
 from .versions import *
-
-from polyaxon.config_manager import config
 
 # Service configs
 if config.is_monolith_service:
