@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import * as actions from '../actions/build';
-import PaginatedTable from '../components/paginatedTable';
-import { BuildModel } from '../models/build';
+import * as actions from '../../actions/build';
+import { BuildModel } from '../../models/build';
+import { EmptyList } from '../empty/emptyList';
+import PaginatedTable from '../paginatedTable';
 import Build from './build';
 import BuildHeader from './buildHeader';
-import { EmptyList } from './empty/emptyList';
 
 export interface Props {
   build: BuildModel;

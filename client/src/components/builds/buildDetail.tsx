@@ -1,26 +1,26 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../actions/build';
+import * as actions from '../../actions/build';
 import {
   getBuildUrl,
   getProjectUrl,
   getUserUrl,
   splitUniqueName,
-} from '../constants/utils';
-import Logs from '../containers/logs';
-import Statuses from '../containers/statuses';
-import { ActionInterface } from '../interfaces/actions';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { BuildModel } from '../models/build';
-import { getBookmark } from '../utils/bookmarks';
-import Breadcrumb from './breadcrumb';
+} from '../../constants/utils';
+import Logs from '../../containers/logs';
+import Statuses from '../../containers/statuses';
+import { ActionInterface } from '../../interfaces/actions';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { BuildModel } from '../../models/build';
+import { getBookmark } from '../../utils/bookmarks';
+import Breadcrumb from '../breadcrumb';
+import { EmptyList } from '../empty/emptyList';
+import BuildInstructions from '../instructions/buildInstructions';
+import LinkedTab from '../linkedTab';
+import Text from '../text';
+import YamlText from '../yamlText';
 import BuildOverview from './buildOverview';
-import { EmptyList } from './empty/emptyList';
-import BuildInstructions from './instructions/buildInstructions';
-import LinkedTab from './linkedTab';
-import Text from './text';
-import YamlText from './yamlText';
 
 export interface Props {
   build: BuildModel;
@@ -50,7 +50,7 @@ export default class BuildDetail extends React.Component<Props, {}> {
     };
 
     const bookmark: BookmarkInterface = getBookmark(
-      this.props.build.bookmarked,  this.props.bookmark, this.props.unbookmark);
+      this.props.build.bookmarked, this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(build.project);
     const buildUrl = getBuildUrl(values[0], values[1], this.props.build.id);
     const projectUrl = getProjectUrl(values[0], values[1]);

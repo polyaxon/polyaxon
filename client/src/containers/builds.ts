@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Builds from '../components/builds';
+import Builds from '../components/builds/builds';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
 import { BuildModel } from '../models/build';
@@ -97,7 +97,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
       }
     },
     fetchData: (offset?: number, query?: string, sort?: string) => {
-      const filters: {[key: string]: number|boolean|string} = {};
+      const filters: { [key: string]: number | boolean | string } = {};
       if (query) {
         filters.query = query;
       }

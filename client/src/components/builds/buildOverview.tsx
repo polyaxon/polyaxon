@@ -1,19 +1,19 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { BuildModel } from '../models/build';
-import Description from './description';
-import { EmptyList } from './empty/emptyList';
-import CommitMetaInfo from './metaInfo/commitMetaInfo';
-import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
-import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import NodeMetaInfo from './metaInfo/nodeMetaInfo';
-import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import Status from './status';
-import Tags from './tags';
+import { BuildModel } from '../../models/build';
+import Description from '../description';
+import { EmptyList } from '../empty/emptyList';
+import CommitMetaInfo from '../metaInfo/commitMetaInfo';
+import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo';
+import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Status from '../status';
+import Tags from '../tags';
 
 export interface Props {
   build: BuildModel;
@@ -30,10 +30,10 @@ export default class BuildOverview extends React.Component<Props, {}> {
       <div className="entity-details">
         <div className="row">
           <div className="col-md-12">
-             <Description
-                description={build.description}
-                showEmpty={true}
-             />
+            <Description
+              description={build.description}
+              showEmpty={true}
+            />
             <div className="meta">
               <UserMetaInfo user={build.user} inline={true}/>
               <DatesMetaInfo
@@ -54,7 +54,7 @@ export default class BuildOverview extends React.Component<Props, {}> {
               <ExperimentCountMetaInfo count={build.num_experiments} inline={true}/>
               <JobCountMetaInfo count={build.num_jobs} inline={true}/>
             </div>
-            <ResourcesMetaInfo resources={build.resources} />
+            <ResourcesMetaInfo resources={build.resources}/>
             <Tags tags={build.tags}/>
           </div>
         </div>

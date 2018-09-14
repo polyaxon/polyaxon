@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import * as actions from '../actions/build';
-import * as search_actions from '../actions/search';
-import { BUILD_FILTER_OPTIONS } from '../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
-import { BuildModel } from '../models/build';
-import { SearchModel } from '../models/search';
+import * as actions from '../../actions/build';
+import * as search_actions from '../../actions/search';
+import { BUILD_FILTER_OPTIONS } from '../../constants/filtering';
+import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
+import { BuildModel } from '../../models/build';
+import { SearchModel } from '../../models/search';
 import Build from './build';
 import BuildHeader from './buildHeader';
-import { EmptyBookmarks } from './empty/emptyBookmarks';
-import { EmptyList } from './empty/emptyList';
-import { DEFAULT_FILTERS } from './filters/constants';
-import PaginatedTable from './paginatedTable';
+import { EmptyBookmarks } from '../empty/emptyBookmarks';
+import { EmptyList } from '../empty/emptyList';
+import { DEFAULT_FILTERS } from '../filters/constants';
+import PaginatedTable from '../paginatedTable';
 
 export interface Props {
   isCurrentUser: boolean;

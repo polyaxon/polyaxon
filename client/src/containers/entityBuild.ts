@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import * as actions from '../actions/build';
-import EntityBuild from '../components/entityBuild';
+import EntityBuild from '../components/builds/entityBuild';
 import { AppState } from '../constants/types';
 import { splitUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   return _.includes(state.builds.uniqueNames, params.buildName) ?
-  {build: state.builds.byUniqueNames[params.buildName], showBookmarks: false} :
-  {build: null, showBookmarks: false};
+    {build: state.builds.byUniqueNames[params.buildName], showBookmarks: false} :
+    {build: null, showBookmarks: false};
 }
 
 export interface DispatchProps {
