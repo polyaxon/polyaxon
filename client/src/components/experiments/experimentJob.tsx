@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { ExperimentJobModel } from '../models/experimentJob';
-import NodeMetaInfo from './metaInfo/nodeMetaInfo';
-import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import Status from './status';
+import { ExperimentJobModel } from '../../models/experimentJob';
+import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import Status from '../status';
 
 export interface Props {
   experimentJob: ExperimentJobModel;
@@ -34,7 +34,7 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
             {experimentJob.id}
           </span>
         </div>
-        <ResourcesMetaInfo resources={experimentJob.resources} />
+        <ResourcesMetaInfo resources={experimentJob.resources}/>
       </div>
       <div className="col-md-2 block">
         <NodeMetaInfo node={experimentJob.node_scheduled}/>

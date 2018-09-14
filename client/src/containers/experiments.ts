@@ -2,14 +2,13 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Experiments from '../components/experiments';
+import Experiments from '../components/experiments/experiments';
 import { AppState } from '../constants/types';
-import { isTrue } from '../constants/utils';
+import { getExperimentIndexName, isTrue } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
 import * as search_actions from '../actions/search';
-import { getExperimentIndexName } from '../constants/utils';
 import { SearchModel } from '../models/search';
 
 interface OwnProps {
@@ -121,8 +120,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     fetchData: (offset?: number,
                 query?: string,
                 sort?: string,
-                extraFilters?:  {[key: string]: number|boolean|string}) => {
-      const filters: {[key: string]: number|boolean|string} = {};
+                extraFilters?: { [key: string]: number | boolean | string }) => {
+      const filters: { [key: string]: number | boolean | string } = {};
       if (ownProps.groupId) {
         filters.group = ownProps.groupId;
       }

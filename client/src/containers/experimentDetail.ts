@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../actions/experiment';
 import * as codeRefActions from '../actions/codeReference';
-import ExperimentDetail from '../components/experimentDetail';
+import * as actions from '../actions/experiment';
+import ExperimentDetail from '../components/experiments/experimentDetail';
 import { AppState } from '../constants/types';
 import { getExperimentUniqueName } from '../constants/utils';
 

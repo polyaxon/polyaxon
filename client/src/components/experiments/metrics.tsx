@@ -3,11 +3,11 @@ import * as React from 'react';
 
 import * as Plotly from 'plotly.js';
 
-import * as actions from '../actions/metrics';
-import { MetricModel } from '../models/metric';
+import * as actions from '../../actions/metrics';
+import { MetricModel } from '../../models/metric';
 
-import Chart from './charts/chart';
-import { EmptyList } from './empty/emptyList';
+import Chart from '../charts/chart';
+import { EmptyList } from '../empty/emptyList';
 
 export interface Props {
   metrics: MetricModel[];
@@ -82,7 +82,7 @@ export default class Metrics extends React.Component<Props, State> {
           (metricName, idx) => {
             return (
               <div
-                className={this.state.isGrid ? 'col-md-11 col-md-offset-1' : 'col-md-6'}
+                className={this.state.isGrid ? 'col-md-6' : 'col-md-11 col-md-offset-1'}
                 key={idx}
               >
                 {<Chart data={[data[metricName] as Plotly.PlotData]} title={metricName}/>}

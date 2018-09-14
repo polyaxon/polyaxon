@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import ExperimentJobs from '../components/experimentJobs';
+import ExperimentJobs from '../components/experiments/experimentJobs';
 import { AppState } from '../constants/types';
 import { getExperimentIndexName } from '../constants/utils';
 import { ExperimentJobModel } from '../models/experimentJob';
@@ -26,7 +26,7 @@ export function mapStateToProps(state: AppState, params: any) {
     const count = state.experimentJobs.lastFetched.count;
     const jobs: ExperimentJobModel[] = [];
     jobNames.forEach(
-      function(job: string, idx: number) {
+      function (job: string, idx: number) {
         jobs.push(state.experimentJobs.byUniqueNames[job]);
       });
     return {jobs, count};

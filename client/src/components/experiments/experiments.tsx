@@ -1,20 +1,20 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../actions/experiment';
-import * as search_actions from '../actions/search';
-import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
-import { FilterOption } from '../interfaces/filterOptions';
-import { ExperimentModel } from '../models/experiment';
-import { SearchModel } from '../models/search';
-import AutocompleteDropdown from './autocomplete/autocomplteDorpdown';
-import { EmptyBookmarks } from './empty/emptyBookmarks';
-import { EmptyList } from './empty/emptyList';
+import * as actions from '../../actions/experiment';
+import * as search_actions from '../../actions/search';
+import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
+import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
+import { FilterOption } from '../../interfaces/filterOptions';
+import { ExperimentModel } from '../../models/experiment';
+import { SearchModel } from '../../models/search';
+import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
+import { EmptyBookmarks } from '../empty/emptyBookmarks';
+import { EmptyList } from '../empty/emptyList';
 import Experiment from './experiment';
 import './experiments.less';
-import { DEFAULT_FILTERS } from './filters/constants';
-import PaginatedTable from './paginatedTable';
+import { DEFAULT_FILTERS } from '../filters/constants';
+import PaginatedTable from '../paginatedTable';
 
 interface TableColumnProps {
   type: string;

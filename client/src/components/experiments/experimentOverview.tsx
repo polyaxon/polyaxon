@@ -1,18 +1,18 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { getExperimentTensorboardUrl } from '../constants/utils';
-import { ExperimentModel } from '../models/experiment';
-import Description from './description';
-import { EmptyList } from './empty/emptyList';
-import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import Status from './status';
-import Tags from './tags';
-import VerticalTable from './verticalTable';
+import { getExperimentTensorboardUrl } from '../../constants/utils';
+import { ExperimentModel } from '../../models/experiment';
+import Description from '../description';
+import { EmptyList } from '../empty/emptyList';
+import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Status from '../status';
+import Tags from '../tags';
+import VerticalTable from '../verticalTable';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -46,7 +46,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at} inline={true}/>
               <Status status={experiment.last_status}/>
             </div>
-            <ResourcesMetaInfo resources={experiment.resources} />
+            <ResourcesMetaInfo resources={experiment.resources}/>
             {experiment.has_tensorboard &&
             <div className="meta">
               <span className="meta-info meta-dashboard">

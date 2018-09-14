@@ -2,28 +2,23 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import {
-  getBuildUrl,
-  getExperimentUrl,
-  getGroupUrl,
-  splitUniqueName
-} from '../constants/utils';
+import { getBuildUrl, getExperimentUrl, getGroupUrl, splitUniqueName } from '../../constants/utils';
 
-import * as actions from '../actions/experiment';
-import { isDone } from '../constants/statuses';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { ExperimentModel } from '../models/experiment';
-import { getBookmark } from '../utils/bookmarks';
-import Actions from './actions';
-import BookmarkStar from './bookmarkStar';
-import Description from './description';
-import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import GroupLinkMetaInfo from './metaInfo/groupLinkMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import Status from './status';
-import Tags from './tags';
+import * as actions from '../../actions/experiment';
+import { isDone } from '../../constants/statuses';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { ExperimentModel } from '../../models/experiment';
+import { getBookmark } from '../../utils/bookmarks';
+import Actions from '../actions';
+import BookmarkStar from '../bookmarkStar';
+import Description from '../description';
+import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import GroupLinkMetaInfo from '../metaInfo/groupLinkMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Status from '../status';
+import Tags from '../tags';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -37,7 +32,8 @@ export interface Props {
   reducedForm: boolean;
 }
 
-function Experiment({experiment,
+function Experiment({
+                      experiment,
                       metrics,
                       declarations,
                       onDelete,
@@ -45,7 +41,8 @@ function Experiment({experiment,
                       bookmark,
                       unbookmark,
                       showBookmarks,
-                      reducedForm}: Props) {
+                      reducedForm
+                    }: Props) {
   const values = splitUniqueName(experiment.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
     experiment.bookmarked, bookmark, unbookmark);

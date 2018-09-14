@@ -1,32 +1,32 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as codeRefActions from '../actions/codeReference';
-import * as actions from '../actions/experiment';
+import * as codeRefActions from '../../actions/codeReference';
+import * as actions from '../../actions/experiment';
 import {
   getExperimentUrl,
   getGroupUrl,
   getProjectUrl,
   getUserUrl,
   splitUniqueName,
-} from '../constants/utils';
-import CodeReference from '../containers/codeReference';
-import EntityBuild from '../containers/EntityBuild';
-import ExperimentJobs from '../containers/experimentJobs';
-import Logs from '../containers/logs';
-import Metrics from '../containers/metrics';
-import Statuses from '../containers/statuses';
-import { ActionInterface } from '../interfaces/actions';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { ExperimentModel } from '../models/experiment';
-import { getBookmark } from '../utils/bookmarks';
-import Breadcrumb from './breadcrumb';
-import { EmptyList } from './empty/emptyList';
+} from '../../constants/utils';
+import CodeReference from '../../containers/codeReference';
+import EntityBuild from '../../containers/entityBuild';
+import ExperimentJobs from '../../containers/experimentJobs';
+import Logs from '../../containers/logs';
+import Metrics from '../../containers/metrics';
+import Statuses from '../../containers/statuses';
+import { ActionInterface } from '../../interfaces/actions';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { ExperimentModel } from '../../models/experiment';
+import { getBookmark } from '../../utils/bookmarks';
+import Breadcrumb from '../breadcrumb';
+import { EmptyList } from '../empty/emptyList';
+import ExperimentInstructions from '../instructions/experimentInstructions';
+import LinkedTab from '../linkedTab';
+import RunEnv from '../runEnv';
+import YamlText from '../yamlText';
 import ExperimentOverview from './experimentOverview';
-import ExperimentInstructions from './instructions/experimentInstructions';
-import LinkedTab from './linkedTab';
-import RunEnv from './runEnv';
-import YamlText from './yamlText';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -64,7 +64,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
       group = parseInt(splitUniqueName(experiment.experiment_group)[2], 10);
     }
     const projectUrl = getProjectUrl(values[0], values[1]);
-    let breadcrumbLinks: Array<{name: string; value?: string|undefined}>;
+    let breadcrumbLinks: Array<{ name: string; value?: string | undefined }>;
     breadcrumbLinks = [
       {name: values[0], value: getUserUrl(values[0])},
       {name: values[1], value: projectUrl}];
