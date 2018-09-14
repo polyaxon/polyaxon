@@ -1,11 +1,12 @@
 import * as moment from 'moment';
 import * as React from 'react';
 
+import * as Plotly from 'plotly.js';
+
 import * as actions from '../actions/metrics';
 import { MetricModel } from '../models/metric';
-import MetricLineChart from './metricLineChart';
 
-import { Data, DataPoint } from '../constants/charts';
+import Chart from './charts/chart';
 import { EmptyList } from './empty/emptyList';
 import './metrics.less';
 
@@ -13,6 +14,11 @@ export interface Props {
   metrics: MetricModel[];
   count: number;
   fetchData: () => actions.MetricsAction;
+}
+
+export interface DataPoint {
+  x: any[];
+  y: any[];
 }
 
 export default class Metrics extends React.Component<Props, {}> {
@@ -23,36 +29,29 @@ export default class Metrics extends React.Component<Props, {}> {
   public render() {
 
     const convertTimeFormat = (d: string) => {
-      return moment(d).format('DD-MM HH:mm');
+      return moment(d).format('HH:mm:ss');
     };
 
     const getMetricComponentData = () => {
       const metrics = this.props.metrics;
-      const metricData: { [key: string]: DataPoint[] } = {};
+      const metricData: { [key: string]: DataPoint } = {};
 
       for (const metric of metrics) {
         const createdAt = metric.created_at;
         for (const metricName of Object.keys(metric.values)) {
-          const dataPoint = {index: convertTimeFormat(createdAt), value: metric.values[metricName]};
           if (metricName in metricData) {
-            metricData[metricName].push(dataPoint);
+            metricData[metricName].x.push(convertTimeFormat(createdAt));
+            metricData[metricName].y.push(metric.values[metricName]);
           } else {
-            metricData[metricName] = [dataPoint];
+            metricData[metricName] = {
+              x: [convertTimeFormat(createdAt)],
+              y: [metric.values[metricName]]
+            };
           }
         }
       }
 
-      const data: Data[] = [];
-
-      for (const metricName of Object.keys(metricData)) {
-        data.push(
-          {
-            key: metricName,
-            values: metricData[metricName]
-          }
-        );
-      }
-      return data;
+      return metricData;
     };
 
     const getMetricComponent = () => {
@@ -60,11 +59,11 @@ export default class Metrics extends React.Component<Props, {}> {
         return EmptyList(false, 'metric', 'metric');
       } else {
         const data = getMetricComponentData();
-        return data.map(
-          (mData, idx) => {
+        return Object.keys(data).map(
+          (metricName, idx) => {
             return (
               <div className="metric-item" key={idx}>
-                {MetricLineChart(mData)}
+                {<Chart data={[data[metricName] as Plotly.PlotData]} title={metricName} />}
               </div>
             );
           }
