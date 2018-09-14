@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import * as actions from '../actions/build';
-import EntityBuild from '../components/EntityBuild';
+import EntityBuild from '../components/entityBuild';
 import { AppState } from '../constants/types';
 import { splitUniqueName } from '../constants/utils';
 

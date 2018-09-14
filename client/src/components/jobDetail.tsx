@@ -8,7 +8,7 @@ import {
   getUserUrl,
   splitUniqueName,
 } from '../constants/utils';
-import EntityBuild from '../containers/EntityBuild';
+import EntityBuild from '../containers/entityBuild';
 import Logs from '../containers/logs';
 import Statuses from '../containers/statuses';
 import { ActionInterface } from '../interfaces/actions';

@@ -5,7 +5,7 @@ import { AppState } from '../constants/types';
 import { MetricModel } from '../models/metric';
 
 import * as actions from '../actions/metrics';
-import Metrics from '../components/metrics';
+import Metrics from '../components/experiments/metrics';
 
 export function mapStateToProps(state: AppState, params: any) {
   const useLastFetched = () => {
@@ -13,7 +13,7 @@ export function mapStateToProps(state: AppState, params: any) {
     const count = state.metrics.lastFetched.count;
     const metrics: MetricModel[] = [];
     metricIds.forEach(
-      function(metricId: number, idx: number) {
+      (metricId: number, idx: number) => {
         metrics.push(state.metrics.byIds[metricId]);
       });
     return {metrics, count};
