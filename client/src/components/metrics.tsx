@@ -17,8 +17,8 @@ export interface Props {
 }
 
 export interface DataPoint {
-  x: any[];
-  y: any[];
+  x: Plotly.Datum[];
+  y: Plotly.Datum[];
 }
 
 export default class Metrics extends React.Component<Props, {}> {
