@@ -11,14 +11,11 @@ interface Props {
 
 export default class Chart extends React.Component<Props, {}> {
   public render() {
-    const f = (
+    return (
       <PlotlyChart
         data={this.props.data}
         layout={{title: this.props.title}}
       />
-    );
-    return (
-      f
     );
   }
 }
