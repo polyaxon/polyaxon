@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Jobs from '../components/jobs';
+import Jobs from '../components/jobs/jobs';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
 import { JobModel } from '../models/job';

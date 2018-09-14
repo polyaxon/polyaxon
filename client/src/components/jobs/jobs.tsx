@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import * as actions from '../actions/job';
-import * as search_actions from '../actions/search';
-import { JOB_FILTER_OPTIONS } from '../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
-import { JobModel } from '../models/job';
-import { SearchModel } from '../models/search';
-import { EmptyBookmarks } from './empty/emptyBookmarks';
-import { EmptyList } from './empty/emptyList';
-import { DEFAULT_FILTERS } from './filters/constants';
+import * as actions from '../../actions/job';
+import * as search_actions from '../../actions/search';
+import { JOB_FILTER_OPTIONS } from '../../constants/filtering';
+import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
+import { JobModel } from '../../models/job';
+import { SearchModel } from '../../models/search';
+import { EmptyBookmarks } from '../empty/emptyBookmarks';
+import { EmptyList } from '../empty/emptyList';
+import { DEFAULT_FILTERS } from '../filters/constants';
+import PaginatedTable from '../paginatedTable';
 import Job from './job';
 import JobHeader from './jobHeader';
-import PaginatedTable from './paginatedTable';
 
 export interface Props {
   isCurrentUser: boolean;

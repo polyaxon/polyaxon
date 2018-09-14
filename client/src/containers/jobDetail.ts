@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 
 import * as actions from '../actions/job';
-import JobDetail from '../components/jobDetail';
+import JobDetail from '../components/jobs/jobDetail';
 import { getJobUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {

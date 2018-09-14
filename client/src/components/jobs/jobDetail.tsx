@@ -1,26 +1,26 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../actions/job';
+import * as actions from '../../actions/job';
 import {
   getJobUrl,
   getProjectUrl,
   getUserUrl,
   splitUniqueName,
-} from '../constants/utils';
-import EntityBuild from '../containers/entityBuild';
-import Logs from '../containers/logs';
-import Statuses from '../containers/statuses';
-import { ActionInterface } from '../interfaces/actions';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { JobModel } from '../models/job';
-import { getBookmark } from '../utils/bookmarks';
-import Breadcrumb from './breadcrumb';
-import { EmptyList } from './empty/emptyList';
-import JobInstructions from './instructions/jobInstructions';
+} from '../../constants/utils';
+import EntityBuild from '../../containers/entityBuild';
+import Logs from '../../containers/logs';
+import Statuses from '../../containers/statuses';
+import { ActionInterface } from '../../interfaces/actions';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { JobModel } from '../../models/job';
+import { getBookmark } from '../../utils/bookmarks';
+import Breadcrumb from '../breadcrumb';
+import { EmptyList } from '../empty/emptyList';
+import JobInstructions from '../instructions/jobInstructions';
 import JobOverview from './jobOverview';
-import LinkedTab from './linkedTab';
-import YamlText from './yamlText';
+import LinkedTab from '../linkedTab';
+import YamlText from '../yamlText';
 
 export interface Props {
   job: JobModel;

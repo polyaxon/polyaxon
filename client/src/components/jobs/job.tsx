@@ -2,22 +2,21 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../actions/job';
-import { isDone } from '../constants/statuses';
-import { getBuildUrl } from '../constants/utils';
-import { getJobUrl, splitUniqueName } from '../constants/utils';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { JobModel } from '../models/job';
-import { getBookmark } from '../utils/bookmarks';
-import Actions from './actions';
-import BookmarkStar from './bookmarkStar';
-import Description from './description';
-import BuildLinkMetaInfo from './metaInfo/buildLinkMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import Status from './status';
-import Tags from './tags';
+import * as actions from '../../actions/job';
+import { isDone } from '../../constants/statuses';
+import { getBuildUrl, getJobUrl, splitUniqueName } from '../../constants/utils';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { JobModel } from '../../models/job';
+import { getBookmark } from '../../utils/bookmarks';
+import Actions from '../actions';
+import BookmarkStar from '../bookmarkStar';
+import Description from '../description';
+import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Status from '../status';
+import Tags from '../tags';
 
 export interface Props {
   job: JobModel;

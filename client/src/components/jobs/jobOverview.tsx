@@ -1,16 +1,16 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { JobModel } from '../models/job';
-import Description from './description';
-import { EmptyList } from './empty/emptyList';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import NodeMetaInfo from './metaInfo/nodeMetaInfo';
-import ResourcesMetaInfo from './metaInfo/resourcesMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import Status from './status';
-import Tags from './tags';
+import { JobModel } from '../../models/job';
+import Description from '../description';
+import { EmptyList } from '../empty/emptyList';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Status from '../status';
+import Tags from '../tags';
 
 export interface Props {
   job: JobModel;
@@ -27,10 +27,10 @@ export default class JobOverview extends React.Component<Props, {}> {
       <div className="entity-details">
         <div className="row">
           <div className="col-md-12">
-             <Description
-                description={job.description}
-                showEmpty={true}
-             />
+            <Description
+              description={job.description}
+              showEmpty={true}
+            />
             <div className="meta">
               <UserMetaInfo user={job.user} inline={true}/>
               <DatesMetaInfo
@@ -49,7 +49,7 @@ export default class JobOverview extends React.Component<Props, {}> {
               <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at} inline={true}/>
               <Status status={job.last_status}/>
             </div>
-            <ResourcesMetaInfo resources={job.resources} />
+            <ResourcesMetaInfo resources={job.resources}/>
             <Tags tags={job.tags}/>
           </div>
         </div>
