@@ -1,18 +1,18 @@
 import * as React from 'react';
 
-import * as actions from '../actions/group';
-import * as search_actions from '../actions/search';
-import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../constants/sorting';
-import { FilterOption } from '../interfaces/filterOptions';
-import { GroupModel } from '../models/group';
-import { SearchModel } from '../models/search';
-import { EmptyBookmarks } from './empty/emptyBookmarks';
-import { EmptyList } from './empty/emptyList';
-import { DEFAULT_FILTERS } from './filters/constants';
+import * as actions from '../../actions/group';
+import * as search_actions from '../../actions/search';
+import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../../constants/filtering';
+import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
+import { FilterOption } from '../../interfaces/filterOptions';
+import { GroupModel } from '../../models/group';
+import { SearchModel } from '../../models/search';
+import { EmptyBookmarks } from '../empty/emptyBookmarks';
+import { EmptyList } from '../empty/emptyList';
+import { DEFAULT_FILTERS } from '../filters/constants';
+import PaginatedTable from '../paginatedTable';
 import Group from './group';
 import GroupHeader from './groupHeader';
-import PaginatedTable from './paginatedTable';
 
 export interface Props {
   isCurrentUser: boolean;

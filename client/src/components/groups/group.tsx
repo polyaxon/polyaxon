@@ -1,25 +1,22 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../actions/group';
-import { isDone } from '../constants/statuses';
-import {
-  getGroupUrl,
-  splitUniqueName
-} from '../constants/utils';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { GroupModel } from '../models/group';
-import { getBookmark } from '../utils/bookmarks';
-import Actions from './actions';
-import BookmarkStar from './bookmarkStar';
-import Description from './description';
-import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import SearchAlgorithmMetaInfo from './metaInfo/searchAlgorithmMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import Status from './status';
-import Tags from './tags';
+import * as actions from '../../actions/group';
+import { isDone } from '../../constants/statuses';
+import { getGroupUrl, splitUniqueName } from '../../constants/utils';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { GroupModel } from '../../models/group';
+import { getBookmark } from '../../utils/bookmarks';
+import Actions from '../actions';
+import BookmarkStar from '../bookmarkStar';
+import Description from '../description';
+import ConcurrencyMetaInfo from '../metaInfo/concurrencyMetaInfo';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import SearchAlgorithmMetaInfo from '../metaInfo/searchAlgorithmMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Status from '../status';
+import Tags from '../tags';
 
 export interface Props {
   group: GroupModel;

@@ -1,19 +1,19 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { getGroupTensorboardUrl } from '../constants/utils';
-import { GroupModel } from '../models/group';
-import Description from './description';
-import { EmptyList } from './empty/emptyList';
-import ConcurrencyMetaInfo from './metaInfo/concurrencyMetaInfo';
-import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import MetaInfo from './metaInfo/metaInfo';
-import SearchAlgorithmMetaInfo from './metaInfo/searchAlgorithmMetaInfo';
-import TaskRunMetaInfo from './metaInfo/taskRunMetaInfo';
-import UserMetaInfo from './metaInfo/userMetaInfo';
-import Status from './status';
-import Tags from './tags';
+import { getGroupTensorboardUrl } from '../../constants/utils';
+import { GroupModel } from '../../models/group';
+import Description from '../description';
+import { EmptyList } from '../empty/emptyList';
+import ConcurrencyMetaInfo from '../metaInfo/concurrencyMetaInfo';
+import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import MetaInfo from '../metaInfo/metaInfo';
+import SearchAlgorithmMetaInfo from '../metaInfo/searchAlgorithmMetaInfo';
+import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
+import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Status from '../status';
+import Tags from '../tags';
 
 export interface Props {
   group: GroupModel;

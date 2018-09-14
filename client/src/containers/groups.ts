@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Groups from '../components/groups';
+import Groups from '../components/groups/groups';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
 import { GroupModel } from '../models/group';
@@ -99,7 +99,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
       }
     },
     fetchData: (offset?: number, query?: string, sort?: string) => {
-      const filters: {[key: string]: number|boolean|string} = {};
+      const filters: { [key: string]: number | boolean | string } = {};
       if (query) {
         filters.query = query;
       }

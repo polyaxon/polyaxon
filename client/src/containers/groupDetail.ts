@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../actions/group';
-import GroupDetail from '../components/groupDetail';
+import GroupDetail from '../components/groups/groupDetail';
 import { AppState } from '../constants/types';
 import { getGroupUniqueName } from '../constants/utils';
 
