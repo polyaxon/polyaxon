@@ -8,7 +8,6 @@ import { MetricModel } from '../models/metric';
 
 import Chart from './charts/chart';
 import { EmptyList } from './empty/emptyList';
-import './metrics.less';
 
 export interface Props {
   metrics: MetricModel[];
@@ -21,10 +20,30 @@ export interface DataPoint {
   y: Plotly.Datum[];
 }
 
-export default class Metrics extends React.Component<Props, {}> {
+export interface State {
+  isGrid: boolean;
+}
+
+export default class Metrics extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isGrid: true,
+    };
+  }
+
   public componentDidMount() {
     this.props.fetchData();
   }
+
+  public setLayout = () => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      ...{
+        isGrid: !this.state.isGrid,
+      }
+    }));
+  };
 
   public render() {
 
@@ -62,8 +81,11 @@ export default class Metrics extends React.Component<Props, {}> {
         return Object.keys(data).map(
           (metricName, idx) => {
             return (
-              <div className="metric-item" key={idx}>
-                {<Chart data={[data[metricName] as Plotly.PlotData]} title={metricName} />}
+              <div
+                className={this.state.isGrid ? 'col-md-11 col-md-offset-1' : 'col-md-6'}
+                key={idx}
+              >
+                {<Chart data={[data[metricName] as Plotly.PlotData]} title={metricName}/>}
               </div>
             );
           }
@@ -75,16 +97,25 @@ export default class Metrics extends React.Component<Props, {}> {
       <div className="metrics">
         <div className="row">
           <div className="col-md-12">
-            <div className="metrics-header">
-              Metrics
+            <div className="btn-toolbar pull-left">
+              <button className="btn btn-sm btn-default" onClick={this.setLayout}>
+                <i className="fa fa-save icon" aria-hidden="true"/> Save
+              </button>
+            </div>
+            <div className="btn-toolbar pull-right">
+              <button className="btn btn-sm btn-default">
+                <i className="fa fa-plus icon" aria-hidden="true"/> Add chart
+              </button>
+              <button className="btn btn-sm btn-default" onClick={this.setLayout}>
+                {this.state.isGrid
+                  ? <span><i className="fa fa-bars icon" aria-hidden="true"/> List</span>
+                  : <span><i className="fa fa-th-large icon" aria-hidden="true"/> Grid</span>
+                }
+              </button>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-10 col-md-offset-1">
-            <div className="metrics-content">
-              {getMetricComponent()}
-            </div>
+          <div className="row">
+            {getMetricComponent()}
           </div>
         </div>
       </div>
