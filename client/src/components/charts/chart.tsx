@@ -14,7 +14,7 @@ export default class Chart extends React.Component<Props, {}> {
     return (
       <PlotlyChart
         data={this.props.data}
-        layout={{title: this.props.title}}
+        layout={{title: this.props.title, autosize: true}}
       />
     );
   }
