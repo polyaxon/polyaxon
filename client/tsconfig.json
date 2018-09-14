@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "typeRoots": [
-        "./node_modules/@types"
+        "./node_modules/@types",
+        "./src/@types"
     ],
     "outDir": "./dist",
     "module": "commonjs",
@@ -33,6 +34,6 @@
   ],
   "baseUrl": ".",
   "paths": {
-    "*": [ "./typings/*" ]
+    "*": [ "./src/@types/*" ]
   }
 }
