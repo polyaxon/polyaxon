@@ -29,7 +29,7 @@ export default class Metrics extends React.Component<Props, {}> {
   public render() {
 
     const convertTimeFormat = (d: string) => {
-      return moment(d).format('HH:mm:ss');
+      return moment(d).format('YYYY-MM-DD HH:mm:ss');
     };
 
     const getMetricComponentData = () => {
