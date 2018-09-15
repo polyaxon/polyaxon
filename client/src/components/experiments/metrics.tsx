@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import * as React from 'react';
+import { Dropdown, MenuItem } from 'react-bootstrap';
 
 import * as Plotly from 'plotly.js';
 
@@ -13,6 +14,8 @@ export interface Props {
   metrics: MetricModel[];
   count: number;
   fetchData: () => actions.MetricsAction;
+  deleteView?: (view: string) => actions.MetricsAction;
+  createView?: (view: string) => actions.MetricsAction;
 }
 
 export interface DataPoint {
@@ -45,11 +48,51 @@ export default class Metrics extends React.Component<Props, State> {
     }));
   };
 
+  public saveView = (event: any) => {
+    event.preventDefault();
+    if (this.props.createView) {
+      this.props.createView('');
+    }
+    this.handleClose();
+  };
+
+  public deleteView = (event: any, view: string) => {
+    event.preventDefault();
+    if (this.props.deleteView) {
+      this.props.deleteView(view);
+    }
+  };
+
+  public selectView = (view: string) => {
+    const state = {};
+
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...state
+    }));
+  };
+
+  public handleClose = () => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...{showViewModal: false}
+    }));
+  };
+
+  public handleShow = () => {
+    const saveViewForm = {
+      name: '',
+    };
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...{showViewModal: true, saveViewForm}
+    }));
+  };
+
   public render() {
 
     const convertTimeFormat = (d: string) => {
       return moment(d).format('YYYY-MM-DD HH:mm:ss');
     };
+
+    const views: string[] = [];
 
     const getMetricComponentData = () => {
       const metrics = this.props.metrics;
@@ -93,13 +136,57 @@ export default class Metrics extends React.Component<Props, State> {
       }
     };
 
+    const viewsComponent = (
+      <Dropdown id="dropdown-views">
+        <Dropdown.Toggle
+          bsStyle="default"
+          bsSize="small"
+        >
+          <i className="fa fa-clone icon" aria-hidden="true"/> Views
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {views.map(
+            (view, idx: number) =>
+              <MenuItem
+                key={idx}
+                className="search-saved-query"
+                onClick={() => this.selectView(view)}
+              >
+                <button
+                  type="button"
+                  className="close pull-right"
+                  aria-label="Close"
+                  onClick={(event) => this.deleteView(event, view)}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <span>
+                      {view || 'untitled'}:
+                    </span>
+                <p className="query-desc">
+                    <span className="label label-search">
+                      Query:
+                    </span> {view}
+                </p>
+              </MenuItem>
+          )}
+          {views.length === 0 &&
+          <MenuItem className="search-saved-query">
+            No saved views
+          </MenuItem>
+          }
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+
     return (
       <div className="metrics">
         <div className="row">
           <div className="col-md-12">
-            <div className="btn-toolbar pull-left">
-              <button className="btn btn-sm btn-default" onClick={this.setLayout}>
-                <i className="fa fa-save icon" aria-hidden="true"/> Save
+            <div className="btn-group pull-left">
+              {viewsComponent}
+              <button className="btn btn-sm btn-default" onClick={() => this.handleShow()}>
+                <i className="fa fa-download icon" aria-hidden="true"/> Save view
               </button>
             </div>
             <div className="btn-toolbar pull-right">
