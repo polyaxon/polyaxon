@@ -1,14 +1,11 @@
-import * as moment from 'moment';
 import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
-import * as Plotly from 'plotly.js';
-
 import * as actions from '../../actions/metrics';
-import { DataPoint } from '../../interfaces/dataPoint';
+import { ChartModel } from '../../models/chart';
+import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
-import Chart from '../charts/chart';
-import { EmptyList } from '../empty/emptyList';
+import ChartView from '../charts/chartView';
 
 export interface Props {
   metrics: MetricModel[];
@@ -20,18 +17,34 @@ export interface Props {
 
 export interface State {
   isGrid: boolean;
+  metricNames: string[];
+  view: ChartViewModel;
 }
 
 export default class Metrics extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    const metricNames = this.getMetricNames();
     this.state = {
       isGrid: true,
+      metricNames,
+      view: this.getDefaultView(metricNames)
     };
   }
 
   public componentDidMount() {
     this.props.fetchData();
+  }
+
+  public componentDidUpdate(prevProps: Props, prevState: State) {
+    if (this.props.metrics !== prevProps.metrics) {
+      const metricNames = this.getMetricNames();
+      this.setState({
+        isGrid: prevState.isGrid,
+        metricNames,
+        view: this.getDefaultView(metricNames)
+      });
+    }
   }
 
   public setLayout = () => {
@@ -81,60 +94,25 @@ export default class Metrics extends React.Component<Props, State> {
     }));
   };
 
-  public render() {
+  public getDefaultView = (metricNames: string[]) => {
+    const charts: ChartModel[] = [];
+    for (const metricName of metricNames) {
+      charts.push({name: metricName, metricNames: [metricName], mode: 'lines'} as ChartModel);
+    }
+    return {charts, name: 'default'} as ChartViewModel;
+  };
 
-    const convertTimeFormat = (d: string) => {
-      return moment(d).format('YYYY-MM-DD HH:mm:ss');
-    };
-
-    const metricNames = [...Array.from(
+  public getMetricNames = () => {
+    return [...Array.from(
       new Set(([] as string[]).concat(
         ...this.props.metrics.map((metric) => Object.keys(metric.values)))
       )
     )].sort();
+  };
+
+  public render() {
+
     const views: string[] = [];
-
-    const getMetricComponentData = () => {
-      const metrics = this.props.metrics;
-      const metricData: { [key: string]: DataPoint } = {};
-
-      for (const metric of metrics) {
-        const createdAt = metric.created_at;
-        for (const metricName of Object.keys(metric.values)) {
-          if (metricName in metricData) {
-            metricData[metricName].x.push(convertTimeFormat(createdAt));
-            metricData[metricName].y.push(metric.values[metricName]);
-          } else {
-            metricData[metricName] = {
-              x: [convertTimeFormat(createdAt)],
-              y: [metric.values[metricName]]
-            };
-          }
-        }
-      }
-
-      return metricData;
-    };
-
-    const getMetricComponent = () => {
-      if (this.props.count === 0) {
-        return EmptyList(false, 'metric', 'metric');
-      } else {
-        const data = getMetricComponentData();
-        return Object.keys(data).map(
-          (metricName, idx) => {
-            return (
-              <div
-                className={this.state.isGrid ? 'col-md-6' : 'col-md-11 col-md-offset-1'}
-                key={idx}
-              >
-                {<Chart data={[data[metricName] as Plotly.PlotData]} title={metricName}/>}
-              </div>
-            );
-          }
-        );
-      }
-    };
 
     const viewsComponent = (
       <Dropdown id="dropdown-views">
@@ -201,9 +179,11 @@ export default class Metrics extends React.Component<Props, State> {
               </button>
             </div>
           </div>
-          <div className="row">
-            {getMetricComponent()}
-          </div>
+          <ChartView
+            className={this.state.isGrid ? 'col-md-6' : 'col-md-11 col-md-offset-1'}
+            metrics={this.props.metrics}
+            view={this.state.view}
+          />
         </div>
       </div>
     );
