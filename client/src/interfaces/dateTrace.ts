@@ -1,4 +1,4 @@
-import { ChartModes } from '../models/chart';
+import { ChartModes, ChartTypes } from '../models/chart';
 
 export interface DateTrace {
   x: Plotly.Datum[];
@@ -9,4 +9,5 @@ export interface DateTrace {
 export interface Trace extends DateTrace {
   name: string;
   mode: ChartModes;
+  type: ChartTypes;
 }

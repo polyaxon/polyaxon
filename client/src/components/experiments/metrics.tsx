@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dropdown, MenuItem } from 'react-bootstrap';
+import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
 import * as actions from '../../actions/metrics';
 import { ChartModel } from '../../models/chart';
@@ -19,6 +19,7 @@ export interface State {
   isGrid: boolean;
   metricNames: string[];
   view: ChartViewModel;
+  showViewModal: boolean;
 }
 
 export default class Metrics extends React.Component<Props, State> {
@@ -27,6 +28,7 @@ export default class Metrics extends React.Component<Props, State> {
     const metricNames = this.getMetricNames();
     this.state = {
       isGrid: true,
+      showViewModal: false,
       metricNames,
       view: this.getDefaultView(metricNames)
     };
@@ -97,7 +99,12 @@ export default class Metrics extends React.Component<Props, State> {
   public getDefaultView = (metricNames: string[]) => {
     const charts: ChartModel[] = [];
     for (const metricName of metricNames) {
-      charts.push({name: metricName, metricNames: [metricName], mode: 'lines'} as ChartModel);
+      charts.push({
+        name: metricName,
+        metricNames: [metricName],
+        mode: 'lines',
+        type: 'scatter'
+      } as ChartModel);
     }
     return {charts, name: 'default'} as ChartViewModel;
   };
@@ -114,7 +121,7 @@ export default class Metrics extends React.Component<Props, State> {
 
     const views: string[] = [];
 
-    const viewsComponent = (
+    const viewsList = (
       <Dropdown id="dropdown-views">
         <Dropdown.Toggle
           bsStyle="default"
@@ -162,7 +169,7 @@ export default class Metrics extends React.Component<Props, State> {
         <div className="row">
           <div className="col-md-12">
             <div className="btn-group pull-left">
-              {viewsComponent}
+              {viewsList}
               <button className="btn btn-sm btn-default" onClick={() => this.handleShow()}>
                 <i className="fa fa-download icon" aria-hidden="true"/> Save view
               </button>
@@ -185,6 +192,32 @@ export default class Metrics extends React.Component<Props, State> {
             view={this.state.view}
           />
         </div>
+        <Modal show={this.state.showViewModal} onHide={this.handleClose}>
+          <Modal.Header closeButton={true}>
+            <Modal.Title>Save search query</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form className="form-horizontal" onSubmit={this.saveView}>
+              <div className="form-group">
+                <label className="col-sm-2 control-label">Name</label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="untitled"
+                    // value={this.state.saveQueryForm.name}
+                    // onChange={(event) => this.updateQueryForm('name', event.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <div className="col-sm-offset-2 col-sm-10">
+                  <button type="submit" className="btn btn-default" onClick={this.saveView}>Save</button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }

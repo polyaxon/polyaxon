@@ -33,18 +33,21 @@ export default class ChartView extends React.Component<Props, {}> {
             traces[metricName] = {
               x: [convertTimeFormat(createdAt)],
               y: [metric.values[metricName]],
+              name: metricName,
               mode: chart.mode,
-              name: metricName
+              type: chart.type,
             };
           }
         }
       }
-      return chart.metricNames.map((chartName) => traces[chartName]) as Plotly.PlotData[];
+      return chart.metricNames
+        .filter((chartName) => chartName in traces)
+        .map((chartName) => traces[chartName]) as Plotly.PlotData[];
     };
 
-    const getChart = (chart: ChartModel) => {
+    const getChart = (chart: ChartModel, idx: number) => {
       return (
-        <div className={this.props.className}>
+        <div className={this.props.className} key={chart.name + idx}>
           {<Chart data={getChartData(chart)} title={chart.name}/>}
         </div>
       );
@@ -52,7 +55,7 @@ export default class ChartView extends React.Component<Props, {}> {
 
     return (
       <div className="row">
-        {this.props.view.charts.map((chart) => getChart(chart))}
+        {this.props.view.charts.map((chart, idx) => getChart(chart, idx))}
       </div>
     );
   }
