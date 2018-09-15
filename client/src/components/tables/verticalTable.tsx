@@ -23,7 +23,7 @@ function VerticalTable({values, keys}: Props) {
               {col}
             </th>
             <td className="list-item block">
-              {!_.isNil(values[col])  && values[col] + ''}
+              {!_.isNil(values[col]) && values[col] + ''}
             </td>
           </tr>
         )}

@@ -4,12 +4,12 @@ import { Pager } from 'react-bootstrap';
 
 import * as queryString from 'query-string';
 
-import * as search_actions from '../actions/search';
-import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
-import FilterList from '../containers/filterList';
-import { FilterOption } from '../interfaces/filterOptions';
-import { SearchModel } from '../models/search';
-import { DEFAULT_FILTERS } from './filters/constants';
+import * as search_actions from '../../actions/search';
+import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../../constants/paginate';
+import FilterList from '../../containers/filterList';
+import { FilterOption } from '../../interfaces/filterOptions';
+import { SearchModel } from '../../models/search';
+import { DEFAULT_FILTERS } from '../filters/constants';
 import './paginatedTable.less';
 
 export interface Props {

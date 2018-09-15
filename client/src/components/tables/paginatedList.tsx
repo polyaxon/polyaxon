@@ -4,10 +4,10 @@ import { Pager } from 'react-bootstrap';
 
 import * as queryString from 'query-string';
 
-import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../constants/paginate';
-import FilterList from '../containers/filterList';
-import { FilterOption } from '../interfaces/filterOptions';
-import { DEFAULT_FILTERS } from './filters/constants';
+import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../../constants/paginate';
+import FilterList from '../../containers/filterList';
+import { FilterOption } from '../../interfaces/filterOptions';
+import { DEFAULT_FILTERS } from '../filters/constants';
 import './paginatedList.less';
 
 export interface Props {
@@ -25,7 +25,7 @@ interface State {
   offset: number;
   query?: string;
   sort?: string;
-  extraFilters?: {[key: string]: number|boolean|string};
+  extraFilters?: { [key: string]: number | boolean | string };
 }
 
 export default class PaginatedList extends React.Component<Props, State> {
@@ -60,10 +60,10 @@ export default class PaginatedList extends React.Component<Props, State> {
 
   public componentDidMount() {
     this.props.fetchData(
-        this.state.offset,
-        this.state.query,
-        this.state.sort,
-        this.state.extraFilters);
+      this.state.offset,
+      this.state.query,
+      this.state.sort,
+      this.state.extraFilters);
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
@@ -80,8 +80,8 @@ export default class PaginatedList extends React.Component<Props, State> {
       this.setState({offset: 0});
     }
     if (this.state.extraFilters &&
-        prevState.extraFilters &&
-        !_.isEqual(this.state.extraFilters, prevState.extraFilters)) {
+      prevState.extraFilters &&
+      !_.isEqual(this.state.extraFilters, prevState.extraFilters)) {
       changed = true;
       this.setState({offset: 0});
     }
@@ -106,7 +106,7 @@ export default class PaginatedList extends React.Component<Props, State> {
     }));
   };
 
-  public handleFilter = (query: string, sort: string, extraFilters?: {[key: string]: number|boolean|string}) => {
+  public handleFilter = (query: string, sort: string, extraFilters?: { [key: string]: number | boolean | string }) => {
     this.setState((prevState, prevProps) => ({
       query,
       sort,
