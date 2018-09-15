@@ -1,17 +1,17 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { getNotebookUrl, getProjectTensorboardUrl } from '../constants/utils';
-import { ProjectModel } from '../models/project';
-import Description from './description';
-import { EmptyList } from './empty/emptyList';
-import BuildCountMetaInfo from './metaInfo/counts/buildCountMetaInfo';
-import ExperimentCountMetaInfo from './metaInfo/counts/experimentCountMetaInfo';
-import GroupCountMetaInfo from './metaInfo/counts/groupCountMetaInfo';
-import JobCountMetaInfo from './metaInfo/counts/jobCountMetaInfo';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import MetaInfo from './metaInfo/metaInfo';
-import Tags from './tags';
+import { getNotebookUrl, getProjectTensorboardUrl } from '../../constants/utils';
+import { ProjectModel } from '../../models/project';
+import Description from '../description';
+import { EmptyList } from '../empty/emptyList';
+import BuildCountMetaInfo from '../metaInfo/counts/buildCountMetaInfo';
+import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo';
+import GroupCountMetaInfo from '../metaInfo/counts/groupCountMetaInfo';
+import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import MetaInfo from '../metaInfo/metaInfo';
+import Tags from '../tags';
 
 export interface Props {
   project: ProjectModel;
@@ -52,14 +52,14 @@ function ProjectOverview({project}: Props) {
               count={project.num_experiment_groups}
               inline={true}
             />
-             <JobCountMetaInfo
+            <JobCountMetaInfo
               count={project.num_jobs}
               inline={true}
-             />
-             <BuildCountMetaInfo
+            />
+            <BuildCountMetaInfo
               count={project.num_builds}
               inline={true}
-             />
+            />
           </div>
           {project.has_tensorboard &&
           <div className="meta">

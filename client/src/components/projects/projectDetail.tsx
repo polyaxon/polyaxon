@@ -1,21 +1,21 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../actions/project';
-import { getProjectUrl, getUserUrl, isTrue } from '../constants/utils';
-import ActivityLogs from '../containers/activityLogs';
-import Builds from '../containers/builds';
-import Experiments from '../containers/experiments';
-import Groups from '../containers/groups';
-import Jobs from '../containers/jobs';
-import { ActionInterface } from '../interfaces/actions';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { ProjectModel } from '../models/project';
-import { getBookmark } from '../utils/bookmarks';
-import Breadcrumb from './breadcrumb';
-import { EmptyList } from './empty/emptyList';
-import ProjectInstructions from './instructions/projectInstructions';
-import LinkedTab from './linkedTab';
+import * as actions from '../../actions/project';
+import { getProjectUrl, getUserUrl } from '../../constants/utils';
+import ActivityLogs from '../../containers/activityLogs';
+import Builds from '../../containers/builds';
+import Experiments from '../../containers/experiments';
+import Groups from '../../containers/groups';
+import Jobs from '../../containers/jobs';
+import { ActionInterface } from '../../interfaces/actions';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { ProjectModel } from '../../models/project';
+import { getBookmark } from '../../utils/bookmarks';
+import Breadcrumb from '../breadcrumb';
+import { EmptyList } from '../empty/emptyList';
+import ProjectInstructions from '../instructions/projectInstructions';
+import LinkedTab from '../linkedTab';
 import ProjectOverview from './projectOverview';
 
 export interface Props {

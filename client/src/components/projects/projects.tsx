@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import * as actions from '../actions/project';
-import PaginatedTable from '../components/paginatedTable';
-import { ProjectModel } from '../models/project';
-import { EmptyBookmarks } from './empty/emptyBookmarks';
-import { EmptyList } from './empty/emptyList';
+import * as actions from '../../actions/project';
+import PaginatedTable from '../paginatedTable';
+import { ProjectModel } from '../../models/project';
+import { EmptyBookmarks } from '../empty/emptyBookmarks';
+import { EmptyList } from '../empty/emptyList';
 import Project from './project';
 import ProjectHeader from './projectHeader';
 

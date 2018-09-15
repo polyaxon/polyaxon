@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../actions/project';
-import { getProjectUrl } from '../constants/utils';
-import { BookmarkInterface } from '../interfaces/bookmarks';
-import { ProjectModel } from '../models/project';
-import { getBookmark } from '../utils/bookmarks';
-import Actions from './actions';
-import BookmarkStar from './bookmarkStar';
-import Description from './description';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
-import MetaInfo from './metaInfo/metaInfo';
-import Tags from './tags';
+import * as actions from '../../actions/project';
+import { getProjectUrl } from '../../constants/utils';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { ProjectModel } from '../../models/project';
+import { getBookmark } from '../../utils/bookmarks';
+import Actions from '../actions';
+import BookmarkStar from '../bookmarkStar';
+import Description from '../description';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import MetaInfo from '../metaInfo/metaInfo';
+import Tags from '../tags';
 
 export interface Props {
   project: ProjectModel;
