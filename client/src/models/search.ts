@@ -3,11 +3,11 @@ import { LastFetchedIds } from './utils';
 export class SearchModel {
   public id: number;
   public name: string;
-  public query: {[key: string]: string};
+  public query: { [key: string]: string };
 }
 
 export class SearchesStateSchema {
-  public byIds: {[id: number]: SearchModel};
+  public byIds: { [id: number]: SearchModel };
   public ids: number[];
   public lastFetched: LastFetchedIds;
 }

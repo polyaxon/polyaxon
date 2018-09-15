@@ -7,7 +7,7 @@ export class UserModel {
 }
 
 export class UserStateSchema {
-  public byUserNames: {[username: string]: UserModel};
+  public byUserNames: { [username: string]: UserModel };
   public userNames: string[];
 }
 

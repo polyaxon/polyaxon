@@ -31,7 +31,7 @@ export class GroupModel {
 }
 
 export class GroupStateSchema {
-  public byUniqueNames: {[uniqueName: string]: GroupModel};
+  public byUniqueNames: { [uniqueName: string]: GroupModel };
   public uniqueNames: string[];
   public lastFetched: LastFetchedNames;
 }

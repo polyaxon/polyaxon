@@ -11,7 +11,7 @@ export class ActivityLogModel {
 }
 
 export class ActivityLogsStateSchema {
-  public byIds: {[id: number]: ActivityLogModel};
+  public byIds: { [id: number]: ActivityLogModel };
   public ids: number[];
   public lastFetched: LastFetchedIds;
 }

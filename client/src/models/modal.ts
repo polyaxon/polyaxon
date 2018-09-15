@@ -12,7 +12,7 @@ export enum modalTypes {
   CREATE_PROJECT = 'CREATE_PROJECT',
 }
 
-export const modalPropsByTypes: {[id: string]: any} = {};
+export const modalPropsByTypes: { [id: string]: any } = {};
 modalPropsByTypes[modalTypes.CREATE_PROJECT] = {
   show: false,
   heading: 'New Project',

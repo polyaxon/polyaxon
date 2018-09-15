@@ -26,7 +26,7 @@ export class ProjectModel {
 }
 
 export class ProjectStateSchema {
-  public byUniqueNames: {[uniqueName: string]: ProjectModel};
+  public byUniqueNames: { [uniqueName: string]: ProjectModel };
   public uniqueNames: string[];
   public lastFetched: LastFetchedNames;
 

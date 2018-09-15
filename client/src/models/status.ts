@@ -11,7 +11,7 @@ export class StatusModel {
 }
 
 export class StatusStateSchema {
-  public byIds: {[id: number]: StatusModel};
+  public byIds: { [id: number]: StatusModel };
   public ids: number[];
   public lastFetched: LastFetchedIds;
 }

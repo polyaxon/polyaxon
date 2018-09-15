@@ -16,11 +16,11 @@ export class ExperimentJobModel {
   public started_at: string;
   public finished_at: string;
   public node_scheduled: string;
-  public resources: {[key: string]: any};
+  public resources: { [key: string]: any };
 }
 
 export class ExperimentJobStateSchema {
-  public byUniqueNames: {[uniqueName: string]: ExperimentJobModel};
+  public byUniqueNames: { [uniqueName: string]: ExperimentJobModel };
   public uniqueNames: string[];
   public lastFetched: LastFetchedNames;
 }

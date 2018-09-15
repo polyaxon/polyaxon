@@ -6,7 +6,7 @@ export class ExperimentModel {
   public id: number;
   public description: string;
   public user: string;
-  public config: {[key: string]: any};
+  public config: { [key: string]: any };
   public num_jobs: number;
   public last_status: string;
   public deleted?: boolean;
@@ -19,18 +19,18 @@ export class ExperimentModel {
   public updated_at: string;
   public started_at: string;
   public finished_at: string;
-  public declarations: {[key: string]: any};
+  public declarations: { [key: string]: any };
   public tags: string[] = [];
-  public last_metric: {[metric: string]: number};
-  public data_refs: {[key: string]: string};
-  public resources: {[key: string]: any};
-  public run_env: {[key: string]: any};
+  public last_metric: { [metric: string]: number };
+  public data_refs: { [key: string]: string };
+  public resources: { [key: string]: any };
+  public run_env: { [key: string]: any };
   public jobs: string[] = [];
   public bookmarked: boolean;
 }
 
 export class ExperimentStateSchema {
-  public byUniqueNames: {[uniqueName: string]: ExperimentModel};
+  public byUniqueNames: { [uniqueName: string]: ExperimentModel };
   public uniqueNames: string[];
   public lastFetched: LastFetchedNames;
 }

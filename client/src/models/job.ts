@@ -17,14 +17,14 @@ export class JobModel {
   public updated_at: string;
   public started_at: string;
   public finished_at: string;
-  public resources: {[key: string]: any};
-  public config: {[key: string]: any};
+  public resources: { [key: string]: any };
+  public config: { [key: string]: any };
   public node_scheduled: string;
   public bookmarked: boolean;
 }
 
 export class JobStateSchema {
-  public byUniqueNames: {[uniqueName: string]: JobModel};
+  public byUniqueNames: { [uniqueName: string]: JobModel };
   public uniqueNames: string[];
   public lastFetched: LastFetchedNames;
 }

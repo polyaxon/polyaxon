@@ -11,7 +11,7 @@ export class CodeReferenceModel {
 }
 
 export class CodeReferenceStateSchema {
-  public byIds: {[id: number]: CodeReferenceModel};
+  public byIds: { [id: number]: CodeReferenceModel };
   public ids: number[];
   public lastFetched: LastFetchedIds;
 }

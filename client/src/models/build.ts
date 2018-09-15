@@ -18,8 +18,8 @@ export class BuildModel {
   public finished_at: string;
   public commit: string;
   public dockerfile: string;
-  public config: {[key: string]: any};
-  public resources: {[key: string]: any};
+  public config: { [key: string]: any };
+  public resources: { [key: string]: any };
   public node_scheduled: string;
   public num_jobs: number;
   public num_experiments: number;
@@ -27,7 +27,7 @@ export class BuildModel {
 }
 
 export class BuildStateSchema {
-  public byUniqueNames: {[uniqueName: string]: BuildModel};
+  public byUniqueNames: { [uniqueName: string]: BuildModel };
   public uniqueNames: string[];
   public lastFetched: LastFetchedNames;
 }
