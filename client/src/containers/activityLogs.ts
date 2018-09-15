@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 
 import * as actions from '../actions/activityLog';
-import ActivityLogs from '../components/activityLogs';
+import ActivityLogs from '../components/activitylogs/activityLogs';
 import { ActivityLogModel } from '../models/activitylog';
 
 interface OwnProps {
@@ -41,7 +41,7 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.ActivityLogAction>, ownProps: OwnProps): DispatchProps {
   return {
     fetchData: (offset?: number) => {
-      const filters: {[key: string]: number|boolean|string} = {};
+      const filters: { [key: string]: number | boolean | string } = {};
       if (offset) {
         filters.offset = offset;
       }

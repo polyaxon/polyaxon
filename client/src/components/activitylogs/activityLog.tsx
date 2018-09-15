@@ -9,9 +9,9 @@ import {
   getUserUrl,
   splitUniqueName,
   urlifyProjectName,
-} from '../constants/utils';
-import { ActivityLogModel } from '../models/activitylog';
-import DatesMetaInfo from './metaInfo/datesMetaInfo';
+} from '../../constants/utils';
+import { ActivityLogModel } from '../../models/activitylog';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 
 export interface Props {
   activityLog: ActivityLogModel;

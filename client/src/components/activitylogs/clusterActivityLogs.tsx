@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import ActivityLogs from '../containers/activityLogs';
-import Breadcrumb from './breadcrumb';
+import ActivityLogs from '../../containers/activityLogs';
+import Breadcrumb from '../breadcrumb';
 
 function ClusterActivityLogs() {
   return (
@@ -12,7 +12,7 @@ function ClusterActivityLogs() {
           links={[
             {name: 'activities'}]}
         />
-       <ActivityLogs />
+        <ActivityLogs/>
       </div>
     </div>
   );

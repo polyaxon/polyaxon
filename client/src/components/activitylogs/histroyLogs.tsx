@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import ActivityLogs from '../containers/activityLogs';
-import Breadcrumb from './breadcrumb';
+import ActivityLogs from '../../containers/activityLogs';
+import Breadcrumb from '../breadcrumb';
 
 function HistoryLogs() {
   return (
@@ -12,7 +12,7 @@ function HistoryLogs() {
           links={[
             {name: 'Recently viewed'}]}
         />
-       <ActivityLogs history={true} />
+        <ActivityLogs history={true}/>
       </div>
     </div>
   );

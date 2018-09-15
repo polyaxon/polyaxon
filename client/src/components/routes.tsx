@@ -10,8 +10,8 @@ import JobDetail from '../containers/jobDetail';
 import ProjectDetail from '../containers/projectDetail';
 import Token from '../containers/token';
 import User from '../containers/user';
-import ClusterActivityLogs from './clusterActivityLogs';
-import HistoryLogs from './histroyLogs';
+import ClusterActivityLogs from './activitylogs/clusterActivityLogs';
+import HistoryLogs from './activitylogs/histroyLogs';
 
 import { getHomeUrl } from '../constants/utils';
 

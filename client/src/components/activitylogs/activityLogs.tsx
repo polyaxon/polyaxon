@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { ActivityLogModel } from '../models/activitylog';
+import { ActivityLogModel } from '../../models/activitylog';
 import ActivityLog from './activityLog';
 import ActivityLogHeader from './activityLogHeader';
-import { EmptyList } from './empty/emptyList';
-import PaginatedList from './paginatedList';
+import { EmptyList } from '../empty/emptyList';
+import PaginatedList from '../paginatedList';
 
 export interface Props {
   activityLogs: ActivityLogModel[];
@@ -34,10 +34,10 @@ export default class ActivityLogs extends React.Component<Props, State> {
           {this.props.activityLogs
             .filter((activityLog: ActivityLogModel) => subjects.indexOf(activityLog.event_subject) > -1)
             .map(
-            (activityLog: ActivityLogModel) =>
-              <li className="list-item" key={activityLog.id}>
-                <ActivityLog activityLog={activityLog}/>
-              </li>)}
+              (activityLog: ActivityLogModel) =>
+                <li className="list-item" key={activityLog.id}>
+                  <ActivityLog activityLog={activityLog}/>
+                </li>)}
         </ul>
       );
     };
