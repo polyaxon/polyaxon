@@ -11,9 +11,9 @@ import { SearchModel } from '../../models/search';
 import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
-import Experiment from './experiment';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import PaginatedTable from '../tables/paginatedTable';
+import Experiment from './experiment';
 
 import './experiments.less';
 
