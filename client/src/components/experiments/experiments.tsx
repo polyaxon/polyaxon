@@ -9,6 +9,7 @@ import { FilterOption } from '../../interfaces/filterOptions';
 import { ExperimentModel } from '../../models/experiment';
 import { SearchModel } from '../../models/search';
 import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
+import AutocompleteLabel from '../autocompleteLabel';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
@@ -16,26 +17,6 @@ import PaginatedTable from '../tables/paginatedTable';
 import Experiment from './experiment';
 
 import './experiments.less';
-
-interface TableColumnProps {
-  type: string;
-  value: string;
-  onClick: (type: string, value: string) => any;
-}
-
-function TableColumn({type, value, onClick}: TableColumnProps) {
-  return (
-    <span className="label-autocomplete-container">
-      <span className="label label-autocomplete ">{type}:</span>
-      <span className="label label-autocomplete label-autocomplete-value">
-        <span>{value}</span>
-        <span className="remove" onClick={() => onClick(type, value)}>
-          <i className="fa fa-close icon" aria-hidden="true"/>
-        </span>
-      </span>
-    </span>
-  );
-}
 
 export interface Props {
   isCurrentUser: boolean;
@@ -101,7 +82,7 @@ export default class Experiments extends React.Component<Props, State> {
     }));
   };
 
-  public removeColumn = (type: string, value: string) => {
+  public removeColumn = (value: string, type: string) => {
     const metrics = this.state.metrics.filter((
       item: string) => item !== value);
     const declarations = this.state.declarations.filter((
@@ -186,7 +167,7 @@ export default class Experiments extends React.Component<Props, State> {
           <form className="form-horizontal form-columns">
             {this.state.declarations.map(
               (value: string, idx: number) =>
-                <TableColumn
+                <AutocompleteLabel
                   key={idx}
                   type="param"
                   value={value}
@@ -195,7 +176,7 @@ export default class Experiments extends React.Component<Props, State> {
             )}
             {this.state.metrics.map(
               (value: string, idx: number) =>
-                <TableColumn
+                <AutocompleteLabel
                   key={idx}
                   type="metric"
                   value={value}
