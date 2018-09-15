@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import './instructions.less';
 
 export interface Props {
@@ -79,7 +80,7 @@ function ProjectInstructions({projectName}: Props) {
                 polyaxon tensorboard start [-f polyaxonfile.yml] [-f override_file.yml] [-u]
               </div>
             </div>
-             <div className="instructions-section">
+            <div className="instructions-section">
               <h4>Bookmark project</h4>
               <div className="instructions-section-content">
                 polyaxon project bookmark

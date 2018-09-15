@@ -3,6 +3,7 @@ import * as React from 'react';
 import { MenuItem, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { getHomeUrl, getLogoutUrl, isUserAuthenticated } from '../constants/utils';
+
 import './header.less';
 
 function Header() {

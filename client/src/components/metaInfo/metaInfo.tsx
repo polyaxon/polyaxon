@@ -6,7 +6,7 @@ import './metaInfo.less';
 export interface Props {
   icon: string;
   name: string;
-  value: string|number|boolean|React.ReactNode;
+  value: string | number | boolean | React.ReactNode;
   tooltip?: string;
   inline?: boolean;
   extraClass?: string;
@@ -29,7 +29,7 @@ function MetaInfo({icon, name, value, tooltip, inline = false, extraClass = ''}:
     );
     return tooltip ? (
       <OverlayTrigger placement="bottom" overlay={tooltipContent}>
-      {info}
+        {info}
       </OverlayTrigger>
     ) : info;
   }

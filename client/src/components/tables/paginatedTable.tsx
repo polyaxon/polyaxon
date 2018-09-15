@@ -10,6 +10,7 @@ import FilterList from '../../containers/filterList';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
 import { DEFAULT_FILTERS } from '../filters/constants';
+
 import './paginatedTable.less';
 
 export interface Props {

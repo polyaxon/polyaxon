@@ -4,6 +4,7 @@ import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 import * as actions from '../../actions/search';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
+
 import './filterList.less';
 
 export interface Props {
@@ -26,7 +27,7 @@ interface State {
   searches: SearchModel[];
   showFilters: boolean;
   showSearchModal: boolean;
-  saveQueryForm: { name: string, query: string, sort: string};
+  saveQueryForm: { name: string, query: string, sort: string };
 }
 
 export default class FilterList extends React.Component<Props, State> {

@@ -9,7 +9,7 @@ export function EmptyBookmarks(isCurrentUser: boolean, objectType: string, image
         <div className="jumbotron jumbotron-action text-center empty-jumbotron">
           <h3>No bookmarked {objectType}</h3>
           {image && isCurrentUser &&
-            <img src={`/static/images/${image}.svg`} alt={image} className="empty-icon"/>
+          <img src={`/static/images/${image}.svg`} alt={image} className="empty-icon"/>
           }
         </div>
       </div>

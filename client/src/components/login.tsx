@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { getHomeUrl } from '../constants/utils';
+
 import './login.less';
 
 export interface Props {
@@ -29,7 +31,7 @@ export default class Login extends React.Component<Props, {}> {
         document.getElementById('error-message') as HTMLElement
       ).innerHTML = 'Unable to log in with provided credentials.';
     });
-  }
+  };
 
   public componentWillMount() {
     this.props.fetchUser().then(

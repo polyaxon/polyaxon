@@ -12,9 +12,10 @@ import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import Experiment from './experiment';
-import './experiments.less';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import PaginatedTable from '../tables/paginatedTable';
+
+import './experiments.less';
 
 interface TableColumnProps {
   type: string;

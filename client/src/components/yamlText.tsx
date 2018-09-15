@@ -6,7 +6,7 @@ import './text.less';
 
 export interface Props {
   title: string;
-  config?: {[key: string]: any};
+  config?: { [key: string]: any };
   configText?: string;
 }
 

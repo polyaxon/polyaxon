@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CREATED, FAILED, STOPPED, SUCCEEDED } from '../constants/statuses';
+
 import './status.less';
 
 export interface Props {

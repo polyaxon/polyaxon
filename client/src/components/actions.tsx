@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
+
 import './actions.less';
 
 export interface Props {
@@ -30,7 +31,7 @@ function Actions({onDelete, onStop, isRunning = false, pullRight = false}: Props
           <i className="fa fa-stop icon" aria-hidden="true"/> Stop
         </MenuItem>
         }
-        <MenuItem eventKey="2" onClick={onDelete}>
+          <MenuItem eventKey="2" onClick={onDelete}>
           <i className="fa fa-trash icon" aria-hidden="true"/> Delete
         </MenuItem>
         </Dropdown.Menu>

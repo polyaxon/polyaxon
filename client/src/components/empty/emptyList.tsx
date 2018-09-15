@@ -9,7 +9,7 @@ export function EmptyList(isCurrentUser: boolean, objectType: string, image: str
         <div className="jumbotron jumbotron-action text-center empty-jumbotron">
           <h3>No {objectType} was found</h3>
           {image && isCurrentUser &&
-            <img src={`/static/images/${image}.svg`} alt={image} className="empty-icon"/>
+          <img src={`/static/images/${image}.svg`} alt={image} className="empty-icon"/>
           }
           {command && isCurrentUser &&
           <div>
