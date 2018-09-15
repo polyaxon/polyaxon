@@ -8,6 +8,15 @@ export type ChartModes =
   | 'text+lines+markers'
   | 'none';
 
+export type ChartTypes =
+  'bar'
+  | 'histogram'
+  | 'pointcloud'
+  | 'scatter'
+  | 'scattergl'
+  | 'scatter3d'
+  | 'surface';
+
 export class ChartModel {
   public id: number;
   public created_at: string;
@@ -15,4 +24,5 @@ export class ChartModel {
   public name: string;
   public metricNames: string[];
   public mode: ChartModes;
+  public type: ChartTypes;
 }

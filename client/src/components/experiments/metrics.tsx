@@ -5,6 +5,8 @@ import * as actions from '../../actions/metrics';
 import { ChartModel } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
+import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
+import AutocompleteLabel from '../autocompleteLabel';
 import ChartView from '../charts/chartView';
 
 export interface Props {
@@ -20,6 +22,7 @@ export interface State {
   metricNames: string[];
   view: ChartViewModel;
   showViewModal: boolean;
+  chartForm: { chart: ChartModel, metricNames: string[] };
 }
 
 export default class Metrics extends React.Component<Props, State> {
@@ -30,7 +33,8 @@ export default class Metrics extends React.Component<Props, State> {
       isGrid: true,
       showViewModal: false,
       metricNames,
-      view: this.getDefaultView(metricNames)
+      view: this.getDefaultView(metricNames),
+      chartForm: this.getEmptyChartForm(metricNames)
     };
   }
 
@@ -42,12 +46,25 @@ export default class Metrics extends React.Component<Props, State> {
     if (this.props.metrics !== prevProps.metrics) {
       const metricNames = this.getMetricNames();
       this.setState({
-        isGrid: prevState.isGrid,
+        ...prevState,
         metricNames,
-        view: this.getDefaultView(metricNames)
+        view: this.getDefaultView(metricNames),
+        chartForm: {...prevState.chartForm, metricNames}
       });
     }
   }
+
+  public getEmptyChartForm = (metricNames: string[]) => {
+    return {
+        metricNames,
+        chart: {
+          name: '',
+          metricNames: [] as string[],
+          mode: 'lines',
+          type: 'scatter'
+        } as ChartModel
+      };
+  };
 
   public setLayout = () => {
     this.setState((prevState, prevProps) => ({
@@ -88,11 +105,57 @@ export default class Metrics extends React.Component<Props, State> {
   };
 
   public handleShow = () => {
-    const saveViewForm = {
-      name: '',
-    };
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{showViewModal: true, saveViewForm}
+      ...prevState, ...{showViewModal: true}
+    }));
+  };
+
+  public addChart = () => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      view: {...prevState.view, charts: [...prevState.view.charts, prevState.chartForm.chart]},
+      chartForm: this.getEmptyChartForm(this.state.metricNames)
+    }));
+  };
+
+  public updateChartForm = (key: string, value: string) => {
+    const chartForm = {...this.state.chartForm};
+    if (key === 'name') {
+      chartForm.chart.name = value;
+    }
+    this.setState((prevState, prevProps) => ({
+      ...prevState, chartForm
+    }));
+  };
+
+  public addMetricChartForm = (metricName: string) => {
+    const selectedMetrics = [...this.state.chartForm.chart.metricNames, metricName].sort();
+    const chartMetricNames = this.state.chartForm.metricNames
+      .filter((m) => m !== metricName);
+
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      chartForm: {
+        ...prevState.chartForm,
+        ...{
+          metricNames: chartMetricNames,
+          chart: {...prevState.chartForm.chart, metricNames: selectedMetrics}}
+      }
+    }));
+  };
+
+  public removeMetricChartForm = (value: string) => {
+    const chartMetricNames = this.state.chartForm.chart.metricNames.filter((
+      item: string) => item !== value);
+    const metricNames = [...this.state.chartForm.metricNames, value].sort();
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      chartForm: {
+        ...prevState.chartForm,
+        ...{
+          metricNames,
+          chart: {...prevState.chartForm.chart, metricNames: chartMetricNames}}
+      }
     }));
   };
 
@@ -164,18 +227,65 @@ export default class Metrics extends React.Component<Props, State> {
       </Dropdown>
     );
 
+    const chartModal = (
+      <Modal show={this.state.showViewModal} onHide={this.handleClose}>
+        <Modal.Header closeButton={true}>
+          <Modal.Title>Add chart</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="form-horizontal" onSubmit={this.saveView}>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Name</label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="untitled"
+                  value={this.state.chartForm.chart.name}
+                  onChange={(event) => this.updateChartForm('name', event.target.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-sm-10 col-sm-offset-2">
+                {this.state.chartForm.chart.metricNames.map(
+                  (value: string, idx: number) =>
+                    <AutocompleteLabel
+                      key={idx}
+                      value={value}
+                      onClick={this.removeMetricChartForm}
+                    />
+                )}
+                <AutocompleteDropdown
+                  title="Add column"
+                  possibleValues={this.state.chartForm.metricNames}
+                  selectedValues={this.state.chartForm.chart.metricNames}
+                  onClick={this.addMetricChartForm}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                <button type="submit" className="btn btn-default" onClick={this.addChart}>Add</button>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+      </Modal>
+    );
+
     return (
       <div className="metrics">
         <div className="row">
           <div className="col-md-12">
             <div className="btn-group pull-left">
               {viewsList}
-              <button className="btn btn-sm btn-default" onClick={() => this.handleShow()}>
+              <button className="btn btn-sm btn-default">
                 <i className="fa fa-download icon" aria-hidden="true"/> Save view
               </button>
             </div>
             <div className="btn-toolbar pull-right">
-              <button className="btn btn-sm btn-default">
+              <button className="btn btn-sm btn-default" onClick={() => this.handleShow()}>
                 <i className="fa fa-plus icon" aria-hidden="true"/> Add chart
               </button>
               <button className="btn btn-sm btn-default" onClick={this.setLayout}>
@@ -192,32 +302,7 @@ export default class Metrics extends React.Component<Props, State> {
             view={this.state.view}
           />
         </div>
-        <Modal show={this.state.showViewModal} onHide={this.handleClose}>
-          <Modal.Header closeButton={true}>
-            <Modal.Title>Save search query</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form className="form-horizontal" onSubmit={this.saveView}>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Name</label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="untitled"
-                    // value={this.state.saveQueryForm.name}
-                    // onChange={(event) => this.updateQueryForm('name', event.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-sm-offset-2 col-sm-10">
-                  <button type="submit" className="btn btn-default" onClick={this.saveView}>Save</button>
-                </div>
-              </div>
-            </form>
-          </Modal.Body>
-        </Modal>
+        {chartModal}
       </div>
     );
   }
