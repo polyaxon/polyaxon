@@ -5,8 +5,8 @@ import { Dropdown, MenuItem } from 'react-bootstrap';
 import * as Plotly from 'plotly.js';
 
 import * as actions from '../../actions/metrics';
+import { DataPoint } from '../../interfaces/dataPoint';
 import { MetricModel } from '../../models/metric';
-
 import Chart from '../charts/chart';
 import { EmptyList } from '../empty/emptyList';
 
@@ -16,11 +16,6 @@ export interface Props {
   fetchData: () => actions.MetricsAction;
   deleteView?: (view: string) => actions.MetricsAction;
   createView?: (view: string) => actions.MetricsAction;
-}
-
-export interface DataPoint {
-  x: Plotly.Datum[];
-  y: Plotly.Datum[];
 }
 
 export interface State {
@@ -92,6 +87,11 @@ export default class Metrics extends React.Component<Props, State> {
       return moment(d).format('YYYY-MM-DD HH:mm:ss');
     };
 
+    const metricNames = [...Array.from(
+      new Set(([] as string[]).concat(
+        ...this.props.metrics.map((metric) => Object.keys(metric.values)))
+      )
+    )].sort();
     const views: string[] = [];
 
     const getMetricComponentData = () => {

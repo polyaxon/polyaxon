@@ -6,13 +6,3 @@ export const CHARTS_COLORS = [
   '#ff83d3',
   '#ffc5dd',
 ];
-
-export interface DataPoint {
-  [key: string]: number | boolean | string;
-}
-
-export interface Data {
-  values: DataPoint[];
-  key: string;
-  color?: string;
-}
