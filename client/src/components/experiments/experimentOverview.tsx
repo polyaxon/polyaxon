@@ -11,8 +11,8 @@ import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
+import VerticalTable from '../tables/verticalTable';
 import Tags from '../tags';
-import VerticalTable from '../verticalTable';
 
 export interface Props {
   experiment: ExperimentModel;

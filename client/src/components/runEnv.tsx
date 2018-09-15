@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import CodeTable from './codeTable';
 import { EmptyList } from './empty/emptyList';
-import VerticalTable from './verticalTable';
+import CodeTable from './tables/codeTable';
+import VerticalTable from './tables/verticalTable';
 
 export interface Props {
   runEnv: { [key: string]: any };

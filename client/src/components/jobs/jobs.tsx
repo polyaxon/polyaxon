@@ -9,7 +9,7 @@ import { SearchModel } from '../../models/search';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
-import PaginatedTable from '../paginatedTable';
+import PaginatedTable from '../tables/paginatedTable';
 import Job from './job';
 import JobHeader from './jobHeader';
 

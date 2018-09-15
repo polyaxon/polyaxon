@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as actions from '../actions/codeReference';
 import { CodeReferenceModel } from '../models/codeReference';
 import { EmptyList } from './empty/emptyList';
-import VerticalTable from './verticalTable';
+import VerticalTable from './tables/verticalTable';
 
 export interface Props {
   codeReference: CodeReferenceModel;

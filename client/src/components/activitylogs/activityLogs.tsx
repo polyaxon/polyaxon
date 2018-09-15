@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { ActivityLogModel } from '../../models/activitylog';
+import { EmptyList } from '../empty/emptyList';
+import PaginatedList from '../tables/paginatedList';
 import ActivityLog from './activityLog';
 import ActivityLogHeader from './activityLogHeader';
-import { EmptyList } from '../empty/emptyList';
-import PaginatedList from '../paginatedList';
 
 export interface Props {
   activityLogs: ActivityLogModel[];

@@ -14,7 +14,7 @@ import { EmptyList } from '../empty/emptyList';
 import Experiment from './experiment';
 import './experiments.less';
 import { DEFAULT_FILTERS } from '../filters/constants';
-import PaginatedTable from '../paginatedTable';
+import PaginatedTable from '../tables/paginatedTable';
 
 interface TableColumnProps {
   type: string;

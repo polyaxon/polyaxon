@@ -11,7 +11,7 @@ import BuildHeader from './buildHeader';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
-import PaginatedTable from '../paginatedTable';
+import PaginatedTable from '../tables/paginatedTable';
 
 export interface Props {
   isCurrentUser: boolean;
