@@ -18,9 +18,10 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorSearchesTest(BaseTest):
     """Testing subscribed events"""
-    DISABLE_RUNNER = False
+    DISABLE_RUNNER = True
 
     def setUp(self):
+        super().setUp()
         self.project = ProjectFactory()
         self.user = self.project.user
         auditor.validate()
@@ -29,7 +30,6 @@ class AuditorSearchesTest(BaseTest):
         tracker.setup()
         activitylogs.validate()
         activitylogs.setup()
-        super().setUp()
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')

@@ -17,6 +17,7 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorJobTest(BaseTest):
     """Testing subscribed events"""
+    DISABLE_RUNNER = True
 
     def setUp(self):
         self.job = NotebookJobFactory(project=ProjectFactory())

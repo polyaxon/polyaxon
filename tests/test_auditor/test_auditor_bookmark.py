@@ -15,7 +15,7 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorBookmarksTest(BaseTest):
     """Testing subscribed events"""
-    DISABLE_RUNNER = False
+    DISABLE_RUNNER = True
 
     def setUp(self):
         auditor.validate()
