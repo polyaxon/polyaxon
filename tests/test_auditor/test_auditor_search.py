@@ -16,7 +16,7 @@ from tests.utils import BaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorBookmarksTest(BaseTest):
+class AuditorSearchesTest(BaseTest):
     """Testing subscribed events"""
     DISABLE_RUNNER = False
 
@@ -78,6 +78,58 @@ class AuditorBookmarksTest(BaseTest):
                                        user=self.user,
                                        query={})
         auditor.record(event_type=searches_events.SEARCH_CREATED,
+                       instance=search)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_build_search_deleted(self, activitylogs_record, tracker_record):
+        search = Search.objects.create(project=self.project,
+                                       content_type=content_types.BUILD_JOB,
+                                       user=self.user,
+                                       query={})
+        auditor.record(event_type=searches_events.SEARCH_DELETED,
+                       instance=search)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_job_search_deleted(self, activitylogs_record, tracker_record):
+        search = Search.objects.create(project=self.project,
+                                       content_type=content_types.JOB,
+                                       user=self.user,
+                                       query={})
+        auditor.record(event_type=searches_events.SEARCH_DELETED,
+                       instance=search)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_search_deleted(self, activitylogs_record, tracker_record):
+        search = Search.objects.create(project=self.project,
+                                       content_type=content_types.EXPERIMENT,
+                                       user=self.user,
+                                       query={})
+        auditor.record(event_type=searches_events.SEARCH_DELETED,
+                       instance=search)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_group_search_deleted(self, activitylogs_record, tracker_record):
+        search = Search.objects.create(project=self.project,
+                                       content_type=content_types.EXPERIMENT_GROUP,
+                                       user=self.user,
+                                       query={})
+        auditor.record(event_type=searches_events.SEARCH_DELETED,
                        instance=search)
 
         assert tracker_record.call_count == 1

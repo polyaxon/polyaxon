@@ -172,6 +172,7 @@ class TestEvents(BaseTest):
 
         # Searches
         assert search.SearchCreatedEvent.get_event_subject() == 'search'
+        assert search.SearchDeletedEvent.get_event_subject() == 'search'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
@@ -365,6 +366,7 @@ class TestEvents(BaseTest):
 
         # Searches
         assert search.SearchCreatedEvent.get_event_action() == 'created'
+        assert search.SearchDeletedEvent.get_event_action() == 'deleted'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'

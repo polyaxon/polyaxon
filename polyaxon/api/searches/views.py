@@ -2,14 +2,13 @@ from rest_framework.generics import DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
 import auditor
-
 from api.filters import OrderingFilter
 from api.paginator import LargeLimitOffsetPagination
 from api.searches.serializers import SearchSerializer
 from api.utils.views.list_create import ListCreateAPIView
 from constants import content_types
 from db.models.searches import Search
-from event_manager.events.search import SEARCH_CREATED
+from event_manager.events.search import SEARCH_CREATED, SEARCH_DELETED
 from libs.permissions.projects import get_permissible_project
 
 
@@ -67,6 +66,10 @@ class SearchDeleteView(DestroyAPIView):
 
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user, project=get_permissible_project(view=self))
+
+    def perform_destroy(self, instance):
+        auditor.record(event_type=SEARCH_DELETED, instance=instance)
+        super().perform_destroy(instance)
 
 
 class BuildSearchDeleteView(SearchDeleteView):
