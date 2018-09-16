@@ -11,13 +11,7 @@ from django.dispatch import Signal
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
-from db.models.utils import (
-    DescribableModel,
-    DiffModel,
-    NameableModel,
-    RunTimeModel,
-    TagModel
-)
+from db.models.utils import DescribableModel, DiffModel, NameableModel, RunTimeModel, TagModel
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 

@@ -14,8 +14,9 @@ from django.utils.functional import cached_property
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
-from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
+from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
+from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DescribableModel,
     DiffModel,
@@ -305,7 +306,20 @@ class ExperimentGroupStatus(StatusModel):
 
     class Meta:
         app_label = 'db'
-        verbose_name_plural = 'Experiment group Statuses'
+        verbose_name_plural = 'Experiment Group Statuses'
 
     def __str__(self):
         return '{} <{}>'.format(self.experiment_group.unique_name, self.status)
+
+
+class ExperimentGroupChartView(ChartViewModel):
+    """A model that represents an experiment group chart view."""
+    experiment_group = models.ForeignKey(
+        'db.ExperimentGroup',
+        on_delete=models.CASCADE,
+        related_name='chart_views')
+
+    class Meta:
+        app_label = 'db'
+        verbose_name_plural = 'Experiment Group Chart Views'
+        ordering = ['created_at']

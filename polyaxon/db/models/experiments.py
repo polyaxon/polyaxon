@@ -11,9 +11,10 @@ import auditor
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
+from db.models.charts import ChartViewModel
 from db.models.cloning_strategies import CloningStrategy
-from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.models.statuses import LastStatusMixin, StatusModel
+from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DataReference,
     DescribableModel,
@@ -346,4 +347,17 @@ class ExperimentMetric(models.Model):
 
     class Meta:
         app_label = 'db'
+        ordering = ['created_at']
+
+
+class ExperimentChartView(ChartViewModel):
+    """A model that represents an experiment chart view."""
+    experiment = models.ForeignKey(
+        'db.Experiment',
+        on_delete=models.CASCADE,
+        related_name='chart_views')
+
+    class Meta:
+        app_label = 'db'
+        verbose_name_plural = 'Experiment Chart Views'
         ordering = ['created_at']
