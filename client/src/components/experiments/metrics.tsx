@@ -5,8 +5,8 @@ import * as actions from '../../actions/metrics';
 import { ChartModel } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
+import AutocompleteLabel from '../autocomplete/autocompleteLabel';
 import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
-import AutocompleteLabel from '../autocompleteLabel';
 import ChartView from '../charts/chartView';
 
 export interface Props {
@@ -56,14 +56,14 @@ export default class Metrics extends React.Component<Props, State> {
 
   public getEmptyChartForm = (metricNames: string[]) => {
     return {
-        metricNames,
-        chart: {
-          name: '',
-          metricNames: [] as string[],
-          mode: 'lines',
-          type: 'scatter'
-        } as ChartModel
-      };
+      metricNames,
+      chart: {
+        name: '',
+        metricNames: [] as string[],
+        mode: 'lines',
+        type: 'scatter'
+      } as ChartModel
+    };
   };
 
   public setLayout = () => {
@@ -139,7 +139,8 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.chartForm,
         ...{
           metricNames: chartMetricNames,
-          chart: {...prevState.chartForm.chart, metricNames: selectedMetrics}}
+          chart: {...prevState.chartForm.chart, metricNames: selectedMetrics}
+        }
       }
     }));
   };
@@ -154,7 +155,8 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.chartForm,
         ...{
           metricNames,
-          chart: {...prevState.chartForm.chart, metricNames: chartMetricNames}}
+          chart: {...prevState.chartForm.chart, metricNames: chartMetricNames}
+        }
       }
     }));
   };
