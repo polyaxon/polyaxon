@@ -2,6 +2,7 @@
 
 import db.models.abstract_jobs
 import db.models.repos
+import db.models.statuses
 import db.models.utils
 from django.conf import settings
 import django.contrib.postgres.fields
@@ -59,7 +60,7 @@ class Migration(migrations.Migration):
                 ('config', django.contrib.postgres.fields.jsonb.JSONField(help_text='The compiled polyaxonfile for the build job.', validators=[libs.spec_validation.validate_build_spec_config])),
                 ('dockerfile', models.TextField(blank=True, help_text='The dockerfile used to create the image with this job.', null=True)),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin, db.models.abstract_jobs.JobMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin, db.models.abstract_jobs.JobMixin),
         ),
         migrations.CreateModel(
             name='BuildJobStatus',
@@ -170,7 +171,7 @@ class Migration(migrations.Migration):
                 ('build_job', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.BuildJob')),
                 ('code_reference', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.CodeReference')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin, db.models.abstract_jobs.TensorboardJobMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin, db.models.abstract_jobs.TensorboardJobMixin),
         ),
         migrations.CreateModel(
             name='ExperimentGroup',
@@ -189,7 +190,7 @@ class Migration(migrations.Migration):
                 ('hptuning', django.contrib.postgres.fields.jsonb.JSONField(blank=True, help_text='The experiment group hptuning params config.', null=True, validators=[libs.spec_validation.validate_group_hptuning_config])),
                 ('code_reference', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.CodeReference')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin, db.models.abstract_jobs.TensorboardJobMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin, db.models.abstract_jobs.TensorboardJobMixin),
         ),
         migrations.CreateModel(
             name='ExperimentGroupIteration',
@@ -231,7 +232,7 @@ class Migration(migrations.Migration):
                 ('role', models.CharField(default='master', max_length=64)),
                 ('experiment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='jobs', to='db.Experiment')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin),
         ),
         migrations.CreateModel(
             name='ExperimentJobStatus',
@@ -309,7 +310,7 @@ class Migration(migrations.Migration):
                 ('code_reference', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.CodeReference')),
                 ('original_job', models.ForeignKey(blank=True, help_text='The original job that was cloned from.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='clones', to='db.Job')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin, db.models.abstract_jobs.JobMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin, db.models.abstract_jobs.JobMixin),
         ),
         migrations.CreateModel(
             name='JobResources',
@@ -387,7 +388,7 @@ class Migration(migrations.Migration):
                 ('build_job', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.BuildJob')),
                 ('code_reference', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.CodeReference')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin, db.models.abstract_jobs.JobMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin, db.models.abstract_jobs.JobMixin),
         ),
         migrations.CreateModel(
             name='NotebookJobStatus',
@@ -443,7 +444,7 @@ class Migration(migrations.Migration):
                 ('celery_task_id', models.CharField(blank=True, max_length=36)),
                 ('operation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='runs', to='db.Operation')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin),
         ),
         migrations.CreateModel(
             name='OperationRunStatus',
@@ -494,7 +495,7 @@ class Migration(migrations.Migration):
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
                 ('pipeline', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='runs', to='db.Pipeline')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin),
         ),
         migrations.CreateModel(
             name='PipelineRunStatus',
@@ -615,7 +616,7 @@ class Migration(migrations.Migration):
                 ('outputs_refs', models.OneToOneField(blank=True, editable=False, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.OutputsRefs')),
                 ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tensorboard_jobs', to='db.Project')),
             ],
-            bases=(models.Model, db.models.utils.LastStatusMixin, db.models.abstract_jobs.JobMixin),
+            bases=(models.Model, db.models.statuses.LastStatusMixin, db.models.abstract_jobs.JobMixin),
         ),
         migrations.CreateModel(
             name='TensorboardJobStatus',

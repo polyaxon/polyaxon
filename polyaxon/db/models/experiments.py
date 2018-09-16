@@ -13,16 +13,15 @@ from constants.jobs import JobLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
+from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.utils import (
     DataReference,
     DescribableModel,
     DiffModel,
-    LastStatusMixin,
     NameableModel,
     OutputsModel,
     PersistenceModel,
     RunTimeModel,
-    StatusModel,
     TagModel
 )
 from event_manager.events.experiment import (

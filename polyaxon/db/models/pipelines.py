@@ -9,14 +9,13 @@ from django.db import models
 from django.dispatch import Signal
 
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
+from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DescribableModel,
     DiffModel,
-    LastStatusMixin,
     NameableModel,
     RunTimeModel,
-    StatusModel,
     TagModel
 )
 from polyaxon.celery_api import app as celery_app

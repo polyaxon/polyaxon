@@ -6,7 +6,8 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.jobs import JobLifeCycle
-from db.models.utils import CachedMixin, DiffModel, LastStatusMixin, RunTimeModel, StatusModel
+from db.models.statuses import LastStatusMixin, StatusModel
+from db.models.utils import CachedMixin, DiffModel, RunTimeModel
 
 _logger = logging.getLogger('polyaxon.db.jobs')
 

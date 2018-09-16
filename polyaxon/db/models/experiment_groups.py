@@ -15,14 +15,13 @@ from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
+from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.utils import (
     DescribableModel,
     DiffModel,
-    LastStatusMixin,
     NameableModel,
     PersistenceModel,
     RunTimeModel,
-    StatusModel,
     TagModel
 )
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
