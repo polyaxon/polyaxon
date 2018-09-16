@@ -6,7 +6,12 @@ from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
-from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
+from db.models.experiments import (
+    Experiment,
+    ExperimentChartView,
+    ExperimentMetric,
+    ExperimentStatus
+)
 from libs.spec_validation import validate_experiment_spec_config
 
 
@@ -63,6 +68,15 @@ class ExperimentMetricSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExperimentMetric
+        exclude = []
+        extra_kwargs = {'experiment': {'read_only': True}}
+
+
+class ExperimentChartViewSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+
+    class Meta:
+        model = ExperimentChartView
         exclude = []
         extra_kwargs = {'experiment': {'read_only': True}}
 

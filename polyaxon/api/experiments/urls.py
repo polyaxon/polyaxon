@@ -32,12 +32,18 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentStatusListView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/metrics/?$'.format(
-        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
-        views.ExperimentMetricListView.as_view()),
     re_path(r'^{}/{}/experiments/{}/statuses/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN, UUID_PATTERN),
         views.ExperimentStatusDetailView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/metrics/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        views.ExperimentMetricListView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/chart_views/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        views.ExperimentChartViewListView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/chart_views/{}/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN, ID_PATTERN),
+        views.ExperimentChartViewDetailView.as_view()),
     re_path(r'^{}/{}/experiments/{}/jobs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentJobListView.as_view()),

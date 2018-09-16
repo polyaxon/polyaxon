@@ -1,7 +1,8 @@
 import factory
 
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
-from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
+from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus, \
+    ExperimentChartView
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
@@ -30,6 +31,14 @@ class ExperimentMetricFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = ExperimentMetric
+
+
+class ExperimentChartViewFactory(factory.DjangoModelFactory):
+    experiment = factory.SubFactory(ExperimentFactory)
+    charts = [{'uuid': 'id1'}, {'uuid': 'id2'}]
+
+    class Meta:
+        model = ExperimentChartView
 
 
 class ExperimentJobFactory(factory.DjangoModelFactory):

@@ -27,6 +27,7 @@ from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
+    ExperimentChartViewSerializer,
     ExperimentCreateSerializer,
     ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
@@ -47,9 +48,15 @@ from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
-from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
+from db.models.experiments import (
+    Experiment,
+    ExperimentChartView,
+    ExperimentMetric,
+    ExperimentStatus
+)
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.tll import RedisTTL
+from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED_TRIGGERED,
     EXPERIMENT_CREATED,
@@ -607,3 +614,52 @@ class ExperimentScopeTokenView(PostAPIView):
 
         token, _ = Token.objects.get_or_create(user=experiment.user)
         return Response({'token': token.key}, status=status.HTTP_200_OK)
+
+
+class ExperimentChartViewListView(ExperimentViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all chart views of an experiment.
+    post:
+        Create an experiment chart view.
+    """
+    queryset = ExperimentChartView.objects.all()
+    serializer_class = ExperimentChartViewSerializer
+    permission_classes = (IsAuthenticated,)
+    pagination_class = LargeLimitOffsetPagination
+
+    def perform_create(self, serializer):
+        experiment = self.get_experiment()
+        instance = serializer.save(experiment=experiment)
+        auditor.record(event_type=CHART_VIEW_CREATED,
+                       instance=instance,
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username,
+                       experiment=experiment)
+
+
+class ExperimentChartViewDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get experiment chart view details.
+    patch:
+        Update an experiment chart view details.
+    delete:
+        Delete an experiment chart view.
+    """
+    queryset = ExperimentChartView.objects.all()
+    serializer_class = ExperimentChartViewSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
+    delete_event = CHART_VIEW_DELETED
+
+    def get_object(self):
+        instance = super().get_object()
+        method = self.request.method.lower()
+        if method == 'delete' and self.delete_event:
+            auditor.record(event_type=self.delete_event,
+                           instance=instance,
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username,
+                           group=instance)
+        return instance

@@ -4,20 +4,22 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 import auditor
-
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     BookmarkedExperimentGroupSerializer,
     ExperimentGroupCreateSerializer,
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer,
-    ExperimentGroupStatusSerializer
-)
+    ExperimentGroupStatusSerializer,
+    ExperimentGroupChartViewSerializer)
 from api.filters import OrderingFilter, QueryFilter
+from api.paginator import LargeLimitOffsetPagination
 from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.list_create import ListCreateAPIView
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, \
+    ExperimentGroupChartView
+from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
     EXPERIMENT_GROUP_STATUSES_VIEWED,
@@ -116,16 +118,8 @@ class ExperimentGroupStopView(CreateAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ExperimentGroupStatusListView(ListCreateAPIView):
-    """
-    get:
-        List all statuses of experiment group.
-    post:
-        Create an experiment group status.
-    """
-    queryset = ExperimentGroupStatus.objects.order_by('created_at').all()
-    serializer_class = ExperimentGroupStatusSerializer
-    permission_classes = (IsAuthenticated,)
+class ExperimentGroupViewMixin(object):
+    """A mixin to filter by experiment group."""
     project = None
     group = None
 
@@ -140,6 +134,20 @@ class ExperimentGroupStatusListView(ListCreateAPIView):
         queryset = super().filter_queryset(queryset)
         return queryset.filter(experiment_group=self.get_experiment_group())
 
+
+class ExperimentGroupStatusListView(ExperimentGroupViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all statuses of experiment group.
+    post:
+        Create an experiment group status.
+    """
+    queryset = ExperimentGroupStatus.objects.order_by('created_at').all()
+    serializer_class = ExperimentGroupStatusSerializer
+    permission_classes = (IsAuthenticated,)
+    project = None
+    group = None
+
     def perform_create(self, serializer):
         serializer.save(experiment_group=self.get_experiment_group())
 
@@ -150,3 +158,52 @@ class ExperimentGroupStatusListView(ListCreateAPIView):
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         return response
+
+
+class ExperimentGroupChartViewListView(ExperimentGroupViewMixin, ListCreateAPIView):
+    """
+    get:
+        List all chart views of an experiment group.
+    post:
+        Create an experiment group chart view.
+    """
+    queryset = ExperimentGroupChartView.objects.all()
+    serializer_class = ExperimentGroupChartViewSerializer
+    permission_classes = (IsAuthenticated,)
+    pagination_class = LargeLimitOffsetPagination
+
+    def perform_create(self, serializer):
+        group = self.get_experiment_group()
+        instance = serializer.save(experiment_group=group)
+        auditor.record(event_type=CHART_VIEW_CREATED,
+                       instance=instance,
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username,
+                       group=group)
+
+
+class ExperimentGroupChartViewDetailView(ExperimentGroupViewMixin, RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get experiment group chart view details.
+    patch:
+        Update an experiment group chart view details.
+    delete:
+        Delete an experiment group chart view.
+    """
+    queryset = ExperimentGroupChartView.objects.all()
+    serializer_class = ExperimentGroupChartViewSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
+    delete_event = CHART_VIEW_DELETED
+
+    def get_object(self):
+        instance = super().get_object()
+        method = self.request.method.lower()
+        if method == 'delete' and self.delete_event:
+            auditor.record(event_type=self.delete_event,
+                           instance=instance,
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username,
+                           group=instance)
+        return instance

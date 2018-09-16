@@ -4,10 +4,11 @@ from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     BookmarkedExperimentGroupSerializer,
     ExperimentGroupDetailSerializer,
-    ExperimentGroupSerializer
-)
-from db.models.experiment_groups import ExperimentGroup
-from factories.factory_experiment_groups import ExperimentGroupFactory
+    ExperimentGroupSerializer,
+    ExperimentGroupChartViewSerializer)
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupChartView
+from factories.factory_experiment_groups import ExperimentGroupFactory, \
+    ExperimentGroupChartViewFactory
 from tests.utils import BaseTest
 
 
@@ -160,6 +161,46 @@ class TestExperimentGroupDetailSerializer(BaseTest):
 
     def test_serialize_many(self):
         data = self.serializer_class(queries.groups_details.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.experiment_groups_mark
+class TestExperimentGroupChartViewSerializer(BaseTest):
+    DISABLE_RUNNER = True
+    serializer_class = ExperimentGroupChartViewSerializer
+    model_class = ExperimentGroupChartView
+    factory_class = ExperimentGroupChartViewFactory
+    expected_keys = {
+        'id',
+        'uuid',
+        'name',
+        'experiment_group',
+        'created_at',
+        'updated_at',
+        'charts',
+        }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('experiment_group') == self.obj1.experiment_group.id
+        data.pop('created_at')
+        data.pop('updated_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys

@@ -1,15 +1,12 @@
 # pylint:disable=too-many-lines
 import os
 import time
-
-from faker import Faker
 from unittest.mock import patch
 
 import pytest
-
-from rest_framework import status
-
 from django.conf import settings
+from faker import Faker
+from rest_framework import status
 
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
@@ -23,15 +20,16 @@ from api.experiments.serializers import (
     ExperimentLastMetricSerializer,
     ExperimentMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer
-)
+    ExperimentStatusSerializer,
+    ExperimentChartViewSerializer)
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
-from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
+from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus, \
+    ExperimentChartView
 from db.models.repos import CodeReference
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.tll import RedisTTL
@@ -42,8 +40,8 @@ from factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
     ExperimentMetricFactory,
-    ExperimentStatusFactory
-)
+    ExperimentStatusFactory,
+    ExperimentChartViewFactory)
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
@@ -1774,3 +1772,111 @@ class TestExperimentTokenViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == {'token': self.experiment.user.auth_token.key}
         self.assertEqual(ephemeral_token.get_state(), None)
+
+
+@pytest.mark.experiments_mark
+class TestExperimentChartViewListViewV1(BaseViewTest):
+    serializer_class = ExperimentChartViewSerializer
+    model_class = ExperimentChartView
+    factory_class = ExperimentChartViewFactory
+    num_objects = 3
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/chart_views/'.format(API_V1,
+                                                                  project.user.username,
+                                                                  project.name,
+                                                                  self.experiment.id)
+        self.objects = [self.factory_class(experiment=self.experiment, name='view{}'.format(i))
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        data = {'charts': [{'id': '1'}, {'id': '2'}]}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.experiment == self.experiment
+        assert last_object.charts == data['charts']
+
+
+@pytest.mark.experiments_mark
+class TestExperimentChartViewDetailViewV1(BaseViewTest):
+    serializer_class = ExperimentChartViewSerializer
+    model_class = ExperimentChartView
+    factory_class = ExperimentChartViewFactory
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=self.project)
+        self.object = self.factory_class(experiment=self.experiment)
+        self.url = '/{}/{}/{}/experiments/{}/chart_views/{}/'.format(
+            API_V1,
+            self.experiment.project.user.username,
+            self.experiment.project.name,
+            self.experiment.id,
+            self.object.id)
+        self.queryset = self.model_class.objects.all()
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.object).data
+
+    def test_patch(self):
+        data = {'charts': [{'uuid': 'id22'}, {'uuid': 'id23'}, {'uuid': 'id24'}, {'uuid': 'id25'}]}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['charts'] == data['charts']
+
+    def test_delete(self):
+        assert self.model_class.objects.count() == 1
+        resp = self.auth_client.delete(self.url)
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.count() == 0

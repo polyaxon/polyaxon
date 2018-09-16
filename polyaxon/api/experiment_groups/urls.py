@@ -20,6 +20,12 @@ groups_urlpatterns = [
     re_path(
         r'^{}/{}/groups/{}/unbookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         bookmark_views.ExperimentGroupBookmarkDeleteView.as_view()),
+    re_path(r'^{}/{}/groups/{}/chart_views/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, GROUP_ID_PATTERN),
+        views.ExperimentGroupChartViewListView.as_view()),
+    re_path(r'^{}/{}/groups/{}/chart_views/{}/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, GROUP_ID_PATTERN, ID_PATTERN),
+        views.ExperimentGroupChartViewDetailView.as_view()),
 ]
 
 # Order is important, because the patterns could swallow other urls

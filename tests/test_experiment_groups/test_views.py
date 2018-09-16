@@ -1,27 +1,28 @@
 from unittest.mock import patch
 
 import pytest
-
 from rest_framework import status
 
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     BookmarkedExperimentGroupSerializer,
     ExperimentGroupDetailSerializer,
-    ExperimentGroupStatusSerializer
-)
+    ExperimentGroupStatusSerializer,
+    ExperimentGroupChartViewSerializer)
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
-from db.models.experiments import Experiment
-from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, \
+    ExperimentGroupChartView
+from db.models.experiments import Experiment, ExperimentChartView
+from factories.factory_experiment_groups import ExperimentGroupFactory, \
+    ExperimentGroupStatusFactory, ExperimentGroupChartViewFactory
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
-    ExperimentStatusFactory
-)
+    ExperimentStatusFactory,
+    ExperimentChartViewFactory)
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 from tests.utils import BaseViewTest
@@ -547,3 +548,111 @@ class TestExperimentGroupStatusListViewV1(BaseViewTest):
         last_object = self.model_class.objects.last()
         assert last_object.experiment_group == self.experiment_group
         assert last_object.status == data['status']
+
+
+@pytest.mark.experiment_groups_mark
+class TestExperimentGroupChartViewListViewV1(BaseViewTest):
+    serializer_class = ExperimentGroupChartViewSerializer
+    model_class = ExperimentGroupChartView
+    factory_class = ExperimentGroupChartViewFactory
+    num_objects = 3
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.group = ExperimentGroupFactory(project=project)
+        self.url = '/{}/{}/{}/groups/{}/chart_views/'.format(API_V1,
+                                                             project.user.username,
+                                                             project.name,
+                                                             self.group.id)
+        self.objects = [self.factory_class(experiment_group=self.group, name='view{}'.format(i))
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        data = {'charts': [{'id': '1'}, {'id': '2'}]}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.experiment_group == self.group
+        assert last_object.charts == data['charts']
+
+
+@pytest.mark.experiment_groups_mark
+class TestExperimentGroupChartViewDetailViewV1(BaseViewTest):
+    serializer_class = ExperimentGroupChartViewSerializer
+    model_class = ExperimentGroupChartView
+    factory_class = ExperimentGroupChartViewFactory
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.group = ExperimentGroupFactory(project=self.project)
+        self.object = self.factory_class(experiment_group=self.group)
+        self.url = '/{}/{}/{}/groups/{}/chart_views/{}/'.format(
+            API_V1,
+            self.group.project.user.username,
+            self.group.project.name,
+            self.group.id,
+            self.object.id)
+        self.queryset = self.model_class.objects.all()
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.object).data
+
+    def test_patch(self):
+        data = {'charts': [{'uuid': 'id22'}, {'uuid': 'id23'}, {'uuid': 'id24'}, {'uuid': 'id25'}]}
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['charts'] == data['charts']
+
+    def test_delete(self):
+        assert self.model_class.objects.count() == 1
+        resp = self.auth_client.delete(self.url)
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.count() == 0

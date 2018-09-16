@@ -3,7 +3,8 @@ from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.tags import TagsSerializerMixin
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, \
+    ExperimentGroupChartView
 from libs.spec_validation import validate_group_spec_content
 
 
@@ -138,3 +139,12 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer):
         if self.initial_data.get('check_specification') and not attrs.get('content'):
             raise ValidationError('Experiment group expects `content`.')
         return attrs
+
+
+class ExperimentGroupChartViewSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+
+    class Meta:
+        model = ExperimentGroupChartView
+        exclude = []
+        extra_kwargs = {'experiment_group': {'read_only': True}}

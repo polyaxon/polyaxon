@@ -11,16 +11,16 @@ from api.experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentLastMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer
-)
+    ExperimentStatusSerializer,
+    ExperimentChartViewSerializer)
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
-from db.models.experiments import Experiment, ExperimentStatus
+from db.models.experiments import Experiment, ExperimentStatus, ExperimentChartView
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
-    ExperimentStatusFactory
-)
+    ExperimentStatusFactory,
+    ExperimentChartViewFactory)
 from schemas.specifications import ExperimentSpecification
 from tests.utils import BaseTest
 
@@ -487,6 +487,46 @@ class TestExperimentStatusSerializer(BaseTest):
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('experiment') == self.obj1.experiment.id
         data.pop('created_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.experiments_mark
+class TestExperimentChartViewSerializer(BaseTest):
+    DISABLE_RUNNER = True
+    serializer_class = ExperimentChartViewSerializer
+    model_class = ExperimentChartView
+    factory_class = ExperimentChartViewFactory
+    expected_keys = {
+        'id',
+        'uuid',
+        'name',
+        'experiment',
+        'created_at',
+        'updated_at',
+        'charts',
+        }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('experiment') == self.obj1.experiment.id
+        data.pop('created_at')
+        data.pop('updated_at')
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
