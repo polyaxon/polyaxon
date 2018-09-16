@@ -13,8 +13,9 @@ export interface Props {
   metrics: MetricModel[];
   count: number;
   fetchData: () => actions.MetricsAction;
-  deleteView?: (view: string) => actions.MetricsAction;
-  createView?: (view: string) => actions.MetricsAction;
+  fetchViews: () => actions.MetricsAction;
+  createView?: (data: ChartViewModel) => actions.MetricsAction;
+  deleteView?: (viewId: number) => actions.MetricsAction;
 }
 
 export interface State {
@@ -78,19 +79,19 @@ export default class Metrics extends React.Component<Props, State> {
   public saveView = (event: any) => {
     event.preventDefault();
     if (this.props.createView) {
-      this.props.createView('');
+      this.props.createView({} as ChartViewModel);
     }
     this.handleClose();
   };
 
-  public deleteView = (event: any, view: string) => {
+  public deleteView = (event: any, viewId: number) => {
     event.preventDefault();
     if (this.props.deleteView) {
-      this.props.deleteView(view);
+      this.props.deleteView(viewId);
     }
   };
 
-  public selectView = (view: string) => {
+  public selectView = (chartView: ChartViewModel) => {
     const state = {};
 
     this.setState((prevState, prevProps) => ({
@@ -184,7 +185,7 @@ export default class Metrics extends React.Component<Props, State> {
 
   public render() {
 
-    const views: string[] = [];
+    const views: ChartViewModel[] = [];
 
     const viewsList = (
       <Dropdown id="dropdown-views">
@@ -206,7 +207,7 @@ export default class Metrics extends React.Component<Props, State> {
                   type="button"
                   className="close pull-right"
                   aria-label="Close"
-                  onClick={(event) => this.deleteView(event, view)}
+                  onClick={(event) => this.deleteView(event, view.id)}
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
