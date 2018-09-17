@@ -6,6 +6,7 @@ import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
 
 import './filterList.less';
+import '../dropdowns.less';
 
 export interface Props {
   query?: string;
@@ -158,12 +159,12 @@ export default class FilterList extends React.Component<Props, State> {
                     >
                       <i className="fa fa-history icon" aria-hidden="true"/> Searches
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu className="dropdown-menu-large">
                       {this.props.searches.map(
                         (search: SearchModel, idx: number) =>
                           <MenuItem
                             key={idx}
-                            className="search-saved-query"
+                            className="dropdown-select-menu"
                             onClick={() => this.selectSearch(search.query.query, search.query.sort)}
                           >
                             <button
@@ -177,18 +178,18 @@ export default class FilterList extends React.Component<Props, State> {
                             <span>
                                 {search.name || 'untitled'}:
                               </span>
-                            <p className="query-desc">
-                              <span className="label label-search">
+                            <p className="dropdown-meta">
+                              <span className="label dropdown-label">
                                 Query:
                               </span> {search.query.query && search.query.query}
-                              <span className="label label-search">
+                              <span className="label dropdown-label">
                                 Sort:
                               </span> {search.query.sort || this.props.defaultSort || '-update_at'}
                             </p>
                           </MenuItem>
                       )}
                       {this.props.searches.length === 0 &&
-                      <MenuItem className="search-saved-query">
+                      <MenuItem className="dropdown-select-menu">
                         No saved searches
                       </MenuItem>
                       }
@@ -223,7 +224,7 @@ export default class FilterList extends React.Component<Props, State> {
                     >
                       <i className="fa fa-chevron-down icon" aria-hidden="true"/>
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu className="dropdown-menu-large">
                       {this.props.filterOptions.map(
                         (filterOption: FilterOption, idx: number) =>
                           <MenuItem
@@ -267,7 +268,7 @@ export default class FilterList extends React.Component<Props, State> {
                 >
                   <i className="fa fa-sort icon" aria-hidden="true"/> {`Sort by: ${this.state.sort}`}
                 </Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Menu className="dropdown-menu-large">
                   {this.props.sortOptions.map((sortOption: string) =>
                     <MenuItem
                       key={sortOption}
