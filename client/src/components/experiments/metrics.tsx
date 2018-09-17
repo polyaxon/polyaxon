@@ -131,7 +131,22 @@ export default class Metrics extends React.Component<Props, State> {
     event.preventDefault();
     this.setState((prevState, prevProps) => ({
       ...prevState,
-      view: {...prevState.view, charts: [...prevState.view.charts, prevState.chartForm.chart]},
+      view: {
+        ...prevState.view,
+        charts: [...prevState.view.charts, prevState.chartForm.chart]
+      },
+      chartForm: this.getEmptyChartForm(this.state.metricNames)
+    }));
+    this.handleClose();
+  };
+
+  public removeChart = (chartIdx: number) => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      view: {
+        ...prevState.view,
+        charts: [...prevState.view.charts.filter((chart, idx) => idx !== chartIdx)]
+      },
       chartForm: this.getEmptyChartForm(this.state.metricNames)
     }));
     this.handleClose();
@@ -344,9 +359,10 @@ export default class Metrics extends React.Component<Props, State> {
             </div>
           </div>
           <ChartView
-            className={this.state.isGrid ? 'col-md-6' : 'col-md-11 col-md-offset-1'}
+            className={this.state.isGrid ? 'col-md-6' : 'col-md-10 col-md-offset-1'}
             metrics={this.props.metrics}
             view={this.state.view}
+            onRemoveChart={this.removeChart}
           />
         </div>
         {chartModal}

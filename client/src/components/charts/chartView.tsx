@@ -9,10 +9,13 @@ import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
 import Chart from '../charts/chart';
 
+import './chart.less';
+
 interface Props {
   view: ChartViewModel;
   metrics: MetricModel[];
   className: string;
+  onRemoveChart: (chartIdx: number) => void;
 }
 
 export default class ChartView extends React.Component<Props, {}> {
@@ -54,8 +57,17 @@ export default class ChartView extends React.Component<Props, {}> {
 
     const getChart = (chart: ChartModel, idx: number) => {
       return (
-        <div className={this.props.className} key={chart.name + idx}>
-          {<Chart data={getChartData(chart)} title={chart.name}/>}
+        <div className={this.props.className + ' chart-item'} key={chart.name + idx}>
+          <div className="chart">
+            <h5 className="chart-header">{chart.name}
+              <button
+                className="btn btn-sm btn-default pull-right"
+                onClick={() => this.props.onRemoveChart(idx)}
+              >Remove
+              </button>
+            </h5>
+            {<Chart data={getChartData(chart)}/>}
+          </div>
         </div>
       );
     };
