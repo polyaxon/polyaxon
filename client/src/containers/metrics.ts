@@ -9,6 +9,16 @@ import Metrics from '../components/experiments/metrics';
 import { ChartViewModel } from '../models/chartView';
 
 export function mapStateToProps(state: AppState, params: any) {
+  const useLastFetchedViews = () => {
+    const viewIds = state.chartViews.lastFetched.ids;
+    const count = state.chartViews.lastFetched.count;
+    const views: ChartViewModel[] = [];
+    viewIds.forEach(
+      (viewId: number, idx: number) => {
+        views.push(state.chartViews.byIds[viewId]);
+      });
+    return {views, count};
+  };
   const useLastFetched = () => {
     const metricIds = state.metrics.lastFetched.ids;
     const count = state.metrics.lastFetched.count;
@@ -20,9 +30,11 @@ export function mapStateToProps(state: AppState, params: any) {
     return {metrics, count};
   };
   const results = useLastFetched();
+  const viewsResults = useLastFetchedViews();
 
   return {
     metrics: results.metrics,
+    views: viewsResults.views,
     count: results.count
   };
 }

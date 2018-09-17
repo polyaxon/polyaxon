@@ -77,6 +77,13 @@ export const searchSchema = new schema.Entity(
     idAttribute: 'id'
   });
 
+export const chartViewSchema = new schema.Entity(
+  'chartViews',
+  {},
+  {
+    idAttribute: 'id'
+  });
+
 export const codeReferenceSchema = new schema.Entity(
   'codeReferences',
   {},

@@ -2,6 +2,7 @@
 
 import { ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activitylog';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
+import { ChartViewEmptyState, ChartViewStateSchema } from '../models/chartView';
 import { CodeReferenceEmptyState, CodeReferenceStateSchema } from '../models/codeReference';
 import { ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
 import { ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/experimentJob';
@@ -31,6 +32,7 @@ export interface AppState {
   metrics: MetricStateSchema;
   activityLogs: ActivityLogsStateSchema;
   searches: SearchesStateSchema;
+  chartViews: ChartViewStateSchema;
   codeReferences: CodeReferenceStateSchema;
 }
 
@@ -48,5 +50,6 @@ export const AppEmptyState = {
   metrics: MetricEmptyState,
   activityLogs: ActivityLogsEmptyState,
   searches: SearchesEmptyState,
+  chartViews: ChartViewEmptyState,
   codeReferences: CodeReferenceEmptyState
 };

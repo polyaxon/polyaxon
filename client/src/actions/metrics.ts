@@ -104,8 +104,10 @@ export type MetricsAction =
   RequestMetricsAction
   | ReceiveMetricsAction
   | ReceiveErrorAction
+  | ReceiveChartViewAction
   | RequestChartViewsAction
-  | ReceiveChartViewsAction;
+  | ReceiveChartViewsAction
+  | DeleteChartViewAction;
 
 export function fetchMetrics(projectUniqueName: string, resources: string, id: number): any {
   return (dispatch: any, getState: any) => {

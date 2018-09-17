@@ -9,8 +9,11 @@ import AutocompleteLabel from '../autocomplete/autocompleteLabel';
 import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
 import ChartView from '../charts/chartView';
 
+import '../dropdowns.less';
+
 export interface Props {
   metrics: MetricModel[];
+  views: ChartViewModel[];
   count: number;
   fetchData: () => actions.MetricsAction;
   fetchViews: () => actions.MetricsAction;
@@ -22,6 +25,7 @@ export interface State {
   isGrid: boolean;
   metricNames: string[];
   view: ChartViewModel;
+  showChartModal: boolean;
   showViewModal: boolean;
   chartForm: { chart: ChartModel, metricNames: string[] };
 }
@@ -32,6 +36,7 @@ export default class Metrics extends React.Component<Props, State> {
     const metricNames = this.getMetricNames();
     this.state = {
       isGrid: true,
+      showChartModal: false,
       showViewModal: false,
       metricNames,
       view: this.getDefaultView(metricNames),
@@ -41,6 +46,7 @@ export default class Metrics extends React.Component<Props, State> {
 
   public componentDidMount() {
     this.props.fetchData();
+    this.props.fetchViews();
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
@@ -79,9 +85,19 @@ export default class Metrics extends React.Component<Props, State> {
   public saveView = (event: any) => {
     event.preventDefault();
     if (this.props.createView) {
-      this.props.createView({} as ChartViewModel);
+      this.props.createView(this.state.view);
     }
     this.handleClose();
+  };
+
+  public updateViewForm = (key: string, value: string) => {
+    const view = {...this.state.view};
+    if (key === 'name') {
+      view.name = value;
+    }
+    this.setState((prevState, prevProps) => ({
+      ...prevState, view
+    }));
   };
 
   public deleteView = (event: any, viewId: number) => {
@@ -92,22 +108,22 @@ export default class Metrics extends React.Component<Props, State> {
   };
 
   public selectView = (chartView: ChartViewModel) => {
-    const state = {};
-
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...state
+      ...prevState, view: chartView
     }));
   };
 
   public handleClose = () => {
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{showViewModal: false}
+      ...prevState, ...{showViewModal: false, showChartModal: false}
     }));
   };
 
-  public handleShow = () => {
+  public handleShow = (type: 'showViewModal' | 'showChartModal') => {
+    const updateState = {showViewModal: false, showChartModal: false};
+    updateState[type] = true;
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{showViewModal: true}
+      ...prevState, ...updateState
     }));
   };
 
@@ -174,7 +190,7 @@ export default class Metrics extends React.Component<Props, State> {
         type: 'scatter'
       } as ChartModel);
     }
-    return {charts, name: 'default'} as ChartViewModel;
+    return {charts, name: 'untitled'} as ChartViewModel;
   };
 
   public getMetricNames = () => {
@@ -186,9 +202,6 @@ export default class Metrics extends React.Component<Props, State> {
   };
 
   public render() {
-
-    const views: ChartViewModel[] = [];
-
     const viewsList = (
       <Dropdown id="dropdown-views">
         <Dropdown.Toggle
@@ -197,12 +210,12 @@ export default class Metrics extends React.Component<Props, State> {
         >
           <i className="fa fa-clone icon" aria-hidden="true"/> Views
         </Dropdown.Toggle>
-        <Dropdown.Menu>
-          {views.map(
+        <Dropdown.Menu className="dropdown-menu-large">
+          {this.props.views.map(
             (view, idx: number) =>
               <MenuItem
                 key={idx}
-                className="search-saved-query"
+                className="dropdown-select-menu"
                 onClick={() => this.selectView(view)}
               >
                 <button
@@ -214,17 +227,17 @@ export default class Metrics extends React.Component<Props, State> {
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <span>
-                      {view || 'untitled'}:
-                    </span>
-                <p className="query-desc">
-                    <span className="label label-search">
-                      Query:
-                    </span> {view}
+                  {view.name || 'untitled'}:
+                </span>
+                <p className="dropdown-meta">
+                  <span className="label dropdown-label">
+                    number charts:
+                  </span> {view.charts.length}
                 </p>
               </MenuItem>
           )}
-          {views.length === 0 &&
-          <MenuItem className="search-saved-query">
+          {this.props.views.length === 0 &&
+          <MenuItem className="dropdown-select-menu">
             No saved views
           </MenuItem>
           }
@@ -233,7 +246,7 @@ export default class Metrics extends React.Component<Props, State> {
     );
 
     const chartModal = (
-      <Modal show={this.state.showViewModal} onHide={this.handleClose}>
+      <Modal show={this.state.showChartModal} onHide={this.handleClose}>
         <Modal.Header closeButton={true}>
           <Modal.Title>Add chart</Modal.Title>
         </Modal.Header>
@@ -279,18 +292,47 @@ export default class Metrics extends React.Component<Props, State> {
       </Modal>
     );
 
+    const viewModal = (
+      <Modal show={this.state.showViewModal} onHide={this.handleClose}>
+        <Modal.Header closeButton={true}>
+          <Modal.Title>Save View</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="form-horizontal" onSubmit={this.saveView}>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Name</label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="untitled"
+                  value={this.state.view.name}
+                  onChange={(event) => this.updateViewForm('name', event.target.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                <button type="submit" className="btn btn-default" onClick={this.saveView}>Save</button>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+      </Modal>
+    );
+
     return (
       <div className="metrics">
         <div className="row">
           <div className="col-md-12">
             <div className="btn-group pull-left">
               {viewsList}
-              <button className="btn btn-sm btn-default">
+              <button className="btn btn-sm btn-default" onClick={() => this.handleShow('showViewModal')}>
                 <i className="fa fa-download icon" aria-hidden="true"/> Save view
               </button>
             </div>
             <div className="btn-toolbar pull-right">
-              <button className="btn btn-sm btn-default" onClick={() => this.handleShow()}>
+              <button className="btn btn-sm btn-default" onClick={() => this.handleShow('showChartModal')}>
                 <i className="fa fa-plus icon" aria-hidden="true"/> Add chart
               </button>
               <button className="btn btn-sm btn-default" onClick={this.setLayout}>
@@ -308,6 +350,7 @@ export default class Metrics extends React.Component<Props, State> {
           />
         </div>
         {chartModal}
+        {viewModal}
       </div>
     );
   }
