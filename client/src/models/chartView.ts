@@ -8,13 +8,13 @@ export class ChartViewModel {
   public name: string;
 }
 
-export class MetricStateSchema {
+export class ChartViewStateSchema {
   public byIds: { [id: number]: ChartViewModel };
   public ids: number[];
   public lastFetched: LastFetchedIds;
 }
 
-export const MetricEmptyState = {
+export const ChartViewEmptyState = {
   byIds: {},
   ids: [],
   lastFetched: new LastFetchedIds()

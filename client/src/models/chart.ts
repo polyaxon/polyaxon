@@ -18,9 +18,6 @@ export type ChartTypes =
   | 'surface';
 
 export class ChartModel {
-  public id: number;
-  public created_at: string;
-  public updated_at: string;
   public name: string;
   public metricNames: string[];
   public mode: ChartModes;
