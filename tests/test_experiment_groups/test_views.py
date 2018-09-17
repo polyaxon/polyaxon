@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-
 from rest_framework import status
 
 from api.experiment_groups import queries
@@ -571,10 +570,10 @@ class TestExperimentGroupChartViewListViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.group = ExperimentGroupFactory(project=project)
-        self.url = '/{}/{}/{}/groups/{}/chart_views/'.format(API_V1,
-                                                             project.user.username,
-                                                             project.name,
-                                                             self.group.id)
+        self.url = '/{}/{}/{}/groups/{}/chartviews/'.format(API_V1,
+                                                            project.user.username,
+                                                            project.name,
+                                                            self.group.id)
         self.objects = [self.factory_class(experiment_group=self.group, name='view{}'.format(i))
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
@@ -640,7 +639,7 @@ class TestExperimentGroupChartViewDetailViewV1(BaseViewTest):
         self.project = ProjectFactory(user=self.auth_client.user)
         self.group = ExperimentGroupFactory(project=self.project)
         self.object = self.factory_class(experiment_group=self.group)
-        self.url = '/{}/{}/{}/groups/{}/chart_views/{}/'.format(
+        self.url = '/{}/{}/{}/groups/{}/chartviews/{}/'.format(
             API_V1,
             self.group.project.user.username,
             self.group.project.name,

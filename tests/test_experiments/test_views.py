@@ -1,15 +1,12 @@
 # pylint:disable=too-many-lines
 import os
 import time
-
-from faker import Faker
 from unittest.mock import patch
 
 import pytest
-
-from rest_framework import status
-
 from django.conf import settings
+from faker import Faker
+from rest_framework import status
 
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
@@ -1796,10 +1793,10 @@ class TestExperimentChartViewListViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.experiment = ExperimentFactory(project=project)
-        self.url = '/{}/{}/{}/experiments/{}/chart_views/'.format(API_V1,
-                                                                  project.user.username,
-                                                                  project.name,
-                                                                  self.experiment.id)
+        self.url = '/{}/{}/{}/experiments/{}/chartviews/'.format(API_V1,
+                                                                 project.user.username,
+                                                                 project.name,
+                                                                 self.experiment.id)
         self.objects = [self.factory_class(experiment=self.experiment, name='view{}'.format(i))
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
@@ -1865,7 +1862,7 @@ class TestExperimentChartViewDetailViewV1(BaseViewTest):
         self.project = ProjectFactory(user=self.auth_client.user)
         self.experiment = ExperimentFactory(project=self.project)
         self.object = self.factory_class(experiment=self.experiment)
-        self.url = '/{}/{}/{}/experiments/{}/chart_views/{}/'.format(
+        self.url = '/{}/{}/{}/experiments/{}/chartviews/{}/'.format(
             API_V1,
             self.experiment.project.user.username,
             self.experiment.project.name,
