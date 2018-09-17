@@ -1,12 +1,15 @@
 # pylint:disable=too-many-lines
 import os
 import time
+
+from faker import Faker
 from unittest.mock import patch
 
 import pytest
-from django.conf import settings
-from faker import Faker
+
 from rest_framework import status
+
+from django.conf import settings
 
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries

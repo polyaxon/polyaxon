@@ -38,7 +38,7 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/metrics/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentMetricListView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/chart_views/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/chartviews/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentChartViewListView.as_view()),
     re_path(r'^{}/{}/experiments/{}/chartviews/{}/?$'.format(
