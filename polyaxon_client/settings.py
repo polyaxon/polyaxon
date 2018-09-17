@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
+from rhea import Rhea
+
 
 class AuthenticationTypes(object):
     TOKEN = 'Token'
@@ -10,22 +12,47 @@ class AuthenticationTypes(object):
     EPHEMERAL_TOKEN = 'EphemeralToken'
 
 
-IN_CLUSTER = os.getenv('POLYAXON_IN_CLUSTER', False)
-API_HOST = os.getenv('POLYAXON_API_HOST', None)
-HTTP_PORT = os.getenv('POLYAXON_HTTP_PORT', None)
-WS_PORT = os.getenv('POLYAXON_WS_PORT', None)
-USE_HTTPS = os.getenv('POLYAXON_USE_HTTPS', False)
-API_HTTP_HOST = os.getenv('POLYAXON_API_HTTP_HOST', None)
-API_WS_HOST = os.getenv('POLYAXON_API_WS_HOST', None)
-SECRET_USER_TOKEN = os.getenv('POLYAXON_SECRET_USER_TOKEN', None)
-SECRET_EPHEMERAL_TOKEN = os.getenv('POLYAXON_SECRET_EPHEMERAL_TOKEN', None)
-AUTHENTICATION_TYPE = os.getenv('POLYAXON_AUTHENTICATION_TYPE', AuthenticationTypes.TOKEN)
-API_VERSION = os.getenv('POLYAXON_API_VERSION', 'v1')
-HASH_LENGTH = os.getenv('POLYAXON_HASH_LENGTH', 12)
-INTERNAL_HEADER = os.getenv('POLYAXON_INTERNAL_HEADER', None)
-INTERNAL_HEADER_SERVICE = os.getenv('POLYAXON_INTERNAL_HEADER_SERVICE', None)
-SCHEMA_RESPONSE = os.getenv('POLYAXON_SCHEMA_RESPONSE', False)
+config = Rhea.read_configs([os.environ])
+
+IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',
+                                is_local=True,
+                                default=False)
+API_HOST = config.get_string('POLYAXON_API_HOST',
+                             is_optional=True)
+HTTP_PORT = config.get_int('POLYAXON_HTTP_PORT',
+                           is_optional=True)
+WS_PORT = config.get_int('POLYAXON_WS_PORT',
+                         is_optional=True)
+USE_HTTPS = config.get_boolean('POLYAXON_USE_HTTPS',
+                               is_optional=True,
+                               default=False)
+API_HTTP_HOST = config.get_string('POLYAXON_API_HTTP_HOST',
+                                  is_optional=True)
+API_WS_HOST = config.get_string('POLYAXON_API_WS_HOST',
+                                is_optional=True)
+SECRET_USER_TOKEN = config.get_string('POLYAXON_SECRET_USER_TOKEN',
+                                      is_optional=True)
+SECRET_EPHEMERAL_TOKEN = config.get_string('POLYAXON_SECRET_EPHEMERAL_TOKEN',
+                                           is_optional=True)
+AUTHENTICATION_TYPE = config.get_string('POLYAXON_AUTHENTICATION_TYPE',
+                                        is_optional=True,
+                                        default=AuthenticationTypes.TOKEN)
+API_VERSION = config.get_string('POLYAXON_API_VERSION',
+                                is_optional=True,
+                                default='v1')
+HASH_LENGTH = config.get_int('POLYAXON_HASH_LENGTH',
+                             is_optional=True,
+                             default=12)
+INTERNAL_HEADER = config.get_string('POLYAXON_INTERNAL_HEADER',
+                                    is_optional=True)
+INTERNAL_HEADER_SERVICE = config.get_string('POLYAXON_INTERNAL_HEADER_SERVICE',
+                                            is_optional=True)
+SCHEMA_RESPONSE = config.get_boolean('POLYAXON_SCHEMA_RESPONSE',
+                                     is_optional=True,
+                                     default=False)
 
 DEFAULT_HTTP_PORT = 80
 DEFAULT_HTTPS_PORT = 443
-TIMEOUT = os.getenv('POLYAXON_TIMEOUT', 10)
+TIMEOUT = config.get_int('POLYAXON_TIMEOUT',
+                         is_optional=True,
+                         default=10)
