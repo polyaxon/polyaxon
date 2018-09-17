@@ -111,12 +111,14 @@ export default class Metrics extends React.Component<Props, State> {
     }));
   };
 
-  public addChart = () => {
+  public addChart = (event: any) => {
+    event.preventDefault();
     this.setState((prevState, prevProps) => ({
       ...prevState,
       view: {...prevState.view, charts: [...prevState.view.charts, prevState.chartForm.chart]},
       chartForm: this.getEmptyChartForm(this.state.metricNames)
     }));
+    this.handleClose();
   };
 
   public updateChartForm = (key: string, value: string) => {
@@ -236,7 +238,7 @@ export default class Metrics extends React.Component<Props, State> {
           <Modal.Title>Add chart</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className="form-horizontal" onSubmit={this.saveView}>
+          <form className="form-horizontal" onSubmit={this.addChart}>
             <div className="form-group">
               <label className="col-sm-2 control-label">Name</label>
               <div className="col-sm-10">
