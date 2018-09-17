@@ -15,7 +15,7 @@ class AuthenticationTypes(object):
 config = Rhea.read_configs([os.environ])
 
 IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',
-                                is_local=True,
+                                is_optional=True,
                                 default=False)
 API_HOST = config.get_string('POLYAXON_API_HOST',
                              is_optional=True)
