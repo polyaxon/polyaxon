@@ -79,15 +79,6 @@ class PlotlyChart extends React.Component<PlotParams, {}> {
     }
   };
 
-  public draw = async (props: PlotParams) => {
-    const {data, layout, config} = props;
-    if (this.container) {
-      // plotly.react will not destroy the old plot: https://plot.ly/javascript/plotlyjs-function-reference/#plotlyreact
-      this.container = await Plotly.react(this.container, data, Object.assign({}, layout), config);
-      this.attachListeners();
-    }
-  };
-
   public componentWillReceiveProps(nextProps: PlotParams) {
     this.draw(nextProps);
   }
@@ -107,13 +98,30 @@ class PlotlyChart extends React.Component<PlotParams, {}> {
     window.removeEventListener('resize', this.resize);
   }
 
+  public draw = async (props: PlotParams) => {
+    const {data, layout, config} = props;
+    if (this.container) {
+      // plotly.react will not destroy the old plot: https://plot.ly/javascript/plotlyjs-function-reference/#plotlyreact
+      this.container = await Plotly.react(
+        this.container,
+        data,
+        Object.assign({}, layout),
+        Object.assign({}, config));
+      this.attachListeners();
+    }
+  };
+
   public render() {
     const { data, layout, config, onClick, onHover, onSelected, ...other } = this.props;
     return (
       <div
         ref={async (node) => {
           if (node && !this.container) {
-            this.container = await Plotly.newPlot(node, data as Plotly.Data[], Object.assign({}, layout), config);
+            this.container = await Plotly.newPlot(
+              node,
+              data,
+              Object.assign({}, layout),
+              Object.assign({}, config));
             this.attachListeners();
           }
         }}

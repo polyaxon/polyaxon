@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import * as Plotly from 'plotly.js';
 import * as React from 'react';
 
+import { CHARTS_COLORS } from '../../constants/charts';
 import { Trace } from '../../interfaces/dateTrace';
 import { ChartModel } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
@@ -25,7 +26,7 @@ export default class ChartView extends React.Component<Props, {}> {
       const traces: { [key: string]: Trace } = {};
       for (const metric of this.props.metrics) {
         const createdAt = metric.created_at;
-        for (const metricName of chart.metricNames) {
+        chart.metricNames.forEach((metricName, idx) => {
           if (metricName in traces) {
             traces[metricName].x.push(convertTimeFormat(createdAt));
             traces[metricName].y.push(metric.values[metricName]);
@@ -36,9 +37,15 @@ export default class ChartView extends React.Component<Props, {}> {
               name: metricName,
               mode: chart.mode,
               type: chart.type,
+              line: {
+                width: 0.8,
+                shape: 'spline',
+                smoothing: 0.5,
+                color: CHARTS_COLORS[idx % CHARTS_COLORS.length],
+              } as Partial<Plotly.ScatterLine>
             };
           }
-        }
+        });
       }
       return chart.metricNames
         .filter((chartName) => chartName in traces)
