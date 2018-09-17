@@ -5,22 +5,24 @@ import pytest
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
+    ExperimentChartViewSerializer,
     ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
     ExperimentLastMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer,
-    ExperimentChartViewSerializer)
+    ExperimentStatusSerializer
+)
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
-from db.models.experiments import Experiment, ExperimentStatus, ExperimentChartView
+from db.models.experiments import Experiment, ExperimentChartView, ExperimentStatus
 from factories.factory_experiments import (
+    ExperimentChartViewFactory,
     ExperimentFactory,
     ExperimentJobFactory,
-    ExperimentStatusFactory,
-    ExperimentChartViewFactory)
+    ExperimentStatusFactory
+)
 from schemas.specifications import ExperimentSpecification
 from tests.utils import BaseTest
 
@@ -512,7 +514,7 @@ class TestExperimentChartViewSerializer(BaseTest):
         'created_at',
         'updated_at',
         'charts',
-        }
+    }
 
     def setUp(self):
         super().setUp()

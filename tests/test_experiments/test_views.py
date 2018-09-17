@@ -1,17 +1,21 @@
 # pylint:disable=too-many-lines
 import os
 import time
+
+from faker import Faker
 from unittest.mock import patch
 
 import pytest
-from django.conf import settings
-from faker import Faker
+
 from rest_framework import status
+
+from django.conf import settings
 
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
+    ExperimentChartViewSerializer,
     ExperimentDeclarationsSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
@@ -20,28 +24,33 @@ from api.experiments.serializers import (
     ExperimentLastMetricSerializer,
     ExperimentMetricSerializer,
     ExperimentSerializer,
-    ExperimentStatusSerializer,
-    ExperimentChartViewSerializer)
+    ExperimentStatusSerializer
+)
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
-from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus, \
-    ExperimentChartView
+from db.models.experiments import (
+    Experiment,
+    ExperimentChartView,
+    ExperimentMetric,
+    ExperimentStatus
+)
 from db.models.repos import CodeReference
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.tll import RedisTTL
 from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
+    ExperimentChartViewFactory,
     ExperimentFactory,
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
     ExperimentMetricFactory,
-    ExperimentStatusFactory,
-    ExperimentChartViewFactory)
+    ExperimentStatusFactory
+)
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (

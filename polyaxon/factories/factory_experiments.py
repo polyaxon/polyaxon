@@ -1,8 +1,12 @@
 import factory
 
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
-from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus, \
-    ExperimentChartView
+from db.models.experiments import (
+    Experiment,
+    ExperimentChartView,
+    ExperimentMetric,
+    ExperimentStatus
+)
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from factories.fixtures import exec_experiment_spec_parsed_content

@@ -3,8 +3,11 @@ from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.tags import TagsSerializerMixin
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, \
-    ExperimentGroupChartView
+from db.models.experiment_groups import (
+    ExperimentGroup,
+    ExperimentGroupChartView,
+    ExperimentGroupStatus
+)
 from libs.spec_validation import validate_group_spec_content
 
 

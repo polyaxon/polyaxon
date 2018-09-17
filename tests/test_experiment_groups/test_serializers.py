@@ -3,12 +3,15 @@ import pytest
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     BookmarkedExperimentGroupSerializer,
+    ExperimentGroupChartViewSerializer,
     ExperimentGroupDetailSerializer,
-    ExperimentGroupSerializer,
-    ExperimentGroupChartViewSerializer)
+    ExperimentGroupSerializer
+)
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupChartView
-from factories.factory_experiment_groups import ExperimentGroupFactory, \
-    ExperimentGroupChartViewFactory
+from factories.factory_experiment_groups import (
+    ExperimentGroupChartViewFactory,
+    ExperimentGroupFactory
+)
 from tests.utils import BaseTest
 
 
@@ -180,7 +183,7 @@ class TestExperimentGroupChartViewSerializer(BaseTest):
         'created_at',
         'updated_at',
         'charts',
-        }
+    }
 
     def setUp(self):
         super().setUp()

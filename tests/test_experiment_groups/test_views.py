@@ -1,28 +1,36 @@
 from unittest.mock import patch
 
 import pytest
+
 from rest_framework import status
 
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     BookmarkedExperimentGroupSerializer,
+    ExperimentGroupChartViewSerializer,
     ExperimentGroupDetailSerializer,
-    ExperimentGroupStatusSerializer,
-    ExperimentGroupChartViewSerializer)
+    ExperimentGroupStatusSerializer
+)
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, \
-    ExperimentGroupChartView
-from db.models.experiments import Experiment, ExperimentChartView
-from factories.factory_experiment_groups import ExperimentGroupFactory, \
-    ExperimentGroupStatusFactory, ExperimentGroupChartViewFactory
+from db.models.experiment_groups import (
+    ExperimentGroup,
+    ExperimentGroupChartView,
+    ExperimentGroupStatus
+)
+from db.models.experiments import Experiment
+from factories.factory_experiment_groups import (
+    ExperimentGroupChartViewFactory,
+    ExperimentGroupFactory,
+    ExperimentGroupStatusFactory
+)
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
-    ExperimentStatusFactory,
-    ExperimentChartViewFactory)
+    ExperimentStatusFactory
+)
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 from tests.utils import BaseViewTest

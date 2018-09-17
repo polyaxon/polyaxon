@@ -4,21 +4,26 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 import auditor
+
 from api.experiment_groups import queries
 from api.experiment_groups.serializers import (
     BookmarkedExperimentGroupSerializer,
+    ExperimentGroupChartViewSerializer,
     ExperimentGroupCreateSerializer,
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer,
-    ExperimentGroupStatusSerializer,
-    ExperimentGroupChartViewSerializer)
+    ExperimentGroupStatusSerializer
+)
 from api.filters import OrderingFilter, QueryFilter
 from api.paginator import LargeLimitOffsetPagination
 from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.list_create import ListCreateAPIView
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, \
-    ExperimentGroupChartView
+from db.models.experiment_groups import (
+    ExperimentGroup,
+    ExperimentGroupChartView,
+    ExperimentGroupStatus
+)
 from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
