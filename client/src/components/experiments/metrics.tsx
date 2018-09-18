@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
@@ -50,7 +51,7 @@ export default class Metrics extends React.Component<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
-    if (this.props.metrics !== prevProps.metrics) {
+    if (!_.isEqual(this.props.metrics, prevProps.metrics)) {
       const metricNames = this.getMetricNames();
       this.setState({
         ...prevState,
@@ -91,13 +92,17 @@ export default class Metrics extends React.Component<Props, State> {
   };
 
   public updateViewForm = (key: string, value: string) => {
+    let updated = false;
     const view = {...this.state.view};
     if (key === 'name') {
       view.name = value;
+      updated = true;
     }
-    this.setState((prevState, prevProps) => ({
-      ...prevState, view
-    }));
+    if (updated) {
+      this.setState((prevState, prevProps) => ({
+        ...prevState, view
+      }));
+    }
   };
 
   public deleteView = (event: any, viewId: number) => {
@@ -153,13 +158,17 @@ export default class Metrics extends React.Component<Props, State> {
   };
 
   public updateChartForm = (key: string, value: string) => {
+    let updated = false;
     const chartForm = {...this.state.chartForm};
     if (key === 'name') {
       chartForm.chart.name = value;
+      updated = true;
     }
-    this.setState((prevState, prevProps) => ({
-      ...prevState, chartForm
-    }));
+    if (updated) {
+      this.setState((prevState, prevProps) => ({
+        ...prevState, chartForm
+      }));
+    }
   };
 
   public addMetricChartForm = (metricName: string) => {
@@ -273,8 +282,6 @@ export default class Metrics extends React.Component<Props, State> {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="untitled"
-                  value={this.state.chartForm.chart.name}
                   onChange={(event) => this.updateChartForm('name', event.target.value)}
                 />
               </div>
@@ -320,8 +327,6 @@ export default class Metrics extends React.Component<Props, State> {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="untitled"
-                  value={this.state.view.name}
                   onChange={(event) => this.updateViewForm('name', event.target.value)}
                 />
               </div>
