@@ -20,7 +20,7 @@ class LocalStore(Store):
     def upload_file(self, *args, **kwargs):
         pass
 
-    def upload_dir(self, dirname, path=None):
+    def upload_dir(self, *args, **kwargs):
         pass
 
     def download_dir(self, *args, **kwargs):

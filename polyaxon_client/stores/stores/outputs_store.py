@@ -5,12 +5,6 @@ import os
 
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
 from polyaxon_client.stores.stores.base_store import Store
-from polyaxon_client.stores.utils import get_from_env
-
-
-def get_outputs_path(keys=None):
-    keys = keys or ['POLYAXON_RUN_OUTPUTS_PATH']
-    return get_from_env(keys)
 
 
 class OutputsStore(object):
@@ -25,7 +19,13 @@ class OutputsStore(object):
         else:
             raise PolyaxonStoresException('Received an unrecognised store `{}`.'.format(store))
 
-        self._outputs_path = outputs_path or get_outputs_path()
+        self._outputs_path = outputs_path
+
+    def set_store(self, store):
+        self._store = store
+
+    def set_outputs_path(self, outputs_path):
+        self._outputs_path = outputs_path
 
     @property
     def store(self):
@@ -35,8 +35,8 @@ class OutputsStore(object):
     def outputs_path(self):
         return self._outputs_path
 
-    def get_outputs_file_path(self, filename):
-        return os.path.join(self.outputs_path, filename)
+    def upload_file(self, filename, **kwargs):
+        self.store.upload_file(filename, self.outputs_path, **kwargs)
 
-    def get_outputs_directory_path(self, dirname):
-        return os.path.join(self.outputs_path, dirname)
+    def upload_dir(self, dirname, **kwargs):
+        self.store.upload_dir(dirname, self.outputs_path, **kwargs)
