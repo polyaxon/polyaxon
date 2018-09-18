@@ -7,6 +7,8 @@ import os
 import sys
 import time
 
+from datetime import datetime
+
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
@@ -133,6 +135,7 @@ class Experiment(BaseTracker):
                                              project_name=self.project_name,
                                              experiment_id=self.experiment_id,
                                              values=metrics,
+                                             created_at=datetime.utcnow(),
                                              background=True)
 
     def log_tags(self, tags, reset=False):

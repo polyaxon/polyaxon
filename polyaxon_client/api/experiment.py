@@ -12,6 +12,7 @@ from polyaxon_client.schemas import (
     ExperimentStatusConfig
 )
 from polyaxon_schemas.code_reference import CodeReferenceConfig
+from polyaxon_schemas.utils import TIME_ZONE
 
 
 class ExperimentApi(BaseApiHandler):
@@ -186,7 +187,13 @@ class ExperimentApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving experiment metric.')
             return None
 
-    def create_metric(self, username, project_name, experiment_id, values, background=False):
+    def create_metric(self,
+                      username,
+                      project_name,
+                      experiment_id,
+                      values,
+                      created_at=None,
+                      background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
                                      project_name,
@@ -204,14 +211,18 @@ class ExperimentApi(BaseApiHandler):
                 return float(value)
             raise PolyaxonClientException(
                 'Client could not parse the value `{}`, it expects a number.'.format(value))
-        _values = {key: parse_numbers(values[key]) for key in values}
+
+        json_data = {'values': {key: parse_numbers(values[key]) for key in values}}
+
+        if created_at:
+            json_data['created_at'] = str(TIME_ZONE.localize(created_at))
 
         if background:
-            self.transport.async_post(request_url, json_data={'values': _values})
+            self.transport.async_post(request_url, json_data=json_data)
             return None
 
         try:
-            response = self.transport.post(request_url, json_data={'values': _values})
+            response = self.transport.post(request_url, json_data=json_data)
             return self.prepare_results(response_json=response.json(),
                                         config=ExperimentMetricConfig)
         except PolyaxonClientException as e:
