@@ -81,8 +81,7 @@ class TestGCSStore(TestCase):
         test_bucket = 'test_bucket'
         test_object = 'test_object'
 
-        (client.return_value.objects.return_value
-         .get.return_value.execute.side_effect) = Exception
+        client.return_value.get_bucket.return_value.get_blob.side_effect = Exception
 
         response = GCSStore().check_blob(blob=test_object, bucket_name=test_bucket)
         assert response is False
@@ -123,8 +122,8 @@ class TestGCSStore(TestCase):
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
     def test_list_dirs_and_blobs(self, client, _):
-        blob_root_path = '/project_path/experiment_id/'
-        gcs_url = 'gs://bucket' + blob_root_path
+        blob_root_path = 'project_path/experiment_id/'
+        gcs_url = 'gs://bucket/' + blob_root_path
 
         obj_mock = mock.Mock()
         file_path = 'fileA'
@@ -154,8 +153,8 @@ class TestGCSStore(TestCase):
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
     def test_list_with_subdir(self, client, _):
-        blob_root_path = '/project_path/experiment_id/'
-        gcs_url = 'gs://bucket' + blob_root_path
+        blob_root_path = 'project_path/experiment_id/'
+        gcs_url = 'gs://bucket/' + blob_root_path
         dirname = 'model'
         obj_mock = mock.Mock()
         file_path = dirname + '/' + 'tf.pb'
@@ -200,20 +199,20 @@ class TestGCSStore(TestCase):
         gcs_url = 'gs://bucket/path/to/blob.txt'
         store.upload_file(filename=fpath, blob=gcs_url, use_basename=False)
         client.return_value.get_bucket.assert_called_with('bucket')
-        client.return_value.get_bucket.return_value.get_blob.assert_called_with('path/to/blob.txt')
+        client.return_value.get_bucket.return_value.blob.assert_called_with('path/to/blob.txt')
         (client.return_value
          .get_bucket.return_value
-         .get_blob.return_value
+         .blob.return_value
          .upload_from_filename.assert_called_with(fpath))
 
         # Test with basename
         gcs_url = 'gs://bucket/path/to/'
         store.upload_file(filename=fpath, blob=gcs_url, use_basename=True)
         client.return_value.get_bucket.assert_called_with('bucket')
-        client.return_value.get_bucket.return_value.get_blob.assert_called_with('path/to/test.txt')
+        client.return_value.get_bucket.return_value.blob.assert_called_with('path/to/test.txt')
         (client.return_value
          .get_bucket.return_value
-         .get_blob.return_value
+         .blob.return_value
          .upload_from_filename.assert_called_with(fpath))
 
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
@@ -280,7 +279,7 @@ class TestGCSStore(TestCase):
         # Test without basename
         store.upload_dir(dirname=dirname1, blob=gcs_url, use_basename=False)
         client.return_value.get_bucket.assert_called_with('bucket')
-        client.return_value.get_bucket.return_value.get_blob.assert_has_calls(
+        client.return_value.get_bucket.return_value.blob.assert_has_calls(
             [
                 mock.call('{}test1.txt'.format(blob_path)),
                 mock.call('{}test2.txt'.format(blob_path)),
@@ -288,7 +287,7 @@ class TestGCSStore(TestCase):
             ], any_order=True)
         (client.return_value
          .get_bucket.return_value
-         .get_blob.return_value
+         .blob.return_value
          .upload_from_filename.assert_has_calls([mock.call(fpath1),
                                                  mock.call(fpath2),
                                                  mock.call(fpath3),
@@ -297,7 +296,7 @@ class TestGCSStore(TestCase):
         # Test with basename
         store.upload_dir(dirname=dirname1, blob=gcs_url, use_basename=True)
         client.return_value.get_bucket.assert_called_with('bucket')
-        client.return_value.get_bucket.return_value.get_blob.assert_has_calls(
+        client.return_value.get_bucket.return_value.blob.assert_has_calls(
             [
                 mock.call('{}{}/test1.txt'.format(blob_path, rel_path1)),
                 mock.call('{}{}/test2.txt'.format(blob_path, rel_path1)),
@@ -305,7 +304,7 @@ class TestGCSStore(TestCase):
             ], any_order=True)
         (client.return_value
          .get_bucket.return_value
-         .get_blob.return_value
+         .blob.return_value
          .upload_from_filename.assert_has_calls([mock.call(fpath1),
                                                  mock.call(fpath2),
                                                  mock.call(fpath3),
@@ -333,17 +332,17 @@ class TestGCSStore(TestCase):
 
         # Mock return list
         obj_mock1 = mock.Mock()
-        obj_mock1.configure_mock(name='/' + blob_path + 'test1.txt', size=1)
+        obj_mock1.configure_mock(name=blob_path + 'test1.txt', size=1)
 
         obj_mock2 = mock.Mock()
-        obj_mock2.configure_mock(name='/' + blob_path + 'test2.txt', size=1)
+        obj_mock2.configure_mock(name=blob_path + 'test2.txt', size=1)
 
         subdir_mock = mock.Mock()
         subdirname = rel_path2 + '/'
-        subdir_mock.configure_mock(prefixes=('/' + blob_path + subdirname,))
+        subdir_mock.configure_mock(prefixes=(blob_path + subdirname,))
 
         obj_mock3 = mock.Mock()
-        obj_mock3.configure_mock(name='/' + blob_path + subdirname + 'test3.txt', size=1)
+        obj_mock3.configure_mock(name=blob_path + subdirname + 'test3.txt', size=1)
 
         mock_results1 = mock.MagicMock()
         mock_results1.configure_mock(pages=[subdir_mock])
@@ -402,17 +401,17 @@ class TestGCSStore(TestCase):
 
         # Mock return list
         obj_mock1 = mock.Mock()
-        obj_mock1.configure_mock(name='/' + blob_path + 'foo/test1.txt', size=1)
+        obj_mock1.configure_mock(name=blob_path + 'foo/test1.txt', size=1)
 
         obj_mock2 = mock.Mock()
-        obj_mock2.configure_mock(name='/' + blob_path + 'foo/test2.txt', size=1)
+        obj_mock2.configure_mock(name=blob_path + 'foo/test2.txt', size=1)
 
         subdir_mock = mock.Mock()
         subdirname = rel_path2 + '/'
-        subdir_mock.configure_mock(prefixes=('/' + blob_path + 'foo/' + subdirname,))
+        subdir_mock.configure_mock(prefixes=(blob_path + 'foo/' + subdirname,))
 
         obj_mock3 = mock.Mock()
-        obj_mock3.configure_mock(name='/' + blob_path + 'foo/' + subdirname + 'test3.txt', size=1)
+        obj_mock3.configure_mock(name=blob_path + 'foo/' + subdirname + 'test3.txt', size=1)
 
         mock_results1 = mock.MagicMock()
         mock_results1.configure_mock(pages=[subdir_mock])

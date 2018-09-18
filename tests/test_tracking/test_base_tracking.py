@@ -3,36 +3,66 @@ from __future__ import absolute_import, division, print_function
 
 from tests.utils import TestEnvVarsCase
 
-from polyaxon_client.tracking.base import BaseTracker
+from polyaxon_client import settings
+from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_client.tracking import paths
 
 
 class TestTracker(TestEnvVarsCase):
+    def test_get_outputs_raises_out_cluster(self):
+        settings.IN_CLUSTER = False
+        with self.assertRaises(PolyaxonClientException):
+            paths.get_outputs_path()
+
     def test_empty_outputs_path(self):
-        self.check_empty_value('POLYAXON_RUN_OUTPUTS_PATH', BaseTracker.get_outputs_path)
+        settings.IN_CLUSTER = True
+        self.check_empty_value('POLYAXON_RUN_OUTPUTS_PATH', paths.get_outputs_path)
 
     def test_valid_outputs_path(self):
-        self.check_valid_value('POLYAXON_RUN_OUTPUTS_PATH', BaseTracker.get_outputs_path, 'path')
+        settings.IN_CLUSTER = True
+        self.check_valid_value('POLYAXON_RUN_OUTPUTS_PATH', paths.get_outputs_path, 'path')
+
+    def test_get_data_paths_raises_out_cluster(self):
+        settings.IN_CLUSTER = False
+        with self.assertRaises(PolyaxonClientException):
+            paths.get_data_paths()
 
     def test_empty_data_path(self):
-        self.check_empty_value('POLYAXON_RUN_DATA_PATHS', BaseTracker.get_data_paths)
+        settings.IN_CLUSTER = True
+        self.check_empty_value('POLYAXON_RUN_DATA_PATHS', paths.get_data_paths)
 
     def test_valid_data_path(self):
-        self.check_valid_dict_value('POLYAXON_RUN_DATA_PATHS', BaseTracker.get_data_paths,
+        settings.IN_CLUSTER = True
+        self.check_valid_dict_value('POLYAXON_RUN_DATA_PATHS', paths.get_data_paths,
                                     {'data': 'path'})
 
+    def test_get_outputs_refs_paths_raises_out_cluster(self):
+        settings.IN_CLUSTER = False
+        with self.assertRaises(PolyaxonClientException):
+            paths.get_outputs_refs_paths()
+
     def test_empty_outputs_refs_paths(self):
-        self.check_empty_value('POLYAXON_REFS_OUTPUTS_PATHS', BaseTracker.get_outputs_refs_paths)
+        settings.IN_CLUSTER = True
+        self.check_empty_value('POLYAXON_REFS_OUTPUTS_PATHS', paths.get_outputs_refs_paths)
 
     def test_valid_outputs_refs_paths(self):
+        settings.IN_CLUSTER = True
         self.check_valid_dict_value('POLYAXON_REFS_OUTPUTS_PATHS',
-                                    BaseTracker.get_outputs_refs_paths,
+                                    paths.get_outputs_refs_paths,
                                     {
                                         'jobs': ['path1', 'path12'],
                                         'experiments': ['path1', 'path12']
                                     })
 
+    def test_get_log_level_raises_out_cluster(self):
+        settings.IN_CLUSTER = False
+        with self.assertRaises(PolyaxonClientException):
+            paths.get_log_level()
+
     def test_empty_log_level(self):
-        self.check_empty_value('POLYAXON_LOG_LEVEL', BaseTracker.get_log_level)
+        settings.IN_CLUSTER = True
+        self.check_empty_value('POLYAXON_LOG_LEVEL', paths.get_log_level)
 
     def test_valid_log_level(self):
-        self.check_valid_value('POLYAXON_LOG_LEVEL', BaseTracker.get_log_level, 'info')
+        settings.IN_CLUSTER = True
+        self.check_valid_value('POLYAXON_LOG_LEVEL', paths.get_log_level, 'info')

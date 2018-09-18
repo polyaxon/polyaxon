@@ -19,7 +19,7 @@ class TestGCClient(TestCase):
         assert default_auth.call_count == 1
         assert credentials is None
 
-    @mock.patch(GCS_MODULE.format('Credentials.from_service_account_info'))
+    @mock.patch(GCS_MODULE.format('Credentials.from_service_account_file'))
     def test_get_key_path_gc_credentials(self, service_account):
 
         with self.assertRaises(PolyaxonStoresException):
