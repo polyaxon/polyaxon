@@ -59,7 +59,7 @@ def get_gc_credentials(key_path=None, keyfile_dict=None, scopes=None):
         # Get credentials from a JSON file.
         if key_path.endswith('.json'):
             logger.info('Getting connection using a JSON key file.')
-            credentials = Credentials.from_service_account_info(keyfile_dict, scopes=scopes)
+            credentials = Credentials.from_service_account_file(key_path, scopes=scopes)
         else:
             raise PolyaxonStoresException('Unrecognised extension for key file.')
     else:
