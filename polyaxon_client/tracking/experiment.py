@@ -12,6 +12,7 @@ from datetime import datetime
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
+from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
 from polyaxon_client.tracking.utils.tags import validate_tags
@@ -24,7 +25,9 @@ class Experiment(BaseTracker):
                  client=None,
                  track_logs=None,
                  track_git=None,
-                 track_env=None):
+                 track_env=None,
+                 outputs_store=None):
+
         if project is None and settings.IN_CLUSTER:
             experiment_info = self.get_experiment_info()
             project = experiment_info['project_name']
@@ -33,11 +36,17 @@ class Experiment(BaseTracker):
                                          client=client,
                                          track_logs=track_logs,
                                          track_git=track_git,
-                                         track_env=track_env)
+                                         track_env=track_env,
+                                         outputs_store=outputs_store)
 
         self.experiment_id = experiment_id
         self.experiment = None
         self.last_status = None
+
+        # Setup the outputs store
+        if outputs_store is None and settings.IN_CLUSTER:
+            self.set_outputs_store(outputs_path=get_outputs_path())
+
         # Check if there's an ephemeral token
         if settings.IN_CLUSTER and settings.SECRET_EPHEMERAL_TOKEN:
             self.client.auth.login_experiment_ephemeral_token(
@@ -47,7 +56,7 @@ class Experiment(BaseTracker):
                 ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
                 set_token=True)
 
-    def create(self, name=None, tags=None, description=None, config=None):
+    def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
         experiment_config = {'run_env': get_run_env()}
         if name:
             experiment_config['name'] = name
@@ -57,6 +66,7 @@ class Experiment(BaseTracker):
             experiment_config['description'] = description
         if config:
             experiment_config['config'] = config
+
         experiment = self.client.project.create_experiment(
             username=self.username,
             project_name=self.project_name,
@@ -66,6 +76,13 @@ class Experiment(BaseTracker):
                               else experiment.get('id'))
         self.experiment = experiment
         self.last_status = 'created'
+
+        # Setup the outputs store
+        if self.outputs_store is None and base_outputs_path:
+            outputs_path = '{}/{}/{}/{}'.format(
+                base_outputs_path, self.username, self.project_name, self.experiment_id)
+            self.set_outputs_store(outputs_path=outputs_path)
+
         self.log_code_ref()
 
         if not settings.IN_CLUSTER:
@@ -237,7 +254,7 @@ class Experiment(BaseTracker):
         tf_config = {
             'cluster': cluster_def,
             'task': task_info,
-            'model_dir': Experiment.get_outputs_path(),
+            'model_dir': get_outputs_path(),
             'environment': 'cloud'
         }
 

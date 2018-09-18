@@ -6,6 +6,7 @@ import os
 
 from polyaxon_client import settings
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
+from polyaxon_client.tracking.paths import get_outputs_path
 
 
 class Job(BaseTracker):
@@ -15,7 +16,8 @@ class Job(BaseTracker):
                  client=None,
                  track_logs=None,
                  track_git=None,
-                 track_env=None):
+                 track_env=None,
+                 outputs_store=None):
         if project is None and settings.IN_CLUSTER:
             job_info = self.get_job_info()
             project = job_info['project_name']
@@ -25,6 +27,10 @@ class Job(BaseTracker):
                                   track_logs=track_logs,
                                   track_git=track_git,
                                   track_env=track_env)
+
+        # Setup the outputs store
+        if outputs_store is None and settings.IN_CLUSTER:
+            self.set_outputs_store(outputs_path=get_outputs_path())
 
         self.job_id = job_id
         self.job = None
