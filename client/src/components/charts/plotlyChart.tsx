@@ -79,16 +79,16 @@ class PlotlyChart extends React.Component<PlotParams, {}> {
     }
   };
 
-  public componentWillReceiveProps(nextProps: PlotParams) {
-    this.draw(nextProps);
-  }
+  // public componentWillReceiveProps(nextProps: PlotParams) {
+  //   this.react(nextProps);
+  // }
 
   public componentDidMount() {
-    this.draw(this.props);
+    this.react(this.props);
   }
 
   public componentDidUpdate() {
-    this.draw(this.props);
+    this.react(this.props);
   }
 
   public componentWillUnmount() {
@@ -98,8 +98,8 @@ class PlotlyChart extends React.Component<PlotParams, {}> {
     window.removeEventListener('resize', this.resize);
   }
 
-  public draw = async (props: PlotParams) => {
-    const {data, layout, config} = props;
+  public react = async (props: PlotParams) => {
+    const {data, layout, config, onClick, onHover, onSelected, ...other } = props;
     if (this.container) {
       // plotly.react will not destroy the old plot: https://plot.ly/javascript/plotlyjs-function-reference/#plotlyreact
       this.container = await Plotly.react(
