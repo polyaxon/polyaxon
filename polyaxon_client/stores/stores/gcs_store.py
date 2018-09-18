@@ -109,11 +109,8 @@ class GCSStore(Store):
             blob: `str`. the path to the object to check in the Google cloud storage bucket.
             bucket_name: `str`. Name of the bucket in which the file is stored
         """
-        if not bucket_name:
-            bucket_name, blob = self.parse_gcs_url(blob)
         try:
-            self.client.objects().get(bucket=bucket_name, object=blob).execute()
-            return True
+            return bool(self.get_blob(blob=blob, bucket_name=bucket_name))
         except Exception as e:
             logger.info('Block does not exist %s', e)
             return False
@@ -168,19 +165,20 @@ class GCSStore(Store):
         if prefix and not prefix.endswith('/'):
             prefix += '/'
 
-        iterator = bucket.list_blobs(prefix=prefix, delimiter=delimiter)
+        def get_iterator():
+            return bucket.list_blobs(prefix=prefix, delimiter=delimiter)
 
         def get_blobs(_blobs):
             list_blobs = []
             for blob in _blobs:
-                name = blob.name[len(key) + 1:]
+                name = blob.name[len(key):]
                 list_blobs.append((name, blob.size))
             return list_blobs
 
         def get_prefixes(_prefixes):
             list_prefixes = []
             for folder_path in _prefixes:
-                name = folder_path[len(key) + 1: -1]
+                name = folder_path[len(key): -1]
                 list_prefixes.append(name)
             return list_prefixes
 
@@ -190,9 +188,11 @@ class GCSStore(Store):
         }
 
         if blobs:
+            iterator = get_iterator()
             results['blobs'] = get_blobs(list(iterator))
 
         if prefixes:
+            iterator = get_iterator()
             for page in iterator.pages:
                 results['prefixes'] = get_prefixes(page.prefixes)
 
@@ -214,8 +214,8 @@ class GCSStore(Store):
         if use_basename:
             blob = append_basename(blob, filename)
 
-        obj = self.get_blob(blob, bucket_name)
-        obj.upload_from_filename(filename)
+        bucket = self.get_bucket(bucket_name)
+        bucket.blob(blob).upload_from_filename(filename)
 
     def download_file(self, blob, local_path, bucket_name=None, use_basename=True):
         """
