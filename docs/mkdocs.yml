@@ -46,7 +46,10 @@ copyright: Copyright &copy; 2018 Polyaxon
 
 markdown_extensions:
   - admonition
-  - codehilite
+  - codehilite:
+      use_pygments: True
+      noclasses: True
+      pygments_style: native
   - footnotes
   - pymdownx.inlinehilite
   - footnotes
