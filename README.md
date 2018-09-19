@@ -26,15 +26,12 @@ rhea_config = Rhea(bool_value1='1',
                    bool_value3=True)
                    
 rhea_config.get_boolean('bool_value1')
-
 # True
 
 rhea_config.get_boolean('bool_value2')
-
 # False
 
 rhea_config.get_boolean('bool_value3')
-
 # True
 ```
 
@@ -211,7 +208,19 @@ rhea_config.get_int('INT_ENV_VALUE', options=[1, 2, 3, 11])
 # 11
 ```
 
-## Example using with Django
+### Parsed params
+
+
+```python
+from rhea import Rhea
+
+rhea_config = Rhea.read_configs([...])
+
+rhea_config.get_requested_params(include_locals=False, include_secrets=False)
+# {'key1': 'value1', ...}
+```
+
+## Example with Django
 
 ```python
 from rhea import Rhea
