@@ -8,6 +8,12 @@
 
 Efficient environment variables management and typing for python.
 
+## Installation
+
+```
+pip install -U rhea
+```
+
 ## Features 
 
  * Typed retrieval of environment variables.
@@ -245,6 +251,12 @@ rhea_config = Rhea.read_configs([...])
 
 DEBUG = rhea_config.get_boolean('DJANGO_DEBUG_MODE', is_optional=True, default=False)
 SECRET_KEY = rhea_config.get_string('POLYAXON_SECRET_KEY', is_secret=True)
+```
+
+## Running tests
+
+```
+pytest
 ```
 
 # License
