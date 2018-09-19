@@ -54,10 +54,10 @@ import os
 from rhea import Rhea
 
 rhea_config = Rhea.read_configs([os.environ, 
-                            'json_file.json', 
-                            'yaml_file.yaml',
-                            'another_file_override.json',
-                            {'foo': 'bar'}])
+                                'json_file.json', 
+                                'yaml_file.yaml',
+                                'another_file_override.json',
+                                {'foo': 'bar'}])
 ```
 
 ### Base types
