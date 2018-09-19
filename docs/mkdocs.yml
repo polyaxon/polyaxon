@@ -101,7 +101,7 @@ pages:
     - Kubernetes cluster On GKE: tutorials/gke_deployment/kubernetes_on_gke.md
     - Training Experiments On Polyaxon : tutorials/gke_deployment/training_experiments_on_polyaxon.md
 - Management:
-  - Intorduction: management/introduction.md
+  - Introduction: management/introduction.md
   - SuperUsers: management/superusers.md
   - Users: management/users.md
 - Customization:
@@ -170,7 +170,7 @@ pages:
 - Helm Chart Reference: reference_polyaxon_helm.md
 - Helper Reference: reference_polyaxon_helper.md
 - Query Syntax Reference:
-  - Intorduction: query_syntax/introduction.md
+  - Introduction: query_syntax/introduction.md
   - Entities:
     - Builds: query_syntax/entities/builds.md
     - Jobs: query_syntax/entities/jobs.md
