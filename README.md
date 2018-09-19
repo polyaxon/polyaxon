@@ -12,6 +12,7 @@ Environment variable management for python.
  * Typed retrieval of environment variables.
  * Collection of retrieved environment variables.
  * Handling of optional, secret, and local variables.
+ * Reading from different sources: os, json files, yaml files.
 
 ## Usage
 
