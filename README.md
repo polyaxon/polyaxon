@@ -82,7 +82,11 @@ FLOAT_ENV_VALUE3: 1111.1
 FLOAT_ENV_VALUE4: -33
 
 DICT_ENV_VALUE: {"foo": "bar", "1": "2"}
+
 LIST_ENV_VALUE: 'foo, bar, boo'
+
+URI_ENV_VALUE1: user:pass@host.com
+URI_ENV_VALUE2: user:pass@host:4000
 ```
 
 Reading:
@@ -123,6 +127,12 @@ rhea_config.get_dict('DICT_ENV_VALUE')
 
 rhea_config.get_list('LIST_ENV_VALUE')
 # ['foo', 'bar', 'boo']
+
+rhea_config.get_uri('URI_ENV_VALUE1')
+# UriSpec('user', 'pass', 'host')
+
+rhea_config.get_uri('URI_ENV_VALUE2')
+# UriSpec('user', 'pass', 'host:4000')
 ```
 
 ### List of base types
@@ -136,6 +146,7 @@ STRINGS_ENV_VALUE: '["some_string", "another_string"]'
 FLOATS_ENV_VALUE: '[1.1, -1.3, 0.03, 1111.1, 1.]'
 DICTS_ENV_VALUE: '[{"foo": "bar", "1": 2}, {"foo": "bar", "1": 2}]'
 DICT_OF_DICTS_ENV_VALUE: '{"key1": {"foo": "bar", "1": 2}, "key2": {"foo": "bar", "1": 2}}'
+URIS_ENV_VALUE: '["user:pass@host.com", "user:pass@host:4000"]'
 ```
 
 Reading:
@@ -162,6 +173,9 @@ rhea_config.get_dict('DICTS_ENV_VALUE', is_list=True)
 
 rhea_config.get_dict_of_dicts('DICT_OF_DICTS_ENV_VALUE')
 # {'key1': {'foo': 'bar', '1': 2}, 'key2': {'foo': 'bar', '1': 2}}
+
+rhea_config.get_uri('URIS_ENV_VALUE', is_list=True)
+# [UriSpec('user', 'pass', 'host'), UriSpec('user', 'pass', 'host:4000')]
 ```
 
 ### Optional values and default values
