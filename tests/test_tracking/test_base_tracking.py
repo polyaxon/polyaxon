@@ -9,6 +9,12 @@ from polyaxon_client.tracking import paths
 
 
 class TestTracker(TestEnvVarsCase):
+    def test_empty_base_outputs_path(self):
+        self.check_empty_value('POLYAXON_BASE_OUTPUTS_PATH', paths.get_base_outputs_path)
+
+    def test_valid_base_outputs_path(self):
+        self.check_valid_value('POLYAXON_BASE_OUTPUTS_PATH', paths.get_base_outputs_path, 'path')
+
     def test_get_outputs_raises_out_cluster(self):
         settings.IN_CLUSTER = False
         with self.assertRaises(PolyaxonClientException):
