@@ -22,6 +22,11 @@ class ChartViewModel(DiffModel, NameableModel):
         unique=True,
         null=False)
     charts = JSONField()
+    meta = JSONField(
+        null=True,
+        blank=True,
+        default={}
+    )
 
     class Meta:
         verbose_name_plural = 'Chart Views'
