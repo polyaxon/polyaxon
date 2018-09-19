@@ -53,8 +53,7 @@ class PodManager(object):
                  use_sidecar=False,
                  sidecar_config=None,
                  log_level=None,
-                 declarations=None,
-                 ephemeral_token=None):
+                 declarations=None):
         self.namespace = namespace
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
@@ -82,7 +81,6 @@ class PodManager(object):
         self.sidecar_config = sidecar_config
         self.log_level = log_level
         self.declarations = declarations
-        self.ephemeral_token = ephemeral_token
         self.experiment_labels = self.get_experiment_labels()
         self.cluster_def = None
 
@@ -125,7 +123,8 @@ class PodManager(object):
                           persistence_data=None,
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
-                          resources=None):
+                          resources=None,
+                          ephemeral_token=None):
         """Pod job container for task."""
         assert self.cluster_def is not None
 
@@ -142,7 +141,7 @@ class PodManager(object):
             logs_path=get_experiment_logs_path(self.experiment_name),
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
-            ephemeral_token=self.ephemeral_token,
+            ephemeral_token=ephemeral_token,
         )
         env_vars += [
             get_env_var(name=constants.CONFIG_MAP_CLUSTER_KEY_NAME,
@@ -217,6 +216,7 @@ class PodManager(object):
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
                           resources=None,
+                          ephemeral_token=None,
                           node_selector=None,
                           affinity=None,
                           tolerations=None,
@@ -246,7 +246,8 @@ class PodManager(object):
                                                persistence_data=persistence_data,
                                                outputs_refs_jobs=outputs_refs_jobs,
                                                outputs_refs_experiments=outputs_refs_experiments,
-                                               resources=resources)
+                                               resources=resources,
+                                               ephemeral_token=ephemeral_token)
 
         containers = [pod_container]
         if self.use_sidecar:
@@ -292,6 +293,7 @@ class PodManager(object):
                 outputs_refs_jobs=None,
                 outputs_refs_experiments=None,
                 resources=None,
+                ephemeral_token=None,
                 node_selector=None,
                 affinity=None,
                 tolerations=None,
@@ -313,6 +315,7 @@ class PodManager(object):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             resources=resources,
+            ephemeral_token=ephemeral_token,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,

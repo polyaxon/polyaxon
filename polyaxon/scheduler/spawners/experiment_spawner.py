@@ -1,4 +1,6 @@
 from polyaxon_k8s.manager import K8SManager
+
+from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
@@ -40,7 +42,7 @@ class ExperimentSpawner(K8SManager):
                  use_sidecar=False,
                  sidecar_config=None,
                  persist=False,
-                 ephemeral_token=None):
+                 token_scope=None):
         self.spec = spec
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
@@ -72,9 +74,9 @@ class ExperimentSpawner(K8SManager):
                                            log_level=self.spec.log_level,
                                            original_name=self.original_name,
                                            cloning_strategy=self.cloning_strategy,
-                                           declarations=self.spec.declarations,
-                                           ephemeral_token=ephemeral_token)
+                                           declarations=self.spec.declarations)
         self.persist = persist
+        self.token_scope = token_scope
 
         super().__init__(k8s_config=k8s_config,
                          namespace=namespace,
@@ -114,6 +116,7 @@ class ExperimentSpawner(K8SManager):
                     affinity=None,
                     tolerations=None,
                     restart_policy='Never'):
+        ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
         sidecar_args = get_sidecar_args(pod_id=job_name)
         labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
@@ -149,6 +152,7 @@ class ExperimentSpawner(K8SManager):
             outputs_refs_jobs=self.outputs_refs_jobs,
             outputs_refs_experiments=self.outputs_refs_experiments,
             resources=resources,
+            ephemeral_token=ephemeral_token,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,

@@ -410,7 +410,6 @@ def start_experiment(experiment):
     token_scope = RedisEphemeralTokens.get_scope(experiment.user.id,
                                                  'experiment',
                                                  experiment.id)
-    ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=token_scope)
 
     # Use spawners to start the experiment
     spawner = spawner_class(project_name=project.unique_name,
@@ -431,7 +430,7 @@ def start_experiment(experiment):
                             job_docker_image=job_docker_image,
                             use_sidecar=True,
                             sidecar_config=config.get_requested_params(to_str=True),
-                            ephemeral_token=ephemeral_token)
+                            token_scope=token_scope)
     error = {}
     try:
         response = spawner.start_experiment()
