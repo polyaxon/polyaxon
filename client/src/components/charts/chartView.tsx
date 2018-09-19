@@ -52,7 +52,13 @@ export default class ChartView extends React.Component<Props, {}> {
       }
       return chart.metricNames
         .filter((chartName) => chartName in traces)
-        .map((chartName) => traces[chartName]) as Plotly.PlotData[];
+        .map((chartName) => {
+          const trace = traces[chartName];
+          if (trace.x.length === 1 && trace.type === 'scatter') {
+            trace.type = 'bar';
+          }
+          return trace;
+        }) as Plotly.PlotData[];
     };
 
     const getChart = (chart: ChartModel, idx: number) => {
