@@ -17,9 +17,9 @@ pip install -U rhea
 ## Features 
 
  * Typed retrieval of environment variables.
- * Collection of retrieved environment variables.
  * Handling of optional, secret, and local variables.
  * Reading from different sources: os, json files, yaml files.
+ * Collection of parsed parameters.
 
 ## Usage
 
