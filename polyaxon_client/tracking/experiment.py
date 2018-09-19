@@ -12,7 +12,7 @@ from datetime import datetime
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
-from polyaxon_client.tracking.paths import get_outputs_path
+from polyaxon_client.tracking.paths import get_base_outputs_path, get_outputs_path
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
 from polyaxon_client.tracking.utils.tags import validate_tags
@@ -78,6 +78,7 @@ class Experiment(BaseTracker):
         self.last_status = 'created'
 
         # Setup the outputs store
+        base_outputs_path = base_outputs_path or get_base_outputs_path()
         if self.outputs_store is None and base_outputs_path:
             outputs_path = '{}/{}/{}/{}'.format(
                 base_outputs_path, self.username, self.project_name, self.experiment_id)
