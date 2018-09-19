@@ -23,7 +23,7 @@ export default class Chart extends React.Component<Props, {}> {
               l: 50,
               r: 20,
               b: 50,
-              t: 30,
+              t: 20,
             },
             showlegend: true,
             legend: {orientation: 'h'}

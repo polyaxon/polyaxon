@@ -11,6 +11,7 @@ import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
 import ChartView from '../charts/chartView';
 
 import '../dropdowns.less';
+import './metrics.less';
 
 export interface Props {
   metrics: MetricModel[];
@@ -66,7 +67,7 @@ export default class Metrics extends React.Component<Props, State> {
     return {
       metricNames,
       chart: {
-        name: '',
+        name: 'untitled',
         metricNames: [] as string[],
         mode: 'lines',
         type: 'scatter'
@@ -97,6 +98,17 @@ export default class Metrics extends React.Component<Props, State> {
     if (key === 'name') {
       view.name = value;
       updated = true;
+    } else if (key === 'smoothing') {
+      view.meta.smoothing = parseFloat(value);
+      updated = true;
+    } else if (key === 'xAxis') {
+      if (value === 'time') {
+        view.meta.xAxis = 'time';
+        updated = true;
+      } else if (value === 'step') {
+        view.meta.xAxis = 'step';
+        updated = true;
+      }
     }
     if (updated) {
       this.setState((prevState, prevProps) => ({
@@ -207,6 +219,9 @@ export default class Metrics extends React.Component<Props, State> {
   public getDefaultView = (metricNames: string[]) => {
     const charts: ChartModel[] = [];
     for (const metricName of metricNames) {
+      if (metricName === 'step') {
+        continue;
+      }
       charts.push({
         name: metricName,
         metricNames: [metricName],
@@ -214,7 +229,7 @@ export default class Metrics extends React.Component<Props, State> {
         type: 'scatter'
       } as ChartModel);
     }
-    return {charts, name: 'untitled'} as ChartViewModel;
+    return {charts, name: 'untitled', meta: {smoothing: 0.1, xAxis: 'time'}} as ChartViewModel;
   };
 
   public getMetricNames = () => {
@@ -351,16 +366,44 @@ export default class Metrics extends React.Component<Props, State> {
                 <i className="fa fa-download icon" aria-hidden="true"/> Save view
               </button>
             </div>
-            <div className="btn-toolbar pull-right">
-              <button className="btn btn-sm btn-default" onClick={() => this.handleShow('showChartModal')}>
-                <i className="fa fa-plus icon" aria-hidden="true"/> Add chart
-              </button>
-              <button className="btn btn-sm btn-default" onClick={this.setLayout}>
-                {this.state.isGrid
-                  ? <span><i className="fa fa-bars icon" aria-hidden="true"/> List</span>
-                  : <span><i className="fa fa-th-large icon" aria-hidden="true"/> Grid</span>
-                }
-              </button>
+            <div className="input-group pull-right chart-view-tools">
+              <span>
+                <button className="btn btn-sm btn-default add-chart" onClick={() => this.handleShow('showChartModal')}>
+                  <i className="fa fa-plus icon" aria-hidden="true"/> Add chart
+                </button>
+              </span>
+              <span>
+                <span className="input-group">
+                    <span className="input-group-addon" id="sizing-addon1">Smoothing</span>
+                    <input
+                      type="number"
+                      className="form-control input-sm"
+                      min="0"
+                      max="1"
+                      step="0.1"
+                      onChange={(event) => this.updateViewForm('smoothing', event.target.value)}
+                    />
+                </span>
+              </span>
+              <span>
+                <button
+                  className="btn btn-sm btn-default chart-axis"
+                  onClick={(e) => this.updateViewForm('xAxis', this.state.view.meta.xAxis === 'time' ? 'step' : 'time')}
+                >
+                  {this.state.view.meta.xAxis === 'time'
+                    ? 'x-axis: Step'
+                    : 'x-axis: Time'
+                  }
+                </button>
+              </span>
+              <span>
+                <button className="btn btn-sm btn-default chart-display" onClick={this.setLayout}>
+                  {this.state.isGrid
+                    ? <span><i className="fa fa-bars icon" aria-hidden="true"/> List</span>
+                    : <span><i className="fa fa-th-large icon" aria-hidden="true"/> Grid</span>
+                  }
+                </button>
+              </span>
             </div>
           </div>
           <ChartView

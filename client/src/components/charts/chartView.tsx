@@ -28,14 +28,19 @@ export default class ChartView extends React.Component<Props, {}> {
     const getChartData = (chart: ChartModel) => {
       const traces: { [key: string]: Trace } = {};
       for (const metric of this.props.metrics) {
-        const createdAt = metric.created_at;
+        let xValue: number|string;
+        if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
+          xValue = metric.values.step;
+        } else {
+          xValue = convertTimeFormat(metric.created_at);
+        }
         chart.metricNames.forEach((metricName, idx) => {
           if (metricName in traces) {
-            traces[metricName].x.push(convertTimeFormat(createdAt));
+            traces[metricName].x.push(xValue);
             traces[metricName].y.push(metric.values[metricName]);
           } else {
             traces[metricName] = {
-              x: [convertTimeFormat(createdAt)],
+              x: [xValue],
               y: [metric.values[metricName]],
               name: metricName,
               mode: chart.mode,
@@ -44,7 +49,7 @@ export default class ChartView extends React.Component<Props, {}> {
               line: {
                 width: 0.8,
                 shape: 'spline',
-                smoothing: 0.5,
+                smoothing: this.props.view.meta.smoothing,
                 color: CHARTS_COLORS[idx % CHARTS_COLORS.length],
               } as Partial<Plotly.ScatterLine>
             };
