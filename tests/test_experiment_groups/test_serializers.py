@@ -183,6 +183,7 @@ class TestExperimentGroupChartViewSerializer(BaseTest):
         'created_at',
         'updated_at',
         'charts',
+        'meta'
     }
 
     def setUp(self):
