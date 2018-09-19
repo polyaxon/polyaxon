@@ -218,7 +218,7 @@ rhea_config = Rhea.read_configs([...])
 
 # INT_ENV_VALUE = 11
 rhea_config.get_int('INT_ENV_VALUE', options=[1, 2, 3])
-# raise ValueError
+# raise RheaError
 rhea_config.get_int('INT_ENV_VALUE', options=[1, 2, 3, 11])
 # 11
 ```

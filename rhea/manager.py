@@ -236,7 +236,7 @@ class Rhea(object):
         def convert_to_dict(x):
             x = json.loads(x)
             if not isinstance(x, Mapping):
-                raise ValueError("Cannot convert value `{}` (key: `{}`) to `dict`".format(x, key))
+                raise RheaError("Cannot convert value `{}` (key: `{}`) to `dict`".format(x, key))
             return x
 
         if is_list:
