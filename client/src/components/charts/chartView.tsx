@@ -40,6 +40,7 @@ export default class ChartView extends React.Component<Props, {}> {
               name: metricName,
               mode: chart.mode,
               type: chart.type,
+              marker: {color: CHARTS_COLORS[idx % CHARTS_COLORS.length]},
               line: {
                 width: 0.8,
                 shape: 'spline',

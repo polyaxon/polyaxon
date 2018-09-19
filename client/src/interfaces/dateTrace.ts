@@ -11,8 +11,5 @@ export interface Trace extends DateTrace {
   mode: ChartModes;
   type: ChartTypes;
   line: Partial<Plotly.ScatterLine>;
-  // 'line.shape': string;
-  // 'line.width': number;
-  // 'line.smoothing': number;
-  // 'line.color': Plotly.Color;
+  marker: Partial<Plotly.PlotMarker>;
 }
