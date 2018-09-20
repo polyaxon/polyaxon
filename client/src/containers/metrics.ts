@@ -35,7 +35,8 @@ export function mapStateToProps(state: AppState, params: any) {
   return {
     metrics: results.metrics,
     views: viewsResults.views,
-    count: results.count
+    resource: params.resource,
+    count: results.count,
   };
 }
 

@@ -3,6 +3,7 @@ import { LastFetchedIds } from './utils';
 export class MetricModel {
   public id: number;
   public created_at: string;
+  public experiment: number;
   public values: { [key: string]: any };
 }
 

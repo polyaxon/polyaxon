@@ -16,6 +16,7 @@ import './metrics.less';
 export interface Props {
   metrics: MetricModel[];
   views: ChartViewModel[];
+  resource: string;
   count: number;
   fetchData: () => actions.MetricsAction;
   fetchViews: () => actions.MetricsAction;
@@ -410,6 +411,7 @@ export default class Metrics extends React.Component<Props, State> {
             className={this.state.isGrid ? 'col-md-6' : 'col-md-10 col-md-offset-1'}
             metrics={this.props.metrics}
             view={this.state.view}
+            resource={this.props.resource}
             onRemoveChart={this.removeChart}
           />
         </div>

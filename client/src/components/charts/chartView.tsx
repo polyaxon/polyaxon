@@ -14,6 +14,7 @@ import './chart.less';
 interface Props {
   view: ChartViewModel;
   metrics: MetricModel[];
+  resource: string;
   className: string;
   onRemoveChart: (chartIdx: number) => void;
 }
@@ -27,7 +28,12 @@ export default class ChartView extends React.Component<Props, {}> {
 
     const getChartData = (chart: ChartModel) => {
       const traces: { [key: string]: Trace } = {};
+      const traceNames: string[] = [];
       for (const metric of this.props.metrics) {
+        let prefix = '';
+        if (this.props.resource === 'groups') {
+          prefix = `${metric.experiment}`;
+        }
         let xValue: number|string;
         if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
           xValue = metric.values.step;
@@ -35,34 +41,35 @@ export default class ChartView extends React.Component<Props, {}> {
           xValue = convertTimeFormat(metric.created_at);
         }
         chart.metricNames.forEach((metricName, idx) => {
-          if (metricName in traces) {
-            traces[metricName].x.push(xValue);
-            traces[metricName].y.push(metric.values[metricName]);
+          const traceName = prefix ? `${prefix}.${metricName}` : metricName;
+          if (traceName in traces) {
+            traces[traceName].x.push(xValue);
+            traces[traceName].y.push(metric.values[metricName]);
           } else {
-            traces[metricName] = {
+            traceNames.push(traceName);
+            traces[traceName] = {
               x: [xValue],
               y: [metric.values[metricName]],
-              name: metricName,
+              name: traceName,
               mode: chart.mode,
               type: chart.type,
               marker: {color: CHARTS_COLORS[idx % CHARTS_COLORS.length]},
               line: {
-                width: 0.8,
+                width: 1.7,
                 shape: 'spline',
                 smoothing: this.props.view.meta.smoothing,
-                color: CHARTS_COLORS[idx % CHARTS_COLORS.length],
               } as Partial<Plotly.ScatterLine>
             };
           }
         });
       }
-      return chart.metricNames
-        .filter((chartName) => chartName in traces)
-        .map((chartName) => {
-          const trace = traces[chartName];
+      return traceNames
+        .map((traceName, idx) => {
+          const trace = traces[traceName];
           if (trace.x.length === 1 && trace.type === 'scatter') {
             trace.type = 'bar';
           }
+          trace.line.color = CHARTS_COLORS[idx % CHARTS_COLORS.length];
           return trace;
         }) as Plotly.PlotData[];
     };
