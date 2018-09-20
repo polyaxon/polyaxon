@@ -175,17 +175,25 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiments.')
             return []
 
-    def create_experiment(self, username, project_name, experiment_config, background=False):
+    def create_experiment(self,
+                          username,
+                          project_name,
+                          experiment_config,
+                          group=None,
+                          background=False):
         experiment_config = self.validate_config(config=experiment_config,
                                                  config_schema=ExperimentConfig)
+        experiment_data = experiment_config.to_dict()
+        if group:
+            experiment_data['experiment_group'] = group
         request_url = self.build_url(self._get_http_url(), username, project_name, 'experiments')
 
         if background:
-            self.transport.async_post(request_url, json_data=experiment_config.to_dict())
+            self.transport.async_post(request_url, json_data=experiment_data)
             return None
 
         try:
-            response = self.transport.post(request_url, json_data=experiment_config.to_dict())
+            response = self.transport.post(request_url, json_data=experiment_data)
             return self.prepare_results(response_json=response.json(), config=ExperimentConfig)
         except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating experiment.')

@@ -394,6 +394,7 @@ class TestProjectApi(TestBaseApi):
     def test_create_experiment(self):
         project_uuid = uuid.uuid4().hex
         obj = ExperimentConfig(project=project_uuid, config={})
+        obj_dict = obj.to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -402,18 +403,18 @@ class TestProjectApi(TestBaseApi):
                 'user',
                 'project',
                 'experiments'),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj_dict),
             content_type='application/json',
             status=200)
 
         # Schema response
         result = self.api_handler.create_experiment('user', 'project', obj)
-        assert result.to_dict() == obj.to_dict()
+        assert result.to_dict() == obj_dict
 
         # Raw response
         self.set_raw_response()
         result = self.api_handler.create_experiment('user', 'project', obj)
-        assert result == obj.to_dict()
+        assert result == obj_dict
 
         # Async
         self.assert_async_call(
@@ -430,24 +431,57 @@ class TestProjectApi(TestBaseApi):
                 'user',
                 'project',
                 'experiments'),
-            body=json.dumps(obj.to_dict()),
+            body=json.dumps(obj_dict),
             content_type='application/json',
             status=200)
 
         # Schema response
         self.set_schema_response()
-        result = self.api_handler.create_experiment('user', 'project', obj.to_dict())
-        assert result.to_dict() == obj.to_dict()
+        result = self.api_handler.create_experiment('user', 'project', obj_dict)
+        assert result.to_dict() == obj_dict
 
         # Raw response
         self.set_raw_response()
-        result = self.api_handler.create_experiment('user', 'project', obj.to_dict())
+        result = self.api_handler.create_experiment('user', 'project', obj_dict)
+        assert result == obj_dict
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_experiment(
+                'user', 'project', obj_dict, background=True),
+            method='post')
+
+        # Test create experiment with group
+        group_id = 1
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'user',
+                'project',
+                'experiments'),
+            body=json.dumps(obj_dict),
+            content_type='application/json',
+            status=200)
+
+        # Schema response
+        self.set_schema_response()
+        result = self.api_handler.create_experiment('user',
+                                                    'project',
+                                                    obj_dict,
+                                                    group=group_id)
+        assert result.to_dict() == obj_dict
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.create_experiment('user', 'project', obj_dict)
         assert result == obj.to_dict()
 
         # Async
         self.assert_async_call(
             api_handler_call=lambda: self.api_handler.create_experiment(
-                'user', 'project', obj.to_dict(), background=True),
+                'user', 'project', obj_dict, group=group_id, background=True),
             method='post')
 
     @httpretty.activate
