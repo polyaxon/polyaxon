@@ -22,6 +22,7 @@ class Experiment(BaseTracker):
     def __init__(self,
                  project=None,
                  experiment_id=None,
+                 group_id=None,
                  client=None,
                  track_logs=None,
                  track_git=None,
@@ -40,6 +41,7 @@ class Experiment(BaseTracker):
                                          outputs_store=outputs_store)
 
         self.experiment_id = experiment_id
+        self.group_id = group_id
         self.experiment = None
         self.last_status = None
 
@@ -70,7 +72,9 @@ class Experiment(BaseTracker):
         experiment = self.client.project.create_experiment(
             username=self.username,
             project_name=self.project_name,
-            experiment_config=experiment_config)
+            experiment_config=experiment_config,
+            group=self.group_id,
+        )
         self.experiment_id = (experiment.id
                               if self.client.api_config.schema_response
                               else experiment.get('id'))
@@ -80,8 +84,16 @@ class Experiment(BaseTracker):
         # Setup the outputs store
         base_outputs_path = base_outputs_path or get_base_outputs_path()
         if self.outputs_store is None and base_outputs_path:
-            outputs_path = '{}/{}/{}/{}'.format(
-                base_outputs_path, self.username, self.project_name, self.experiment_id)
+            if self.group_id:
+                outputs_path = '{}/{}/{}/{}/{}'.format(
+                    base_outputs_path,
+                    self.username,
+                    self.project_name,
+                    self.group,
+                    self.experiment_id)
+            else:
+                outputs_path = '{}/{}/{}/{}'.format(
+                    base_outputs_path, self.username, self.project_name, self.experiment_id)
             self.set_outputs_store(outputs_path=outputs_path)
 
         self.log_code_ref()
