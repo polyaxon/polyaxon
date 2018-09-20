@@ -2,13 +2,9 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/group';
-import {
-  getGroupUrl,
-  getProjectUrl,
-  getUserUrl,
-  splitUniqueName
-} from '../../constants/utils';
+import { getGroupUrl, getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import Experiments from '../../containers/experiments';
+import Metrics from '../../containers/metrics';
 import Statuses from '../../containers/statuses';
 import { ActionInterface } from '../../interfaces/actions';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
@@ -16,10 +12,10 @@ import { GroupModel } from '../../models/group';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import { EmptyList } from '../empty/emptyList';
-import GroupOverview from './groupOverview';
 import GroupInstructions from '../instructions/groupInstructions';
 import LinkedTab from '../linkedTab';
 import YamlText from '../yamlText';
+import GroupOverview from './groupOverview';
 
 export interface Props {
   group: GroupModel;
@@ -84,6 +80,14 @@ export default class GroupDetail extends React.Component<Props, {}> {
                     useFilters={true}
                   />,
                   relUrl: 'experiments'
+                }, {
+                  title: 'Metrics',
+                  component: <Metrics
+                    project={group.project}
+                    resource="groups"
+                    id={group.id}
+                  />,
+                  relUrl: 'metrics'
                 }, {
                   title: 'Statuses',
                   component: <Statuses
