@@ -5,7 +5,7 @@ import { AppState } from '../constants/types';
 import { MetricModel } from '../models/metric';
 
 import * as actions from '../actions/metrics';
-import Metrics from '../components/experiments/metrics';
+import Metrics from '../components/metrics/metrics';
 import { ChartViewModel } from '../models/chartView';
 
 export function mapStateToProps(state: AppState, params: any) {
