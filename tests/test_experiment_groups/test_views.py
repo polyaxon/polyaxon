@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+
 from rest_framework import status
 
 from api.experiment_groups import queries
@@ -29,8 +30,9 @@ from factories.factory_experiment_groups import (
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
-    ExperimentStatusFactory,
-    ExperimentMetricFactory)
+    ExperimentMetricFactory,
+    ExperimentStatusFactory
+)
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 from tests.utils import BaseViewTest

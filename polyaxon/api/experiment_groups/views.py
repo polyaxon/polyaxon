@@ -1,6 +1,10 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, \
-    ListAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveUpdateDestroyAPIView,
+    get_object_or_404
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -30,8 +34,8 @@ from db.models.experiments import ExperimentMetric
 from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
-    EXPERIMENT_GROUP_STATUSES_VIEWED,
     EXPERIMENT_GROUP_METRICS_VIEWED,
+    EXPERIMENT_GROUP_STATUSES_VIEWED,
     EXPERIMENT_GROUP_STOPPED_TRIGGERED,
     EXPERIMENT_GROUP_UPDATED,
     EXPERIMENT_GROUP_VIEWED
@@ -181,7 +185,8 @@ class ExperimentGroupMetricsListView(ExperimentGroupViewMixin, ListAPIView):
     group = None
 
     def filter_queryset(self, queryset):
-        queryset = super(ListAPIView, self).filter_queryset(queryset)
+        queryset = super(ListAPIView, self).filter_queryset(  # pylint:disable=bad-super-call
+            queryset)
         return queryset.filter(experiment__experiment_group=self.get_experiment_group())
 
     def get(self, request, *args, **kwargs):
