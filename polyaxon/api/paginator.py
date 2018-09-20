@@ -2,4 +2,4 @@ from rest_framework.pagination import LimitOffsetPagination
 
 
 class LargeLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 1000
+    default_limit = 2000

@@ -181,6 +181,7 @@ class ExperimentGroupMetricsListView(ExperimentGroupViewMixin, ListAPIView):
     queryset = ExperimentMetric.objects.all()
     serializer_class = ExperimentMetricSerializer
     permission_classes = (IsAuthenticated,)
+    pagination_class = LargeLimitOffsetPagination
     project = None
     group = None
 
