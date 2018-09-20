@@ -135,6 +135,9 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer):
         )
 
     def validate_content(self, content):
+        # This is optional
+        if not content:
+            return content
         validate_group_spec_content(content)
         return content
 
