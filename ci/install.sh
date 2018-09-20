@@ -55,4 +55,4 @@ echo "Install dep"
 helm dependency update ./polyaxon/
 
 echo "Install CLI"
-pip3 install -r ./requirements.txt
+pip3 install -r ./ci/requirements.txt
