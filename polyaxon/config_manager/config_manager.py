@@ -61,14 +61,17 @@ class ConfigManager(object):
         """
         Get a the value corresponding to the key and converts it to `int`/`list(int)`.
 
-        :param key: the dict key.
-        :param is_list: If this is one element or a list of elements.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `int`: value corresponding to the key.
+        Args:
+            key: the dict key.
+            is_list: If this is one element or a list of elements.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+             `int`: value corresponding to the key.
         """
         if is_list:
             return self._get_typed_list_value(key=key,
@@ -100,14 +103,17 @@ class ConfigManager(object):
         """
         Get a the value corresponding to the key and converts it to `float`/`list(float)`.
 
-        :param key: the dict key.
-        :param is_list: If this is one element or a list of elements.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `float`: value corresponding to the key.
+        Args:
+            key: the dict key.
+            is_list: If this is one element or a list of elements.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+             `float`: value corresponding to the key.
         """
         if is_list:
             return self._get_typed_list_value(key=key,
@@ -139,14 +145,17 @@ class ConfigManager(object):
         """
         Get a the value corresponding to the key and converts it to `bool`/`list(str)`.
 
-        :param key: the dict key.
-        :param is_list: If this is one element or a list of elements.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `bool`: value corresponding to the key.
+        Args:
+            key: the dict key.
+            is_list: If this is one element or a list of elements.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+            `bool`: value corresponding to the key.
         """
         if is_list:
             return self._get_typed_list_value(key=key,
@@ -178,14 +187,17 @@ class ConfigManager(object):
         """
         Get a the value corresponding to the key and converts it to `str`/`list(str)`.
 
-        :param key: the dict key.
-        :param is_list: If this is one element or a list of elements.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `str`: value corresponding to the key.
+        Args:
+            key: the dict key.
+            is_list: If this is one element or a list of elements.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+            `str`: value corresponding to the key.
         """
         if is_list:
             return self._get_typed_list_value(key=key,
@@ -217,14 +229,17 @@ class ConfigManager(object):
         """
         Get a the value corresponding to the key and converts it to `dict`.
 
-        :param key: the dict key.
-        :param is_list: If this is one element or a list of elements.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `str`: value corresponding to the key.
+        Args:
+            key: the dict key.
+            is_list: If this is one element or a list of elements.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+            `str`: value corresponding to the key.
         """
 
         def convert_to_dict(x):
@@ -271,13 +286,16 @@ class ConfigManager(object):
 
         Add an extra validation that all keys have a dict as values.
 
-        :param key: the dict key.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `str`: value corresponding to the key.
+        Args:
+            key: the dict key.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+            `str`: value corresponding to the key.
         """
         value = self.get_dict(
             key=key,
@@ -309,14 +327,17 @@ class ConfigManager(object):
         """
         Get a the value corresponding to the key and converts it to `UriSpec`.
 
-        :param key: the dict key.
-        :param is_list: If this is one element or a list of elements.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `str`: value corresponding to the key.
+        Args
+            key: the dict key.
+            is_list: If this is one element or a list of elements.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+             `str`: value corresponding to the key.
         """
         if is_list:
             return self._get_typed_list_value(key=key,
@@ -347,13 +368,16 @@ class ConfigManager(object):
         """
         Get a the value corresponding to the key and converts comma separated values to a list.
 
-        :param key: the dict key.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return: `str`: value corresponding to the key.
+        Args:
+            key: the dict key.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+             `str`: value corresponding to the key.
         """
 
         def parse_list(v):
@@ -378,9 +402,14 @@ class ConfigManager(object):
         """
         Get key from the dictionary made out of the configs passed.
 
-        :param key: the dict key.
-        :return: The corresponding value of the key if found.
-        :raise: KeyError
+        Args:
+            key: the dict key.
+
+        Returns:
+             The corresponding value of the key if found.
+
+        Raises:
+            KeyError
         """
         return self._params[key]
 
@@ -410,16 +439,18 @@ class ConfigManager(object):
         """
         Return the value corresponding to the key converted to the given type.
 
-        :param key: the dict key.
-        :param target_type: The type we expect the variable or key to be in.
-        :param type_convert: A lambda expression that converts the key to the desired type.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
+        Args:
+            key: the dict key.
+            target_type: The type we expect the variable or key to be in.
+            type_convert: A lambda expression that converts the key to the desired type.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
 
-        :return: The corresponding value of the key converted.
+        Returns:
+            The corresponding value of the key converted.
         """
         try:
             value = self._get(key)
@@ -457,15 +488,15 @@ class ConfigManager(object):
         Return the value corresponding to the key converted first to list
         than each element to the given type.
 
-        :param key: the dict key.
-        :param target_type: The type we expect the variable or key to be in.
-        :param type_convert: A lambda expression that converts the key to the desired type.
-        :param is_optional: To raise an error if key was not found.
-        :param is_secret: If the key is a secret.
-        :param is_local: If the key is a local to this service.
-        :param default: default value if is_optional is True.
-        :param options: list/tuple if provided, the value must be one of these values.
-        :return:
+        Args:
+            key: the dict key.
+            target_type: The type we expect the variable or key to be in.
+            type_convert: A lambda expression that converts the key to the desired type.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
         """
 
         value = self._get_typed_value(key=key,
