@@ -1,15 +1,12 @@
 # pylint:disable=too-many-lines
 import os
 import time
-
-from faker import Faker
 from unittest.mock import patch
 
 import pytest
-
-from rest_framework import status
-
 from django.conf import settings
+from faker import Faker
+from rest_framework import status
 
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
@@ -448,6 +445,36 @@ class TestProjectExperimentListViewV1(BaseViewTest):
             'lr': 0.1,
             'dropout': 0.5
         }
+
+    def test_create_in_group(self):
+        # Create in wrong group raises
+        group = ExperimentGroupFactory()
+        assert group.experiments.count() == 0
+
+        data = {
+            'declarations': {
+                'lr': 0.1,
+                'dropout': 0.5
+            },
+            'experiment_group': group.id
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        # Create in correct group passes
+        group = ExperimentGroupFactory(project=self.project)
+        assert group.experiments.count() == 0
+
+        data = {
+            'declarations': {
+                'lr': 0.1,
+                'dropout': 0.5
+            },
+            'experiment_group': group.id
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert group.experiments.count() == 1
 
 
 @pytest.mark.experiments_mark
