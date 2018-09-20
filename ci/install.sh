@@ -54,3 +54,5 @@ kubectl --namespace=kube-system rollout status --watch deployment/tiller-deploy
 echo "Install dep"
 helm dependency update ./polyaxon/
 
+echo "Install CLI"
+pip3 install -r requirement.txt

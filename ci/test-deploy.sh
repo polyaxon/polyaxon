@@ -18,3 +18,12 @@ done
 
 echo "getting polyaxon version"
 curl -s $TEST_URL/api/v1/versions/cli/ | grep version
+
+echo "configure cli"
+polyaxon config config set --host=$IP --http_port=31811
+echo "cli login"
+polyaxon login -u travis -p travis
+echo "cli create project"
+polyaxon project create --name=travis-test --description='Travis testing'
+echo "cli init project"
+polyaxon init travis-test

@@ -8,6 +8,9 @@ ingress:
 
 serviceType: NodePort
 
+user:
+  username: travis
+  password: travis
 
 postgresql:
   imageTag: 9.6.1-alpine
