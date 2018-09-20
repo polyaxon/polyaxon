@@ -30,6 +30,8 @@ EXPERIMENT_GROUP_HYPERBAND = '{}.hyperband'.format(event_subjects.EXPERIMENT_GRO
 EXPERIMENT_GROUP_BO = '{}.bo'.format(event_subjects.EXPERIMENT_GROUP)
 EXPERIMENT_GROUP_STATUSES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                                   event_actions.STATUSES_VIEWED)
+EXPERIMENT_GROUP_METRICS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                                 event_actions.METRICS_VIEWED)
 EXPERIMENT_GROUP_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                                        event_actions.DELETED,
                                                        event_subjects.TRIGGER)
@@ -308,6 +310,18 @@ class ExperimentGroupResumedTriggeredEvent(Event):
 
 class ExperimentGroupStatusesViewedEvent(Event):
     event_type = EXPERIMENT_GROUP_STATUSES_VIEWED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentGroupMetricsViewedEvent(Event):
+    event_type = EXPERIMENT_GROUP_METRICS_VIEWED
     actor = True
     attributes = (
         Attribute('id'),

@@ -12,6 +12,9 @@ groups_urlpatterns = [
     re_path(r'^{}/{}/groups/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, GROUP_ID_PATTERN),
         views.ExperimentGroupStatusListView.as_view()),
+    re_path(r'^{}/{}/groups/{}/metrics/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, GROUP_ID_PATTERN),
+        views.ExperimentGroupMetricsListView.as_view()),
     re_path(r'^{}/{}/groups/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
             views.ExperimentGroupStopView.as_view()),
     re_path(

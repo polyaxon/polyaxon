@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-
 from rest_framework import status
 
 from api.experiment_groups import queries
@@ -11,6 +10,7 @@ from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupStatusSerializer
 )
+from api.experiments.serializers import ExperimentMetricSerializer
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
@@ -20,7 +20,7 @@ from db.models.experiment_groups import (
     ExperimentGroupChartView,
     ExperimentGroupStatus
 )
-from db.models.experiments import Experiment
+from db.models.experiments import Experiment, ExperimentMetric
 from factories.factory_experiment_groups import (
     ExperimentGroupChartViewFactory,
     ExperimentGroupFactory,
@@ -29,8 +29,8 @@ from factories.factory_experiment_groups import (
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
-    ExperimentStatusFactory
-)
+    ExperimentStatusFactory,
+    ExperimentMetricFactory)
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 from tests.utils import BaseViewTest
@@ -664,3 +664,71 @@ class TestExperimentGroupChartViewDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
+
+
+@pytest.mark.experiment_groups_mark
+class TestExperimentGroupMetricListViewV1(BaseViewTest):
+    serializer_class = ExperimentMetricSerializer
+    model_class = ExperimentMetric
+    factory_class = ExperimentMetricFactory
+    num_objects = 3
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.group = ExperimentGroupFactory(project=project)
+        self.experiment1 = ExperimentFactory(project=project, experiment_group=self.group)
+        self.experiment2 = ExperimentFactory(project=project, experiment_group=self.group)
+        self.url = '/{}/{}/{}/groups/{}/metrics/'.format(API_V1,
+                                                         project.user.username,
+                                                         project.name,
+                                                         self.group.id)
+        self.objects1 = [
+            self.factory_class(experiment=self.experiment1, values={'accuracy': i / 10})
+            for i in range(self.num_objects)]
+        self.objects2 = [
+            self.factory_class(experiment=self.experiment2, values={'accuracy': i / 10})
+            for i in range(self.num_objects)]
+
+        # Add a random experiment and metric
+        self.experiment1 = ExperimentFactory(project=project)
+        self.factory_class(experiment=self.experiment1, values={'accuracy': 0.9})
+
+        self.queryset = self.model_class.objects.filter(experiment__experiment_group=self.group)
+        self.queryset = self.queryset.order_by('created_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 2 * self.num_objects
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = (self.num_objects * 2) - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
