@@ -175,8 +175,11 @@ class ProjectExperimentListView(ListCreateAPIView):
                 ttl = RedisTTL.validate_ttl(ttl)
             except ValueError:
                 raise ValidationError('ttl must be an integer.')
-        instance = serializer.save(user=self.request.user,
-                                   project=get_permissible_project(view=self))
+        project = get_permissible_project(view=self)
+        group = self.request.data.get('experiment_group')
+        if group and ExperimentGroup.objects.filter(id=group, project=project).count() == 0:
+            raise ValidationError('Received an invalid group.')
+        instance = serializer.save(user=self.request.user, project=project)
         auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_experiment(experiment_id=instance.id, value=ttl)

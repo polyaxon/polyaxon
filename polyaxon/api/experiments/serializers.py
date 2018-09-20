@@ -234,6 +234,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'original_experiment',
+            'experiment_group',
             'config',
             'declarations',
             'run_env',
