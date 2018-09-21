@@ -10,6 +10,6 @@ export interface Trace extends DataTrace {
   name: string;
   mode: ChartModes;
   type: ChartTypes;
-  line: Partial<Plotly.ScatterLine>;
+  line?: Partial<Plotly.ScatterLine>;
   marker?: Partial<Plotly.PlotMarker>;
 }

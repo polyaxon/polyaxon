@@ -34,7 +34,7 @@ export default class ChartView extends React.Component<Props, {}> {
         if (this.props.resource === 'groups') {
           prefix = `${metric.experiment}`;
         }
-        let xValue: number|string;
+        let xValue: number | string;
         if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
           xValue = metric.values.step;
         } else {
@@ -53,12 +53,6 @@ export default class ChartView extends React.Component<Props, {}> {
               name: traceName,
               mode: chart.mode,
               type: chart.type,
-              marker: {color: CHARTS_COLORS[idx % CHARTS_COLORS.length]},
-              line: {
-                width: 1.7,
-                shape: 'spline',
-                smoothing: this.props.view.meta.smoothing,
-              } as Partial<Plotly.ScatterLine>
             };
           }
         });
@@ -66,10 +60,25 @@ export default class ChartView extends React.Component<Props, {}> {
       return traceNames
         .map((traceName, idx) => {
           const trace = traces[traceName];
-          if (trace.x.length === 1 && trace.type === 'scatter') {
-            trace.type = 'bar';
+          if (trace.type === 'scatter') {
+            if (trace.x.length === 1) {
+              trace.type = 'bar';
+            } else {
+              trace.line = {
+                width: 1.7,
+                shape: 'spline',
+                smoothing: this.props.view.meta.smoothing,
+                color: CHARTS_COLORS[idx % CHARTS_COLORS.length],
+              } as Partial<Plotly.ScatterLine>;
+            }
           }
-          trace.line.color = CHARTS_COLORS[idx % CHARTS_COLORS.length];
+          if (trace.type === 'bar') {
+            trace.marker = {color: CHARTS_COLORS[idx % CHARTS_COLORS.length]};
+            if (trace.x.length > 1) {
+              trace.x = [trace.x[trace.x.length - 1]];
+              trace.y = [trace.y[trace.y.length - 1]];
+            }
+          }
           return trace;
         }) as Plotly.PlotData[];
     };

@@ -4,7 +4,7 @@ import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
 import * as experimentActions from '../../actions/experiment';
 import * as actions from '../../actions/metrics';
-import { ChartModel } from '../../models/chart';
+import { ChartModel, ChartTypes } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
 import AutocompleteLabel from '../autocomplete/autocompleteLabel';
@@ -182,6 +182,9 @@ export default class Metrics extends React.Component<Props, State> {
     if (key === 'name') {
       chartForm.chart.name = value;
       updated = true;
+    } else if (key === 'type') {
+      chartForm.chart.type = value as ChartTypes;
+      updated = true;
     }
     if (updated) {
       this.setState((prevState, prevProps) => ({
@@ -306,6 +309,19 @@ export default class Metrics extends React.Component<Props, State> {
                   className="form-control"
                   onChange={(event) => this.updateChartForm('name', event.target.value)}
                 />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Chart Type</label>
+              <div className="col-sm-10">
+                <select
+                  onChange={(event) => this.updateChartForm('type', event.target.value)}
+                  value={'scatter'}
+                  className="form-control"
+                >
+                  <option>bar</option>
+                  <option>scatter</option>
+                </select>
               </div>
             </div>
             <div className="form-group">
