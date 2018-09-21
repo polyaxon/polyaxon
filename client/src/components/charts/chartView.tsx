@@ -26,7 +26,46 @@ export default class ChartView extends React.Component<Props, {}> {
       return moment(d).format('YYYY-MM-DD HH:mm:ss');
     };
 
-    const getChartData = (chart: ChartModel) => {
+    const getTraceName = (metricName: string, prefix?: string | number) => {
+      return prefix ? `${prefix}.${metricName}` : metricName;
+    };
+
+    const getchartYData = (metric: MetricModel, chart: ChartModel, prefix: string) => {
+      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
+      chart.metricNames.forEach((metricName, idx) => {
+        const traceName = getTraceName(metricName, prefix);
+        if (traceName in dataTraces) {
+          dataTraces[traceName].push(metric.values[metricName]);
+        } else {
+          dataTraces[traceName] = [metric.values[metricName]];
+        }
+      });
+
+      return dataTraces;
+    };
+
+    const getchartXData = (metric: MetricModel, chart: ChartModel, prefix: string) => {
+      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
+      let xValue: number | string;
+      if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
+        xValue = metric.values.step;
+      } else {
+        xValue = convertTimeFormat(metric.created_at);
+      }
+
+      chart.metricNames.forEach((metricName, idx) => {
+        const traceName = getTraceName(metricName, prefix);
+        if (traceName in dataTraces) {
+          dataTraces[traceName].push(xValue);
+        } else {
+          dataTraces[traceName] = [xValue];
+        }
+      });
+
+      return dataTraces;
+    };
+
+    const getTraces = (chart: ChartModel) => {
       const traces: { [key: string]: Trace } = {};
       const traceNames: string[] = [];
       for (const metric of this.props.metrics) {
@@ -41,7 +80,7 @@ export default class ChartView extends React.Component<Props, {}> {
           xValue = convertTimeFormat(metric.created_at);
         }
         chart.metricNames.forEach((metricName, idx) => {
-          const traceName = prefix ? `${prefix}.${metricName}` : metricName;
+          const traceName = getTraceName(metricName, prefix);
           if (traceName in traces) {
             traces[traceName].x.push(xValue);
             traces[traceName].y.push(metric.values[metricName]);
@@ -94,7 +133,7 @@ export default class ChartView extends React.Component<Props, {}> {
               >Remove
               </button>
             </h5>
-            {<Chart data={getChartData(chart)}/>}
+            {<Chart data={getTraces(chart)}/>}
           </div>
         </div>
       );
