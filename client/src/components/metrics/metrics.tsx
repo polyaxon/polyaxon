@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
+import * as experimentActions from '../../actions/experiment';
 import * as actions from '../../actions/metrics';
 import { ChartModel } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
@@ -15,10 +16,12 @@ import './metrics.less';
 
 export interface Props {
   metrics: MetricModel[];
+  params: { [key: string]: any };
   views: ChartViewModel[];
   resource: string;
   count: number;
   fetchData: () => actions.MetricsAction;
+  fetchParamsData?: () => experimentActions.ExperimentAction;
   fetchViews: () => actions.MetricsAction;
   createView?: (data: ChartViewModel) => actions.MetricsAction;
   deleteView?: (viewId: number) => actions.MetricsAction;
@@ -50,6 +53,9 @@ export default class Metrics extends React.Component<Props, State> {
   public componentDidMount() {
     this.props.fetchData();
     this.props.fetchViews();
+    if (this.props.resource === 'groups' && this.props.fetchParamsData) {
+      this.props.fetchParamsData();
+    }
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {

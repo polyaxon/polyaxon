@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 import { MetricModel } from '../models/metric';
 
+import * as experimentActions from '../actions/experiment';
 import * as actions from '../actions/metrics';
 import Metrics from '../components/metrics/metrics';
 import { ChartViewModel } from '../models/chartView';
@@ -19,7 +20,26 @@ export function mapStateToProps(state: AppState, params: any) {
       });
     return {views, count};
   };
-  const useLastFetched = () => {
+  const useLastFetchedParams = () => {
+    const experimentNames = state.experiments.lastFetched.names;
+    const count = state.experiments.lastFetched.count;
+    const experimentParams: { [key: string]: any[] } = {};
+    experimentNames.forEach(
+      (experimentName: string, idx: number) => {
+        const declarations = state.experiments.byUniqueNames[experimentName].declarations;
+        Object.keys(declarations).forEach((key: string) => {
+          if (key in experimentParams) {
+            if (experimentParams[key].indexOf(declarations[key]) === -1) {
+              experimentParams[key].push(declarations[key]);
+            }
+          } else {
+            experimentParams[key] = [declarations[key]];
+          }
+        });
+      });
+    return {experimentParams, count};
+  };
+  const useLastFetchedMetrics = () => {
     const metricIds = state.metrics.lastFetched.ids;
     const count = state.metrics.lastFetched.count;
     const metrics: MetricModel[] = [];
@@ -29,19 +49,23 @@ export function mapStateToProps(state: AppState, params: any) {
       });
     return {metrics, count};
   };
-  const results = useLastFetched();
+
+  const results = useLastFetchedMetrics();
   const viewsResults = useLastFetchedViews();
+  const experimentParamsResults = useLastFetchedParams();
 
   return {
     metrics: results.metrics,
     views: viewsResults.views,
     resource: params.resource,
+    params: experimentParamsResults.experimentParams,
     count: results.count,
   };
 }
 
 export interface DispatchProps {
   fetchData?: () => actions.MetricsAction;
+  fetchParamsData?: () => experimentActions.ExperimentAction;
   fetchViews?: () => actions.MetricsAction;
   createView?: (data: ChartViewModel) => actions.MetricsAction;
   deleteView?: (viewId: number) => actions.MetricsAction;
@@ -51,6 +75,15 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.MetricsAction>, pa
   return {
     fetchData: () => {
       return dispatch(actions.fetchMetrics(params.project, params.resource, params.id));
+    },
+    fetchParamsData: () => {
+      if (params.resource === 'groups') {
+        const filters = {
+          group: params.id,
+          declarations: true
+        };
+        return dispatch(experimentActions.fetchExperiments(params.project, filters));
+      }
     },
     fetchViews: () => {
       return dispatch(actions.fetchChartViews(params.project, params.resource, params.id));
