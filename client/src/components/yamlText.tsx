@@ -45,7 +45,7 @@ function YamlText({config, configText, title}: Props) {
 
   const processedText = (!_.isNil(config)) ?
     jsYaml.dump(orderedConfig) :
-    <p>No content!</p>;
+    'No content!';
 
   function getText() {
     return (
