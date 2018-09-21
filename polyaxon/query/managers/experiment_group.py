@@ -40,6 +40,8 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         'concurrency': 'hptuning__concurrency'
     }
     PARSERS_BY_FIELD = {
+        # Id
+        'id': parse_value_operation,
         # Dates
         'created_at': parse_datetime_operation,
         'updated_at': parse_datetime_operation,
@@ -60,6 +62,8 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         'concurrency': parse_scalar_operation,
     }
     CONDITIONS_BY_FIELD = {
+        # Id
+        'id': ValueCondition,
         # Dates
         'created_at': DateTimeCondition,
         'updated_at': DateTimeCondition,

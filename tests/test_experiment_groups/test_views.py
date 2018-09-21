@@ -191,6 +191,14 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
 
+        # Id
+        resp = self.auth_client.get(self.url +
+                                    '?query=id:{}|{}'.format(self.objects[0].id,
+                                                             self.objects[1].id))
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 2
+
         # Search concurrency
         resp = self.auth_client.get(self.url +
                                     '?query=concurrency:1')

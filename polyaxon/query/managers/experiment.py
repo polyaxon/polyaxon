@@ -28,6 +28,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'commit': 'code_reference__commit',
     }
     PARSERS_BY_FIELD = {
+        # Id
+        'id': parse_value_operation,
         # Dates
         'created_at': parse_datetime_operation,
         'updated_at': parse_datetime_operation,
@@ -57,6 +59,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'independent': parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
+        # Id
+        'id': ValueCondition,
         # Dates
         'created_at': DateTimeCondition,
         'updated_at': DateTimeCondition,
