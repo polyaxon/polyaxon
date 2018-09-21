@@ -48,100 +48,173 @@ export default class ChartView extends React.Component<Props, {}> {
       return 'scatter';
     };
 
+    const ensureChartType = (chartType: ChartTypes,
+                             yData: { [key: string]: Plotly.Datum[] }): ChartTypes => {
+      // If chart type is not line or scatter, we don't need to do anything else.
+      if (chartType !== 'line' && chartType !== 'scatter') {
+        return chartType;
+      }
+
+      // Check if we need to convert to bar chart
+      let isLine = false;
+      for (const traceName of Object.keys(yData)) {
+        if (yData[traceName].length > 1) {
+          isLine = true;
+          break;
+        }
+      }
+
+      return isLine ? chartType : 'bar';
+    };
+
+    const getTracePrefix = (metric: MetricModel) => {
+      return this.props.resource === 'groups' ?
+        `${metric.experiment}` :
+        '';
+    };
+
     const getTraceName = (metricName: string, prefix?: string | number) => {
       return prefix ? `${prefix}.${metricName}` : metricName;
     };
 
-    const getchartYData = (metric: MetricModel, chart: ChartModel, prefix: string) => {
-      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
-      chart.metricNames.forEach((metricName, idx) => {
-        const traceName = getTraceName(metricName, prefix);
-        if (traceName in dataTraces) {
-          dataTraces[traceName].push(metric.values[metricName]);
-        } else {
-          dataTraces[traceName] = [metric.values[metricName]];
-        }
-      });
-
-      return dataTraces;
-    };
-
-    const getchartXData = (metric: MetricModel, chart: ChartModel, prefix: string) => {
-      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
-      let xValue: number | string;
-      if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
-        xValue = metric.values.step;
-      } else {
-        xValue = convertTimeFormat(metric.created_at);
+    const getTraceNamesByMetrics = (chart: ChartModel) => {
+      const traceNamesByMetrics: { [key: string]: string[] } = {};
+      for (const metric of this.props.metrics) {
+        const prefix = getTracePrefix(metric);
+        chart.metricNames.forEach((metricName, idx) => {
+          const traceName = getTraceName(metricName, prefix);
+          if (metricName in traceNamesByMetrics) {
+            traceNamesByMetrics[metricName].push(traceName);
+          } else {
+            traceNamesByMetrics[metricName] = [traceName];
+          }
+        });
       }
 
-      chart.metricNames.forEach((metricName, idx) => {
-        const traceName = getTraceName(metricName, prefix);
-        if (traceName in dataTraces) {
-          dataTraces[traceName].push(xValue);
-        } else {
-          dataTraces[traceName] = [xValue];
-        }
-      });
+      return traceNamesByMetrics;
+    };
+
+    const getChartYData = (chart: ChartModel) => {
+      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
+      for (const metric of this.props.metrics) {
+        const prefix = getTracePrefix(metric);
+        chart.metricNames.forEach((metricName, idx) => {
+          const traceName = getTraceName(metricName, prefix);
+          if (traceName in dataTraces) {
+            dataTraces[traceName].push(metric.values[metricName]);
+          } else {
+            dataTraces[traceName] = [metric.values[metricName]];
+          }
+        });
+      }
 
       return dataTraces;
     };
 
-    const getTraces = (chart: ChartModel) => {
-      const traces: { [key: string]: Trace } = {};
-      const traceNames: string[] = [];
+    const getChartXData = (chart: ChartModel) => {
+      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
       for (const metric of this.props.metrics) {
-        let prefix = '';
-        if (this.props.resource === 'groups') {
-          prefix = `${metric.experiment}`;
-        }
         let xValue: number | string;
         if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
           xValue = metric.values.step;
         } else {
           xValue = convertTimeFormat(metric.created_at);
         }
+        const prefix = getTracePrefix(metric);
+
         chart.metricNames.forEach((metricName, idx) => {
+
           const traceName = getTraceName(metricName, prefix);
-          if (traceName in traces) {
-            traces[traceName].x.push(xValue);
-            traces[traceName].y.push(metric.values[metricName]);
+          if (traceName in dataTraces) {
+            dataTraces[traceName].push(xValue);
           } else {
-            traceNames.push(traceName);
-            traces[traceName] = {
-              x: [xValue],
-              y: [metric.values[metricName]],
-              name: traceName,
-              mode: getTraceMode(chart.type),
-              type: getTraceType(chart.type),
-            };
+            dataTraces[traceName] = [xValue];
           }
         });
       }
-      return traceNames
+
+      return dataTraces;
+    };
+
+    const getBarTraces = (chart: ChartModel,
+                          xData: { [key: string]: Plotly.Datum[] },
+                          yData: { [key: string]: Plotly.Datum[] },
+                          traceNamesByMetrics: { [key: string]: string[] },
+                          traceMode: TraceModes,
+                          traceType: TraceTypes) => {
+      const traces: { [key: string]: Trace } = {};
+
+      chart.metricNames.forEach((metricName) => {
+        if (metricName in traceNamesByMetrics) {
+          traceNamesByMetrics[metricName].forEach((traceName, idx) => {
+            const data = yData[traceName];
+            traces[traceName] = {
+              x: [metricName],
+              y: [data[data.length - 1]],
+              name: traceName,
+              mode: traceMode,
+              type: traceType,
+            };
+          });
+        }
+      });
+
+      // Add colors
+      return Object.keys(traces)
         .map((traceName, idx) => {
           const trace = traces[traceName];
-          if (trace.type === 'scatter') {
-            if (trace.x.length === 1) {
-              trace.type = 'bar';
-            } else {
-              trace.line = {
-                width: 1.7,
-                shape: 'spline',
-                smoothing: this.props.view.meta.smoothing,
-                color: CHARTS_COLORS[idx % CHARTS_COLORS.length],
-              } as Partial<Plotly.ScatterLine>;
-            }
-          }
-          if (trace.type === 'bar') {
-            trace.marker = {color: CHARTS_COLORS[idx % CHARTS_COLORS.length]};
-            if (trace.x.length > 1) {
-              trace.x = [trace.x[trace.x.length - 1]];
-              trace.y = [trace.y[trace.y.length - 1]];
-            }
-          }
+          trace.marker = {color: CHARTS_COLORS[idx % CHARTS_COLORS.length]};
           return trace;
         }) as Plotly.PlotData[];
+    };
+
+    const getLineTraces = (chart: ChartModel,
+                           xData: { [key: string]: Plotly.Datum[] },
+                           yData: { [key: string]: Plotly.Datum[] },
+                           traceNamesByMetrics: { [key: string]: string[] },
+                           traceMode: TraceModes,
+                           traceType: TraceTypes) => {
+      const traces: { [key: string]: Trace } = {};
+
+      chart.metricNames.forEach((metricName) => {
+        if (metricName in traceNamesByMetrics) {
+          traceNamesByMetrics[metricName].forEach((traceName, idx) => {
+            traces[traceName] = {
+              x: xData[traceName],
+              y: yData[traceName],
+              name: traceName,
+              mode: traceMode,
+              type: traceType,
+            };
+          });
+        }
+      });
+
+      // Add colors
+      return Object.keys(traces)
+        .map((traceName, idx) => {
+          const trace = traces[traceName];
+          trace.line = {
+            width: 1.7,
+            shape: 'spline',
+            smoothing: this.props.view.meta.smoothing,
+            color: CHARTS_COLORS[idx % CHARTS_COLORS.length],
+          } as Partial<Plotly.ScatterLine>;
+          return trace;
+        }) as Plotly.PlotData[];
+    };
+
+    const getTraces = (chart: ChartModel) => {
+      const xData = getChartXData(chart);
+      const yData = getChartYData(chart);
+      const traceNamesByMetrics = getTraceNamesByMetrics(chart);
+      const chartType = ensureChartType(chart.type, yData);
+      const traceMode = getTraceMode(chartType);
+      const traceType = getTraceType(chartType);
+
+      return (traceType === 'bar')
+        ? getBarTraces(chart, xData, yData, traceNamesByMetrics, traceMode, traceType)
+        : getLineTraces(chart, xData, yData, traceNamesByMetrics, traceMode, traceType);
     };
 
     const getChart = (chart: ChartModel, idx: number) => {
