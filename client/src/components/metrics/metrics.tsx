@@ -314,7 +314,6 @@ export default class Metrics extends React.Component<Props, State> {
               <div className="col-sm-10">
                 <select
                   onChange={(event) => this.updateChartForm('type', event.target.value)}
-                  value={'line'}
                   className="form-control"
                 >
                   <option>line</option>
