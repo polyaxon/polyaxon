@@ -6,7 +6,13 @@ import { actionTypes, ExperimentAction } from '../actions/experiment';
 import { ExperimentSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { getExperimentIndexName } from '../constants/utils';
-import { ExperimentModel, ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
+import {
+  ExperimentModel,
+  ExperimentParamStateSchema,
+  ExperimentsEmptyState,
+  ExperimentsParamsEmptyState,
+  ExperimentStateSchema
+} from '../models/experiment';
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
@@ -106,11 +112,42 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
     }
   };
 
+export const ExperimentsParamsReducer: Reducer<ExperimentParamStateSchema> =
+  (state: ExperimentParamStateSchema = ExperimentsParamsEmptyState, action: ExperimentAction) => {
+    let newState = {...state};
+
+    const processExperiment = (experiment: ExperimentModel) => {
+      const uniqueName = getExperimentIndexName(experiment.unique_name);
+      if (!_.includes(newState.lastFetched.names, uniqueName)) {
+        newState.lastFetched.names.push(uniqueName);
+      }
+      if (!_.includes(newState.uniqueNames, uniqueName)) {
+        newState.uniqueNames.push(uniqueName);
+      }
+      const normalizedExperiments = normalize(experiment, ExperimentSchema).entities.experiments;
+      newState.byUniqueNames[uniqueName] = {
+        ...newState.byUniqueNames[uniqueName],
+        ...normalizedExperiments[experiment.unique_name]
+      };
+      return newState;
+    };
+
+    switch (action.type) {
+      case actionTypes.RECEIVE_EXPERIMENTS_PARAMS:
+        for (const experiment of action.experiments) {
+          newState = processExperiment(experiment);
+        }
+        return newState;
+      default:
+        return state;
+    }
+  };
+
 export const ProjectExperimentsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ExperimentAction) => {
     let newState = {...state};
 
-    const processExperiment = function(experiment: ExperimentModel) {
+    const processExperiment = (experiment: ExperimentModel) => {
       const uniqueName = getExperimentIndexName(experiment.unique_name);
       const projectName = experiment.project;
       if (_.includes(newState.uniqueNames, projectName) &&
@@ -137,7 +174,7 @@ export const GroupExperimentsReducer: Reducer<GroupStateSchema> =
   (state: GroupStateSchema = GroupsEmptyState, action: ExperimentAction) => {
     let newState = {...state};
 
-    const processExperiment = function(experiment: ExperimentModel) {
+    const processExperiment = (experiment: ExperimentModel) => {
       const uniqueName = getExperimentIndexName(experiment.unique_name);
       const groupName = experiment.experiment_group;
       if (groupName != null &&

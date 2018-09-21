@@ -2,7 +2,12 @@ import { Action, combineReducers } from 'redux';
 // import {reducer as formReducer } from 'redux-form';
 
 import { ExperimentJobExperimentsReducer, ExperimentJobsReducer } from './experimentJobs';
-import { experimentsReducer, GroupExperimentsReducer, ProjectExperimentsReducer } from './experiments';
+import {
+  ExperimentsParamsReducer,
+  experimentsReducer,
+  GroupExperimentsReducer,
+  ProjectExperimentsReducer
+} from './experiments';
 import { groupsReducer, ProjectGroupsReducer } from './groups';
 import { jobsReducer, ProjectJobsReducer } from './jobs';
 import { projectsReducer, UserProjectsReducer } from './projects';
@@ -23,6 +28,7 @@ import { userReducer } from './user';
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
   experiments: experimentsReducer,
+  experimentsParams: ExperimentsParamsReducer,
   groups: groupsReducer,
   jobs: jobsReducer,
   builds: buildsReducer,
@@ -53,6 +59,7 @@ function SliceReducer(state: AppState, action: Action) {
       action),
     groups: GroupExperimentsReducer(state.groups, action),
     experiments: ExperimentJobExperimentsReducer(state.experiments, action),
+    experimentsParams: state.experimentsParams,
     jobs: state.jobs,
     builds: state.builds,
     experimentJobs: state.experimentJobs,

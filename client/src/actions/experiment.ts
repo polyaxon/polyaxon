@@ -21,6 +21,7 @@ export enum actionTypes {
   UPDATE_EXPERIMENT = 'UPDATE_EXPERIMENT',
   RECEIVE_EXPERIMENT = 'RECEIVE_EXPERIMENT',
   RECEIVE_EXPERIMENTS = 'RECEIVE_EXPERIMENTS',
+  RECEIVE_EXPERIMENTS_PARAMS = 'RECEIVE_EXPERIMENTS_PARAMS',
   REQUEST_EXPERIMENTS = 'REQUEST_EXPERIMENTS',
   BOOKMARK_EXPERIMENT = 'BOOKMARK_EXPERIMENT',
   UNBOOKMARK_EXPERIMENT = 'UNBOOKMARK_EXPERIMENT',
@@ -47,6 +48,12 @@ export interface ReceiveExperimentsAction extends Action {
   count: number;
 }
 
+export interface ReceiveExperimentsParamsAction extends Action {
+  type: actionTypes.RECEIVE_EXPERIMENTS_PARAMS;
+  experiments: ExperimentModel[];
+  count: number;
+}
+
 export interface RequestExperimentsAction extends Action {
   type: actionTypes.REQUEST_EXPERIMENTS;
 }
@@ -61,6 +68,7 @@ export type ExperimentAction =
   | DeleteExperimentAction
   | StopExperimentAction
   | ReceiveExperimentsAction
+  | ReceiveExperimentsParamsAction
   | RequestExperimentsAction
   | BookmarkExperimentAction;
 
@@ -102,6 +110,15 @@ export function receiveExperimentsActionCreator(experiments: ExperimentModel[],
                                                 count: number): ReceiveExperimentsAction {
   return {
     type: actionTypes.RECEIVE_EXPERIMENTS,
+    experiments,
+    count
+  };
+}
+
+export function receiveExperimentsParamsActionCreator(experiments: ExperimentModel[],
+                                                      count: number): ReceiveExperimentsParamsAction {
+  return {
+    type: actionTypes.RECEIVE_EXPERIMENTS_PARAMS,
     experiments,
     count
   };
@@ -157,6 +174,16 @@ function _fetchExperiments(experimentsUrl: string,
   } else if (urlPieces.length > 1) {
     history.push(baseUrl);
   }
+
+  const dispatchActionCreator = (results: any, count: number) => {
+    if (filters && filters.declarations) {
+      return dispatch(receiveExperimentsParamsActionCreator(results, count));
+    }
+    return bookmarks ?
+      dispatch(receiveBookmarkedExperimentsActionCreator(results, count)) :
+      dispatch(receiveExperimentsActionCreator(results, count));
+  };
+
   return fetch(experimentsUrl, {
     headers: {
       Authorization: 'token ' + getState().auth.token
@@ -164,9 +191,7 @@ function _fetchExperiments(experimentsUrl: string,
   })
     .then((response) => handleAuthError(response, dispatch))
     .then((response) => response.json())
-    .then((json) => bookmarks ?
-      dispatch(receiveBookmarkedExperimentsActionCreator(json.results, json.count)) :
-      dispatch(receiveExperimentsActionCreator(json.results, json.count)));
+    .then((json) => dispatchActionCreator(json.results, json.count));
 }
 
 export function fetchBookmarkedExperiments(user: string,

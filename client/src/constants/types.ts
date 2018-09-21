@@ -4,7 +4,12 @@ import { ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activ
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
 import { ChartViewEmptyState, ChartViewStateSchema } from '../models/chartView';
 import { CodeReferenceEmptyState, CodeReferenceStateSchema } from '../models/codeReference';
-import { ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
+import {
+  ExperimentParamStateSchema,
+  ExperimentsEmptyState,
+  ExperimentsParamsEmptyState,
+  ExperimentStateSchema
+} from '../models/experiment';
 import { ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/experimentJob';
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
 import { JobsEmptyState, JobStateSchema } from '../models/job';
@@ -19,6 +24,7 @@ import { UserEmptyState, UserStateSchema } from '../models/user';
 export interface AppState {
   projects: ProjectStateSchema;
   experiments: ExperimentStateSchema;
+  experimentsParams: ExperimentParamStateSchema;
   groups: GroupStateSchema;
   jobs: JobStateSchema;
   builds: BuildStateSchema;
@@ -39,6 +45,7 @@ export interface AppState {
 export const AppEmptyState = {
   projects: ProjectsEmptyState,
   experiments: ExperimentsEmptyState,
+  experimentsParams: ExperimentsParamsEmptyState,
   groups: GroupsEmptyState,
   jobs: JobsEmptyState,
   builds: BuildsEmptyState,

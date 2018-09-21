@@ -21,12 +21,12 @@ export function mapStateToProps(state: AppState, params: any) {
     return {views, count};
   };
   const useLastFetchedParams = () => {
-    const experimentNames = state.experiments.lastFetched.names;
-    const count = state.experiments.lastFetched.count;
+    const experimentNames = state.experimentsParams.lastFetched.names;
+    const count = state.experimentsParams.lastFetched.count;
     const experimentParams: { [key: string]: any[] } = {};
     experimentNames.forEach(
       (experimentName: string, idx: number) => {
-        const declarations = state.experiments.byUniqueNames[experimentName].declarations;
+        const declarations = state.experimentsParams.byUniqueNames[experimentName].declarations;
         Object.keys(declarations).forEach((key: string) => {
           if (key in experimentParams) {
             if (experimentParams[key].indexOf(declarations[key]) === -1) {

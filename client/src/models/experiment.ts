@@ -40,3 +40,15 @@ export const ExperimentsEmptyState = {
   uniqueNames: [],
   lastFetched: new LastFetchedNames()
 };
+
+export class ExperimentParamStateSchema {
+  public byUniqueNames: { [uniqueName: string]: ExperimentModel };
+  public uniqueNames: string[];
+  public lastFetched: LastFetchedNames;
+}
+
+export const ExperimentsParamsEmptyState = {
+  byUniqueNames: {},
+  uniqueNames: [],
+  lastFetched: new LastFetchedNames()
+};
