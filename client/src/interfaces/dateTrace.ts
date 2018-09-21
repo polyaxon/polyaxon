@@ -1,4 +1,4 @@
-import { ChartModes, ChartTypes } from '../models/chart';
+import { TraceModes, TraceTypes } from '../models/chart';
 
 export interface DataTrace {
   x: Plotly.Datum[];
@@ -8,8 +8,8 @@ export interface DataTrace {
 
 export interface Trace extends DataTrace {
   name: string;
-  mode: ChartModes;
-  type: ChartTypes;
+  mode: TraceModes;
+  type: TraceTypes;
   line?: Partial<Plotly.ScatterLine>;
   marker?: Partial<Plotly.PlotMarker>;
 }

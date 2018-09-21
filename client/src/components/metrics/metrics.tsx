@@ -76,8 +76,7 @@ export default class Metrics extends React.Component<Props, State> {
       chart: {
         name: 'untitled',
         metricNames: [] as string[],
-        mode: 'lines',
-        type: 'scatter'
+        type: 'line'
       } as ChartModel
     };
   };
@@ -235,8 +234,7 @@ export default class Metrics extends React.Component<Props, State> {
       charts.push({
         name: metricName,
         metricNames: [metricName],
-        mode: 'lines',
-        type: 'scatter'
+        type: 'line'
       } as ChartModel);
     }
     return {charts, name: 'untitled', meta: {smoothing: 0.1, xAxis: 'time'}} as ChartViewModel;
@@ -316,9 +314,10 @@ export default class Metrics extends React.Component<Props, State> {
               <div className="col-sm-10">
                 <select
                   onChange={(event) => this.updateChartForm('type', event.target.value)}
-                  value={'scatter'}
+                  value={'line'}
                   className="form-control"
                 >
+                  <option>line</option>
                   <option>bar</option>
                   <option>scatter</option>
                 </select>

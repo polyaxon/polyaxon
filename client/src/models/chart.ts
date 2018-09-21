@@ -1,4 +1,4 @@
-export type ChartModes =
+export type TraceModes =
   'lines'
   | 'markers'
   | 'text'
@@ -8,7 +8,7 @@ export type ChartModes =
   | 'text+lines+markers'
   | 'none';
 
-export type ChartTypes =
+export type TraceTypes =
   'bar'
   | 'histogram'
   | 'pointcloud'
@@ -17,9 +17,14 @@ export type ChartTypes =
   | 'scatter3d'
   | 'surface';
 
+export type ChartTypes =
+  'bar'
+  | 'line'
+  | 'scatter'
+  | 'parallel';
+
 export class ChartModel {
   public name: string;
   public metricNames: string[];
-  public mode: ChartModes;
   public type: ChartTypes;
 }

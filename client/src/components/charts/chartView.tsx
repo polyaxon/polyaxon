@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { CHARTS_COLORS } from '../../constants/charts';
 import { Trace } from '../../interfaces/dateTrace';
-import { ChartModel } from '../../models/chart';
+import { ChartModel, ChartTypes, TraceModes, TraceTypes } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
 import Chart from '../charts/chart';
@@ -24,6 +24,28 @@ export default class ChartView extends React.Component<Props, {}> {
   public render() {
     const convertTimeFormat = (d: string) => {
       return moment(d).format('YYYY-MM-DD HH:mm:ss');
+    };
+
+    const getTraceMode = (chartType: ChartTypes): TraceModes => {
+      if (chartType === 'line') {
+        return 'lines';
+      } else if (chartType === 'bar') {
+        return 'none';
+      } else if (chartType === 'scatter') {
+        return 'markers';
+      }
+      return 'lines';
+    };
+
+    const getTraceType = (chartType: ChartTypes): TraceTypes => {
+      if (chartType === 'line') {
+        return 'scatter';
+      } else if (chartType === 'bar') {
+        return 'bar';
+      } else if (chartType === 'scatter') {
+        return 'scatter';
+      }
+      return 'scatter';
     };
 
     const getTraceName = (metricName: string, prefix?: string | number) => {
@@ -90,8 +112,8 @@ export default class ChartView extends React.Component<Props, {}> {
               x: [xValue],
               y: [metric.values[metricName]],
               name: traceName,
-              mode: chart.mode,
-              type: chart.type,
+              mode: getTraceMode(chart.type),
+              type: getTraceType(chart.type),
             };
           }
         });
