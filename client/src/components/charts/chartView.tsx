@@ -242,6 +242,13 @@ export default class ChartView extends React.Component<Props, {}> {
           type: 'histogram',
           name: 'min'
         },
+         {
+          histfunc: 'avg',
+          y: yData,
+          x: xData,
+          type: 'histogram',
+          name: 'avg'
+        },
         {
           histfunc: 'max',
           y: yData,
@@ -249,13 +256,6 @@ export default class ChartView extends React.Component<Props, {}> {
           type: 'histogram',
           name: 'max'
         },
-        {
-          histfunc: 'avg',
-          y: yData,
-          x: xData,
-          type: 'histogram',
-          name: 'avg'
-        }
       ] as Plotly.PlotData[];
     };
 

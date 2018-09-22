@@ -263,6 +263,9 @@ export default class Metrics extends React.Component<Props, State> {
     const params = [];
     for (const xp of Object.keys(this.props.params)) {
       const xpParams = this.props.params[parseInt(xp, 10)];
+      if (!xpParams) {
+        return params;
+      }
       for (const param of Object.keys(xpParams)) {
         if (params.indexOf(param) === -1) {
           params.push(param);
