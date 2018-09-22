@@ -89,7 +89,7 @@ class Experiment(BaseTracker):
                     base_outputs_path,
                     self.username,
                     self.project_name,
-                    self.group,
+                    self.group_id,
                     self.experiment_id)
             else:
                 outputs_path = '{}/{}/{}/{}'.format(
