@@ -14,6 +14,7 @@ import './chart.less';
 interface Props {
   view: ChartViewModel;
   metrics: MetricModel[];
+  params: { [id: number]: { [key: string]: any } };
   resource: string;
   className: string;
   onRemoveChart: (chartIdx: number) => void;
@@ -73,8 +74,12 @@ export default class ChartView extends React.Component<Props, {}> {
         '';
     };
 
-    const getTraceName = (metricName: string, prefix?: string | number) => {
-      return prefix ? `${prefix}.${metricName}` : metricName;
+    const getParamValue = (metric: MetricModel, param: string) => {
+      return this.props.params[metric.experiment][param];
+    };
+
+    const getTraceName = (metricName: string | number, prefix?: string | number) => {
+      return prefix ? `${prefix}.${metricName}` : metricName as string;
     };
 
     const getTraceNamesByMetrics = (chart: ChartModel) => {
@@ -204,7 +209,7 @@ export default class ChartView extends React.Component<Props, {}> {
         }) as Plotly.PlotData[];
     };
 
-    const getTraces = (chart: ChartModel) => {
+    const getBasicTraces = (chart: ChartModel) => {
       const xData = getChartXData(chart);
       const yData = getChartYData(chart);
       const traceNamesByMetrics = getTraceNamesByMetrics(chart);
@@ -215,6 +220,74 @@ export default class ChartView extends React.Component<Props, {}> {
       return (traceType === 'bar')
         ? getBarTraces(chart, xData, yData, traceNamesByMetrics, traceMode, traceType)
         : getLineTraces(chart, xData, yData, traceNamesByMetrics, traceMode, traceType);
+    };
+
+    const getHistogramTraces = (chart: ChartModel) => {
+      const xData: Plotly.Datum[] = [];
+      const yData: Plotly.Datum[] = [];
+      const metricName = chart.metricNames[0];  // We should only authorize one metric
+      const paramName = chart.paramNames[0];  // We should only authorize one param
+      for (const metric of this.props.metrics) {
+        const paramValue = getParamValue(metric, paramName);
+        const traceName = getTraceName(paramValue, paramName);
+        xData.push(traceName);
+        yData.push(metric.values[metricName]);
+      }
+
+      return [
+        {
+          histfunc: 'min',
+          y: yData,
+          x: xData,
+          type: 'histogram',
+          name: 'min'
+        },
+        {
+          histfunc: 'max',
+          y: yData,
+          x: xData,
+          type: 'histogram',
+          name: 'max'
+        },
+        {
+          histfunc: 'avg',
+          y: yData,
+          x: xData,
+          type: 'histogram',
+          name: 'avg'
+        }
+      ] as Plotly.PlotData[];
+    };
+
+    const getParallelTraces = (chart: ChartModel) => {
+      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
+      for (const metric of this.props.metrics) {
+        chart.metricNames.forEach((metricName) => {
+          const metricValue = metric.values[metricName];
+          if (metricName in dataTraces) {
+            dataTraces[metricName].push(metricValue);
+          } else {
+            dataTraces[metricName] = [metricValue];
+          }
+        });
+        chart.paramNames.forEach((paramName) => {
+          const paramValue = this.props.params[metric.experiment][paramName];
+          if (paramName in dataTraces) {
+            dataTraces[paramName].push(paramValue);
+          } else {
+            dataTraces[paramName] = [paramValue];
+          }
+        });
+      }
+    };
+
+    const getTraces = (chart: ChartModel) => {
+      if (chart.type === 'parallel') {
+        return getBasicTraces(chart);
+      } else if (chart.type === 'histogram') {
+        return getHistogramTraces(chart);
+      }
+      return getBasicTraces(chart);
     };
 
     const getChart = (chart: ChartModel, idx: number) => {
