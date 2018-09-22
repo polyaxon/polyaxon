@@ -145,6 +145,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                     project={experiment.project}
                     resource="experiments"
                     id={experiment.id}
+                    experiment={experiment}
                   />,
                   relUrl: 'metrics'
                 }, {

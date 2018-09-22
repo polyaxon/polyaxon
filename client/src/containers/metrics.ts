@@ -22,23 +22,21 @@ export function mapStateToProps(state: AppState, params: any) {
   };
   const useLastFetchedParams = () => {
     const experimentNames = state.experimentsParams.lastFetched.names;
-    const count = state.experimentsParams.lastFetched.count;
-    const experimentParams: { [key: string]: any[] } = {};
+    let count = state.experimentsParams.lastFetched.count;
+    const experimentParams: { [id: number]: { [key: string]: any } } = {};
     experimentNames.forEach(
       (experimentName: string, idx: number) => {
         const declarations = state.experimentsParams.byUniqueNames[experimentName].declarations;
-        Object.keys(declarations).forEach((key: string) => {
-          if (key in experimentParams) {
-            if (experimentParams[key].indexOf(declarations[key]) === -1) {
-              experimentParams[key].push(declarations[key]);
-            }
-          } else {
-            experimentParams[key] = [declarations[key]];
-          }
-        });
+        const id = state.experimentsParams.byUniqueNames[experimentName].id;
+        experimentParams[id] = declarations;
       });
+    if (!count && params.experiment) {
+      experimentParams[params.experiment.id] = params.experiment.declarations
+      count = 1;
+    }
     return {experimentParams, count};
   };
+
   const useLastFetchedMetrics = () => {
     const metricIds = state.metrics.lastFetched.ids;
     const count = state.metrics.lastFetched.count;

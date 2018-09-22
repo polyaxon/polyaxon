@@ -16,7 +16,7 @@ import './metrics.less';
 
 export interface Props {
   metrics: MetricModel[];
-  params: { [key: string]: any };
+  params: { [id: number]: { [key: string]: any } };
   views: ChartViewModel[];
   resource: string;
   count: number;
@@ -29,24 +29,27 @@ export interface Props {
 
 export interface State {
   isGrid: boolean;
-  metricNames: string[];
-  view: ChartViewModel;
   showChartModal: boolean;
   showViewModal: boolean;
-  chartForm: { chart: ChartModel, metricNames: string[] };
+  metricNames: string[];
+  paramNames: string[];
+  view: ChartViewModel;
+  chartForm: { chart: ChartModel, metricNames: string[], paramNames: string[] };
 }
 
 export default class Metrics extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     const metricNames = this.getMetricNames();
+    const paramNames = this.getParamNames();
     this.state = {
       isGrid: true,
       showChartModal: false,
       showViewModal: false,
       metricNames,
+      paramNames,
       view: this.getDefaultView(metricNames),
-      chartForm: this.getEmptyChartForm(metricNames)
+      chartForm: this.getEmptyChartForm(metricNames, paramNames)
     };
   }
 
@@ -59,23 +62,28 @@ export default class Metrics extends React.Component<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
-    if (!_.isEqual(this.props.metrics, prevProps.metrics)) {
+    if (!_.isEqual(this.props.metrics, prevProps.metrics) ||
+        !_.isEqual(this.props.params, prevProps.params)) {
       const metricNames = this.getMetricNames();
+      const paramNames = this.getParamNames();
       this.setState({
         ...prevState,
         metricNames,
+        paramNames,
         view: this.getDefaultView(metricNames),
-        chartForm: {...prevState.chartForm, metricNames}
+        chartForm: {...prevState.chartForm, metricNames, paramNames}
       });
     }
   }
 
-  public getEmptyChartForm = (metricNames: string[]) => {
+  public getEmptyChartForm = (metricNames: string[], paramNames: string[]) => {
     return {
       metricNames,
+      paramNames,
       chart: {
         name: 'untitled',
         metricNames: [] as string[],
+        paramNames: [] as string[],
         type: 'line'
       } as ChartModel
     };
@@ -158,7 +166,7 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.view,
         charts: [...prevState.view.charts, prevState.chartForm.chart]
       },
-      chartForm: this.getEmptyChartForm(this.state.metricNames)
+      chartForm: this.getEmptyChartForm(this.state.metricNames, this.state.paramNames)
     }));
     this.handleClose();
   };
@@ -170,7 +178,7 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.view,
         charts: [...prevState.view.charts.filter((chart, idx) => idx !== chartIdx)]
       },
-      chartForm: this.getEmptyChartForm(this.state.metricNames)
+      chartForm: this.getEmptyChartForm(this.state.metricNames, this.state.paramNames)
     }));
     this.handleClose();
   };
@@ -183,6 +191,9 @@ export default class Metrics extends React.Component<Props, State> {
       updated = true;
     } else if (key === 'type') {
       chartForm.chart.type = value as ChartTypes;
+      updated = true;
+    } else if (key === 'param') {
+      chartForm.chart.paramNames = [value];
       updated = true;
     }
     if (updated) {
@@ -246,6 +257,19 @@ export default class Metrics extends React.Component<Props, State> {
         ...this.props.metrics.map((metric) => Object.keys(metric.values)))
       )
     )].sort();
+  };
+
+  public getParamNames = () => {
+    const params = [];
+    for (const xp of Object.keys(this.props.params)) {
+      const xpParams = this.props.params[parseInt(xp, 10)];
+      for (const param of Object.keys(xpParams)) {
+        if (params.indexOf(param) === -1) {
+          params.push(param);
+        }
+      }
+    }
+    return params;
   };
 
   public render() {
@@ -318,7 +342,18 @@ export default class Metrics extends React.Component<Props, State> {
                 >
                   <option>line</option>
                   <option>bar</option>
-                  <option>scatter</option>
+                  <option>histogram</option>
+                </select>
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">X axis</label>
+              <div className="col-sm-10">
+                <select
+                  onChange={(event) => this.updateChartForm('param', event.target.value)}
+                  className="form-control"
+                >
+                  {this.state.paramNames.map((param) => <option key={param}>{param}</option>)}
                 </select>
               </div>
             </div>
@@ -333,7 +368,7 @@ export default class Metrics extends React.Component<Props, State> {
                     />
                 )}
                 <AutocompleteDropdown
-                  title="Add column"
+                  title="Add metric"
                   possibleValues={this.state.chartForm.metricNames}
                   selectedValues={this.state.chartForm.chart.metricNames}
                   onClick={this.addMetricChartForm}
@@ -430,6 +465,7 @@ export default class Metrics extends React.Component<Props, State> {
           <ChartView
             className={this.state.isGrid ? 'col-md-6' : 'col-md-10 col-md-offset-1'}
             metrics={this.props.metrics}
+            params={this.props.params}
             view={this.state.view}
             resource={this.props.resource}
             onRemoveChart={this.removeChart}
