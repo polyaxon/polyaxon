@@ -63,7 +63,7 @@ export default class Metrics extends React.Component<Props, State> {
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
     if (!_.isEqual(this.props.metrics, prevProps.metrics) ||
-        !_.isEqual(this.props.params, prevProps.params)) {
+      !_.isEqual(this.props.params, prevProps.params)) {
       const metricNames = this.getMetricNames();
       const paramNames = this.getParamNames();
       this.setState({
@@ -194,6 +194,9 @@ export default class Metrics extends React.Component<Props, State> {
       updated = true;
     } else if (key === 'param') {
       chartForm.chart.paramNames = [value];
+      updated = true;
+    } else if (key === 'metric') {
+      chartForm.chart.metricNames = [value];
       updated = true;
     }
     if (updated) {
@@ -350,9 +353,9 @@ export default class Metrics extends React.Component<Props, State> {
                 </select>
               </div>
             </div>
-            {this.state.paramNames.length > 0 &&
+            {this.state.paramNames.length > 0 && this.state.chartForm.chart.type === 'histogram' &&
             <div className="form-group">
-              <label className="col-sm-2 control-label">X axis</label>
+              <label className="col-sm-2 control-label">Param</label>
               <div className="col-sm-10">
                 <select
                   onChange={(event) => this.updateChartForm('param', event.target.value)}
@@ -363,6 +366,20 @@ export default class Metrics extends React.Component<Props, State> {
               </div>
             </div>
             }
+            {this.state.paramNames.length > 0 && this.state.chartForm.chart.type === 'histogram' &&
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Metric</label>
+              <div className="col-sm-10">
+                <select
+                  onChange={(event) => this.updateChartForm('metric', event.target.value)}
+                  className="form-control"
+                >
+                  {this.state.metricNames.map((metric) => <option key={metric}>{metric}</option>)}
+                </select>
+              </div>
+            </div>
+            }
+            {this.state.chartForm.chart.type !== 'histogram' &&
             <div className="form-group">
               <div className="col-sm-10 col-sm-offset-2">
                 {this.state.chartForm.chart.metricNames.map(
@@ -381,6 +398,7 @@ export default class Metrics extends React.Component<Props, State> {
                 />
               </div>
             </div>
+            }
             <div className="form-group">
               <div className="col-sm-offset-2 col-sm-10">
                 <button type="submit" className="btn btn-default" onClick={this.addChart}>Add</button>
