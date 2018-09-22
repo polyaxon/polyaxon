@@ -21,10 +21,12 @@ export type ChartTypes =
   'bar'
   | 'line'
   | 'scatter'
+  | 'histogram'
   | 'parallel';
 
 export class ChartModel {
   public name: string;
   public metricNames: string[];
+  public paramNames: string[];
   public type: ChartTypes;
 }
