@@ -2,18 +2,17 @@
 from __future__ import absolute_import, division, print_function
 
 import datetime
-import httpretty
 import json
 import uuid
-
 from collections import Mapping
-from faker import Faker
 
-from tests.test_api.utils import TestBaseApi
+import httpretty
+from faker import Faker
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment_group import ExperimentGroupApi
 from polyaxon_client.schemas import ExperimentConfig, ExperimentGroupConfig, GroupStatusConfig
+from tests.test_api.utils import TestBaseApi
 
 faker = Faker()
 
@@ -236,6 +235,42 @@ class TestExperimentGroupApi(TestBaseApi):
         response = self.api_handler.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
         assert isinstance(response['results'][0], Mapping)
+
+    @httpretty.activate
+    def test_create_experiment_status(self):
+        exp = GroupStatusConfig(id=1,
+                                uuid=uuid.uuid4().hex,
+                                experiment_group=1,
+                                created_at=datetime.datetime.now(),
+                                status='Running').to_dict()
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'groups',
+                1,
+                'statuses'),
+            body=json.dumps(exp),
+            content_type='application/json',
+            status=200)
+
+        # Schema response
+        response = self.api_handler.create_status('username', 'project_name', 1, status='running')
+        assert response.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.create_status('username', 'project_name', 1, status='running')
+        assert response == exp
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_status(
+                'username', 'project_name', 1, status='running', background=True),
+            method='post')
 
     @httpretty.activate
     def test_stop_experiment_group_all(self):

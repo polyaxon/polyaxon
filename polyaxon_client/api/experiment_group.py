@@ -111,6 +111,36 @@ class ExperimentGroupApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving group statuses')
             return None
 
+    def create_status(self,
+                      username,
+                      project_name,
+                      group_id,
+                      status,
+                      message=None,
+                      background=False):
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'groups',
+                                     group_id,
+                                     'statuses')
+
+        json_data = {'status': status}
+        if message:
+            json_data['message'] = message
+        if background:
+            self.transport.async_post(request_url, json_data=json_data)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=json_data)
+            return self.prepare_results(response_json=response.json(),
+                                        config=GroupStatusConfig)
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while creating group status.')
+            return None
+
     def stop(self, username, project_name, group_id, pending=False, background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
