@@ -344,11 +344,13 @@ export default class Metrics extends React.Component<Props, State> {
                   className="form-control"
                 >
                   <option>line</option>
+                  <option>scatter</option>
                   <option>bar</option>
-                  <option>histogram</option>
+                  {this.state.paramNames.length > 0 && <option>histogram</option>}
                 </select>
               </div>
             </div>
+            {this.state.paramNames.length > 0 &&
             <div className="form-group">
               <label className="col-sm-2 control-label">X axis</label>
               <div className="col-sm-10">
@@ -360,6 +362,7 @@ export default class Metrics extends React.Component<Props, State> {
                 </select>
               </div>
             </div>
+            }
             <div className="form-group">
               <div className="col-sm-10 col-sm-offset-2">
                 {this.state.chartForm.chart.metricNames.map(
