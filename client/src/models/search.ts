@@ -4,6 +4,7 @@ export class SearchModel {
   public id: number;
   public name: string;
   public query: { [key: string]: string };
+  public meta?: { [key: string]: any };
 }
 
 export class SearchesStateSchema {

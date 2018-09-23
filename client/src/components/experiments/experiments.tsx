@@ -33,9 +33,9 @@ export interface Props {
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
-  fetchSearches?: () => search_actions.SearchAction;
-  createSearch?: (data: SearchModel) => search_actions.SearchAction;
-  deleteSearch?: (searchId: number) => search_actions.SearchAction;
+  fetchSearches: () => search_actions.SearchAction;
+  createSearch: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch: (searchId: number) => search_actions.SearchAction;
 }
 
 interface State {
@@ -294,7 +294,10 @@ export default class Experiments extends React.Component<Props, State> {
         filters={filters}
         fetchData={this.props.fetchData}
         fetchSearches={this.props.fetchSearches}
-        createSearch={this.props.createSearch}
+        createSearch={(data: SearchModel) => {
+          data.meta = {columns: this.state.selectedValues};
+          return this.props.createSearch(data);
+        }}
         deleteSearch={this.props.deleteSearch}
         sortOptions={sortOptions}
         filterOptions={filterOptions}

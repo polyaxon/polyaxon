@@ -123,6 +123,7 @@ export default class FilterList extends React.Component<Props, State> {
       query: this.state.query,
       sort: this.state.sort,
       name: '',
+      meta: {}
     };
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{showSearchModal: true, saveQueryForm}

@@ -82,10 +82,10 @@ export interface DispatchProps {
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
-  fetchData?: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
-  fetchSearches?: () => search_actions.SearchAction;
-  createSearch?: (data: SearchModel) => search_actions.SearchAction;
-  deleteSearch?: (searchId: number) => search_actions.SearchAction;
+  fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
+  fetchSearches: () => search_actions.SearchAction;
+  createSearch: (data: SearchModel) => search_actions.SearchAction;
+  deleteSearch: (searchId: number) => search_actions.SearchAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
