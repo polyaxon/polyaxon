@@ -17,6 +17,7 @@ export interface Params {
   fetchSearches?: () => actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
+  selectSearch?: (data: SearchModel) => void;
 }
 
 export function mapStateToProps(state: AppState, params: Params) {

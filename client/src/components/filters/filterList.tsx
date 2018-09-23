@@ -18,6 +18,7 @@ export interface Props {
   fetchSearches?: () => actions.SearchAction;
   createSearch?: (data: SearchModel) => actions.SearchAction;
   deleteSearch?: (searchId: number) => actions.SearchAction;
+  selectSearch?: (data: SearchModel) => void;
   searches: SearchModel[];
   searchesCount: number;
 }
@@ -81,11 +82,15 @@ export default class FilterList extends React.Component<Props, State> {
     }
   };
 
-  public selectSearch = (query: string, sort: string) => {
+  public selectSearch = (search: SearchModel) => {
     const state = {
-      query,
-      sort: sort || this.props.defaultSort || '-updated_at',
+      query: search.query.query,
+      sort: search.query.sort || this.props.defaultSort || '-updated_at',
     };
+
+    if (this.props.selectSearch) {
+      this.props.selectSearch(search);
+    }
 
     this.setState((prevState, prevProps) => ({
       ...prevState, ...state
@@ -166,7 +171,7 @@ export default class FilterList extends React.Component<Props, State> {
                           <MenuItem
                             key={idx}
                             className="dropdown-select-menu"
-                            onClick={() => this.selectSearch(search.query.query, search.query.sort)}
+                            onClick={() => this.selectSearch(search)}
                           >
                             <button
                               type="button"

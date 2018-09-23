@@ -120,6 +120,28 @@ export default class Experiments extends React.Component<Props, State> {
     return possibleColumns;
   };
 
+  public selectSearch = (search: SearchModel) => {
+    const selectedValues = (_.isNil(search.meta) || _.isNil(search.meta.columns)) ? [] : search.meta.columns;
+    const metrics: string[] = [];
+    const declarations: string[] = [];
+    for (const value of selectedValues) {
+      const columnValues = _.trim(value).split(':');
+      if (columnValues.length > 1 && columnValues[0] === 'metric') {
+        metrics.push(columnValues[1]);
+      } else if (columnValues.length > 1 && columnValues[0] === 'param') {
+        declarations.push(columnValues[1]);
+      }
+    }
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      ...{
+        metrics,
+        declarations,
+        selectedValues
+      }
+    }));
+  };
+
   public render() {
     let additionalFilters: FilterOption[] = this.props.groupId ?
       [] :
@@ -299,6 +321,7 @@ export default class Experiments extends React.Component<Props, State> {
           return this.props.createSearch(data);
         }}
         deleteSearch={this.props.deleteSearch}
+        selectSearch={this.selectSearch}
         sortOptions={sortOptions}
         filterOptions={filterOptions}
       />

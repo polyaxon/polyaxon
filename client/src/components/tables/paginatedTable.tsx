@@ -22,6 +22,7 @@ export interface Props {
   fetchSearches?: () => search_actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
+  selectSearch?: (data: SearchModel) => void;
   sortOptions?: string[];
   filterOptions?: FilterOption[];
 }
@@ -132,6 +133,7 @@ export default class PaginatedTable extends React.Component<Props, State> {
             fetchSearches={this.props.fetchSearches}
             createSearch={this.props.createSearch}
             deleteSearch={this.props.deleteSearch}
+            selectSearch={this.props.selectSearch}
           />);
       } else {
         return (null);
