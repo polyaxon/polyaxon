@@ -95,6 +95,8 @@ export default class FilterList extends React.Component<Props, State> {
     this.setState((prevState, prevProps) => ({
       ...prevState, ...state
     }));
+
+    this.props.handleFilter(state.query, state.sort);
   };
 
   public onQueryInput = (query: string) => {
