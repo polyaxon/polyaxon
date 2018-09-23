@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "typeRoots": [
-        "./node_modules/@types"
+      "./types",
+      "./node_modules/@types"
     ],
     "outDir": "./dist",
     "module": "commonjs",
@@ -20,6 +21,7 @@
     "./src/**/*"
   ],
   "exclude": [
+    "types",
     "node_modules",
     "build",
     "scripts",
@@ -29,10 +31,10 @@
     "./src/setupTests.ts"
   ],
   "types": [
-    "typePatches"
+    "./types"
   ],
   "baseUrl": ".",
   "paths": {
-    "*": [ "./typings/*" ]
+    "*": [ "./types/*" ]
   }
 }
