@@ -70,7 +70,7 @@ def get_container_resources(node, container, gpu_resources):
         logger.debug("`%s` container is not recognised", container.name)
         return
 
-    logger.info(
+    logger.debug(
         "Streaming resources for container %s in (job, experiment) (`%s`, `%s`) ",
         container.id, job_uuid, experiment_uuid)
 
@@ -154,7 +154,10 @@ def run(containers, node, persist):
         container = get_container(containers, container_id)
         if not container:
             continue
-        payload = get_container_resources(node, containers[container_id], gpu_resources)
+        try:
+            payload = get_container_resources(node, containers[container_id], gpu_resources)
+        except KeyError:
+            payload = None
         if payload:
             payload = payload.to_dict()
             logger.debug("Publishing resources event")
