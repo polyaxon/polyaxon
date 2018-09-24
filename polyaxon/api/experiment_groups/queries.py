@@ -15,26 +15,26 @@ groups_details = groups.annotate(
     Count('iterations', distinct=True),
     pending_experiments__count=Count(
         'experiments',
-        filter=Q(status__status__in=ExperimentLifeCycle.PENDING_STATUS),
+        filter=Q(experiments__status__status__in=ExperimentLifeCycle.PENDING_STATUS),
         distinct=True),
     running_experiments__count=Count(
         'experiments',
-        filter=Q(status__status__in=ExperimentLifeCycle.RUNNING_STATUS),
+        filter=Q(experiments__status__status__in=ExperimentLifeCycle.RUNNING_STATUS),
         distinct=True),
     scheduled_experiments__count=Count(
         'experiments',
-        filter=Q(status__status__in=ExperimentLifeCycle.SCHEDULED),
+        filter=Q(experiments__status__status=ExperimentLifeCycle.SCHEDULED),
         distinct=True),
     succeeded_experiments__count=Count(
         'experiments',
-        filter=Q(status__status=ExperimentLifeCycle.SUCCEEDED),
+        filter=Q(experiments__status__status=ExperimentLifeCycle.SUCCEEDED),
         distinct=True),
     failed_experiments__count=Count(
         'experiments',
-        filter=Q(status__status=ExperimentLifeCycle.FAILED),
+        filter=Q(experiments__status__status=ExperimentLifeCycle.FAILED),
         distinct=True),
     stopped_experiments__count=Count(
         'experiments',
-        filter=Q(status__status=ExperimentLifeCycle.STOPPED),
+        filter=Q(experiments__status__status=ExperimentLifeCycle.STOPPED),
         distinct=True),
 )
