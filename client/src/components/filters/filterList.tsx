@@ -183,9 +183,9 @@ export default class FilterList extends React.Component<Props, State> {
                             >
                               <span aria-hidden="true">&times;</span>
                             </button>
-                            <span>
-                                {search.name || 'untitled'}:
-                              </span>
+                            <span className="dropdown-title">
+                              {search.name || 'untitled'}
+                            </span>
                             <p className="dropdown-meta">
                               <span className="label dropdown-label">
                                 Query:

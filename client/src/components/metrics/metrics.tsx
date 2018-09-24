@@ -303,8 +303,8 @@ export default class Metrics extends React.Component<Props, State> {
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <span>
-                  {view.name || 'untitled'}:
+                <span className="dropdown-title">
+                  {view.name || 'untitled'}
                 </span>
                 <p className="dropdown-meta">
                   <span className="label dropdown-label">
