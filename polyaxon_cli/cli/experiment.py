@@ -6,6 +6,7 @@ import sys
 from collections import deque
 
 import click
+import rhea
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.cli.upload import upload
@@ -14,7 +15,6 @@ from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExit
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_job import ExperimentJobManager
-from polyaxon_cli.schemas.polyaxonfile import reader
 from polyaxon_cli.schemas.utils import to_list
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import (
@@ -331,7 +331,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     config = None
     update_code = None
     if file:
-        config = reader.read(file)
+        config = rhea.read(file)
 
     # Check if we need to upload
     if u:
@@ -377,7 +377,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     config = None
     update_code = None
     if file:
-        config = reader.read(file)
+        config = rhea.read(file)
 
     # Check if we need to upload
     if u:

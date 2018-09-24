@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+import rhea
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.cli.upload import upload
@@ -11,7 +12,6 @@ from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.job import JobManager
-from polyaxon_cli.schemas.polyaxonfile import reader
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -238,7 +238,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     config = None
     update_code = None
     if file:
-        config = reader.read(file)
+        config = rhea.read(file)
 
     # Check if we need to upload
     if u:
@@ -283,7 +283,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     config = None
     update_code = None
     if file:
-        config = reader.read(file)
+        config = rhea.read(file)
 
     # Check if we need to upload
     if u:
