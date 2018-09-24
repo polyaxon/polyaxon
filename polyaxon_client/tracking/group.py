@@ -8,7 +8,7 @@ import time
 from polyaxon_client import settings
 from polyaxon_client.tracking import Experiment
 from polyaxon_client.tracking.base import BaseTracker
-from polyaxon_client.tracking.paths import get_outputs_path, get_base_outputs_path
+from polyaxon_client.tracking.paths import get_base_outputs_path, get_outputs_path
 
 
 class Group(BaseTracker):
