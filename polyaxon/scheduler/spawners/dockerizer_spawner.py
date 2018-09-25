@@ -1,7 +1,7 @@
 from django.conf import settings
-from polyaxon_k8s.exceptions import PolyaxonK8SError
 
 from polyaxon.config_manager import config
+from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_from_secret, get_service_env_vars

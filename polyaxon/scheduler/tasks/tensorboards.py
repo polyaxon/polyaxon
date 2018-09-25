@@ -3,7 +3,7 @@ import logging
 from constants.jobs import JobLifeCycle
 from db.getters.tensorboards import get_valid_tensorboard
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks, Intervals
+from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import tensorboard_scheduler
 
 _logger = logging.getLogger(__name__)

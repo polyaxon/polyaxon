@@ -2,12 +2,12 @@ import json
 import random
 
 from django.conf import settings
-from polyaxon_k8s.exceptions import PolyaxonK8SError
 
 from libs.crypto import get_hmac
 from libs.paths.data_paths import get_data_paths
 from libs.paths.notebooks import get_notebook_job_outputs_path
 from libs.paths.projects import get_project_repos_path
+from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.env_vars import get_job_env_vars

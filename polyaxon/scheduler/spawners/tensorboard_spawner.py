@@ -2,8 +2,8 @@ import json
 import random
 
 from django.conf import settings
-from polyaxon_k8s.exceptions import PolyaxonK8SError
 
+from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.pod_environment import (

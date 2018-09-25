@@ -1,6 +1,5 @@
-from polyaxon_k8s.exceptions import PolyaxonK8SError
-
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
+from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.base_pods import get_pod_command_args

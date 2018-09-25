@@ -7,7 +7,7 @@ from db.getters.experiments import get_valid_experiment
 from db.models.experiments import ExperimentMetric
 from libs.paths.experiments import copy_experiment_outputs
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks, Intervals
+from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, experiment_scheduler
 from schemas.specifications import ExperimentSpecification
 
