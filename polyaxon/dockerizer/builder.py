@@ -297,7 +297,7 @@ def send_status(build_job, status, message=None, traceback=None):
     payload = {
         'details': {
             'labels': {
-                'app': settings.APP_LABELS_DOCKERIZER,
+                'app': 'dockerizer',
                 'job_uuid': build_job.uuid.hex,
                 'job_name': build_job.unique_name,
                 'project_uuid': build_job.project.uuid.hex,
