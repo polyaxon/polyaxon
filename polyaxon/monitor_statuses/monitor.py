@@ -47,11 +47,10 @@ def update_job_containers(event, status, job_container_name):
 
 
 def get_label_selector():
-    type_label = settings.TYPE_LABELS_EXPERIMENT
     return 'role in ({},{}),type={}'.format(
         settings.ROLE_LABELS_WORKER,
         settings.ROLE_LABELS_DASHBOARD,
-        type_label)
+        settings.TYPE_LABELS_RUNNER)
 
 
 def run(k8s_manager):
@@ -69,7 +68,7 @@ def run(k8s_manager):
                                  settings.CONTAINER_NAME_PLUGIN_JOB,
                                  settings.CONTAINER_NAME_JOB,
                                  settings.CONTAINER_NAME_DOCKERIZER_JOB),
-            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+            experiment_type_label=settings.TYPE_LABELS_RUNNER)
 
         if job_state:
             status = job_state.status

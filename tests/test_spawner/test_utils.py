@@ -21,7 +21,7 @@ class TestSpawner(BaseTest):
             event_type=status_experiment_job_event['type'],
             event=status_experiment_job_event['object'],
             job_container_names=(settings.CONTAINER_NAME_EXPERIMENT_JOB,),
-            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+            experiment_type_label=settings.TYPE_LABELS_RUNNER)
 
         assert isinstance(job_state, JobStateConfig)
         assert isinstance(job_state.details, PodStateConfig)
@@ -39,7 +39,7 @@ class TestSpawner(BaseTest):
         job_state = get_job_state(event_type=status_experiment_job_event_with_conditions['type'],
                                   event=status_experiment_job_event_with_conditions['object'],
                                   job_container_names=(settings.CONTAINER_NAME_EXPERIMENT_JOB,),
-                                  experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+                                  experiment_type_label=settings.TYPE_LABELS_RUNNER)
 
         assert isinstance(job_state, JobStateConfig)
         assert isinstance(job_state.details, PodStateConfig)

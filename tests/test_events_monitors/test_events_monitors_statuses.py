@@ -54,7 +54,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
             event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
             event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
             job_container_names=(self.CONTAINER_NAME,),
-            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+            experiment_type_label=settings.TYPE_LABELS_RUNNER)
         self.STATUS_HANDLER(job_state.to_dict())  # pylint:disable=not-callable
         assert self.STATUS_MODEL.objects.count() == 0
 
@@ -64,7 +64,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
             event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
             event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
             job_container_names=(self.CONTAINER_NAME,),
-            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+            experiment_type_label=settings.TYPE_LABELS_RUNNER)
 
         job = self.get_job_object(job_state)
 
@@ -79,7 +79,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
             event_type=self.EVENT_WITH_CONDITIONS['type'],  # pylint:disable=unsubscriptable-object
             event=self.EVENT_WITH_CONDITIONS['object'],  # pylint:disable=unsubscriptable-object
             job_container_names=(self.CONTAINER_NAME,),
-            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+            experiment_type_label=settings.TYPE_LABELS_RUNNER)
 
         job = self.get_job_object(job_state)
 

@@ -90,7 +90,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             affinity=affinity,
             tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,
-            type=settings.TYPE_LABELS_EXPERIMENT)
+            type=settings.TYPE_LABELS_RUNNER)
         deployment_name = constants.JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME,
                                                     job_uuid=self.job_uuid)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
@@ -99,7 +99,7 @@ class TensorboardSpawner(ProjectJobSpawner):
                                                    job_name=self.job_name,
                                                    job_uuid=self.job_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
-                                                   type=settings.TYPE_LABELS_EXPERIMENT)
+                                                   type=settings.TYPE_LABELS_RUNNER)
 
         dep_resp, _ = self.create_or_update_deployment(name=deployment_name, data=deployment)
         service = services.get_service(

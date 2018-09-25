@@ -70,7 +70,7 @@ class PodManager(object):
         self.init_container_name = init_container_name or settings.CONTAINER_NAME_INIT
         self.init_docker_image = init_docker_image or settings.JOB_INIT_DOCKER_IMAGE
         self.role_label = role_label or settings.ROLE_LABELS_WORKER
-        self.type_label = type_label or settings.TYPE_LABELS_EXPERIMENT
+        self.type_label = type_label or settings.TYPE_LABELS_RUNNER
         self.app_label = settings.APP_LABELS_EXPERIMENT
         self.ports = ports or [constants.DEFAULT_PORT]
         self.use_sidecar = use_sidecar
@@ -93,7 +93,8 @@ class PodManager(object):
                                                     experiment_uuid=self.experiment_uuid)
 
     def get_experiment_labels(self):
-        labels = {'project_name': self.project_name,
+        labels = {'app': self.app_label,
+                  'project_name': self.project_name,
                   'experiment_group_name': self.experiment_group_name,
                   'experiment_name': self.experiment_name,
                   'project_uuid': self.project_uuid,

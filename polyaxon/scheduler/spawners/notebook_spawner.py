@@ -160,14 +160,14 @@ class NotebookSpawner(ProjectJobSpawner):
             affinity=affinity,
             tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,
-            type=settings.TYPE_LABELS_EXPERIMENT)
+            type=settings.TYPE_LABELS_RUNNER)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_NOTEBOOK,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    job_name=self.job_name,
                                                    job_uuid=self.job_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
-                                                   type=settings.TYPE_LABELS_EXPERIMENT)
+                                                   type=settings.TYPE_LABELS_RUNNER)
         dep_resp, _ = self.create_or_update_deployment(name=deployment_name, data=deployment)
         service = services.get_service(
             namespace=self.namespace,
