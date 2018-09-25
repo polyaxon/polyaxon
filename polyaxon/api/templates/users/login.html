@@ -49,6 +49,9 @@
                 <label>&nbsp;</label><input type="submit" value="Log in"/>
             </div>
         </form>
+        <div class="signup-redirect">
+            No account yet? <a href="{% url 'users:registration_simple_register' %}">You can register here.</a>
+        </div>
     {% if sso_enabled %}
         <hr/>
         <div id="signinLabel" class="auth-sso">

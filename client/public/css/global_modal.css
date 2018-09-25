@@ -166,5 +166,16 @@ body.modal {
 }
 
 form {
- margin-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+.signup-redirect {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.signup-redirect a {
+  color: #337ab7;
+  text-decoration: none;
 }
