@@ -1,3 +1,4 @@
+import json
 import logging
 import re
 import requests
@@ -76,6 +77,8 @@ def get_container_resources(node, container, gpu_resources):
 
     try:
         stats = container.stats(decode=True, stream=False)
+    except json.decoder.JSONDecodeError:
+        logger.info("Error streaming states for `%s`", container.name)
     except NotFound:
         logger.debug("`%s` was not found", container.name)
         RedisJobContainers.remove_container(container.id)
