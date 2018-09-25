@@ -1,23 +1,25 @@
 {% extends "polyaxon/index.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-offset-2 col-md-8">
-        <div class="jumbotron jumbotron-action">
-            <div class="logo-position logo">
-                <a href="/" class="logo-font-login">Polyaxon</a>
+    <div class="container layout">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="jumbotron jumbotron-action">
+                    <div class="logo-position logo">
+                        <a href="/" class="logo-font-login">Polyaxon</a>
+                    </div>
+                    <div id="signinLabel">
+                        Your account was created successfully.
+                        Please reach out to your superuser/admin to activate your account.
+                    </div>
+                    <br>
+                </div>
             </div>
-            <div id="signinLabel">
-                Your account was created successfully.
-                Please reach out to your superuser/admin to activate your account.
-            </div>
-            <br>
         </div>
     </div>
-</div>
 {% endblock %}
 {% block scripts %}
-<script type="text/javascript">
-    redirectTo("{{ login_url }}");
-</script>
+    <script type="text/javascript">
+      redirectTo("{{ login_url }}");
+    </script>
 {% endblock %}
