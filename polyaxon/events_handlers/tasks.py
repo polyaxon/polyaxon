@@ -49,18 +49,18 @@ def events_handle_experiment_job_statuses(self, payload):
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
-    _logger.debug('handling events status for job_uuid: %s', job_uuid)
+    _logger.info('handling events status for job_uuid: %s, status: %s', job_uuid, payload['status'])
 
     try:
         job = ExperimentJob.objects.get(uuid=job_uuid)
     except ExperimentJob.DoesNotExist:
-        _logger.debug('Job uuid`%s` does not exist', job_uuid)
+        _logger.info('Job uuid`%s` does not exist', job_uuid)
         return
 
     try:
         job.experiment
     except Experiment.DoesNotExist:
-        _logger.debug('Experiment for job `%s` does not exist anymore', job_uuid)
+        _logger.info('Experiment for job `%s` does not exist anymore', job_uuid)
         return
 
     # Set the new status
