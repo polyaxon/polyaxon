@@ -27,3 +27,5 @@ echo "cli create project"
 polyaxon project create --name=travis-test --description='Travis testing'
 echo "cli init project"
 polyaxon init travis-test
+
+echo "done"
