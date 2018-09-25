@@ -5,6 +5,7 @@ from kubernetes import watch
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
+from constants.pods import PodLifeCycle
 from db.redis.containers import RedisJobContainers
 from monitor_statuses.jobs import get_job_state
 from polyaxon.celery_api import app as celery_app
@@ -82,18 +83,26 @@ def run(k8s_manager):
 
             experiment_job_condition = (
                 settings.CONTAINER_NAME_EXPERIMENT_JOB in job_state['details']['container_statuses']
+                or (status in {PodLifeCycle.UNKNOWN, PodLifeCycle.FAILED} and
+                    labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             job_condition = (
-                settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses']
+                settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses'] or
+                (status in {PodLifeCycle.UNKNOWN, PodLifeCycle.FAILED} and
+                 labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             plugin_job_condition = (
-                settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses']
+                settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses'] or
+                (status in {PodLifeCycle.UNKNOWN, PodLifeCycle.FAILED} and
+                 labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             dockerizer_job_condition = (
                 settings.CONTAINER_NAME_DOCKERIZER_JOB in job_state['details']['container_statuses']
+                or (status in {PodLifeCycle.UNKNOWN, PodLifeCycle.FAILED} and
+                    labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             if experiment_job_condition:
