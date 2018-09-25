@@ -8,7 +8,7 @@ from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks, Intervals
 from scheduler import dockerizer_scheduler
 
 _logger = logging.getLogger('polyaxon.scheduler.build_jobs')
@@ -25,13 +25,26 @@ def build_jobs_start(build_job_id):
     dockerizer_scheduler.start_dockerizer(build_job)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP, ignore_result=True)
-def build_jobs_stop(project_name, project_uuid, build_job_name, build_job_uuid, update_status=True):
-    dockerizer_scheduler.stop_dockerizer(
+@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
+def build_jobs_stop(self,
+                    project_name,
+                    project_uuid,
+                    build_job_name,
+                    build_job_uuid,
+                    update_status=True):
+    deleted = dockerizer_scheduler.stop_dockerizer(
         project_name=project_name,
         project_uuid=project_uuid,
         build_job_name=build_job_name,
         build_job_uuid=build_job_uuid)
+
+    if not deleted and self.request.retries < 2:
+        _logger.info('Trying again to delete build `%s`.', build_job_name)
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
 
     if not update_status:
         return

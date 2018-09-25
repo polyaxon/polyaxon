@@ -7,7 +7,7 @@ from db.getters.experiments import get_valid_experiment
 from db.models.experiments import ExperimentMetric
 from libs.paths.experiments import copy_experiment_outputs
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks, Intervals
 from scheduler import dockerizer_scheduler, experiment_scheduler
 from schemas.specifications import ExperimentSpecification
 
@@ -126,8 +126,12 @@ def experiments_start(experiment_id):
     experiment_scheduler.start_experiment(experiment)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
-def experiments_stop(project_name,
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
+def experiments_stop(self,
+                     project_name,
                      project_uuid,
                      experiment_name,
                      experiment_group_name,
@@ -136,7 +140,7 @@ def experiments_stop(project_name,
                      specification,
                      update_status=True):
     specification = ExperimentSpecification.read(specification)
-    experiment_scheduler.stop_experiment(
+    deleted = experiment_scheduler.stop_experiment(
         project_name=project_name,
         project_uuid=project_uuid,
         experiment_name=experiment_name,
@@ -145,6 +149,11 @@ def experiments_stop(project_name,
         experiment_uuid=experiment_uuid,
         specification=specification,
     )
+
+    if not deleted and self.request.retries < 2:
+        _logger.info('Trying again to delete job `%s` in experiment.', experiment_name)
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
 
     if not update_status:
         return

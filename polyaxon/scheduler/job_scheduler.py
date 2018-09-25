@@ -99,4 +99,4 @@ def stop_job(project_name, project_uuid, job_name, job_uuid, specification):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.stop_job()
+    return spawner.stop_job()

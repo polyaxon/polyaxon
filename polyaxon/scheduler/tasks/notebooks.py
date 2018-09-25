@@ -3,7 +3,7 @@ import logging
 from constants.jobs import JobLifeCycle
 from db.getters.notebooks import get_valid_notebook
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks, Intervals
 from scheduler import dockerizer_scheduler, notebook_scheduler
 
 _logger = logging.getLogger(__name__)
@@ -58,17 +58,26 @@ def projects_notebook_start(notebook_job_id):
     notebook_scheduler.start_notebook(notebook_job)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP, ignore_result=True)
-def projects_notebook_stop(project_name,
+@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
+def projects_notebook_stop(self,
+                           project_name,
                            project_uuid,
                            notebook_job_name,
                            notebook_job_uuid,
                            update_status=True):
-    notebook_scheduler.stop_notebook(
+    deleted = notebook_scheduler.stop_notebook(
         project_name=project_name,
         project_uuid=project_uuid,
         notebook_job_name=notebook_job_name,
         notebook_job_uuid=notebook_job_uuid)
+
+    if not deleted and self.request.retries < 2:
+        _logger.info('Trying again to delete job `%s`.', notebook_job_name)
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
 
     if not update_status:
         return

@@ -1,4 +1,5 @@
 from django.conf import settings
+from polyaxon_k8s.exceptions import PolyaxonK8SError
 
 from polyaxon.config_manager import config
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
@@ -75,4 +76,8 @@ class DockerizerSpawner(ProjectJobSpawner):
     def stop_dockerizer(self):
         pod_name = constants.JOB_NAME.format(job_uuid=self.job_uuid,
                                              name=self.DOCKERIZER_JOB_NAME)
-        self.delete_pod(name=pod_name)
+        try:
+            self.delete_pod(name=pod_name, reraise=True)
+            return True
+        except PolyaxonK8SError:
+            return False

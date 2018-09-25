@@ -490,4 +490,4 @@ def stop_experiment(project_name,
                             in_cluster=True,
                             use_sidecar=True,
                             sidecar_config=config.get_requested_params(to_str=True))
-    spawner.stop_experiment()
+    return spawner.stop_experiment()

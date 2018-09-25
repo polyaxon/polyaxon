@@ -2,6 +2,7 @@ import json
 import random
 
 from django.conf import settings
+from polyaxon_k8s.exceptions import PolyaxonK8SError
 
 from libs.crypto import get_hmac
 from libs.paths.data_paths import get_data_paths
@@ -199,7 +200,11 @@ class NotebookSpawner(ProjectJobSpawner):
     def stop_notebook(self):
         deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
                                                     job_uuid=self.job_uuid)
-        self.delete_deployment(name=deployment_name)
-        self.delete_service(name=deployment_name)
-        if self._use_ingress():
-            self.delete_ingress(name=deployment_name)
+        try:
+            self.delete_deployment(name=deployment_name, reraise=True)
+            self.delete_service(name=deployment_name)
+            if self._use_ingress():
+                self.delete_ingress(name=deployment_name)
+            return True
+        except PolyaxonK8SError:
+            return False

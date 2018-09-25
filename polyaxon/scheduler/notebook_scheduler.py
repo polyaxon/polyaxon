@@ -101,7 +101,7 @@ def stop_notebook(project_name,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.stop_notebook()
+    return spawner.stop_notebook()
 
 
 def get_notebook_url(notebook):

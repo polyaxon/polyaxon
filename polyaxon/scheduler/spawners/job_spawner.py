@@ -1,3 +1,5 @@
+from polyaxon_k8s.exceptions import PolyaxonK8SError
+
 from polyaxon.config_manager import config
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates.base_pods import get_pod_command_args
@@ -107,4 +109,8 @@ class JobSpawner(K8SManager):
         return pod_resp.to_dict()
 
     def stop_job(self):
-        self.delete_pod(name=self.pod_manager.k8s_job_name)
+        try:
+            self.delete_pod(name=self.pod_manager.k8s_job_name, reraise=True)
+            return True
+        except PolyaxonK8SError:
+            return False

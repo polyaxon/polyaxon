@@ -1,3 +1,5 @@
+from polyaxon_k8s.exceptions import PolyaxonK8SError
+
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
@@ -192,14 +194,19 @@ class ExperimentSpawner(K8SManager):
 
     def _delete_job(self, task_type, task_idx, has_service):
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
-        self.delete_pod(name=job_name)
+        self.delete_pod(name=job_name, reraise=True)
         if has_service:
-            self.delete_service(name=job_name)
+            self.delete_service(name=job_name, reraise=True)
 
     def delete_multi_jobs(self, task_type, has_service):
         n_pods = self.get_n_pods(task_type=task_type)
+        deleted = True
         for i in range(n_pods):
-            self._delete_job(task_type=task_type, task_idx=i, has_service=has_service)
+            try:
+                self._delete_job(task_type=task_type, task_idx=i, has_service=has_service)
+            except PolyaxonK8SError:
+                deleted = False
+        return deleted
 
     def get_pod_command_args(self, task_type, task_idx):
         return get_pod_command_args(run_config=self.spec.run)
@@ -223,7 +230,11 @@ class ExperimentSpawner(K8SManager):
                                 add_service=self.MASTER_SERVICE)
 
     def delete_master(self):
-        self._delete_job(task_type=TaskType.MASTER, task_idx=0, has_service=self.MASTER_SERVICE)
+        try:
+            self._delete_job(task_type=TaskType.MASTER, task_idx=0, has_service=self.MASTER_SERVICE)
+            return True
+        except PolyaxonK8SError:
+            return False
 
     def create_experiment_config_map(self):
         name = constants.CONFIG_MAP_NAME.format(uuid=self.experiment_uuid)
@@ -261,7 +272,7 @@ class ExperimentSpawner(K8SManager):
         }
 
     def stop_experiment(self):
-        self.delete_master()
+        return self.delete_master()
 
     def _get_pod_address(self, host):
         return '{}:{}'.format(host, self.pod_manager.ports[0])

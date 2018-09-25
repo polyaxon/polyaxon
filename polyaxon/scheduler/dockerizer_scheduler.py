@@ -138,4 +138,4 @@ def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.stop_dockerizer()
+    return spawner.stop_dockerizer()

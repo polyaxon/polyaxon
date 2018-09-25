@@ -87,7 +87,7 @@ def stop_tensorboard(project_name,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.stop_tensorboard()
+    return spawner.stop_tensorboard()
 
 
 def get_tensorboard_url(tensorboard):

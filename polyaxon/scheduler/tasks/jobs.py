@@ -3,7 +3,7 @@ import logging
 from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks, Intervals
 from scheduler import dockerizer_scheduler, job_scheduler
 from schemas.specifications import JobSpecification
 
@@ -64,15 +64,26 @@ def jobs_start(job_id):
     job_scheduler.start_job(job)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, ignore_result=True)
-def jobs_stop(project_name, project_uuid, job_name, job_uuid, specification, update_status=True):
+@celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)
+def jobs_stop(self,
+              project_name,
+              project_uuid,
+              job_name,
+              job_uuid,
+              specification,
+              update_status=True):
     specification = JobSpecification.read(specification)
-    job_scheduler.stop_job(
+    deleted = job_scheduler.stop_job(
         project_name=project_name,
         project_uuid=project_uuid,
         job_name=job_name,
         job_uuid=job_uuid,
         specification=specification)
+
+    if not deleted and self.request.retries < 2:
+        _logger.info('Trying again to delete job `%s`.', job_name)
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
 
     if not update_status:
         return
