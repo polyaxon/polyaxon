@@ -1,5 +1,6 @@
 import time
 
+import redis
 from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
 
@@ -46,6 +47,8 @@ class Command(BaseMonitorCommand):
             try:
                 if node:
                     monitor.run(containers, node, persist)
+            except redis.exceptions.ConnectionError:
+                monitor.logger.warning("Redis connection is probably already closed %s\n", e)
             except Exception as e:
                 monitor.logger.exception("Unhandled exception occurred %s\n", e)
 
