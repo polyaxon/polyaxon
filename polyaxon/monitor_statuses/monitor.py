@@ -99,6 +99,7 @@ def run(k8s_manager):
 
             if experiment_job_condition:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_EXPERIMENT_JOB)
+                logger.info("Sending state to handler %s, %s", status, labels)
                 # Handle experiment job statuses
                 celery_app.send_task(
                     EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
@@ -122,3 +123,5 @@ def run(k8s_manager):
                 celery_app.send_task(
                     EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
                     kwargs={'payload': job_state})
+            else:
+                logger.info("lost state %s, %s", status, job_state)
