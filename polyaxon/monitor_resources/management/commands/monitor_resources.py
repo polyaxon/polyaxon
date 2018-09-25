@@ -48,7 +48,7 @@ class Command(BaseMonitorCommand):
             try:
                 if node:
                     monitor.run(containers, node, persist)
-            except redis.exceptions.ConnectionError:
+            except redis.exceptions.ConnectionError as e:
                 monitor.logger.warning("Redis connection is probably already closed %s\n", e)
             except Exception as e:
                 monitor.logger.exception("Unhandled exception occurred %s\n", e)
