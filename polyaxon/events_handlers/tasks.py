@@ -13,7 +13,7 @@ from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from events_handlers.utils import safe_log_experiment_job, safe_log_job
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks
+from polyaxon.settings import EventsCeleryTasks, Intervals
 
 _logger = logging.getLogger(__name__)
 
@@ -41,8 +41,11 @@ def set_node_scheduling(job, node_name):
     job.save()
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES)
-def events_handle_experiment_job_statuses(payload):
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
+def events_handle_experiment_job_statuses(self, payload):
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -68,12 +71,15 @@ def events_handle_experiment_job_statuses(payload):
                        traceback=payload.get('traceback'),
                        details=details)
     except IntegrityError:
-        # Due to concurrency this could happen, we just ignore it
-        pass
+        # Due to concurrency this could happen, we just retry it
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
-def events_handle_job_statuses(payload):
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
+def events_handle_job_statuses(self, payload):
     """Project jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -101,12 +107,15 @@ def events_handle_job_statuses(payload):
                        traceback=payload.get('traceback'),
                        details=details)
     except IntegrityError:
-        # Due to concurrency this could happen, we just ignore it
-        pass
+        # Due to concurrency this could happen, we just retry it
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
-def events_handle_plugin_job_statuses(payload):
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
+def events_handle_plugin_job_statuses(self, payload):
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
@@ -140,12 +149,15 @@ def events_handle_plugin_job_statuses(payload):
                        traceback=payload.get('traceback'),
                        details=details)
     except IntegrityError:
-        # Due to concurrency this could happen, we just ignore it
-        pass
+        # Due to concurrency this could happen, we just retry it
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES)
-def events_handle_build_job_statuses(payload):
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
+def events_handle_build_job_statuses(self, payload):
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
@@ -173,8 +185,8 @@ def events_handle_build_job_statuses(payload):
                              traceback=payload.get('traceback'),
                              details=details)
     except IntegrityError:
-        # Due to concurrency this could happen, we just ignore it
-        pass
+        # Due to concurrency this could happen, we just retry it
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB)
