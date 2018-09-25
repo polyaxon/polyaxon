@@ -35,6 +35,15 @@ class TestClusterDetailViewV1(BaseViewTest):
         assert len(resp.data['nodes']) == 2
         assert resp.data['nodes'] == ClusterNodeSerializer(self.object.nodes.all(), many=True).data
 
+        # Deactivate node
+        node = self.object.nodes.all()[0]
+        node.is_current = False
+        node.save()
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.object).data
+        assert len(resp.data['nodes']) == 1
+
 
 @pytest.mark.clusters_mark
 class TestClusterNodeListViewV1(BaseViewTest):
