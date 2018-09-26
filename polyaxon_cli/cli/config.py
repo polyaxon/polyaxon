@@ -91,6 +91,6 @@ def set(verbose, host, http_port, ws_port, use_https):  # pylint:disable=redefin
         _config.use_https = use_https
 
     GlobalConfigManager.set_config(_config)
-    Printer.print_success('Config was update.')
+    Printer.print_success('Config was updated.')
     # Reset cli config
     CliConfigManager.purge()
