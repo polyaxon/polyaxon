@@ -55,13 +55,13 @@ def events_handle_experiment_job_statuses(self, payload):
     try:
         job = ExperimentJob.objects.get(uuid=job_uuid)
     except ExperimentJob.DoesNotExist:
-        _logger.info('Job uuid`%s` does not exist', job_uuid)
+        _logger.debug('Job uuid`%s` does not exist', job_uuid)
         return
 
     try:
         job.experiment
     except Experiment.DoesNotExist:
-        _logger.info('Experiment for job `%s` does not exist anymore', job_uuid)
+        _logger.debug('Experiment for job `%s` does not exist anymore', job_uuid)
         return
 
     if job.last_status is None and self.request.retries < 2:
