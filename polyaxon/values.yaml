@@ -486,7 +486,7 @@ nfsProvisioner:
 types:
   hooks: "polyaxon-hooks"
   core: "polyaxon-core"
-  experiment: "polyaxon-experiment"
+  runner: "polyaxon-runner"
 
 roles:
   api: "polyaxon-api"

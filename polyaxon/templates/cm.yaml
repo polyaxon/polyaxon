@@ -150,7 +150,7 @@ data:
   POLYAXON_ROLE_LABELS_WORKER: {{ .Values.roles.worker }}
   POLYAXON_ROLE_LABELS_DASHBOARD: {{ .Values.roles.dashboard }}
   POLYAXON_TYPE_LABELS_CORE: {{ .Values.types.core }}
-  POLYAXON_TYPE_LABELS_EXPERIMENT: {{ .Values.types.experiment }}
+  POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner }}
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   # Registry
   POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
