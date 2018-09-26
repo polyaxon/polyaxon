@@ -86,7 +86,7 @@ class Experiment(DiffModel,
     run_env = JSONField(
         blank=True,
         null=True,
-        default={'in_cluster': True},
+        default=dict(in_cluster=True),
         help_text='The run environment of the experiment.')
     original_experiment = models.ForeignKey(
         'self',
