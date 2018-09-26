@@ -1,6 +1,5 @@
 import base64
 import binascii
-import logging
 
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
