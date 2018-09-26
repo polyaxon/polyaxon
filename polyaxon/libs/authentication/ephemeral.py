@@ -1,5 +1,6 @@
 import base64
 import binascii
+import logging
 
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
@@ -8,6 +9,8 @@ from django.conf import settings
 
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from libs.authentication.internal import get_internal_header
+
+_logger = logging.getLogger(__name__)
 
 
 class EphemeralUser(object):
@@ -61,6 +64,7 @@ class EphemeralAuthentication(BaseAuthentication):
         except UnicodeError:
             msg = ('Invalid internal_service header. '
                    'internal_service string should not contain invalid characters.')
+            _logger.info(msg)
             raise exceptions.AuthenticationFailed(msg)
 
         if internal_service not in settings.EPHEMERAL_SERVICES.VALUES:
@@ -71,15 +75,18 @@ class EphemeralAuthentication(BaseAuthentication):
 
         if len(auth) == 1:
             msg = 'Invalid token header. No credentials provided.'
+            _logger.info(msg)
             raise exceptions.AuthenticationFailed(msg)
         elif len(auth) > 2:
             msg = 'Invalid token header. Token string should not contain spaces.'
+            _logger.info(msg)
             raise exceptions.AuthenticationFailed(msg)
 
         try:
             token = auth[1].decode()
         except UnicodeError:
             msg = 'Invalid token header. Token string should not contain invalid characters.'
+            _logger.info(msg)
             raise exceptions.AuthenticationFailed(msg)
 
         return self.authenticate_credentials(token)
@@ -89,10 +96,12 @@ class EphemeralAuthentication(BaseAuthentication):
             auth_parts = base64.b64decode(key).decode('utf-8').split(RedisEphemeralTokens.SEPARATOR)
         except (TypeError, UnicodeDecodeError, binascii.Error):
             msg = 'Invalid basic header. Credentials not correctly base64 encoded.'
+            _logger.info(msg)
             raise exceptions.AuthenticationFailed(msg)
 
         if len(auth_parts) != 2:
             msg = 'Invalid token header. Token should contain token and uuid.'
+            _logger.info(msg)
             raise exceptions.AuthenticationFailed(msg)
 
         token = auth_parts[0]
@@ -100,12 +109,15 @@ class EphemeralAuthentication(BaseAuthentication):
 
         ephemeral_token = RedisEphemeralTokens(token_uuid)
         if not ephemeral_token:
-            raise exceptions.AuthenticationFailed('Invalid token.')
+            msg = 'Invalid token.'
+            _logger.info(msg)
+            raise exceptions.AuthenticationFailed(msg)
 
         scope = ephemeral_token.scope
         if not ephemeral_token.check_token(token=token):
             ephemeral_token.clear()
             msg = 'Invalid token header'
+            _logger.info(msg)
             raise exceptions.AuthenticationFailed(msg)
 
         return EphemeralUser(scope=scope), None
