@@ -127,9 +127,6 @@ def experiment_job_status_post_save(sender, **kwargs):
     set_job_finished_at(instance=job, status=instance.status)
     job.save()
 
-    if instance.status == JobLifeCycle.CREATED:
-        _logger.info('Set created status for job %s, last: %s', job.id, job.last_status)
-
     # check if the new status is done to remove the containers from the monitors
     if job.is_done:
         from db.redis.containers import RedisJobContainers

@@ -49,7 +49,8 @@ def events_handle_experiment_job_statuses(self, payload):
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
-    _logger.info('handling events status for job_uuid: %s, status: %s', job_uuid, payload['status'])
+    _logger.debug('handling events status for job_uuid: %s, status: %s',
+                  job_uuid, payload['status'])
 
     try:
         job = ExperimentJob.objects.get(uuid=job_uuid)
@@ -63,6 +64,9 @@ def events_handle_experiment_job_statuses(self, payload):
         _logger.info('Experiment for job `%s` does not exist anymore', job_uuid)
         return
 
+    if job.last_status is None and self.request.retries < 2:
+        self.retry(countdown=1)
+
     # Set the new status
     try:
         set_node_scheduling(job, details['node_name'])
@@ -70,7 +74,7 @@ def events_handle_experiment_job_statuses(self, payload):
                        message=payload['message'],
                        traceback=payload.get('traceback'),
                        details=details)
-        _logger.info('status %s is set for job %s %s', payload['status'], job_uuid, job.id)
+        _logger.debug('status %s is set for job %s %s', payload['status'], job_uuid, job.id)
     except IntegrityError:
         # Due to concurrency this could happen, we just retry it
         _logger.info('Retry job status %s handling %s', payload['status'], job_uuid)

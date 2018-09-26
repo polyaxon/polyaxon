@@ -53,7 +53,7 @@ class JobLifeCycle(BaseStatuses):
     # 2. Kubernetes building phase
     TRANSITION_MATRIX = {
         CREATED: {None, },
-        BUILDING: {CREATED, SCHEDULED},
+        BUILDING: {None, CREATED, SCHEDULED},
         SCHEDULED: {CREATED, BUILDING},
         RUNNING: {CREATED, SCHEDULED, BUILDING, UNKNOWN},
         SUCCEEDED: {CREATED, BUILDING, SCHEDULED, RUNNING, UNKNOWN, },
