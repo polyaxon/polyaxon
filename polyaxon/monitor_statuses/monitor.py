@@ -132,4 +132,4 @@ def run(k8s_manager):
                     EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
                     kwargs={'payload': job_state})
             else:
-                logger.info("lost state %s, %s", status, job_state)
+                logger.debug("Lost state %s, %s", status, job_state)
