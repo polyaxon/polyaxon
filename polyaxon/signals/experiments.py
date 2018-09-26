@@ -122,6 +122,9 @@ def experiment_job_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
     job = instance.job
 
+    if instance.status == JobLifeCycle.CREATED:
+        _logger.info('Set created for job %s', job.id)
+
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
