@@ -25,7 +25,7 @@ class ChartViewModel(DiffModel, NameableModel):
     meta = JSONField(
         null=True,
         blank=True,
-        default={}
+        default=dict()
     )
 
     class Meta:

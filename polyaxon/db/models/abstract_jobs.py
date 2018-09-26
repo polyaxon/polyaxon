@@ -21,7 +21,8 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
         editable=False,
         unique=True,
         null=False)
-    definition = JSONField(help_text='The specific values/manifest for this job.', default={})
+    definition = JSONField(help_text='The specific values/manifest for this job.',
+                           default=dict())
 
     class Meta:
         abstract = True
@@ -107,7 +108,7 @@ class AbstractJobStatus(StatusModel):
         null=True,
         default=STATUSES.CREATED,
         choices=STATUSES.CHOICES)
-    details = JSONField(null=True, blank=True, default={})
+    details = JSONField(null=True, blank=True, default=dict())
 
     def __str__(self):
         return '{} <{}>'.format(self.job.unique_name, self.status)
