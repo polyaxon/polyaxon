@@ -57,6 +57,7 @@ export function mapStateToProps(state: AppState, params: any) {
     views: viewsResults.views,
     resource: params.resource,
     params: experimentParamsResults.experimentParams,
+    chartTypes: params.chartTypes,
     count: results.count,
   };
 }

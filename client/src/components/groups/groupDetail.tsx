@@ -86,6 +86,7 @@ export default class GroupDetail extends React.Component<Props, {}> {
                     project={group.project}
                     resource="groups"
                     id={group.id}
+                    chartTypes={['line', 'bar', 'scatter', 'histogram']}
                   />,
                   relUrl: 'metrics'
                 }, {

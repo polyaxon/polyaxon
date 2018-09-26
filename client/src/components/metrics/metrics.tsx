@@ -20,6 +20,7 @@ export interface Props {
   views: ChartViewModel[];
   resource: string;
   count: number;
+  chartTypes: string[];
   fetchData: () => actions.MetricsAction;
   fetchParamsData?: () => experimentActions.ExperimentAction;
   fetchViews: () => actions.MetricsAction;
@@ -346,10 +347,23 @@ export default class Metrics extends React.Component<Props, State> {
                   onChange={(event) => this.updateChartForm('type', event.target.value)}
                   className="form-control"
                 >
-                  <option>line</option>
-                  <option>scatter</option>
-                  <option>bar</option>
-                  {this.state.paramNames.length > 0 && <option>histogram</option>}
+                  {
+                    this.props.chartTypes.indexOf('line') > -1 &&
+                    <option>line</option>
+                  }
+                  {
+                    this.props.chartTypes.indexOf('scatter') > -1 &&
+                    <option>scatter</option>
+                  }
+                  {
+                    this.props.chartTypes.indexOf('bar') > -1 &&
+                    <option>bar</option>
+                  }
+                  {
+                    this.props.chartTypes.indexOf('histogram') > -1 &&
+                    this.state.paramNames.length > 0 &&
+                    <option>histogram</option>
+                  }
                 </select>
               </div>
             </div>
