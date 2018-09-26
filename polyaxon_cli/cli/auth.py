@@ -74,7 +74,7 @@ def login(token, username, password):
         sys.exit(1)
     access_token = AccessTokenConfig(username=user.username, token=access_code)
     AuthConfigManager.set_config(access_token)
-    Printer.print_success("Login Successful")
+    Printer.print_success("Login successful")
 
     # Reset current cli
     server_version = get_server_version()
