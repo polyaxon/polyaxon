@@ -20,12 +20,10 @@ echo "getting polyaxon version"
 curl -s $TEST_URL/api/v1/versions/cli/ | grep version
 
 echo "configure cli"
-polyaxon config set --host=$IP --http_port=31811
+polyaxon config set --host=$IP --http_port=31811 | grep updated
 echo "cli login"
-polyaxon login -u travis -p travis
+polyaxon login -u travis -p travis | grep success
 echo "cli create project"
-polyaxon project create --name=travis-test --description='Travis testing'
+polyaxon project create --name=travis-test --description='Travis testing' | grep success
 echo "cli init project"
-polyaxon init travis-test
-
-echo "done"
+polyaxon init travis-test | grep success
