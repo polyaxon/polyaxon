@@ -120,6 +120,10 @@ def experiment_job_post_save(sender, **kwargs):
 @ignore_raw
 def experiment_job_status_post_save(sender, **kwargs):
     instance = kwargs['instance']
+    # Ignore created status
+    if instance.status == JobLifeCycle.CREATED:
+        return
+
     job = instance.job
 
     # update job last_status
