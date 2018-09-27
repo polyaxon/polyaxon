@@ -1,7 +1,7 @@
 ## 0.2.3
 
  * Fix one major issue with events getting dropped, which led to experiments getting stuck in scheduled status.
- * Add out cluster tracking an instrumentation, users can now track experiment outside of Polyaxon and compare there experiment in Polyaxon.
+ * Add out cluster tracking and instrumentation, users can now track experiment outside of Polyaxon and compare the experiments in Polyaxon.
  * Add possibility to create experiment and experiment groups without polyaxon specification, to allow users to run custom hyperparams tuning.
  * Add ttl and debug mode for runs.
  * Add customizable charts.
@@ -10,19 +10,21 @@
  * Extend query spec api to save metrics/params columns.
  * Add group metrics visualization and analysis [Beta].
  * Improve stability of experiment groups (some issues are still under investigation).
- * filter disabled nodes out from cluster api end points. 
- * Add possibility to use GCE/S3/Azure as an outputs and artifact storage  [Beta].
+ * filter disabled nodes out from cluster api end points.
+ * Add possibility to use GCE/S3/Azure as an outputs and artifact storage [Beta].
  * Update handling of internal tokens to increase job/experiment security and scoping.
  * Add traceback to the failure event status to get more context.
  * Add code reference endpoint for jobs and experiments.
  * Add data references tracking and extend experiment details api.
  * Add run environment tracking and extend experiment details api.
  * Add handling for evicted pods.
- * Init should not reinitialize ignore files and other cli config files.  
+ * Init should not reinitialize ignore files and other cli config files.
  * Introduce ephemeral auth for experiment and jobs.
  * Update code reference to include branch, url, is_dirty.
  * Add possibility to merge-update tags and params/declarations.
  * Extract env var handling and typing.
+ * Fix group stats (counts of experiments in different stages)
+ * Fix a UI issue with flexbox in last chrome
  
 ## 0.2.2
 
