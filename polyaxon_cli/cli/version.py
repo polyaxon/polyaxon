@@ -7,7 +7,6 @@ from distutils.version import LooseVersion  # pylint:disable=import-error
 
 import click
 import clint
-import pip
 import pkg_resources
 
 from polyaxon_cli.client import PolyaxonClient
@@ -26,7 +25,9 @@ PROJECT_CLI_NAME = "polyaxon-cli"
 
 
 def pip_upgrade(project_name=PROJECT_CLI_NAME):
-    pip.main(["install", "--upgrade", project_name])
+    import subprocess
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', project_name])
+    click.echo('polyaxon-cli upgraded.')
 
 
 def session_expired():
