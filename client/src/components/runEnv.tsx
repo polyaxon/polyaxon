@@ -43,7 +43,7 @@ export default class RunEnv extends React.Component<Props, {}> {
     return (
       <div>
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-8">
             <VerticalTable values={this.props.runEnv} keys={keys}/>
           </div>
         </div>

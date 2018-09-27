@@ -28,7 +28,7 @@ export default class CodeReference extends React.Component<Props, {}> {
         };
         return (
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-8">
               <VerticalTable values={values}/>
             </div>
           </div>

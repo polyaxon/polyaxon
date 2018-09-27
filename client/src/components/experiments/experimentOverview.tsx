@@ -61,30 +61,42 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
             }
             <Tags tags={experiment.tags}/>
             {experiment.declarations &&
-            <div className="meta meta-declarations">
-              <span className="meta-info">
-                <i className="fa fa-gear icon" aria-hidden="true"/>
-                <span className="title">Declarations:</span>
-              </span>
-              <VerticalTable values={experiment.declarations}/>
+            <div className="row">
+              <div className="col-md-8">
+                <div className="meta meta-declarations">
+                  <span className="meta-info">
+                    <i className="fa fa-gear icon" aria-hidden="true"/>
+                    <span className="title">Declarations:</span>
+                  </span>
+                  <VerticalTable values={experiment.declarations}/>
+                </div>
+              </div>
             </div>
             }
             {experiment.last_metric &&
-            <div className="meta meta-metrics">
-              <span className="meta-info">
-                <i className="fa fa-area-chart icon" aria-hidden="true"/>
-                <span className="title">Metrics:</span>
-              </span>
-              <VerticalTable values={experiment.last_metric}/>
+            <div className="row">
+              <div className="col-md-8">
+                <div className="meta meta-metrics">
+                <span className="meta-info">
+                  <i className="fa fa-area-chart icon" aria-hidden="true"/>
+                  <span className="title">Metrics:</span>
+                </span>
+                  <VerticalTable values={experiment.last_metric}/>
+                </div>
+              </div>
             </div>
             }
             {experiment.data_refs &&
-            <div className="meta meta-data-refs">
+            <div className="row">
+              <div className="col-md-8">
+                <div className="meta meta-data-refs">
               <span className="meta-info">
                 <i className="fa fa-database icon" aria-hidden="true"/>
                 <span className="title">Data refs:</span>
               </span>
-              <VerticalTable values={experiment.data_refs}/>
+                  <VerticalTable values={experiment.data_refs}/>
+                </div>
+              </div>
             </div>
             }
           </div>
