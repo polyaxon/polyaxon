@@ -24,9 +24,9 @@ class Experiment(BaseTracker):
                  experiment_id=None,
                  group_id=None,
                  client=None,
-                 track_logs=None,
-                 track_git=None,
-                 track_env=None,
+                 track_logs=True,
+                 track_git=True,
+                 track_env=True,
                  outputs_store=None):
 
         if project is None and settings.IN_CLUSTER:
@@ -57,6 +57,10 @@ class Experiment(BaseTracker):
                 experiment_id=self.experiment_id,
                 ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
                 set_token=True)
+
+        # Track run env
+        if settings.IN_CLUSTER and self.track_env:
+            self.log_run_env()
 
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
         experiment_config = {'run_env': get_run_env()}

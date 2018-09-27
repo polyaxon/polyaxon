@@ -11,9 +11,9 @@ class BaseTracker(object):
     def __init__(self,
                  project=None,
                  client=None,
-                 track_logs=None,
-                 track_git=None,
-                 track_env=None,
+                 track_logs=True,
+                 track_git=True,
+                 track_env=True,
                  outputs_store=None):
         if not settings.IN_CLUSTER and project is None:
             raise PolyaxonClientException('Please provide a valid project.')

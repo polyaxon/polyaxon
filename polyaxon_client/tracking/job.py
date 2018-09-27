@@ -14,9 +14,9 @@ class Job(BaseTracker):
                  project=None,
                  job_id=None,
                  client=None,
-                 track_logs=None,
-                 track_git=None,
-                 track_env=None,
+                 track_logs=True,
+                 track_git=True,
+                 track_env=True,
                  outputs_store=None):
         if project is None and settings.IN_CLUSTER:
             job_info = self.get_job_info()
