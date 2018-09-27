@@ -1,4 +1,4 @@
 -r requirements-base.txt
 
-polyaxon-k8s==0.2.0
-polyaxon-schemas==0.2.0
+polyaxon-k8s==0.2.3
+polyaxon-schemas==0.2.3
