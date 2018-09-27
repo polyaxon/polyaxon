@@ -18,7 +18,7 @@ class IgnoreManager(BaseConfigManager):
 
     @classmethod
     def init_config(cls):
-        cls.set_config(constants.DEFAULT_IGNORE_LIST)
+        cls.set_config(constants.DEFAULT_IGNORE_LIST, init=True)
 
     @staticmethod
     def _is_empty_or_comment(line):
