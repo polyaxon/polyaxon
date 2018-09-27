@@ -106,7 +106,7 @@ def check_cli_version():
 
 @click.command()
 @click.option('--cli', is_flag=True, default=False, help='Version of the Polyaxon cli.')
-@click.option('--platform', is_flag=True, default=False, help='Version of the Polyaxon cli.')
+@click.option('--platform', is_flag=True, default=False, help='Version of the Polyaxon platform.')
 @clean_outputs
 def version(cli, platform):
     """Print the current version of the cli and platform."""
