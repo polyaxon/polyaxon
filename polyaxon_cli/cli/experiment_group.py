@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
-from polyaxon_client.exceptions import PolyaxonClientException
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.client import PolyaxonClient
@@ -21,6 +20,7 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_cli.utils.validation import validate_tags
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_group_or_local(_group):

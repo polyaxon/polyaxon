@@ -5,7 +5,6 @@ import sys
 
 import click
 import clint
-from polyaxon_client.exceptions import PolyaxonClientException
 
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import get_project_or_local
@@ -14,6 +13,7 @@ from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_notebook_url(user, project_name):

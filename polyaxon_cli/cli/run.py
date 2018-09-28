@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from polyaxon_cli.cli import experiment, job, build
+from polyaxon_cli.cli import build, experiment, job
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
