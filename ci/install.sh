@@ -52,7 +52,8 @@ echo "waiting for tiller"
 kubectl --namespace=kube-system rollout status --watch deployment/tiller-deploy
 
 echo "Install dep"
-helm dependency update ./polyaxon/
+helm repo add polyaxon https://charts.polyaxon.com
+helm repo update
 
 echo "Install CLI"
 pip3 install -r ./ci/requirements.txt

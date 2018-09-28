@@ -8,8 +8,6 @@ TEST_URL=http://$IP:31811
 
 kubectl create namespace $TEST_NAMESPACE
 
-helm repo add polyaxon https://charts.polyaxon.com
-helm repo update
 helm install --name polyaxon-test --namespace $TEST_NAMESPACE polyaxon/polyaxon -f ./ci/test-config.yml
 
 echo "waiting for servers to become responsive"
