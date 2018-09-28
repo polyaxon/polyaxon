@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 import argparse
 
 import tensorflow as tf
-from polyaxon_helper import get_data_paths
+from polyaxon_client.tracking import get_data_paths
 from tensorflow.examples.tutorials.mnist import input_data
 
 
