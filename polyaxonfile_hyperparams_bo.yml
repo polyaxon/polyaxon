@@ -26,7 +26,7 @@ hptuning:
     learning_rate:
       uniform: [0.001, 0.01]
     dropout:
-      values: [0.25, 0.3]
+      values: [0.2, 0.22, 0.25, 0.3, 0.35]
     activation:
       values: [relu, sigmoid]
 
