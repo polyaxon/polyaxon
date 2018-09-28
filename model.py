@@ -1,15 +1,8 @@
 from __future__ import absolute_import, division, print_function
 
 import argparse
-
 import tensorflow as tf
-from polyaxon_helper import (
-    get_log_level,
-    get_data_paths,
-    get_outputs_path,
-    get_tf_config,
-    send_metrics
-)
+from polyaxon_client.tracking import Experiment, get_log_level, get_data_paths, get_outputs_path
 from tensorflow.examples.tutorials.mnist import input_data
 
 
@@ -27,7 +20,6 @@ def set_logging(log_level=None):
 
 
 set_logging(get_log_level())
-
 
 data_paths = list(get_data_paths().values())[0]
 data_paths = "{}/mnist".format(data_paths)
@@ -144,9 +136,10 @@ if __name__ == '__main__':
     elif activation == 'linear':
         activation = None
 
+    experiment = Experiment()
     if distributed:
         # Check if we need to export TF_CLUSTER
-        get_tf_config()
+        experiment.get_tf_config()
 
     estimator = tf.estimator.Estimator(
         get_model_fn(learning_rate=learning_rate, dropout=dropout, activation=activation),
@@ -173,6 +166,6 @@ if __name__ == '__main__':
         metrics = estimator.evaluate(input_fn)
 
         print("Testing metrics: {}", metrics)
-        send_metrics(loss=metrics['loss'],
-                     accuracy=metrics['accuracy'],
-                     precision=metrics['precision'])
+        experiment.log_metrics(loss=metrics['loss'],
+                               accuracy=metrics['accuracy'],
+                               precision=metrics['precision'])
