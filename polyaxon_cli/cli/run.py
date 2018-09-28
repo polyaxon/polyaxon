@@ -5,7 +5,9 @@ import sys
 
 import click
 
-from polyaxon_cli.cli import build, experiment, job
+from polyaxon_cli.cli.build import logs as build_logs
+from polyaxon_cli.cli.experiment import logs as experiment_logs
+from polyaxon_cli.cli.job import logs as job_logs
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
@@ -177,15 +179,15 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
     logs = None
     if specification.is_experiment:
         run_experiment()
-        logs = experiment.logs
+        logs = experiment_logs
     elif specification.is_group:
         run_group()
     elif specification.is_job:
         run_job()
-        logs = job.logs
+        logs = job_logs
     elif specification.is_build:
         run_build()
-        logs = build.logs
+        logs = build_logs
 
     # Check if we need to invoke logs
     if l:
