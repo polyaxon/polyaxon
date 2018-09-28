@@ -6,8 +6,10 @@ IP=$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
 TEST_NAMESPACE=polyaxon
 TEST_URL=http://$IP:31811
 
+echo "create namespace"
 kubectl create namespace $TEST_NAMESPACE
 
+echo "deploy polyaxon"
 helm install --name polyaxon-test --namespace $TEST_NAMESPACE ./polyaxon/ -f ./ci/test-config.yml
 
 echo "waiting for servers to become responsive"
