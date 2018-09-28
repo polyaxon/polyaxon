@@ -5,6 +5,7 @@ import sys
 
 import click
 import clint
+from polyaxon_client.exceptions import PolyaxonClientException
 
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import get_project_or_local
@@ -13,7 +14,6 @@ from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_notebook_url(user, project_name):
@@ -44,7 +44,7 @@ def url(ctx):
     $ polyaxon notebook url
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
     try:
         response = PolyaxonClient().project.get_project(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -99,7 +99,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
         # pylint:disable=protected-access
         check_polyaxonfile_kind(specification=specification, kind=specification._NOTEBOOK)
         job_config = specification.parsed_data
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
     try:
         response = PolyaxonClient().project.start_notebook(user, project_name, job_config)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -136,7 +136,7 @@ def stop(ctx, commit, yes):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     if not yes and not click.confirm("Are sure you want to stop notebook "
                                      "for project `{}/{}`".format(user, project_name)):

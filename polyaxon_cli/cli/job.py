@@ -81,7 +81,7 @@ def get(ctx):
     $ polyaxon job --job=1 --project=project_name get
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     try:
         response = PolyaxonClient().job.get_job(user, project_name, _job)
         cache.cache(config_manager=JobManager, response=response)
@@ -108,7 +108,7 @@ def delete(ctx):
     $ polyaxon job delete
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     if not click.confirm("Are sure you want to delete job `{}`".format(_job)):
         click.echo('Existing without deleting job.')
         sys.exit(1)
@@ -146,7 +146,7 @@ def update(ctx, name, description, tags):
     $ polyaxon job -j 2 update --description="new description for my job"
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     update_dict = {}
 
     if name:
@@ -198,7 +198,7 @@ def stop(ctx, yes):
     $ polyaxon job -xp 2 stop
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     if not yes and not click.confirm("Are sure you want to stop "
                                      "job `{}`".format(_job)):
         click.echo('Existing without stopping job.')
@@ -245,7 +245,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
         ctx.invoke(upload, async=False)
         update_code = True
 
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     try:
         if copy:
             response = PolyaxonClient().job.copy(
@@ -290,8 +290,8 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
         ctx.invoke(upload, async=False)
         update_code = True
 
-    user, project_name, _job = get_job_or_local(ctx.obj['project'],
-                                                ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'),
+                                                ctx.obj.get('job'))
     try:
         response = PolyaxonClient().job.resume(
             user, project_name, _job, config=config, update_code=update_code)
@@ -319,7 +319,7 @@ def statuses(ctx, page):
     $ polyaxon job -j 2 statuses
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     page = page or 1
     try:
         response = PolyaxonClient().job.get_statuses(user, project_name, _job, page=page)
@@ -368,7 +368,7 @@ def resources(ctx, gpu):
     $ polyaxon job -j 2 resources --gpu
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     try:
         message_handler = Printer.gpu_resources if gpu else Printer.resources
         PolyaxonClient().job.resources(user,
@@ -404,7 +404,7 @@ def logs(ctx, past, follow):
     $ polyaxon job logs
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
 
     if past:
         try:
@@ -446,7 +446,7 @@ def outputs(ctx):
     $ polyaxon job -j 1 outputs
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     try:
         PolyaxonClient().job.download_outputs(user, project_name, _job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -476,7 +476,7 @@ def bookmark(ctx):
     $ polyaxon job -xp 2 bookmark
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     try:
         PolyaxonClient().job.bookmark(user, project_name, _job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -507,7 +507,7 @@ def unbookmark(ctx):
     $ polyaxon job -xp 2 unbookmark
     ```
     """
-    user, project_name, _job = get_job_or_local(ctx.obj['project'], ctx.obj['job'])
+    user, project_name, _job = get_job_or_local(ctx.obj.get('project'), ctx.obj.get('job'))
     try:
         PolyaxonClient().job.unbookmark(user, project_name, _job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:

@@ -168,8 +168,8 @@ def get(ctx, job):
         Printer.print_header("Job info:")
         dict_tabulate(response)
 
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
 
     if job:
         _job = get_experiment_job_or_local(job)
@@ -193,8 +193,8 @@ def delete(ctx):
     $ polyaxon experiment delete
     ```
     """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     if not click.confirm("Are sure you want to delete experiment `{}`".format(_experiment)):
         click.echo('Existing without deleting experiment.')
         sys.exit(1)
@@ -237,8 +237,8 @@ def update(ctx, name, description, tags):
     $ polyaxon experiment -xp 2 update --tags="foo, bar" --name="unique-name"
     ```
     """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     update_dict = {}
 
     if name:
@@ -290,8 +290,8 @@ def stop(ctx, yes):
     $ polyaxon experiment -xp 2 stop
     ```
     """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     if not yes and not click.confirm("Are sure you want to stop "
                                      "experiment `{}`".format(_experiment)):
         click.echo('Existing without stopping experiment.')
@@ -338,8 +338,8 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
         ctx.invoke(upload, async=False)
         update_code = True
 
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     try:
         if copy:
             response = PolyaxonClient().experiment.copy(
@@ -384,8 +384,8 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
         ctx.invoke(upload, async=False)
         update_code = True
 
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     try:
         response = PolyaxonClient().experiment.resume(
             user, project_name, _experiment, config=config, update_code=update_code)
@@ -412,8 +412,8 @@ def jobs(ctx, page):
     $ polyaxon experiment --experiment=1 jobs
     ```
     """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     page = page or 1
     try:
         response = PolyaxonClient().experiment.list_jobs(
@@ -530,8 +530,8 @@ def statuses(ctx, job, page):
 
     page = page or 1
 
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
 
     if job:
         _job = get_experiment_job_or_local(job)
@@ -602,8 +602,8 @@ def resources(ctx, job, gpu):
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
 
     if job:
         _job = get_experiment_job_or_local(job)
@@ -709,8 +709,8 @@ def logs(ctx, job, past, follow):
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
 
     if job:
         _job = get_experiment_job_or_local(job)
@@ -734,8 +734,8 @@ def outputs(ctx):
     $ polyaxon experiment -xp 1 outputs
     ```
     """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     try:
         PolyaxonClient().experiment.download_outputs(user, project_name, _experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -765,8 +765,8 @@ def bookmark(ctx):
     $ polyaxon experiment -xp 2 bookmark
     ```
     """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     try:
         PolyaxonClient().experiment.bookmark(user, project_name, _experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -797,8 +797,8 @@ def unbookmark(ctx):
     $ polyaxon experiment -xp 2 unbookmark
     ```
     """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj['project'],
-                                                                      ctx.obj['experiment'])
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
     try:
         PolyaxonClient().experiment.unbookmark(user, project_name, _experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:

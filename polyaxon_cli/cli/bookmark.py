@@ -53,7 +53,7 @@ def projects(ctx, page):
     $ polyaxon bookmark -u adam projects
     ```
     """
-    user = get_username_or_local(ctx.obj['username'])
+    user = get_username_or_local(ctx.obj.get('username'))
 
     page = page or 1
     try:
@@ -101,7 +101,7 @@ def groups(ctx, page):
     $ polyaxon bookmark -u adam groups
     ```
     """
-    user = get_username_or_local(ctx.obj['username'])
+    user = get_username_or_local(ctx.obj.get('username'))
 
     page = page or 1
     try:
@@ -149,7 +149,7 @@ def experiments(ctx, page):
     $ polyaxon bookmark -u adam experiments
     ```
     """
-    user = get_username_or_local(ctx.obj['username'])
+    user = get_username_or_local(ctx.obj.get('username'))
 
     page = page or 1
     try:
@@ -197,7 +197,7 @@ def jobs(ctx, page):
     $ polyaxon bookmark -u adam jobs
     ```
     """
-    user = get_username_or_local(ctx.obj['username'])
+    user = get_username_or_local(ctx.obj.get('username'))
 
     page = page or 1
     try:
@@ -245,7 +245,7 @@ def builds(ctx, page):
     $ polyaxon bookmark -u adam builds
     ```
     """
-    user = get_username_or_local(ctx.obj['username'])
+    user = get_username_or_local(ctx.obj.get('username'))
 
     page = page or 1
     try:

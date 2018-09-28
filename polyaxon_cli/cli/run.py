@@ -5,6 +5,7 @@ import sys
 
 import click
 
+from polyaxon_cli.cli import experiment, job, build
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
@@ -36,9 +37,11 @@ from polyaxon_client.exceptions import PolyaxonClientException
               help="TTL for this run after it's done.")
 @click.option('-u', is_flag=True, default=False,
               help='To upload the repo before running.')
+@click.option('-l', is_flag=True, default=False,
+              help='To start logging after scheduling the run.')
 @click.pass_context
 @clean_outputs
-def run(ctx, file, name, tags, description, ttl, u):  # pylint:disable=redefined-builtin
+def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefined-builtin
     """Run polyaxonfile specification.
 
     Examples:
@@ -171,11 +174,20 @@ def run(ctx, file, name, tags, description, ttl, u):  # pylint:disable=redefined
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
+    logs = None
     if specification.is_experiment:
         run_experiment()
+        logs = experiment.logs
     elif specification.is_group:
         run_group()
     elif specification.is_job:
         run_job()
+        logs = job.logs
     elif specification.is_build:
         run_build()
+        logs = build.logs
+
+    # Check if we need to invoke logs
+    if l:
+        ctx.obj = {}
+        ctx.invoke(logs)

@@ -80,9 +80,9 @@ def url(ctx):
     $ polyaxon tensorboard -g 1 url
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
-    group = ctx.obj['group']
-    experiment = ctx.obj['experiment']
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
+    group = ctx.obj.get('group')
+    experiment = ctx.obj.get('experiment')
     if experiment:
         try:
             response = PolyaxonClient().experiment.get_experiment(
@@ -180,9 +180,9 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
         check_polyaxonfile_kind(specification=specification, kind=specification._TENSORBOARD)
         job_config = specification.parsed_data
 
-    user, project_name = get_project_or_local(ctx.obj['project'])
-    group = ctx.obj['group']
-    experiment = ctx.obj['experiment']
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
+    group = ctx.obj.get('group')
+    experiment = ctx.obj.get('experiment')
     if experiment:
         try:
             response = PolyaxonClient().experiment.start_tensorboard(
@@ -270,9 +270,9 @@ def stop(ctx, yes):
     $ polyaxon tensorboard -xp 112 stop
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
-    group = ctx.obj['group']
-    experiment = ctx.obj['experiment']
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
+    group = ctx.obj.get('group')
+    experiment = ctx.obj.get('experiment')
 
     if experiment:
         obj = 'experiment `{}`'.format(experiment)

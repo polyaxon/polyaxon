@@ -79,7 +79,7 @@ def get(ctx):
     $ polyaxon build --build=1 --project=project_name get
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     try:
         response = PolyaxonClient().build_job.get_build(user, project_name, _build)
         cache.cache(config_manager=BuildJobManager, response=response)
@@ -111,7 +111,7 @@ def delete(ctx):
     $ polyaxon build -b 2 delete
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     if not click.confirm("Are sure you want to delete build job `{}`".format(_build)):
         click.echo('Existing without deleting build job.')
         sys.exit(1)
@@ -149,7 +149,7 @@ def update(ctx, name, description, tags):
     $ polyaxon build -b 2 update --description="new description for my build"
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     update_dict = {}
 
     if name:
@@ -201,7 +201,7 @@ def stop(ctx, yes):
     $ polyaxon build -b 2 stop
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     if not yes and not click.confirm("Are sure you want to stop "
                                      "job `{}`".format(_build)):
         click.echo('Existing without stopping build job.')
@@ -237,7 +237,7 @@ def bookmark(ctx):
     $ polyaxon build -b 2 bookmark
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     try:
         PolyaxonClient().build_job.bookmark(user, project_name, _build)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -268,7 +268,7 @@ def unbookmark(ctx):
     $ polyaxon build -b 2 unbookmark
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     try:
         PolyaxonClient().build_job.unbookmark(user, project_name, _build)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -295,7 +295,7 @@ def statuses(ctx, page):
     $ polyaxon build -b 2 statuses
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     page = page or 1
     try:
         response = PolyaxonClient().build_job.get_statuses(user, project_name, _build, page=page)
@@ -344,7 +344,7 @@ def resources(ctx, gpu):
     $ polyaxon build -b 2 resources --gpu
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
     try:
         message_handler = Printer.gpu_resources if gpu else Printer.resources
         PolyaxonClient().build_job.resources(user,
@@ -380,7 +380,7 @@ def logs(ctx, past, follow):
     $ polyaxon build logs
     ```
     """
-    user, project_name, _build = get_build_or_local(ctx.obj['project'], ctx.obj['build'])
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
 
     if past:
         try:

@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+from polyaxon_client.exceptions import PolyaxonClientException
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.client import PolyaxonClient
@@ -20,7 +21,6 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_cli.utils.validation import validate_tags
-from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_group_or_local(_group):
@@ -73,7 +73,8 @@ def get(ctx):
     $ polyaxon group -g 13 get
     ```
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
     try:
         response = PolyaxonClient().experiment_group.get_experiment_group(
             user, project_name, _group)
@@ -94,7 +95,8 @@ def delete(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
 
     if not click.confirm("Are sure you want to delete experiment group `{}`".format(_group)):
         click.echo('Existing without deleting experiment group.')
@@ -138,7 +140,8 @@ def update(ctx, name, description, tags):
     $ polyaxon update --tags="foo, bar"
     ```
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
     update_dict = {}
 
     if name:
@@ -182,7 +185,8 @@ def experiments(ctx, metrics, declarations, query, sort, page):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
     page = page or 1
     try:
         response = PolyaxonClient().experiment_group.list_experiments(username=user,
@@ -254,7 +258,8 @@ def stop(ctx, yes, pending):
     $ polyaxon group -g 2 stop
     ```
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
 
     if not yes and not click.confirm("Are sure you want to stop experiments "
                                      "in group `{}`".format(_group)):
@@ -287,7 +292,8 @@ def statuses(ctx, page):
     $ polyaxon group -g 2 statuses
     ```
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
     page = page or 1
     try:
         response = PolyaxonClient().experiment_group.get_statuses(user,
@@ -336,7 +342,8 @@ def bookmark(ctx):
     $ polyaxon group -g 2 bookmark
     ```
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
 
     try:
         PolyaxonClient().experiment_group.bookmark(user, project_name, _group)
@@ -368,7 +375,8 @@ def unbookmark(ctx):
     $ polyaxon group -g 2 unbookmark
     ```
     """
-    user, project_name, _group = get_project_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
+                                                            ctx.obj.get('group'))
 
     try:
         PolyaxonClient().experiment_group.unbookmark(user, project_name, _group)

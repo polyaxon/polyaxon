@@ -181,7 +181,7 @@ def get(ctx):
     $ polyaxon project get user/project
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     try:
         response = PolyaxonClient().project.get_project(user, project_name)
@@ -201,7 +201,7 @@ def delete(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     if not click.confirm("Are sure you want to delete project `{}/{}`".format(user, project_name)):
         click.echo('Existing without deleting project.')
@@ -252,7 +252,7 @@ def update(ctx, name, description, tags, private):
     $ polyaxon update --tags="foo, bar"
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     update_dict = {}
     if name:
@@ -321,7 +321,7 @@ def groups(ctx, query, sort, page):
     $ polyaxon project groups -s "-updated_at"
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     page = page or 1
     try:
@@ -398,7 +398,7 @@ def jobs(ctx, query, sort, page):
     $ polyaxon project jobs -s "-updated_at"
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     page = page or 1
     try:
@@ -474,7 +474,7 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
     $ polyaxon project experiments -s "-updated_at"
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     page = page or 1
     try:
@@ -556,7 +556,7 @@ def builds(ctx, query, sort, page):
     $ polyaxon project builds -s "-updated_at"
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     page = page or 1
     try:
@@ -599,7 +599,7 @@ def tensorboards(ctx, query, sort, page):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     page = page or 1
     try:
@@ -636,7 +636,7 @@ def tensorboards(ctx, query, sort, page):
 @clean_outputs
 def download(ctx):
     """Download code of the current project."""
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
     try:
         PolyaxonClient().project.download_repo(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
@@ -654,7 +654,7 @@ def bookmark(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     try:
         PolyaxonClient().project.bookmark(user, project_name)
@@ -674,7 +674,7 @@ def unbookmark(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(ctx.obj['project'])
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
 
     try:
         PolyaxonClient().project.unbookmark(user, project_name)
