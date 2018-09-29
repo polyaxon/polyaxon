@@ -50,7 +50,10 @@ class Experiment(BaseTracker):
             self.set_outputs_store(outputs_path=get_outputs_path())
 
         # Check if there's an ephemeral token
-        if settings.IN_CLUSTER and settings.SECRET_EPHEMERAL_TOKEN:
+        check_ephemeral_token = (settings.IN_CLUSTER and
+                                 hasattr(settings, 'SECRET_EPHEMERAL_TOKEN') and
+                                 settings.SECRET_EPHEMERAL_TOKEN)
+        if check_ephemeral_token:
             self.client.auth.login_experiment_ephemeral_token(
                 username=self.username,
                 project_name=self.project_name,

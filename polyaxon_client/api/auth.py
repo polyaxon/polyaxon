@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
+import os
 import requests
 
 from polyaxon_client import settings
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
+from polyaxon_client.logger import logger
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
 
 
@@ -42,7 +45,20 @@ class AuthApi(BaseApiHandler):
 
         return self.prepare_results(response_json=user_dict, config=UserConfig)
 
-    def _process_token(self, request_url, response, set_token=True):
+    def _persist_token(self, token):
+        base_path = os.path.join('/tmp', '.polyaxon')
+        if not os.path.exists(base_path):
+            try:
+                os.makedirs(base_path)
+            except OSError:
+                # Except permission denied and potential race conditions
+                # in multi-threaded environments.
+                logger.warning('Could not create config directory `%s`', base_path)
+
+        with open(settings.TMP_AUTH_TOKEN_PATH, "w") as config_file:
+            config_file.write(json.dumps({settings.SECRET_USER_TOKEN: token}))
+
+    def _process_token(self, request_url, response, set_token=True, persist_token=False):
         try:
             token_dict = response.json()
             response.raise_for_status()
@@ -62,6 +78,8 @@ class AuthApi(BaseApiHandler):
         token = token_dict.get('token')
         if set_token:
             self.config.token = token
+        if persist_token:
+            self._persist_token(token)
         return token
 
     def login(self, credentials, set_token=False):
@@ -82,7 +100,8 @@ class AuthApi(BaseApiHandler):
                                          project_name,
                                          experiment_id,
                                          ephemeral_token,
-                                         set_token=True):
+                                         set_token=True,
+                                         persist_token=True):
         request_url = self.build_url(self._get_http_url('/'),
                                      username,
                                      project_name,
@@ -102,4 +121,13 @@ class AuthApi(BaseApiHandler):
                 None,
                 "Connection error.",
                 None)
-        return self._process_token(request_url=request_url, response=response, set_token=set_token)
+        token = self._process_token(request_url=request_url,
+                                    response=response,
+                                    set_token=set_token,
+                                    persist_token=persist_token)
+        # Destroy ephemeral token
+        if os.environ.get(settings.SECRET_EPHEMERAL_TOKEN_KEY):
+            del os.environ[settings.SECRET_EPHEMERAL_TOKEN_KEY]
+        if hasattr(settings, 'SECRET_EPHEMERAL_TOKEN') and settings.SECRET_EPHEMERAL_TOKEN:
+            del settings.SECRET_EPHEMERAL_TOKEN
+        return token

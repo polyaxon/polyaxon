@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from rhea import Rhea
+import rhea
 
 
 class AuthenticationTypes(object):
@@ -12,7 +12,12 @@ class AuthenticationTypes(object):
     EPHEMERAL_TOKEN = 'EphemeralToken'
 
 
-config = Rhea.read_configs([os.environ])
+TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
+
+config = rhea.Rhea.read_configs([
+    os.environ,
+    rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False)
+])
 
 IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',
                                 is_optional=True,
@@ -32,7 +37,8 @@ API_WS_HOST = config.get_string('POLYAXON_API_WS_HOST',
                                 is_optional=True)
 SECRET_USER_TOKEN = config.get_string('POLYAXON_SECRET_USER_TOKEN',
                                       is_optional=True)
-SECRET_EPHEMERAL_TOKEN = config.get_string('POLYAXON_SECRET_EPHEMERAL_TOKEN',
+SECRET_EPHEMERAL_TOKEN_KEY = 'POLYAXON_SECRET_EPHEMERAL_TOKEN'
+SECRET_EPHEMERAL_TOKEN = config.get_string(SECRET_EPHEMERAL_TOKEN_KEY,
                                            is_optional=True)
 AUTHENTICATION_TYPE = config.get_string('POLYAXON_AUTHENTICATION_TYPE',
                                         is_optional=True,

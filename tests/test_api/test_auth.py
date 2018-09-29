@@ -3,10 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 import httpretty
 import json
+import os
 import uuid
 
 from tests.test_api.utils import TestBaseApi
 
+from polyaxon_client import settings
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
@@ -79,22 +81,58 @@ class TestAuthApi(TestBaseApi):
             body=json.dumps({'token': token}),
             content_type='application/json', status=200)
 
-        # Login without updating the token
+        # Login without updating the token and without persistence
+        if os.path.exists('/tmp/.polyaxon/.authtoken'):
+            os.remove('/tmp/.polyaxon/.authtoken')
         assert self.api_config.token == 'token'
         assert token == self.api_handler.login_experiment_ephemeral_token(
             username='user',
             project_name='project',
             experiment_id=1,
             ephemeral_token='foo',
-            set_token=False)
+            set_token=False,
+            persist_token=False)
         assert self.api_config.token == 'token'
+        assert os.path.exists('/tmp/.polyaxon/.authtoken') is False
 
-        # Login and update the token
+        # Login and update the token and persistence
+        if os.path.exists('/tmp/.polyaxon/.authtoken'):
+            os.remove('/tmp/.polyaxon/.authtoken')
         assert self.api_config.token == 'token'
         assert token == self.api_handler.login_experiment_ephemeral_token(
             username='user',
             project_name='project',
             experiment_id=1,
             ephemeral_token='foo',
-            set_token=True)
+            set_token=True,
+            persist_token=True)
         assert self.api_config.token == token
+        assert os.path.exists('/tmp/.polyaxon/.authtoken') is True
+
+        # Login remove ephemeral token from env var and settings
+        os.environ[settings.SECRET_EPHEMERAL_TOKEN_KEY] = 'value'
+        settings.SECRET_EPHEMERAL_TOKEN = 'eph_token'
+        if os.path.exists('/tmp/.polyaxon/.authtoken'):
+            os.remove('/tmp/.polyaxon/.authtoken')
+        assert self.api_config.token == token
+        assert os.environ.get(settings.SECRET_EPHEMERAL_TOKEN_KEY) == 'value'
+        assert settings.SECRET_EPHEMERAL_TOKEN == 'eph_token'
+        assert token == self.api_handler.login_experiment_ephemeral_token(
+            username='user',
+            project_name='project',
+            experiment_id=1,
+            ephemeral_token='foo',
+            set_token=True,
+            persist_token=True)
+        assert self.api_config.token == token
+        assert os.path.exists('/tmp/.polyaxon/.authtoken') is True
+        assert os.environ.get(settings.SECRET_EPHEMERAL_TOKEN_KEY) is None
+        assert not hasattr(settings, 'SECRET_EPHEMERAL_TOKEN')
+
+        assert token == self.api_handler.login_experiment_ephemeral_token(
+            username='user',
+            project_name='project',
+            experiment_id=1,
+            ephemeral_token='foo',
+            set_token=True,
+            persist_token=True)
