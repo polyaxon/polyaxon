@@ -56,7 +56,7 @@ class AuthApi(BaseApiHandler):
                 logger.warning('Could not create config directory `%s`', base_path)
 
         with open(settings.TMP_AUTH_TOKEN_PATH, "w") as config_file:
-            config_file.write(json.dumps({settings.SECRET_USER_TOKEN: token}))
+            config_file.write(json.dumps({settings.SECRET_USER_TOKEN_KEY: token}))
 
     def _process_token(self, request_url, response, set_token=True, persist_token=False):
         try:
