@@ -161,11 +161,21 @@ export default class Metrics extends React.Component<Props, State> {
 
   public addChart = (event: any) => {
     event.preventDefault();
+    const getChart = (chart: ChartModel): ChartModel => {
+      if (chart.metricNames.length === 0) {
+        chart.metricNames = [this.state.metricNames[0]];
+      }
+      if (chart.paramNames.length === 0) {
+        chart.paramNames = [this.state.paramNames[0]];
+      }
+      return chart;
+    };
+    // const chart = prevState.chartForm.chart;
     this.setState((prevState, prevProps) => ({
       ...prevState,
       view: {
         ...prevState.view,
-        charts: [...prevState.view.charts, prevState.chartForm.chart]
+        charts: [...prevState.view.charts, getChart(prevState.chartForm.chart)]
       },
       chartForm: this.getEmptyChartForm(this.state.metricNames, this.state.paramNames)
     }));
