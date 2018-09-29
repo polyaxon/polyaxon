@@ -164,7 +164,7 @@ def update(ctx, name, description, tags):
         sys.exit(0)
 
     try:
-        response = PolyaxonClient().build_job.update_job(
+        response = PolyaxonClient().job.update_job(
             user, project_name, _job, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not update job  `{}`.'.format(_job))
