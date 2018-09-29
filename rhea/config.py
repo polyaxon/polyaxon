@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-
-import six
 import json
 import os
+import six
 import yaml
 
 from collections import Mapping
 from yaml.scanner import ScannerError  # noqa
-
 
 from rhea.exceptions import RheaError
 
