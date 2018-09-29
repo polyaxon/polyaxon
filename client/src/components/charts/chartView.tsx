@@ -52,7 +52,7 @@ export default class ChartView extends React.Component<Props, {}> {
     const ensureChartType = (chartType: ChartTypes,
                              yData: { [key: string]: Plotly.Datum[] }): ChartTypes => {
       // If chart type is not line or scatter, we don't need to do anything else.
-      if (chartType !== 'line' && chartType !== 'scatter') {
+      if (chartType !== 'line') {
         return chartType;
       }
 
@@ -229,32 +229,29 @@ export default class ChartView extends React.Component<Props, {}> {
       const paramName = chart.paramNames[0];  // We should only authorize one param
       for (const metric of this.props.metrics) {
         const paramValue = getParamValue(metric, paramName);
-        const traceName = getTraceName(paramValue, paramName);
-        xData.push(traceName);
+        xData.push(paramValue);
         yData.push(metric.values[metricName]);
       }
 
       return [
         {
-          histfunc: 'min',
+          histfunc: 'max',
           y: yData,
           x: xData,
           type: 'histogram',
-          name: 'min'
-        },
-         {
+          name: 'max',
+        }, {
           histfunc: 'avg',
           y: yData,
           x: xData,
           type: 'histogram',
           name: 'avg'
-        },
-        {
-          histfunc: 'max',
+        }, {
+          histfunc: 'min',
           y: yData,
           x: xData,
           type: 'histogram',
-          name: 'max'
+          name: 'min'
         },
       ] as Plotly.PlotData[];
     };
@@ -290,6 +287,29 @@ export default class ChartView extends React.Component<Props, {}> {
       return getBasicTraces(chart);
     };
 
+    const getLayout = (chart: ChartModel) => {
+      const layout = {
+        autosize: true,
+        titlefont: {size: 13},
+        margin: {
+          l: 50,
+          r: 20,
+          b: 50,
+          t: 20,
+        },
+        showlegend: true,
+        legend: {orientation: 'h'},
+      } as Plotly.Layout;
+
+      if (chart.type === 'histogram') {
+        layout.barmode = 'overlay';
+        layout.xaxis = {title: chart.paramNames[0]};
+        layout.bargap = 0.05;
+        layout.bargroupgap = 0.2;
+      }
+      return layout;
+    };
+
     const getChart = (chart: ChartModel, idx: number) => {
       return (
         <div className={this.props.className + ' chart-item'} key={chart.name + idx}>
@@ -301,7 +321,7 @@ export default class ChartView extends React.Component<Props, {}> {
               >Remove
               </button>
             </h5>
-            {<Chart data={getTraces(chart)}/>}
+            {<Chart data={getTraces(chart)} layout={getLayout(chart)} chartType={chart.type}/>}
           </div>
         </div>
       );
