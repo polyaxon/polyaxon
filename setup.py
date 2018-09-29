@@ -47,7 +47,7 @@ setup(name='polyaxon-schemas',
           'numpy==1.15.0',
           'python-dateutil==2.7.3',
           'pytz==2018.5',
-          'rhea==0.3.7'
+          'rhea==0.3.8'
       ],
       classifiers=[
           'Programming Language :: Python',
