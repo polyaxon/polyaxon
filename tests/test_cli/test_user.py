@@ -5,20 +5,20 @@ from mock import patch
 
 from tests.test_cli.utils import BaseCommandTestCase
 
-from polyaxon_cli.cli.superuser import superuser
+from polyaxon_cli.cli.user import user
 
 
-class TestSuperUser(BaseCommandTestCase):
-    @patch('polyaxon_client.api.user.UserApi.grant_superuser')
+class TestUser(BaseCommandTestCase):
+    @patch('polyaxon_client.api.user.UserApi.activate_user')
     @patch('polyaxon_cli.cli.check.Printer.print_success')
-    def test_grant(self, print_success, grant_superuser):
-        self.runner.invoke(superuser, ['grant', 'username'])
-        assert grant_superuser.call_count == 1
+    def test_activate(self, print_success, activate_user):
+        self.runner.invoke(user, ['activate', 'username'])
+        assert activate_user.call_count == 1
         assert print_success.call_count == 1
 
-    @patch('polyaxon_client.api.user.UserApi.revoke_superuser')
+    @patch('polyaxon_client.api.user.UserApi.delete_user')
     @patch('polyaxon_cli.cli.check.Printer.print_success')
-    def test_revoke(self, print_success, revoke_superuser):
-        self.runner.invoke(superuser, ['revoke', 'username'])
-        assert revoke_superuser.call_count == 1
+    def test_delete(self, print_success, delete_user):
+        self.runner.invoke(user, ['delete', 'username'])
+        assert delete_user.call_count == 1
         assert print_success.call_count == 1
