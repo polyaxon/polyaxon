@@ -3,7 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from rhea import reader
+from rhea import reader, RheaError
+from rhea.config import ConfigSpec
 
 
 class TestReader(TestCase):
@@ -14,6 +15,38 @@ class TestReader(TestCase):
     def test_reads_json_files(self):
         config = reader.read('tests/fixtures/json_file.json')
         assert config == {'x': 1, 'y': 2, 'foo': 'bar', 'type': 'json'}
+
+    def test_reads_yaml_files_without_extension(self):
+        config = reader.read(ConfigSpec('tests/fixtures/yaml_file', config_type='.yml'))
+        assert config == {'x': 10, 'y': 20, 'foo': 'bar', 'type': 'yaml'}
+
+    def test_reads_json_files_without_extension(self):
+        config = reader.read(ConfigSpec('tests/fixtures/json_file', config_type='.json'))
+        assert config == {'x': 1, 'y': 2, 'foo': 'bar', 'type': 'json'}
+
+    def test_reads_non_existing_file(self):
+        # Raises by default
+        with self.assertRaises(RheaError):
+            reader.read('tests/fixtures/no_file.yml')
+
+        with self.assertRaises(RheaError):
+            reader.read('tests/fixtures/no_file.json')
+
+        with self.assertRaises(RheaError):
+            reader.read(ConfigSpec('tests/fixtures/no_file'))
+
+        with self.assertRaises(RheaError):
+            reader.read(ConfigSpec('tests/fixtures/no_file.yml'))
+
+        with self.assertRaises(RheaError):
+            reader.read(ConfigSpec('tests/fixtures/no_file.json'))
+
+        # Does not raise if set to ignore
+        assert reader.read(ConfigSpec('tests/fixtures/no_file', check_if_exists=False)) == {}
+
+        assert reader.read(ConfigSpec('tests/fixtures/no_file.yml', check_if_exists=False)) == {}
+
+        assert reader.read(ConfigSpec('tests/fixtures/no_file.json', check_if_exists=False)) == {}
 
     def test_reads_config_map(self):
         config = reader.read([{'x': 'y'}, {1: 2}, {'x': 'override y'}])
