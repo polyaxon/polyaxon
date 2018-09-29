@@ -6,9 +6,9 @@ import sys
 import click
 
 from polyaxon_cli.cli.build import logs as build_logs
+from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.experiment import logs as experiment_logs
 from polyaxon_cli.cli.job import logs as job_logs
-from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
