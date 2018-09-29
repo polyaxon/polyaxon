@@ -310,6 +310,10 @@ export default class ChartView extends React.Component<Props, {}> {
       return layout;
     };
 
+    const getConfig = (chart: ChartModel) => {
+      return {displayModeBar: false} as Plotly.Config;
+    };
+
     const getChart = (chart: ChartModel, idx: number) => {
       return (
         <div className={this.props.className + ' chart-item'} key={chart.name + idx}>
@@ -321,7 +325,12 @@ export default class ChartView extends React.Component<Props, {}> {
               >Remove
               </button>
             </h5>
-            {<Chart data={getTraces(chart)} layout={getLayout(chart)} chartType={chart.type}/>}
+            {<Chart
+              data={getTraces(chart)}
+              layout={getLayout(chart)}
+              config={getConfig(chart)}
+              chartType={chart.type}
+            />}
           </div>
         </div>
       );

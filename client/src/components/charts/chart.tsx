@@ -8,6 +8,7 @@ import PlotlyChart from './plotlyChart';
 interface Props {
   data: Plotly.PlotData[];
   layout: Plotly.Layout;
+  config: Plotly.Config;
   chartType: ChartTypes;
   title?: string;
 }
@@ -18,7 +19,7 @@ export default class Chart extends React.Component<Props, {}> {
       <PlotlyChart
         data={this.props.data}
         layout={this.props.layout}
-        config={{displayModeBar: false}}
+        config={this.props.config}
       />
     );
   }
