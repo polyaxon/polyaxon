@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 
 from polyaxon_client import settings
+from polyaxon_client.exceptions import AuthenticationError
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
 from polyaxon_client.tracking.paths import get_base_outputs_path, get_outputs_path
@@ -54,12 +55,16 @@ class Experiment(BaseTracker):
                                  hasattr(settings, 'SECRET_EPHEMERAL_TOKEN') and
                                  settings.SECRET_EPHEMERAL_TOKEN)
         if check_ephemeral_token:
-            self.client.auth.login_experiment_ephemeral_token(
-                username=self.username,
-                project_name=self.project_name,
-                experiment_id=self.experiment_id,
-                ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
-                set_token=True)
+            try:
+                self.client.auth.login_experiment_ephemeral_token(
+                    username=self.username,
+                    project_name=self.project_name,
+                    experiment_id=self.experiment_id,
+                    ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
+                    set_token=True,
+                    persist_token=True)
+            except AuthenticationError:
+                logger.debug('Could not log with ephemeral token.')
 
         # Track run env
         if settings.IN_CLUSTER and self.track_env:
