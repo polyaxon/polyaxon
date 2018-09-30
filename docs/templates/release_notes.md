@@ -1,3 +1,11 @@
+## 0.2.5
+
+ * Keep stream connection alive for logs (fix issue with ending sessions)
+ 
+## 0.2.4
+
+ * Update client auth: persist token after ephemeral login
+
 ## 0.2.3
 
  * Fix one major issue with events getting dropped, which led to experiments getting stuck in scheduled status.
