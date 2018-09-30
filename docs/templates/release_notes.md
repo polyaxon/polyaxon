@@ -1,8 +1,13 @@
 ## 0.2.5
 
+This is a patch release on top of 0.2.3 containing no breaking changes.
+
+ * Add `-l` option to `polyaxon run` to start log automatically after run command
  * Keep stream connection alive for logs (fix issue with ending sessions)
  
 ## 0.2.4
+
+This is a patch release on top of 0.2.3 containing no breaking changes.
 
  * Update client auth: persist token after ephemeral login
 
