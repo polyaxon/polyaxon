@@ -111,7 +111,7 @@ class TestAuthApi(TestBaseApi):
 
         # Login remove ephemeral token from env var and settings
         os.environ[settings.SECRET_EPHEMERAL_TOKEN_KEY] = 'value'
-        settings.SECRET_EPHEMERAL_TOKEN = 'eph_token'
+        settings.SECRET_EPHEMERAL_TOKEN = 'eph_token'  # noqa
         if os.path.exists('/tmp/.polyaxon/.authtoken'):
             os.remove('/tmp/.polyaxon/.authtoken')
         assert self.api_config.token == token
