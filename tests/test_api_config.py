@@ -16,7 +16,7 @@ class TestApiConfig(TestCase):
                                     http_port=self.http_port,
                                     ws_port=self.ws_port,
                                     version='v1',
-                                    token='toekn',
+                                    token='token',
                                     reraise=True,
                                     use_https=False)
 
