@@ -176,6 +176,14 @@ $ polyaxon dashboard
  * Experiment Overview
 
     ![Polyaxon dashboard](config/experiment.png)
+ 
+ * Experiment Metrics
+ 
+     ![experiment](config/experiment_metrics.png)
+    
+ * Experiment Logs
+ 
+     ![experiment](config/experiment_logs.png)
 
 # Project status
 

@@ -396,9 +396,17 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
         ![project](/images/dashboard/experiment_groups.png)
 
-    * Experiment Details
+    * Experiment Overview
 
         ![experiment](/images/dashboard/experiment.png)
+        
+    * Experiment Metrics
+    
+        ![experiment](/images/dashboard/experiment_metrics.png)
+       
+    * Experiment Logs
+    
+        ![experiment](/images/dashboard/experiment_logs.png)
 
 15. Finally, Let start a tensorboard to see the model outputs:
 
