@@ -62,7 +62,7 @@ def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
         humanize_values=True,
         exclude_attrs=[
             'uuid', 'config', 'project', 'experiments', 'description',
-            'declarations', 'last_metric', 'resources', 'jobs'
+            'declarations', 'last_metric', 'resources', 'jobs', 'run_env'
         ])
 
     Printer.print_header("Experiment info:")
