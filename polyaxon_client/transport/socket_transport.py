@@ -17,7 +17,7 @@ class SocketTransportMixin(object):
             on_close=self._on_close,
             header=self._get_headers(headers)
         )
-        wes.run_forever()
+        wes.run_forever(ping_interval=30, ping_timeout=10)
 
     def _on_message(self, message_handler, message):
         message_handler(json.loads(message))
