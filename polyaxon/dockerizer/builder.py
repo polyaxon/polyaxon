@@ -250,11 +250,11 @@ def download_code(build_job, build_path, filename):
         headers={
             settings.HEADERS_INTERNAL.replace('_', '-'): settings.INTERNAL_SERVICES.DOCKERIZER
         })
-    untar_file(build_path=build_path, filename=filename, logger=_logger, delete_tar=True)
     if not repo_file:
         send_status(build_job=build_job,
                     status=JobLifeCycle.FAILED,
                     message='Could not download code to build the image.')
+    untar_file(build_path=build_path, filename=filename, logger=_logger, delete_tar=True)
 
 
 def build(build_job):
