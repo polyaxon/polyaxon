@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
                 ('charts', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('meta', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default={}, null=True)),
+                ('meta', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict(), null=True)),
             ],
             options={
                 'ordering': ['created_at'],
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
                 ('charts', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('meta', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default={}, null=True)),
+                ('meta', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict(), null=True)),
                 ('experiment_group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='chart_views', to='db.ExperimentGroup')),
             ],
             options={
@@ -136,7 +136,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='search',
             name='meta',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default={}, null=True),
+            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict(), null=True),
         ),
         migrations.AddField(
             model_name='tensorboardjobstatus',
