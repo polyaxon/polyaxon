@@ -1,7 +1,7 @@
 -r ../requirements-base.txt
 
 django-auth-ldap==1.7.0
-django-debug-toolbar
+django-debug-toolbar==1.10.1
 docker==3.4.1
 GitPython==2.1.11
 Jinja2==2.10
