@@ -125,6 +125,7 @@ def download(url,
             return None
 
         with open(filename, 'wb') as f:
+            logger.info("Processing file %s" % filename)
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
@@ -136,12 +137,15 @@ def download(url,
 
 
 def untar_file(build_path, filename, logger, delete_tar=False):
-    if filename:
+    if filename and os.path.exists(filename):
         logger.info("Untarring the contents of the file ...")
         tar = tarfile.open(filename)
         tar.extractall(build_path)
         tar.close()
-    if delete_tar:
-        logger.info("Cleaning up the tar file ...")
-        os.remove(filename)
-    return filename
+        if delete_tar:
+            logger.info("Cleaning up the tar file ...")
+            os.remove(filename)
+        return filename
+    else:
+        logger.info("File was not found, build_path: %s" % os.listdir(build_path))
+        return None
