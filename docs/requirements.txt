@@ -1,6 +1,6 @@
 mkdocs==1.0.4
 mkdocs-material==3.0.4
-Markdown==2.6.11
+Markdown==3.0.1
 Pygments==2.2.0
 pymdown-extensions==4.7
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas
