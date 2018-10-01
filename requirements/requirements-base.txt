@@ -5,6 +5,6 @@ django-cors-headers==2.4.0
 djangorestframework==3.8.2
 psycopg2-binary==2.7.5
 psutil==5.4.7
-raven==6.7.0
+raven==6.9.0
 redis==2.10.6
 Unipath==1.1
