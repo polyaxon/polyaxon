@@ -261,6 +261,9 @@ def build(build_job):
     """Build necessary code for a job to run"""
     build_path = '/tmp/build'
     filename = '_code'
+    import time
+
+    time.sleep(240)
     download_code(build_job=build_job,
                   build_path=build_path,
                   filename=filename)
