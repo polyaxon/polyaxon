@@ -35,6 +35,10 @@ from schemas.specifications import ExperimentSpecification
 from schemas.tasks import TaskType
 
 
+def default_run_env():
+    return {'in_cluster': True}
+
+
 class Experiment(DiffModel,
                  RunTimeModel,
                  NameableModel,
@@ -86,7 +90,7 @@ class Experiment(DiffModel,
     run_env = JSONField(
         blank=True,
         null=True,
-        default=dict(in_cluster=True),
+        default=default_run_env,
         help_text='The run environment of the experiment.')
     original_experiment = models.ForeignKey(
         'self',

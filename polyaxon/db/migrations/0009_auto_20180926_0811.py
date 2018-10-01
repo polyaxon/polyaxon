@@ -4,6 +4,7 @@ import django.contrib.postgres.fields.jsonb
 import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
+import db.models.experiments
 import libs.blacklist
 import re
 import uuid
@@ -86,7 +87,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='experiment',
             name='run_env',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default={'in_cluster': True}, help_text='The run environment of the experiment.', null=True),
+            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=db.models.experiments.default_run_env, help_text='The run environment of the experiment.', null=True),
         ),
         migrations.AddField(
             model_name='experimentgroupstatus',
