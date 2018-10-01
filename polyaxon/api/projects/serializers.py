@@ -57,19 +57,19 @@ class ProjectDetailSerializer(BookmarkedProjectSerializer, TagsSerializerMixin):
         )
 
     def get_num_independent_experiments(self, obj):
-        return obj.independent_experiments__count
+        return obj.experiments.filter(experiment_group__isnull=True).count()
 
     def get_num_experiment_groups(self, obj):
-        return obj.experiment_groups__count
+        return obj.experiment_groups.count()
 
     def get_num_experiments(self, obj):
-        return obj.experiments__count
+        return obj.experiments.count()
 
     def get_num_jobs(self, obj):
-        return obj.jobs__count
+        return obj.jobs.count()
 
     def get_num_builds(self, obj):
-        return obj.build_jobs__count
+        return obj.build_jobs.count()
 
     def update(self, instance, validated_data):
         validated_data = self.validated_tags(validated_data=validated_data,

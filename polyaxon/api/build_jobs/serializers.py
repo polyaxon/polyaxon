@@ -3,6 +3,8 @@ from rest_framework import fields, serializers
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.models.experiments import Experiment
+from db.models.jobs import Job
 from libs.spec_validation import validate_build_spec_config
 
 
@@ -81,10 +83,10 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, TagsSerializerMixin
         return obj.resources.to_dict() if obj.resources else None
 
     def get_num_jobs(self, obj):
-        return obj.jobs__count
+        return Job.objects.filter(build_job=obj).count()
 
     def get_num_experiments(self, obj):
-        return obj.experiments__count
+        return Experiment.objects.filter(build_job=obj).count()
 
     def update(self, instance, validated_data):
         validated_data = self.validated_tags(validated_data=validated_data,

@@ -87,28 +87,28 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer, TagsS
         )
 
     def get_num_experiments(self, obj):
-        return obj.experiments__count
+        return obj.experiments.count()
 
     def get_num_pending_experiments(self, obj):
-        return obj.pending_experiments__count
+        return obj.pending_experiments.count()
 
     def get_num_running_experiments(self, obj):
-        return obj.running_experiments__count
+        return obj.running_experiments.count()
 
     def get_num_scheduled_experiments(self, obj):
-        return obj.scheduled_experiments__count
+        return obj.scheduled_experiments.count()
 
     def get_num_succeeded_experiments(self, obj):
-        return obj.succeeded_experiments__count
+        return obj.succeeded_experiments.count()
 
     def get_num_failed_experiments(self, obj):
-        return obj.failed_experiments__count
+        return obj.failed_experiments.count()
 
     def get_num_stopped_experiments(self, obj):
-        return obj.stopped_experiments__count
+        return obj.stopped_experiments.count()
 
     def get_current_iteration(self, obj):
-        return obj.iterations__count
+        return obj.iterations.count()
 
     def validate_content(self, content):
         validate_group_spec_content(content)

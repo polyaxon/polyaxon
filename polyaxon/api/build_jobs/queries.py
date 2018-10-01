@@ -1,5 +1,3 @@
-from django.db.models import Count
-
 from db.models.build_jobs import BuildJob
 
 builds = BuildJob.objects.select_related(
@@ -8,6 +6,4 @@ builds = BuildJob.objects.select_related(
     'project__user',
     'status')
 
-builds_details = builds.select_related('code_reference').annotate(
-    Count('experiments', distinct=True),
-    Count('jobs', distinct=True))
+builds_details = builds.select_related('code_reference')
