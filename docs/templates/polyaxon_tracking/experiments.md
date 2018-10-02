@@ -3,7 +3,7 @@ Experiments tracking is a high-level API allowing data scientists to track infor
 ## Tracking
 
 When a user creates an `Experiment` instance, the instance will automatically log 
-code reference, command and arguments used, the run environment.
+code reference, command and arguments used, the run environment, and much more.
  
 Optionally the user can log as well hyper parameters, data reference, metrics, and model outputs.
 
@@ -33,10 +33,10 @@ But before we do that, let's look at what the user can do with and `Experiment` 
 ### Starting an experiment
 
 ```python
-# Example creating with tags and description 
+# Example created with tags and description 
 experiment.create(tags=['tensorflow', 'nlp'], description='My first Polyaxon experiment')
 
-# Example creating with a name (must be a slug)
+# Example created with a name (must be a slug)
 experiment.create(name='experiment_name')
 ```
 
@@ -73,7 +73,7 @@ experiment.log_tags(['tag1', 'tag2'])
 experiment.log_tags('tag3', reset=True)
 ```
 
-This will merge the new tags with the previous ones, if you had tags before, 
+This will merge the new tags with the previous ones if you had tags before, 
 otherwise you can reset the tags of the experiment.
 
 ### Log run environment
@@ -103,7 +103,7 @@ experiment.log_status('starting')
 ```
 
 In general this is not needed, because the tracking API will take care of tracking 
-the status of your experiment both in-cluster and on other environment.
+the status of your experiment both in-cluster and on other environments.
 
 ### Stop
 
@@ -113,7 +113,7 @@ experiment.stop()
 
 This is just an easy way to set a `stopped` status.
 
-### succeeded
+### Succeeded
 
 ```python
 experiment.succeeded()
@@ -124,7 +124,7 @@ End of script will trigger succeeded status automatically,
 unless you running a loop and creating a new experiment, 
 you need to set the `done` status manually.
 
-### failed
+### Failed
 
 ```python
 experiment.failed()
@@ -141,7 +141,7 @@ experiment.log_metrics(step=123, loss=0.023, accuracy=0.91)
 It's very important to log `step` as one of your metrics if you want to compare experiments on the dashboard 
 and use the steps in x-axis instead of timestamps.
 
-!!! tip "Add a `step` as one of the metrics you track for the metric dashboards"
+!!! tip "Add a `step` as one of the metrics you track for the metrics' dashboards"
     Polyaxon provides custom metrics charting and dashboards. 
     In many instance it's useful to compare experiments, this could be challenging for 
     experiments ran sequentially, since the x-axis will use by default timestamps, 
@@ -228,7 +228,7 @@ Please look at [Polyaxon client](/polyaxon_client/introduction) for more informa
 
 ## Tracking experiments running outside Polyaxon
 
-In order to track experiment running outside of Polyaxon, the user must configure client.
+In order to track experiment running outside of Polyaxon, the user must configure a client.
 
 ```python
 from polyaxon_client.client import PolyaxonClient

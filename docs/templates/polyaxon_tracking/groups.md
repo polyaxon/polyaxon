@@ -8,14 +8,14 @@ algorithms not provided by the platform, to schedule experiment on Polyaxon or t
 
 In order to use this API, the user must configure a client
 
+## Creating a group
+
 ```python
 from polyaxon_client.client import PolyaxonClient
 
 client = PolyaxonClient(host='HOST_IP',
                         token='4ee4e5e6080a196d11f637b950fce1587b29ef36')
 ```
-
-## Creating a group
 
 ```python
 from polyaxon_client.tracking import Group
@@ -24,11 +24,15 @@ group = Group(client=client, project='quick-start')
 group.create(tags=['foo', 'bar'], description='New group')
 ```
 
-## Starting experiments
+## Tracking 
+
+### Starting experiments
 
 ```python
 experiment = group.create_experiment(tags=tags, description='Some description')
 ```
+
+This will create an experiment under this group, and provide all context (client api, and storage), to each experiment.
 
 You can then refer to [experiment tracking](/polyaxon_tracking/experiments)
 
@@ -50,7 +54,7 @@ group.stop()
 
 This is just an easy way to set a `stopped` status.
 
-### succeeded
+### Succeeded
 
 ```python
 group.succeeded()
@@ -58,8 +62,7 @@ group.succeeded()
 
 This is just an easy way to set a `succeeded` status. End of script will trigger succeeded status automatically
 
-### failed
-
+### Failed
 ```python
 group.failed()
 ```
