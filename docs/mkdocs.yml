@@ -177,6 +177,7 @@ pages:
 - Helm Chart Reference: reference_polyaxon_helm.md
 - Query Syntax Reference:
   - Introduction: query_syntax/introduction.md
+  - Saved searches: query_syntax/saved_searches.md
   - Entities:
     - Builds: query_syntax/entities/builds.md
     - Jobs: query_syntax/entities/jobs.md

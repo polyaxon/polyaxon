@@ -4,6 +4,11 @@ When searching experiments, jobs, builds, or experiment groups on Polyaxon,
 you can construct queries that match specific numbers and words.
 You can as well change sorting mechanism of the results.
 
+## Saved searches
+
+You can create searches to access the needed results, as well as your team members, 
+without the need to construct searches every time. Please follow this [guide about saved searches](saved_searches).
+
 ## Sort
 
 To update the sort of an API, CLI command, or on the dashboard, you just need to provide one or
