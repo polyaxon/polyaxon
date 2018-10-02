@@ -2,9 +2,9 @@
 
 This is a patch release on top of 0.2.3 containing no breaking changes.
 
- * For deployments using node port an issue arises with builds and with overall internal connection to api
- * Improved response time for project/group/experiment detail apis (removed query annotations)
- * Fix some db warnings related to Jsonb default values 
+ * For issues in NodePort deployments: an issue arises with builds and with overall internal connection to api.
+ * Improved response time for project/group/experiment detail apis (removed query annotations).
+ * Fix some db warnings related to Jsonb default values.
 
 ## 0.2.5
 
