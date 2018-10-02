@@ -43,8 +43,8 @@ setup(name='polyaxon-schemas',
       ],
       install_requires=[
           'Jinja2==2.10',
-          'marshmallow==2.15.3',
-          'numpy==1.15.0',
+          'marshmallow==2.15.6',
+          'numpy==1.15.2',
           'python-dateutil==2.7.3',
           'pytz==2018.5',
           'rhea==0.3.8'
