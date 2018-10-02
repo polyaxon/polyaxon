@@ -161,7 +161,6 @@ pages:
   - Jobs Tracking: polyaxon_tracking/jobs.md
   - Experiment Groups Tracking: polyaxon_tracking/groups.md
   - In-cluster Paths: polyaxon_tracking/paths.md
-
 - REST API Reference:
   - Introduction: polyaxon_rest/introduction.md
   - Resources:

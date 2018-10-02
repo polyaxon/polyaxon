@@ -18,7 +18,7 @@ Same as logs, the outputs are saved on the outputs volume, on:
 You don't need to figure out this path or hardcode them manually,
 Polyaxon will provide an environment variable for the outputs `POLYAXON_RUN_OUTPUTS_PATH`
 that you can use to export your outputs, artifacts and checkpoints.
-You can also use our client to get this path [get_outputs_path](/tracking/experiments#tracking_experiments_running_inside_polyaxon).
+You can also use our client to get this path [get_outputs_path](/polyaxon_tracking/experiments#tracking_experiments_running_inside_polyaxon).
 
 ## Saving and checkpointing
 

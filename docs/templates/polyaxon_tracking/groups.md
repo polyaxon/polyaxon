@@ -30,7 +30,7 @@ group.create(tags=['foo', 'bar'], description='New group')
 experiment = group.create_experiment(tags=tags, description='Some description')
 ```
 
-You can then refer to [experiment tracking](/tracking/experiments)
+You can then refer to [experiment tracking](/polyaxon_tracking/experiments)
 
 
 ### Log statuses
