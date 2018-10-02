@@ -93,7 +93,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
 
     # Check if we need to upload
     if u:
-        ctx.invoke(upload, async=False)
+        ctx.invoke(upload)
 
     if specification:
         # pylint:disable=protected-access
