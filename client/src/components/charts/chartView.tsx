@@ -75,7 +75,9 @@ export default class ChartView extends React.Component<Props, {}> {
     };
 
     const getParamValue = (metric: MetricModel, param: string) => {
-      return this.props.params[metric.experiment][param];
+      return metric.experiment in this.props.params && param in this.props.params[metric.experiment]
+        ? this.props.params[metric.experiment][param]
+        : null;
     };
 
     const getTraceName = (metricName: string | number, prefix?: string | number) => {
@@ -229,8 +231,10 @@ export default class ChartView extends React.Component<Props, {}> {
       const paramName = chart.paramNames[0];  // We should only authorize one param
       for (const metric of this.props.metrics) {
         const paramValue = getParamValue(metric, paramName);
-        xData.push(paramValue);
-        yData.push(metric.values[metricName]);
+        if (paramValue) {
+          xData.push(paramValue);
+          yData.push(metric.values[metricName]);
+        }
       }
 
       return [
