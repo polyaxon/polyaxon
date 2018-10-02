@@ -22,6 +22,13 @@ If you used the default values, the command should be,
 $ helm delete polyaxon --purge
 ```
 
+If for some reason, your deployment did not succeed, 
+you might need to delete Polyaxon with this command instead
+
+```bash
+$ helm delete polyaxon --purge --no-hooks
+```
+
 ## Delete the namespace
 
 Delete the namespace Polyaxon was installed in.
