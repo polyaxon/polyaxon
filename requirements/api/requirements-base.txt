@@ -1,5 +1,5 @@
 -r ../requirements-base.txt
 
-django-auth-ldap==1.6.0
+django-auth-ldap==1.7.0
 GitPython==2.1.11
-uWSGI==2.0.17
+uWSGI==2.0.17.1
