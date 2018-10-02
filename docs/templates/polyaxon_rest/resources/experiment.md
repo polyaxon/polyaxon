@@ -36,7 +36,7 @@ curl --request GET \
     "build": {
       "image": "tensorflow/tensorflow:1.4.1-py3",
       "build_steps": [
-        "pip3 install --no-cache-dir -U polyaxon-helper"
+        "pip3 install --no-cache-dir -U polyaxon-client"
       ]
     },
     "version": 1,
@@ -101,7 +101,7 @@ curl --request PATCH \
     "build": {
       "image": "tensorflow/tensorflow:1.4.1-py3",
       "build_steps": [
-        "pip3 install --no-cache-dir -U polyaxon-helper"
+        "pip3 install --no-cache-dir -U polyaxon-client"
       ]
     },
     "version": 1,

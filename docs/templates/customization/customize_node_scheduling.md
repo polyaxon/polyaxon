@@ -70,7 +70,7 @@ environment:
 build:
   image: tensorflow/tensorflow:1.4.1-gpu-py3
   build_steps:
-    - pip3 install --no-cache-dir -U polyaxon-helper
+    - pip3 install --no-cache-dir -U polyaxon-client
 
 run:
   cmd:  python3 model.py  # Use default params
@@ -121,7 +121,7 @@ environment:
 build:
   image: tensorflow/tensorflow:1.4.1
   build_steps:
-    - pip install --no-cache-dir -U polyaxon-helper
+    - pip install --no-cache-dir -U polyaxon-client
 
 run:
   cmd:  python run.py --train-steps=400 --sync

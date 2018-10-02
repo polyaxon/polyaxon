@@ -33,7 +33,7 @@ curl -X GET \
     "concurrency": 5,
     "search_algorithm": "random",
     "current_iteration": 0,
-    "content": "{'version': 1, 'kind': 'group', 'hptuning': {'concurrency': 5, 'random_search': {'n_experiments': 10}, 'matrix': {'learning_rate': {'linspace': '0.001:0.1:5'}, 'dropout': {'values': [0.25, 0.3]}, 'activation': {'values': ['relu', 'sigmoid']}}}, 'declarations': {'batch_size': 128, 'num_steps': 500, 'num_epochs': 1}, 'build': {'image': 'tensorflow/tensorflow:1.4.1-py3', 'build_steps': ['pip3 install --no-cache-dir -U polyaxon-helper']}, 'run': {'cmd': 'python3 model.py --batch_size={{ batch_size }} \\\\ --num_steps={{ num_steps }} \\\\ --learning_rate={{ learning_rate }} \\\\ --dropout={{ dropout }} \\\\ --num_epochs={{ num_epochs }} \\\\ --activation={{ activation }}'}}",
+    "content": "{'version': 1, 'kind': 'group', 'hptuning': {'concurrency': 5, 'random_search': {'n_experiments': 10}, 'matrix': {'learning_rate': {'linspace': '0.001:0.1:5'}, 'dropout': {'values': [0.25, 0.3]}, 'activation': {'values': ['relu', 'sigmoid']}}}, 'declarations': {'batch_size': 128, 'num_steps': 500, 'num_epochs': 1}, 'build': {'image': 'tensorflow/tensorflow:1.4.1-py3', 'build_steps': ['pip3 install --no-cache-dir -U polyaxon-client']}, 'run': {'cmd': 'python3 model.py --batch_size={{ batch_size }} \\\\ --num_steps={{ num_steps }} \\\\ --learning_rate={{ learning_rate }} \\\\ --dropout={{ dropout }} \\\\ --num_epochs={{ num_epochs }} \\\\ --activation={{ activation }}'}}",
     "hptuning": {
         "early_stopping": null,
         "concurrency": 5,
@@ -114,7 +114,7 @@ curl -X PATCH \
     "concurrency": 5,
     "search_algorithm": "random",
     "current_iteration": 0,
-    "content": "{'version': 1, 'kind': 'group', 'hptuning': {'concurrency': 5, 'random_search': {'n_experiments': 10}, 'matrix': {'learning_rate': {'linspace': '0.001:0.1:5'}, 'dropout': {'values': [0.25, 0.3]}, 'activation': {'values': ['relu', 'sigmoid']}}}, 'declarations': {'batch_size': 128, 'num_steps': 500, 'num_epochs': 1}, 'build': {'image': 'tensorflow/tensorflow:1.4.1-py3', 'build_steps': ['pip3 install --no-cache-dir -U polyaxon-helper']}, 'run': {'cmd': 'python3 model.py --batch_size={{ batch_size }} \\\\ --num_steps={{ num_steps }} \\\\ --learning_rate={{ learning_rate }} \\\\ --dropout={{ dropout }} \\\\ --num_epochs={{ num_epochs }} \\\\ --activation={{ activation }}'}}",
+    "content": "{'version': 1, 'kind': 'group', 'hptuning': {'concurrency': 5, 'random_search': {'n_experiments': 10}, 'matrix': {'learning_rate': {'linspace': '0.001:0.1:5'}, 'dropout': {'values': [0.25, 0.3]}, 'activation': {'values': ['relu', 'sigmoid']}}}, 'declarations': {'batch_size': 128, 'num_steps': 500, 'num_epochs': 1}, 'build': {'image': 'tensorflow/tensorflow:1.4.1-py3', 'build_steps': ['pip3 install --no-cache-dir -U polyaxon-client']}, 'run': {'cmd': 'python3 model.py --batch_size={{ batch_size }} \\\\ --num_steps={{ num_steps }} \\\\ --learning_rate={{ learning_rate }} \\\\ --dropout={{ dropout }} \\\\ --num_epochs={{ num_epochs }} \\\\ --activation={{ activation }}'}}",
     "hptuning": {
         "early_stopping": null,
         "concurrency": 5,

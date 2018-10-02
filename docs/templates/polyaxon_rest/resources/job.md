@@ -38,7 +38,7 @@ curl --request GET \
         },
         "build": {
             "build_steps": [
-                "pip3 install --no-cache-dir -U polyaxon-helper"
+                "pip3 install --no-cache-dir -U polyaxon-client"
             ],
             "image": "tensorflow/tensorflow:1.4.1-py3"
         },
@@ -95,7 +95,7 @@ curl --request PATCH \
         },
         "build": {
             "build_steps": [
-                "pip3 install --no-cache-dir -U polyaxon-helper"
+                "pip3 install --no-cache-dir -U polyaxon-client"
             ],
             "image": "tensorflow/tensorflow:1.4.1-py3"
         },
@@ -232,7 +232,7 @@ curl --request POST \
         },
         "build": {
             "build_steps": [
-                "pip3 install --no-cache-dir -U polyaxon-helper"
+                "pip3 install --no-cache-dir -U polyaxon-client"
             ],
             "image": "tensorflow/tensorflow:1.4.1-py3"
         },
@@ -286,7 +286,7 @@ curl --request POST \
         },
         "build": {
             "build_steps": [
-                "pip3 install --no-cache-dir -U polyaxon-helper"
+                "pip3 install --no-cache-dir -U polyaxon-client"
             ],
             "image": "tensorflow/tensorflow:1.4.1-py3"
         },
@@ -341,7 +341,7 @@ curl --request POST \
         },
         "build": {
             "build_steps": [
-                "pip3 install --no-cache-dir -U polyaxon-helper"
+                "pip3 install --no-cache-dir -U polyaxon-client"
             ],
             "image": "tensorflow/tensorflow:1.4.1-py3"
         },

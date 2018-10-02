@@ -32,7 +32,7 @@ curl --request GET \
     "config": {
         "build": {
             "build_steps": [
-                "pip3 install --no-cache-dir -U polyaxon-helper"
+                "pip3 install --no-cache-dir -U polyaxon-client"
             ],
             "image": "tensorflow/tensorflow:1.4.1-py3"
         },
@@ -43,7 +43,7 @@ curl --request GET \
     "node_scheduled": "gke-cluster-1-default-pool-65d093c7-7hk4",
     "num_jobs": 0,
     "num_experiments": 1,
-    "dockerfile": "\nFROM tensorflow/tensorflow:1.4.1-py3\n\nENV LC_ALL en_US.UTF-8\nENV LANG en_US.UTF-8\nENV LANGUAGE en_US.UTF-8\n# Use bash as default shell, rather than sh\nENV SHELL /bin/bash\n\nWORKDIR /code\n\nRUN pip3 install --no-cache-dir -U polyaxon-helper\nCOPY build /code\n",
+    "dockerfile": "\nFROM tensorflow/tensorflow:1.4.1-py3\n\nENV LC_ALL en_US.UTF-8\nENV LANG en_US.UTF-8\nENV LANGUAGE en_US.UTF-8\n# Use bash as default shell, rather than sh\nENV SHELL /bin/bash\n\nWORKDIR /code\n\nRUN pip3 install --no-cache-dir -U polyaxon-client\nCOPY build /code\n",
     "commit": "2f758b8902d4cf5d4147b09706613ec108eda369",
     "bookmarked": false
 }
@@ -87,7 +87,7 @@ curl --request PATCH \
     "config": {
         "build": {
             "build_steps": [
-                "pip3 install --no-cache-dir -U polyaxon-helper"
+                "pip3 install --no-cache-dir -U polyaxon-client"
             ],
             "image": "tensorflow/tensorflow:1.4.1-py3"
         },
@@ -98,7 +98,7 @@ curl --request PATCH \
     "node_scheduled": "gke-cluster-1-default-pool-65d093c7-7hk4",
     "num_jobs": 0,
     "num_experiments": 1,
-    "dockerfile": "\nFROM tensorflow/tensorflow:1.4.1-py3\n\nENV LC_ALL en_US.UTF-8\nENV LANG en_US.UTF-8\nENV LANGUAGE en_US.UTF-8\n# Use bash as default shell, rather than sh\nENV SHELL /bin/bash\n\nWORKDIR /code\n\nRUN pip3 install --no-cache-dir -U polyaxon-helper\nCOPY build /code\n",
+    "dockerfile": "\nFROM tensorflow/tensorflow:1.4.1-py3\n\nENV LC_ALL en_US.UTF-8\nENV LANG en_US.UTF-8\nENV LANGUAGE en_US.UTF-8\n# Use bash as default shell, rather than sh\nENV SHELL /bin/bash\n\nWORKDIR /code\n\nRUN pip3 install --no-cache-dir -U polyaxon-client\nCOPY build /code\n",
     "commit": "2f758b8902d4cf5d4147b09706613ec108eda369",
     "bookmarked": false
 }

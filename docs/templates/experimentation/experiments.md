@@ -319,10 +319,10 @@ Since we have multiple jobs, Polyaxon adds the cluster definition to the docker 
 
 It also exposes some framework specific environment variables to the pods, in this case `TF_CONFIG` since we are running a Tensorflow distributed experiment.
 
-You can also use our helper library to extract these environment variables programmatically.
+You can also use our `tracking` api in `polyaxon-client` to extract these environment variables programmatically.
 
 !!! tip "Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER`"
-    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your distributed deep learning model.
+    Check how you can [get the cluster definition](/tracking/experiments) to use it with your distributed deep learning model.
 
 To run this distributed experiment, run
 

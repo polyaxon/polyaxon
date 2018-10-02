@@ -49,7 +49,7 @@ Polyaxon will by default mount all these volumes when it schedules the experimen
 These data volumes will be accessible to you as a dictionary `{volume_name: path_to_data}`,
 exported as an env variable `POLYAXON_RUN_DATA_PATHS`.
 
-You can use as well our `helper` library `polyaxon-helper` to get access to this env variable automatically.
+You can use as well our `tracking` api in `polyaxon-client` to get access to this env variable automatically.
 
 If on the other hand, you wish to only mount one volume or a subset of the volumes,
 you then need to provide this information in the polyaxonfile, e.g.
@@ -74,7 +74,7 @@ Polyaxon will, by default mount one volume, either the first one or a random one
 The outputs volume will be accessible to you as a string `path_to_outputs_for_experiment`,
 exported as an env variable `POLYAXON_RUN_OUTPUTS_PATH`.
 
-You can use as well our `helper` library `polyaxon-helper` to get access to this env variable automatically.
+You can use as well our `tracking` api in `polyaxon-client` to get access to this env variable automatically.
 
 If on the other hand, you wish to mount a particular volume,
 you then need to provide this information in the polyaxonfile, e.g.

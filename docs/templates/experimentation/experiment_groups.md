@@ -112,7 +112,7 @@ This command validate the polyaxon file, and the option `-def` returns the group
     or check the [command reference](/polyaxon_cli/commands/check)
 
 !!! tip "Polyaxon merges the combination values from matrix for a single experiment with the values from declarations and export under the environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the experiment declarations](/reference_polyaxon_helper) to use them with your models.
+    Check how you can [get the experiment declarations](/tracking/exepriments) to use them with your models.
 
 ## Running a group of experiments
 

@@ -77,7 +77,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     build:
       image: tensorflow/tensorflow:1.4.1-py3
       build_steps:
-        - pip3 install polyaxon-helper
+        - pip3 install polyaxon-client
 
     run:
       cmd: python model.py
@@ -90,7 +90,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
        * The `project` namespace we want to run the experiment inside.
        * The `build` section to build a docker image,
          in this case we want to run our code with the specified tensorflow docker image.
-         We are also installing the [polyaxon helper](/reference_polyaxon_helper) library to send metrics at the end of the experiment.
+         We are also installing the polyaxon-client for [tracking](/tracking) and to send metrics at the end of the experiment.
        * The `run` section to execute our code.
 
 6. Now let's upload our code to create a commit on Polyaxon
