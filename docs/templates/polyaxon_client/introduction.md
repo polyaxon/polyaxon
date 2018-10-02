@@ -37,7 +37,8 @@ from polyaxon_client.client import PolyaxonClient
 
 polyaxon_client = PolyaxonClient(
     host=POLYAXON_IP,
-    token=MY_TOKEN, http_port=POLYAXON_HTTP_PORT,
+    token=MY_TOKEN, 
+    http_port=POLYAXON_HTTP_PORT,
     ws_port=POLYAXON_WS_PORT)
 
 polyaxon_client.auth

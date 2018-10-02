@@ -1,3 +1,7 @@
+!!! attention "polyaxon-helper is deprecated"
+    polyaxon-helper is deprecated in favor of the new tracking api. 
+    We are keeping this helper only for backward compatibility. 
+    
 Polyaxon helper is a lightweight python library to report metrics and communicate information with Polyaxon.
 
 ## Installation

@@ -59,6 +59,6 @@ Once you have a Polyaxon deployment, you can check polyaxon architecture and lea
  * [CLI Reference](polyaxon_cli/introduction)
  * [Specification Reference](polyaxonfile_specification/introduction)
  * [Helm Chart Reference](reference_polyaxon_helm)
- * [Client Reference](reference_polyaxon_client)
- * [Helper Reference](reference_polyaxon_helper)
+ * [Client Reference](polyaxon_client/introduction)
+ * [Tracking Reference](tracking/introduction)
  * [Query Syntax Reference](reference_query_syntax)
