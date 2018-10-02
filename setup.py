@@ -53,7 +53,7 @@ setup(name='polyaxon-client',
           "psutil==5.4.7",
           "requests==2.19.1",
           "requests-toolbelt==0.8.0",
-          "websocket-client==0.48.0",
+          "websocket-client==0.53.0",
       ],
       classifiers=[
           'Programming Language :: Python',
