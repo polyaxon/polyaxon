@@ -154,6 +154,14 @@ pages:
     - Build Job: polyaxon_client/clients/build_job.md
     - Bookmark: polyaxon_client/clients/bookmark.md
     - Version: polyaxon_client/clients/version.md
+- Tracking Reference:
+  - Introduction: polyaxon_tracking/introduction.md
+  - Helper: polyaxon_tracking/polyaxon_helper.md
+  - Experiments Tracking: polyaxon_tracking/experiments.md
+  - Jobs Tracking: polyaxon_tracking/jobs.md
+  - Experiment Groups Tracking: polyaxon_tracking/groups.md
+  - In-cluster Paths: polyaxon_tracking/paths.md
+
 - REST API Reference:
   - Introduction: polyaxon_rest/introduction.md
   - Resources:
@@ -168,7 +176,6 @@ pages:
     - Bookmark: polyaxon_rest/resources/bookmark.md
     - Version: polyaxon_rest/resources/version.md
 - Helm Chart Reference: reference_polyaxon_helm.md
-- Helper Reference: reference_polyaxon_helper.md
 - Query Syntax Reference:
   - Introduction: query_syntax/introduction.md
   - Entities:
