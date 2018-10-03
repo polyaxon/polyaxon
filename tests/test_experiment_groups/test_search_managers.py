@@ -116,6 +116,17 @@ class TestRandomSearchManager(BaseTest):
             'concurrency': 2,
             'random_search': {'n_experiments': 10},
             'matrix': {
+                'feature1': {'values': [1, 2]},
+                'feature3': {'range': [1, 3, 1]}
+            }
+        })
+        manager = RandomSearchManager(hptuning_config=hptuning_config)
+        assert len(manager.get_suggestions()) == 4
+
+        hptuning_config = HPTuningConfig.from_dict({
+            'concurrency': 2,
+            'random_search': {'n_experiments': 10},
+            'matrix': {
                 'feature1': {'values': [1, 2, 3]},
                 'feature2': {'linspace': [1, 2, 5]},
                 'feature3': {'range': [1, 5, 1]}

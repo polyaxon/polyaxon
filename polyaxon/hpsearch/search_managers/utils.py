@@ -2,6 +2,9 @@ import copy
 import numpy as np
 import uuid
 
+from functools import reduce
+from operator import mul
+
 
 class Suggestion(object):
     """A structure that defines an experiment hyperparam suggestion."""
@@ -41,6 +44,16 @@ def get_random_suggestions(matrix, n_suggestions, suggestion_params=None, seed=N
     suggestions = []
     suggestion_params = suggestion_params or {}
     rand_generator = get_random_generator(seed=seed)
+    # Validate number of suggestions and total space
+    all_discrete = True
+    for v in matrix.values():
+        if v.is_continuous:
+            all_discrete = False
+            break
+    if all_discrete:
+        space = reduce(mul, [len(v.to_numpy()) for v in matrix.values()])
+        n_suggestions = n_suggestions if n_suggestions <= space else space
+
     while n_suggestions > 0:
         params = copy.deepcopy(suggestion_params)
         params.update({k: v.sample(rand_generator=rand_generator) for k, v in matrix.items()})
