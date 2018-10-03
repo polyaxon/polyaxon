@@ -9,6 +9,7 @@ import { ChartModel, ChartTypes, TraceModes, TraceTypes } from '../../models/cha
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
 import Chart from '../charts/chart';
+import { Empty } from '../empty/empty';
 
 import './chart.less';
 
@@ -82,7 +83,7 @@ export default class ChartView extends React.Component<Props, {}> {
     };
 
     const getTraceName = (metricName: string | number, prefix?: string | number) => {
-      return prefix ? `${prefix}.${metricName}` : metricName as string;
+      return prefix ? `${prefix}` : metricName as string;
     };
 
     const getTraceNamesByMetrics = (chart: ChartModel) => {
@@ -123,7 +124,7 @@ export default class ChartView extends React.Component<Props, {}> {
       const dataTraces: { [key: string]: Plotly.Datum[] } = {};
       for (const metric of this.props.metrics) {
         let xValue: number | string;
-        if (!_.isNil(chart.paramNames)) {
+        if (!_.isNil(chart.paramNames) && chart.paramNames.length > 0) {
           xValue = getParamValue(metric, chart.paramNames[0]);
         } else if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
           xValue = metric.values.step;
@@ -157,7 +158,7 @@ export default class ChartView extends React.Component<Props, {}> {
           traceNamesByMetrics[metricName].forEach((traceName, idx) => {
             const data = yData[traceName];
             traces[traceName] = {
-              x: [metricName],
+              x: [traceName],
               y: [data[data.length - 1]],
               name: traceName,
               mode: traceMode,
@@ -335,8 +336,7 @@ export default class ChartView extends React.Component<Props, {}> {
         layout.xaxis = {title: chart.paramNames[0]};
         layout.bargap = 0.05;
         layout.bargroupgap = 0.2;
-      }
-      if (chart.type === 'scatter') {
+      } else if (chart.type === 'scatter') {
         layout.hovermode = 'closest';
       }
       return layout;
@@ -370,7 +370,12 @@ export default class ChartView extends React.Component<Props, {}> {
 
     return (
       <div className="row">
-        {this.props.view.charts.map((chart, idx) => getChart(chart, idx))}
+        {this.props.view.charts.length > 0
+          ? this.props.view.charts.map((chart, idx) => getChart(chart, idx))
+          : Empty(
+            'chart',
+            'Please add new charts.')
+        }
       </div>
     );
   }

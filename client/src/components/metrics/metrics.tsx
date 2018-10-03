@@ -49,7 +49,9 @@ export default class Metrics extends React.Component<Props, State> {
       showViewModal: false,
       metricNames,
       paramNames,
-      view: this.getDefaultView(metricNames),
+      view: this.props.resource === 'groups'
+        ? this.getDefaultView([])
+        : this.getDefaultView(metricNames),
       chartForm: this.getEmptyChartForm(metricNames, paramNames)
     };
   }
@@ -71,7 +73,9 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState,
         metricNames,
         paramNames,
-        view: this.getDefaultView(metricNames),
+        view: this.props.resource === 'groups'
+        ? this.getDefaultView([])
+        : this.getDefaultView(metricNames),
         chartForm: {...prevState.chartForm, metricNames, paramNames}
       });
     }
@@ -165,7 +169,7 @@ export default class Metrics extends React.Component<Props, State> {
       if (chart.metricNames.length === 0) {
         chart.metricNames = [this.state.metricNames[0]];
       }
-      if (chart.paramNames.length === 0) {
+      if (chart.paramNames.length === 0 && (chart.type === 'scatter' || chart.type === 'histogram')) {
         chart.paramNames = [this.state.paramNames[0]];
       }
       return chart;
@@ -392,7 +396,9 @@ export default class Metrics extends React.Component<Props, State> {
               </div>
             </div>
             }
-            {this.state.paramNames.length > 0 && this.state.chartForm.chart.type === 'histogram' &&
+            {((this.state.paramNames.length > 0 && this.state.chartForm.chart.type === 'histogram') ||
+              (this.props.resource === 'groups' &&
+                (this.state.chartForm.chart.type === 'line' || this.state.chartForm.chart.type === 'bar'))) &&
             <div className="form-group">
               <label className="col-sm-2 control-label">Metric</label>
               <div className="col-sm-10">
@@ -405,7 +411,9 @@ export default class Metrics extends React.Component<Props, State> {
               </div>
             </div>
             }
-            {this.state.chartForm.chart.type !== 'histogram' &&
+            {(this.state.chartForm.chart.type !== 'histogram' &&
+              !(this.props.resource === 'groups' &&
+                (this.state.chartForm.chart.type === 'line' || this.state.chartForm.chart.type === 'bar'))) &&
             <div className="form-group">
               <div className="col-sm-10 col-sm-offset-2">
                 {this.state.chartForm.chart.metricNames.map(
