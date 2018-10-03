@@ -362,12 +362,13 @@ export default class Metrics extends React.Component<Props, State> {
                     <option>line</option>
                   }
                   {
-                    this.props.chartTypes.indexOf('scatter') > -1 &&
-                    <option>scatter</option>
-                  }
-                  {
                     this.props.chartTypes.indexOf('bar') > -1 &&
                     <option>bar</option>
+                  }
+                  {
+                    this.props.chartTypes.indexOf('scatter') > -1 &&
+                    this.state.paramNames.length > 0 &&
+                    <option>scatter</option>
                   }
                   {
                     this.props.chartTypes.indexOf('histogram') > -1 &&
@@ -377,7 +378,8 @@ export default class Metrics extends React.Component<Props, State> {
                 </select>
               </div>
             </div>
-            {this.state.paramNames.length > 0 && this.state.chartForm.chart.type === 'histogram' &&
+            {this.state.paramNames.length > 0 &&
+            (this.state.chartForm.chart.type === 'histogram' || this.state.chartForm.chart.type === 'scatter') &&
             <div className="form-group">
               <label className="col-sm-2 control-label">Param</label>
               <div className="col-sm-10">
