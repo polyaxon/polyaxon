@@ -26,20 +26,20 @@ In order to use LDAP with Polyaxon you need to provide a list of configuration p
 auth:
   ldap:
     enabled: true
-    serverUri:
+    serverUri:  # e.g. "ldap://my.ldapserver.com"
     globalOptions: {}
     connectionOptions: {}
     bindDN:
     bindPassword:
-    userSearchBaseDN:
-    userSearchFilterStr:
-    userDNTemplate:
+    userSearchBaseDN:  # e.g. "dc=domain,dc=com"
+    userSearchFilterStr:  # e.g. "(mail=%(user)s)"
+    userDNTemplate:  # e.g. "uid=%(user)s,ou=users,dc=example,dc=com"
     startTLS: false
-    userAttrMap: {}
-    groupSearchBaseDN:
-    groupSearchGroupType:
-    requireGroup:
-    denyGroup:
+    userAttrMap: {}  # e.g. {"first_name": "givenName", "last_name": "sn"}
+    groupSearchBaseDN:  # e.g. "ou=groups,dc=example,dc=com"
+    groupSearchGroupType:  # e.g. "(objectClass=groupOfNames)"
+    requireGroup:  # e.g. "cn=enabled,ou=groups,dc=example,dc=com"
+    denyGroup:  # e.g. "cn=disabled,ou=groups,dc=example,dc=com"
 ```
 
 ### Github
