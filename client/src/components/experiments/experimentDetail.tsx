@@ -146,7 +146,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                     resource="experiments"
                     id={experiment.id}
                     experiment={experiment}
-                    chartTypes={['line', 'bar', 'scatter']}
+                    chartTypes={['line', 'bar']}
                   />,
                   relUrl: 'metrics'
                 }, {
