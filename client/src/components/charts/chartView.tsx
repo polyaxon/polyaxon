@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as Plotly from 'plotly.js';
 import * as React from 'react';
@@ -101,12 +102,12 @@ export default class ChartView extends React.Component<Props, {}> {
       return traceNamesByMetrics;
     };
 
-    const getChartYData = (chart: ChartModel) => {
+    const getChartYData = (chart: ChartModel, useTraceName: boolean = true) => {
       const dataTraces: { [key: string]: Plotly.Datum[] } = {};
       for (const metric of this.props.metrics) {
         const prefix = getTracePrefix(metric);
         chart.metricNames.forEach((metricName, idx) => {
-          const traceName = getTraceName(metricName, prefix);
+          const traceName = useTraceName ? getTraceName(metricName, prefix) : metricName;
           if (traceName in dataTraces) {
             dataTraces[traceName].push(metric.values[metricName]);
           } else {
@@ -118,20 +119,20 @@ export default class ChartView extends React.Component<Props, {}> {
       return dataTraces;
     };
 
-    const getChartXData = (chart: ChartModel) => {
+    const getChartXData = (chart: ChartModel, useTraceName: boolean = true) => {
       const dataTraces: { [key: string]: Plotly.Datum[] } = {};
       for (const metric of this.props.metrics) {
         let xValue: number | string;
-        if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
+        if (!_.isNil(chart.paramNames)) {
+          xValue = getParamValue(metric, chart.paramNames[0]);
+        } else if (this.props.view.meta.xAxis === 'step' && 'step' in metric.values) {
           xValue = metric.values.step;
         } else {
           xValue = convertTimeFormat(metric.created_at);
         }
         const prefix = getTracePrefix(metric);
-
         chart.metricNames.forEach((metricName, idx) => {
-
-          const traceName = getTraceName(metricName, prefix);
+          const traceName = useTraceName ? getTraceName(metricName, prefix) : metricName;
           if (traceName in dataTraces) {
             dataTraces[traceName].push(xValue);
           } else {
@@ -224,6 +225,25 @@ export default class ChartView extends React.Component<Props, {}> {
         : getLineTraces(chart, xData, yData, traceNamesByMetrics, traceMode, traceType);
     };
 
+    const getScatterTraces = (chart: ChartModel) => {
+      const xData = getChartXData(chart, false);
+      const yData = getChartYData(chart, false);
+      const traces: Plotly.PlotData[] = [];
+      const traceMode = getTraceMode(chart.type);
+      const traceType = getTraceType(chart.type);
+      chart.metricNames.forEach((metricName, idx) => {
+        traces.push({
+          x: xData[metricName],
+          y: yData[metricName],
+          name: metricName,
+          mode: traceMode,
+          type: traceType,
+          marker: {color: CHARTS_COLORS[idx % CHARTS_COLORS.length]},
+        } as Plotly.PlotData);
+      });
+      return traces;
+    };
+
     const getHistogramTraces = (chart: ChartModel) => {
       const xData: Plotly.Datum[] = [];
       const yData: Plotly.Datum[] = [];
@@ -239,23 +259,26 @@ export default class ChartView extends React.Component<Props, {}> {
 
       return [
         {
+          name: 'max',
           histfunc: 'max',
           y: yData,
           x: xData,
           type: 'histogram',
-          name: 'max',
+          marker: {color: CHARTS_COLORS[0]} as Plotly.PlotMarker,
         }, {
+          name: 'avg',
           histfunc: 'avg',
           y: yData,
           x: xData,
           type: 'histogram',
-          name: 'avg'
+          marker: {color: CHARTS_COLORS[1]} as Plotly.PlotMarker,
         }, {
+          name: 'min',
           histfunc: 'min',
           y: yData,
           x: xData,
           type: 'histogram',
-          name: 'min'
+          marker: {color: CHARTS_COLORS[2]} as Plotly.PlotMarker,
         },
       ] as Plotly.PlotData[];
     };
@@ -287,6 +310,8 @@ export default class ChartView extends React.Component<Props, {}> {
         return getBasicTraces(chart);
       } else if (chart.type === 'histogram') {
         return getHistogramTraces(chart);
+      } else if (chart.type === 'scatter') {
+        return getScatterTraces(chart);
       }
       return getBasicTraces(chart);
     };
@@ -310,6 +335,9 @@ export default class ChartView extends React.Component<Props, {}> {
         layout.xaxis = {title: chart.paramNames[0]};
         layout.bargap = 0.05;
         layout.bargroupgap = 0.2;
+      }
+      if (chart.type === 'scatter') {
+        layout.hovermode = 'closest';
       }
       return layout;
     };
