@@ -126,6 +126,11 @@ class MatrixConfig(BaseConfig):
         'range', 'linspace', 'logspace', 'geomspace'
     }
 
+    CONTINUOUS = {
+        'uniform', 'quniform', 'loguniform', 'qloguniform',
+        'normal', 'qnormal', 'lognormal', 'qlognormal'
+    }
+
     DISTRIBUTIONS = {
         'pvalues',
         'uniform', 'quniform', 'loguniform', 'qloguniform',
@@ -172,8 +177,13 @@ class MatrixConfig(BaseConfig):
         return key in self.DISTRIBUTIONS
 
     @property
+    def is_continuous(self):
+        key = list(six.iterkeys(self.to_dict()))[0]
+        return key in self.CONTINUOUS
+
+    @property
     def is_discrete(self):
-        return not self.is_distribution
+        return not self.is_continuous
 
     @property
     def is_range(self):
@@ -202,7 +212,7 @@ class MatrixConfig(BaseConfig):
             value = list(six.itervalues(self.to_dict()))[0]
             return value.get('start')
 
-        if self.is_discrete:
+        if self.is_discrete and not self.is_distribution:
             return min(self.to_numpy())
 
         if self.is_uniform:
@@ -220,7 +230,7 @@ class MatrixConfig(BaseConfig):
             value = list(six.itervalues(self.to_dict()))[0]
             return value.get('stop')
 
-        if self.is_discrete:
+        if self.is_discrete and not self.is_distribution:
             return max(self.to_numpy())
 
         if self.is_uniform:

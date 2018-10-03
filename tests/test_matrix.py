@@ -37,6 +37,7 @@ class TestMatrixConfigs(TestCase):
         assert config.is_range is False
         assert config.is_uniform is False
         assert config.is_discrete is True
+        assert config.is_continuous is False
         assert config.min == 1
         assert config.max == 3
 
@@ -50,6 +51,7 @@ class TestMatrixConfigs(TestCase):
         assert config.is_range is False
         assert config.is_uniform is False
         assert config.is_discrete is True
+        assert config.is_continuous is False
         assert config.min is None
         assert config.max is None
 
@@ -89,7 +91,8 @@ class TestMatrixConfigs(TestCase):
         assert config.is_distribution is True
         assert config.is_range is False
         assert config.is_uniform is False
-        assert config.is_discrete is False
+        assert config.is_discrete is True
+        assert config.is_continuous is False
         assert config.min is None
         assert config.max is None
 
@@ -104,6 +107,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
+            assert config.is_continuous is False
             assert config.min == v1
             assert config.max == v2
 
@@ -135,6 +139,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
+            assert config.is_continuous is False
             assert config.min == v1
             assert config.max == v2
 
@@ -166,6 +171,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
+            assert config.is_continuous is False
             assert config.min == v1
             assert config.max == v2
 
@@ -200,6 +206,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
+            assert config.is_continuous is False
             assert config.min == v1
             assert config.max == v2
 
@@ -249,6 +256,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is True
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min == v1
             assert config.max == v2
 
@@ -283,6 +291,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min is None
             assert config.max is None
 
@@ -317,6 +326,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min is None
             assert config.max is None
 
@@ -351,6 +361,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min is None
             assert config.max is None
 
@@ -385,6 +396,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min is None
             assert config.max is None
 
@@ -419,6 +431,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min is None
             assert config.max is None
 
@@ -453,6 +466,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min is None
             assert config.max is None
 
@@ -487,6 +501,7 @@ class TestMatrixConfigs(TestCase):
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
+            assert config.is_continuous is True
             assert config.min is None
             assert config.max is None
 
