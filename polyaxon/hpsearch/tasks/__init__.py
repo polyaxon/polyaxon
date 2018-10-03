@@ -9,13 +9,18 @@ from event_manager.events.experiment_group import (
 )
 from hpsearch.tasks import bo, grid, hyperband, random
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import HPCeleryTasks
+from polyaxon.settings import HPCeleryTasks, Intervals
 from schemas.hptuning import SearchAlgorithms
 
 
-@celery_app.task(name=HPCeleryTasks.HP_CREATE)
-def hp_create(experiment_group_id):
+@celery_app.task(name=HPCeleryTasks.HP_CREATE, bind=True, max_retries=None)
+def hp_create(self, experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
+    if not experiment_group and self.request.retries < 2:
+        # Schedule another task
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
+
     create(experiment_group)
 
 
