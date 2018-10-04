@@ -5,8 +5,8 @@ import * as actions from '../../actions/search';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
 
-import './filterList.less';
 import '../dropdowns.less';
+import './filterList.less';
 
 export interface Props {
   query?: string;

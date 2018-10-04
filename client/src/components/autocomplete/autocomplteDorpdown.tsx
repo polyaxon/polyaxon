@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
+import '../dropdowns.less';
+
 export interface Props {
   title: string;
   onClick: (item: string) => any;
@@ -18,7 +20,7 @@ function AutocompleteDropdown({title, onClick, possibleValues, selectedValues}: 
       >
         <i className="fa fa-plus icon" aria-hidden="true"/> {title}
       </Dropdown.Toggle>
-      <Dropdown.Menu>
+      <Dropdown.Menu className="dropdown-limit-height">
         {possibleValues
           .filter((item: string) => selectedValues.indexOf(item) === -1)
           .map((item: string, idx: number) =>
