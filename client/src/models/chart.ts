@@ -28,5 +28,6 @@ export class ChartModel {
   public name: string;
   public metricNames: string[];
   public paramNames: string[];
+  public experiments: string[];
   public type: ChartTypes;
 }

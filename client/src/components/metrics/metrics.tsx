@@ -34,8 +34,9 @@ export interface State {
   showViewModal: boolean;
   metricNames: string[];
   paramNames: string[];
+  experiments: string[];
   view: ChartViewModel;
-  chartForm: { chart: ChartModel, metricNames: string[], paramNames: string[] };
+  chartForm: { chart: ChartModel, metricNames: string[], paramNames: string[], experiments: string[], };
 }
 
 export default class Metrics extends React.Component<Props, State> {
@@ -43,16 +44,18 @@ export default class Metrics extends React.Component<Props, State> {
     super(props);
     const metricNames = this.getMetricNames();
     const paramNames = this.getParamNames();
+    const experiments = this.getExperiments();
     this.state = {
       isGrid: true,
       showChartModal: false,
       showViewModal: false,
       metricNames,
       paramNames,
+      experiments,
       view: this.props.resource === 'groups'
         ? this.getDefaultView([])
         : this.getDefaultView(metricNames),
-      chartForm: this.getEmptyChartForm(metricNames, paramNames)
+      chartForm: this.getEmptyChartForm(metricNames, paramNames, experiments)
     };
   }
 
@@ -69,26 +72,31 @@ export default class Metrics extends React.Component<Props, State> {
       !_.isEqual(this.props.params, prevProps.params)) {
       const metricNames = this.getMetricNames();
       const paramNames = this.getParamNames();
+      const experiments = this.getExperiments();
       this.setState({
         ...prevState,
         metricNames,
         paramNames,
+        experiments,
+        // Do not set a default view for groups (could be too large)
         view: this.props.resource === 'groups'
-        ? this.getDefaultView([])
-        : this.getDefaultView(metricNames),
-        chartForm: {...prevState.chartForm, metricNames, paramNames}
+          ? this.getDefaultView([])
+          : this.getDefaultView(metricNames),
+        chartForm: {...prevState.chartForm, metricNames, paramNames, experiments}
       });
     }
   }
 
-  public getEmptyChartForm = (metricNames: string[], paramNames: string[]) => {
+  public getEmptyChartForm = (metricNames: string[], paramNames: string[], experiments: string[]) => {
     return {
       metricNames,
       paramNames,
+      experiments,
       chart: {
         name: 'untitled',
         metricNames: [] as string[],
         paramNames: [] as string[],
+        experiments: [] as string[],
         type: 'line'
       } as ChartModel
     };
@@ -181,7 +189,8 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.view,
         charts: [...prevState.view.charts, getChart(prevState.chartForm.chart)]
       },
-      chartForm: this.getEmptyChartForm(this.state.metricNames, this.state.paramNames)
+      chartForm: this.getEmptyChartForm(
+        this.state.metricNames, this.state.paramNames, this.state.experiments)
     }));
     this.handleClose();
   };
@@ -193,7 +202,8 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.view,
         charts: [...prevState.view.charts.filter((chart, idx) => idx !== chartIdx)]
       },
-      chartForm: this.getEmptyChartForm(this.state.metricNames, this.state.paramNames)
+      chartForm: this.getEmptyChartForm(
+        this.state.metricNames, this.state.paramNames, this.state.experiments)
     }));
     this.handleClose();
   };
@@ -254,6 +264,39 @@ export default class Metrics extends React.Component<Props, State> {
     }));
   };
 
+  public addExperimentChartForm = (experiment: string) => {
+    const selectedExperiments = [...this.state.chartForm.chart.experiments, experiment].sort();
+    const chartExperiments = this.state.chartForm.experiments
+      .filter((m) => m !== experiment);
+
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      chartForm: {
+        ...prevState.chartForm,
+        ...{
+          experiments: chartExperiments,
+          chart: {...prevState.chartForm.chart, experiments: selectedExperiments}
+        }
+      }
+    }));
+  };
+
+  public removeExperimentChartForm = (value: string) => {
+    const chartExperiments = this.state.chartForm.chart.experiments.filter((
+      item: string) => item !== value);
+    const experiments = [...this.state.chartForm.experiments, value].sort();
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      chartForm: {
+        ...prevState.chartForm,
+        ...{
+          experiments,
+          chart: {...prevState.chartForm.chart, experiments: chartExperiments}
+        }
+      }
+    }));
+  };
+
   public getDefaultView = (metricNames: string[]) => {
     const charts: ChartModel[] = [];
     for (const metricName of metricNames) {
@@ -273,6 +316,14 @@ export default class Metrics extends React.Component<Props, State> {
     return [...Array.from(
       new Set(([] as string[]).concat(
         ...this.props.metrics.map((metric) => Object.keys(metric.values)))
+      )
+    )].sort();
+  };
+
+  public getExperiments = () => {
+    return [...Array.from(
+      new Set(([] as string[]).concat(
+        ...this.props.metrics.map((metric) => `${metric.experiment}`))
       )
     )].sort();
   };
@@ -408,6 +459,27 @@ export default class Metrics extends React.Component<Props, State> {
                 >
                   {this.state.metricNames.map((metric) => <option key={metric}>{metric}</option>)}
                 </select>
+              </div>
+            </div>
+            }
+            {this.props.resource === 'groups' &&
+            (this.state.chartForm.chart.type === 'line' || this.state.chartForm.chart.type === 'bar') &&
+            <div className="form-group">
+              <div className="col-sm-10 col-sm-offset-2">
+                {this.state.chartForm.chart.experiments.map(
+                  (value: string, idx: number) =>
+                    <AutocompleteLabel
+                      key={idx}
+                      value={value}
+                      onClick={this.removeExperimentChartForm}
+                    />
+                )}
+                <AutocompleteDropdown
+                  title="Add experiment"
+                  possibleValues={this.state.chartForm.experiments}
+                  selectedValues={this.state.chartForm.chart.experiments}
+                  onClick={this.addExperimentChartForm}
+                />
               </div>
             </div>
             }

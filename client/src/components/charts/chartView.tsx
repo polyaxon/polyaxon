@@ -89,6 +89,12 @@ export default class ChartView extends React.Component<Props, {}> {
     const getTraceNamesByMetrics = (chart: ChartModel) => {
       const traceNamesByMetrics: { [key: string]: string[] } = {};
       for (const metric of this.props.metrics) {
+        if (chart.experiments &&
+          chart.experiments.length > 0 &&
+          chart.experiments.indexOf(`${metric.experiment}`) === -1) {
+          continue;
+        }
+
         const prefix = getTracePrefix(metric);
         chart.metricNames.forEach((metricName, idx) => {
           const traceName = getTraceName(metricName, prefix);
@@ -106,6 +112,12 @@ export default class ChartView extends React.Component<Props, {}> {
     const getChartYData = (chart: ChartModel, useTraceName: boolean = true) => {
       const dataTraces: { [key: string]: Plotly.Datum[] } = {};
       for (const metric of this.props.metrics) {
+        if (chart.experiments &&
+          chart.experiments.length > 0 &&
+          chart.experiments.indexOf(`${metric.experiment}`) === -1) {
+          continue;
+        }
+
         const prefix = getTracePrefix(metric);
         chart.metricNames.forEach((metricName, idx) => {
           const traceName = useTraceName ? getTraceName(metricName, prefix) : metricName;
@@ -123,6 +135,12 @@ export default class ChartView extends React.Component<Props, {}> {
     const getChartXData = (chart: ChartModel, useTraceName: boolean = true) => {
       const dataTraces: { [key: string]: Plotly.Datum[] } = {};
       for (const metric of this.props.metrics) {
+        if (chart.experiments &&
+          chart.experiments.length > 0 &&
+          chart.experiments.indexOf(`${metric.experiment}`) === -1) {
+          continue;
+        }
+
         let xValue: number | string;
         if (!_.isNil(chart.paramNames) && chart.paramNames.length > 0) {
           xValue = getParamValue(metric, chart.paramNames[0]);
