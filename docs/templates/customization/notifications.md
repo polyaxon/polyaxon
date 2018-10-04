@@ -21,7 +21,7 @@ email:
 
 #### e.g. Email with Mailgun
 
-```
+```yaml
 email:
   host: "smtp.mailgun.org"
   port: 587
@@ -33,7 +33,7 @@ email:
 
 #### e.g. Email with gmail
 
-```
+```yaml
 email:
   host: "smtp.gmail.com"
   port: 587
@@ -48,8 +48,8 @@ email:
 You can get notification directly to your your slack team's channels.
 In order to do that you need to link one or multiple slack webhook:
 
-```
-integration:
+```yaml
+integrations:
   slack:
     - url: https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee
     - url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
@@ -61,8 +61,8 @@ integration:
 
 In order to configure Polyaxon to send notification to HipChat, you need to set the hipchat's integration section:
 
-```
-integration:
+```yaml
+integrations:
   hipchat:
     - url: https://hipchat.com/v2/room/room_id_or_name/webhook
 ```
@@ -72,8 +72,8 @@ integration:
 
 In order to configure Polyaxon to send notification to Discord, you need to set the discord's integration section:
 
-```
-integration:
+```yaml
+integrations:
   discord:
     - url: url1
     - url: url2
@@ -84,8 +84,8 @@ integration:
 
 In order to configure Polyaxon to send notification to Mattermost, you need to set the mattermost's integration section:
 
-```
-integration:
+```yaml
+integrations:
   mattermost:
     - url: url1
 ```
@@ -94,8 +94,8 @@ integration:
 
 In order to configure Polyaxon to send notification to PagerDuty, you need to set the pagerduty's integration section:
 
-```
-integration:
+```yaml
+integrations:
   pagerduty:
     - url: url1
 ```
@@ -105,8 +105,8 @@ integration:
 
 To send generic webhooks, you just need to set the urls that you want to send webhooks to and the http methods to use:
 
-```
-integration:
+```yaml
+integrations:
   webhook:
     - url: url1
     - url: url2
