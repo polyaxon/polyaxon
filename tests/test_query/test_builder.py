@@ -115,17 +115,17 @@ class TestComparisonCondition(BaseTest):
 
         # eq
         queryset = eq_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.1)
         assert queryset.count() == 1
 
         queryset = eq_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.2)
         assert queryset.count() == 0
 
         queryset = eq_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__step',
+                                 name='last_metric__step',
                                  params=10)
         assert queryset.count() == 1
 
@@ -157,65 +157,65 @@ class TestComparisonCondition(BaseTest):
 
         # lt
         queryset = lt_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.1)
         assert queryset.count() == 0
 
         queryset = lt_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.2)
         assert queryset.count() == 1
 
         queryset = lt_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.9)
         assert queryset.count() == 2
 
         # lte
         queryset = lte_cond.apply(queryset=Experiment.objects,
-                                  name='metric__values__loss',
+                                  name='last_metric__loss',
                                   params=0.1)
         assert queryset.count() == 1
 
         queryset = lte_cond.apply(queryset=Experiment.objects,
-                                  name='metric__values__loss',
+                                  name='last_metric__loss',
                                   params=0.2)
         assert queryset.count() == 1
 
         queryset = lte_cond.apply(queryset=Experiment.objects,
-                                  name='metric__values__loss',
+                                  name='last_metric__loss',
                                   params=0.9)
         assert queryset.count() == 3
 
         # gt
         queryset = gt_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.1)
         assert queryset.count() == 2
 
         queryset = gt_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.2)
         assert queryset.count() == 2
 
         queryset = gt_cond.apply(queryset=Experiment.objects,
-                                 name='metric__values__loss',
+                                 name='last_metric__loss',
                                  params=0.9)
         assert queryset.count() == 0
 
         # gte
         queryset = gte_cond.apply(queryset=Experiment.objects,
-                                  name='metric__values__loss',
+                                  name='last_metric__loss',
                                   params=0.1)
         assert queryset.count() == 3
 
         queryset = gte_cond.apply(queryset=Experiment.objects,
-                                  name='metric__values__loss',
+                                  name='last_metric__loss',
                                   params=0.2)
         assert queryset.count() == 2
 
         queryset = gte_cond.apply(queryset=Experiment.objects,
-                                  name='metric__values__loss',
+                                  name='last_metric__loss',
                                   params=0.9)
         assert queryset.count() == 1
 

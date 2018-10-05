@@ -211,7 +211,7 @@ class ExperimentGroup(DiffModel,
         for early_stopping_metric in self.early_stopping:
             comparison = (
                 'gte' if Optimization.maximize(early_stopping_metric.optimization) else 'lte')
-            metric_filter = 'metric__values__{}__{}'.format(
+            metric_filter = 'last_metric__{}__{}'.format(
                 early_stopping_metric.metric, comparison)
             filters.append({metric_filter: early_stopping_metric.value})
         if filters:
@@ -223,7 +223,7 @@ class ExperimentGroup(DiffModel,
         if experiment_ids:
             query = query.filter(id__in=experiment_ids)
         annotation = {
-            metric: KeyTransform(metric, 'metric__values')
+            metric: KeyTransform(metric, 'last_metric')
         }
         return query.annotate(**annotation)
 

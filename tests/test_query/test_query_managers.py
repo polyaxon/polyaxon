@@ -177,14 +177,14 @@ class TestQueryManager(BaseTest):
                                                        queryset=Experiment.objects)
         queries = [
             str(Experiment.objects.filter(
-                metric__values__loss__lte=0.8
+                last_metric__loss__lte=0.8
             ).filter(
                 status__status__in=['starting', 'running']
             ).query),
             str(Experiment.objects.filter(
                 status__status__in=['starting', 'running']
             ).filter(
-                metric__values__loss__lte=0.8
+                last_metric__loss__lte=0.8
             ).query)
         ]
         assert str(result_queryset.query) in queries
