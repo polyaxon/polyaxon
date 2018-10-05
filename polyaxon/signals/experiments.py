@@ -198,7 +198,7 @@ def experiment_metric_post_save(sender, **kwargs):
 
     # update experiment last_metric
     def update_metric(last_metrics, metrics):
-        metrics.update(last_metrics)
+        last_metrics.update(metrics)
         return metrics
 
     experiment.last_metric = update_metric(last_metrics=experiment.last_metric,

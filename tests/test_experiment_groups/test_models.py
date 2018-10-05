@@ -243,7 +243,7 @@ class TestExperimentGroupModel(BaseTest):
 
         assert len(experiment_metrics) == 5
         metrics = [m[1] for m in experiment_metrics if m[1] is not None]
-        assert len(metrics) == 2
+        assert len(metrics) == 5
 
         experiment_metrics = experiment_group.get_experiments_metrics(
             experiment_ids=experiment_ids,
@@ -419,14 +419,18 @@ class TestExperimentGroupModel(BaseTest):
 
         # Delete metric1
         metric1.delete()
-
-        # Check again that early stopping still works
-        assert experiment_group.should_stop_early() is True
-
         # Delete metric2
         metric2.delete()
 
         # Check again that early stopping still works
+        assert experiment_group.should_stop_early() is True  # last_metric still has the last values
+
+        # Add another metric
+        ExperimentMetric.objects.create(experiment=experiment1,
+                                        values={'precision': 0.8})
+        ExperimentMetric.objects.create(experiment=experiment2,
+                                        values={'loss': 0.2})
+
         assert experiment_group.should_stop_early() is False
 
     def test_stop_pending_experiments(self):

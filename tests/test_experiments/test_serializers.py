@@ -276,7 +276,7 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('experiment_group') == (self.obj1.experiment_group.unique_name
                                                 if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
-        assert data.pop('last_metric') == self.obj1.last_metric
+        assert data.pop('last_metric') == self.obj1.last_metric or None
         assert data.pop('num_jobs') == self.obj1.jobs.count()
         assert data.pop('bookmarked') is False
         data.pop('created_at')
