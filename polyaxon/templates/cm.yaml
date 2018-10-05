@@ -78,15 +78,20 @@ data:
   {{- end }}
   # Celery
   POLYAXON_QUEUES_REPOS: {{ .Values.queues.repos | quote }}
+  POLYAXON_QUEUES_SCHEDULER_HEALTH: {{ .Values.queues.schedulerHealth | quote }}
   POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS: {{ .Values.queues.schedulerExperiments | quote }}
   POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS: {{ .Values.queues.schedulerExperimentGroups | quote }}
   POLYAXON_QUEUES_SCHEDULER_PROJECTS: {{ .Values.queues.schedulerProjects | quote }}
   POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS: {{ .Values.queues.schedulerBuildJobs | quote }}
+  POLYAXON_QUEUES_PIPELINES_HEALTH: {{ .Values.queues.pipelinesHealth | quote }}
   POLYAXON_QUEUES_PIPELINES: {{ .Values.queues.pipelines | quote }}
+  POLYAXON_QUEUES_CRONS_HEALTH: {{ .Values.queues.cronsHealth | quote }}
   POLYAXON_QUEUES_CRONS_EXPERIMENTS: {{ .Values.queues.cronsExperiments | quote }}
   POLYAXON_QUEUES_CRONS_PIPELINES: {{ .Values.queues.cronsPipelines | quote }}
   POLYAXON_QUEUES_CRONS_CLUSTERS: {{ .Values.queues.cronsClusters | quote }}
+  POLYAXON_QUEUES_HP_HEALTH: {{ .Values.queues.hpHealth | quote }}
   POLYAXON_QUEUES_HP: {{ .Values.queues.hp | quote }}
+  POLYAXON_QUEUES_EVENTS_HEALTH: {{ .Values.queues.eventsHealth | quote }}
   POLYAXON_QUEUES_EVENTS_NAMESPACE: {{ .Values.queues.eventsNamespace | quote }}
   POLYAXON_QUEUES_EVENTS_RESOURCES: {{ .Values.queues.eventsResources | quote }}
   POLYAXON_QUEUES_EVENTS_JOB_STATUSES: {{ .Values.queues.eventsJobStatuses | quote }}

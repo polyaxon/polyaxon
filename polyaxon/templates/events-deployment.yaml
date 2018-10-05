@@ -44,7 +44,7 @@ spec:
       - name: {{ .Chart.Name }}-events
         image: "{{ .Values.eventsHandlers.image }}:{{ .Values.eventsHandlers.imageTag }}"
         imagePullPolicy: {{ .Values.eventsHandlers.imagePullPolicy }}
-        args: ["{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsJobStatuses }},{{ .Values.queues.logsSidecars }},{{ .Values.queues.streamLogsSidecars }}", "--concurrency={{ .Values.eventsHandlers.concurrency }}"]
+        args: ["{{ .Values.queues.eventsHealth }},{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsJobStatuses }},{{ .Values.queues.logsSidecars }},{{ .Values.queues.streamLogsSidecars }}", "--concurrency={{ .Values.eventsHandlers.concurrency }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config

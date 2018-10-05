@@ -533,19 +533,24 @@ intervals:  # in seconds
 queues:
   repos: 'queues.repos'
 
+  schedulerHealth: 'queues.scheduler.health'
   schedulerExperiments: 'queues.scheduler.experiments'
   schedulerExperimentGroups: 'queues.scheduler.experimentGroups'
   schedulerProjects: 'queues.scheduler.projects'
   schedulerBuildJobs: 'queues.scheduler.build_jobs'
 
+  pipelinesHealth: 'queues.pipelines.health'
   pipelines: 'queues.pipelines'
 
+  cronsHealth: 'queues.crons.health'
   cronsExperiments: 'queues.crons.experiments'
   cronsPipelines: 'queues.crons.pipelines'
   cronsClusters: 'queues.crons.clusters'
 
+  hpHealth: 'queues.hp.health'
   hp: 'queues.hp'
 
+  eventsHealth: 'queues.events.health'
   eventsNamespace: 'queues.events.namespace'
   eventsResources: 'queues.events.resources'
   eventsJobStatuses: 'queues.events.jobStatuses'

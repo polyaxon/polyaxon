@@ -44,7 +44,7 @@ spec:
       - name: {{ .Chart.Name }}-hpsearch
         image: "{{ .Values.hpsearch.image }}:{{ .Values.hpsearch.imageTag }}"
         imagePullPolicy: {{ .Values.hpsearch.imagePullPolicy }}
-        args: ["{{ .Values.queues.hp }}", "--concurrency={{ .Values.hpsearch.concurrency }}"]
+        args: ["{{ .Values.queues.hpHealth }},{{ .Values.queues.hp }}", "--concurrency={{ .Values.hpsearch.concurrency }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
