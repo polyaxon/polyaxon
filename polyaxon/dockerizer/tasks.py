@@ -57,7 +57,10 @@ def build_project_notebook(project_id):
         kwargs={'notebook_job_id': notebook_job.id})
 
 
-@celery_app.task(name=DockerizerCeleryTasks.BUILD_EXPERIMENT, bind=True, max_retries=3)
+@celery_app.task(name=DockerizerCeleryTasks.BUILD_EXPERIMENT,
+                 bind=True,
+                 max_retries=3,
+                 ignore_result=True)
 def build_experiment(self, experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:

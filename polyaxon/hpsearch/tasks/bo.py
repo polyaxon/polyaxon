@@ -18,7 +18,7 @@ def create(experiment_group):
         countdown=1)
 
 
-@celery_app.task(name=HPCeleryTasks.HP_BO_CREATE)
+@celery_app.task(name=HPCeleryTasks.HP_BO_CREATE, ignore_result=True)
 def hp_bo_create(experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -27,7 +27,7 @@ def hp_bo_create(experiment_group_id):
     create(experiment_group)
 
 
-@celery_app.task(name=HPCeleryTasks.HP_BO_START, bind=True, max_retries=None)
+@celery_app.task(name=HPCeleryTasks.HP_BO_START, bind=True, max_retries=None, ignore_result=True)
 def hp_bo_start(self, experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -44,7 +44,7 @@ def hp_bo_start(self, experiment_group_id):
         kwargs={'experiment_group_id': experiment_group_id})
 
 
-@celery_app.task(name=HPCeleryTasks.HP_BO_ITERATE, bind=True, max_retries=None)
+@celery_app.task(name=HPCeleryTasks.HP_BO_ITERATE, bind=True, max_retries=None, ignore_result=True)
 def hp_bo_iterate(self, experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:

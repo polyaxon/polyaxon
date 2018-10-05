@@ -14,7 +14,10 @@ from polyaxon.settings import Intervals, PipelinesCeleryTasks
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_START, bind=True, max_retries=None)
+@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_START,
+                 bind=True,
+                 max_retries=None,
+                 ignore_result=True)
 def pipelines_start(self, pipeline_run_id):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
@@ -40,7 +43,7 @@ def pipelines_start(self, pipeline_run_id):
         self.retry(countdown=Intervals.PIPELINES_SCHEDULER)
 
 
-@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_START_OPERATION)
+@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_START_OPERATION, ignore_result=True)
 def pipelines_start_operation(operation_run_id):
     operation_run = get_operation_run(operation_run_id=operation_run_id)
     if not operation_run:

@@ -18,6 +18,6 @@ class ScheduleExperimentTask(ClassBasedTask):
             kwargs={'experiment_id': experiment_id})
 
 
-@celery_app.task(name=CeleryOperationTasks.EXPERIMENTS_SCHEDULE, bind=True)
+@celery_app.task(name=CeleryOperationTasks.EXPERIMENTS_SCHEDULE, bind=True, ignore_result=True)
 def schedule_experiment(self, experiment_id):
     ScheduleExperimentTask.run(task_bind=self, experiment_id=experiment_id)

@@ -13,7 +13,7 @@ from polyaxon.settings import HPCeleryTasks, Intervals
 from schemas.hptuning import SearchAlgorithms
 
 
-@celery_app.task(name=HPCeleryTasks.HP_CREATE, bind=True, max_retries=None)
+@celery_app.task(name=HPCeleryTasks.HP_CREATE, bind=True, max_retries=None, ignore_result=True)
 def hp_create(self, experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group and self.request.retries < 2:

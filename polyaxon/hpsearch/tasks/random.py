@@ -13,7 +13,7 @@ def create(experiment_group):
         countdown=1)
 
 
-@celery_app.task(name=HPCeleryTasks.HP_RANDOM_SEARCH_CREATE)
+@celery_app.task(name=HPCeleryTasks.HP_RANDOM_SEARCH_CREATE, ignore_result=True)
 def hp_random_search_create(experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -22,7 +22,10 @@ def hp_random_search_create(experiment_group_id):
     create(experiment_group)
 
 
-@celery_app.task(name=HPCeleryTasks.HP_RANDOM_SEARCH_START, bind=True, max_retries=None)
+@celery_app.task(name=HPCeleryTasks.HP_RANDOM_SEARCH_START,
+                 bind=True,
+                 max_retries=None,
+                 ignore_result=True)
 def hp_random_search_start(self, experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:

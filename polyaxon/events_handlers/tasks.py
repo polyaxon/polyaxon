@@ -18,7 +18,7 @@ from polyaxon.settings import EventsCeleryTasks, Intervals
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE, ignore_result=True)
 def handle_events_namespace(cluster_id, payload):
     _logger.debug('handling events namespace for cluster: %s', cluster_id)
     try:
@@ -27,7 +27,7 @@ def handle_events_namespace(cluster_id, payload):
         pass
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_RESOURCES)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_RESOURCES, ignore_result=True)
 def handle_events_resources(payload, persist):
     # here we must persist resources if requested
     _logger.info('handling events resources with persist:%s', persist)
@@ -195,7 +195,7 @@ def events_handle_build_job_statuses(self, payload):
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB, ignore_result=True)
 def events_handle_logs_experiment_job(experiment_name,
                                       experiment_uuid,
                                       job_uuid,
@@ -213,7 +213,7 @@ def events_handle_logs_experiment_job(experiment_name,
     safe_log_experiment_job(experiment_name=experiment_name, log_lines=log_lines)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB, ignore_result=True)
 def events_handle_logs_job(job_uuid, job_name, log_lines):
     if not Job.objects.filter(uuid=job_uuid).exists():
         return
@@ -222,7 +222,7 @@ def events_handle_logs_job(job_uuid, job_name, log_lines):
     safe_log_job(job_name=job_name, log_lines=log_lines)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB, ignore_result=True)
 def events_handle_logs_build_job(job_uuid, job_name, log_lines):
     if not BuildJob.objects.filter(uuid=job_uuid).exists():
         return
