@@ -386,6 +386,7 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
     ]
     permission_classes = (IsAuthenticatedOrInternal,)
     pagination_class = LargeLimitOffsetPagination
+    throttle_scope = 'high'
 
     def perform_create(self, serializer):
         serializer.save(experiment=self.get_experiment())
@@ -594,6 +595,7 @@ class ExperimentScopeTokenView(PostAPIView):
     queryset = Experiment.objects.all()
     authentication_classes = [EphemeralAuthentication, ]
     permission_classes = (IsEphemeral,)
+    throttle_scope = 'ephemeral'
     lookup_field = 'id'
 
     def post(self, request, *args, **kwargs):

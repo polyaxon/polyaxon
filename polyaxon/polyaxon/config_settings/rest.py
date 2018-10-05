@@ -17,6 +17,9 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_THROTTLE_RATES': {
+        'high': '20/second',
+        'internal': '20/second',
+        'ephemeral': '20/second',
         'user': '120/min',
         'admin': '100/min',
         'anon': '30/min',
