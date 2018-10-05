@@ -3,8 +3,8 @@ import random
 from django.conf import settings
 
 from checks.base import Check
-from checks.results import Result
 from checks.health_task import health_task
+from checks.results import Result
 from polyaxon.celery_api import app as celery_app
 
 

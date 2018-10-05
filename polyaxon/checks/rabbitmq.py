@@ -1,8 +1,9 @@
 import logging
 
 from amqp.exceptions import AccessRefused
-from django.conf import settings
 from kombu import Connection
+
+from django.conf import settings
 
 from checks.base import Check
 from checks.results import Result
