@@ -10,7 +10,7 @@ from schemas.specifications import JobSpecification
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_BUILD, ignore_result=True, ignore_result=True)
+@celery_app.task(name=SchedulerCeleryTasks.JOBS_BUILD, ignore_result=True)
 def jobs_build(job_id):
     job = get_valid_job(job_id=job_id)
     if not job:
@@ -45,7 +45,7 @@ def jobs_build(job_id):
     job.set_status(JobLifeCycle.BUILDING, message='Building container')
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_START, ignore_result=True, ignore_result=True)
+@celery_app.task(name=SchedulerCeleryTasks.JOBS_START, ignore_result=True)
 def jobs_start(job_id):
     job = get_valid_job(job_id=job_id)
     if not job:
