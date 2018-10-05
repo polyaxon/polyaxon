@@ -14,7 +14,7 @@ from tests.utils import BaseTest
 class TestRabbitMQHealthCheck(BaseTest):
     DISABLE_RUNNER = True
 
-    @override_settings(AMQP_URL='amqp_url')
+    @override_settings(CELERY_BROKER_URL='broker_url')
     @mock.patch('checks.rabbitmq.Connection')
     def test_broker_refused_connection(self, mocked_connection):
         mocked_conn = mock.MagicMock()
@@ -24,9 +24,9 @@ class TestRabbitMQHealthCheck(BaseTest):
         results = RabbitMQCheck.run()
         assert results['RABBITMQ'].is_healthy is False
         assert results['RABBITMQ'].severity == Result.ERROR
-        mocked_connection.assert_called_once_with('amqp_url')
+        mocked_connection.assert_called_once_with('broker_url')
 
-    @override_settings(AMQP_URL='amqp_url')
+    @override_settings(CELERY_BROKER_URL='broker_url')
     @mock.patch('checks.rabbitmq.Connection')
     def test_broker_access_refused(self, mocked_connection):
         mocked_conn = mock.MagicMock()
@@ -36,9 +36,9 @@ class TestRabbitMQHealthCheck(BaseTest):
         results = RabbitMQCheck.run()
         assert results['RABBITMQ'].is_healthy is False
         assert results['RABBITMQ'].severity == Result.ERROR
-        mocked_connection.assert_called_once_with('amqp_url')
+        mocked_connection.assert_called_once_with('broker_url')
 
-    @override_settings(AMQP_URL=None)
+    @override_settings(CELERY_BROKER_URL=None)
     @mock.patch('checks.rabbitmq.Connection')
     def test_broker_connection_upon_none_url(self, mocked_connection):
         mocked_conn = mock.MagicMock()

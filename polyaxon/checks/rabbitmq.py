@@ -18,7 +18,7 @@ class RabbitMQCheck(Check):
         """Open and close the broker channel."""
         try:
             # Context to release connection
-            with Connection(settings.AMQP_URL) as conn:
+            with Connection(settings.CELERY_BROKER_URL) as conn:
                 conn.connect()
         except ConnectionRefusedError:
             return Result(message='Service unable to connect, "Connection was refused".',
