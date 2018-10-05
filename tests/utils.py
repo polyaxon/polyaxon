@@ -185,10 +185,11 @@ class BaseTest(TestCase):
     def setUp(self):
         # Force tasks autodiscover
         from scheduler import tasks  # noqa
-        from hpsearch import tasks  # noqa
-        from pipelines import tasks  # noqa
+        from hpsearch.tasks import bo, grid, health, hyperband, random  # noqa
+        from pipelines import health, tasks  # noqa
         from crons import tasks  # noqa
         from dockerizer import tasks  # noqa
+        from events_handlers import health, tasks  # noqa
 
         # Flushing all redis databases
         redis.StrictRedis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
