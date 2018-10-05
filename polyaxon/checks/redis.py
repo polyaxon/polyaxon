@@ -17,7 +17,8 @@ class RedisCheck(Check):
             info = connection.info()
             return Result(message='Service is healthy, db size {}'.format(info['used_memory']))
         except redis.exceptions.ConnectionError:
-            return Result(severity=Result.ERROR)
+            return Result(message='Service unable to connect, "Connection error".',
+                          severity=Result.ERROR)
 
     @classmethod
     def check(cls):

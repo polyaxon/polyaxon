@@ -7,21 +7,20 @@ from checks.results import Result
 class PostgresCheck(Check):
     @staticmethod
     def pg_health():
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT 1; -- Healthcheck')
-            health = cursor.fetchone()[0] == 1
-            size = None
-            if health:
-                cursor.execute("select pg_database_size('postgres') as size")
-                size = cursor.fetchone()
-        return health, size
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT 1; -- Healthcheck')
+                health = cursor.fetchone()[0] == 1
+                if health:
+                    cursor.execute("select pg_database_size('postgres') as size")
+                    size = cursor.fetchone()
+                    return Result(message='Service is healthy, db size {}'.format(size))
+            return Result(message='Service is not working.', severity=Result.WARNING)
+        except Exception as e:
+            return Result(message='Service unable to connect, encountered "{}" error.'.format(e),
+                          severity=Result.ERROR)
 
     @classmethod
     def run(cls):
-        health, size = cls.pg_health()
-        if health:
-            result = Result(message='Service is healthy, db size {}'.format(size))
-        else:
-            result = Result(message='Service is not working.', severity=Result.ERROR)
-
+        result = cls.pg_health()
         return {'POSTGRES': result}
