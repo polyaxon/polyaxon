@@ -173,10 +173,31 @@ class TestExperimentGroupModel(BaseTest):
 
         experiments = []
         experiment_ids = []
+
         for _ in range(5):
             experiment = ExperimentFactory(experiment_group=experiment_group)
             experiments.append(experiment)
             experiment_ids.append(experiment.id)
+
+        # Create metrics for 2 experiments
+        for experiment in experiments[:2]:
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'accuracy': random.random()})
+
+        # Test metric values for accuracy (2 values)
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='accuracy',
+            optimization='maximize'
+        )
+
+        assert len(experiment_metrics) == 5
+        metrics = [m.accuracy for m in experiment_metrics if m.accuracy is not None]
+        assert len(metrics) == 2
+        assert sorted(metrics, reverse=True) == metrics
+
+        # Add more metrics (precision for all, and loss for 3)
+        for experiment in experiments:
             ExperimentMetric.objects.create(experiment=experiment,
                                             values={'precision': random.random()})
 
@@ -184,6 +205,18 @@ class TestExperimentGroupModel(BaseTest):
             ExperimentMetric.objects.create(experiment=experiment,
                                             values={'loss': random.random()})
 
+        # Testing again for accuracy should be propagated to all experiments but only 2 with values
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='accuracy',
+            optimization='maximize'
+        )
+        assert len(experiment_metrics) == 5
+        metrics = [m.accuracy for m in experiment_metrics if m.accuracy is not None]
+        assert len(metrics) == 2
+        assert sorted(metrics, reverse=True) == metrics
+
+        # Test for precisions, even after an updated metrics, the values were passed to last_metric
         experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
             experiment_ids=experiment_ids,
             metric='precision',
@@ -192,9 +225,10 @@ class TestExperimentGroupModel(BaseTest):
 
         assert len(experiment_metrics) == 5
         metrics = [m.precision for m in experiment_metrics if m.precision is not None]
-        assert len(metrics) == 2
+        assert len(metrics) == 5
         assert sorted(metrics, reverse=True) == metrics
 
+        # Loss is only visible on 3 experiments
         experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
             experiment_ids=experiment_ids,
             metric='loss',
@@ -205,14 +239,15 @@ class TestExperimentGroupModel(BaseTest):
         assert len(metrics) == 3
         assert sorted(metrics) == metrics
 
+        # Check non existing metric
         experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
             experiment_ids=experiment_ids,
-            metric='accuracy',
+            metric='metric_dummy',
             optimization='maximize'
         )
 
         self.assertEqual(len(experiment_metrics), 5)
-        self.assertEqual(len([m for m in experiment_metrics if m.accuracy is not None]), 0)
+        self.assertEqual(len([m for m in experiment_metrics if m.metric_dummy is not None]), 0)
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     def test_get_experiments_metrics(self, _):
