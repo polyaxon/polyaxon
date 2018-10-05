@@ -33359,7 +33359,6 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 42,
-        "metric": 1,
         "code_reference": null
     }
 },
@@ -33399,7 +33398,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 44,
-        "metric": 2,
+        "last_metric": {},
         "code_reference": null
     }
 },
@@ -33439,7 +33438,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 40,
-        "metric": null,
+        "last_metric": {},
         "code_reference": null
     }
 },
@@ -33479,7 +33478,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 41,
-        "metric": null,
+        "last_metric": {},
         "code_reference": null
     }
 },
@@ -33731,7 +33730,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 45,
-        "metric": null,
+        "last_metric": {},
         "code_reference": null
     }
 },
@@ -33983,7 +33982,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 43,
-        "metric": null,
+        "last_metric": {},
         "code_reference": null
     }
 },
@@ -34030,7 +34029,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 51,
-        "metric": 3,
+        "last_metric": {},
         "code_reference": 1
     }
 },
@@ -34077,7 +34076,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 63,
-        "metric": 4,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34139,7 +34138,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 118,
-        "metric": 53,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34201,7 +34200,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 109,
-        "metric": 42,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34263,7 +34262,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 110,
-        "metric": 41,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34325,7 +34324,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 105,
-        "metric": 40,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34387,7 +34386,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 90,
-        "metric": null,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34449,7 +34448,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 96,
-        "metric": 36,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34511,7 +34510,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 101,
-        "metric": 37,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34573,7 +34572,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 114,
-        "metric": 44,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34635,7 +34634,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 115,
-        "metric": 46,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34697,7 +34696,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 117,
-        "metric": 50,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34759,7 +34758,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 116,
-        "metric": 48,
+        "last_metric": {},
         "code_reference": 2
     }
 },
@@ -34821,7 +34820,7 @@
         "original_experiment": null,
         "cloning_strategy": null,
         "status": 124,
-        "metric": null,
+        "last_metric": {},
         "code_reference": 2
     }
 },
