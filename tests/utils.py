@@ -191,8 +191,8 @@ class BaseTest(TestCase):
         from dockerizer import tasks  # noqa
 
         # Flushing all redis databases
-        redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
-        redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
+        redis.StrictRedis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
+        redis.StrictRedis(connection_pool=RedisPools.TO_STREAM).flushall()
         # Mock dirs
         settings.REPOS_MOUNT_PATH = tempfile.mkdtemp()
         settings.UPLOAD_MOUNT_PATH = tempfile.mkdtemp()
