@@ -6,4 +6,8 @@ class BaseRedisDb(object):
 
     @classmethod
     def _get_redis(cls):
-        return redis.Redis(connection_pool=cls.REDIS_POOL)
+        return redis.StrictRedis(connection_pool=cls.REDIS_POOL)
+
+    @classmethod
+    def connection(cls):
+        return cls._get_redis()
