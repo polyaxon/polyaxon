@@ -19,9 +19,12 @@ class RedisCheck(Check):
         except redis.exceptions.ConnectionError:
             return Result(message='Service unable to connect, "Connection error".',
                           severity=Result.ERROR)
+        except Exception as e:
+            return Result(message='Service unable to connect, encountered error "{}".'.format(e),
+                          severity=Result.ERROR)
 
     @classmethod
-    def check(cls):
+    def run(cls):
         results = {}
         result = cls.redis_health(RedisEphemeralTokens.connection())
         if not result.is_healthy:
