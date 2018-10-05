@@ -23,23 +23,23 @@ class RedisCheck(Check):
     def check(cls):
         results = {}
         result = cls.redis_health(RedisEphemeralTokens.connection())
-        if result.is_error():
+        if result.is_error:
             results['REDIS_EPH_TOKENS'] = result
 
         result = cls.redis_health(RedisSessions.connection())
-        if result.is_error():
+        if result.is_error:
             results['REDIS_SESSIONS'] = result
 
         result = cls.redis_health(RedisTTL.connection())
-        if result.is_error():
+        if result.is_error:
             results['REDIS_TTL'] = result
 
         result = cls.redis_health(RedisToStream.connection())
-        if result.is_error():
+        if result.is_error:
             results['REDIS_TO_STREAM'] = result
 
         result = cls.redis_health(RedisJobContainers.connection())
-        if result.is_error():
+        if result.is_error:
             results['REDIS_CONTAINERS'] = result
 
         if not results:
