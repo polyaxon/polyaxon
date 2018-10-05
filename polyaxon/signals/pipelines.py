@@ -5,7 +5,7 @@ from constants.pipelines import OperationStatuses, PipelineStatuses
 from db.models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
 from libs.decorators import ignore_raw, ignore_updates
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import PipelineCeleryTasks
+from polyaxon.settings import PipelinesCeleryTasks
 from signals.run_time import set_finished_at, set_started_at
 
 
@@ -43,12 +43,12 @@ def new_pipeline_run_status(sender, **kwargs):
     # Notify operations with status change. This is necessary if we skip or stop the dag run.
     if pipeline_run.stopped:
         celery_app.send_task(
-            PipelineCeleryTasks.PIPELINES_STOP_OPERATIONS,
+            PipelinesCeleryTasks.PIPELINES_STOP_OPERATIONS,
             kwargs={'pipeline_run_id': pipeline_run.id,
                     'message': 'Pipeline run was stopped'})
     if pipeline_run.skipped:
         celery_app.send_task(
-            PipelineCeleryTasks.PIPELINES_SKIP_OPERATIONS,
+            PipelinesCeleryTasks.PIPELINES_SKIP_OPERATIONS,
             kwargs={'pipeline_run_id': pipeline_run.id,
                     'message': 'Pipeline run was skipped'})
 
@@ -76,7 +76,7 @@ def new_operation_run_status(sender, **kwargs):
 
     # Check if we need to update the pipeline_run's status
     celery_app.send_task(
-        PipelineCeleryTasks.PIPELINES_CHECK_STATUSES,
+        PipelinesCeleryTasks.PIPELINES_CHECK_STATUSES,
         kwargs={'pipeline_run_id': pipeline_run.id,
                 'status': instance.status,
                 'message': instance.message})
@@ -86,7 +86,7 @@ def new_operation_run_status(sender, **kwargs):
             status__status=OperationStatuses.CREATED)
         for op_run in downstream_runs:
             celery_app.send_task(
-                PipelineCeleryTasks.PIPELINES_START_OPERATION,
+                PipelinesCeleryTasks.PIPELINES_START_OPERATION,
                 kwargs={'operation_run_id': op_run.id})
 
 
