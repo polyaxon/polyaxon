@@ -1,8 +1,9 @@
 from unittest.mock import patch
+
 import pytest
 
-from checks.scheduler import SchedulerCheck
 from checks.results import Result
+from checks.scheduler import SchedulerCheck
 from tests.utils import BaseTest
 
 

@@ -1,9 +1,9 @@
-import pytest
 import mock
+import pytest
 
+from checks.postgres import PostgresCheck
 from checks.results import Result
 from tests.utils import BaseTest
-from checks.postgres import PostgresCheck
 
 
 @pytest.mark.checks_mark

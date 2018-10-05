@@ -1,11 +1,13 @@
-import pytest
 import mock
+import pytest
+
 from amqp.exceptions import AccessRefused
+
 from django.test import override_settings
 
+from checks.rabbitmq import RabbitMQCheck
 from checks.results import Result
 from tests.utils import BaseTest
-from checks.rabbitmq import RabbitMQCheck
 
 
 @pytest.mark.checks_mark
