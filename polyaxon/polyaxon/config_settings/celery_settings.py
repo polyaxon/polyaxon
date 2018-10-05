@@ -18,6 +18,7 @@ if RABBITMQ_USER and RABBITMQ_PASSWORD:
         url=AMQP_URL
     )
 
+# todo: fix me at some point
 CELERY_BROKER_URL = 'amqp://{url}'.format(url=AMQP_URL)
 
 INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',
@@ -39,6 +40,9 @@ CELERY_IGNORE_RESULT = True
 CELERY_HARD_TIME_LIMIT_DELAY = config.get_int('POLYAXON_CELERY_HARD_TIME_LIMIT_DELAY',
                                               is_optional=True,
                                               default=180)
+HEALTH_CHECK_WORKER_TIMEOUT = config.get_int('POLYAXON_HEALTH_CHECK_WORKER_TIMEOUT',
+                                             is_optional=True,
+                                             default=4)
 
 
 class Intervals(object):
@@ -106,6 +110,7 @@ class CronsCeleryTasks(object):
 
     N.B. make sure that the task name is not < 128.
     """
+    CRONS_HEALTH = 'crons_health'
     EXPERIMENTS_SYNC_JOBS_STATUSES = 'experiments_sync_jobs_statuses'
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
     CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
@@ -121,11 +126,12 @@ class ReposCeleryTasks(object):
     REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
 
 
-class PipelineCeleryTasks(object):
+class PipelinesCeleryTasks(object):
     """Pipeline celery tasks.
 
     N.B. make sure that the task name is not < 128.
     """
+    PIPELINES_HEALTH = 'pipelines_health'
     PIPELINES_START = 'pipelines_start'
     PIPELINES_START_OPERATION = 'pipelines_start_operation'
     PIPELINES_STOP_OPERATIONS = 'pipelines_stop_operations'
@@ -146,6 +152,7 @@ class EventsCeleryTasks(object):
 
     N.B. make sure that the task name is not < 128.
     """
+    EVENTS_HEALTH = 'events_health'
     EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
     EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES = 'events_handle_experiment_job_statuses'
@@ -162,6 +169,8 @@ class SchedulerCeleryTasks(object):
 
     N.B. make sure that the task name is not < 128.
     """
+    SCHEDULER_HEALTH = 'scheduler_health'
+
     EXPERIMENTS_BUILD = 'experiments_build'
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_STOP = 'experiments_stop'
@@ -195,6 +204,8 @@ class HPCeleryTasks(object):
 
     N.B. make sure that the task name is not < 128.
     """
+    HP_HEALTH = 'hp_health'
+
     HP_CREATE = 'hp_create'
 
     HP_GRID_SEARCH_CREATE = 'hp_grid_search_create'
@@ -224,19 +235,24 @@ class CeleryQueues(object):
     """
     REPOS = config.get_string('POLYAXON_QUEUES_REPOS')
 
+    SCHEDULER_HEALTH = config.get_string('POLYAXON_QUEUES_SCHEDULER_HEALTH')
     SCHEDULER_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS')
     SCHEDULER_EXPERIMENT_GROUPS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS')
     SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS')
     SCHEDULER_BUILD_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS')
 
+    PIPELINES_HEALTH = config.get_string('POLYAXON_QUEUES_PIPELINES_HEALTH')
     PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES')
 
+    CRONS_HEALTH = config.get_string('POLYAXON_QUEUES_CRONS_HEALTH')
     CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS')
     CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES')
     CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS')
 
+    HP_HEALTH = config.get_string('POLYAXON_QUEUES_HP_HEALTH')
     HP = config.get_string('POLYAXON_QUEUES_HP')
 
+    EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_EVENTS_HEALTH')
     EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_EVENTS_NAMESPACE')
     EVENTS_RESOURCES = config.get_string('POLYAXON_QUEUES_EVENTS_RESOURCES')
     EVENTS_JOB_STATUSES = config.get_string('POLYAXON_QUEUES_EVENTS_JOB_STATUSES')
@@ -261,15 +277,19 @@ CELERY_TASK_ROUTES = {
     ReposCeleryTasks.REPOS_HANDLE_FILE_UPLOAD:
         {'queue': CeleryQueues.REPOS},
 
-    PipelineCeleryTasks.PIPELINES_START:
+    # Pipelines and ops Health
+    PipelinesCeleryTasks.PIPELINES_HEALTH:
+        {'queue': CeleryQueues.PIPELINES_HEALTH},
+    # Pipelines tasks
+    PipelinesCeleryTasks.PIPELINES_START:
         {'queue': CeleryQueues.PIPELINES},
-    PipelineCeleryTasks.PIPELINES_START_OPERATION:
+    PipelinesCeleryTasks.PIPELINES_START_OPERATION:
         {'queue': CeleryQueues.PIPELINES},
-    PipelineCeleryTasks.PIPELINES_STOP_OPERATIONS:
+    PipelinesCeleryTasks.PIPELINES_STOP_OPERATIONS:
         {'queue': CeleryQueues.PIPELINES},
-    PipelineCeleryTasks.PIPELINES_SKIP_OPERATIONS:
+    PipelinesCeleryTasks.PIPELINES_SKIP_OPERATIONS:
         {'queue': CeleryQueues.PIPELINES},
-    PipelineCeleryTasks.PIPELINES_CHECK_STATUSES:
+    PipelinesCeleryTasks.PIPELINES_CHECK_STATUSES:
         {'queue': CeleryQueues.PIPELINES},
     # Operation tasks
     CeleryOperationTasks.EXPERIMENTS_SCHEDULE:
@@ -288,6 +308,11 @@ CELERY_TASK_ROUTES = {
          'routing_key': RoutingKeys.LOGS_SIDECARS_BUILDS,
          'exchange_type': 'topic'},
 
+    # Scheduler health
+    SchedulerCeleryTasks.SCHEDULER_HEALTH:
+        {'queue': CeleryQueues.SCHEDULER_HEALTH},
+
+    # Scheduler experiments
     SchedulerCeleryTasks.EXPERIMENTS_START:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
     SchedulerCeleryTasks.EXPERIMENTS_STOP:
@@ -299,6 +324,7 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
 
+    # Scheduler groups
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS:
@@ -306,6 +332,7 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
 
+    # Scheduler tensorboards
     SchedulerCeleryTasks.TENSORBOARDS_START:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
     SchedulerCeleryTasks.TENSORBOARDS_STOP:
@@ -317,6 +344,7 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
 
+    # Scheduler builds
     SchedulerCeleryTasks.BUILD_JOBS_START:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
     SchedulerCeleryTasks.BUILD_JOBS_STOP:
@@ -326,6 +354,7 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
 
+    # Scheduler jobs
     SchedulerCeleryTasks.JOBS_BUILD:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
     SchedulerCeleryTasks.JOBS_START:
@@ -335,6 +364,11 @@ CELERY_TASK_ROUTES = {
     SchedulerCeleryTasks.JOBS_NOTIFY_DONE:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
 
+    # Crons health
+    CronsCeleryTasks.CRONS_HEALTH:
+        {'queue': CeleryQueues.CRONS_HEALTH},
+
+    # Crons
     CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES:
         {'queue': CeleryQueues.CRONS_EXPERIMENTS},
     CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE:
@@ -346,6 +380,10 @@ CELERY_TASK_ROUTES = {
     CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE:
         {'queue': CeleryQueues.CRONS_CLUSTERS},
 
+    # HP health
+    HPCeleryTasks.HP_HEALTH:
+        {'queue': CeleryQueues.HP_HEALTH},
+    # HP ops
     HPCeleryTasks.HP_CREATE:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_GRID_SEARCH_CREATE:
@@ -369,6 +407,11 @@ CELERY_TASK_ROUTES = {
     HPCeleryTasks.HP_BO_ITERATE:
         {'queue': CeleryQueues.HP},
 
+    # Events heath
+    EventsCeleryTasks.EVENTS_HEALTH:
+        {'queue': CeleryQueues.EVENTS_NAMESPACE},
+
+    # Events ops
     EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE:
         {'queue': CeleryQueues.EVENTS_NAMESPACE},
     EventsCeleryTasks.EVENTS_HANDLE_RESOURCES:
