@@ -195,8 +195,13 @@ def experiment_status_post_save(sender, **kwargs):
 def experiment_metric_post_save(sender, **kwargs):
     instance = kwargs['instance']
     experiment = instance.experiment
+
     # update experiment last_metric
-    experiment.metric = instance
+    def update_metric(last_metrics, metrics):
+        metrics.update(last_metrics)
+        return metrics
+
+    experiment.metric = update_metric(last_metrics=experiment.metric, metrics=instance.values)
     experiment.save()
     auditor.record(event_type=EXPERIMENT_NEW_METRIC,
                    instance=experiment)

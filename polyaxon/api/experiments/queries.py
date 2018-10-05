@@ -19,8 +19,7 @@ experiments = Experiment.objects.select_related(
     'original_experiment__experiment_group',
     'original_experiment__experiment_group__project',
     'original_experiment__experiment_group__project__user',
-    'status',
-    'metric')
+    'status')
 
 experiments_details = experiments.annotate(
     Count('jobs', distinct=True)

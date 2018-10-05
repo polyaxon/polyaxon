@@ -111,13 +111,10 @@ class Experiment(DiffModel,
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
-    metric = models.OneToOneField(
-        'db.ExperimentMetric',
-        related_name='+',
+    last_metric = JSONField(
         blank=True,
         null=True,
-        editable=True,
-        on_delete=models.SET_NULL)
+        default=dict)
     code_reference = models.ForeignKey(
         'db.CodeReference',
         on_delete=models.SET_NULL,
@@ -174,10 +171,6 @@ class Experiment(DiffModel,
         if calculated_status is None:
             return self.last_status
         return calculated_status
-
-    @property
-    def last_metric(self):
-        return self.metric.values if self.metric else None
 
     @property
     def is_clone(self):
