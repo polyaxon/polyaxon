@@ -21,7 +21,7 @@ def _indepenent_condition(queryset, params, negation):
 class ExperimentQueryManager(BaseQueryManager):
     NAME = 'experiment'
     FIELDS_PROXY = {
-        'metric': 'metric__values',
+        'metric': 'last_metric',
         'status': 'status__status',
         'group': 'experiment_group',
         'build': 'build_job',
