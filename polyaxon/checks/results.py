@@ -18,10 +18,6 @@ class Result(object):
         return self.severity == self.INFO
 
     @property
-    def is_error(self):
-        return not self.is_healthy
-
-    @property
     def is_warning(self):
         return self.severity == self.WARNING
 
