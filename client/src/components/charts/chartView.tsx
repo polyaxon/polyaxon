@@ -392,7 +392,7 @@ export default class ChartView extends React.Component<Props, {}> {
           ? this.props.view.charts.map((chart, idx) => getChart(chart, idx))
           : Empty(
             'chart',
-            'Please add new charts.')
+            'Please add new charts or select a view.')
         }
       </div>
     );
