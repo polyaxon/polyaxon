@@ -15,4 +15,4 @@ class StreamsCheck(Check):
             result = Result(message='Service is not healthy, response {}'.format(status_code),
                             severity=Result.ERROR)
 
-        return result
+        return {'STREAMS': result}

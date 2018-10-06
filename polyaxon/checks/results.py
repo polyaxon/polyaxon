@@ -24,3 +24,10 @@ class Result(object):
     @property
     def is_error(self):
         return self.severity == self.ERROR
+
+    def to_dict(self):
+        return {
+            'is_healthy': self.is_healthy,
+            'message': self.message,
+            'severity': self.severity,
+        }
