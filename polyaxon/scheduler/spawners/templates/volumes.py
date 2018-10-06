@@ -12,9 +12,10 @@ def get_volume_mount(volume, volume_mount=None, read_only=False):
     return client.V1VolumeMount(name=volume, mount_path=volume_mount, read_only=read_only)
 
 
-def get_volume(volume, claim_name=None, host_path=None):
+def get_volume(volume, claim_name=None, host_path=None, read_only=None):
     if claim_name:
-        pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name)
+        pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name,
+                                                              read_only=read_only)
         return client.V1Volume(name=volume, persistent_volume_claim=pv_claim)
 
     if host_path:
@@ -40,7 +41,8 @@ def get_volume_from_definition(volume_name, volume_settings):
     if mount_path:
         volumes.append(get_volume(volume=volume_name,
                                   claim_name=claim_name,
-                                  host_path=host_path))
+                                  host_path=host_path,
+                                  read_only=read_only))
         volume_mounts.append(get_volume_mount(volume=volume_name,
                                               volume_mount=mount_path,
                                               read_only=read_only))
