@@ -15,7 +15,7 @@ class TestSchedulerHealthCheck(BaseTest):
         results = SchedulerCheck.run()
         assert results['SCHEDULER'].is_healthy is True
 
-    @patch('scheduler.tasks.health.scheduler_heath.apply_async')
+    @patch('scheduler.tasks.health.scheduler_health.apply_async')
     def test_scheduler_wrong_results(self, mock_health):
         mock_health.return_value.__enter__.return_value = None
 
@@ -23,7 +23,7 @@ class TestSchedulerHealthCheck(BaseTest):
         assert results['SCHEDULER'].is_healthy is False
         assert results['SCHEDULER'].severity == Result.WARNING
 
-    @patch('scheduler.tasks.health.scheduler_heath.apply_async')
+    @patch('scheduler.tasks.health.scheduler_health.apply_async')
     def test_scheduler_not_healthy(self, mock_health):
         mock_health.side_effect = Exception('Connection Refused')
 

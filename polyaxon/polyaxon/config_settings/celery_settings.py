@@ -407,7 +407,7 @@ CELERY_TASK_ROUTES = {
     HPCeleryTasks.HP_BO_ITERATE:
         {'queue': CeleryQueues.HP},
 
-    # Events heath
+    # Events health
     EventsCeleryTasks.EVENTS_HEALTH:
         {'queue': CeleryQueues.EVENTS_HEALTH},
 

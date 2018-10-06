@@ -15,7 +15,7 @@ class TestCronsHealthCheck(BaseTest):
         results = CronsCheck.run()
         assert results['CRONS'].is_healthy is True
 
-    @patch('crons.tasks.health.crons_heath.apply_async')
+    @patch('crons.tasks.health.crons_health.apply_async')
     def test_crons_wrong_results(self, mock_health):
         mock_health.return_value.__enter__.return_value = None
 
@@ -23,7 +23,7 @@ class TestCronsHealthCheck(BaseTest):
         assert results['CRONS'].is_healthy is False
         assert results['CRONS'].severity == Result.WARNING
 
-    @patch('crons.tasks.health.crons_heath.apply_async')
+    @patch('crons.tasks.health.crons_health.apply_async')
     def test_crons_not_healthy(self, mock_health):
         mock_health.side_effect = Exception('Connection Refused')
 

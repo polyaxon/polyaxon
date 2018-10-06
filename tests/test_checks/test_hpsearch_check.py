@@ -15,7 +15,7 @@ class TestHPHealthCheck(BaseTest):
         results = HPSearchCheck.run()
         assert results['HPSEARCH'].is_healthy is True
 
-    @patch('hpsearch.tasks.health.hp_heath.apply_async')
+    @patch('hpsearch.tasks.health.hp_health.apply_async')
     def test_hp_wrong_results(self, mock_health):
         mock_health.return_value.__enter__.return_value = None
 
@@ -23,7 +23,7 @@ class TestHPHealthCheck(BaseTest):
         assert results['HPSEARCH'].is_healthy is False
         assert results['HPSEARCH'].severity == Result.WARNING
 
-    @patch('hpsearch.tasks.health.hp_heath.apply_async')
+    @patch('hpsearch.tasks.health.hp_health.apply_async')
     def test_hp_not_healthy(self, mock_health):
         mock_health.side_effect = Exception('Connection Refused')
 
