@@ -7,6 +7,7 @@ from django.views.generic import RedirectView
 from api.index.errors import Handler50xView, Handler403View, Handler404View  # noqa
 from api.index.health import HealthView
 from api.index.views import IndexView, ReactIndexView
+from api.index.status import StatusView
 from api.users.views import LogoutView
 from constants.urls import API_V1
 from polyaxon.config_manager import config
@@ -60,6 +61,7 @@ urlpatterns = [
 
     re_path(r'^_admin/', admin.site.urls),
     re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
+    re_path(r'^_status/?$', StatusView.as_view(), name='status_check'),
     re_path(r'^{}/'.format(API_V1), include((api_patterns, 'v1'), namespace='v1')),
     re_path(r'^$', IndexView.as_view(), name='index'),
     re_path(r'^50x.html$', Handler50xView.as_view(), name='50x'),
