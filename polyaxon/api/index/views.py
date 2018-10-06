@@ -7,4 +7,3 @@ class IndexView(TemplateView):
 
 class ReactIndexView(TemplateView):
     template_name = "polyaxon/react_index.html"
-
