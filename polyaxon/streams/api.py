@@ -2,7 +2,7 @@ import asyncio
 import json
 import logging
 
-from sanic import Sanic
+from sanic import Sanic, response
 from websockets import ConnectionClosed
 
 from django.core.exceptions import ValidationError
@@ -643,6 +643,12 @@ async def build_logs(request,  # pylint:disable=too-many-branches
 
         await asyncio.sleep(SOCKET_SLEEP)
 
+
+def health(request):
+    return response.text('', status=200)
+
+
+app.add_route(health, '/_health')
 
 EXPERIMENT_URL = '/v1/<username>/<project_name>/experiments/<experiment_id>'
 BUILD_URL = '/v1/<username>/<project_name>/builds/<build_id>'
