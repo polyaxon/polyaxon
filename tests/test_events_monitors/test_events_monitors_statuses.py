@@ -10,7 +10,7 @@ from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.jobs import JobStatus
 from db.models.notebooks import NotebookJobStatus
 from db.models.tensorboards import TensorboardJobStatus
-from events_handlers.tasks import (
+from events_handlers.tasks.statuses import (
     events_handle_build_job_statuses,
     events_handle_experiment_job_statuses,
     events_handle_job_statuses,

@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from events_handlers.tasks import (
+from events_handlers.tasks.logs import (
     events_handle_logs_build_job,
     events_handle_logs_experiment_job,
     events_handle_logs_job
