@@ -103,6 +103,26 @@ spec:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
 {{ include "config.envs" . | indent 8 }}
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /_health/
+            port: {{ .Values.streams.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: 100
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /_health/
+            port: {{ .Values.streams.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: 150
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
         resources:
           requests:
 {{ toYaml .Values.streams.resources.requests | indent 12 }}
