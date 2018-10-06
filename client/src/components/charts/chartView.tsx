@@ -175,9 +175,17 @@ export default class ChartView extends React.Component<Props, {}> {
         if (metricName in traceNamesByMetrics) {
           traceNamesByMetrics[metricName].forEach((traceName, idx) => {
             const data = yData[traceName];
+
+            let y = data.length > 0 ? data[0] : null;
+            for (let i = data.length; i--;) {
+              if (data[i]) {
+                y = data[i];
+                break;
+              }
+            }
             traces[traceName] = {
               x: [traceName],
-              y: [data[data.length - 1]],
+              y: [y],
               name: traceName,
               mode: traceMode,
               type: traceType,
