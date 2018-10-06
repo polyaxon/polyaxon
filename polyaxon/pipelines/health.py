@@ -4,5 +4,5 @@ from polyaxon.settings import PipelinesCeleryTasks
 
 
 @celery_app.task(name=PipelinesCeleryTasks.PIPELINES_HEALTH, ignore_result=False)
-def pipelines_heath(x, y):
+def pipelines_health(x, y):
     return health_task.health_task(x, y)

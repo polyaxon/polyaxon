@@ -409,7 +409,7 @@ CELERY_TASK_ROUTES = {
 
     # Events heath
     EventsCeleryTasks.EVENTS_HEALTH:
-        {'queue': CeleryQueues.EVENTS_NAMESPACE},
+        {'queue': CeleryQueues.EVENTS_HEALTH},
 
     # Events ops
     EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE:
