@@ -207,6 +207,26 @@ export function fetchJob(user: string, projectName: string, jobId: number): any 
   };
 }
 
+export function updateJob(jobName: string, updateDict: { [key: string]: any }): any {
+  const jobUrl = getJobUrlFromName(jobName, false);
+  return (dispatch: any, getState: any) => {
+    fetch(
+      `${BASE_API_URL}${jobUrl}`, {
+        method: 'PATCH',
+        body: JSON.stringify(updateDict),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(updateJobActionCreator(json)));
+  };
+}
+
 export function deleteJob(jobName: string, redirect: boolean = false): any {
   const jobUrl = getJobUrlFromName(jobName, false);
   return (dispatch: any, getState: any) => {

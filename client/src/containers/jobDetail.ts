@@ -21,6 +21,7 @@ export function mapStateToProps(state: AppState, params: any) {
 
 export interface DispatchProps {
   onDelete: () => actions.JobAction;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.JobAction;
   onStop: () => actions.JobAction;
   fetchData?: () => actions.JobAction;
   bookmark: () => actions.JobAction;
@@ -34,6 +35,14 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.jobId)),
+    onUpdate: (updateDict: { [key: string]: any }) => dispatch(
+      actions.updateJob(
+        getJobUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.jobId),
+        updateDict
+      )),
     onDelete: () => dispatch(actions.deleteJob(
       getJobUniqueName(
         params.match.params.user,

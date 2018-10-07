@@ -24,6 +24,7 @@ import YamlText from '../yamlText';
 
 export interface Props {
   job: JobModel;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.JobAction;
   onDelete: () => actions.JobAction;
   onStop: () => actions.JobAction;
   fetchData: () => actions.JobAction;
@@ -74,7 +75,10 @@ export default class JobDetail extends React.Component<Props, {}> {
               tabs={[
                 {
                   title: 'Overview',
-                  component: <JobOverview job={job}/>,
+                  component: <JobOverview
+                    job={job}
+                    onUpdate={this.props.onUpdate}
+                  />,
                   relUrl: ''
                 }, {
                   title: 'Logs',

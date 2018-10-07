@@ -9,6 +9,7 @@ export class JobModel {
   public user: string;
   public definition: string;
   public description: string;
+  public readme: string;
   public deleted?: boolean;
   public project: string;
   public tags: string[] = [];
