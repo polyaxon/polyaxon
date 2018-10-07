@@ -31,8 +31,9 @@ def upload():  # pylint:disable=assign-to-new-keyword
             except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
                 Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
                 Printer.print_error('Error message `{}`.'.format(e))
-                Printer.print_error('Check if you have access rights for this project, '
-                                    'or if you are running a notebook, '
+                Printer.print_error('Check if you have access rights for this project and '
+                                    'that you are not uploading large files.'
+                                    'If you are running a notebook, '
                                     'you should stop it before uploading.')
                 sys.exit(1)
             Printer.print_success('Files uploaded.')
