@@ -1,5 +1,4 @@
 import { Action, combineReducers } from 'redux';
-// import {reducer as formReducer } from 'redux-form';
 
 import { ExperimentJobExperimentsReducer, ExperimentJobsReducer } from './experimentJobs';
 import {
@@ -17,6 +16,7 @@ import { activityLogsReducer } from './activityLogs';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
 import { chartViewsReducer } from './chartViews';
 import { codeReferencesReducer } from './codeReferences';
+import { healthStatusReducer } from './healthStatus';
 import { logsReducer } from './logs';
 import { MetricsReducer } from './metrics';
 import { modalReducer } from './modal';
@@ -35,6 +35,7 @@ const combinedReducer = combineReducers<AppState>({
   experimentJobs: ExperimentJobsReducer,
   modal: modalReducer,
   auth: tokenReducer,
+  healthStatus: healthStatusReducer,
   users: userReducer,
   // form: formReducer,
   logs: logsReducer,
@@ -65,8 +66,8 @@ function SliceReducer(state: AppState, action: Action) {
     experimentJobs: state.experimentJobs,
     modal: state.modal,
     auth: state.auth,
+    healthStatus: state.healthStatus,
     users: UserProjectsReducer(state.users, action),
-    // form: state.form,
     logs: state.logs,
     statuses: state.statuses,
     metrics: state.metrics,

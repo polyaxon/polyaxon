@@ -6,6 +6,7 @@ import BuildDetail from '../containers/buildDetail';
 import ExperimentDetail from '../containers/experimentDetail';
 import ExperimentJobDetail from '../containers/experimentJobDetail';
 import GroupDetail from '../containers/groupDetail';
+import HealthStatus from '../containers/healthStatus';
 import JobDetail from '../containers/jobDetail';
 import ProjectDetail from '../containers/projectDetail';
 import Token from '../containers/token';
@@ -17,6 +18,7 @@ import { getHomeUrl } from '../constants/utils';
 
 function Routes() {
   const tokenRoute = '/app/token';
+  const statusRoute = '/app/status';
   const clusterActivityLogsRoute = '/app/activitylogs';
   const historyLogsRoute = '/app/historylogs';
   const userRoute = '/app/:user/';
@@ -45,6 +47,7 @@ function Routes() {
   return (
     <Switch>
       <Route path={tokenRoute} component={Token}/>
+      <Route path={statusRoute} component={HealthStatus}/>
       <Route path={historyLogsRoute} component={HistoryLogs}/>
       <Route path={clusterActivityLogsRoute} component={ClusterActivityLogs}/>
       <Route path={experimentJobDetailRoute} component={ExperimentJobDetail}/>

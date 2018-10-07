@@ -1,5 +1,3 @@
-// import { FormReducer } from 'redux-form';
-
 import { ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activitylog';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
 import { ChartViewEmptyState, ChartViewStateSchema } from '../models/chartView';
@@ -12,6 +10,7 @@ import {
 } from '../models/experiment';
 import { ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/experimentJob';
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
+import { HealthStatusEmptyState, HealthStatusStateSchema } from '../models/healthStatus';
 import { JobsEmptyState, JobStateSchema } from '../models/job';
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ModalStateSchema } from '../models/modal';
@@ -31,6 +30,7 @@ export interface AppState {
   experimentJobs: ExperimentJobStateSchema;
   modal: ModalStateSchema;
   auth: TokenStateSchema;
+  healthStatus: HealthStatusStateSchema;
   users: UserStateSchema;
   // form: FormReducer;
   logs: string;
@@ -51,6 +51,7 @@ export const AppEmptyState = {
   builds: BuildsEmptyState,
   experimentJobs: ExperimentJobsEmptyState,
   auth: TokenEmptyState,
+  healthStatus: HealthStatusEmptyState,
   user: UserEmptyState,
   logs: '',
   statuses: StatusEmptyState,
