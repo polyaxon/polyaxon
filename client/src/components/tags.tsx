@@ -66,12 +66,14 @@ export default class Tags extends React.Component<Props, State> {
       value,
     }));
   };
+
   public handleInputChange = (inputValue: string, actionMeta: any) => {
     this.setState((prevState, prevProps) => ({
       ...prevState,
       inputValue,
     }));
   };
+
   public handleKeyDown = (event: any) => {
     const {inputValue, value} = this.state;
     if (!inputValue) {
@@ -113,7 +115,7 @@ export default class Tags extends React.Component<Props, State> {
             )}
             {this.state.isEditMode &&
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-10">
                 <CreatableSelect
                   components={{
                     DropdownIndicator: null
@@ -130,7 +132,7 @@ export default class Tags extends React.Component<Props, State> {
                   placeholder=""
                 />
               </div>
-              <div className="col-md-4 tags-buttons">
+              <div className="col-md-2 tags-buttons">
                 <button className="btn btn-sm btn-default" onClick={() => this.onSave()}>
                   Save
                 </button>

@@ -156,27 +156,30 @@ a {
 }
 
 .btn-link {
-    display: inline-block;
-    padding: 0;
-    font-size: inherit;
-    color: @gl-link-color;
-    text-decoration: none;
-    white-space: nowrap;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: transparent;
-    border: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  &.btn-link-margin {
+    margin-left: 10px;
+  }
+  display: inline-block;
+  padding: 0;
+  font-size: 13px;
+  color: @gl-link-color;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-.input-multi-select>div{
+.input-multi-select > div {
   min-height: unset;
-  &>div {
+  & > div {
     padding: 0 4px;
     &:first-child > div {
       background-color: #f1f8ff;
@@ -192,7 +195,7 @@ a {
         }
       }
 
-      &>div:last-child:hover {
+      & > div:last-child:hover {
         background-color: #8bc9ff;
         color: #245ad8;
         cursor: pointer;
