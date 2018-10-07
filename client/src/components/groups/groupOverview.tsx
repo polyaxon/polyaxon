@@ -119,10 +119,10 @@ export default class GroupOverview extends React.Component<Props, {}> {
               </span>
             </div>
             }
-            <Tags tags={group.tags}/>
+            <Tags tags={group.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
             <MDEditor
               content={group.readme}
-              onSave={(content: string) => { this.props.onUpdate({readme: content}); }}
+              onSave={(readme: string) => { this.props.onUpdate({readme}); }}
             />
           </div>
         </div>

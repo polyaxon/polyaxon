@@ -82,10 +82,10 @@ export default class ProjectOverview extends React.Component<Props, {}> {
             </span>
             </div>
             }
-            <Tags tags={project.tags}/>
+            <Tags tags={project.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
             <MDEditor
               content={project.readme}
-              onSave={(content: string) => { this.props.onUpdate({readme: content}); }}
+              onSave={(readme: string) => { this.props.onUpdate({readme}); }}
             />
           </div>
         </div>

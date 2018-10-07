@@ -62,7 +62,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               </span>
             </div>
             }
-            <Tags tags={experiment.tags}/>
+            <Tags tags={experiment.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
             {experiment.declarations &&
             <div className="row">
               <div className="col-md-8">
@@ -104,7 +104,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
             }
             <MDEditor
               content={experiment.readme}
-              onSave={(content: string) => { this.props.onUpdate({readme: content}); }}
+              onSave={(readme: string) => { this.props.onUpdate({readme}); }}
             />
           </div>
         </div>

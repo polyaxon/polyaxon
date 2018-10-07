@@ -53,10 +53,10 @@ export default class JobOverview extends React.Component<Props, {}> {
               <Status status={job.last_status}/>
             </div>
             <ResourcesMetaInfo resources={job.resources}/>
-            <Tags tags={job.tags}/>
+            <Tags tags={job.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
             <MDEditor
               content={job.readme}
-              onSave={(content: string) => { this.props.onUpdate({readme: content}); }}
+              onSave={(readme: string) => { this.props.onUpdate({readme}); }}
             />
           </div>
         </div>
