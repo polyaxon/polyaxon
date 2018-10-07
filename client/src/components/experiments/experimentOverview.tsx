@@ -102,7 +102,10 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               </div>
             </div>
             }
-            <MDEditor content={'foo'} onSave={(content: string) => { this.props.onUpdate({readme: content}); }} />
+            <MDEditor
+              content={experiment.readme}
+              onSave={(content: string) => { this.props.onUpdate({readme: content}); }}
+            />
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ export default class MDView extends React.Component<Props, {}> {
   }
 
   public render() {
-    const html = sanitizeHtml(this.converter.makeHtml(this.props.content));
+    const html = sanitizeHtml(this.converter.makeHtml(this.props.content || ''));
     return (
       <div className="row">
         <div className="col-md-12">
@@ -28,11 +28,11 @@ export default class MDView extends React.Component<Props, {}> {
           <div className="md-header">
             <div className="row">
               <div className="col-md-11 block">
-                Readme
+                <i className="fa fa-book icon" aria-hidden="true"/> Readme
               </div>
               <div className="col-md-1 block">
                 <span className="md-edit" onClick={() => this.props.onEdit()}>
-                  <i className="fa fa-edit icon" aria-hidden="true"/> Edit
+                  <i className="fa fa-pencil icon pull-right" aria-hidden="true"/>
                 </span>
               </div>
             </div>

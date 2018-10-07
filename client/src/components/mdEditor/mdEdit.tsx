@@ -25,7 +25,7 @@ export default class MDEdit extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      content: this.props.content
+      content: this.props.content || ''
     };
     this.converter = getConverter();
   }
