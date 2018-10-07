@@ -24,6 +24,7 @@ REST_FRAMEWORK = {
         'admin': '100/min',
         'anon': '30/min',
         'health': '10/min',
+        'status': '10/min',
     },
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
