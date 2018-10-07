@@ -42,7 +42,7 @@ export default class MDView extends React.Component<Props, {}> {
             <div className="col-md-12">
               <div className="md-view">
                 <div
-                  dangerouslySetInnerHTML={{__html: html || '<p>&nbsp;</p>'}}
+                  dangerouslySetInnerHTML={{__html: html || ''}}
                 />
               </div>
             </div>

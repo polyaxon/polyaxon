@@ -20,6 +20,7 @@ import ProjectOverview from './projectOverview';
 
 export interface Props {
   project: ProjectModel;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onDelete: () => actions.ProjectAction;
   onStop: () => actions.ProjectAction;
   fetchData: () => actions.ProjectAction;
@@ -62,7 +63,10 @@ export default class ProjectDetail extends React.Component<Props, {}> {
             tabs={[
               {
                 title: 'Overview',
-                component: <ProjectOverview project={project}/>,
+                component: <ProjectOverview
+                  project={project}
+                  onUpdate={this.props.onUpdate}
+                />,
                 relUrl: ''
               }, {
                 title: 'Experiments',

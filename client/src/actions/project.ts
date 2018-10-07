@@ -151,6 +151,25 @@ export function createProject(user: string, project: ProjectModel): any {
   };
 }
 
+export function updateProject(projectName: string, updateDict: { [key: string]: any }): any {
+  return (dispatch: any, getState: any) => {
+    const projectUrl = getProjectUrlFromName(projectName, false);
+    return fetch(`${BASE_API_URL}/${projectUrl}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updateDict),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(updateProjectActionCreator(json)));
+  };
+}
+
 export function deleteProject(projectName: string, redirect: boolean = false): any {
   const projectUrl = getProjectUrlFromName(projectName, false);
   return (dispatch: any, getState: any) => {

@@ -13,6 +13,7 @@ export class ProjectModel {
   public is_public: boolean;
   public deleted?: boolean;
   public description?: string;
+  public readme: string;
   public created_at: string;
   public updated_at: string;
   public has_tensorboard: boolean;

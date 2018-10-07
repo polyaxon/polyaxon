@@ -18,6 +18,7 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
+  onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onDelete: () => actions.ProjectAction;
   fetchData?: () => actions.ProjectAction;
   bookmark: () => actions.ProjectAction;
@@ -26,6 +27,12 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
+    onUpdate: (updateDict: { [key: string]: any }) => dispatch(
+      actions.updateProject(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName),
+        updateDict)),
     onDelete: () => dispatch(
       actions.deleteProject(
         getProjectUniqueName(
