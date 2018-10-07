@@ -144,7 +144,7 @@ export default class Tags extends React.Component<Props, State> {
 
             }
             {this.props.onSave && !this.state.isEditMode &&
-            <span className="btn-link" onClick={this.onEdit}>Manage tags</span>
+            <span className="btn-link" onClick={this.onEdit}>Update tags</span>
             }
           </div>
         );
