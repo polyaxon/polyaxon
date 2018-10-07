@@ -14,4 +14,4 @@ class StatusView(RetrieveAPIView):
     throttle_classes = (HealthRateThrottle,)
 
     def retrieve(self, request, *args, **kwargs):
-        return Response({'status': get_status()})
+        return Response(get_status())
