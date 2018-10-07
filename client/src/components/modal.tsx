@@ -15,7 +15,7 @@ function RootModal({modalProps, hideModal}: Props) {
     case modalTypes.CREATE_PROJECT:
       bodyComponent = (
         <CreateProjectForm
-          onSubmit={(values) => {
+          onSubmit={(values: any) => {
             modalProps.props.submitCb({
               ...values,
               id: 100,
