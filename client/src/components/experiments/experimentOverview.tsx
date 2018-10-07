@@ -1,10 +1,12 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import * as actions from '../../actions/experiment';
 import { getExperimentTensorboardUrl } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
+import MDEditor from '../mdEditor/mdEditor';
 import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
@@ -16,6 +18,7 @@ import Tags from '../tags';
 
 export interface Props {
   experiment: ExperimentModel;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
 }
 
 export default class ExperimentOverview extends React.Component<Props, {}> {
@@ -99,6 +102,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               </div>
             </div>
             }
+            <MDEditor content={'foo'} onSave={(content: string) => { this.props.onUpdate({readme: content}); }} />
           </div>
         </div>
       </div>

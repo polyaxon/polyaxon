@@ -31,6 +31,7 @@ import ExperimentOverview from './experimentOverview';
 export interface Props {
   experiment: ExperimentModel;
   onDelete: () => actions.ExperimentAction;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
   fetchData: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
@@ -93,7 +94,10 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
               tabs={[
                 {
                   title: 'Overview',
-                  component: <ExperimentOverview experiment={experiment}/>,
+                  component: <ExperimentOverview
+                    experiment={experiment}
+                    onUpdate={this.props.onUpdate}
+                  />,
                   relUrl: ''
                 }, {
                   title: 'Logs',

@@ -247,6 +247,25 @@ export function deleteExperiment(experimentName: string, redirect: boolean = fal
   };
 }
 
+export function updateExperiment(experimentName: string, updateDict: { [key: string]: any }): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${experimentUrl}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updateDict),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(updateExperimentActionCreator(json)));
+  };
+}
+
 export function stopExperiment(experimentName: string): any {
   const experimentUrl = getExperimentUrlFromName(experimentName, false);
   return (dispatch: any, getState: any) => {

@@ -21,6 +21,7 @@ export function mapStateToProps(state: AppState, params: any) {
 
 export interface DispatchProps {
   fetchData?: () => actions.ExperimentAction;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
   onDelete: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
@@ -35,6 +36,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.experimentId)),
+    onUpdate: (updateDict: { [key: string]: any }) => dispatch(
+      actions.updateExperiment(
+        getExperimentUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.experimentId),
+        updateDict)),
     onDelete: () => dispatch(
       actions.deleteExperiment(
         getExperimentUniqueName(

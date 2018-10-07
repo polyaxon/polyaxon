@@ -26,6 +26,7 @@ export class ExperimentModel {
   public resources: { [key: string]: any };
   public run_env: { [key: string]: any };
   public jobs: string[] = [];
+  public readme: string;
   public bookmarked: boolean;
 }
 
