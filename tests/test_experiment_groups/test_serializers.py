@@ -105,6 +105,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         'name',
         'unique_name',
         'description',
+        'readme',
         'content',
         'tags',
         'hptuning',

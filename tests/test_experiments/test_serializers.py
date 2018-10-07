@@ -236,6 +236,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'last_status',
         'last_metric',
         'description',
+        'readme',
         'experiment_group',
         'config',
         'started_at',

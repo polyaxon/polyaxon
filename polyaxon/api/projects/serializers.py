@@ -46,6 +46,7 @@ class ProjectDetailSerializer(BookmarkedProjectSerializer, TagsSerializerMixin):
     class Meta(BookmarkedProjectSerializer.Meta):
         fields = BookmarkedProjectSerializer.Meta.fields + (
             'merge',
+            'readme',
             'has_code',
             'has_tensorboard',
             'has_notebook',

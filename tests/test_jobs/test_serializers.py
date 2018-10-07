@@ -132,6 +132,7 @@ class TestJobDetailSerializer(BaseTest):
         'user',
         'last_status',
         'description',
+        'readme',
         'config',
         'tags',
         'started_at',

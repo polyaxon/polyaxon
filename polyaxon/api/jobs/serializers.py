@@ -70,6 +70,7 @@ class JobDetailSerializer(BookmarkedJobSerializer, TagsSerializerMixin, DataRefs
             'original',
             'original_job',
             'description',
+            'readme',
             'config',
             'resources',
             'data_refs',
@@ -97,7 +98,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ('id', 'user', 'name', 'description', 'data_refs', 'config',)
+        fields = ('id', 'user', 'name', 'description', 'readme', 'data_refs', 'config',)
 
     def get_user(self, obj):
         return obj.user.username

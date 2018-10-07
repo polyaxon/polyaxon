@@ -87,6 +87,7 @@ class TestProjectDetailSerializer(BaseTest):
         'unique_name',
         'name',
         'description',
+        'readme',
         'user',
         'created_at',
         'updated_at',

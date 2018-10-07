@@ -22,6 +22,7 @@ from db.models.utils import (
     NameableModel,
     OutputsModel,
     PersistenceModel,
+    ReadmeModel,
     RunTimeModel,
     TagModel
 )
@@ -46,6 +47,7 @@ class Experiment(DiffModel,
                  OutputsModel,
                  PersistenceModel,
                  DescribableModel,
+                 ReadmeModel,
                  TagModel,
                  LastStatusMixin,
                  TensorboardJobMixin):

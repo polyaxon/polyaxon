@@ -6,8 +6,8 @@ from django.views.generic import RedirectView
 
 from api.index.errors import Handler50xView, Handler403View, Handler404View  # noqa
 from api.index.health import HealthView
-from api.index.views import IndexView, ReactIndexView
 from api.index.status import StatusView
+from api.index.views import IndexView, ReactIndexView
 from api.users.views import LogoutView
 from constants.urls import API_V1
 from polyaxon.config_manager import config

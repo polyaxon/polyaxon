@@ -32,6 +32,17 @@ class NameableModel(models.Model):
         abstract = True
 
 
+class ReadmeModel(models.Model):
+    readme = models.TextField(blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+    @property
+    def has_readme(self):
+        return bool(self.readme)
+
+
 class SequenceManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().order_by('sequence')

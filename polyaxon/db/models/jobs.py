@@ -15,6 +15,7 @@ from db.models.utils import (
     NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
+    ReadmeModel,
     TagModel
 )
 from event_manager.events.job import JOB_RESTARTED
@@ -29,6 +30,7 @@ class Job(AbstractJob,
           NodeSchedulingModel,
           NameableModel,
           DescribableModel,
+          ReadmeModel,
           TagModel,
           JobMixin):
     """A model that represents the configuration for run job."""

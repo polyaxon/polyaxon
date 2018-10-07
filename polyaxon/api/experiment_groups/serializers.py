@@ -73,6 +73,7 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer, TagsS
     class Meta(BookmarkedExperimentGroupSerializer.Meta):
         fields = BookmarkedExperimentGroupSerializer.Meta.fields + (
             'merge',
+            'readme',
             'current_iteration',
             'content',
             'hptuning',
@@ -130,6 +131,7 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer):
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
+            'readme',
             'search_algorithm',
             'content',
         )
