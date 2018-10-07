@@ -4,10 +4,11 @@ import * as url from 'url';
 import { BASE_API_URL } from '../constants/api';
 import {
   getBuildUrl,
+  getBuildUrlFromName,
+  getProjectUrl,
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
-import { getBuildUrlFromName, getProjectUrl } from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { BuildModel } from '../models/build';
@@ -150,28 +151,28 @@ function _fetchBuilds(buildsUrl: string,
                       filters: { [key: string]: number | boolean | string } = {},
                       dispatch: any,
                       getState: any): any {
-    dispatch(requestBuildsActionCreator());
-    const urlPieces = location.hash.split('?');
-    const baseUrl = urlPieces[0];
-    if (Object.keys(filters).length) {
-      buildsUrl += url.format({query: filters});
-      if (baseUrl) {
-        history.push(baseUrl + url.format({query: filters}));
-      }
-    } else if (urlPieces.length > 1) {
-      history.push(baseUrl);
+  dispatch(requestBuildsActionCreator());
+  const urlPieces = location.hash.split('?');
+  const baseUrl = urlPieces[0];
+  if (Object.keys(filters).length) {
+    buildsUrl += url.format({query: filters});
+    if (baseUrl) {
+      history.push(baseUrl + url.format({query: filters}));
     }
-    return fetch(
-      buildsUrl, {
-        headers: {
-          Authorization: 'token ' + getState().auth.token
-        }
-      })
-      .then((response) => handleAuthError(response, dispatch))
-      .then((response) => response.json())
-      .then((json) => bookmarks ?
-        dispatch(receiveBookmarkedBuildsActionCreator(json.results, json.count)) :
-        dispatch(receiveBuildsActionCreator(json.results, json.count)));
+  } else if (urlPieces.length > 1) {
+    history.push(baseUrl);
+  }
+  return fetch(
+    buildsUrl, {
+      headers: {
+        Authorization: 'token ' + getState().auth.token
+      }
+    })
+    .then((response) => handleAuthError(response, dispatch))
+    .then((response) => response.json())
+    .then((json) => bookmarks ?
+      dispatch(receiveBookmarkedBuildsActionCreator(json.results, json.count)) :
+      dispatch(receiveBuildsActionCreator(json.results, json.count)));
 }
 
 export function fetchBookmarkedBuilds(user: string,
@@ -203,6 +204,27 @@ export function fetchBuild(user: string, projectName: string, buildId: number | 
       .then((response) => handleAuthError(response, dispatch))
       .then((response) => response.json())
       .then((json) => dispatch(receiveBuildActionCreator(json)));
+  };
+}
+
+
+export function updateBuild(buildName: string, updateDict: { [key: string]: any }): any {
+  const buildUrl = getBuildUrlFromName(buildName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${buildUrl}`, {
+        method: 'PATCH',
+        body: JSON.stringify(updateDict),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        }
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(updateBuildActionCreator(json)));
   };
 }
 

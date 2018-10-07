@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import * as actions from '../../actions/build';
 import { BuildModel } from '../../models/build';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
@@ -17,6 +18,7 @@ import Tags from '../tags';
 
 export interface Props {
   build: BuildModel;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.BuildAction;
 }
 
 export default class BuildOverview extends React.Component<Props, {}> {
@@ -55,7 +57,7 @@ export default class BuildOverview extends React.Component<Props, {}> {
               <JobCountMetaInfo count={build.num_jobs} inline={true}/>
             </div>
             <ResourcesMetaInfo resources={build.resources}/>
-            <Tags tags={build.tags}/>
+            <Tags tags={build.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
           </div>
         </div>
       </div>

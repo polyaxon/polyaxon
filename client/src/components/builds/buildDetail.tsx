@@ -24,6 +24,7 @@ import BuildOverview from './buildOverview';
 
 export interface Props {
   build: BuildModel;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.BuildAction;
   onDelete: () => actions.BuildAction;
   onStop: () => actions.BuildAction;
   fetchData: () => actions.BuildAction;
@@ -74,7 +75,10 @@ export default class BuildDetail extends React.Component<Props, {}> {
               tabs={[
                 {
                   title: 'Overview',
-                  component: <BuildOverview build={build}/>,
+                  component: <BuildOverview
+                    build={build}
+                    onUpdate={this.props.onUpdate}
+                  />,
                   relUrl: ''
                 }, {
                   title: 'Logs',

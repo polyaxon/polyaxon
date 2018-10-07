@@ -20,6 +20,7 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
+  onUpdate: (updateDict: { [key: string]: any }) => actions.BuildAction;
   onDelete: () => actions.BuildAction;
   onStop: () => actions.BuildAction;
   fetchData?: () => actions.BuildAction;
@@ -34,6 +35,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.buildId)),
+    onUpdate: (updateDict: { [key: string]: any }) => dispatch(
+      actions.updateBuild(
+        getBuildUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.buildId),
+        updateDict)),
     onDelete: () => dispatch(actions.deleteBuild(
       getBuildUniqueName(
         params.match.params.user,
