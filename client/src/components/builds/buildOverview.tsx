@@ -35,6 +35,7 @@ export default class BuildOverview extends React.Component<Props, {}> {
             <Description
               description={build.description}
               showEmpty={true}
+              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
             />
             <div className="meta">
               <UserMetaInfo user={build.user} inline={true}/>
@@ -57,7 +58,10 @@ export default class BuildOverview extends React.Component<Props, {}> {
               <JobCountMetaInfo count={build.num_jobs} inline={true}/>
             </div>
             <ResourcesMetaInfo resources={build.resources}/>
-            <Tags tags={build.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
+            <Tags
+              tags={build.tags}
+              onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}
+            />
           </div>
         </div>
       </div>

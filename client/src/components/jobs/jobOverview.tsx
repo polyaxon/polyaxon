@@ -33,6 +33,7 @@ export default class JobOverview extends React.Component<Props, {}> {
             <Description
               description={job.description}
               showEmpty={true}
+              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
             />
             <div className="meta">
               <UserMetaInfo user={job.user} inline={true}/>
@@ -53,7 +54,10 @@ export default class JobOverview extends React.Component<Props, {}> {
               <Status status={job.last_status}/>
             </div>
             <ResourcesMetaInfo resources={job.resources}/>
-            <Tags tags={job.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
+            <Tags
+              tags={job.tags}
+              onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}
+            />
             <MDEditor
               content={job.readme}
               onSave={(readme: string) => { this.props.onUpdate({readme}); }}

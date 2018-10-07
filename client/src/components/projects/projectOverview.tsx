@@ -34,6 +34,7 @@ export default class ProjectOverview extends React.Component<Props, {}> {
             <Description
               description={project.description}
               showEmpty={true}
+              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
             />
             <div className="meta">
               <MetaInfo
@@ -82,7 +83,10 @@ export default class ProjectOverview extends React.Component<Props, {}> {
             </span>
             </div>
             }
-            <Tags tags={project.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
+            <Tags
+              tags={project.tags}
+              onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}
+            />
             <MDEditor
               content={project.readme}
               onSave={(readme: string) => { this.props.onUpdate({readme}); }}

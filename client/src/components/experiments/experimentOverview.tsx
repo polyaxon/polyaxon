@@ -35,6 +35,7 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
             <Description
               description={experiment.description}
               showEmpty={true}
+              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
             />
             <div className="meta">
               <UserMetaInfo user={experiment.user} inline={true}/>
@@ -62,7 +63,10 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               </span>
             </div>
             }
-            <Tags tags={experiment.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
+            <Tags
+              tags={experiment.tags}
+              onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}
+            />
             {experiment.declarations &&
             <div className="row">
               <div className="col-md-8">

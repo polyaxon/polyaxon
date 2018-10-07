@@ -35,6 +35,7 @@ export default class GroupOverview extends React.Component<Props, {}> {
             <Description
               description={group.description}
               showEmpty={true}
+              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
             />
             <div className="meta">
               <UserMetaInfo user={group.user} inline={true}/>
@@ -119,7 +120,10 @@ export default class GroupOverview extends React.Component<Props, {}> {
               </span>
             </div>
             }
-            <Tags tags={group.tags} onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}/>
+            <Tags
+              tags={group.tags}
+              onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}
+            />
             <MDEditor
               content={group.readme}
               onSave={(readme: string) => { this.props.onUpdate({readme}); }}
