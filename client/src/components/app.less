@@ -154,3 +154,51 @@ a {
     text-decoration: none;
   }
 }
+
+.btn-link {
+    display: inline-block;
+    padding: 0;
+    font-size: inherit;
+    color: @gl-link-color;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.input-multi-select>div{
+  &>div {
+    padding: 0 4px;
+    &:first-child > div {
+      background-color: #f1f8ff;
+      color: #317fd8;
+
+      &:last-child {
+        background-color: unset;
+        color: #000;
+
+        input {
+          margin: 0;
+          font: inherit;
+        }
+      }
+
+      &>div:last-child:hover {
+        background-color: #8bc9ff;
+        color: #245ad8;
+        cursor: pointer;
+      }
+    }
+    &:last-child > div {
+      padding: 4px;
+    }
+  }
+}
