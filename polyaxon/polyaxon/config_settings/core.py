@@ -9,6 +9,7 @@ K8S_GPU_RESOURCE_KEY = config.get_string('POLYAXON_K8S_GPU_RESOURCE_KEY')
 CLUSTER_ID = config.get_string('POLYAXON_CLUSTER_ID', is_optional=True)
 REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
 OUTPUTS_ARCHIVE_ROOT = '/tmp/archived_outputs'
+FILE_UPLOAD_PERMISSIONS = 0o644
 
 ALLOWED_HOSTS = ['*']
 
