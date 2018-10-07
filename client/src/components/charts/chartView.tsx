@@ -72,7 +72,7 @@ export default class ChartView extends React.Component<Props, {}> {
 
     const getTracePrefix = (metric: MetricModel) => {
       return this.props.resource === 'groups' ?
-        `${metric.experiment}` :
+        `xp.${metric.experiment}` :
         '';
     };
 
