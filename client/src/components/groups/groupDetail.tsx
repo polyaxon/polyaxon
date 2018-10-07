@@ -19,6 +19,7 @@ import GroupOverview from './groupOverview';
 
 export interface Props {
   group: GroupModel;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.GroupAction;
   onDelete: () => actions.GroupAction;
   onStop: () => actions.GroupAction;
   fetchData: () => actions.GroupAction;
@@ -68,7 +69,10 @@ export default class GroupDetail extends React.Component<Props, {}> {
               tabs={[
                 {
                   title: 'Overview',
-                  component: <GroupOverview group={group}/>,
+                  component: <GroupOverview
+                    group={group}
+                    onUpdate={this.props.onUpdate}
+                  />,
                   relUrl: ''
                 }, {
                   title: 'Experiments',

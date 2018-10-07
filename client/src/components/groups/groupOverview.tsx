@@ -1,10 +1,12 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import * as actions from '../../actions/group';
 import { getGroupTensorboardUrl } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
+import MDEditor from '../mdEditor/mdEditor';
 import ConcurrencyMetaInfo from '../metaInfo/concurrencyMetaInfo';
 import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
@@ -17,6 +19,7 @@ import Tags from '../tags';
 
 export interface Props {
   group: GroupModel;
+  onUpdate: (updateDict: { [key: string]: any }) => actions.GroupAction;
 }
 
 export default class GroupOverview extends React.Component<Props, {}> {
@@ -117,6 +120,10 @@ export default class GroupOverview extends React.Component<Props, {}> {
             </div>
             }
             <Tags tags={group.tags}/>
+            <MDEditor
+              content={group.readme}
+              onSave={(content: string) => { this.props.onUpdate({readme: content}); }}
+            />
           </div>
         </div>
       </div>

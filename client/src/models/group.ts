@@ -1,10 +1,11 @@
 import { LastFetchedNames } from './utils';
 
 export class GroupModel {
+  public id: number;
   public uuid: string;
   public unique_name: string;
   public description: string;
-  public id: number;
+  public readme: string;
   public num_experiments: number;
   public user: string;
   public concurrency: number;

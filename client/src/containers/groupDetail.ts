@@ -19,6 +19,7 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
+  onUpdate: (updateDict: { [key: string]: any }) => actions.GroupAction;
   onDelete: () => actions.GroupAction;
   onStop: () => actions.GroupAction;
   fetchData?: () => actions.GroupAction;
@@ -33,6 +34,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.groupId)),
+    onUpdate: (updateDict: { [key: string]: any }) => dispatch(
+      actions.updateGroup(
+        getGroupUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.groupId),
+        updateDict)),
     onDelete: () => dispatch(actions.deleteGroup(
       getGroupUniqueName(
         params.match.params.user,

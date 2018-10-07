@@ -199,6 +199,26 @@ export function fetchGroup(user: string, projectName: string, groupId: number): 
   };
 }
 
+export function updateGroup(groupName: string, updateDict: { [key: string]: any }): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${groupUrl}`, {
+        method: 'PATCH',
+        body: JSON.stringify(updateDict),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(updateGroupActionCreator(json)));
+  };
+}
+
 export function deleteGroup(groupName: string, redirect: boolean = false): any {
   const groupUrl = getGroupUrlFromName(groupName, false);
   return (dispatch: any, getState: any) => {
