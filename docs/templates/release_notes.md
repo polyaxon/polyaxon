@@ -3,25 +3,21 @@
  * Add experiment groups' metrics/visualizations.
  * Add experiments' metrics comparison.
  * Add readme and note taking on project/group/experiment/job's overviews.
- * (`Data Migration`) Update Experiment's last metric, it will include all values even 
- if they were not reported at the current step. 
- This is a new behaviour to allow user to aggregate and have an overview over 
- all values reported from steps/epochs' metrics.
+ * (`Data Migration`) Update Experiment's last metric, it will include all values even if they were not reported at the current step. This is a new behaviour to allow user to aggregate and have an overview over 
+ all values reported from previous steps/epochs' metrics.
  * Add tags editing from dashboard.
  * Add description editing from dashboard.
  * Add health status endpoint.
  * Add tracking API documentation.
- * Fix issue with hyperperparameters tuning; 
- group stuck trying to sample new values when user requests larger number of experiments than the provided space.
+ * Fix issue with hyperperparameters tuning; experiment groups are stuck trying to sample new values when user requests larger number of experiments than the provided space (happens only when using discrete distributions).
  * Add is_continuous property to space values.
  * Fix issue with cli upload large files.
  * Fix issue with cli losing connection due to timeout.
- * Update annotation for mounting volumes with read-only option, 
- the read-only is now applied to both the volume and the persistence claim.
+ * Update annotation for mounting volumes with read-only option, the read-only is now applied to both the volume and the persistence claim.
  * Update error message for cli upload.
  * Fix `notebook -u` command, an old keyword was still being passed.
  * Update static files caching options.
- * Attempt to stabilize connection to broker, a better solution is required.
+ * Attempt to stabilize connection to broker(better solution is required).
  * Upgraded requirements.
  * Removed unused frontend dependencies. 
 
