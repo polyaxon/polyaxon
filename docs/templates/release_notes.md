@@ -19,7 +19,8 @@
  * Update static files caching options.
  * Attempt to stabilize connection to broker(better solution is required).
  * Upgraded requirements.
- * Removed unused frontend dependencies. 
+ * Removed unused frontend dependencies.
+ * Update throttling behavior for some endpoints. 
 
 ## 0.2.6
 
