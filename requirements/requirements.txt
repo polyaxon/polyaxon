@@ -3,4 +3,4 @@ marshmallow==2.15.6
 numpy==1.15.2
 python-dateutil==2.7.3
 pytz==2018.5
-rhea==0.3.8
+rhea==0.4.0
