@@ -139,16 +139,19 @@ def experiments_stop(self,
                      experiment_uuid,
                      specification,
                      update_status=True):
-    specification = ExperimentSpecification.read(specification)
-    deleted = experiment_scheduler.stop_experiment(
-        project_name=project_name,
-        project_uuid=project_uuid,
-        experiment_name=experiment_name,
-        experiment_group_name=experiment_group_name,
-        experiment_group_uuid=experiment_group_uuid,
-        experiment_uuid=experiment_uuid,
-        specification=specification,
-    )
+    if specification:
+        specification = ExperimentSpecification.read(specification)
+        deleted = experiment_scheduler.stop_experiment(
+            project_name=project_name,
+            project_uuid=project_uuid,
+            experiment_name=experiment_name,
+            experiment_group_name=experiment_group_name,
+            experiment_group_uuid=experiment_group_uuid,
+            experiment_uuid=experiment_uuid,
+            specification=specification,
+        )
+    else:
+        deleted = True
 
     if not deleted and self.request.retries < 2:
         _logger.info('Trying again to delete job `%s` in experiment.', experiment_name)
