@@ -10,6 +10,12 @@ export const FILTER_EXAMPLES: { [key: string]: (value: string) => string } = {
 
 export const PROJECT_FILTER_OPTIONS = [
   {
+    filter: 'id',
+    type: 'value',
+    desc: 'id: 13 or id: 31|300|1022 or tags: ~12|23',
+    icon: 'circle',
+  },
+  {
     filter: 'created_at',
     type: 'datetime',
     desc: FILTER_EXAMPLES.datetime('created_at'),
