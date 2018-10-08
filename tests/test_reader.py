@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from rhea import reader, RheaError
+from rhea import RheaError, reader
 from rhea.config import ConfigSpec
 
 
