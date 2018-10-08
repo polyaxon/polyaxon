@@ -11,6 +11,8 @@ RABBITMQ_USER = config.get_string('POLYAXON_RABBITMQ_USER', is_optional=True)
 RABBITMQ_PASSWORD = config.get_string('POLYAXON_RABBITMQ_PASSWORD',
                                       is_secret=True,
                                       is_optional=True)
+BROKER_POOL_LIMIT = None
+
 if RABBITMQ_USER and RABBITMQ_PASSWORD:
     CELERY_BROKER_URL = 'amqp://{user}:{password}@{url}'.format(
         user=RABBITMQ_USER,

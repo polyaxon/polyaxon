@@ -60,6 +60,7 @@ class PublisherService(Service):
                             'task_type': task_type,
                             'task_idx': task_idx
                         },
+                        retry=True,
                         routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS_EXPERIMENTS,
                                                       experiment_uuid,
                                                       job_uuid),
@@ -83,6 +84,7 @@ class PublisherService(Service):
                             'job_uuid': job_uuid,
                             'log_lines': log_lines,
                         },
+                        retry=True,
                         routing_key='{}.{}'.format(routing_key, job_uuid),
                         exchange=settings.INTERNAL_EXCHANGE,
                     )
