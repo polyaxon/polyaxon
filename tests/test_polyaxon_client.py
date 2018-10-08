@@ -23,6 +23,7 @@ from polyaxon_client.transport import Transport
 
 class TestPolyaxonClient(TestCase):
     def test_client(self):
+        settings.SECRET_USER_TOKEN = None
         with self.assertRaises(PolyaxonClientException):
             PolyaxonClient(host=None, token=None)
         client = PolyaxonClient(host=None, token=None, in_cluster=True)
