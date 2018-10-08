@@ -4,6 +4,7 @@
 
 field                         | condition
 ------------------------------|------------------
+`id`                          | [value condition](/query_syntax/introduction/#query-with-value-condition)
 `created_at`                  | [datetime condition](/query_syntax/introduction/#query-with-datetime-condition)
 `updated_at`                  | [datetime condition](/query_syntax/introduction/#query-with-datetime-condition)
 `started_at`                  | [datetime condition](/query_syntax/introduction/#query-with-datetime-condition)
