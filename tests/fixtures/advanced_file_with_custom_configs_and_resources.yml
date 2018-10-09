@@ -12,8 +12,8 @@ environment:
     data: ['data1', 'data2']
     outputs: 'outputs1'
 
-  secrets: ['secret1', 'secret2']
-  configmaps: ['configmap1', 'configmap2']
+  secret_refs: ['secret1', 'secret2']
+  configmap_refs: ['configmap1', 'configmap2']
 
   resources:
     cpu:

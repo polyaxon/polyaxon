@@ -168,8 +168,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
-        assert spec.secrets == ['secret1', 'secret2']
-        assert spec.configmaps == ['configmap1', 'configmap2']
+        assert spec.secret_refs == ['secret1', 'secret2']
+        assert spec.configmap_refs == ['configmap1', 'configmap2']
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
         assert spec.environment.tensorflow.delay_workers_by_global_step is True
@@ -1348,8 +1348,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
-        assert spec.secrets == ['secret1', 'secret2']
-        assert spec.configmaps == ['configmap1', 'configmap2']
+        assert spec.secret_refs == ['secret1', 'secret2']
+        assert spec.configmap_refs == ['configmap1', 'configmap2']
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
         assert spec.environment.node_selector == node_selector
@@ -1422,8 +1422,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
-        assert spec.secrets == ['secret1', 'secret2']
-        assert spec.configmaps == ['configmap1', 'configmap2']
+        assert spec.secret_refs == ['secret1', 'secret2']
+        assert spec.configmap_refs == ['configmap1', 'configmap2']
 
         node_selector = {'polyaxon.com': 'node_for_jobs'}
         assert spec.environment.node_selector == node_selector

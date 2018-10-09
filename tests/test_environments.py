@@ -416,12 +416,12 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add secrets
-        config_dict['secrets'] = ['secret1', 'secret2']
+        config_dict['secret_refs'] = ['secret1', 'secret2']
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add configmaps
-        config_dict['configmaps'] = ['configmap1', 'configmap2']
+        config_dict['configmap_refs'] = ['configmap1', 'configmap2']
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 

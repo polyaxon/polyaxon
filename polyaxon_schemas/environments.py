@@ -810,8 +810,8 @@ class EnvironmentSchema(PodEnvironmentSchema):
     cluster_uuid = UUID(allow_none=True)
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
     outputs = fields.Nested(OutputsSchema, allow_none=True)
-    secrets = fields.List(fields.Str(), allow_none=True)
-    configmaps = fields.List(fields.Str(), allow_none=True)
+    secret_refs = fields.List(fields.Str(), allow_none=True)
+    configmap_refs = fields.List(fields.Str(), allow_none=True)
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
     horovod = fields.Nested(HorovodSchema, allow_none=True)
     mxnet = fields.Nested(MXNetSchema, allow_none=True)
@@ -861,8 +861,8 @@ class EnvironmentConfig(PodEnvironmentConfig):
                  persistence=None,
                  outputs=None,
                  resources=None,
-                 secrets=None,
-                 configmaps=None,
+                 secret_refs=None,
+                 configmap_refs=None,
                  node_selector=None,
                  affinity=None,
                  tolerations=None,
@@ -873,8 +873,8 @@ class EnvironmentConfig(PodEnvironmentConfig):
         self.cluster_uuid = cluster_uuid
         self.persistence = persistence
         self.outputs = outputs
-        self.secrets = secrets
-        self.configmaps = configmaps
+        self.secret_refs = secret_refs
+        self.configmap_refs = configmap_refs
         super(EnvironmentConfig, self).__init__(
             resources=resources,
             node_selector=node_selector,
