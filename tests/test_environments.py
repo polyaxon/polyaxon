@@ -415,6 +415,16 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        # Add secrets
+        config_dict['secrets'] = ['secret1', 'secret2']
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add configmaps
+        config_dict['configmaps'] = ['configmap1', 'configmap2']
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add tensorflow
         config_dict['tensorflow'] = {
             'n_workers': 10,

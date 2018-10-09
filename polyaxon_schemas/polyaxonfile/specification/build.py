@@ -53,6 +53,14 @@ class BuildSpecification(BaseSpecification):
         return self.environment.outputs if self.environment else None
 
     @cached_property
+    def secrets(self):
+        return self.environment.secrets if self.environment else None
+
+    @cached_property
+    def configmaps(self):
+        return self.environment.configmaps if self.environment else None
+
+    @cached_property
     def node_selector(self):
         return self.environment.node_selector if self.environment else None
 

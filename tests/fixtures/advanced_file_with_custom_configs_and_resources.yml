@@ -12,6 +12,9 @@ environment:
     data: ['data1', 'data2']
     outputs: 'outputs1'
 
+  secrets: ['secret1', 'secret2']
+  configmaps: ['configmap1', 'configmap2']
+
   resources:
     cpu:
       requests: 1
