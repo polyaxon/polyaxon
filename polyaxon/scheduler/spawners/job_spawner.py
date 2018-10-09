@@ -2,9 +2,18 @@ from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates.base_pods import get_pod_command_args
-from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
+from scheduler.spawners.templates.env_vars import (
+    get_env_var,
+    get_service_env_vars,
+    validate_configmap_refs,
+    validate_secret_refs
+)
 from scheduler.spawners.templates.jobs import pods
-from scheduler.spawners.templates.volumes import get_pod_refs_outputs_volumes, get_pod_volumes
+from scheduler.spawners.templates.volumes import (
+    get_pod_refs_outputs_volumes,
+    get_pod_volumes,
+    get_shm_volumes
+)
 
 
 class JobSpawner(K8SManager):
@@ -75,6 +84,7 @@ class JobSpawner(K8SManager):
                   node_selector=None,
                   affinity=None,
                   tolerations=None):
+        # Set and validate volumes
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
         refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
@@ -87,6 +97,14 @@ class JobSpawner(K8SManager):
             persistence_outputs=persistence_outputs)
         volumes += refs_volumes
         volume_mounts += refs_volume_mounts
+        shm_volumes, shm_volume_mounts = get_shm_volumes()
+        volumes += shm_volumes
+        volume_mounts += shm_volume_mounts
+
+        # Validate secret and configmap refs
+        secret_refs = validate_secret_refs(self.spec.secret_refs)
+        configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
+
         command, args = self.get_pod_command_args()
         pod = self.pod_manager.get_pod(
             volume_mounts=volume_mounts,
@@ -99,6 +117,8 @@ class JobSpawner(K8SManager):
             command=command,
             args=args,
             resources=resources,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,

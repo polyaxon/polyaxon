@@ -141,6 +141,14 @@ class Experiment(DiffModel,
         return ExperimentSpecification(values=self.config) if self.config else None
 
     @cached_property
+    def secret_refs(self):
+        return self.specification.secret_refs
+
+    @cached_property
+    def configmap_refs(self):
+        return self.specification.configmap_refs
+
+    @cached_property
     def resources(self):
         if not self.specification:
             return None

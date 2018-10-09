@@ -14,6 +14,7 @@ from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
     get_job_env_vars,
+    get_pod_env_from,
     get_resources_env_vars
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
@@ -124,11 +125,14 @@ class PodManager(object):
                           persistence_data=None,
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
+                          secret_refs=None,
+                          configmap_refs=None,
                           resources=None,
                           ephemeral_token=None):
         """Pod job container for task."""
         assert self.cluster_def is not None
 
+        # Env vars preparations
         env_vars = get_list(env_vars)
         outputs_path = get_experiment_outputs_path(
             persistence_outputs=persistence_outputs,
@@ -152,8 +156,10 @@ class PodManager(object):
             get_env_var(name=constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME,
                         value=json.dumps(self.experiment_labels)),
         ]
-
         env_vars += get_resources_env_vars(resources=resources)
+
+        # Env from configmap and secret refs
+        env_from = get_pod_env_from(secret_refs=secret_refs, configmap_refs=configmap_refs)
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
         return client.V1Container(name=self.job_container_name,
@@ -162,6 +168,7 @@ class PodManager(object):
                                   args=args,
                                   ports=ports,
                                   env=env_vars,
+                                  env_from=env_from,
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
 
@@ -217,6 +224,8 @@ class PodManager(object):
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
                           resources=None,
+                          secret_refs=None,
+                          configmap_refs=None,
                           ephemeral_token=None,
                           node_selector=None,
                           affinity=None,
@@ -247,6 +256,8 @@ class PodManager(object):
                                                persistence_data=persistence_data,
                                                outputs_refs_jobs=outputs_refs_jobs,
                                                outputs_refs_experiments=outputs_refs_experiments,
+                                               secret_refs=secret_refs,
+                                               configmap_refs=configmap_refs,
                                                resources=resources,
                                                ephemeral_token=ephemeral_token)
 
@@ -293,6 +304,8 @@ class PodManager(object):
                 persistence_data=None,
                 outputs_refs_jobs=None,
                 outputs_refs_experiments=None,
+                secret_refs=None,
+                configmap_refs=None,
                 resources=None,
                 ephemeral_token=None,
                 node_selector=None,
@@ -315,6 +328,8 @@ class PodManager(object):
             persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,

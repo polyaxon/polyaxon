@@ -114,3 +114,40 @@ def get_resources_env_vars(resources):
         )
 
     return env_vars
+
+
+class EnvFromRefFoundError(Exception):
+    pass
+
+
+def validate_secret_refs(secret_refs):
+    for secret_ref in secret_refs:
+        if secret_ref not in settings.REFS_SECRETS:
+            raise EnvFromRefFoundError('secret_ref with name `{}` was defined in specification, '
+                                       'but was not found'.format(secret_ref))
+    return secret_refs
+
+
+def validate_configmap_refs(configmap_refs):
+    for configmap_ref in configmap_refs:
+        if configmap_ref not in settings.REFS_CONFIG_MAPS:
+            raise EnvFromRefFoundError('configmap_ref with name `{}` was defined in specification, '
+                                       'but was not found'.format(configmap_ref))
+    return configmap_refs
+
+
+def get_env_from(secret_ref=None, config_map_ref=None):
+    if not any([secret_ref, config_map_ref]) or all([secret_ref, config_map_ref]):
+        raise ValueError('One and only one value is required for get_env_from.')
+
+    if secret_ref:
+        return client.V1EnvFromSource(secret_ref=secret_ref)
+    return client.V1EnvFromSource(config_map_ref=config_map_ref)
+
+
+def get_pod_env_from(secret_refs=None, configmap_refs=None):
+    secret_refs = secret_refs or []
+    configmap_refs = configmap_refs or []
+    env_from = []
+    env_from += [get_env_from(secret_ref=secret_ref) for secret_ref in secret_refs]
+    env_from += [get_env_from(config_map_ref=configmap_ref) for configmap_ref in configmap_refs]

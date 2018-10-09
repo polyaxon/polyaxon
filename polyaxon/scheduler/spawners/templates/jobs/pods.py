@@ -12,6 +12,7 @@ from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
     get_job_env_vars,
+    get_pod_env_from,
     get_resources_env_vars
 )
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
@@ -95,11 +96,14 @@ class PodManager(object):
                           persistence_data,
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
+                          secret_refs=None,
+                          configmap_refs=None,
                           env_vars=None,
                           command=None,
                           args=None,
                           resources=None):
         """Pod job container for task."""
+        # Env vars preparation
         env_vars = get_list(env_vars)
         env_vars += get_job_env_vars(
             log_level=self.log_level,
@@ -116,6 +120,9 @@ class PodManager(object):
 
         env_vars += get_resources_env_vars(resources=resources)
 
+        # Env from configmap and secret refs
+        env_from = get_pod_env_from(secret_refs=secret_refs, configmap_refs=configmap_refs)
+
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
         return client.V1Container(name=self.job_container_name,
                                   image=self.job_docker_image,
@@ -123,6 +130,7 @@ class PodManager(object):
                                   args=args,
                                   ports=ports or None,
                                   env=env_vars,
+                                  env_from=env_from,
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
 
@@ -162,6 +170,8 @@ class PodManager(object):
                           command=None,
                           args=None,
                           resources=None,
+                          secret_refs=None,
+                          configmap_refs=None,
                           node_selector=None,
                           affinity=None,
                           tolerations=None,
@@ -179,6 +189,8 @@ class PodManager(object):
                                                persistence_data=persistence_data,
                                                outputs_refs_jobs=outputs_refs_jobs,
                                                outputs_refs_experiments=outputs_refs_experiments,
+                                               secret_refs=secret_refs,
+                                               configmap_refs=configmap_refs,
                                                env_vars=env_vars,
                                                command=command,
                                                args=args,
@@ -223,6 +235,8 @@ class PodManager(object):
                 command=None,
                 args=None,
                 resources=None,
+                secret_refs=None,
+                configmap_refs=None,
                 node_selector=None,
                 affinity=None,
                 tolerations=None,
@@ -242,6 +256,8 @@ class PodManager(object):
             command=command,
             args=args,
             resources=resources,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,

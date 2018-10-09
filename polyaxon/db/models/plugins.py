@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJob
 from db.models.utils import (
@@ -40,3 +41,11 @@ class PluginJobBase(AbstractJob,
     class Meta:
         app_label = 'db'
         abstract = True
+
+    @cached_property
+    def secret_refs(self):
+        return self.specification.secret_refs
+
+    @cached_property
+    def configmap_refs(self):
+        return self.specification.configmap_refs

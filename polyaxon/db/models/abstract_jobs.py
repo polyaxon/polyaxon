@@ -61,6 +61,14 @@ class JobMixin(object):
         return self.specification.build.image
 
     @cached_property
+    def secret_refs(self):
+        return self.specification.secret_refs
+
+    @cached_property
+    def configmap_refs(self):
+        return self.specification.configmap_refs
+
+    @cached_property
     def resources(self):
         return self.specification.resources
 

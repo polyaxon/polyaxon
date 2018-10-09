@@ -10,7 +10,13 @@ from libs.paths.projects import get_project_repos_path
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
-from scheduler.spawners.templates.env_vars import get_job_env_vars
+from scheduler.spawners.templates.env_vars import (
+    get_env_from,
+    get_job_env_vars,
+    get_pod_env_from,
+    validate_configmap_refs,
+    validate_secret_refs
+)
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -94,6 +100,8 @@ class NotebookSpawner(ProjectJobSpawner):
                        outputs_refs_jobs=None,
                        outputs_refs_experiments=None,
                        resources=None,
+                       secret_refs=None,
+                       configmap_refs=None,
                        node_selector=None,
                        affinity=None,
                        tolerations=None,
@@ -122,6 +130,9 @@ class NotebookSpawner(ProjectJobSpawner):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments
         )
+        secret_refs = validate_secret_refs(secret_refs)
+        configmap_refs = validate_configmap_refs(configmap_refs)
+        env_from = get_pod_env_from(secret_refs=secret_refs, configmap_refs=configmap_refs)
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
@@ -155,6 +166,7 @@ class NotebookSpawner(ProjectJobSpawner):
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             env_vars=env_vars,
+            env_from=env_from,
             resources=resources,
             node_selector=node_selector,
             affinity=affinity,

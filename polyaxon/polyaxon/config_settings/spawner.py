@@ -1,18 +1,27 @@
 from polyaxon.config_manager import config
 
 PUBLIC_PLUGIN_JOBS = config.get_boolean('POLYAXON_PUBLIC_PLUGIN_JOBS', is_optional=True)
-# Roles
-ROLE_LABELS_WORKER = config.get_string('POLYAXON_ROLE_LABELS_WORKER')
-ROLE_LABELS_DASHBOARD = config.get_string('POLYAXON_ROLE_LABELS_DASHBOARD')
-ROLE_LABELS_LOG = config.get_string('POLYAXON_ROLE_LABELS_LOG')
-ROLE_LABELS_API = config.get_string('POLYAXON_ROLE_LABELS_API')
+
+# k8s
 K8S_SERVICE_ACCOUNT_NAME = config.get_string('POLYAXON_K8S_SERVICE_ACCOUNT_NAME')
 K8S_RBAC_ENABLED = config.get_boolean('POLYAXON_K8S_RBAC_ENABLED')
 K8S_PROVISIONER_ENABLED = config.get_boolean('POLYAXON_K8S_PROVISIONER_ENABLED')
 K8S_INGRESS_ENABLED = config.get_boolean('POLYAXON_K8S_INGRESS_ENABLED')
 K8S_INGRESS_ANNOTATIONS = config.get_string('POLYAXON_K8S_INGRESS_ANNOTATIONS', is_optional=True)
+
+# Refs
+REFS_SECRETS = config.get_string('POLYAXON_REFS_SECRETS', is_optional=True, is_list=True)
+REFS_CONFIG_MAPS = config.get_string('POLYAXON_REFS_CONFIG_MAPS', is_optional=True, is_list=True)
+
+# Ports
 TENSORBOARD_PORT_RANGE = [5700, 6700]
 NOTEBOOK_PORT_RANGE = [6700, 7700]
+
+# Roles
+ROLE_LABELS_WORKER = config.get_string('POLYAXON_ROLE_LABELS_WORKER')
+ROLE_LABELS_DASHBOARD = config.get_string('POLYAXON_ROLE_LABELS_DASHBOARD')
+ROLE_LABELS_LOG = config.get_string('POLYAXON_ROLE_LABELS_LOG')
+ROLE_LABELS_API = config.get_string('POLYAXON_ROLE_LABELS_API')
 
 # Types
 TYPE_LABELS_CORE = config.get_string('POLYAXON_TYPE_LABELS_CORE')
