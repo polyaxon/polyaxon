@@ -122,10 +122,10 @@ class TestEnvVars(TestCase):
             get_env_from(config_map_ref=None)
 
         env_from_secret = get_env_from(secret_ref='foo')
-        assert env_from_secret.secret_ref == 'foo'
+        assert env_from_secret.secret_ref == {'name': 'foo'}
 
         env_from_secret = get_env_from(config_map_ref='foo')
-        assert env_from_secret.config_map_ref == 'foo'
+        assert env_from_secret.config_map_ref == {'name': 'foo'}
 
     def test_get_pod_env_from(self):
         env_from = get_pod_env_from(secret_refs=['secret1', 'secret2'],
