@@ -141,8 +141,8 @@ def get_env_from(secret_ref=None, config_map_ref=None):
         raise ValueError('One and only one value is required for get_env_from.')
 
     if secret_ref:
-        return client.V1EnvFromSource(secret_ref=secret_ref)
-    return client.V1EnvFromSource(config_map_ref=config_map_ref)
+        return client.V1EnvFromSource(secret_ref={'name': secret_ref})
+    return client.V1EnvFromSource(config_map_ref={'name': config_map_ref})
 
 
 def get_pod_env_from(secret_refs=None, configmap_refs=None):
