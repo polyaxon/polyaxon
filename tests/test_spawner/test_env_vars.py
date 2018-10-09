@@ -75,12 +75,12 @@ class TestEnvVars(TestCase):
         assert any(item.name == 'NVIDIA_VISIBLE_DEVICES' and item.value == 'none'
                    for item in env_vars)
 
-    @override_settings(REFS_SECRETS=None)
+    @override_settings(REFS_SECRETS=[])
     def test_validate_secret_refs_passes_if_not_specified(self):
         assert validate_secret_refs(secret_refs=[]) == []
-        assert validate_secret_refs(secret_refs=None) == []
+        assert validate_secret_refs(secret_refs=None) is None
 
-    @override_settings(REFS_SECRETS=None)
+    @override_settings(REFS_SECRETS=[])
     def test_validate_secret_refs_raises_if_no_secret_refs_specified(self):
         with self.assertRaises(EnvFromRefFoundError):
             validate_secret_refs(secret_refs=['foo'])
@@ -93,12 +93,12 @@ class TestEnvVars(TestCase):
         assert validate_secret_refs(secret_refs=['foo']) == ['foo']
         assert validate_secret_refs(secret_refs=['foo', 'bar']) == ['foo', 'bar']
 
-    @override_settings(REFS_CONFIG_MAPS=None)
+    @override_settings(REFS_CONFIG_MAPS=[])
     def test_validate_configmap_refs_passes_if_not_specified(self):
         assert validate_configmap_refs(configmap_refs=[]) == []
-        assert validate_configmap_refs(configmap_refs=None) == []
+        assert validate_configmap_refs(configmap_refs=None) is None
 
-    @override_settings(REFS_CONFIG_MAPS=None)
+    @override_settings(REFS_CONFIG_MAPS=[])
     def test_validate_configmap_refs_raises_if_no_secret_refs_specified(self):
         with self.assertRaises(EnvFromRefFoundError):
             validate_configmap_refs(configmap_refs=['foo'])
@@ -114,6 +114,12 @@ class TestEnvVars(TestCase):
     def test_get_env_from(self):
         with self.assertRaises(ValueError):
             get_env_from(secret_ref='foo', config_map_ref='bar')
+
+        with self.assertRaises(ValueError):
+            get_env_from(secret_ref=None)
+
+        with self.assertRaises(ValueError):
+            get_env_from(config_map_ref=None)
 
         env_from_secret = get_env_from(secret_ref='foo')
         assert env_from_secret.secret_ref == 'foo'

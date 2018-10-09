@@ -121,7 +121,7 @@ class EnvFromRefFoundError(Exception):
 
 
 def validate_secret_refs(secret_refs):
-    for secret_ref in secret_refs:
+    for secret_ref in secret_refs or []:
         if secret_ref not in settings.REFS_SECRETS:
             raise EnvFromRefFoundError('secret_ref with name `{}` was defined in specification, '
                                        'but was not found'.format(secret_ref))
@@ -129,7 +129,7 @@ def validate_secret_refs(secret_refs):
 
 
 def validate_configmap_refs(configmap_refs):
-    for configmap_ref in configmap_refs:
+    for configmap_ref in configmap_refs or []:
         if configmap_ref not in settings.REFS_CONFIG_MAPS:
             raise EnvFromRefFoundError('configmap_ref with name `{}` was defined in specification, '
                                        'but was not found'.format(configmap_ref))
@@ -151,3 +151,4 @@ def get_pod_env_from(secret_refs=None, configmap_refs=None):
     env_from = []
     env_from += [get_env_from(secret_ref=secret_ref) for secret_ref in secret_refs]
     env_from += [get_env_from(config_map_ref=configmap_ref) for configmap_ref in configmap_refs]
+    return env_from

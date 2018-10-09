@@ -11,7 +11,6 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.env_vars import (
-    get_env_from,
     get_job_env_vars,
     get_pod_env_from,
     validate_configmap_refs,

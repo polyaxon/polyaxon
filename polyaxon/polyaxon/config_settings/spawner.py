@@ -10,8 +10,14 @@ K8S_INGRESS_ENABLED = config.get_boolean('POLYAXON_K8S_INGRESS_ENABLED')
 K8S_INGRESS_ANNOTATIONS = config.get_string('POLYAXON_K8S_INGRESS_ANNOTATIONS', is_optional=True)
 
 # Refs
-REFS_SECRETS = config.get_string('POLYAXON_REFS_SECRETS', is_optional=True, is_list=True)
-REFS_CONFIG_MAPS = config.get_string('POLYAXON_REFS_CONFIG_MAPS', is_optional=True, is_list=True)
+REFS_SECRETS = config.get_string('POLYAXON_REFS_SECRETS',
+                                 is_optional=True,
+                                 is_list=True,
+                                 default=())
+REFS_CONFIG_MAPS = config.get_string('POLYAXON_REFS_CONFIG_MAPS',
+                                     is_optional=True,
+                                     is_list=True,
+                                     default=())
 
 # Ports
 TENSORBOARD_PORT_RANGE = [5700, 6700]
