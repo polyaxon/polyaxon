@@ -46,9 +46,10 @@ def get_outputs_refs_paths():
     The references outputs paths requested by the user,
     the order follows the order specified by the user:
     {
-        'experiments': [
+        'jobs': [
             `user/project/job12/files`,
-        ], 'experiments': [
+        ],
+        'experiments': [
             `user/project/group/experiment1/files`,
             `user/project/experiment100/files`
         ]

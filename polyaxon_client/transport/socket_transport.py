@@ -13,8 +13,8 @@ class SocketTransportMixin(object):
         wes = websocket.WebSocketApp(
             url,
             on_message=lambda ws, message: self._on_message(message_handler, message),
-            on_error=self._on_error,
-            on_close=self._on_close,
+            on_error=lambda ws, error: self._on_error(ws, error),
+            on_close=lambda ws: self._on_close(ws),
             header=self._get_headers(headers)
         )
         wes.run_forever(ping_interval=30, ping_timeout=10)
