@@ -13,8 +13,8 @@ class SocketTransportMixin(object):
         wes = websocket.WebSocketApp(
             url,
             on_message=lambda ws, message: self._on_message(message_handler, message),
-            on_error=lambda ws, error: self._on_error(ws, error),
-            on_close=lambda ws: self._on_close(ws),
+            on_error=self._on_error,
+            on_close=self._on_close,
             header=self._get_headers(headers)
         )
         wes.run_forever(ping_interval=30, ping_timeout=10)
@@ -22,12 +22,14 @@ class SocketTransportMixin(object):
     def _on_message(self, message_handler, message):
         message_handler(json.loads(message))
 
-    def _on_error(self, ws, error):
+    @staticmethod
+    def _on_error(ws, error):
         if isinstance(error, (KeyboardInterrupt, SystemExit)):
             logger.info('Quitting... The session will be running in the background.')
         else:
             logger.debug('Termination cause: %s', error)
             logger.debug('Session disconnected.')
 
-    def _on_close(self, ws):
+    @staticmethod
+    def _on_close(ws):
         logger.info('Session ended')
