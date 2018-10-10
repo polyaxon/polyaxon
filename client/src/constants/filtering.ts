@@ -12,7 +12,7 @@ export const PROJECT_FILTER_OPTIONS = [
   {
     filter: 'id',
     type: 'value',
-    desc: 'id: 13 or id: 31|300|1022 or tags: ~12|23',
+    desc: FILTER_EXAMPLES.id('id'),
     icon: 'circle',
   },
   {
