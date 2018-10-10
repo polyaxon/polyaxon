@@ -80,4 +80,4 @@ def test(model, test_loader, cuda):
             len(test_loader.dataset),
             100. * accuracy)
     )
-    send_metrics(loss=test_loss, accuracy=accuracy)
+    send_metrics(loss=test_loss.item(), accuracy=accuracy.item())
