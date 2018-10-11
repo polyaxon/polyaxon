@@ -81,8 +81,8 @@ def get_pod_refs_outputs_volumes(outputs_refs, persistence_outputs):
         p_volumes, p_volume_mounts = get_volume_from_definition(
             volume_name=persistence,
             volume_settings=settings.PERSISTENCE_OUTPUTS)
-        volumes.append(p_volumes)
-        volume_mounts.append(p_volume_mounts)
+        volumes += p_volumes
+        volume_mounts += p_volume_mounts
 
     return volumes, volume_mounts
 
