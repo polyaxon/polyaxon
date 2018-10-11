@@ -4,7 +4,6 @@ from kubernetes import client
 
 from django.conf import settings
 
-from libs.paths.data_paths import get_data_paths
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
@@ -107,9 +106,10 @@ class PodManager(object):
         env_vars = get_list(env_vars)
         env_vars += get_job_env_vars(
             log_level=self.log_level,
+            persistence_outputs=persistence_outputs,
             outputs_path=get_job_outputs_path(persistence_outputs=persistence_outputs,
                                               job_name=self.job_name),
-            data_paths=get_data_paths(persistence_data),
+            persistence_data=persistence_data,
             logs_path=get_job_logs_path(job_name=self.job_name),
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments

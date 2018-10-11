@@ -7,7 +7,10 @@ from django.conf import settings
 from constants.urls import VERSION_V1
 from db.models.outputs import get_paths_from_specs
 from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
+from libs.paths.data_paths import get_data_paths
 from scheduler.spawners.templates import constants
+from scheduler.spawners.templates.stores import get_data_store_secrets, \
+    get_outputs_store_secrets, get_outputs_refs_store_secrets
 
 
 def get_env_var(name, value, reraise=True):
@@ -44,8 +47,9 @@ def get_service_env_vars(namespace='default'):
     ]
 
 
-def get_job_env_vars(outputs_path,
-                     data_paths,
+def get_job_env_vars(persistence_outputs,
+                     outputs_path,
+                     persistence_data,
                      log_level=None,
                      logs_path=None,
                      outputs_refs_jobs=None,
@@ -60,8 +64,6 @@ def get_job_env_vars(outputs_path,
                     value=settings.HEADERS_INTERNAL.replace('_', '-')),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
                     value=settings.INTERNAL_SERVICES.RUNNER),
-        get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
-        get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME, value=data_paths),
     ]
     if log_level:
         env_vars.append(
@@ -70,6 +72,13 @@ def get_job_env_vars(outputs_path,
     if logs_path:
         env_vars.append(
             get_env_var(name=constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME, value=logs_path))
+
+    # Data and outputs paths
+    data_paths = get_data_paths(persistence_data)
+    env_vars += [
+        get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
+        get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME, value=data_paths)
+    ]
 
     refs_outputs = {}
     outputs_jobs_paths = get_paths_from_specs(specs=outputs_refs_jobs)
@@ -82,6 +91,40 @@ def get_job_env_vars(outputs_path,
         env_vars.append(
             get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME,
                         value=refs_outputs))
+
+    # Stores' secrets
+    secrets = {}
+    secret_keys = {}
+    data_secrets, data_secret_keys = get_data_store_secrets(
+        persistence_data=persistence_data, data_paths=data_paths)
+    secrets |= data_secrets
+    secret_keys.update(data_secret_keys)
+
+    outputs_secrets, outputs_secret_keys = get_outputs_store_secrets(
+        persistence_outputs=persistence_outputs, outputs_path=outputs_path)
+    secrets |= outputs_secrets
+    secret_keys.update(outputs_secret_keys)
+
+    jobs_refs_secrets, jobs_refs_secret_keys = get_outputs_refs_store_secrets(
+        specs=outputs_refs_jobs)
+    secrets |= jobs_refs_secrets
+    secret_keys.update(jobs_refs_secret_keys)
+
+    experiments_refs_secrets, experiments_refs_secret_keys = get_outputs_refs_store_secrets(
+        specs=outputs_refs_experiments)
+    secrets |= experiments_refs_secrets
+    secret_keys.update(experiments_refs_secret_keys)
+
+    # Expose secret keys from all secrets
+    for (secret, secret_key) in secrets:
+        env_vars.append(get_from_secret(key_name=secret_key,
+                                        secret_key_name=secret_key,
+                                        secret_ref_name=secret))
+    # Add paths' secret env vars
+    if secret_keys:
+        env_vars.append(
+            get_env_var(name=constants.CONFIG_MAP_RUN_STORES_ACCESS_KEYS, value=secret_keys))
+
     if ephemeral_token:
         env_vars.append(
             get_env_var(name=constants.SECRET_EPHEMERAL_TOKEN,

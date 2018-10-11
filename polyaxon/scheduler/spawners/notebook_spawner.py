@@ -4,7 +4,6 @@ import random
 from django.conf import settings
 
 from libs.crypto import get_hmac
-from libs.paths.data_paths import get_data_paths
 from libs.paths.notebooks import get_notebook_job_outputs_path
 from libs.paths.projects import get_project_repos_path
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -123,9 +122,10 @@ class NotebookSpawner(ProjectJobSpawner):
         volumes += shm_volumes
         volume_mounts += shm_volume_mounts
         env_vars = get_job_env_vars(
+            persistence_outputs=persistence_outputs,
             outputs_path=get_notebook_job_outputs_path(persistence_outputs=persistence_outputs,
                                                        notebook_job=self.job_name),
-            data_paths=get_data_paths(persistence_data),
+            persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments
         )

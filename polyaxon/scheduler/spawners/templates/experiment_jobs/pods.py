@@ -140,9 +140,10 @@ class PodManager(object):
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy)
         env_vars += get_job_env_vars(
-            log_level=self.log_level,
+            persistence_outputs=persistence_outputs,
             outputs_path=outputs_path,
-            data_paths=get_data_paths(persistence_data),
+            persistence_data=persistence_data,
+            log_level=self.log_level,
             logs_path=get_experiment_logs_path(self.experiment_name),
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
