@@ -1,5 +1,5 @@
 from rest_framework.generics import RetrieveAPIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 
 from api.clusters.serializers import ClusterSerializer
 from db.models.clusters import Cluster
@@ -8,7 +8,7 @@ from db.models.clusters import Cluster
 class ClusterDetailView(RetrieveAPIView):
     """Get cluster details."""
     queryset = Cluster.objects.all()
-    permission_classes = (IsAuthenticated, IsAdminUser)
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         return ClusterSerializer
