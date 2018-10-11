@@ -3,7 +3,7 @@ import pytest
 from django.conf import settings
 from django.test import override_settings
 
-from libs.paths.data_paths import validate_persistence_data, get_data_paths
+from libs.paths.data_paths import get_data_paths, validate_persistence_data
 from libs.paths.exceptions import VolumeNotFoundError
 from tests.utils import BaseTest
 

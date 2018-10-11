@@ -3,8 +3,8 @@ import pytest
 from django.conf import settings
 from django.test import override_settings
 
-from libs.paths.outputs_paths import validate_persistence_outputs, get_outputs_paths
 from libs.paths.exceptions import VolumeNotFoundError
+from libs.paths.outputs_paths import get_outputs_paths, validate_persistence_outputs
 from tests.utils import BaseTest
 
 

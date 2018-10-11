@@ -9,8 +9,11 @@ from db.models.outputs import get_paths_from_specs
 from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
 from libs.paths.data_paths import get_data_paths
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.stores import get_data_store_secrets, \
-    get_outputs_store_secrets, get_outputs_refs_store_secrets
+from scheduler.spawners.templates.stores import (
+    get_data_store_secrets,
+    get_outputs_refs_store_secrets,
+    get_outputs_store_secrets
+)
 
 
 def get_env_var(name, value, reraise=True):

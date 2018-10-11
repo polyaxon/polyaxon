@@ -1,12 +1,16 @@
 from unittest import TestCase
 
 import pytest
+
 from django.test import override_settings
 
 from db.models.outputs import OutputsRefsSpec
 from libs.paths.exceptions import VolumeNotFoundError
-from scheduler.spawners.templates.stores import get_outputs_store_secrets, get_data_store_secrets, \
-    get_outputs_refs_store_secrets
+from scheduler.spawners.templates.stores import (
+    get_data_store_secrets,
+    get_outputs_refs_store_secrets,
+    get_outputs_store_secrets
+)
 
 
 @pytest.mark.spawner_mark
