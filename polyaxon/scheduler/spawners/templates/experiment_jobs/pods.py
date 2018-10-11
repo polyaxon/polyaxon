@@ -6,7 +6,6 @@ from kubernetes import client
 from django.conf import settings
 
 from db.models.cloning_strategies import CloningStrategy
-from libs.paths.data_paths import get_data_paths
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
