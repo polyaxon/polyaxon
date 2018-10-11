@@ -47,6 +47,9 @@ dirs:
     libcuda: ""  # e.g. "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
   docker: "/var/run/docker.sock"
 
+secretRefs:  # e.g. ['secret1', 'secret2', ...]
+configmapRefs:  # e.g. ['cm1', 'cm2', ...]
+
 # This is where we mount nvidia on hosts
 mountPaths:
   nvidia:

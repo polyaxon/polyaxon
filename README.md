@@ -528,6 +528,14 @@ Dependent charts can also have values overwritten. Preface values with
  * `registry.*`
 
 
+### Secrets and ConfigMaps
+
+| Parameter    | Description                                     | Default
+| -------------| ----------------------------------------------- | -------
+| `secretRefs`    | List of secrets' names to mount for you jobs    | `[]`
+| `configmapRefs` | List of configmaps' names to mount for you jobs | `[]`
+
+
 ### How to set the configuration
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
