@@ -83,14 +83,24 @@ persistence:
   #   data2:
   #     mountPath: "/data/2"
   #     existingClaim: "data-2-pvc"
+  #   data3:
+  #     store: gcs
+  #     bucket: gs://output-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
   # outputs:
   #   outputs1:
-  #      mountPath: "/outputs/1"
+  #     mountPath: "/outputs/1"
   #     hostPath: "/path/to/outputs"
   #     readOnly: true
   #   outputs2:
-  #      mountPath: "/outputs/2"
+  #     mountPath: "/outputs/2"
   #     existingClaim: "outputs-2-pvc"
+  #   outputs3:
+  #     store: gcs
+  #     bucket: gs://data-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
 
 defaultPersistence:
   data:

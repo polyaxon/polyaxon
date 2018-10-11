@@ -12,7 +12,7 @@ Volume mounts
 - mountPath: {{ .Values.nfsProvisioner.pvc.upload.mountPath | quote }}
   name: upload
 {{- end }}
-{{- end -}}
+{{- end -}}  {{- /* end def upload volume mounts */ -}}
 {{- define "volumes.volumeMounts.logs" -}}
 {{- if .Values.persistence.logs }}
 - mountPath: {{ .Values.persistence.logs.mountPath | quote }}
@@ -24,7 +24,7 @@ Volume mounts
 - mountPath: {{ .Values.nfsProvisioner.pvc.logs.mountPath | quote }}
   name: logs
 {{- end }}
-{{- end -}}
+{{- end -}}  {{- /* end def logs volume mounts */ -}}
 {{- define "volumes.volumeMounts.repos" -}}
 {{- if .Values.persistence.repos }}
 - mountPath: {{ .Values.persistence.repos.mountPath | quote }}
@@ -36,16 +36,18 @@ Volume mounts
 - mountPath: {{ .Values.nfsProvisioner.pvc.repos.mountPath | quote }}
   name: repos
 {{- end }}
-{{- end -}}
+{{- end -}}  {{- /* end def repos volume mounts */ -}}
 {{- define "volumes.volumeMounts.data" -}}
 {{- if .Values.persistence.data }}
 {{- range $key, $val := .Values.persistence.data }}
+{{- if not $val.store }}
 - mountPath: {{ $val.mountPath | quote }}
   name: {{ $key }}
   {{ if $val.subPath -}}
   subPath: {{ $val.subPath | quote }}
   {{- end }}
-{{- end}}
+{{- end }}  {{- /* end if store */ -}}
+{{- end }}  {{- /* end range */ -}}
 {{- else if .Values.nfsProvisioner.enabled }}
 - mountPath: {{ .Values.nfsProvisioner.pvc.data.mountPath | quote }}
   name: data
@@ -53,16 +55,18 @@ Volume mounts
 - mountPath: {{ .Values.defaultPersistence.data.data.mountPath | quote }}
   name: data
 {{- end }}
-{{- end -}}
+{{- end -}}  {{- /* end def data volume mounts */ -}}
 {{- define "volumes.volumeMounts.outputs" -}}
 {{- if .Values.persistence.outputs }}
 {{- range $key, $val := .Values.persistence.outputs }}
+{{- if not $val.store }}
 - mountPath: {{ $val.mountPath | quote }}
   name: {{ $key }}
   {{ if $val.subPath -}}
   subPath: {{ $val.subPath | quote }}
   {{- end }}
-{{- end}}
+{{- end }}  {{- /* end if store */ -}}
+{{- end }}  {{- /* end range */ -}}
 {{- else if .Values.nfsProvisioner.enabled }}
 - mountPath: {{ .Values.nfsProvisioner.pvc.outputs.mountPath | quote }}
   name: outputs
@@ -70,7 +74,7 @@ Volume mounts
 - mountPath: {{ .Values.defaultPersistence.outputs.outputs.mountPath | quote }}
   name: outputs
 {{- end }}
-{{- end -}}
+{{- end -}}  {{- /* end def outputs volume mounts */ -}}
 
 {{- /*
 Volumes
