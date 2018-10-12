@@ -38,8 +38,8 @@ spec:
           serviceName: {{ $fullName }}-api
           servicePort: {{ $.Values.streams.service.externalPort }}
     {{- end }} {{- /* end range .hosts */ -}}
-  {{- end }}  {{- /* end with loop */ -}}
-  {{- else }} {{- /* else of if tls.enabled */ -}}
+  {{- end }}  {{- /* end loop */ -}}
+  {{- else }}  {{- /* else if tls.enabled */ -}}
   rules:
   - http:
       paths:
