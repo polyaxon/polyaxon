@@ -21,7 +21,7 @@ class QueueWorker(BaseWorker):
     def __init__(self, timeout=None, queue_size=None):
         super(QueueWorker, self).__init__()
         self._queue = Queue(queue_size or self.QUEUE_SIZE)
-        self._timeout = timeout or settings.TIMEOUT
+        self._timeout = timeout if timeout is not None else settings.TIMEOUT
 
     def atexit(self):
         with self._lock:
@@ -56,7 +56,8 @@ class QueueWorker(BaseWorker):
                 size = self._queue.qsize()
 
                 if not settings.IN_CLUSTER:
-                    print('Polyaxon worker is attempting to send %i pending messages' % size)
+                    print('Polyaxon %s is attempting to send %i pending messages' %
+                          (self.NAME, size))
                     print('Waiting up to {} seconds'.format(self._timeout))
                     if os.name == 'nt':
                         print('Press Ctrl-Break to quit')
@@ -69,7 +70,8 @@ class QueueWorker(BaseWorker):
 
             size = self._queue.qsize()
             if size > 0:
-                print('Polyaxon worker timed out and did not manage to send %i messages' % size)
+                print('Polyaxon %s timed out and did not manage to send %i messages' %
+                      (self.NAME, size))
 
             self._thread = None
 
