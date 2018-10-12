@@ -6,6 +6,8 @@ import time
 
 from unittest import TestCase
 
+from flaky import flaky
+
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport.periodic_transport import PeriodicTransportMixin
 from polyaxon_client.workers.periodic_worker import PeriodicWorker
@@ -127,6 +129,7 @@ class TestPeriodicTransport(TestCase):
         assert self.transport.get_periodic_worker('url_post1').is_alive() is True
         assert self.transport.get_periodic_worker('url_post2').is_alive() is True
 
+    @flaky(max_runs=3)
     def test_async_exceptions(self):
         self.exception_transport.periodic_post(url='url_post', data={'d1': 'v1'})
         time.sleep(2)

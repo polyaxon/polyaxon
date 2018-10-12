@@ -6,6 +6,8 @@ import time
 
 from unittest import TestCase
 
+from flaky import flaky
+
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
 from polyaxon_client.workers.queue_worker import QueueWorker
@@ -129,6 +131,7 @@ class TestThreadedTransport(TestCase):
         assert self.transport.exceptions == 0
         assert self.transport.worker.is_alive() is True
 
+    @flaky(max_runs=3)
     def test_async_exceptions(self):
         self.exception_transport.async_post(url='url_post')
         time.sleep(0.001)
