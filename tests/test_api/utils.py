@@ -23,8 +23,8 @@ class TestBaseApi(TestCase):
                                     reraise=True,
                                     use_https=False,
                                     in_cluster=False,
-                                    interval=0.0001,
-                                    timeout=0.0001,
+                                    interval=0,
+                                    timeout=0.01,
                                     schema_response=True)
         self.transport = Transport(config=self.api_config)
 
