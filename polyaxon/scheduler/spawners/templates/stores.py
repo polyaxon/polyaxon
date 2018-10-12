@@ -16,17 +16,18 @@ def get_store_secret_from_definition(volume_name, volume_settings):
     secret = definition.get('secret')
     secret_key = definition.get('secretKey')
 
-    if store and store not in stores.VALUES:
-        raise VolumeNotFoundError(
-            'Volume with store class `{}` is not supported.'.format(store))
+    if store:
+        if store not in stores.VALUES:
+            raise VolumeNotFoundError(
+                'Volume with store class `{}` is not supported.'.format(store))
 
-    if not secret:
-        raise VolumeNotFoundError(
-            'Volume with store class `{}` does not define a secret.'.format(store))
+        if not secret:
+            raise VolumeNotFoundError(
+                'Volume with store class `{}` does not define a secret.'.format(store))
 
-    if not secret_key:
-        raise VolumeNotFoundError(
-            'Volume with store class `{}` does not define a secretKey.'.format(store))
+        if not secret_key:
+            raise VolumeNotFoundError(
+                'Volume with store class `{}` does not define a secretKey.'.format(store))
 
     return secret, secret_key
 

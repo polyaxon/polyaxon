@@ -198,8 +198,7 @@ class TestPodVolumes(TestCase):
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS, PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_get_pod_volumes_with_buckets_values_only(self):
-        volumes, volume_mounts = get_pod_volumes(persistence_outputs='outputs3',
-                                                 persistence_data=['data3'])
+        volumes, _ = get_pod_volumes(persistence_outputs='outputs3', persistence_data=['data3'])
         self.assertEqual(len(volumes), 0)
 
     def test_get_shm_volumes(self):
