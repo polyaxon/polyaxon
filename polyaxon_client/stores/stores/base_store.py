@@ -65,8 +65,7 @@ class Store(object):
 
         if store_type == cls._GCS_STORE:
             return cls.get_store(store_type=store_type, keyfile_dict=store_access)
-        else:
-            return cls.get_store(store_type=store_type, **store_access)
+        return cls.get_store(store_type=store_type, **store_access)
 
     def download_file(self, *args, **kwargs):
         raise NotImplementedError
