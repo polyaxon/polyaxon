@@ -20,7 +20,7 @@ class TestDataPaths(BaseTest):
             'hostPath': '/root/data'
         },
         'data3': {
-            'storage': 'gcs',
+            'store': 'gcs',
             'bucket': 'gs://data-bucket',
             'secret': 'secret-name',
             'secretKey': 'secret-key'

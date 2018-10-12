@@ -25,7 +25,7 @@ class TestPodStores(TestCase):
             'hostPath': '/root/outputs'
         },
         'outputs3': {
-            'storage': 'gcs',
+            'store': 'gcs',
             'bucket': 'gs://output-bucket',
             'secret': 'outputs-secret-name',
             'secretKey': 'outputs-secret-key'
@@ -41,13 +41,13 @@ class TestPodStores(TestCase):
             'hostPath': '/root/data'
         },
         'data3': {
-            'storage': 'gcs',
+            'store': 'gcs',
             'bucket': 'gs://data3-bucket',
             'secret': 'data3-secret-name',
             'secretKey': 'data3-secret-key'
         },
         'data4': {
-            'storage': 'gcs',
+            'store': 'gcs',
             'bucket': 'gs://data4-bucket',
             'secret': 'data4-secret-name',
             'secretKey': 'data4-secret-key'
@@ -74,7 +74,8 @@ class TestPodStores(TestCase):
         assert len(secrets) == 1
         assert len(secret_keys) == 1
         assert list(secrets)[0] == ('outputs-secret-name', 'outputs-secret-key')
-        assert secret_keys == {'/path/to/outputs': {'secret_key': 'outputs-secret-key'}}
+        assert secret_keys == {
+            '/path/to/outputs': {'secret_key': 'outputs-secret-key', 'store': 'gcs'}}
 
     def test_get_data_store_secrets(self):
         secrets, _ = get_data_store_secrets(['data'], {})
@@ -96,7 +97,8 @@ class TestPodStores(TestCase):
         assert len(secrets) == 1
         assert len(secret_keys) == 1
         assert list(secrets)[0] == ('data3-secret-name', 'data3-secret-key')
-        assert secret_keys == {'/path/to/data3': {'secret_key': 'data3-secret-key'}}
+        assert secret_keys == {
+            '/path/to/data3': {'secret_key': 'data3-secret-key', 'store': 'gcs'}}
 
         secrets, secret_keys = get_data_store_secrets(
             ['data3', 'data4'],
@@ -107,8 +109,8 @@ class TestPodStores(TestCase):
             ('data3-secret-name', 'data3-secret-key'),
             ('data4-secret-name', 'data4-secret-key')}
         assert secret_keys == {
-            '/path/to/data3': {'secret_key': 'data3-secret-key'},
-            '/path/to/data4': {'secret_key': 'data4-secret-key'}
+            '/path/to/data3': {'secret_key': 'data3-secret-key', 'store': 'gcs'},
+            '/path/to/data4': {'secret_key': 'data4-secret-key', 'store': 'gcs'}
         }
 
     def test_get_outputs_refs_store_secrets(self):

@@ -27,7 +27,7 @@ class TestPodVolumes(TestCase):
             'hostPath': '/root/outputs'
         },
         'outputs3': {
-            'storage': 'gcs',
+            'store': 'gcs',
             'bucket': 'gs://output-bucket',
             'secret': 'secret-name',
             'secretKey': 'secret-key'
@@ -43,7 +43,7 @@ class TestPodVolumes(TestCase):
             'hostPath': '/root/data'
         },
         'data3': {
-            'storage': 'gcs',
+            'store': 'gcs',
             'bucket': 'gs://data-bucket',
             'secret': 'secret-name',
             'secretKey': 'secret-key'

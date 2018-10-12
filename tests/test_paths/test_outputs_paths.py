@@ -20,7 +20,7 @@ class TestOutputsPaths(BaseTest):
             'hostPath': '/root/outputs'
         },
         'outputs3': {
-            'storage': 'gcs',
+            'store': 'gcs',
             'bucket': 'gs://output-bucket',
             'secret': 'secret-name',
             'secretKey': 'secret-key'
