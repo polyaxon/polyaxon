@@ -1,8 +1,7 @@
 import json
 
-from kubernetes import client
-
 from django.conf import settings
+from kubernetes import client
 
 from constants.urls import VERSION_V1
 from db.models.outputs import get_paths_from_specs
@@ -50,6 +49,50 @@ def get_service_env_vars(namespace='default'):
     ]
 
 
+def get_job_stores_secrets_env_vars(persistence_outputs,
+                                    outputs_path,
+                                    persistence_data,
+                                    data_paths,
+                                    outputs_refs_jobs=None,
+                                    outputs_refs_experiments=None):
+    env_vars = []
+
+    # Stores' secrets
+    secrets = set([])
+    secret_keys = {}
+    data_secrets, data_secret_keys = get_data_store_secrets(
+        persistence_data=persistence_data, data_paths=data_paths)
+    secrets |= data_secrets
+    secret_keys.update(data_secret_keys)
+
+    outputs_secrets, outputs_secret_keys = get_outputs_store_secrets(
+        persistence_outputs=persistence_outputs, outputs_path=outputs_path)
+    secrets |= outputs_secrets
+    secret_keys.update(outputs_secret_keys)
+
+    jobs_refs_secrets, jobs_refs_secret_keys = get_outputs_refs_store_secrets(
+        specs=outputs_refs_jobs)
+    secrets |= jobs_refs_secrets
+    secret_keys.update(jobs_refs_secret_keys)
+
+    experiments_refs_secrets, experiments_refs_secret_keys = get_outputs_refs_store_secrets(
+        specs=outputs_refs_experiments)
+    secrets |= experiments_refs_secrets
+    secret_keys.update(experiments_refs_secret_keys)
+
+    # Expose secret keys from all secrets
+    for (secret, secret_key) in secrets:
+        env_vars.append(get_from_secret(key_name=secret_key,
+                                        secret_key_name=secret_key,
+                                        secret_ref_name=secret))
+    # Add paths' secret env vars
+    if secret_keys:
+        env_vars.append(
+            get_env_var(name=constants.CONFIG_MAP_RUN_STORES_ACCESS_KEYS, value=secret_keys))
+
+    return env_vars
+
+
 def get_job_env_vars(persistence_outputs,
                      outputs_path,
                      persistence_data,
@@ -95,39 +138,12 @@ def get_job_env_vars(persistence_outputs,
             get_env_var(name=constants.CONFIG_MAP_REFS_OUTPUTS_PATHS_KEY_NAME,
                         value=refs_outputs))
 
-    # Stores' secrets
-    secrets = {}
-    secret_keys = {}
-    data_secrets, data_secret_keys = get_data_store_secrets(
-        persistence_data=persistence_data, data_paths=data_paths)
-    secrets |= data_secrets
-    secret_keys.update(data_secret_keys)
-
-    outputs_secrets, outputs_secret_keys = get_outputs_store_secrets(
-        persistence_outputs=persistence_outputs, outputs_path=outputs_path)
-    secrets |= outputs_secrets
-    secret_keys.update(outputs_secret_keys)
-
-    jobs_refs_secrets, jobs_refs_secret_keys = get_outputs_refs_store_secrets(
-        specs=outputs_refs_jobs)
-    secrets |= jobs_refs_secrets
-    secret_keys.update(jobs_refs_secret_keys)
-
-    experiments_refs_secrets, experiments_refs_secret_keys = get_outputs_refs_store_secrets(
-        specs=outputs_refs_experiments)
-    secrets |= experiments_refs_secrets
-    secret_keys.update(experiments_refs_secret_keys)
-
-    # Expose secret keys from all secrets
-    for (secret, secret_key) in secrets:
-        env_vars.append(get_from_secret(key_name=secret_key,
-                                        secret_key_name=secret_key,
-                                        secret_ref_name=secret))
-    # Add paths' secret env vars
-    if secret_keys:
-        env_vars.append(
-            get_env_var(name=constants.CONFIG_MAP_RUN_STORES_ACCESS_KEYS, value=secret_keys))
-
+    env_vars += get_job_stores_secrets_env_vars(persistence_outputs=persistence_outputs,
+                                                outputs_path=outputs_path,
+                                                persistence_data=persistence_data,
+                                                data_paths=data_paths,
+                                                outputs_refs_jobs=outputs_refs_jobs,
+                                                outputs_refs_experiments=outputs_refs_experiments)
     if ephemeral_token:
         env_vars.append(
             get_env_var(name=constants.SECRET_EPHEMERAL_TOKEN,
