@@ -9,7 +9,7 @@ Polyaxon tracking lets you log and interact with REST API in a very convenient w
 
 In previous versions of Polyaxon, we only exposed metrics reporting through, [polyaxon-helper](polyaxon_helper).
 
-The new polyaxon-client allows more advanced workflows, both mangaed by Polyaxon, in-cluster runs, or on external environment (e.g. your local machine).
+The new polyaxon-client allows more advanced workflows, both managed by Polyaxon, in-cluster runs, or on external environment (e.g. your local machine).
 
 This section will guide you how to track:
 
