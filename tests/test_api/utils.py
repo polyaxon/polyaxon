@@ -23,6 +23,8 @@ class TestBaseApi(TestCase):
                                     reraise=True,
                                     use_https=False,
                                     in_cluster=False,
+                                    interval=0.0001,
+                                    timeout=0.0001,
                                     schema_response=True)
         self.transport = Transport(config=self.api_config)
 
@@ -35,5 +37,11 @@ class TestBaseApi(TestCase):
     def assert_async_call(self, api_handler_call, method):
         with patch.object(Transport, method) as mock_fct:
             api_handler_call()
-        time.sleep(0.001)
+        time.sleep(0.01)
+        assert mock_fct.call_count == 1
+
+    def assert_periodic_call(self, api_handler_call, method):
+        with patch.object(Transport, method) as mock_fct:
+            api_handler_call()
+        time.sleep(0.01)
         assert mock_fct.call_count == 1

@@ -328,6 +328,16 @@ class TestExperimentApi(TestBaseApi):
                 background=True),
             method='post')
 
+        # Periodic
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_metric(
+                'username', 'project_name', 1,
+                values={'accuracy': 0.9,
+                        'loss': np.float64(0.34),
+                        'step': 1},
+                periodic=True),
+            method='post')
+
     @httpretty.activate
     def test_list_experiment_jobs(self):
         job_uuid = uuid.uuid4().hex

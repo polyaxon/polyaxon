@@ -193,7 +193,8 @@ class ExperimentApi(BaseApiHandler):
                       experiment_id,
                       values,
                       created_at=None,
-                      background=False):
+                      background=False,
+                      periodic=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
                                      project_name,
@@ -219,6 +220,10 @@ class ExperimentApi(BaseApiHandler):
 
         if background:
             self.transport.async_post(request_url, json_data=json_data)
+            return None
+
+        if periodic:
+            self.transport.periodic_post(request_url, json_data=json_data)
             return None
 
         try:
