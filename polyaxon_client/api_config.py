@@ -21,7 +21,8 @@ class ApiConfig(object):
                  in_cluster=None,
                  schema_response=None,
                  reraise=False,
-                 timeout=None):
+                 timeout=None,
+                 interval=None):
 
         self.token = token or settings.SECRET_USER_TOKEN
         self.host = host or settings.API_HOST
@@ -62,6 +63,7 @@ class ApiConfig(object):
         self.schema_response = self._get_bool(schema_response, settings.SCHEMA_RESPONSE)
         self.reraise = reraise
         self.timeout = timeout or settings.TIMEOUT
+        self.interval = interval or settings.INTERVAL
 
     @staticmethod
     def _get_bool(value, default_value):

@@ -63,3 +63,6 @@ DEFAULT_HTTPS_PORT = 443
 TIMEOUT = config.get_int('POLYAXON_TIMEOUT',
                          is_optional=True,
                          default=10)
+INTERVAL = config.get_int('POLYAXON_INTERVAL',
+                          is_optional=True,
+                          default=2)
