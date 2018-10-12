@@ -56,9 +56,9 @@ class TestPodStores(TestCase):
 
     def test_get_outputs_store_secrets(self):
         secrets, _ = get_outputs_store_secrets('outputs', {})
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
         secrets, _ = get_outputs_store_secrets(None, None)
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
         with self.assertRaises(VolumeNotFoundError):
             get_outputs_store_secrets('outputs1', {})
 
@@ -68,7 +68,7 @@ class TestPodStores(TestCase):
             get_outputs_store_secrets('outputs', {})
 
         secrets, _ = get_outputs_store_secrets('outputs1', {'outputs1': '/path/to/outputs'})
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
 
         secrets, secret_keys = get_outputs_store_secrets('outputs3',
                                                          {'outputs3': '/path/to/outputs'})
@@ -79,9 +79,9 @@ class TestPodStores(TestCase):
 
     def test_get_data_store_secrets(self):
         secrets, _ = get_data_store_secrets(['data'], {})
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
         secrets, _ = get_data_store_secrets(None, None)
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
         with self.assertRaises(VolumeNotFoundError):
             get_data_store_secrets(['data1'], {})
 
@@ -91,7 +91,7 @@ class TestPodStores(TestCase):
             get_data_store_secrets(['data'], {})
 
         secrets, _ = get_data_store_secrets(['data1'], {'data1': '/path/to/data'})
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
 
         secrets, secret_keys = get_data_store_secrets(['data3'], {'data3': '/path/to/data3'})
         assert len(secrets) == 1
@@ -114,10 +114,10 @@ class TestPodStores(TestCase):
 
     def test_get_outputs_refs_store_secrets(self):
         secrets, _ = get_outputs_refs_store_secrets(None)
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
         secrets, _ = get_outputs_refs_store_secrets([
             OutputsRefsSpec(path='/path1', persistence='outputs')])
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
         with self.assertRaises(VolumeNotFoundError):
             get_outputs_refs_store_secrets([
                 OutputsRefsSpec(path='/path1', persistence='outputs1'),
@@ -128,7 +128,7 @@ class TestPodStores(TestCase):
         secrets, _ = get_outputs_refs_store_secrets([
             OutputsRefsSpec(path='/path1', persistence='outputs1'),
             OutputsRefsSpec(path='/path2', persistence='outputs2')])
-        assert len(secrets) == 0
+        self.assertEqual(len(secrets), 0)
 
         secrets, secret_keys = get_outputs_refs_store_secrets([
             OutputsRefsSpec(path='/path1', persistence='outputs3'),

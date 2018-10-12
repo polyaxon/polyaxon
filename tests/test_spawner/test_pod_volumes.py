@@ -71,7 +71,7 @@ class TestPodVolumes(TestCase):
         assert volumes[0].host_path.path == '/root/outputs'
 
         volumes, _ = get_pod_outputs_volume(persistence_outputs='outputs3')
-        assert len(volumes) == 0
+        self.assertEqual(len(volumes), 0)
 
     def test_get_pod_data_volumes(self):
         volumes, _ = get_pod_data_volume(None)
@@ -94,7 +94,7 @@ class TestPodVolumes(TestCase):
         assert volumes[0].host_path.path == '/root/data'
 
         volumes, _ = get_pod_data_volume(persistence_data=['data3'])
-        assert len(volumes) == 0
+        self.assertEqual(len(volumes), 0)
 
     def test_default_get_pod_volumes(self):
         volumes, _ = get_pod_volumes(persistence_outputs=None, persistence_data=None)
@@ -180,7 +180,7 @@ class TestPodVolumes(TestCase):
     def test_get_pod_refs_outputs_volumes_same_outputs_persistence(self):
         volumes, _ = get_pod_refs_outputs_volumes(
             [OutputsRefsSpec('/outputs1/some/path', 'outputs1')], 'outputs1')
-        assert len(volumes) == 0
+        self.assertEqual(len(volumes), 0)
 
         volumes, _ = get_pod_refs_outputs_volumes(
             [OutputsRefsSpec('/outputs2/some/path', 'outputs2')], 'outputs1')
@@ -194,13 +194,13 @@ class TestPodVolumes(TestCase):
 
         volumes, _ = get_pod_refs_outputs_volumes(
             [OutputsRefsSpec('/outputs1/some/path', 'outputs3')], 'outputs2')
-        assert len(volumes) == 0
+        self.assertEqual(len(volumes), 0)
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS, PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_get_pod_volumes_with_buckets_values_only(self):
         volumes, volume_mounts = get_pod_volumes(persistence_outputs='outputs3',
                                                  persistence_data=['data3'])
-        assert len(volumes) == 0
+        self.assertEqual(len(volumes), 0)
 
     def test_get_shm_volumes(self):
         volumes, volume_mounts = get_shm_volumes()
