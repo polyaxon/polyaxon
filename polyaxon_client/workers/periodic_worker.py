@@ -2,9 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import copy
-from time import sleep
-
 import six
+
+from time import sleep
 
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
