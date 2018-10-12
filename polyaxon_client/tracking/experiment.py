@@ -178,7 +178,7 @@ class Experiment(BaseTracker):
                                              experiment_id=self.experiment_id,
                                              values=metrics,
                                              created_at=datetime.utcnow(),
-                                             background=True)
+                                             periodic=True)
 
     def log_tags(self, tags, reset=False):
         patch_dict = {'tags': validate_tags(tags)}
