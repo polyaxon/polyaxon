@@ -1,57 +1,34 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import requests
-
-from requests.adapters import HTTPAdapter
-
-from urllib3 import Retry
-
 from polyaxon_client.logger import logger
+from polyaxon_client.transport.retry_transport import RetryTransportMixin
 from polyaxon_client.workers.queue_worker import QueueWorker
 
 
-class ThreadedTransportMixin(object):
+class ThreadedTransportMixin(RetryTransportMixin):
     """Threads operations transport."""
 
     @property
     def done(self):
-        if hasattr(self, '_done'):
-            return self._done
+        if hasattr(self, '_threaded_done'):
+            return self._threaded_done
         return None
 
     @property
     def exceptions(self):
-        if hasattr(self, '_exceptions'):
-            return self._exceptions
+        if hasattr(self, '_threaded_exceptions'):
+            return self._threaded_exceptions
         return None
-
-    @property
-    def retry_session(self):
-        if not hasattr(self, '_retry_session'):
-            self._retry_session = requests.Session()
-            retry = Retry(
-                total=3,
-                read=3,
-                connect=3,
-                backoff_factor=2,
-                status_forcelist=[500, 502, 503, 504],
-            )
-            adapter = HTTPAdapter(max_retries=retry)
-            self._retry_session.mount('http://', adapter)
-            self._retry_session.mount('https://', adapter)
-            self._done = 0
-            self._exceptions = 0
-        return self._retry_session
 
     def queue_request(self, request, url, **kwargs):
         try:
             request(url=url, session=self.retry_session, **kwargs)
         except Exception as e:
-            self._exceptions += 1
+            self._threaded_exceptions += 1
             logger.debug('Error making request url: %s, params: params %s, exp: %s', url, kwargs, e)
         finally:
-            self._done += 1
+            self._threaded_done += 1
 
     @property
     def worker(self):

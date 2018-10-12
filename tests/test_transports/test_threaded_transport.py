@@ -17,8 +17,8 @@ class DummyTransport(ThreadedTransportMixin):
         self.queue = []
         self.delay = delay
         self.config = ApiConfig(in_cluster=True, timeout=0)
-        self._exceptions = 0
-        self._done = 0
+        self._threaded_exceptions = 0
+        self._threaded_done = 0
 
     def post(self, url, **kwargs):
         time.sleep(self.delay)
@@ -46,8 +46,8 @@ class ExceptionTransport(ThreadedTransportMixin):
     def __init__(self, delay=0):
         self.delay = delay
         self.config = ApiConfig(in_cluster=True, timeout=0)
-        self._exceptions = 0
-        self._done = 0
+        self._threaded_exceptions = 0
+        self._threaded_done = 0
 
     def post(self, **kwargs):
         time.sleep(self.delay)
