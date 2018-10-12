@@ -54,9 +54,9 @@ def get_outputs_store_secrets(persistence_outputs, outputs_path):
         volume_name=persistence_outputs,
         volume_settings=settings.PERSISTENCE_OUTPUTS)
 
-    if persistence_secret and persistence_secret_key and persistence_outputs in outputs_path:
+    if persistence_secret and persistence_secret_key:
         secrets.add((persistence_secret, persistence_secret_key))
-        secret_keys[outputs_path[persistence_outputs]] = {'secret_key': persistence_secret_key}
+        secret_keys[outputs_path] = {'secret_key': persistence_secret_key}
     return secrets, secret_keys
 
 

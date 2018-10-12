@@ -55,23 +55,22 @@ class TestPodStores(TestCase):
     }
 
     def test_get_outputs_store_secrets(self):
-        secrets, _ = get_outputs_store_secrets('outputs', {})
+        secrets, _ = get_outputs_store_secrets('outputs', '/path')
         self.assertEqual(len(secrets), 0)
         secrets, _ = get_outputs_store_secrets(None, None)
         self.assertEqual(len(secrets), 0)
         with self.assertRaises(VolumeNotFoundError):
-            get_outputs_store_secrets('outputs1', {})
+            get_outputs_store_secrets('outputs1', '/path')
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS)
     def test_get_outputs_store_secrets_with_updated_settings(self):
         with self.assertRaises(VolumeNotFoundError):
-            get_outputs_store_secrets('outputs', {})
+            get_outputs_store_secrets('outputs', '/path')
 
-        secrets, _ = get_outputs_store_secrets('outputs1', {'outputs1': '/path/to/outputs'})
+        secrets, _ = get_outputs_store_secrets('outputs1', '/path/to/outputs')
         self.assertEqual(len(secrets), 0)
 
-        secrets, secret_keys = get_outputs_store_secrets('outputs3',
-                                                         {'outputs3': '/path/to/outputs'})
+        secrets, secret_keys = get_outputs_store_secrets('outputs3', '/path/to/outputs')
         assert len(secrets) == 1
         assert len(secret_keys) == 1
         assert list(secrets)[0] == ('outputs-secret-name', 'outputs-secret-key')
