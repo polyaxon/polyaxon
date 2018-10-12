@@ -57,6 +57,9 @@ INTERNAL_HEADER_SERVICE = config.get_string('POLYAXON_INTERNAL_HEADER_SERVICE',
 SCHEMA_RESPONSE = config.get_boolean('POLYAXON_SCHEMA_RESPONSE',
                                      is_optional=True,
                                      default=False)
+RUN_STORES_ACCESS_KEYS = config.get_dict('POLYAXON_RUN_STORES_ACCESS_KEYS',
+                                         is_optional=True,
+                                         default={})
 
 DEFAULT_HTTP_PORT = 80
 DEFAULT_HTTPS_PORT = 443

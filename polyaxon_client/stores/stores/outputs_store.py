@@ -11,13 +11,12 @@ class OutputsStore(object):
     """
 
     def __init__(self, store=None, outputs_path=None):
-        store = store or Store.get_store()
+        self._outputs_path = outputs_path
+        store = store or Store.get_store_for_path(path=outputs_path)
         if isinstance(store, Store):
             self._store = store
         else:
             raise PolyaxonStoresException('Received an unrecognised store `{}`.'.format(store))
-
-        self._outputs_path = outputs_path
 
     def set_store(self, store):
         self._store = store
