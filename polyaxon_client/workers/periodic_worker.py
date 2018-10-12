@@ -25,7 +25,7 @@ class PeriodicWorker(QueueWorker):
         self._callback = callback
         self._kwargs = kwargs
 
-    def queue(self, **kwargs):
+    def queue(self, **kwargs):  # pylint:disable=arguments-differ
         self.is_running()
         self._queue.put_nowait(kwargs)
 
