@@ -12,7 +12,11 @@ class OutputsStore(object):
 
     def __init__(self, store=None, outputs_path=None):
         self._outputs_path = outputs_path
-        store = store or Store.get_store_for_path(path=outputs_path)
+        if not store:
+            if outputs_path:
+                Store.get_store_for_path(path=outputs_path)
+            else:
+                store = Store.get_store()
         if isinstance(store, Store):
             self._store = store
         else:
