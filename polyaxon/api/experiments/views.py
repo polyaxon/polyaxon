@@ -391,6 +391,19 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(experiment=self.get_experiment())
 
+    def get_serializer(self, *args, **kwargs):
+        """ if an array is passed, set serializer to many """
+        if isinstance(kwargs.get('data', {}), list):
+            kwargs['many'] = True
+        return super().get_serializer(*args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_METRICS_VIEWED,

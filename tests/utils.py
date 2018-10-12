@@ -38,14 +38,21 @@ class BaseClient(Client):
         if data is None:
             data = {}
 
-        for key, value in data.items():
-            # Fix UUIDs for convenience
-            if isinstance(value, uuid.UUID):
-                data[key] = value.hex
+        def validate_data(dvalues):
+            for key, value in dvalues.items():
+                # Fix UUIDs for convenience
+                if isinstance(value, uuid.UUID):
+                    dvalues[key] = value.hex
 
-            # Fix datetimes
-            if isinstance(value, datetime.datetime):
-                data[key] = value.strftime('%Y-%m-%d %H:%M')
+                # Fix datetimes
+                if isinstance(value, datetime.datetime):
+                    dvalues[key] = value.strftime('%Y-%m-%d %H:%M')
+
+        if isinstance(data, list):
+            for d in data:
+                validate_data(d)
+        else:
+            validate_data(data)
 
         if content_type == CONTENT_TYPE_APPLICATION_JSON:
             data = json.dumps(data)

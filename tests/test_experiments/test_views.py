@@ -1129,6 +1129,23 @@ class TestExperimentMetricListViewV1(BaseViewTest):
         assert last_object.experiment == self.experiment
         assert last_object.values == data['values']
 
+    def test_create_many(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        data = [
+            {'values': {'precision': 0.9}},
+            {'values': {'precision': 0.95}},
+            {'values': {'precision': 0.99}}
+        ]
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 3
+        last_object = self.model_class.objects.last()
+        assert last_object.experiment == self.experiment
+        assert last_object.values == data[-1]['values']
+
     def test_create_internal(self):
         data = {}
         resp = self.internal_client.post(self.url, data)
