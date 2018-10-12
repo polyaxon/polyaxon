@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client import settings
 from polyaxon_client.exceptions import AuthenticationError
 from polyaxon_client.logger import logger
-from polyaxon_client.settings import AuthenticationTypes
 from polyaxon_client.transport.http_transport import HttpTransportMixin
+from polyaxon_client.transport.periodic_transport import PeriodicTransportMixin
 from polyaxon_client.transport.socket_transport import SocketTransportMixin
 from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
 
 
-class Transport(HttpTransportMixin, ThreadedTransportMixin, SocketTransportMixin):
+class Transport(HttpTransportMixin,
+                PeriodicTransportMixin,
+                ThreadedTransportMixin,
+                SocketTransportMixin):
     """Transport for handling http/ws operations."""
 
     def __init__(self, config=None):

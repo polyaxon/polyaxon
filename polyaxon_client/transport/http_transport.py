@@ -79,7 +79,7 @@ class HttpTransportMixin(object):
                      url, params, data)
 
         request_headers = self._get_headers(headers=headers)
-        timeout = timeout or self.TIME_OUT
+        timeout = timeout if timeout is not None else self.TIME_OUT
         session = session or self.session
 
         try:
@@ -156,7 +156,7 @@ class HttpTransportMixin(object):
         logger.debug("Downloading files from url: %s", url)
 
         request_headers = self._get_headers(headers=headers)
-        timeout = timeout or self.TIME_OUT
+        timeout = timeout if timeout is not None else self.TIME_OUT
         session = session or self.session
 
         try:

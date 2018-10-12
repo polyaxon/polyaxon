@@ -62,8 +62,8 @@ class ApiConfig(object):
                                     settings.AuthenticationTypes.TOKEN)
         self.schema_response = self._get_bool(schema_response, settings.SCHEMA_RESPONSE)
         self.reraise = reraise
-        self.timeout = timeout or settings.TIMEOUT
-        self.interval = interval or settings.INTERVAL
+        self.timeout = timeout if timeout is not None else settings.TIMEOUT
+        self.interval = interval if timeout is not None else settings.INTERVAL
 
     @staticmethod
     def _get_bool(value, default_value):
