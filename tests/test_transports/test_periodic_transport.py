@@ -84,6 +84,7 @@ class TestPeriodicTransport(TestCase):
         assert self.transport.exceptions == 0
         assert self.transport.get_periodic_worker('url_post').is_alive() is True
 
+    @flaky(max_runs=3)
     def test_periodic_requests_with_json_data(self):
         assert self.transport.queue == []
 
@@ -110,6 +111,7 @@ class TestPeriodicTransport(TestCase):
         assert self.transport.exceptions == 0
         assert self.transport.get_periodic_worker('url_post').is_alive() is True
 
+    @flaky(max_runs=3)
     def test_periodic_requests_with_different_urls(self):
         self.transport.periodic_post(url='url_post1', json_data={'d11': 'v11'})
         self.transport.periodic_post(url='url_post1', json_data={'d12': 'v12'})
