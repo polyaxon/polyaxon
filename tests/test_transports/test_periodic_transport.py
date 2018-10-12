@@ -62,7 +62,7 @@ class TestPeriodicTransport(TestCase):
         assert self.transport.queue == []
 
         self.transport.periodic_post(url='url_post', data={'d1': 'v1'})
-        time.sleep(0.001)
+        time.sleep(0.03)
         queue = self.transport.queue
         assert len(queue) == 1
         assert queue[0][0] == 'post'
@@ -74,7 +74,7 @@ class TestPeriodicTransport(TestCase):
 
         self.transport.periodic_post(url='url_post', data={'d1': 'v1'})
         self.transport.periodic_post(url='url_post', data={'d2': 'v2'})
-        time.sleep(0.001)
+        time.sleep(0.03)
         queue = self.transport.queue
         assert len(queue) == 2
         assert queue[1][0] == 'post'
@@ -89,7 +89,7 @@ class TestPeriodicTransport(TestCase):
         assert self.transport.queue == []
 
         self.transport.periodic_post(url='url_post', json_data={'d1': 'v1'})
-        time.sleep(0.001)
+        time.sleep(0.03)
         queue = self.transport.queue
         assert len(queue) == 1
         assert queue[0][0] == 'post'
@@ -101,7 +101,7 @@ class TestPeriodicTransport(TestCase):
 
         self.transport.periodic_post(url='url_post', json_data={'d1': 'v1'})
         self.transport.periodic_post(url='url_post', json_data={'d2': 'v2'})
-        time.sleep(0.001)
+        time.sleep(0.03)
         queue = self.transport.queue
         assert len(queue) == 2
         assert queue[1][0] == 'post'
@@ -117,7 +117,7 @@ class TestPeriodicTransport(TestCase):
         self.transport.periodic_post(url='url_post1', json_data={'d12': 'v12'})
         self.transport.periodic_post(url='url_post2', data={'d21': 'v21'})
         self.transport.periodic_post(url='url_post2', data={'d22': 'v22'})
-        time.sleep(0.001)
+        time.sleep(0.03)
         queue = self.transport.queue
         assert len(queue) == 2
         assert queue[0][0] == 'post'
@@ -134,7 +134,7 @@ class TestPeriodicTransport(TestCase):
     @flaky(max_runs=3)
     def test_async_exceptions(self):
         self.exception_transport.periodic_post(url='url_post', data={'d1': 'v1'})
-        time.sleep(2)
+        time.sleep(0.03)
         assert self.exception_transport.done == 1
         assert self.exception_transport.exceptions == 1
 
@@ -145,7 +145,7 @@ class TestPeriodicTransport(TestCase):
         assert self.transport.queue == []
         self.transport.periodic_post(url='url_post', data={'d1': 'v1'})
         assert self.transport.queue == []
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.transport.get_periodic_worker('url_post').is_alive() is True
         self.transport.get_periodic_worker('url_post').atexit()
         queue = self.transport.queue

@@ -92,19 +92,19 @@ class TestThreadedTransport(TestCase):
         assert self.transport.queue == []
 
         self.transport.async_post(url='url_post')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post')]
         assert self.transport.done == 1
         assert self.transport.exceptions == 0
 
         self.transport.async_patch(url='url_patch')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post'), ('patch', 'url_patch')]
         assert self.transport.done == 2
         assert self.transport.exceptions == 0
 
         self.transport.async_put(url='url_put')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post'),
                                         ('patch', 'url_patch'),
                                         ('put', 'url_put')]
@@ -112,7 +112,7 @@ class TestThreadedTransport(TestCase):
         assert self.transport.exceptions == 0
 
         self.transport.async_delete(url='url_delete')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post'),
                                         ('patch', 'url_patch'),
                                         ('put', 'url_put'),
@@ -121,7 +121,7 @@ class TestThreadedTransport(TestCase):
         assert self.transport.exceptions == 0
 
         self.transport.async_upload(url='url_upload', files=['file'], files_size=200)
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post'),
                                         ('patch', 'url_patch'),
                                         ('put', 'url_put'),
@@ -134,27 +134,27 @@ class TestThreadedTransport(TestCase):
     @flaky(max_runs=3)
     def test_async_exceptions(self):
         self.exception_transport.async_post(url='url_post')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.exception_transport.done == 1
         assert self.exception_transport.exceptions == 1
 
         self.exception_transport.async_patch(url='url_patch')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.exception_transport.done == 2
         assert self.exception_transport.exceptions == 2
 
         self.exception_transport.async_put(url='url_put')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.exception_transport.done == 3
         assert self.exception_transport.exceptions == 3
 
         self.exception_transport.async_delete(url='url_delete')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.exception_transport.done == 4
         assert self.exception_transport.exceptions == 4
 
         self.exception_transport.async_delete(url='url_upload')
-        time.sleep(0.001)
+        time.sleep(0.03)
         assert self.exception_transport.done == 5
         assert self.exception_transport.exceptions == 5
 
