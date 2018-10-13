@@ -85,7 +85,12 @@ persistence:
   #     existingClaim: "data-2-pvc"
   #   data3:
   #     store: gcs
-  #     bucket: gs://output-bucket
+  #     bucket: gs://data-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
+  #   data4:
+  #     store: s3
+  #     bucket: s3://data-bucket
   #     secret: secret-name
   #     secretKey: secret-key
   # outputs:
@@ -98,9 +103,17 @@ persistence:
   #     existingClaim: "outputs-2-pvc"
   #   outputs3:
   #     store: gcs
-  #     bucket: gs://data-bucket
+  #     bucket: gs://outputs-bucket
   #     secret: secret-name
   #     secretKey: secret-key
+  #   outputs4:
+  #     store: s3
+  #     bucket: s3://outputs-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
+  #
+  # Possible values for S3 secret:
+  #   {AWS_ACCESS_KEY_ID: , AWS_SECRET_ACCESS_KEY: , AWS_SECURITY_TOKEN: , AWS_REGION_NAME: }
 
 defaultPersistence:
   data:
