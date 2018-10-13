@@ -8,7 +8,7 @@ from polyaxon_client.stores.exceptions import PolyaxonStoresException
 from polyaxon_client.stores.utils import get_from_env
 
 
-class Store(object):
+class BaseStore(object):
     """
     A base store interface.
     """

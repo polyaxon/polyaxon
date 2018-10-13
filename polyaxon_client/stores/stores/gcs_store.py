@@ -8,7 +8,7 @@ from six.moves import urllib
 from polyaxon_client.logger import logger
 from polyaxon_client.stores.clients import gc_client
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
-from polyaxon_client.stores.stores.base_store import Store
+from polyaxon_client.stores.stores.base_store import BaseStore
 from polyaxon_client.stores.utils import (
     append_basename,
     check_dirname_exists,
@@ -18,11 +18,11 @@ from polyaxon_client.stores.utils import (
 # pylint:disable=arguments-differ
 
 
-class GCSStore(Store):
+class GCSStore(BaseStore):
     """
     Google cloud store Service.
     """
-    STORE_TYPE = Store._GCS_STORE  # pylint:disable=protected-access
+    STORE_TYPE = BaseStore._GCS_STORE  # pylint:disable=protected-access
 
     def __init__(self, client=None, **kwargs):
         self._client = client
@@ -230,6 +230,8 @@ class GCSStore(Store):
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
 
+        local_path = os.path.abspath(local_path)
+
         if use_basename:
             local_path = append_basename(local_path, blob)
 
@@ -276,6 +278,8 @@ class GCSStore(Store):
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
+
+        local_path = os.path.abspath(local_path)
 
         if use_basename:
             local_path = append_basename(local_path, blob)

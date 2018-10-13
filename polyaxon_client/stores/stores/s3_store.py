@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 from polyaxon_client.logger import logger
 from polyaxon_client.stores.clients import aws_client
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
-from polyaxon_client.stores.stores.base_store import Store
+from polyaxon_client.stores.stores.base_store import BaseStore
 from polyaxon_client.stores.utils import (
     append_basename,
     check_dirname_exists,
@@ -22,11 +22,11 @@ from polyaxon_client.stores.utils import (
 # pylint:disable=arguments-differ
 
 
-class S3Store(Store):
+class S3Store(BaseStore):
     """
     S3 store Service using Boto3.
     """
-    STORE_TYPE = Store._S3_STORE  # pylint:disable=protected-access
+    STORE_TYPE = BaseStore._S3_STORE  # pylint:disable=protected-access
     ENCRYPTION = "AES256"
 
     def __init__(self, client=None, resource=None, **kwargs):
@@ -429,6 +429,8 @@ class S3Store(Store):
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)
 
+        local_path = os.path.abspath(local_path)
+
         if use_basename:
             local_path = append_basename(local_path, key)
 
@@ -490,6 +492,8 @@ class S3Store(Store):
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)
+
+        local_path = os.path.abspath(local_path)
 
         if use_basename:
             local_path = append_basename(local_path, key)

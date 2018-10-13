@@ -11,7 +11,7 @@ from azure.storage.blob.models import BlobPrefix
 
 from polyaxon_client.stores.clients.azure_client import get_blob_service_connection
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
-from polyaxon_client.stores.stores.base_store import Store
+from polyaxon_client.stores.stores.base_store import BaseStore
 from polyaxon_client.stores.utils import (
     append_basename,
     check_dirname_exists,
@@ -21,11 +21,11 @@ from polyaxon_client.stores.utils import (
 # pylint:disable=arguments-differ
 
 
-class AzureStore(Store):
+class AzureStore(BaseStore):
     """
     Azure store Service.
     """
-    STORE_TYPE = Store._AZURE_STORE  # pylint:disable=protected-access
+    STORE_TYPE = BaseStore._AZURE_STORE  # pylint:disable=protected-access
 
     def __init__(self, connection=None, **kwargs):
         self._connection = connection
@@ -195,6 +195,8 @@ class AzureStore(Store):
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
 
+        local_path = os.path.abspath(local_path)
+
         if use_basename:
             local_path = append_basename(local_path, blob)
 
@@ -240,6 +242,8 @@ class AzureStore(Store):
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
+
+        local_path = os.path.abspath(local_path)
 
         if use_basename:
             local_path = append_basename(local_path, blob)
