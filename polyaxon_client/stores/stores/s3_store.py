@@ -33,11 +33,13 @@ class S3Store(BaseStore):
         self._client = client
         self._resource = resource
         self._encoding = kwargs.get('encoding', 'utf-8')
-        self._endpoint_url = kwargs.get('endpoint_url')
-        self._aws_access_key_id = kwargs.get('aws_access_key_id')
-        self._aws_secret_access_key = kwargs.get('aws_secret_access_key')
-        self._aws_session_token = kwargs.get('aws_session_token')
-        self._region_name = kwargs.get('region_name')
+        self._endpoint_url = kwargs.get('endpoint_url') or kwargs.get('AWS_ENDPOINT_URL')
+        self._aws_access_key_id = kwargs.get('aws_access_key_id') or kwargs.get('AWS_ACCESS_KEY_ID')
+        self._aws_secret_access_key = (
+            kwargs.get('aws_secret_access_key') or kwargs.get('AWS_SECRET_ACCESS_KEY'))
+        self._aws_session_token = (
+            kwargs.get('aws_session_token') or kwargs.get('AWS_SECURITY_TOKEN'))
+        self._region_name = kwargs.get('region_name') or kwargs.get('AWS_REGION_NAME')
 
     @property
     def client(self):
