@@ -1146,6 +1146,11 @@ class TestExperimentMetricListViewV1(BaseViewTest):
         assert last_object.experiment == self.experiment
         assert last_object.values == data[-1]['values']
 
+        with patch('scheduler.tasks.experiments.experiments_set_metrics.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
+
     def test_create_internal(self):
         data = {}
         resp = self.internal_client.post(self.url, data)

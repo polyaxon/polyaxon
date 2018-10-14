@@ -1,7 +1,8 @@
 import json
 
-from django.conf import settings
 from kubernetes import client
+
+from django.conf import settings
 
 from constants.urls import VERSION_V1
 from db.models.outputs import get_paths_from_specs

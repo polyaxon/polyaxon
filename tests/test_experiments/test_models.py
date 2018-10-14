@@ -338,11 +338,24 @@ class TestExperimentModel(BaseTest):
         assert experiment.metrics.count() == 0
 
         create_at = timezone.now()
-        experiments_set_metrics(experiment_uuid=experiment.uuid.hex,
-                                created_at=create_at,
-                                metrics={'accuracy': 0.9, 'precision': 0.9})
+        experiments_set_metrics(experiment_id=experiment.id,
+                                data={
+                                    'created_at': create_at,
+                                    'values': {'accuracy': 0.9, 'precision': 0.9}
+                                })
 
         assert experiment.metrics.count() == 1
+
+        experiments_set_metrics(experiment_id=experiment.id,
+                                data=[{
+                                    'created_at': create_at,
+                                    'values': {'accuracy': 0.9, 'precision': 0.9}
+                                }, {
+                                    'created_at': create_at,
+                                    'values': {'accuracy': 0.9, 'precision': 0.9}
+                                }])
+
+        assert experiment.metrics.count() == 3
 
     def test_master_success_influences_other_experiment_workers_status(self):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa

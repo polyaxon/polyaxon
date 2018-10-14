@@ -1,10 +1,12 @@
 import logging
 
+from rest_framework.exceptions import ValidationError
+
 import publisher
 
+from api.experiments.serializers import ExperimentMetricSerializer
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
-from db.models.experiments import ExperimentMetric
 from libs.paths.experiments import copy_experiment_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
@@ -98,15 +100,21 @@ def experiments_check_status(experiment_uuid=None, experiment_id=None):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
-def experiments_set_metrics(experiment_uuid, metrics, created_at=None):
-    experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
+def experiments_set_metrics(experiment_id, data):
+    experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         return
 
     kwargs = {}
-    if created_at:
-        kwargs['created_at'] = created_at
-    ExperimentMetric.objects.create(experiment=experiment, values=metrics, **kwargs)
+    if isinstance(data, list):
+        kwargs['many'] = True
+    serializer = ExperimentMetricSerializer(data=data, **kwargs)
+    try:
+        serializer.is_valid(raise_exception=True)
+    except ValidationError:
+        _logger.error('Could not create metrics, a validation error was raised.')
+
+    serializer.save(experiment=experiment)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_START, ignore_result=True)

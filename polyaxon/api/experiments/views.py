@@ -398,6 +398,15 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
         return super().get_serializer(*args, **kwargs)
 
     def create(self, request, *args, **kwargs):
+        if isinstance(request.data, list):
+            celery_app.send_task(
+                SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS,
+                kwargs={
+                    'experiment_id': self.get_experiment().id,
+                    'data': request.data
+                })
+            return Response(status=status.HTTP_201_CREATED)
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
