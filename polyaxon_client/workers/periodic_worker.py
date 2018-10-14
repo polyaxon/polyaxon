@@ -50,14 +50,21 @@ class PeriodicWorker(QueueWorker):
     def _target(self):
         while True:
             queue_kwargs = {}
+            message = 0
             while self._queue.qsize() > 0:
                 record = self._queue.get()
                 try:
                     if record is self.END_EVENT:
                         break
                     queue_kwargs = self._extend_queue_kwargs(queue_kwargs, record)
+                    message += 1
                 finally:
                     self._queue.task_done()
+
+                if queue_kwargs and message >= settings.QUEUE_CALL:
+                    self._call(queue_kwargs)
+                    message = 0
+                    queue_kwargs = {}
 
             if queue_kwargs:
                 self._call(queue_kwargs)
