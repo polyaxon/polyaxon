@@ -16,12 +16,14 @@ export default class HealthStatus extends React.Component<Props, {}> {
   }
 
   public render() {
-    const services = ['Scheduler', 'Crons', 'Events', 'HPSearch', 'Postgres', 'Rabbitmq', 'Redis'];
+    const services = [
+      'Scheduler', 'Crons', 'Events', 'HPSearch', 'Streams', 'Postgres', 'Rabbitmq', 'Redis'];
     const status: {[key: string]: boolean | null} = {
       Scheduler: null,
       Crons: null,
       Events: null,
       HPSearch: null,
+      Streams: null,
       Postgres: null,
       Rabbitmq: null,
       Redis: null,
@@ -31,6 +33,7 @@ export default class HealthStatus extends React.Component<Props, {}> {
       status.Crons = this.props.healthStatus.CRONS.is_healthy;
       status.Events = this.props.healthStatus.EVENTS.is_healthy;
       status.HPSearch = this.props.healthStatus.HPSEARCH.is_healthy;
+      status.Streams = this.props.healthStatus.STREAMS.is_healthy;
       status.Postgres = this.props.healthStatus.POSTGRES.is_healthy;
       status.Rabbitmq = this.props.healthStatus.RABBITMQ.is_healthy;
       status.Redis = this.props.healthStatus.REDIS.is_healthy;
