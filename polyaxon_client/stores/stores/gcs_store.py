@@ -16,6 +16,7 @@ from polyaxon_client.stores.utils import (
     check_dirname_exists,
     get_files_in_current_directory
 )
+from polyaxon_client.utils import create_polyaxon_tmp
 
 # pylint:disable=arguments-differ
 
@@ -76,6 +77,7 @@ class GCSStore(BaseStore):
         if self._key_path:
             os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self._key_path
         elif self._keyfile_dict:
+            create_polyaxon_tmp()
             with open(settings.TMP_AUTH_GCS_ACCESS_PATH, 'w') as outfile:
                 json.dump(self._keyfile_dict, outfile)
             os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = settings.TMP_AUTH_GCS_ACCESS_PATH

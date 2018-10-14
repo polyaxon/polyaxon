@@ -8,8 +8,8 @@ import requests
 from polyaxon_client import settings
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
-from polyaxon_client.logger import logger
 from polyaxon_client.schemas import CredentialsConfig, UserConfig
+from polyaxon_client.utils import create_polyaxon_tmp
 
 
 class AuthApi(BaseApiHandler):
@@ -46,15 +46,7 @@ class AuthApi(BaseApiHandler):
         return self.prepare_results(response_json=user_dict, config=UserConfig)
 
     def _persist_token(self, token):
-        base_path = os.path.join('/tmp', '.polyaxon')
-        if not os.path.exists(base_path):
-            try:
-                os.makedirs(base_path)
-            except OSError:
-                # Except permission denied and potential race conditions
-                # in multi-threaded environments.
-                logger.warning('Could not create config directory `%s`', base_path)
-
+        create_polyaxon_tmp()
         with open(settings.TMP_AUTH_TOKEN_PATH, "w") as config_file:
             config_file.write(json.dumps({settings.SECRET_USER_TOKEN_KEY: token}))
 
