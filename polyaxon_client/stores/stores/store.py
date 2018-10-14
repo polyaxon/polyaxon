@@ -27,6 +27,11 @@ class Store(object):
     def set_outputs_path(self, outputs_path):
         self._outputs_path = outputs_path
 
+    def set_env_vars(self):
+        """Set authentication and access of the current store to the env vars"""
+        if self.store:
+            self.store.set_env_vars()
+
     @property
     def store(self):
         return self._store

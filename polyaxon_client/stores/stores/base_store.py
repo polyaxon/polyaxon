@@ -67,6 +67,10 @@ class BaseStore(object):
             return cls.get_store(store_type=store_type, keyfile_dict=store_access)
         return cls.get_store(store_type=store_type, **store_access)
 
+    def set_env_vars(self):
+        """Set authentication and access of the current store to the env vars"""
+        pass
+
     def download_file(self, *args, **kwargs):
         raise NotImplementedError
 

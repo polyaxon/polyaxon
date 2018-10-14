@@ -51,6 +51,13 @@ class S3Store(BaseStore):
                             region_name=self._region_name)
         return self._client
 
+    def set_env_vars(self):
+        os.environ['AWS_ENDPOINT_URL'] = self._endpoint_url
+        os.environ['AWS_ACCESS_KEY_ID'] = self._aws_access_key_id
+        os.environ['AWS_SECRET_ACCESS_KEY'] = self._aws_secret_access_key
+        os.environ['AWS_SECURITY_TOKEN'] = self._aws_session_token
+        os.environ['AWS_REGION_NAME'] = self._region_name
+
     @property
     def resource(self):
         if self._resource is None:

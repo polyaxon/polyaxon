@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
 import os
 
 from six.moves import urllib
 
+from polyaxon_client import settings
 from polyaxon_client.logger import logger
 from polyaxon_client.stores.clients import gc_client
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
@@ -69,6 +71,14 @@ class GCSStore(BaseStore):
             credentials=credentials,
             scopes=scopes,
         )
+
+    def set_env_vars(self):
+        if self._key_path:
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self._key_path
+        elif self._keyfile_dict:
+            with open(settings.TMP_AUTH_GCS_ACCESS_PATH, 'w') as outfile:
+                json.dump(self._keyfile_dict, outfile)
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = settings.TMP_AUTH_GCS_ACCESS_PATH
 
     @staticmethod
     def parse_gcs_url(gcs_url):
