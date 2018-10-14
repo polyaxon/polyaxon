@@ -39,7 +39,7 @@ class S3Store(BaseStore):
             kwargs.get('aws_secret_access_key') or kwargs.get('AWS_SECRET_ACCESS_KEY'))
         self._aws_session_token = (
             kwargs.get('aws_session_token') or kwargs.get('AWS_SECURITY_TOKEN'))
-        self._region_name = kwargs.get('region_name') or kwargs.get('AWS_REGION_NAME')
+        self._region_name = kwargs.get('region') or kwargs.get('AWS_REGION')
 
     @property
     def client(self):
@@ -61,7 +61,7 @@ class S3Store(BaseStore):
         if self._aws_session_token:
             os.environ['AWS_SECURITY_TOKEN'] = self._aws_session_token
         if self._region_name:
-            os.environ['AWS_REGION_NAME'] = self._region_name
+            os.environ['AWS_REGION'] = self._region_name
 
     @property
     def resource(self):

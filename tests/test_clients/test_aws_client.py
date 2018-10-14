@@ -36,7 +36,7 @@ class TestAwsClient(TestCase):
         os.environ['POLYAXON_AWS_ACCESS_KEY_ID'] = 'b1'
         os.environ['POLYAXON_AWS_SECRET_ACCESS_KEY'] = 'b2'
         os.environ['POLYAXON_AWS_SECURITY_TOKEN'] = 'b3'
-        os.environ['POLYAXON_AWS_REGION_NAME'] = 'b4'
+        os.environ['POLYAXON_AWS_REGION'] = 'b4'
         session = get_aws_session()
         assert isinstance(session, boto3.session.Session)
         assert session.region_name == 'b4'
