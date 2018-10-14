@@ -16,14 +16,14 @@ class Group(BaseTracker):
                  project=None,
                  group_id=None,
                  client=None,
-                 track_logs=None,
-                 track_git=None,
-                 track_env=None,
+                 track_logs=True,
+                 track_code=True,
+                 track_env=True,
                  outputs_store=None):
         super(Group, self).__init__(project=project,
                                     client=client,
                                     track_logs=track_logs,
-                                    track_git=track_git,
+                                    track_code=track_code,
                                     track_env=track_env,
                                     outputs_store=outputs_store)
 
@@ -65,7 +65,7 @@ class Group(BaseTracker):
                                 group_id=self.group_id,
                                 client=self.client,
                                 track_logs=self.track_logs,
-                                track_git=self.track_git,
+                                track_code=self.track_code,
                                 track_env=self.track_env,
                                 outputs_store=self.outputs_store)
         experiment.create(name=name,

@@ -12,7 +12,8 @@ from datetime import datetime
 from polyaxon_client import settings
 from polyaxon_client.exceptions import AuthenticationError
 from polyaxon_client.logger import logger
-from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
+from polyaxon_client.tracking.base import BaseTracker
+from polyaxon_client.tracking.in_cluster import ensure_in_custer
 from polyaxon_client.tracking.paths import get_base_outputs_path, get_outputs_path
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
@@ -26,7 +27,7 @@ class Experiment(BaseTracker):
                  group_id=None,
                  client=None,
                  track_logs=True,
-                 track_git=True,
+                 track_code=True,
                  track_env=True,
                  outputs_store=None):
 
@@ -37,7 +38,7 @@ class Experiment(BaseTracker):
         super(Experiment, self).__init__(project=project,
                                          client=client,
                                          track_logs=track_logs,
-                                         track_git=track_git,
+                                         track_code=track_code,
                                          track_env=track_env,
                                          outputs_store=outputs_store)
 
@@ -67,7 +68,7 @@ class Experiment(BaseTracker):
             self.log_run_env()
 
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
-        experiment_config = {'run_env': get_run_env()}
+        experiment_config = {'run_env': get_run_env()} if self.track_env else {}
         if name:
             experiment_config['name'] = name
         if tags:
@@ -104,7 +105,8 @@ class Experiment(BaseTracker):
                     base_outputs_path, self.username, self.project_name, self.experiment_id)
             self.set_outputs_store(outputs_path=outputs_path)
 
-        self.log_code_ref()
+        if self.track_code:
+            self.log_code_ref()
 
         if not settings.IN_CLUSTER:
             self._start()

@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.stores.stores.store import Store
-from polyaxon_client.tracking import get_outputs_path
+from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.project import get_project_info
 
 
@@ -13,7 +13,7 @@ class BaseTracker(object):
                  project=None,
                  client=None,
                  track_logs=True,
-                 track_git=True,
+                 track_code=True,
                  track_env=True,
                  outputs_store=None):
         if not settings.IN_CLUSTER and project is None:
@@ -29,7 +29,7 @@ class BaseTracker(object):
 
         username, project_name = get_project_info(current_user=self.user, project=project)
         self.track_logs = track_logs
-        self.track_git = track_git
+        self.track_code = track_code
         self.track_env = track_env
         self.project = project
         self.username = username
@@ -53,8 +53,3 @@ class BaseTracker(object):
 
     def log_outputs(self, dirname, **kwargs):
         self.outputs_store.upload_dir(dirname=dirname)
-
-
-def ensure_in_custer():
-    if not settings.IN_CLUSTER:
-        raise PolyaxonClientException('This experiment/job is not running inside a Polyaxon job.')

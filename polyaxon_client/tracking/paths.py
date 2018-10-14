@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-from polyaxon_client.tracking.base import ensure_in_custer
+from polyaxon_client.tracking.in_cluster import ensure_in_custer
 
 
 def get_data_paths():

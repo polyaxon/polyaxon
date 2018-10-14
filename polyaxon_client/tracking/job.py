@@ -5,7 +5,8 @@ import json
 import os
 
 from polyaxon_client import settings
-from polyaxon_client.tracking.base import BaseTracker, ensure_in_custer
+from polyaxon_client.tracking.base import BaseTracker
+from polyaxon_client.tracking.in_cluster import ensure_in_custer
 
 
 class Job(BaseTracker):
@@ -14,7 +15,7 @@ class Job(BaseTracker):
                  job_id=None,
                  client=None,
                  track_logs=True,
-                 track_git=True,
+                 track_code=True,
                  track_env=True,
                  outputs_store=None):
         if project is None and settings.IN_CLUSTER:
@@ -24,7 +25,7 @@ class Job(BaseTracker):
         super(Job, self).__init__(project=project,
                                   client=client,
                                   track_logs=track_logs,
-                                  track_git=track_git,
+                                  track_code=track_code,
                                   track_env=track_env,
                                   outputs_store=outputs_store)
         self.job_id = job_id
