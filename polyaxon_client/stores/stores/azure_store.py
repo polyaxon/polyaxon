@@ -60,9 +60,12 @@ class AzureStore(BaseStore):
                                                        connection_string=connection_string)
 
     def set_env_vars(self):
-        os.environ['AZURE_ACCOUNT_NAME'] = self._account_name
-        os.environ['AZURE_ACCOUNT_KEY'] = self._account_key
-        os.environ['AZURE_CONNECTION_STRING'] = self._connection_string
+        if self._account_name:
+            os.environ['AZURE_ACCOUNT_NAME'] = self._account_name
+        if self._account_key:
+            os.environ['AZURE_ACCOUNT_KEY'] = self._account_key
+        if self._connection_string:
+            os.environ['AZURE_CONNECTION_STRING'] = self._connection_string
 
     @staticmethod
     def parse_wasbs_url(wasbs_url):
