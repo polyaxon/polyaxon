@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.stores.stores.base_store import Store
+from polyaxon_client.stores.stores.base_store import BaseStore
 
 
-class LocalStore(Store):
+class LocalStore(BaseStore):
     """
     Local filesystem store.
 
@@ -12,7 +12,7 @@ class LocalStore(Store):
     """
     # pylint:disable=arguments-differ
 
-    STORE_TYPE = Store._LOCAL_STORE  # pylint:disable=protected-access
+    STORE_TYPE = BaseStore._LOCAL_STORE  # pylint:disable=protected-access
 
     def download_file(self, *args, **kwargs):
         pass
