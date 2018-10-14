@@ -32,10 +32,6 @@ class Group(BaseTracker):
         self.last_status = None
         self.base_outputs_path = None
 
-        # Setup the outputs store
-        if outputs_store is None and settings.IN_CLUSTER:
-            self.set_outputs_store(outputs_path=get_outputs_path())
-
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
         group_config = {}
         if name:

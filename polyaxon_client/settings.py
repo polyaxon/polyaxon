@@ -13,6 +13,7 @@ class AuthenticationTypes(object):
 
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
+TMP_AUTH_GCS_ACCESS_PATH = '/tmp/.polyaxon/.gcsaccess.json'
 
 config = rhea.Rhea.read_configs([
     os.environ,

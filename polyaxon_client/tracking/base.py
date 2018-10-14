@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.stores.stores.store import Store
+from polyaxon_client.tracking import get_outputs_path
 from polyaxon_client.tracking.utils.project import get_project_info
 
 
@@ -35,11 +36,17 @@ class BaseTracker(object):
         self.project_name = project_name
         self.outputs_store = outputs_store
 
-    def set_outputs_store(self, outputs_store=None, outputs_path=None):
+        # Setup the outputs store
+        if outputs_store is None and settings.IN_CLUSTER:
+            self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
+
+    def set_outputs_store(self, outputs_store=None, outputs_path=None, set_env_vars=False):
         if not any([outputs_store, outputs_path]):
             raise PolyaxonClientException(
                 'An Store instance or and outputs path is required.')
         self.outputs_store = outputs_store or Store(outputs_path=outputs_path)
+        if self.outputs_store and set_env_vars:
+            self.outputs_store.set_env_vars()
 
     def log_output(self, filename, **kwargs):
         self.outputs_store.upload_file(filename=filename)

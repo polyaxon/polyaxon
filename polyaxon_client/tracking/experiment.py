@@ -46,10 +46,6 @@ class Experiment(BaseTracker):
         self.experiment = None
         self.last_status = None
 
-        # Setup the outputs store
-        if outputs_store is None and settings.IN_CLUSTER:
-            self.set_outputs_store(outputs_path=get_outputs_path())
-
         # Check if there's an ephemeral token
         check_ephemeral_token = (settings.IN_CLUSTER and
                                  hasattr(settings, 'SECRET_EPHEMERAL_TOKEN') and
