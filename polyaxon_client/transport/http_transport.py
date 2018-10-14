@@ -10,6 +10,7 @@ from clint.textui import progress
 from clint.textui.progress import Bar
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
+from polyaxon_client import settings
 from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
 from polyaxon_client.logger import logger
 from polyaxon_client.schemas.utils import to_list
@@ -17,7 +18,6 @@ from polyaxon_client.schemas.utils import to_list
 
 class HttpTransportMixin(object):
     """HTTP operations transport."""
-    TIME_OUT = 25
     MAX_UPLOAD_SIZE = 1024 * 1024 * 150
 
     @property
@@ -79,7 +79,7 @@ class HttpTransportMixin(object):
                      url, params, data)
 
         request_headers = self._get_headers(headers=headers)
-        timeout = timeout if timeout is not None else self.TIME_OUT
+        timeout = timeout if timeout is not None else settings.LONG_TIMEOUT
         session = session or self.session
 
         try:
@@ -156,7 +156,7 @@ class HttpTransportMixin(object):
         logger.debug("Downloading files from url: %s", url)
 
         request_headers = self._get_headers(headers=headers)
-        timeout = timeout if timeout is not None else self.TIME_OUT
+        timeout = timeout if timeout is not None else settings.LONG_TIMEOUT
         session = session or self.session
 
         try:
