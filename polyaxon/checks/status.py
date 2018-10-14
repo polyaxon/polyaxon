@@ -6,6 +6,7 @@ from checks.postgres import PostgresCheck
 from checks.rabbitmq import RabbitMQCheck
 from checks.redis import RedisCheck
 from checks.scheduler import SchedulerCheck
+from checks.streams import StreamsCheck
 
 
 def get_status():
@@ -18,4 +19,5 @@ def get_status():
     status.update(RabbitMQCheck.run())
     status.update(RedisCheck.run())
     status.update(SchedulerCheck.run())
+    status.update(StreamsCheck.run())
     return {k: v.to_dict() for k, v in status.items()}

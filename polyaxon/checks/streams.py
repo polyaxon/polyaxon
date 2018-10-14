@@ -1,5 +1,6 @@
 from checks.base import Check
 from checks.results import Result
+from libs.api import get_settings_ws_api_url
 from libs.http import safe_request
 
 
@@ -7,7 +8,7 @@ class StreamsCheck(Check):
 
     @classmethod
     def run(cls):
-        response = safe_request('', 'GET')
+        response = safe_request(get_settings_ws_api_url(), 'GET')
         status_code = response.status_code
         if status_code == 200:
             result = Result()
