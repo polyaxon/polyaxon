@@ -55,7 +55,8 @@ class TestPeriodicTransport(TestCase):
         assert hasattr(self.transport, '_periodic_http_workers') is False
         assert isinstance(self.transport.periodic_http_workers, dict)
         assert isinstance(self.transport._periodic_http_workers, dict)
-        assert isinstance(self.transport.get_periodic_http_worker('foo', request=self.transport.post),
+        assert isinstance(self.transport.get_periodic_http_worker('foo',
+                                                                  request=self.transport.post),
                           PeriodicWorker)
 
     def test_periodic_requests_with_data(self):
