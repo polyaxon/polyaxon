@@ -7,7 +7,7 @@ This section tries to explain how Polyaxon mounts these volumes for experiments 
 ## Chart Definition
 
 The [helm reference](/reference_polyaxon_helm) describes briefly the data and outputs persistence definitions,
-and how you can mount volumes, both persistent claims and host paths, here's the example coming from the ref:
+and how you can mount volumes, both persistent claims, host paths, and cloud storages, here's the example coming from the ref:
 
 ```yaml
 persistence:
@@ -22,6 +22,16 @@ persistence:
     data-foo:
       mountPath: "/data/foo"
       existingClaim: "data-foo-pvc"
+    data-gcs3:
+      store: gcs
+      bucket: gs://data-bucket
+      secret: secret-name
+      secretKey: secret-key
+    data-s3:
+      store: s3
+      bucket: s3://data-bucket
+      secret: secret-name
+      secretKey: secret-key
   outputs:
     outputs1:
       mountPath: "/outputs/1"
@@ -33,7 +43,19 @@ persistence:
     outputs-foo:
       mountPath: "/outputs/foo"
       existingClaim: "outputs-foo-pvc"
+    outputs-gcs3:
+      store: gcs
+      bucket: gs://outputs-bucket
+      secret: secret-name
+      secretKey: secret-key
+    outputs-s3:
+      store: s3
+      bucket: s3://outputs-bucket
+      secret: secret-name
+      secretKey: secret-key
 ```
+
+For GCS, S3, and Azure Storage, you need to need to provide a secret with auth access to these storages.
 
 ## Scheduling
 
