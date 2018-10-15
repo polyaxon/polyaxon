@@ -78,6 +78,8 @@ class Intervals(object):
         is_optional=True,
         default=150)
     CLUSTERS_NOTIFICATION_ALIVE = 150
+    CLEAN_ACTIVITY_LOGS = 300
+    CLEAN_NOTIFICATIONS = 300
 
     @staticmethod
     def get_schedule(interval):
@@ -118,6 +120,8 @@ class CronsCeleryTasks(object):
     CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
+    CLEAN_ACTIVITY_LOGS = 'clean_activity_logs'
+    CLEAN_NOTIFICATIONS = 'clean_notifications'
 
 
 class ReposCeleryTasks(object):
@@ -250,6 +254,7 @@ class CeleryQueues(object):
     CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS')
     CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES')
     CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS')
+    CRONS_CLEAN = config.get_string('POLYAXON_QUEUES_CRONS_CLEAN')
 
     HP_HEALTH = config.get_string('POLYAXON_QUEUES_HP_HEALTH')
     HP = config.get_string('POLYAXON_QUEUES_HP')
@@ -381,6 +386,10 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.CRONS_CLUSTERS},
     CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE:
         {'queue': CeleryQueues.CRONS_CLUSTERS},
+    CronsCeleryTasks.CLEAN_ACTIVITY_LOGS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.CLEAN_NOTIFICATIONS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
 
     # HP health
     HPCeleryTasks.HP_HEALTH:
@@ -468,6 +477,20 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
         'options': {
             'expires': Intervals.get_expires(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
+        },
+    },
+    CronsCeleryTasks.CLEAN_ACTIVITY_LOGS + '_beat': {
+        'task': CronsCeleryTasks.CLEAN_ACTIVITY_LOGS,
+        'schedule': Intervals.get_schedule(Intervals.CLEAN_ACTIVITY_LOGS),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.CLEAN_ACTIVITY_LOGS),
+        },
+    },
+    CronsCeleryTasks.CLEAN_NOTIFICATIONS + '_beat': {
+        'task': CronsCeleryTasks.CLEAN_NOTIFICATIONS,
+        'schedule': Intervals.get_schedule(Intervals.CLEAN_NOTIFICATIONS),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.CLEAN_NOTIFICATIONS),
         },
     },
 }
