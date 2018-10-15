@@ -28,7 +28,7 @@ def projects_notebook_build(notebook_job_id):
         code_reference=notebook_job.code_reference)
 
     notebook_job.build_job = build_job
-    notebook_job.save()
+    notebook_job.save(update_fields=['build_job'])
     if image_exists:
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(

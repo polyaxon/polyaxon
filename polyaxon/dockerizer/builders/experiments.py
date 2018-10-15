@@ -79,7 +79,7 @@ def get_experiment_repo_info(experiment):
             code_reference, _ = CodeReference.objects.get_or_create(repo=repo,
                                                                     commit=repo.last_commit[0])
             experiment.code_reference = code_reference
-            experiment.save()
+            experiment.save(update_fields=['code_reference'])
 
         repo_path = repo.path
         repo_name = repo.name

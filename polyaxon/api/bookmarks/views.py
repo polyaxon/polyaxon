@@ -128,7 +128,7 @@ class BookmarkCreateView(PostAPIView):
                 content_type__model=self.content_type,
                 object_id=obj.id)
             bookmark.enabled = True
-            bookmark.save()
+            bookmark.save(update_fields=['enabled'])
         except Bookmark.DoesNotExist:
             Bookmark.objects.create(
                 user=user,
@@ -159,7 +159,7 @@ class BookmarkDeleteView(DestroyAPIView):
                        actor_id=user.id,
                        actor_name=user.username)
         bookmark.enabled = False
-        bookmark.save()
+        bookmark.save(update_fields=['enabled'])
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

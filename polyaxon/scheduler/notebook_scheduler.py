@@ -55,7 +55,7 @@ def start_notebook(notebook):
                                          tolerations=notebook.tolerations,
                                          allow_commits=allow_commits)
         notebook.definition = get_job_definition(results)
-        notebook.save()
+        notebook.save(update_fields=['definition'])
         return
     except ApiException:
         _logger.error('Could not start notebook, please check your polyaxon spec.',

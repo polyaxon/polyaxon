@@ -1,4 +1,5 @@
 import pytest
+
 from django.utils.functional import lazy
 
 from libs.slugs import slugify

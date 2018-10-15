@@ -113,7 +113,7 @@ def experiment_group_status_post_save(sender, **kwargs):
     set_finished_at(instance=experiment_group,
                     status=instance.status,
                     is_done=ExperimentGroupLifeCycle.is_done)
-    experiment_group.save()
+    experiment_group.save(update_fields=['status', 'started_at', 'finished_at'])
     auditor.record(event_type=EXPERIMENT_GROUP_NEW_STATUS,
                    instance=experiment_group,
                    previous_status=previous_status)

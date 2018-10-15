@@ -53,7 +53,7 @@ def start_job(job):
                                     affinity=job.affinity,
                                     tolerations=job.tolerations)
         job.definition = get_job_definition(results)
-        job.save()
+        job.save(update_fields=['definition'])
         return
     except ApiException:
         _logger.error('Could not start job, please check your polyaxon spec.',

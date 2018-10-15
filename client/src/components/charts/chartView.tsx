@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as Plotly from 'plotly.js';
 import * as React from 'react';
+import { Dropdown, MenuItem } from 'react-bootstrap';
 
 import { CHARTS_COLORS } from '../../constants/charts';
 import { Trace } from '../../interfaces/dateTrace';
@@ -20,6 +21,7 @@ interface Props {
   resource: string;
   className: string;
   onRemoveChart: (chartIdx: number) => void;
+  onUpdateChart: (chartIdx: number) => void;
 }
 
 export default class ChartView extends React.Component<Props, {}> {
@@ -377,11 +379,29 @@ export default class ChartView extends React.Component<Props, {}> {
         <div className={this.props.className + ' chart-item'} key={chart.name + idx}>
           <div className="chart">
             <h5 className="chart-header">{chart.name}
-              <button
-                className="btn btn-sm btn-default pull-right"
-                onClick={() => this.props.onRemoveChart(idx)}
-              >Remove
-              </button>
+              <span className="pull-right">
+                <Dropdown
+                  pullRight={true}
+                  key={1}
+                  id={`dropdown-actions-1`}
+                >
+                  <Dropdown.Toggle
+                    bsStyle="default"
+                    bsSize="small"
+                    noCaret={true}
+                  >
+                      <i className="fa fa-ellipsis-h icon" aria-hidden="true"/>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                  <MenuItem eventKey="1" onClick={() => this.props.onRemoveChart(idx)}>
+                    <i className="fa fa-times icon" aria-hidden="true"/> Remove
+                  </MenuItem>
+                    <MenuItem eventKey="2" onClick={() => this.props.onUpdateChart(idx)}>
+                    <i className="fa fa-edit icon" aria-hidden="true"/> Update
+                  </MenuItem>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </span>
             </h5>
             {<Chart
               data={getTraces(chart)}
