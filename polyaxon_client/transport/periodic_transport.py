@@ -7,50 +7,50 @@ from polyaxon_client.transport.retry_transport import RetryTransportMixin
 from polyaxon_client.workers.periodic_worker import PeriodicWorker
 
 
-class PeriodicTransportMixin(RetryTransportMixin):
-    """Threads operations transport."""
+class PeriodicHttpTransportMixin(RetryTransportMixin):
+    """Periodic http operations transport."""
 
     @property
-    def done(self):
-        if hasattr(self, '_periodic_done'):
-            return self._periodic_done
+    def periodic_http_done(self):
+        if hasattr(self, '_periodic_http_done'):
+            return self._periodic_http_done
         return None
 
     @property
-    def exceptions(self):
-        if hasattr(self, '_periodic_exceptions'):
-            return self._periodic_exceptions
+    def periodic_http_exceptions(self):
+        if hasattr(self, '_periodic_http_exceptions'):
+            return self._periodic_http_exceptions
         return None
 
-    def queue_request(self, request, url, **kwargs):
+    def queue_periodic_request(self, request, url, **kwargs):
         try:
             request(url=url, session=self.retry_session, **kwargs)
         except Exception as e:
-            self._periodic_exceptions += 1
+            self._periodic_http_exceptions += 1
             logger.debug('Error making request url: %s, params: params %s, exp: %s', url, kwargs, e)
         finally:
-            self._periodic_done += 1
+            self._periodic_http_done += 1
 
     @property
-    def periodic_workers(self):
-        if not hasattr(self, '_periodic_workers'):
-            self._periodic_workers = {}
+    def periodic_http_workers(self):
+        if not hasattr(self, '_periodic_http_workers'):
+            self._periodic_http_workers = {}
 
-        return self._periodic_workers
+        return self._periodic_http_workers
 
-    def get_periodic_worker(self, url, **kwargs):
-        worker = self.periodic_workers.get(url)
+    def get_periodic_http_worker(self, url, **kwargs):
+        worker = self.periodic_http_workers.get(url)
         if not worker or not worker.is_alive():
             if 'request' not in kwargs:
                 raise PolyaxonClientException('Periodic worker expects a request argument.')
             kwargs['url'] = url
-            worker = PeriodicWorker(callback=self.queue_request,
+            worker = PeriodicWorker(callback=self.queue_periodic_request,
                                     worker_interval=self.config.interval,
                                     worker_timeout=self.config.timeout,
                                     kwargs=kwargs)
             worker.start()
-            self.periodic_workers[url] = worker
-        return self.periodic_workers[url]
+            self.periodic_http_workers[url] = worker
+        return self.periodic_http_workers[url]
 
     def periodic_post(self,
                       url,
@@ -61,10 +61,60 @@ class PeriodicTransportMixin(RetryTransportMixin):
                       timeout=None,
                       headers=None):
         """Periodic Async Call request with a post."""
-        worker = self.get_periodic_worker(url=url,
-                                          request=self.post,
-                                          params=params,
-                                          files=files,
-                                          timeout=timeout,
-                                          headers=headers)
+        worker = self.get_periodic_http_worker(url=url,
+                                               request=self.post,
+                                               params=params,
+                                               files=files,
+                                               timeout=timeout,
+                                               headers=headers)
         return worker.queue(data=data, json_data=json_data)
+
+
+class PeriodicWSTransportMixin(RetryTransportMixin):
+    """Periodic websocket operations transport."""
+
+    @property
+    def periodic_ws_done(self):
+        if hasattr(self, '_periodic_ws_done'):
+            return self._periodic_ws_done
+        return None
+
+    @property
+    def periodic_ws_exceptions(self):
+        if hasattr(self, '_periodic_ws_exceptions'):
+            return self._periodic_ws_exceptions
+        return None
+
+    def queue_ws_request(self, request, url, **kwargs):
+        try:
+            request(url=url, **kwargs)
+        except Exception as e:
+            self._periodic_ws_exceptions += 1
+            logger.debug('Error making request url: %s, params: params %s, exp: %s', url, kwargs, e)
+        finally:
+            self._periodic_ws_done += 1
+
+    @property
+    def periodic_ws_workers(self):
+        if not hasattr(self, '_periodic_http_workers'):
+            self._periodic_http_workers = {}
+
+        return self._periodic_http_workers
+
+    def get_periodic_http_worker(self, url, **kwargs):
+        worker = self.periodic_ws_workers.get(url)
+        if not worker or not worker.is_alive():
+            kwargs['url'] = url
+            kwargs['request'] = self.socket(url, message_handler=None, **kwargs)
+            worker = PeriodicWorker(callback=self.queue_ws_request,
+                                    worker_interval=self.config.interval,
+                                    worker_timeout=self.config.timeout,
+                                    kwargs=kwargs)
+            worker.start()
+            self.periodic_ws_workers[url] = worker
+        return self.periodic_ws_workers[url]
+
+    def periodic_send(self, url, data=None, headers=None):
+        """Periodic Async Call request with a post."""
+        worker = self.get_periodic_http_worker(url=url, headers=headers)
+        return worker.queue(data=data)
