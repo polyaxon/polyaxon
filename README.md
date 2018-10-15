@@ -261,7 +261,7 @@ It is not very important to have a volume claim for this, if your host node has 
 You can mount multiple claims and host paths for data.
 This should be a dictionary mapping volume names to the respective volumes.
 
-Every definition should follow the following structure:
+Every definition should follow the structure:
 
 
 | Parameter                                  | Description                                       | Default
@@ -270,6 +270,10 @@ Every definition should follow the following structure:
 | `persistence.data.dataName.mountPath`      | Path where to mount the volume                    | ``
 | `persistence.data.dataName.hostPath`       | The directory from the host node's                | ``
 | `persistence.data.dataName.readOnly`       | Whether to mount as read only                     |
+| `persistence.data.dataName.store`          | To mount a cloud storage (s3, gcs, azure)         |
+| `persistence.data.dataName.bucket`         | The bucket to mount                               |
+| `persistence.data.dataName.secret`         | The secret containing access to the bucket        |
+| `persistence.data.dataName.secretKey`      | The key name to get the value from the secret     |
 
 
 The default value based is on a path in the host node:
@@ -297,6 +301,16 @@ persistence:
     data-foo:
       mountPath: "/data/foo"
       existingClaim: "data-foo-pvc"
+    data3:
+      store: gcs
+      bucket: gs://data-bucket
+      secret: secret-name
+      secretKey: secret-key
+    data4:
+      store: s3
+      bucket: s3://data-bucket
+      secret: secret-name
+      secretKey: secret-key
 ```
 
 
@@ -305,7 +319,7 @@ persistence:
 You can mount multiple claims and host paths for outputs.
 This should be a dictionary mapping volume names to the respective volumes.
 
-Every definition should follow the following structure:
+Every definition should follow the structure:
 
 
 | Parameter                                        | Description                                       | Default
@@ -314,6 +328,10 @@ Every definition should follow the following structure:
 | `persistence.outputs.outputsName.mountPath`      | Path where to mount the volume                    | ``
 | `persistence.outputs.outputsName.hostPath`       | The directory from the host node's                | ``
 | `persistence.outputs.outputsName.readOnly`       | Whether to mount as read only                     |
+| `persistence.outputs.dataName.store`             | To mount a cloud storage (s3, gcs, azure)         |
+| `persistence.outputs.dataName.bucket`            | The bucket to mount                               |
+| `persistence.outputs.dataName.secret`            | The secret containing access to the bucket        |
+| `persistence.outputs.dataName.secretKey`         | The key name to get the value from the secret     |
 
 
 The default value based is on a path in the host node:
@@ -341,6 +359,16 @@ persistence:
     outputs-foo:
       mountPath: "/outputs/foo"
       existingClaim: "outputs-foo-pvc"
+    outputs3:
+      store: gcs
+      bucket: gs://outputs-bucket
+      secret: secret-name
+      secretKey: secret-key
+    outputs4:
+      store: s3
+      bucket: s3://outputs-bucket
+      secret: secret-name
+      secretKey: secret-key
 ```
 
 ### Persistence with nfs provisioner
