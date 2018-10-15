@@ -190,6 +190,6 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
         logs = build_logs
 
     # Check if we need to invoke logs
-    if l:
+    if l and logs:
         ctx.obj = {}
         ctx.invoke(logs)
