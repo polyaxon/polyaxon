@@ -1,9 +1,12 @@
 from __future__ import absolute_import, print_function
 
 import logging
+import random
 import uuid
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_slug
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -13,6 +16,7 @@ import auditor
 
 from api.users.utils import login_user
 from db.models.sso import SSOIdentity
+from libs.slugs import slugify
 from libs.wizards import Wizard
 from sso import providers
 
@@ -33,6 +37,24 @@ class IdentityWizard(Wizard):
         return '{}://{}{}'.format('https' if request.is_secure() else 'http',
                                   request.get_host(),
                                   associate_url)
+
+    @staticmethod
+    def validate_username(username):
+        """
+        This validation step is done when we are sure the user
+        does not exit on the systems and we need to create a new user.
+        """
+        try:
+            validate_slug(username)
+        except ValidationError:
+            username = slugify(username)
+
+        user_model_cls = get_user_model()
+        _username = username
+        while user_model_cls.objects.filter(username=_username).exists():
+            _username = '{}{}'.format(username, random.randint(1, 100))
+
+        return _username
 
     def get_or_create_user(self, identity):
         # Check if request has already a user
@@ -59,10 +81,12 @@ class IdentityWizard(Wizard):
             except user_model_cls.DoesNotExist:
                 user = user_model_cls.objects.get(email=identity['username'])
             return user
+
         # Create a new user
+        username = self.validate_username(identity['username'])
         return user_model_cls.objects.create(
             email=identity['email'],
-            username=identity['username'],
+            username=username,
             first_name=identity['first_name'],
             last_name=identity['last_name'],
             password='{}.{}'.format(
