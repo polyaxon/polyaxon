@@ -1,3 +1,3 @@
-polyaxon-cli==0.2.7
-polyaxon-client==0.2.7
-polyaxon-schemas==0.2.7
+polyaxon-cli==0.2.8
+polyaxon-client==0.2.8
+polyaxon-schemas==0.2.8
