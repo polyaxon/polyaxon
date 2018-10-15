@@ -10,13 +10,13 @@ class ThreadedTransportMixin(RetryTransportMixin):
     """Threads operations transport."""
 
     @property
-    def done(self):
+    def threaded_done(self):
         if hasattr(self, '_threaded_done'):
             return self._threaded_done
         return None
 
     @property
-    def exceptions(self):
+    def threaded_exceptions(self):
         if hasattr(self, '_threaded_exceptions'):
             return self._threaded_exceptions
         return None
