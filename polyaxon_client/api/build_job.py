@@ -170,4 +170,4 @@ class BuildJobApi(BaseApiHandler):
                                      'builds',
                                      job_id,
                                      'logs')
-        self.transport.socket(request_url, message_handler=message_handler)
+        self.transport.stream(request_url, message_handler=message_handler)

@@ -59,7 +59,7 @@ class ExperimentJobApi(BaseApiHandler):
                                      'jobs',
                                      job_id,
                                      'resources')
-        self.transport.socket(request_url, message_handler=message_handler)
+        self.transport.stream(request_url, message_handler=message_handler)
 
     def logs(self, username, project_name, experiment_id, job_id, message_handler=None):
         """Streams job logs using websockets.
@@ -75,4 +75,4 @@ class ExperimentJobApi(BaseApiHandler):
                                      'jobs',
                                      job_id,
                                      'logs')
-        self.transport.socket(request_url, message_handler=message_handler)
+        self.transport.stream(request_url, message_handler=message_handler)

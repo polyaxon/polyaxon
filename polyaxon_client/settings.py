@@ -75,4 +75,4 @@ INTERVAL = config.get_int('POLYAXON_INTERVAL',
                           default=1)
 QUEUE_CALL = config.get_int('POLYAXON_INTERVAL',
                             is_optional=True,
-                            default=500)
+                            default=200)

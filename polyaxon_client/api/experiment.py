@@ -378,7 +378,7 @@ class ExperimentApi(BaseApiHandler):
                                      'experiments',
                                      experiment_id,
                                      'resources')
-        self.transport.socket(request_url, message_handler=message_handler)
+        self.transport.stream(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
     def logs(self, username, project_name, experiment_id, stream=True, message_handler=None):
@@ -407,7 +407,7 @@ class ExperimentApi(BaseApiHandler):
                                      'experiments',
                                      experiment_id,
                                      'logs')
-        self.transport.socket(request_url, message_handler=message_handler)
+        self.transport.stream(request_url, message_handler=message_handler)
 
     def start_tensorboard(self,
                           username,

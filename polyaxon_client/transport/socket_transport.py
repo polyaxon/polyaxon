@@ -10,17 +10,22 @@ from polyaxon_client.logger import logger
 class SocketTransportMixin(object):
     """Socket operations transport."""
     def socket(self, url, message_handler, headers=None):
-        wes = websocket.WebSocketApp(
+        webs = websocket.WebSocketApp(
             url,
             on_message=lambda ws, message: self._on_message(message_handler, message),
             on_error=self._on_error,
             on_close=self._on_close,
             header=self._get_headers(headers)
         )
-        wes.run_forever(ping_interval=30, ping_timeout=10)
+        return webs
+
+    def stream(self, url, message_handler, headers=None):
+        webs = self.socket(url=url, message_handler=message_handler, headers=headers)
+        webs.run_forever(ping_interval=30, ping_timeout=10)
 
     def _on_message(self, message_handler, message):
-        message_handler(json.loads(message))
+        if message_handler and message:
+            message_handler(json.loads(message))
 
     @staticmethod
     def _on_error(ws, error):

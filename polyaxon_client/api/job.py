@@ -236,7 +236,7 @@ class JobApi(BaseApiHandler):
                                      'jobs',
                                      job_id,
                                      'resources')
-        self.transport.socket(request_url, message_handler=message_handler)
+        self.transport.stream(request_url, message_handler=message_handler)
 
     # pylint:disable=inconsistent-return-statements
     def logs(self, username, project_name, job_id, stream=True, message_handler=None):
@@ -265,7 +265,7 @@ class JobApi(BaseApiHandler):
                                      'jobs',
                                      job_id,
                                      'logs')
-        self.transport.socket(request_url, message_handler=message_handler)
+        self.transport.stream(request_url, message_handler=message_handler)
 
     def download_outputs(self, username, project_name, job_id):
         """Downloads outputs for this job to the current dir."""
