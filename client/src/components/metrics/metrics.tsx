@@ -195,6 +195,26 @@ export default class Metrics extends React.Component<Props, State> {
       if (chart.paramNames.length === 0 && (chart.type === 'scatter' || chart.type === 'histogram')) {
         chart.paramNames = [this.state.paramNames[0]];
       }
+      if (
+        (!chart.name || chart.name === 'untitled') &&
+        chart.type === 'histogram' &&
+        (chart.metricNames.length > 0 && chart.paramNames.length > 0)
+      ) {
+          chart.name = _.join([chart.metricNames[0], chart.paramNames[0]], ' / ');
+      }
+      if (
+        (!chart.name || chart.name === 'untitled') &&
+        chart.type === 'scatter' && chart.paramNames.length > 0
+      ) {
+          chart.name = chart.paramNames[0];
+      }
+      if (
+        (!chart.name || chart.name === 'untitled') &&
+        (chart.type === 'line' || chart.type === 'bar') &&
+        (chart.experiments.length > 1)
+      ) {
+        chart.name = _.join(chart.metricNames, ', ');
+      }
       return chart;
     };
     // const chart = prevState.chartForm.chart;
@@ -202,8 +222,10 @@ export default class Metrics extends React.Component<Props, State> {
       ...prevState,
       view: {
         ...prevState.view,
-        charts: [...prevState.view.charts.map(
+        charts: prevState.chartForm.index > -1
+          ? [...prevState.view.charts.map(
           (chart, idx) => idx === prevState.chartForm.index ? getChart(prevState.chartForm.chart) : chart)]
+          : [...prevState.view.charts, getChart(prevState.chartForm.chart)]
       },
       chartForm: this.getChartForm(
         this.state.metricNames, this.state.paramNames, this.state.experiments)
