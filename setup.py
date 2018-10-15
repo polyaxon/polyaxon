@@ -19,12 +19,11 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon',
-      version='0.2.7',
-      description='Deep Learning library for TensorFlow for '
-                  'building end to end db and experiments.',
-      maintainer='Mourad Mourafiq',
-      maintainer_email='mouradmourafiq@gmail.com',
-      author='Mourad Mourafiq',
+      version='0.2.8',
+      description='A platform for reproducible and scalable deep learning and machine learning.',
+      maintainer='Polyaxon',
+      maintainer_email='contact@polyaxon.com',
+      author='Polyaxon',
       author_email='mouradmourafiq@gmail.com',
       url='https://github.com/polyaxon/polyaxon',
       license='MIT',

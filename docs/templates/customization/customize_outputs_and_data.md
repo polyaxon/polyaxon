@@ -1,6 +1,6 @@
-Polyaxon allows to mount multiple data volumes and outputs,
-this could be very useful for large teams who need to either to scale or
-to have different teams to have access to different volumes.
+Polyaxon allows to mount multiple data volumes and outputs as well as cloud storages,
+this could be very useful for large teams who need either to scale or
+to have different teams to access different volumes.
 
 This section tries to explain how Polyaxon mounts these volumes for experiments and jobs.
 

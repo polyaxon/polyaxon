@@ -1,3 +1,26 @@
+## 0.2.8
+
+ * Seamless integration of S3 and GCS is now in public beta, 
+   users can load data from cloud storages as well as from persistent volumes and host nodes, 
+   they can also manage their outputs and artifacts using these storages, 
+   tensorflow's integration is seamless as well for model and checkpoints logging.
+ * Fix some issues with Azure Storage (still in private beta). 
+ * Add support for user's custom secrets and config maps, 
+   users can extend Polyaxon runs and workloads with extra environment and secrets.
+ * Improve experiments' metrics API by using a queue for frequent updates.
+ * Increase throttling rate for metrics reporting.
+ * Add possibility to edit charts.
+ * Add more automation to chart titles based on metrics/params.
+ * Add periodic worker to improve performance.
+ * Add cleaning crons to remove old notifications and logs.
+ * Add streams health status.
+ * Add extra config and annotation to prevent IOError in long running requests.
+ * Add draft for out-cluster logging.
+ * Fix validation issue related to gitlab usernames containing dots.
+ * Fix issue with re-enabling previously disabled nodes. 
+ * Fix issues related to artifacts management and absolute paths on users machines.
+ * Fix filtering typo for `id` dropdown.
+ 
 ## 0.2.7
 
  * Add experiment groups' metrics/visualizations.
