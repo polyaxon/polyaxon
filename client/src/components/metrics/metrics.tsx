@@ -36,7 +36,13 @@ export interface State {
   paramNames: string[];
   experiments: string[];
   view: ChartViewModel;
-  chartForm: { chart: ChartModel, metricNames: string[], paramNames: string[], experiments: string[], };
+  chartForm: {
+    chart: ChartModel,
+    metricNames: string[],
+    paramNames: string[],
+    experiments: string[],
+    index: number;
+  };
 }
 
 export default class Metrics extends React.Component<Props, State> {
@@ -55,7 +61,7 @@ export default class Metrics extends React.Component<Props, State> {
       view: this.props.resource === 'groups'
         ? this.getDefaultView([])
         : this.getDefaultView(metricNames),
-      chartForm: this.getEmptyChartForm(metricNames, paramNames, experiments)
+      chartForm: this.getChartForm(metricNames, paramNames, experiments)
     };
   }
 
@@ -87,17 +93,26 @@ export default class Metrics extends React.Component<Props, State> {
     }
   }
 
-  public getEmptyChartForm = (metricNames: string[], paramNames: string[], experiments: string[]) => {
+  public getChartForm = (metricNames: string[],
+                         paramNames: string[],
+                         experiments: string[],
+                         name: string = 'untitled',
+                         chartMetricNames: string[] = [],
+                         chartParamNames: string[] = [],
+                         chartExperiments: string[] = [],
+                         chartType: ChartTypes = 'line',
+                         index: number = -1) => {
     return {
       metricNames,
       paramNames,
       experiments,
+      index,
       chart: {
-        name: 'untitled',
-        metricNames: [] as string[],
-        paramNames: [] as string[],
-        experiments: [] as string[],
-        type: 'line'
+        name,
+        metricNames: chartMetricNames,
+        paramNames: chartParamNames,
+        experiments: chartExperiments,
+        type: chartType,
       } as ChartModel
     };
   };
@@ -187,9 +202,10 @@ export default class Metrics extends React.Component<Props, State> {
       ...prevState,
       view: {
         ...prevState.view,
-        charts: [...prevState.view.charts, getChart(prevState.chartForm.chart)]
+        charts: [...prevState.view.charts.map(
+          (chart, idx) => idx === prevState.chartForm.index ? getChart(prevState.chartForm.chart) : chart)]
       },
-      chartForm: this.getEmptyChartForm(
+      chartForm: this.getChartForm(
         this.state.metricNames, this.state.paramNames, this.state.experiments)
     }));
     this.handleClose();
@@ -202,10 +218,28 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.view,
         charts: [...prevState.view.charts.filter((chart, idx) => idx !== chartIdx)]
       },
-      chartForm: this.getEmptyChartForm(
+      chartForm: this.getChartForm(
         this.state.metricNames, this.state.paramNames, this.state.experiments)
     }));
     this.handleClose();
+  };
+
+  public updateChart = (chartIdx: number) => {
+    const chart = this.state.view.charts[chartIdx];
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      chartForm: this.getChartForm(
+        this.state.metricNames,
+        this.state.paramNames,
+        this.state.experiments,
+        chart.name,
+        chart.metricNames,
+        chart.paramNames,
+        chart.experiments,
+        chart.type,
+        chartIdx)
+    }));
+    this.handleShow('showChartModal');
   };
 
   public updateChartForm = (key: string, value: string) => {
@@ -507,7 +541,9 @@ export default class Metrics extends React.Component<Props, State> {
             }
             <div className="form-group">
               <div className="col-sm-offset-2 col-sm-10">
-                <button type="submit" className="btn btn-default" onClick={this.addChart}>Add</button>
+                <button type="submit" className="btn btn-default" onClick={this.addChart}>
+                  {this.state.chartForm.index > -1 ? 'Update' : 'Add'}
+                </button>
               </div>
             </div>
           </form>
@@ -599,6 +635,7 @@ export default class Metrics extends React.Component<Props, State> {
             view={this.state.view}
             resource={this.props.resource}
             onRemoveChart={this.removeChart}
+            onUpdateChart={this.updateChart}
           />
         </div>
         {chartModal}
