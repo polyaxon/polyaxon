@@ -216,10 +216,7 @@ class TestExperimentModel(BaseTest):
                                       ExperimentLifeCycle.SCHEDULED,
                                       ExperimentLifeCycle.FAILED]
         experiment.refresh_from_db()
-        assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
-
-        # Assert also that experiment is monitored
-        assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
+        assert experiment.last_status == ExperimentLifeCycle.FAILED
 
     def test_independent_experiment_creation_with_run_triggers_experiment_building_scheduling(self):
         config = ExperimentSpecification.read(exec_experiment_spec_content)
