@@ -25,6 +25,10 @@ class RetryTransportMixin(object):
             adapter = HTTPAdapter(max_retries=retry)
             self._retry_session.mount('http://', adapter)
             self._retry_session.mount('https://', adapter)
-            self._periodic_done = 0
-            self._periodic_exceptions = 0
+            self._threaded_done = 0
+            self._threaded_exceptions = 0
+            self._periodic_http_done = 0
+            self._periodic_http_exceptions = 0
+            self._periodic_ws_done = 0
+            self._periodic_ws_exceptions = 0
         return self._retry_session
