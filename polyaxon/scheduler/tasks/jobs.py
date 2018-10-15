@@ -29,7 +29,7 @@ def jobs_build(job_id):
         code_reference=job.code_reference)
 
     job.build_job = build_job
-    job.save()
+    job.save(update_fields=['build_job'])
     if image_exists:
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(

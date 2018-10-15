@@ -125,7 +125,7 @@ def experiment_job_status_post_save(sender, **kwargs):
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
-    job.save()
+    job.save(update_fields=['status', 'started_at', 'finished_at'])
 
     # check if the new status is done to remove the containers from the monitors
     if job.is_done:
@@ -160,7 +160,7 @@ def experiment_status_post_save(sender, **kwargs):
     set_finished_at(instance=experiment,
                     status=instance.status,
                     is_done=ExperimentLifeCycle.is_done)
-    experiment.save()
+    experiment.save(update_fields=['status', 'started_at', 'finished_at'])
     auditor.record(event_type=EXPERIMENT_NEW_STATUS,
                    instance=experiment,
                    previous_status=previous_status)
@@ -203,7 +203,7 @@ def experiment_metric_post_save(sender, **kwargs):
 
     experiment.last_metric = update_metric(last_metrics=experiment.last_metric,
                                            metrics=instance.values)
-    experiment.save()
+    experiment.save(update_fields=['last_metric'])
     auditor.record(event_type=EXPERIMENT_NEW_METRIC,
                    instance=experiment)
 

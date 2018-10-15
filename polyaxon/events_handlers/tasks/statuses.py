@@ -17,7 +17,7 @@ def set_node_scheduling(job, node_name):
     if job.node_scheduled or node_name is None:
         return
     job.node_scheduled = node_name
-    job.save()
+    job.save(update_fields=['node_scheduled'])
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,

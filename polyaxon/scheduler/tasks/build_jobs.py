@@ -164,4 +164,4 @@ def build_jobs_set_dockerfile(build_job_uuid, dockerfile):
         return
 
     build_job.dockerfile = dockerfile
-    build_job.save()
+    build_job.save(update_fields=['dockerfile'])

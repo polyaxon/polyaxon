@@ -92,7 +92,7 @@ def start_dockerizer(build_job):
         auditor.record(event_type=BUILD_JOB_STARTED,
                        instance=build_job)
         build_job.definition = get_job_definition(results)
-        build_job.save()
+        build_job.save(update_fields=['definition'])
         return True
     except ApiException:
         _logger.error('Could not start build job, please check your polyaxon spec',

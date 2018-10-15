@@ -322,7 +322,7 @@ class ExperimentCodeReferenceView(CreateAPIView, RetrieveAPIView):
         experiment = self.get_object()
         instance = serializer.save()
         experiment.code_reference = instance
-        experiment.save()
+        experiment.save(update_fields=['code_reference'])
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

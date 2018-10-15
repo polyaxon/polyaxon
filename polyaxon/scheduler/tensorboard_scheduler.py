@@ -39,7 +39,7 @@ def start_tensorboard(tensorboard):
             affinity=tensorboard.affinity,
             tolerations=tensorboard.tolerations)
         tensorboard.definition = get_job_definition(results)
-        tensorboard.save()
+        tensorboard.save(update_fields=['definition'])
         return
     except ApiException:
         _logger.error('Could not start tensorboard, please check your polyaxon spec.',

@@ -51,7 +51,7 @@ def notebook_job_status_post_save(sender, **kwargs):
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
-    job.save()
+    job.save(update_fields=['status', 'started_at', 'finished_at'])
     auditor.record(event_type=NOTEBOOK_NEW_STATUS,
                    instance=job,
                    previous_status=previous_status,
