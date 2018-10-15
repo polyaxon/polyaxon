@@ -81,6 +81,9 @@ def update_system_nodes():
             if v != getattr(current_node, k):
                 setattr(current_node, k, v)
                 node_updated = True
+            if not current_node.is_current:
+                current_node.is_current = True
+                node_updated = True
         if node_updated:
             current_node.save()
             cluster_updated = True
