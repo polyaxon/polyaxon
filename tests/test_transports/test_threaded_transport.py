@@ -94,22 +94,22 @@ class TestThreadedTransport(TestCase):
         self.transport.async_post(url='url_post')
         time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post')]
-        assert self.transport.done == 1
-        assert self.transport.exceptions == 0
+        assert self.transport.threaded_done == 1
+        assert self.transport.threaded_exceptions == 0
 
         self.transport.async_patch(url='url_patch')
         time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post'), ('patch', 'url_patch')]
-        assert self.transport.done == 2
-        assert self.transport.exceptions == 0
+        assert self.transport.threaded_done == 2
+        assert self.transport.threaded_exceptions == 0
 
         self.transport.async_put(url='url_put')
         time.sleep(0.03)
         assert self.transport.queue == [('post', 'url_post'),
                                         ('patch', 'url_patch'),
                                         ('put', 'url_put')]
-        assert self.transport.done == 3
-        assert self.transport.exceptions == 0
+        assert self.transport.threaded_done == 3
+        assert self.transport.threaded_exceptions == 0
 
         self.transport.async_delete(url='url_delete')
         time.sleep(0.03)
@@ -117,8 +117,8 @@ class TestThreadedTransport(TestCase):
                                         ('patch', 'url_patch'),
                                         ('put', 'url_put'),
                                         ('delete', 'url_delete')]
-        assert self.transport.done == 4
-        assert self.transport.exceptions == 0
+        assert self.transport.threaded_done == 4
+        assert self.transport.threaded_exceptions == 0
 
         self.transport.async_upload(url='url_upload', files=['file'], files_size=200)
         time.sleep(0.03)
@@ -127,36 +127,36 @@ class TestThreadedTransport(TestCase):
                                         ('put', 'url_put'),
                                         ('delete', 'url_delete'),
                                         ('upload', 'url_upload')]
-        assert self.transport.done == 5
-        assert self.transport.exceptions == 0
+        assert self.transport.threaded_done == 5
+        assert self.transport.threaded_exceptions == 0
         assert self.transport.worker.is_alive() is True
 
     @flaky(max_runs=3)
     def test_async_exceptions(self):
         self.exception_transport.async_post(url='url_post')
         time.sleep(0.03)
-        assert self.exception_transport.done == 1
-        assert self.exception_transport.exceptions == 1
+        assert self.exception_transport.threaded_done == 1
+        assert self.exception_transport.threaded_exceptions == 1
 
         self.exception_transport.async_patch(url='url_patch')
         time.sleep(0.03)
-        assert self.exception_transport.done == 2
-        assert self.exception_transport.exceptions == 2
+        assert self.exception_transport.threaded_done == 2
+        assert self.exception_transport.threaded_exceptions == 2
 
         self.exception_transport.async_put(url='url_put')
         time.sleep(0.03)
-        assert self.exception_transport.done == 3
-        assert self.exception_transport.exceptions == 3
+        assert self.exception_transport.threaded_done == 3
+        assert self.exception_transport.threaded_exceptions == 3
 
         self.exception_transport.async_delete(url='url_delete')
         time.sleep(0.03)
-        assert self.exception_transport.done == 4
-        assert self.exception_transport.exceptions == 4
+        assert self.exception_transport.threaded_done == 4
+        assert self.exception_transport.threaded_exceptions == 4
 
         self.exception_transport.async_delete(url='url_upload')
         time.sleep(0.03)
-        assert self.exception_transport.done == 5
-        assert self.exception_transport.exceptions == 5
+        assert self.exception_transport.threaded_done == 5
+        assert self.exception_transport.threaded_exceptions == 5
 
     def test_worker_atexit_handle_queue_before_stopping(self):
         # Transport
@@ -169,19 +169,19 @@ class TestThreadedTransport(TestCase):
         assert self.transport.worker.is_alive() is True
         self.transport.worker.atexit()
         assert self.transport.queue == [('post', 'url_post')]
-        assert self.transport.done == 1
-        assert self.transport.exceptions == 0
+        assert self.transport.threaded_done == 1
+        assert self.transport.threaded_exceptions == 0
         assert self.transport._worker.is_alive() is False
 
         # Exception transport
         self.exception_transport.config.timeout = 0.5
         self.exception_transport.delay = 0.5
         self.exception_transport.async_post(url='url_post')
-        assert self.exception_transport.done == 0
-        assert self.exception_transport.exceptions == 0
+        assert self.exception_transport.threaded_done == 0
+        assert self.exception_transport.threaded_exceptions == 0
         time.sleep(0.1)
         assert self.exception_transport.worker.is_alive() is True
         self.exception_transport.worker.atexit()
-        assert self.exception_transport.done == 1
-        assert self.exception_transport.exceptions == 1
+        assert self.exception_transport.threaded_done == 1
+        assert self.exception_transport.threaded_exceptions == 1
         assert self.exception_transport._worker.is_alive() is False
