@@ -577,6 +577,7 @@ queues:
   cronsExperiments: 'queues.crons.experiments'
   cronsPipelines: 'queues.crons.pipelines'
   cronsClusters: 'queues.crons.clusters'
+  cronsClean: 'queues.crons.clean'
 
   hpHealth: 'queues.hp.health'
   hp: 'queues.hp'

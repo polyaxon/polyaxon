@@ -92,6 +92,7 @@ data:
   POLYAXON_QUEUES_CRONS_EXPERIMENTS: {{ .Values.queues.cronsExperiments | quote }}
   POLYAXON_QUEUES_CRONS_PIPELINES: {{ .Values.queues.cronsPipelines | quote }}
   POLYAXON_QUEUES_CRONS_CLUSTERS: {{ .Values.queues.cronsClusters | quote }}
+  POLYAXON_QUEUES_CRONS_CLEAN: {{ .Values.queues.cronsClean | quote }}
   POLYAXON_QUEUES_HP_HEALTH: {{ .Values.queues.hpHealth | quote }}
   POLYAXON_QUEUES_HP: {{ .Values.queues.hp | quote }}
   POLYAXON_QUEUES_EVENTS_HEALTH: {{ .Values.queues.eventsHealth | quote }}

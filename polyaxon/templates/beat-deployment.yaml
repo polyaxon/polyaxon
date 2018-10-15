@@ -61,7 +61,7 @@ spec:
       - name: {{ .Chart.Name }}-crons
         image: "{{ .Values.crons.image }}:{{ .Values.crons.imageTag }}"
         imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
-        args: ["{{ .Values.queues.cronsHealth }},{{ .Values.queues.cronsExperiments }},{{ .Values.queues.cronsPipelines }},{{ .Values.queues.cronsClusters }}", "--concurrency={{ .Values.crons.concurrency }}"]
+        args: ["{{ .Values.queues.cronsHealth }},{{ .Values.queues.cronsExperiments }},{{ .Values.queues.cronsPipelines }},{{ .Values.queues.cronsClusters }},{{ .Values.queues.cronsClean }}", "--concurrency={{ .Values.crons.concurrency }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
