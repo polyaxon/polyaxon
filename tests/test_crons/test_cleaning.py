@@ -20,7 +20,10 @@ class TestCleaningCrons(BaseTest):
 
     @pytest.mark.filterwarnings('ignore::RuntimeWarning')
     def test_clean_activity_logs(self):
-        assert ActivityLog.objects.count() == 0
+        actvity_logs_count = ActivityLog.objects.count()
+        notification_events_counts = NotificationEvent.objects.count()
+        notifications_counts = Notification.objects.count()
+
         ActivityLog.objects.create(
             event_type=EXPERIMENT_SUCCEEDED,
             actor_id=self.user.id,
@@ -60,18 +63,18 @@ class TestCleaningCrons(BaseTest):
             user=self.user,
             event=notification_event
         )
-        assert ActivityLog.objects.count() == 2
-        assert NotificationEvent.objects.count() == 2
-        assert Notification.objects.count() == 2
+        assert ActivityLog.objects.count() == actvity_logs_count + 2
+        assert NotificationEvent.objects.count() == notification_events_counts + 2
+        assert Notification.objects.count() == notifications_counts + 2
 
         clean_activity_logs()
 
-        assert ActivityLog.objects.count() == 1
-        assert NotificationEvent.objects.count() == 2
-        assert Notification.objects.count() == 2
+        assert ActivityLog.objects.count() == actvity_logs_count + 1
+        assert NotificationEvent.objects.count() == notification_events_counts + 2
+        assert Notification.objects.count() == notifications_counts + 2
 
         clean_notifications()
 
-        assert ActivityLog.objects.count() == 1
-        assert NotificationEvent.objects.count() == 1
-        assert Notification.objects.count() == 1
+        assert ActivityLog.objects.count() == actvity_logs_count + 1
+        assert NotificationEvent.objects.count() == notification_events_counts + 1
+        assert Notification.objects.count() == notifications_counts + 1
