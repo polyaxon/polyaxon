@@ -112,7 +112,8 @@ class TestPodVolumes(TestCase):
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS, PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_default_get_pod_volumes_with_updated_settings(self):
-        volumes, volume_mounts = get_pod_volumes(persistence_outputs=None, persistence_data=None)
+        volumes, volume_mounts = get_pod_volumes(persistence_outputs='outputs1',
+                                                 persistence_data=None)
         assert len(volumes) == 3  # Data3 won't be included because it's a bucket
         if volumes[0].name == 'outputs1':
             assert volumes[0].persistent_volume_claim.claim_name == 'test-claim-outputs-1'
