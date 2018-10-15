@@ -116,7 +116,7 @@ pages:
   - Private registries: customization/private_registries.md
 - Reference Polyaxon CLI:
   - Introduction: polyaxon_cli/introduction.md
-  - Commnands:
+  - Commands:
     - Auth: polyaxon_cli/commands/auth.md
     - Check: polyaxon_cli/commands/check.md
     - Config: polyaxon_cli/commands/config.md
