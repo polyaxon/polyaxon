@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
+from polyaxon_schemas.code_reference import CodeReferenceConfig
+from polyaxon_schemas.utils import TIME_ZONE
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
@@ -11,8 +13,6 @@ from polyaxon_client.schemas import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
-from polyaxon_schemas.code_reference import CodeReferenceConfig
-from polyaxon_schemas.utils import TIME_ZONE
 
 
 class ExperimentApi(BaseApiHandler):
@@ -509,3 +509,11 @@ class ExperimentApi(BaseApiHandler):
             self.transport.handle_exception(
                 e=e, log_message='Error while downloading experiment outputs.')
             return None
+
+    def get_health_url(self, username, project_name, experiment_id):
+        return self.build_url(self._get_http_url(),
+                              username,
+                              project_name,
+                              'experiments',
+                              experiment_id,
+                              self.HEALTH_CHECK_SUF)

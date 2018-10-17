@@ -76,3 +76,13 @@ class ExperimentJobApi(BaseApiHandler):
                                      job_id,
                                      'logs')
         self.transport.stream(request_url, message_handler=message_handler)
+
+    def get_health_url(self,  username, project_name, experiment_id, job_id):
+        return self.build_url(self._get_http_url(),
+                              username,
+                              project_name,
+                              'experiments',
+                              experiment_id,
+                              'jobs',
+                              job_id,
+                              self.HEALTH_CHECK_SUF)
