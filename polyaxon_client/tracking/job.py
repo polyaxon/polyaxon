@@ -13,6 +13,7 @@ class Job(BaseTracker):
     def __init__(self,
                  project=None,
                  job_id=None,
+                 job_type=None,
                  client=None,
                  track_logs=True,
                  track_code=True,
@@ -22,6 +23,8 @@ class Job(BaseTracker):
             job_info = self.get_job_info()
             project = job_info['project_name']
             job_id = job_info['job_name'].split('.')[-1]
+            job_type = job_info['job_name'].split('.')[-2]
+            self._set_health_url()
         super(Job, self).__init__(project=project,
                                   client=client,
                                   track_logs=track_logs,
@@ -29,8 +32,22 @@ class Job(BaseTracker):
                                   track_env=track_env,
                                   outputs_store=outputs_store)
         self.job_id = job_id
+        self.job_type = job_type
         self.job = None
         self.last_status = None
+
+    def _set_health_url(self):
+        if self.job_type == 'jobs':
+            health_url = self.client.job.get_health_url(
+                username=self.username,
+                project_name=self.project_name,
+                experiment_id=self.job_id)
+        else:
+            health_url = self.client.build_job.get_health_url(
+                username=self.username,
+                project_name=self.project_name,
+                experiment_id=self.job_id)
+        self.client.set_health_check(url=health_url)
 
     @staticmethod
     def get_job_info():

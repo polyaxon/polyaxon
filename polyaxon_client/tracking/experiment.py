@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 
 from polyaxon_client import settings
-from polyaxon_client.exceptions import AuthenticationError
+from polyaxon_client.exceptions import AuthenticationError, PolyaxonClientException
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
@@ -60,6 +60,7 @@ class Experiment(BaseTracker):
                     ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
                     set_token=True,
                     persist_token=True)
+                self._set_health_url()
             except AuthenticationError:
                 logger.debug('Could not log with ephemeral token.')
 
@@ -84,6 +85,8 @@ class Experiment(BaseTracker):
             experiment_config=experiment_config,
             group=self.group_id,
         )
+        if not experiment:
+            raise PolyaxonClientException('Could not create experiment.')
         self.experiment_id = (experiment.id
                               if self.client.api_config.schema_response
                               else experiment.get('id'))
@@ -110,8 +113,16 @@ class Experiment(BaseTracker):
 
         if not settings.IN_CLUSTER:
             self._start()
+            self._set_health_url()
 
         return self
+
+    def _set_health_url(self):
+        health_url = self.client.experiment.get_health_url(
+            username=self.username,
+            project_name=self.project_name,
+            experiment_id=self.experiment_id)
+        self.client.set_health_check(url=health_url)
 
     def _start(self):
         atexit.register(self._end)
