@@ -25,47 +25,61 @@ class PeriodicWorker(QueueWorker):
         self._callback = callback
         self._kwargs = kwargs
 
-    def queue(self, **kwargs):  # pylint:disable=arguments-differ
+    def queue(self, url, **kwargs):  # pylint:disable=arguments-differ
         self.is_running()
-        self._queue.put_nowait(kwargs)
+        self._queue.put_nowait({url: kwargs})
 
-    def _call(self, queue_kwargs):
+    def _call(self, url, queue_kwargs):
         try:
             kwargs = copy.copy(self._kwargs)
             kwargs.update(queue_kwargs)
-            self._callback(**kwargs)
+            self._callback(url=url, **kwargs)
         except Exception:
             logger.error('Failed processing job', exc_info=True)
 
-    def _extend_queue_kwargs(self, queue_kwargs, kwargs):
+    def _extend_url_kwargs(self, url_kwargs, kwargs):
         for k, v in six.iteritems(kwargs):
             if v:
-                if k in queue_kwargs:
-                    queue_kwargs[k].append(v)
+                if k in url_kwargs:
+                    url_kwargs[k].append(v)
                 else:
-                    queue_kwargs[k] = [v]
+                    url_kwargs[k] = [v]
 
-        return queue_kwargs
+        return url_kwargs
+
+    def _extend_queue_kwargs(self, queue_kwargs, kwargs, messages):
+        for url, v in six.iteritems(kwargs):
+            if v:
+                if url in queue_kwargs:
+                    queue_kwargs[url] = self._extend_url_kwargs(queue_kwargs[url], v)
+                    messages[url] += 1
+                else:
+                    queue_kwargs[url] = self._extend_url_kwargs({}, v)
+                    messages[url] = 0
+
+        return queue_kwargs, messages
 
     def _target(self):
         while True:
             queue_kwargs = {}
-            message = 0
+            messages = {}
             while self._queue.qsize() > 0:
                 record = self._queue.get()
                 try:
                     if record is self.END_EVENT:
                         break
-                    queue_kwargs = self._extend_queue_kwargs(queue_kwargs, record)
-                    message += 1
+                    queue_kwargs, messages = self._extend_queue_kwargs(
+                        queue_kwargs, record, messages)
                 finally:
                     self._queue.task_done()
 
-                if queue_kwargs and message >= settings.QUEUE_CALL:
-                    self._call(queue_kwargs)
-                    message = 0
-                    queue_kwargs = {}
+                for url in six.iterkeys(messages):
+                    if messages[url] >= settings.QUEUE_CALL:
+                        self._call(url, queue_kwargs[url])
+                        messages[url] = 0
+                        queue_kwargs[url] = {}
 
             if queue_kwargs:
-                self._call(queue_kwargs)
+                for url in six.iterkeys(queue_kwargs):
+                    self._call(url, queue_kwargs[url])
             sleep(self._interval)

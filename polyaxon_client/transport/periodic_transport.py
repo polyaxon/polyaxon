@@ -33,24 +33,22 @@ class PeriodicHttpTransportMixin(RetryTransportMixin):
 
     @property
     def periodic_http_workers(self):
-        if not hasattr(self, '_periodic_http_workers'):
-            self._periodic_http_workers = {}
+        if hasattr(self, '_periodic_http_workers'):
+            return self._periodic_http_workers
+        return None
 
-        return self._periodic_http_workers
-
-    def get_periodic_http_worker(self, url, **kwargs):
-        worker = self.periodic_http_workers.get(url)
+    def get_periodic_http_worker(self, **kwargs):
+        worker = self.periodic_http_workers
         if not worker or not worker.is_alive():
             if 'request' not in kwargs:
                 raise PolyaxonClientException('Periodic worker expects a request argument.')
-            kwargs['url'] = url
-            worker = PeriodicWorker(callback=self.queue_periodic_request,
-                                    worker_interval=self.config.interval,
-                                    worker_timeout=self.config.timeout,
-                                    kwargs=kwargs)
-            worker.start()
-            self.periodic_http_workers[url] = worker
-        return self.periodic_http_workers[url]
+            self._periodic_http_workers = PeriodicWorker(
+                callback=self.queue_periodic_request,
+                worker_interval=self.config.interval,
+                worker_timeout=self.config.timeout,
+                kwargs=kwargs)
+            self._periodic_http_workers.start()
+        return self.periodic_http_workers
 
     def periodic_post(self,
                       url,
@@ -61,13 +59,12 @@ class PeriodicHttpTransportMixin(RetryTransportMixin):
                       timeout=None,
                       headers=None):
         """Periodic Async Call request with a post."""
-        worker = self.get_periodic_http_worker(url=url,
-                                               request=self.post,
+        worker = self.get_periodic_http_worker(request=self.post,
                                                params=params,
                                                files=files,
                                                timeout=timeout,
                                                headers=headers)
-        return worker.queue(data=data, json_data=json_data)
+        return worker.queue(url=url, data=data, json_data=json_data)
 
 
 class PeriodicWSTransportMixin(RetryTransportMixin):
