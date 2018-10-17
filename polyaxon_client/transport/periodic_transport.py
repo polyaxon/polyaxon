@@ -32,23 +32,27 @@ class PeriodicHttpTransportMixin(RetryTransportMixin):
             self._periodic_http_done += 1
 
     @property
-    def periodic_http_workers(self):
-        if hasattr(self, '_periodic_http_workers'):
-            return self._periodic_http_workers
+    def periodic_http_worker(self):
+        if hasattr(self, '_periodic_http_worker'):
+            return self._periodic_http_worker
         return None
 
     def get_periodic_http_worker(self, **kwargs):
-        worker = self.periodic_http_workers
+        worker = self.periodic_http_worker
         if not worker or not worker.is_alive():
             if 'request' not in kwargs:
                 raise PolyaxonClientException('Periodic worker expects a request argument.')
-            self._periodic_http_workers = PeriodicWorker(
+            self._periodic_http_worker = PeriodicWorker(
                 callback=self.queue_periodic_request,
                 worker_interval=self.config.interval,
                 worker_timeout=self.config.timeout,
                 kwargs=kwargs)
-            self._periodic_http_workers.start()
-        return self.periodic_http_workers
+            self._periodic_http_worker.start()
+        return self.periodic_http_worker
+
+    def set_health_check(self, url):
+        worker = self.get_periodic_http_worker(request=self.post)
+        worker.queue_health(url)
 
     def periodic_post(self,
                       url,
@@ -93,10 +97,10 @@ class PeriodicWSTransportMixin(RetryTransportMixin):
 
     @property
     def periodic_ws_workers(self):
-        if not hasattr(self, '_periodic_http_workers'):
-            self._periodic_http_workers = {}
+        if not hasattr(self, '_periodic_ws_workers'):
+            self._periodic_ws_workers = {}
 
-        return self._periodic_http_workers
+        return self._periodic_ws_workers
 
     def get_periodic_http_worker(self, url, **kwargs):
         worker = self.periodic_ws_workers.get(url)

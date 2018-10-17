@@ -146,6 +146,9 @@ class PolyaxonClient(object):
         self.api_config.reraise = reraise
         self.reset()
 
+    def set_health_check(self, url):
+        self.transport.set_health_check(url)
+
     @property
     def transport(self):
         if not self._transport:

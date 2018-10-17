@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import copy
 import six
 
-from time import sleep
+from time import sleep, time
 
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
@@ -24,6 +24,13 @@ class PeriodicWorker(QueueWorker):
         self._interval = worker_interval if worker_interval is not None else settings.INTERVAL
         self._callback = callback
         self._kwargs = kwargs
+        self._health_urls = []
+        self._last_health_check = time()
+
+    def queue_health(self, url):  # pylint:disable=arguments-differ
+        self.is_running()
+        if url not in self._health_urls:
+            self._health_urls.append(url)
 
     def queue(self, url, **kwargs):  # pylint:disable=arguments-differ
         self.is_running()
@@ -56,8 +63,17 @@ class PeriodicWorker(QueueWorker):
                 else:
                     queue_kwargs[url] = self._extend_url_kwargs({}, v)
                     messages[url] = 0
+            else:
+                queue_kwargs[url] = {}
+                messages[url] = 1
 
         return queue_kwargs, messages
+
+    def health_checks(self):
+        if time() - self._last_health_check > settings.HEALTH_CHECK_INTERVAL:
+            self._last_health_check = time()
+            for url in self._health_urls:
+                self._call(url, {})
 
     def _target(self):
         while True:
@@ -82,4 +98,6 @@ class PeriodicWorker(QueueWorker):
             if queue_kwargs:
                 for url in six.iterkeys(queue_kwargs):
                     self._call(url, queue_kwargs[url])
+
+            self.health_checks()
             sleep(self._interval)
