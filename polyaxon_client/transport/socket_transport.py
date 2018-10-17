@@ -2,9 +2,12 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+import threading
+
 import websocket
 
 from polyaxon_client.logger import logger
+from polyaxon_client.workers.socket_worker import SocketWorker
 
 
 class SocketTransportMixin(object):
@@ -25,7 +28,7 @@ class SocketTransportMixin(object):
 
     def _on_message(self, message_handler, message):
         if message_handler and message:
-            message_handler(json.loads(message))
+            message_handler(json.loads(message).decode('utf-8'))
 
     @staticmethod
     def _on_error(ws, error):
