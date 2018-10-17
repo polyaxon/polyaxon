@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import json
 
+import six
 import websocket
 
 from polyaxon_client.logger import logger
@@ -26,7 +27,9 @@ class SocketTransportMixin(object):
 
     def _on_message(self, message_handler, message):
         if message_handler and message:
-            message_handler(json.loads(message.decode('utf-8')))
+            if not isinstance(message, six.string_types):
+                message = message.decode('utf-8')
+            message_handler(json.loads(message))
 
     @staticmethod
     def _on_error(ws, error):
