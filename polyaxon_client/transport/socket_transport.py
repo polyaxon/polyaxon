@@ -26,7 +26,7 @@ class SocketTransportMixin(object):
 
     def _on_message(self, message_handler, message):
         if message_handler and message:
-            message_handler(json.loads(message).decode('utf-8'))
+            message_handler(json.loads(message.decode('utf-8')))
 
     @staticmethod
     def _on_error(ws, error):
