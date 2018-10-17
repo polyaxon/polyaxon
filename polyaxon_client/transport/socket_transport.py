@@ -2,12 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-import threading
 
 import websocket
 
 from polyaxon_client.logger import logger
-from polyaxon_client.workers.socket_worker import SocketWorker
 
 
 class SocketTransportMixin(object):
