@@ -1,12 +1,13 @@
 import asyncio
 
 import auditor
+
 from constants.jobs import JobLifeCycle
 from db.redis.to_stream import RedisToStream
 from event_manager.events.job import JOB_LOGS_VIEWED
 from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
-from streams.constants import CHECK_DELAY, SOCKET_SLEEP, MAX_RETRIES
+from streams.constants import CHECK_DELAY, MAX_RETRIES, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
 from streams.resources.utils import get_error_message, get_status_message, notify

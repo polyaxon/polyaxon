@@ -3,14 +3,15 @@ import asyncio
 from websockets import ConnectionClosed
 
 import auditor
+
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment_job import (
-    EXPERIMENT_JOB_RESOURCES_VIEWED,
-    EXPERIMENT_JOB_LOGS_VIEWED
+    EXPERIMENT_JOB_LOGS_VIEWED,
+    EXPERIMENT_JOB_RESOURCES_VIEWED
 )
 from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
-from streams.constants import RESOURCES_CHECK, CHECK_DELAY, SOCKET_SLEEP, MAX_RETRIES
+from streams.constants import CHECK_DELAY, MAX_RETRIES, RESOURCES_CHECK, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
 from streams.resources.utils import get_error_message, notify

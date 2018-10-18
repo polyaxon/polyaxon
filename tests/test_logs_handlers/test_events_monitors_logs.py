@@ -5,16 +5,16 @@ from unittest.mock import patch
 
 import pytest
 
-from logs_handlers.tasks.logs import (
-    logs_handle_build_job,
-    logs_handle_experiment_job,
-    logs_handle_job
-)
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from libs.paths.experiments import get_experiment_logs_path
 from libs.paths.jobs import get_job_logs_path
+from logs_handlers.tasks.logs import (
+    logs_handle_build_job,
+    logs_handle_experiment_job,
+    logs_handle_job
+)
 from schemas.tasks import TaskType
 from tests.utils import BaseTest
 

@@ -1,4 +1,4 @@
-from django.core.cache import cache, CacheKeyWarning
+from django.core.cache import CacheKeyWarning, cache
 
 from checks.base import Check
 from checks.results import Result

@@ -1,8 +1,8 @@
 from sanic import Sanic
 
 from streams.resources.builds import build_logs
-from streams.resources.experiment_jobs import experiment_job_resources, experiment_job_logs
-from streams.resources.experiments import experiment_resources, experiment_logs
+from streams.resources.experiment_jobs import experiment_job_logs, experiment_job_resources
+from streams.resources.experiments import experiment_logs, experiment_resources
 from streams.resources.health import health
 from streams.resources.jobs import job_logs
 

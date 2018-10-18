@@ -9,7 +9,6 @@ from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 
 from django.conf import settings
-from polyaxon_schemas.utils import to_list
 
 import publisher
 
@@ -22,6 +21,7 @@ from libs.repos import git
 from libs.utils import get_list
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks, SchedulerCeleryTasks
+from polyaxon_schemas.utils import to_list
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
