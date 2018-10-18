@@ -224,9 +224,9 @@ If you don't provide an outputs claim to use, Polyaxon will use the host.
 
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `persistence.logs.existingClaim`  | Name of an existing PVC                           | ``
-| `persistence.logs.mountPath`      | Path where to mount the volume                    | `/repos`
-| `persistence.logs.hostPath`       | The directory from the host node's                | `/tmp/repos`
+| `persistence.repos.existingClaim`  | Name of an existing PVC                           | ``
+| `persistence.repos.mountPath`      | Path where to mount the volume                    | `/repos`
+| `persistence.repos.hostPath`       | The directory from the host node's                | `/tmp/repos`
 
 
 **upload**: temporary volume where Polyaxon uploads data, code, files, ...
@@ -236,9 +236,9 @@ It is not very important to have a volume claim for this, if your host node has 
 
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `persistence.logs.existingClaim`  | Name of an existing PVC                           | ``
-| `persistence.logs.mountPath`      | Path where to mount the volume                    | `/repos`
-| `persistence.logs.hostPath`       | The directory from the host node's                | `/tmp/repos`
+| `persistence.upload.existingClaim`  | Name of an existing PVC                           | ``
+| `persistence.upload.mountPath`      | Path where to mount the volume                    | `/upload`
+| `persistence.upload.hostPath`       | The directory from the host node's                | `/tmp/upload`
 
 
 **data**: data used for training experiments.
