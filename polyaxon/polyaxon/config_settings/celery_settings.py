@@ -170,6 +170,17 @@ class EventsCeleryTasks(object):
     EVENTS_HANDLE_LOGS_BUILD_JOB = 'events_handle_logs_build_job'
 
 
+class LogsCeleryTasks(object):
+    """Runner celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
+    LOGS_HEALTH = 'logs_health'
+    LOGS_HANDLE_EXPERIMENT_JOB = 'logs_handle_experiment_job'
+    LOGS_HANDLE_JOB = 'logs_handle_job'
+    LOGS_HANDLE_BUILD_JOB = 'logs_handle_build_job'
+
+
 class SchedulerCeleryTasks(object):
     """Scheduler celery tasks.
 
@@ -263,6 +274,8 @@ class CeleryQueues(object):
     EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_EVENTS_NAMESPACE')
     EVENTS_RESOURCES = config.get_string('POLYAXON_QUEUES_EVENTS_RESOURCES')
     EVENTS_JOB_STATUSES = config.get_string('POLYAXON_QUEUES_EVENTS_JOB_STATUSES')
+
+    LOGS_HEALTH = config.get_string('POLYAXON_QUEUES_LOGS_HEALTH')
     LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS')
     STREAM_LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_STREAM_LOGS_SIDECARS')
 
@@ -435,11 +448,13 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES:
         {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-    EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB:
+
+    # Logs ops
+    LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB:
         {'queue': CeleryQueues.LOGS_SIDECARS},
-    EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB:
+    LogsCeleryTasks.LOGS_HANDLE_JOB:
         {'queue': CeleryQueues.LOGS_SIDECARS},
-    EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB:
+    LogsCeleryTasks.LOGS_HANDLE_BUILD_JOB:
         {'queue': CeleryQueues.LOGS_SIDECARS},
 }
 

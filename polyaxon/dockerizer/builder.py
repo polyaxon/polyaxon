@@ -9,6 +9,7 @@ from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 
 from django.conf import settings
+from polyaxon_schemas.utils import to_list
 
 import publisher
 
@@ -103,14 +104,20 @@ class DockerBuilder(object):
                     raise DockerBuilderError(str(json_line.get('error', json_line)))
                 else:
                     if json_line.get('stream'):
-                        log_lines.append('Build: {}'.format(json_line['stream'].strip()))
+                        log_lines.append(
+                            publisher.LogSpec(
+                                log_line='Build: {}'.format(json_line['stream'].strip())
+                            ))
                     elif json_line.get('status'):
-                        log_lines.append('Push: {} {}'.format(
-                            json_line['status'],
-                            json_line.get('progress')
-                        ))
+                        log_lines.append(
+                            publisher.LogSpec(
+                                log_line='Push: {} {}'.format(json_line['status'],
+                                                              json_line.get('progress'))
+                            ))
                     elif json_line.get('aux'):
-                        log_lines.append('Push finished: {}'.format(json_line.get('aux')))
+                        log_lines.append(publisher.LogSpec(
+                            log_line='Push finished: {}'.format(json_line.get('aux'))
+                        ))
                     else:
                         log_lines.append(str(json_line))
             except json.JSONDecodeError:
@@ -119,7 +126,7 @@ class DockerBuilder(object):
 
     def _handle_logs(self, log_lines):
         publisher.publish_build_job_log(
-            log_lines=log_lines,
+            log_lines=to_list(log_lines),
             job_uuid=self.job_uuid,
             job_name=self.job_name
         )
@@ -141,7 +148,8 @@ class DockerBuilder(object):
             if log_lines:
                 self._handle_logs(log_lines)
         except (BuildError, APIError, DockerBuilderError) as e:
-            self._handle_logs('Build Error {}'.format(e))
+            self._handle_logs(publisher.LogSpec(log_line='Build Error {}'.format(e),
+                                                log_level=publisher.ERROR))
             return False
 
         return True

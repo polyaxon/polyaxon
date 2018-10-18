@@ -1,4 +1,5 @@
 from libs.services import LazyServiceWrapper
+from publisher import log_spec
 from publisher.service import PublisherService
 
 MESSAGES_COUNT = 50
@@ -11,3 +12,8 @@ backend = LazyServiceWrapper(
     options={}
 )
 backend.expose(locals())
+
+LogSpec = log_spec.log_spec
+
+ERROR = 'ERROR'
+DATETIME_FORMAT = log_spec.DATETIME_FORMAT

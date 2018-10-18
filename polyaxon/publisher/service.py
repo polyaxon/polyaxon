@@ -6,7 +6,7 @@ from django.conf import settings
 from db.redis.to_stream import RedisToStream
 from libs.services import Service
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks, RoutingKeys
+from polyaxon.settings import LogsCeleryTasks, RoutingKeys
 from schemas.utils import to_list
 
 
@@ -27,18 +27,15 @@ class PublisherService(Service):
                                    job_uuid,
                                    task_type=None,
                                    task_idx=None):
-
+        log_lines = to_list(log_lines)
         self._logger.debug("Publishing log event for task: %s.%s, %s",
                            task_type, task_idx, experiment_name)
         celery_app.send_task(
-            EventsCeleryTasks.EVENTS_HANDLE_LOGS_EXPERIMENT_JOB,
+            LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
             kwargs={
                 'experiment_name': experiment_name,
                 'experiment_uuid': experiment_uuid,
-                'job_uuid': job_uuid,
-                'log_lines': log_lines,
-                'task_type': task_type,
-                'task_idx': task_idx})
+                'log_lines': '\n'.join(log_lines)})
         try:
             should_stream = (RedisToStream.is_monitored_job_logs(job_uuid) or
                              RedisToStream.is_monitored_experiment_logs(experiment_uuid))
@@ -96,17 +93,27 @@ class PublisherService(Service):
 
         self._logger.info("Publishing log event for task: %s", job_uuid)
         celery_app.send_task(
-            EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB,
-            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_lines': log_lines})
+            LogsCeleryTasks.LOGS_HANDLE_BUILD_JOB,
+            kwargs={
+                'job_uuid': job_uuid,
+                'job_name': job_name,
+                'log_lines': '\n'.join(log_lines)
+            })
         self._stream_job_log(job_uuid=job_uuid,
                              log_lines=log_lines,
                              routing_key=RoutingKeys.LOGS_SIDECARS_BUILDS)
 
     def publish_job_log(self, log_lines, job_uuid, job_name):
+        log_lines = to_list(log_lines)
+
         self._logger.info("Publishing log event for task: %s", job_uuid)
         celery_app.send_task(
-            EventsCeleryTasks.EVENTS_HANDLE_LOGS_JOB,
-            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_lines': log_lines})
+            LogsCeleryTasks.LOGS_HANDLE_JOB,
+            kwargs={
+                'job_uuid': job_uuid,
+                'job_name': job_name,
+                'log_lines': '\n'.join(log_lines)
+            })
         self._stream_job_log(job_uuid=job_uuid,
                              log_lines=log_lines,
                              routing_key=RoutingKeys.LOGS_SIDECARS_JOBS)

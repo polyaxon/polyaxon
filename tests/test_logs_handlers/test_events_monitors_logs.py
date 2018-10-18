@@ -5,10 +5,10 @@ from unittest.mock import patch
 
 import pytest
 
-from events_handlers.tasks.logs import (
-    events_handle_logs_build_job,
-    events_handle_logs_experiment_job,
-    events_handle_logs_job
+from logs_handlers.tasks.logs import (
+    logs_handle_build_job,
+    logs_handle_experiment_job,
+    logs_handle_job
 )
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentFactory
@@ -72,10 +72,7 @@ class TestExperimentJobLogsHandling(BaseTestLogsHandling):
     def get_params(instance):
         return dict(experiment_name=instance.unique_name,
                     experiment_uuid=instance.uuid.hex,
-                    job_uuid=uuid.uuid4().hex,
-                    log_lines='First test',
-                    task_type=TaskType.MASTER,
-                    task_idx=0)
+                    log_lines='First test')
 
     @staticmethod
     def get_log_path(instance):
@@ -83,7 +80,7 @@ class TestExperimentJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def handle_event(**params):
-        events_handle_logs_experiment_job(**params)
+        logs_handle_experiment_job(**params)
 
 
 @pytest.mark.monitors_mark
@@ -109,7 +106,7 @@ class TestJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def handle_event(**params):
-        events_handle_logs_job(**params)
+        logs_handle_job(**params)
 
 
 @pytest.mark.monitors_mark
@@ -134,7 +131,7 @@ class TestBuildJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def handle_event(**params):
-        events_handle_logs_build_job(**params)
+        logs_handle_build_job(**params)
 
 
 # Prevent base class from running

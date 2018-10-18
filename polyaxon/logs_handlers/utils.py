@@ -2,14 +2,12 @@ import fcntl
 
 from libs.paths.experiments import create_experiment_logs_path, get_experiment_logs_path
 from libs.paths.jobs import create_job_logs_path, get_job_logs_path
-from schemas.utils import to_list
 
 
 def _lock_log(log_path, log_lines):
-    log_lines = to_list(log_lines)
     with open(log_path, "a") as log_file:
         fcntl.flock(log_file, fcntl.LOCK_EX)
-        log_file.write('\n'.join(log_lines) + '\n')
+        log_file.write(log_lines + '\n')
         fcntl.flock(log_file, fcntl.LOCK_UN)
 
 
