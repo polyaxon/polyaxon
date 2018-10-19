@@ -2,9 +2,8 @@ import logging
 import sys
 import traceback
 
-from polyaxon_schemas.utils import local_now
-
 from polyaxon_client import settings
+from polyaxon_schemas.utils import local_now
 
 
 class PolyaxonHandler(logging.Handler):
