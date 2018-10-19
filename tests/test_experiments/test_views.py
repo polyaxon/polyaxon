@@ -1716,6 +1716,13 @@ class TestExperimentLogsViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1
 
+        data = ['logs here', 'dfg dfg']
+        with patch('logs_handlers.tasks.logs_handle_experiment_job.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 1
+
 
 @pytest.mark.experiments_mark
 class DownloadExperimentOutputsViewTest(BaseViewTest):
