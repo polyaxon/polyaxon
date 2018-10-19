@@ -7,6 +7,7 @@ from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
+from db.redis.heartbeat import RedisHeartBeat
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
@@ -165,3 +166,17 @@ def build_jobs_set_dockerfile(build_job_uuid, dockerfile):
 
     build_job.dockerfile = dockerfile
     build_job.save(update_fields=['dockerfile'])
+
+
+@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT, ignore_result=True)
+def build_jobs_check_heartbeat(build_job_id):
+    if RedisHeartBeat.build_is_alive(build_id=build_job_id):
+        return
+
+    build_job = get_valid_build_job(build_job_id=build_job_id)
+    if not build_job:
+        return
+
+    # BuildJob is zombie status
+    build_job.set_status(JobLifeCycle.FAILED,
+                         message='BuildJob is in zombie state (no heartbeat was reported).')

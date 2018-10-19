@@ -7,6 +7,7 @@ import publisher
 from api.experiments.serializers import ExperimentMetricSerializer
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
+from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.experiments import copy_experiment_outputs
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
@@ -95,6 +96,20 @@ def experiments_check_status(experiment_uuid=None, experiment_id=None):
     if not experiment:
         return
     experiment.update_status()
+
+
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_HEARTBEAT, ignore_result=True)
+def experiments_check_heartbeat(experiment_id):
+    if RedisHeartBeat.experiment_is_alive(experiment_id=experiment_id):
+        return
+
+    experiment = get_valid_experiment(experiment_id=experiment_id)
+    if not experiment:
+        return
+
+    # Experiment is zombie status
+    experiment.set_status(ExperimentLifeCycle.FAILED,
+                          message='Experiment is in zombie state (no heartbeat was reported).')
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)

@@ -2,6 +2,7 @@ import logging
 
 from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
+from db.redis.heartbeat import RedisHeartBeat
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, job_scheduler
@@ -95,3 +96,17 @@ def jobs_stop(self,
     # Update notebook status to show that its stopped
     job.set_status(status=JobLifeCycle.STOPPED,
                    message='Job was stopped')
+
+
+@celery_app.task(name=SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT, ignore_result=True)
+def jobs_check_heartbeat(job_id):
+    if RedisHeartBeat.job_is_alive(job_id=job_id):
+        return
+
+    job = get_valid_job(job_id=job_id)
+    if not job:
+        return
+
+    # Job is zombie status
+    job.set_status(JobLifeCycle.FAILED,
+                   message='Job is in zombie state (no heartbeat was reported).')
