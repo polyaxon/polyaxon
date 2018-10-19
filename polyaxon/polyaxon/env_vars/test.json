@@ -18,6 +18,7 @@
   "POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS": "queues.scheduler.experiment_groups",
   "POLYAXON_QUEUES_SCHEDULER_PROJECTS": "queues.scheduler.projects",
   "POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS": "queues.scheduler.build_jobs",
+  "POLYAXON_QUEUES_SCHEDULER_JOBS": "queues.scheduler.jobs",
   "POLYAXON_QUEUES_PIPELINES_HEALTH": "queues.pipelines.health",
   "POLYAXON_QUEUES_PIPELINES": "queues.pipelines",
   "POLYAXON_QUEUES_CRONS_HEALTH": "queues.crons.health",

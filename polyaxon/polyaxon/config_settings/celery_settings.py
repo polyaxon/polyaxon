@@ -77,6 +77,10 @@ class Intervals(object):
         'POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES',
         is_optional=True,
         default=150)
+    HEARTBEAT_CHECK = config.get_int(
+        'POLYAXON_HEARTBEAT_CHECK',
+        is_optional=True,
+        default=240)
     CLUSTERS_NOTIFICATION_ALIVE = 150
     CLEAN_ACTIVITY_LOGS = 300
     CLEAN_NOTIFICATIONS = 300
@@ -116,6 +120,9 @@ class CronsCeleryTasks(object):
     """
     CRONS_HEALTH = 'crons_health'
     EXPERIMENTS_SYNC_JOBS_STATUSES = 'experiments_sync_jobs_statuses'
+    HEARTBEAT_EXPERIMENTS = 'heartbeat_experiments'
+    HEARTBEAT_JOBS = 'heartbeat_jobs'
+    HEARTBEAT_BUILDS = 'heartbeat_builds'
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
     CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
@@ -189,6 +196,7 @@ class SchedulerCeleryTasks(object):
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_STOP = 'experiments_stop'
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
+    EXPERIMENTS_CHECK_HEARTBEAT = 'experiments_check_heartbeat'
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
 
     EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
@@ -206,11 +214,13 @@ class SchedulerCeleryTasks(object):
     BUILD_JOBS_STOP = 'build_jobs_stop'
     BUILD_JOBS_NOTIFY_DONE = 'build_jobs_notify_done'
     BUILD_JOBS_SET_DOCKERFILE = 'build_jobs_set_dockerfile'
+    BUILD_JOBS_CHECK_HEARTBEAT = 'build_jobs_check_heartbeat'
 
     JOBS_BUILD = 'jobs_build'
     JOBS_START = 'jobs_start'
     JOBS_STOP = 'jobs_stop'
     JOBS_NOTIFY_DONE = 'jobs_notify_done'
+    JOBS_CHECK_HEARTBEAT = 'jobs_check_heartbeat'
 
 
 class HPCeleryTasks(object):
@@ -254,6 +264,7 @@ class CeleryQueues(object):
     SCHEDULER_EXPERIMENT_GROUPS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS')
     SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS')
     SCHEDULER_BUILD_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS')
+    SCHEDULER_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_JOBS')
 
     PIPELINES_HEALTH = config.get_string('POLYAXON_QUEUES_PIPELINES_HEALTH')
     PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES')
@@ -338,6 +349,8 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
     SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
+    SchedulerCeleryTasks.EXPERIMENTS_CHECK_HEARTBEAT:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
     SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
 
@@ -370,16 +383,20 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
     SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+    SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
 
     # Scheduler jobs
     SchedulerCeleryTasks.JOBS_BUILD:
-        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+        {'queue': CeleryQueues.SCHEDULER_JOBS},
     SchedulerCeleryTasks.JOBS_START:
-        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+        {'queue': CeleryQueues.SCHEDULER_JOBS},
     SchedulerCeleryTasks.JOBS_STOP:
-        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+        {'queue': CeleryQueues.SCHEDULER_JOBS},
     SchedulerCeleryTasks.JOBS_NOTIFY_DONE:
-        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+        {'queue': CeleryQueues.SCHEDULER_JOBS},
+    SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT:
+        {'queue': CeleryQueues.SCHEDULER_JOBS},
 
     # Crons health
     CronsCeleryTasks.CRONS_HEALTH:
@@ -387,6 +404,12 @@ CELERY_TASK_ROUTES = {
 
     # Crons
     CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES:
+        {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+    CronsCeleryTasks.HEARTBEAT_EXPERIMENTS:
+        {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+    CronsCeleryTasks.HEARTBEAT_JOBS:
+        {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+    CronsCeleryTasks.HEARTBEAT_BUILDS:
         {'queue': CeleryQueues.CRONS_EXPERIMENTS},
     CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE:
         {'queue': CeleryQueues.CRONS_CLUSTERS},
@@ -472,6 +495,27 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': Intervals.get_schedule(Intervals.EXPERIMENTS_SYNC),
         'options': {
             'expires': Intervals.get_expires(Intervals.EXPERIMENTS_SYNC),
+        },
+    },
+    CronsCeleryTasks.HEARTBEAT_EXPERIMENTS + '_beat': {
+        'task': CronsCeleryTasks.HEARTBEAT_EXPERIMENTS,
+        'schedule': Intervals.get_schedule(Intervals.HEARTBEAT_CHECK),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.HEARTBEAT_CHECK),
+        },
+    },
+    CronsCeleryTasks.HEARTBEAT_JOBS + '_beat': {
+        'task': CronsCeleryTasks.HEARTBEAT_JOBS,
+        'schedule': Intervals.get_schedule(Intervals.HEARTBEAT_CHECK),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.HEARTBEAT_CHECK),
+        },
+    },
+    CronsCeleryTasks.HEARTBEAT_BUILDS + '_beat': {
+        'task': CronsCeleryTasks.HEARTBEAT_BUILDS,
+        'schedule': Intervals.get_schedule(Intervals.HEARTBEAT_CHECK),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.HEARTBEAT_CHECK),
         },
     },
     CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO + '_beat': {

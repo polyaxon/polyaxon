@@ -13,7 +13,7 @@ from django.utils import timezone
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
-from crons.tasks.experiments import sync_experiments_and_jobs_statuses
+from crons.tasks.experiments_statuses import sync_experiments_and_jobs_statuses
 from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentStatus
