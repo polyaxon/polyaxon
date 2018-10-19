@@ -2,8 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
-from polyaxon_schemas.code_reference import CodeReferenceConfig
-from polyaxon_schemas.utils import TIME_ZONE
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
@@ -13,6 +11,8 @@ from polyaxon_client.schemas import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
+from polyaxon_schemas.code_reference import CodeReferenceConfig
+from polyaxon_schemas.utils import TIME_ZONE
 
 
 class ExperimentApi(BaseApiHandler):
@@ -230,6 +230,41 @@ class ExperimentApi(BaseApiHandler):
             response = self.transport.post(request_url, json_data=json_data)
             return self.prepare_results(response_json=response.json(),
                                         config=ExperimentMetricConfig)
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving experiment status.')
+            return None
+
+    def send_logs(self,
+                  username,
+                  project_name,
+                  experiment_id,
+                  log_lines,
+                  background=False,
+                  periodic=False):
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'logs')
+
+        if not isinstance(log_lines, str):
+            raise PolyaxonClientException('Client could not send logs, it expects a string.')
+
+        json_data = {'log_lines': log_lines}
+
+        if background:
+            self.transport.async_post(request_url, json_data=json_data)
+            return None
+
+        if periodic:
+            self.transport.periodic_post(request_url, json_data=json_data)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=json_data)
+            return response
         except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while retrieving experiment status.')

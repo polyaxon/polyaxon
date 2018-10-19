@@ -339,6 +339,52 @@ class TestExperimentApi(TestBaseApi):
             method='post')
 
     @httpretty.activate
+    def test_create_experiment_logs(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'logs'),
+            body=json.dumps({'log_lines': 'foo\nbar'}),
+            content_type='application/json',
+            status=200)
+
+        # Raises
+        with self.assertRaises(PolyaxonClientException):
+            self.api_handler.send_logs('username', 'project_name', 1,
+                                       log_lines=['ds'])
+
+        # Schema response
+        response = self.api_handler.send_logs('username', 'project_name', 1, log_lines='foo\nbar')
+        assert response.status_code == 200
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.send_logs('username', 'project_name', 1, log_lines='foo\nbar')
+        assert response.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.send_logs(
+                'username', 'project_name', 1,
+                log_lines='foo\nbar',
+                background=True),
+            method='post')
+
+        # Periodic
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.send_logs(
+                'username', 'project_name', 1,
+                log_lines='foo\nbar',
+                periodic=True),
+            method='post')
+
+    @httpretty.activate
     def test_list_experiment_jobs(self):
         job_uuid = uuid.uuid4().hex
         xps = [ExperimentJobConfig(uuid=job_uuid,

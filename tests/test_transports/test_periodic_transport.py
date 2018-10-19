@@ -52,12 +52,12 @@ class TestPeriodicTransport(TestCase):
         assert isinstance(self.transport._retry_session, requests.Session)
 
     def test_worker(self):
-        assert hasattr(self.transport, '_periodic_http_workers') is False
-        assert isinstance(self.transport.periodic_http_workers, dict)
-        assert isinstance(self.transport._periodic_http_workers, dict)
-        assert isinstance(self.transport.get_periodic_http_worker('foo',
-                                                                  request=self.transport.post),
-                          PeriodicWorker)
+        assert hasattr(self.transport, '_periodic_http_worker') is False
+        self.assertEqual(self.transport.periodic_http_worker, None)
+        worker = self.transport.get_periodic_http_worker(request=self.transport.post)
+        assert isinstance(self.transport.periodic_http_worker, PeriodicWorker)
+        assert isinstance(self.transport._periodic_http_worker, PeriodicWorker)
+        assert isinstance(worker, PeriodicWorker)
 
     def test_periodic_requests_with_data(self):
         assert self.transport.queue == []
@@ -71,7 +71,7 @@ class TestPeriodicTransport(TestCase):
         assert queue[0][2]['data'] == [{'d1': 'v1'}]
         assert self.transport.periodic_http_done == 1
         assert self.transport.periodic_http_exceptions == 0
-        assert self.transport.get_periodic_http_worker('url_post').is_alive() is True
+        assert self.transport.get_periodic_http_worker().is_alive() is True
 
         self.transport.periodic_post(url='url_post', data={'d1': 'v1'})
         self.transport.periodic_post(url='url_post', data={'d2': 'v2'})
@@ -83,7 +83,7 @@ class TestPeriodicTransport(TestCase):
         assert queue[1][2]['data'] == [{'d1': 'v1'}, {'d2': 'v2'}]
         assert self.transport.periodic_http_done == 2
         assert self.transport.periodic_http_exceptions == 0
-        assert self.transport.get_periodic_http_worker('url_post').is_alive() is True
+        assert self.transport.get_periodic_http_worker().is_alive() is True
 
     @flaky(max_runs=3)
     def test_periodic_requests_with_json_data(self):
@@ -98,7 +98,7 @@ class TestPeriodicTransport(TestCase):
         assert queue[0][2]['json_data'] == [{'d1': 'v1'}]
         assert self.transport.periodic_http_done == 1
         assert self.transport.periodic_http_exceptions == 0
-        assert self.transport.get_periodic_http_worker('url_post').is_alive() is True
+        assert self.transport.get_periodic_http_worker().is_alive() is True
 
         self.transport.periodic_post(url='url_post', json_data={'d1': 'v1'})
         self.transport.periodic_post(url='url_post', json_data={'d2': 'v2'})
@@ -110,7 +110,7 @@ class TestPeriodicTransport(TestCase):
         assert queue[1][2]['json_data'] == [{'d1': 'v1'}, {'d2': 'v2'}]
         assert self.transport.periodic_http_done == 2
         assert self.transport.periodic_http_exceptions == 0
-        assert self.transport.get_periodic_http_worker('url_post').is_alive() is True
+        assert self.transport.get_periodic_http_worker().is_alive() is True
 
     @flaky(max_runs=3)
     def test_periodic_requests_with_different_urls(self):
@@ -129,8 +129,7 @@ class TestPeriodicTransport(TestCase):
         assert queue[1][2]['data'] == [{'d21': 'v21'}, {'d22': 'v22'}]
         assert self.transport.periodic_http_done == 2
         assert self.transport.periodic_http_exceptions == 0
-        assert self.transport.get_periodic_http_worker('url_post1').is_alive() is True
-        assert self.transport.get_periodic_http_worker('url_post2').is_alive() is True
+        assert self.transport.periodic_http_worker.is_alive() is True
 
     @flaky(max_runs=3)
     def test_async_exceptions(self):
@@ -147,8 +146,8 @@ class TestPeriodicTransport(TestCase):
         self.transport.periodic_post(url='url_post', data={'d1': 'v1'})
         assert self.transport.queue == []
         time.sleep(0.03)
-        assert self.transport.get_periodic_http_worker('url_post').is_alive() is True
-        self.transport.get_periodic_http_worker('url_post').atexit()
+        assert self.transport.get_periodic_http_worker().is_alive() is True
+        self.transport.get_periodic_http_worker().atexit()
         queue = self.transport.queue
         assert len(queue) == 1
         assert queue[0][0] == 'post'
@@ -156,7 +155,7 @@ class TestPeriodicTransport(TestCase):
         assert queue[0][2]['data'] == [{'d1': 'v1'}]
         assert self.transport.periodic_http_done == 1
         assert self.transport.periodic_http_exceptions == 0
-        assert self.transport.periodic_http_workers.get('url_post').is_alive() is False
+        assert self.transport.periodic_http_worker.is_alive() is False
 
         # Exception transport
         self.exception_transport.config.timeout = 0.5
@@ -165,8 +164,8 @@ class TestPeriodicTransport(TestCase):
         assert self.exception_transport.periodic_http_done == 0
         assert self.exception_transport.periodic_http_exceptions == 0
         time.sleep(0.1)
-        assert self.exception_transport.get_periodic_http_worker('url_post').is_alive() is True
-        self.exception_transport.get_periodic_http_worker('url_post').atexit()
+        assert self.exception_transport.periodic_http_worker.is_alive() is True
+        self.exception_transport.periodic_http_worker.atexit()
         assert self.exception_transport.periodic_http_done == 1
         assert self.exception_transport.periodic_http_exceptions == 1
-        assert self.exception_transport.periodic_http_workers.get('url_post').is_alive() is False
+        assert self.exception_transport.periodic_http_worker.is_alive() is False
