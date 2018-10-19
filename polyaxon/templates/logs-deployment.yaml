@@ -1,20 +1,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-events
+  name: {{ template "polyaxon.fullname" . }}-logs
   annotations:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
     checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-events
+    app: {{ template "polyaxon.fullname" . }}-logs
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.worker }}
 spec:
-  replicas: {{ .Values.eventsHandlers.replicas }}
+  replicas: {{ .Values.logsHandlers.replicas }}
   template:
     metadata:
       annotations:
@@ -22,7 +22,7 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
         checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       labels:
-        app: {{ template "polyaxon.fullname" . }}-events
+        app: {{ template "polyaxon.fullname" . }}-logs
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.worker }}
@@ -41,10 +41,10 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      - name: {{ .Chart.Name }}-events
-        image: "{{ .Values.eventsHandlers.image }}:{{ .Values.eventsHandlers.imageTag }}"
-        imagePullPolicy: {{ .Values.eventsHandlers.imagePullPolicy }}
-        args: ["{{ .Values.queues.eventsHealth }},{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsJobStatuses }}", "--concurrency={{ .Values.eventsHandlers.concurrency }}"]
+      - name: {{ .Chart.Name }}-logs
+        image: "{{ .Values.logsHandlers.image }}:{{ .Values.logsHandlers.imageTag }}"
+        imagePullPolicy: {{ .Values.logsHandlers.imagePullPolicy }}
+        args: ["{{ .Values.queues.logsHealth }},{{ .Values.queues.logsSidecars }},{{ .Values.queues.streamLogsSidecars }}", "--concurrency={{ .Values.logsHandlers.concurrency }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
@@ -57,10 +57,10 @@ spec:
 {{ include "volumes.volumeMounts.logs" . | indent 8}}
         resources:
           requests:
-{{ toYaml .Values.eventsHandlers.resources.requests | indent 12 }}
+{{ toYaml .Values.logsHandlers.resources.requests | indent 12 }}
           {{- if .Values.limitResources }}
           limits:
-{{ toYaml .Values.eventsHandlers.resources.limits | indent 12 }}
+{{ toYaml .Values.logsHandlers.resources.limits | indent 12 }}
           {{- end }}
       volumes:
 {{ include "volumes.volumes.logs" . | indent 6 }}

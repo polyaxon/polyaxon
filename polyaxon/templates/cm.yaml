@@ -99,6 +99,7 @@ data:
   POLYAXON_QUEUES_EVENTS_NAMESPACE: {{ .Values.queues.eventsNamespace | quote }}
   POLYAXON_QUEUES_EVENTS_RESOURCES: {{ .Values.queues.eventsResources | quote }}
   POLYAXON_QUEUES_EVENTS_JOB_STATUSES: {{ .Values.queues.eventsJobStatuses | quote }}
+  POLYAXON_QUEUES_LOGS_HEALTH: {{ .Values.queues.logsHealth | quote }}
   POLYAXON_QUEUES_LOGS_SIDECARS: {{ .Values.queues.logsSidecars | quote }}
   POLYAXON_QUEUES_STREAM_LOGS_SIDECARS: {{ .Values.queues.streamLogsSidecars | quote }}
   POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER: {{ .Values.intervals.experiments_scheduler | quote }}
