@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import sys
 
-from collections import deque
-
 import click
 import rhea
 
@@ -24,6 +22,7 @@ from polyaxon_cli.utils.formatting import (
     get_resources,
     list_dicts_to_tabulate
 )
+from polyaxon_cli.utils.log_handler import get_logs_handler
 from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
 
@@ -617,9 +616,11 @@ def resources(ctx, job, gpu):
 @click.option('--past', '-p', is_flag=True, help="Show the past logs.")
 @click.option('--follow', '-f', is_flag=True, default=False,
               help="Stream logs after showing past logs.")
+@click.option('--hide_time', is_flag=True, default=False,
+              help="Whether or not to hide timestamps from the log stream.")
 @click.pass_context
 @clean_outputs
-def logs(ctx, job, past, follow):
+def logs(ctx, job, past, follow, hide_time):
     """Get experiment or experiment job logs.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -645,37 +646,14 @@ def logs(ctx, job, past, follow):
     """
 
     def get_experiment_logs():
-        colors = deque(Printer.COLORS)
-        job_to_color = {}
-
-        def message_handler(message):
-            status = message['status']
-            if status == 'running' and message['log_lines']:
-                log_lines = to_list(message['log_lines'])
-                job_info = '{}.{}'.format(message['task_type'], int(message['task_idx']) + 1)
-                if job_info in job_to_color:
-                    color = job_to_color[job_info]
-                else:
-                    color = colors[0]
-                    colors.rotate(-1)
-                    job_to_color[job_info] = color
-
-                for log_line in log_lines:
-                    log_line = '{} -- {}'.format(Printer.add_color(job_info, color), log_line)
-                    Printer.log(log_line, nl=True)
-            else:
-                log_lines = to_list(message['log_lines'])
-                for log_line in log_lines:
-                    status = Printer.get_colored_status(status)
-                    Printer.log('{} -- {}'.format(status, log_line or ''), nl=True)
-
         if past:
             try:
                 response = PolyaxonClient().experiment.logs(
                     user, project_name, _experiment, stream=False)
-                for log_line in response.content.decode().split('\n'):
-                    Printer.log(log_line)
-                    print()
+                get_logs_handler(handle_job_info=True,
+                                 show_timestamp=not hide_time,
+                                 stream=False)(response.content.decode().split('\n'))
+                print()
 
                 if not follow:
                     return
@@ -686,24 +664,25 @@ def logs(ctx, job, past, follow):
 
         try:
             PolyaxonClient().experiment.logs(
-                user, project_name, _experiment, message_handler=message_handler)
+                user,
+                project_name,
+                _experiment,
+                message_handler=get_logs_handler(handle_job_info=True,
+                                                 show_timestamp=not hide_time))
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get logs for experiment `{}`.'.format(_experiment))
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
     def get_experiment_job_logs():
-        def message_handler(message):
-            log_lines = to_list(message['log_lines'])
-            for log_line in log_lines:
-                Printer.log(log_line, nl=True)
-
         try:
-            PolyaxonClient().experiment_job.logs(user,
-                                                 project_name,
-                                                 _experiment,
-                                                 _job,
-                                                 message_handler=message_handler)
+            PolyaxonClient().experiment_job.logs(
+                user,
+                project_name,
+                _experiment,
+                _job,
+                message_handler=get_logs_handler(handle_job_info=True,
+                                                 show_timestamp=not hide_time))
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not get logs for job `{}`.'.format(_job))
             Printer.print_error('Error message `{}`.'.format(e))

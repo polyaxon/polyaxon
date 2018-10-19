@@ -18,7 +18,7 @@ from polyaxon_cli.utils.formatting import (
     get_resources,
     list_dicts_to_tabulate
 )
-from polyaxon_cli.utils.log_handler import handle_job_logs
+from polyaxon_cli.utils.log_handler import get_logs_handler
 from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
 
@@ -361,9 +361,11 @@ def resources(ctx, gpu):
 @click.option('--past', '-p', is_flag=True, help="Show the past logs.")
 @click.option('--follow', '-f', is_flag=True, default=False,
               help="Stream logs after showing past logs.")
+@click.option('--hide_time', is_flag=True, default=False,
+              help="Whether or not to hide timestamps from the log stream.")
 @click.pass_context
 @clean_outputs
-def logs(ctx, past, follow):
+def logs(ctx, past, follow, hide_time):
     """Get build logs.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -386,8 +388,10 @@ def logs(ctx, past, follow):
         try:
             response = PolyaxonClient().build_job.logs(
                 user, project_name, _build, stream=False)
-            for log_line in response.content.decode().split('\n'):
-                Printer.log(log_line, nl=True)
+            get_logs_handler(handle_job_info=False,
+                             show_timestamp=not hide_time,
+                             stream=False)(response.content.decode().split('\n'))
+            print()
 
             if not follow:
                 return
@@ -397,10 +401,11 @@ def logs(ctx, past, follow):
             sys.exit(1)
 
     try:
-        PolyaxonClient().build_job.logs(user,
-                                        project_name,
-                                        _build,
-                                        message_handler=handle_job_logs)
+        PolyaxonClient().build_job.logs(
+            user,
+            project_name,
+            _build,
+            message_handler=get_logs_handler(handle_job_info=False, show_timestamp=not hide_time))
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not get logs for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
