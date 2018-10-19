@@ -2,8 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
-from polyaxon_schemas.code_reference import CodeReferenceConfig
-from polyaxon_schemas.utils import TIME_ZONE
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
@@ -13,6 +11,8 @@ from polyaxon_client.schemas import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
+from polyaxon_schemas.code_reference import CodeReferenceConfig
+from polyaxon_schemas.utils import TIME_ZONE
 
 
 class ExperimentApi(BaseApiHandler):
