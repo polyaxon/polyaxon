@@ -116,6 +116,7 @@ class TestPeriodicTransport(TestCase):
     def test_periodic_requests_with_different_urls(self):
         self.transport.periodic_post(url='url_post1', json_data={'d11': 'v11'})
         self.transport.periodic_post(url='url_post1', json_data={'d12': 'v12'})
+        time.sleep(0.0001)
         self.transport.periodic_post(url='url_post2', data={'d21': 'v21'})
         self.transport.periodic_post(url='url_post2', data={'d22': 'v22'})
         time.sleep(0.03)
