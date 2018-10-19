@@ -130,7 +130,7 @@ run:
 ### Running a script
 
 
-In some case you will need to change the directory before running a command,
+In some cases you will need to change the directory before running a command,
 or you might need to run multiple commands,
 the best way to do that is to create an executable file,
 e.g. `run.sh` where you will put all the commands you wish to run, and then just run that file:
@@ -147,3 +147,32 @@ And your cmd in polyaxonfile:
 run:
   cmd: /bin/bash run.sh
 ```
+
+### Custom configmaps and secrets
+
+
+In some cases, users might need to authenticate to a third party service 
+that the platform does not have an integration for yet, 
+Polyaxon provides a way to mount custom config maps and secrets for your runs.
+
+To be able to mount a config map or secret in your jobs/builds/experiments, 
+you need to create the config map/secret, and add it to you deployment config:
+
+For example:
+
+```yaml
+secretRefs: [secret1, secret2, secret3]
+configmapRefs: [configmap1, configmap2, secret3]
+```
+
+During the scheduling of your build/job/experiment, 
+you can reference the config map(s)/secret(s) that you want to mount in the environment section:
+
+```yaml
+
+environment:
+  ...
+  secret_refs: ['secret1', 'secret2']
+  configmap_refs: ['configmap1', 'configmap3']
+```
+
