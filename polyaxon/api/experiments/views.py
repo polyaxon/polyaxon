@@ -88,7 +88,7 @@ from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 
 _logger = logging.getLogger("polyaxon.views.experiments")
 
@@ -470,7 +470,7 @@ class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpd
     get_event = EXPERIMENT_JOB_VIEWED
 
 
-class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
+class ExperimentLogsView(ExperimentViewMixin, RetrieveUpdateAPIView):
     """Get experiment logs."""
     permission_classes = (IsAuthenticated,)
 
@@ -495,6 +495,20 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
             _logger.warning('Log file not found: log_path=%s', log_path)
             return Response(status=status.HTTP_404_NOT_FOUND,
                             data='Log file not found: log_path={}'.format(log_path))
+
+    def put(self, request, *args, **kwargs):
+        experiment = self.get_experiment()
+        log_lines = request.data.get('log_lines')
+        if not log_lines or not isinstance(log_lines, str):
+            raise ValidationError('Logs handler expects `log_lines`.')
+        celery_app.send_task(
+            LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
+            kwargs={
+                'experiment_name': experiment.unique_name,
+                'experiment_uuid': experiment.uuid.hex,
+                'log_lines': log_lines
+            })
+        return Response(status=status.HTTP_200_OK)
 
 
 class ExperimentJobViewMixin(object):
