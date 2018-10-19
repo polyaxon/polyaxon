@@ -1,12 +1,13 @@
 import pytest
+
 from mock import patch
 
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
-from crons.tasks.heartbeats import heartbeat_experiments, heartbeat_jobs, heartbeat_builds
+from crons.tasks.heartbeats import heartbeat_builds, heartbeat_experiments, heartbeat_jobs
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
-from factories.factory_jobs import JobStatusFactory, JobFactory
+from factories.factory_jobs import JobFactory, JobStatusFactory
 from tests.utils import BaseTest
 
 
@@ -59,5 +60,3 @@ class TestHeartBeatCrons(BaseTest):
             heartbeat_builds()
 
         assert mock_fct.call_count == 2
-
-
