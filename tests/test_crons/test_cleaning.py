@@ -14,6 +14,8 @@ from tests.utils import BaseTest
 
 @pytest.mark.crons_mark
 class TestCleaningCrons(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         self.experiment = ExperimentFactory()
         self.user = UserFactory()
