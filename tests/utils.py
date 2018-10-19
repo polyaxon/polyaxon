@@ -2,6 +2,7 @@ import datetime
 import json
 import tempfile
 import uuid
+from collections import Mapping
 
 from urllib.parse import urlparse
 
@@ -39,6 +40,8 @@ class BaseClient(Client):
             data = {}
 
         def validate_data(dvalues):
+            if not isinstance(dvalues, Mapping):
+                return
             for key, value in dvalues.items():
                 # Fix UUIDs for convenience
                 if isinstance(value, uuid.UUID):

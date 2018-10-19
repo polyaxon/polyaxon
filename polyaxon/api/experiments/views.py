@@ -498,15 +498,14 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
 
     def post(self, request, *args, **kwargs):
         experiment = self.get_experiment()
-        log_lines = request.data.get('log_lines')
-        if not log_lines or not isinstance(log_lines, str):
-            raise ValidationError('Logs handler expects `log_lines`.')
+        if not request.data or not isinstance(request.data, str):
+            raise ValidationError('Logs handler expects `data` to be a string.')
         celery_app.send_task(
             LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
             kwargs={
                 'experiment_name': experiment.unique_name,
                 'experiment_uuid': experiment.uuid.hex,
-                'log_lines': log_lines
+                'log_lines': request.data
             })
         return Response(status=status.HTTP_200_OK)
 
