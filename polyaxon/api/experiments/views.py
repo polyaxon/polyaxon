@@ -502,7 +502,7 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
         if not log_lines or not isinstance(log_lines, (str, list)):
             raise ValidationError('Logs handler expects `data` to be a string or list of strings.')
         if isinstance(log_lines, list):
-            log_lines = '\n'.format(log_lines)
+            log_lines = '\n'.join(log_lines)
         celery_app.send_task(
             LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
             kwargs={
