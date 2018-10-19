@@ -13,7 +13,7 @@ class BaseApiHandler(object):
     Base api handler.
     """
     ENDPOINT = None
-    HEALTH_CHECK_SUF = '_health'
+    HEARTBEAT = '_heartbeat'
 
     def __init__(self, transport, config):
         self.transport = transport

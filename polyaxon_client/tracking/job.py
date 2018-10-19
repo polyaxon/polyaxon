@@ -38,12 +38,12 @@ class Job(BaseTracker):
 
     def _set_health_url(self):
         if self.job_type == 'jobs':
-            health_url = self.client.job.get_health_url(
+            health_url = self.client.job.get_heartbeat_url(
                 username=self.username,
                 project_name=self.project_name,
                 experiment_id=self.job_id)
         else:
-            health_url = self.client.build_job.get_health_url(
+            health_url = self.client.build_job.get_heartbeat_url(
                 username=self.username,
                 project_name=self.project_name,
                 experiment_id=self.job_id)

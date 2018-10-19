@@ -122,7 +122,7 @@ class Experiment(BaseTracker):
         return self
 
     def _set_health_url(self):
-        health_url = self.client.experiment.get_health_url(
+        health_url = self.client.experiment.get_heartbeat_url(
             username=self.username,
             project_name=self.project_name,
             experiment_id=self.experiment_id)

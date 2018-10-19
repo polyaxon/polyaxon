@@ -285,10 +285,10 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while downloading job outputs.')
             return None
 
-    def get_health_url(self, username, project_name, job_id):
+    def get_heartbeat_url(self, username, project_name, job_id):
         return self.build_url(self._get_http_url(),
                               username,
                               project_name,
                               'jobs',
                               job_id,
-                              self.HEALTH_CHECK_SUF)
+                              self.HEARTBEAT)

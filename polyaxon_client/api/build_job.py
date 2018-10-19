@@ -172,10 +172,10 @@ class BuildJobApi(BaseApiHandler):
                                      'logs')
         self.transport.stream(request_url, message_handler=message_handler)
 
-    def get_health_url(self, username, project_name, job_id):
+    def get_heartbeat_url(self, username, project_name, job_id):
         return self.build_url(self._get_http_url(),
                               username,
                               project_name,
                               'builds',
                               job_id,
-                              self.HEALTH_CHECK_SUF)
+                              self.HEARTBEAT)

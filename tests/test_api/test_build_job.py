@@ -220,3 +220,14 @@ class TestBuildJobApi(TestBaseApi):
 
         response = self.api_handler.logs('username', 'project_name', 1, stream=False)
         assert response.content.decode() == 'some text'
+
+    def test_get_heartbeat_url(self):
+        self.assertEqual(self.api_handler.get_heartbeat_url('username', 'project_name', 1),
+                         BaseApiHandler.build_url(
+                             self.api_config.base_url,
+                             '/',
+                             'username',
+                             'project_name',
+                             'builds',
+                             1,
+                             BaseApiHandler.HEARTBEAT))

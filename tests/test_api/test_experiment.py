@@ -797,3 +797,14 @@ class TestExperimentApi(TestBaseApi):
             api_handler_call=lambda: self.api_handler.unbookmark(
                 'username', 'project_name', 1, background=True),
             method='delete')
+
+    def test_get_heartbeat_url(self):
+        self.assertEqual(self.api_handler.get_heartbeat_url('username', 'project_name', 1),
+                         BaseApiHandler.build_url(
+                             self.api_config.base_url,
+                             '/',
+                             'username',
+                             'project_name',
+                             'experiments',
+                             1,
+                             BaseApiHandler.HEARTBEAT))
