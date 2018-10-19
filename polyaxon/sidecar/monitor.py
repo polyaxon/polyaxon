@@ -3,7 +3,6 @@ import time
 
 import publisher
 
-from constants.experiments import ExperimentLifeCycle
 from constants.pods import PodLifeCycle
 from schemas.job_labels import JobLabelConfig
 
