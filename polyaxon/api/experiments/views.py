@@ -470,7 +470,7 @@ class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpd
     get_event = EXPERIMENT_JOB_VIEWED
 
 
-class ExperimentLogsView(ExperimentViewMixin, RetrieveUpdateAPIView):
+class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
     """Get experiment logs."""
     permission_classes = (IsAuthenticated,)
 
@@ -496,7 +496,7 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveUpdateAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND,
                             data='Log file not found: log_path={}'.format(log_path))
 
-    def put(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         experiment = self.get_experiment()
         log_lines = request.data.get('log_lines')
         if not log_lines or not isinstance(log_lines, str):

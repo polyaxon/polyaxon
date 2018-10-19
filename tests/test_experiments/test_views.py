@@ -1705,13 +1705,13 @@ class TestExperimentLogsViewV1(BaseViewTest):
         assert len(data) == len(self.logs)
         assert data == self.logs
 
-    def test_put_logs(self):
-        resp = self.auth_client.put(self.url)
+    def test_post_logs(self):
+        resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {'log_lines': 'logs here'}
         with patch('logs_handlers.tasks.logs_handle_experiment_job.apply_async') as mock_fct:
-            resp = self.auth_client.put(self.url, data)
+            resp = self.auth_client.post(self.url, data)
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
