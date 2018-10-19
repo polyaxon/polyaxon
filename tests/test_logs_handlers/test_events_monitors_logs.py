@@ -1,5 +1,4 @@
 import os
-import uuid
 
 from unittest.mock import patch
 
@@ -15,7 +14,6 @@ from logs_handlers.tasks.logs import (
     logs_handle_experiment_job,
     logs_handle_job
 )
-from schemas.tasks import TaskType
 from tests.utils import BaseTest
 
 
