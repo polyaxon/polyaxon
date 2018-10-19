@@ -24,12 +24,9 @@ class PublisherService(Service):
                                    status,
                                    experiment_uuid,
                                    experiment_name,
-                                   job_uuid,
-                                   task_type=None,
-                                   task_idx=None):
+                                   job_uuid):
         log_lines = to_list(log_lines)
-        self._logger.debug("Publishing log event for task: %s.%s, %s",
-                           task_type, task_idx, experiment_name)
+        self._logger.debug("Publishing log event for task: %s, %s", job_uuid, experiment_name)
         celery_app.send_task(
             LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
             kwargs={
@@ -53,9 +50,7 @@ class PublisherService(Service):
                             'experiment_uuid': experiment_uuid,
                             'job_uuid': job_uuid,
                             'log_lines': log_lines,
-                            'status': status,
-                            'task_type': task_type,
-                            'task_idx': task_idx
+                            'status': status
                         },
                         retry=True,
                         routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS_EXPERIMENTS,

@@ -51,9 +51,7 @@ def run_for_experiment_job(k8s_manager,
             status=ExperimentLifeCycle.RUNNING,
             experiment_uuid=experiment_uuid,
             experiment_name=experiment_name,
-            job_uuid=job_uuid,
-            task_type=task_type,
-            task_idx=task_idx)
+            job_uuid=job_uuid)
 
     _handle_log_stream(stream=raw.stream(), publish=publish)
 
