@@ -31,7 +31,9 @@ from api.filters import OrderingFilter, QueryFilter
 from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.list_create import ListCreateAPIView
+from api.utils.views.post import PostAPIView
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.build_job import (
     BUILD_JOB_CREATED,
@@ -222,4 +224,19 @@ class BuildStopView(CreateAPIView):
                 'build_job_uuid': obj.uuid.hex,
                 'update_status': True
             })
+        return Response(status=status.HTTP_200_OK)
+
+
+class BuildHeartBeatView(PostAPIView):
+    """
+    post:
+        Post a heart beat ping.
+    """
+    queryset = BuildJob.objects.all()
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
+
+    def post(self, request, *args, **kwargs):
+        build = self.get_object()
+        RedisHeartBeat.build_ping(build_id=build.id)
         return Response(status=status.HTTP_200_OK)

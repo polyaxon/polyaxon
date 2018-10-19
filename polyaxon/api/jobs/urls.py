@@ -28,6 +28,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/outputs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.DownloadOutputsView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/_heartbeat/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+        views.JobHeartBeatView.as_view()),
     re_path(r'^{}/{}/jobs/{}/bookmark/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         bookmark_views.JobBookmarkCreateView.as_view()),

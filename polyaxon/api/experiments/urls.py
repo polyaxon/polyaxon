@@ -63,6 +63,9 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/token/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.ExperimentScopeTokenView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/_heartbeat/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        views.ExperimentHeartBeatView.as_view()),
 ]
 
 jobs_urlpatterns = [

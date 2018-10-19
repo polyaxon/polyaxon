@@ -30,8 +30,10 @@ from api.jobs.serializers import (
 )
 from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.list_create import ListCreateAPIView
+from api.utils.views.post import PostAPIView
 from api.utils.views.protected import ProtectedView
 from db.models.jobs import Job, JobStatus
+from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.job import (
     JOB_CREATED,
@@ -307,3 +309,18 @@ class DownloadOutputsView(ProtectedView):
             persistence_outputs=job.persistence_outputs,
             job_name=job.unique_name)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
+
+
+class JobHeartBeatView(PostAPIView):
+    """
+    post:
+        Post a heart beat ping.
+    """
+    queryset = Job.objects.all()
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
+
+    def post(self, request, *args, **kwargs):
+        job = self.get_object()
+        RedisHeartBeat.job_ping(job_id=job.id)
+        return Response(status=status.HTTP_200_OK)

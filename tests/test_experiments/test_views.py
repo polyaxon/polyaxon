@@ -40,6 +40,7 @@ from db.models.experiments import (
 )
 from db.models.repos import CodeReference
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
+from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -1967,3 +1968,25 @@ class TestExperimentChartViewDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
+
+
+@pytest.mark.experiments_mark
+class TestExperimentHeartBeatViewV1(BaseViewTest):
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/_heartbeat'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.experiment.id)
+
+    def test_post_experiment_heartbeat(self):
+        self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), False)
+        resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), True)

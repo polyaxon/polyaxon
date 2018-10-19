@@ -16,6 +16,7 @@ from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
+from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
@@ -561,3 +562,25 @@ class TestBuildLogsViewV1(BaseViewTest):
         data = [d for d in data[0].decode('utf-8').split('\n') if d]
         assert len(data) == len(self.logs)
         assert data == self.logs
+
+
+@pytest.mark.build_jobs_mark
+class TestBuildHeartBeatViewV1(BaseViewTest):
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.build = BuildJobFactory(project=project)
+        self.url = '/{}/{}/{}/builds/{}/_heartbeat'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.build.id)
+
+    def test_post_build_heartbeat(self):
+        self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), False)
+        resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), True)

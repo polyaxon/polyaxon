@@ -55,6 +55,7 @@ from db.models.experiments import (
     ExperimentStatus
 )
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
+from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment import (
@@ -471,7 +472,12 @@ class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpd
 
 
 class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
-    """Get experiment logs."""
+    """
+    get:
+        Get experiment logs.
+    post:
+        Post experiment logs.
+    """
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
@@ -510,6 +516,19 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
                 'experiment_uuid': experiment.uuid.hex,
                 'log_lines': log_lines
             })
+        return Response(status=status.HTTP_200_OK)
+
+
+class ExperimentHeartBeatView(ExperimentViewMixin, PostAPIView):
+    """
+    post:
+        Post a heart beat ping.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        experiment = self.get_experiment()
+        RedisHeartBeat.experiment_ping(experiment_id=experiment.id)
         return Response(status=status.HTTP_200_OK)
 
 

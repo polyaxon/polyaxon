@@ -22,6 +22,9 @@ build_jobs_urlpatterns = [
         r'^{}/{}/builds/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.BuildStopView.as_view()),
     re_path(
+        r'^{}/{}/builds/{}/_heartbeat/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+        views.BuildHeartBeatView.as_view()),
+    re_path(
         r'^{}/{}/builds/{}/bookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         bookmark_views.BuildJobBookmarkCreateView.as_view()),
     re_path(

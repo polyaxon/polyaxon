@@ -21,6 +21,7 @@ from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
+from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
@@ -700,3 +701,25 @@ class DownloadJobOutputsViewTest(BaseViewTest):
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
                          '{}/{}.tar.gz'.format(settings.OUTPUTS_ARCHIVE_ROOT,
                                                self.job.unique_name.replace('.', '_')))
+
+
+@pytest.mark.jobs_mark
+class TestJobHeartBeatViewV1(BaseViewTest):
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.job = JobFactory(project=project)
+        self.url = '/{}/{}/{}/jobs/{}/_heartbeat'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.job.id)
+
+    def test_post_job_heartbeat(self):
+        self.assertEqual(RedisHeartBeat.job_is_alive(self.job.id), False)
+        resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assertEqual(RedisHeartBeat.job_is_alive(self.job.id), True)
