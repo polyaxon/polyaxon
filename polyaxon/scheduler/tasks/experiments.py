@@ -23,7 +23,6 @@ def copy_experiment(experiment):
             log_lines='Copying outputs from experiment `{}` into experiment `{}`'.format(
                 experiment.original_experiment.unique_name, experiment.unique_name
             ),
-            status=ExperimentLifeCycle.BUILDING,
             experiment_uuid=experiment.uuid.hex,
             experiment_name=experiment.unique_name,
             job_uuid='all',
@@ -39,7 +38,6 @@ def copy_experiment(experiment):
             log_lines='Could not copy the outputs of experiment `{}` into experiment `{}`'.format(
                 experiment.original_experiment.unique_name, experiment.unique_name
             ),
-            status=ExperimentLifeCycle.BUILDING,
             experiment_uuid=experiment.uuid.hex,
             experiment_name=experiment.unique_name,
             job_uuid='all',
