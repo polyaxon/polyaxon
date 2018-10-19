@@ -6,11 +6,12 @@ import json
 import os
 import sys
 import time
-
 from datetime import datetime
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonClientException
+from polyaxon_client.handlers.conf import setup_logging
+from polyaxon_client.handlers.handler import PolyaxonHandler
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
@@ -87,6 +88,8 @@ class Experiment(BaseTracker):
         )
         if not experiment:
             raise PolyaxonClientException('Could not create experiment.')
+        if not settings.IN_CLUSTER:
+            setup_logging(PolyaxonHandler(send_logs=self._send_logs))
         self.experiment_id = (experiment.id
                               if self.client.api_config.schema_response
                               else experiment.get('id'))
@@ -134,6 +137,13 @@ class Experiment(BaseTracker):
             sys.__excepthook__(exception, value, tb)
 
         sys.excepthook = excepthook
+
+    def _send_logs(self, log_line):
+        self.client.experiment.send_logs(username=self.username,
+                                         project_name=self.project_name,
+                                         experiment_id=self.experiment_id,
+                                         log_lines=log_line,
+                                         periodic=True)
 
     def _end(self):
         self.succeeded()
