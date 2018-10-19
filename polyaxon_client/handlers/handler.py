@@ -1,9 +1,9 @@
 import logging
-import sys
-import traceback
 
 from polyaxon_client import settings
 from polyaxon_schemas.utils import local_now
+
+from polyaxon_client.logger import logger
 
 
 class PolyaxonHandler(logging.Handler):
@@ -31,6 +31,4 @@ class PolyaxonHandler(logging.Handler):
         try:
             return self._send_logs(self.format_record(record))
         except Exception:
-            print("Polyaxon failed creating log record", file=sys.stderr)
-            print('{}'.format(record.msg), file=sys.stderr)
-            print('{}'.format(traceback.format_exc()), file=sys.stderr)
+            logger.warning("Polyaxon failed creating log record")
