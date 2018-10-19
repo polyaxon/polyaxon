@@ -583,6 +583,7 @@ queues:
   schedulerExperimentGroups: 'queues.scheduler.experimentGroups'
   schedulerProjects: 'queues.scheduler.projects'
   schedulerBuildJobs: 'queues.scheduler.build_jobs'
+  schedulerJobs: 'queues.scheduler.jobs'
 
   pipelinesHealth: 'queues.pipelines.health'
   pipelines: 'queues.pipelines'
