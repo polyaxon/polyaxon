@@ -249,21 +249,19 @@ class ExperimentApi(BaseApiHandler):
                                      experiment_id,
                                      'logs')
 
-        if not isinstance(log_lines, str):
-            raise PolyaxonClientException('Client could not send logs, it expects a string.')
-
-        json_data = {'log_lines': log_lines}
+        if isinstance(log_lines, list):
+            log_lines = '\n'.join(log_lines)
 
         if background:
-            self.transport.async_post(request_url, json_data=json_data)
+            self.transport.async_post(request_url, json_data=log_lines)
             return None
 
         if periodic:
-            self.transport.periodic_post(request_url, json_data=json_data)
+            self.transport.periodic_post(request_url, json_data=log_lines)
             return None
 
         try:
-            response = self.transport.post(request_url, json_data=json_data)
+            response = self.transport.post(request_url, json_data=log_lines)
             return response
         except PolyaxonClientException as e:
             self.transport.handle_exception(
