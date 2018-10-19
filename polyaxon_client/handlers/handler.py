@@ -25,7 +25,7 @@ class PolyaxonHandler(logging.Handler):
                                     record.levelname,
                                     record.msg)
 
-    def emit(self, record):
+    def emit(self, record):  # pylint:disable=inconsistent-return-statements
         if settings.IN_CLUSTER or not self.can_record(record):
             return
         try:

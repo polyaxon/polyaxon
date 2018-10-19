@@ -354,11 +354,6 @@ class TestExperimentApi(TestBaseApi):
             content_type='application/json',
             status=200)
 
-        # Raises
-        with self.assertRaises(PolyaxonClientException):
-            self.api_handler.send_logs('username', 'project_name', 1,
-                                       log_lines=['ds'])
-
         # Schema response
         response = self.api_handler.send_logs('username', 'project_name', 1, log_lines='foo\nbar')
         assert response.status_code == 200
