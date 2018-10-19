@@ -37,8 +37,7 @@ def get_logs_handler(handle_job_info=False, show_timestamp=True, stream=True):
         if found:
             return log_line
         log_line, found = get_job_info(log_line=log_line, job_regex=PS_REGEX)
-        if found:
-            return log_line
+        return log_line
 
     def handle_timestamp(log_line):
         log_search = TIMESTAMP_REGEX.search(log_line)

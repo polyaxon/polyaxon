@@ -13,7 +13,6 @@ from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExit
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_job import ExperimentJobManager
-from polyaxon_cli.schemas.utils import to_list
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import (
     Printer,
