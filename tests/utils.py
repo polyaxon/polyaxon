@@ -2,8 +2,8 @@ import datetime
 import json
 import tempfile
 import uuid
-from collections import Mapping
 
+from collections import Mapping
 from urllib.parse import urlparse
 
 import redis
