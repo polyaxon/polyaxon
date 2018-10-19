@@ -116,6 +116,10 @@ class ConfigManager(rhea.Rhea):
         return self.service == 'events_handlers'
 
     @property
+    def is_logs_handlers_service(self):
+        return self.service == 'logs_handlers'
+
+    @property
     def is_debug_mode(self):
         return self._is_debug_mode
 

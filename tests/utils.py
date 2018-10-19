@@ -197,6 +197,7 @@ class BaseTest(TestCase):
         from crons import tasks  # noqa
         from dockerizer import tasks  # noqa
         from events_handlers import tasks  # noqa
+        from logs_handlers import tasks  # noqa
 
         # Flushing all redis databases
         redis.StrictRedis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
