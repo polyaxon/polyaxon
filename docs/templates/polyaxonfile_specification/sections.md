@@ -406,6 +406,24 @@ environment:
 
 To enable a distributed run, the user can define one of the following framework:
 
+### configmap_refs
+
+A list of config map references to mount during the scheduling of a job/build/experiment
+
+```yaml
+environment:
+  configmap_refs: ['configmap1', 'configmap3']
+```
+
+### secret_refs
+
+```yaml
+environment:
+  secret_refs: ['secret1', 'secret2']
+```
+
+A list of secret references to mount during the scheduling of a job/build/experiment
+
 ### tensorflow
 
 #### n_workers
