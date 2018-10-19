@@ -131,6 +131,7 @@ data:
   POLYAXON_REDIS_SESSIONS_URL: redis://{{ template "redis.fullname" . }}:6379/5
   POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: redis://{{ template "redis.fullname" . }}:6379/6
   POLYAXON_REDIS_TTL_URL: redis://{{ template "redis.fullname" . }}:6379/7
+  POLYAXON_HEARTBEAT_URL: redis://{{ template "redis.fullname" . }}:6379/8
   POLYAXON_REDIS_HOST: {{ template "redis.fullname" . }}
   POLYAXON_REDIS_PORT: "6379"
   # Spawner
