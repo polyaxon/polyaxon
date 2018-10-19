@@ -21,7 +21,6 @@ class PublisherService(Service):
 
     def publish_experiment_job_log(self,
                                    log_lines,
-                                   status,
                                    experiment_uuid,
                                    experiment_name,
                                    job_uuid):
@@ -50,7 +49,6 @@ class PublisherService(Service):
                             'experiment_uuid': experiment_uuid,
                             'job_uuid': job_uuid,
                             'log_lines': log_lines,
-                            'status': status
                         },
                         retry=True,
                         routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS_EXPERIMENTS,

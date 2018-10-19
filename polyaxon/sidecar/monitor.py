@@ -48,7 +48,6 @@ def run_for_experiment_job(k8s_manager,
                      for log_line in log_lines]
         publisher.publish_experiment_job_log(
             log_lines=log_lines,
-            status=ExperimentLifeCycle.RUNNING,
             experiment_uuid=experiment_uuid,
             experiment_name=experiment_name,
             job_uuid=job_uuid)
