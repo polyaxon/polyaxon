@@ -17,7 +17,7 @@ from logs_handlers.tasks.logs import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.monitors_mark
+@pytest.mark.logs_heandlers_mark
 class BaseTestLogsHandling(BaseTest):
     @staticmethod
     def file_line_count(filename):
@@ -55,7 +55,7 @@ class BaseTestLogsHandling(BaseTest):
         assert self.file_line_count(log_path) == 2
 
 
-@pytest.mark.monitors_mark
+@pytest.mark.logs_heandlers_mark
 class TestExperimentJobLogsHandling(BaseTestLogsHandling):
     @staticmethod
     def file_line_count(filename):
@@ -81,7 +81,7 @@ class TestExperimentJobLogsHandling(BaseTestLogsHandling):
         logs_handle_experiment_job(**params)
 
 
-@pytest.mark.monitors_mark
+@pytest.mark.logs_heandlers_mark
 class TestJobLogsHandling(BaseTestLogsHandling):
     @staticmethod
     def file_line_count(filename):
@@ -107,7 +107,7 @@ class TestJobLogsHandling(BaseTestLogsHandling):
         logs_handle_job(**params)
 
 
-@pytest.mark.monitors_mark
+@pytest.mark.logs_heandlers_mark
 class TestBuildJobLogsHandling(BaseTestLogsHandling):
     @staticmethod
     def file_line_count(filename):

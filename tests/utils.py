@@ -199,6 +199,7 @@ class BaseTest(TestCase):
         from pipelines import health, tasks  # noqa
         from crons import tasks  # noqa
         from dockerizer import tasks  # noqa
+        from events_handlers import tasks  # noqa
         from k8s_events_handlers import tasks  # noqa
         from logs_handlers import tasks  # noqa
 

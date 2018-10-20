@@ -7,6 +7,7 @@ PROJECT_APPS = AUDITOR_APPS + (
     'scheduler.apps.SchedulerConfig',
     'hpsearch.apps.HPSearchConfig',
     'pipelines.apps.PipelinesConfig',
+    'events_handlers.apps.EventsHandlersConfig',
     'k8s_events_handlers.apps.K8SEventsHandlersConfig',
     'logs_handlers.apps.LogsHandlersConfig',
     'commands.apps.CommandsConfig',

@@ -174,6 +174,17 @@ class K8SEventsCeleryTasks(object):
     K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES = 'k8s_events_handle_build_job_statuses'
 
 
+class EventsCeleryTasks(object):
+    """Runner celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
+    EVENTS_HEALTH = 'events_health'
+    EVENTS_NOTIFY = 'events_notify'
+    EVENTS_TRACK = 'events_track'
+    EVENTS_LOG = 'events_log'
+
+
 class LogsCeleryTasks(object):
     """Runner celery tasks.
 
@@ -277,6 +288,11 @@ class CeleryQueues(object):
 
     HP_HEALTH = config.get_string('POLYAXON_QUEUES_HP_HEALTH')
     HP = config.get_string('POLYAXON_QUEUES_HP')
+
+    EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_EVENTS_HEALTH')
+    EVENTS_NOTIFY = config.get_string('POLYAXON_QUEUES_EVENTS_NOTIFY')
+    EVENTS_LOG = config.get_string('POLYAXON_QUEUES_EVENTS_LOG')
+    EVENTS_TRACK = config.get_string('POLYAXON_QUEUES_EVENTS_TRACK')
 
     K8S_EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_HEALTH')
     K8S_EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE')
@@ -452,10 +468,22 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.HP},
 
     # Events health
+    EventsCeleryTasks.EVENTS_HEALTH:
+        {'queue': CeleryQueues.EVENTS_HEALTH},
+
+    # Events ops
+    EventsCeleryTasks.EVENTS_NOTIFY:
+        {'queue': CeleryQueues.EVENTS_NOTIFY},
+    EventsCeleryTasks.EVENTS_TRACK:
+        {'queue': CeleryQueues.EVENTS_TRACK},
+    EventsCeleryTasks.EVENTS_LOG:
+        {'queue': CeleryQueues.EVENTS_LOG},
+
+    # K8S Events health
     K8SEventsCeleryTasks.K8S_EVENTS_HEALTH:
         {'queue': CeleryQueues.K8S_EVENTS_HEALTH},
 
-    # Events ops
+    # K8S Events ops
     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_NAMESPACE:
         {'queue': CeleryQueues.K8S_EVENTS_NAMESPACE},
     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_RESOURCES:

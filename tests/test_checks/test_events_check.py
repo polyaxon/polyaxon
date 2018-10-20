@@ -8,23 +8,23 @@ from tests.utils import BaseTest
 
 
 @pytest.mark.checks_mark
-class TestK8SEventsHealthCheck(BaseTest):
+class TestEventsHealthCheck(BaseTest):
     DISABLE_RUNNER = True
 
-    def test_k8s_events_is_healthy(self):
+    def test_events_is_healthy(self):
         results = EventsCheck.run()
         assert results['EVENTS'].is_healthy is True
 
-    @patch('k8s_events_handlers.tasks.health.k8s_events_health.apply_async')
-    def test_k8s_events_wrong_results(self, mock_health):
+    @patch('events_handlers.tasks.health.events_health.apply_async')
+    def test_events_wrong_results(self, mock_health):
         mock_health.return_value.__enter__.return_value = None
 
         results = EventsCheck.run()
         assert results['EVENTS'].is_healthy is False
         assert results['EVENTS'].severity == Result.WARNING
 
-    @patch('k8s_events_handlers.tasks.health.k8s_events_health.apply_async')
-    def test_k8s_events_not_healthy(self, mock_health):
+    @patch('events_handlers.tasks.health.events_health.apply_async')
+    def test_events_not_healthy(self, mock_health):
         mock_health.side_effect = Exception('Connection Refused')
 
         results = EventsCheck.run()
