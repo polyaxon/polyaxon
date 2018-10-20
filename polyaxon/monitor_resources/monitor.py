@@ -16,7 +16,7 @@ from db.models.nodes import ClusterNode, NodeGPU
 from db.redis.containers import RedisJobContainers
 from db.redis.to_stream import RedisToStream
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks
+from polyaxon.settings import K8SEventsCeleryTasks
 from schemas.containers import ContainerResourcesConfig
 
 logger = logging.getLogger('polyaxon.monitors.resources')
@@ -165,7 +165,7 @@ def run(containers, node, persist):
             payload = payload.to_dict()
             logger.debug("Publishing resources event")
             celery_app.send_task(
-                EventsCeleryTasks.EVENTS_HANDLE_RESOURCES,
+                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_RESOURCES,
                 kwargs={'payload': payload, 'persist': persist})
 
             job_uuid = payload['job_uuid']

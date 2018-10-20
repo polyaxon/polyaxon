@@ -40,7 +40,7 @@ elif config.is_streams_service:
     from .streams import *
 elif config.is_hpsearch_service:
     from .hpsearch import *
-elif config.is_events_handlers_service:
-    from .events_handlers import *
+elif config.is_k8s_events_handlers_service:
+    from .k8s_events_handlers import *
 elif config.is_logs_handlers_service:
     from .logs_handlers import *

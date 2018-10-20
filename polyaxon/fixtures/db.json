@@ -4595,7 +4595,7 @@
                             {
                                 "value": "queues.events.resources",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                             },
                             {
                                 "value": "false",
@@ -4910,7 +4910,7 @@
                             {
                                 "value": "queues.events.jobStatuses",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                             },
                             {
                                 "value": "true",
@@ -4930,7 +4930,7 @@
                             {
                                 "value": "queues.events.namespace",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                             },
                             {
                                 "value": "polyaxon-core",
@@ -5440,7 +5440,7 @@
                             {
                                 "value": "queues.events.resources",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                             },
                             {
                                 "value": "false",
@@ -5755,7 +5755,7 @@
                             {
                                 "value": "queues.events.jobStatuses",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                             },
                             {
                                 "value": "true",
@@ -5775,7 +5775,7 @@
                             {
                                 "value": "queues.events.namespace",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                             },
                             {
                                 "value": "polyaxon-core",
@@ -6840,7 +6840,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -7010,7 +7010,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -7556,7 +7556,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -7726,7 +7726,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -8272,7 +8272,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -8442,7 +8442,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -8988,7 +8988,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -9158,7 +9158,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -9708,7 +9708,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -9878,7 +9878,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -10429,7 +10429,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -10599,7 +10599,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -11150,7 +11150,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -11320,7 +11320,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -11871,7 +11871,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -12041,7 +12041,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -12592,7 +12592,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -12762,7 +12762,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -13313,7 +13313,7 @@
                                 {
                                     "value": "events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": null,
@@ -13483,7 +13483,7 @@
                                 {
                                     "value": "events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon",
@@ -14152,7 +14152,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -14467,7 +14467,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -14487,7 +14487,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -15223,7 +15223,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -15538,7 +15538,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -15558,7 +15558,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -16301,7 +16301,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -16616,7 +16616,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -16636,7 +16636,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -17378,7 +17378,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -17693,7 +17693,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -17713,7 +17713,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -18456,7 +18456,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -18771,7 +18771,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -18791,7 +18791,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -19534,7 +19534,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -19849,7 +19849,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -19869,7 +19869,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -20612,7 +20612,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -20927,7 +20927,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -20947,7 +20947,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -21690,7 +21690,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -22005,7 +22005,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -22025,7 +22025,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -22768,7 +22768,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -23083,7 +23083,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -23103,7 +23103,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -23846,7 +23846,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -24161,7 +24161,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -24181,7 +24181,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -24924,7 +24924,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -25239,7 +25239,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -25259,7 +25259,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -26002,7 +26002,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -26317,7 +26317,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -26337,7 +26337,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -27080,7 +27080,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -27395,7 +27395,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -27415,7 +27415,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -28159,7 +28159,7 @@
                                 {
                                     "value": "queues.events.resources",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                                 },
                                 {
                                     "value": "false",
@@ -28474,7 +28474,7 @@
                                 {
                                     "value": "queues.events.jobStatuses",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                                 },
                                 {
                                     "value": "true",
@@ -28494,7 +28494,7 @@
                                 {
                                     "value": "queues.events.namespace",
                                     "value_from": null,
-                                    "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                    "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                                 },
                                 {
                                     "value": "polyaxon-core",
@@ -37346,7 +37346,7 @@
                             {
                                 "value": "queues.events.resources",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                             },
                             {
                                 "value": "false",
@@ -37661,7 +37661,7 @@
                             {
                                 "value": "queues.events.jobStatuses",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                             },
                             {
                                 "value": "true",
@@ -37681,7 +37681,7 @@
                             {
                                 "value": "queues.events.namespace",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                             },
                             {
                                 "value": "polyaxon-core",
@@ -38376,7 +38376,7 @@
                             {
                                 "value": "queues.events.resources",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                             },
                             {
                                 "value": "false",
@@ -38691,7 +38691,7 @@
                             {
                                 "value": "queues.events.jobStatuses",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                             },
                             {
                                 "value": "true",
@@ -38711,7 +38711,7 @@
                             {
                                 "value": "queues.events.namespace",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                             },
                             {
                                 "value": "polyaxon-core",
@@ -39406,7 +39406,7 @@
                             {
                                 "value": "queues.events.resources",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                             },
                             {
                                 "value": "false",
@@ -39721,7 +39721,7 @@
                             {
                                 "value": "queues.events.jobStatuses",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                             },
                             {
                                 "value": "true",
@@ -39741,7 +39741,7 @@
                             {
                                 "value": "queues.events.namespace",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                             },
                             {
                                 "value": "polyaxon-core",
@@ -40482,7 +40482,7 @@
                             {
                                 "value": "queues.events.resources",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_RESOURCES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_RESOURCES"
                             },
                             {
                                 "value": "false",
@@ -40797,7 +40797,7 @@
                             {
                                 "value": "queues.events.jobStatuses",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_JOB_STATUSES"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES"
                             },
                             {
                                 "value": "true",
@@ -40817,7 +40817,7 @@
                             {
                                 "value": "queues.events.namespace",
                                 "value_from": null,
-                                "name": "POLYAXON_QUEUES_EVENTS_NAMESPACE"
+                                "name": "POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE"
                             },
                             {
                                 "value": "polyaxon-core",

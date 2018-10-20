@@ -112,8 +112,8 @@ class ConfigManager(rhea.Rhea):
         return self.service == 'hpsearch'
 
     @property
-    def is_events_handlers_service(self):
-        return self.service == 'events_handlers'
+    def is_k8s_events_handlers_service(self):
+        return self.service == 'k8s_events_handlers'
 
     @property
     def is_logs_handlers_service(self):

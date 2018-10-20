@@ -8,9 +8,9 @@ from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
-from events_handlers.tasks.logger import logger
+from k8s_events_handlers.tasks.logger import logger
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks, Intervals
+from polyaxon.settings import K8SEventsCeleryTasks, Intervals
 
 
 def set_node_scheduling(job, node_name):
@@ -20,11 +20,11 @@ def set_node_scheduling(job, node_name):
     job.save(update_fields=['node_scheduled'])
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def events_handle_experiment_job_statuses(self, payload):
+def k8s_events_handle_experiment_job_statuses(self, payload):
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -60,11 +60,11 @@ def events_handle_experiment_job_statuses(self, payload):
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES,
+@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def events_handle_job_statuses(self, payload):
+def k8s_events_handle_job_statuses(self, payload):
     """Project jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -96,11 +96,11 @@ def events_handle_job_statuses(self, payload):
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
+@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def events_handle_plugin_job_statuses(self, payload):
+def k8s_events_handle_plugin_job_statuses(self, payload):
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
@@ -138,11 +138,11 @@ def events_handle_plugin_job_statuses(self, payload):
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
+@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def events_handle_build_job_statuses(self, payload):
+def k8s_events_handle_build_job_statuses(self, payload):
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']

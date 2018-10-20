@@ -9,7 +9,7 @@ from constants.pods import PodLifeCycle
 from db.redis.containers import RedisJobContainers
 from monitor_statuses.jobs import get_job_state
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks
+from polyaxon.settings import K8SEventsCeleryTasks
 
 logger = logging.getLogger('polyaxon.monitors.statuses')
 
@@ -110,26 +110,26 @@ def run(k8s_manager):
                 logger.info("Sending state to handler %s, %s", status, labels)
                 # Handle experiment job statuses
                 celery_app.send_task(
-                    EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif job_condition:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
                 # Handle experiment job statuses
                 celery_app.send_task(
-                    EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES,
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif plugin_job_condition:
                 # Handle plugin job statuses
                 celery_app.send_task(
-                    EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif dockerizer_job_condition:
                 # Handle dockerizer job statuses
                 celery_app.send_task(
-                    EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
                     kwargs={'payload': job_state})
             else:
                 logger.debug("Lost state %s, %s", status, job_state)

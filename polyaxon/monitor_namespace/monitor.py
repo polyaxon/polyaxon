@@ -3,7 +3,7 @@ import logging
 from kubernetes import watch
 
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks
+from polyaxon.settings import K8SEventsCeleryTasks
 
 logger = logging.getLogger('polyaxon.monitors.namespace')
 
@@ -99,5 +99,5 @@ def run(k8s_manager, cluster):  # pylint:disable=too-many-branches
 
             logger.debug("Publishing event: %s", data)
             celery_app.send_task(
-                EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE,
+                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_NAMESPACE,
                 kwargs={'cluster_id': cluster.id, 'payload': payload})

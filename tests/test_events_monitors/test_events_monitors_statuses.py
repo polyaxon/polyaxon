@@ -10,11 +10,11 @@ from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.jobs import JobStatus
 from db.models.notebooks import NotebookJobStatus
 from db.models.tensorboards import TensorboardJobStatus
-from events_handlers.tasks.statuses import (
-    events_handle_build_job_statuses,
-    events_handle_experiment_job_statuses,
-    events_handle_job_statuses,
-    events_handle_plugin_job_statuses
+from k8s_events_handlers.tasks.statuses import (
+    k8s_events_handle_build_job_statuses,
+    k8s_events_handle_experiment_job_statuses,
+    k8s_events_handle_job_statuses,
+    k8s_events_handle_plugin_job_statuses
 )
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentJobFactory
@@ -48,7 +48,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
     def get_job_object(self, job_state):
         raise NotImplemented  # noqa
 
-    def test_handle_events_job_statuses_for_non_existing_job(self):
+    def test_handle_k8s_events_job_statuses_for_non_existing_job(self):
         assert self.STATUS_MODEL.objects.count() == 0
         job_state = get_job_state(
             event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
@@ -58,7 +58,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         self.STATUS_HANDLER(job_state.to_dict())  # pylint:disable=not-callable
         assert self.STATUS_MODEL.objects.count() == 0
 
-    def test_handle_events_job_statuses_for_existing_job_with_unknown_conditions(self):
+    def test_handle_k8s_events_job_statuses_for_existing_job_with_unknown_conditions(self):
         assert self.STATUS_MODEL.objects.count() == 0
         job_state = get_job_state(
             event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
@@ -73,7 +73,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         statuses = self.STATUS_MODEL.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.UNKNOWN}
 
-    def test_handle_events_job_statuses_for_existing_job_with_known_conditions(self):
+    def test_handle_k8s_events_job_statuses_for_existing_job_with_known_conditions(self):
         assert self.STATUS_MODEL.objects.count() == 0
         job_state = get_job_state(
             event_type=self.EVENT_WITH_CONDITIONS['type'],  # pylint:disable=unsubscriptable-object
@@ -95,7 +95,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_EXPERIMENT_JOB
     STATUS_MODEL = ExperimentJobStatus
-    STATUS_HANDLER = events_handle_experiment_job_statuses
+    STATUS_HANDLER = k8s_events_handle_experiment_job_statuses
 
     def get_job_object(self, job_state):
         job_uuid = job_state.details.labels.job_uuid.hex
@@ -108,7 +108,7 @@ class TestEventsJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT_WITH_CONDITIONS = status_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_JOB
     STATUS_MODEL = JobStatus
-    STATUS_HANDLER = events_handle_job_statuses
+    STATUS_HANDLER = k8s_events_handle_job_statuses
 
     def get_job_object(self, job_state):
         job_uuid = job_state.details.labels.job_uuid.hex
@@ -122,7 +122,7 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = TensorboardJobStatus
-    STATUS_HANDLER = events_handle_plugin_job_statuses
+    STATUS_HANDLER = k8s_events_handle_plugin_job_statuses
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
@@ -137,7 +137,7 @@ class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling)
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = NotebookJobStatus
-    STATUS_HANDLER = events_handle_plugin_job_statuses
+    STATUS_HANDLER = k8s_events_handle_plugin_job_statuses
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
@@ -152,7 +152,7 @@ class TestEventsDockerizerJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
     EVENT_WITH_CONDITIONS = status_build_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_DOCKERIZER_JOB
     STATUS_MODEL = BuildJobStatus
-    STATUS_HANDLER = events_handle_build_job_statuses
+    STATUS_HANDLER = k8s_events_handle_build_job_statuses
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex

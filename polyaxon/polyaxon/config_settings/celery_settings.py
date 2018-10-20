@@ -160,18 +160,18 @@ class CeleryOperationTasks(object):
     EXPERIMENTS_SCHEDULE = 'experiments_schedule'
 
 
-class EventsCeleryTasks(object):
+class K8SEventsCeleryTasks(object):
     """Runner celery tasks.
 
     N.B. make sure that the task name is not < 128.
     """
-    EVENTS_HEALTH = 'events_health'
-    EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
-    EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
-    EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES = 'events_handle_experiment_job_statuses'
-    EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
-    EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
-    EVENTS_HANDLE_BUILD_JOB_STATUSES = 'events_handle_build_job_statuses'
+    K8S_EVENTS_HEALTH = 'k8s_events_health'
+    K8S_EVENTS_HANDLE_NAMESPACE = 'k8s_events_handle_namespace'
+    K8S_EVENTS_HANDLE_RESOURCES = 'k8s_events_handle_resources'
+    K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES = 'k8s_events_handle_experiment_job_statuses'
+    K8S_EVENTS_HANDLE_JOB_STATUSES = 'k8s_events_handle_job_statuses'
+    K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'k8s_events_handle_plugin_job_statuses'
+    K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES = 'k8s_events_handle_build_job_statuses'
 
 
 class LogsCeleryTasks(object):
@@ -278,10 +278,10 @@ class CeleryQueues(object):
     HP_HEALTH = config.get_string('POLYAXON_QUEUES_HP_HEALTH')
     HP = config.get_string('POLYAXON_QUEUES_HP')
 
-    EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_EVENTS_HEALTH')
-    EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_EVENTS_NAMESPACE')
-    EVENTS_RESOURCES = config.get_string('POLYAXON_QUEUES_EVENTS_RESOURCES')
-    EVENTS_JOB_STATUSES = config.get_string('POLYAXON_QUEUES_EVENTS_JOB_STATUSES')
+    K8S_EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_HEALTH')
+    K8S_EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE')
+    K8S_EVENTS_RESOURCES = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_RESOURCES')
+    K8S_EVENTS_JOB_STATUSES = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES')
 
     LOGS_HEALTH = config.get_string('POLYAXON_QUEUES_LOGS_HEALTH')
     LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS')
@@ -452,22 +452,22 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.HP},
 
     # Events health
-    EventsCeleryTasks.EVENTS_HEALTH:
-        {'queue': CeleryQueues.EVENTS_HEALTH},
+    K8SEventsCeleryTasks.K8S_EVENTS_HEALTH:
+        {'queue': CeleryQueues.K8S_EVENTS_HEALTH},
 
     # Events ops
-    EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE:
-        {'queue': CeleryQueues.EVENTS_NAMESPACE},
-    EventsCeleryTasks.EVENTS_HANDLE_RESOURCES:
-        {'queue': CeleryQueues.EVENTS_RESOURCES},
-    EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES:
-        {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-    EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES:
-        {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-    EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
-        {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-    EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES:
-        {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_NAMESPACE:
+        {'queue': CeleryQueues.K8S_EVENTS_NAMESPACE},
+    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_RESOURCES:
+        {'queue': CeleryQueues.K8S_EVENTS_RESOURCES},
+    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
 
     # Logs health
     LogsCeleryTasks.LOGS_HEALTH:

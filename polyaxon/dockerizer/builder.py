@@ -20,7 +20,7 @@ from libs.paths.utils import delete_path
 from libs.repos import git
 from libs.utils import get_list
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks, SchedulerCeleryTasks
+from polyaxon.settings import K8SEventsCeleryTasks, SchedulerCeleryTasks
 from polyaxon_schemas.utils import to_list
 
 _logger = logging.getLogger('polyaxon.dockerizer')
@@ -318,5 +318,5 @@ def send_status(build_job, status, message=None, traceback=None):
         'traceback': traceback
     }
     celery_app.send_task(
-        EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
+        K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
         kwargs={'payload': payload})
