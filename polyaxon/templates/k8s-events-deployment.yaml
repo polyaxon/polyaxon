@@ -14,7 +14,7 @@ metadata:
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.worker }}
 spec:
-  replicas: {{ .Values.v.replicas }}
+  replicas: {{ .Values.k8sEventsHandlers.replicas }}
   template:
     metadata:
       annotations:
@@ -53,8 +53,6 @@ spec:
         env:
 {{ include "config.envs" . | indent 8 }}
 {{ include "config.persistence.logs" . | indent 8 }}
-        volumeMounts:
-{{ include "volumes.volumeMounts.logs" . | indent 8}}
         resources:
           requests:
 {{ toYaml .Values.k8sEventsHandlers.resources.requests | indent 12 }}
