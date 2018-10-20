@@ -257,8 +257,8 @@ hpsearch:
       cpu: 150m
       memory: 200Mi
 
-eventsHandlers:
-  image: polyaxon/polyaxon-events-handlers
+k8sEventsHandlers:
+  image: polyaxon/polyaxon-k8s-events-handlers
   imageTag: 0.2.8
   imagePullPolicy: IfNotPresent
   replicas: 1
@@ -597,10 +597,10 @@ queues:
   hpHealth: 'queues.hp.health'
   hp: 'queues.hp'
 
-  eventsHealth: 'queues.events.health'
-  eventsNamespace: 'queues.events.namespace'
-  eventsResources: 'queues.events.resources'
-  eventsJobStatuses: 'queues.events.jobStatuses'
+  k8sEventsHealth: 'queues.k8s_events.health'
+  k8sEventsNamespace: 'queues.k8s_events.namespace'
+  k8sEventsResources: 'queues.k8s_events.resources'
+  k8sEventsJobStatuses: 'queues.k8s_events.jobStatuses'
 
   logsHealth: 'queues.logs.health'
   logsSidecars: 'queues.logs.sidecars'

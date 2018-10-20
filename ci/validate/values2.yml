@@ -33,7 +33,7 @@ scheduler:
 hpsearch:
   replicas: 3
 
-eventsHandlers:
+k8sEventsHandlers:
   replicas: 3
 
 eventMonitors:

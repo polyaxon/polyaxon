@@ -96,10 +96,10 @@ data:
   POLYAXON_QUEUES_CRONS_CLEAN: {{ .Values.queues.cronsClean | quote }}
   POLYAXON_QUEUES_HP_HEALTH: {{ .Values.queues.hpHealth | quote }}
   POLYAXON_QUEUES_HP: {{ .Values.queues.hp | quote }}
-  POLYAXON_QUEUES_EVENTS_HEALTH: {{ .Values.queues.eventsHealth | quote }}
-  POLYAXON_QUEUES_EVENTS_NAMESPACE: {{ .Values.queues.eventsNamespace | quote }}
-  POLYAXON_QUEUES_EVENTS_RESOURCES: {{ .Values.queues.eventsResources | quote }}
-  POLYAXON_QUEUES_EVENTS_JOB_STATUSES: {{ .Values.queues.eventsJobStatuses | quote }}
+  POLYAXON_QUEUES_K8S_EVENTS_HEALTH: {{ .Values.queues.k8sEventsHealth | quote }}
+  POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE: {{ .Values.queues.k8sEventsNamespace | quote }}
+  POLYAXON_QUEUES_K8S_EVENTS_RESOURCES: {{ .Values.queues.k8sEventsResources | quote }}
+  POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES: {{ .Values.queues.k8sEventsJobStatuses | quote }}
   POLYAXON_QUEUES_LOGS_HEALTH: {{ .Values.queues.logsHealth | quote }}
   POLYAXON_QUEUES_LOGS_SIDECARS: {{ .Values.queues.logsSidecars | quote }}
   POLYAXON_QUEUES_STREAM_LOGS_SIDECARS: {{ .Values.queues.streamLogsSidecars | quote }}
