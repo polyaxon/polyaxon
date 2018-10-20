@@ -11,10 +11,15 @@ ingress:
     - chart-example.local
     secretName: ""
   annotations:
+    kubernetes.io/ingress.class: polyaxon-ingress
     ingress.kubernetes.io/ssl-redirect: "false"
     ingress.kubernetes.io/rewrite-target: /
     ingress.kubernetes.io/add-base-url: "true"
-    kubernetes.io/ingress.class: polyaxon-ingress
+    ingress.kubernetes.io/proxy-connect-timeout: "600"
+    ingress.kubernetes.io/proxy-read-timeout: "600"
+    ingress.kubernetes.io/proxy-send-timeout: "600"
+    ingress.kubernetes.io/send-timeout: "600"
+    ingress.kubernetes.io/proxy-body-size: 4G
   resources:
     limits:
       cpu: 10m
@@ -42,6 +47,9 @@ dirs:
     bin: ""  # e.g. "/usr/lib/nvidia-384/bin"
     libcuda: ""  # e.g. "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
   docker: "/var/run/docker.sock"
+
+secretRefs:  # e.g. ['secret1', 'secret2', ...]
+configmapRefs:  # e.g. ['cm1', 'cm2', ...]
 
 # This is where we mount nvidia on hosts
 mountPaths:
@@ -76,14 +84,37 @@ persistence:
   #   data2:
   #     mountPath: "/data/2"
   #     existingClaim: "data-2-pvc"
+  #   data3:
+  #     store: gcs
+  #     bucket: gs://data-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
+  #   data4:
+  #     store: s3
+  #     bucket: s3://data-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
   # outputs:
   #   outputs1:
-  #      mountPath: "/outputs/1"
+  #     mountPath: "/outputs/1"
   #     hostPath: "/path/to/outputs"
   #     readOnly: true
   #   outputs2:
-  #      mountPath: "/outputs/2"
+  #     mountPath: "/outputs/2"
   #     existingClaim: "outputs-2-pvc"
+  #   outputs3:
+  #     store: gcs
+  #     bucket: gs://outputs-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
+  #   outputs4:
+  #     store: s3
+  #     bucket: s3://outputs-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
+  #
+  # Possible values for S3 secret:
+  #   {AWS_ACCESS_KEY_ID: , AWS_SECRET_ACCESS_KEY: , AWS_SECURITY_TOKEN: , AWS_REGION_NAME: }
 
 defaultPersistence:
   data:
@@ -227,12 +258,26 @@ hpsearch:
       cpu: 150m
       memory: 200Mi
 
-eventsHandlers:
-  image: polyaxon/polyaxon-events-handlers
+k8sEventsHandlers:
+  image: polyaxon/polyaxon-k8s-events-handlers
   imageTag: 0.2.8
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
+  resources:
+    limits:
+      cpu: 200m
+      memory: 300Mi
+    requests:
+      cpu: 130m
+      memory: 200Mi
+
+logsHandlers:
+  image: polyaxon/polyaxon-logs-handlers
+  imageTag: 0.2.8
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  concurrency: 1
   resources:
     limits:
       cpu: 200m
@@ -338,7 +383,7 @@ postgresql:
   #     postgresUser:
   #     postgresPassword:
   #     postgresDatabase:
-  enabled: True
+  enabled: true
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: polyaxon
@@ -485,8 +530,9 @@ nfsProvisioner:
             topologyKey: "kubernetes.io/hostname"
 
 types:
+  hooks: "polyaxon-hooks"
   core: "polyaxon-core"
-  experiment: "polyaxon-experiment"
+  runner: "polyaxon-runner"
 
 roles:
   api: "polyaxon-api"
@@ -533,22 +579,31 @@ intervals:  # in seconds
 queues:
   repos: 'queues.repos'
 
+  schedulerHealth: 'queues.scheduler.health'
   schedulerExperiments: 'queues.scheduler.experiments'
   schedulerExperimentGroups: 'queues.scheduler.experimentGroups'
   schedulerProjects: 'queues.scheduler.projects'
   schedulerBuildJobs: 'queues.scheduler.build_jobs'
+  schedulerJobs: 'queues.scheduler.jobs'
 
+  pipelinesHealth: 'queues.pipelines.health'
   pipelines: 'queues.pipelines'
 
+  cronsHealth: 'queues.crons.health'
   cronsExperiments: 'queues.crons.experiments'
   cronsPipelines: 'queues.crons.pipelines'
   cronsClusters: 'queues.crons.clusters'
+  cronsClean: 'queues.crons.clean'
 
+  hpHealth: 'queues.hp.health'
   hp: 'queues.hp'
 
-  eventsNamespace: 'queues.events.namespace'
-  eventsResources: 'queues.events.resources'
-  eventsJobStatuses: 'queues.events.jobStatuses'
+  k8sEventsHealth: 'queues.k8s_events.health'
+  k8sEventsNamespace: 'queues.k8s_events.namespace'
+  k8sEventsResources: 'queues.k8s_events.resources'
+  k8sEventsJobStatuses: 'queues.k8s_events.jobStatuses'
+
+  logsHealth: 'queues.logs.health'
   logsSidecars: 'queues.logs.sidecars'
   streamLogsSidecars: 'queues.stream.logs.sidecars'
 `;
