@@ -17,6 +17,7 @@ class StatusOptions:
 class BaseStatuses(object):
     VALUES = set([])
     CHOICES = ()
+    HEARTBEAT_STATUS = set([])
     STARTING_STATUS = set([])
     DONE_STATUS = set([])
     RUNNING_STATUS = set([])

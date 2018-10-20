@@ -26,6 +26,7 @@ from db.models.utils import (
     RunTimeModel,
     TagModel
 )
+from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
     EXPERIMENT_RESTARTED,
@@ -217,6 +218,8 @@ class Experiment(DiffModel,
         return False
 
     def set_status(self, status, message=None, traceback=None, **kwargs):
+        if status in ExperimentLifeCycle.HEARTBEAT_STATUS:
+            RedisHeartBeat.experiment_ping(self.id)
         ExperimentStatus.objects.create(experiment=self,
                                         status=status,
                                         message=message,

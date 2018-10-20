@@ -9,10 +9,7 @@ from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_EXPERIMENTS, ignore_result=True)
 def heartbeat_experiments():
-    created_and_done = (
-        ExperimentLifeCycle.DONE_STATUS |
-        {ExperimentLifeCycle.CREATED, ExperimentLifeCycle.BUILDING})
-    experiments = Experiment.objects.exclude(status__status__in=created_and_done)
+    experiments = Experiment.objects.filter(status__status__in=ExperimentLifeCycle.HEARTBEAT_STATUS)
     for experiment in experiments:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_CHECK_HEARTBEAT,
@@ -21,8 +18,7 @@ def heartbeat_experiments():
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_JOBS, ignore_result=True)
 def heartbeat_jobs():
-    created_and_done = JobLifeCycle.DONE_STATUS | JobLifeCycle.STARTING_STATUS
-    jobs = Job.objects.exclude(status__status__in=created_and_done)
+    jobs = Job.objects.filter(status__status__in=JobLifeCycle.HEARTBEAT_STATUS)
     for job in jobs:
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT,
@@ -31,8 +27,7 @@ def heartbeat_jobs():
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_BUILDS, ignore_result=True)
 def heartbeat_builds():
-    created_and_done = JobLifeCycle.DONE_STATUS | JobLifeCycle.STARTING_STATUS
-    build_jobs = BuildJob.objects.exclude(status__status__in=created_and_done)
+    build_jobs = BuildJob.objects.exclude(status__status__in=JobLifeCycle.HEARTBEAT_STATUS)
     for build_job in build_jobs:
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT,

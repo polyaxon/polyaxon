@@ -18,6 +18,7 @@ from db.models.utils import (
     ReadmeModel,
     TagModel
 )
+from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED
 from libs.spec_validation import validate_job_spec_config
 from schemas.specifications import JobSpecification
@@ -111,6 +112,9 @@ class Job(AbstractJob,
     @property
     def is_copy(self):
         return self.is_clone and self.cloning_strategy == CloningStrategy.COPY
+
+    def _ping_heartbeat(self):
+        RedisHeartBeat.job_ping(self.id)
 
     def set_status(self,  # pylint:disable=arguments-differ
                    status,

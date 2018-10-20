@@ -7,6 +7,7 @@ from constants.images_tags import LATEST_IMAGE_TAG
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.models.utils import DescribableModel, NameableModel, NodeSchedulingModel, TagModel
+from db.redis.heartbeat import RedisHeartBeat
 from libs.spec_validation import validate_build_spec_config
 from schemas.specifications import BuildSpecification
 
@@ -60,6 +61,9 @@ class BuildJob(AbstractJob,
     @cached_property
     def specification(self):
         return BuildSpecification(values=self.config)
+
+    def _ping_heartbeat(self):
+        RedisHeartBeat.build_ping(self.id)
 
     def set_status(self,  # pylint:disable=arguments-differ
                    status,

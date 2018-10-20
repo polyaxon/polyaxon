@@ -27,6 +27,10 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
     class Meta:
         abstract = True
 
+    def _ping_heartbeat(self):
+        """Run's heartbeat callback."""
+        pass
+
     def _set_status(self, status_model, status, message=None, traceback=None, details=None):
         current_status = self.last_status
         if self.is_done:
@@ -36,6 +40,8 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
                 'But the job is already done with status `%s`',
                 status, self.unique_name, current_status)
             return False
+        if status in JobLifeCycle.HEARTBEAT_STATUS:
+            self._ping_heartbeat()
         if JobLifeCycle.can_transition(status_from=current_status, status_to=status):
             # Add new status to the job
             status_model.objects.create(job=self,
