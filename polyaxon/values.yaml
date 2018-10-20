@@ -257,6 +257,21 @@ hpsearch:
       cpu: 150m
       memory: 200Mi
 
+eventsHandlers:
+  image: polyaxon/polyaxon-events-handlers
+  imageTag: 0.2.8
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  concurrency: 2
+  resources:
+    limits:
+      cpu: 200m
+      memory: 300Mi
+    requests:
+      cpu: 130m
+      memory: 200Mi
+
+
 k8sEventsHandlers:
   image: polyaxon/polyaxon-k8s-events-handlers
   imageTag: 0.2.8
@@ -596,6 +611,11 @@ queues:
 
   hpHealth: 'queues.hp.health'
   hp: 'queues.hp'
+
+  eventsHealth: 'queues.events.health'
+  eventsNotify: 'queues.events.notify'
+  eventsLog: 'queues.events.log'
+  eventsTrack: 'queues.events.track'
 
   k8sEventsHealth: 'queues.k8s_events.health'
   k8sEventsNamespace: 'queues.k8s_events.namespace'

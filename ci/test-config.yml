@@ -65,6 +65,14 @@ hpsearch:
       memory: 80Mi
       cpu: 30m
 
+eventsHandlers:
+  imageTag: latest
+  imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
+
 k8sEventsHandlers:
   imageTag: latest
   imagePullPolicy: Always

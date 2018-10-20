@@ -46,6 +46,9 @@ scheduler:
 hpsearch:
   replicas: 3
 
+eventsHandlers:
+  replicas: 3
+
 k8sEventsHandlers:
   replicas: 3
 

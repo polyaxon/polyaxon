@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-events
+  annotations:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
+    checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-events
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.worker }}
+spec:
+  replicas: {{ .Values.eventsHandlers.replicas }}
+  template:
+    metadata:
+      annotations:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
+        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-events
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.worker }}
+    spec:
+      {{- if .Values.nodeSelectors.core }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectors.core | indent 8 }}
+      {{- end }}
+      {{- if .Values.affinity.core }}
+      affinity:
+{{ toYaml .Values.affinity.core | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations.core }}
+      tolerations:
+{{ toYaml .Values.tolerations.core | indent 8 }}
+      {{- end }}
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+      containers:
+      - name: {{ .Chart.Name }}-events
+        image: "{{ .Values.eventsHandlers.image }}:{{ .Values.eventsHandlers.imageTag }}"
+        imagePullPolicy: {{ .Values.eventsHandlers.imagePullPolicy }}
+        args: ["{{ .Values.queues.eventsHealth }},{{ .Values.queues.eventsNotify }},{{ .Values.queues.eventsLog }},{{ .Values.queues.eventsTrack }}", "--concurrency={{ .Values.eventsHandlers.concurrency }}"]
+        envFrom:
+        - configMapRef:
+            name: {{ template "polyaxon.fullname" . }}-config
+        - secretRef:
+            name: {{ template "polyaxon.fullname" . }}-secret
+        env:
+{{ include "config.envs" . | indent 8 }}
+{{ include "config.persistence.logs" . | indent 8 }}
+        resources:
+          requests:
+{{ toYaml .Values.eventsHandlers.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.eventsHandlers.resources.limits | indent 12 }}
+          {{- end }}
