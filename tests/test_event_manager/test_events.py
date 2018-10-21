@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.contenttypes.models import ContentType
 
 from constants import user_system
 from event_manager.event import Attribute, Event
@@ -20,6 +21,8 @@ from event_manager.events import (
     tensorboard,
     user
 )
+from event_manager.events.experiment import ExperimentSucceededEvent
+from factories.factory_experiments import ExperimentFactory
 from libs.json_utils import loads
 from tests.utils import BaseTest
 
@@ -457,6 +460,25 @@ class TestEvents(BaseTest):
 
         event_serialized_dump = event.serialize(dumps=True)
         assert event_serialized == loads(event_serialized_dump)
+
+    def test_serialize_with_instance(self):
+        instance = ExperimentFactory()
+        event = ExperimentSucceededEvent.from_instance(instance=instance,
+                                                       actor_id=1,
+                                                       actor_name='user')
+        event_serialized = event.serialize(dumps=False, include_instance_info=True)
+        instance_contenttype = ContentType.objects.get_for_model(instance).id
+        assert event_serialized['instance_id'] == instance.id
+        assert event_serialized['instance_contenttype'] == instance_contenttype
+
+    def test_from_event_data(self):
+        instance = ExperimentFactory()
+        event = ExperimentSucceededEvent.from_instance(instance=instance,
+                                                       actor_id=1,
+                                                       actor_name='user')
+        event_serialized = event.serialize(dumps=False, include_instance_info=True)
+        new_event = ExperimentSucceededEvent.from_event_data(event_data=event_serialized)
+        assert new_event.serialize(include_instance_info=True) == event_serialized
 
     def test_get_value_from_instance(self):
         class DummyEvent(Event):
