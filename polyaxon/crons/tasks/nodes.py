@@ -16,7 +16,7 @@ from event_manager.events.cluster import (
     CLUSTER_UPDATED
 )
 from libs.utils import to_unit_memory
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks
 from polyaxon_k8s.manager import K8SManager
 

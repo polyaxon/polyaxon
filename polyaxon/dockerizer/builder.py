@@ -19,7 +19,7 @@ from libs.http import download, untar_file
 from libs.paths.utils import delete_path
 from libs.repos import git
 from libs.utils import get_list
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks, SchedulerCeleryTasks
 from polyaxon_schemas.utils import to_list
 

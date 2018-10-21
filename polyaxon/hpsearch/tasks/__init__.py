@@ -8,7 +8,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_RANDOM
 )
 from hpsearch.tasks import bo, grid, health, hyperband, random  # noqa
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 from schemas.hptuning import SearchAlgorithms
 

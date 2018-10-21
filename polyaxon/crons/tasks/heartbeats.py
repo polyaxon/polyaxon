@@ -3,7 +3,7 @@ from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from db.models.experiments import Experiment
 from db.models.jobs import Job
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 
 

@@ -1,6 +1,6 @@
 from db.getters.experiments import get_valid_experiment
 from pipelines.celery_task import ClassBasedTask, OperationRunError
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import CeleryOperationTasks, SchedulerCeleryTasks
 
 

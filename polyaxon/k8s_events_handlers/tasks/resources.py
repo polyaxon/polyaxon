@@ -1,5 +1,5 @@
 from k8s_events_handlers.tasks.logger import logger
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks
 
 

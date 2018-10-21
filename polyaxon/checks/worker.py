@@ -5,7 +5,7 @@ from django.conf import settings
 from checks.base import Check
 from checks.health_task import health_task
 from checks.results import Result
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 
 
 class WorkerCheck(Check):

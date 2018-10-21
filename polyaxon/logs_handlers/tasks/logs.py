@@ -3,7 +3,7 @@ from db.models.experiments import Experiment
 from db.models.jobs import Job
 from logs_handlers.tasks.logger import logger
 from logs_handlers.utils import safe_log_experiment_job, safe_log_job
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks
 
 

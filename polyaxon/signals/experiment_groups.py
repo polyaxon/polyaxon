@@ -19,7 +19,7 @@ from libs.paths.experiment_groups import (
     delete_experiment_group_outputs
 )
 from libs.repos.utils import assign_code_reference
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.hptuning import SearchAlgorithms
 from signals.run_time import set_finished_at, set_started_at

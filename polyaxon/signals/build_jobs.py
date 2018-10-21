@@ -18,7 +18,7 @@ from event_manager.events.build_job import (
 )
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.jobs import delete_job_logs
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.run_time import set_job_finished_at, set_job_started_at
 from signals.utils import remove_bookmarks, set_tags

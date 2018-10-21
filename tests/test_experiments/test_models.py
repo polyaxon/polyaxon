@@ -13,7 +13,7 @@ from django.utils import timezone
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
-from crons.tasks.experiments_statuses import sync_experiments_and_jobs_statuses
+from crons.tasks.experiments_statuses import experiments_sync_jobs_statuses
 from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentStatus
@@ -383,7 +383,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SUCCEEDED
 
-    def test_sync_experiments_and_jobs_statuses(self):
+    def test_experiments_sync_jobs_statuses(self):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiments = [ExperimentFactory() for _ in range(3)]
@@ -405,12 +405,12 @@ class TestExperimentModel(BaseTest):
         # Mock sync experiments and jobs constants
         with patch('scheduler.tasks.experiments.'
                    'experiments_check_status.apply_async') as check_status_mock:
-            sync_experiments_and_jobs_statuses()
+            experiments_sync_jobs_statuses()
 
         assert check_status_mock.call_count == 1
 
         # Call sync experiments and jobs constants
-        sync_experiments_and_jobs_statuses()
+        experiments_sync_jobs_statuses()
         done_xp.refresh_from_db()
         no_jobs_xp.refresh_from_db()
         xp_with_jobs.refresh_from_db()

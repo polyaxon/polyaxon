@@ -2,7 +2,7 @@ from kombu import Exchange
 
 from django.core.management import BaseCommand
 
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 
 
 class Command(BaseCommand):

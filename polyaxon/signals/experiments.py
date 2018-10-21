@@ -24,7 +24,7 @@ from event_manager.events.experiment import (
 from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.experiments import delete_experiment_logs, delete_experiment_outputs
 from libs.repos.utils import assign_code_reference
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.run_time import (

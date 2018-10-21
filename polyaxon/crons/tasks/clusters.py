@@ -4,7 +4,7 @@ import uuid
 from django.conf import settings
 
 from db.models.clusters import Cluster
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks
 
 

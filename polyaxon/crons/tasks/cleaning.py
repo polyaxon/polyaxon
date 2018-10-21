@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from db.models.activitylogs import ActivityLog
 from db.models.notification import NotificationEvent
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import CleaningIntervals, CronsCeleryTasks
 
 

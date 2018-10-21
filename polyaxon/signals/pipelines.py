@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from constants.pipelines import OperationStatuses, PipelineStatuses
 from db.models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
 from libs.decorators import ignore_raw, ignore_updates
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import PipelinesCeleryTasks
 from signals.run_time import set_finished_at, set_started_at
 

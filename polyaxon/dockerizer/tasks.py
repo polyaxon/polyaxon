@@ -10,7 +10,7 @@ from db.getters.projects import get_valid_project
 from db.models.repos import Repo
 from dockerizer.builders import experiments as experiments_builder
 from dockerizer.builders import notebooks as notebooks_builder
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import DockerizerCeleryTasks, Intervals, SchedulerCeleryTasks
 
 _logger = logging.getLogger(__name__)

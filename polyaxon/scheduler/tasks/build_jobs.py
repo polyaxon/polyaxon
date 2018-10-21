@@ -8,7 +8,7 @@ from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
 from db.redis.heartbeat import RedisHeartBeat
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
 

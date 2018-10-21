@@ -35,7 +35,7 @@ from event_manager.events.tensorboard import (
 from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.repos import git
 from libs.utils import to_bool
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.specifications import TensorboardSpecification
 

@@ -1,6 +1,6 @@
 from db.getters.experiment_groups import get_running_experiment_group
 from hpsearch.tasks import base
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 
 

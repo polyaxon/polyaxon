@@ -15,7 +15,7 @@ from constants.containers import ContainerStatuses
 from db.models.nodes import ClusterNode, NodeGPU
 from db.redis.containers import RedisJobContainers
 from db.redis.to_stream import RedisToStream
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks
 from schemas.containers import ContainerResourcesConfig
 

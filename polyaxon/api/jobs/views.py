@@ -52,7 +52,7 @@ from libs.paths.jobs import get_job_logs_path
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_job_spec_config
 from libs.utils import to_bool
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 _logger = logging.getLogger("polyaxon.views.jobs")

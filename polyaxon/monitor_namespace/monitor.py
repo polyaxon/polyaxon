@@ -2,7 +2,7 @@ import logging
 
 from kubernetes import watch
 
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks
 
 logger = logging.getLogger('polyaxon.monitors.namespace')

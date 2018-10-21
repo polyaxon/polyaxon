@@ -8,7 +8,7 @@ from constants.jobs import JobLifeCycle
 from constants.pods import PodLifeCycle
 from db.redis.containers import RedisJobContainers
 from monitor_statuses.jobs import get_job_state
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks
 
 logger = logging.getLogger('polyaxon.monitors.statuses')

@@ -5,7 +5,7 @@ from django.conf import settings
 
 from db.redis.to_stream import RedisToStream
 from libs.services import Service
-from polyaxon.celery_api import app as celery_app
+from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, RoutingKeys
 from schemas.utils import to_list
 
