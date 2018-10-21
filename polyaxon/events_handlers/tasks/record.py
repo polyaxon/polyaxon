@@ -6,7 +6,7 @@ from polyaxon.settings import EventsCeleryTasks
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_NOTIFY, ignore_result=True)
 def events_notify(event):
-    auditor.notify(event, referesh_instnace=True)
+    auditor.notify(event)
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_LOG, ignore_result=True)
