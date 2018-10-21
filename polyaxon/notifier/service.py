@@ -28,7 +28,8 @@ class NotifierService(EventService):
             actor_id=actor_id if actor_id != user_system.USER_SYSTEM_ID else None,
             context=event.data,
             created_at=event.datetime,
-            content_object=event.instance,
+            object_id=event.instance_id,
+            content_type_id=event.instance_contenttype
         )
 
         self.notification.objects.bulk_create([

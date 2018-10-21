@@ -15,13 +15,6 @@ class AuditorService(EventService):
         self.tracker = None
         self.activitylogs = None
 
-    def get_event(self, event_type, instance, **kwargs):
-        return {
-            'event_type': event_type,
-            'instance': instance,
-            'kwargs': kwargs
-        }
-
     def record_event(self, event):
         """
         Record the event async.
@@ -32,35 +25,31 @@ class AuditorService(EventService):
         from polyaxon.celery_api import celery_app
         from polyaxon.settings import EventsCeleryTasks
 
-        celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK,
-                             kwargs={'event': event},
-                             serializer='pickle')
-        celery_app.send_task(EventsCeleryTasks.EVENTS_LOG,
-                             kwargs={'event': event},
-                             serializer='pickle')
-        celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY,
-                             kwargs={'event': event},
-                             serializer='pickle')
+        event = event.serialize(dumps=False, include_actor_name=True, include_instance_info=True)
 
-    def notify(self, event, refresh_instance=False):
-        if refresh_instance and event['instance']:
+        celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK,
+                             kwargs={'event': event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_LOG,
+                             kwargs={'event': event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY,
+                             kwargs={'event': event})
+
+    def notify(self, event):
+        from django.contrib.contenttypes.models import ContentType
+
+        if event.get('instance_id') and event.get('instance_contenttype'):
             try:
-                event['instance'].refresh_from_db()
+                ct = ContentType.objects.get(id=event['instance_contenttype'])
+                ct.get_object_for_this_type(id=event['instance_id'])
             except ObjectDoesNotExist:
                 return
-        self.notifier.record(event_type=event['event_type'],
-                             instance=event['instance'],
-                             **event['kwargs'])
+        self.notifier.record(event_type=event['type'], event_data=event)
 
     def track(self, event):
-        self.tracker.record(event_type=event['event_type'],
-                            instance=event['instance'],
-                            **event['kwargs'])
+        self.tracker.record(event_type=event['type'], event_data=event)
 
     def log(self, event):
-        self.activitylogs.record(event_type=event['event_type'],
-                                 instance=event['instance'],
-                                 **event['kwargs'])
+        self.activitylogs.record(event_type=event['type'], event_data=event)
 
     def setup(self):
         super().setup()
