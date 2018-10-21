@@ -44,16 +44,16 @@ class NotifierService(EventService):
         from django.contrib.contenttypes.models import ContentType
 
         instance_cond = (
-            not event.get('instance') and
-            event.get('instance_id') and
-            event.get('instance_contenttype')
+            not event.instance and
+            event.instance_id and
+            event.instance_contenttype
         )
 
         if instance_cond:
             try:
-                ct = ContentType.objects.get(id=event['instance_contenttype'])
-                instance = ct.get_object_for_this_type(id=event['instance_id'])
-                event['instance'] = instance
+                ct = ContentType.objects.get(id=event.instance_contenttype)
+                instance = ct.get_object_for_this_type(id=event.instance_id)
+                event.instance = instance
             except ObjectDoesNotExist:
                 return None
 
