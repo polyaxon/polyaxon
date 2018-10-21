@@ -20,6 +20,7 @@ export default class HealthStatus extends React.Component<Props, {}> {
       'Scheduler',
       'Crons',
       'Events',
+      'K8SEvents',
       'Logs',
       'HPSearch',
       'Streams',
@@ -31,6 +32,7 @@ export default class HealthStatus extends React.Component<Props, {}> {
       Scheduler: null,
       Crons: null,
       Events: null,
+      K8SEvents: null,
       Logs: null,
       HPSearch: null,
       Streams: null,
@@ -42,6 +44,7 @@ export default class HealthStatus extends React.Component<Props, {}> {
       status.Scheduler = this.props.healthStatus.SCHEDULER.is_healthy;
       status.Crons = this.props.healthStatus.CRONS.is_healthy;
       status.Events = this.props.healthStatus.EVENTS.is_healthy;
+      status.K8SEvents = this.props.healthStatus.K8SEVENTS.is_healthy;
       status.Logs = this.props.healthStatus.LOGS.is_healthy;
       status.HPSearch = this.props.healthStatus.HPSEARCH.is_healthy;
       status.Streams = this.props.healthStatus.STREAMS.is_healthy;
