@@ -90,6 +90,7 @@ data:
   POLYAXON_QUEUES_PIPELINES_HEALTH: {{ .Values.queues.pipelinesHealth | quote }}
   POLYAXON_QUEUES_PIPELINES: {{ .Values.queues.pipelines | quote }}
   POLYAXON_QUEUES_CRONS_HEALTH: {{ .Values.queues.cronsHealth | quote }}
+  POLYAXON_QUEUES_CRONS_HEARTBEAT: {{ .Values.queues.cronsHeartbeat | quote }}
   POLYAXON_QUEUES_CRONS_EXPERIMENTS: {{ .Values.queues.cronsExperiments | quote }}
   POLYAXON_QUEUES_CRONS_PIPELINES: {{ .Values.queues.cronsPipelines | quote }}
   POLYAXON_QUEUES_CRONS_CLUSTERS: {{ .Values.queues.cronsClusters | quote }}

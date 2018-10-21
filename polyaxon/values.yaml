@@ -604,6 +604,7 @@ queues:
   pipelines: 'queues.pipelines'
 
   cronsHealth: 'queues.crons.health'
+  cronsHeartbeat: 'queues.crons.heartbeat'
   cronsExperiments: 'queues.crons.experiments'
   cronsPipelines: 'queues.crons.pipelines'
   cronsClusters: 'queues.crons.clusters'
