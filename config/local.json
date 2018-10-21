@@ -25,6 +25,7 @@
   "POLYAXON_QUEUES_PIPELINES_HEALTH": "queues.pipelines.health",
   "POLYAXON_QUEUES_PIPELINES": "queues.pipelines",
   "POLYAXON_QUEUES_CRONS_HEALTH": "queues.crons.health",
+  "POLYAXON_QUEUES_CRONS_HEARTBEAT": "queues.crons.heartbeat",
   "POLYAXON_QUEUES_CRONS_EXPERIMENTS": "queues.crons.experiments",
   "POLYAXON_QUEUES_CRONS_PIPELINES": "queues.crons.pipelines",
   "POLYAXON_QUEUES_CRONS_CLUSTERS": "queues.crons.pipelines",

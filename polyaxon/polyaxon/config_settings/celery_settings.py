@@ -281,6 +281,7 @@ class CeleryQueues(object):
     PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES')
 
     CRONS_HEALTH = config.get_string('POLYAXON_QUEUES_CRONS_HEALTH')
+    CRONS_HEARTBEAT = config.get_string('POLYAXON_QUEUES_CRONS_HEARTBEAT')
     CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS')
     CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES')
     CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS')
@@ -422,11 +423,11 @@ CELERY_TASK_ROUTES = {
     CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES:
         {'queue': CeleryQueues.CRONS_EXPERIMENTS},
     CronsCeleryTasks.HEARTBEAT_EXPERIMENTS:
-        {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+        {'queue': CeleryQueues.CRONS_HEARTBEAT},
     CronsCeleryTasks.HEARTBEAT_JOBS:
-        {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+        {'queue': CeleryQueues.CRONS_HEARTBEAT},
     CronsCeleryTasks.HEARTBEAT_BUILDS:
-        {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+        {'queue': CeleryQueues.CRONS_HEARTBEAT},
     CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE:
         {'queue': CeleryQueues.CRONS_CLUSTERS},
     CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO:
