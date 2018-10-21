@@ -27,7 +27,7 @@ def heartbeat_jobs():
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_BUILDS, ignore_result=True)
 def heartbeat_builds():
-    build_jobs = BuildJob.objects.exclude(status__status__in=JobLifeCycle.HEARTBEAT_STATUS)
+    build_jobs = BuildJob.objects.filter(status__status__in=JobLifeCycle.HEARTBEAT_STATUS)
     for build_job in build_jobs:
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT,
