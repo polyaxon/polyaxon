@@ -1,5 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
-
 from auditor.manager import default_manager
 from event_manager.event_service import EventService
 
@@ -29,14 +27,6 @@ class AuditorService(EventService):
         celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY, kwargs={'event': event})
 
     def notify(self, event):
-        from django.contrib.contenttypes.models import ContentType
-
-        if event.get('instance_id') and event.get('instance_contenttype'):
-            try:
-                ct = ContentType.objects.get(id=event['instance_contenttype'])
-                ct.get_object_for_this_type(id=event['instance_id'])
-            except ObjectDoesNotExist:
-                return
         self.notifier.record(event_type=event['type'], event_data=event)
 
     def track(self, event):

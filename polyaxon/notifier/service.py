@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 from action_manager.actions.email import EmailAction
 from constants import user_system
 from event_manager import event_subjects
@@ -37,7 +39,31 @@ class NotifierService(EventService):
             for recipient in recipients
         ])
 
+    @staticmethod
+    def validate_event_instance(event):
+        from django.contrib.contenttypes.models import ContentType
+
+        instance_cond = (
+            not event.get('instance') and
+            event.get('instance_id') and
+            event.get('instance_contenttype')
+        )
+
+        if instance_cond:
+            try:
+                ct = ContentType.objects.get(id=event['instance_contenttype'])
+                instance = ct.get_object_for_this_type(id=event['instance_id'])
+                event['instance'] = instance
+            except ObjectDoesNotExist:
+                return None
+
+        return event
+
     def record_event(self, event):
+        event = self.validate_event_instance(event=event)
+        if not event:  # No notification, reason is that the object is probably deleted from the db
+            return
+
         recipients = self.get_recipients(event)
         self.create_notification(event, recipients)
         for action in self.action_manager.values:

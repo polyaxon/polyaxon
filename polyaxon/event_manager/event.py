@@ -182,6 +182,7 @@ class Event(object):
             datetime=to_datetime(event_data.get('timestamp')),
             uid=event_data.get('uuid'),
             event_data=event_data.get('data'),
+            instance=event_data.get('instance'),
             instance_id=event_data.get('instance_id'),
             instance_contenttype=event_data.get('instance_contenttype'),
         )
