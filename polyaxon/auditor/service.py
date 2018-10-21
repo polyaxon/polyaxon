@@ -18,21 +18,15 @@ class AuditorService(EventService):
     def record_event(self, event):
         """
         Record the event async.
-
-        N.B. it's intentional that we pass an orm object/instance
-        to be sure that we can log later on.
         """
         from polyaxon.celery_api import celery_app
         from polyaxon.settings import EventsCeleryTasks
 
         event = event.serialize(dumps=False, include_actor_name=True, include_instance_info=True)
 
-        celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK,
-                             kwargs={'event': event})
-        celery_app.send_task(EventsCeleryTasks.EVENTS_LOG,
-                             kwargs={'event': event})
-        celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY,
-                             kwargs={'event': event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK, kwargs={'event': event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_LOG, kwargs={'event': event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY, kwargs={'event': event})
 
     def notify(self, event):
         from django.contrib.contenttypes.models import ContentType
