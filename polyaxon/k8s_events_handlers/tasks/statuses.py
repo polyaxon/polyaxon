@@ -10,7 +10,7 @@ from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from k8s_events_handlers.tasks.logger import logger
 from polyaxon.celery_api import celery_app
-from polyaxon.settings import K8SEventsCeleryTasks, Intervals
+from polyaxon.settings import Intervals, K8SEventsCeleryTasks
 
 
 def set_node_scheduling(job, node_name):

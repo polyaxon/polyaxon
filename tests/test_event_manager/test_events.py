@@ -1,4 +1,5 @@
 import pytest
+
 from django.contrib.contenttypes.models import ContentType
 
 from constants import user_system

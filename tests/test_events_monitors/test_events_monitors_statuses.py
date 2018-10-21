@@ -10,17 +10,17 @@ from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.jobs import JobStatus
 from db.models.notebooks import NotebookJobStatus
 from db.models.tensorboards import TensorboardJobStatus
+from factories.factory_build_jobs import BuildJobFactory
+from factories.factory_experiments import ExperimentJobFactory
+from factories.factory_jobs import JobFactory
+from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
+from factories.factory_projects import ProjectFactory
 from k8s_events_handlers.tasks.statuses import (
     k8s_events_handle_build_job_statuses,
     k8s_events_handle_experiment_job_statuses,
     k8s_events_handle_job_statuses,
     k8s_events_handle_plugin_job_statuses
 )
-from factories.factory_build_jobs import BuildJobFactory
-from factories.factory_experiments import ExperimentJobFactory
-from factories.factory_jobs import JobFactory
-from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
-from factories.factory_projects import ProjectFactory
 from monitor_statuses.jobs import get_job_state
 from tests.fixtures import (
     status_build_job_event,
