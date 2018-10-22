@@ -141,7 +141,7 @@ An experiment group in Polyaxon defines a search algorithm, a search space, and 
 
 # Architecture
 
-![Polyaxon architecture](config/polyaxon_architecture.png)
+![Polyaxon architecture](artifacts/polyaxon_architecture.png)
 
 # Documentation
 
@@ -159,31 +159,31 @@ $ polyaxon dashboard
 
  * List Projects
 
-    ![Polyaxon dashboard](config/projects.png)
+    ![Polyaxon dashboard](artifacts/projects.png)
 
  * Project Overview
 
-    ![Polyaxon dashboard](config/project_overview.png)
+    ![Polyaxon dashboard](artifacts/project_overview.png)
 
  * Experiments
 
-    ![Polyaxon dashboard](config/experiments.png)
+    ![Polyaxon dashboard](artifacts/experiments.png)
 
  * Experiment Groups
 
-    ![Polyaxon dashboard](config/experiment_groups.png)
+    ![Polyaxon dashboard](artifacts/experiment_groups.png)
 
  * Experiment Overview
 
-    ![Polyaxon dashboard](config/experiment.png)
+    ![Polyaxon dashboard](artifacts/experiment.png)
  
  * Experiment Metrics
  
-     ![experiment](config/experiment_metrics.png)
+     ![experiment](artifacts/experiment_metrics.png)
     
  * Experiment Logs
  
-     ![experiment](config/experiment_logs.png)
+     ![experiment](artifacts/experiment_logs.png)
 
 # Project status
 
