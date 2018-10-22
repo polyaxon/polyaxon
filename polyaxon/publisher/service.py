@@ -26,7 +26,6 @@ class PublisherService(Service):
                                    experiment_name,
                                    job_uuid,
                                    send_task=True):
-        log_lines = to_list(log_lines)
         self._logger.debug("Publishing log event for task: %s, %s", job_uuid, experiment_name)
 
         if send_task:
@@ -35,7 +34,7 @@ class PublisherService(Service):
                 kwargs={
                     'experiment_name': experiment_name,
                     'experiment_uuid': experiment_uuid,
-                    'log_lines': '\n'.join(log_lines)})
+                    'log_lines': log_lines})
         try:
             should_stream = (RedisToStream.is_monitored_job_logs(job_uuid) or
                              RedisToStream.is_monitored_experiment_logs(experiment_uuid))
@@ -86,8 +85,6 @@ class PublisherService(Service):
                     pass
 
     def publish_build_job_log(self, log_lines, job_uuid, job_name, send_task=True):
-        log_lines = to_list(log_lines)
-
         self._logger.info("Publishing log event for task: %s", job_uuid)
         if send_task:
             celery_app.send_task(
@@ -95,7 +92,7 @@ class PublisherService(Service):
                 kwargs={
                     'job_uuid': job_uuid,
                     'job_name': job_name,
-                    'log_lines': '\n'.join(log_lines)
+                    'log_lines': log_lines
                 })
         self._stream_job_log(job_uuid=job_uuid,
                              log_lines=log_lines,
@@ -111,7 +108,7 @@ class PublisherService(Service):
                 kwargs={
                     'job_uuid': job_uuid,
                     'job_name': job_name,
-                    'log_lines': '\n'.join(log_lines)
+                    'log_lines': log_lines
                 })
         self._stream_job_log(job_uuid=job_uuid,
                              log_lines=log_lines,
