@@ -128,7 +128,7 @@ class DockerBuilder(object):
 
     def _handle_logs(self, log_lines):
         publisher.publish_build_job_log(
-            log_lines=to_list(log_lines),
+            log_lines='\n'.join(to_list(log_lines)),
             job_uuid=self.job_uuid,
             job_name=self.job_name
         )
