@@ -6,7 +6,7 @@ $DIR/check
 
 if [ $? -eq 0 ]; then
     if [ -z "$1" ]; then
-        QUEUES="queues.repos,queues.scheduler.experiments,queues.scheduler.experiment_groups,queues.scheduler.projects,queues.crons.experiments,queues.crons.pipelines,queues.crons.clusters,queus.hp,queues.pipelines"
+        QUEUES="queues.repos,queues.scheduler.health,queues.scheduler.experiments,queues.scheduler.experiment_groups,queues.scheduler.projects,queues.scheduler.build_jobs,queues.scheduler.jobs,queues.crons.health,queues.crons.heartbeat,queues.crons.experiments,queues.crons.pipelines,queues.crons.clusters,queues.crons.clean,queues.hp.health,queues.hp,queues.pipelines,queues.events.health,queues.events.notify,queues.events.log,queues.events.track,queues.k8s_events.health,queues.k8s_events.namespace,queues.k8s_events.resources,queues.k8s_events.jobStatuses,queues.logs.health,queues.logs.sidecars,queues.stream.logs.sidecars"
     else
         QUEUES=$*
     fi
