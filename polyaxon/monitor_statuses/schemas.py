@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields, post_dump, post_load
 
 from schemas.base import BaseConfig
-from schemas.job_labels import JobLabelSchema
+from schemas.job import JobLabelSchema
 
 
 class PodStateSchema(Schema):
