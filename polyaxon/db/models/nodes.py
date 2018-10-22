@@ -1,11 +1,12 @@
 import uuid
 
+from hestia.unknown import UNKNOWN
+
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from constants.nodes import NodeLifeCycle, NodeRoles
-from constants.unknown import UNKNOWN
 from db.models.utils import DiffModel, SequenceModel
 
 
