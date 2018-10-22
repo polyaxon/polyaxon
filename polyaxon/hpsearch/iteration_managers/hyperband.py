@@ -1,10 +1,7 @@
-import logging
-
 from hpsearch.iteration_managers.base import BaseIterationManger
+from hpsearch.iteration_managers.logger import logger
 from hpsearch.schemas import HyperbandIterationConfig
 from schemas.hptuning import Optimization
-
-_logger = logging.getLogger('polyaxon.hpsearch.iteration_manager')
 
 
 class HyperbandIterationManager(BaseIterationManger):
@@ -53,7 +50,7 @@ class HyperbandIterationManager(BaseIterationManger):
         """Reduce the experiments to restart."""
         iteration_config = self.experiment_group.iteration_config
         if iteration_config is None:
-            _logger.error(
+            logger.error(
                 'Experiment group `%s` attempt to update iteration, but has no iteration',
                 self.experiment_group.id,
                 extra={'stack': True})

@@ -1,10 +1,8 @@
-import logging
+from hpsearch.tasks.logger import logger
 
 from db.models.experiments import Experiment
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
-_logger = logging.getLogger(__name__)
 
 
 def create_group_experiments(experiment_group):
@@ -13,8 +11,9 @@ def create_group_experiments(experiment_group):
     suggestions = experiment_group.get_suggestions()
 
     if not suggestions:
-        _logger.error('Search algorithm was not found `%s`', specification.search_algorithm,
-                      extra={'stack': True})
+        logger.error('Search algorithm `{}` could not make any suggestions.',
+                     specification.search_algorithm,
+                     extra={'stack': True})
         return
 
     experiments = []

@@ -1,11 +1,21 @@
+from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group
 from hpsearch.tasks import base
+from hpsearch.tasks.logger import logger
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 
 
 def create(experiment_group):
     experiments = base.create_group_experiments(experiment_group=experiment_group)
+
+    if not experiments:
+        logger.error('Experiment group `%s` could not create any experiment.',
+                     experiment_group.id)
+        experiment_group.set_status(ExperimentGroupLifeCycle.FAILED,
+                                    message='Experiment group could not create new suggestions.')
+        return
+
     experiment_ids = [xp.id for xp in experiments]
     experiments_configs = [[xp.id, xp.declarations] for xp in experiments]
     experiment_group.iteration_manager.create_iteration(
