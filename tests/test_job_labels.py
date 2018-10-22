@@ -5,7 +5,7 @@ import uuid
 
 from unittest import TestCase
 
-from polyaxon_schemas.job_labels import JobLabelConfig
+from polyaxon_schemas.job import JobLabelConfig
 
 
 class TestSettingConfigs(TestCase):
