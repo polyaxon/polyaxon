@@ -10,7 +10,7 @@ def create_group_experiments(experiment_group):
     suggestions = experiment_group.get_suggestions()
 
     if not suggestions:
-        logger.error('Search algorithm `{}` could not make any suggestions.',
+        logger.error('Search algorithm `%s` could not make any suggestions.',
                      specification.search_algorithm,
                      extra={'stack': True})
         return
