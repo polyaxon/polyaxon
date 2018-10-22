@@ -45,7 +45,7 @@ async def job_logs(request,  # pylint:disable=too-many-branches
     else:
         logger.info('Add job log consumer for %s', job_uuid)
         consumer = Consumer(
-            routing_key='{}.{}'.format(RoutingKeys.LOGS_SIDECARS_JOBS, job_uuid),
+            routing_key='{}.{}'.format(RoutingKeys.STREAM_LOGS_SIDECARS_JOBS, job_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
         request.app.job_logs_consumers[job_uuid] = consumer
         consumer.run()

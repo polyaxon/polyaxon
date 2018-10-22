@@ -120,7 +120,8 @@ async def experiment_logs(request,  # pylint:disable=too-many-branches
     else:
         logger.info('Add experiment log consumer for %s', experiment_uuid)
         consumer = Consumer(
-            routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS_EXPERIMENTS, experiment_uuid),
+            routing_key='{}.{}.*'.format(RoutingKeys.STREAM_LOGS_SIDECARS_EXPERIMENTS,
+                                         experiment_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, experiment_uuid))
         request.app.experiment_logs_consumers[experiment_uuid] = consumer
         consumer.run()

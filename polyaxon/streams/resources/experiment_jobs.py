@@ -112,7 +112,7 @@ async def experiment_job_logs(request, ws, username, project_name, experiment_id
     else:
         logger.info('Add job log consumer for %s', job_uuid)
         consumer = Consumer(
-            routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS_EXPERIMENTS,
+            routing_key='{}.{}.{}'.format(RoutingKeys.STREAM_LOGS_SIDECARS_EXPERIMENTS,
                                           experiment.uuid.hex,
                                           job_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
