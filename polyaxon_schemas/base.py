@@ -5,17 +5,12 @@ import six
 
 from collections import Mapping, OrderedDict
 
+from hestia.units import to_percentage, to_unit_memory
 from marshmallow import Schema, ValidationError, post_dump, post_load
 from marshmallow.utils import utc
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
-from polyaxon_schemas.utils import (
-    TIME_ZONE,
-    humanize_timesince,
-    to_camel_case,
-    to_percentage,
-    to_unit_memory
-)
+from polyaxon_schemas.utils import TIME_ZONE, humanize_timesince, to_camel_case
 
 
 class BaseConfig(object):
