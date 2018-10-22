@@ -77,7 +77,7 @@ INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',
                                       is_optional=True,
                                       default='internal')
 
-CELERY_RESULT_BACKEND = config.get_string('POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL')
+CELERY_RESULT_BACKEND = None
 CELERYD_PREFETCH_MULTIPLIER = config.get_int('POLYAXON_CELERYD_PREFETCH_MULTIPLIER')
 
 CELERY_TASK_ALWAYS_EAGER = config.get_boolean('POLYAXON_CELERY_ALWAYS_EAGER')
