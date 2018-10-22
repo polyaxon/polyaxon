@@ -95,15 +95,23 @@ class Intervals(object):
 
 
 class RoutingKeys(object):
-    LOGS_SIDECARS_EXPERIMENTS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_EXPERIMENTS',
-                                                  is_optional=True,
-                                                  default='logs.sidecars.experiments')
-    LOGS_SIDECARS_JOBS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_JOBS',
-                                           is_optional=True,
-                                           default='logs.sidecars.jobs')
-    LOGS_SIDECARS_BUILDS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS_BUILDS',
-                                             is_optional=True,
-                                             default='logs.sidecars.builds')
+    STREAM_LOGS_SIDECARS_EXPERIMENTS = config.get_string(
+        'POLYAXON_ROUTING_KEYS_STREAM_LOGS_SIDECARS_EXPERIMENTS',
+        is_optional=True,
+        default='stream_logs.sidecars.experiments')
+    STREAM_LOGS_SIDECARS_JOBS = config.get_string(
+        'POLYAXON_ROUTING_KEYS_STREAM_LOGS_SIDECARS_JOBS',
+        is_optional=True,
+        default='stream_logs.sidecars.jobs')
+    STREAM_LOGS_SIDECARS_BUILDS = config.get_string(
+        'POLYAXON_ROUTING_KEYS_STREAM_LOGS_SIDECARS_BUILDS',
+        is_optional=True,
+        default='stream_logs.sidecars.builds')
+
+    LOGS_SIDECARS = config.get_string(
+        'POLYAXON_ROUTING_KEYS_LOGS_SIDECARS',
+        is_optional=True,
+        default='logs.sidecars.*')
 
 
 class CeleryPublishTask(object):
@@ -186,7 +194,7 @@ class EventsCeleryTasks(object):
 
 
 class LogsCeleryTasks(object):
-    """Runner celery tasks.
+    """Logs celery tasks.
 
     N.B. make sure that the task name is not < 128.
     """
@@ -194,6 +202,11 @@ class LogsCeleryTasks(object):
     LOGS_HANDLE_EXPERIMENT_JOB = 'logs_handle_experiment_job'
     LOGS_HANDLE_JOB = 'logs_handle_job'
     LOGS_HANDLE_BUILD_JOB = 'logs_handle_build_job'
+
+    # Signals
+    LOGS_SIDECARS_EXPERIMENTS = 'logs_sidecars_experiments'
+    LOGS_SIDECARS_JOBS = 'logs_sidecars_jobs'
+    LOGS_SIDECARS_BUILDS = 'logs_sidecars_builds'
 
 
 class SchedulerCeleryTasks(object):
@@ -307,15 +320,21 @@ class CeleryQueues(object):
 
 # Queues on non default exchange
 CELERY_TASK_QUEUES = (
+    # Streams
     Queue(CeleryQueues.STREAM_LOGS_SIDECARS,
           exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
-          routing_key=RoutingKeys.LOGS_SIDECARS_EXPERIMENTS + '.#'),
+          routing_key=RoutingKeys.STREAM_LOGS_SIDECARS_EXPERIMENTS + '.#'),
     Queue(CeleryQueues.STREAM_LOGS_SIDECARS,
           exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
-          routing_key=RoutingKeys.LOGS_SIDECARS_JOBS + '.#'),
+          routing_key=RoutingKeys.STREAM_LOGS_SIDECARS_JOBS + '.#'),
     Queue(CeleryQueues.STREAM_LOGS_SIDECARS,
           exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
-          routing_key=RoutingKeys.LOGS_SIDECARS_BUILDS + '.#'),
+          routing_key=RoutingKeys.STREAM_LOGS_SIDECARS_BUILDS + '.#'),
+
+    # Sidecars signals
+    Queue(CeleryQueues.LOGS_SIDECARS,
+          exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
+          routing_key=RoutingKeys.LOGS_SIDECARS),
 )
 
 CELERY_TASK_ROUTES = {
@@ -342,15 +361,15 @@ CELERY_TASK_ROUTES = {
 
     CeleryPublishTask.PUBLISH_LOGS_SIDECAR_EXPERIMENTS:
         {'exchange': INTERNAL_EXCHANGE,
-         'routing_key': RoutingKeys.LOGS_SIDECARS_EXPERIMENTS,
+         'routing_key': RoutingKeys.STREAM_LOGS_SIDECARS_EXPERIMENTS,
          'exchange_type': 'topic'},
     CeleryPublishTask.PUBLISH_LOGS_SIDECAR_JOBS:
         {'exchange': INTERNAL_EXCHANGE,
-         'routing_key': RoutingKeys.LOGS_SIDECARS_JOBS,
+         'routing_key': RoutingKeys.STREAM_LOGS_SIDECARS_JOBS,
          'exchange_type': 'topic'},
     CeleryPublishTask.PUBLISH_LOGS_SIDECAR_BUILDS:
         {'exchange': INTERNAL_EXCHANGE,
-         'routing_key': RoutingKeys.LOGS_SIDECARS_BUILDS,
+         'routing_key': RoutingKeys.STREAM_LOGS_SIDECARS_BUILDS,
          'exchange_type': 'topic'},
 
     # Scheduler health
