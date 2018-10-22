@@ -6,5 +6,5 @@ if 'DJANGO_SETTINGS_MODULE' in os.environ:
     del os.environ['DJANGO_SETTINGS_MODULE']
 
 app = Celery('polyaxon-sidecar')
-app.config_from_object('settings', namespace='CELERY')
+app.config_from_object('sidecar.settings', namespace='CELERY')
 celery_app = app
