@@ -14,7 +14,7 @@ def get_sidecar_env_vars(job_name, job_container_name):
 
 
 def get_sidecar_args(pod_id, app_label):
-    return ["pod_id={}".format(pod_id),
+    return ["--pod_id={}".format(pod_id),
             "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
             "--app_label={}".format(app_label)]
 
