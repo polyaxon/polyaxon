@@ -1,4 +1,4 @@
-from constants.unknown import UNKNOWN
+from hestia.unknown import UNKNOWN
 
 
 class NodeLifeCycle(object):

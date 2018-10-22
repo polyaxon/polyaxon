@@ -1,6 +1,7 @@
+from hestia.unknown import UNKNOWN
+
 from constants.jobs import JobLifeCycle
 from constants.statuses import BaseStatuses, StatusOptions
-from constants.unknown import UNKNOWN
 
 
 class ExperimentLifeCycle(BaseStatuses):
