@@ -12,7 +12,7 @@ if __name__ == '__main__':
         type=str
     )
     parser.add_argument(
-        '--kind',
+        '--app_label',
         type=str
     )
     parser.add_argument(
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     arguments = args.__dict__
 
     pod_id = arguments.pop('pod_id')
-    kind = arguments.pop('kind')
+    app_label = arguments.pop('app_label')
     log_sleep_interval = arguments.pop('log_sleep_interval')
 
     k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
@@ -33,16 +33,16 @@ if __name__ == '__main__':
     if not is_running:
         monitor.logger.info('Pod is not running anymore.')
     else:
-        if kind == 'experiment':
+        if app_label == 'experiment':
             start_experiment_sidecar(monitor=monitor,
                                      k8s_manager=k8s_manager,
                                      pod_id=pod_id,
                                      labels=labels)
-        elif kind == 'job':
+        elif app_label == 'job':
             start_job_side_car(monitor=monitor,
                                k8s_manager=k8s_manager,
                                pod_id=pod_id,
                                labels=labels)
         else:
-            monitor.logger.error('Pod kind is not recognized.')
+            monitor.logger.error('Pod app_label is not recognized.')
     monitor.logger.info('Finished logging')
