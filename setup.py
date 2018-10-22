@@ -42,7 +42,7 @@ setup(name='polyaxon-schemas',
           'kubernetes',
       ],
       install_requires=[
-          'hestia==0.0.7',
+          'hestia==0.0.8',
           'Jinja2==2.10',
           'marshmallow==2.15.6',
           'numpy==1.15.2',
