@@ -32,15 +32,6 @@ def add_notification_referrer_param(url, provider, is_absolute=True):
     return urlunparse(url_list)
 
 
-def validate_url(url):
-    if not url.startswith(('http://', 'https://')):
-        return False
-    parsed = urlparse(url)
-    if not parsed.hostname:
-        return False
-    return True
-
-
 def safe_request(
     url,
     method=None,

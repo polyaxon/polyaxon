@@ -1,10 +1,11 @@
 import base64
 import uuid
 
+from hestia.crypto import get_hmac
+
 from django.utils.crypto import constant_time_compare
 
 from db.redis.base import BaseRedisDb
-from libs.crypto import get_hmac
 from libs.json_utils import dumps, loads
 from polyaxon.settings import RedisPools
 

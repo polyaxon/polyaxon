@@ -1,4 +1,4 @@
-from libs.services import Service
+from hestia.service_interface import Service
 
 
 class EventService(Service):

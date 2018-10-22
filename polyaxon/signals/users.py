@@ -1,3 +1,5 @@
+from hestia.decorators import ignore_raw
+
 from rest_framework.authtoken.models import Token
 
 from django.conf import settings
@@ -7,7 +9,6 @@ from django.dispatch import Signal, receiver
 import auditor
 
 from event_manager.events.user import USER_REGISTERED, USER_UPDATED
-from libs.decorators import ignore_raw
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

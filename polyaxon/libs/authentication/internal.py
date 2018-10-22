@@ -1,9 +1,9 @@
+from hestia.headers import get_header
+
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 
 from django.conf import settings
-
-from libs.headers import get_header
 
 
 class InternalUser(object):

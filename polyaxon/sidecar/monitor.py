@@ -1,6 +1,8 @@
 import logging
 import time
 
+from hestia.logging_utils import LogSpec
+
 import publisher
 
 from constants.pods import PodLifeCycle
@@ -42,8 +44,8 @@ def run_for_experiment_job(k8s_manager,
         _preload_content=False)
 
     def publish(log_lines):
-        log_lines = [publisher.LogSpec(log_line=log_line,
-                                       name='{}.{}'.format(task_type, int(task_idx) + 1))
+        log_lines = [LogSpec(log_line=log_line,
+                             name='{}.{}'.format(task_type, int(task_idx) + 1))
                      for log_line in log_lines]
         publisher.publish_experiment_job_log(
             log_lines=log_lines,
@@ -67,7 +69,7 @@ def run_for_job(k8s_manager,
         _preload_content=False)
 
     def publish(log_lines):
-        log_lines = [publisher.LogSpec(log_line=log_line) for log_line in log_lines]
+        log_lines = [LogSpec(log_line=log_line) for log_line in log_lines]
         publisher.publish_job_log(
             log_lines=log_lines,
             job_name=job_name,

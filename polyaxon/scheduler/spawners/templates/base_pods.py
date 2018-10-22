@@ -1,4 +1,4 @@
-from libs.string_utils import strip_spaces
+from hestia.string_utils import strip_spaces
 
 
 def get_pod_command_args(run_config):

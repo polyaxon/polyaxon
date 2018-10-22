@@ -1,6 +1,7 @@
+from hestia.service_interface import LazyServiceWrapper
+
 from activitylogs.manager import default_manager
 from activitylogs.service import ActivityLogService
-from libs.services import LazyServiceWrapper
 
 backend = LazyServiceWrapper(
     backend_base=ActivityLogService,

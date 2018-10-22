@@ -1,4 +1,5 @@
-from libs.services import LazyServiceWrapper
+from hestia.service_interface import LazyServiceWrapper
+
 from notifier.managers import default_action_manager, default_event_manager
 from notifier.service import NotifierService
 

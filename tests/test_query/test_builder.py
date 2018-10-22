@@ -1,5 +1,7 @@
 import datetime
 
+from hestia.date_formatter import DateTimeFormatter
+
 import pytest
 
 from django.db.models import Q
@@ -11,7 +13,6 @@ from factories.factory_experiments import (
     ExperimentMetricFactory,
     ExperimentStatusFactory
 )
-from libs.date_utils import DateTimeFormatter
 from query.builder import ComparisonCondition, DateTimeCondition, EqualityCondition, ValueCondition
 from query.exceptions import QueryConditionException
 from tests.utils import BaseTest

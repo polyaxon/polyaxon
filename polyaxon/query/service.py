@@ -1,4 +1,5 @@
-from libs.services import Service
+from hestia.service_interface import Service
+
 from query.managers.build import BuildQueryManager
 from query.managers.experiment import ExperimentQueryManager
 from query.managers.experiment_group import ExperimentGroupQueryManager

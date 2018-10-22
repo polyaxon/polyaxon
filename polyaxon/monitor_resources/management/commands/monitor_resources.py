@@ -1,5 +1,7 @@
 import time
 
+from hestia.bool_utils import to_bool
+
 import redis
 
 from django.conf import settings
@@ -8,7 +10,6 @@ from django.db import InterfaceError, OperationalError, ProgrammingError
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode
 from libs.base_monitor import BaseMonitorCommand
-from libs.utils import to_bool
 from monitor_resources import monitor
 
 

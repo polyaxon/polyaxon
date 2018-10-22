@@ -1,5 +1,7 @@
 import logging
 
+from hestia.decorators import ignore_raw, ignore_updates, ignore_updates_pre
+
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
@@ -16,7 +18,6 @@ from event_manager.events.build_job import (
     BUILD_JOB_STOPPED,
     BUILD_JOB_SUCCEEDED
 )
-from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.jobs import delete_job_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks

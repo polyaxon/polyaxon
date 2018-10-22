@@ -1,3 +1,5 @@
+from hestia.bool_utils import to_bool
+
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -34,7 +36,6 @@ from event_manager.events.tensorboard import (
 )
 from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.repos import git
-from libs.utils import to_bool
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.specifications import TensorboardSpecification

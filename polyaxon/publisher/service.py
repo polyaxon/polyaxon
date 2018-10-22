@@ -1,10 +1,11 @@
+from hestia.service_interface import Service
+
 from amqp import AMQPError
 from redis import RedisError
 
 from django.conf import settings
 
 from db.redis.to_stream import RedisToStream
-from libs.services import Service
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, RoutingKeys
 from schemas.utils import to_list

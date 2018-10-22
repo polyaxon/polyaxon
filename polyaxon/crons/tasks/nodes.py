@@ -1,6 +1,8 @@
 import requests
 import uuid
 
+from hestia.units import to_unit_memory
+
 from django.conf import settings
 from django.db.models import Count, Sum
 
@@ -15,7 +17,6 @@ from event_manager.events.cluster import (
     CLUSTER_RESOURCES_UPDATED,
     CLUSTER_UPDATED
 )
-from libs.utils import to_unit_memory
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks
 from polyaxon_k8s.manager import K8SManager

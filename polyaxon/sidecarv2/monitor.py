@@ -1,10 +1,11 @@
 import logging
 import time
 
-import publisher
+from hestia.logging_utils import LogSpec
 
 from constants.pods import PodLifeCycle
 from schemas.job_labels import JobLabelConfig
+from sidecarv2 import settings
 
 logger = logging.getLogger('polyaxon.monitors.sidecar')
 
@@ -15,8 +16,8 @@ def _handle_log_stream(stream, publish):
     for log_line in stream:
         log_lines.append(log_line.decode('utf-8').strip())
         publish_cond = (
-            len(log_lines) == publisher.MESSAGES_COUNT or
-            (log_lines and time.time() - last_emit_time > publisher.MESSAGES_TIMEOUT_SHORT)
+            len(log_lines) == settings.MESSAGES_COUNT or
+            (log_lines and time.time() - last_emit_time > settings.MESSAGES_TIMEOUT_SHORT)
         )
         if publish_cond:
             publish(log_lines)
@@ -42,8 +43,7 @@ def run_for_experiment_job(k8s_manager,
         _preload_content=False)
 
     def publish(log_lines):
-        log_lines = [publisher.LogSpec(log_line=log_line,
-                                       name='{}.{}'.format(task_type, int(task_idx) + 1))
+        log_lines = [LogSpec(log_line=log_line, name='{}.{}'.format(task_type, int(task_idx) + 1))
                      for log_line in log_lines]
         publisher.publish_experiment_job_log(
             log_lines=log_lines,
@@ -67,7 +67,7 @@ def run_for_job(k8s_manager,
         _preload_content=False)
 
     def publish(log_lines):
-        log_lines = [publisher.LogSpec(log_line=log_line) for log_line in log_lines]
+        log_lines = [LogSpec(log_line=log_line) for log_line in log_lines]
         publisher.publish_job_log(
             log_lines=log_lines,
             job_name=job_name,

@@ -1,5 +1,7 @@
 import logging
 
+from hestia.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
+
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
@@ -16,7 +18,6 @@ from event_manager.events.job import (
     JOB_STOPPED,
     JOB_SUCCEEDED
 )
-from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app

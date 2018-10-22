@@ -1,6 +1,7 @@
+from hestia.date_utils import to_timestamp
+
 from event_manager.event_colors import EventColor
 from event_manager.event_context import get_event_context, get_readable_event
-from libs.date_utils import to_timestamp
 from libs.http import add_notification_referrer_param
 
 

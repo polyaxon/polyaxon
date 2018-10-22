@@ -1,4 +1,4 @@
-from libs.managers import ManagerInterface
+from hestia.manager_interface import ManagerInterface
 
 
 class ActionManager(ManagerInterface):

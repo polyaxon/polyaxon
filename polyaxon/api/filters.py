@@ -1,3 +1,5 @@
+from hestia.string_utils import strip_spaces
+
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.filters import OrderingFilter as BaseOrderingFilter
@@ -9,7 +11,6 @@ from django.db.models.sql.constants import ORDER_PATTERN
 # pylint:disable=ungrouped-imports
 import query
 
-from libs.string_utils import strip_spaces
 from query.exceptions import QueryError
 
 

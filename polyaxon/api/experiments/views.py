@@ -2,6 +2,7 @@ import logging
 import mimetypes
 import os
 
+from hestia.bool_utils import to_bool
 from wsgiref.util import FileWrapper
 
 from rest_framework import status
@@ -87,7 +88,6 @@ from libs.permissions.ephemeral import IsEphemeral
 from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
-from libs.utils import to_bool
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 

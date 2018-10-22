@@ -1,7 +1,8 @@
+from hestia.hashing import md5_text
+
 from django.shortcuts import render_to_response
 
 from db.redis.sessions import RedisSessions
-from libs.hashing import md5_text
 
 
 class Wizard(object):

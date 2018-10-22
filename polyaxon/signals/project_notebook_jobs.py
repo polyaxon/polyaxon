@@ -1,3 +1,5 @@
+from hestia.decorators import ignore_raw, ignore_updates, ignore_updates_pre
+
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
@@ -11,7 +13,6 @@ from event_manager.events.notebook import (
     NOTEBOOK_STOPPED,
     NOTEBOOK_SUCCEEDED
 )
-from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks

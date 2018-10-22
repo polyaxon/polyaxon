@@ -1,3 +1,5 @@
+from hestia.date_utils import to_timestamp
+from hestia.urls_utils import validate_url
 from requests import RequestException
 
 from django.conf import settings
@@ -7,8 +9,7 @@ from action_manager.action_event import ActionExecutedEvent
 from action_manager.exceptions import PolyaxonActionException
 from event_manager.event_actions import EXECUTED
 from event_manager.event_context import get_event_context, get_readable_event
-from libs.date_utils import to_timestamp
-from libs.http import safe_request, validate_url
+from libs.http import safe_request
 from schemas.utils import to_list
 
 WEBHOOK_ACTION_EXECUTED = 'webhook_action.{}'.format(EXECUTED)

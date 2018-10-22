@@ -1,3 +1,5 @@
+from hestia.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
+
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
 from django.utils.timezone import now
@@ -13,7 +15,6 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_NEW_STATUS,
     EXPERIMENT_GROUP_STOPPED
 )
-from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.experiment_groups import (
     delete_experiment_group_logs,
     delete_experiment_group_outputs

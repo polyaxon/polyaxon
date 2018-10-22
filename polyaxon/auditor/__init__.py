@@ -1,6 +1,7 @@
+from hestia.service_interface import LazyServiceWrapper
+
 from auditor.manager import default_manager
 from auditor.service import AuditorService
-from libs.services import LazyServiceWrapper
 
 backend = LazyServiceWrapper(
     backend_base=AuditorService,

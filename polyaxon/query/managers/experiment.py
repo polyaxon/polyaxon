@@ -1,4 +1,5 @@
-from libs.utils import to_bool
+from hestia.bool_utils import to_bool
+
 from polyaxon_schemas.utils import to_list
 from query.builder import (
     ArrayCondition,

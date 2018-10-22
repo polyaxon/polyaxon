@@ -1,6 +1,7 @@
 from django.conf import settings
 
-from libs.services import LazyServiceWrapper
+from hestia.service_interface import LazyServiceWrapper
+
 from stats.base import BaseStatsBackend
 
 

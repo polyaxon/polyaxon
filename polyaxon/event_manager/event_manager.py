@@ -1,5 +1,6 @@
+from hestia.manager_interface import ManagerInterface
+
 from event_manager import event_actions
-from libs.managers import ManagerInterface
 
 
 class EventManager(ManagerInterface):

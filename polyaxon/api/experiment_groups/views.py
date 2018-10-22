@@ -1,3 +1,5 @@
+from hestia.bool_utils import to_bool
+
 from rest_framework import status
 from rest_framework.generics import (
     CreateAPIView,
@@ -42,7 +44,6 @@ from event_manager.events.experiment_group import (
 )
 from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
 from libs.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
-from libs.utils import to_bool
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

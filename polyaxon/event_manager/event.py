@@ -1,5 +1,6 @@
 import copy
 
+from hestia.date_utils import to_datetime, to_timestamp
 from uuid import UUID, uuid1
 
 from django.db.models import Model
@@ -7,7 +8,6 @@ from django.utils import timezone
 
 from constants import user_system
 from event_manager import event_context
-from libs.date_utils import to_datetime, to_timestamp
 from libs.json_utils import dumps_htmlsafe
 
 

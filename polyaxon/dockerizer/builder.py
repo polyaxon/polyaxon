@@ -5,6 +5,8 @@ import os
 import stat
 import time
 
+from hestia.logging_utils import LogSpec
+
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 
@@ -105,17 +107,17 @@ class DockerBuilder(object):
                 else:
                     if json_line.get('stream'):
                         log_lines.append(
-                            publisher.LogSpec(
+                            LogSpec(
                                 log_line='Build: {}'.format(json_line['stream'].strip())
                             ))
                     elif json_line.get('status'):
                         log_lines.append(
-                            publisher.LogSpec(
+                            LogSpec(
                                 log_line='Push: {} {}'.format(json_line['status'],
                                                               json_line.get('progress'))
                             ))
                     elif json_line.get('aux'):
-                        log_lines.append(publisher.LogSpec(
+                        log_lines.append(LogSpec(
                             log_line='Push finished: {}'.format(json_line.get('aux'))
                         ))
                     else:
@@ -148,8 +150,8 @@ class DockerBuilder(object):
             if log_lines:
                 self._handle_logs(log_lines)
         except (BuildError, APIError, DockerBuilderError) as e:
-            self._handle_logs(publisher.LogSpec(log_line='Build Error {}'.format(e),
-                                                log_level=publisher.ERROR))
+            self._handle_logs(LogSpec(log_line='Build Error {}'.format(e),
+                                      log_level=publisher.ERROR))
             return False
 
         return True

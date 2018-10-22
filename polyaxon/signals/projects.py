@@ -1,3 +1,5 @@
+from hestia.decorators import ignore_raw, ignore_updates
+
 from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
 
@@ -5,7 +7,6 @@ import auditor
 
 from db.models.projects import Project
 from event_manager.events.project import PROJECT_DELETED
-from libs.decorators import ignore_raw, ignore_updates
 from libs.paths.projects import delete_project_logs, delete_project_outputs, delete_project_repos
 from signals.utils import remove_bookmarks
 

@@ -1,8 +1,8 @@
+from hestia.string_utils import strip_spaces
+
 from django.conf import settings
 from django.core.mail import send_mass_mail
 from django.template.loader import render_to_string
-
-from libs.string_utils import strip_spaces
 
 
 def render_mail_template(subject_template, body_template, context):

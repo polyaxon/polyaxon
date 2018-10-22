@@ -1,3 +1,5 @@
+from hestia.string_utils import strip_spaces
+
 from django.conf import settings
 
 from action_manager.action import Action, logger
@@ -5,7 +7,6 @@ from action_manager.action_event import ActionExecutedEvent
 from action_manager.utils.email import send_mass_template_mail
 from event_manager.event_actions import EXECUTED
 from event_manager.event_context import get_event_context, get_readable_event
-from libs.string_utils import strip_spaces
 
 EMAIL_ACTION_EXECUTED = 'email_action.{}'.format(EXECUTED)
 

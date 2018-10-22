@@ -1,9 +1,10 @@
 import json
 import random
 
+from hestia.crypto import get_hmac
+
 from django.conf import settings
 
-from libs.crypto import get_hmac
 from libs.paths.notebooks import get_notebook_job_outputs_path
 from libs.paths.projects import get_project_repos_path
 from polyaxon_k8s.exceptions import PolyaxonK8SError

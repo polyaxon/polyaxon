@@ -1,4 +1,5 @@
-from libs.services import LazyServiceWrapper
+from hestia.service_interface import LazyServiceWrapper
+
 from query.service import QueryService
 
 backend = LazyServiceWrapper(
