@@ -3,7 +3,6 @@ celery==4.2.1
 Django==2.1.2
 django-cors-headers==2.4.0
 djangorestframework==3.8.2
-hestia==0.0.4
 psycopg2-binary==2.7.5
 psutil==5.4.7
 raven==6.7.0
