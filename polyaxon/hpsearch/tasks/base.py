@@ -1,6 +1,5 @@
-from hpsearch.tasks.logger import logger
-
 from db.models.experiments import Experiment
+from hpsearch.tasks.logger import logger
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

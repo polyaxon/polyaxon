@@ -3,7 +3,6 @@ import pytest
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
-from polyaxon_schemas.pod import PodLifeCycle
 from constants.pods import EventTypes, PodConditions
 from db.models.experiment_jobs import ExperimentJob
 from db.redis.containers import RedisJobContainers
@@ -11,6 +10,7 @@ from factories.factory_experiments import ExperimentJobFactory
 from monitor_statuses.jobs import get_job_state
 from monitor_statuses.monitor import update_job_containers
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig
+from polyaxon_schemas.pod import PodLifeCycle
 from tests.fixtures import status_experiment_job_event, status_experiment_job_event_with_conditions
 from tests.utils import BaseTest
 

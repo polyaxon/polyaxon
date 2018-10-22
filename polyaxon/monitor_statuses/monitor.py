@@ -5,11 +5,11 @@ from kubernetes import watch
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
-from polyaxon_schemas.pod import PodLifeCycle
 from db.redis.containers import RedisJobContainers
 from monitor_statuses.jobs import get_job_state
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks
+from polyaxon_schemas.pod import PodLifeCycle
 
 logger = logging.getLogger('polyaxon.monitors.statuses')
 
