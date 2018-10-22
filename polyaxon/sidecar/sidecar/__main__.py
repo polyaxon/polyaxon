@@ -33,12 +33,12 @@ if __name__ == '__main__':
     if not is_running:
         monitor.logger.info('Pod is not running anymore.')
     else:
-        if app_label == 'experiment':
+        if app_label == settings.APP_LABELS_EXPERIMENT:
             start_experiment_sidecar(monitor=monitor,
                                      k8s_manager=k8s_manager,
                                      pod_id=pod_id,
                                      labels=labels)
-        elif app_label == 'job':
+        elif app_label == settings.APP_LABELS_JOB:
             start_job_side_car(monitor=monitor,
                                k8s_manager=k8s_manager,
                                pod_id=pod_id,
