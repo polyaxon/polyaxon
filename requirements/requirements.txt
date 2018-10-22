@@ -1,4 +1,4 @@
-hestia==0.0.8
+hestia==0.0.9
 Jinja2==2.10
 marshmallow==2.15.6
 numpy==1.15.2
