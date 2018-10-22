@@ -180,7 +180,6 @@ class PodManager(object):
             sidecar_container_name=self.sidecar_container_name,
             sidecar_docker_image=self.sidecar_docker_image,
             namespace=self.namespace,
-            app_label=self.app_label,
             sidecar_config=self.sidecar_config,
             sidecar_args=args)
 

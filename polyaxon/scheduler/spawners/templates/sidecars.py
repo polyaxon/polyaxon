@@ -19,11 +19,8 @@ def get_sidecar_args(pod_id, app_label):
             "--app_label={}".format(app_label)]
 
 
-def get_sidecar_command(app_label):
-    if app_label == settings.APP_LABELS_JOB:
-        return ["python3", "polyaxon/manage.py", "start_job_sidecar"]
-    if app_label == settings.APP_LABELS_EXPERIMENT:
-        return ["python3", "polyaxon/manage.py", "start_experiment_sidecar"]
+def get_sidecar_command():
+    return ["python3", "sidecar/__main__.py"]
 
 
 def get_sidecar_container(job_name,
@@ -31,7 +28,6 @@ def get_sidecar_container(job_name,
                           sidecar_container_name,
                           sidecar_docker_image,
                           namespace,
-                          app_label,
                           sidecar_config,
                           sidecar_args,
                           env_vars=None):
@@ -43,6 +39,6 @@ def get_sidecar_container(job_name,
         env_vars.append(get_env_var(name=k, value=v))
     return client.V1Container(name=sidecar_container_name,
                               image=sidecar_docker_image,
-                              # command=get_sidecar_command(app_label=app_label),
+                              command=get_sidecar_command(),
                               env=env_vars,
                               args=sidecar_args)

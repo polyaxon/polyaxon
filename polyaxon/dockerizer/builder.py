@@ -130,7 +130,8 @@ class DockerBuilder(object):
         publisher.publish_build_job_log(
             log_lines='\n'.join(to_list(log_lines)),
             job_uuid=self.job_uuid,
-            job_name=self.job_name
+            job_name=self.job_name,
+            send_task=True
         )
 
     def _handle_log_stream(self, stream):
