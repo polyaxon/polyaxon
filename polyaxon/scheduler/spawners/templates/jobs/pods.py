@@ -144,7 +144,7 @@ class PodManager(object):
             namespace=self.namespace,
             app_label=self.app_label,
             sidecar_config=self.sidecar_config,
-            sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name))
+            sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name, app_label=self.app_label))
 
     def get_init_container(self, persistence_outputs):
         """Pod init container for setting outputs path."""

@@ -13,10 +13,10 @@ def get_sidecar_env_vars(job_name, job_container_name):
     ]
 
 
-def get_sidecar_args(pod_id):
-    return [pod_id,
+def get_sidecar_args(pod_id, app_label):
+    return ["pod_id={}".format(pod_id),
             "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
-            "--persist=true"]
+            "--app_label={}".format(app_label)]
 
 
 def get_sidecar_command(app_label):
@@ -43,6 +43,6 @@ def get_sidecar_container(job_name,
         env_vars.append(get_env_var(name=k, value=v))
     return client.V1Container(name=sidecar_container_name,
                               image=sidecar_docker_image,
-                              command=get_sidecar_command(app_label=app_label),
+                              # command=get_sidecar_command(app_label=app_label),
                               env=env_vars,
                               args=sidecar_args)
