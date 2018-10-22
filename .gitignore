@@ -105,6 +105,7 @@ data/
 
 # environment vars
 polyaxon/polyaxon/env_vars/local.json
+polyaxon/sidecar/env_vars/local.json
 
 # project
 logs/*
