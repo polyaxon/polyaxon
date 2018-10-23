@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from hestia.auth import AuthenticationTypes
 from unittest import TestCase
+
+from hestia.auth import AuthenticationTypes
 
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport import Transport
