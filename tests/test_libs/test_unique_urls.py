@@ -5,9 +5,17 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
-from libs.unique_urls import get_user_url, get_project_url, get_user_project_url, \
-    get_experiment_url, get_experiment_group_url, get_job_health_url, get_job_url, get_build_url, \
-    get_experiment_health_url
+from libs.unique_urls import (
+    get_build_url,
+    get_experiment_group_url,
+    get_experiment_health_url,
+    get_experiment_url,
+    get_job_health_url,
+    get_job_url,
+    get_project_url,
+    get_user_project_url,
+    get_user_url
+)
 from tests.utils import BaseTest
 
 
