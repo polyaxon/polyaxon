@@ -102,7 +102,7 @@ A `Distributed Experiment` is the execution of a model or a computation graph ac
 
 ### Job
 
-A `Job` is the execution of your your code to do some data processing or any generic operation.
+A `Job` is the execution of your code to do some data processing or any generic operation.
 
 !!! info "More details"
     Please refer to the [jobs section](jobs) for more details.
