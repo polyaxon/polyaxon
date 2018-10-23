@@ -29,6 +29,8 @@ def get_code_reference(instance, commit):
 
 
 def assign_code_reference(instance, commit=None):
+    if instance.code_reference is not None:
+        return
     if not commit and instance.specification and instance.specification.build:
         commit = instance.specification.build.commit
     code_reference = get_code_reference(instance=instance, commit=commit)
