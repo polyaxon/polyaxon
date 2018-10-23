@@ -31,11 +31,13 @@ if SSL_ENABLED:
 
 class INTERNAL_SERVICES(object):  # noqa
     DOCKERIZER = 'dockerizer'
+    SIDECAR = 'sidecar'
     HELPER = 'helper'
     RUNNER = 'runner'
 
     VALUES = [
         DOCKERIZER,
+        SIDECAR,
         HELPER,
         RUNNER
     ]
