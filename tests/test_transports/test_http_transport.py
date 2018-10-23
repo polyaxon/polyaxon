@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import mock
 import requests
 
 from unittest import TestCase
+
+import mock
 
 from clint.textui.progress import Bar
 

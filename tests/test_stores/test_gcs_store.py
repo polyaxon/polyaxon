@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import mock
 import os
 import tempfile
 
 from unittest import TestCase
+
+import mock
 
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
 from polyaxon_client.stores.stores.gcs_store import GCSStore

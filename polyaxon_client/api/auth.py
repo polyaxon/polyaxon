@@ -5,6 +5,8 @@ import json
 import os
 import requests
 
+from hestia.auth import AuthenticationTypes
+
 from polyaxon_client import settings
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
@@ -105,7 +107,7 @@ class AuthApi(BaseApiHandler):
                 request_url,
                 headers={
                     'Authorization': '{} {}'.format(
-                        settings.AuthenticationTypes.EPHEMERAL_TOKEN, ephemeral_token)
+                        AuthenticationTypes.EPHEMERAL_TOKEN, ephemeral_token)
                 })
         except requests.ConnectionError:
             raise PolyaxonHTTPError(

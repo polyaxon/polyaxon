@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from hestia.auth import AuthenticationTypes
+
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
 
@@ -67,7 +69,7 @@ class ApiConfig(object):
         self.base_ws_url = self.BASE_WS_URL.format(self.ws_host, self.version)
         self.authentication_type = (authentication_type or
                                     settings.AUTHENTICATION_TYPE or
-                                    settings.AuthenticationTypes.TOKEN)
+                                    AuthenticationTypes.TOKEN)
         self.schema_response = self._get_bool(schema_response, settings.SCHEMA_RESPONSE)
         self.reraise = reraise
         self.timeout = timeout if timeout is not None else settings.TIMEOUT

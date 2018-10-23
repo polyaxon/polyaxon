@@ -2,15 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import os
-
 import rhea
 
-
-class AuthenticationTypes(object):
-    TOKEN = 'Token'
-    INTERNAL_TOKEN = 'Internaltoken'
-    EPHEMERAL_TOKEN = 'EphemeralToken'
-
+from hestia.auth import AuthenticationTypes
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
 TMP_AUTH_GCS_ACCESS_PATH = '/tmp/.polyaxon/.gcsaccess.json'
