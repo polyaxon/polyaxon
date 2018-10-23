@@ -54,7 +54,7 @@ class ApiConfig(object):
 
             internal_token_cond = (
                 self.internal_header and
-                self.internal_header == AuthenticationTypes.INTERNAL_TOKEN and
+                not self.token and
                 settings.SECRET_INTERNAL_TOKEN
             )
             if internal_token_cond:
