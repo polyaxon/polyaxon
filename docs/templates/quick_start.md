@@ -175,7 +175,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Check the run definition:
 
     ```bash
-    $ polyaxon check -f polyaxonfile_hyperparams.yml -x
+    $ polyaxon check -f polyaxonfile_hyperparams.yml --definition
 
 
     Polyaxonfile valid
@@ -192,7 +192,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Start the experiments group
 
     ```bash
-    $ polyaxon run -f polyaxonfile_declarations.yml
+    $ polyaxon run -f polyaxonfile_hyperparams.yml
 
     Creating an experiment group with 20 experiments.
 
