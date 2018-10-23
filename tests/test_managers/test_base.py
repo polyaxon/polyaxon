@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from mock import patch
 from unittest import TestCase
+
+from mock import patch
 
 from polyaxon_cli.managers.base import BaseConfigManager
 

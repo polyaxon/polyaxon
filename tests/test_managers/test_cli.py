@@ -4,8 +4,9 @@ from __future__ import absolute_import, division, print_function
 import os
 import uuid
 
-from mock import patch
 from unittest import TestCase
+
+from mock import patch
 
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.schemas.cli_configuration import CliConfigurationConfig

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from mock import mock_open, patch
 from unittest import TestCase
+
+from mock import mock_open, patch
 
 from polyaxon_cli.managers.ignore import IgnoreManager
 

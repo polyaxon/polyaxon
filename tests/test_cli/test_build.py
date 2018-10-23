@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 from mock import patch
-
 from tests.test_cli.utils import BaseCommandTestCase
 
 from polyaxon_cli.cli.build import build
