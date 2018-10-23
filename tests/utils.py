@@ -295,11 +295,12 @@ class BaseViewTest(BaseTest):
     HAS_AUTH = False
     HAS_INTERNAL = False
     ADMIN_USER = False
+    INTERNAL_SERVICE = None
 
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.internal_client = InternalClient()
+        cls.internal_client = InternalClient(service=cls.INTERNAL_SERVICE)
         if cls.ADMIN_USER:
             user = UserFactory(is_staff=True, is_superuser=True)
             cls.auth_client = AuthorizedClient(user=user)
