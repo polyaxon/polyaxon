@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_client.settings import AuthenticationTypes
 
 
 class ApiConfig(object):
@@ -50,6 +51,14 @@ class ApiConfig(object):
             self.ws_host = settings.API_WS_HOST
             if all([settings.INTERNAL_HEADER, settings.INTERNAL_HEADER_SERVICE]):
                 self.internal_header = {settings.INTERNAL_HEADER: settings.INTERNAL_HEADER_SERVICE}
+
+            internal_token_cond = (
+                self.internal_header and
+                self.internal_header == AuthenticationTypes.INTERNAL_TOKEN and
+                settings.SECRET_INTERNAL_TOKEN
+            )
+            if internal_token_cond:
+                self.token = settings.SECRET_INTERNAL_TOKEN
         else:
             http_protocol = 'https' if self.use_https else 'http'
             ws_protocol = 'wss' if self.use_https else 'ws'
