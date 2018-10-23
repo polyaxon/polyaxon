@@ -44,7 +44,7 @@ class BaseTracker(object):
         if not any([outputs_store, outputs_path]):
             raise PolyaxonClientException(
                 'An Store instance or and outputs path is required.')
-        self.outputs_store = outputs_store or Store(outputs_path=outputs_path)
+        self.outputs_store = outputs_store or Store(path=outputs_path)
         if self.outputs_store and set_env_vars:
             self.outputs_store.set_env_vars()
 
