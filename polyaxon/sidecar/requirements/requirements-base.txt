@@ -1,3 +1,2 @@
 celery==4.2.1
-raven==6.7.0
 Unipath==1.1
