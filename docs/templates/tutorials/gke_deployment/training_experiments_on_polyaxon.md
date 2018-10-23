@@ -49,7 +49,7 @@ Before we can train our experiments we need to deploy Polyaxon.
 
 7. Create the first experiment
 
-    Unless you copied the data manually to the data share create in the previous section,
+    Unless you copied the data manually to the data share created in the previous section,
     the first time you create an experiment, it will create the data.
 
     Start an experiment with the default `polyaxonfile.yml`
@@ -80,8 +80,7 @@ Before we can train our experiments we need to deploy Polyaxon.
     --------  -------------------  ---------------
     master.1  1.26 Gb / 6.79 Gb    120.11% - 6
     ```
-
-    N.B. Azure seems to have an issue with reporting docker cpu resources.
+    
 
 10. Run a distributed experiment
 
