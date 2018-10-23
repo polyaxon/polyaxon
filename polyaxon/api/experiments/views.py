@@ -524,7 +524,10 @@ class ExperimentHeartBeatView(ExperimentViewMixin, PostAPIView):
     post:
         Post a heart beat ping.
     """
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrInternal,)
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
 
     def post(self, request, *args, **kwargs):
         experiment = self.get_experiment()

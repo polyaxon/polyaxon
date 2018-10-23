@@ -707,6 +707,8 @@ class DownloadJobOutputsViewTest(BaseViewTest):
 class TestJobHeartBeatViewV1(BaseViewTest):
     HAS_AUTH = True
     DISABLE_RUNNER = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = settings.INTERNAL_SERVICES.SIDECAR
 
     def setUp(self):
         super().setUp()
@@ -721,5 +723,11 @@ class TestJobHeartBeatViewV1(BaseViewTest):
     def test_post_job_heartbeat(self):
         self.assertEqual(RedisHeartBeat.job_is_alive(self.job.id), False)
         resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assertEqual(RedisHeartBeat.job_is_alive(self.job.id), True)
+
+    def test_post_internal_job_heartbeat(self):
+        self.assertEqual(RedisHeartBeat.job_is_alive(self.job.id), False)
+        resp = self.internal_client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         self.assertEqual(RedisHeartBeat.job_is_alive(self.job.id), True)

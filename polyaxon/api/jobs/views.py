@@ -15,6 +15,7 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 from django.http import StreamingHttpResponse
 
@@ -49,7 +50,9 @@ from event_manager.events.job import (
 )
 from event_manager.events.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_job_outputs
+from libs.authentication.internal import InternalAuthentication
 from libs.paths.jobs import get_job_logs_path
+from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_job_spec_config
 from polyaxon.celery_api import celery_app
@@ -317,7 +320,10 @@ class JobHeartBeatView(PostAPIView):
         Post a heart beat ping.
     """
     queryset = Job.objects.all()
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrInternal,)
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
     lookup_field = 'id'
 
     def post(self, request, *args, **kwargs):

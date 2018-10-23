@@ -1974,6 +1974,8 @@ class TestExperimentChartViewDetailViewV1(BaseViewTest):
 class TestExperimentHeartBeatViewV1(BaseViewTest):
     HAS_AUTH = True
     DISABLE_RUNNER = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = settings.INTERNAL_SERVICES.SIDECAR
 
     def setUp(self):
         super().setUp()
@@ -1988,5 +1990,11 @@ class TestExperimentHeartBeatViewV1(BaseViewTest):
     def test_post_experiment_heartbeat(self):
         self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), False)
         resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), True)
+
+    def test_post_internal_experiment_heartbeat(self):
+        self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), False)
+        resp = self.internal_client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), True)

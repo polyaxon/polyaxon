@@ -6,6 +6,8 @@ import pytest
 
 from rest_framework import status
 
+from django.conf import settings
+
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
     BookmarkedBuildJobSerializer,
@@ -568,6 +570,8 @@ class TestBuildLogsViewV1(BaseViewTest):
 class TestBuildHeartBeatViewV1(BaseViewTest):
     HAS_AUTH = True
     DISABLE_RUNNER = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = settings.INTERNAL_SERVICES.SIDECAR
 
     def setUp(self):
         super().setUp()
@@ -582,5 +586,11 @@ class TestBuildHeartBeatViewV1(BaseViewTest):
     def test_post_build_heartbeat(self):
         self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), False)
         resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), True)
+
+    def test_post_internal_build_heartbeat(self):
+        self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), False)
+        resp = self.internal_client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), True)
