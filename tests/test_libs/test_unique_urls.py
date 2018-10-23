@@ -24,6 +24,7 @@ class TestUniqueUrls(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):
+        super().setUp()
         self.project = ProjectFactory()
         self.experiment = ExperimentFactory()
         self.group = ExperimentGroupFactory()
