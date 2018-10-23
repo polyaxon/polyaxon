@@ -33,7 +33,7 @@ build:
 Now we can start the jupyter notebook on the project
 
 ```bash
-$ polyaxon notebook -f polyaxonfile_notebook.yml
+$ polyaxon notebook start -f polyaxonfile_notebook.yml
 
 Notebook is being deployed for project `mnist`
 
