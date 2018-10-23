@@ -15,6 +15,7 @@ from django.conf import settings
 import publisher
 
 from constants.jobs import JobLifeCycle
+from db.redis.heartbeat import RedisHeartBeat
 from docker_images.image_info import get_image_name, get_tagged_image
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from libs.http import download, untar_file
@@ -35,6 +36,7 @@ class DockerBuilderError(Exception):
 class DockerBuilder(object):
     LATEST_IMAGE_TAG = 'latest'
     WORKDIR = '/code'
+    HEART_BEAT_INTERVAL = 60
 
     def __init__(self,
                  build_job,
@@ -137,6 +139,7 @@ class DockerBuilder(object):
     def _handle_log_stream(self, stream):
         log_lines = []
         last_emit_time = time.time()
+        last_heart_beat = time.time()
         try:
             for log_line in stream:
                 log_lines += self._prepare_log_lines(log_line)
@@ -148,6 +151,9 @@ class DockerBuilder(object):
                     self._handle_logs(log_lines)
                     log_lines = []
                     last_emit_time = time.time()
+                if time.time() - last_heart_beat > self.HEART_BEAT_INTERVAL:
+                    last_heart_beat = time.time()
+                    RedisHeartBeat.build_ping(build_id=self.build_job.id)
             if log_lines:
                 self._handle_logs(log_lines)
         except (BuildError, APIError, DockerBuilderError) as e:
