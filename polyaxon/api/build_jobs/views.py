@@ -50,7 +50,6 @@ from libs.authentication.internal import InternalAuthentication
 from libs.paths.jobs import get_job_logs_path
 from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
-from libs.repos.utils import get_project_latest_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -92,10 +91,8 @@ class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
                 raise ValidationError('ttl must be an integer.')
 
         project = get_permissible_project(view=self)
-        code_reference = get_project_latest_code_reference(project=project)
         instance = serializer.save(user=self.request.user,
-                                   project=project,
-                                   code_reference=code_reference)
+                                   project=project)
         auditor.record(event_type=BUILD_JOB_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_build(build_id=instance.id, value=ttl)

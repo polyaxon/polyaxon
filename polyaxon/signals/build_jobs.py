@@ -19,6 +19,7 @@ from event_manager.events.build_job import (
     BUILD_JOB_SUCCEEDED
 )
 from libs.paths.jobs import delete_job_logs
+from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.run_time import set_job_finished_at, set_job_started_at
@@ -33,6 +34,7 @@ _logger = logging.getLogger('polyaxon.signals.build_jobs')
 def build_job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     set_tags(instance=instance)
+    assign_code_reference(instance)
 
 
 @receiver(post_save, sender=BuildJob, dispatch_uid="build_job_post_save")
