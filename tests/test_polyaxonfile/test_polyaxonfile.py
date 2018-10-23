@@ -305,6 +305,9 @@ class TestPolyaxonfile(TestCase):
             'concurrency': 2,
         }
 
+        build = spec.build
+        assert build is None
+
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
         assert spec.environment is not None
@@ -346,6 +349,9 @@ class TestPolyaxonfile(TestCase):
             'concurrency': 2,
         }
 
+        build = spec.build
+        assert build is None
+
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
         assert spec.environment is None
@@ -384,6 +390,9 @@ class TestPolyaxonfile(TestCase):
             'concurrency': 2,
             'n_experiments': 5
         }
+
+        build = spec.build
+        assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
@@ -428,6 +437,9 @@ class TestPolyaxonfile(TestCase):
             'n_experiments': 300
         }
 
+        build = spec.build
+        assert build is None
+
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
         assert spec.environment is None
@@ -455,6 +467,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.hptuning.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 2
+
+        build = spec.build
+        assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
@@ -500,6 +515,11 @@ class TestPolyaxonfile(TestCase):
         assert spec.matrix_space == 3
         assert isinstance(spec.hptuning, HPTuningConfig)
         declarations = spec.matrix_declaration_test
+
+        build = spec.build
+        assert isinstance(build, BuildConfig)
+        assert build.image == 'my_image'
+
         spec = spec.get_experiment_spec(declarations)
         assert spec.is_runnable
         assert spec.environment is None
@@ -520,6 +540,7 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
+        assert isinstance(spec.build, BuildConfig)
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.hptuning.matrix['model'], MatrixConfig)
         assert spec.hptuning.matrix['learning_rate'].to_dict() == {
@@ -531,6 +552,12 @@ class TestPolyaxonfile(TestCase):
         assert spec.hptuning.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert isinstance(spec.hptuning, HPTuningConfig)
         declarations = spec.matrix_declaration_test
+
+
+        build = spec.build
+        assert isinstance(build, BuildConfig)
+        assert build.image == 'my_image'
+
         spec = spec.get_experiment_spec(declarations)
         assert spec.is_runnable
         assert spec.environment is None

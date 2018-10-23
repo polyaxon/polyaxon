@@ -8,6 +8,7 @@ import numpy as np
 import six
 
 from collections import Mapping, defaultdict
+
 from rhea.utils import deep_update
 
 from polyaxon_schemas.exceptions import PolyaxonfileError

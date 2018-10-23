@@ -2,8 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import abc
-import rhea
 import six
+
+import rhea
 
 from marshmallow import ValidationError
 

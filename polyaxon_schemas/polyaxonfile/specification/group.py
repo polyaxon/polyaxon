@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import copy
 import six
 
 from polyaxon_schemas.environments import PersistenceConfig
@@ -8,6 +9,7 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
+from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
 from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import SearchAlgorithms
@@ -53,11 +55,26 @@ class GroupSpecification(BaseSpecification):
         validator.validate(spec=self, data=parsed_data)
 
     def get_experiment_spec(self, matrix_declaration):
-        """Returns and experiment spec for this group spec and the given matrix declaration."""
+        """Returns an experiment spec for this group spec and the given matrix declaration."""
         parsed_data = Parser.parse(self, self._data, matrix_declaration)
         del parsed_data[self.HP_TUNING]
         validator.validate(spec=self, data=parsed_data)
         return ExperimentSpecification(values=[parsed_data, {'kind': self._EXPERIMENT}])
+
+    def get_build_spec(self):
+        """Returns a build spec for this group spec."""
+        data = {}
+        if BaseSpecification.BUILD not in self._data:
+            return None
+        for key in self._data:
+            if key in BuildSpecification.POSSIBLE_SECTIONS:
+                data[key] = copy.deepcopy(self._data[key])
+        return BuildSpecification(values=[data, {'kind': self._BUILD}])
+
+    @cached_property
+    def build(self):
+        build_spec = self.get_build_spec()
+        return self.get_build_spec().build if build_spec else None
 
     @cached_property
     def environment(self):
