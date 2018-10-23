@@ -1,12 +1,11 @@
 import logging
 
+from hestia.logging_utils import LogSpec
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
-from polyaxon_schemas.utils import local_now
 
 
 class PolyaxonHandler(logging.Handler):
-    DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S %Z"
 
     def __init__(self, send_logs, **kwargs):
         self._send_logs = send_logs
@@ -20,9 +19,7 @@ class PolyaxonHandler(logging.Handler):
         )
 
     def format_record(self, record):
-        return '{} -- {} {}'.format(local_now().strftime(self.DATETIME_FORMAT),
-                                    record.levelname,
-                                    record.msg)
+        return LogSpec(log_line=record.msg, log_level=record.levelname)
 
     def emit(self, record):  # pylint:disable=inconsistent-return-statements
         if settings.IN_CLUSTER or not self.can_record(record):
