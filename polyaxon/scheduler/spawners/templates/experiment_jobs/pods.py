@@ -50,6 +50,7 @@ class PodManager(object):
                  role_label=None,
                  type_label=None,
                  ports=None,
+                 health_check_url=None,
                  use_sidecar=False,
                  sidecar_config=None,
                  log_level=None,
@@ -79,6 +80,7 @@ class PodManager(object):
                 'In order to use a `sidecar_config` is required. '
                 'The `sidecar_config` must correspond to the sidecar docker image used.')
         self.sidecar_config = sidecar_config
+        self.health_check_url = health_check_url
         self.log_level = log_level
         self.declarations = declarations
         self.experiment_labels = self.get_experiment_labels()
@@ -181,7 +183,8 @@ class PodManager(object):
             sidecar_docker_image=self.sidecar_docker_image,
             namespace=self.namespace,
             sidecar_config=self.sidecar_config,
-            sidecar_args=args)
+            sidecar_args=args,
+            internal_health_check_url=self.health_check_url)
 
     def get_init_container(self, persistence_outputs):
         """Pod init container for setting outputs path."""

@@ -1,3 +1,4 @@
+from libs.unique_urls import get_job_health_url
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
@@ -58,7 +59,8 @@ class JobSpawner(K8SManager):
                                            ports=ports,
                                            use_sidecar=use_sidecar,
                                            sidecar_config=sidecar_config,
-                                           log_level=self.spec.log_level)
+                                           log_level=self.spec.log_level,
+                                           health_check_url=get_job_health_url(job_name))
         self.persist = persist
 
         super().__init__(k8s_config=k8s_config,

@@ -47,6 +47,7 @@ class PodManager(object):
                  ports=None,
                  use_sidecar=False,
                  sidecar_config=None,
+                 health_check_url=None,
                  log_level=None):
         self.namespace = namespace
         self.name = name
@@ -72,6 +73,7 @@ class PodManager(object):
                 'In order to use a `sidecar_config` is required. '
                 'The `sidecar_config` must correspond to the sidecar docker image used.')
         self.sidecar_config = sidecar_config
+        self.health_check_url = health_check_url
         self.log_level = log_level
 
     def get_k8s_job_name(self):
@@ -143,7 +145,8 @@ class PodManager(object):
             sidecar_docker_image=self.sidecar_docker_image,
             namespace=self.namespace,
             sidecar_config=self.sidecar_config,
-            sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name, app_label=self.app_label))
+            sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name, app_label=self.app_label),
+            internal_health_check_url=self.health_check_url)
 
     def get_init_container(self, persistence_outputs):
         """Pod init container for setting outputs path."""

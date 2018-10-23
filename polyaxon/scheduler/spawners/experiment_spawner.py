@@ -1,4 +1,5 @@
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
+from libs.unique_urls import get_experiment_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
@@ -56,26 +57,28 @@ class ExperimentSpawner(K8SManager):
         self.persistence_config = persistence_config
         self.outputs_refs_experiments = outputs_refs_experiments
         self.outputs_refs_jobs = outputs_refs_jobs
-        self.pod_manager = pods.PodManager(namespace=namespace,
-                                           project_name=self.project_name,
-                                           experiment_group_name=self.experiment_group_name,
-                                           experiment_name=self.experiment_name,
-                                           project_uuid=self.project_uuid,
-                                           experiment_group_uuid=self.experiment_group_uuid,
-                                           experiment_uuid=experiment_uuid,
-                                           job_container_name=job_container_name,
-                                           job_docker_image=job_docker_image,
-                                           sidecar_container_name=sidecar_container_name,
-                                           sidecar_docker_image=sidecar_docker_image,
-                                           role_label=role_label,
-                                           type_label=type_label,
-                                           ports=ports,
-                                           use_sidecar=use_sidecar,
-                                           sidecar_config=sidecar_config,
-                                           log_level=self.spec.log_level,
-                                           original_name=self.original_name,
-                                           cloning_strategy=self.cloning_strategy,
-                                           declarations=self.spec.declarations)
+        self.pod_manager = pods.PodManager(
+            namespace=namespace,
+            project_name=self.project_name,
+            experiment_group_name=self.experiment_group_name,
+            experiment_name=self.experiment_name,
+            project_uuid=self.project_uuid,
+            experiment_group_uuid=self.experiment_group_uuid,
+            experiment_uuid=experiment_uuid,
+            job_container_name=job_container_name,
+            job_docker_image=job_docker_image,
+            sidecar_container_name=sidecar_container_name,
+            sidecar_docker_image=sidecar_docker_image,
+            role_label=role_label,
+            type_label=type_label,
+            ports=ports,
+            use_sidecar=use_sidecar,
+            sidecar_config=sidecar_config,
+            log_level=self.spec.log_level,
+            original_name=self.original_name,
+            cloning_strategy=self.cloning_strategy,
+            declarations=self.spec.declarations,
+            health_check_url=get_experiment_health_url(self.experiment_name))
         self.persist = persist
         self.token_scope = token_scope
 
