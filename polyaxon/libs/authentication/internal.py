@@ -1,3 +1,4 @@
+from hestia.auth import AuthenticationTypes
 from hestia.headers import get_header
 
 from rest_framework import exceptions
@@ -51,7 +52,7 @@ class InternalAuthentication(BaseAuthentication):
         X_POLYAXON_INTERNAL: experiments
     """
 
-    keyword = 'InternalToken'
+    keyword = AuthenticationTypes.INTERNAL_TOKEN
     model = None
 
     def get_model(self):

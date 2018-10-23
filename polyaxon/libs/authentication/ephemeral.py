@@ -1,6 +1,7 @@
 import base64
 import binascii
 
+from hestia.auth import AuthenticationTypes
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 
@@ -49,7 +50,7 @@ class EphemeralAuthentication(BaseAuthentication):
         X_POLYAXON_INTERNAL: experiments
     """
 
-    keyword = 'EphemeralToken'
+    keyword = AuthenticationTypes.EPHEMERAL_TOKEN
     model = None
 
     def authenticate(self, request):
