@@ -64,6 +64,8 @@ SCHEMA_RESPONSE = config.get_boolean('POLYAXON_SCHEMA_RESPONSE',
 RUN_STORES_ACCESS_KEYS = config.get_dict('POLYAXON_RUN_STORES_ACCESS_KEYS',
                                          is_optional=True,
                                          default={})
+INTERNAL_HEALTH_CHECK_URL = config.get_string('POLYAXON_INTERNAL_HEALTH_CHECK_URL',
+                                              is_optional=True)
 
 DEFAULT_HTTP_PORT = 80
 DEFAULT_HTTPS_PORT = 443
@@ -78,7 +80,7 @@ INTERVAL = config.get_int('POLYAXON_INTERVAL',
                           default=1)
 HEALTH_CHECK_INTERVAL = config.get_int('HEALTH_CHECK_INTERVAL',
                                        is_optional=True,
-                                       default=10)
+                                       default=40)
 QUEUE_CALL = config.get_int('POLYAXON_INTERVAL',
                             is_optional=True,
                             default=200)

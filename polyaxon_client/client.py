@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_client import settings
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.bookmark import BookmarkApi
 from polyaxon_client.api.build_job import BuildJobApi
@@ -148,6 +149,11 @@ class PolyaxonClient(object):
 
     def set_health_check(self, url):
         self.transport.set_health_check(url)
+
+    def set_internal_health_check(self):
+        if settings.INTERNAL_HEALTH_CHECK_URL:
+            self.set_health_check(
+                self.auth.build_url(self.api_config.base_url, settings.INTERNAL_HEALTH_CHECK_URL))
 
     @property
     def transport(self):
