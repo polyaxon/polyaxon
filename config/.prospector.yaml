@@ -10,6 +10,7 @@ ignore-patterns:
   - __init__.py
   - (^|/)migrations(/|$)
   - (^|/)config_settings/.*/apps.py
+  - (^|/)sidecar(/|$)
   - src
 
 pep257:
