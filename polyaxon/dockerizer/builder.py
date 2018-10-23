@@ -5,10 +5,9 @@ import os
 import stat
 import time
 
-from hestia.logging_utils import LogSpec
-
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
+from hestia.logging_utils import LogSpec
 
 from django.conf import settings
 

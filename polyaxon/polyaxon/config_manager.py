@@ -1,8 +1,9 @@
 import base64
 import os
-import rhea
 
 from distutils.util import strtobool  # pylint:disable=import-error
+
+import rhea
 
 from unipath import Path
 

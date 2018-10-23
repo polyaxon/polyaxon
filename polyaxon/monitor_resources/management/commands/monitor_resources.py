@@ -1,8 +1,8 @@
 import time
 
-from hestia.bool_utils import to_bool
-
 import redis
+
+from hestia.bool_utils import to_bool
 
 from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError

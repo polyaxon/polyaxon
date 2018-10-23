@@ -1,8 +1,8 @@
 import os
 
-from rhea import RheaError
-
 import pytest
+
+from rhea import RheaError
 
 from polyaxon.config_manager import ConfigManager
 from tests.utils import BaseTest

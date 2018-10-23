@@ -1,4 +1,5 @@
 from collections import namedtuple
+
 from hestia.date_formatter import DateTimeFormatter, DateTimeFormatterException
 
 from django.db.models import Q

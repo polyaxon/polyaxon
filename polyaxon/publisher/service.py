@@ -1,6 +1,5 @@
-from hestia.service_interface import Service
-
 from amqp import AMQPError
+from hestia.service_interface import Service
 from redis import RedisError
 
 from django.conf import settings

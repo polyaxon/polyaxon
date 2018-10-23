@@ -1,5 +1,4 @@
 from hestia.string_utils import strip_spaces
-
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.filters import OrderingFilter as BaseOrderingFilter

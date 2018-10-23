@@ -1,5 +1,4 @@
 from hestia.decorators import ignore_raw
-
 from rest_framework.authtoken.models import Token
 
 from django.conf import settings

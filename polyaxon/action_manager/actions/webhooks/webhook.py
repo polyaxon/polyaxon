@@ -1,6 +1,7 @@
+from requests import RequestException
+
 from hestia.date_utils import to_timestamp
 from hestia.urls_utils import validate_url
-from requests import RequestException
 
 from django.conf import settings
 

@@ -1,8 +1,8 @@
 import datetime
 
-from hestia.date_formatter import DateTimeFormatter
-
 import pytest
+
+from hestia.date_formatter import DateTimeFormatter
 
 from django.db.models import Q
 

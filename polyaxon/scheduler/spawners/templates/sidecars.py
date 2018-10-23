@@ -1,5 +1,4 @@
 from hestia.auth import AuthenticationTypes
-
 from kubernetes import client
 
 from django.conf import settings

@@ -1,7 +1,8 @@
 import copy
 
-from hestia.date_utils import to_datetime, to_timestamp
 from uuid import UUID, uuid1
+
+from hestia.date_utils import to_datetime, to_timestamp
 
 from django.db.models import Model
 from django.utils import timezone
