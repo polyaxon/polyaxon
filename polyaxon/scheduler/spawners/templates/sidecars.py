@@ -1,3 +1,5 @@
+from hestia.auth import AuthenticationTypes
+
 from kubernetes import client
 
 from django.conf import settings
@@ -12,6 +14,7 @@ def get_sidecar_env_vars(job_name, job_container_name, internal_health_check_url
         get_env_var(name='POLYAXON_POD_ID', value=job_name),
         get_env_var(name='POLYAXON_JOB_ID', value=job_container_name),
         get_env_var(name='POLYAXON_INTERNAL_HEALTH_CHECK_URL', value=internal_health_check_url),
+        get_env_var(name='POLYAXON_AUTHENTICATION_TYPE', value=AuthenticationTypes.INTERNAL_TOKEN),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
                     value=settings.HEADERS_INTERNAL.replace('_', '-')),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
