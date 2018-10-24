@@ -1,18 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from db.models.repos import CodeReference
+from db.models.repos import CodeReference, ExternalRepo
 
 
-def get_code_reference(instance, commit=None, external_repo=None):
+def get_internal_code_reference(instance, commit=None):
     project = instance.project
 
-    if external_repo:
-        repo = external_repo
-    elif project.has_code:
-        repo = project.repo
-
-    if not repo:
+    if not project.has_code:
         return None
+
+    repo = project.repo
 
     if commit:
         try:
@@ -29,6 +26,17 @@ def get_code_reference(instance, commit=None, external_repo=None):
     return code_reference
 
 
+def get_external_code_reference(instance, external_repo, commit=None):
+    project = instance.project
+
+    external_repo, created = ExternalRepo.objects.get_or_create(project=project,
+                                                                git_url=external_repo)
+
+    code_reference, _ = CodeReference.objects.get_or_create(external_repo=external_repo,
+                                                            commit=commit)
+    return code_reference
+
+
 def assign_code_reference(instance, commit=None):
     if instance.code_reference is not None:
         return
@@ -36,9 +44,13 @@ def assign_code_reference(instance, commit=None):
     if not commit and build:
         commit = build.commit
     external_repo = build.git if build and build.git else None
-    code_reference = get_code_reference(instance=instance,
-                                        commit=commit,
-                                        external_repo=external_repo)
+    if external_repo:
+        code_reference = get_external_code_reference(instance=instance,
+                                                     external_repo=external_repo,
+                                                     commit=commit)
+    else:
+        code_reference = get_internal_code_reference(instance=instance,
+                                                     commit=commit)
     if code_reference:
         instance.code_reference = code_reference
 
