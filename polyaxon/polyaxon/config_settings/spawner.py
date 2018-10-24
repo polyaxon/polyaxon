@@ -9,6 +9,11 @@ K8S_PROVISIONER_ENABLED = config.get_boolean('POLYAXON_K8S_PROVISIONER_ENABLED')
 K8S_INGRESS_ENABLED = config.get_boolean('POLYAXON_K8S_INGRESS_ENABLED')
 K8S_INGRESS_ANNOTATIONS = config.get_string('POLYAXON_K8S_INGRESS_ANNOTATIONS', is_optional=True)
 
+# Builds
+BUILD_ALWAYS_PULL_LATEST = config.get_boolean('POLYAXON_BUILD_ALWAYS_PULL_LATEST',
+                                              is_optional=True,
+                                              default=False)
+
 # Refs
 REFS_SECRETS = config.get_string('POLYAXON_REFS_SECRETS',
                                  is_optional=True,

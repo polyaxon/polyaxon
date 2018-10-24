@@ -83,7 +83,12 @@ class BuildJob(AbstractJob,
             # Set the config's nocache rebuild
             nocache = build_config.build.nocache
         # Check if image is not using latest tag, then we can reuse a previous build
-        if not nocache and build_config.build.image_tag != LATEST_IMAGE_TAG:
+        rebuild_cond = (
+            nocache or
+            (settings.BUILD_ALWAYS_PULL_LATEST and
+             build_config.build.image_tag == LATEST_IMAGE_TAG)
+        )
+        if not rebuild_cond:
             job = BuildJob.objects.filter(project=project,
                                           config=build_config.parsed_data,
                                           code_reference=code_reference).last()
