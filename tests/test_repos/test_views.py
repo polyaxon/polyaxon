@@ -359,8 +359,9 @@ class DownloadRepoViewTest(BaseViewTest):
         response = self.auth_client.get(self.download_url)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         '{}/{}.tar.gz'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
+        self.assertEqual(
+            response[ProtectedView.NGINX_REDIRECT_HEADER],
+            '{}/{}-master.tar.gz'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
 
     def test_redirects_nginx_to_file_works_with_internal_client(self):
         self.upload_file()
@@ -378,5 +379,6 @@ class DownloadRepoViewTest(BaseViewTest):
         response = self.internal_client.get(self.download_url)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         '{}/{}.tar.gz'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
+        self.assertEqual(
+            response[ProtectedView.NGINX_REDIRECT_HEADER],
+            '{}/{}-master.tar.gz'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
