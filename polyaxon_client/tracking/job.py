@@ -25,9 +25,6 @@ class Job(BaseTracker):
             job_id = job_info['job_name'].split('.')[-1]
             job_type = job_info['job_name'].split('.')[-2]
 
-        if settings.IN_CLUSTER:
-            self._set_health_url()
-
         super(Job, self).__init__(project=project,
                                   client=client,
                                   track_logs=track_logs,
