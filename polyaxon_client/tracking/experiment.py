@@ -62,9 +62,11 @@ class Experiment(BaseTracker):
                     ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
                     set_token=True,
                     persist_token=True)
-                self._set_health_url()
             except AuthenticationError:
                 logger.debug('Could not log with ephemeral token.')
+
+        if settings.IN_CLUSTER:
+            self._set_health_url()
 
         # Track run env
         if settings.IN_CLUSTER and self.track_env:
