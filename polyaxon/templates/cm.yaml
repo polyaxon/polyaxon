@@ -79,7 +79,7 @@ data:
   {{- if .Values.email.backend }}
   POLYAXON_EMAIL_BACKEND: {{ .Values.email.backend | quote }}
   {{- end }}
-  # Celery
+  # Queues
   POLYAXON_QUEUES_REPOS: {{ .Values.queues.repos | quote }}
   POLYAXON_QUEUES_SCHEDULER_HEALTH: {{ .Values.queues.schedulerHealth | quote }}
   POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS: {{ .Values.queues.schedulerExperiments | quote }}
@@ -169,6 +169,7 @@ data:
   POLYAXON_TYPE_LABELS_CORE: {{ .Values.types.core }}
   POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner }}
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
+  POLYAXON_BUILD_ALWAYS_PULL_LATEST: {{ default "publisher" .Values.build_always_pull_latest | quote }}
   # Registry
   POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
   POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").service.port | quote }}
