@@ -149,7 +149,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.clones.count() == 2
 
         # Resuming a resumed experiment
-        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             resumed = new_experiment.resume()
             ExperimentStatusFactory(experiment=resumed, status=ExperimentLifeCycle.CREATED)
         experiment.refresh_from_db()
