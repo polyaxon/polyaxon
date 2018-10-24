@@ -1,12 +1,10 @@
 import os
-import requests
 import tarfile
-
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
-from rest_framework.authentication import TokenAuthentication
-
+import requests
 from django.conf import settings
+from rest_framework.authentication import TokenAuthentication
 
 from libs.api import get_http_api_url
 from libs.authentication.internal import InternalAuthentication
@@ -85,9 +83,14 @@ def download(url,
              authentication_type=None,
              access_token=None,
              headers=None,
+             internal=True,
              timeout=60):
-    """Download the file from the given url at the current path"""
-    authentication_type = authentication_type or InternalAuthentication.keyword
+    """Get download url from the internal api."""
+    if internal:
+        authentication_type = authentication_type or InternalAuthentication.keyword
+    else:
+        authentication_type = settings.SECRET_INTERNAL_TOKEN
+
     if authentication_type == InternalAuthentication.keyword and not access_token:
         access_token = settings.SECRET_INTERNAL_TOKEN
     elif authentication_type == TokenAuthentication.keyword and not access_token:
@@ -102,8 +105,9 @@ def download(url,
         request_headers.update(headers)
 
     try:
-        api_url = get_http_api_url()
-        url = '{}/{}'.format(api_url, url)
+        if internal:
+            api_url = get_http_api_url()
+            url = '{}/{}'.format(api_url, url)
         logger.info("Downloading file from %s using %s" % (url, authentication_type))
         response = requests.get(url,
                                 headers=request_headers,

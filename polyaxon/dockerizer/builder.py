@@ -252,21 +252,29 @@ def download_code(build_job, build_path, filename):
 
     if build_job.code_reference.repo:
         download_url = build_job.code_reference.repo.download_url
+        internal = True
+        headers = {
+            settings.HEADERS_INTERNAL.replace('_', '-'): settings.INTERNAL_SERVICES.DOCKERIZER
+        }
+        access_token = None
     elif build_job.code_reference.external_repo:
         download_url = build_job.code_reference.external_repo.download_url
+        internal = False
+        headers = {}
+        access_token = settings.REPOS_ACCESS_TOKEN
     else:
         raise ValueError('Code reference for this build job does not have any repo.')
 
-    if build_job.code_reference.commit:
+    if build_job.code_reference.commit and internal:
         download_url = '{}?commit={}'.format(download_url, build_job.code_reference.commit)
 
     repo_file = download(
         url=download_url,
         filename=filename,
         logger=_logger,
-        headers={
-            settings.HEADERS_INTERNAL.replace('_', '-'): settings.INTERNAL_SERVICES.DOCKERIZER
-        })
+        headers=headers,
+        access_token=access_token,
+        internal=internal)
     if not repo_file:
         send_status(build_job=build_job,
                     status=JobLifeCycle.FAILED,
