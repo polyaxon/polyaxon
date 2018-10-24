@@ -976,7 +976,6 @@ class TestExperimentCodeReferenceViewV1(BaseViewTest):
         assert last_object.is_dirty is False
         assert last_object.git_url is None
         assert last_object.repo is None
-        assert last_object.external_repo is None
 
         data = {
             'commit': '3783ab36703b14b91b15736fe4302bfb8d52af1c',
@@ -997,7 +996,6 @@ class TestExperimentCodeReferenceViewV1(BaseViewTest):
         assert last_object.is_dirty is True
         assert last_object.git_url == 'https://bitbucket.org:foo/bar.git'
         assert last_object.repo is None
-        assert last_object.external_repo is None
 
 
 @pytest.mark.experiments_mark

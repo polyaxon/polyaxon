@@ -51,23 +51,6 @@ def experiment_pre_save(sender, **kwargs):
     set_persistence(instance=instance)
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
-
-    # Add code reference
-    # Check if :
-    # the experiment is new
-    # that it has an exec section
-    # that it's not cloned
-    # that is not an external repo (because we did not clone it yet)
-    # if the instance has a primary key then is getting updated
-    condition = (
-        not instance.specification or
-        not instance.specification.build or
-        instance.specification.build.git or
-        instance.code_reference or
-        not instance.project.has_code)
-    if condition:
-        return
-
     assign_code_reference(instance)
 
 

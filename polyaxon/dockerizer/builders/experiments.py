@@ -7,7 +7,7 @@ import publisher
 
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import is_experiment_still_running
-from db.models.repos import CodeReference, ExternalRepo, Repo
+from db.models.repos import CodeReference, Repo
 from dockerizer.builders.base import BaseDockerBuilder
 from libs.repos import git
 
@@ -66,25 +66,25 @@ def get_experiment_repo_info(experiment):
     """Returns information required to create a build for an experiment."""
     project_name = experiment.project.name
     experiment_spec = experiment.specification
-    if experiment_spec.build.git:  # We need to fetch the repo first
-
-        repo, is_created = ExternalRepo.objects.get_or_create(project=experiment.project,
-                                                              git_url=experiment_spec.build.git)
-        if not is_created:
-            # If the repo already exist, we just need to refetch it
-            git.fetch(git_url=repo.git_url, repo_path=repo.path)
-        if not experiment.code_reference.commit:
-            # Update experiment commit if not set already
-            code_reference, _ = CodeReference.objects.get_or_create(repo=repo,
-                                                                    commit=repo.last_commit[0])
-            experiment.code_reference = code_reference
-            experiment.save(update_fields=['code_reference'])
-
-        repo_path = repo.path
-        repo_name = repo.name
-    else:
-        repo_path = experiment.project.repo.path
-        repo_name = project_name
+    # if experiment_spec.build.git:  # We need to fetch the repo first
+    #
+    #     repo, is_created = ExternalRepo.objects.get_or_create(project=experiment.project,
+    #                                                           git_url=experiment_spec.build.git)
+    #     if not is_created:
+    #         # If the repo already exist, we just need to refetch it
+    #         git.fetch(git_url=repo.git_url, repo_path=repo.path)
+    #     if not experiment.code_reference.commit:
+    #         # Update experiment commit if not set already
+    #         code_reference, _ = CodeReference.objects.get_or_create(repo=repo,
+    #                                                                 commit=repo.last_commit[0])
+    #         experiment.code_reference = code_reference
+    #         experiment.save(update_fields=['code_reference'])
+    #
+    #     repo_path = repo.path
+    #     repo_name = repo.name
+    # else:
+    repo_path = experiment.project.repo.path
+    repo_name = project_name
 
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     image_tag = experiment.code_reference.commit

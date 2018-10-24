@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from constants.jobs import JobLifeCycle
-from db.models.repos import ExternalRepo, Repo
+from db.models.repos import Repo
 from dockerizer.builders.base import BaseDockerBuilder
 from libs.repos import git
 
@@ -44,22 +44,22 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
 
 def get_job_repo_info(project, job):
     project_name = project.name
-    job_spec = job.specification
-    if job_spec.build.git:  # We need to fetch the repo first
-
-        repo, is_created = ExternalRepo.objects.get_or_create(project=project,
-                                                              git_url=job_spec.build.git)
-        if not is_created:
-            # If the repo already exist, we just need to refetch it
-            git.fetch(git_url=repo.git_url, repo_path=repo.path)
-
-        repo_path = repo.path
-        repo_name = repo.name
-        last_commit = repo.last_commit
-    else:
-        repo_path = project.repo.path
-        last_commit = project.repo.last_commit
-        repo_name = project_name
+    # job_spec = job.specification
+    # if job_spec.build.git:  # We need to fetch the repo first
+    #
+    #     repo, is_created = ExternalRepo.objects.get_or_create(project=project,
+    #                                                           git_url=job_spec.build.git)
+    #     if not is_created:
+    #         # If the repo already exist, we just need to refetch it
+    #         git.fetch(git_url=repo.git_url, repo_path=repo.path)
+    #
+    #     repo_path = repo.path
+    #     repo_name = repo.name
+    #     last_commit = repo.last_commit
+    # else:
+    repo_path = project.repo.path
+    last_commit = project.repo.last_commit
+    repo_name = project_name
 
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     if not last_commit:

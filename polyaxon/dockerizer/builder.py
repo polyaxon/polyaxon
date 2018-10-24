@@ -257,8 +257,8 @@ def download_code(build_job, build_path, filename):
             settings.HEADERS_INTERNAL.replace('_', '-'): settings.INTERNAL_SERVICES.DOCKERIZER
         }
         access_token = None
-    elif build_job.code_reference.external_repo:
-        download_url = build_job.code_reference.external_repo.download_url
+    elif build_job.code_reference.git_url:
+        download_url = build_job.code_reference.git_url
         internal = False
         headers = {}
         access_token = settings.REPOS_ACCESS_TOKEN

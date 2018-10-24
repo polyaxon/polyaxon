@@ -43003,7 +43003,6 @@
         "created_at": "2018-08-19T20:06:34.077Z",
         "updated_at": "2018-08-19T20:06:34.077Z",
         "repo": 1,
-        "external_repo": null,
         "commit": "2f758b8902d4cf5d4147b09706613ec108eda369"
     }
 },
@@ -43014,7 +43013,6 @@
         "created_at": "2018-08-19T20:14:40.904Z",
         "updated_at": "2018-08-19T20:14:40.904Z",
         "repo": 1,
-        "external_repo": null,
         "commit": "7afbc6aaf1054d4113b4a740396fb861518da044"
     }
 },

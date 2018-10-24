@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from db.models.repos import CodeReference, ExternalRepo
+from db.models.repos import CodeReference
 
 
 def get_internal_code_reference(instance, commit=None):
@@ -26,12 +26,8 @@ def get_internal_code_reference(instance, commit=None):
     return code_reference
 
 
-def get_external_code_reference(instance, external_repo, commit=None):
-    project = instance.project
-
-    external_repo, _ = ExternalRepo.objects.get_or_create(project=project, git_url=external_repo)
-    code_reference, _ = CodeReference.objects.get_or_create(external_repo=external_repo,
-                                                            commit=commit)
+def get_external_code_reference(git_url, commit=None):
+    code_reference, _ = CodeReference.objects.get_or_create(git_url=git_url, commit=commit)
     return code_reference
 
 
@@ -41,14 +37,11 @@ def assign_code_reference(instance, commit=None):
     build = instance.specification.build if instance.specification else None
     if not commit and build:
         commit = build.commit
-    external_repo = build.git if build and build.git else None
-    if external_repo:
-        code_reference = get_external_code_reference(instance=instance,
-                                                     external_repo=external_repo,
-                                                     commit=commit)
+    git_url = build.git if build and build.git else None
+    if git_url:
+        code_reference = get_external_code_reference(git_url=git_url, commit=commit)
     else:
-        code_reference = get_internal_code_reference(instance=instance,
-                                                     commit=commit)
+        code_reference = get_internal_code_reference(instance=instance, commit=commit)
     if code_reference:
         instance.code_reference = code_reference
 
