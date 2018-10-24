@@ -6,7 +6,10 @@ from db.models.repos import CodeReference
 def get_code_reference(instance, commit=None, external_repo=None):
     project = instance.project
 
-    repo = project.repo if project.has_code else external_repo
+    if external_repo:
+        repo = external_repo
+    elif project.has_code:
+        repo = project.repo
 
     if not repo:
         return None
