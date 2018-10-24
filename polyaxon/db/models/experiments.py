@@ -220,10 +220,11 @@ class Experiment(DiffModel,
     def set_status(self, status, message=None, traceback=None, **kwargs):
         if status in ExperimentLifeCycle.HEARTBEAT_STATUS:
             RedisHeartBeat.experiment_ping(self.id)
-        ExperimentStatus.objects.create(experiment=self,
-                                        status=status,
-                                        message=message,
-                                        traceback=traceback)
+        if ExperimentLifeCycle.can_transition(status_from=self.last_status, status_to=status):
+            ExperimentStatus.objects.create(experiment=self,
+                                            status=status,
+                                            message=message,
+                                            traceback=traceback)
 
     def _clone(self,
                cloning_strategy,
