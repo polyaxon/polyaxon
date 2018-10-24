@@ -911,7 +911,20 @@ class TestExperimentDetailViewV1(BaseViewTest):
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.declarations == {'foo_new': 'bar_new', 'foo': 'bar'}
 
-    def test_delete(self):
+    def test_delete_from_created_status(self):
+        assert self.model_class.objects.count() == 1
+        assert ExperimentJob.objects.count() == 2
+        with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_stop:
+            with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
+                resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.call_count == 0
+        assert outputs_mock_stop.call_count == 2  # Outputs and Logs
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.count() == 0
+        assert ExperimentJob.objects.count() == 0
+
+    def test_delete_from_running_status(self):
+        self.object.set_status(ExperimentLifeCycle.RUNNING)
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
         with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_stop:

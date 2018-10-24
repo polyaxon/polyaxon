@@ -149,7 +149,9 @@ class TestExperimentModel(BaseTest):
         assert experiment.clones.count() == 2
 
         # Resuming a resumed experiment
-        new_experiment.resume()
+        with patch.object(Experiment, 'set_status') as _:  # noqa
+            resumed = new_experiment.resume()
+            ExperimentStatusFactory(experiment=resumed, status=ExperimentLifeCycle.CREATED)
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
         last_resumed_experiment_new = experiment.clones.filter(
@@ -358,7 +360,7 @@ class TestExperimentModel(BaseTest):
 
     def test_master_success_influences_other_experiment_workers_status(self):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
-            with patch.object(Experiment, 'set_status') as _:  # noqa
+            # with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiment = ExperimentFactory()
 
         assert ExperimentLifeCycle.is_done(experiment.last_status) is False
@@ -410,6 +412,7 @@ class TestExperimentModel(BaseTest):
         assert check_status_mock.call_count == 1
 
         # Call sync experiments and jobs constants
+        ExperimentStatusFactory(experiment=xp_with_jobs, status=JobLifeCycle.CREATED)
         experiments_sync_jobs_statuses()
         done_xp.refresh_from_db()
         no_jobs_xp.refresh_from_db()
