@@ -5,6 +5,7 @@ from constants.experiments import ExperimentLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group, get_valid_experiment_group
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals, SchedulerCeleryTasks
+from scheduler import dockerizer_scheduler
 
 _logger = logging.getLogger(__name__)
 
@@ -30,11 +31,39 @@ def experiments_group_create(self, experiment_group_id):
     if not experiment_group:
         return
 
-    experiment_group.set_status(ExperimentGroupLifeCycle.RUNNING)
-    celery_app.send_task(
-        HPCeleryTasks.HP_CREATE,
-        kwargs={'experiment_group_id': experiment_group_id},
-        countdown=1)
+    last_status = experiment_group.last_status
+    if not ExperimentGroupLifeCycle.can_transition(status_from=last_status,
+                                                   status_to=ExperimentGroupLifeCycle.RUNNING):
+        _logger.info('Experiment group id `%s` cannot transition from `%s` to `%s`.',
+                     experiment_group_id, last_status, ExperimentGroupLifeCycle.RUNNING)
+        return
+
+    def hp_create():
+        experiment_group.set_status(ExperimentGroupLifeCycle.RUNNING)
+        celery_app.send_task(
+            HPCeleryTasks.HP_CREATE,
+            kwargs={'experiment_group_id': experiment_group_id},
+            countdown=1)
+
+    # We start first by creating a build if necessary
+    # No need to build the image, start the experiment directly
+    if not experiment_group.specification.build:
+        hp_create()
+        return
+
+    build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
+        user=experiment_group.user,
+        project=experiment_group.project,
+        config=experiment_group.specification.build,
+        code_reference=experiment_group.code_reference)
+
+    if not build_status:
+        experiment_group.set_status(ExperimentGroupLifeCycle.FAILED,
+                                    message='Could not start build process.')
+        return
+
+    # We start the group process
+    hp_create()
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS, ignore_result=True)

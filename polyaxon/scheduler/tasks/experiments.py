@@ -61,10 +61,11 @@ def experiments_build(experiment_id):
             kwargs={'experiment_id': experiment_id})
         return
 
-    if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
+    last_status = experiment.last_status
+    if not ExperimentLifeCycle.can_transition(status_from=last_status,
                                               status_to=ExperimentLifeCycle.BUILDING):
         _logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
-                     experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
+                     experiment_id, last_status, ExperimentLifeCycle.BUILDING)
         return
 
     build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
