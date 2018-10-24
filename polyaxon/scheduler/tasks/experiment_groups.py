@@ -57,6 +57,11 @@ def experiments_group_create(self, experiment_group_id):
         config=experiment_group.specification.build,
         code_reference=experiment_group.code_reference)
 
+    if image_exists:
+        # The image already exists, so we can start the experiment right away
+        hp_create()
+        return
+
     if not build_status:
         experiment_group.set_status(ExperimentGroupLifeCycle.FAILED,
                                     message='Could not start build process.')
