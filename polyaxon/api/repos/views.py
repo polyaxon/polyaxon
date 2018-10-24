@@ -63,7 +63,10 @@ class DownloadFilesView(ProtectedView):
 
     def get(self, request, *args, **kwargs):
         repo = self.get_object()
-        archived_path, archive_name = archive_repo(repo.git, repo.project.name)
+        commit = self.request.query_params.get('commit', None)
+        archived_path, archive_name = archive_repo(repo_git=repo.git,
+                                                   repo_name=repo.project.name,
+                                                   commit=commit)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 

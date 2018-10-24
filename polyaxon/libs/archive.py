@@ -27,11 +27,11 @@ def get_files_in_path(path):
     return result_files
 
 
-def archive_repo(repo_git, repo_name):
+def archive_repo(repo_git, repo_name, commit=None):
     check_archive_path(settings.REPOS_ARCHIVE_ROOT)
-    archive_name = '{}.tar.gz'.format(repo_name)
+    archive_name = '{}-{}.tar.gz'.format(repo_name, commit or 'master')
     with open(os.path.join(settings.REPOS_ARCHIVE_ROOT, archive_name), 'wb') as fp:
-        repo_git.archive(fp, format='tgz')
+        repo_git.archive(fp, format='tgz', treeish=commit)
 
     return settings.REPOS_ARCHIVE_ROOT, archive_name
 

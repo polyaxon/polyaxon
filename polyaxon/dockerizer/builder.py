@@ -212,12 +212,11 @@ class DockerBuilder(object):
     def build(self, nocache=False, memory_limit=None):
         _logger.debug('Starting build in `%s`', self.repo_path)
         # Checkout to the correct commit
-        if self.image_tag != self.LATEST_IMAGE_TAG:
-            git.checkout_commit(repo_path=self.repo_path, commit=self.image_tag)
+        # if self.image_tag != self.LATEST_IMAGE_TAG:
+        #     git.checkout_commit(repo_path=self.repo_path, commit=self.image_tag)
 
         limits = {
-            # Always disable memory swap for building, since mostly
-            # nothing good can come of that.
+            # Disable memory swap for building
             'memswap': -1
         }
         if memory_limit:
@@ -258,6 +257,9 @@ def download_code(build_job, build_path, filename):
         download_url = build_job.code_reference.external_repo.download_url
     else:
         raise ValueError('Code reference for this build job does not have any repo.')
+
+    if build_job.code_reference.commit:
+        download_url = '{}?commit={}'.format(download_url, build_job.code_reference.commit)
 
     repo_file = download(
         url=download_url,
