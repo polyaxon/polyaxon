@@ -93,12 +93,12 @@ class BuildJob(AbstractJob,
                                           config=build_config.parsed_data,
                                           code_reference=code_reference).last()
             if job:
-                return job
+                return job, False
 
         return BuildJob.objects.create(user=user,
                                        project=project,
                                        config=build_config.parsed_data,
-                                       code_reference=code_reference)
+                                       code_reference=code_reference), True
 
 
 class BuildJobStatus(AbstractJobStatus):

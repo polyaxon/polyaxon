@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+from django.test import override_settings
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
@@ -35,44 +36,48 @@ class TestBuildJobModels(BaseTest):
         assert BuildJobStatus.objects.count() == 0
         experiment = ExperimentFactory(project=self.project)
 
-        build_job = BuildJob.create(
+        build_job, rebuild = BuildJob.create(
             user=experiment.user,
             project=experiment.project,
             config=experiment.specification.build,
             code_reference=self.code_reference)
 
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
 
     def test_create_build_from_notebook(self):
         assert BuildJobStatus.objects.count() == 0
         notebook = NotebookJobFactory(project=self.project)
-        build_job = BuildJob.create(
+        build_job, rebuild = BuildJob.create(
             user=notebook.user,
             project=notebook.project,
             config=notebook.specification.build,
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
 
     def test_create_build_with_same_config(self):
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
-        build_job = BuildJob.create(
+        build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image:test'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
         assert BuildJob.objects.count() == 1
 
         # Building with same config does not create a new build job
-        new_build_job = BuildJob.create(
+        new_build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image:test'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, False)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
         assert BuildJob.objects.count() == 1
@@ -81,77 +86,136 @@ class TestBuildJobModels(BaseTest):
     def test_create_build_with_same_config_and_force_create_new_build_job(self):
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
-        build_job = BuildJob.create(
+        build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image:test'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
         assert BuildJob.objects.count() == 1
 
         # Building with same config and force creates a new build job
-        new_build_job = BuildJob.create(
+        new_build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image:test'},
             code_reference=self.code_reference,
             nocache=True)
+        self.assertEqual(rebuild, True)
         assert BuildJobStatus.objects.count() == 2
         assert BuildJob.objects.count() == 2
         assert new_build_job != build_job
 
         # Building with same config does not create a new build job
-        new_build_job_v2 = BuildJob.create(
+        new_build_job_v2, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image:test'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, False)
         assert BuildJobStatus.objects.count() == 2
         assert BuildJob.objects.count() == 2
         assert new_build_job == new_build_job_v2
 
-    def test_create_build_with_latest_tag_always_results_in_new_job(self):
+    def test_create_build_with_latest_tag_does_not_results_in_new_job(self):
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
-        build_job = BuildJob.create(
+        build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image:latest'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
         assert BuildJob.objects.count() == 1
 
         # Building with same config does not create a new build job
-        new_build_job = BuildJob.create(
+        new_build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image:latest'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, False)
+        assert build_job.last_status == JobLifeCycle.CREATED
+        assert BuildJobStatus.objects.count() == 1
+        assert BuildJob.objects.count() == 1
+        assert new_build_job == build_job
+
+    @override_settings(BUILD_ALWAYS_PULL_LATEST=True)
+    def test_create_build_with_latest_tag_and_always_pull_latest_creates_new_job(self):
+        assert BuildJobStatus.objects.count() == 0
+        assert BuildJob.objects.count() == 0
+        build_job, rebuild = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:latest'},
+            code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
+        assert build_job.last_status == JobLifeCycle.CREATED
+        assert BuildJobStatus.objects.count() == 1
+        assert BuildJob.objects.count() == 1
+
+        # Building with same config does not create a new build job
+        new_build_job, rebuild = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:latest'},
+            code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 2
         assert BuildJob.objects.count() == 2
         assert new_build_job != build_job
 
-    def test_create_build_without_tag_always_results_in_new_job(self):
+    def test_create_build_without_tag_always_doesn_not_create_new_job(self):
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
-        build_job = BuildJob.create(
+        build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
         assert BuildJob.objects.count() == 1
 
         # Building with same config does not create a new build job
-        new_build_job = BuildJob.create(
+        new_build_job, rebuild = BuildJob.create(
             user=self.project.user,
             project=self.project,
             config={'image': 'my_image'},
             code_reference=self.code_reference)
+        self.assertEqual(rebuild, False)
+        assert build_job.last_status == JobLifeCycle.CREATED
+        assert BuildJobStatus.objects.count() == 1
+        assert BuildJob.objects.count() == 1
+        assert new_build_job == build_job
+
+    @override_settings(BUILD_ALWAYS_PULL_LATEST=True)
+    def test_create_build_without_tag_and_rebuild_latest_always_results_in_new_job(self):
+        assert BuildJobStatus.objects.count() == 0
+        assert BuildJob.objects.count() == 0
+        build_job, rebuild = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image'},
+            code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
+        assert build_job.last_status == JobLifeCycle.CREATED
+        assert BuildJobStatus.objects.count() == 1
+        assert BuildJob.objects.count() == 1
+
+        # Building with same config does not create a new build job
+        new_build_job, rebuild = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image'},
+            code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 2
         assert BuildJob.objects.count() == 2
@@ -161,12 +225,13 @@ class TestBuildJobModels(BaseTest):
         assert BuildJobStatus.objects.count() == 0
         experiment = ExperimentFactory(project=self.project)
 
-        build_job = BuildJob.create(
+        build_job, rebuild = BuildJob.create(
             user=experiment.user,
             project=experiment.project,
             config=experiment.specification.build,
             code_reference=self.code_reference)
 
+        self.assertEqual(rebuild, True)
         assert build_job.last_status == JobLifeCycle.CREATED
         assert BuildJobStatus.objects.count() == 1
         build_job.set_status(JobLifeCycle.FAILED)
