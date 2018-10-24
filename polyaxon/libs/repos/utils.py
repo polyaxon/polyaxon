@@ -29,9 +29,7 @@ def get_internal_code_reference(instance, commit=None):
 def get_external_code_reference(instance, external_repo, commit=None):
     project = instance.project
 
-    external_repo, created = ExternalRepo.objects.get_or_create(project=project,
-                                                                git_url=external_repo)
-
+    external_repo, _ = ExternalRepo.objects.get_or_create(project=project, git_url=external_repo)
     code_reference, _ = CodeReference.objects.get_or_create(external_repo=external_repo,
                                                             commit=commit)
     return code_reference
