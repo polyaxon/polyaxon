@@ -51,7 +51,7 @@ def experiments_group_create(self, experiment_group_id):
         hp_create()
         return
 
-    build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
+    _, image_exists, build_status = dockerizer_scheduler.create_build_job(
         user=experiment_group.user,
         project=experiment_group.project,
         config=experiment_group.specification.build,

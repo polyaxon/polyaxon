@@ -4,7 +4,6 @@ import traceback
 from kubernetes.client.rest import ApiException
 
 from django.conf import settings
-from django.utils.timezone import now
 
 import auditor
 
