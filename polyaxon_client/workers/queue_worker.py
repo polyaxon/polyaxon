@@ -64,6 +64,7 @@ class QueueWorker(BaseWorker):
                     else:
                         print('Press Ctrl-C to quit')
 
+            sleep(self.MIN_TIMEOUT)  # Allow tasks to get executed
             while timeout > 0 and not timeout_join(timeout=timeout, queue=self._queue):
                 timeout = min(timeout + self._timeout / self.TIMEOUT_ATTEMPTS,
                               self._timeout - timeout)
