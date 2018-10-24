@@ -3,11 +3,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from db.models.repos import CodeReference
 
 
-def get_project_code_reference(project, commit=None):
-    if not project.has_code:
-        return None
+def get_code_reference(instance, commit=None, external_repo=None):
+    project = instance.project
 
-    repo = project.repo
+    repo = project.repo if project.has_code else external_repo
+
+    if not repo:
+        return None
 
     if commit:
         try:
@@ -24,16 +26,16 @@ def get_project_code_reference(project, commit=None):
     return code_reference
 
 
-def get_code_reference(instance, commit):
-    return get_project_code_reference(instance.project, commit=commit)
-
-
 def assign_code_reference(instance, commit=None):
     if instance.code_reference is not None:
         return
-    if not commit and instance.specification and instance.specification.build:
-        commit = instance.specification.build.commit
-    code_reference = get_code_reference(instance=instance, commit=commit)
+    build = instance.specification.build if instance.specification else None
+    if not commit and build:
+        commit = build.commit
+    external_repo = build.git if build and build.git else None
+    code_reference = get_code_reference(instance=instance,
+                                        commit=commit,
+                                        external_repo=external_repo)
     if code_reference:
         instance.code_reference = code_reference
 
