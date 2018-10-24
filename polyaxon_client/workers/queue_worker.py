@@ -12,7 +12,7 @@ from polyaxon_client.workers.base_worker import BaseWorker
 
 
 class QueueWorker(BaseWorker):
-    MIN_TIMEOUT = 0.1
+    MIN_TIMEOUT = 1
     TIMEOUT_ATTEMPTS = 5
     QUEUE_SIZE = -1  # inf
     END_EVENT = object()
@@ -55,10 +55,10 @@ class QueueWorker(BaseWorker):
                 # Queue still has message, try another time
                 size = self._queue.qsize()
 
-                print('Polyaxon %s is attempting to send %i pending messages' %
-                      (self.NAME, size))
-                print('Waiting up to {} seconds'.format(self._timeout))
                 if not settings.IN_CLUSTER:
+                    print('Polyaxon %s is attempting to send %i pending messages' %
+                          (self.NAME, size))
+                    print('Waiting up to {} seconds'.format(self._timeout))
                     if os.name == 'nt':
                         print('Press Ctrl-Break to quit')
                     else:
