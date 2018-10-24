@@ -7,6 +7,7 @@ from collections import Mapping
 from urllib.parse import urlparse
 
 import redis
+from hestia.auth import AuthenticationTypes
 
 from mock import patch
 from rest_framework import status
@@ -97,7 +98,11 @@ class BaseClient(Client):
 
 
 class EphemeralClient(BaseClient):
-    def __init__(self, token, authentication_type='EphemeralToken', service=None, **defaults):
+    def __init__(self,
+                 token,
+                 authentication_type=AuthenticationTypes.EPHEMERAL_TOKEN,
+                 service=None,
+                 **defaults):
         super().__init__(**defaults)
         self.service = service or settings.EPHEMERAL_SERVICES.RUNNER
         self.authorization_header = '{} {}'.format(authentication_type, token)
