@@ -55,10 +55,10 @@ class QueueWorker(BaseWorker):
                 # Queue still has message, try another time
                 size = self._queue.qsize()
 
+                print('Polyaxon %s is attempting to send %i pending messages' %
+                      (self.NAME, size))
+                print('Waiting up to {} seconds'.format(self._timeout))
                 if not settings.IN_CLUSTER:
-                    print('Polyaxon %s is attempting to send %i pending messages' %
-                          (self.NAME, size))
-                    print('Waiting up to {} seconds'.format(self._timeout))
                     if os.name == 'nt':
                         print('Press Ctrl-Break to quit')
                     else:
