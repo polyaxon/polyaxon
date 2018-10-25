@@ -159,10 +159,10 @@ class AzureStore(BaseStore):
                                                  marker=marker)
             for r in results:
                 if isinstance(r, BlobPrefix):
-                    name = r.name[len(key) + 1:]
+                    name = r.name[len(key):]
                     list_prefixes.append(name)
                 else:
-                    name = r.name[len(key) + 1:]
+                    name = r.name[len(key):]
                     list_blobs.append((name, r.properties.content_length))
             if results.next_marker:
                 marker = results.next_marker
