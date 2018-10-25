@@ -153,7 +153,8 @@ def untar_file(build_path, filename, logger, delete_tar=False, internal=False, t
         if not internal:
             tarf = [f for f in os.listdir(extract_path) if tar_suffix in f]
             if tarf:
-                move_recursively(tarf[0], build_path)
+                src = os.path.join(extract_path, tarf[0])
+                move_recursively(src, build_path)
         return filename
     else:
         logger.info("File was not found, build_path: %s" % os.listdir(build_path))
