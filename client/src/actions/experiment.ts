@@ -25,6 +25,8 @@ export enum actionTypes {
   REQUEST_EXPERIMENTS = 'REQUEST_EXPERIMENTS',
   BOOKMARK_EXPERIMENT = 'BOOKMARK_EXPERIMENT',
   UNBOOKMARK_EXPERIMENT = 'UNBOOKMARK_EXPERIMENT',
+  START_EXPERIMENT_TENSORBOARD = 'START_EXPERIMENT_TENSORBOARD',
+  STOP_EXPERIMENT_TENSORBOARD = 'STOP_EXPERIMENT_TENSORBOARD'
 }
 
 export interface CreateUpdateReceiveExperimentAction extends Action {
@@ -63,6 +65,11 @@ export interface BookmarkExperimentAction extends Action {
   experimentName: string;
 }
 
+export interface ExperimenTensorboardAction extends Action {
+  type: actionTypes.START_EXPERIMENT_TENSORBOARD | actionTypes.STOP_EXPERIMENT_TENSORBOARD;
+  projectName: string;
+}
+
 export type ExperimentAction =
   CreateUpdateReceiveExperimentAction
   | DeleteExperimentAction
@@ -70,7 +77,8 @@ export type ExperimentAction =
   | ReceiveExperimentsAction
   | ReceiveExperimentsParamsAction
   | RequestExperimentsAction
-  | BookmarkExperimentAction;
+  | BookmarkExperimentAction
+  | ExperimenTensorboardAction;
 
 export function createExperimentActionCreator(experiment: ExperimentModel): CreateUpdateReceiveExperimentAction {
   return {
@@ -154,6 +162,20 @@ export function bookmarkExperimentActionCreator(experimentName: string) {
 export function unbookmarkExperimentActionCreator(experimentName: string) {
   return {
     type: actionTypes.UNBOOKMARK_EXPERIMENT,
+    experimentName,
+  };
+}
+
+export function startExperimentTensorboardActionCreator(experimentName: string) {
+  return {
+    type: actionTypes.START_EXPERIMENT_TENSORBOARD,
+    experimentName,
+  };
+}
+
+export function stopExperimentTensorboardActionCreator(experimentName: string) {
+  return {
+    type: actionTypes.STOP_EXPERIMENT_TENSORBOARD,
     experimentName,
   };
 }
@@ -317,4 +339,34 @@ export function fetchExperimentCodeReference(experimentName: string): any {
   const experimentUrl = getExperimentUrlFromName(experimentName, false);
   const codeRefUrl = `${experimentUrl}/coderef`;
   return fetchCodeReference(codeRefUrl);
+}
+
+export function startTensorboard(experimentName: string): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${experimentUrl}/tensorboard/start`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(startExperimentTensorboardActionCreator(experimentName)));
+  };
+}
+
+export function stopTensorboard(experimentName: string): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${experimentUrl}/tensorboard/stop`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(stopExperimentTensorboardActionCreator(experimentName)));
+  };
 }

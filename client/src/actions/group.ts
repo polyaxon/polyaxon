@@ -4,11 +4,11 @@ import * as url from 'url';
 import { BASE_API_URL } from '../constants/api';
 import {
   getGroupUrl,
+  getGroupUrlFromName,
   getProjectUrl,
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
-import { getGroupUrlFromName } from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { GroupModel } from '../models/group';
@@ -24,6 +24,8 @@ export enum actionTypes {
   REQUEST_GROUPS = 'REQUEST_GROUPS',
   BOOKMARK_GROUP = 'BOOKMARK_GROUP',
   UNBOOKMARK_GROUP = 'UNBOOKMARK_GROUP',
+  START_GROUP_TENSORBOARD = 'START_GROUP_TENSORBOARD',
+  STOP_GROUP_TENSORBOARD = 'STOP_GROUP_TENSORBOARD',
 }
 
 export interface CreateUpdateReceiveGroupAction extends Action {
@@ -56,13 +58,19 @@ export interface BookmarkGroupAction extends Action {
   groupName: string;
 }
 
+export interface GroupTensorboardAction extends Action {
+  type: actionTypes.START_GROUP_TENSORBOARD | actionTypes.STOP_GROUP_TENSORBOARD;
+  projectName: string;
+}
+
 export type GroupAction =
   CreateUpdateReceiveGroupAction
   | DeleteGroupAction
   | StopGroupAction
   | ReceiveGroupsAction
   | RequestGroupsAction
-  | BookmarkGroupAction;
+  | BookmarkGroupAction
+  | GroupTensorboardAction;
 
 export function createGroupActionCreator(group: GroupModel): CreateUpdateReceiveGroupAction {
   return {
@@ -140,32 +148,46 @@ export function unbookmarkGroupActionCreator(groupName: string) {
   };
 }
 
+export function startGroupTensorboardActionCreator(groupName: string) {
+  return {
+    type: actionTypes.START_GROUP_TENSORBOARD,
+    groupName,
+  };
+}
+
+export function stopGroupTensorboardActionCreator(groupName: string) {
+  return {
+    type: actionTypes.STOP_GROUP_TENSORBOARD,
+    groupName,
+  };
+}
+
 function _fetchGroups(groupsUrl: string,
                       bookmarks: boolean,
                       filters: { [key: string]: number | boolean | string } = {},
                       dispatch: any,
                       getState: any): any {
-    dispatch(requestGroupsActionCreator());
-    const urlPieces = location.hash.split('?');
-    const baseUrl = urlPieces[0];
-    if (Object.keys(filters).length) {
-      groupsUrl += url.format({query: filters});
-      if (baseUrl) {
-        history.push(baseUrl + url.format({query: filters}));
-      }
-    } else if (urlPieces.length > 1) {
-      history.push(baseUrl);
+  dispatch(requestGroupsActionCreator());
+  const urlPieces = location.hash.split('?');
+  const baseUrl = urlPieces[0];
+  if (Object.keys(filters).length) {
+    groupsUrl += url.format({query: filters});
+    if (baseUrl) {
+      history.push(baseUrl + url.format({query: filters}));
     }
-    return fetch(groupsUrl, {
-      headers: {
-        Authorization: 'token ' + getState().auth.token
-      }
-    })
-      .then((response) => handleAuthError(response, dispatch))
-      .then((response) => response.json())
-      .then((json) =>  bookmarks ?
-        dispatch(receiveBookmarkedGroupsActionCreator(json.results, json.count)) :
-        dispatch(receiveGroupsActionCreator(json.results, json.count)));
+  } else if (urlPieces.length > 1) {
+    history.push(baseUrl);
+  }
+  return fetch(groupsUrl, {
+    headers: {
+      Authorization: 'token ' + getState().auth.token
+    }
+  })
+    .then((response) => handleAuthError(response, dispatch))
+    .then((response) => response.json())
+    .then((json) => bookmarks ?
+      dispatch(receiveBookmarkedGroupsActionCreator(json.results, json.count)) :
+      dispatch(receiveGroupsActionCreator(json.results, json.count)));
 }
 
 export function fetchBookmarkedGroups(user: string,
@@ -287,5 +309,35 @@ export function unbookmark(groupName: string): any {
       })
       .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(unbookmarkGroupActionCreator(groupName)));
+  };
+}
+
+export function startTensorboard(groupName: string): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${groupUrl}/tensorboard/start`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(startGroupTensorboardActionCreator(groupName)));
+  };
+}
+
+export function stopTensorboard(groupName: string): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${groupUrl}/tensorboard/stop`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(stopGroupTensorboardActionCreator(groupName)));
   };
 }

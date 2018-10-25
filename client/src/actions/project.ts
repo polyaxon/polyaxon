@@ -22,6 +22,10 @@ export enum actionTypes {
   REQUEST_PROJECTS = 'REQUEST_PROJECTS',
   BOOKMARK_PROJECT = 'BOOKMARK_PROJECT',
   UNBOOKMARK_PROJECT = 'UNBOOKMARK_PROJECT',
+  START_PROJECT_NOTEBOOK = 'START_PROJECT_NOTEBOOK',
+  STOP_PROJECT_NOTEBOOK = 'STOP_PROJECT_NOTEBOOK',
+  START_PROJECT_TENSORBOARD = 'START_PROJECT_TENSORBOARD',
+  STOP_PROJECT_TENSORBOARD = 'STOP_PROJECT_TENSORBOARD'
 }
 
 export interface CreateUpdateReceiveProjectAction extends Action {
@@ -49,12 +53,24 @@ export interface BookmarkProjectAction extends Action {
   projectName: string;
 }
 
+export interface ProjectNotebookAction extends Action {
+  type: actionTypes.START_PROJECT_NOTEBOOK | actionTypes.STOP_PROJECT_NOTEBOOK;
+  projectName: string;
+}
+
+export interface ProjectTensorboardAction extends Action {
+  type: actionTypes.START_PROJECT_TENSORBOARD | actionTypes.STOP_PROJECT_TENSORBOARD;
+  projectName: string;
+}
+
 export type ProjectAction =
   CreateUpdateReceiveProjectAction
   | DeleteProjectAction
   | ReceiveProjectsAction
   | RequestProjectsAction
-  | BookmarkProjectAction;
+  | BookmarkProjectAction
+  | ProjectNotebookAction
+  | ProjectTensorboardAction;
 
 export function createProjectActionCreator(project: ProjectModel): CreateUpdateReceiveProjectAction {
   return {
@@ -128,6 +144,34 @@ export function unbookmarkProjectActionCreator(projectName: string) {
   return {
     type: actionTypes.UNBOOKMARK_PROJECT,
     projectName,
+  };
+}
+
+export function startProjectNotebookActionCreator(projectName: string): ProjectNotebookAction {
+  return {
+    type: actionTypes.START_PROJECT_NOTEBOOK,
+    projectName
+  };
+}
+
+export function stopProjectNotebookActionCreator(projectName: string): ProjectNotebookAction {
+  return {
+    type: actionTypes.STOP_PROJECT_NOTEBOOK,
+    projectName
+  };
+}
+
+export function startProjectTensorboardActionCreator(projectName: string): ProjectTensorboardAction {
+  return {
+    type: actionTypes.START_PROJECT_TENSORBOARD,
+    projectName
+  };
+}
+
+export function stopProjectTensorboardActionCreator(projectName: string): ProjectTensorboardAction {
+  return {
+    type: actionTypes.STOP_PROJECT_TENSORBOARD,
+    projectName
   };
 }
 
@@ -282,5 +326,74 @@ export function unbookmark(projectName: string): any {
       })
       .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(unbookmarkProjectActionCreator(projectName)));
+  };
+}
+
+
+export function startNotebook(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projectUrl}/notebook/start`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        return dispatch(startProjectNotebookActionCreator(projectName));
+      });
+  };
+}
+
+export function stopNotebook(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projectUrl}/notebook/stop`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        return dispatch(stopProjectNotebookActionCreator(projectName));
+      });
+  };
+}
+
+export function startTensorboard(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projectUrl}/tensorboard/start`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        return dispatch(startProjectTensorboardActionCreator(projectName));
+      });
+  };
+}
+
+export function stopTensorboard(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projectUrl}/tensorboard/stop`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        return dispatch(stopProjectTensorboardActionCreator(projectName));
+      });
   };
 }

@@ -9,7 +9,6 @@ import { isDone } from '../../constants/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';
 import { getBookmark } from '../../utils/bookmarks';
-import Actions from '../actions';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
@@ -19,6 +18,7 @@ import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
 import Tags from '../tags';
+import ExperimentActions from './experimentActions';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -110,10 +110,11 @@ function Experiment({
         </td>)
       }
       <td className="block pull-right">
-        <Actions
+        <ExperimentActions
           onDelete={onDelete}
           onStop={onStop}
           isRunning={!isDone(experiment.last_status)}
+          pullRight={false}
         />
       </td>
     </tr>

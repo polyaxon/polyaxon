@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/group';
+import { isDone } from '../../constants/statuses';
 import { getGroupUrl, getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import Experiments from '../../containers/experiments';
 import Metrics from '../../containers/metrics';
@@ -15,6 +16,7 @@ import { EmptyList } from '../empty/emptyList';
 import GroupInstructions from '../instructions/groupInstructions';
 import LinkedTab from '../linkedTab';
 import YamlText from '../yamlText';
+import GroupActions from './groupActions';
 import GroupOverview from './groupOverview';
 
 export interface Props {
@@ -25,6 +27,8 @@ export interface Props {
   fetchData: () => actions.GroupAction;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
+  startTensorboard: () => actions.GroupAction;
+  stopTensorboard: () => actions.GroupAction;
 }
 
 export default class GroupDetail extends React.Component<Props, {}> {
@@ -37,13 +41,6 @@ export default class GroupDetail extends React.Component<Props, {}> {
     if (_.isNil(group)) {
       return EmptyList(false, 'experiment group', 'group');
     }
-
-    const action: ActionInterface = {
-      last_status: this.props.group.last_status,
-      onDelete: this.props.onDelete,
-      onStop: this.props.onStop
-
-    };
 
     const bookmark: BookmarkInterface = getBookmark(
       this.props.group.bookmarked, this.props.bookmark, this.props.unbookmark);
@@ -62,7 +59,17 @@ export default class GroupDetail extends React.Component<Props, {}> {
                 {name: 'Groups', value: `${projectUrl}#groups`},
                 {name: `Group ${group.id}`}]}
               bookmark={bookmark}
-              actions={action}
+              actions={
+                <GroupActions
+                  onDelete={this.props.onDelete}
+                  onStop={this.props.onStop}
+                  tensorboardActionCallback={
+                  group.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
+                  hasTensorboard={group.has_tensorboard}
+                  isRunning={!isDone(group.last_status)}
+                  pullRight={true}
+                />
+              }
             />
             <LinkedTab
               baseUrl={groupUrl}

@@ -6,12 +6,12 @@ import { getProjectUrl } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ProjectModel } from '../../models/project';
 import { getBookmark } from '../../utils/bookmarks';
-import Actions from '../actions';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import MetaInfo from '../metaInfo/metaInfo';
 import Tags from '../tags';
+import ProjectActions from './projectActions';
 
 export interface Props {
   project: ProjectModel;
@@ -50,9 +50,9 @@ function Project({project, onDelete, bookmark, unbookmark, showBookmarks}: Props
         <DatesMetaInfo createdAt={project.created_at} updatedAt={project.updated_at}/>
       </td>
       <td className="block pull-right">
-        <Actions
+        <ProjectActions
           onDelete={onDelete}
-          isRunning={false}
+          pullRight={false}
         />
       </td>
     </tr>

@@ -8,7 +8,6 @@ import { getBuildUrl, getJobUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { JobModel } from '../../models/job';
 import { getBookmark } from '../../utils/bookmarks';
-import Actions from '../actions';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
@@ -17,6 +16,7 @@ import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
 import Tags from '../tags';
+import JobActions from './jobActions';
 
 export interface Props {
   job: JobModel;
@@ -74,10 +74,11 @@ function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props
         <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>
       </td>
       <td className="block pull-right">
-        <Actions
+        <JobActions
           onDelete={onDelete}
           onStop={onStop}
           isRunning={!isDone(job.last_status)}
+          pullRight={false}
         />
       </td>
     </tr>

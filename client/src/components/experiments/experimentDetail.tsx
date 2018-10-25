@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import * as codeRefActions from '../../actions/codeReference';
 import * as actions from '../../actions/experiment';
+import { isDone } from '../../constants/statuses';
 import {
   getExperimentUrl,
   getGroupUrl,
@@ -16,7 +17,6 @@ import ExperimentJobs from '../../containers/experimentJobs';
 import Logs from '../../containers/logs';
 import Metrics from '../../containers/metrics';
 import Statuses from '../../containers/statuses';
-import { ActionInterface } from '../../interfaces/actions';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';
 import { getBookmark } from '../../utils/bookmarks';
@@ -26,6 +26,7 @@ import ExperimentInstructions from '../instructions/experimentInstructions';
 import LinkedTab from '../linkedTab';
 import RunEnv from '../runEnv';
 import YamlText from '../yamlText';
+import ExperimentActions from './experimentActions';
 import ExperimentOverview from './experimentOverview';
 
 export interface Props {
@@ -36,6 +37,8 @@ export interface Props {
   fetchData: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
+  startTensorboard: () => actions.ExperimentAction;
+  stopTensorboard: () => actions.ExperimentAction;
   fetchCodeReference: () => codeRefActions.CodeReferenceAction;
 }
 
@@ -50,12 +53,6 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
       return EmptyList(false, 'experiment', 'experiment');
     }
 
-    const action: ActionInterface = {
-      last_status: this.props.experiment.last_status,
-      onDelete: this.props.onDelete,
-      onStop: this.props.onStop
-
-    };
     const bookmark: BookmarkInterface = getBookmark(
       this.props.experiment.bookmarked, this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(experiment.project);
@@ -87,7 +84,17 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
               icon="fa-cube"
               links={breadcrumbLinks}
               bookmark={bookmark}
-              actions={action}
+              actions={
+                <ExperimentActions
+                  onDelete={this.props.onDelete}
+                  onStop={this.props.onStop}
+                  tensorboardActionCallback={
+                  experiment.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
+                  hasTensorboard={experiment.has_tensorboard}
+                  isRunning={!isDone(experiment.last_status)}
+                  pullRight={true}
+                />
+              }
             />
             <LinkedTab
               baseUrl={experimentUrl}

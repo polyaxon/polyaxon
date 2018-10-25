@@ -2,12 +2,8 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/build';
-import {
-  getBuildUrl,
-  getProjectUrl,
-  getUserUrl,
-  splitUniqueName,
-} from '../../constants/utils';
+import { isDone } from '../../constants/statuses';
+import { getBuildUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Logs from '../../containers/logs';
 import Statuses from '../../containers/statuses';
 import { ActionInterface } from '../../interfaces/actions';
@@ -20,6 +16,7 @@ import BuildInstructions from '../instructions/buildInstructions';
 import LinkedTab from '../linkedTab';
 import Text from '../text';
 import YamlText from '../yamlText';
+import BuildActions from './buildActions';
 import BuildOverview from './buildOverview';
 
 export interface Props {
@@ -43,13 +40,6 @@ export default class BuildDetail extends React.Component<Props, {}> {
       return EmptyList(false, 'build', 'build');
     }
 
-    const action: ActionInterface = {
-      last_status: this.props.build.last_status,
-      onDelete: this.props.onDelete,
-      onStop: this.props.onStop
-
-    };
-
     const bookmark: BookmarkInterface = getBookmark(
       this.props.build.bookmarked, this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(build.project);
@@ -68,7 +58,14 @@ export default class BuildDetail extends React.Component<Props, {}> {
               icon="fa-gavel"
               links={breadcrumbLinks}
               bookmark={bookmark}
-              actions={action}
+              actions={
+                <BuildActions
+                  onDelete={this.props.onDelete}
+                  onStop={this.props.onStop}
+                  isRunning={!isDone(this.props.build.last_status)}
+                  pullRight={true}
+                />
+              }
             />
             <LinkedTab
               baseUrl={buildUrl}

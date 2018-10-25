@@ -20,6 +20,10 @@ export function mapStateToProps(state: AppState, params: any) {
 export interface DispatchProps {
   onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onDelete: () => actions.ProjectAction;
+  startNotebook: () => actions.ProjectAction;
+  stopNotebook: () => actions.ProjectAction;
+  startTensorboard: () => actions.ProjectAction;
+  stopTensorboard: () => actions.ProjectAction;
   fetchData?: () => actions.ProjectAction;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
@@ -39,6 +43,26 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, pa
           params.match.params.user,
           params.match.params.projectName),
         true)),
+    startNotebook: () => dispatch(
+      actions.startNotebook(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName))),
+    stopNotebook: () => dispatch(
+      actions.stopNotebook(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName))),
+    startTensorboard: () => dispatch(
+      actions.startTensorboard(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName))),
+    stopTensorboard: () => dispatch(
+      actions.stopTensorboard(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName))),
     fetchData: () => dispatch(
       actions.fetchProject(
         params.match.params.user,

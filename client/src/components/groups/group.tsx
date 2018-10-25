@@ -7,7 +7,6 @@ import { getGroupUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { GroupModel } from '../../models/group';
 import { getBookmark } from '../../utils/bookmarks';
-import Actions from '../actions';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import ConcurrencyMetaInfo from '../metaInfo/concurrencyMetaInfo';
@@ -17,6 +16,7 @@ import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
 import Tags from '../tags';
+import GroupActions from './groupActions';
 
 export interface Props {
   group: GroupModel;
@@ -66,10 +66,11 @@ function Group({group, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>
       </td>
       <td className="block pull-right">
-        <Actions
+        <GroupActions
           onDelete={onDelete}
           onStop={onStop}
           isRunning={!isDone(group.last_status)}
+          pullRight={false}
         />
       </td>
     </tr>

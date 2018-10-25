@@ -2,6 +2,8 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/job';
+import { JobAction } from '../../actions/job';
+import { isDone } from '../../constants/statuses';
 import {
   getJobUrl,
   getProjectUrl,
@@ -11,16 +13,16 @@ import {
 import EntityBuild from '../../containers/entityBuild';
 import Logs from '../../containers/logs';
 import Statuses from '../../containers/statuses';
-import { ActionInterface } from '../../interfaces/actions';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { JobModel } from '../../models/job';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import { EmptyList } from '../empty/emptyList';
 import JobInstructions from '../instructions/jobInstructions';
-import JobOverview from './jobOverview';
 import LinkedTab from '../linkedTab';
 import YamlText from '../yamlText';
+import JobActions from './jobActions';
+import JobOverview from './jobOverview';
 
 export interface Props {
   job: JobModel;
@@ -43,13 +45,6 @@ export default class JobDetail extends React.Component<Props, {}> {
       return EmptyList(false, 'job', 'job');
     }
 
-    const action: ActionInterface = {
-      last_status: this.props.job.last_status,
-      onDelete: this.props.onDelete,
-      onStop: this.props.onStop
-
-    };
-
     const bookmark: BookmarkInterface = getBookmark(
       this.props.job.bookmarked, this.props.bookmark, this.props.unbookmark);
     const values = splitUniqueName(job.project);
@@ -68,7 +63,14 @@ export default class JobDetail extends React.Component<Props, {}> {
               icon="fa-tasks"
               links={breadcrumbLinks}
               bookmark={bookmark}
-              actions={action}
+              actions={
+                <JobActions
+                  onDelete={this.props.onDelete}
+                  onStop={this.props.onStop}
+                  isRunning={!isDone(this.props.job.last_status)}
+                  pullRight={true}
+                />
+              }
             />
             <LinkedTab
               baseUrl={jobUrl}

@@ -7,7 +7,6 @@ import { getBuildUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { BuildModel } from '../../models/build';
 import { getBookmark } from '../../utils/bookmarks';
-import Actions from '../actions';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
@@ -15,6 +14,7 @@ import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
 import Tags from '../tags';
+import BuildActions from './buildActions';
 
 export interface Props {
   build: BuildModel;
@@ -60,10 +60,11 @@ function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <TaskRunMetaInfo startedAt={build.started_at} finishedAt={build.finished_at}/>
       </td>
       <td className="block pull-right">
-        <Actions
+        <BuildActions
           onDelete={onDelete}
           onStop={onStop}
           isRunning={!isDone(build.last_status)}
+          pullRight={false}
         />
       </td>
     </tr>

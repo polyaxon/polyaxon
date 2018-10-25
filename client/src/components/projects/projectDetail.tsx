@@ -8,7 +8,6 @@ import Builds from '../../containers/builds';
 import Experiments from '../../containers/experiments';
 import Groups from '../../containers/groups';
 import Jobs from '../../containers/jobs';
-import { ActionInterface } from '../../interfaces/actions';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ProjectModel } from '../../models/project';
 import { getBookmark } from '../../utils/bookmarks';
@@ -16,16 +15,20 @@ import Breadcrumb from '../breadcrumb';
 import { EmptyList } from '../empty/emptyList';
 import ProjectInstructions from '../instructions/projectInstructions';
 import LinkedTab from '../linkedTab';
+import ProjectActions from './projectActions';
 import ProjectOverview from './projectOverview';
 
 export interface Props {
   project: ProjectModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onDelete: () => actions.ProjectAction;
-  onStop: () => actions.ProjectAction;
   fetchData: () => actions.ProjectAction;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
+  startNotebook: () => actions.ProjectAction;
+  stopNotebook: () => actions.ProjectAction;
+  startTensorboard: () => actions.ProjectAction;
+  stopTensorboard: () => actions.ProjectAction;
 }
 
 export default class ProjectDetail extends React.Component<Props, {}> {
@@ -38,10 +41,6 @@ export default class ProjectDetail extends React.Component<Props, {}> {
     if (_.isNil(project)) {
       return EmptyList(false, 'project', 'project');
     }
-
-    const action: ActionInterface = {
-      onDelete: this.props.onDelete,
-    };
 
     const bookmark: BookmarkInterface = getBookmark(
       this.props.project.bookmarked, this.props.bookmark, this.props.unbookmark);
@@ -56,7 +55,18 @@ export default class ProjectDetail extends React.Component<Props, {}> {
               {name: project.user, value: getUserUrl(project.user)},
               {name: project.name}]}
             bookmark={bookmark}
-            actions={action}
+            actions={
+              <ProjectActions
+                onDelete={this.props.onDelete}
+                notebookActionCallback={
+                  project.has_tensorboard ? this.props.stopNotebook : this.props.startNotebook}
+                tensorboardActionCallback={
+                  project.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
+                hasNotebook={project.has_notebook}
+                hasTensorboard={project.has_tensorboard}
+                pullRight={true}
+              />
+            }
           />
           <LinkedTab
             baseUrl={projectUrl}
