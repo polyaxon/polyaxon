@@ -89,6 +89,7 @@ class IdentityWizard(Wizard):
             username=username,
             first_name=identity['first_name'],
             last_name=identity['last_name'],
+            is_active=False,
             password='{}.{}'.format(
                 self.provider.key, uuid.uuid4().hex)  # Generate a random password
         )
