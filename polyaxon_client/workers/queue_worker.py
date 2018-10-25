@@ -12,7 +12,6 @@ from polyaxon_client.workers.base_worker import BaseWorker
 
 
 class QueueWorker(BaseWorker):
-    MIN_TIMEOUT = 1
     TIMEOUT_ATTEMPTS = 5
     QUEUE_SIZE = -1  # inf
     END_EVENT = object()
@@ -48,7 +47,7 @@ class QueueWorker(BaseWorker):
                     queue.all_tasks_done.release()
 
             # ensure wait
-            timeout = min(self.MIN_TIMEOUT, self._timeout / self.TIMEOUT_ATTEMPTS)
+            timeout = min(settings.MIN_TIMEOUT, self._timeout / self.TIMEOUT_ATTEMPTS)
             if timeout_join(timeout=timeout, queue=self._queue):
                 timeout = 0
             else:
@@ -64,7 +63,7 @@ class QueueWorker(BaseWorker):
                     else:
                         print('Press Ctrl-C to quit')
 
-            sleep(self.MIN_TIMEOUT)  # Allow tasks to get executed
+            sleep(settings.MIN_TIMEOUT)  # Allow tasks to get executed
             while timeout > 0 and not timeout_join(timeout=timeout, queue=self._queue):
                 timeout = min(timeout + self._timeout / self.TIMEOUT_ATTEMPTS,
                               self._timeout - timeout)

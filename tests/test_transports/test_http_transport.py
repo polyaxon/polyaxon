@@ -3,18 +3,18 @@ from __future__ import absolute_import, division, print_function
 
 import requests
 
-from unittest import TestCase
-
 import mock
 
 from clint.textui.progress import Bar
 
 from polyaxon_client.transport import Transport
+from tests.test_transports.utils import BaseTestCaseTransport
 
 
-class TestHttpTransport(TestCase):
+class TestHttpTransport(BaseTestCaseTransport):
     # pylint:disable=protected-access
     def setUp(self):
+        super(TestHttpTransport, self).setUp()
         self.transport = Transport()
 
     def test_create_progress_callback(self):

@@ -4,13 +4,12 @@ from __future__ import absolute_import, division, print_function
 import requests
 import time
 
-from unittest import TestCase
-
 from flaky import flaky
 
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport.periodic_transport import PeriodicHttpTransportMixin
 from polyaxon_client.workers.periodic_worker import PeriodicWorker
+from tests.test_transports.utils import BaseTestCaseTransport
 
 
 class DummyTransport(PeriodicHttpTransportMixin):
@@ -40,9 +39,10 @@ class ExceptionTransport(PeriodicHttpTransportMixin):
         raise requests.exceptions.HTTPError('error')
 
 
-class TestPeriodicTransport(TestCase):
+class TestPeriodicTransport(BaseTestCaseTransport):
     # pylint:disable=protected-access
     def setUp(self):
+        super(TestPeriodicTransport, self).setUp()
         self.transport = DummyTransport()
         self.exception_transport = ExceptionTransport()
 

@@ -4,13 +4,12 @@ from __future__ import absolute_import, division, print_function
 import requests
 import time
 
-from unittest import TestCase
-
 from flaky import flaky
 
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport.threaded_transport import ThreadedTransportMixin
 from polyaxon_client.workers.queue_worker import QueueWorker
+from tests.test_transports.utils import BaseTestCaseTransport
 
 
 class DummyTransport(ThreadedTransportMixin):
@@ -72,9 +71,10 @@ class ExceptionTransport(ThreadedTransportMixin):
         raise requests.exceptions.HTTPError('error')
 
 
-class TestThreadedTransport(TestCase):
+class TestThreadedTransport(BaseTestCaseTransport):
     # pylint:disable=protected-access
     def setUp(self):
+        super(TestThreadedTransport, self).setUp()
         self.transport = DummyTransport()
         self.exception_transport = ExceptionTransport()
 

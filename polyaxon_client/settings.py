@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import os
 
 import rhea
-
 from hestia.auth import AuthenticationTypes
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
@@ -64,6 +63,9 @@ INTERNAL_HEALTH_CHECK_URL = config.get_string('POLYAXON_INTERNAL_HEALTH_CHECK_UR
 
 DEFAULT_HTTP_PORT = 80
 DEFAULT_HTTPS_PORT = 443
+MIN_TIMEOUT = config.get_int('POLYAXON_MIN_TIMEOUT',
+                             is_optional=True,
+                             default=1)
 TIMEOUT = config.get_int('POLYAXON_TIMEOUT',
                          is_optional=True,
                          default=20)
