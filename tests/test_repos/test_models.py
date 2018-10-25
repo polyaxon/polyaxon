@@ -6,7 +6,6 @@ from django.conf import settings
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
-from libs.repos import git
 from tests.utils import BaseTest
 
 

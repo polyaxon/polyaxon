@@ -122,11 +122,10 @@ Polyaxon is currently running:
            'kubectl get --namespace polyaxon svc -w polyaxon-polyaxon-api'
 
 
-  export POLYAXON_IP=$(kubectl get svc --namespace polyaxon polyaxon-polyaxon-api -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  export POLYAXON_IP=$(kubectl get svc --namespace polyaxon polyaxon-polyaxon-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
   export POLYAXON_HTTP_PORT=80
-
-  export POLYAXON_WS_PORT=1337
+  export POLYAXON_WS_PORT=80
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
