@@ -150,7 +150,7 @@ def untar_file(build_path, filename, logger, delete_tar=False, internal=False, t
             logger.info("Cleaning up the tar file ...")
             os.remove(filename)
 
-        if internal:
+        if not internal:
             tarf = [f for f in os.listdir(extract_path) if tar_suffix in f]
             if tarf:
                 move_recursively(tarf[0], build_path)

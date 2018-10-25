@@ -270,13 +270,13 @@ def download_code(build_job, build_path, filename):
             download_url = '{}?commit={}'.format(download_url, build_job.code_reference.commit)
         tar_suffix = None
     else:
-        download_url += '/archive'
         tar_suffix = (
             build_job.code_reference.commit
             if build_job.code_reference.commit
             else 'master'
         )
         download_url += '/{}'.format(tar_suffix)
+        download_url += '/archive'
         download_url += '.tar.gz'
 
     repo_file = download(
