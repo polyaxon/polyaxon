@@ -66,14 +66,14 @@ class TestAzureStore(TestCase):
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
     def test_list_non_empty(self, client):
-        base_path = 'path'
+        base_path = '/path/'
         # Create some files to return
         dir_prefix = BlobPrefix()
-        dir_prefix.name = '/' + base_path + '/dir'
+        dir_prefix.name = base_path + 'dir'
 
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        blob = Blob('/' + base_path + '/file', props=blob_props)
+        blob = Blob(base_path + 'file', props=blob_props)
 
         client.return_value.list_blobs.return_value = MockBlobList([dir_prefix, blob])
 
@@ -187,25 +187,25 @@ class TestAzureStore(TestCase):
 
         store = AzureStore()
 
-        blob_path = 'path/to/'
+        blob_path = '/path/to/'
         azure_url = self.wasbs_base + blob_path
         rel_path2 = dirname2.split('/')[-1]
 
         # Mock return list
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        obj_mock1 = Blob('/' + blob_path + 'test1.txt', props=blob_props)
+        obj_mock1 = Blob(blob_path + 'test1.txt', props=blob_props)
 
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        obj_mock2 = Blob('/' + blob_path + 'test2.txt', props=blob_props)
+        obj_mock2 = Blob(blob_path + 'test2.txt', props=blob_props)
 
         subdir_mock = BlobPrefix()
-        subdir_mock.name = '/' + blob_path + rel_path2
+        subdir_mock.name = blob_path + rel_path2
 
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        obj_mock3 = Blob('/' + blob_path + rel_path2 + '/' + 'test3.txt', props=blob_props)
+        obj_mock3 = Blob(blob_path + rel_path2 + '/' + 'test3.txt', props=blob_props)
 
         # Create some files to return
         def list_side_effect(container_name, prefix, delimiter='/', marker=None):
@@ -244,25 +244,25 @@ class TestAzureStore(TestCase):
 
         store = AzureStore()
 
-        blob_path = 'path/to/'
+        blob_path = '/path/to/'
         azure_url = self.wasbs_base + blob_path
         rel_path2 = dirname2.split('/')[-1]
 
         # Mock return list
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        obj_mock1 = Blob('/' + blob_path + 'foo/test1.txt', props=blob_props)
+        obj_mock1 = Blob(blob_path + 'foo/test1.txt', props=blob_props)
 
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        obj_mock2 = Blob('/' + blob_path + 'foo/test2.txt', props=blob_props)
+        obj_mock2 = Blob(blob_path + 'foo/test2.txt', props=blob_props)
 
         subdir_mock = BlobPrefix()
-        subdir_mock.name = '/' + blob_path + 'foo/' + rel_path2
+        subdir_mock.name = blob_path + 'foo/' + rel_path2
 
         blob_props = BlobProperties()
         blob_props.content_length = 42
-        obj_mock3 = Blob('/' + blob_path + 'foo/' + rel_path2 + '/' + 'test3.txt', props=blob_props)
+        obj_mock3 = Blob(blob_path + 'foo/' + rel_path2 + '/' + 'test3.txt', props=blob_props)
 
         # Create some files to return
         def list_side_effect(container_name, prefix, delimiter='/', marker=None):
