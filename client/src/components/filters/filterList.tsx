@@ -157,9 +157,10 @@ export default class FilterList extends React.Component<Props, State> {
         <div className="filter-list">
           <form onSubmit={this.handleFilter}>
             <div className="form-group search-group">
-              <div className="input-group search-query">
-                {this.props.fetchSearches &&
-                <span className="input-group-btn">
+              <div className="search-form">
+                <div className="input-group search-query">
+                  {this.props.fetchSearches &&
+                  <span className="input-group-btn">
                   <Dropdown id="dropdown-searches" className="saved-searches">
                     <Dropdown.Toggle
                       bsStyle="default"
@@ -210,16 +211,16 @@ export default class FilterList extends React.Component<Props, State> {
                     </Dropdown.Menu>
                   </Dropdown>
                 </span>
-                }
-                <input
-                  type="text"
-                  className="form-control input-sm"
-                  id="query"
-                  placeholder="build.id:3|4, status:~running|scheduled, created_at:2018-01-01..2018-02-01"
-                  value={this.state.query}
-                  onChange={(event) => this.onQueryInput(event.target.value)}
-                />
-                <span className="input-group-btn">
+                  }
+                  <input
+                    type="text"
+                    className="form-control input-sm"
+                    id="query"
+                    placeholder="build.id:3|4, status:~running|scheduled, created_at:2018-01-01..2018-02-01"
+                    value={this.state.query}
+                    onChange={(event) => this.onQueryInput(event.target.value)}
+                  />
+                  <span className="input-group-btn">
                   <Dropdown
                     id="dropdown-add"
                     pullRight={true}
@@ -263,6 +264,7 @@ export default class FilterList extends React.Component<Props, State> {
                     <i className="fa fa-search icon" aria-hidden="true"/>
                   </button>
                 </span>
+                </div>
               </div>
               <Dropdown
                 id="dropdown-sort"
