@@ -116,8 +116,9 @@ def download(url,
                                 stream=True)
 
         if response.status_code != 200:
-            raise ValueError(
-                "Could not get code to build the image, response code %s." % response.status_code)
+            logger.error("Failed to download file from %s: %s" % (url, response.status_code),
+                         extra={'stack': True})
+            return None
 
         with open(filename, 'wb') as f:
             logger.info("Processing file %s" % filename)
