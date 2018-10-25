@@ -265,8 +265,19 @@ def download_code(build_job, build_path, filename):
     else:
         raise ValueError('Code reference for this build job does not have any repo.')
 
-    if build_job.code_reference.commit and internal:
-        download_url = '{}?commit={}'.format(download_url, build_job.code_reference.commit)
+    if internal:
+        if build_job.code_reference.commit:
+            download_url = '{}?commit={}'.format(download_url, build_job.code_reference.commit)
+        tar_suffix = None
+    else:
+        download_url += '/archive'
+        tar_suffix = (
+            build_job.code_reference.commit
+            if build_job.code_reference.commit
+            else 'master'
+        )
+        download_url += '/{}'.format(tar_suffix)
+        download_url += '.tar.gz'
 
     repo_file = download(
         url=download_url,
@@ -279,7 +290,12 @@ def download_code(build_job, build_path, filename):
         send_status(build_job=build_job,
                     status=JobLifeCycle.FAILED,
                     message='Could not download code to build the image.')
-    untar_file(build_path=build_path, filename=filename, logger=_logger, delete_tar=True)
+    untar_file(build_path=build_path,
+               filename=filename,
+               logger=_logger,
+               delete_tar=True,
+               internal=internal,
+               tar_suffix=tar_suffix)
 
 
 def build(build_job):

@@ -1,4 +1,5 @@
 import os
+import shutil
 import tarfile
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
@@ -131,15 +132,28 @@ def download(url,
         return None
 
 
-def untar_file(build_path, filename, logger, delete_tar=False):
+def move_recursively(src, dst):
+    files = os.listdir(src)
+
+    for f in files:
+        shutil.move(os.path.join(src, f), dst)
+
+
+def untar_file(build_path, filename, logger, delete_tar=False, internal=False, tar_suffix=None):
+    extract_path = build_path if internal else '/tmp'
     if filename and os.path.exists(filename):
         logger.info("Untarring the contents of the file ...")
         tar = tarfile.open(filename)
-        tar.extractall(build_path)
+        tar.extractall(extract_path)
         tar.close()
         if delete_tar:
             logger.info("Cleaning up the tar file ...")
             os.remove(filename)
+
+        if internal:
+            tarf = [f for f in os.listdir(extract_path) if tar_suffix in f]
+            if tarf:
+                move_recursively(tarf[0], build_path)
         return filename
     else:
         logger.info("File was not found, build_path: %s" % os.listdir(build_path))

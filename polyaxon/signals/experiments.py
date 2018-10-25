@@ -51,6 +51,9 @@ def experiment_pre_save(sender, **kwargs):
     set_persistence(instance=instance)
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
+    if not instance.specification or not instance.specification.build:
+        return
+
     assign_code_reference(instance)
 
 
