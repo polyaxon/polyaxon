@@ -32,6 +32,11 @@ persistence:
       bucket: s3://data-bucket
       secret: secret-name
       secretKey: secret-key
+    data-azure:
+      store: azure
+      bucket: wasbs://data-container@account.blob.core.windows.net/
+      secret: secret-name
+      secretKey: secret-key
   outputs:
     outputs1:
       mountPath: "/outputs/1"
@@ -51,6 +56,11 @@ persistence:
     outputs-s3:
       store: s3
       bucket: s3://outputs-bucket
+      secret: secret-name
+      secretKey: secret-key
+    outputs-azure:
+      store: azure
+      bucket: wasbs://outputs-container@account.blob.core.windows.net/
       secret: secret-name
       secretKey: secret-key
 ```

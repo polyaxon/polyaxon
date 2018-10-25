@@ -285,14 +285,19 @@ persistence:
     data-foo:
       mountPath: "/data/foo"
       existingClaim: "data-foo-pvc"
-    data3:
+    data-gcs3:
       store: gcs
       bucket: gs://data-bucket
       secret: secret-name
       secretKey: secret-key
-    data4:
+    data-s3:
       store: s3
       bucket: s3://data-bucket
+      secret: secret-name
+      secretKey: secret-key
+    data-azure:
+      store: azure
+      bucket: wasbs://data-container@account.blob.core.windows.net/
       secret: secret-name
       secretKey: secret-key
 ```
@@ -343,14 +348,19 @@ persistence:
     outputs-foo:
       mountPath: "/outputs/foo"
       existingClaim: "outputs-foo-pvc"
-    outputs3:
+    outputs-gcs3:
       store: gcs
       bucket: gs://outputs-bucket
       secret: secret-name
       secretKey: secret-key
-    outputs4:
+    outputs-s3:
       store: s3
       bucket: s3://outputs-bucket
+      secret: secret-name
+      secretKey: secret-key
+    outputs-azure:
+      store: azure
+      bucket: wasbs://outputs-container@account.blob.core.windows.net/
       secret: secret-name
       secretKey: secret-key
 ```
