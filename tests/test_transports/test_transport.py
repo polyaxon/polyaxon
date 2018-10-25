@@ -2,10 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 from hestia.auth import AuthenticationTypes
+from tests.test_transports.utils import BaseTestCaseTransport
 
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport import Transport
-from tests.test_transports.utils import BaseTestCaseTransport
 
 
 class TestTransport(BaseTestCaseTransport):

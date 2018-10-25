@@ -5,11 +5,11 @@ import requests
 import time
 
 from flaky import flaky
+from tests.test_transports.utils import BaseTestCaseTransport
 
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport.periodic_transport import PeriodicHttpTransportMixin
 from polyaxon_client.workers.periodic_worker import PeriodicWorker
-from tests.test_transports.utils import BaseTestCaseTransport
 
 
 class DummyTransport(PeriodicHttpTransportMixin):
