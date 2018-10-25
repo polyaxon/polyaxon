@@ -302,6 +302,8 @@ def download_code(build_job, build_path, filename):
                     message='Could not handle downloaded code to build the image.')
         return False
 
+    return True
+
 
 def build(build_job):
     """Build necessary code for a job to run"""
