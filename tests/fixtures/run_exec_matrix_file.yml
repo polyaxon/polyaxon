@@ -12,7 +12,7 @@ hptuning:
 
 build:
   image: my_image
-  install:
+  build_steps:
     - pip install some_lib
 
 run:

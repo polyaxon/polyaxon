@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
+from polyaxon_schemas.exceptions import PolyaxonfileError
+
 from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.environments import EnvironmentConfig
 from polyaxon_schemas.hptuning import HPTuningConfig
@@ -39,9 +41,20 @@ def validate(spec, data):
     data = copy.deepcopy(data)
     validated_data = {}
 
+    def validate_keys(section, config, section_data):
+        if not isinstance(section_data, dict) or section == spec.MODEL:
+            return
+
+        extra_args = [key for key in section_data.keys() if key not in config.SCHEMA().fields]
+        if extra_args:
+            raise PolyaxonfileError('Extra arguments passed for `{}`: {}'.format(
+                section, extra_args))
+
     def add_validated_section(section, config):
         if data.get(section):
-            validated_data[section] = config.from_dict(data[section])
+            section_data = data[section]
+            validate_keys(section=section, config=config, section_data=section_data)
+            validated_data[section] = config.from_dict(section_data)
 
     add_validated_section(spec.ENVIRONMENT, EnvironmentConfig)
     add_validated_section(spec.BUILD, BuildConfig)
