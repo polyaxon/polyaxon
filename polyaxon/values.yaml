@@ -83,14 +83,19 @@ persistence:
   #   data2:
   #     mountPath: "/data/2"
   #     existingClaim: "data-2-pvc"
-  #   data3:
+  #   data-gcs:
   #     store: gcs
   #     bucket: gs://data-bucket
   #     secret: secret-name
   #     secretKey: secret-key
-  #   data4:
+  #   data-s3:
   #     store: s3
   #     bucket: s3://data-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
+  #   data-azure:
+  #     store: azure
+  #     bucket: wasbs://data-container@account.blob.core.windows.net/
   #     secret: secret-name
   #     secretKey: secret-key
   # outputs:
@@ -101,14 +106,19 @@ persistence:
   #   outputs2:
   #     mountPath: "/outputs/2"
   #     existingClaim: "outputs-2-pvc"
-  #   outputs3:
+  #   outputs-gcs:
   #     store: gcs
   #     bucket: gs://outputs-bucket
   #     secret: secret-name
   #     secretKey: secret-key
-  #   outputs4:
+  #   outputs-s3:
   #     store: s3
   #     bucket: s3://outputs-bucket
+  #     secret: secret-name
+  #     secretKey: secret-key
+  #   outputs-azure:
+  #     store: azure
+  #     bucket: wasbs://outputs-container@account.blob.core.windows.net/
   #     secret: secret-name
   #     secretKey: secret-key
   #
