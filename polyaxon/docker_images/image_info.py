@@ -34,7 +34,7 @@ def get_experiment_image_info(experiment):
 def get_job_image_info(project, job):
     """Return the image name and image tag for a job"""
     project_name = project.name
-    job_spec = job.specification
+    # job_spec = job.specification
     # if job_spec.build.git:
     #
     #     try:

@@ -7,9 +7,8 @@ import publisher
 
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import is_experiment_still_running
-from db.models.repos import CodeReference, Repo
+from db.models.repos import Repo
 from dockerizer.builders.base import BaseDockerBuilder
-from libs.repos import git
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -65,7 +64,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
 def get_experiment_repo_info(experiment):
     """Returns information required to create a build for an experiment."""
     project_name = experiment.project.name
-    experiment_spec = experiment.specification
+    # experiment_spec = experiment.specification
     # if experiment_spec.build.git:  # We need to fetch the repo first
     #
     #     repo, is_created = ExternalRepo.objects.get_or_create(project=experiment.project,
