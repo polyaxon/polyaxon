@@ -3,7 +3,7 @@ if not please read how you can [install kubernetes](install_kubernetes), and [se
 
 Please consider using this [small interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
 
-Please also note that the [helm reference](/reference_polyaxon_helm) to check all default values.
+Please also check the [helm reference](/reference_polyaxon_helm) for all default values.
 
 ## Create a namespace for Polyaxon
 
@@ -49,7 +49,7 @@ postgresql:
     size: 5Gi
 ```
 
-Example, updating the user data:
+Example, updating the default user:
 
 ```yaml
 user:
