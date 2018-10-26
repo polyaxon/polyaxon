@@ -180,6 +180,7 @@ serviceType: LoadBalancer
 ## Upgrade Polyaxon
 
 To upgrade Polyaxon to a newer version, you can simply run:
+
 ```bash
 helm update
 helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml

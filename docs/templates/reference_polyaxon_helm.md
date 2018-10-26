@@ -581,3 +581,12 @@ You ca yse port forwarding to access the api and dashboard on you localhost:
 ```bash
 kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
 ``` 
+
+## Upgrade Polyaxon
+
+To upgrade Polyaxon to a newer version, you can simply run:
+
+```bash
+helm update
+helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
+```
