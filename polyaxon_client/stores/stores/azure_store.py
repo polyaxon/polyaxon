@@ -191,28 +191,6 @@ class AzureStore(BaseStore):
 
         self.connection.create_blob_from_path(container_name, blob, filename)
 
-    def download_file(self, blob, local_path, container_name=None, use_basename=True):
-        """
-        Downloads a file from Google Cloud Storage.
-
-        Args:
-            blob: `str`. blob to download.
-            local_path: `str`. the path to download to.
-            container_name: `str`. the name of the container.
-            use_basename: `bool`. whether or not to use the basename of the blob.
-        """
-        if not container_name:
-            container_name, _, blob = self.parse_wasbs_url(blob)
-
-        local_path = os.path.abspath(local_path)
-
-        if use_basename:
-            local_path = append_basename(local_path, blob)
-
-        check_dirname_exists(local_path)
-
-        self.connection.get_blob_to_path(container_name, blob, local_path)
-
     def upload_dir(self, dirname, blob, container_name=None, use_basename=True):
         """
         Uploads a local directory to to Google Cloud Storage.
@@ -238,6 +216,28 @@ class AzureStore(BaseStore):
                                  blob=file_blob,
                                  container_name=container_name,
                                  use_basename=False)
+
+    def download_file(self, blob, local_path, container_name=None, use_basename=True):
+        """
+        Downloads a file from Google Cloud Storage.
+
+        Args:
+            blob: `str`. blob to download.
+            local_path: `str`. the path to download to.
+            container_name: `str`. the name of the container.
+            use_basename: `bool`. whether or not to use the basename of the blob.
+        """
+        if not container_name:
+            container_name, _, blob = self.parse_wasbs_url(blob)
+
+        local_path = os.path.abspath(local_path)
+
+        if use_basename:
+            local_path = append_basename(local_path, blob)
+
+        check_dirname_exists(local_path)
+
+        self.connection.get_blob_to_path(container_name, blob, local_path)
 
     def download_dir(self, blob, local_path, container_name=None, use_basename=True):
         """
