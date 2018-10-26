@@ -657,9 +657,12 @@ def logs(ctx, job, past, follow, hide_time):
                 if not follow:
                     return
             except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-                Printer.print_error('Could not get logs for experiment `{}`.'.format(_experiment))
-                Printer.print_error('Error message `{}`.'.format(e))
-                sys.exit(1)
+                if not follow:
+                    Printer.print_error(
+                        'Could not get logs for experiment `{}`.'.format(_experiment))
+                    Printer.print_error(
+                        'Error message `{}`.'.format(e))
+                    sys.exit(1)
 
         try:
             PolyaxonClient().experiment.logs(
