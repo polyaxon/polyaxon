@@ -19,7 +19,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-sidecar',
-      version='0.2.8',
+      version='0.2.9',
       description='Polyaxon sidecar.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
@@ -38,8 +38,8 @@ setup(name='polyaxon-sidecar',
           'instrumentation'
       ],
       install_requires=[
-          'polyaxon-k8s==0.2.8',
-          'polyaxon-schemas==0.2.8',
+          'polyaxon-k8s==0.2.9',
+          'polyaxon-schemas==0.2.9',
           'celery==4.2.1',
           'Unipath==1.1'
       ],
