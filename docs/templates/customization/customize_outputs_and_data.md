@@ -119,3 +119,63 @@ environment:
 
 By providing this persistence subsection,
 Polyaxon will mount the volume by looking up the name from the defined volumes.
+
+
+## Cloud storages
+
+In order to mount a cloud storage, 
+users need to provide authentication access to Polyaxon for all storages needed during the scheduling.
+
+The way to do that is by creating a secret of your cloud storage access auth, 
+and providing the secret name and key name to use from that secret. 
+(You can use the same k8s secret to manage multiple storage access auth, in this case only the key will be different).   
+
+### For Google Cloud Storage
+
+Google cloud storage provide an easy way to download access key as json file. 
+You should create a secret based on that json file.
+
+`kubectl create secret generic gcs-secret --from-file=key.json=path/key.json -n polyaxon`
+
+
+### For S3
+
+In order to use S3 buckets with Polyaxon, you should create a file containing you access information json object, e.g. `key.json`.
+This file should include at least the following information:
+
+```json
+{
+  "AWS_ACCESS_KEY_ID" : "",
+  "AWS_SECRET_ACCESS_KEY": ""
+}
+```
+
+All possible values:
+
+```json
+{
+  "AWS_ENDPOINT_URL": "",
+  "AWS_ACCESS_KEY_ID": "",
+  "AWS_SECRET_ACCESS_KEY": "",
+  "AWS_SECURITY_TOKEN": "",
+  "AWS_REGION": ""
+}
+```
+
+`kubectl create secret generic s3-secret --from-file=key.json=path/key.json -n polyaxon`
+
+### For Azure storage
+
+You should create a storage account (e.g. plx-storage) and a blob (e.g. outputs). 
+You should then create a file you access information json object, e.g. `key.json`. 
+This file should include the following information:
+
+```json
+{ 
+  "AZURE_ACCOUNT_NAME": "plx-storage",
+  "AZURE_ACCOUNT_KEY": "your key",
+  "AZURE_CONNECTION_STRING": "your connection string",
+}
+```
+
+`kubectl create secret generic az-secret --from-file=key.json=path/key.json -n polyaxon`
