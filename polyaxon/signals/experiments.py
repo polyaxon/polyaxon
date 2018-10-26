@@ -201,7 +201,7 @@ def experiment_metric_post_save(sender, **kwargs):
 @ignore_raw
 def start_new_experiment(sender, **kwargs):
     instance = kwargs['instance']
-    if instance.is_independent:
+    if instance.is_independent or instance.is_clone:
         # Start building the experiment and then Schedule it to be picked by the spawners
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_BUILD,
