@@ -393,7 +393,10 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.pending_experiments.count() == 1
         assert experiment_group.running_experiments.count() == 0
         assert experiment_group.succeeded_experiments.count() == 1
-        experiment.resume()
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as start_build:
+            experiment.resume()
+
+        assert start_build.call_count == 1
         assert experiment_group.pending_experiments.count() == 2
         assert experiment_group.running_experiments.count() == 0
         assert experiment_group.succeeded_experiments.count() == 1
