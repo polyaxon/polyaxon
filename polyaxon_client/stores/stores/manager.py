@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+
 from polyaxon_client.stores.exceptions import PolyaxonStoresException
 from polyaxon_client.stores.stores.base_store import BaseStore
 
 
-class Store(object):
+class StoreManager(object):
     """
     A convenient class to store experiment/job outputs to a given/configured store.
     """
@@ -46,8 +48,12 @@ class Store(object):
     def upload_dir(self, dirname, **kwargs):
         self.store.upload_dir(dirname, self._path, **kwargs)
 
-    def download_file(self, filename, **kwargs):
-        self.store.download_file(filename, self._path, **kwargs)
+    def download_file(self, filename, local_path=None, use_basename=False, **kwargs):
+        file_path = os.path.join(self._path, filename)
+        local_path = local_path or filename
+        self.store.download_file(file_path, local_path, use_basename=use_basename, **kwargs)
 
-    def download_dir(self, dirname, **kwargs):
-        self.store.download_dir(dirname, self._path, **kwargs)
+    def download_dir(self, dirname, local_path=None, use_basename=False, **kwargs):
+        dir_path = os.path.join(self._path, dirname)
+        local_path = local_path or dirname
+        self.store.download_dir(dir_path, local_path, use_basename=use_basename, **kwargs)

@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
-from polyaxon_client.stores.stores.store import Store
+from polyaxon_client.stores import StoreManager
 from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.project import get_project_info
 
@@ -44,7 +44,7 @@ class BaseTracker(object):
         if not any([outputs_store, outputs_path]):
             raise PolyaxonClientException(
                 'An Store instance or and outputs path is required.')
-        self.outputs_store = outputs_store or Store(path=outputs_path)
+        self.outputs_store = outputs_store or StoreManager(path=outputs_path)
         if self.outputs_store and set_env_vars:
             self.outputs_store.set_env_vars()
 
