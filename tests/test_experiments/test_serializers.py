@@ -361,8 +361,10 @@ class TestExperimentDetailSerializer(BaseTest):
                       requests: 4096
                       limits: 10240
 
+            build:
+                image: foo
+
             run:
-              image: my_image
               cmd: video_prediction_train --model=DNA --num_masks=1
         """
         spec = ExperimentSpecification.read(spec_content)
