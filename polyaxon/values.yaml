@@ -124,6 +124,10 @@ persistence:
   #
   # Possible values for S3 secret:
   #   {AWS_ACCESS_KEY_ID: , AWS_SECRET_ACCESS_KEY: , AWS_SECURITY_TOKEN: , AWS_REGION_NAME: }
+  # Possible values for Azure storage secret:
+  #   {AZURE_ACCOUNT_NAME: , AZURE_ACCOUNT_KEY: , AZURE_CONNECTION_STRING:}
+  # Possible values for GCS secret:
+  #   The key.json
 
 defaultPersistence:
   data:
