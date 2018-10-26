@@ -1,6 +1,6 @@
 FROM polyaxon/polyaxon-npm-base
 
-MAINTAINER mourad mourafiq <mouradmourafiq@gmail.com>
+MAINTAINER mourad mourafiq <mourad@polyaxon.com>
 
 RUN apt-get -y update && \
     apt-get -y install git && \

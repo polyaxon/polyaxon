@@ -1,5 +1,32 @@
 ## 0.2.8
 
+ * Add Azure Storage to public beta.
+ * Update SSO behaviour to create users inactive by default.
+ * Add support for external public repos.
+ * Add support for external private repos (beta).
+ * Extend build specification with commit/branch(treeish) for both internal and external repos. 
+ * Update and extract sidecar logic to independent service.
+ * Add support for external experiment logging.
+ * Update and enhance store management.
+ * Trigger single build process for experiment groups.
+ * Update behaviour of `latest` docker tag, default to not always pull, add configuration to set it up to True.
+ * Update and fix several docs issues. 
+ * Add port forwarding command docs
+ * Add workload heartbeat tracking, jobs/experiments not reporting will be marked as Zombie runs.
+ * Enhance internal events management, default is async now.
+ * Add possibility to stop tensorboards/notebooks from dashboard.
+ * Force experiment statuses to respect the transition matrix.
+ * Update logging to track timestamps as well, cli logs commands have option to hide timestamps.
+ * Extend health check logic with disk, memory, cache, ...
+ * Extract common utils.
+ * Remove external repos management.
+ * Fix issue with client not reporting correctly last metrics (worker dies before finishing the request).
+ * Fix issue with cli outdated param (async).
+ * Fix issues related to image builds.
+ * Fix some ui issues on safari.
+ 
+## 0.2.8
+
  * Seamless integration of S3 and GCS is now in public beta, 
    users can load data from cloud storages as well as from persistent volumes and host nodes, 
    they can also manage their outputs and artifacts using these storages, 
