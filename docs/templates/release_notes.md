@@ -1,4 +1,4 @@
-## 0.2.8
+## 0.2.9
 
  * Add Azure Storage to public beta.
  * Update SSO behaviour to create users inactive by default.
