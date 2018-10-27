@@ -4,7 +4,7 @@ To access information about a Polyaxon run:
 ```python
 from polyaxon_client.tracking import (
     get_outputs_path,
-    outputs_path,
+    get_outputs_refs_paths,
     get_data_paths,
     get_log_level
 )
