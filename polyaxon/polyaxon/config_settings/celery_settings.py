@@ -78,12 +78,18 @@ class Intervals(object):
         is_optional=True,
         default=150)
     HEARTBEAT_CHECK = config.get_int(
-        'POLYAXON_HEARTBEAT_CHECK',
+        'POLYAXON_INTERVALS_HEARTBEAT_CHECK',
         is_optional=True,
         default=240)
     CLUSTERS_NOTIFICATION_ALIVE = 150
-    CLEAN_ACTIVITY_LOGS = 300
-    CLEAN_NOTIFICATIONS = 300
+    CLEAN_ACTIVITY_LOGS = config.get_int(
+        'POLYAXON_INTERVALS_CLEAN_ACTIVITY_LOGS',
+        is_optional=True,
+        default=300)
+    CLEAN_NOTIFICATIONS = config.get_int(
+        'POLYAXON_INTERVALS_CLEAN_NOTIFICATIONS',
+        is_optional=True,
+        default=300)
 
     @staticmethod
     def get_schedule(interval):
