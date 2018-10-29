@@ -24,7 +24,7 @@ def get_tensorboard_url(user, project_name, experiment=None, group=None):
             experiment)
     if group:
         return "{}/tensorboard/{}/{}/groups/{}/\n".format(
-            PolyaxonClient().auth.http_host,
+            PolyaxonClient().api_config.http_host,
             user,
             project_name,
             group)
