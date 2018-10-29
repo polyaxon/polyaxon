@@ -66,7 +66,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
     def outputs_path(self):
         from libs.paths.experiments import get_experiment_outputs_path
 
-        def get_experiment_outputs_path(experiment):
+        def get_named_experiment_outputs_path(experiment):
             return '{}:{}'.format(
                 self.experiment,
                 get_experiment_outputs_path(
@@ -76,10 +76,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
                     cloning_strategy=experiment.cloning_strategy))
 
         if self.experiment:
-            return get_experiment_outputs_path(self.experiment)
+            return get_named_experiment_outputs_path(self.experiment)
 
         if self.experiment_group:
-            return ','.join([get_experiment_outputs_path(experiment)
+            return ','.join([get_named_experiment_outputs_path(experiment)
                              for experiment in self.experiment_group.experiments.all()])
 
         from libs.paths.projects import get_project_outputs_path
