@@ -68,7 +68,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
         def get_named_experiment_outputs_path(experiment):
             return '{}:{}'.format(
-                self.experiment,
+                experiment.unique_name,
                 get_experiment_outputs_path(
                     persistence_outputs=experiment.persistence_outputs,
                     experiment_name=experiment.unique_name,
