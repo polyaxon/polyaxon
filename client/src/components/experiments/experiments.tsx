@@ -15,6 +15,7 @@ import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import PaginatedTable from '../tables/paginatedTable';
 import Experiment from './experiment';
+import ExperimentActions from './experimentActions';
 
 import './experiments.less';
 
@@ -29,7 +30,9 @@ export interface Props {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experimentName: string) => actions.ExperimentAction;
+  onDeleteMany: (experimentName: string, experimentIds: number[]) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
+  onStopMany: (experimentName: string, experimentIds: number[]) => actions.ExperimentAction;
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
@@ -42,6 +45,8 @@ interface State {
   metrics: string[];
   declarations: string[];
   selectedValues: string[];
+  items: number[];
+  allItems: boolean;
 }
 
 export default class Experiments extends React.Component<Props, State> {
@@ -51,6 +56,8 @@ export default class Experiments extends React.Component<Props, State> {
       metrics: [],
       declarations: [],
       selectedValues: [],
+      items: [],
+      allItems: false,
     };
   }
 
@@ -58,6 +65,31 @@ export default class Experiments extends React.Component<Props, State> {
     const baseUrl = location.hash.split('?')[0];
     return baseUrl === '#experiments' || (this.props.bookmarks && baseUrl === '');
   }
+
+  public selectAll = () => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      ...{
+        items: prevState.allItems
+        ? []
+        : this.props.experiments.map((xp: ExperimentModel) => xp.id),
+        allItems: !prevState.allItems,
+      }
+    }));
+  };
+
+  public selectHandler = (itemId: number) => {
+    const items = (this.state.items.indexOf(itemId) > -1)
+      ? this.state.items.filter((id: number) => id !== itemId)
+      : [...this.state.items, itemId];
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      ...{
+        items,
+        allItems: false,
+      }
+    }));
+  };
 
   public addColumn = (column: string) => {
     const metrics: string[] = [];
@@ -182,7 +214,6 @@ export default class Experiments extends React.Component<Props, State> {
       ...this.state.metrics.map((metric) => `metric.${metric}`),
     ];
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
-    const experiments = this.props.experiments;
     const listExperiments = () => {
       return (
         <div>
@@ -213,7 +244,7 @@ export default class Experiments extends React.Component<Props, State> {
             />
           </form>
           <table className="table table-hover table-responsive">
-            <colgroup span={4}/>
+            <colgroup span={5}/>
             <colgroup span={1}/>
             <colgroup span={1}/>
             {this.state.metrics.length > 0 && <colgroup span={this.state.metrics.length}/>}
@@ -222,7 +253,7 @@ export default class Experiments extends React.Component<Props, State> {
             <tbody>
             {(this.state.metrics.length > 0 || this.state.declarations.length > 0) &&
             <tr className="list-header">
-              <th className="top-header block" scope="colgroup" colSpan={4}/>
+              <th className="top-header block" scope="colgroup" colSpan={5}/>
               {this.state.declarations.length > 0 &&
               <th
                 className="top-header border-left border-right block"
@@ -240,6 +271,9 @@ export default class Experiments extends React.Component<Props, State> {
               <th className="top-header block" scope="colgroup" colSpan={1}/>
             </tr>}
             <tr className="list-header">
+              <th className="block">
+                <input type="checkbox" checked={this.state.allItems} onClick={this.selectAll}/>
+              </th>
               <th className="block">
                 Status
               </th>
@@ -275,10 +309,15 @@ export default class Experiments extends React.Component<Props, State> {
                 </th>
               )}
               <th className="block pull-right">
-                Actions
+                <ExperimentActions
+                  onDelete={() => this.props.onDelete('')}
+                  onStop={() => this.props.onStop('')}
+                  isRunning={false}
+                  pullRight={false}
+                />
               </th>
             </tr>
-            {experiments.map(
+            {this.props.experiments.map(
               (xp: ExperimentModel) =>
                 <Experiment
                   key={xp.unique_name}
@@ -290,6 +329,8 @@ export default class Experiments extends React.Component<Props, State> {
                   showBookmarks={this.props.showBookmarks}
                   bookmark={() => this.props.bookmark(xp.unique_name)}
                   unbookmark={() => this.props.unbookmark(xp.unique_name)}
+                  selectHandler={() => this.selectHandler(xp.id)}
+                  selected={this.state.items.indexOf(xp.id) > -1}
                   reducedForm={(this.state.metrics.length + this.state.declarations.length) > 4}
                 />)}
             </tbody>

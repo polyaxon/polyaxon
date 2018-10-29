@@ -6,6 +6,7 @@ import {
   getExperimentUrl,
   getExperimentUrlFromName,
   getProjectUrl,
+  getProjectUrlFromName,
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
@@ -17,7 +18,9 @@ import { fetchCodeReference } from './codeReference';
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
   DELETE_EXPERIMENT = 'DELETE_EXPERIMENT',
+  DELETE_EXPERIMENTS = 'DELETE_EXPERIMENTS',
   STOP_EXPERIMENT = 'STOP_EXPERIMENT',
+  STOP_EXPERIMENTS = 'STOP_EXPERIMENTS',
   UPDATE_EXPERIMENT = 'UPDATE_EXPERIMENT',
   RECEIVE_EXPERIMENT = 'RECEIVE_EXPERIMENT',
   RECEIVE_EXPERIMENTS = 'RECEIVE_EXPERIMENTS',
@@ -39,9 +42,22 @@ export interface DeleteExperimentAction extends Action {
   experimentName: string;
 }
 
+
+export interface DeleteExperimentsAction extends Action {
+  type: actionTypes.DELETE_EXPERIMENTS;
+  projectName: string;
+  experimentIds: number[];
+}
+
 export interface StopExperimentAction extends Action {
   type: actionTypes.STOP_EXPERIMENT;
   experimentName: string;
+}
+
+export interface StopExperimentsAction extends Action {
+  type: actionTypes.STOP_EXPERIMENTS;
+  projectName: string;
+  experimentIds: number[];
 }
 
 export interface ReceiveExperimentsAction extends Action {
@@ -74,6 +90,8 @@ export type ExperimentAction =
   CreateUpdateReceiveExperimentAction
   | DeleteExperimentAction
   | StopExperimentAction
+  | StopExperimentsAction
+  | StopExperimentsAction
   | ReceiveExperimentsAction
   | ReceiveExperimentsParamsAction
   | RequestExperimentsAction
@@ -101,10 +119,26 @@ export function deleteExperimentActionCreator(experimentName: string): DeleteExp
   };
 }
 
+export function deleteExperimentsActionCreator(projectName: string, experimentIds: number[]): DeleteExperimentsAction {
+  return {
+    type: actionTypes.DELETE_EXPERIMENTS,
+    projectName,
+    experimentIds,
+  };
+}
+
 export function stopExperimentActionCreator(experimentName: string): StopExperimentAction {
   return {
     type: actionTypes.STOP_EXPERIMENT,
     experimentName,
+  };
+}
+
+export function stopExperimentsActionCreator(projectName: string, experimentIds: number[]): StopExperimentsAction {
+  return {
+    type: actionTypes.STOP_EXPERIMENTS,
+    projectName,
+    experimentIds,
   };
 }
 
@@ -269,6 +303,23 @@ export function deleteExperiment(experimentName: string, redirect: boolean = fal
   };
 }
 
+export function deleteExperiments(projectName: string, experimentIds: number[]): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projectUrl}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        return dispatch(deleteExperimentsActionCreator(projectName, experimentIds));
+      });
+  };
+}
+
 export function updateExperiment(experimentName: string, updateDict: { [key: string]: any }): any {
   const experimentUrl = getExperimentUrlFromName(experimentName, false);
   return (dispatch: any, getState: any) => {
@@ -300,6 +351,21 @@ export function stopExperiment(experimentName: string): any {
     })
       .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(stopExperimentActionCreator(experimentName)));
+  };
+}
+
+export function stopExperiments(projectName: string, experimentIds: number[]): any {
+  const projecttUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projecttUrl}/stop`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(stopExperimentsActionCreator(projectName, experimentIds)));
   };
 }
 

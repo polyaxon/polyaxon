@@ -29,6 +29,8 @@ export interface Props {
   showBookmarks: boolean;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
+  selectHandler: () => void;
+  selected: boolean;
   reducedForm: boolean;
 }
 
@@ -41,6 +43,8 @@ function Experiment({
                       bookmark,
                       unbookmark,
                       showBookmarks,
+                      selectHandler,
+                      selected,
                       reducedForm
                     }: Props) {
   const values = splitUniqueName(experiment.project);
@@ -60,6 +64,9 @@ function Experiment({
   }
   return (
     <tr className="list-item">
+      <td className="block">
+        <input type="checkbox" checked={selected} onChange={selectHandler} />
+      </td>
       <td className="block">
         <Status status={experiment.last_status}/>
       </td>
