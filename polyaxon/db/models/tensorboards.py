@@ -64,18 +64,23 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     @cached_property
     def outputs_path(self):
+        from libs.paths.experiments import get_experiment_outputs_path
+
+        def get_experiment_outputs_path(experiment):
+            return '{}:{}'.format(
+                self.experiment,
+                get_experiment_outputs_path(
+                    persistence_outputs=experiment.persistence_outputs,
+                    experiment_name=experiment.unique_name,
+                    original_name=experiment.original_unique_name,
+                    cloning_strategy=experiment.cloning_strategy))
+
         if self.experiment:
-            from libs.paths.experiments import get_experiment_outputs_path
-            return get_experiment_outputs_path(
-                persistence_outputs=self.experiment.persistence_outputs,
-                experiment_name=self.experiment.unique_name,
-                original_name=self.experiment.original_unique_name,
-                cloning_strategy=self.experiment.cloning_strategy)
+            return get_experiment_outputs_path(self.experiment)
+
         if self.experiment_group:
-            from libs.paths.experiment_groups import get_experiment_group_outputs_path
-            return get_experiment_group_outputs_path(
-                persistence_outputs=self.experiment_group.persistence_outputs,
-                experiment_group_name=self.experiment_group.unique_name)
+            return ','.join([get_experiment_outputs_path(experiment)
+                             for experiment in self.experiment_group.experiments.all()])
 
         from libs.paths.projects import get_project_outputs_path
         return get_project_outputs_path(persistence_outputs=None,
