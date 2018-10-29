@@ -162,7 +162,10 @@ class ProjectExperimentListView(ListCreateAPIView):
             queryset = queryset.filter(experiment_group__isnull=True)
         if group_id:
             group = self.get_group(project=project, group_id=group_id)
-            queryset = queryset.filter(experiment_group=group)
+            if group.is_study:
+                queryset = queryset.filter(experiment_group=group)
+            elif group.is_selection:
+                queryset = group.selection_experiments.all()
         auditor.record(event_type=PROJECT_EXPERIMENTS_VIEWED,
                        instance=project,
                        actor_id=self.request.user.id,
@@ -178,9 +181,17 @@ class ProjectExperimentListView(ListCreateAPIView):
                 raise ValidationError('ttl must be an integer.')
         project = get_permissible_project(view=self)
         group = self.request.data.get('experiment_group')
-        if group and ExperimentGroup.objects.filter(id=group, project=project).count() == 0:
-            raise ValidationError('Received an invalid group.')
+        if group:
+            try:
+                group = ExperimentGroup.objects.get(id=group, project=project)
+            except ExperimentGroup.DoesNotExist:
+                raise ValidationError('Received an invalid group.')
+            if group.is_selection:
+                self.request.data.pop('experiment_group')
+
         instance = serializer.save(user=self.request.user, project=project)
+        if group and group.is_selection:  # Add the experiment to the group selection
+            group.selection_experiments.add(instance)
         auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_experiment(experiment_id=instance.id, value=ttl)

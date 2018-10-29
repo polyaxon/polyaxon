@@ -33,6 +33,17 @@ from schemas.specifications import GroupSpecification
 _logger = logging.getLogger('polyaxon.db.experiment_groups')
 
 
+class GroupTypes(object):
+    STUDY = 'study'
+    SELECTION = 'selection'
+
+    VALUES = {STUDY, SELECTION}
+    CHOICES = (
+        (STUDY, STUDY),
+        (SELECTION, SELECTION)
+    )
+
+
 class ExperimentGroup(DiffModel,
                       RunTimeModel,
                       NameableModel,
@@ -59,6 +70,17 @@ class ExperimentGroup(DiffModel,
         on_delete=models.CASCADE,
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
+    group_type = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True,
+        default=GroupTypes.STUDY,
+        choices=GroupTypes.CHOICES)
+    selection_experiments = models.ManyToManyField(
+        'db.Experiment',
+        blank=True,
+        related_name='selections'
+    )
     content = models.TextField(
         null=True,
         blank=True,
@@ -95,6 +117,14 @@ class ExperimentGroup(DiffModel,
         return GROUP_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @property
+    def is_study(self):
+        return self.group_type == GroupTypes.STUDY
+
+    @property
+    def is_selection(self):
+        return self.group_type == GroupTypes.SELECTION
 
     def can_transition(self, status):
         """Update the status of the current instance.

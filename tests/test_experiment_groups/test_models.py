@@ -11,7 +11,7 @@ from django.test.client import MULTIPART_CONTENT
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration, GroupTypes
 from db.models.experiments import Experiment, ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
 from factories.factory_experiments import (
@@ -71,6 +71,8 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.concurrency is None
         assert experiment_group.search_algorithm is None
         assert experiment_group.early_stopping is None
+        assert experiment_group.code_reference is None
+        assert experiment_group.group_type == GroupTypes.SELECTION
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     def test_experiment_group_with_spec_create_hptuning(self, _):
@@ -86,6 +88,7 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.concurrency == 2
         assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
         assert len(experiment_group.early_stopping) == 2
+        assert experiment_group.group_type == GroupTypes.STUDY
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     def test_experiment_group_with_hptuning(self, _):

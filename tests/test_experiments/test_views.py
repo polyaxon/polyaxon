@@ -31,6 +31,7 @@ from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
+from db.models.experiment_groups import GroupTypes
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import (
     Experiment,
@@ -488,6 +489,39 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         assert group.experiments.count() == 1
 
+    def test_create_in_selection(self):
+        # Create in wrong selection raises
+        group = ExperimentGroupFactory(group_type=GroupTypes.SELECTION, content=None)
+        assert group.experiments.count() == 0
+
+        data = {
+            'declarations': {
+                'lr': 0.1,
+                'dropout': 0.5
+            },
+            'experiment_group': group.id
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        # Create in correct group passes
+        group = ExperimentGroupFactory(project=self.project,
+                                       group_type=GroupTypes.SELECTION,
+                                       content=None)
+        assert group.experiments.count() == 0
+        assert group.selection_experiments.count() == 0
+
+        data = {
+            'declarations': {
+                'lr': 0.1,
+                'dropout': 0.5
+            },
+            'experiment_group': group.id
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert group.selection_experiments.count() == 1
+
 
 @pytest.mark.experiments_mark
 class TestProjectExperimentLastMetricListViewV1(BaseViewTest):
@@ -553,6 +587,106 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         # one object that does not belong to the filter
         self.factory_class(project=self.experiment_group.project)
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
+        self.queryset = self.queryset.order_by('-updated_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}&limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_get_order(self):
+        resp = self.auth_client.get(self.url + '&sort=created_at,updated_at')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data != self.serializer_class(self.queryset, many=True).data
+        assert data == self.serializer_class(self.queryset.order_by('created_at', 'updated_at'),
+                                             many=True).data
+
+    def test_get_order_pagination(self):
+        queryset = self.queryset.order_by('created_at', 'updated_at')
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}&limit={}&{}".format(self.url,
+                                                            limit,
+                                                            'sort=created_at,updated_at'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(queryset[limit:], many=True).data
+
+
+@pytest.mark.experiments_mark
+class TestExperimentSelectionListViewV1(BaseViewTest):
+    serializer_class = BookmarkedExperimentSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    num_objects = 3
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory()
+        self.experiment_group = ExperimentGroupFactory(project=self.project,
+                                                       content=None,
+                                                       group_type=GroupTypes.SELECTION)
+        self.objects = [self.factory_class(project=self.project)
+                        for _ in range(self.num_objects)]
+        self.experiment_group.selection_experiments.set(self.objects)
+        self.url = '/{}/{}/{}/experiments?group={}'.format(
+            API_V1,
+            self.experiment_group.project.user,
+            self.experiment_group.project.name,
+            self.experiment_group.id)
+        # one object that does not belong to the filter
+        self.factory_class(project=self.experiment_group.project)
+        self.queryset = self.experiment_group.selection_experiments.all()
         self.queryset = self.queryset.order_by('-updated_at')
 
     def test_get(self):

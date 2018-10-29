@@ -7,7 +7,7 @@ from django.utils.timezone import now
 import auditor
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, GroupTypes
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_CREATED,
     EXPERIMENT_GROUP_DELETED,
@@ -43,6 +43,9 @@ def experiment_group_pre_save(sender, **kwargs):
         instance.hptuning = hptuning
     set_tags(instance=instance)
     set_persistence(instance=instance)
+    # Set type
+    if not instance.hptuning:
+        instance.group_type = GroupTypes.SELECTION
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
