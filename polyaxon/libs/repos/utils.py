@@ -32,7 +32,7 @@ def get_external_code_reference(git_url, commit=None):
 
 
 def assign_code_reference(instance, commit=None):
-    if instance.code_reference is not None:
+    if instance.code_reference is not None or instance.specification is None:
         return
     build = instance.specification.build if instance.specification else None
     if not commit and build:
