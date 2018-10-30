@@ -78,9 +78,9 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 export interface DispatchProps {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experimentName: string) => actions.ExperimentAction;
-  onDeleteMany: (experimentName: string, experimentIds: number[]) => actions.ExperimentAction;
+  onDeleteMany: (experimentIds: number[]) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
-  onStopMany: (experimentName: string, experimentIds: number[]) => actions.ExperimentAction;
+  onStopMany: (experimentIds: number[]) => actions.ExperimentAction;
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
@@ -94,11 +94,21 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
   return {
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experimentName: string) => dispatch(actions.deleteExperiment(experimentName)),
-    onDeleteMany: (projectName: string,
-                   experimentIds: number[]) => dispatch(actions.deleteExperiments(projectName, experimentIds)),
+    onDeleteMany: (experimentIds: number[]) => {
+      if (ownProps.projectName) {
+        return dispatch(actions.deleteExperiments(ownProps.projectName, experimentIds));
+      } else {
+        throw new Error('Experiments container does not have project.');
+      }
+    },
     onStop: (experimentName: string) => dispatch(actions.stopExperiment(experimentName)),
-    onStopMany: (projectName: string,
-                 experimentIds: number[]) => dispatch(actions.stopExperiments(projectName, experimentIds)),
+    onStopMany: (experimentIds: number[]) => {
+      if (ownProps.projectName) {
+        return dispatch(actions.stopExperiments(ownProps.projectName, experimentIds));
+      } else {
+        throw new Error('Experiments container does not have project.');
+      }
+    },
     bookmark: (experimentName: string) => dispatch(actions.bookmark(experimentName)),
     unbookmark: (experimentName: string) => dispatch(actions.unbookmark(experimentName)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),

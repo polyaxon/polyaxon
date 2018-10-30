@@ -42,7 +42,6 @@ export interface DeleteExperimentAction extends Action {
   experimentName: string;
 }
 
-
 export interface DeleteExperimentsAction extends Action {
   type: actionTypes.DELETE_EXPERIMENTS;
   projectName: string;
@@ -81,7 +80,7 @@ export interface BookmarkExperimentAction extends Action {
   experimentName: string;
 }
 
-export interface ExperimenTensorboardAction extends Action {
+export interface ExperimentTensorboardAction extends Action {
   type: actionTypes.START_EXPERIMENT_TENSORBOARD | actionTypes.STOP_EXPERIMENT_TENSORBOARD;
   projectName: string;
 }
@@ -89,14 +88,14 @@ export interface ExperimenTensorboardAction extends Action {
 export type ExperimentAction =
   CreateUpdateReceiveExperimentAction
   | DeleteExperimentAction
+  | DeleteExperimentsAction
   | StopExperimentAction
-  | StopExperimentsAction
   | StopExperimentsAction
   | ReceiveExperimentsAction
   | ReceiveExperimentsParamsAction
   | RequestExperimentsAction
   | BookmarkExperimentAction
-  | ExperimenTensorboardAction;
+  | ExperimentTensorboardAction;
 
 export function createExperimentActionCreator(experiment: ExperimentModel): CreateUpdateReceiveExperimentAction {
   return {
@@ -308,7 +307,10 @@ export function deleteExperiments(projectName: string, experimentIds: number[]):
   return (dispatch: any, getState: any) => {
     return fetch(`${BASE_API_URL}${projectUrl}/experiments/delete`, {
       method: 'DELETE',
+      body: JSON.stringify({ids: experimentIds}),
       headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
         'X-CSRFToken': getState().auth.csrftoken
       }
@@ -359,7 +361,10 @@ export function stopExperiments(projectName: string, experimentIds: number[]): a
   return (dispatch: any, getState: any) => {
     return fetch(`${BASE_API_URL}${projecttUrl}/experiments/stop`, {
       method: 'POST',
+      body: JSON.stringify({ids: experimentIds}),
       headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
         'X-CSRFToken': getState().auth.csrftoken
       }

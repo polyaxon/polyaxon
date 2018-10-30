@@ -5,6 +5,7 @@ import * as actions from '../../actions/experiment';
 import * as search_actions from '../../actions/search';
 import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
+import { isDone } from '../../constants/statuses';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { ExperimentModel } from '../../models/experiment';
 import { SearchModel } from '../../models/search';
@@ -30,9 +31,9 @@ export interface Props {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experimentName: string) => actions.ExperimentAction;
-  onDeleteMany: (experimentName: string, experimentIds: number[]) => actions.ExperimentAction;
+  onDeleteMany: (experimentIds: number[]) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
-  onStopMany: (experimentName: string, experimentIds: number[]) => actions.ExperimentAction;
+  onStopMany: (experimentIds: number[]) => actions.ExperimentAction;
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
@@ -59,6 +60,17 @@ export default class Experiments extends React.Component<Props, State> {
       items: [],
       allItems: false,
     };
+  }
+
+  public componentWillReceiveProps(nextProps: Props) {
+    const experimentIds = nextProps.experiments.map((xp: ExperimentModel) => xp.id);
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      ...{
+        items: prevState.items.filter((item: number) => experimentIds.indexOf(item) === -1),
+        allItems: false,
+      }
+    }));
   }
 
   public shouldComponentUpdate(nextProps: Props, nextState: State) {
@@ -310,9 +322,14 @@ export default class Experiments extends React.Component<Props, State> {
               )}
               <th className="block pull-right">
                 <ExperimentActions
-                  onDelete={() => this.props.onDelete('')}
-                  onStop={() => this.props.onStop('')}
-                  isRunning={false}
+                  onDelete={() => this.props.onDeleteMany(this.state.items)}
+                  onStop={() => this.props.onStopMany(this.state.items)}
+                  isRunning={this.props.experiments.filter(
+                    (xp: ExperimentModel) => this.state.items.indexOf(xp.id) > -1
+                  ).filter(
+                    (xp: ExperimentModel) => !isDone(xp.last_status)
+                  ).length > 0
+                  }
                   pullRight={false}
                 />
               </th>

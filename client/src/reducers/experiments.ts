@@ -60,6 +60,18 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
             names: state.lastFetched.names.filter(
               (name) => name !== getExperimentIndexName(action.experimentName))},
         };
+      case actionTypes.DELETE_EXPERIMENTS:
+        const experimentNames = action.experimentIds.map(
+          (id: number) => action.projectName + '.' + id);
+        return {
+          ...state,
+          uniqueNames: state.uniqueNames.filter(
+            (name) => experimentNames.indexOf(name) === -1),
+          lastFetched: {
+            ...state.lastFetched,
+            names: state.lastFetched.names.filter(
+              (name) => experimentNames.indexOf(name) === -1)},
+        };
       case actionTypes.STOP_EXPERIMENT:
         return {
           ...state,
@@ -67,6 +79,19 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
             ...state.byUniqueNames,
             [getExperimentIndexName(action.experimentName)]: {
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], last_status: STOPPED}
+          },
+        };
+      case actionTypes.STOP_EXPERIMENTS:
+        const byUniqueNames = {...state.byUniqueNames};
+        for (const exprimentId of action.experimentIds) {
+          const experimentName = action.projectName + '.' + exprimentId;
+          byUniqueNames[experimentName] = {...byUniqueNames[experimentName], last_status: STOPPED};
+        }
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            ...byUniqueNames
           },
         };
       case actionTypes.BOOKMARK_EXPERIMENT:
