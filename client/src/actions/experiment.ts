@@ -306,7 +306,7 @@ export function deleteExperiment(experimentName: string, redirect: boolean = fal
 export function deleteExperiments(projectName: string, experimentIds: number[]): any {
   const projectUrl = getProjectUrlFromName(projectName, false);
   return (dispatch: any, getState: any) => {
-    return fetch(`${BASE_API_URL}${projectUrl}`, {
+    return fetch(`${BASE_API_URL}${projectUrl}/experiments/delete`, {
       method: 'DELETE',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
@@ -357,7 +357,7 @@ export function stopExperiment(experimentName: string): any {
 export function stopExperiments(projectName: string, experimentIds: number[]): any {
   const projecttUrl = getProjectUrlFromName(projectName, false);
   return (dispatch: any, getState: any) => {
-    return fetch(`${BASE_API_URL}${projecttUrl}/stop`, {
+    return fetch(`${BASE_API_URL}${projecttUrl}/experiments/stop`, {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
