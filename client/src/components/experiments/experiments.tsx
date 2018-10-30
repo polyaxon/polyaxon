@@ -324,7 +324,7 @@ export default class  Experiments extends React.Component<Props, State> {
                 </th>
               )}
               <th className="block pull-right">
-                {this.props.useCheckbox
+                {this.props.useCheckbox && this.state.items.length > 0
                   ? <ExperimentActions
                     onDelete={() => this.props.onDeleteMany(this.state.items)}
                     onStop={() => this.props.onStopMany(this.state.items)}
