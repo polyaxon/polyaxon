@@ -55,6 +55,7 @@ from db.models.experiments import (
     ExperimentMetric,
     ExperimentStatus
 )
+from db.models.projects import Project
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
@@ -86,7 +87,7 @@ from libs.authentication.internal import InternalAuthentication
 from libs.paths.experiments import get_experiment_logs_path
 from libs.permissions.ephemeral import IsEphemeral
 from libs.permissions.internal import IsAuthenticatedOrInternal
-from libs.permissions.projects import get_permissible_project
+from libs.permissions.projects import get_permissible_project, IsProjectOwnerOrPublicReadOnly
 from libs.spec_validation import validate_experiment_spec_config
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
@@ -636,6 +637,64 @@ class ExperimentStopView(CreateAPIView):
                 'specification': obj.config,
                 'update_status': True
             })
+        return Response(status=status.HTTP_200_OK)
+
+
+class ExperimentStopManyView(PostAPIView):
+    """Stop an experiment."""
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
+    lookup_field = 'name'
+
+    def filter_queryset(self, queryset):
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
+
+    def post(self, request, *args, **kwargs):
+        project = self.get_object()
+        experiments = queries.experiments_auditing.filter(project=project,
+                                                          id__in=request.data.get('ids', []))
+        for experiment in experiments:
+            auditor.record(event_type=EXPERIMENT_STOPPED_TRIGGERED,
+                           instance=experiment,
+                           actor_id=request.user.id,
+                           actor_name=request.user.username)
+            group = experiment.experiment_group
+            celery_app.send_task(
+                SchedulerCeleryTasks.EXPERIMENTS_STOP,
+                kwargs={
+                    'project_name': project.unique_name,
+                    'project_uuid': project.uuid.hex,
+                    'experiment_name': experiment.unique_name,
+                    'experiment_uuid': experiment.uuid.hex,
+                    'experiment_group_name': group.unique_name if group else None,
+                    'experiment_group_uuid': group.uuid.hex if group else None,
+                    'specification': experiment.config,
+                    'update_status': True
+                })
+        return Response(status=status.HTTP_200_OK)
+
+
+class ExperimentDeleteManyView(PostAPIView):
+    """Stop an experiment."""
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
+    lookup_field = 'name'
+
+    def filter_queryset(self, queryset):
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
+
+    def post(self, request, *args, **kwargs):
+        project = self.get_object()
+        experiments = queries.experiments_auditing.filter(project=project,
+                                                          id__in=request.data.get('ids', []))
+        for experiment in experiments:
+            auditor.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
+                           instance=experiment,
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username)
+            experiment.delete()
         return Response(status=status.HTTP_200_OK)
 
 

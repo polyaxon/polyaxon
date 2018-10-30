@@ -1816,6 +1816,68 @@ class TestStopExperimentViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
+class TestStopExperimentManyViewV1(BaseViewTest):
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.objects = [self.factory_class(project=project) for _ in range(3)]
+        self.url = '/{}/{}/{}/experiments/stop'.format(
+            API_V1,
+            project.user.username,
+            project.name)
+        self.queryset = self.model_class.objects.all()
+
+    def test_stop_many(self):
+        data = {}
+        assert self.queryset.count() == 3
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 0
+
+        data = {'ids': [obj.id for obj in self.objects]}
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 3
+        assert self.queryset.count() == 3
+
+
+@pytest.mark.experiments_mark
+class TestDeleteExperimentManyViewV1(BaseViewTest):
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    DISABLE_RUNNER = True
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.objects = [self.factory_class(project=project) for _ in range(3)]
+        self.url = '/{}/{}/{}/experiments/delete'.format(
+            API_V1,
+            project.user.username,
+            project.name)
+        self.queryset = self.model_class.objects.all()
+
+    def test_delete_many(self):
+        data = {}
+        assert self.queryset.count() == 3
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 3
+
+        data = {'ids': [obj.id for obj in self.objects]}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 0
+
+
+@pytest.mark.experiments_mark
 class TestExperimentLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True

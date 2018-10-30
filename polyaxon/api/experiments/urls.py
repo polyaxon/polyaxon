@@ -15,6 +15,12 @@ from constants.urls import (
 experiments_urlpatterns = [
     # Get all experiments
     re_path(r'^experiments/?$', views.ExperimentListView.as_view()),
+    re_path(r'^{}/{}/experiments/stop/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN),
+        views.ExperimentStopManyView.as_view()),
+    re_path(r'^{}/{}/experiments/delete/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN),
+        views.ExperimentDeleteManyView.as_view()),
     re_path(r'^{}/{}/experiments/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
             views.ExperimentDetailView.as_view()),
     re_path(r'^{}/{}/experiments/{}/restart/?$'.format(
