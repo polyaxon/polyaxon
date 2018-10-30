@@ -1,11 +1,12 @@
 from hestia.bool_utils import to_bool
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
-    get_object_or_404
-)
+    get_object_or_404,
+    UpdateAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -74,7 +75,15 @@ class ExperimentGroupListView(BookmarkedListMixinView, ListCreateAPIView):
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, project=get_permissible_project(view=self))
+        project = get_permissible_project(view=self)
+        instance = serializer.save(user=self.request.user,
+                                   project=project)
+        experiment_ids = self.request.data.get('experiment_ids')
+        if instance.is_selection and experiment_ids:
+            experiment_ids = set(experiment_ids)
+            if len(experiment_ids) != project.experiments.filter(id__in=experiment_ids).count():
+                raise ValidationError('Experiments selection is not valid.')
+            instance.selection_experiments.set(experiment_ids)
 
 
 class ExperimentGroupDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
@@ -102,6 +111,33 @@ class ExperimentGroupDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
         # Check project permissions
         self.check_object_permissions(self.request, obj)
         return obj
+
+
+class ExperimentGroupSelectionView(UpdateAPIView):
+    queryset = ExperimentGroup.objects
+    serializer_class = None
+    permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
+    lookup_field = 'id'
+
+    def get_object(self):
+        obj = super().get_object()
+        # Check project permissions
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        group = self.get_object()
+        if not group.is_selection:
+            raise ValidationError('This group is a not a selection.')
+
+        project = group.project
+        experiment_ids = self.request.data.get('experiment_ids')
+        if experiment_ids:
+            experiment_ids = set(experiment_ids)
+            if len(experiment_ids) != project.experiments.filter(id__in=experiment_ids).count():
+                raise ValidationError('Experiments selection is not valid.')
+            group.selection_experiments.set(experiment_ids)
+        return Response(status=status.HTTP_200_OK)
 
 
 class ExperimentGroupStopView(CreateAPIView):

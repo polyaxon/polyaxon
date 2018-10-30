@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-
 from rest_framework import status
 
 from api.experiment_groups import queries
@@ -349,6 +348,18 @@ model:
         assert last_object.hptuning is not None
         assert last_object.hptuning['concurrency'] == 3
         assert last_object.hptuning['matrix']['lr'] is not None
+        assert last_object.is_study is True
+
+        # Creating a study with selection ignores selection
+        experiments = [ExperimentFactory(project=self.project) for _ in range(2)]
+        experiment_ids = [xp.id for xp in experiments]
+        data = {'content': content, 'description': 'new-deep', 'experiment_ids': experiment_ids}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 2
+        last_object = self.model_class.objects.last()
+        assert last_object.is_study is True
+        assert last_object.selection_experiments.count() == 0
 
     def test_create_without_content_passes_if_no_spec_validation_requested(self):
         data = {}
@@ -358,6 +369,26 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content is None
+        assert last_object.is_selection is True
+
+        # Creating a selection with experiment ids
+        experiments = [ExperimentFactory(project=self.project) for _ in range(2)]
+        experiment_ids = [xp.id for xp in experiments]
+        data = {'experiment_ids': experiment_ids}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 2
+        last_object = self.model_class.objects.last()
+        assert last_object.is_study is False
+        assert last_object.selection_experiments.count() == 2
+
+        # Creating a selection with an invalid experiment id raises
+        experiments.append(ExperimentFactory())
+        experiment_ids = [xp.id for xp in experiments]
+        data = {'experiment_ids': experiment_ids}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert self.queryset.count() == self.num_objects + 2
 
     def test_create_with_hptuning(self):
         data = {
@@ -374,6 +405,7 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content is None
+        assert last_object.is_study is False
 
 
 @pytest.mark.experiment_groups_mark
@@ -436,6 +468,58 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert Experiment.objects.count() == 0
+
+
+@pytest.mark.experiment_groups_mark
+class TestExperimentGroupSelectionViewV1(BaseViewTest):
+    serializer_class = ExperimentGroupDetailSerializer
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=self.project, content=None)
+        self.url = '/{}/{}/{}/selections/{}/'.format(API_V1,
+                                                     self.project.user.username,
+                                                     self.project.name,
+                                                     self.object.id)
+        self.queryset = self.model_class.objects.all()
+        self.object_query = queries.groups_details.get(id=self.object.id)
+        assert self.object.is_selection
+
+    def test_add_experiments(self):
+        # Creating a selection with experiment ids
+        experiments = [ExperimentFactory(project=self.project) for _ in range(2)]
+        experiment_ids = [xp.id for xp in experiments]
+        data = {'experiment_ids': experiment_ids}
+        resp = self.auth_client.put(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.object.selection_experiments.count() == 2
+
+        # Creating a selection with an invalid experiment id raises
+        experiments.append(ExperimentFactory())
+        experiment_ids = [xp.id for xp in experiments]
+        data = {'experiment_ids': experiment_ids}
+        resp = self.auth_client.put(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert self.object.selection_experiments.count() == 2
+
+        # Manually setting selection
+        self.object.selection_experiments.set([])
+        assert self.object.selection_experiments.count() == 0
+        self.object.selection_experiments.set([ExperimentFactory(project=self.project)])
+        assert self.object.selection_experiments.count() == 1
+
+        # Override
+        experiments.pop()
+        experiment_ids = [xp.id for xp in experiments]
+        data = {'experiment_ids': experiment_ids}
+        resp = self.auth_client.put(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.object.selection_experiments.count() == 2
 
 
 @pytest.mark.experiment_groups_mark
