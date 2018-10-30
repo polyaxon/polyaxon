@@ -137,6 +137,17 @@ You should create a secret based on that json file.
 
 `kubectl create secret generic gcs-secret --from-file=key.json=path/key.json -n polyaxon`
 
+Polyaxon client does not bundle by default the google cloud requirements to keep the client lightweight, 
+the user need to add a `pip intstall google-cloud-storage`
+
+```yaml
+build:
+  ...
+  build_steps:
+    ...
+    - pip3 install google-cloud-storage
+``` 
+
 
 ### For S3
 
@@ -164,6 +175,20 @@ All possible values:
 
 `kubectl create secret generic s3-secret --from-file=key.json=path/key.json -n polyaxon`
 
+
+Polyaxon client does not bundle by default the boto requirements to keep the client lightweight, 
+the user need to add the necessary steps to be available during the run:
+
+```yaml
+build:
+  ...
+  build_steps:
+    ...
+    - pip3 install boto3
+    - pip3 install botocore
+``` 
+
+
 ### For Azure storage
 
 You should create a storage account (e.g. plx-storage) and a blob (e.g. outputs). 
@@ -179,3 +204,15 @@ This file should include the following information:
 ```
 
 `kubectl create secret generic az-secret --from-file=key.json=path/key.json -n polyaxon`
+
+
+Polyaxon client does not bundle by default the azure storage requirements to keep the client lightweight, 
+the user need to add the necessary steps to be available during the run:
+
+```yaml
+build:
+  ...
+  build_steps:
+    ...
+    - pip3 install azure-storage
+``` 
