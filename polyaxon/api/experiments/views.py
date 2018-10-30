@@ -641,7 +641,7 @@ class ExperimentStopView(CreateAPIView):
 
 
 class ExperimentStopManyView(PostAPIView):
-    """Stop an experiment."""
+    """Stop a group of experiments."""
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
@@ -676,7 +676,7 @@ class ExperimentStopManyView(PostAPIView):
 
 
 class ExperimentDeleteManyView(PostAPIView):
-    """Stop an experiment."""
+    """Delete a group of experiments."""
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
