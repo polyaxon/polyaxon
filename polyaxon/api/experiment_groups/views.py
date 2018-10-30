@@ -224,7 +224,12 @@ class ExperimentGroupMetricsListView(ExperimentGroupViewMixin, ListAPIView):
     def filter_queryset(self, queryset):
         queryset = super(ListAPIView, self).filter_queryset(  # pylint:disable=bad-super-call
             queryset)
-        return queryset.filter(experiment__experiment_group=self.get_experiment_group())
+        group = self.get_experiment_group()
+        if group.is_study:
+            return queryset.filter(experiment__experiment_group=group)
+        elif group.is_selection:
+            return queryset.filter(experiment__selections=group)
+        raise ValidationError('Invalid group.')
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)

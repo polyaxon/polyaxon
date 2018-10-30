@@ -774,49 +774,75 @@ class TestExperimentGroupMetricListViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.group = ExperimentGroupFactory(project=project)
+        self.selection = ExperimentGroupFactory(project=project, content=None)
         self.experiment1 = ExperimentFactory(project=project, experiment_group=self.group)
         self.experiment2 = ExperimentFactory(project=project, experiment_group=self.group)
-        self.url = '/{}/{}/{}/groups/{}/metrics/'.format(API_V1,
-                                                         project.user.username,
-                                                         project.name,
-                                                         self.group.id)
+        self.experiment3 = ExperimentFactory(project=project)
+        self.selection.selection_experiments.set([self.experiment3])
+        self.group_url = '/{}/{}/{}/groups/{}/metrics/'.format(API_V1,
+                                                               project.user.username,
+                                                               project.name,
+                                                               self.group.id)
+        self.url = self.group_url
+        self.selection_url = '/{}/{}/{}/groups/{}/metrics/'.format(API_V1,
+                                                                   project.user.username,
+                                                                   project.name,
+                                                                   self.group.id)
         self.objects1 = [
             self.factory_class(experiment=self.experiment1, values={'accuracy': i / 10})
             for i in range(self.num_objects)]
         self.objects2 = [
             self.factory_class(experiment=self.experiment2, values={'accuracy': i / 10})
             for i in range(self.num_objects)]
+        self.objects3 = [
+            self.factory_class(experiment=self.experiment3, values={'accuracy': i / 10})
+            for i in range(self.num_objects)]
 
         # Add a random experiment and metric
-        self.experiment1 = ExperimentFactory(project=project)
-        self.factory_class(experiment=self.experiment1, values={'accuracy': 0.9})
+        self.experiment4 = ExperimentFactory(project=project)
+        self.factory_class(experiment=self.experiment4, values={'accuracy': 0.9})
 
-        self.queryset = self.model_class.objects.filter(experiment__experiment_group=self.group)
-        self.queryset = self.queryset.order_by('created_at')
+        self.group_queryset = self.model_class.objects.filter(
+            experiment__experiment_group=self.group)
+        self.group_queryset = self.group_queryset.order_by('created_at')
+
+        self.selection_queryset = self.model_class.objects.filter(
+            experiment__selections=self.selection)
+        self.selection_queryset = self.selection_queryset.order_by('created_at')
 
     def test_get(self):
-        resp = self.auth_client.get(self.url)
+        resp = self.auth_client.get(self.group_url)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
         assert resp.data['count'] == 2 * self.num_objects
 
         data = resp.data['results']
-        assert len(data) == self.queryset.count()
-        assert data == self.serializer_class(self.queryset, many=True).data
+        assert len(data) == self.group_queryset.count()
+        assert data == self.serializer_class(self.group_queryset, many=True).data
+
+        resp = self.auth_client.get(self.selection_url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == self.num_objects
+
+        data = resp.data['results']
+        assert len(data) == self.selection_queryset.count()
+        assert data == self.serializer_class(self.selection_queryset, many=True).data
 
     def test_pagination(self):
         limit = (self.num_objects * 2) - 1
-        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        resp = self.auth_client.get("{}?limit={}".format(self.group_url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
         next_page = resp.data.get('next')
         assert next_page is not None
-        assert resp.data['count'] == self.queryset.count()
+        assert resp.data['count'] == self.group_queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
-        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+        assert data == self.serializer_class(self.group_queryset[:limit], many=True).data
 
         resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
@@ -825,4 +851,4 @@ class TestExperimentGroupMetricListViewV1(BaseViewTest):
 
         data = resp.data['results']
         assert len(data) == 1
-        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+        assert data == self.serializer_class(self.group_queryset[limit:], many=True).data

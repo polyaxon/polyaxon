@@ -167,6 +167,8 @@ class ProjectExperimentListView(ListCreateAPIView):
                 queryset = queryset.filter(experiment_group=group)
             elif group.is_selection:
                 queryset = group.selection_experiments.all()
+            else:
+                raise ValidationError('Invalid group.')
         auditor.record(event_type=PROJECT_EXPERIMENTS_VIEWED,
                        instance=project,
                        actor_id=self.request.user.id,
