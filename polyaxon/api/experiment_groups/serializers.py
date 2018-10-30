@@ -35,6 +35,7 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
             'user',
             'description',
             'last_status',
+            'group_type',
             'project',
             'created_at',
             'updated_at',
