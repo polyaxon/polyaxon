@@ -29,6 +29,7 @@ export interface Props {
   showBookmarks: boolean;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
+  useCheckbox: boolean;
   selectHandler: () => void;
   selected: boolean;
   reducedForm: boolean;
@@ -42,6 +43,7 @@ function Experiment({
                       onStop,
                       bookmark,
                       unbookmark,
+                      useCheckbox,
                       showBookmarks,
                       selectHandler,
                       selected,
@@ -64,9 +66,11 @@ function Experiment({
   }
   return (
     <tr className="list-item">
+      {useCheckbox &&
       <td className="block">
-        <input type="checkbox" checked={selected} onChange={selectHandler} />
+        <input type="checkbox" checked={selected} onChange={selectHandler}/>
       </td>
+      }
       <td className="block">
         <Status status={experiment.last_status}/>
       </td>

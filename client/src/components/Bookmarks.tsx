@@ -36,6 +36,7 @@ export default class Bookmarks extends React.Component<Props, {}> {
                   bookmarks={true}
                   useFilters={false}
                   showBookmarks={false}
+                  useCheckbox={false}
                 />,
                 relUrl: 'experiments'
               }, {

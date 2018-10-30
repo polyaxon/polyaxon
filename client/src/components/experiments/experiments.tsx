@@ -27,6 +27,7 @@ export interface Props {
   count: number;
   useFilters: boolean;
   showBookmarks: boolean;
+  useCheckbox: boolean;
   bookmarks: boolean;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
@@ -50,7 +51,7 @@ interface State {
   allItems: boolean;
 }
 
-export default class Experiments extends React.Component<Props, State> {
+export default class  Experiments extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -256,7 +257,7 @@ export default class Experiments extends React.Component<Props, State> {
             />
           </form>
           <table className="table table-hover table-responsive">
-            <colgroup span={5}/>
+            <colgroup span={this.props.useCheckbox ? 5 : 4}/>
             <colgroup span={1}/>
             <colgroup span={1}/>
             {this.state.metrics.length > 0 && <colgroup span={this.state.metrics.length}/>}
@@ -283,9 +284,11 @@ export default class Experiments extends React.Component<Props, State> {
               <th className="top-header block" scope="colgroup" colSpan={1}/>
             </tr>}
             <tr className="list-header">
+              {this.props.useCheckbox &&
               <th className="block">
                 <input type="checkbox" checked={this.state.allItems} onClick={this.selectAll}/>
               </th>
+              }
               <th className="block">
                 Status
               </th>
@@ -321,17 +324,20 @@ export default class Experiments extends React.Component<Props, State> {
                 </th>
               )}
               <th className="block pull-right">
-                <ExperimentActions
-                  onDelete={() => this.props.onDeleteMany(this.state.items)}
-                  onStop={() => this.props.onStopMany(this.state.items)}
-                  isRunning={this.props.experiments.filter(
-                    (xp: ExperimentModel) => this.state.items.indexOf(xp.id) > -1
-                  ).filter(
-                    (xp: ExperimentModel) => !isDone(xp.last_status)
-                  ).length > 0
-                  }
-                  pullRight={false}
-                />
+                {this.props.useCheckbox
+                  ? <ExperimentActions
+                    onDelete={() => this.props.onDeleteMany(this.state.items)}
+                    onStop={() => this.props.onStopMany(this.state.items)}
+                    isRunning={this.props.experiments.filter(
+                      (xp: ExperimentModel) => this.state.items.indexOf(xp.id) > -1
+                    ).filter(
+                      (xp: ExperimentModel) => !isDone(xp.last_status)
+                    ).length > 0
+                    }
+                    pullRight={false}
+                  />
+                  : 'actions'
+                }
               </th>
             </tr>
             {this.props.experiments.map(
@@ -344,6 +350,7 @@ export default class Experiments extends React.Component<Props, State> {
                   onDelete={() => this.props.onDelete(xp.unique_name)}
                   onStop={() => this.props.onStop(xp.unique_name)}
                   showBookmarks={this.props.showBookmarks}
+                  useCheckbox={this.props.useCheckbox}
                   bookmark={() => this.props.bookmark(xp.unique_name)}
                   unbookmark={() => this.props.unbookmark(xp.unique_name)}
                   selectHandler={() => this.selectHandler(xp.id)}

@@ -84,6 +84,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
                   user={project.user}
                   projectName={project.unique_name}
                   showBookmarks={true}
+                  useCheckbox={true}
                   useFilters={true}
                 />,
                 relUrl: 'experiments'

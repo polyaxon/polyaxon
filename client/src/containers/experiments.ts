@@ -17,6 +17,7 @@ interface OwnProps {
   groupId?: string | number;
   useFilters?: boolean;
   showBookmarks?: boolean;
+  useCheckbox?: boolean;
   bookmarks?: boolean;
   fetchData?: () => actions.ExperimentAction;
 }
@@ -71,6 +72,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     count: results.count,
     useFilters: isTrue(ownProps.useFilters),
     showBookmarks: isTrue(ownProps.showBookmarks),
+    useCheckbox: isTrue(ownProps.useCheckbox),
     bookmarks: isTrue(ownProps.bookmarks),
   };
 }
