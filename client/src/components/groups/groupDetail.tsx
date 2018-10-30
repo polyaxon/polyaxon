@@ -7,7 +7,6 @@ import { getGroupUrl, getProjectUrl, getUserUrl, splitUniqueName } from '../../c
 import Experiments from '../../containers/experiments';
 import Metrics from '../../containers/metrics';
 import Statuses from '../../containers/statuses';
-import { ActionInterface } from '../../interfaces/actions';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { GroupModel } from '../../models/group';
 import { getBookmark } from '../../utils/bookmarks';

@@ -1,13 +1,16 @@
 import * as _ from 'lodash';
 import * as React from 'react';
+import { Modal } from 'react-bootstrap';
 
 import * as actions from '../../actions/experiment';
-import * as search_actions from '../../actions/search';
+import * as groupActions from '../../actions/group';
+import * as searchActions from '../../actions/search';
 import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { isDone } from '../../constants/statuses';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { ExperimentModel } from '../../models/experiment';
+import { GroupModel } from '../../models/group';
 import { SearchModel } from '../../models/search';
 import AutocompleteLabel from '../autocomplete/autocompleteLabel';
 import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
@@ -38,9 +41,11 @@ export interface Props {
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
-  fetchSearches: () => search_actions.SearchAction;
-  createSearch: (data: SearchModel) => search_actions.SearchAction;
-  deleteSearch: (searchId: number) => search_actions.SearchAction;
+  fetchSearches: () => searchActions.SearchAction;
+  createSearch: (data: SearchModel) => searchActions.SearchAction;
+  deleteSearch: (searchId: number) => searchActions.SearchAction;
+  createSelection: (data: GroupModel) => groupActions.GroupAction;
+  addToSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
 }
 
 interface State {
@@ -49,6 +54,10 @@ interface State {
   selectedValues: string[];
   items: number[];
   allItems: boolean;
+  showCreateSelectionModal: boolean;
+  showAddSelectionModal: boolean;
+  group: GroupModel;
+  selectionId: number;
 }
 
 export default class  Experiments extends React.Component<Props, State> {
@@ -60,6 +69,10 @@ export default class  Experiments extends React.Component<Props, State> {
       selectedValues: [],
       items: [],
       allItems: false,
+      showAddSelectionModal: false,
+      showCreateSelectionModal: false,
+      group: {} as GroupModel,
+      selectionId: -1,
     };
   }
 
@@ -68,7 +81,7 @@ export default class  Experiments extends React.Component<Props, State> {
     this.setState((prevState, prevProps) => ({
       ...prevState,
       ...{
-        items: prevState.items.filter((item: number) => experimentIds.indexOf(item) === -1),
+        items: prevState.items.filter((item: number) => experimentIds.indexOf(item) !== -1),
         allItems: false,
       }
     }));
@@ -185,6 +198,60 @@ export default class  Experiments extends React.Component<Props, State> {
         selectedValues
       }
     }));
+  };
+
+  public handleClose = () => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState, showAddSelectionModal: false, showCreateSelectionModal: false
+    }));
+  };
+
+  public handleShow = (type: 'showAddSelectionModal' | 'showCreateSelectionModal') => {
+    const updateState = {showAddSelectionModal: false, showCreateSelectionModal: false};
+    updateState[type] = true;
+    this.setState((prevState, prevProps) => ({
+      ...prevState, ...updateState
+    }));
+  };
+
+  public createSelection = (event: any) => {
+    event.preventDefault();
+    if (this.props.createSelection) {
+      const group = {...this.state.group, experiment_ids: this.state.items};
+      this.props.createSelection(group);
+    }
+    this.handleClose();
+  };
+
+  public addToSelection = (event: any) => {
+    event.preventDefault();
+    if (this.props.addToSelection) {
+      this.props.addToSelection(this.state.selectionId, this.state.items);
+    }
+    this.handleClose();
+  };
+
+  public setSelectionGroup = (selectionId: string) => {
+    this.setState((prevState, prevProps) => ({
+        ...prevState, selectionId:  parseInt(selectionId, 10)
+      }));
+  };
+
+  public updateSelectionForm = (key: string, value: string) => {
+    let updated = false;
+    const group = {...this.state.group};
+    if (key === 'name') {
+      group.name = value;
+      updated = true;
+    } else if (key === 'description') {
+      group.description = value;
+      updated = true;
+    }
+    if (updated) {
+      this.setState((prevState, prevProps) => ({
+        ...prevState, group
+      }));
+    }
   };
 
   public render() {
@@ -335,6 +402,18 @@ export default class  Experiments extends React.Component<Props, State> {
                     ).length > 0
                     }
                     pullRight={false}
+                    actions={[
+                      {
+                        name: 'Create selection',
+                        icon: '',
+                        callback: () => this.handleShow('showCreateSelectionModal')
+                      },
+                      {
+                        name: 'Add to selection',
+                        icon: '',
+                        callback: () => this.handleShow('showAddSelectionModal')
+                      }
+                      ]}
                   />
                   : 'actions'
                 }
@@ -359,9 +438,75 @@ export default class  Experiments extends React.Component<Props, State> {
                 />)}
             </tbody>
           </table>
+          {createSelectionModal}
+          {addToSelectionModal}
         </div>
       );
     };
+
+    const addToSelectionModal = (
+      <Modal show={this.state.showAddSelectionModal} onHide={this.handleClose}>
+        <Modal.Header closeButton={true}>
+          <Modal.Title>Save View</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="form-horizontal" onSubmit={this.addToSelection}>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Group Selection</label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(event) => this.setSelectionGroup(event.target.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                <button type="submit" className="btn btn-default" onClick={this.addToSelection}>Save</button>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+      </Modal>
+    );
+
+    const createSelectionModal = (
+      <Modal show={this.state.showCreateSelectionModal} onHide={this.handleClose}>
+        <Modal.Header closeButton={true}>
+          <Modal.Title>Save View</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="form-horizontal" onSubmit={this.createSelection}>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Name</label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(event) => this.updateSelectionForm('name', event.target.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Description</label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(event) => this.updateSelectionForm('description', event.target.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                <button type="submit" className="btn btn-default" onClick={this.createSelection}>Save</button>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+      </Modal>
+    );
 
     const empty = this.props.bookmarks ?
       EmptyBookmarks(

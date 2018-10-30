@@ -6,7 +6,6 @@ import { isDone } from '../../constants/statuses';
 import { getBuildUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Logs from '../../containers/logs';
 import Statuses from '../../containers/statuses';
-import { ActionInterface } from '../../interfaces/actions';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { BuildModel } from '../../models/build';
 import { getBookmark } from '../../utils/bookmarks';

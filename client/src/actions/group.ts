@@ -6,6 +6,8 @@ import {
   getGroupUrl,
   getGroupUrlFromName,
   getProjectUrl,
+  getProjectUrlFromName,
+  getSelectionUrlFromName,
   handleAuthError,
   urlifyProjectName
 } from '../constants/utils';
@@ -241,6 +243,24 @@ export function updateGroup(groupName: string, updateDict: { [key: string]: any 
   };
 }
 
+export function updateSelection(groupName: string, updateDict: { [key: string]: any }): any {
+  const selectionUrl = getSelectionUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${selectionUrl}`, {
+        method: 'PATCH',
+        body: JSON.stringify(updateDict),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch));
+  };
+}
+
 export function deleteGroup(groupName: string, redirect: boolean = false): any {
   const groupUrl = getGroupUrlFromName(groupName, false);
   return (dispatch: any, getState: any) => {
@@ -261,6 +281,26 @@ export function deleteGroup(groupName: string, redirect: boolean = false): any {
         }
         return dispatched;
       });
+  };
+}
+
+export function createGroup(projectName: string, body: { [key: string]: any }): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${projectUrl}/groups`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => dispatch(createGroupActionCreator(json)));
   };
 }
 

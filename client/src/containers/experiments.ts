@@ -2,13 +2,14 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
+import * as actions from '../actions/experiment';
+import * as groupActions from '../actions/group';
+import * as searchActions from '../actions/search';
 import Experiments from '../components/experiments/experiments';
 import { AppState } from '../constants/types';
 import { getExperimentIndexName, isTrue } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
-
-import * as actions from '../actions/experiment';
-import * as search_actions from '../actions/search';
+import { GroupModel } from '../models/group';
 import { SearchModel } from '../models/search';
 
 interface OwnProps {
@@ -87,9 +88,11 @@ export interface DispatchProps {
   unbookmark: (experimentName: string) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentAction;
-  fetchSearches: () => search_actions.SearchAction;
-  createSearch: (data: SearchModel) => search_actions.SearchAction;
-  deleteSearch: (searchId: number) => search_actions.SearchAction;
+  fetchSearches: () => searchActions.SearchAction;
+  createSearch: (data: SearchModel) => searchActions.SearchAction;
+  deleteSearch: (searchId: number) => searchActions.SearchAction;
+  createSelection: (data: GroupModel) => groupActions.GroupAction;
+  addToSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -116,23 +119,39 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
     fetchSearches: () => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.fetchExperimentSearches(ownProps.projectName));
+        return dispatch(searchActions.fetchExperimentSearches(ownProps.projectName));
       } else {
         throw new Error('Experiments container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.createExperimentSearch(ownProps.projectName, data));
+        return dispatch(searchActions.createExperimentSearch(ownProps.projectName, data));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Experiments container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.deleteExperimentSearch(ownProps.projectName, searchId));
+        return dispatch(searchActions.deleteExperimentSearch(ownProps.projectName, searchId));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Experiments container does not have project.');
+      }
+    },
+    createSelection: (data: GroupModel) => {
+      if (ownProps.projectName) {
+        return dispatch(groupActions.createGroup(ownProps.projectName, data));
+      } else {
+        throw new Error('Experiments container does not have project.');
+      }
+    },
+    addToSelection: (selectionId: number, items: number[]) => {
+      if (ownProps.projectName) {
+        const data = {experiment_ids: items};
+        const groupName = `${ownProps.projectName}.${selectionId}`;
+        return dispatch(groupActions.updateSelection(groupName, data));
+      } else {
+        throw new Error('Experiments container does not have project.');
       }
     },
     fetchData: (offset?: number,

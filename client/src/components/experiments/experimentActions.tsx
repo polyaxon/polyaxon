@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
+import { ActionInterface } from '../../interfaces/actions';
+
 import '../actions.less';
 
 export interface Props {
@@ -10,9 +12,11 @@ export interface Props {
   hasTensorboard?: boolean;
   isRunning: boolean;
   pullRight: boolean;
+  actions?: ActionInterface[];
 }
 
 function ExperimentActions(props: Props) {
+  const actions = props.actions || [];
   return (
     <span className={props.pullRight ? 'actions pull-right' : 'actions'}>
       <Dropdown
@@ -28,6 +32,11 @@ function ExperimentActions(props: Props) {
             <i className="fa fa-ellipsis-h icon" aria-hidden="true"/>
         </Dropdown.Toggle>
         <Dropdown.Menu>
+          {actions.map((action: ActionInterface, idx: number) => (
+            <MenuItem key={idx} eventKey="1" onClick={action.callback}>
+              <i className={`fa fa-${action.icon} icon`} aria-hidden="true"/> {action.name}
+            </MenuItem>
+          ))}
           {props.onStop && props.isRunning &&
           <MenuItem eventKey="1" onClick={props.onStop}>
             <i className="fa fa-stop icon" aria-hidden="true"/> Stop

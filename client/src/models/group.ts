@@ -3,6 +3,7 @@ import { LastFetchedNames } from './utils';
 export class GroupModel {
   public id: number;
   public uuid: string;
+  public name: string;
   public unique_name: string;
   public description: string;
   public readme: string;
@@ -28,6 +29,7 @@ export class GroupModel {
   public project: string;
   public has_tensorboard: boolean;
   public experiments: string[] = [];
+  public selection_experiments: string[] = [];
   public bookmarked: boolean;
 }
 

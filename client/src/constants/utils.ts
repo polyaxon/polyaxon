@@ -98,6 +98,15 @@ export let getGroupUrl = (username: string,
   return `${projectUrl}/groups/${groupId}/`;
 };
 
+export let getSelectionUrl = (username: string,
+                              projectName: string,
+                              groupId: number | string,
+                              app: boolean = true) => {
+  const projectUrl = getProjectUrl(username, projectName, app);
+  return `${projectUrl}/selections/${groupId}/`;
+};
+
+
 export let getGroupUniqueName = (username: string,
                                  projectName: string,
                                  groupId: number | string) => {
@@ -138,6 +147,11 @@ export let getBuildUrlFromName = (uniqueName: string, app: boolean = true): stri
 export let getGroupUrlFromName = (uniqueName: string, app: boolean = true): string => {
   const values = uniqueName.split('.');
   return getGroupUrl(values[0], values[1], values[values.length - 1], app);
+};
+
+export let getSelectionUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getSelectionUrl(values[0], values[1], values[values.length - 1], app);
 };
 
 export let getJobUrlFromName = (uniqueName: string, app: boolean = true): string => {
@@ -284,7 +298,7 @@ export const delay = (ms?: number) => new Promise((resolve) =>
 
 export function b64DecodeUnicode(str: string) {
   // Going backwards: from bytestream, to percent-encoding, to original string.
-  return decodeURIComponent(atob(str).split('').map( (c) => {
+  return decodeURIComponent(atob(str).split('').map((c) => {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
 }

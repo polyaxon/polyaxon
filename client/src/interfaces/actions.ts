@@ -1,5 +1,5 @@
 export interface ActionInterface {
-  onDelete: () => any;
-  onStop?: () => any;
-  last_status?: string;
+  callback: () => any;
+  name: string;
+  icon: string;
 }
