@@ -685,7 +685,7 @@ class ExperimentDeleteManyView(PostAPIView):
         username = self.kwargs['username']
         return queryset.filter(user__username=username)
 
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         project = self.get_object()
         experiments = queries.experiments_auditing.filter(project=project,
                                                           id__in=request.data.get('ids', []))

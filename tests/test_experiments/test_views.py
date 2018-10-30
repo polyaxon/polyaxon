@@ -1867,12 +1867,12 @@ class TestDeleteExperimentManyViewV1(BaseViewTest):
     def test_delete_many(self):
         data = {}
         assert self.queryset.count() == 3
-        resp = self.auth_client.post(self.url, data)
+        resp = self.auth_client.delete(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 3
 
         data = {'ids': [obj.id for obj in self.objects]}
-        resp = self.auth_client.post(self.url, data)
+        resp = self.auth_client.delete(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 0
 
