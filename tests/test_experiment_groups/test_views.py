@@ -534,7 +534,7 @@ class TestExperimentGroupSelectionViewV1(BaseViewTest):
         assert self.object.selection_experiments.count() == 2
 
         # Using invalid operation
-        data = {'experiment_ids': experiment_ids}
+        data = {'experiment_ids': experiment_ids, 'operation': 'foo'}
         resp = self.auth_client.put(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         assert self.object.selection_experiments.count() == 2
