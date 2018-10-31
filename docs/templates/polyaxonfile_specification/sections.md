@@ -15,7 +15,7 @@ Represents the polyaxon file specification kind, i.e. one of the values `experim
 Example:
 
 ```yaml
-kine: experiment
+kind: experiment
 ```
 
 ## logging
