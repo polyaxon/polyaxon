@@ -1,7 +1,10 @@
 from hestia.string_utils import strip_spaces
 
 
-def get_pod_command_args(run_config):
+def get_pod_command_args(run_config, use_args=True):
+    if use_args:
+        return ["/bin/bash", "-c"], run_config.cmd
+
     if not run_config or not run_config.cmd:
         raise ValueError('The specification must contain a command.')
 
