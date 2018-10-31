@@ -513,12 +513,30 @@ class TestExperimentGroupSelectionViewV1(BaseViewTest):
         self.object.selection_experiments.set([ExperimentFactory(project=self.project)])
         assert self.object.selection_experiments.count() == 1
 
-        # Override
+        # Adding experiments
         experiments.pop()
         experiment_ids = [xp.id for xp in experiments]
+        data = {'experiment_ids': experiment_ids, 'operation': 'add'}
+        resp = self.auth_client.put(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.object.selection_experiments.count() == 3
+
+        # Removing experiments
+        data = {'experiment_ids': experiment_ids, 'operation': 'remove'}
+        resp = self.auth_client.put(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.object.selection_experiments.count() == 1
+
+        # Settings experiments
         data = {'experiment_ids': experiment_ids}
         resp = self.auth_client.put(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
+        assert self.object.selection_experiments.count() == 2
+
+        # Using invalid operation
+        data = {'experiment_ids': experiment_ids}
+        resp = self.auth_client.put(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
         assert self.object.selection_experiments.count() == 2
 
 

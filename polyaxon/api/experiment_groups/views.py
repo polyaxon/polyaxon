@@ -131,12 +131,20 @@ class ExperimentGroupSelectionView(UpdateAPIView):
             raise ValidationError('This group is a not a selection.')
 
         project = group.project
+        op = self.request.data.get('operation')
         experiment_ids = self.request.data.get('experiment_ids')
         if experiment_ids:
             experiment_ids = set(experiment_ids)
             if len(experiment_ids) != project.experiments.filter(id__in=experiment_ids).count():
                 raise ValidationError('Experiments selection is not valid.')
-            group.selection_experiments.set(experiment_ids)
+            if op == 'add':
+                group.selection_experiments.add(experiment_ids)
+            elif op == 'remove':
+                group.selection_experiments.remove(experiment_ids)
+            elif op is None:
+                group.selection_experiments.set(experiment_ids)
+            else:
+                raise ValidationError('Received an invalid operation.')
         return Response(status=status.HTTP_200_OK)
 
 
