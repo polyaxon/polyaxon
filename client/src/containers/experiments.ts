@@ -15,7 +15,7 @@ import { SearchModel } from '../models/search';
 interface OwnProps {
   user: string;
   projectName?: string;
-  groupId?: string | number;
+  groupId?: number;
   useFilters?: boolean;
   showBookmarks?: boolean;
   useCheckbox?: boolean;
@@ -93,6 +93,7 @@ export interface DispatchProps {
   deleteSearch: (searchId: number) => searchActions.SearchAction;
   createSelection: (data: GroupModel) => groupActions.GroupAction;
   addToSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
+  removeFromSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -147,7 +148,16 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     },
     addToSelection: (selectionId: number, items: number[]) => {
       if (ownProps.projectName) {
-        const data = {experiment_ids: items};
+        const data = {experiment_ids: items, operation: 'add'};
+        const groupName = `${ownProps.projectName}.${selectionId}`;
+        return dispatch(groupActions.updateSelection(groupName, data));
+      } else {
+        throw new Error('Experiments container does not have project.');
+      }
+    },
+    removeFromSelection: (selectionId: number, items: number[]) => {
+      if (ownProps.projectName) {
+        const data = {experiment_ids: items, operation: 'remove'};
         const groupName = `${ownProps.projectName}.${selectionId}`;
         return dispatch(groupActions.updateSelection(groupName, data));
       } else {

@@ -5,6 +5,7 @@ import { BASE_API_URL } from '../constants/api';
 import {
   getGroupUrl,
   getGroupUrlFromName,
+  getProjectNameFromUniqueName,
   getProjectUrl,
   getProjectUrlFromName,
   getSelectionUrlFromName,
@@ -14,6 +15,7 @@ import {
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { GroupModel } from '../models/group';
+import { deleteExperimentsActionCreator } from './experiment';
 
 export enum actionTypes {
   CREATE_GROUP = 'CREATE_GROUP',
@@ -257,7 +259,14 @@ export function updateSelection(groupName: string, updateDict: { [key: string]: 
           'X-CSRFToken': getState().auth.csrftoken
         },
       })
-      .then((response) => handleAuthError(response, dispatch));
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        if ('operation' in updateDict && updateDict.operation === 'remove') {
+          return dispatch(
+            deleteExperimentsActionCreator(getProjectNameFromUniqueName(groupName), updateDict.experiment_ids)
+          );
+        }
+      });
   };
 }
 

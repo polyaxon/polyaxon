@@ -154,6 +154,11 @@ export let getSelectionUrlFromName = (uniqueName: string, app: boolean = true): 
   return getSelectionUrl(values[0], values[1], values[values.length - 1], app);
 };
 
+export let getProjectNameFromUniqueName = (uniqueName: string) => {
+  const values = uniqueName.split('.');
+  return `${values[0]}.${values[1]}`;
+};
+
 export let getJobUrlFromName = (uniqueName: string, app: boolean = true): string => {
   const values = uniqueName.split('.');
   return getJobUrl(values[0], values[1], values[values.length - 1], app);

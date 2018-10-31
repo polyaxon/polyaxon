@@ -26,7 +26,7 @@ import './experiments.less';
 export interface Props {
   isCurrentUser: boolean;
   experiments: ExperimentModel[];
-  groupId?: string | number;
+  groupId?: number;
   count: number;
   useFilters: boolean;
   showBookmarks: boolean;
@@ -46,6 +46,7 @@ export interface Props {
   deleteSearch: (searchId: number) => searchActions.SearchAction;
   createSelection: (data: GroupModel) => groupActions.GroupAction;
   addToSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
+  removeFromSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
 }
 
 interface State {
@@ -60,7 +61,7 @@ interface State {
   selectionId: number;
 }
 
-export default class  Experiments extends React.Component<Props, State> {
+export default class Experiments extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -97,8 +98,8 @@ export default class  Experiments extends React.Component<Props, State> {
       ...prevState,
       ...{
         items: prevState.allItems
-        ? []
-        : this.props.experiments.map((xp: ExperimentModel) => xp.id),
+          ? []
+          : this.props.experiments.map((xp: ExperimentModel) => xp.id),
         allItems: !prevState.allItems,
       }
     }));
@@ -231,10 +232,17 @@ export default class  Experiments extends React.Component<Props, State> {
     this.handleClose();
   };
 
+  public removeFromSelection = () => {
+    if (this.props.removeFromSelection && this.props.groupId) {
+      this.props.removeFromSelection(this.props.groupId, this.state.items);
+    }
+    this.handleClose();
+  };
+
   public setSelectionGroup = (selectionId: string) => {
     this.setState((prevState, prevProps) => ({
-        ...prevState, selectionId:  parseInt(selectionId, 10)
-      }));
+      ...prevState, selectionId: parseInt(selectionId, 10)
+    }));
   };
 
   public updateSelectionForm = (key: string, value: string) => {
@@ -293,6 +301,25 @@ export default class  Experiments extends React.Component<Props, State> {
       ...DEFAULT_SORT_OPTIONS,
       ...this.state.metrics.map((metric) => `metric.${metric}`),
     ];
+    const experimentActions = [
+      {
+        name: 'Create selection',
+        icon: '',
+        callback: () => this.handleShow('showCreateSelectionModal')
+      },
+      {
+        name: 'Add to selection',
+        icon: '',
+        callback: () => this.handleShow('showAddSelectionModal')
+      },
+    ];
+    if (this.props.groupId) {
+      experimentActions.push({
+        name: 'Remove from selection',
+        icon: '',
+        callback: () => this.removeFromSelection()
+      });
+    }
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const listExperiments = () => {
       return (
@@ -402,18 +429,7 @@ export default class  Experiments extends React.Component<Props, State> {
                     ).length > 0
                     }
                     pullRight={false}
-                    actions={[
-                      {
-                        name: 'Create selection',
-                        icon: '',
-                        callback: () => this.handleShow('showCreateSelectionModal')
-                      },
-                      {
-                        name: 'Add to selection',
-                        icon: '',
-                        callback: () => this.handleShow('showAddSelectionModal')
-                      }
-                      ]}
+                    actions={experimentActions}
                   />
                   : 'actions'
                 }
