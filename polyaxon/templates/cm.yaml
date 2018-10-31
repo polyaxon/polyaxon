@@ -41,6 +41,7 @@ data:
   {{- else }}
   POLYAXON_K8S_GPU_RESOURCE_KEY: "alpha.kubernetes.io/nvidia-gpu"
   {{- end }}
+  POLYAXON_HEARTBEAT_TIMEOUT: {{ .Values.heartbeatTimeout | quote }}
   # Secrets and ConfigMaps
   POLYAXON_REFS_SECRETS: {{ toJson .Values.secretRefs | quote }}
   POLYAXON_REFS_CONFIG_MAPS: {{ toJson .Values.configmapRefs | quote }}
