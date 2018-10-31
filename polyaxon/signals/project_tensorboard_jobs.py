@@ -73,6 +73,16 @@ def tensorboard_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
+        # Schedule stop for this tensorboard
+        celery_app.send_task(
+            SchedulerCeleryTasks.TENSORBOARDS_STOP,
+            kwargs={
+                'project_name': job.project.unique_name,
+                'project_uuid': job.project.uuid.hex,
+                'tensorboard_job_name': job.unique_name,
+                'tensorboard_job_uuid': job.uuid.hex,
+                'update_status': False
+            })
 
     if instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=TENSORBOARD_SUCCEEDED,
