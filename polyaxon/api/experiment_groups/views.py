@@ -138,9 +138,9 @@ class ExperimentGroupSelectionView(UpdateAPIView):
             if len(experiment_ids) != project.experiments.filter(id__in=experiment_ids).count():
                 raise ValidationError('Experiments selection is not valid.')
             if op == 'add':
-                group.selection_experiments.add(experiment_ids)
+                group.selection_experiments.add(*experiment_ids)
             elif op == 'remove':
-                group.selection_experiments.remove(experiment_ids)
+                group.selection_experiments.remove(*experiment_ids)
             elif op is None:
                 group.selection_experiments.set(experiment_ids)
             else:
