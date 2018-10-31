@@ -78,9 +78,12 @@ class TensorboardJob(PluginJobBase, JobMixin):
         if self.experiment:
             return get_named_experiment_outputs_path(self.experiment)
 
-        if self.experiment_group:
+        if self.experiment_group and self.experiment_group.is_study:
             return ','.join([get_named_experiment_outputs_path(experiment)
                              for experiment in self.experiment_group.experiments.all()])
+        if self.experiment_group and self.experiment_group.is_selection:
+            return ','.join([get_named_experiment_outputs_path(experiment)
+                             for experiment in self.experiment_group.selection_experiments.all()])
 
         from libs.paths.projects import get_project_outputs_path
         return get_project_outputs_path(persistence_outputs=None,
