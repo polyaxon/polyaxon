@@ -136,7 +136,7 @@ A `Tensorboard` is a job running to visualize the metrics of an experiment,
 the experiments of a group, or of a project.
 
 !!! info "More details"
-    Please refer to the [tensorboard](tensorboard) for more details.
+    Please refer to the [tensorboard](tensorboards) for more details.
 
 ### Notebooks
 
