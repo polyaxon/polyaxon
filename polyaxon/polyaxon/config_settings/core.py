@@ -13,7 +13,7 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 # Heartbeat timeout (status -> failed as zombie)
 HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
                                    is_optional=True,
-                                   default=60 * 2)
+                                   default=60 * 4)
 
 ALLOWED_HOSTS = ['*']
 
