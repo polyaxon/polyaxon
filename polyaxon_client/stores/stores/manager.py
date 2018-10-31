@@ -9,7 +9,7 @@ from polyaxon_client.stores.stores.base_store import BaseStore
 
 class StoreManager(object):
     """
-    A convenient class to store experiment/job outputs to a given/configured store.
+    A convenient class to map experiment/job outputs/data paths to a given/configured store.
     """
 
     def __init__(self, store=None, path=None):
