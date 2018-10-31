@@ -787,7 +787,7 @@ class TestExperimentGroupMetricListViewV1(BaseViewTest):
         self.selection_url = '/{}/{}/{}/groups/{}/metrics/'.format(API_V1,
                                                                    project.user.username,
                                                                    project.name,
-                                                                   self.group.id)
+                                                                   self.selection.id)
         self.objects1 = [
             self.factory_class(experiment=self.experiment1, values={'accuracy': i / 10})
             for i in range(self.num_objects)]
