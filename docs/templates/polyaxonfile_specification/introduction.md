@@ -35,7 +35,7 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
 ## Build Job sections
 
  * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
- * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
+ * [kind](sections#kind) `required`: defines the kind of operation to run: build.
  * [project](sections#project) `required`: defines the project name (must be unique).
  * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
  * [build](sections#build) `required`: defines the how the user can set a docker image.
@@ -44,7 +44,7 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
 ## Generic Job sections
 
  * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
- * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
+ * [kind](sections#kind) `required`: defines the kind of operation to run: job.
  * [project](sections#project) `required`: defines the project name (must be unique).
  * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
  * [build](sections#build) `required`: defines the how the user can set a docker image.
@@ -54,7 +54,7 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
 
  * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
  * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
- * [project](sections#project) `required`: defines the project name (must be unique).
+ * [project](sections#project) `required`: defines the project name (must be tensorboard).
  * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
  * [build](sections#build) `required`: defines the how the user can set a docker image.
 
@@ -62,7 +62,7 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
 ## Notebook sections
 
  * [version](sections#version) `required`: defines the version of the file to be parsed and validated.
- * [kind](sections#kind) `required`: defines the kind of operation to run: plugin.
+ * [kind](sections#kind) `required`: defines the kind of operation to run: notebook.
  * [project](sections#project) `required`: defines the project name (must be unique).
  * [environment](sections#environment): defines the run environment, resources, persistence, and node selectors.
  * [build](sections#build) `required`: defines the how the user can set a docker image.
