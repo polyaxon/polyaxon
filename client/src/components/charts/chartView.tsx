@@ -222,6 +222,7 @@ export default class ChartView extends React.Component<Props, {}> {
               name: traceName,
               mode: traceMode,
               type: traceType,
+              connectgaps: true,
             };
           });
         }

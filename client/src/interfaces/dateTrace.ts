@@ -12,4 +12,5 @@ export interface Trace extends DataTrace {
   type: TraceTypes;
   line?: Partial<Plotly.ScatterLine>;
   marker?: Partial<Plotly.PlotMarker>;
+  connectgaps?: boolean;
 }
