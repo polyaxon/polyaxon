@@ -10,6 +10,10 @@ CLUSTER_ID = config.get_string('POLYAXON_CLUSTER_ID', is_optional=True)
 REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
 OUTPUTS_ARCHIVE_ROOT = '/tmp/archived_outputs'
 FILE_UPLOAD_PERMISSIONS = 0o644
+# Heartbeat timeout (status -> failed as zombie)
+HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
+                                   is_optional=True,
+                                   default=60 * 2)
 
 ALLOWED_HOSTS = ['*']
 
