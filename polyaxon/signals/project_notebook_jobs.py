@@ -68,6 +68,16 @@ def notebook_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
+        # Schedule stop for this notebook
+        celery_app.send_task(
+            SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
+            kwargs={
+                'project_name': job.project.unique_name,
+                'project_uuid': job.project.uuid.hex,
+                'notebook_job_name': job.unique_name,
+                'notebook_job_uuid': job.uuid.hex,
+                'update_status': False
+            })
 
     if instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=NOTEBOOK_SUCCEEDED,
