@@ -161,7 +161,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             volumes=volumes,
             image=image,
             command=["/bin/sh", "-c"],
-            args=' && '.join(command_args),
+            args=[' && '.join(command_args)],
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
