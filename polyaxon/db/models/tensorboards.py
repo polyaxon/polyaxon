@@ -82,10 +82,8 @@ class TensorboardJob(PluginJobBase, JobMixin):
         if self.experiment:
             return get_named_experiment_outputs_path(self.experiment)
 
-        if self.experiment_group and self.experiment_group.is_study:
-            experiments = self.experiment_group.experiments.all()
-        elif self.experiment_group and self.experiment_group.is_selection:
-            experiments = self.experiment_group.selection_experiments.all()
+        if self.experiment_group:
+            experiments = self.experiment_group.group_experiments.all()
         else:
             experiments = self.project.experiments.all()
 
