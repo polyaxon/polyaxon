@@ -1,3 +1,6 @@
+from rhea import RheaError
+from rhea.manager import UriSpec
+
 from polyaxon.config_manager import config
 
 REGISTRY_USER = config.get_string('POLYAXON_REGISTRY_USER', is_optional=True)
@@ -12,8 +15,14 @@ PRIVATE_REGISTRIES_PREFIX = 'POLYAXON_PRIVATE_REGISTRY_'
 def get_external_registries():
     registries = []
     for key in config.params_startswith(PRIVATE_REGISTRIES_PREFIX):
-        registry_spec = config.get_string(key, is_secret=True)
-        registry_spec = config.parse_uri_spec(registry_spec)
+
+        try:
+            registry_dict = config.get_dict(key, is_secret=True)
+            registry_spec = UriSpec(**registry_dict)
+        except RheaError:
+            registry_spec = config.get_string(key, is_secret=True)
+            registry_spec = config.parse_uri_spec(registry_spec)
+
         if registry_spec:
             registries.append(registry_spec)
 
