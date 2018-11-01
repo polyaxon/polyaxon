@@ -5,6 +5,6 @@ mock==2.0.0
 prospector==1.1.4
 pep8-naming==0.5.0
 pyflakes==2.0.0
-pytest==3.7.0
+pytest==3.9.3
 pylint==1.8.4
 tox==3.1.2
