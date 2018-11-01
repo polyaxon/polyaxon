@@ -10,6 +10,7 @@ import MDEditor from '../mdEditor/mdEditor';
 import ConcurrencyMetaInfo from '../metaInfo/concurrencyMetaInfo';
 import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import GroupType from '../metaInfo/groupType';
 import MetaInfo from '../metaInfo/metaInfo';
 import SearchAlgorithmMetaInfo from '../metaInfo/searchAlgorithmMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
@@ -49,23 +50,29 @@ export default class GroupOverview extends React.Component<Props, {}> {
               <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at} inline={true}/>
               <Status status={group.last_status}/>
             </div>
-            <div className="meta">
-              <SearchAlgorithmMetaInfo
-                searchAlgorithm={group.search_algorithm}
-                inline={true}
-              />
-              <ConcurrencyMetaInfo
-                concurrency={group.concurrency}
-                inline={true}
-              />
-              {group.current_iteration > 0 &&
-              <MetaInfo
-                icon="fa-refresh"
-                name="Iteration"
-                value={group.current_iteration}
-                inline={true}
-              />}
-            </div>
+            {group.group_type === 'study'
+              ? <div className="meta">
+                <GroupType groupTyp={group.group_type} inline={true}/>
+                <SearchAlgorithmMetaInfo
+                  searchAlgorithm={group.search_algorithm}
+                  inline={true}
+                />
+                <ConcurrencyMetaInfo
+                  concurrency={group.concurrency}
+                  inline={true}
+                />
+                {group.current_iteration > 0 &&
+                <MetaInfo
+                  icon="fa-refresh"
+                  name="Iteration"
+                  value={group.current_iteration}
+                  inline={true}
+                />}
+              </div>
+              : <div className="meta">
+                  <GroupType groupTyp={group.group_type} inline={true}/>
+                </div>
+            }
             <div className="meta">
               <ExperimentCountMetaInfo
                 count={group.num_experiments}
