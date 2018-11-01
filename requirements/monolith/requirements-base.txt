@@ -2,7 +2,7 @@
 
 django-auth-ldap==1.7.0
 django-debug-toolbar
-docker==3.4.1
+docker==3.5.1
 GitPython==2.1.11
 Jinja2==2.10
 pika==0.12.0
