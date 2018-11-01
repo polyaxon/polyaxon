@@ -95,7 +95,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
             outputs_spec, tensorboard_path = get_named_experiment_outputs_path(
                 experiment)
             outputs_specs += outputs_spec
-            tensorboard_paths += tensorboard_path
+            tensorboard_paths.append(tensorboard_path)
 
         return outputs_specs, ','.join(tensorboard_paths)
 
