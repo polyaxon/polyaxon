@@ -1,4 +1,4 @@
-mkdocs==0.17.2
+mkdocs==1.0.4
 mkdocs-material==2.2.6
 Markdown==2.6.11
 Pygments==2.2.0
