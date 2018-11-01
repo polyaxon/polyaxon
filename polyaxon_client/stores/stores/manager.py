@@ -24,8 +24,9 @@ class StoreManager(object):
             raise PolyaxonStoresException('Received an unrecognised store `{}`.'.format(store))
 
     @classmethod
-    def get_for_type(cls, store_type, **kwargs):
-        return cls(store=BaseStore.get_store(store_type=store_type, **kwargs))
+    def get_for_type(cls, store_type, store_access):
+        store = BaseStore.get_store_for_type(store_type=store_type, store_access=store_access)
+        return cls(store=store)
 
     def set_store(self, store):
         self._store = store

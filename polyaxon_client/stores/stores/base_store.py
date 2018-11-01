@@ -63,6 +63,10 @@ class BaseStore(object):
                 'Could not create store for path `{}`,'
                 'received a store type `{}` without valid access key.'.format(path, store_type))
 
+        return cls.get_store_for_type(store_type=store_type, store_access=store_access)
+
+    @classmethod
+    def get_store_for_type(cls, store_type, store_access):
         if store_type == cls._GCS_STORE:
             return cls.get_store(store_type=store_type, keyfile_dict=store_access)
         return cls.get_store(store_type=store_type, **store_access)
