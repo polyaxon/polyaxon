@@ -89,7 +89,7 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer, TagsS
         )
 
     def get_num_experiments(self, obj):
-        return obj.experiments.count()
+        return obj.group_experiments.count()
 
     def get_num_pending_experiments(self, obj):
         return obj.pending_experiments.count()
