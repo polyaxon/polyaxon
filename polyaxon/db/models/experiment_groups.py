@@ -183,8 +183,7 @@ class ExperimentGroup(DiffModel,
     def group_experiments(self):
         if self.is_selection:
             return self.selection_experiments
-        else:
-            return self.experiments
+        return self.experiments
 
     @property
     def scheduled_experiments(self):
