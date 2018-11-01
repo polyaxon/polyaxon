@@ -4,6 +4,7 @@ export class GroupModel {
   public id: number;
   public uuid: string;
   public name: string;
+  public group_type: string;
   public unique_name: string;
   public description: string;
   public readme: string;

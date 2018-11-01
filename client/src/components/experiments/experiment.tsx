@@ -29,6 +29,7 @@ export interface Props {
   showBookmarks: boolean;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
+  removeFromSelection?: () => void;
   useCheckbox: boolean;
   selectHandler: () => void;
   selected: boolean;
@@ -47,7 +48,8 @@ function Experiment({
                       showBookmarks,
                       selectHandler,
                       selected,
-                      reducedForm
+                      reducedForm,
+                      removeFromSelection,
                     }: Props) {
   const values = splitUniqueName(experiment.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
@@ -64,6 +66,17 @@ function Experiment({
     buildValues = splitUniqueName(experiment.build_job);
     buildUrl = getBuildUrl(buildValues[0], buildValues[1], buildValues[3]);
   }
+  const experimentActions = [];
+  if (removeFromSelection) {
+    experimentActions.push(
+      {
+        name: 'Remove from selection',
+        icon: 'minus',
+        callback: removeFromSelection
+      }
+    );
+  }
+
   return (
     <tr className="list-item">
       {useCheckbox &&
@@ -126,6 +139,7 @@ function Experiment({
           onStop={onStop}
           isRunning={!isDone(experiment.last_status)}
           pullRight={false}
+          actions={experimentActions}
         />
       </td>
     </tr>

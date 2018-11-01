@@ -27,6 +27,7 @@ export interface Props {
   isCurrentUser: boolean;
   experiments: ExperimentModel[];
   groupId?: number;
+  isSelection?: boolean;
   count: number;
   useFilters: boolean;
   showBookmarks: boolean;
@@ -232,9 +233,9 @@ export default class Experiments extends React.Component<Props, State> {
     this.handleClose();
   };
 
-  public removeFromSelection = () => {
+  public removeFromSelection = (items: number[]) => {
     if (this.props.removeFromSelection && this.props.groupId) {
-      this.props.removeFromSelection(this.props.groupId, this.state.items);
+      this.props.removeFromSelection(this.props.groupId, items);
     }
     this.handleClose();
   };
@@ -304,20 +305,20 @@ export default class Experiments extends React.Component<Props, State> {
     const experimentActions = [
       {
         name: 'Create selection',
-        icon: '',
+        icon: 'download',
         callback: () => this.handleShow('showCreateSelectionModal')
       },
       {
         name: 'Add to selection',
-        icon: '',
+        icon: 'plus',
         callback: () => this.handleShow('showAddSelectionModal')
       },
     ];
-    if (this.props.groupId) {
+    if (this.props.groupId && this.props.isSelection) {
       experimentActions.push({
         name: 'Remove from selection',
-        icon: '',
-        callback: () => this.removeFromSelection()
+        icon: 'minus',
+        callback: () => this.removeFromSelection(this.state.items)
       });
     }
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
@@ -451,6 +452,11 @@ export default class Experiments extends React.Component<Props, State> {
                   selectHandler={() => this.selectHandler(xp.id)}
                   selected={this.state.items.indexOf(xp.id) > -1}
                   reducedForm={(this.state.metrics.length + this.state.declarations.length) > 4}
+                  removeFromSelection={
+                    this.props.groupId && this.props.isSelection
+                      ? () => this.removeFromSelection([xp.id])
+                      : undefined
+                  }
                 />)}
             </tbody>
           </table>

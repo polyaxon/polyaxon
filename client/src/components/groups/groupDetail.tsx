@@ -86,6 +86,7 @@ export default class GroupDetail extends React.Component<Props, {}> {
                     user={group.user}
                     projectName={group.project}
                     groupId={group.id}
+                    isSelection={group.group_type === 'selection'}
                     showBookmarks={true}
                     useCheckbox={true}
                     useFilters={true}
