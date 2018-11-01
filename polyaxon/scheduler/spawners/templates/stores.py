@@ -92,3 +92,4 @@ def get_stores_secrets(specs):
             'persistence_secret': persistence_secret,
             'persistence_secret_key': persistence_secret_key
         })
+    return store_secrets

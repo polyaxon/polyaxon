@@ -28,8 +28,8 @@ class TensorboardValidation(Exception):
 class TensorboardSpawner(ProjectJobSpawner):
     TENSORBOARD_JOB_NAME = 'tensorboard'
     PORT = 6006
-    STORE_SECRET_VOLUME_NAME = 'plx-{}-secret'
-    STORE_SECRET_MOUNT_PATH = '/tmp'
+    STORE_SECRET_VOLUME_NAME = 'plx-{}-secret'  # noqa
+    STORE_SECRET_MOUNT_PATH = '/tmp'  # noqa
     STORE_SECRET_KEY_MOUNT_PATH = STORE_SECRET_MOUNT_PATH + '/{}'
 
     def get_tensorboard_url(self):
@@ -88,7 +88,7 @@ class TensorboardSpawner(ProjectJobSpawner):
                 ))
             elif store == S3:
                 commands.append(
-                    "import json; data = json.loads(open('{}').read()); content = []; [content.append('export {}={}'.format(k, data[k])) for k in data]; output = open('{}', 'w'); output.write('\n'.join(content)); output.close()".format(
+                    "import json; data = json.loads(open('{}').read()); content = []; [content.append('export {}={}'.format(k, data[k])) for k in data]; output = open('{}', 'w'); output.write('\n'.join(content)); output.close()".format(  # noqa
                         cls.STORE_SECRET_KEY_MOUNT_PATH.format(
                             store_secret['persistence_secret_key']),
                         cls.STORE_SECRET_KEY_MOUNT_PATH.format('envs3'),

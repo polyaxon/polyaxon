@@ -70,10 +70,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
         def get_named_experiment_outputs_path(experiment):
             persistence = experiment.persistence_outputs
             outputs_path = get_experiment_outputs_path(
-                    persistence_outputs=experiment.persistence_outputs,
-                    experiment_name=experiment.unique_name,
-                    original_name=experiment.original_unique_name,
-                    cloning_strategy=experiment.cloning_strategy)
+                persistence_outputs=experiment.persistence_outputs,
+                experiment_name=experiment.unique_name,
+                original_name=experiment.original_unique_name,
+                cloning_strategy=experiment.cloning_strategy)
             tensorboard_path = '{}:{}'.format(
                 experiment.unique_name,
                 outputs_path)

@@ -13,12 +13,6 @@ from scheduler.spawners.utils import get_job_definition
 _logger = logging.getLogger('polyaxon.scheduler.tensorboard')
 
 
-def validate_output_specs(outputs_specs):
-    """Validate that we can authenticate to stores if they are used."""
-    outputs_specs
-
-
-
 def start_tensorboard(tensorboard):
     # Update job status to show that its started
     tensorboard.set_status(JobLifeCycle.SCHEDULED)
