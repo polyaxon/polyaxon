@@ -30,7 +30,7 @@ class TensorboardSpawner(ProjectJobSpawner):
     PORT = 6006
     STORE_SECRET_VOLUME_NAME = 'plx-{}-secret'  # noqa
     STORE_SECRET_MOUNT_PATH = '/tmp'  # noqa
-    STORE_SECRET_KEY_MOUNT_PATH = STORE_SECRET_MOUNT_PATH + '/{}'
+    STORE_SECRET_KEY_MOUNT_PATH = STORE_SECRET_MOUNT_PATH + '/' + STORE_SECRET_VOLUME_NAME
 
     def get_tensorboard_url(self):
         return self._get_service_url(self.TENSORBOARD_JOB_NAME)
@@ -68,7 +68,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             if store in {GCS, S3}:
                 secrets_volumes, secrets_volume_mounts = get_volume_from_secret(
                     volume_name=cls.STORE_SECRET_VOLUME_NAME.format(store),
-                    mount_path=cls.STORE_SECRET_VOLUME_NAME.format(store),
+                    mount_path=cls.STORE_SECRET_KEY_MOUNT_PATH.format(store),
                     secret_name=store_secret['persistence_secret'],
                 )
                 volumes += secrets_volumes
@@ -84,16 +84,16 @@ class TensorboardSpawner(ProjectJobSpawner):
             store = store_secret['store']
             if store == GCS:
                 commands.append('export GOOGLE_APPLICATION_CREDENTIALS={}'.format(
-                    cls.STORE_SECRET_KEY_MOUNT_PATH.format(store_secret['persistence_secret_key'])
+                    cls.STORE_SECRET_KEY_MOUNT_PATH.format(store_secret['store'])
                 ))
             elif store == S3:
                 commands.append(
                     "import json; data = json.loads(open('{}').read()); content = []; [content.append('export {}={}'.format(k, data[k])) for k in data]; output = open('{}', 'w'); output.write('\n'.join(content)); output.close()".format(  # noqa
                         cls.STORE_SECRET_KEY_MOUNT_PATH.format(
-                            store_secret['persistence_secret_key']),
+                            store_secret['store']),
                         cls.STORE_SECRET_KEY_MOUNT_PATH.format('envs3'),
                     ))
-                commands.append("source ./{}".format(
+                commands.append("source {}".format(
                     cls.STORE_SECRET_KEY_MOUNT_PATH.format('envs3')))
 
         return commands
