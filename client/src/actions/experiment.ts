@@ -82,7 +82,7 @@ export interface BookmarkExperimentAction extends Action {
 
 export interface ExperimentTensorboardAction extends Action {
   type: actionTypes.START_EXPERIMENT_TENSORBOARD | actionTypes.STOP_EXPERIMENT_TENSORBOARD;
-  projectName: string;
+  experimentName: string;
 }
 
 export type ExperimentAction =

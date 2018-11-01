@@ -78,6 +78,16 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             }
           },
         };
+      case actionTypes.STOP_GROUP_TENSORBOARD:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.groupName]: {
+              ...state.byUniqueNames[action.groupName], has_tensorboard: false
+            }
+          },
+        };
       case actionTypes.UPDATE_GROUP:
         return {
           ...state,

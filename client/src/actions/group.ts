@@ -64,7 +64,7 @@ export interface BookmarkGroupAction extends Action {
 
 export interface GroupTensorboardAction extends Action {
   type: actionTypes.START_GROUP_TENSORBOARD | actionTypes.STOP_GROUP_TENSORBOARD;
-  projectName: string;
+  groupName: string;
 }
 
 export type GroupAction =

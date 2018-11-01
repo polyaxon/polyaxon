@@ -120,6 +120,15 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               getExperimentIndexName(action.experiment.unique_name)]: action.experiment
           }
         };
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [getExperimentIndexName(action.experimentName)]: {
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], has_tensorboard: false}
+          }
+        };
       case actionTypes.RECEIVE_EXPERIMENTS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
