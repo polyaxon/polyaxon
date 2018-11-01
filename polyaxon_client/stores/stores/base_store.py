@@ -71,6 +71,12 @@ class BaseStore(object):
         """Set authentication and access of the current store to the env vars"""
         pass
 
+    def ls(self, path):
+        raise NotImplementedError
+
+    def list(self, *args, **kwargs):
+        raise NotImplementedError
+
     def download_file(self, *args, **kwargs):
         raise NotImplementedError
 

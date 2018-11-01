@@ -126,6 +126,10 @@ class AzureStore(BaseStore):
         except AzureMissingResourceHttpError:
             pass
 
+    def ls(self, path):
+        results = self.list(key=path)
+        return {'files': [b[0] for b in results['blobs']], 'dirs': results['prefixes']}
+
     def list(self, key, container_name=None, path=None, delimiter='/', marker=None):
         """
         Checks if a blob exists.

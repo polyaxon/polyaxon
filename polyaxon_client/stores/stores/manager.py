@@ -23,6 +23,10 @@ class StoreManager(object):
         else:
             raise PolyaxonStoresException('Received an unrecognised store `{}`.'.format(store))
 
+    @classmethod
+    def get_for_type(cls, store_type, **kwargs):
+        return cls(store=BaseStore.get_store(store_type=store_type, **kwargs))
+
     def set_store(self, store):
         self._store = store
 
@@ -41,6 +45,12 @@ class StoreManager(object):
     @property
     def path(self):
         return self._path
+
+    def ls(self, path):
+        return self.store.ls(path)
+
+    def list(self, path):
+        return self.store.list(path)
 
     def upload_file(self, filename, **kwargs):
         self.store.upload_file(filename, self._path, **kwargs)
