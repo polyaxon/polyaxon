@@ -83,7 +83,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         for store_secret in stores_secrets:
             store = store_secret['store']
             if store == GCS:
-                commands.append('gcloud auth activate-service-account --key-file {}'.format(
+                commands.append('export GOOGLE_APPLICATION_CREDENTIALS={}'.format(
                     cls.STORE_SECRET_KEY_MOUNT_PATH.format(store_secret['persistence_secret_key'])
                 ))
             elif store == S3:
