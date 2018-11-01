@@ -5,7 +5,7 @@ import '../actions.less';
 
 export interface Props {
   onDelete: () => any;
-  onStop: () => any;
+  onStop?: () => any;
   tensorboardActionCallback?: () => any;
   hasTensorboard?: boolean;
   isRunning: boolean;

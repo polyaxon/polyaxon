@@ -11,6 +11,7 @@ import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import ConcurrencyMetaInfo from '../metaInfo/concurrencyMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import GroupType from '../metaInfo/groupType';
 import SearchAlgorithmMetaInfo from '../metaInfo/searchAlgorithmMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
@@ -58,17 +59,28 @@ function Group({group, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         </div>
         <Tags tags={group.tags}/>
       </td>
-      <td className="block">
-        <SearchAlgorithmMetaInfo searchAlgorithm={group.search_algorithm}/>
-        <ConcurrencyMetaInfo concurrency={group.concurrency}/>
-      </td>
-      <td className="block">
-        <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>
-      </td>
+      {group.group_type === 'selection'
+        ? <td className="block">
+            <GroupType groupTyp={group.group_type}/>
+          </td>
+        : <td className="block">
+            <GroupType groupTyp={group.group_type}/>
+            <SearchAlgorithmMetaInfo searchAlgorithm={group.search_algorithm}/>
+            <ConcurrencyMetaInfo concurrency={group.concurrency}/>
+          </td>
+      }
+      {group.group_type === 'selection'
+        ? <td className="block">
+            N/A
+          </td>
+        : <td className="block">
+            <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at}/>
+          </td>
+      }
       <td className="block pull-right">
         <GroupActions
           onDelete={onDelete}
-          onStop={onStop}
+          onStop={group.group_type === 'study' ? onStop : undefined}
           isRunning={!isDone(group.last_status)}
           pullRight={false}
         />
