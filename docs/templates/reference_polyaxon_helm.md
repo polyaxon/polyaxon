@@ -530,15 +530,18 @@ nfsProvisioner:
 | `nodeSelector.experiments`         | Node selector for experiments pod assignment                 | `{}`
 | `nodeSelector.jobs`                | Node selector for jobs pod assignment                        | `{}`
 | `nodeSelector.builds`              | Node selector for builds pod assignment                      | `{}`
+| `nodeSelector.tensorboards`        | Node selector for tensorboards pod assignment                | `{}`
 | `tolerations.core`                 | Tolerations for core pod assignment                          | `[]`
 | `tolerations.experiments`          | Tolerations for experiments pod assignment                   | `[]`
 | `tolerations.jobs`                 | Tolerations for jobs pod assignment                          | `[]`
 | `tolerations.builds`               | Tolerations for builds pod assignment                        | `[]`
+| `tolerations.tensorboards`         | Tolerations for tensorboards pod assignment                  | `[]`
 | `tolerations.resourcesDaemon`      | Tolerations for resourcesDaemon pod assignment               | `[]`
 | `affinity.core`                    | Affinity for core                                            | Please check the values
 | `affinity.experiments`             | Affinity for experiments                                     | `{}`
 | `affinity.jobs`                    | Affinity for jobs                                            | `{}`
 | `affinity.builds`                  | Affinity for builds                                          | `{}`
+| `affinity.tensorboards`            | Affinity for tensorboards                                    | `{}`
 
 
 Dependent charts can also have values overwritten. Preface values with
