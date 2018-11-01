@@ -61,7 +61,7 @@ export default class GroupDetail extends React.Component<Props, {}> {
               actions={
                 <GroupActions
                   onDelete={this.props.onDelete}
-                  onStop={this.props.onStop}
+                  onStop={group.group_type === 'study' ? this.props.onStop : undefined}
                   tensorboardActionCallback={
                   group.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
                   hasTensorboard={group.has_tensorboard}
