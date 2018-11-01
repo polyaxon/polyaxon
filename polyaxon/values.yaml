@@ -181,6 +181,7 @@ nodeSelectors:
   experiments:
   jobs:
   builds:
+  tensorborads:
 
 tolerations:
   resourcesDaemon:
@@ -188,11 +189,13 @@ tolerations:
   experiments:
   jobs:
   builds:
+  tensorborads:
 
 affinity:
   experiments:
   jobs:
   builds:
+  tensorborads:
   core:
     podAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
