@@ -62,6 +62,8 @@ NODE_SELECTOR_JOBS = config.get_string(
     'POLYAXON_NODE_SELECTOR_JOBS', is_optional=True)
 NODE_SELECTOR_BUILDS = config.get_string(
     'POLYAXON_NODE_SELECTOR_BUILDS', is_optional=True)
+NODE_SELECTOR_TENSORBOARDS = config.get_string(
+    'POLYAXON_NODE_SELECTOR_TENSORBOARDS', is_optional=True)
 NODE_SELECTOR_CORE = config.get_string(
     'POLYAXON_NODE_SELECTOR_CORE', is_optional=True)
 
@@ -72,6 +74,8 @@ AFFINITY_JOBS = config.get_string(
     'POLYAXON_AFFINITY_JOBS', is_optional=True)
 AFFINITY_BUILDS = config.get_string(
     'POLYAXON_AFFINITY_BUILDS', is_optional=True)
+AFFINITY_TENSORBOARDS = config.get_string(
+    'POLYAXON_AFFINITY_TENSORBOARDS', is_optional=True)
 AFFINITY_CORE = config.get_string(
     'POLYAXON_AFFINITY_CORE', is_optional=True)
 
@@ -82,6 +86,8 @@ TOLERATIONS_JOBS = config.get_string(
     'POLYAXON_TOLERATIONS_JOBS', is_optional=True)
 TOLERATIONS_BUILDS = config.get_string(
     'POLYAXON_TOLERATIONS_BUILDS', is_optional=True)
+TOLERATIONS_TENSORBOARDS = config.get_string(
+    'POLYAXON_TOLERATIONS_TENSORBOARDS', is_optional=True)
 TOLERATIONS_CORE = config.get_string(
     'POLYAXON_TOLERATIONS_CORE', is_optional=True)
 

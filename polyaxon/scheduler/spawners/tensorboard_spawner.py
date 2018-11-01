@@ -143,13 +143,13 @@ class TensorboardSpawner(ProjectJobSpawner):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTOR_EXPERIMENTS)
+            default_node_selector=settings.NODE_SELECTOR_TENSORBOARDS)
         affinity = get_affinity(
             affinity=affinity,
-            default_affinity=settings.AFFINITY_EXPERIMENTS)
+            default_affinity=settings.AFFINITY_TENSORBOARDS)
         tolerations = get_tolerations(
             tolerations=tolerations,
-            default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
+            default_tolerations=settings.TOLERATIONS_TENSORBOARDS)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=settings.APP_LABELS_TENSORBOARD,
