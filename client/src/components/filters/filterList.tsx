@@ -310,6 +310,7 @@ export default class FilterList extends React.Component<Props, State> {
                       value={this.state.saveQueryForm.name}
                       onChange={(event) => this.updateQueryForm('name', event.target.value)}
                     />
+                    <span id="helpBlock" className="help-block">The name must be a slug.</span>
                   </div>
                 </div>
                 <div className="form-group">

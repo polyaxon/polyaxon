@@ -474,7 +474,7 @@ export default class Experiments extends React.Component<Props, State> {
         <Modal.Body>
           <form className="form-horizontal" onSubmit={this.addToSelection}>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Group Selection</label>
+              <label className="col-sm-2 control-label">Selection (group_id)</label>
               <div className="col-sm-10">
                 <input
                   type="text"
@@ -508,6 +508,7 @@ export default class Experiments extends React.Component<Props, State> {
                   className="form-control"
                   onChange={(event) => this.updateSelectionForm('name', event.target.value)}
                 />
+                <span id="helpBlock" className="help-block">The name must be a slug.</span>
               </div>
             </div>
             <div className="form-group">

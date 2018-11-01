@@ -588,6 +588,7 @@ export default class Metrics extends React.Component<Props, State> {
                   className="form-control"
                   onChange={(event) => this.updateViewForm('name', event.target.value)}
                 />
+                <span id="helpBlock" className="help-block">The name must be a slug.</span>
               </div>
             </div>
             <div className="form-group">
