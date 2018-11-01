@@ -76,10 +76,6 @@ class TensorboardSpawner(ProjectJobSpawner):
 
         return volumes, volume_mounts
 
-    @staticmethod
-    def fii():
-        import json; data = json.loads(open('k.json').read()); content = []; for k in data: content.append('export {}={}'.format(k, data[k])); output = open('somefile.txt', 'w'); output.write('\n'.join(content)); output.close()
-
     @classmethod
     def get_stores_secrets_command_args(cls, stores_secrets):
         """Create an auth command for S3 and GCS."""
