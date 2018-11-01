@@ -87,9 +87,10 @@ def get_stores_secrets(specs):
         store, persistence_secret, persistence_secret_key = get_store_secret_from_definition(
             volume_name=spec.persistence,
             volume_settings=settings.PERSISTENCE_OUTPUTS)
-        store_secrets.append({
-            'store': store,
-            'persistence_secret': persistence_secret,
-            'persistence_secret_key': persistence_secret_key
-        })
+        if persistence_secret and persistence_secret_key:
+            store_secrets.append({
+                'store': store,
+                'persistence_secret': persistence_secret,
+                'persistence_secret_key': persistence_secret_key
+            })
     return store_secrets

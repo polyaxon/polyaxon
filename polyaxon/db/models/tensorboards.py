@@ -77,7 +77,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
             tensorboard_path = '{}:{}'.format(
                 experiment.unique_name,
                 outputs_path)
-            return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], [tensorboard_path]
+            return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], tensorboard_path
 
         if self.experiment:
             return get_named_experiment_outputs_path(self.experiment)
