@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
+from db.models.outputs import OutputsRefsSpec
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
 from libs.spec_validation import validate_tensorboard_spec_config
@@ -67,27 +68,36 @@ class TensorboardJob(PluginJobBase, JobMixin):
         from libs.paths.experiments import get_experiment_outputs_path
 
         def get_named_experiment_outputs_path(experiment):
-            return '{}:{}'.format(
-                experiment.unique_name,
-                get_experiment_outputs_path(
+            persistence = experiment.persistence_outputs
+            outputs_path = get_experiment_outputs_path(
                     persistence_outputs=experiment.persistence_outputs,
                     experiment_name=experiment.unique_name,
                     original_name=experiment.original_unique_name,
-                    cloning_strategy=experiment.cloning_strategy))
+                    cloning_strategy=experiment.cloning_strategy)
+            tensorboard_path = '{}:{}'.format(
+                experiment.unique_name,
+                outputs_path)
+            return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], [tensorboard_path]
 
         if self.experiment:
             return get_named_experiment_outputs_path(self.experiment)
 
         if self.experiment_group and self.experiment_group.is_study:
-            return ','.join([get_named_experiment_outputs_path(experiment)
-                             for experiment in self.experiment_group.experiments.all()])
-        if self.experiment_group and self.experiment_group.is_selection:
-            return ','.join([get_named_experiment_outputs_path(experiment)
-                             for experiment in self.experiment_group.selection_experiments.all()])
+            experiments = self.experiment_group.experiments.all()
+        elif self.experiment_group and self.experiment_group.is_selection:
+            experiments = self.experiment_group.selection_experiments.all()
+        else:
+            experiments = self.project.experiments.all()
 
-        from libs.paths.projects import get_project_outputs_path
-        return get_project_outputs_path(persistence_outputs=None,
-                                        project_name=self.project.unique_name)
+        outputs_specs = []
+        tensorboard_paths = []
+        for experiment in experiments:
+            outputs_spec, tensorboard_path = get_named_experiment_outputs_path(
+                experiment)
+            outputs_specs += outputs_spec
+            tensorboard_paths += tensorboard_path
+
+        return outputs_specs, ','.join(tensorboard_paths)
 
 
 class TensorboardJobStatus(AbstractJobStatus):

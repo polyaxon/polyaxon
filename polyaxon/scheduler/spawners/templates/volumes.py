@@ -27,6 +27,15 @@ def get_volume(volume, claim_name=None, host_path=None, read_only=None):
     return client.V1Volume(name=volume, empty_dir=empty_dir)
 
 
+def get_volume_from_secret(volume_name, mount_path, secret_name):
+    secret = client.V1SecretVolumeSource(secret_name=secret_name)
+    volumes = [client.V1Volume(name=volume_name, secret=secret)]
+    volume_mounts = [client.V1VolumeMount(name=volume_name,
+                                          mount_path=mount_path,
+                                          read_only=True)]
+    return volumes, volume_mounts
+
+
 def get_volume_from_definition(volume_name, volume_settings):
     if volume_name not in volume_settings:
         raise VolumeNotFoundError('Volume with name `{}` was defined in specification, '

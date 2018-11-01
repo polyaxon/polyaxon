@@ -79,3 +79,16 @@ def get_outputs_refs_store_secrets(specs):
             secret_keys[spec.path] = {'store': store, 'secret_key': persistence_secret_key}
 
     return secrets, secret_keys
+
+
+def get_stores_secrets(specs):
+    store_secrets = []
+    for spec in specs:
+        store, persistence_secret, persistence_secret_key = get_store_secret_from_definition(
+            volume_name=spec.persistence,
+            volume_settings=settings.PERSISTENCE_OUTPUTS)
+        store_secrets.append({
+            'store': store,
+            'persistence_secret': persistence_secret,
+            'persistence_secret_key': persistence_secret_key
+        })

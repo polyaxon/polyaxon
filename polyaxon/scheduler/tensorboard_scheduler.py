@@ -7,10 +7,16 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from libs.paths.exceptions import VolumeNotFoundError
-from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
+from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
 from scheduler.spawners.utils import get_job_definition
 
 _logger = logging.getLogger('polyaxon.scheduler.tensorboard')
+
+
+def validate_output_specs(outputs_specs):
+    """Validate that we can authenticate to stores if they are used."""
+    outputs_specs
+
 
 
 def start_tensorboard(tensorboard):
@@ -27,11 +33,13 @@ def start_tensorboard(tensorboard):
         in_cluster=True)
 
     error = {}
+    outputs_specs, tensorboard_paths = tensorboard.outputs_path
     try:
         results = spawner.start_tensorboard(
             image=tensorboard.image,
-            outputs_path=tensorboard.outputs_path,
+            outputs_path=tensorboard_paths,
             persistence_outputs=tensorboard.persistence_outputs,
+            outputs_specs=outputs_specs,
             outputs_refs_jobs=tensorboard.outputs_refs_jobs,
             outputs_refs_experiments=tensorboard.outputs_refs_experiments,
             resources=tensorboard.resources,
@@ -56,6 +64,17 @@ def start_tensorboard(tensorboard):
             'raised': True,
             'traceback': traceback.format_exc(),
             'message': 'Could not start the job, encountered a volume definition problem. %s' % e,
+        }
+    except TensorboardValidation as e:
+        _logger.error('Could not start the tensorboard, '
+                      'some experiments require authenticating to stores with different access.',
+                      exc_info=True)
+        error = {
+            'raised': True,
+            'traceback': None,
+            'message': 'Could not start the tensorboard, '
+                       'some experiments require authenticating '
+                       'to stores with different access. %s' % e,
         }
     except Exception as e:
         _logger.error('Could not start tensorboard, please check your polyaxon spec.',

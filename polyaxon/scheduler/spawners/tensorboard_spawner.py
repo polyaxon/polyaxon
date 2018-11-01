@@ -2,8 +2,9 @@ import json
 import random
 
 from django.conf import settings
-
 from polyaxon_k8s.exceptions import PolyaxonK8SError
+
+from constants.stores import GCS, S3
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.pod_environment import (
@@ -12,15 +13,24 @@ from scheduler.spawners.templates.pod_environment import (
     get_tolerations
 )
 from scheduler.spawners.templates.project_jobs import deployments
+from scheduler.spawners.templates.stores import get_stores_secrets
 from scheduler.spawners.templates.volumes import (
     get_pod_outputs_volume,
-    get_pod_refs_outputs_volumes
+    get_pod_refs_outputs_volumes,
+    get_volume_from_secret
 )
+
+
+class TensorboardValidation(Exception):
+    pass
 
 
 class TensorboardSpawner(ProjectJobSpawner):
     TENSORBOARD_JOB_NAME = 'tensorboard'
     PORT = 6006
+    STORE_SECRET_VOLUME_NAME = 'plx-{}-secret'
+    STORE_SECRET_MOUNT_PATH = '/tmp'
+    STORE_SECRET_KEY_MOUNT_PATH = STORE_SECRET_MOUNT_PATH + '/{}'
 
     def get_tensorboard_url(self):
         return self._get_service_url(self.TENSORBOARD_JOB_NAME)
@@ -37,10 +47,66 @@ class TensorboardSpawner(ProjectJobSpawner):
             port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
         return port
 
+    @staticmethod
+    def validate_stores_secrets_keys(stores_secrets):
+        """Validates that we can only authenticate to one S3 and one GCS."""
+        stores = set([])
+        for store_secret in stores_secrets:
+            if store_secret['store'] in stores:
+                raise TensorboardValidation('Received an invalid store configuration.')
+            elif store_secret['store'] not in {GCS, S3}:
+                raise TensorboardValidation('Received an unsupported store configuration.')
+            stores.add(store_secret['store'])
+
+    @classmethod
+    def get_stores_secrets_volumes(cls, stores_secrets):
+        """Handles the case of GCS and S3 and create a volume with secret file."""
+        volumes = []
+        volume_mounts = []
+        for store_secret in stores_secrets:
+            store = store_secret['store']
+            if store in {GCS, S3}:
+                secrets_volumes, secrets_volume_mounts = get_volume_from_secret(
+                    volume_name=cls.STORE_SECRET_VOLUME_NAME.format(store),
+                    mount_path=cls.STORE_SECRET_VOLUME_NAME.format(store),
+                    secret_name=store_secret['persistence_secret'],
+                )
+                volumes += secrets_volumes
+                volume_mounts += secrets_volume_mounts
+
+        return volumes, volume_mounts
+
+    @staticmethod
+    def fii():
+        import json; data = json.loads(open('k.json').read()); content = []; for k in data: content.append('export {}={}'.format(k, data[k])); output = open('somefile.txt', 'w'); output.write('\n'.join(content)); output.close()
+
+    @classmethod
+    def get_stores_secrets_command_args(cls, stores_secrets):
+        """Create an auth command for S3 and GCS."""
+        commands = []
+        for store_secret in stores_secrets:
+            store = store_secret['store']
+            if store == GCS:
+                commands.append('gcloud auth activate-service-account --key-file {}'.format(
+                    cls.STORE_SECRET_KEY_MOUNT_PATH.format(store_secret['persistence_secret_key'])
+                ))
+            elif store == S3:
+                commands.append(
+                    "import json; data = json.loads(open('{}').read()); content = []; [content.append('export {}={}'.format(k, data[k])) for k in data]; output = open('{}', 'w'); output.write('\n'.join(content)); output.close()".format(
+                        cls.STORE_SECRET_KEY_MOUNT_PATH.format(
+                            store_secret['persistence_secret_key']),
+                        cls.STORE_SECRET_KEY_MOUNT_PATH.format('envs3'),
+                    ))
+                commands.append("source ./{}".format(
+                    cls.STORE_SECRET_KEY_MOUNT_PATH.format('envs3')))
+
+        return commands
+
     def start_tensorboard(self,
                           image,
                           outputs_path,
                           persistence_outputs,
+                          outputs_specs=None,
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
                           resources=None,
@@ -56,10 +122,27 @@ class TensorboardSpawner(ProjectJobSpawner):
         volumes += refs_volumes
         volume_mounts += refs_volume_mounts
         refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
+            outputs_refs=outputs_specs,
+            persistence_outputs=persistence_outputs)
+        volumes += refs_volumes
+        volume_mounts += refs_volume_mounts
+        refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
             outputs_refs=outputs_refs_experiments,
             persistence_outputs=persistence_outputs)
         volumes += refs_volumes
         volume_mounts += refs_volume_mounts
+
+        # Add volumes for persistence outputs secrets
+        stores_secrets = get_stores_secrets(specs=outputs_specs)
+        self.validate_stores_secrets_keys(stores_secrets=stores_secrets)
+        secrets_volumes, secrets_volume_mounts = self.get_stores_secrets_volumes(
+            stores_secrets=stores_secrets)
+        volumes += secrets_volumes
+        volume_mounts += secrets_volume_mounts
+
+        # Get persistence outputs secrets auth commands
+        command_args = self.get_stores_secrets_command_args(stores_secrets=stores_secrets)
+        command_args.append("tensorboard --logdir={} --port={}".format(outputs_path, self.PORT))
 
         node_selector = get_node_selector(
             node_selector=node_selector,
@@ -82,7 +165,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             volumes=volumes,
             image=image,
             command=["/bin/sh", "-c"],
-            args=["tensorboard --logdir={} --port={}".format(outputs_path, self.PORT)],
+            args=' && '.join(command_args),
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
