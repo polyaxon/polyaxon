@@ -14,7 +14,7 @@
     "build": "npm run clean && webpack --env.prod --config webpack.config.prod.js && npm run minify && npm run copy"
   },
   "author": "mourad mourafiq",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "devDependencies": {
     "@types/draft-js": "^0.10.25",
     "@types/history": "4.6.2",

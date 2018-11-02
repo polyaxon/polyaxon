@@ -10,7 +10,7 @@
     "build": "npm run clean && webpack --env.prod --config webpack.config.prod.js && npm run minify"
   },
   "author": "mourad mourafiq",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "devDependencies": {
     "@types/node": "8.10.20",
     "awesome-typescript-loader": "3.5.0",
