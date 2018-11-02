@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+
 from django.test import override_settings
 
 from constants.jobs import JobLifeCycle

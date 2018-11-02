@@ -29,11 +29,12 @@ from factories.factory_experiments import (
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import (
+    exec_experiment_ext_repo_spec_content,
     exec_experiment_resources_content,
     exec_experiment_resources_parsed_content,
     exec_experiment_spec_content,
-    experiment_spec_content,
-    exec_experiment_ext_repo_spec_content)
+    experiment_spec_content
+)
 from libs.paths.experiments import create_experiment_outputs_path, get_experiment_outputs_path
 from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
 from schemas.specifications import ExperimentSpecification

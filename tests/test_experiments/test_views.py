@@ -67,7 +67,7 @@ from libs.paths.experiments import (
     get_experiment_outputs_path
 )
 from schemas.specifications import ExperimentSpecification
-from tests.utils import BaseViewTest, EphemeralClient, BaseFilesViewTest
+from tests.utils import BaseFilesViewTest, BaseViewTest, EphemeralClient
 
 
 @pytest.mark.experiments_mark

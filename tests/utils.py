@@ -7,8 +7,8 @@ from collections import Mapping
 from urllib.parse import urlparse
 
 import redis
-from hestia.auth import AuthenticationTypes
 
+from hestia.auth import AuthenticationTypes
 from mock import patch
 from rest_framework import status
 from rest_framework.authtoken.models import Token

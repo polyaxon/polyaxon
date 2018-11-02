@@ -1,9 +1,9 @@
 import logging
 import mimetypes
 import os
+
 from wsgiref.util import FileWrapper
 
-from django.http import StreamingHttpResponse
 from hestia.bool_utils import to_bool
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -20,7 +20,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
+from django.http import StreamingHttpResponse
+
 import auditor
+
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
@@ -84,7 +87,7 @@ from libs.authentication.internal import InternalAuthentication
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.permissions.ephemeral import IsEphemeral
 from libs.permissions.internal import IsAuthenticatedOrInternal
-from libs.permissions.projects import get_permissible_project, IsProjectOwnerOrPublicReadOnly
+from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.stores import get_outputs_store
 from polyaxon.celery_api import celery_app

@@ -1,11 +1,13 @@
 import os
+import requests
 import shutil
 import tarfile
+
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
-import requests
-from django.conf import settings
 from rest_framework.authentication import TokenAuthentication
+
+from django.conf import settings
 
 from libs.api import get_http_api_url
 from libs.authentication.internal import InternalAuthentication

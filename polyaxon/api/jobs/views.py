@@ -1,9 +1,9 @@
 import logging
 import mimetypes
 import os
+
 from wsgiref.util import FileWrapper
 
-from django.http import StreamingHttpResponse
 from hestia.bool_utils import to_bool
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
@@ -17,7 +17,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
+from django.http import StreamingHttpResponse
+
 import auditor
+
 from api.filters import OrderingFilter, QueryFilter
 from api.jobs import queries
 from api.jobs.serializers import (

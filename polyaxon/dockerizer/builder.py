@@ -1,17 +1,18 @@
+import jinja2
 import json
 import logging
 import os
 import stat
 import time
 
-import jinja2
-from django.conf import settings
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 from hestia.logging_utils import LogSpec
-from polyaxon_schemas.utils import to_list
+
+from django.conf import settings
 
 import publisher
+
 from constants.jobs import JobLifeCycle
 from db.redis.heartbeat import RedisHeartBeat
 from docker_images.image_info import get_image_name, get_tagged_image
@@ -21,6 +22,7 @@ from libs.paths.utils import delete_path
 from libs.utils import get_list
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks, SchedulerCeleryTasks
+from polyaxon_schemas.utils import to_list
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 

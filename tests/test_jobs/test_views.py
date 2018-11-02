@@ -1,12 +1,15 @@
 # pylint:disable=too-many-lines
 import os
 import tempfile
+
+from faker import Faker
 from unittest.mock import patch
 
 import pytest
-from django.conf import settings
-from faker import Faker
+
 from rest_framework import status
+
+from django.conf import settings
 
 from api.jobs.serializers import (
     BookmarkedJobSerializer,
@@ -31,7 +34,7 @@ from libs.paths.jobs import (
     get_job_outputs_path
 )
 from schemas.specifications import JobSpecification
-from tests.utils import BaseViewTest, BaseFilesViewTest
+from tests.utils import BaseFilesViewTest, BaseViewTest
 
 
 @pytest.mark.jobs_mark
