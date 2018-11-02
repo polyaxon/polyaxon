@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import tempfile
 import uuid
 
@@ -343,16 +344,18 @@ class BaseFilesViewTest(BaseViewTest):
         fpath1 = path + '/test1.txt'
         with open(fpath1, 'w') as f:
             f.write('data1')
+        fsize1 = os.path.getsize(fpath1)
         fpath2 = path + '/test2.txt'
         with open(fpath2, 'w') as f:
             f.write('data2')
+        fsize2 = os.path.getsize(fpath2)
         # Create dirs
         dirname1 = tempfile.mkdtemp(prefix=path + '/')
         dirname2 = tempfile.mkdtemp(prefix=path + '/')
         self.top_level_files = [
             {'file': 'test1.txt', 'data': 'data1'},
             {'file': 'test2.txt', 'data': 'data2'}]
-        self.top_level = {'files': ['test1.txt', 'test2.txt'],
+        self.top_level = {'files': [('test1.txt', fsize1), ('test2.txt', fsize2)],
                           'dirs': [dirname1.split('/')[-1], dirname2.split('/')[-1]]}
 
         # Create dirs under dirs
@@ -363,14 +366,16 @@ class BaseFilesViewTest(BaseViewTest):
         fpath1 = dirname1 + '/test11.txt'
         with open(fpath1, 'w') as f:
             f.write('data11')
+        fsize1 = os.path.getsize(fpath1)
 
         fpath2 = dirname1 + '/test12.txt'
         with open(fpath2, 'w') as f:
             f.write('data12')
+        fsize2 = os.path.getsize(fpath2)
         self.second_level_files = [
             {'file': dirname1.split('/')[-1] + '/test11.txt', 'data': 'data11'},
             {'file': dirname1.split('/')[-1] + '/test12.txt', 'data': 'data12'}]
-        self.second_level = {'files': ['test11.txt', 'test12.txt'],
+        self.second_level = {'files': [('test11.txt', fsize1), ('test12.txt', fsize2)],
                              'dirs': [dirname3.split('/')[-1]]}
 
     def assert_same_content(self, value1, value2):
