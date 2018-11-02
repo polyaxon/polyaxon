@@ -100,11 +100,11 @@ integrations:
 
 privateRegistries:
   - host: "my.registry.com"
-    username: "_json_key"
+    user: "_json_key"
     password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'
 
   - host: "another.registry.com"
-    username: "myname"
+    user: "myname"
     password: "mypassword"
 
   - "user:password@foo.bar.registry.com"
