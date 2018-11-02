@@ -1,4 +1,4 @@
 -r requirements-base.txt
 
 polyaxon-k8s==0.2.9
-polyaxon-schemas==0.2.9
+polyaxon-client==0.2.9
