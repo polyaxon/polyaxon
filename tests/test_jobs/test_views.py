@@ -1,6 +1,5 @@
 # pylint:disable=too-many-lines
 import os
-import tempfile
 
 from faker import Faker
 from unittest.mock import patch
