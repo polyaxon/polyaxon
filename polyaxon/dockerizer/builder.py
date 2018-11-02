@@ -27,10 +27,6 @@ from polyaxon_schemas.utils import to_list
 _logger = logging.getLogger('polyaxon.dockerizer')
 
 
-class DockerBuilderError(Exception):
-    pass
-
-
 class DockerBuilder(object):
     LATEST_IMAGE_TAG = 'latest'
     WORKDIR = '/code'
@@ -103,7 +99,11 @@ class DockerBuilder(object):
                 json_line = json.loads(raw_line)
 
                 if json_line.get('error'):
-                    raise DockerBuilderError(str(json_line.get('error', json_line)))
+                    log_lines.append(
+                        LogSpec(
+                            log_line='Build: {}'.format(str(json_line.get('error', json_line))),
+                            log_level=publisher.ERROR
+                        ))
                 else:
                     if json_line.get('stream'):
                         log_lines.append(
@@ -154,7 +154,7 @@ class DockerBuilder(object):
                     RedisHeartBeat.build_ping(build_id=self.build_job.id)
             if log_lines:
                 self._handle_logs(log_lines)
-        except (BuildError, APIError, DockerBuilderError) as e:
+        except (BuildError, APIError) as e:
             self._handle_logs(LogSpec(log_line='Build Error {}'.format(e),
                                       log_level=publisher.ERROR))
             return False
