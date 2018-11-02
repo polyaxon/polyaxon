@@ -1,14 +1,12 @@
 # pylint:disable=too-many-lines
 import os
-
-from faker import Faker
+import tempfile
 from unittest.mock import patch
 
 import pytest
-
-from rest_framework import status
-
 from django.conf import settings
+from faker import Faker
+from rest_framework import status
 
 from api.jobs.serializers import (
     BookmarkedJobSerializer,
@@ -731,3 +729,74 @@ class TestJobHeartBeatViewV1(BaseViewTest):
         resp = self.internal_client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         self.assertEqual(RedisHeartBeat.job_is_alive(self.job.id), True)
+
+
+@pytest.mark.jobs_mark
+class TestJobOutputsTreeViewV1(BaseViewTest):
+    num_log_lines = 10
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        job = JobFactory(project=project)
+        self.url = '/{}/{}/{}/jobs/{}/outputstree'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            job.id)
+
+        outputs_path = get_job_outputs_path(
+            persistence_outputs=job.persistence_outputs,
+            job_name=job.unique_name)
+        create_job_outputs_path(persistence_outputs=job.persistence_outputs,
+                                job_name=job.unique_name)
+        # Create files
+        fpath1 = outputs_path + '/test1.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+        fpath2 = outputs_path + '/test2.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+        # Create dirs
+        dirname1 = tempfile.mkdtemp(prefix=outputs_path + '/')
+        dirname2 = tempfile.mkdtemp(prefix=outputs_path + '/')
+        self.top_level = {'files': ['test1.txt', 'test2.txt'],
+                          'dirs': [dirname1.split('/')[-1], dirname2.split('/')[-1]]}
+
+        # Create dirs under dirs
+        self.url_second_level = self.url + '?path={}'.format(dirname1.split('/')[-1])
+        self.url_second_level2 = self.url + '?path={}'.format(dirname1.split('/')[-1] + '/')
+        dirname3 = tempfile.mkdtemp(prefix=dirname1 + '/')
+        # Create files under dirs
+        fpath1 = dirname1 + '/test11.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+
+        fpath2 = dirname1 + '/test12.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+        self.second_level = {'files': ['test11.txt', 'test12.txt'],
+                             'dirs': [dirname3.split('/')[-1]]}
+
+    def assert_same_content(self, value1, value2):
+        assert len(value1) == len(value2)
+        assert set(value1) == set(value2)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assert_same_content(resp.data['files'], self.top_level['files'])
+        self.assert_same_content(resp.data['dirs'], self.top_level['dirs'])
+
+        resp = self.auth_client.get(self.url_second_level)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assert_same_content(resp.data['files'], self.second_level['files'])
+        self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
+
+        resp = self.auth_client.get(self.url_second_level2)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assert_same_content(resp.data['files'], self.second_level['files'])
+        self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
+

@@ -28,6 +28,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/outputs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.JobDownloadOutputsView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/outputstree/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, JOB_ID_PATTERN),
+            views.JobOutputsTreeView.as_view()),
     re_path(r'^{}/{}/jobs/{}/_heartbeat/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.JobHeartBeatView.as_view()),
