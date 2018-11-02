@@ -40,13 +40,13 @@ class LocalStore(BaseStore):
     def list(self, path, abs_path=False):
 
         def list_dirs():
-            matches = self._list(path, os.path.isdir, abs_path)
+            return self._list(path, os.path.isdir, abs_path)
+
+        def list_files():
+            matches = self._list(path, os.path.isfile, abs_path)
             if abs_path:
                 return [(f, os.path.getsize(f)) for f in matches]
             return [(f, os.path.getsize(os.path.join(path, f))) for f in matches]
-
-        def list_files():
-            return self._list(path, os.path.isfile, abs_path)
 
         return {
             'dirs': list_dirs(),
