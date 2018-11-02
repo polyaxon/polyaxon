@@ -67,7 +67,7 @@ from libs.paths.experiments import (
     get_experiment_outputs_path
 )
 from schemas.specifications import ExperimentSpecification
-from tests.utils import BaseViewTest, EphemeralClient
+from tests.utils import BaseViewTest, EphemeralClient, BaseFilesViewTest
 
 
 @pytest.mark.experiments_mark
@@ -1934,7 +1934,7 @@ class TestExperimentOutputsTreeViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
-class TestExperimentOutputsTreeViewV1(BaseViewTest):
+class TestExperimentOutputsTreeViewV1(BaseFilesViewTest):
     num_log_lines = 10
     HAS_AUTH = True
     DISABLE_RUNNER = True
@@ -1956,37 +1956,8 @@ class TestExperimentOutputsTreeViewV1(BaseViewTest):
             cloning_strategy=experiment.cloning_strategy)
         create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
                                        experiment_name=experiment.unique_name)
-        # Create files
-        fpath1 = outputs_path + '/test1.txt'
-        with open(fpath1, 'w') as f:
-            f.write('data1')
-        fpath2 = outputs_path + '/test2.txt'
-        with open(fpath2, 'w') as f:
-            f.write('data2')
-        # Create dirs
-        dirname1 = tempfile.mkdtemp(prefix=outputs_path + '/')
-        dirname2 = tempfile.mkdtemp(prefix=outputs_path + '/')
-        self.top_level = {'files': ['test1.txt', 'test2.txt'],
-                          'dirs': [dirname1.split('/')[-1], dirname2.split('/')[-1]]}
 
-        # Create dirs under dirs
-        self.url_second_level = self.url + '?path={}'.format(dirname1.split('/')[-1])
-        self.url_second_level2 = self.url + '?path={}'.format(dirname1.split('/')[-1] + '/')
-        dirname3 = tempfile.mkdtemp(prefix=dirname1 + '/')
-        # Create files under dirs
-        fpath1 = dirname1 + '/test11.txt'
-        with open(fpath1, 'w') as f:
-            f.write('data1')
-
-        fpath2 = dirname1 + '/test12.txt'
-        with open(fpath2, 'w') as f:
-            f.write('data2')
-        self.second_level = {'files': ['test11.txt', 'test12.txt'],
-                             'dirs': [dirname3.split('/')[-1]]}
-
-    def assert_same_content(self, value1, value2):
-        assert len(value1) == len(value2)
-        assert set(value1) == set(value2)
+        self.create_paths(path=outputs_path, url=self.url)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

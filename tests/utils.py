@@ -325,3 +325,40 @@ class BaseViewTest(BaseTest):
             if not self.HAS_INTERNAL:
                 assert self.internal_client.get(self.url).status_code in (
                     status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+
+class BaseFilesViewTest(BaseViewTest):
+    def create_paths(self, path, url):
+        # Create files
+        fpath1 = path + '/test1.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+        fpath2 = path + '/test2.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+        # Create dirs
+        dirname1 = tempfile.mkdtemp(prefix=path + '/')
+        dirname2 = tempfile.mkdtemp(prefix=path + '/')
+        self.top_level_content = ['data1', 'data2']
+        self.top_level = {'files': ['test1.txt', 'test2.txt'],
+                          'dirs': [dirname1.split('/')[-1], dirname2.split('/')[-1]]}
+
+        # Create dirs under dirs
+        self.url_second_level = url + '?path={}'.format(dirname1.split('/')[-1])
+        self.url_second_level2 = url + '?path={}'.format(dirname1.split('/')[-1] + '/')
+        dirname3 = tempfile.mkdtemp(prefix=dirname1 + '/')
+        # Create files under dirs
+        fpath1 = dirname1 + '/test11.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data11')
+
+        fpath2 = dirname1 + '/test12.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data12')
+        self.second_level_content = ['data11', 'data12']
+        self.second_level = {'files': ['test11.txt', 'test12.txt'],
+                             'dirs': [dirname3.split('/')[-1]]}
+
+    def assert_same_content(self, value1, value2):
+        assert len(value1) == len(value2)
+        assert set(value1) == set(value2)
