@@ -35,7 +35,7 @@ def get_store_secret_from_definition(volume_name, volume_settings):
 
 
 def get_outputs_store(persistence_outputs):
-    store, secret, secret_key = get_store_secret_from_definition(
+    store, _, secret_key = get_store_secret_from_definition(
         volume_name=persistence_outputs,
         volume_settings=settings.PERSISTENCE_OUTPUTS)
     if not store or not secret_key:

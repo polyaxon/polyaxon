@@ -1,6 +1,5 @@
-from rest_framework.urlpatterns import format_suffix_patterns
-
 from django.urls import re_path
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from api.bookmarks import views as bookmark_views
 from api.jobs import views
@@ -30,10 +29,10 @@ jobs_urlpatterns = [
         views.JobDownloadOutputsView.as_view()),
     re_path(r'^{}/{}/jobs/{}/outputs/tree/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, JOB_ID_PATTERN),
-            views.JobOutputsTreeView.as_view()),
+        views.JobOutputsTreeView.as_view()),
     re_path(r'^{}/{}/jobs/{}/outputs/files/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, JOB_ID_PATTERN),
-            views.JobOutputsFilesView.as_view()),
+        views.JobOutputsFilesView.as_view()),
     re_path(r'^{}/{}/jobs/{}/_heartbeat/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.JobHeartBeatView.as_view()),

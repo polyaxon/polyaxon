@@ -1,6 +1,5 @@
-from rest_framework.urlpatterns import format_suffix_patterns
-
 from django.urls import re_path
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from api.bookmarks import views as bookmark_views
 from api.experiments import views
@@ -60,13 +59,13 @@ experiments_urlpatterns = [
             views.ExperimentStopView.as_view()),
     re_path(r'^{}/{}/experiments/{}/outputs/download/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
-            views.ExperimentDownloadOutputsView.as_view()),
+        views.ExperimentDownloadOutputsView.as_view()),
     re_path(r'^{}/{}/experiments/{}/outputs/tree/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
-            views.ExperimentOutputsTreeView.as_view()),
+        views.ExperimentOutputsTreeView.as_view()),
     re_path(r'^{}/{}/experiments/{}/outputs/files/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
-            views.ExperimentOutputsFilesView.as_view()),
+        views.ExperimentOutputsFilesView.as_view()),
     re_path(r'^{}/{}/experiments/{}/bookmark/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         bookmark_views.ExperimentBookmarkCreateView.as_view()),
