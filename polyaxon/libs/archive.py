@@ -5,6 +5,7 @@ from django.conf import settings
 
 from libs.paths.experiments import get_experiment_outputs_path
 from libs.paths.jobs import get_job_outputs_path
+from libs.stores import get_outputs_store
 
 
 def check_archive_path(archive_path=None):
@@ -56,3 +57,17 @@ def archive_job_outputs(persistence_outputs, job_name):
     create_tarfile(files=outputs_files, tar_path=os.path.join(settings.OUTPUTS_ARCHIVE_ROOT,
                                                               tar_name))
     return settings.OUTPUTS_ARCHIVE_ROOT, tar_name
+
+
+def archive_outputs_file(persistence_outputs, outputs_path, namepath, filepath):
+    check_archive_path(settings.OUTPUTS_DOWNLOAD_ROOT)
+    namepath = namepath.replace('.', '/')
+    download_filepath = os.path.join(settings.OUTPUTS_DOWNLOAD_ROOT, namepath, filepath)
+    download_dir = '/'.join(download_filepath.split('/')[:-1])
+    check_archive_path(download_dir)
+    store_manager = get_outputs_store(persistence_outputs=persistence_outputs)
+    outputs_filepath = os.path.join(outputs_path, filepath)
+    store_manager.download_file(outputs_filepath, download_filepath)
+    if store_manager.store.is_local_store:
+        return outputs_filepath
+    return download_filepath
