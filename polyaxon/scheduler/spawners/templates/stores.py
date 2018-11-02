@@ -1,35 +1,8 @@
 from django.conf import settings
 
-from constants import stores
 from libs.paths.data_paths import validate_persistence_data
-from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.outputs_paths import validate_persistence_outputs
-
-
-def get_store_secret_from_definition(volume_name, volume_settings):
-    if volume_name not in volume_settings:
-        raise VolumeNotFoundError('Volume with name `{}` was defined in specification, '
-                                  'but was not found'.format(volume_name))
-
-    definition = volume_settings[volume_name]
-    store = definition.get('store')
-    secret = definition.get('secret')
-    secret_key = definition.get('secretKey')
-
-    if store:
-        if store not in stores.VALUES:
-            raise VolumeNotFoundError(
-                'Volume with store class `{}` is not supported.'.format(store))
-
-        if not secret:
-            raise VolumeNotFoundError(
-                'Volume with store class `{}` does not define a secret.'.format(store))
-
-        if not secret_key:
-            raise VolumeNotFoundError(
-                'Volume with store class `{}` does not define a secretKey.'.format(store))
-
-    return store, secret, secret_key
+from libs.stores import get_store_secret_from_definition
 
 
 def get_data_store_secrets(persistence_data, data_paths):
