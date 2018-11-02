@@ -1879,7 +1879,7 @@ class TestDeleteExperimentManyViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
-class TestExperimentOutputsTreeViewV1(BaseViewTest):
+class TestExperimentOutputsLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
     DISABLE_RUNNER = True
@@ -1974,6 +1974,45 @@ class TestExperimentOutputsTreeViewV1(BaseFilesViewTest):
         assert resp.status_code == status.HTTP_200_OK
         self.assert_same_content(resp.data['files'], self.second_level['files'])
         self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
+
+
+@pytest.mark.jobs_mark
+class TestExperimentOutputsFilesViewV1(BaseFilesViewTest):
+    num_log_lines = 10
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        experiment = ExperimentFactory(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/outputs/files'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            experiment.id)
+
+        outputs_path = get_experiment_outputs_path(
+            persistence_outputs=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name,
+            original_name=experiment.original_unique_name,
+            cloning_strategy=experiment.cloning_strategy)
+        create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
+                                       experiment_name=experiment.unique_name)
+        self.create_paths(path=outputs_path, url=self.url)
+
+    def test_get(self):
+        for file_content in self.top_level_files:
+            resp = self.auth_client.get(self.url + '?path={}'.format(file_content['file']))
+            assert resp.status_code == status.HTTP_200_OK
+            data = [i for i in resp._iterator]
+            assert data[0].decode('utf-8') == file_content['data']
+
+        for file_content in self.second_level_files:
+            resp = self.auth_client.get(self.url + '?path={}'.format(file_content['file']))
+            assert resp.status_code == status.HTTP_200_OK
+            data = [i for i in resp._iterator]
+            assert data[0].decode('utf-8') == file_content['data']
 
 
 @pytest.mark.experiments_mark

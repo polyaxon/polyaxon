@@ -64,6 +64,9 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/outputs/tree/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
             views.ExperimentOutputsTreeView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/outputs/files/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+            views.ExperimentOutputsFilesView.as_view()),
     re_path(r'^{}/{}/experiments/{}/bookmark/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         bookmark_views.ExperimentBookmarkCreateView.as_view()),

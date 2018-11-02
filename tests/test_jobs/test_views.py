@@ -769,3 +769,40 @@ class TestJobOutputsTreeViewV1(BaseFilesViewTest):
         assert resp.status_code == status.HTTP_200_OK
         self.assert_same_content(resp.data['files'], self.second_level['files'])
         self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
+
+
+@pytest.mark.jobs_mark
+class TestJobOutputsFilesViewV1(BaseFilesViewTest):
+    num_log_lines = 10
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        job = JobFactory(project=project)
+        self.url = '/{}/{}/{}/jobs/{}/outputs/files'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            job.id)
+
+        outputs_path = get_job_outputs_path(
+            persistence_outputs=job.persistence_outputs,
+            job_name=job.unique_name)
+        create_job_outputs_path(persistence_outputs=job.persistence_outputs,
+                                job_name=job.unique_name)
+        self.create_paths(path=outputs_path, url=self.url)
+
+    def test_get(self):
+        for file_content in self.top_level_files:
+            resp = self.auth_client.get(self.url + '?path={}'.format(file_content['file']))
+            assert resp.status_code == status.HTTP_200_OK
+            data = [i for i in resp._iterator]
+            assert data[0].decode('utf-8') == file_content['data']
+
+        for file_content in self.second_level_files:
+            resp = self.auth_client.get(self.url + '?path={}'.format(file_content['file']))
+            assert resp.status_code == status.HTTP_200_OK
+            data = [i for i in resp._iterator]
+            assert data[0].decode('utf-8') == file_content['data']

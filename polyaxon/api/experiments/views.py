@@ -1,9 +1,9 @@
 import logging
 import mimetypes
 import os
-
 from wsgiref.util import FileWrapper
 
+from django.http import StreamingHttpResponse
 from hestia.bool_utils import to_bool
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -20,10 +20,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
-from django.http import StreamingHttpResponse
-
 import auditor
-
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
@@ -81,7 +78,7 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
-from libs.archive import archive_experiment_outputs
+from libs.archive import archive_experiment_outputs, archive_outputs_file
 from libs.authentication.ephemeral import EphemeralAuthentication
 from libs.authentication.internal import InternalAuthentication
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
@@ -384,6 +381,45 @@ class ExperimentOutputsTreeView(ExperimentViewMixin, RetrieveAPIView):
             experiment_outputs_path = os.path.join(experiment_outputs_path,
                                                    request.query_params.get('path'))
         return Response(data=store_manager.ls(experiment_outputs_path), status=200)
+
+
+class ExperimentOutputsFilesView(ExperimentViewMixin, RetrieveAPIView):
+    """
+    get:
+        Returns a the outputs files content.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        filepath = request.query_params.get('path')
+        if not filepath:
+            raise ValidationError('Files view expect a path to the file.')
+
+        experiment = self.get_experiment()
+        experiment_outputs_path = get_experiment_outputs_path(
+            persistence_outputs=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name,
+            original_name=experiment.original_unique_name,
+            cloning_strategy=experiment.cloning_strategy)
+
+        download_filepath = archive_outputs_file(persistence_outputs=experiment.persistence_outputs,
+                                                 outputs_path=experiment_outputs_path,
+                                                 namepath=experiment.unique_name,
+                                                 filepath=filepath)
+
+        filename = os.path.basename(download_filepath)
+        chunk_size = 8192
+        try:
+            wrapped_file = FileWrapper(open(download_filepath, 'rb'), chunk_size)
+            response = StreamingHttpResponse(
+                wrapped_file, content_type=mimetypes.guess_type(download_filepath)[0])
+            response['Content-Length'] = os.path.getsize(download_filepath)
+            response['Content-Disposition'] = "attachment; filename={}".format(filename)
+            return response
+        except FileNotFoundError:
+            _logger.warning('Log file not found: log_path=%s', download_filepath)
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data='Log file not found: log_path={}'.format(download_filepath))
 
 
 class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
