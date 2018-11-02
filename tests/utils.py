@@ -329,6 +329,15 @@ class BaseViewTest(BaseTest):
 
 
 class BaseFilesViewTest(BaseViewTest):
+    def setUp(self):
+        super().setUp()
+        self.url_second_level = ''
+        self.url_second_level2 = ''
+        self.top_level = {}
+        self.top_level_files = []
+        self.second_level = {}
+        self.second_level_files = []
+
     def create_paths(self, path, url):
         # Create files
         fpath1 = path + '/test1.txt'

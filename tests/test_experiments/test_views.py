@@ -1,6 +1,5 @@
 # pylint:disable=too-many-lines
 import os
-import tempfile
 import time
 
 from faker import Faker
@@ -2005,13 +2004,13 @@ class TestExperimentOutputsFilesViewV1(BaseFilesViewTest):
         for file_content in self.top_level_files:
             resp = self.auth_client.get(self.url + '?path={}'.format(file_content['file']))
             assert resp.status_code == status.HTTP_200_OK
-            data = [i for i in resp._iterator]
+            data = [i for i in resp._iterator]  # pylint:disable=protected-access
             assert data[0].decode('utf-8') == file_content['data']
 
         for file_content in self.second_level_files:
             resp = self.auth_client.get(self.url + '?path={}'.format(file_content['file']))
             assert resp.status_code == status.HTTP_200_OK
-            data = [i for i in resp._iterator]
+            data = [i for i in resp._iterator]  # pylint:disable=protected-access
             assert data[0].decode('utf-8') == file_content['data']
 
 
