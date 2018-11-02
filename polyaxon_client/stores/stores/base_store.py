@@ -75,6 +75,22 @@ class BaseStore(object):
         """Set authentication and access of the current store to the env vars"""
         pass
 
+    @property
+    def is_local_store(self):
+        return self.STORE_TYPE == self._LOCAL_STORE
+
+    @property
+    def is_s3_store(self):
+        return self.STORE_TYPE == self._S3_STORE
+
+    @property
+    def is_azure_store(self):
+        return self.STORE_TYPE == self._AZURE_STORE
+
+    @property
+    def is_gcs_store(self):
+        return self.STORE_TYPE == self._GCS_STORE
+
     def ls(self, path):
         raise NotImplementedError
 
