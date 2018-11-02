@@ -1,5 +1,6 @@
 # pylint:disable=too-many-lines
 import os
+import tempfile
 import time
 
 from faker import Faker
@@ -1878,7 +1879,7 @@ class TestDeleteExperimentManyViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
-class TestExperimentLogsViewV1(BaseViewTest):
+class TestExperimentOutputsTreeViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
     DISABLE_RUNNER = True
@@ -1930,6 +1931,78 @@ class TestExperimentLogsViewV1(BaseViewTest):
 
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1
+
+
+@pytest.mark.experiments_mark
+class TestExperimentOutputsTreeViewV1(BaseViewTest):
+    num_log_lines = 10
+    HAS_AUTH = True
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        experiment = ExperimentFactory(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/outputstree'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            experiment.id)
+
+        outputs_path = get_experiment_outputs_path(
+            persistence_outputs=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name,
+            original_name=experiment.original_unique_name,
+            cloning_strategy=experiment.cloning_strategy)
+        create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
+                                       experiment_name=experiment.unique_name)
+        # Create files
+        fpath1 = outputs_path + '/test1.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+        fpath2 = outputs_path + '/test2.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+        # Create dirs
+        dirname1 = tempfile.mkdtemp(prefix=outputs_path + '/')
+        dirname2 = tempfile.mkdtemp(prefix=outputs_path + '/')
+        self.top_level = {'files': ['test1.txt', 'test2.txt'],
+                          'dirs': [dirname1.split('/')[-1], dirname2.split('/')[-1]]}
+
+        # Create dirs under dirs
+        self.url_second_level = self.url + '?path={}'.format(dirname1.split('/')[-1])
+        self.url_second_level2 = self.url + '?path={}'.format(dirname1.split('/')[-1] + '/')
+        dirname3 = tempfile.mkdtemp(prefix=dirname1 + '/')
+        # Create files under dirs
+        fpath1 = dirname1 + '/test11.txt'
+        with open(fpath1, 'w') as f:
+            f.write('data1')
+
+        fpath2 = dirname1 + '/test12.txt'
+        with open(fpath2, 'w') as f:
+            f.write('data2')
+        self.second_level = {'files': ['test11.txt', 'test12.txt'],
+                             'dirs': [dirname3.split('/')[-1]]}
+
+    def assert_same_content(self, value1, value2):
+        assert len(value1) == len(value2)
+        assert set(value1) == set(value2)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assert_same_content(resp.data['files'], self.top_level['files'])
+        self.assert_same_content(resp.data['dirs'], self.top_level['dirs'])
+
+        resp = self.auth_client.get(self.url_second_level)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assert_same_content(resp.data['files'], self.second_level['files'])
+        self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
+
+        resp = self.auth_client.get(self.url_second_level2)
+        assert resp.status_code == status.HTTP_200_OK
+        self.assert_same_content(resp.data['files'], self.second_level['files'])
+        self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
 
 
 @pytest.mark.experiments_mark

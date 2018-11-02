@@ -84,11 +84,12 @@ from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_experiment_outputs
 from libs.authentication.ephemeral import EphemeralAuthentication
 from libs.authentication.internal import InternalAuthentication
-from libs.paths.experiments import get_experiment_logs_path
+from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.permissions.ephemeral import IsEphemeral
 from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project, IsProjectOwnerOrPublicReadOnly
 from libs.spec_validation import validate_experiment_spec_config
+from libs.stores import get_outputs_store
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 
@@ -362,6 +363,27 @@ class ExperimentViewMixin(object):
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
         return queryset.filter(experiment=self.get_experiment())
+
+
+class ExperimentOutputsTreeView(ExperimentViewMixin, RetrieveAPIView):
+    """
+    get:
+        Returns a the outputs directory tree.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        experiment = self.get_experiment()
+        store_manager = get_outputs_store(persistence_outputs=experiment.persistence_outputs)
+        experiment_outputs_path = get_experiment_outputs_path(
+            persistence_outputs=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name,
+            original_name=experiment.original_unique_name,
+            cloning_strategy=experiment.cloning_strategy)
+        if request.query_params.get('path'):
+            experiment_outputs_path = os.path.join(experiment_outputs_path,
+                                                   request.query_params.get('path'))
+        return Response(data=store_manager.ls(experiment_outputs_path), status=200)
 
 
 class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
@@ -700,7 +722,7 @@ class ExperimentDeleteManyView(PostAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class DownloadOutputsView(ProtectedView):
+class ExperimentDownloadOutputsView(ProtectedView):
     """Download outputs of an experiment."""
     permission_classes = (IsAuthenticated,)
     HANDLE_UNAUTHENTICATED = False

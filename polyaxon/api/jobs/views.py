@@ -292,7 +292,7 @@ class JobStopView(CreateAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class DownloadOutputsView(ProtectedView):
+class JobDownloadOutputsView(ProtectedView):
     """Download outputs of a job."""
     permission_classes = (IsAuthenticated,)
     HANDLE_UNAUTHENTICATED = False
