@@ -531,7 +531,8 @@ class ExperimentApi(BaseApiHandler):
                                      project_name,
                                      'experiments',
                                      experiment_id,
-                                     'outputs')
+                                     'outputs',
+                                     'download')
 
         try:
             response = self.transport.download(

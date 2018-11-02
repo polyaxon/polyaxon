@@ -274,7 +274,8 @@ class JobApi(BaseApiHandler):
                                      project_name,
                                      'jobs',
                                      job_id,
-                                     'outputs')
+                                     'outputs',
+                                     'download')
 
         try:
             response = self.transport.download(
