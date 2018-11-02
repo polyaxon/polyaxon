@@ -218,6 +218,7 @@ class BaseTest(TestCase):
         settings.PERSISTENCE_OUTPUTS['outputs']['mountPath'] = tempfile.mkdtemp()
         settings.REPOS_ARCHIVE_ROOT = tempfile.mkdtemp()
         settings.OUTPUTS_ARCHIVE_ROOT = tempfile.mkdtemp()
+        settings.OUTPUTS_DOWNLOAD_ROOT = tempfile.mkdtemp()
         # Flush cache
         cache.clear()
         # Mock celery default sent task
@@ -339,7 +340,9 @@ class BaseFilesViewTest(BaseViewTest):
         # Create dirs
         dirname1 = tempfile.mkdtemp(prefix=path + '/')
         dirname2 = tempfile.mkdtemp(prefix=path + '/')
-        self.top_level_content = ['data1', 'data2']
+        self.top_level_files = [
+            {'file': 'test1.txt', 'data': 'data1'},
+            {'file': 'test2.txt', 'data': 'data2'}]
         self.top_level = {'files': ['test1.txt', 'test2.txt'],
                           'dirs': [dirname1.split('/')[-1], dirname2.split('/')[-1]]}
 
@@ -355,7 +358,9 @@ class BaseFilesViewTest(BaseViewTest):
         fpath2 = dirname1 + '/test12.txt'
         with open(fpath2, 'w') as f:
             f.write('data12')
-        self.second_level_content = ['data11', 'data12']
+        self.second_level_files = [
+            {'file': dirname1.split('/')[-1] + '/test11.txt', 'data': 'data11'},
+            {'file': dirname1.split('/')[-1] + '/test12.txt', 'data': 'data12'}]
         self.second_level = {'files': ['test11.txt', 'test12.txt'],
                              'dirs': [dirname3.split('/')[-1]]}
 
