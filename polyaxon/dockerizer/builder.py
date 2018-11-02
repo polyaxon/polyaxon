@@ -94,6 +94,7 @@ class DockerBuilder(object):
         raw = log_line.decode('utf-8').strip()
         raw_lines = raw.split('\n')
         log_lines = []
+        status = True
         for raw_line in raw_lines:
             try:
                 json_line = json.loads(raw_line)
@@ -104,6 +105,7 @@ class DockerBuilder(object):
                             log_line='Build: {}'.format(str(json_line.get('error', json_line))),
                             log_level=publisher.ERROR
                         ))
+                    status = False
                 else:
                     if json_line.get('stream'):
                         log_lines.append(
@@ -124,7 +126,7 @@ class DockerBuilder(object):
                         log_lines.append(str(json_line))
             except json.JSONDecodeError:
                 log_lines.append('JSON decode error: {}'.format(raw_line))
-        return log_lines
+        return log_lines, status
 
     def _handle_logs(self, log_lines):
         publisher.publish_build_job_log(
@@ -138,9 +140,13 @@ class DockerBuilder(object):
         log_lines = []
         last_emit_time = time.time()
         last_heart_beat = time.time()
+        status = True
         try:
             for log_line in stream:
-                log_lines += self._prepare_log_lines(log_line)
+                new_log_lines, new_status = self._prepare_log_lines(log_line)
+                log_lines += new_log_lines
+                if not new_status:
+                    status = new_status
                 publish_cond = (
                     len(log_lines) == publisher.MESSAGES_COUNT or
                     (log_lines and time.time() - last_emit_time > publisher.MESSAGES_TIMEOUT)
@@ -159,7 +165,7 @@ class DockerBuilder(object):
                                       log_level=publisher.ERROR))
             return False
 
-        return True
+        return status
 
     def _get_requirements_path(self):
         def get_requirements(requirements_file):
