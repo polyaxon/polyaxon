@@ -25,10 +25,10 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/stop/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.JobStopView.as_view()),
-    re_path(r'^{}/{}/jobs/{}/outputs/?$'.format(
+    re_path(r'^{}/{}/jobs/{}/outputs/download/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
         views.JobDownloadOutputsView.as_view()),
-    re_path(r'^{}/{}/jobs/{}/outputstree/?$'.format(
+    re_path(r'^{}/{}/jobs/{}/outputs/tree/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, JOB_ID_PATTERN),
             views.JobOutputsTreeView.as_view()),
     re_path(r'^{}/{}/jobs/{}/_heartbeat/?$'.format(

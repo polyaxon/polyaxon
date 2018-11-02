@@ -673,7 +673,7 @@ class DownloadJobOutputsViewTest(BaseViewTest):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.job = self.factory_class(project=self.project)
-        self.download_url = '/{}/{}/{}/jobs/{}/outputs'.format(
+        self.download_url = '/{}/{}/{}/jobs/{}/outputs/download'.format(
             API_V1,
             self.project.user.username,
             self.project.name,
@@ -741,7 +741,7 @@ class TestJobOutputsTreeViewV1(BaseFilesViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         job = JobFactory(project=project)
-        self.url = '/{}/{}/{}/jobs/{}/outputstree'.format(
+        self.url = '/{}/{}/{}/jobs/{}/outputs/tree'.format(
             API_V1,
             project.user.username,
             project.name,
@@ -769,4 +769,3 @@ class TestJobOutputsTreeViewV1(BaseFilesViewTest):
         assert resp.status_code == status.HTTP_200_OK
         self.assert_same_content(resp.data['files'], self.second_level['files'])
         self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
-

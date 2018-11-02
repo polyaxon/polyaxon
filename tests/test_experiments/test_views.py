@@ -1943,7 +1943,7 @@ class TestExperimentOutputsTreeViewV1(BaseFilesViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         experiment = ExperimentFactory(project=project)
-        self.url = '/{}/{}/{}/experiments/{}/outputstree'.format(
+        self.url = '/{}/{}/{}/experiments/{}/outputs/tree'.format(
             API_V1,
             project.user.username,
             project.name,
@@ -1988,7 +1988,7 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.experiment = self.factory_class(project=self.project)
-        self.download_url = '/{}/{}/{}/experiments/{}/outputs'.format(
+        self.download_url = '/{}/{}/{}/experiments/{}/outputs/download'.format(
             API_V1,
             self.project.user.username,
             self.project.name,

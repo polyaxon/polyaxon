@@ -58,9 +58,10 @@ experiments_urlpatterns = [
         views.ExperimentLogsView.as_view()),
     re_path(r'^{}/{}/experiments/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
             views.ExperimentStopView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/outputs/?$'.format(USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
+    re_path(r'^{}/{}/experiments/{}/outputs/download/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, ID_PATTERN),
             views.ExperimentDownloadOutputsView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/outputstree/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/outputs/tree/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_ID_PATTERN),
             views.ExperimentOutputsTreeView.as_view()),
     re_path(r'^{}/{}/experiments/{}/bookmark/?$'.format(
