@@ -149,7 +149,7 @@ class GCSStore(BaseStore):
 
     def ls(self, path):
         results = self.list(key=path)
-        return {'files': [b[0] for b in results['blobs']], 'dirs': results['prefixes']}
+        return {'files': results['blobs'], 'dirs': results['prefixes']}
 
     def list(self, key, bucket_name=None, path=None, delimiter='/', blobs=True, prefixes=True):
         """
