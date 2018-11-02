@@ -22,35 +22,39 @@ class TestPodCmdArgs(TestCase):
                                  --num_epochs={{ num_epochs }} \
                                  --activation={{ activation }}
                 """
-
-    def test_get_pod_command_args(self):
-        assert get_pod_command_args(self.cmd1, use_args=False) == (
-            ['video_prediction_train',
-             '--model=DNA',
-             '--num_masks=1'], [])
-        assert get_pod_command_args(self.cmd2, use_args=False) == (['/bin/bash', 'run.sh'], [])
-        assert get_pod_command_args(self.cmd3, use_args=False) == (
-            ['python3',
-             'model.py',
-             '--batch_size={{', 'batch_size', '}}',
-             '--num_steps={{', 'num_steps', '}}',
-             '--learning_rate={{', 'learning_rate', '}}',
-             '--dropout={{', 'dropout', '}}',
-             '--num_epochs={{', 'num_epochs', '}}',
-             '--activation={{', 'activation', '}}'], [])
-
-    def test_get_pod_command_args_use_args(self):
-        assert get_pod_command_args(self.cmd1) == (
-            ["/bin/bash", "-c"],
-            ['video_prediction_train --model=DNA --num_masks=1'])
-        assert get_pod_command_args(self.cmd2) == (["/bin/bash", "-c"], ['/bin/bash run.sh'])
-        assert get_pod_command_args(self.cmd3) == (
-            ["/bin/bash", "-c"],
-            ["""
+        self.cmd4 = MagicMock()
+        self.cmd4.cmd = """
+                video_prediction_train --model=DNA --num_masks=1 && \
                 python3 model.py --batch_size={{ batch_size }} \
                                  --num_steps={{ num_steps }} \
                                  --learning_rate={{ learning_rate }} \
                                  --dropout={{ dropout }} \
                                  --num_epochs={{ num_epochs }} \
                                  --activation={{ activation }}
-                """])
+                """
+
+    def test_get_pod_command_args_use_args(self):
+        assert get_pod_command_args(self.cmd1) == (
+            ["/bin/bash", "-c"],
+            ["video_prediction_train --model=DNA --num_masks=1"])
+        assert get_pod_command_args(self.cmd2) == (["/bin/bash", "-c"], ["/bin/bash run.sh"])
+        assert get_pod_command_args(self.cmd3) == (
+            ["/bin/bash", "-c"],
+            ["python3 model.py "
+             "--batch_size={{ batch_size }} "
+             "--num_steps={{ num_steps }} "
+             "--learning_rate={{ learning_rate }} "
+             "--dropout={{ dropout }} "
+             "--num_epochs={{ num_epochs }} "
+             "--activation={{ activation }}"])
+
+        assert get_pod_command_args(self.cmd4) == (
+            ["/bin/bash", "-c"],
+            ["video_prediction_train --model=DNA --num_masks=1 && "
+             "python3 model.py "
+             "--batch_size={{ batch_size }} "
+             "--num_steps={{ num_steps }} "
+             "--learning_rate={{ learning_rate }} "
+             "--dropout={{ dropout }} "
+             "--num_epochs={{ num_epochs }} "
+             "--activation={{ activation }}"])
