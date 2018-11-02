@@ -10,7 +10,7 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  fetchData?: () => any;
+  fetchData?: () => actions.LogsAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.LogsAction>, params: any): DispatchProps {
