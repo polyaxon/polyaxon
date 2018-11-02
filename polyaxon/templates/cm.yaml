@@ -157,17 +157,17 @@ data:
   POLYAXON_NODE_SELECTOR_EXPERIMENTS: {{ toJson .Values.nodeSelectors.experiments | quote }}
   POLYAXON_NODE_SELECTOR_JOBS: {{ toJson .Values.nodeSelectors.jobs | quote }}
   POLYAXON_NODE_SELECTOR_BUILDS: {{ toJson .Values.nodeSelectors.builds | quote }}
-  POLYAXON_NODE_SELECTOR_TENSORBOARDS: {{ toJson .Values.nodeSelectors.tensorborads | quote }}
+  POLYAXON_NODE_SELECTOR_TENSORBOARDS: {{ toJson .Values.nodeSelectors.tensorboards | quote }}
   POLYAXON_AFFINITY_CORE: {{ toJson .Values.affinity.core | quote }}
   POLYAXON_AFFINITY_EXPERIMENTS: {{ toJson .Values.affinity.experiments | quote }}
   POLYAXON_AFFINITY_JOBS: {{ toJson .Values.affinity.jobs | quote }}
   POLYAXON_AFFINITY_BUILDS: {{ toJson .Values.affinity.builds | quote }}
-  POLYAXON_AFFINITY_TENSORBOARDS: {{ toJson .Values.affinity.tensorborads | quote }}
+  POLYAXON_AFFINITY_TENSORBOARDS: {{ toJson .Values.affinity.tensorboards | quote }}
   POLYAXON_TOLERATIONS_CORE: {{ toJson .Values.tolerations.core | quote }}
   POLYAXON_TOLERATIONS_EXPERIMENTS: {{ toJson .Values.tolerations.experiments | quote }}
   POLYAXON_TOLERATIONS_JOBS: {{ toJson .Values.tolerations.jobs | quote }}
   POLYAXON_TOLERATIONS_BUILDS: {{ toJson .Values.tolerations.builds | quote }}
-  POLYAXON_TOLERATIONS_TENSORBOARDS: {{ toJson .Values.tolerations.tensorborads | quote }}
+  POLYAXON_TOLERATIONS_TENSORBOARDS: {{ toJson .Values.tolerations.tensorboards | quote }}
   POLYAXON_ROLE_LABELS_API: {{ .Values.roles.api }}
   POLYAXON_ROLE_LABELS_LOG: {{ .Values.roles.log }}
   POLYAXON_ROLE_LABELS_WORKER: {{ .Values.roles.worker }}
