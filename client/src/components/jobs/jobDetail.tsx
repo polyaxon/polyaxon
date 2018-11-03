@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/job';
-import { JobAction } from '../../actions/job';
 import { isDone } from '../../constants/statuses';
 import {
   getJobUrl,
@@ -12,6 +11,7 @@ import {
 } from '../../constants/utils';
 import EntityBuild from '../../containers/entityBuild';
 import Logs from '../../containers/logs';
+import Outputs from '../../containers/outputs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { JobModel } from '../../models/job';
@@ -105,6 +105,15 @@ export default class JobDetail extends React.Component<Props, {}> {
                     id={job.id}
                   />,
                   relUrl: 'statuses'
+                }, {
+                  title: 'Outputs',
+                  component: <Outputs
+                    user={job.user}
+                    project={job.project}
+                    resource="jobs"
+                    id={job.id}
+                  />,
+                  relUrl: 'outputs'
                 }, {
                   title: 'Config',
                   component: <YamlText title="Config" config={job.config}/>,

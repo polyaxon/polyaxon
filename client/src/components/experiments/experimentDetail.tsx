@@ -16,6 +16,7 @@ import EntityBuild from '../../containers/entityBuild';
 import ExperimentJobs from '../../containers/experimentJobs';
 import Logs from '../../containers/logs';
 import Metrics from '../../containers/metrics';
+import Outputs from '../../containers/outputs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';
@@ -160,6 +161,16 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                     chartTypes={['line', 'bar']}
                   />,
                   relUrl: 'metrics'
+                },
+                {
+                  title: 'Outputs',
+                  component: <Outputs
+                    user={experiment.user}
+                    project={experiment.project}
+                    resource="experiments"
+                    id={experiment.id}
+                  />,
+                  relUrl: 'outputs'
                 }, {
                   title: 'Config',
                   component: <YamlText title="Config" config={experiment.config}/>,
