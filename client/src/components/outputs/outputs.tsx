@@ -5,15 +5,17 @@ import { decorators, Treebeard } from 'react-treebeard';
 import * as actions from '../../actions/outputs';
 import { CODE_EXTENSIONS, IMAGE_EXTENSIONS, TEXT_EXTENSIONS } from '../../constants/extensions';
 import { OutputsNode, TreeNode } from '../../models/outputs';
+import OutputsImg from './outputsImg';
+import OutputsTxt from './outputsTxt';
 import { OUTPUTS_TREE_STYLE } from './treeViewStyle';
 
 import './outputs.less';
 
 export interface Props {
   outputsTree: { [key: string]: OutputsNode };
-  outputsFile: string;
+  outputsFiles: { [key: string]: string };
   fetchOutputsTree: (path: string) => actions.OutputsAction;
-  fetchOutputsFiles: (path: string) => actions.OutputsAction;
+  fetchOutputsFiles: (path: string, filetype: string) => actions.OutputsAction;
 }
 
 export interface State {
@@ -21,7 +23,7 @@ export interface State {
   toggledNodeIds: { [key: string]: boolean };
   requestedNodeIds: Set<string>;
   outputsTree: { [key: string]: OutputsNode };
-  outputsFile: string;
+  outputsFiles: { [key: string]: string };
 }
 
 export default class Outputs extends React.Component<Props, State> {
@@ -29,7 +31,7 @@ export default class Outputs extends React.Component<Props, State> {
     super(props);
     this.state = {
       outputsTree: this.props.outputsTree,
-      outputsFile: this.props.outputsFile,
+      outputsFiles: this.props.outputsFiles,
       requestedNodeIds: new Set(),
       activeNodeId: undefined,
       toggledNodeIds: {},
@@ -42,11 +44,11 @@ export default class Outputs extends React.Component<Props, State> {
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
     if (!_.isEqual(this.props.outputsTree, prevProps.outputsTree) ||
-      !_.isEqual(this.props.outputsFile, prevProps.outputsFile)) {
+      !_.isEqual(this.props.outputsFiles, prevProps.outputsFiles)) {
       this.setState({
         ...prevState,
         outputsTree: this.props.outputsTree,
-        outputsFile: this.props.outputsFile
+        outputsFiles: this.props.outputsFiles,
       });
     }
   }
@@ -55,9 +57,19 @@ export default class Outputs extends React.Component<Props, State> {
     if (node.loading && !this.state.requestedNodeIds.has(node.id)) {
       this.props.fetchOutputsTree(node.id);
     }
+    const child = OutputsNode.findChild(this.state.outputsTree.root, node.id);
+    if (_.isNil(this.state.outputsFiles[node.id]) && !child.isDir) {
+      const extension = this.getExtension(node.id);
+      if (this.isImage(extension)) {
+        this.props.fetchOutputsFiles(node.id, 'img');
+      } else if (this.isCode(extension) || this.isText(extension)) {
+        this.props.fetchOutputsFiles(node.id, 'txt');
+      }
+    }
     this.setState((prevState, prevProps) => ({
       ...prevState,
       ...{
+        activeNodeId: node.id,
         toggledNodeIds: {
           ...this.state.toggledNodeIds,
           [node.id]: toggled,
@@ -66,13 +78,13 @@ export default class Outputs extends React.Component<Props, State> {
     }));
   };
 
-  public getData = (outputsNode: OutputsNode): TreeNode => {
+  public getData = (parentPath: string, outputsNode: OutputsNode): TreeNode => {
     const isRoot = outputsNode.isRoot;
     if (isRoot) {
       if (outputsNode.children) {
         const nodes: TreeNode[] = [];
         for (const nodeName of Object.keys(outputsNode.children)) {
-          nodes.push(this.getData(outputsNode.children[nodeName]));
+          nodes.push(this.getData(outputsNode.path, outputsNode.children[nodeName]));
         }
         return {children: nodes, toggled: true} as TreeNode;
       }
@@ -80,7 +92,7 @@ export default class Outputs extends React.Component<Props, State> {
       throw Error('unreachable code.');
     }
 
-    const id = outputsNode.path;
+    const id = parentPath ? `${parentPath}/${outputsNode.path}` : outputsNode.path;
     const name = outputsNode.path;
     let toggled;
     let children;
@@ -94,7 +106,7 @@ export default class Outputs extends React.Component<Props, State> {
     if (outputsNode.children) {
       children = [];
       for (const nodeName of Object.keys(outputsNode.children)) {
-        children.push(this.getData(outputsNode.children[nodeName]));
+        children.push(this.getData(outputsNode.path, outputsNode.children[nodeName]));
       }
     }
 
@@ -119,6 +131,18 @@ export default class Outputs extends React.Component<Props, State> {
     return parts[parts.length - 1];
   };
 
+  public isImage = (extension: string) => {
+    return IMAGE_EXTENSIONS.has(extension);
+  };
+
+  public isCode = (extension: string) => {
+    return CODE_EXTENSIONS.has(extension);
+  };
+
+  public isText = (extension: string) => {
+    return TEXT_EXTENSIONS.has(extension);
+  };
+
   public render() {
     const nodeHeader = (props: any) => {
       let iconType;
@@ -126,11 +150,11 @@ export default class Outputs extends React.Component<Props, State> {
         iconType = 'folder';
       } else {
         const extension = this.getExtension(props.node.name);
-        if (IMAGE_EXTENSIONS.has(extension)) {
+        if (this.isImage(extension)) {
           iconType = 'file-image-o';
-        } else if (CODE_EXTENSIONS.has(extension)) {
+        } else if (this.isCode(extension)) {
           iconType = 'file-code-o';
-        } else if (TEXT_EXTENSIONS.has(extension)) {
+        } else if (this.isText(extension)) {
           iconType = 'file-text-o';
         } else {
           iconType = 'file';
@@ -155,6 +179,20 @@ export default class Outputs extends React.Component<Props, State> {
       );
     };
 
+    const getFile = () => {
+      if (this.state.activeNodeId &&
+        !OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId).isDir &&
+        this.state.outputsFiles[this.state.activeNodeId]) {
+        const extension = this.getExtension(this.state.activeNodeId);
+        if (this.isCode(extension) || this.isText(extension)) {
+          return (<OutputsTxt outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
+        } else if (this.isImage(extension)) {
+          return (<OutputsImg outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
+        }
+      }
+      return (null);
+    };
+
     decorators.Header = nodeHeader;
     decorators.Loading = nodeLoading;
     return (
@@ -170,7 +208,7 @@ export default class Outputs extends React.Component<Props, State> {
           <div className="col-md-4">
             {this.state.outputsTree.root
               ? <Treebeard
-                data={this.getData(this.state.outputsTree.root)}
+                data={this.getData('', this.state.outputsTree.root)}
                 onToggle={this.onToggle}
                 style={OUTPUTS_TREE_STYLE}
                 decorators={decorators}
@@ -179,7 +217,7 @@ export default class Outputs extends React.Component<Props, State> {
             }
           </div>
           <div className="col-md-8">
-            foo
+            {getFile()}
           </div>
         </div>
       </div>

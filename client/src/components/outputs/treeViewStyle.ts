@@ -6,7 +6,7 @@ export const OUTPUTS_TREE_STYLE = {
       padding: 0,
       backgroundColor: '#fbfafa',
       fontSize: '14px',
-      height: '556px',
+      height: '550px',
       overflow: 'scroll',
     },
     node: {
