@@ -7,6 +7,8 @@ import { CODE_EXTENSIONS, IMAGE_EXTENSIONS, TEXT_EXTENSIONS } from '../../consta
 import { OutputsNode, TreeNode } from '../../models/outputs';
 import { OUTPUTS_TREE_STYLE } from './treeViewStyle';
 
+import './outputs.less';
+
 export interface Props {
   outputsTree: { [key: string]: OutputsNode };
   outputsFile: string;
@@ -56,7 +58,7 @@ export default class Outputs extends React.Component<Props, State> {
     this.setState((prevState, prevProps) => ({
       ...prevState,
       ...{
-         toggledNodeIds: {
+        toggledNodeIds: {
           ...this.state.toggledNodeIds,
           [node.id]: toggled,
         },
@@ -156,16 +158,30 @@ export default class Outputs extends React.Component<Props, State> {
     decorators.Header = nodeHeader;
     decorators.Loading = nodeLoading;
     return (
-      <div>
-        {this.state.outputsTree.root
-          ? <Treebeard
-            data={this.getData(this.state.outputsTree.root)}
-            onToggle={this.onToggle}
-            style={OUTPUTS_TREE_STYLE}
-            decorators={decorators}
-          />
-          : ''
-        }
+      <div className="outputs">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="outputs-header">
+              Outputs
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            {this.state.outputsTree.root
+              ? <Treebeard
+                data={this.getData(this.state.outputsTree.root)}
+                onToggle={this.onToggle}
+                style={OUTPUTS_TREE_STYLE}
+                decorators={decorators}
+              />
+              : ''
+            }
+          </div>
+          <div className="col-md-8">
+            foo
+          </div>
+        </div>
       </div>
     );
   }
