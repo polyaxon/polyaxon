@@ -17,15 +17,15 @@ export class OutputsNode {
 
   public static findChild(node: OutputsNode, path: string) {
     const parts = path.split('/');
-    let ret = node;
+    let currentNode = node;
     parts.forEach((part) => {
-      if (ret.children && ret.children[part] !== undefined) {
-        ret = ret.children[part];
+      if (currentNode.children && currentNode.children[part] !== undefined) {
+        currentNode = currentNode.children[part];
       } else {
         throw new Error('Can\'t find child.');
       }
     });
-    return ret;
+    return currentNode;
   }
 
   public static isEmpty(node: OutputsNode) {
@@ -67,7 +67,7 @@ export class OutputsNode {
         newChildren[fileInfo[0]] = new OutputsNode(false, fileInfo[0], false, fileInfo[1]);
       });
       dirs.forEach((dir: string) => {
-        newChildren[dir] = new OutputsNode(false, dir, false, '', {});
+        newChildren[dir] = new OutputsNode(false, dir, true, '', {});
       });
       this.children = newChildren;
     }
@@ -76,10 +76,10 @@ export class OutputsNode {
 
 export class OutputsModel {
   public outputsTree: { [key: string]: OutputsNode };
-  public outputsFile: string;
+  public outputsFiles: { [key: string]: string };
 }
 
 export const OutputsEmptyState = {
   outputsTree: {},
-  outputsFile: '',
+  outputsFiles: {},
 };
