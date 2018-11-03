@@ -14,6 +14,7 @@ import { HealthStatusEmptyState, HealthStatusStateSchema } from '../models/healt
 import { JobsEmptyState, JobStateSchema } from '../models/job';
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ModalStateSchema } from '../models/modal';
+import { OutputsModel } from '../models/outputs';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { SearchesEmptyState, SearchesStateSchema, } from '../models/search';
 import { StatusEmptyState, StatusStateSchema } from '../models/status';
@@ -34,6 +35,7 @@ export interface AppState {
   users: UserStateSchema;
   // form: FormReducer;
   logs: string;
+  outputs: OutputsModel;
   statuses: StatusStateSchema;
   metrics: MetricStateSchema;
   activityLogs: ActivityLogsStateSchema;
