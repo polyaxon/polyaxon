@@ -27,6 +27,7 @@ export interface RequestOutputsFileAction extends Action {
 
 export interface ReceiveOutputsFileAction extends Action {
   type: actionTypes.RECEIVE_OUTPUTS_FILE;
+  path: string;
   outputsFile: string;
 }
 
@@ -53,9 +54,11 @@ export function requestOutputsFileActionCreator(): RequestOutputsFileAction {
   };
 }
 
-export function receiveOutputsFileActionCreator(outputsFile: string): ReceiveOutputsFileAction {
+export function receiveOutputsFileActionCreator(path: string,
+                                                outputsFile: string): ReceiveOutputsFileAction {
   return {
     type: actionTypes.RECEIVE_OUTPUTS_FILE,
+    path,
     outputsFile
   };
 }
@@ -92,7 +95,11 @@ export function fetchOutputsTree(projectUniqueName: string,
   };
 }
 
-export function fetchOutputsFile(projectUniqueName: string, resources: string, id: number, path: string): any {
+export function fetchOutputsFile(projectUniqueName: string,
+                                 resources: string,
+                                 id: number,
+                                 path: string,
+                                 filetype: string): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestOutputsTreeActionCreator());
 
@@ -106,7 +113,17 @@ export function fetchOutputsFile(projectUniqueName: string, resources: string, i
       }
     })
       .then((response) => handleAuthError(response, dispatch))
-      .then((response) => response.text())
-      .then((text) => dispatch(receiveOutputsFileActionCreator(text)));
+      .then((response) => {
+        if (filetype === 'img') {
+          return response.blob();
+        }
+        return response.text();
+      })
+      .then((val) => {
+        if (filetype === 'img') {
+          return dispatch(receiveOutputsFileActionCreator(path, URL.createObjectURL(val)));
+        }
+        return dispatch(receiveOutputsFileActionCreator(path, val));
+      });
   };
 }
