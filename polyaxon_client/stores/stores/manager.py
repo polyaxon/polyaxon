@@ -60,11 +60,17 @@ class StoreManager(object):
         self.store.upload_dir(dirname, self._path, **kwargs)
 
     def download_file(self, filename, local_path=None, use_basename=False, **kwargs):
-        file_path = os.path.join(self._path, filename)
-        local_path = local_path or filename
+        if self._path:  # We assume rel paths
+            file_path = os.path.join(self._path, filename)
+            local_path = local_path or filename
+        else:
+            file_path = filename
         self.store.download_file(file_path, local_path, use_basename=use_basename, **kwargs)
 
     def download_dir(self, dirname, local_path=None, use_basename=False, **kwargs):
-        dir_path = os.path.join(self._path, dirname)
-        local_path = local_path or dirname
+        if self._path:  # We assume rel paths
+            dir_path = os.path.join(self._path, dirname)
+            local_path = local_path or dirname
+        else:
+            dir_path = dirname
         self.store.download_dir(dir_path, local_path, use_basename=use_basename, **kwargs)
