@@ -179,6 +179,24 @@ export default class Outputs extends React.Component<Props, State> {
       );
     };
 
+    const getFileHeader = () => {
+      if (!this.state.activeNodeId) {
+        return (null);
+      }
+      const node = OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId);
+      return (
+        <div className="row">
+          <div className="col-md-12">
+            <div className="file-header">
+              <p>Type: {node.isDir ? 'directory' : 'file'}</p>
+              <p>Path: {this.state.activeNodeId}</p>
+              {!node.isDir && <p>Size: {node.size}</p>}
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     const getFile = () => {
       if (this.state.activeNodeId &&
         !OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId).isDir &&
@@ -222,6 +240,7 @@ export default class Outputs extends React.Component<Props, State> {
             }
           </div>
           <div className="col-md-8">
+            {getFileHeader()}
             {getFile()}
           </div>
         </div>
