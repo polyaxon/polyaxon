@@ -185,7 +185,12 @@ export default class Outputs extends React.Component<Props, State> {
         this.state.outputsFiles[this.state.activeNodeId]) {
         const extension = this.getExtension(this.state.activeNodeId);
         if (this.isCode(extension) || this.isText(extension)) {
-          return (<OutputsTxt outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
+          return (
+            <OutputsTxt
+              key={this.state.activeNodeId}
+              outputsFile={this.state.outputsFiles[this.state.activeNodeId]}
+            />
+          );
         } else if (this.isImage(extension)) {
           return (<OutputsImg outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
         }

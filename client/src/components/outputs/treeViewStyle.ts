@@ -4,8 +4,8 @@ export const OUTPUTS_TREE_STYLE = {
       listStyle: 'none',
       margin: 0,
       padding: 0,
-      backgroundColor: '#fbfafa',
       fontSize: '14px',
+      borderRight: '.1rem solid rgba(0, 0, 0, .07)',
       height: '550px',
       overflow: 'scroll',
     },
@@ -16,11 +16,11 @@ export const OUTPUTS_TREE_STYLE = {
       link: {
         cursor: 'pointer',
         position: 'relative',
-        padding: '0px 5px',
+        padding: '0px 8px',
         display: 'block'
       },
       activeLink: {
-        background: '#c7c2d0'
+        background: '#eceef3'
       },
       toggle: {
         base: {
@@ -49,7 +49,8 @@ export const OUTPUTS_TREE_STYLE = {
         base: {
           display: 'inline-block',
           verticalAlign: 'top',
-          color: '#333'
+          color: '#333',
+          cursor: 'pointer',
         },
         connector: {
           width: '2px',
