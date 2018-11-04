@@ -199,18 +199,30 @@ export default class Outputs extends React.Component<Props, State> {
 
     const getFile = () => {
       if (this.state.activeNodeId &&
-        !OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId).isDir &&
-        this.state.outputsFiles[this.state.activeNodeId]) {
-        const extension = this.getExtension(this.state.activeNodeId);
-        if (this.isCode(extension) || this.isText(extension)) {
+        !OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId).isDir) {
+        if (this.state.outputsFiles[this.state.activeNodeId]) {
+          const extension = this.getExtension(this.state.activeNodeId);
+          if (this.isCode(extension) || this.isText(extension)) {
+            return (
+              <OutputsTxt
+                key={this.state.activeNodeId}
+                outputsFile={this.state.outputsFiles[this.state.activeNodeId]}
+              />
+            );
+          } else if (this.isImage(extension)) {
+            return (<OutputsImg outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
+          }
+        } else {
           return (
-            <OutputsTxt
-              key={this.state.activeNodeId}
-              outputsFile={this.state.outputsFiles[this.state.activeNodeId]}
-            />
+            <div className="row">
+              <div className="col-md-offset-2 col-md-8">
+                <div className="jumbotron jumbotron-action text-center empty-jumbotron">
+                  <h3>This extension is not supported.</h3>
+                  <div>Only text files and images can be previewed.</div>
+                </div>
+              </div>
+            </div>
           );
-        } else if (this.isImage(extension)) {
-          return (<OutputsImg outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
         }
       }
       return (null);
