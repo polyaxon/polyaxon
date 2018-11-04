@@ -12,7 +12,7 @@ function CodeTable({lines}: Props) {
       <table className="table table-hover table-responsive">
         <tbody>
         {lines && lines.map((line, idx) =>
-          <tr key={line}>
+          <tr key={`${idx}-${line}`}>
             <th className="line-number">
               {idx + 1}
             </th>
