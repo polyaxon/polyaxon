@@ -795,7 +795,8 @@ This section defines the following values/subsections:
  * build_steps [optional]: steps are basically a list of ops that Polyaxon use with docker
  `RUN` to install/run further operations you define in the list.
  * env_vars [optional]: environment variables are also a list of tuples of 2 elements, that polyaxon will use to add env variables in the docker image.
- * commit [optional]: the commit to use for creating the build.
+ * git: the git url of an external repo.
+ * ref [optional]: the commit/branch/treeish to use for creating the build.
  * nocache [optional]: to force rebuild the image. 
 
 ```yaml
@@ -807,7 +808,17 @@ build:
   env_vars:
     - [KEY1, VALUE1]
     - [KEY2, VALUE2]
-  commit: 14e9d652151eb058afa0b51ba110671f2ca10cbf
+  ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
+```
+
+External repo
+
+
+```yaml
+build:
+  image: ubuntu
+  git: https://github.com/user/repo
+  ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
 ## run
