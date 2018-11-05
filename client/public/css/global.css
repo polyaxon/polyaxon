@@ -251,6 +251,10 @@ a.brand {
 }
 
 /* Dropdown */
+.header-user .dropdown-menu {
+  min-width: 200px;
+}
+
 .header-user .dropdown-menu li.current-user {
   padding: 5px 18px;
 }
