@@ -13,7 +13,8 @@ from polyaxon_schemas.experiment import (
 )
 from polyaxon_schemas.job import JobConfig, JobStatusConfig, TensorboardJobConfig
 from polyaxon_schemas.log_handler import LogHandlerConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, GroupStatusConfig, ProjectConfig
+from polyaxon_client.schemas.patch_experiment_group import ExperimentGroupConfig
+from polyaxon_schemas.project import GroupStatusConfig, ProjectConfig
 from polyaxon_schemas.user import UserConfig
 from polyaxon_schemas.version import (
     ChartVersionConfig,
