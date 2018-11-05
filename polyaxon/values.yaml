@@ -597,6 +597,14 @@ privateRegistries:
 # e.g.
   # - user:pass@host:port
   # - user:pass@host.com
+  # - host: "my.registry.com"
+  #   user: "_json_key"
+  #   password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'
+  # - host: "another.registry.com"
+  #   user: "myname"
+  #   password: "mypassword"
+
+
 
 intervals:  # in seconds
   experiments_scheduler: 15
