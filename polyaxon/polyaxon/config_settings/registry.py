@@ -1,3 +1,5 @@
+import json
+
 from rhea import RheaError
 from rhea.manager import UriSpec
 
@@ -21,6 +23,12 @@ def get_external_registries():
             registry_spec = UriSpec(**registry_dict)
         except RheaError:
             registry_spec = config.get_string(key, is_secret=True)
+            try:
+                # We might get this value from a chart with `toJson` applied.
+                registry_spec = json.loads(registry_spec)
+            except json.decoder.JSONDecodeError:
+                pass
+
             registry_spec = config.parse_uri_spec(registry_spec)
 
         if registry_spec:
