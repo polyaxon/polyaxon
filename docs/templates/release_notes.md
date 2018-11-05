@@ -1,3 +1,26 @@
+## 0.3.0
+
+ * Add experiment selection groups: Users can now compare 2 (or more) experiments by adding them to a selection.
+ * Add possibility to visualize metrics and to start a tensorboard for any selection of experiments.
+ * Add outputs/artifacts tree view.
+ * Add outputs/artifacts files (text/code/images) previewing.
+ * Add tensorboard support for events on cloud storage (S3 and GCS).
+ * Add refresh button to avoid reloading the whole page (first step to better UX, next step is real-time updates or polling). 
+ * Extend tensorboard behaviour to show events from different backend storages (e.g. one experiment persisting events to S3 and another to GCS)
+ * Add possibility to delete and stop multiple experiments at once.
+ * Allow to configure heartbeat timeout.
+ * Allow to support commands with `&&` without the need to create a script.
+ * Connect gaps in charts, an issue happens when only a data point is created at a time.
+ * Extend Groups Component to show group type (study & selection).
+ * Extend private registries to accept dictionaries as well as uri specs.
+ * Open support for private repos to public beta. 
+ * Add help text to indicate that names must be slugs while waiting for a better error handling for the dashboard.
+ * Add default node scheduling for tensorboards.
+ * Upgrade security warning packages.
+ * Enhance cloud storages management.
+ * Fix an issue with cli existing if both `--past` and `--follow` and past api returns a 404 are passed to logs.
+ * Fix issues copy/restart experiment from a group.
+
 ## 0.2.9
 
  * Add Azure Storage to public beta.
