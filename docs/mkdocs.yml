@@ -114,6 +114,7 @@ pages:
   - PostgreSQL HA: customization/postgresql_ha.md
   - Notifications: customization/notifications.md
   - Private registries: customization/private_registries.md
+  - External repos: customization/external_repos.md
 - Reference Polyaxon CLI:
   - Introduction: polyaxon_cli/introduction.md
   - Commands:
