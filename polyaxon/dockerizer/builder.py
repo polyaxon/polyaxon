@@ -269,8 +269,6 @@ def download_code(build_job, build_path, filename):
         access_token = settings.REPOS_ACCESS_TOKEN
         # Gitlab requires heaer `private-token`
         headers = {}
-        if access_token:
-            headers = {'PRIVATE-TOKEN': access_token}
     else:
         raise ValueError('Code reference for this build job does not have any repo.')
 
@@ -284,9 +282,16 @@ def download_code(build_job, build_path, filename):
             if build_job.code_reference.commit
             else 'master'
         )
+        archive_url = '/archive'
         if 'gitlab' in download_url.lower():
+            if access_token:
+                headers = {'PRIVATE-TOKEN': access_token}
             download_url += '/-'  # Gitlab requires this underscore for valid urls
-        download_url += '/archive'
+        if 'bitbucket' in download_url.lower():
+            if access_token:
+                headers = {'Authorization': 'Bearer {}'.format(access_token)}
+            archive_url = '/get'
+        download_url += archive_url
         download_url += '/{}'.format(tar_suffix)
         download_url += '.tar.gz'
 
