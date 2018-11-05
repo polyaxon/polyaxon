@@ -36,7 +36,7 @@ def assign_code_reference(instance, commit=None):
         return
     build = instance.specification.build if instance.specification else None
     if not commit and build:
-        commit = build.commit
+        commit = build.ref
     git_url = build.git if build and build.git else None
     if git_url:
         code_reference = get_external_code_reference(git_url=git_url, commit=commit)
