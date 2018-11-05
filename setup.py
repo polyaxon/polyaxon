@@ -19,7 +19,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon',
-      version='0.2.9',
+      version='0.3.0',
       description='A platform for reproducible and scalable deep learning and machine learning.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
@@ -32,6 +32,7 @@ setup(name='polyaxon',
       keywords=[
           'polyaxon',
           'tensorFlow',
+          'kubernetes',
           'deep-learning',
           'machine-learning',
           'data-science',
