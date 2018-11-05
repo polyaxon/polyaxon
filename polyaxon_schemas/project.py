@@ -16,7 +16,7 @@ class ExperimentGroupSchema(Schema):
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
-    content = fields.Str()
+    content = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
