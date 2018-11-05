@@ -32,3 +32,19 @@ privateRegistries:
   - "my_username:my_password@registry.example.com"
   - "my_username2:my_password2@registry:5000"
 ```
+
+Although the uri spec is the preferred way for defining private registries, 
+Polyaxon supports dictionaries as well, users can use both approaches to define private registries:
+
+
+```yaml
+privateRegistries:
+  - "my_username:my_password@registry.example.com"
+  - "my_username2:my_password2@registry:5000"
+  - host: "my.registry.com"
+    user: "_json_key"
+    password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'
+  - host: "another.registry.com"
+    user: "myname"
+    password: "mypassword"
+```
