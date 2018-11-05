@@ -26,6 +26,11 @@ class DockerizerSpawner(ProjectJobSpawner):
         for key in config.params_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
             env_vars.append(get_from_secret(key, key))
 
+        # Add repos access token secret key
+        if settings.REPOS_ACCESS_TOKEN:
+            env_vars.append(get_from_secret(settings.REPOS_ACCESS_TOKEN_KEY,
+                                            settings.REPOS_ACCESS_TOKEN_KEY))
+
         return env_vars
 
     def start_dockerizer(self,
