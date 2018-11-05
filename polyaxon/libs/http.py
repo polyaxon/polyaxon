@@ -92,12 +92,10 @@ def download(url,
     if internal:
         authentication_type = authentication_type or InternalAuthentication.keyword
     else:
-        authentication_type = settings.SECRET_INTERNAL_TOKEN
+        authentication_type = TokenAuthentication.keyword
 
     if authentication_type == InternalAuthentication.keyword and not access_token:
         access_token = settings.SECRET_INTERNAL_TOKEN
-    elif authentication_type == TokenAuthentication.keyword and not access_token:
-        raise ValueError('Access token is required')
 
     # Auth headers if access_token is present
     request_headers = {}

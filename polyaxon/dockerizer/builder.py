@@ -266,8 +266,11 @@ def download_code(build_job, build_path, filename):
     elif build_job.code_reference.git_url:
         download_url = build_job.code_reference.git_url
         internal = False
-        headers = {}
         access_token = settings.REPOS_ACCESS_TOKEN
+        # Gitlab requires heaer `private-token`
+        headers = {}
+        if access_token:
+            headers = {'PRIVATE-TOKEN': access_token}
     else:
         raise ValueError('Code reference for this build job does not have any repo.')
 
