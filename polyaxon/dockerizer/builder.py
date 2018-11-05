@@ -284,6 +284,8 @@ def download_code(build_job, build_path, filename):
             if build_job.code_reference.commit
             else 'master'
         )
+        if 'gitlab' in download_url.lower():
+            download_url += '/-'  # Gitlab requires this underscore for valid urls
         download_url += '/archive'
         download_url += '/{}'.format(tar_suffix)
         download_url += '.tar.gz'
