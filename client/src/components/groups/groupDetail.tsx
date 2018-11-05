@@ -78,6 +78,7 @@ export default class GroupDetail extends React.Component<Props, {}> {
                   component: <GroupOverview
                     group={group}
                     onUpdate={this.props.onUpdate}
+                    onFetch={this.props.fetchData}
                   />,
                   relUrl: ''
                 }, {

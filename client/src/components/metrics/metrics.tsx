@@ -10,6 +10,7 @@ import { MetricModel } from '../../models/metric';
 import AutocompleteLabel from '../autocomplete/autocompleteLabel';
 import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
 import ChartView from '../charts/chartView';
+import Refresh from '../refresh';
 
 import '../dropdowns.less';
 import './metrics.less';
@@ -92,6 +93,10 @@ export default class Metrics extends React.Component<Props, State> {
       });
     }
   }
+
+  public refresh = () => {
+    this.props.fetchData();
+  };
 
   public getChartForm = (metricNames: string[],
                          paramNames: string[],
@@ -200,13 +205,13 @@ export default class Metrics extends React.Component<Props, State> {
         chart.type === 'histogram' &&
         (chart.metricNames.length > 0 && chart.paramNames.length > 0)
       ) {
-          chart.name = _.join([chart.metricNames[0], chart.paramNames[0]], ' / ');
+        chart.name = _.join([chart.metricNames[0], chart.paramNames[0]], ' / ');
       }
       if (
         (!chart.name || chart.name === 'untitled') &&
         chart.type === 'scatter' && chart.paramNames.length > 0
       ) {
-          chart.name = chart.paramNames[0];
+        chart.name = chart.paramNames[0];
       }
       if (
         (!chart.name || chart.name === 'untitled') &&
@@ -224,7 +229,7 @@ export default class Metrics extends React.Component<Props, State> {
         ...prevState.view,
         charts: prevState.chartForm.index > -1
           ? [...prevState.view.charts.map(
-          (chart, idx) => idx === prevState.chartForm.index ? getChart(prevState.chartForm.chart) : chart)]
+            (chart, idx) => idx === prevState.chartForm.index ? getChart(prevState.chartForm.chart) : chart)]
           : [...prevState.view.charts, getChart(prevState.chartForm.chart)]
       },
       chartForm: this.getChartForm(
@@ -613,7 +618,7 @@ export default class Metrics extends React.Component<Props, State> {
             </div>
             <div className="input-group pull-right chart-view-tools">
               <span>
-                <button className="btn btn-sm btn-default add-chart" onClick={() => this.handleShow('showChartModal')}>
+                <button className="btn btn-sm btn-default" onClick={() => this.handleShow('showChartModal')}>
                   <i className="fa fa-plus icon" aria-hidden="true"/> Add chart
                 </button>
               </span>
@@ -649,6 +654,7 @@ export default class Metrics extends React.Component<Props, State> {
                   }
                 </button>
               </span>
+              <Refresh callback={this.refresh} pullRight={false}/>
             </div>
           </div>
           <ChartView

@@ -80,6 +80,7 @@ export default class JobDetail extends React.Component<Props, {}> {
                   component: <JobOverview
                     job={job}
                     onUpdate={this.props.onUpdate}
+                    onFetch={this.props.fetchData}
                   />,
                   relUrl: ''
                 }, {

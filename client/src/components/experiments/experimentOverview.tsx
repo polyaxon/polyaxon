@@ -12,6 +12,7 @@ import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Refresh from '../refresh';
 import Status from '../status';
 import VerticalTable from '../tables/verticalTable';
 import Tags from '../tags';
@@ -19,9 +20,14 @@ import Tags from '../tags';
 export interface Props {
   experiment: ExperimentModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
+  onFetch: () => actions.ExperimentAction;
 }
 
 export default class ExperimentOverview extends React.Component<Props, {}> {
+  public refresh = () => {
+    this.props.onFetch();
+  };
+
   public render() {
     const experiment = this.props.experiment;
 
@@ -32,11 +38,18 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
       <div className="entity-details">
         <div className="row">
           <div className="col-md-12">
-            <Description
-              description={experiment.description}
-              showEmpty={true}
-              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
-            />
+            <div className="row">
+              <div className="col-md-11">
+                <Description
+                  description={experiment.description}
+                  showEmpty={true}
+                  onSave={(description: string) =>  { this.props.onUpdate({description}); }}
+                />
+              </div>
+              <div className="col-md-1">
+                <Refresh callback={this.refresh} pullRight={false}/>
+              </div>
+            </div>
             <div className="meta">
               <UserMetaInfo user={experiment.user} inline={true}/>
               <DatesMetaInfo

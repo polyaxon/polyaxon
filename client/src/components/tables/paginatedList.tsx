@@ -4,15 +4,11 @@ import { Pager } from 'react-bootstrap';
 
 import * as queryString from 'query-string';
 
-import {
-  PAGE_SIZE,
-  paginate,
-  paginateNext,
-  paginatePrevious
-} from '../../constants/paginate';
+import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../../constants/paginate';
 import FilterList from '../../containers/filterList';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { DEFAULT_FILTERS } from '../filters/constants';
+import Refresh from '../refresh';
 
 import './paginatedList.less';
 
@@ -100,6 +96,14 @@ export default class PaginatedList extends React.Component<Props, State> {
     }
   }
 
+  public refresh = () => {
+    this.props.fetchData(
+      this.state.offset,
+      this.state.query,
+      this.state.sort,
+      this.state.extraFilters);
+  };
+
   public handleNextPage = () => {
     this.setState((prevState, prevProps) => ({
       offset: prevState.offset + PAGE_SIZE,
@@ -143,12 +147,20 @@ export default class PaginatedList extends React.Component<Props, State> {
     const getContent = () => {
       return (
         <div className="paginated-list">
-          {(enableFilter()) &&
-          <div className="row">
-            <div className="col-md-12">
-              {getFilters()}
+          {(enableFilter())
+            ? <div className="row">
+              <div className="col-md-11">
+                {getFilters()}
+              </div>
+              <div className="col-md-1">
+                <Refresh callback={this.refresh} pullRight={true}/>
+              </div>
             </div>
-          </div>
+            : <div className="row">
+              <div className="col-md-12 button-refresh-alone">
+                <Refresh callback={this.refresh} pullRight={true}/>
+              </div>
+            </div>
           }
           {this.props.componentHeader &&
           <div className="row">

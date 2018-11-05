@@ -10,6 +10,7 @@ import FilterList from '../../containers/filterList';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
 import { DEFAULT_FILTERS } from '../filters/constants';
+import Refresh from '../refresh';
 
 import './paginatedTable.less';
 
@@ -32,16 +33,19 @@ interface State {
   query?: string;
   sort?: string;
   extraFilters?: { [key: string]: number | boolean | string };
+  shouldUpdate: boolean;
 }
 
 export default class PaginatedTable extends React.Component<Props, State> {
+  // private timer: any;
+
   constructor(props: Props) {
     super(props);
-    this.state = this.getFilters();
+    this.state = this.getState();
   }
 
-  public getFilters() {
-    const filters = {offset: 0, query: '', sort: '', extraFilters: {}};
+  public getState() {
+    const filters = {offset: 0, query: '', sort: '', extraFilters: {}, shouldUpdate: false};
     const pieces = location.href.split('?');
     if (pieces.length > 1) {
       const search = queryString.parse(pieces[1]);
@@ -70,7 +74,23 @@ export default class PaginatedTable extends React.Component<Props, State> {
       this.state.query,
       this.state.sort,
       this.state.extraFilters);
+    // this.timer = setInterval(
+    //   () => {
+    //     if (this.state.shouldUpdate) {
+    //       this.props.fetchData(
+    //         this.state.offset,
+    //         this.state.query,
+    //         this.state.sort,
+    //         this.state.extraFilters);
+    //     }
+    //   },
+    //   4000);
   }
+
+  // public componentWillUnmount() {
+  //   clearInterval(this.timer);
+  //   this.timer = null;
+  // }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
     let changed = false;
@@ -99,6 +119,20 @@ export default class PaginatedTable extends React.Component<Props, State> {
         this.state.extraFilters);
     }
   }
+
+  public refresh = () => {
+    this.props.fetchData(
+      this.state.offset,
+      this.state.query,
+      this.state.sort,
+      this.state.extraFilters);
+  };
+
+  public setShouldUpdate = () => {
+    this.setState((prevState, prevProps) => ({
+      shouldUpdate: !prevState.shouldUpdate,
+    }));
+  };
 
   public handleNextPage = () => {
     this.setState((prevState, prevProps) => ({
@@ -147,12 +181,20 @@ export default class PaginatedTable extends React.Component<Props, State> {
     const getContent = () => {
       return (
         <div className="paginated-table">
-          {(enableFilter()) &&
-          <div className="row">
-            <div className="col-md-12">
-              {getFilters()}
+          {(enableFilter())
+            ? <div className="row">
+              <div className="col-md-11">
+                {getFilters()}
+              </div>
+              <div className="col-md-1">
+                <Refresh callback={this.refresh} pullRight={true}/>
+              </div>
             </div>
-          </div>
+            : <div className="row">
+              <div className="col-md-12 button-refresh-alone">
+                <Refresh callback={this.refresh} pullRight={true}/>
+              </div>
+            </div>
           }
 
           <div className="row">

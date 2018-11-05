@@ -74,6 +74,7 @@ export default class BuildDetail extends React.Component<Props, {}> {
                   component: <BuildOverview
                     build={build}
                     onUpdate={this.props.onUpdate}
+                    onFetch={this.props.fetchData}
                   />,
                   relUrl: ''
                 }, {

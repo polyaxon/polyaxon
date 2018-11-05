@@ -15,15 +15,21 @@ import MetaInfo from '../metaInfo/metaInfo';
 import SearchAlgorithmMetaInfo from '../metaInfo/searchAlgorithmMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Refresh from '../refresh';
 import Status from '../status';
 import Tags from '../tags';
 
 export interface Props {
   group: GroupModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.GroupAction;
+  onFetch: () => actions.GroupAction;
 }
 
 export default class GroupOverview extends React.Component<Props, {}> {
+  public refresh = () => {
+    this.props.onFetch();
+  };
+
   public render() {
     const group = this.props.group;
     if (_.isNil(group)) {
@@ -33,11 +39,18 @@ export default class GroupOverview extends React.Component<Props, {}> {
       <div className="entity-details">
         <div className="row">
           <div className="col-md-12">
-            <Description
-              description={group.description}
-              showEmpty={true}
-              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
-            />
+            <div className="row">
+              <div className="col-md-11">
+                <Description
+                  description={group.description}
+                  showEmpty={true}
+                  onSave={(description: string) =>  { this.props.onUpdate({description}); }}
+                />
+              </div>
+              <div className="col-md-1">
+                <Refresh callback={this.refresh} pullRight={false}/>
+              </div>
+            </div>
             <div className="meta">
               <UserMetaInfo user={group.user} inline={true}/>
               <DatesMetaInfo

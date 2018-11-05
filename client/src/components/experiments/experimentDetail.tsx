@@ -105,6 +105,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                   component: <ExperimentOverview
                     experiment={experiment}
                     onUpdate={this.props.onUpdate}
+                    onFetch={this.props.fetchData}
                   />,
                   relUrl: ''
                 }, {

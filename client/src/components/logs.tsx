@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import Refresh from './refresh';
+
 import './logs.less';
 
 export interface Props {
@@ -13,6 +15,10 @@ export default class Logs extends React.Component<Props, {}> {
     this.props.fetchData();
   }
 
+  public refresh = () => {
+    this.props.fetchData();
+  };
+
   public render() {
     const logs = this.props.logs;
     const logsElements = logs.length > 0 ?
@@ -21,6 +27,11 @@ export default class Logs extends React.Component<Props, {}> {
 
     return (
       <div className="logs">
+        <div className="row">
+          <div className="col-md-12 button-refresh-alone">
+            <Refresh callback={this.refresh} pullRight={true}/>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="logs-header">

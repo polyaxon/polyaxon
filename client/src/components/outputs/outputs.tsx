@@ -5,6 +5,7 @@ import { decorators, Treebeard } from 'react-treebeard';
 import * as actions from '../../actions/outputs';
 import { CODE_EXTENSIONS, IMAGE_EXTENSIONS, TEXT_EXTENSIONS } from '../../constants/extensions';
 import { OutputsNode, TreeNode } from '../../models/outputs';
+import Refresh from '../refresh';
 import OutputsImg from './outputsImg';
 import OutputsTxt from './outputsTxt';
 import { OUTPUTS_TREE_STYLE } from './treeViewStyle';
@@ -52,6 +53,10 @@ export default class Outputs extends React.Component<Props, State> {
       });
     }
   }
+
+  public refresh = () => {
+    this.props.fetchOutputsTree('');
+  };
 
   public onToggle = (node: any, toggled: any) => {
     if (node.loading && !this.state.requestedNodeIds.has(node.id)) {
@@ -232,6 +237,11 @@ export default class Outputs extends React.Component<Props, State> {
     decorators.Loading = nodeLoading;
     return (
       <div className="outputs">
+        <div className="row">
+          <div className="col-md-12 button-refresh-alone">
+            <Refresh callback={this.refresh} pullRight={true}/>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="outputs-header">
