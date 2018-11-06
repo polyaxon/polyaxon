@@ -11,6 +11,9 @@ REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
 OUTPUTS_ARCHIVE_ROOT = '/tmp/archived_outputs'
 OUTPUTS_DOWNLOAD_ROOT = '/tmp/download_outputs'
 FILE_UPLOAD_PERMISSIONS = 0o644
+ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
+                                        is_optional=True,
+                                        default=False)
 # Heartbeat timeout (status -> failed as zombie)
 HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
                                    is_optional=True,

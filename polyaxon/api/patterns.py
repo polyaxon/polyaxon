@@ -59,7 +59,6 @@ urlpatterns = [
             RedirectView.as_view(url=settings.LOGIN_URL, permanent=True, query_string=True),
             name='login'),
 
-    re_path(r'^_admin/', admin.site.urls),
     re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
     re_path(r'^_status/?$', StatusView.as_view(), name='status_check'),
     re_path(r'^{}/'.format(API_V1), include((api_patterns, 'v1'), namespace='v1')),
@@ -71,6 +70,9 @@ urlpatterns = [
 handler404 = Handler404View.as_view()
 handler403 = Handler403View.as_view()
 handler500 = Handler50xView.as_view()
+
+if settings.ADMIN_VIEW_ENABLED:
+    urlpatterns += [re_path(r'^_admin/', admin.site.urls)]
 
 if config.is_debug_mode and config.is_monolith_service:
 

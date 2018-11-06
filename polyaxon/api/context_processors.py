@@ -7,5 +7,6 @@ def sso_enabled(request):
         'sso_github': settings.OAUTH_PROVIDERS.GITHUB.ENABLED,
         'sso_gitlab': settings.OAUTH_PROVIDERS.GITLAB.ENABLED,
         'sso_bitbucket': settings.OAUTH_PROVIDERS.BITBUCKET.ENABLED,
-        'sso_azure': settings.OAUTH_PROVIDERS.AZURE.ENABLED
+        'sso_azure': settings.OAUTH_PROVIDERS.AZURE.ENABLED,
+        'admin_view_enabled': settings.ADMIN_VIEW_ENABLED
     }
