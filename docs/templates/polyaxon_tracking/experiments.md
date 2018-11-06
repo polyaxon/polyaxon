@@ -27,7 +27,7 @@ When a user creates an `Experiment` instance,
 it either detects an existing experiment and the tracking api will request additional information about it,
 or create the needed information to start a new one.
 
-We will get back to this optional parameters, in following sections with use cases and examples.
+We will get back to this optional parameters in following sections with use cases and examples.
 But before we do that, let's look at what the user can do with and `Experiment` instance.
 
 ### Starting an experiment
@@ -102,7 +102,7 @@ experiment.log_status(status, message=None)
 experiment.log_status('starting')
 ```
 
-In general this is not needed, because the tracking API will take care of tracking 
+This step is done automatically so this is in general is not needed, because the tracking API will take care of tracking 
 the status of your experiment both in-cluster and on other environments.
 
 ### Stop
@@ -179,6 +179,19 @@ experiment.log_data_ref(data=dataset3, data_name='my_dataset3', reset=True)
 For experiment running and managed by Polyaxon, an in-cluster context is exposed to the tracking API 
 to transparently detect the experiment context, project, 
 experiment group if the experiment belongs to a group, authentication, outputs paths, logs paths, and storage definition.
+
+The only step needed is to create an instance of `Experiment`:
+
+```python
+from polyaxon_client.tracking import Experiment
+
+experiment = Experiment()
+...
+experiment.log_metrics(step=1000, loss=0.01, accuracy=0.97)
+```
+
+Since hyperparams are defined in the `declarations` section of the Polyaxonfile, 
+you generally don't need to  
 
 You can access this context using the following methods:
 
