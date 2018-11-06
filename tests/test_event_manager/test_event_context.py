@@ -3,7 +3,6 @@ from unittest.mock import MagicMock
 import pytest
 
 from constants import user_system
-from constants.urls import API_V1
 from event_manager import event_context
 from event_manager.event import Attribute, Event
 from event_manager.event_context import EventItemContextSpec
