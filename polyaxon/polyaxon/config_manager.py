@@ -1,5 +1,6 @@
 import base64
 import os
+import uuid
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
@@ -47,6 +48,12 @@ class ConfigManager(rhea.Rhea):
         self._service = self.get_string('POLYAXON_SERVICE', is_local=True)
         self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG', is_optional=True, default=False)
         self._namespace = self.get_string('POLYAXON_K8S_NAMESPACE')
+        self._cluster_id = config.get_string('POLYAXON_CLUSTER_ID',
+                                             is_optional=True,
+                                             default=uuid.uuid4().hex)
+        self._chart_version = config.get_string('POLYAXON_CHART_VERSION',
+                                                is_optional=True,
+                                                default='0.0.0')
         if self.is_sidecar_service or self.is_dockerizer_service:
             self._node_name = None
         else:
@@ -55,6 +62,14 @@ class ConfigManager(rhea.Rhea):
     @property
     def namespace(self):
         return self._namespace
+
+    @property
+    def cluster_id(self):
+        return self._cluster_id
+
+    @property
+    def chart_version(self):
+        return self._chart_version
 
     @property
     def node_name(self):
