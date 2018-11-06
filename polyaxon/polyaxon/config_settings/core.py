@@ -28,7 +28,7 @@ def get_allowed_hosts():
     allowed_hosts.append('.polyaxon.com')
     k8s_api_host = config.get_string('POLYAXON_K8S_API_HOST', is_optional=True)
     if k8s_api_host:
-        allowed_hosts.appen(k8s_api_host)
+        allowed_hosts.append(k8s_api_host)
 
     return allowed_hosts
 

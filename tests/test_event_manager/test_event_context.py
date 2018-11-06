@@ -82,27 +82,31 @@ class TestEventContext(BaseTest):
         # Experiment inside group
         mock_object.unique_name = 'user.project.2.1'
         event_spec = EventItemContextSpec(mock_object.unique_name,
-                                          get_experiment_url(mock_object.unique_name),
+                                          '{}/app{}'.format(
+                                              API_V1, get_experiment_url(mock_object.unique_name)),
                                           1)
         assert event_context.get_event_object_context(mock_object, 'experiment') == event_spec
 
         # Experiment group
         mock_object.unique_name = 'user.project.1'
         event_spec = EventItemContextSpec(mock_object.unique_name,
-                                          get_experiment_group_url(mock_object.unique_name),
+                                          '{}/app{}'.format(
+                                              API_V1, get_experiment_group_url(mock_object.unique_name)),
                                           1)
         assert event_context.get_event_object_context(mock_object, 'experiment_group') == event_spec
 
         # Job
         mock_object.unique_name = 'user.project.1'
         event_spec = EventItemContextSpec(mock_object.unique_name,
-                                          get_job_url(mock_object.unique_name),
+                                          '{}/app{}'.format(
+                                              API_V1, get_job_url(mock_object.unique_name)),
                                           1)
         assert event_context.get_event_object_context(mock_object, 'job') == event_spec
 
         # Project
         mock_object.unique_name = 'user.project'
         event_spec = EventItemContextSpec(mock_object.unique_name,
-                                          get_project_url(mock_object.unique_name),
+                                          '{}/app{}'.format(
+                                              API_V1, get_project_url(mock_object.unique_name)),
                                           1)
         assert event_context.get_event_object_context(mock_object, 'project') == event_spec
