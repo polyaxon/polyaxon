@@ -47,7 +47,7 @@ scheduler:
   concurrency: 10  
 ``` 
 
-This will create 2 replicas for the scheduler, with 10 concurrent process each.
+This will create 2 replicas for the scheduler, with 10 concurrent processes each.
 
 
 ## Resources' limit

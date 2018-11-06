@@ -48,7 +48,7 @@ Once you have a Polyaxon deployment, you can check polyaxon architecture and lea
  * [Customize Node Scheduling](customization/customize_node_scheduling)
  * [Customize Data and Outputs](customization/customize_outputs_and_data)
  * [Single Sign On (SSO)](customization/single_sign_on)
- * [Replication](customization/replication_and_concurrecny)
+ * [Replication & Concurrency](customization/replication_and_concurrecny)
  * [PostgreSQL HA](customization/postgresql_ha)
  * [Notifications](customization/notifications)
  * [Private registries](customization/private_registries)
