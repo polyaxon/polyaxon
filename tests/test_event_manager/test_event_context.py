@@ -74,7 +74,7 @@ class TestEventContext(BaseTest):
         mock_object.id = 1
         mock_object.unique_name = 'user.project.1'
         event_spec = EventItemContextSpec(mock_object.unique_name,
-                                          '{}/{}'.format(
+                                          '{}/app{}'.format(
                                               API_V1, get_experiment_url(mock_object.unique_name)),
                                           1)
         assert event_context.get_event_object_context(mock_object, 'experiment') == event_spec
