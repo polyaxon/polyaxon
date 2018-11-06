@@ -19,11 +19,22 @@ HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
                                    is_optional=True,
                                    default=60 * 4)
 
-ALLOWED_HOSTS = config.get_string('POLYAXON_ALLOWED_HOSTS',
-                                  is_optional=True,
-                                  is_list=True,
-                                  default=['*'])
-ALLOWED_HOSTS += ['.polyaxon.com']
+
+def get_allowed_hosts():
+    allowed_hosts = config.get_string('POLYAXON_ALLOWED_HOSTS',
+                                      is_optional=True,
+                                      is_list=True,
+                                      default=['*'])
+    allowed_hosts.append('.polyaxon.com')
+    k8s_api_host = config.get_string('POLYAXON_K8S_API_HOST', is_optional=True)
+    if k8s_api_host:
+        allowed_hosts.appen(k8s_api_host)
+
+    return allowed_hosts
+
+
+ALLOWED_HOSTS = get_allowed_hosts()
+
 WSGI_APPLICATION = 'polyaxon.wsgi.application'
 TIME_ZONE = config.get_string('POLYAXON_TIME_ZONE', is_optional=True) or 'Europe/Berlin'
 LANGUAGE_CODE = 'en'
