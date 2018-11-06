@@ -14,8 +14,11 @@ from libs.authentication.internal import InternalAuthentication
 
 
 def absolute_uri(url):
-    if not url or not settings.API_HOST:
+    if not url:
         return None
+
+    if not settings.API_HOST:
+        return url
 
     return urljoin(settings.API_HOST.rstrip('/') + '/', url.lstrip('/'))
 
