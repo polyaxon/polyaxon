@@ -71,7 +71,12 @@ spec:
             path: /_health/
             port: {{ .Values.api.service.internalPort }}
             scheme: HTTP
-          initialDelaySeconds: 100
+            {{- if .Values.allowedHosts }}
+            httpHeaders:
+              - name: Host
+                value: {{ template "polyaxon.fullname" . }}-api
+            {{- end }}
+          initialDelaySeconds: 60
           periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: 2
@@ -81,7 +86,12 @@ spec:
             path: /_health/
             port: {{ .Values.api.service.internalPort }}
             scheme: HTTP
-          initialDelaySeconds: 150
+            {{- if .Values.allowedHosts }}
+            httpHeaders:
+                - name: Host
+                  value: {{ template "polyaxon.fullname" . }}-api
+            {{- end }}
+          initialDelaySeconds: 60
           periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: 2
