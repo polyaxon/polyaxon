@@ -1,7 +1,6 @@
 from collections import namedtuple
 
 from constants import user_system
-from constants.urls import API_V1
 from event_manager import event_subjects
 from libs import unique_urls
 from libs.http import absolute_uri
@@ -87,7 +86,7 @@ def get_event_object_context(event_content_object, event_type):
         object_url = unique_urls.get_user_url(event_content_object.username)
 
     # Set proper url
-    object_url = absolute_uri('{}/app{}'.format(API_V1, object_url))
+    object_url = absolute_uri('app{}'.format(object_url))
     return EventItemContextSpec(name=object_name, url=object_url, object_id=object_id)
 
 

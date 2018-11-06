@@ -20,7 +20,8 @@ def absolute_uri(url):
     if not settings.API_HOST:
         return url
 
-    return urljoin(settings.API_HOST.rstrip('/') + '/', url.lstrip('/'))
+    url = urljoin(settings.API_HOST.rstrip('/') + '/', url.lstrip('/'))
+    return '{}://{}'.format(settings.PROTOCOL, url)
 
 
 def add_notification_referrer_param(url, provider, is_absolute=True):
