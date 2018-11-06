@@ -4,7 +4,7 @@ from constants import user_system
 from constants.urls import API_V1
 from event_manager import event_subjects
 from libs import unique_urls
-from libs.http import add_notification_referrer_param, absolute_uri
+from libs.http import absolute_uri
 
 
 class EventItemContextSpec(namedtuple('EventItemContextSpec', 'name url object_id')):
