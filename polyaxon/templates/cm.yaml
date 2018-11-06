@@ -12,6 +12,12 @@ metadata:
 data:
   # Cluster
   POLYAXON_CLUSTER_ID: {{ default "" .Values.clusterId | quote }}
+  {{- if .Values.allowedHosts }}
+  POLYAXON_ALLOWED_HOSTS: {{ toJson .Values.allowedHosts | quote }}
+  {{- end }}
+  {{- if .Values.apiHost }}
+  POLYAXON_API_HOST: {{ .Values.apiHost | quote }}
+  {{- end }}
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_APP_NAME: {{ template "polyaxon.fullname" . }}
   POLYAXON_K8S_API_HOST: {{ template "polyaxon.fullname" . }}-api
@@ -34,15 +40,15 @@ data:
   {{- else }}
   POLYAXON_K8S_DB_SECRET_NAME: {{ template "polyaxon.fullname" . }}-postgres-secret
   {{- end}}
-  # Env
+  {{- if .Values.heartbeatTimeout }}
+  POLYAXON_HEARTBEAT_TIMEOUT: {{ .Values.heartbeatTimeout | quote }}
+  {{- end }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
+  # Run Env
   {{- if ge (int (include "k8s.minor" .)) 8 }}
   POLYAXON_K8S_GPU_RESOURCE_KEY: "nvidia.com/gpu"
   {{- else }}
   POLYAXON_K8S_GPU_RESOURCE_KEY: "alpha.kubernetes.io/nvidia-gpu"
-  {{- end }}
-  {{- if .Values.heartbeatTimeout }}
-  POLYAXON_HEARTBEAT_TIMEOUT: {{ .Values.heartbeatTimeout | quote }}
   {{- end }}
   # Secrets and ConfigMaps
   POLYAXON_REFS_SECRETS: {{ toJson .Values.secretRefs | quote }}
@@ -66,6 +72,7 @@ data:
   POLYAXON_ADMIN_NAME: {{ .Values.user.username | quote }}
   POLYAXON_ADMIN_MAIL: {{ .Values.user.email | quote }}
   POLYAXON_PASSWORD_LENGTH: {{ default "6" .Values.passwordLength | quote }}
+  POLYAXON_ADMIN_VIEW_ENABLED: {{ default "false" .Values.adminViewEnabled | quote }}
   # Email
   {{- if .Values.email.from }}
   POLYAXON_EMAIL_FROM: {{ .Values.email.from | quote }}
