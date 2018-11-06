@@ -19,7 +19,11 @@ HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
                                    is_optional=True,
                                    default=60 * 4)
 
-ALLOWED_HOSTS = ['*']
+API_HOST = config.get_string('POLYAXON_API_HOST', is_optional=True)
+ALLOWED_HOSTS = config.get_string('POLYAXON_ALLOWED_HOSTS',
+                                  is_optional=True,
+                                  is_list=True,
+                                  default=['*'])
 
 WSGI_APPLICATION = 'polyaxon.wsgi.application'
 TIME_ZONE = config.get_string('POLYAXON_TIME_ZONE', is_optional=True) or 'Europe/Berlin'
