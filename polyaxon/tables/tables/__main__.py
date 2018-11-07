@@ -1,5 +1,5 @@
-import psycopg2
 import argparse
+import psycopg2
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -35,7 +35,8 @@ if __name__ == '__main__':
     conn = psycopg2.connect(database=db, user=username, password=password, host=host, port=port)
     cur = conn.cursor()
 
-    check_query = "select * from information_schema.tables where table_name='{}'".format('auth_user')
+    check_query = "select * from information_schema.tables where table_name='{}'".format(
+        'auth_user')
     cur.execute(check_query)
     if bool(cur.fetchall()):
         alter_query = "ALTER TABLE auth_user RENAME TO db_user"
