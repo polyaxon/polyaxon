@@ -1,6 +1,16 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
 }
+
+body.index {
+  height: 100%;
+}
+
 body>#container {
   height: 100%;
 }
