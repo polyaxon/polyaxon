@@ -141,6 +141,11 @@ job:
 
 hooks:
   imageTag: latest
+  imagePullPolicy: Always
+
+Tableshook:
+  imageTag: latest
+  imagePullPolicy: Always
 
 persistence:
   logs:
