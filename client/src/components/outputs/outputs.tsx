@@ -84,14 +84,13 @@ export default class Outputs extends React.Component<Props, State> {
   };
 
   public getData = (parentPath: string, outputsNode: OutputsNode): TreeNode => {
-    const isRoot = outputsNode.isRoot;
-    if (isRoot) {
+    if (outputsNode.isRoot) {
       if (outputsNode.children) {
         const nodes: TreeNode[] = [];
         for (const nodeName of Object.keys(outputsNode.children)) {
           nodes.push(this.getData(outputsNode.path, outputsNode.children[nodeName]));
         }
-        return {children: nodes, toggled: true} as TreeNode;
+        return {children: nodes} as TreeNode;
       }
       // This case should never happen since we should never call this function on an empty root.
       throw Error('unreachable code.');
@@ -253,7 +252,7 @@ export default class Outputs extends React.Component<Props, State> {
           <div className="col-md-4">
             {this.state.outputsTree.root
               ? <Treebeard
-                data={this.getData('', this.state.outputsTree.root)}
+                data={this.getData('', this.state.outputsTree.root).children}
                 onToggle={this.onToggle}
                 style={OUTPUTS_TREE_STYLE}
                 decorators={decorators}
