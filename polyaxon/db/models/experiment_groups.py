@@ -72,8 +72,6 @@ class ExperimentGroup(DiffModel,
         help_text='The project this polyaxonfile belongs to.')
     group_type = models.CharField(
         max_length=10,
-        blank=True,
-        null=True,
         default=GroupTypes.STUDY,
         choices=GroupTypes.CHOICES)
     selection_experiments = models.ManyToManyField(
