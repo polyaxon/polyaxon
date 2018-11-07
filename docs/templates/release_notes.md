@@ -1,6 +1,6 @@
 ## 0.3.1
 
- * (Security) Add IP whitelist configuration.
+ * (Security) Add IP/Hosts whitelist configuration.
  * (Security) Make admin view configurable and disable it by default.
  * Add api host/ip configuration to send email/slack/notification with platform links.
  * Add more validation and edge cases handling for outputs apis.
