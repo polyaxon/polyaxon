@@ -577,6 +577,28 @@ Alternatively, a YAML file that specifies the values for the above parameters ca
 $ helm install --name my-release -f values.yaml polyaxon
 ```
 
+
+### Ip White list
+
+In order to restrict IP addresses that can communicate with the api
+
+```yaml
+allowedHosts:
+  - 127.0.0.1
+  - 159.203.150.212
+  - .mysite.com  # (Will consume every subdomain of mysite.com)
+```
+
+### API Host
+
+In order to receive email and notifcation with a clickable link to the objects on the platform
+
+```yaml
+apiHost: 159.203.150.212 
+apiHost: polyaxon.foo.com  
+
+```
+
 ## Port forwarding
 
 You ca yse port forwarding to access the api and dashboard on you localhost:
