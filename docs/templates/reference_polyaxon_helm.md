@@ -599,6 +599,16 @@ apiHost: polyaxon.foo.com
 
 ```
 
+### Admin view
+
+Polyaxon ships with an admin interface, it disabled by default
+
+
+```yaml
+adminViewEnabled: true
+``` 
+
+
 ## Port forwarding
 
 You ca yse port forwarding to access the api and dashboard on you localhost:
