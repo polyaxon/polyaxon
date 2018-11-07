@@ -46,6 +46,8 @@ def experiment_group_pre_save(sender, **kwargs):
     # Set type
     if not instance.hptuning:
         instance.group_type = GroupTypes.SELECTION
+    else:
+        instance.group_type = GroupTypes.STUDY
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
