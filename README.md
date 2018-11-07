@@ -594,9 +594,9 @@ Alternatively, a YAML file that specifies the values for the above parameters ca
 $ helm install --name my-release -f values.yaml polyaxon
 ```
 
-### Ip White list
+### IPs/Hosts White list
 
-In order to restrict IP addresses that can communicate with the api
+In order to restrict IP addresses and hosts that can communicate with the api
 
 ```yaml
 allowedHosts:
