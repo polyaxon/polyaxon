@@ -48,6 +48,8 @@ module.exports = {
             'process.env': {
               'NODE_ENV': JSON.stringify('production')
             }
-        })
+        }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new webpack.optimize.AggressiveMergingPlugin()  // Merge chunks
     ]
 };
