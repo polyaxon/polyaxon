@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static "css/global_modal.css" %}"/>
+    {% if frontend_debug %}
+    <link href="{% static 'css/global_modal.css' %}" media="all" rel="stylesheet" type="text/css"/>
+    {% else %}
+    <link href="{% static 'dist/css/global_modal.min.css' %}" media="all" rel="stylesheet" type="text/css"/>
+    {%  endif %}
 {% endblock %}
 
 

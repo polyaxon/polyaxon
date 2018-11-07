@@ -2,8 +2,10 @@
 {% load static %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+    <link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
+
+{% block bodyclass %}index{% endblock %}
 
 {% block header %}
     {% include "polyaxon/header.html" %}

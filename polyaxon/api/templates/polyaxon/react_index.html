@@ -4,13 +4,27 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static 'dist/css/font-awesome.min.css' %}">
 <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+{% if frontend_debug %}
+<link href="{% static 'css/loader.css' %}" media="all" rel="stylesheet" type="text/css"/>
+{% else %}
+<link rel="stylesheet" href="{% static 'dist/css/loader.min.css' %}" media="all" rel="stylesheet" type="text/css"/>
+{%  endif %}
 {% endblock %}
+
+{% block bodyclass %}index{% endblock %}
 
 {% block header %}
     {% include "polyaxon/react_header.html" %}
 {% endblock %}
 {% block index %}
     <div class="container layout" id="root">
+        <div class="row">
+            <div class="col-md-offset-6 col-md-6 loader">
+                <div class="la-ball-rotate">
+                    <div></div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block footer %}
