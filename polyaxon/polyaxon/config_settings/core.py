@@ -50,6 +50,7 @@ INTERNAL_IPS = ('127.0.0.1',)
 APPEND_SLASH = True
 
 ROOT_URLCONF = 'polyaxon.urls'
+AUTH_USER_MODEL = 'db.User'
 
 # user management
 LOGIN_URL = '/users/login/'
