@@ -84,6 +84,7 @@ from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_experiment_outputs, archive_outputs_file
 from libs.authentication.ephemeral import EphemeralAuthentication
 from libs.authentication.internal import InternalAuthentication
+from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.permissions.ephemeral import IsEphemeral
 from libs.permissions.internal import IsAuthenticatedOrInternal
@@ -383,7 +384,14 @@ class ExperimentOutputsTreeView(ExperimentViewMixin, RetrieveAPIView):
         if request.query_params.get('path'):
             experiment_outputs_path = os.path.join(experiment_outputs_path,
                                                    request.query_params.get('path'))
-        return Response(data=store_manager.ls(experiment_outputs_path), status=200)
+        try:
+            data = store_manager.ls(experiment_outputs_path)
+        except VolumeNotFoundError:
+            raise ValidationError('Store manager could not load the volume requested,'
+                                  ' to get the outputs data.')
+        except Exception:
+            raise ValidationError('Experiment outputs path does not exists or bad configuration.')
+        return Response(data=data, status=200)
 
 
 class ExperimentOutputsFilesView(ExperimentViewMixin, RetrieveAPIView):
