@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('auth', '0009_alter_user_last_name_max_length'),
     ]
 
     operations = [
@@ -70,9 +70,10 @@ class Migration(migrations.Migration):
                                         to='auth.Permission', verbose_name='user permissions')),
             ],
             options={
-                'abstract': False,
-                'verbose_name_plural': 'users',
                 'verbose_name': 'user',
+                'abstract': False,
+                'swappable': 'AUTH_USER_MODEL',
+                'verbose_name_plural': 'users',
             },
             managers=[
                 ('objects', django.contrib.auth.models.UserManager()),
