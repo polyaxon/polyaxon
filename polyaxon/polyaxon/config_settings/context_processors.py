@@ -13,13 +13,13 @@ if config.is_monolith_service or config.is_api_service:
         'api.context_processors.sso_enabled',
     ]
 
-    JS_DEBUG = config.get_boolean('POLYAXON_JS_DEBUG')
+    FRONTEND_DEBUG = config.get_boolean('POLYAXON_FRONTEND_DEBUG')
 
-    if JS_DEBUG:
-        def js_debug_processor(request):
-            return {'js_debug': True}
+    if FRONTEND_DEBUG:
+        def frontend_debug_processor(request):
+            return {'frontend_debug': True}
 
-        LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.js_debug_processor',)
+        LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.frontend_debug_processor',)
 
 else:
     LIST_TEMPLATE_CONTEXT_PROCESSORS = [

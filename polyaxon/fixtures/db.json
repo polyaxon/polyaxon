@@ -7000,7 +7000,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -7716,7 +7716,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -8432,7 +8432,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -9148,7 +9148,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -9868,7 +9868,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -10589,7 +10589,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -11310,7 +11310,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -12031,7 +12031,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -12752,7 +12752,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",
@@ -13473,7 +13473,7 @@
                                 {
                                     "value": "False",
                                     "value_from": null,
-                                    "name": "POLYAXON_JS_DEBUG"
+                                    "name": "POLYAXON_FRONTEND_DEBUG"
                                 },
                                 {
                                     "value": "smtp",

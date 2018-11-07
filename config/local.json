@@ -1,6 +1,6 @@
 {
   "POLYAXON_DEBUG": false,
-  "POLYAXON_JS_DEBUG": false,
+  "POLYAXON_FRONTEND_DEBUG": false,
   "POLYAXON_DB_NAME": "travis_ci_test",
   "POLYAXON_DB_USER": "postgres",
   "POLYAXON_DB_PASSWORD": "",
