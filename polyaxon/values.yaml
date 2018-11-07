@@ -405,6 +405,12 @@ hooks:
   imageTag: 0.3.0
   imagePullPolicy: IfNotPresent
 
+tablesHook:
+  image: polyaxon/polyaxon-tables
+  imageTag: 0.3.0
+  imagePullPolicy: IfNotPresent
+
+
 postgresql:
   # Whether to deploy a postgres server in-cluster.
   # To use an external postgres instance:
@@ -604,6 +610,13 @@ privateRegistries:
   #   user: "myname"
   #   password: "mypassword"
 
+# To receive email/notifcation with correct host
+#apiHost: 159.203.150.212 or polyaxon.foo.com
+
+# White list of ip/hosts that can communicate with the api
+#allowedHosts:
+#  - 127.0.0.1
+#  - 159.203.150.212
 
 
 intervals:  # in seconds
