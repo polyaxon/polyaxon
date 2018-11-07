@@ -1,3 +1,16 @@
+## 0.3.1
+
+ * (Security) Add IP whitelist configuration.
+ * (Security) Make admin view configurable and disable it by default.
+ * Add api host/ip configuration to send email/slack/notification with platform links.
+ * Add more validation and edge cases handling for outputs apis.
+ * Add loading indicator for dashboard.
+ * Add migration to prepare for auth/permission plugins and extensions for community version (Phase 1).
+ * Remove patch experiment group.
+ * Minify styles.
+ * Fix UI alignment and usability issues.
+ * Fix an issue with groups' type not created for studies.
+
 ## 0.3.0
 
  * Add experiment selection groups: Users can now compare 2 (or more) experiments by adding them to a selection.
