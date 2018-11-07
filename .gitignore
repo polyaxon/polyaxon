@@ -114,6 +114,7 @@ reports/
 media/
 static/debug_toolbar
 static/rest_framework
+static/css
 
 # npm modules and transpiled typescript files
 client/dist/
