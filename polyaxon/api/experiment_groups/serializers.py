@@ -46,6 +46,8 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
             'search_algorithm'
         )
 
+        extra_kwargs = {'group_type': {'read_only': True}}
+
     def get_project(self, obj):
         return obj.project.unique_name
 
