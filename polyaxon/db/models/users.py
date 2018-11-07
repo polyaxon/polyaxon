@@ -6,3 +6,4 @@ class User(AbstractUser):
 
     class Meta(AbstractUser.Meta):
         app_label = 'db'
+        swappable = 'AUTH_USER_MODEL'
