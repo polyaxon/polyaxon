@@ -59,7 +59,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
               <ProjectActions
                 onDelete={this.props.onDelete}
                 notebookActionCallback={
-                  project.has_tensorboard ? this.props.stopNotebook : this.props.startNotebook}
+                  project.has_notebook ? this.props.stopNotebook : this.props.startNotebook}
                 tensorboardActionCallback={
                   project.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
                 hasNotebook={project.has_notebook}
