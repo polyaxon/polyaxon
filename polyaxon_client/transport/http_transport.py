@@ -79,7 +79,7 @@ class HttpTransportMixin(object):
                      url, params, data)
 
         request_headers = self._get_headers(headers=headers)
-        timeout = timeout if timeout is not None else settings.LONG_TIMEOUT
+        timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
         session = session or self.session
 
         try:
@@ -110,7 +110,7 @@ class HttpTransportMixin(object):
                files_size,
                params=None,
                json_data=None,
-               timeout=3600,
+               timeout=None,
                headers=None,
                session=None):
 
@@ -135,6 +135,8 @@ class HttpTransportMixin(object):
         # Attach progress bar
         progress_callback, progress_bar = self.create_progress_callback(multipart_encoder)
         multipart_encoder_monitor = MultipartEncoderMonitor(multipart_encoder, progress_callback)
+
+        timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
 
         try:
             response = self.put(url=url,

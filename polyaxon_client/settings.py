@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import os
 
 import rhea
-
 from hestia.auth import AuthenticationTypes
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
@@ -70,9 +69,12 @@ MIN_TIMEOUT = config.get_int('POLYAXON_MIN_TIMEOUT',
 TIMEOUT = config.get_int('POLYAXON_TIMEOUT',
                          is_optional=True,
                          default=20)
-LONG_TIMEOUT = config.get_int('POLYAXON_LONG_TIMEOUT',
-                              is_optional=True,
-                              default=25)
+REQUEST_TIMEOUT = config.get_int('POLYAXON_REQUEST_TIMEOUT',
+                                 is_optional=True,
+                                 default=25)
+LONG_REQUEST_TIMEOUT = config.get_int('POLYAXON_LONG_REQUEST_TIMEOUT',
+                                      is_optional=True,
+                                      default=3600)
 INTERVAL = config.get_int('POLYAXON_INTERVAL',
                           is_optional=True,
                           default=1)
