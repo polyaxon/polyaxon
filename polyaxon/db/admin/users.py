@@ -1,6 +1,6 @@
 from django.contrib.admin import site
+from django.contrib.auth.admin import UserAdmin
 
-from db.models.notification import Notification, NotificationEvent
+from db.models.users import User
 
-site.register(NotificationEvent)
-site.register(Notification)
+site.register(User, UserAdmin)

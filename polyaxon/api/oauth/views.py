@@ -18,7 +18,7 @@ class AccountCreateIdentityView(View):
             )
 
             if request.method != 'POST' and not wizard.is_valid():
-                return HttpResponseRedirect(reverse('users:login'))
+                return HttpResponseRedirect(reverse('users:registration_complete'))
 
             wizard.initialize()
 

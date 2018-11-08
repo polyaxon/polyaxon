@@ -19,7 +19,7 @@ class GitHubIdentityTest(BaseViewTest):
         resp = self.client.get(auth_path)
         redirect = urlparse(resp['Location'])
         assert resp.status_code == 302
-        assert redirect.path == reverse('users:login')
+        assert redirect.path == reverse('users:registration_complete')
 
     def test_flow(self):
         auth_path = reverse('oauth:create_identity', kwargs={'provider': 'github'})

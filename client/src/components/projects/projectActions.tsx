@@ -33,7 +33,7 @@ function ProjectActions(props: Props) {
             <i
               className="fa fa-stop icon"
               aria-hidden="true"
-            /> 'Stop Notebook'
+            /> Stop Notebook
           </MenuItem>
           }
           {props.tensorboardActionCallback && props.hasTensorboard &&
