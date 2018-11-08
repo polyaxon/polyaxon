@@ -7,7 +7,6 @@ from api.projects.serializers import (
     ProjectDetailSerializer,
     ProjectSerializer
 )
-from constants import content_types
 from db.models.projects import Project
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest

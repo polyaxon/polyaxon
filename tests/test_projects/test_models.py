@@ -1,6 +1,6 @@
 import pytest
-from django.core.exceptions import ValidationError
 from django.test import override_settings
+from rest_framework.exceptions import ValidationError
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
