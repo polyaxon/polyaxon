@@ -28,7 +28,7 @@ function ProjectActions(props: Props) {
             <i className="fa fa-ellipsis-h icon" aria-hidden="true"/>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {props.notebookActionCallback && props.hasTensorboard &&
+          {props.notebookActionCallback && props.hasNotebook &&
           <MenuItem eventKey="2" onClick={props.notebookActionCallback}>
             <i
               className="fa fa-stop icon"
