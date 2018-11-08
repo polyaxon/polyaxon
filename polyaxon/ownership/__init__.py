@@ -7,9 +7,11 @@ from ownership.service import OwnershipService
 
 
 def get_ownership_backend():
-    if not settings.OWNERSHIP_BACKEND:
+    if not settings.OWNERSHIP_BACKEND or not settings.OWNERSHIP_BACKENDS:
         return 'ownership.service.OwnershipService'
-    raise OwnershipError()
+    if settings.OWNERSHIP_BACKENDS not in settings.OWNERSHIP_BACKENDS:
+        raise OwnershipError()
+    return settings.OWNERSHIP_BACKENDS[settings.OWNERSHIP_BACKEND]
 
 
 backend = LazyServiceWrapper(

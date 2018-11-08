@@ -5,3 +5,5 @@ ALLOW_USER_PROJECTS = config.get_boolean('POLYAXON_ALLOW_USER_PROJECTS',
                                          default=True)
 OWNERSHIP_BACKEND = config.get_string('POLYAXON_OWNERSHIP_BACKEND',
                                       is_optional=True)
+OWNERSHIP_BACKENDS = config.get_dict('POLYAXON_OWNERSHIP_BACKENDS',
+                                     is_optional=True)
