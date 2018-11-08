@@ -93,6 +93,7 @@ class TestProjectConfigs(TestCase):
                        'started_at': local_now().isoformat(),
                        'finished_at': local_now().isoformat(),
                        'group_type': 'study',
+                       'search_algorithm': None,
                        'last_status': None,
                        'has_tensorboard': False,
                        'tags': ['tests'],

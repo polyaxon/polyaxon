@@ -18,6 +18,7 @@ class ExperimentGroupSchema(Schema):
     description = fields.Str(allow_none=True)
     content = fields.Str(allow_none=True)
     group_type = fields.Str(allow_none=True)
+    search_algorithm = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
@@ -53,7 +54,7 @@ class ExperimentGroupConfig(BaseConfig):
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
         'id', 'unique_name', 'user', 'concurrency', 'created_at', 'last_status',
-        'started_at', 'finished_at', 'total_run', 'group_type'
+        'started_at', 'finished_at', 'total_run', 'group_type', 'search_algorithm'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -69,6 +70,7 @@ class ExperimentGroupConfig(BaseConfig):
                  num_experiments=None,
                  tags=None,
                  group_type=None,
+                 search_algorithm=None,
                  num_scheduled_experiments=None,
                  num_pending_experiments=None,
                  num_running_experiments=None,
@@ -94,6 +96,7 @@ class ExperimentGroupConfig(BaseConfig):
         self.project = project
         self.tags = tags
         self.group_type = group_type
+        self.search_algorithm = search_algorithm
         self.num_experiments = num_experiments
         self.num_scheduled_experiments = num_scheduled_experiments
         self.num_pending_experiments = num_pending_experiments
