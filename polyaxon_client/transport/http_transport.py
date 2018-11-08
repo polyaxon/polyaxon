@@ -91,7 +91,9 @@ class HttpTransportMixin(object):
                                        headers=request_headers,
                                        files=files,
                                        timeout=timeout)
-        except (requests.exceptions.RequestException, requests.exceptions.HTTPError) as exception:
+        except (requests.exceptions.RequestException,
+                requests.exceptions.Timeout,
+                requests.exceptions.HTTPError) as exception:
             try:
                 logger.debug("Exception: %s", exception, exc_info=True)
             except TypeError:
@@ -158,7 +160,7 @@ class HttpTransportMixin(object):
         logger.debug("Downloading files from url: %s", url)
 
         request_headers = self._get_headers(headers=headers)
-        timeout = timeout if timeout is not None else settings.LONG_TIMEOUT
+        timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
         session = session or self.session
 
         try:
@@ -183,7 +185,10 @@ class HttpTransportMixin(object):
                         if chunk:
                             f.write(chunk)
             return filename
-        except requests.exceptions.ConnectionError as exception:
+        except (requests.exceptions.ConnectionError,
+                requests.exceptions.RequestException,
+                requests.exceptions.Timeout,
+                requests.exceptions.HTTPError) as exception:
             try:
                 logger.debug("Exception: %s", exception)
             except TypeError:
