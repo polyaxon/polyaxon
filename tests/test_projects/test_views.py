@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+from django.test import override_settings
 
 from flaky import flaky
 from rest_framework import status
@@ -49,6 +50,13 @@ class TestProjectCreateViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 1
+        assert self.model_class.objects.last().owner == self.auth_client.user
+
+    @override_settings(ALLOW_USER_PROJECTS=False)
+    def test_not_allowed_to_create(self):
+        data = {'name': 'new_project'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
 
 @pytest.mark.projects_mark
@@ -64,7 +72,7 @@ class TestProjectListViewV1(BaseViewTest):
         self.user = self.auth_client.user
         self.url = '/{}/{}'.format(API_V1, self.user.username)
         self.objects = [self.factory_class(user=self.user) for _ in range(self.num_objects)]
-        # Other user objetcs
+        # Other user objects
         self.other_object = self.factory_class()
         # One private project
         self.private = self.factory_class(user=self.other_object.user, is_public=False)

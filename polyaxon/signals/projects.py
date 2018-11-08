@@ -1,14 +1,31 @@
-from hestia.decorators import ignore_raw, ignore_updates
+from django.conf import settings
+from hestia.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 
-from django.db.models.signals import post_delete, post_save, pre_delete
+from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
+from rest_framework.exceptions import ValidationError
 
 import auditor
+import ownership
 
 from db.models.projects import Project
 from event_manager.events.project import PROJECT_DELETED
 from libs.paths.projects import delete_project_logs, delete_project_outputs, delete_project_repos
 from signals.utils import remove_bookmarks
+
+
+@receiver(pre_save, sender=Project, dispatch_uid="project_pre_save")
+@ignore_updates_pre
+@ignore_raw
+def project_pre_save(sender, **kwargs):
+    instance = kwargs['instance']
+    # Set default owner
+    if not instance.has_owner:
+        if settings.ALLOW_USER_PROJECTS:
+            ownership.set_owner(instance=instance, owner=instance.user)
+        else:
+            raise ValidationError('You are not allowed to create a project, '
+                                  'please contact your admin.')
 
 
 @receiver(post_save, sender=Project, dispatch_uid="project_post_save")

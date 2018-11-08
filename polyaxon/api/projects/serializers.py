@@ -8,6 +8,7 @@ from db.models.projects import Project
 class ProjectSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
+    owner = fields.SerializerMethodField()
 
     class Meta:
         model = Project
@@ -16,6 +17,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'uuid',
             'user',
             'name',
+            'owner',
             'unique_name',
             'description',
             'tags',
@@ -26,6 +28,9 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         return obj.user.username
+
+    def get_owner(self, obj):
+        return obj.owner_details
 
 
 class BookmarkedProjectSerializer(ProjectSerializer, BookmarkedSerializerMixin):

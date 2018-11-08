@@ -1,11 +1,13 @@
 import pytest
 
+import ownership
 from api.projects import queries
 from api.projects.serializers import (
     BookmarkedProjectSerializer,
     ProjectDetailSerializer,
     ProjectSerializer
 )
+from constants import content_types
 from db.models.projects import Project
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
@@ -24,6 +26,7 @@ class TestProjectSerializer(BaseTest):
         'unique_name',
         'description',
         'user',
+        'owner',
         'description',
         'created_at',
         'updated_at',
@@ -45,6 +48,7 @@ class TestProjectSerializer(BaseTest):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
+        assert data.pop('owner') == ownership.get_owner(self.obj1)
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -69,6 +73,7 @@ class TestBookmarkedProjectSerializer(TestProjectSerializer):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
+        assert data.pop('owner') == ownership.get_owner(self.obj1)
         assert data.pop('bookmarked') is False
 
         for k, v in data.items():
@@ -89,6 +94,7 @@ class TestProjectDetailSerializer(BaseTest):
         'description',
         'readme',
         'user',
+        'owner',
         'created_at',
         'updated_at',
         'is_public',
@@ -118,6 +124,7 @@ class TestProjectDetailSerializer(BaseTest):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
+        assert data.pop('owner') == ownership.get_owner(self.obj1)
         assert data.pop('num_experiments') == self.obj1.experiments.count()
         assert data.pop('num_experiment_groups') == self.obj1.experiment_groups.count()
         assert data.pop('num_independent_experiments') == self.obj1.experiments.filter(

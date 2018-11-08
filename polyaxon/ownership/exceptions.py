@@ -1,0 +1,2 @@
+class OwnershipError(Exception):
+    pass
