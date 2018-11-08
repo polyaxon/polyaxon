@@ -99,8 +99,10 @@ class HttpTransportMixin(object):
             except TypeError:
                 pass
             raise PolyaxonShouldExitError(
-                "Cannot connect to the Polyaxon server on `{}`.\n"
-                "Check your host and ports configuration and your internet connection.".format(url))
+                "Error connecting to Polyaxon server on `{}`.\n"
+                "An Error `{}` occurred.\n"
+                "Check your host and ports configuration "
+                "and your internet connection.".format(url, exception))
 
         logger.debug("Response Content: %s, Headers: %s", response.content, response.headers)
         self.check_response_status(response, url)
@@ -195,8 +197,10 @@ class HttpTransportMixin(object):
                 pass
 
             raise PolyaxonShouldExitError(
-                "Cannot connect to the Polyaxon server on `{}`.\n"
-                "Check your host and ports configuration and your internet connection.".format(url))
+                "Error connecting to Polyaxon server on `{}`.\n"
+                "An Error `{}` occurred.\n"
+                "Check your host and ports configuration "
+                "and your internet connection.".format(url, exception))
 
     def download_tar(self, url, untar=True, delete_tar=False):
         """
