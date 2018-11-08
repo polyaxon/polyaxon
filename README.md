@@ -610,7 +610,11 @@ allowedHosts:
 In order to receive email and notifcation with a clickable link to the objects on the platform
 
 ```yaml
-apiHost: 159.203.150.212 
+apiHost: 159.203.150.212
+``` 
+Or 
+
+```yaml
 apiHost: polyaxon.foo.com  
 ```
 
