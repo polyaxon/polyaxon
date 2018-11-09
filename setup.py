@@ -45,9 +45,9 @@ setup(name='polyaxon-schemas',
           'hestia==0.1.2',
           'Jinja2==2.10',
           'marshmallow==2.16.1',
-          'numpy==1.15.2',
-          'python-dateutil==2.7.3',
-          'pytz==2018.5',
+          'numpy>=1.15.2',
+          'python-dateutil>=2.7.3',
+          'pytz==2018.7',
           'rhea==0.4.0'
       ],
       classifiers=[
