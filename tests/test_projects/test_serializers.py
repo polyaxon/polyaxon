@@ -47,7 +47,7 @@ class TestProjectSerializer(BaseTest):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('owner') == ownership.get_owner(self.obj1)
+        assert data.pop('owner') == self.obj1.owner.name
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -72,7 +72,7 @@ class TestBookmarkedProjectSerializer(TestProjectSerializer):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('owner') == ownership.get_owner(self.obj1)
+        assert data.pop('owner') == self.obj1.owner.name
         assert data.pop('bookmarked') is False
 
         for k, v in data.items():
@@ -123,7 +123,7 @@ class TestProjectDetailSerializer(BaseTest):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert data.pop('owner') == ownership.get_owner(self.obj1)
+        assert data.pop('owner') == self.obj1.owner.name
         assert data.pop('num_experiments') == self.obj1.experiments.count()
         assert data.pop('num_experiment_groups') == self.obj1.experiment_groups.count()
         assert data.pop('num_independent_experiments') == self.obj1.experiments.filter(

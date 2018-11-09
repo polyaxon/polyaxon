@@ -30,7 +30,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         return obj.user.username
 
     def get_owner(self, obj):
-        return obj.owner_details
+        return obj.owner.name
 
 
 class BookmarkedProjectSerializer(ProjectSerializer, BookmarkedSerializerMixin):

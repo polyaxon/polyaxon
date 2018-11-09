@@ -21,11 +21,7 @@ def project_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     # Set default owner
     if not instance.has_owner:
-        if settings.ALLOW_USER_PROJECTS:
-            ownership.set_owner(instance=instance, owner=instance.user)
-        else:
-            raise ValidationError('You are not allowed to create a project, '
-                                  'please contact your admin.')
+        ownership.set_default_owner(instance=instance)
 
 
 @receiver(post_save, sender=Project, dispatch_uid="project_post_save")

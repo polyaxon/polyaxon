@@ -44,5 +44,5 @@ if [ $? -eq 0 ]; then
     echo "Initialising database schema..."
     $DIR/manage migrate
 
-    $DIR/manage loaddata polyaxon/fixtures/users.json polyaxon/fixtures/authtoken.json polyaxon/fixtures/db.json
+    $DIR/manage loaddata polyaxon/fixtures/db.json polyaxon/fixtures/authtoken.json
 fi

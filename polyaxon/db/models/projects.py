@@ -1,13 +1,10 @@
 import uuid
 
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 from django.core.validators import validate_slug
 from django.db import models
 from django.utils.functional import cached_property
 
-import ownership
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT
 from db.models.utils import DescribableModel, DiffModel, ReadmeModel, TagModel
@@ -32,11 +29,10 @@ class Project(DiffModel, DescribableModel, ReadmeModel, TagModel, TensorboardJob
         null=True,
         blank=True,
         related_name='projects')
-    owner_content_type = models.ForeignKey(
-        ContentType,
-        on_delete=models.CASCADE)
-    owner_object_id = models.PositiveIntegerField()
-    owner = GenericForeignKey('owner_content_type', 'owner_object_id')
+    owner = models.ForeignKey(
+        'db.Owner',
+        on_delete=models.CASCADE,
+        related_name='projects')
     is_public = models.BooleanField(
         default=True,
         help_text='If project is public or private.')
@@ -76,11 +72,7 @@ class Project(DiffModel, DescribableModel, ReadmeModel, TagModel, TensorboardJob
         tensorboard = self.tensorboard
         return tensorboard and tensorboard.is_running
 
-    @cached_property
-    def owner_details(self):
-        return ownership.get_owner(self)
-
     @property
     def has_owner(self):
         """Quick test to check the instance has an owner."""
-        return ownership.has_owner(self)
+        return bool(self.owner_id)
