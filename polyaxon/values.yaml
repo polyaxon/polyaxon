@@ -214,7 +214,7 @@ passwordLenght: 8
 api:
   image: polyaxon/polyaxon-api
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   resources:
     limits:
@@ -234,7 +234,7 @@ api:
 streams:
   image: polyaxon/polyaxon-streams
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   resources:
     limits:
       cpu: 700m
@@ -252,7 +252,7 @@ streams:
 scheduler:
   image: polyaxon/polyaxon-scheduler
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   concurrency: 2
   resources:
@@ -266,7 +266,7 @@ scheduler:
 hpsearch:
   image: polyaxon/polyaxon-hpsearch
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   concurrency: 2
   resources:
@@ -277,7 +277,7 @@ hpsearch:
 eventsHandlers:
   image: polyaxon/polyaxon-events-handlers
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   concurrency: 2
   resources:
@@ -292,7 +292,7 @@ eventsHandlers:
 k8sEventsHandlers:
   image: polyaxon/polyaxon-k8s-events-handlers
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   concurrency: 2
   resources:
@@ -306,7 +306,7 @@ k8sEventsHandlers:
 logsHandlers:
   image: polyaxon/polyaxon-logs-handlers
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   concurrency: 1
   resources:
@@ -320,7 +320,7 @@ logsHandlers:
 beat:
   image: polyaxon/polyaxon-beat
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   resources:
     limits:
@@ -333,7 +333,7 @@ beat:
 crons:
   image: polyaxon/polyaxon-crons
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   replicas: 1
   concurrency: 2
   resources:
@@ -351,7 +351,7 @@ eventMonitors:
     enabled: true
     image: polyaxon/polyaxon-monitor-namespace
     imageTag: 0.3.1
-    imagePullPolicy: IfNotPresent
+    imagePullPolicy: Always
     resources:
       limits:
         cpu: 120m
@@ -366,7 +366,7 @@ eventMonitors:
     enabled: true
     image: polyaxon/polyaxon-monitor-statuses
     imageTag: 0.3.1
-    imagePullPolicy: IfNotPresent
+    imagePullPolicy: Always
     resources:
       limits:
         cpu: 120m
@@ -381,7 +381,7 @@ resourcesDaemon:
   enabled: true
   image: polyaxon/polyaxon-monitor-resources
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   resources:
     limits:
       cpu: 150m
@@ -395,22 +395,22 @@ resourcesDaemon:
 sidecar:
   image: polyaxon/polyaxon-sidecar
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 dockerizer:
   image: polyaxon/polyaxon-dockerizer
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 hooks:
   image: polyaxon/polyaxon-manage
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 tablesHook:
   image: polyaxon/polyaxon-tables
   imageTag: 0.3.1
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 
 postgresql:
