@@ -49,7 +49,7 @@ class DockerizerSpawner(ProjectJobSpawner):
         tolerations = get_tolerations(
             tolerations=tolerations,
             default_tolerations=settings.TOLERATIONS_BUILDS)
-        deployment = pods.get_pod(
+        pod = pods.get_pod(
             namespace=self.namespace,
             app=settings.APP_LABELS_DOCKERIZER,
             name=self.DOCKERIZER_JOB_NAME,
@@ -60,6 +60,7 @@ class DockerizerSpawner(ProjectJobSpawner):
             volume_mounts=volume_mounts,
             volumes=volumes,
             image=settings.JOB_DOCKERIZER_IMAGE,
+            image_pull_policy=settings.JOB_DOCKERIZER_IMAGE_PULL_POLICY,
             command=None,
             args=[self.job_uuid],
             ports=[],
@@ -75,7 +76,7 @@ class DockerizerSpawner(ProjectJobSpawner):
         pod_name = constants.JOB_NAME.format(
             job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
 
-        pod_resp, _ = self.create_or_update_pod(name=pod_name, data=deployment)
+        pod_resp, _ = self.create_or_update_pod(name=pod_name, data=pod)
         return pod_resp.to_dict()
 
     def stop_dockerizer(self):

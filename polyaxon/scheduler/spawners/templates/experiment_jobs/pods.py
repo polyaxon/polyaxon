@@ -45,6 +45,7 @@ class PodManager(object):
                  job_docker_image=None,
                  sidecar_container_name=None,
                  sidecar_docker_image=None,
+                 sidecar_docker_image_pull_policy=None,
                  init_container_name=None,
                  init_docker_image=None,
                  role_label=None,
@@ -68,6 +69,8 @@ class PodManager(object):
         self.job_docker_image = job_docker_image or settings.JOB_DOCKER_NAME
         self.sidecar_container_name = sidecar_container_name or settings.CONTAINER_NAME_SIDECAR
         self.sidecar_docker_image = sidecar_docker_image or settings.JOB_SIDECAR_DOCKER_IMAGE
+        self.sidecar_docker_image_pull_policy = (
+            sidecar_docker_image_pull_policy or settings.JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY)
         self.init_container_name = init_container_name or settings.CONTAINER_NAME_INIT
         self.init_docker_image = init_docker_image or settings.JOB_INIT_DOCKER_IMAGE
         self.role_label = role_label or settings.ROLE_LABELS_WORKER
@@ -181,6 +184,7 @@ class PodManager(object):
             job_container_name=self.job_container_name,
             sidecar_container_name=self.sidecar_container_name,
             sidecar_docker_image=self.sidecar_docker_image,
+            sidecar_docker_image_pull_policy=self.sidecar_docker_image_pull_policy,
             namespace=self.namespace,
             sidecar_config=self.sidecar_config,
             sidecar_args=args,

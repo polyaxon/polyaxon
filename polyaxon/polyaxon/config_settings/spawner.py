@@ -113,10 +113,16 @@ JOB_DOCKER_NAME = config.get_string('POLYAXON_JOB_DOCKER_NAME',
                                     is_optional=True,
                                     default='polyaxon/polyaxon-lib')
 JOB_SIDECAR_DOCKER_IMAGE = config.get_string('POLYAXON_JOB_SIDECAR_DOCKER_IMAGE')
+JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY = config.get_string(
+    'POLYAXON_JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY',
+    is_optional=True,)
 JOB_INIT_DOCKER_IMAGE = config.get_string('POLYAXON_JOB_INIT_DOCKER_IMAGE',
                                           is_optional=True,
                                           default='ubuntu:16.04')
 JOB_DOCKERIZER_IMAGE = config.get_string('POLYAXON_JOB_DOCKERIZER_IMAGE')
+JOB_DOCKERIZER_IMAGE_PULL_POLICY = config.get_string(
+    'POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY',
+    is_optional=True,)
 TENSORBOARD_DOCKER_IMAGE = config.get_string('POLYAXON_TENSORBOARD_DOCKER_IMAGE',
                                              is_optional=True,
                                              default='tensorflow/tensorflow:1.4.1-py3')

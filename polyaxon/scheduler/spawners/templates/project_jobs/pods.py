@@ -24,6 +24,7 @@ def get_project_pod_spec(volume_mounts,
                          node_selector=None,
                          affinity=None,
                          tolerations=None,
+                         image_pull_policy=None,
                          restart_policy=None,
                          use_service_account=False):
     """Pod spec to be used to create pods for project: tensorboard, notebooks."""
@@ -40,6 +41,7 @@ def get_project_pod_spec(volume_mounts,
 
     containers = [client.V1Container(name=container_name,
                                      image=image,
+                                     image_pull_policy=image_pull_policy,
                                      command=command,
                                      args=args,
                                      ports=ports,
@@ -82,12 +84,14 @@ def get_pod(namespace,
             tolerations=None,
             type=None,  # pylint:disable=redefined-builtin
             role=None,
+            image_pull_policy=None,
             restart_policy=None,
             use_service_account=False):
     pod_spec = get_project_pod_spec(
         volume_mounts=volume_mounts,
         volumes=volumes,
         image=image,
+        image_pull_policy=image_pull_policy,
         container_name=container_name,
         command=command,
         args=args,
