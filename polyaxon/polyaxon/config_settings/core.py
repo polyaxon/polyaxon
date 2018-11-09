@@ -18,6 +18,10 @@ ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
 HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
                                    is_optional=True,
                                    default=60 * 4)
+# Token experiment time in days
+TOKEN_EXPIRATION = config.get_int('POLYAXON_TOKEN_EXPIRATION',
+                                  is_optional=True,
+                                  default=30)
 
 
 def get_allowed_hosts():
