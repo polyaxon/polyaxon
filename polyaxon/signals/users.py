@@ -11,7 +11,7 @@ import ownership
 from event_manager.events.user import USER_REGISTERED, USER_UPDATED
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid="create_auth_token")
 @ignore_raw
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
@@ -21,7 +21,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         auditor.record(event_type=USER_UPDATED, instance=instance)
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid="create_user_owner")
 @ignore_updates
 @ignore_raw
 def create_user_owner(sender, instance=None, created=False, **kwargs):
@@ -30,9 +30,9 @@ def create_user_owner(sender, instance=None, created=False, **kwargs):
         owner_obj=instance)
 
 
-@receiver(post_delete, sender=settings.AUTH_USER_MODEL)
+@receiver(post_delete, sender=settings.AUTH_USER_MODEL, dispatch_uid="delete_user_owner")
 @ignore_raw
-def create_user_owner(sender, instance=None, created=False, **kwargs):
+def delete_user_owner(sender, instance=None, created=False, **kwargs):
     ownership.delete_owner(name=instance.username)
 
 
