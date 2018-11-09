@@ -1,10 +1,9 @@
-from rest_framework import permissions
-
 from scopes.authentication.ephemeral import is_ephemeral_user
 from scopes.authentication.internal import is_internal_user
+from scopes.permissions.base import PolyaxonPermission
 
 
-class ScopedPermission(permissions.BasePermission):
+class ScopedPermission(PolyaxonPermission):
     """
     Scopes based Permissions, depends on the authentication backend.
     """
@@ -30,6 +29,3 @@ class ScopedPermission(permissions.BasePermission):
         allowed_scopes = set(self.SCOPE_MAPPING.get(request.method, []))
         current_scopes = request.auth.get_scopes()
         return any(s in allowed_scopes for s in current_scopes)
-
-    def has_object_permission(self, request, view, obj):
-        return False

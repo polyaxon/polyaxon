@@ -1,9 +1,10 @@
 from rest_framework import permissions
 
 from scopes.authentication.internal import is_authenticated_internal_user
+from scopes.permissions.base import PolyaxonPermission
 
 
-class IsInternal(permissions.BasePermission):
+class IsInternal(PolyaxonPermission):
     """Custom permission to only allow internal clients."""
 
     def has_permission(self, request, view):

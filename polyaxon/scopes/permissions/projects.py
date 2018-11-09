@@ -6,6 +6,7 @@ from rest_framework.generics import get_object_or_404
 from db.models.projects import Project
 from scopes.authentication.internal import is_authenticated_internal_user
 from libs.permissions.internal import IsAuthenticatedOrInternal, IsInternal
+from scopes.permissions.base import PolyaxonPermission
 
 _logger = logging.getLogger(__name__)
 
@@ -38,7 +39,7 @@ class IsProjectOwnerOrPublicReadOnly(permissions.BasePermission):
                                        request_method=request.method)
 
 
-class IsItemProjectOwnerOrPublicReadOnly(permissions.BasePermission):
+class IsItemProjectOwnerOrPublicReadOnly(PolyaxonPermission):
     """Custom permission to only allow owner of project to update/delete project items.
 
     Other users can have read access if the project is public."""

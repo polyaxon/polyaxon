@@ -1,9 +1,8 @@
-from rest_framework import permissions
-
 from scopes.authentication.ephemeral import is_authenticated_ephemeral_user
+from scopes.permissions.base import PolyaxonPermission
 
 
-class IsEphemeral(permissions.BasePermission):
+class IsEphemeral(PolyaxonPermission):
     """Custom permission to only allow ephemeral clients."""
 
     def has_permission(self, request, view):
