@@ -1,7 +1,8 @@
 from functools import wraps
 
-from rest_framework.authentication import TokenAuthentication
 from sanic.response import json
+
+from scopes.authentication.token import TokenAuthentication
 
 
 class SanicTokenAuthentication(TokenAuthentication):

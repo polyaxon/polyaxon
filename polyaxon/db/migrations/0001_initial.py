@@ -6,10 +6,8 @@ import db.models.statuses
 import db.models.utils
 from django.conf import settings
 import django.contrib.postgres.fields
-import django.contrib.postgres.fields.jsonb
 import django.core.validators
 from django.db import migrations, models
-import django.db.models.deletion
 import django.utils.timezone
 import libs.blacklist
 import libs.resource_validation

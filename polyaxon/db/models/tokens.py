@@ -19,13 +19,13 @@ class Token(DiffModel):
     user = models.ForeignKey(
         'db.User',
         on_delete=models.CASCADE,
-        related_name='api_tokens')
-    token = models.CharField(
+        related_name='tokens')
+    key = models.CharField(
         max_length=64,
         unique=True,
         default=generate_token,
     )
-    refresh_token = models.CharField(
+    refresh_key = models.CharField(
         max_length=64,
         unique=True,
         null=True,
@@ -46,7 +46,7 @@ class Token(DiffModel):
 
     def refresh(self, started_at=None):
         self.update(
-            token=self.generate_token(),
-            refresh_token=self.generate_token(),
+            key=self.generate_token(),
+            refresh_key=self.generate_token(),
             started_at=started_at or timezone.now(),
         )

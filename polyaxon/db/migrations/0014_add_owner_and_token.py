@@ -43,9 +43,9 @@ class Migration(migrations.Migration):
                                         verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('token', models.CharField(default=db.models.tokens.generate_token, max_length=64,
-                                           unique=True)),
-                ('refresh_token',
+                ('key', models.CharField(default=db.models.tokens.generate_token, max_length=64,
+                                         unique=True)),
+                ('refresh_key',
                  models.CharField(default=db.models.tokens.generate_token, max_length=64, null=True,
                                   unique=True)),
                 ('scopes', django.contrib.postgres.fields.ArrayField(
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                     size=None)),
                 ('started_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
-                                           related_name='api_tokens', to=settings.AUTH_USER_MODEL)),
+                                           related_name='tokens', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(

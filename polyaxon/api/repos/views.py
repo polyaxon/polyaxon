@@ -18,9 +18,9 @@ from api.utils.views.upload import UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.archive import archive_repo
-from libs.authentication.internal import InternalAuthentication, is_internal_user
-from libs.permissions.internal import IsAuthenticatedOrInternal
-from libs.permissions.projects import get_permissible_project
+from scopes.authentication.internal import InternalAuthentication, is_authenticated_internal_user
+from scopes.permissions.internal import IsAuthenticatedOrInternal
+from scopes.permissions.projects import get_permissible_project
 from libs.repos.git import set_git_repo
 
 _logger = logging.getLogger('polyaxon.views.repos')
@@ -54,7 +54,7 @@ class DownloadFilesView(ProtectedView):
     def get_object(self):
         project = get_permissible_project(view=self)
         repo = get_object_or_404(Repo, project=project)
-        if not is_internal_user(self.request.user):
+        if not is_authenticated_internal_user(self.request.user):
             auditor.record(event_type=REPO_DOWNLOADED,
                            instance=repo,
                            actor_id=self.request.user.id,

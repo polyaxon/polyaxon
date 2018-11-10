@@ -46,10 +46,10 @@ from event_manager.events.build_job import (
     BUILD_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_BUILDS_VIEWED
-from libs.authentication.internal import InternalAuthentication
 from libs.paths.jobs import get_job_logs_path
-from libs.permissions.internal import IsAuthenticatedOrInternal
-from libs.permissions.projects import get_permissible_project
+from scopes.authentication.internal import InternalAuthentication
+from scopes.permissions.internal import IsAuthenticatedOrInternal
+from scopes.permissions.projects import get_permissible_project
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

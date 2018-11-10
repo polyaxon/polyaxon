@@ -41,11 +41,11 @@ class TokenAuthentication(PolyaxonAuthentication):
 
     def authenticate_credentials(self, key):  # pylint:disable=arguments-differ
         try:
-            token = Token.objects.select_related('user').get(token=key)
+            token = Token.objects.select_related('user').get(key=key)
         except Token.DoesNotExist:
             raise AuthenticationFailed('Invalid token.')
 
-        if token.is_expired():
+        if token.is_expired:
             raise AuthenticationFailed('Token expired')
 
         if not token.user.is_active:

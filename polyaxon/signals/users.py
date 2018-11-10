@@ -1,5 +1,4 @@
 from hestia.decorators import ignore_raw, ignore_updates
-from rest_framework.authtoken.models import Token
 
 from django.conf import settings
 from django.db.models.signals import post_save, post_delete
@@ -7,6 +6,8 @@ from django.dispatch import Signal, receiver
 
 import auditor
 import ownership
+
+from db.models.tokens import Token
 
 from event_manager.events.user import USER_REGISTERED, USER_UPDATED
 

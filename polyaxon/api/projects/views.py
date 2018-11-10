@@ -18,7 +18,7 @@ from event_manager.events.project import (
     PROJECT_UPDATED,
     PROJECT_VIEWED
 )
-from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly
+from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly
 
 
 class ProjectCreateView(CreateAPIView):

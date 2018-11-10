@@ -5,12 +5,10 @@ import tarfile
 
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
-from rest_framework.authentication import TokenAuthentication
-
 from django.conf import settings
+from hestia.auth import AuthenticationTypes
 
 from libs.api import get_http_api_url
-from libs.authentication.internal import InternalAuthentication
 
 
 def absolute_uri(url):
@@ -94,11 +92,11 @@ def download(url,
              timeout=60):
     """Get download url from the internal api."""
     if internal:
-        authentication_type = authentication_type or InternalAuthentication.keyword
+        authentication_type = authentication_type or AuthenticationTypes.INTERNAL_TOKEN
     else:
-        authentication_type = TokenAuthentication.keyword
+        authentication_type = AuthenticationTypes.TOKEN
 
-    if authentication_type == InternalAuthentication.keyword and not access_token:
+    if authentication_type == AuthenticationTypes.INTERNAL_TOKEN and not access_token:
         access_token = settings.SECRET_INTERNAL_TOKEN
 
     # Auth headers if access_token is present

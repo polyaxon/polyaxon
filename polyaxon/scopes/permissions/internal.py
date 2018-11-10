@@ -22,3 +22,6 @@ class IsAuthenticatedOrInternal(permissions.IsAuthenticated):
         if request.user and not request.user.is_anonymous and is_authenticated_internal_user(request.user):
             return True
         return False
+
+    def has_object_permission(self, request, view, obj):
+        return True

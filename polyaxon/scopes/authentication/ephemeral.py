@@ -8,7 +8,7 @@ from rest_framework.authentication import get_authorization_header
 from django.conf import settings
 
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
-from libs.authentication.internal import get_internal_header
+from scopes.authentication.internal import get_internal_header
 from scopes.authentication.base import PolyaxonAuthentication
 
 

@@ -44,7 +44,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
-from libs.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
+from scopes.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

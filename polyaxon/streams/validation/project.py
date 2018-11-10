@@ -1,5 +1,5 @@
 from db.models.projects import Project
-from libs.permissions.projects import has_project_permissions
+from scopes.permissions.projects import has_project_permissions
 
 
 def validate_project(request, username, project_name):

@@ -5,7 +5,7 @@ from rest_framework.generics import get_object_or_404
 
 from db.models.projects import Project
 from scopes.authentication.internal import is_authenticated_internal_user
-from libs.permissions.internal import IsAuthenticatedOrInternal, IsInternal
+from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInternal
 from scopes.permissions.base import PolyaxonPermission
 
 _logger = logging.getLogger(__name__)

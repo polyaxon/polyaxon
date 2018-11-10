@@ -6,7 +6,6 @@ from wsgiref.util import FileWrapper
 
 from hestia.bool_utils import to_bool
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
@@ -56,6 +55,7 @@ from db.models.experiments import (
     ExperimentStatus
 )
 from db.models.projects import Project
+from db.models.tokens import Token
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
@@ -82,13 +82,13 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_experiment_outputs, archive_outputs_file
-from libs.authentication.ephemeral import EphemeralAuthentication
-from libs.authentication.internal import InternalAuthentication
 from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
-from libs.permissions.ephemeral import IsEphemeral
-from libs.permissions.internal import IsAuthenticatedOrInternal
-from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
+from scopes.authentication.ephemeral import EphemeralAuthentication
+from scopes.authentication.internal import InternalAuthentication
+from scopes.permissions.ephemeral import IsEphemeral
+from scopes.permissions.internal import IsAuthenticatedOrInternal
+from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.stores import get_outputs_store
 from polyaxon.celery_api import celery_app

@@ -1,7 +1,8 @@
-from rest_framework.authtoken.models import Token
 
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+
+from db.models.tokens import Token
 
 
 def login_user(request, response, user, login=True):

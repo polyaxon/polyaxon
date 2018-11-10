@@ -38,7 +38,7 @@ from event_manager.events.experiment_group import (
 )
 from event_manager.events.job import JOB_BOOKMARKED, JOB_UNBOOKMARKED
 from event_manager.events.project import PROJECT_BOOKMARKED, PROJECT_UNBOOKMARKED
-from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
+from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 
 
 class BookmarkListView(ListAPIView):

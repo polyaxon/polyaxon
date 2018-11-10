@@ -12,13 +12,13 @@ import redis
 from hestia.auth import AuthenticationTypes
 from mock import patch
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 
 from django.conf import settings
 from django.core.cache import cache
 from django.test import Client, TestCase
 from django.test.client import FakePayload
 
+from db.models.tokens import Token
 from factories.factory_users import UserFactory
 from polyaxon.settings import RedisPools
 
@@ -121,7 +121,10 @@ class EphemeralClient(BaseClient):
 
 
 class InternalClient(BaseClient):
-    def __init__(self, authentication_type='InternalToken', service=None, **defaults):
+    def __init__(self,
+                 authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
+                 service=None,
+                 **defaults):
         super().__init__(**defaults)
         self.service = service or settings.INTERNAL_SERVICES.HELPER
         self.authorization_header = '{} {}'.format(authentication_type,
@@ -145,12 +148,15 @@ class AuthorizedClient(BaseClient):
     This is allowed to make calls to the authenticated endpoints.
     """
 
-    def __init__(self, access_token='', authentication_type='Token', **defaults):
+    def __init__(self,
+                 access_token='',
+                 authentication_type=AuthenticationTypes.TOKEN,
+                 **defaults):
         super().__init__(**defaults)
         user = defaults.get('user', UserFactory())
         self.login_user(user, access_token, authentication_type)
 
-    def login_user(self, user, access_token='', authentication_type='Token'):
+    def login_user(self, user, access_token='', authentication_type=AuthenticationTypes.TOKEN):
         self.user = user
         self.expires = datetime.datetime.now() + datetime.timedelta(days=1)
         if not access_token:

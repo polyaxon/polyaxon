@@ -10,7 +10,7 @@ from api.utils.views.list_create import ListCreateAPIView
 from constants import content_types
 from db.models.searches import Search
 from event_manager.events.search import SEARCH_CREATED, SEARCH_DELETED
-from libs.permissions.projects import get_permissible_project
+from scopes.permissions.projects import get_permissible_project
 
 
 class SearchListView(ListCreateAPIView):
