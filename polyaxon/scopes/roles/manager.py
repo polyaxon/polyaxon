@@ -19,7 +19,7 @@ class RoleManager(object):
         self._default = self._roles[default]
 
     def can_manage(self, role, other):
-        return self.get(role).priority >= self.get(other).priority
+        return self.get(role).rank >= self.get(other).rank
 
     def get(self, id):
         return self._roles[id]

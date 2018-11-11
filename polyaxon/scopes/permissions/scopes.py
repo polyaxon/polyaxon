@@ -3,10 +3,11 @@ from scopes.authentication.internal import is_internal_user
 from scopes.permissions.base import PolyaxonPermission
 
 
-class ScopedPermission(PolyaxonPermission):
+class ScopesPermission(PolyaxonPermission):
     """
     Scopes based Permissions, depends on the authentication backend.
     """
+    ENTITY = None
     SCOPE_MAPPING = None
 
     def has_permission(self, request, view):
