@@ -207,6 +207,12 @@ class ConfigManager(rhea.Rhea):
         ownership.validate()
         ownership.setup()
 
+    def setup_access_service(self):
+        import access
+
+        access.validate()
+        access.setup()
+
     def setup_stats_service(self):
         import stats
 
