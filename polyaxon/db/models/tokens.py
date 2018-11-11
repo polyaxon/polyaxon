@@ -1,10 +1,10 @@
 from datetime import timedelta
+from uuid import uuid4
 
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
-from uuid import uuid4
 
 from db.models.utils import DiffModel
 

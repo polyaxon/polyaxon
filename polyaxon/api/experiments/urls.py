@@ -1,5 +1,6 @@
-from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
+
+from django.urls import re_path
 
 from api.bookmarks import views as bookmark_views
 from api.experiments import views

@@ -1,6 +1,7 @@
+from hestia.service_interface import Service
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from hestia.service_interface import Service
 
 from ownership import OwnershipError
 

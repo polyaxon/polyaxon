@@ -1,4 +1,4 @@
-from hestia.auth import AuthenticationTypes, AuthenticationError
+from hestia.auth import AuthenticationError, AuthenticationTypes
 from rest_framework.authentication import BasicAuthentication
 
 

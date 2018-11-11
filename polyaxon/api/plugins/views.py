@@ -33,11 +33,11 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_STOPPED_TRIGGERED,
     TENSORBOARD_VIEWED
 )
-from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.repos import git
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.specifications import TensorboardSpecification
+from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 
 
 class StartTensorboardView(CreateAPIView):

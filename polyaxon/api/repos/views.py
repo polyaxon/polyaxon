@@ -18,10 +18,10 @@ from api.utils.views.upload import UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.archive import archive_repo
+from libs.repos.git import set_git_repo
 from scopes.authentication.internal import InternalAuthentication, is_authenticated_internal_user
 from scopes.permissions.internal import IsAuthenticatedOrInternal
 from scopes.permissions.projects import get_permissible_project
-from libs.repos.git import set_git_repo
 
 _logger = logging.getLogger('polyaxon.views.repos')
 

@@ -1,4 +1,5 @@
 import argparse
+
 import psycopg2
 
 if __name__ == '__main__':

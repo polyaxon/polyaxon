@@ -1,12 +1,13 @@
-from django.conf import settings
 from hestia.service_interface import Service
+
+from django.conf import settings
 
 from scopes.manager import ScopeMappingManager
 from scopes.roles.manager import RoleManager
 
 
 class AccessService(Service):
-    __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission ')
+    __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission',)
 
     def __init__(self):
         self.role_manager = None

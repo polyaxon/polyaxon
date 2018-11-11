@@ -5,8 +5,9 @@ import tarfile
 
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
-from django.conf import settings
 from hestia.auth import AuthenticationTypes
+
+from django.conf import settings
 
 from libs.api import get_http_api_url
 

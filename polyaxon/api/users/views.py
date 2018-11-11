@@ -1,10 +1,9 @@
-from rest_framework import status
-from rest_framework.generics import DestroyAPIView, RetrieveAPIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from rest_framework import parsers, renderers
+from rest_framework import parsers, renderers, status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.compat import coreapi, coreschema
+from rest_framework.generics import DestroyAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.schemas import ManualSchema
 from rest_framework.views import APIView

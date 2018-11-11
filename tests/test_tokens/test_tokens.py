@@ -1,8 +1,8 @@
 from datetime import timedelta
 
 import pytest
-from django.conf import settings
 
+from django.conf import settings
 from django.utils import timezone
 
 from db.models.tokens import Token

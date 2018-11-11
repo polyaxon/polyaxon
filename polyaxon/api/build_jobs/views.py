@@ -47,11 +47,11 @@ from event_manager.events.build_job import (
 )
 from event_manager.events.project import PROJECT_BUILDS_VIEWED
 from libs.paths.jobs import get_job_logs_path
+from polyaxon.celery_api import celery_app
+from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal
 from scopes.permissions.projects import get_permissible_project
-from polyaxon.celery_api import celery_app
-from polyaxon.settings import SchedulerCeleryTasks
 
 _logger = logging.getLogger("polyaxon.views.builds")
 

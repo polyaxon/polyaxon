@@ -52,13 +52,13 @@ from event_manager.events.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_job_outputs, archive_outputs_file
 from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
-from scopes.authentication.internal import InternalAuthentication
-from scopes.permissions.internal import IsAuthenticatedOrInternal
-from scopes.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_job_spec_config
 from libs.stores import get_outputs_store
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+from scopes.authentication.internal import InternalAuthentication
+from scopes.permissions.internal import IsAuthenticatedOrInternal
+from scopes.permissions.projects import get_permissible_project
 
 _logger = logging.getLogger("polyaxon.views.jobs")
 

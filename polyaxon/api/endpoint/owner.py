@@ -1,4 +1,5 @@
 import access
+
 from api.endpoint.base import BaseEndpoint
 from scopes.permissions.scopes import ScopesPermission
 
