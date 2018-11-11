@@ -7,14 +7,7 @@ class ScopedPermission(PolyaxonPermission):
     """
     Scopes based Permissions, depends on the authentication backend.
     """
-    SCOPE_MAPPING = {
-        'HEAD': (),
-        'GET': (),
-        'POST': (),
-        'PUT': (),
-        'PATCH': (),
-        'DELETE': (),
-    }
+    SCOPE_MAPPING = None
 
     def has_permission(self, request, view):
         if not request.auth:
