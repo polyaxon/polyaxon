@@ -64,12 +64,41 @@ class BaseEndpoint(mixins.CreateModelMixin,
             setattr(self, key, kwargs.get(key))
         for key in self.QUERY_CONTEXT_KEYS:
             setattr(self, key, request.query_params.get(key))
-        self._validate_context()
         self._initialize_context()
+        self._validate_context()
 
     def dispatch(self, request, *args, **kwargs):
-        self.initialize_context(request, *args, **kwargs)
-        return super().dispatch(request, *args, **kwargs)
+        """
+        `.dispatch()` is pretty much the same as DRF's regular dispatch,
+        but with extra logic to initialize a local context.
+        Please check parent methods for more info.
+        """
+        self.args = args
+        self.kwargs = kwargs
+        request = self.initialize_request(request, *args, **kwargs)
+        self.request = request
+        self.headers = self.default_response_headers  # deprecate?
+
+        try:
+            self.initial(request, *args, **kwargs)
+
+            # Get the appropriate handler method
+            if request.method.lower() in self.http_method_names:
+                handler = getattr(self, request.method.lower(),
+                                  self.http_method_not_allowed)
+            else:
+                handler = self.http_method_not_allowed
+
+            # Polyaxon's context initializer
+            self.initialize_context(request, *args, **kwargs)
+
+            response = handler(request, *args, **kwargs)
+
+        except Exception as exc:
+            response = self.handle_exception(exc)
+
+        self.response = self.finalize_response(request, response, *args, **kwargs)
+        return self.response
 
 
 class PostEndpoint(object):
