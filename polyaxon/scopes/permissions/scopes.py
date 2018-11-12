@@ -12,7 +12,7 @@ class ScopesPermission(PolyaxonPermission):
 
     def has_permission(self, request, view):
         if not request.auth:
-            if not request.user.is_authenticated():
+            if not request.user.is_authenticated:
                 return False
             # If it's internal or ephemeral, we delegate to the next permission if there's any
             if any([is_ephemeral_user(request.user), is_internal_user(request.user)]):
@@ -20,6 +20,12 @@ class ScopesPermission(PolyaxonPermission):
             # Session users are granted total access
             return True
 
+        if request.user.is_authenticated and request.user.is_superuser:
+            return True
+
         allowed_scopes = set(self.SCOPE_MAPPING.get(request.method, []))
-        current_scopes = request.auth.get_scopes()
+        if not allowed_scopes:
+            return True
+
+        current_scopes = request.auth.scopes
         return any(s in allowed_scopes for s in current_scopes)

@@ -4,7 +4,7 @@ from scopes.permissions.base import PolyaxonPermission
 
 class SuperuserPermission(PolyaxonPermission):
     def has_permission(self, request, view):
-        if request.user.is_authenticated() and request.user.is_superuser:
+        if request.user.is_authenticated and not request.user.is_superuser:
             raise SuperuserRequired
         return False
 
