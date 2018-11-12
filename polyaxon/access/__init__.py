@@ -1,11 +1,17 @@
+from django.conf import settings
+
 from hestia.service_interface import LazyServiceWrapper
 
 from access.service import AccessService
 
 
+def get_access_backend():
+    return settings.ACCESS_BACKEND or 'access.service.AccessService'
+
+
 backend = LazyServiceWrapper(
     backend_base=AccessService,
-    backend_path='access.service.AccessService',
+    backend_path=get_access_backend(),
     options={}
 )
 backend.expose(locals())

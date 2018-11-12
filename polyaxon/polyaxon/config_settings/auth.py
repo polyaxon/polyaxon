@@ -13,6 +13,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+ACCESS_BACKEND = config.get_string('POLYAXON_ACCESS_BACKEND', is_optional=True)
+
 if AUTH_LDAP_ENABLED:
     AUTHENTICATION_BACKENDS = ['django_auth_ldap.backend.LDAPBackend'] + AUTHENTICATION_BACKENDS
 
