@@ -1,6 +1,8 @@
 UUID_PATTERN = r'(?P<uuid>\w{1,36})'
 SLUG_PATTERN = r'[-\w]{1,256}'
 USERNAME_PATTERN = r'(?P<username>[-\w]{1,156})'
+OWNER_NAME_PATTERN = r'(?P<owner_name>[-\w]{1,156})'
+PROJECT_NAME_PATTERN = r'(?P<project_name>[-\w]{1,256})'
 NAME_PATTERN = r'(?P<name>[-\w]{1,256})'
 SEQUENCE_PATTERN = r'(?P<sequence>\d+)'
 ID_PATTERN = r'(?P<id>\d+)'

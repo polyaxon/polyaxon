@@ -9,14 +9,14 @@ from api.experiments import views as experiments_views
 from api.jobs import views as jobs_views
 from api.plugins import views as tensorboards_views
 from api.projects import views
-from constants.urls import NAME_PATTERN, USERNAME_PATTERN
+from constants.urls import NAME_PATTERN, USERNAME_PATTERN, OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
 
 projects_urlpatterns = [
     re_path(r'^projects/?$',
             views.ProjectCreateView.as_view()),
-    re_path(r'^{}/?$'.format(USERNAME_PATTERN),
+    re_path(r'^{}/?$'.format(OWNER_NAME_PATTERN),
             views.ProjectListView.as_view()),
-    re_path(r'^{}/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.ProjectDetailView.as_view()),
     re_path(r'^{}/{}/groups/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
             groups_views.ExperimentGroupListView.as_view()),
