@@ -1,10 +1,15 @@
+from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 
 import auditor
 
 
-class BaseEndpoint(GenericAPIView):
-
+class BaseEndpoint(mixins.CreateModelMixin,
+                   mixins.ListModelMixin,
+                   mixins.RetrieveModelMixin,
+                   mixins.DestroyModelMixin,
+                   mixins.UpdateModelMixin,
+                   GenericAPIView,):
     AUDITOR_EVENT_TYPES = None
     CONTEXT_KEYS = ()
     QUERY_CONTEXT_KEYS = ()
@@ -40,7 +45,7 @@ class BaseEndpoint(GenericAPIView):
 
     def _validate_context(self):
         """
-        Validates that the context.
+        Validates that the context is correct.
         """
         pass
 
@@ -65,3 +70,31 @@ class BaseEndpoint(GenericAPIView):
     def dispatch(self, request, *args, **kwargs):
         self.initialize_context(request, *args, **kwargs)
         return super().dispatch(request, *args, **kwargs)
+
+
+class PostEndpoint(object):
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class ListEndpoint(object):
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class RetrieveEndpoint(object):
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
+class DestroyEndpoint(object):
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class UpdateEndpoint(object):
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)

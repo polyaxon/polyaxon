@@ -9,7 +9,7 @@ from scopes.roles.manager import RoleManager
 
 
 class AccessService(Service):
-    __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission', 'entities')
+    __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission', 'entities',)
 
     ENTITY_MAPPING = {
         Entities.OWNER: owner.has_object_permission,

@@ -5,11 +5,11 @@ from api.endpoint.owner import OwnerPermission
 
 
 class ProjectPermission(OwnerPermission):
-    ENTITY = 'Project'
+    ENTITY = access.entites.PROJECT
     SCOPE_MAPPING = access.get_scope_mapping_for('Project')
 
     def has_object_permission(self, request, view, obj):
-        result = super().has_object_permission(request, view, obj)
+        result = super().has_object_permission(request, view, obj.owner)
         if not result:
             return result
 
@@ -24,4 +24,12 @@ class ProjectPermission(OwnerPermission):
 class ProjectEndpoint(BaseEndpoint):
     permission_classes = (ProjectPermission,)
     AUDITOR_EVENT_TYPES = None
-    CONTEXT_KEYS = ('owner', 'project')
+    CONTEXT_KEYS = ('owner_name', 'project_name')
+    lookup_field = 'name'
+
+    def filter_queryset(self, queryset):
+        owner_name = self.kwargs['owner_name']
+        return queryset.filter(owner__name=owner_name)
+
+    def _initialize_context(self):
+        self.request.owner = self.get_object()
