@@ -13,19 +13,30 @@ class BaseEndpoint(mixins.CreateModelMixin,
     AUDITOR_EVENT_TYPES = None
     CONTEXT_KEYS = ()
     QUERY_CONTEXT_KEYS = ()
+    create_serializer_class = None
+    PLAIN_POST = False
+
+    def get_serializer_class(self):
+        if self.create_serializer_class and self.request.method == 'POST':
+            return self.create_serializer_class
+        return self.serializer_class
+
+    def get_serializer(self, *args, **kwargs):
+        if not self.PLAIN_POST:
+            super().get_serializer()
 
     def get_object(self):
         instance = super().get_object()
         if not self.AUDITOR_EVENT_TYPES:
             return instance
-        method = self.request.method.lower()
+        method = self.request.method
         event_type = self.AUDITOR_EVENT_TYPES.get(method)
-        if method == 'get' and event_type:
+        if method == 'GET' and event_type:
             auditor.record(event_type=event_type,
                            instance=instance,
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username)
-        elif method == 'delete' and event_type:
+        elif method == 'DELETE' and event_type:
             auditor.record(event_type=event_type,
                            instance=instance,
                            actor_id=self.request.user.id,
@@ -36,7 +47,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
         instance = serializer.save()
         if not self.AUDITOR_EVENT_TYPES:
             return instance
-        event_type = self.AUDITOR_EVENT_TYPES.get('update')
+        event_type = self.AUDITOR_EVENT_TYPES.get('UPDATE')
         if event_type:
             auditor.record(event_type=event_type,
                            instance=instance,
@@ -101,7 +112,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
         return self.response
 
 
-class PostEndpoint(object):
+class CreateEndpoint(object):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
