@@ -7,7 +7,7 @@ from django.db import models
 
 class ActivityLog(models.Model):
     """The ActivityLog model represents one recorded event."""
-
+    ref = models.UUIDField(editable=False)
     event_type = models.CharField(max_length=128)
     actor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -19,7 +19,7 @@ class ActivityLog(models.Model):
     context = JSONField(help_text='Extra context information.')
     created_at = models.DateTimeField()
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='+')
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
