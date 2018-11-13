@@ -1,12 +1,12 @@
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 
 import auditor
-from api.endpoint.base import ListEndpoint, RetrieveEndpoint, DestroyEndpoint, UpdateEndpoint
-from api.endpoint.owner import OwnerEndpoint, OwnerResourceEndpoint
-from api.endpoint.project import ProjectEndpoint
 
+from api.endpoint.base import DestroyEndpoint, ListEndpoint, RetrieveEndpoint, UpdateEndpoint
+from api.endpoint.owner import OwnerProjectListPermission, OwnerResourceEndpoint
+from api.endpoint.project import ProjectEndpoint
 from api.projects import queries
 from api.projects.serializers import (
     BookmarkedProjectSerializer,
@@ -40,13 +40,13 @@ class ProjectCreateView(CreateAPIView):
 class ProjectListView(OwnerResourceEndpoint, ListEndpoint):
     """List projects for a user."""
     queryset = queries.projects.order_by('-updated_at')
+    permission_classes = (OwnerProjectListPermission,)
     serializer_class = BookmarkedProjectSerializer
 
     def filter_queryset(self, queryset):
-        queryset = queryset.filter(owner=self.owner)
         if self.request.access.public_only:
             queryset = queryset.filter(is_public=True)
-        return queryset
+        return super().filter_queryset(queryset=queryset)
 
 
 class ProjectDetailView(ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
@@ -61,7 +61,7 @@ class ProjectDetailView(ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, Destr
     queryset = queries.projects_details
     serializer_class = ProjectDetailSerializer
     AUDITOR_EVENT_TYPES = {
-        'get': PROJECT_VIEWED,
-        'update': PROJECT_UPDATED,
-        'delete': PROJECT_DELETED_TRIGGERED,
+        'GET': PROJECT_VIEWED,
+        'UPDATE': PROJECT_UPDATED,
+        'DELETE': PROJECT_DELETED_TRIGGERED,
     }

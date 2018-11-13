@@ -9,7 +9,7 @@ from api.experiments import views as experiments_views
 from api.jobs import views as jobs_views
 from api.plugins import views as tensorboards_views
 from api.projects import views
-from constants.urls import NAME_PATTERN, USERNAME_PATTERN, OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
+from constants.urls import OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
 
 projects_urlpatterns = [
     re_path(r'^projects/?$',
@@ -18,19 +18,19 @@ projects_urlpatterns = [
             views.ProjectListView.as_view()),
     re_path(r'^{}/{}/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.ProjectDetailView.as_view()),
-    re_path(r'^{}/{}/groups/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/groups/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             groups_views.ExperimentGroupListView.as_view()),
-    re_path(r'^{}/{}/experiments/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/experiments/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             experiments_views.ProjectExperimentListView.as_view()),
-    re_path(r'^{}/{}/jobs/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/jobs/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             jobs_views.ProjectJobListView.as_view()),
-    re_path(r'^{}/{}/builds/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/builds/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             builds_views.ProjectBuildListView.as_view()),
-    re_path(r'^{}/{}/tensorboards/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/tensorboards/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             tensorboards_views.ProjectTensorboardListView.as_view()),
-    re_path(r'^{}/{}/bookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/bookmark/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             bookmark_views.ProjectBookmarkCreateView.as_view()),
-    re_path(r'^{}/{}/unbookmark/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/unbookmark/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             bookmark_views.ProjectBookmarkDeleteView.as_view()),
 ]
 
