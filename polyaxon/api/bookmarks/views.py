@@ -172,28 +172,24 @@ class BookmarkDeleteView(BaseEndpoint, DestroyEndpoint):
 class BuildJobBookmarkCreateView(BuildEndpoint, BookmarkCreateView):
     """Bookmark build view."""
     event_type = BUILD_JOB_BOOKMARKED
-    queryset = BuildJob.objects.filter()
     content_type = content_types.BUILD_JOB
 
 
 class BuildJobBookmarkDeleteView(BuildEndpoint, BookmarkDeleteView):
     """Unbookmark build view."""
     event_type = BUILD_JOB_UNBOOKMARKED
-    queryset = BuildJob.objects.filter()
     content_type = content_types.BUILD_JOB
 
 
 class JobBookmarkCreateView(JobEndpoint, BookmarkCreateView):
     """Bookmark job view."""
     event_type = JOB_BOOKMARKED
-    queryset = Job.objects.filter()
     content_type = content_types.JOB
 
 
 class JobBookmarkDeleteView(JobEndpoint, BookmarkDeleteView):
     """Unbookmark job view."""
     event_type = JOB_UNBOOKMARKED
-    queryset = Job.objects.filter()
     content_type = content_types.JOB
 
 
@@ -224,12 +220,10 @@ class ExperimentGroupBookmarkDeleteView(ExperimentGroupEndpoint, BookmarkDeleteV
 class ProjectBookmarkCreateView(ProjectEndpoint, BookmarkCreateView):
     """Bookmark project view."""
     event_type = PROJECT_BOOKMARKED
-    permission_classes = (ProjectPermission,)
     content_type = content_types.PROJECT
 
 
 class ProjectBookmarkDeleteView(ProjectEndpoint, BookmarkDeleteView):
     """Unbookmark project view."""
     event_type = PROJECT_UNBOOKMARKED
-    permission_classes = (ProjectPermission,)
     content_type = content_types.PROJECT
