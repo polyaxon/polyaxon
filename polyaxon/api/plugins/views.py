@@ -1,7 +1,6 @@
 from hestia.bool_utils import to_bool
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, ListAPIView, get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from django.conf import settings
@@ -9,18 +8,18 @@ from django.http import Http404
 
 import auditor
 
+from api.endpoint.base import CreateEndpoint, ListEndpoint, PostEndpoint
+from api.endpoint.project import ProjectResourceListEndpoint, ProjectEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.plugins.serializers import (
     NotebookJobSerializer,
     ProjectTensorboardJobSerializer,
     TensorboardJobSerializer
 )
-from api.utils.views.post import PostAPIView
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
-from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from event_manager.events.notebook import (
     NOTEBOOK_STARTED_TRIGGERED,
@@ -37,19 +36,11 @@ from libs.repos import git
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.specifications import TensorboardSpecification
-from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 
 
-class StartTensorboardView(CreateAPIView):
+class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
     """Start a tensorboard."""
-    queryset = Project.objects.all()
     serializer_class = TensorboardJobSerializer
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
-
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
 
     @staticmethod
     def _get_default_tensorboard_config():
@@ -93,7 +84,7 @@ class StartTensorboardView(CreateAPIView):
         return experiment.tensorboard
 
     def post(self, request, *args, **kwargs):
-        project = self.get_object()
+        project = self.project
         experiment_id = self.kwargs.get('experiment_id')
         group_id = self.kwargs.get('group_id')
         if experiment_id:
@@ -117,18 +108,11 @@ class StartTensorboardView(CreateAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopTensorboardView(PostAPIView):
+class StopTensorboardView(ProjectEndpoint, PostEndpoint):
     """Stop a tensorboard."""
-    queryset = Project.objects.all()
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
-
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
 
     def post(self, request, *args, **kwargs):
-        project = self.get_object()
+        project = self.project
         experiment_id = self.kwargs.get('experiment_id')
         group_id = self.kwargs.get('group_id')
 
@@ -162,16 +146,9 @@ class StopTensorboardView(PostAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class StartNotebookView(CreateAPIView):
+class StartNotebookView(ProjectEndpoint, PostEndpoint):
     """Start a notebook."""
-    queryset = Project.objects.all()
     serializer_class = NotebookJobSerializer
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
-
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
 
     def _create_notebook(self, project):
         serializer = self.get_serializer(data=self.request.data)
@@ -184,12 +161,11 @@ class StartNotebookView(CreateAPIView):
                        actor_name=self.request.user.username)
 
     def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.has_notebook:
+        if self.project.has_notebook:
             return Response(data='Notebook is already running', status=status.HTTP_200_OK)
-        self._create_notebook(obj)
-        obj.clear_cached_properties()
-        notebook = obj.notebook
+        self._create_notebook(self.project)
+        self.project.clear_cached_properties()
+        notebook = self.project.notebook
         if not notebook.is_running:
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
@@ -198,53 +174,47 @@ class StartNotebookView(CreateAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopNotebookView(PostAPIView):
+class StopNotebookView(ProjectEndpoint, PostEndpoint):
     """Stop a tensorboard."""
-    queryset = Project.objects.all()
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
-
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
-
     def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.has_notebook:
+        if self.project.has_notebook:
             commit = request.data.get('commit')
             commit = to_bool(commit) if commit is not None else True
             try:
                 if commit:
                     # Commit changes
-                    git.commit(obj.repo.path, request.user.email, request.user.username)
+                    git.commit(self.project.repo.path, request.user.email, request.user.username)
                 else:
                     # Reset changes
-                    git.undo(obj.repo.path)
+                    git.undo(self.project.repo.path)
             except FileNotFoundError:
                 # Git probably was not found
                 pass
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
                 kwargs={
-                    'project_name': obj.unique_name,
-                    'project_uuid': obj.uuid.hex,
-                    'notebook_job_name': obj.notebook.unique_name,
-                    'notebook_job_uuid': obj.notebook.uuid.hex,
+                    'project_name': self.project.unique_name,
+                    'project_uuid': self.project.uuid.hex,
+                    'notebook_job_name': self.project.notebook.unique_name,
+                    'notebook_job_uuid': self.project.notebook.uuid.hex,
                     'update_status': True
                 })
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
-                           instance=obj.notebook,
+                           instance=self.project.notebook,
                            target='project',
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username,
                            countdown=1)
-        elif obj.notebook and obj.notebook.is_running:
-            obj.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
-                                    message='Notebook was stopped')
+        elif self.project.notebook and self.project.notebook.is_running:
+            self.project.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
+                                             message='Notebook was stopped')
         return Response(status=status.HTTP_200_OK)
 
 
-class PluginJobView(ProtectedView):
+class PluginJobView(ProjectEndpoint, ProtectedView):
+    def get_instance(self):
+        return self.project
+
     def audit(self, instance):
         pass
 
@@ -262,11 +232,8 @@ class PluginJobView(ProtectedView):
     def get_service_url(self, instance):
         raise NotImplementedError
 
-    def get_object(self):
-        return get_permissible_project(view=self)
-
     def get(self, request, *args, **kwargs):
-        instance = self.get_object()
+        instance = self.get_instance()
         if not self.has_plugin_job(instance):
             raise Http404
         # self.audit(instance=instance)  TODO add later
@@ -317,17 +284,16 @@ class NotebookView(PluginJobView):
 
 
 class TensorboardView(PluginJobView):
-    def get_object(self):
-        project = get_permissible_project(view=self)
+    def get_instance(self):
         experiment_id = self.kwargs.get('experiment_id')
         group_id = self.kwargs.get('group_id')
 
         if experiment_id:
-            return get_object_or_404(Experiment, project=project, id=experiment_id)
+            return get_object_or_404(Experiment, project=self.project, id=experiment_id)
         elif group_id:
-            return get_object_or_404(ExperimentGroup, project=project, id=group_id)
+            return get_object_or_404(ExperimentGroup, project=self.project, id=group_id)
 
-        return project
+        return self.project
 
     def get_service_url(self, instance):
         from scheduler import tensorboard_scheduler
@@ -353,21 +319,20 @@ class TensorboardView(PluginJobView):
                        actor_name=self.request.user.username)
 
 
-class ProjectTensorboardListView(ListAPIView):
+class ProjectTensorboardListView(ProjectResourceListEndpoint,
+                                 ListEndpoint,
+                                 CreateEndpoint):
     """List an tensorboards under a project."""
-    queryset = TensorboardJob.objects.all()
+    queryset = TensorboardJob.objects
     serializer_class = ProjectTensorboardJobSerializer
-    permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)
     query_manager = 'tensorboard'
     ordering = ('-updated_at',)
     ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
 
     def filter_queryset(self, queryset):
-        project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_TENSORBOARDS_VIEWED,
-                       instance=project,
+                       instance=self.project,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        queryset = queryset.filter(project=project)
         return super().filter_queryset(queryset=queryset)
