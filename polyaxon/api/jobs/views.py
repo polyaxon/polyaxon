@@ -21,6 +21,10 @@ from django.http import StreamingHttpResponse
 
 import auditor
 
+from api.endpoint.base import CreateEndpoint, ListEndpoint, DestroyEndpoint, UpdateEndpoint, \
+    RetrieveEndpoint, PostEndpoint
+from api.endpoint.job import JobEndpoint, JobResourceListEndpoint, JobResourceEndpoint
+from api.endpoint.project import ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.jobs import queries
 from api.jobs.serializers import (
@@ -30,9 +34,7 @@ from api.jobs.serializers import (
     JobSerializer,
     JobStatusSerializer
 )
-from api.utils.views.auditor_mixin import AuditorMixinView
-from api.utils.views.list_create import ListCreateAPIView
-from api.utils.views.post import PostAPIView
+from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
 from db.models.jobs import Job, JobStatus
 from db.redis.heartbeat import RedisHeartBeat
@@ -63,7 +65,10 @@ from scopes.permissions.projects import get_permissible_project
 _logger = logging.getLogger("polyaxon.views.jobs")
 
 
-class ProjectJobListView(ListCreateAPIView):
+class ProjectJobListView(BookmarkedListMixinView,
+                         ProjectResourceListEndpoint,
+                         ListEndpoint,
+                         CreateEndpoint):
     """
     get:
         List jobs under a project.
@@ -74,19 +79,16 @@ class ProjectJobListView(ListCreateAPIView):
     queryset = queries.jobs
     serializer_class = BookmarkedJobSerializer
     create_serializer_class = JobCreateSerializer
-    permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)
     query_manager = 'job'
     ordering = ('-updated_at',)
     ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
 
     def filter_queryset(self, queryset):
-        project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_JOBS_VIEWED,
-                       instance=project,
+                       instance=self.project,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        queryset = queryset.filter(project=project)
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
@@ -97,13 +99,13 @@ class ProjectJobListView(ListCreateAPIView):
             except ValueError:
                 raise ValidationError('ttl must be an integer.')
         instance = serializer.save(user=self.request.user,
-                                   project=get_permissible_project(view=self))
+                                   project=self.project)
         auditor.record(event_type=JOB_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_job(job_id=instance.id, value=ttl)
 
 
-class JobDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+class JobDetailView(JobEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
     """
     get:
         Get a job details.
@@ -114,26 +116,17 @@ class JobDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     """
     queryset = queries.jobs_details
     serializer_class = JobDetailSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
     instance = None
-    get_event = JOB_VIEWED
-    update_event = JOB_UPDATED
-    delete_event = JOB_DELETED_TRIGGERED
+    AUDITOR_EVENT_TYPES = {
+        'GET': JOB_VIEWED,
+        'UPDATE': JOB_UPDATED,
+        'DELETE': JOB_DELETED_TRIGGERED
+    }
 
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
 
-
-class JobCloneView(CreateAPIView):
-    queryset = Job.objects.all()
+class JobCloneView(JobEndpoint, CreateEndpoint):
     serializer_class = JobSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
     event_type = None
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
 
     def clone(self, obj, config, update_code_reference, description):
         pass
@@ -146,9 +139,8 @@ class JobCloneView(CreateAPIView):
             except ValueError:
                 raise ValidationError('ttl must be an integer.')
 
-        obj = self.get_object()
         auditor.record(event_type=self.event_type,
-                       instance=obj,
+                       instance=self.job,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
 
@@ -157,7 +149,7 @@ class JobCloneView(CreateAPIView):
         update_code_reference = False
         if 'config' in request.data:
             spec = validate_job_spec_config(
-                [obj.specification.parsed_data, request.data['config']], raise_for_rest=True)
+                [self.job.specification.parsed_data, request.data['config']], raise_for_rest=True)
             config = spec.parsed_data
         if 'update_code' in request.data:
             try:
@@ -166,7 +158,7 @@ class JobCloneView(CreateAPIView):
                 raise ValidationError('update_code should be a boolean')
         if 'description' in request.data:
             description = request.data['description']
-        new_obj = self.clone(obj=obj,
+        new_obj = self.clone(obj=self.job,
                              config=config,
                              update_code_reference=update_code_reference,
                              description=description)
@@ -178,10 +170,6 @@ class JobCloneView(CreateAPIView):
 
 class JobRestartView(JobCloneView):
     """Restart a job."""
-    queryset = Job.objects.all()
-    serializer_class = JobSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
     event_type = JOB_RESTARTED_TRIGGERED
 
     def clone(self, obj, config, update_code_reference, description):
@@ -207,19 +195,18 @@ class JobViewMixin(object):
         return queryset.filter(job=self.get_job())
 
 
-class JobStatusListView(JobViewMixin, ListCreateAPIView):
+class JobStatusListView(JobResourceListEndpoint, ListEndpoint, CreateEndpoint):
     """
     get:
         List all statuses of a job.
     post:
         Create a job status.
     """
-    queryset = JobStatus.objects.order_by('created_at').all()
+    queryset = JobStatus.objects.order_by('created_at')
     serializer_class = JobStatusSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(job=self.get_job())
+        serializer.save(job=self.job)
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -230,25 +217,23 @@ class JobStatusListView(JobViewMixin, ListCreateAPIView):
         return response
 
 
-class JobStatusDetailView(JobViewMixin, RetrieveAPIView):
+class JobStatusDetailView(JobResourceEndpoint, RetrieveEndpoint):
     """Get job status details."""
-    queryset = JobStatus.objects.all()
+    queryset = JobStatus.objects
     serializer_class = JobStatusSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
 
 
-class JobLogsView(JobViewMixin, RetrieveAPIView):
+class JobLogsView(JobEndpoint, RetrieveEndpoint):
     """Get job logs."""
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        job = self.get_job()
         auditor.record(event_type=JOB_LOGS_VIEWED,
                        instance=self.job,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        log_path = get_job_logs_path(job.unique_name)
+        log_path = get_job_logs_path(self.job.unique_name)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192
@@ -265,70 +250,52 @@ class JobLogsView(JobViewMixin, RetrieveAPIView):
                             data='Log file not found: log_path={}'.format(log_path))
 
 
-class JobStopView(CreateAPIView):
+class JobStopView(JobEndpoint, PostEndpoint):
     """Stop a job."""
-    queryset = Job.objects.all()
-    serializer_class = JobSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
 
     def post(self, request, *args, **kwargs):
-        obj = self.get_object()
         auditor.record(event_type=JOB_STOPPED_TRIGGERED,
-                       instance=obj,
+                       instance=self.job,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_STOP,
             kwargs={
-                'project_name': obj.project.unique_name,
-                'project_uuid': obj.project.uuid.hex,
-                'job_name': obj.unique_name,
-                'job_uuid': obj.uuid.hex,
-                'specification': obj.specification,
+                'project_name': self.project.unique_name,
+                'project_uuid': self.project.uuid.hex,
+                'job_name': self.job.unique_name,
+                'job_uuid': self.job.uuid.hex,
+                'specification': self.job.specification,
                 'update_status': True
             })
         return Response(status=status.HTTP_200_OK)
 
 
-class JobDownloadOutputsView(ProtectedView):
+class JobDownloadOutputsView(JobEndpoint, ProtectedView):
     """Download outputs of a job."""
-    permission_classes = (IsAuthenticated,)
     HANDLE_UNAUTHENTICATED = False
 
-    def get_object(self):
-        project = get_permissible_project(view=self)
-        job = get_object_or_404(Job, project=project, id=self.kwargs['id'])
+    def get(self, request, *args, **kwargs):
         auditor.record(event_type=JOB_OUTPUTS_DOWNLOADED,
-                       instance=job,
+                       instance=self.job,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        return job
-
-    def get(self, request, *args, **kwargs):
-        job = self.get_object()
         archived_path, archive_name = archive_job_outputs(
-            persistence_outputs=job.persistence_outputs,
-            job_name=job.unique_name)
+            persistence_outputs=self.job.persistence_outputs,
+            job_name=self.job.unique_name)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 
-class JobOutputsTreeView(JobViewMixin, RetrieveAPIView):
+class JobOutputsTreeView(JobEndpoint, RetrieveEndpoint):
     """
     get:
         Returns a the outputs directory tree.
     """
-    permission_classes = (IsAuthenticated,)
-
     def get(self, request, *args, **kwargs):
-        job = self.get_job()
-        store_manager = get_outputs_store(persistence_outputs=job.persistence_outputs)
+        store_manager = get_outputs_store(persistence_outputs=self.job.persistence_outputs)
         job_outputs_path = get_job_outputs_path(
-            persistence_outputs=job.persistence_outputs,
-            job_name=job.unique_name)
+            persistence_outputs=self.job.persistence_outputs,
+            job_name=self.job.unique_name)
         if request.query_params.get('path'):
             job_outputs_path = os.path.join(job_outputs_path,
                                             request.query_params.get('path'))
@@ -343,26 +310,23 @@ class JobOutputsTreeView(JobViewMixin, RetrieveAPIView):
         return Response(data=data, status=200)
 
 
-class JobOutputsFilesView(JobViewMixin, RetrieveAPIView):
+class JobOutputsFilesView(JobEndpoint, RetrieveEndpoint):
     """
     get:
         Returns a the outputs files content.
     """
-    permission_classes = (IsAuthenticated,)
-
     def get(self, request, *args, **kwargs):
         filepath = request.query_params.get('path')
         if not filepath:
             raise ValidationError('Files view expect a path to the file.')
 
-        job = self.get_job()
         job_outputs_path = get_job_outputs_path(
-            persistence_outputs=job.persistence_outputs,
-            job_name=job.unique_name)
+            persistence_outputs=self.job.persistence_outputs,
+            job_name=self.job.unique_name)
 
-        download_filepath = archive_outputs_file(persistence_outputs=job.persistence_outputs,
+        download_filepath = archive_outputs_file(persistence_outputs=self.job.persistence_outputs,
                                                  outputs_path=job_outputs_path,
-                                                 namepath=job.unique_name,
+                                                 namepath=self.job.unique_name,
                                                  filepath=filepath)
 
         filename = os.path.basename(download_filepath)
@@ -380,19 +344,16 @@ class JobOutputsFilesView(JobViewMixin, RetrieveAPIView):
                             data='Log file not found: log_path={}'.format(download_filepath))
 
 
-class JobHeartBeatView(PostAPIView):
+class JobHeartBeatView(JobEndpoint, PostEndpoint):
     """
     post:
         Post a heart beat ping.
     """
-    queryset = Job.objects.all()
-    permission_classes = (IsAuthenticatedOrInternal,)
+    permission_classes = JobEndpoint.permission_classes + (IsAuthenticatedOrInternal,)
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
         InternalAuthentication,
     ]
-    lookup_field = 'id'
 
     def post(self, request, *args, **kwargs):
-        job = self.get_object()
-        RedisHeartBeat.job_ping(job_id=job.id)
+        RedisHeartBeat.job_ping(job_id=self.job.id)
         return Response(status=status.HTTP_200_OK)
