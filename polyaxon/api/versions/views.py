@@ -1,6 +1,6 @@
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 
+from api.endpoint.base import BaseEndpoint, RetrieveEndpoint
 from db.models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion
 from polyaxon.config_manager import config
 from schemas.log_handler import LogHandlerConfig
@@ -12,31 +12,31 @@ from schemas.version import (
 )
 
 
-class CliVersionView(RetrieveAPIView):
+class CliVersionView(BaseEndpoint, RetrieveEndpoint):
     def retrieve(self, request, *args, **kwargs):
         cli_version = CliVersion.load()
         return Response(CliVersionConfig.obj_to_dict(cli_version))
 
 
-class PlatformVersionView(RetrieveAPIView):
+class PlatformVersionView(BaseEndpoint, RetrieveEndpoint):
     def retrieve(self, request, *args, **kwargs):
         platform_version = PlatformVersion.load()
         return Response(PlatformVersionConfig.obj_to_dict(platform_version))
 
 
-class LibVersionView(RetrieveAPIView):
+class LibVersionView(BaseEndpoint, RetrieveEndpoint):
     def retrieve(self, request, *args, **kwargs):
         lib_version = LibVersion.load()
         return Response(LibVersionConfig.obj_to_dict(lib_version))
 
 
-class ChartVersionView(RetrieveAPIView):
+class ChartVersionView(BaseEndpoint, RetrieveEndpoint):
     def retrieve(self, request, *args, **kwargs):
         chart_version = ChartVersion.load()
         return Response(ChartVersionConfig.obj_to_dict(chart_version))
 
 
-class ClusterLogHandlerView(RetrieveAPIView):
+class ClusterLogHandlerView(BaseEndpoint, RetrieveEndpoint):
     def retrieve(self, request, *args, **kwargs):
         cli_version = CliVersionConfig.obj_to_dict(CliVersion.load())
         chart_version = ChartVersionConfig.obj_to_dict(ChartVersion.load())
