@@ -1,22 +1,19 @@
-from rest_framework.generics import DestroyAPIView
-from rest_framework.permissions import IsAuthenticated
-
 import auditor
+
+from api.endpoint.base import CreateEndpoint, ListEndpoint, DestroyEndpoint
+from api.endpoint.project import ProjectResourceListEndpoint, ProjectResourceEndpoint
 
 from api.filters import OrderingFilter
 from api.paginator import LargeLimitOffsetPagination
 from api.searches.serializers import SearchSerializer
-from api.utils.views.list_create import ListCreateAPIView
 from constants import content_types
 from db.models.searches import Search
 from event_manager.events.search import SEARCH_CREATED, SEARCH_DELETED
-from scopes.permissions.projects import get_permissible_project
 
 
-class SearchListView(ListCreateAPIView):
+class SearchListView(ProjectResourceListEndpoint, ListEndpoint, CreateEndpoint):
     """Base Search list view."""
-    queryset = Search.objects.all()
-    permission_classes = (IsAuthenticated,)
+    queryset = Search.objects
     serializer_class = SearchSerializer
     content_type = None
     filter_backends = (OrderingFilter,)
@@ -25,16 +22,15 @@ class SearchListView(ListCreateAPIView):
     pagination_class = LargeLimitOffsetPagination
 
     def filter_queryset(self, queryset):
-        project = get_permissible_project(view=self)
         queryset = queryset.filter(user=self.request.user,
                                    content_type=self.content_type,
-                                   project=project)
+                                   project=self.project)
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
         instance = serializer.save(user=self.request.user,
                                    content_type=self.content_type,
-                                   project=get_permissible_project(view=self))
+                                   project=self.project)
         auditor.record(event_type=SEARCH_CREATED, instance=instance)
 
 
@@ -58,15 +54,14 @@ class ExperimentGroupSearchListView(SearchListView):
     content_type = content_types.EXPERIMENT_GROUP
 
 
-class SearchDeleteView(DestroyAPIView):
+class SearchDeleteView(ProjectResourceEndpoint, DestroyEndpoint):
     """Base Search delete view."""
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
     queryset = Search.objects
     content_type = None
 
     def filter_queryset(self, queryset):
-        return queryset.filter(user=self.request.user, project=get_permissible_project(view=self))
+        return queryset.filter(user=self.request.user, project=self.project)
 
     def perform_destroy(self, instance):
         auditor.record(event_type=SEARCH_DELETED, instance=instance)
