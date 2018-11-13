@@ -8,9 +8,9 @@ class IsInternal(PolyaxonPermission):
     """Custom permission to only allow internal clients."""
 
     def has_permission(self, request, view):
-        if request.user and not request.user.is_anonymous and is_authenticated_internal_user(request.user):
-            return True
-        return False
+        return (request.user and
+                not request.user.is_anonymous and
+                is_authenticated_internal_user(request.user))
 
 
 class IsAuthenticatedOrInternal(permissions.IsAuthenticated):
