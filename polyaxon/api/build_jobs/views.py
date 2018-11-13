@@ -6,13 +6,7 @@ from wsgiref.util import FileWrapper
 
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import (
-    CreateAPIView,
-    RetrieveAPIView,
-    RetrieveUpdateDestroyAPIView,
-    get_object_or_404
-)
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
@@ -28,6 +22,10 @@ from api.build_jobs.serializers import (
     BuildJobSerializer,
     BuildJobStatusSerializer
 )
+from api.endpoint.base import CreateEndpoint, ListEndpoint, DestroyEndpoint, UpdateEndpoint, \
+    RetrieveEndpoint, PostEndpoint
+from api.endpoint.build import BuildEndpoint, BuildResourceListEndpoint, BuildResourceEndpoint
+from api.endpoint.project import ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
@@ -56,7 +54,10 @@ from scopes.permissions.projects import get_permissible_project
 _logger = logging.getLogger("polyaxon.views.builds")
 
 
-class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
+class ProjectBuildListView(BookmarkedListMixinView,
+                           ProjectResourceListEndpoint,
+                           ListEndpoint,
+                           CreateEndpoint):
     """
     get:
         List builds under a project.
@@ -67,19 +68,16 @@ class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
     queryset = queries.builds
     serializer_class = BookmarkedBuildJobSerializer
     create_serializer_class = BuildJobCreateSerializer
-    permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)
     query_manager = 'build'
     ordering = ('-updated_at',)
     ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
 
     def filter_queryset(self, queryset):
-        project = get_permissible_project(view=self)
         auditor.record(event_type=PROJECT_BUILDS_VIEWED,
-                       instance=project,
+                       instance=self.project,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        queryset = queryset.filter(project=project)
         return super().filter_queryset(queryset=queryset)
 
     def perform_create(self, serializer):
@@ -90,9 +88,8 @@ class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
             except ValueError:
                 raise ValidationError('ttl must be an integer.')
 
-        project = get_permissible_project(view=self)
         instance = serializer.save(user=self.request.user,
-                                   project=project)
+                                   project=self.project)
         auditor.record(event_type=BUILD_JOB_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_build(build_id=instance.id, value=ttl)
@@ -103,7 +100,7 @@ class ProjectBuildListView(BookmarkedListMixinView, ListCreateAPIView):
             countdown=1)
 
 
-class BuildDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
     """
     get:
         Get a build details.
@@ -114,15 +111,11 @@ class BuildDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     """
     queryset = queries.builds_details
     serializer_class = BuildJobDetailSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
-    instance = None
-    get_event = BUILD_JOB_VIEWED
-    update_event = BUILD_JOB_UPDATED
-    delete_event = BUILD_JOB_DELETED_TRIGGERED
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
+    AUDITOR_EVENT_TYPES = {
+        'GET': BUILD_JOB_VIEWED,
+        'UPDATE': BUILD_JOB_UPDATED,
+        'DELETE': BUILD_JOB_DELETED_TRIGGERED
+    }
 
 
 class BuildViewMixin(object):
@@ -141,48 +134,45 @@ class BuildViewMixin(object):
         return queryset.filter(job=self.get_job())
 
 
-class BuildStatusListView(BuildViewMixin, ListCreateAPIView):
+class BuildStatusListView(BuildResourceListEndpoint, ListEndpoint, CreateEndpoint):
     """
     get:
         List all statuses of a build.
     post:
         Create an build status.
     """
-    queryset = BuildJobStatus.objects.order_by('created_at').all()
+    queryset = BuildJobStatus.objects.order_by('created_at')
     serializer_class = BuildJobStatusSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(job=self.get_job())
+        serializer.save(job=self.build)
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=BUILD_JOB_STATUSES_VIEWED,
-                       instance=self.job,
+                       instance=self.build,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         return response
 
 
-class BuildStatusDetailView(BuildViewMixin, RetrieveAPIView):
+class BuildStatusDetailView(BuildResourceEndpoint, RetrieveEndpoint):
     """Get build status details."""
-    queryset = BuildJobStatus.objects.all()
+    queryset = BuildJobStatus.objects
     serializer_class = BuildJobStatusSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
 
 
-class BuildLogsView(BuildViewMixin, RetrieveAPIView):
+class BuildLogsView(BuildEndpoint, RetrieveEndpoint):
     """Get build logs."""
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        job = self.get_job()
         auditor.record(event_type=BUILD_JOB_LOGS_VIEWED,
-                       instance=self.job,
+                       instance=self.build,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        log_path = get_job_logs_path(job.unique_name)
+        log_path = get_job_logs_path(self.build.unique_name)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192
@@ -199,47 +189,37 @@ class BuildLogsView(BuildViewMixin, RetrieveAPIView):
                             data='Log file not found: log_path={}'.format(log_path))
 
 
-class BuildStopView(CreateAPIView):
+class BuildStopView(BuildEndpoint, CreateEndpoint):
     """Stop a build."""
-    queryset = BuildJob.objects.all()
     serializer_class = BuildJobSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
 
     def post(self, request, *args, **kwargs):
-        obj = self.get_object()
         auditor.record(event_type=BUILD_JOB_STOPPED_TRIGGERED,
-                       instance=obj,
+                       instance=self.build,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={
-                'project_name': obj.project.unique_name,
-                'project_uuid': obj.project.uuid.hex,
-                'build_job_name': obj.unique_name,
-                'build_job_uuid': obj.uuid.hex,
+                'project_name': self.project.unique_name,
+                'project_uuid': self.project.uuid.hex,
+                'build_job_name': self.build.unique_name,
+                'build_job_uuid': self.build.uuid.hex,
                 'update_status': True
             })
         return Response(status=status.HTTP_200_OK)
 
 
-class BuildHeartBeatView(PostAPIView):
+class BuildHeartBeatView(BuildEndpoint, PostEndpoint):
     """
     post:
         Post a heart beat ping.
     """
-    queryset = BuildJob.objects.all()
-    permission_classes = (IsAuthenticatedOrInternal,)
+    permission_classes = BuildEndpoint.permission_classes + (IsAuthenticatedOrInternal,)
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
         InternalAuthentication,
     ]
-    lookup_field = 'id'
 
     def post(self, request, *args, **kwargs):
-        build = self.get_object()
-        RedisHeartBeat.build_ping(build_id=build.id)
+        RedisHeartBeat.build_ping(build_id=self.build.id)
         return Response(status=status.HTTP_200_OK)
