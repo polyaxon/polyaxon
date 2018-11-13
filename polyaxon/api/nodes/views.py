@@ -1,13 +1,19 @@
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
 
+from api.endpoint.base import (
+    CreateEndpoint,
+    ListEndpoint,
+    DestroyEndpoint,
+    UpdateEndpoint,
+    RetrieveEndpoint
+)
+from api.endpoint.node import NodeListEndpoint, NodeEndpoint, NodeResourceEndpoint
 from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
-from api.utils.views.list_create import ListCreateAPIView
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 
 
-class ClusterNodeListView(ListCreateAPIView):
+class ClusterNodeListView(NodeListEndpoint, ListEndpoint, CreateEndpoint):
     """
     get:
         List cluster nodes.
@@ -15,15 +21,13 @@ class ClusterNodeListView(ListCreateAPIView):
     post:
         Create a cluster node.
     """
-    queryset = ClusterNode.objects.order_by('sequence').filter(is_current=True)
     serializer_class = ClusterNodeSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(cluster=Cluster.load())
 
 
-class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):
+class ClusterNodeDetailView(NodeEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
     """
     get:
         Get a custer node details.
@@ -34,8 +38,6 @@ class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):
     """
     queryset = ClusterNode.objects.filter(is_current=True)
     serializer_class = ClusterNodeDetailSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
 
 
 class ClusterNodeGPUViewMixin(object):
@@ -47,7 +49,7 @@ class ClusterNodeGPUViewMixin(object):
         return queryset.filter(cluster_node=self.get_cluster_node())
 
 
-class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
+class ClusterNodeGPUListView(NodeResourceEndpoint, ListEndpoint, CreateEndpoint):
     """
     get:
         List cluster node GPUs.
@@ -55,15 +57,17 @@ class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
     post:
         Create a cluster node GPU.
     """
-    queryset = NodeGPU.objects.all()
+    queryset = NodeGPU.objects
     serializer_class = GPUSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(cluster_node=self.get_cluster_node())
+        serializer.save(cluster_node=self.node)
 
 
-class ClusterNodeGPUDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeGPUViewMixin):
+class ClusterNodeGPUDetailView(NodeResourceEndpoint,
+                               RetrieveEndpoint,
+                               UpdateEndpoint,
+                               DestroyEndpoint):
     """
     get:
         Get a custer node GPU details.
@@ -72,7 +76,7 @@ class ClusterNodeGPUDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeGPUViewM
     delete:
         Delete a custer node GPU.
     """
-    queryset = NodeGPU.objects.all()
+    queryset = NodeGPU.objects
     serializer_class = GPUSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'index'
+    lookup_url_kwarg = 'index'

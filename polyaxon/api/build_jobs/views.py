@@ -27,10 +27,7 @@ from api.endpoint.base import CreateEndpoint, ListEndpoint, DestroyEndpoint, Upd
 from api.endpoint.build import BuildEndpoint, BuildResourceListEndpoint, BuildResourceEndpoint
 from api.endpoint.project import ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
-from api.utils.views.auditor_mixin import AuditorMixinView
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
-from api.utils.views.list_create import ListCreateAPIView
-from api.utils.views.post import PostAPIView
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL

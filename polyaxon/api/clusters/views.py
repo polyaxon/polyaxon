@@ -1,14 +1,11 @@
-from rest_framework.generics import RetrieveAPIView
-from rest_framework.permissions import IsAuthenticated
-
 from api.clusters.serializers import ClusterSerializer
+from api.endpoint.base import RetrieveEndpoint
+from api.endpoint.cluster import ClusterEndpoint
 from db.models.clusters import Cluster
 
 
-class ClusterDetailView(RetrieveAPIView):
+class ClusterDetailView(ClusterEndpoint, RetrieveEndpoint):
     """Get cluster details."""
-    queryset = Cluster.objects.all()
-    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         return ClusterSerializer

@@ -5,12 +5,9 @@ from django.urls import re_path
 from api.bookmarks import views as bookmark_views
 from api.jobs import views
 from constants.urls import (
-    ID_PATTERN,
     JOB_ID_PATTERN,
-    NAME_PATTERN,
     OWNER_NAME_PATTERN,
     PROJECT_NAME_PATTERN,
-    USERNAME_PATTERN,
     UUID_PATTERN
 )
 
