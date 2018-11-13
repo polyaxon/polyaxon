@@ -7,14 +7,7 @@ from wsgiref.util import FileWrapper
 from hestia.bool_utils import to_bool
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import (
-    CreateAPIView,
-    ListAPIView,
-    RetrieveAPIView,
-    RetrieveUpdateAPIView,
-    RetrieveUpdateDestroyAPIView,
-    get_object_or_404
-)
+from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
@@ -24,6 +17,24 @@ from django.http import StreamingHttpResponse
 import auditor
 
 from api.code_reference.serializers import CodeReferenceSerializer
+from api.endpoint.base import (
+    CreateEndpoint,
+    DestroyEndpoint,
+    ListEndpoint,
+    RetrieveEndpoint,
+    UpdateEndpoint,
+    PostEndpoint)
+from api.endpoint.experiment import (
+    ExperimentEndpoint,
+    ExperimentResourceEndpoint,
+    ExperimentResourceListEndpoint
+)
+from api.endpoint.experiment_job import (
+    ExperimentJobEndpoint,
+    ExperimentJobResourceEndpoint,
+    ExperimentJobResourceListEndpoint
+)
+from api.endpoint.project import ProjectResourceListEndpoint
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
@@ -41,9 +52,7 @@ from api.experiments.serializers import (
 )
 from api.filters import OrderingFilter, QueryFilter
 from api.paginator import LargeLimitOffsetPagination
-from api.utils.views.auditor_mixin import AuditorMixinView
-from api.utils.views.list_create import ListCreateAPIView
-from api.utils.views.post import PostAPIView
+from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
@@ -54,7 +63,6 @@ from db.models.experiments import (
     ExperimentMetric,
     ExperimentStatus
 )
-from db.models.projects import Project
 from db.models.tokens import Token
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.heartbeat import RedisHeartBeat
@@ -91,8 +99,8 @@ from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
-from scopes.permissions.internal import IsAuthenticatedOrInternal
-from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
+from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInternal
+from scopes.permissions.projects import get_permissible_project
 
 _logger = logging.getLogger("polyaxon.views.experiments")
 
@@ -104,7 +112,10 @@ class ExperimentListView(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class ProjectExperimentListView(ListCreateAPIView):
+class ProjectExperimentListView(BookmarkedListMixinView,
+                                ProjectResourceListEndpoint,
+                                ListEndpoint,
+                                CreateEndpoint):
     """
     get:
         List experiments under a project.
@@ -117,7 +128,6 @@ class ProjectExperimentListView(ListCreateAPIView):
     metrics_serializer_class = ExperimentLastMetricSerializer
     declarations_serializer_class = ExperimentDeclarationsSerializer
     create_serializer_class = ExperimentCreateSerializer
-    permission_classes = (IsAuthenticated,)
     filter_backends = (QueryFilter, OrderingFilter,)
     query_manager = 'experiment'
     ordering = ('-updated_at',)
@@ -159,12 +169,11 @@ class ProjectExperimentListView(ListCreateAPIView):
         if independent and group_id:
             raise ValidationError('You cannot filter for independent experiments and '
                                   'group experiments at the same time.')
-        project = get_permissible_project(view=self)
-        queryset = queryset.filter(project=project)
+        queryset = queryset.filter(project=self.project)
         if independent:
             queryset = queryset.filter(experiment_group__isnull=True)
         if group_id:
-            group = self.get_group(project=project, group_id=group_id)
+            group = self.get_group(project=self.project, group_id=group_id)
             if group.is_study:
                 queryset = queryset.filter(experiment_group=group)
             elif group.is_selection:
@@ -172,7 +181,7 @@ class ProjectExperimentListView(ListCreateAPIView):
             else:
                 raise ValidationError('Invalid group.')
         auditor.record(event_type=PROJECT_EXPERIMENTS_VIEWED,
-                       instance=project,
+                       instance=self.project,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
         return super().filter_queryset(queryset=queryset)
@@ -184,17 +193,16 @@ class ProjectExperimentListView(ListCreateAPIView):
                 ttl = RedisTTL.validate_ttl(ttl)
             except ValueError:
                 raise ValidationError('ttl must be an integer.')
-        project = get_permissible_project(view=self)
         group = self.request.data.get('experiment_group')
         if group:
             try:
-                group = ExperimentGroup.objects.get(id=group, project=project)
+                group = ExperimentGroup.objects.get(id=group, project=self.project)
             except ExperimentGroup.DoesNotExist:
                 raise ValidationError('Received an invalid group.')
             if group.is_selection:
                 self.request.data.pop('experiment_group')
 
-        instance = serializer.save(user=self.request.user, project=project)
+        instance = serializer.save(user=self.request.user, project=self.project)
         if group and group.is_selection:  # Add the experiment to the group selection
             group.selection_experiments.add(instance)
         auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
@@ -202,7 +210,10 @@ class ProjectExperimentListView(ListCreateAPIView):
             RedisTTL.set_for_experiment(experiment_id=instance.id, value=ttl)
 
 
-class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
+class ExperimentDetailView(ExperimentEndpoint,
+                           RetrieveEndpoint,
+                           DestroyEndpoint,
+                           UpdateEndpoint):
     """
     get:
         Get an experiment details.
@@ -213,26 +224,16 @@ class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     """
     queryset = queries.experiments_details
     serializer_class = ExperimentDetailSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
-    instance = None
-    get_event = EXPERIMENT_VIEWED
-    update_event = EXPERIMENT_UPDATED
-    delete_event = EXPERIMENT_DELETED_TRIGGERED
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
+    AUDITOR_EVENT_TYPES = {
+        'GET': EXPERIMENT_VIEWED,
+        'UPDATE': EXPERIMENT_UPDATED,
+        'DELETE': EXPERIMENT_DELETED_TRIGGERED
+    }
 
 
-class ExperimentCloneView(CreateAPIView):
-    queryset = Experiment.objects.all()
+class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
     event_type = None
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
 
     def clone(self, obj, config, declarations, update_code_reference, description):
         pass
@@ -279,10 +280,7 @@ class ExperimentCloneView(CreateAPIView):
 
 class ExperimentRestartView(ExperimentCloneView):
     """Restart an experiment."""
-    queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
     event_type = EXPERIMENT_RESTARTED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
@@ -295,10 +293,7 @@ class ExperimentRestartView(ExperimentCloneView):
 
 class ExperimentResumeView(ExperimentCloneView):
     """Resume an experiment."""
-    queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
     event_type = EXPERIMENT_RESUMED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
@@ -311,10 +306,7 @@ class ExperimentResumeView(ExperimentCloneView):
 
 class ExperimentCopyView(ExperimentCloneView):
     """Copy an experiment."""
-    queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
     event_type = EXPERIMENT_COPIED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
@@ -325,15 +317,12 @@ class ExperimentCopyView(ExperimentCloneView):
                         description=description)
 
 
-class ExperimentCodeReferenceView(CreateAPIView, RetrieveAPIView):
+class ExperimentCodeReferenceView(ExperimentEndpoint, CreateEndpoint, RetrieveEndpoint):
     """
     post:
         Create an experiment metric.
     """
-    queryset = Experiment.objects.all()
     serializer_class = CodeReferenceSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
 
     def perform_create(self, serializer):
         experiment = self.get_object()
@@ -366,21 +355,18 @@ class ExperimentViewMixin(object):
         return queryset.filter(experiment=self.get_experiment())
 
 
-class ExperimentOutputsTreeView(ExperimentViewMixin, RetrieveAPIView):
+class ExperimentOutputsTreeView(ExperimentEndpoint, RetrieveEndpoint):
     """
     get:
         Returns a the outputs directory tree.
     """
-    permission_classes = (IsAuthenticated,)
-
     def get(self, request, *args, **kwargs):
-        experiment = self.get_experiment()
-        store_manager = get_outputs_store(persistence_outputs=experiment.persistence_outputs)
+        store_manager = get_outputs_store(persistence_outputs=self.experiment.persistence_outputs)
         experiment_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=experiment.persistence_outputs,
-            experiment_name=experiment.unique_name,
-            original_name=experiment.original_unique_name,
-            cloning_strategy=experiment.cloning_strategy)
+            persistence_outputs=self.experiment.persistence_outputs,
+            experiment_name=self.experiment.unique_name,
+            original_name=self.experiment.original_unique_name,
+            cloning_strategy=self.experiment.cloning_strategy)
         if request.query_params.get('path'):
             experiment_outputs_path = os.path.join(experiment_outputs_path,
                                                    request.query_params.get('path'))
@@ -394,29 +380,28 @@ class ExperimentOutputsTreeView(ExperimentViewMixin, RetrieveAPIView):
         return Response(data=data, status=200)
 
 
-class ExperimentOutputsFilesView(ExperimentViewMixin, RetrieveAPIView):
+class ExperimentOutputsFilesView(ExperimentEndpoint, RetrieveEndpoint):
     """
     get:
         Returns a the outputs files content.
     """
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         filepath = request.query_params.get('path')
         if not filepath:
             raise ValidationError('Files view expect a path to the file.')
 
-        experiment = self.get_experiment()
         experiment_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=experiment.persistence_outputs,
-            experiment_name=experiment.unique_name,
-            original_name=experiment.original_unique_name,
-            cloning_strategy=experiment.cloning_strategy)
+            persistence_outputs=self.experiment.persistence_outputs,
+            experiment_name=self.experiment.unique_name,
+            original_name=self.experiment.original_unique_name,
+            cloning_strategy=self.experiment.cloning_strategy)
 
-        download_filepath = archive_outputs_file(persistence_outputs=experiment.persistence_outputs,
-                                                 outputs_path=experiment_outputs_path,
-                                                 namepath=experiment.unique_name,
-                                                 filepath=filepath)
+        download_filepath = archive_outputs_file(
+            persistence_outputs=self.experiment.persistence_outputs,
+            outputs_path=experiment_outputs_path,
+            namepath=self.experiment.unique_name,
+            filepath=filepath)
 
         filename = os.path.basename(download_filepath)
         chunk_size = 8192
@@ -433,19 +418,20 @@ class ExperimentOutputsFilesView(ExperimentViewMixin, RetrieveAPIView):
                             data='Log file not found: log_path={}'.format(download_filepath))
 
 
-class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
+class ExperimentStatusListView(ExperimentResourceListEndpoint,
+                               ListEndpoint,
+                               CreateEndpoint):
     """
     get:
         List all statuses of an experiment.
     post:
         Create an experiment status.
     """
-    queryset = ExperimentStatus.objects.order_by('created_at').all()
+    queryset = ExperimentStatus.objects.order_by('created_at')
     serializer_class = ExperimentStatusSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(experiment=self.get_experiment())
+        serializer.save(experiment=self.experiment)
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -456,7 +442,9 @@ class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
         return response
 
 
-class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
+class ExperimentMetricListView(ExperimentResourceEndpoint,
+                               ListEndpoint,
+                               CreateEndpoint):
     """
     get:
         List all metrics of an experiment.
@@ -468,12 +456,11 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
         InternalAuthentication,
     ]
-    permission_classes = (IsAuthenticatedOrInternal,)
     pagination_class = LargeLimitOffsetPagination
     throttle_scope = 'high'
 
     def perform_create(self, serializer):
-        serializer.save(experiment=self.get_experiment())
+        serializer.save(experiment=self.experiment)
 
     def get_serializer(self, *args, **kwargs):
         """ if an array is passed, set serializer to many """
@@ -486,7 +473,7 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
             celery_app.send_task(
                 SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS,
                 kwargs={
-                    'experiment_id': self.get_experiment().id,
+                    'experiment_id': self.experiment.id,
                     'data': request.data
                 })
             return Response(status=status.HTTP_201_CREATED)
@@ -506,28 +493,27 @@ class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
         return response
 
 
-class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
+class ExperimentStatusDetailView(ExperimentResourceEndpoint, RetrieveEndpoint):
     """Get experiment status details."""
-    queryset = ExperimentStatus.objects.all()
+    queryset = ExperimentStatus.objects
     serializer_class = ExperimentStatusSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
 
 
-class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
+class ExperimentJobListView(ExperimentResourceListEndpoint, ListEndpoint, CreateEndpoint):
     """
     get:
         List all jobs of an experiment.
     post:
         Create an experiment job.
     """
-    queryset = ExperimentJob.objects.order_by('-updated_at').all()
+    queryset = ExperimentJob.objects.order_by('-updated_at')
     serializer_class = ExperimentJobSerializer
     create_serializer_class = ExperimentJobDetailSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(experiment=self.get_experiment())
+        serializer.save(experiment=self.experiment)
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -538,7 +524,10 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
         return response
 
 
-class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
+class ExperimentJobDetailView(ExperimentJobEndpoint,
+                              RetrieveEndpoint,
+                              UpdateEndpoint,
+                              DestroyEndpoint):
     """
     get:
         Get experiment job details.
@@ -547,29 +536,25 @@ class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpd
     delete:
         Delete an experiment job.
     """
-    queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobDetailSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
-    get_event = EXPERIMENT_JOB_VIEWED
+    AUDITOR_EVENT_TYPES = {'GET': EXPERIMENT_JOB_VIEWED}
 
 
-class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
+class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
     """
     get:
         Get experiment logs.
     post:
         Post experiment logs.
     """
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        experiment = self.get_experiment()
         auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
                        instance=self.experiment,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        log_path = get_experiment_logs_path(experiment.unique_name)
+        log_path = get_experiment_logs_path(self.experiment.unique_name)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192
@@ -586,7 +571,6 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
                             data='Log file not found: log_path={}'.format(log_path))
 
     def post(self, request, *args, **kwargs):
-        experiment = self.get_experiment()
         log_lines = request.data
         if not log_lines or not isinstance(log_lines, (str, list)):
             raise ValidationError('Logs handler expects `data` to be a string or list of strings.')
@@ -595,26 +579,25 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView, PostAPIView):
         celery_app.send_task(
             LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
             kwargs={
-                'experiment_name': experiment.unique_name,
-                'experiment_uuid': experiment.uuid.hex,
+                'experiment_name': self.experiment.unique_name,
+                'experiment_uuid': self.experiment.uuid.hex,
                 'log_lines': log_lines
             })
         return Response(status=status.HTTP_200_OK)
 
 
-class ExperimentHeartBeatView(ExperimentViewMixin, PostAPIView):
+class ExperimentHeartBeatView(ExperimentEndpoint, PostEndpoint):
     """
     post:
         Post a heart beat ping.
     """
-    permission_classes = (IsAuthenticatedOrInternal,)
+    permission_classes = ExperimentEndpoint.permission_classes + (IsAuthenticatedOrInternal,)
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
         InternalAuthentication,
     ]
 
     def post(self, request, *args, **kwargs):
-        experiment = self.get_experiment()
-        RedisHeartBeat.experiment_ping(experiment_id=experiment.id)
+        RedisHeartBeat.experiment_ping(experiment_id=self.experiment.id)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -643,19 +626,18 @@ class ExperimentJobViewMixin(object):
         return queryset.filter(job=self.get_job())
 
 
-class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
+class ExperimentJobStatusListView(ExperimentJobResourceListEndpoint, ListEndpoint, CreateEndpoint):
     """
     get:
         List all statuses of experiment job.
     post:
         Create an experiment job status.
     """
-    queryset = ExperimentJobStatus.objects.order_by('created_at').all()
+    queryset = ExperimentJobStatus.objects.order_by('created_at')
     serializer_class = ExperimentJobStatusSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(job=self.get_job())
+        serializer.save(job=self.job)
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -666,28 +648,24 @@ class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
         return response
 
 
-class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIView):
+class ExperimentJobStatusDetailView(ExperimentJobResourceEndpoint,
+                                    RetrieveEndpoint,
+                                    UpdateEndpoint):
     """
     get:
         Get experiment job status details.
     patch:
         Update an experiment job status details.
     """
-    queryset = ExperimentJobStatus.objects.all()
+    queryset = ExperimentJobStatus.objects
     serializer_class = ExperimentJobStatusSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
 
 
-class ExperimentStopView(CreateAPIView):
+class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
     """Stop an experiment."""
-    queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'id'
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -699,8 +677,8 @@ class ExperimentStopView(CreateAPIView):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={
-                'project_name': obj.project.unique_name,
-                'project_uuid': obj.project.uuid.hex,
+                'project_name': self.project.unique_name,
+                'project_uuid': self.project.uuid.hex,
                 'experiment_name': obj.unique_name,
                 'experiment_uuid': obj.uuid.hex,
                 'experiment_group_name': group.unique_name if group else None,
@@ -711,20 +689,13 @@ class ExperimentStopView(CreateAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ExperimentStopManyView(PostAPIView):
+class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
     """Stop a group of experiments."""
-    queryset = Project.objects.all()
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
-
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
+    queryset = queries.experiments_auditing
 
     def post(self, request, *args, **kwargs):
-        project = self.get_object()
-        experiments = queries.experiments_auditing.filter(project=project,
-                                                          id__in=request.data.get('ids', []))
+        experiments = self.queryset.filter(project=self.project,
+                                           id__in=request.data.get('ids', []))
         for experiment in experiments:
             auditor.record(event_type=EXPERIMENT_STOPPED_TRIGGERED,
                            instance=experiment,
@@ -734,8 +705,8 @@ class ExperimentStopManyView(PostAPIView):
             celery_app.send_task(
                 SchedulerCeleryTasks.EXPERIMENTS_STOP,
                 kwargs={
-                    'project_name': project.unique_name,
-                    'project_uuid': project.uuid.hex,
+                    'project_name': self.project.unique_name,
+                    'project_uuid': self.project.uuid.hex,
                     'experiment_name': experiment.unique_name,
                     'experiment_uuid': experiment.uuid.hex,
                     'experiment_group_name': group.unique_name if group else None,
@@ -746,19 +717,12 @@ class ExperimentStopManyView(PostAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ExperimentDeleteManyView(PostAPIView):
+class ExperimentDeleteManyView(ProjectResourceListEndpoint, PostEndpoint):
     """Delete a group of experiments."""
-    queryset = Project.objects.all()
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
-
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
+    queryset = queries.experiments_auditing
 
     def delete(self, request, *args, **kwargs):
-        project = self.get_object()
-        experiments = queries.experiments_auditing.filter(project=project,
+        experiments = queries.experiments_auditing.filter(project=self.project,
                                                           id__in=request.data.get('ids', []))
         for experiment in experiments:
             auditor.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
@@ -769,35 +733,27 @@ class ExperimentDeleteManyView(PostAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ExperimentDownloadOutputsView(ProtectedView):
+class ExperimentDownloadOutputsView(ExperimentEndpoint, ProtectedView):
     """Download outputs of an experiment."""
-    permission_classes = (IsAuthenticated,)
     HANDLE_UNAUTHENTICATED = False
 
-    def get_object(self):
-        project = get_permissible_project(view=self)
-        experiment = get_object_or_404(Experiment, project=project, id=self.kwargs['id'])
+    def get(self, request, *args, **kwargs):
         auditor.record(event_type=EXPERIMENT_OUTPUTS_DOWNLOADED,
-                       instance=experiment,
+                       instance=self.experiment,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        return experiment
-
-    def get(self, request, *args, **kwargs):
-        experiment = self.get_object()
         archived_path, archive_name = archive_experiment_outputs(
-            persistence_outputs=experiment.persistence_outputs,
-            experiment_name=experiment.unique_name)
+            persistence_outputs=self.experiment.persistence_outputs,
+            experiment_name=self.experiment.unique_name)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 
-class ExperimentScopeTokenView(PostAPIView):
+class ExperimentScopeTokenView(ExperimentEndpoint, PostEndpoint):
     """Validate scope token and return user's token."""
-    queryset = Experiment.objects.all()
     authentication_classes = [EphemeralAuthentication, ]
     permission_classes = (IsEphemeral,)
     throttle_scope = 'ephemeral'
-    lookup_field = 'id'
+    lookup_url_kwarg = 'experiment_id'
 
     def post(self, request, *args, **kwargs):
         user = request.user
@@ -822,29 +778,32 @@ class ExperimentScopeTokenView(PostAPIView):
         return Response({'token': token.key}, status=status.HTTP_200_OK)
 
 
-class ExperimentChartViewListView(ExperimentViewMixin, ListCreateAPIView):
+class ExperimentChartViewListView(ExperimentResourceListEndpoint,
+                                  ListEndpoint,
+                                  CreateEndpoint):
     """
     get:
         List all chart views of an experiment.
     post:
         Create an experiment chart view.
     """
-    queryset = ExperimentChartView.objects.all()
+    queryset = ExperimentChartView.objects
     serializer_class = ExperimentChartViewSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = LargeLimitOffsetPagination
 
     def perform_create(self, serializer):
-        experiment = self.get_experiment()
-        instance = serializer.save(experiment=experiment)
+        instance = serializer.save(experiment=self.experiment)
         auditor.record(event_type=CHART_VIEW_CREATED,
                        instance=instance,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username,
-                       experiment=experiment)
+                       experiment=self.experiment)
 
 
-class ExperimentChartViewDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
+class ExperimentChartViewDetailView(ExperimentResourceEndpoint,
+                                    RetrieveEndpoint,
+                                    UpdateEndpoint,
+                                    DestroyEndpoint):
     """
     get:
         Get experiment chart view details.
@@ -853,9 +812,8 @@ class ExperimentChartViewDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAP
     delete:
         Delete an experiment chart view.
     """
-    queryset = ExperimentChartView.objects.all()
+    queryset = ExperimentChartView.objects
     serializer_class = ExperimentChartViewSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
     delete_event = CHART_VIEW_DELETED
 

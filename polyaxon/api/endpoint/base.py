@@ -14,17 +14,12 @@ class BaseEndpoint(mixins.CreateModelMixin,
     CONTEXT_KEYS = ()
     QUERY_CONTEXT_KEYS = ()
     CONTEXT_OBJECTS = ()
-    PLAIN_POST = False
     create_serializer_class = None
 
     def get_serializer_class(self):
         if self.create_serializer_class and self.request.method == 'POST':
             return self.create_serializer_class
         return self.serializer_class
-
-    def get_serializer(self, *args, **kwargs):
-        if not self.PLAIN_POST:
-            return super().get_serializer(*args, **kwargs)
 
     def filter_queryset(self, queryset):
         queryset = self.enrich_queryset(queryset=queryset)
@@ -128,6 +123,14 @@ class BaseEndpoint(mixins.CreateModelMixin,
 class CreateEndpoint(object):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+
+class PostEndpoint(object):
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def get_serializer(self, *args, **kwargs):
+        pass
 
 
 class ListEndpoint(object):
