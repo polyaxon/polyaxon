@@ -14,8 +14,13 @@ from api.bookmarks.serializers import (
     JobBookmarkSerializer,
     ProjectBookmarkSerializer
 )
+from api.endpoint.base import BaseEndpoint, CreateEndpoint, DestroyEndpoint, PostEndpoint
+from api.endpoint.build import BuildEndpoint
+from api.endpoint.experiment import ExperimentEndpoint
+from api.endpoint.group import ExperimentGroupEndpoint
+from api.endpoint.job import JobEndpoint
+from api.endpoint.project import ProjectEndpoint, ProjectPermission
 from api.filters import OrderingFilter
-from api.utils.views.post import PostAPIView
 from constants import content_types
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob
@@ -38,7 +43,6 @@ from event_manager.events.experiment_group import (
 )
 from event_manager.events.job import JOB_BOOKMARKED, JOB_UNBOOKMARKED
 from event_manager.events.project import PROJECT_BOOKMARKED, PROJECT_UNBOOKMARKED
-from scopes.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 
 
 class BookmarkListView(ListAPIView):
@@ -104,16 +108,17 @@ class ProjectBookmarkListView(BookmarkListView):
     serializer_class = ProjectBookmarkSerializer
 
 
-class BookmarkCreateView(PostAPIView):
+class BookmarkCreateView(BaseEndpoint, PostEndpoint):
     """Base Bookmark create view."""
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
     queryset = None
     event_type = None
     content_type = None
 
     def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
+        if self.content_type == content_types.PROJECT:
+            return super().filter_queryset(queryset)
+        return queryset.filter(project=self.project)
 
     def create(self, request, *args, **kwargs):
         user = self.request.user
@@ -136,16 +141,17 @@ class BookmarkCreateView(PostAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class BookmarkDeleteView(DestroyAPIView):
+class BookmarkDeleteView(BaseEndpoint, DestroyEndpoint):
     """Base Bookmark delete view."""
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
     queryset = None
     event_type = None
     content_type = None
 
     def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
+        if self.content_type == content_types.PROJECT:
+            return super().filter_queryset(queryset)
+        return queryset.filter(project=self.project)
 
     def destroy(self, request, *args, **kwargs):
         user = self.request.user
@@ -163,83 +169,67 @@ class BookmarkDeleteView(DestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class BuildJobBookmarkCreateView(BookmarkCreateView):
+class BuildJobBookmarkCreateView(BuildEndpoint, BookmarkCreateView):
     """Bookmark build view."""
     event_type = BUILD_JOB_BOOKMARKED
     queryset = BuildJob.objects.filter()
     content_type = content_types.BUILD_JOB
 
 
-class BuildJobBookmarkDeleteView(BookmarkDeleteView):
+class BuildJobBookmarkDeleteView(BuildEndpoint, BookmarkDeleteView):
     """Unbookmark build view."""
     event_type = BUILD_JOB_UNBOOKMARKED
     queryset = BuildJob.objects.filter()
     content_type = content_types.BUILD_JOB
 
 
-class JobBookmarkCreateView(BookmarkCreateView):
+class JobBookmarkCreateView(JobEndpoint, BookmarkCreateView):
     """Bookmark job view."""
     event_type = JOB_BOOKMARKED
     queryset = Job.objects.filter()
     content_type = content_types.JOB
 
 
-class JobBookmarkDeleteView(BookmarkDeleteView):
+class JobBookmarkDeleteView(JobEndpoint, BookmarkDeleteView):
     """Unbookmark job view."""
     event_type = JOB_UNBOOKMARKED
     queryset = Job.objects.filter()
     content_type = content_types.JOB
 
 
-class ExperimentBookmarkCreateView(BookmarkCreateView):
+class ExperimentBookmarkCreateView(ExperimentEndpoint, BookmarkCreateView):
     """Bookmark experiment view."""
     event_type = EXPERIMENT_BOOKMARKED
-    queryset = Experiment.objects.filter()
     content_type = content_types.EXPERIMENT
 
 
-class ExperimentBookmarkDeleteView(BookmarkDeleteView):
+class ExperimentBookmarkDeleteView(ExperimentEndpoint, BookmarkDeleteView):
     """Unbookmark experiment view."""
     event_type = EXPERIMENT_UNBOOKMARKED
-    queryset = Experiment.objects.filter()
     content_type = content_types.EXPERIMENT
 
 
-class ExperimentGroupBookmarkCreateView(BookmarkCreateView):
+class ExperimentGroupBookmarkCreateView(ExperimentGroupEndpoint, BookmarkCreateView):
     """Bookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_BOOKMARKED
-    queryset = ExperimentGroup.objects.filter()
     content_type = content_types.EXPERIMENT_GROUP
 
 
-class ExperimentGroupBookmarkDeleteView(BookmarkDeleteView):
+class ExperimentGroupBookmarkDeleteView(ExperimentGroupEndpoint, BookmarkDeleteView):
     """Unbookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_UNBOOKMARKED
-    queryset = ExperimentGroup.objects.filter()
     content_type = content_types.EXPERIMENT_GROUP
 
 
-class ProjectBookmarkCreateView(BookmarkCreateView):
+class ProjectBookmarkCreateView(ProjectEndpoint, BookmarkCreateView):
     """Bookmark project view."""
     event_type = PROJECT_BOOKMARKED
-    queryset = Project.objects.filter()
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
+    permission_classes = (ProjectPermission,)
     content_type = content_types.PROJECT
 
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
 
-
-class ProjectBookmarkDeleteView(BookmarkDeleteView):
+class ProjectBookmarkDeleteView(ProjectEndpoint, BookmarkDeleteView):
     """Unbookmark project view."""
     event_type = PROJECT_UNBOOKMARKED
-    queryset = Project.objects.filter()
-    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
-    lookup_field = 'name'
+    permission_classes = (ProjectPermission,)
     content_type = content_types.PROJECT
-
-    def filter_queryset(self, queryset):
-        username = self.kwargs['username']
-        return queryset.filter(user__username=username)
