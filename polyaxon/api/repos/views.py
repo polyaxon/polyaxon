@@ -1,8 +1,7 @@
 import logging
 import os
 
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
@@ -10,6 +9,8 @@ from django.conf import settings
 from django.http import HttpResponseServerError
 
 import auditor
+from api.endpoint.base import DestroyEndpoint, UpdateEndpoint, RetrieveEndpoint
+from api.endpoint.project import ProjectResourceListEndpoint
 
 from api.repos.serializers import RepoSerializer
 from api.repos.tasks import handle_new_files
@@ -21,12 +22,11 @@ from libs.archive import archive_repo
 from libs.repos.git import set_git_repo
 from scopes.authentication.internal import InternalAuthentication, is_authenticated_internal_user
 from scopes.permissions.internal import IsAuthenticatedOrInternal
-from scopes.permissions.projects import get_permissible_project
 
 _logger = logging.getLogger('polyaxon.views.repos')
 
 
-class RepoDetailView(RetrieveUpdateDestroyAPIView):
+class RepoDetailView(ProjectResourceListEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
     """
     get:
         Get a repo details.
@@ -35,15 +35,14 @@ class RepoDetailView(RetrieveUpdateDestroyAPIView):
     delete:
         Delete a repo.
     """
-    queryset = Repo.objects.all()
+    queryset = Repo.objects
     serializer_class = RepoSerializer
-    permission_classes = (IsAuthenticated,)
 
     def get_object(self):
-        return get_object_or_404(Repo, project=get_permissible_project(view=self))
+        return get_object_or_404(Repo, project=self.project)
 
 
-class DownloadFilesView(ProtectedView):
+class DownloadFilesView(ProjectResourceListEndpoint, ProtectedView):
     """Download repo code as tar.gz."""
     HANDLE_UNAUTHENTICATED = False
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
@@ -52,8 +51,7 @@ class DownloadFilesView(ProtectedView):
     permission_classes = (IsAuthenticatedOrInternal, )
 
     def get_object(self):
-        project = get_permissible_project(view=self)
-        repo = get_object_or_404(Repo, project=project)
+        repo = get_object_or_404(Repo, project=self.project)
         if not is_authenticated_internal_user(self.request.user):
             auditor.record(event_type=REPO_DOWNLOADED,
                            instance=repo,
@@ -65,22 +63,22 @@ class DownloadFilesView(ProtectedView):
         repo = self.get_object()
         commit = self.request.query_params.get('commit', None)
         archived_path, archive_name = archive_repo(repo_git=repo.git,
-                                                   repo_name=repo.project.name,
+                                                   repo_name=self.project.name,
                                                    commit=commit)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 
-class UploadFilesView(UploadView):
+class UploadFilesView(ProjectResourceListEndpoint, UploadView):
     """Upload code to a repo."""
 
     def get_object(self):
-        project = get_permissible_project(view=self)
-        if project.has_notebook:
+        if self.project.has_notebook:
             self.permission_denied(
                 self.request,
                 'The Project `{}` is currently running a Notebook. '
-                'You must stop it before uploading a new version of the code.'.format(project.name))
-        repo, created = Repo.objects.get_or_create(project=project)
+                'You must stop it before uploading a new version of the code.'.format(
+                    self.project.name))
+        repo, created = Repo.objects.get_or_create(project=self.project)
         if not created and not os.path.isdir(repo.project_path):
             set_git_repo(repo)
         else:
