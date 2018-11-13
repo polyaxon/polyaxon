@@ -9,12 +9,13 @@ class BaseEndpoint(mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,
                    mixins.DestroyModelMixin,
                    mixins.UpdateModelMixin,
-                   GenericAPIView,):
+                   GenericAPIView):
     AUDITOR_EVENT_TYPES = None
     CONTEXT_KEYS = ()
     QUERY_CONTEXT_KEYS = ()
-    create_serializer_class = None
+    CONTEXT_OBJECTS = ()
     PLAIN_POST = False
+    create_serializer_class = None
 
     def get_serializer_class(self):
         if self.create_serializer_class and self.request.method == 'POST':
@@ -23,7 +24,14 @@ class BaseEndpoint(mixins.CreateModelMixin,
 
     def get_serializer(self, *args, **kwargs):
         if not self.PLAIN_POST:
-            super().get_serializer()
+            return super().get_serializer(*args, **kwargs)
+
+    def filter_queryset(self, queryset):
+        queryset = self.enrich_queryset(queryset=queryset)
+        return super().filter_queryset(queryset=queryset)
+
+    def enrich_queryset(self, queryset):
+        return queryset
 
     def get_object(self):
         instance = super().get_object()
@@ -66,6 +74,11 @@ class BaseEndpoint(mixins.CreateModelMixin,
         """
         pass
 
+    def validate_context(self):
+        for key in self.CONTEXT_OBJECTS:
+            assert hasattr(self, key)
+        self._validate_context()
+
     def initialize_context(self, request, *args, **kwargs):
         """
         Initializes the endpoint with the context keys based on the passed
@@ -76,7 +89,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
         for key in self.QUERY_CONTEXT_KEYS:
             setattr(self, key, request.query_params.get(key))
         self._initialize_context()
-        self._validate_context()
+        self.validate_context()
 
     def dispatch(self, request, *args, **kwargs):
         """
