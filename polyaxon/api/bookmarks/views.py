@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import DestroyAPIView, ListAPIView, get_object_or_404
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -14,20 +14,16 @@ from api.bookmarks.serializers import (
     JobBookmarkSerializer,
     ProjectBookmarkSerializer
 )
-from api.endpoint.base import BaseEndpoint, CreateEndpoint, DestroyEndpoint, PostEndpoint
+from api.endpoint.base import BaseEndpoint, DestroyEndpoint, PostEndpoint, ListEndpoint
 from api.endpoint.build import BuildEndpoint
 from api.endpoint.experiment import ExperimentEndpoint
 from api.endpoint.group import ExperimentGroupEndpoint
 from api.endpoint.job import JobEndpoint
-from api.endpoint.project import ProjectEndpoint, ProjectPermission
+from api.endpoint.project import ProjectEndpoint
+from api.endpoint.public import PublicActivityPermission
 from api.filters import OrderingFilter
 from constants import content_types
 from db.models.bookmarks import Bookmark
-from db.models.build_jobs import BuildJob
-from db.models.experiment_groups import ExperimentGroup
-from db.models.experiments import Experiment
-from db.models.jobs import Job
-from db.models.projects import Project
 from event_manager.events.bookmark import (
     BOOKMARK_BUILD_JOBS_VIEWED,
     BOOKMARK_EXPERIMENT_GROUPS_VIEWED,
@@ -45,7 +41,7 @@ from event_manager.events.job import JOB_BOOKMARKED, JOB_UNBOOKMARKED
 from event_manager.events.project import PROJECT_BOOKMARKED, PROJECT_UNBOOKMARKED
 
 
-class BookmarkListView(ListAPIView):
+class BookmarkListView(BaseEndpoint, ListEndpoint):
     """Base Bookmark list view."""
     queryset = Bookmark.objects.all()
     permission_classes = (IsAuthenticated,)
@@ -114,6 +110,7 @@ class BookmarkCreateView(BaseEndpoint, PostEndpoint):
     queryset = None
     event_type = None
     content_type = None
+    permission_classes = (PublicActivityPermission,)
 
     def filter_queryset(self, queryset):
         if self.content_type == content_types.PROJECT:
@@ -147,6 +144,7 @@ class BookmarkDeleteView(BaseEndpoint, DestroyEndpoint):
     queryset = None
     event_type = None
     content_type = None
+    permission_classes = (PublicActivityPermission,)
 
     def filter_queryset(self, queryset):
         if self.content_type == content_types.PROJECT:
