@@ -10,7 +10,6 @@ import notifier
 import tracker
 
 from db.models.clusters import Cluster
-
 from event_manager.events import bookmark as bookmarks_events
 from tests.utils import BaseTest
 
