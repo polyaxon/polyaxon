@@ -23,6 +23,9 @@ TOKEN_EXPIRATION = config.get_int('POLYAXON_TOKEN_EXPIRATION',
                                   is_optional=True,
                                   default=30)
 
+# Auditor backend
+AUDITOR_BACKEND = config.get_string('POLYAXON_AUDITOR_BACKEND', is_optional=True)
+
 
 def get_allowed_hosts():
     allowed_hosts = config.get_string('POLYAXON_ALLOWED_HOSTS',
