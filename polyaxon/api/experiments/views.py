@@ -100,7 +100,7 @@ from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
-from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInternal
+from scopes.permissions.internal import IsAuthenticatedOrInternal
 from scopes.permissions.projects import get_permissible_project
 
 _logger = logging.getLogger("polyaxon.views.experiments")
@@ -452,7 +452,7 @@ class ExperimentMetricListView(ExperimentResourceEndpoint,
     post:
         Create an experiment metric.
     """
-    queryset = ExperimentMetric.objects.all()
+    queryset = ExperimentMetric.objects
     serializer_class = ExperimentMetricSerializer
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
         InternalAuthentication,
@@ -816,13 +816,11 @@ class ExperimentChartViewDetailView(ExperimentResourceEndpoint,
     queryset = ExperimentChartView.objects
     serializer_class = ExperimentChartViewSerializer
     lookup_field = 'id'
-    delete_event = CHART_VIEW_DELETED
 
     def get_object(self):
         instance = super().get_object()
-        method = self.request.method.lower()
-        if method == 'delete' and self.delete_event:
-            auditor.record(event_type=self.delete_event,
+        if self.request.method == 'DELETE':
+            auditor.record(event_type=CHART_VIEW_DELETED,
                            instance=instance,
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username,

@@ -9,6 +9,8 @@ from django.conf import settings
 from django.db import migrations, models
 
 import db.models.tokens
+import libs.blacklist
+import libs.spec_validation
 
 
 def create_owners(apps, schema_editor):
@@ -53,6 +55,22 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AlterField(
+            model_name='bookmark',
+            name='content_type',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+',
+                                    to='contenttypes.ContentType'),
+        ),
+        migrations.AlterField(
+            model_name='notificationevent',
+            name='content_type',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+',
+                                    to='contenttypes.ContentType'),
+        ),
+        migrations.AlterUniqueTogether(
+            name='search',
+            unique_together={('user', 'project', 'name')},
+        ),
         migrations.CreateModel(
             name='Token',
             fields=[
@@ -97,7 +115,7 @@ class Migration(migrations.Migration):
             model_name='project',
             name='owner',
             field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE,
-                                    related_name='projects', to='db.Owner'),
+                                    related_name='+', to='db.Owner'),
             preserve_default=False,
         ),
         migrations.RunPython(create_owners),
