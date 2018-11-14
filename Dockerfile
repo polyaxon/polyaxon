@@ -9,7 +9,7 @@ RUN apt-get -y update && \
 
 
 COPY requirements /requirements/
-RUN pip3 install --no-cache-dir -r /requirements/requirements-test.txt
+RUN pip install --no-cache-dir -r /requirements/requirements-test.txt
 
 VOLUME /tmp/plx/repos
 VOLUME /polyaxon
