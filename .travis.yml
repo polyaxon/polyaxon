@@ -1,8 +1,8 @@
 esudo: required
-dist: trusty
+dist: xenial
 language: python
 python:
-  - "3.5"
+  - "3.7"
 
 env:
   global:
