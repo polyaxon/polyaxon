@@ -6,15 +6,17 @@ from django.db.models import Q
 import activitylogs
 
 from api.activitylogs.serializers import ActivityLogsSerializer
+from api.endpoint.base import ListEndpoint
+from api.endpoint.activitylogs import ActivityLogEndpoint
 from constants import content_types
 from db.models.activitylogs import ActivityLog
 from db.models.projects import Project
 
 
-class HistoryLogsView(ListAPIView):
+class HistoryLogsView(ActivityLogEndpoint, ListEndpoint):
     """Activity logs list view."""
     # Filter only for user write events
-    queryset = ActivityLog.objects.order_by('-created_at').filter(
+    queryset = ActivityLogEndpoint.queryset.order_by('-created_at').filter(
         event_type__in=activitylogs.default_manager.user_view_events()
     )
     serializer_class = ActivityLogsSerializer
@@ -25,10 +27,10 @@ class HistoryLogsView(ListAPIView):
         return super().filter_queryset(queryset=queryset)
 
 
-class ActivityLogsView(ListAPIView):
+class ActivityLogsView(ActivityLogEndpoint, ListEndpoint):
     """Activity logs list view."""
     # Filter only for user write events
-    queryset = ActivityLog.objects.order_by('-created_at').filter(
+    queryset = ActivityLogEndpoint.queryset.order_by('-created_at').filter(
         event_type__in=activitylogs.default_manager.user_write_events()
     )
     serializer_class = ActivityLogsSerializer
