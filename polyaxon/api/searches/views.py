@@ -1,8 +1,7 @@
 import auditor
 
-from api.endpoint.base import CreateEndpoint, ListEndpoint, DestroyEndpoint
-from api.endpoint.project import ProjectResourceListEndpoint, ProjectResourceEndpoint
-
+from api.endpoint.base import CreateEndpoint, DestroyEndpoint, ListEndpoint
+from api.endpoint.project import ProjectResourceEndpoint, ProjectResourceListEndpoint
 from api.filters import OrderingFilter
 from api.paginator import LargeLimitOffsetPagination
 from api.searches.serializers import SearchSerializer

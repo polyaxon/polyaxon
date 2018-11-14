@@ -2,12 +2,12 @@ from rest_framework.generics import get_object_or_404
 
 from api.endpoint.base import (
     CreateEndpoint,
-    ListEndpoint,
     DestroyEndpoint,
-    UpdateEndpoint,
-    RetrieveEndpoint
+    ListEndpoint,
+    RetrieveEndpoint,
+    UpdateEndpoint
 )
-from api.endpoint.node import NodeListEndpoint, NodeEndpoint, NodeResourceEndpoint
+from api.endpoint.node import NodeEndpoint, NodeListEndpoint, NodeResourceEndpoint
 from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU

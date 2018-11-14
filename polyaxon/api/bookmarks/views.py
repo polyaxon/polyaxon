@@ -14,7 +14,7 @@ from api.bookmarks.serializers import (
     JobBookmarkSerializer,
     ProjectBookmarkSerializer
 )
-from api.endpoint.base import BaseEndpoint, DestroyEndpoint, PostEndpoint, ListEndpoint
+from api.endpoint.base import BaseEndpoint, DestroyEndpoint, ListEndpoint, PostEndpoint
 from api.endpoint.build import BuildEndpoint
 from api.endpoint.experiment import ExperimentEndpoint
 from api.endpoint.group import ExperimentGroupEndpoint

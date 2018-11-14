@@ -7,13 +7,7 @@ from wsgiref.util import FileWrapper
 from hestia.bool_utils import to_bool
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import (
-    CreateAPIView,
-    RetrieveAPIView,
-    RetrieveUpdateDestroyAPIView,
-    get_object_or_404
-)
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
@@ -21,9 +15,15 @@ from django.http import StreamingHttpResponse
 
 import auditor
 
-from api.endpoint.base import CreateEndpoint, ListEndpoint, DestroyEndpoint, UpdateEndpoint, \
-    RetrieveEndpoint, PostEndpoint
-from api.endpoint.job import JobEndpoint, JobResourceListEndpoint, JobResourceEndpoint
+from api.endpoint.base import (
+    CreateEndpoint,
+    DestroyEndpoint,
+    ListEndpoint,
+    PostEndpoint,
+    RetrieveEndpoint,
+    UpdateEndpoint
+)
+from api.endpoint.job import JobEndpoint, JobResourceEndpoint, JobResourceListEndpoint
 from api.endpoint.project import ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.jobs import queries

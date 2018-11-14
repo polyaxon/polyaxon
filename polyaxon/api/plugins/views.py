@@ -9,7 +9,7 @@ from django.http import Http404
 import auditor
 
 from api.endpoint.base import CreateEndpoint, ListEndpoint, PostEndpoint
-from api.endpoint.project import ProjectResourceListEndpoint, ProjectEndpoint
+from api.endpoint.project import ProjectEndpoint, ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.plugins.serializers import (
     NotebookJobSerializer,

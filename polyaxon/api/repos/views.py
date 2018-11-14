@@ -9,9 +9,9 @@ from django.conf import settings
 from django.http import HttpResponseServerError
 
 import auditor
-from api.endpoint.base import DestroyEndpoint, UpdateEndpoint, RetrieveEndpoint
-from api.endpoint.project import ProjectResourceListEndpoint
 
+from api.endpoint.base import DestroyEndpoint, RetrieveEndpoint, UpdateEndpoint
+from api.endpoint.project import ProjectResourceListEndpoint
 from api.repos.serializers import RepoSerializer
 from api.repos.tasks import handle_new_files
 from api.utils.views.protected import ProtectedView

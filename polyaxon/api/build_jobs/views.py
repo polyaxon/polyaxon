@@ -22,9 +22,15 @@ from api.build_jobs.serializers import (
     BuildJobSerializer,
     BuildJobStatusSerializer
 )
-from api.endpoint.base import CreateEndpoint, ListEndpoint, DestroyEndpoint, UpdateEndpoint, \
-    RetrieveEndpoint, PostEndpoint
-from api.endpoint.build import BuildEndpoint, BuildResourceListEndpoint, BuildResourceEndpoint
+from api.endpoint.base import (
+    CreateEndpoint,
+    DestroyEndpoint,
+    ListEndpoint,
+    PostEndpoint,
+    RetrieveEndpoint,
+    UpdateEndpoint
+)
+from api.endpoint.build import BuildEndpoint, BuildResourceEndpoint, BuildResourceListEndpoint
 from api.endpoint.project import ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView

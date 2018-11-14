@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, get_object_or_404
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 
 from django.db.models import Q
@@ -6,10 +6,9 @@ from django.db.models import Q
 import activitylogs
 
 from api.activitylogs.serializers import ActivityLogsSerializer
-from api.endpoint.base import ListEndpoint
 from api.endpoint.activitylogs import ActivityLogEndpoint
+from api.endpoint.base import ListEndpoint
 from constants import content_types
-from db.models.activitylogs import ActivityLog
 from db.models.projects import Project
 
 

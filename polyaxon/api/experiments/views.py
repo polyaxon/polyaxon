@@ -21,9 +21,10 @@ from api.endpoint.base import (
     CreateEndpoint,
     DestroyEndpoint,
     ListEndpoint,
+    PostEndpoint,
     RetrieveEndpoint,
-    UpdateEndpoint,
-    PostEndpoint)
+    UpdateEndpoint
+)
 from api.endpoint.experiment import (
     ExperimentEndpoint,
     ExperimentResourceEndpoint,
