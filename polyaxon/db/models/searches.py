@@ -38,4 +38,4 @@ class Search(DiffModel, NameableModel):
 
     class Meta:
         app_label = 'db'
-        unique_together = (('project', 'name'), )
+        unique_together = (('user', 'project', 'name'), )
