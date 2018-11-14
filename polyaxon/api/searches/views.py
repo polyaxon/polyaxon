@@ -2,6 +2,7 @@ import auditor
 
 from api.endpoint.base import CreateEndpoint, DestroyEndpoint, ListEndpoint
 from api.endpoint.project import ProjectResourceEndpoint, ProjectResourceListEndpoint
+from api.endpoint.public import PublicActivityPermission, PublicResourceActivityPermission
 from api.filters import OrderingFilter
 from api.paginator import LargeLimitOffsetPagination
 from api.searches.serializers import SearchSerializer
@@ -19,6 +20,7 @@ class SearchListView(ProjectResourceListEndpoint, ListEndpoint, CreateEndpoint):
     ordering = ('-updated_at',)
     ordering_fields = ('created_at', 'updated_at')
     pagination_class = LargeLimitOffsetPagination
+    permission_classes = (PublicActivityPermission,)
 
     def filter_queryset(self, queryset):
         queryset = queryset.filter(user=self.request.user,
@@ -58,6 +60,7 @@ class SearchDeleteView(ProjectResourceEndpoint, DestroyEndpoint):
     lookup_field = 'id'
     queryset = Search.objects
     content_type = None
+    permission_classes = (PublicResourceActivityPermission,)
 
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user, project=self.project)

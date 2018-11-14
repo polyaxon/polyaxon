@@ -20,7 +20,7 @@ from api.endpoint.experiment import ExperimentEndpoint
 from api.endpoint.group import ExperimentGroupEndpoint
 from api.endpoint.job import JobEndpoint
 from api.endpoint.project import ProjectEndpoint
-from api.endpoint.public import PublicActivityPermission
+from api.endpoint.public import PublicResourceActivityPermission, PublicActivityPermission
 from api.filters import OrderingFilter
 from constants import content_types
 from db.models.bookmarks import Bookmark
@@ -110,7 +110,6 @@ class BookmarkCreateView(BaseEndpoint, PostEndpoint):
     queryset = None
     event_type = None
     content_type = None
-    permission_classes = (PublicActivityPermission,)
 
     def filter_queryset(self, queryset):
         if self.content_type == content_types.PROJECT:
@@ -144,7 +143,6 @@ class BookmarkDeleteView(BaseEndpoint, DestroyEndpoint):
     queryset = None
     event_type = None
     content_type = None
-    permission_classes = (PublicActivityPermission,)
 
     def filter_queryset(self, queryset):
         if self.content_type == content_types.PROJECT:
@@ -171,57 +169,67 @@ class BuildJobBookmarkCreateView(BuildEndpoint, BookmarkCreateView):
     """Bookmark build view."""
     event_type = BUILD_JOB_BOOKMARKED
     content_type = content_types.BUILD_JOB
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class BuildJobBookmarkDeleteView(BuildEndpoint, BookmarkDeleteView):
     """Unbookmark build view."""
     event_type = BUILD_JOB_UNBOOKMARKED
     content_type = content_types.BUILD_JOB
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class JobBookmarkCreateView(JobEndpoint, BookmarkCreateView):
     """Bookmark job view."""
     event_type = JOB_BOOKMARKED
     content_type = content_types.JOB
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class JobBookmarkDeleteView(JobEndpoint, BookmarkDeleteView):
     """Unbookmark job view."""
     event_type = JOB_UNBOOKMARKED
     content_type = content_types.JOB
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class ExperimentBookmarkCreateView(ExperimentEndpoint, BookmarkCreateView):
     """Bookmark experiment view."""
     event_type = EXPERIMENT_BOOKMARKED
     content_type = content_types.EXPERIMENT
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class ExperimentBookmarkDeleteView(ExperimentEndpoint, BookmarkDeleteView):
     """Unbookmark experiment view."""
     event_type = EXPERIMENT_UNBOOKMARKED
     content_type = content_types.EXPERIMENT
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class ExperimentGroupBookmarkCreateView(ExperimentGroupEndpoint, BookmarkCreateView):
     """Bookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_BOOKMARKED
     content_type = content_types.EXPERIMENT_GROUP
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class ExperimentGroupBookmarkDeleteView(ExperimentGroupEndpoint, BookmarkDeleteView):
     """Unbookmark experiment group view."""
     event_type = EXPERIMENT_GROUP_UNBOOKMARKED
     content_type = content_types.EXPERIMENT_GROUP
+    permission_classes = (PublicResourceActivityPermission,)
 
 
 class ProjectBookmarkCreateView(ProjectEndpoint, BookmarkCreateView):
     """Bookmark project view."""
     event_type = PROJECT_BOOKMARKED
     content_type = content_types.PROJECT
+    permission_classes = (PublicActivityPermission,)
 
 
 class ProjectBookmarkDeleteView(ProjectEndpoint, BookmarkDeleteView):
     """Unbookmark project view."""
     event_type = PROJECT_UNBOOKMARKED
     content_type = content_types.PROJECT
+    permission_classes = (PublicActivityPermission,)
