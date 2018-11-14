@@ -9,8 +9,6 @@ from django.conf import settings
 from django.db import migrations, models
 
 import db.models.tokens
-import libs.blacklist
-import libs.spec_validation
 
 
 def create_owners(apps, schema_editor):
