@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 
 import activitylogs
@@ -36,21 +38,25 @@ class TestActivityLogsSerializer(BaseTest):
         activitylogs.validate()
         activitylogs.setup()
         self.project = ProjectFactory()
-        activitylogs.record(event_type=USER_ACTIVATED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=USER_ACTIVATED,
                             instance=self.user,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
-        activitylogs.record(event_type=PROJECT_DELETED_TRIGGERED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=PROJECT_DELETED_TRIGGERED,
                             instance=self.project,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.experiment = ExperimentFactory()
-        activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.job = JobFactory()
-        activitylogs.record(event_type=JOB_VIEWED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=JOB_VIEWED,
                             instance=self.job,
                             actor_id=self.user.id,
                             actor_name=self.user.username)

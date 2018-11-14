@@ -12,6 +12,19 @@ class AuditorService(EventService):
         self.notifier = None
         self.tracker = None
         self.activitylogs = None
+        self.ref_id = None
+
+    def get_ref_id(self):
+        if self.ref_id:
+            return self.ref_id
+
+        from db.models.clusters import Cluster
+        from django.db import InterfaceError, OperationalError, ProgrammingError
+        try:
+            self.ref_id = Cluster.load().uuid.hex
+        except (Cluster.DoesNotExist, InterfaceError, ProgrammingError, OperationalError):
+            pass
+        return self.ref_id
 
     def record_event(self, event):
         """
@@ -20,6 +33,8 @@ class AuditorService(EventService):
         from polyaxon.celery_api import celery_app
         from polyaxon.settings import EventsCeleryTasks
 
+        if not event.ref_id:
+            event.ref_id = self.get_ref_id()
         event = event.serialize(dumps=False, include_actor_name=True, include_instance_info=True)
 
         celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK, kwargs={'event': event})

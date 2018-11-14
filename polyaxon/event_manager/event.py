@@ -32,7 +32,15 @@ class Attribute(object):
 
 
 class Event(object):
-    __slots__ = ['uuid', 'data', 'datetime', 'instance', 'instance_id', 'instance_contenttype']
+    __slots__ = [
+        'uuid',
+        'ref_id',
+        'data',
+        'datetime',
+        'instance',
+        'instance_id',
+        'instance_contenttype'
+    ]
 
     event_type = None  # The event type should ideally follow subject.action
     attributes = ()
@@ -42,10 +50,11 @@ class Event(object):
 
     @classmethod
     def get_event_attributes(cls):
+        attributes = cls.attributes + (Attribute('ref_id', is_uuid=True, is_required=False),)
         if cls.actor:
-            return cls.attributes + (Attribute(cls.actor_id, attr_type=int),
-                                     Attribute(cls.actor_name, is_required=False))
-        return cls.attributes
+            return attributes + (Attribute(cls.actor_id, attr_type=int),
+                                 Attribute(cls.actor_name, is_required=False))
+        return attributes
 
     def __init__(self,
                  uid=None,
@@ -60,6 +69,7 @@ class Event(object):
         self.instance = instance
         self.instance_id = instance_id
         self.instance_contenttype = instance_contenttype
+        self.ref_id = None
 
         if self.event_type is None:
             raise ValueError('Event is missing a type')
@@ -81,6 +91,7 @@ class Event(object):
                     ))
                 data[attr.name] = attr.extract(item_value)
 
+            self.ref_id = self.ref_id or data.get('ref_id')
             actor_id = data.get(self.actor_id)
             actor_name = data.get(self.actor_name)
             if self.actor and actor_id is None:
@@ -134,6 +145,7 @@ class Event(object):
             'uuid': self.uuid.hex,
             'timestamp': to_timestamp(self.datetime),
             'type': self.event_type,
+            'ref_id': self.ref_id,
             'data': _data,
         }
         if include_instance_info:
@@ -182,6 +194,7 @@ class Event(object):
         return cls(
             datetime=to_datetime(event_data.get('timestamp')),
             uid=event_data.get('uuid'),
+            ref_id=event_data.get('ref_id'),
             event_data=event_data.get('data'),
             instance=event_data.get('instance'),
             instance_id=event_data.get('instance_id'),

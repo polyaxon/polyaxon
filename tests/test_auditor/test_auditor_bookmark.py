@@ -8,6 +8,8 @@ import activitylogs
 import auditor
 import tracker
 
+from db.models.clusters import Cluster
+
 from event_manager.events import bookmark as bookmarks_events
 from tests.utils import BaseTest
 
@@ -18,6 +20,7 @@ class AuditorBookmarksTest(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):
+        Cluster.load()
         auditor.validate()
         auditor.setup()
         tracker.validate()

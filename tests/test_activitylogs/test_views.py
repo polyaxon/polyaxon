@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 
 from rest_framework import status
@@ -27,21 +29,25 @@ class TestActivityLogsListViewV1(BaseViewTest):
     def set_objects(self):
         self.user = self.auth_client.user
         self.project = ProjectFactory()
-        activitylogs.record(event_type=PROJECT_DELETED_TRIGGERED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=PROJECT_DELETED_TRIGGERED,
                             instance=self.project,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.experiment = ExperimentFactory()
-        activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.job = JobFactory()
-        activitylogs.record(event_type=JOB_CREATED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=JOB_CREATED,
                             instance=self.job,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
-        activitylogs.record(event_type=JOB_VIEWED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=JOB_VIEWED,
                             instance=self.job,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
@@ -106,21 +112,25 @@ class TestHistoryLogsListViewV1(TestActivityLogsListViewV1):
     def set_objects(self):
         self.user = self.auth_client.user
         self.project = ProjectFactory()
-        activitylogs.record(event_type=PROJECT_VIEWED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=PROJECT_VIEWED,
                             instance=self.project,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.experiment = ExperimentFactory()
-        activitylogs.record(event_type=EXPERIMENT_VIEWED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=EXPERIMENT_VIEWED,
                             instance=self.experiment,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.job = JobFactory()
-        activitylogs.record(event_type=JOB_CREATED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=JOB_CREATED,
                             instance=self.job,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
-        activitylogs.record(event_type=JOB_VIEWED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=JOB_VIEWED,
                             instance=self.job,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
@@ -141,21 +151,25 @@ class TestProjectActivityLogsListViewV1(TestActivityLogsListViewV1):
     def set_objects(self):
         self.user = self.auth_client.user
         self.project = ProjectFactory(user=self.user)
-        activitylogs.record(event_type=PROJECT_DELETED_TRIGGERED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=PROJECT_DELETED_TRIGGERED,
                             instance=self.project,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.experiment = ExperimentFactory(project=self.project)
-        activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
         self.job = JobFactory(project=self.project)
-        activitylogs.record(event_type=JOB_CREATED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=JOB_CREATED,
                             instance=self.job,
                             actor_id=self.user.id,
                             actor_name=self.user.username)
-        activitylogs.record(event_type=JOB_VIEWED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=JOB_VIEWED,
                             instance=self.job,
                             actor_id=self.user.id,
                             actor_name=self.user.username)

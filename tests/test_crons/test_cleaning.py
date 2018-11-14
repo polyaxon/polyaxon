@@ -1,3 +1,4 @@
+import uuid
 from datetime import timedelta
 
 import pytest
@@ -32,6 +33,7 @@ class TestCleaningCrons(BaseTest):
             context={},
             created_at=self.experiment.created_at,
             content_object=self.experiment,
+            ref=uuid.uuid4()
         )
         ActivityLog.objects.create(
             event_type=EXPERIMENT_SUCCEEDED,
@@ -40,6 +42,7 @@ class TestCleaningCrons(BaseTest):
             created_at=self.experiment.created_at - timedelta(
                 days=CleaningIntervals.ACTIVITY_LOGS + 3),
             content_object=self.experiment,
+            ref=uuid.uuid4()
         )
 
         notification_event = NotificationEvent.objects.create(

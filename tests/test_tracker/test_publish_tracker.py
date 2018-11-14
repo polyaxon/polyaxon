@@ -1,3 +1,4 @@
+import uuid
 from unittest.mock import patch
 
 import pytest
@@ -26,14 +27,16 @@ class PublishTrackerTest(BaseTest):
                 self.publisher.record(event_type=USER_ACTIVATED,
                                       instance=self.user,
                                       actor_id=self.admin.id,
-                                      actor_name=self.admin.username)
+                                      actor_name=self.admin.username,
+                                      ref_id=uuid.uuid4())
 
         assert mock_identify.call_count == 0
         assert mock_track.call_count == 1
 
         with patch('analytics.identify') as mock_identify:
             with patch('analytics.track') as mock_track:
-                self.publisher.record(event_type=CLUSTER_CREATED,
+                self.publisher.record(ref_id=uuid.uuid4(),
+                                      event_type=CLUSTER_CREATED,
                                       instance=self.cluster,
                                       namespace='test',
                                       environment='test',

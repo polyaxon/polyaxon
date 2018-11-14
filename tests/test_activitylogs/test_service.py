@@ -1,4 +1,6 @@
 # pylint:disable=ungrouped-imports
+import uuid
+
 import pytest
 
 import activitylogs
@@ -25,7 +27,8 @@ class ActivityLogsTest(BaseTest):
 
     def test_record_creates_activities(self):
         assert ActivityLog.objects.count() == 0
-        activitylogs.record(event_type=USER_ACTIVATED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=USER_ACTIVATED,
                             instance=self.user,
                             actor_id=self.admin.id,
                             actor_name=self.admin.username)
@@ -36,7 +39,8 @@ class ActivityLogsTest(BaseTest):
         assert activity.content_object == self.user
         assert activity.actor == self.admin
 
-        activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
+        activitylogs.record(ref_id=uuid.uuid4(),
+                            event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
                             actor_id=self.admin.id,
                             actor_name=self.admin.username)
