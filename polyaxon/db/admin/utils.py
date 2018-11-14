@@ -4,15 +4,19 @@ from django.contrib.admin import ModelAdmin
 class ReadOnlyAdmin(ModelAdmin):
     """Disables all editing capabilities."""
 
+    actions = None
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # pylint:disable=protected-access
         self.readonly_fields = [field.name for field in self.model._meta.get_fields()]
 
-    def get_actions(self, request):
-        actions = super().get_actions(request)
-        del actions["delete_selected"]
-        return actions
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['show_save_and_continue'] = False
+        extra_context['show_save'] = False
+        return super(ReadOnlyAdmin, self).change_view(request, object_id,
+                                                      extra_context=extra_context)
 
     def has_add_permission(self, request):
         return False
