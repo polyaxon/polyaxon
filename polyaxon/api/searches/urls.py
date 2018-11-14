@@ -1,8 +1,9 @@
-from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from django.urls import re_path
+
 from api.searches import views
-from constants.urls import ID_PATTERN, PROJECT_NAME_PATTERN, OWNER_NAME_PATTERN
+from constants.urls import ID_PATTERN, OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
 
 searches_urlpatterns = [
     re_path(r'^searches/{}/{}/groups/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),

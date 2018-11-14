@@ -4,12 +4,7 @@ from django.urls import re_path
 
 from api.bookmarks import views as bookmark_views
 from api.jobs import views
-from constants.urls import (
-    JOB_ID_PATTERN,
-    OWNER_NAME_PATTERN,
-    PROJECT_NAME_PATTERN,
-    UUID_PATTERN
-)
+from constants.urls import JOB_ID_PATTERN, OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, UUID_PATTERN
 
 jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/?$'.format(

@@ -1,15 +1,10 @@
-from django.urls import re_path
-
 from rest_framework.urlpatterns import format_suffix_patterns
+
+from django.urls import re_path
 
 from api.bookmarks import views as bookmark_views
 from api.build_jobs import views
-from constants.urls import (
-    BUILD_ID_PATTERN,
-    OWNER_NAME_PATTERN,
-    PROJECT_NAME_PATTERN,
-    UUID_PATTERN
-)
+from constants.urls import BUILD_ID_PATTERN, OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, UUID_PATTERN
 
 build_jobs_urlpatterns = [
     re_path(

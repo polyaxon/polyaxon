@@ -6,8 +6,8 @@ from api.plugins import views
 from constants.urls import (
     EXPERIMENT_ID_PATTERN,
     GROUP_ID_PATTERN,
-    PROJECT_NAME_PATTERN,
-    OWNER_NAME_PATTERN
+    OWNER_NAME_PATTERN,
+    PROJECT_NAME_PATTERN
 )
 
 plugin_urlpatterns = [
