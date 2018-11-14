@@ -1,7 +1,8 @@
 from rest_framework.generics import get_object_or_404
 
 import access
-from api.endpoint.project import ProjectResourceEndpoint, ProjectPermission
+
+from api.endpoint.project import ProjectPermission, ProjectResourceEndpoint
 from db.models.jobs import Job
 
 
