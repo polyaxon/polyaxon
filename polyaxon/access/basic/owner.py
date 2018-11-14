@@ -1,10 +1,10 @@
-from scopes.access import DEFAULT_ACCESS, SUPERUSER_ACCESS, OWNER_ACCESS
+from scopes.access import DEFAULT_ACCESS, OWNER_ACCESS, SUPERUSER_ACCESS
 
 
 def has_object_permission(permission, request, view, obj):
     user = request.user
 
-    if not user or user.is_anonymous() or not user.is_active:
+    if not user or user.is_anonymous or not user.is_active:
         request.access = DEFAULT_ACCESS
         return False
 
@@ -12,7 +12,7 @@ def has_object_permission(permission, request, view, obj):
         request.access = SUPERUSER_ACCESS
         return True
 
-    if obj == user:
+    if obj.owner == user:
         request.access = OWNER_ACCESS
         return True
 
