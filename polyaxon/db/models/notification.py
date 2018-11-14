@@ -18,7 +18,10 @@ class NotificationEvent(models.Model):
         help_text='The user who triggered this activity, if null we assume a user `system`.')
     context = JSONField(help_text='Extra context information.')
     created_at = models.DateTimeField()
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        related_name='+')
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 

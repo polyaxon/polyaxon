@@ -19,7 +19,10 @@ class ActivityLog(models.Model):
     context = JSONField(help_text='Extra context information.')
     created_at = models.DateTimeField()
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='+')
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        related_name='+')
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 

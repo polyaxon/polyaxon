@@ -11,7 +11,8 @@ class Owner(DiffModel):
     """A model that represents a project owner."""
     content_type = models.ForeignKey(
         ContentType,
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+        related_name='+')
     object_id = models.PositiveIntegerField()
     owner = GenericForeignKey('content_type', 'object_id')
     name = models.CharField(

@@ -15,7 +15,10 @@ class Bookmark(DiffModel):
         related_name='+')
     enabled = models.BooleanField(default=True)
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        related_name='+')
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
