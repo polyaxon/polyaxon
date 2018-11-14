@@ -27,28 +27,33 @@ class AuditorUserTest(BaseTest):
         activitylogs.setup()
         super().setUp()
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_registered(self, activitylogs_record, tracker_record):
+    def test_user_registered(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_REGISTERED,
                        instance=self.user)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_updated(self, activitylogs_record, tracker_record):
+    def test_user_updated(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_UPDATED,
                        instance=self.user,
                        actor_id=1)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_activated(self, activitylogs_record, tracker_record):
+    def test_user_activated(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_ACTIVATED,
                        instance=self.user,
                        actor_id=1,
@@ -56,10 +61,12 @@ class AuditorUserTest(BaseTest):
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_deleted(self, activitylogs_record, tracker_record):
+    def test_user_deleted(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_DELETED,
                        instance=self.user,
                        actor_id=1,
@@ -67,53 +74,64 @@ class AuditorUserTest(BaseTest):
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_ldap(self, activitylogs_record, tracker_record):
+    def test_user_ldap(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_LDAP,
                        instance=self.user,
                        actor_id=1)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_github(self, activitylogs_record, tracker_record):
+    def test_user_github(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_GITHUB,
                        instance=self.user,
                        actor_id=1)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_gitlab(self, activitylogs_record, tracker_record):
+    def test_user_gitlab(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_GITLAB,
                        instance=self.user,
                        actor_id=1)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_bitbucket(self, activitylogs_record, tracker_record):
+    def test_user_bitbucket(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_BITBUCKET,
                        instance=self.user,
                        actor_id=1)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
 
+    @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_user_azure(self, activitylogs_record, tracker_record):
+    def test_user_azure(self, activitylogs_record, tracker_record, notifier_record):
         auditor.record(event_type=user_events.USER_AZURE,
                        instance=self.user,
                        actor_id=1)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
