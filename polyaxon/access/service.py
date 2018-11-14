@@ -1,4 +1,4 @@
-from hestia.service_interface import Service, InvalidService
+from hestia.service_interface import InvalidService, Service
 
 from django.conf import settings
 
@@ -9,7 +9,7 @@ from scopes.roles.manager import RoleManager
 
 
 class AccessService(Service):
-    __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission', 'entities',)
+    __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission',)
 
     ENTITY_MAPPING = {
         Entities.OWNER: owner.has_object_permission,
@@ -20,15 +20,11 @@ class AccessService(Service):
         self.role_manager = None
         self.scope_mapping_manager = None
 
-    @property
-    def entities(self):
-        return self.entities
-
     def get_scope_mapping_for(self, endpoint):
-        self.scope_mapping_manager.get(endpoint=endpoint)
+        return self.scope_mapping_manager.get(endpoint=endpoint)
 
     def has_object_permission(self, entity, permission, request, view, obj):
-        if entity not in self.entities.VALUES:
+        if entity not in Entities.VALUES:
             raise InvalidService('Entity not support `{}`'.format(entity))
 
         return self.ENTITY_MAPPING[entity](permission=permission,
@@ -41,4 +37,3 @@ class AccessService(Service):
 
         self.role_manager = RoleManager(config=settings.ROLES, default=settings.DEFAULT_ROLE)
         self.scope_mapping_manager = ScopeMappingManager(config=settings.SCOPE_ROLES)
-        self._entities = Entities

@@ -16,7 +16,7 @@ class RoleManager(object):
                             is_global=role.get('desc', False))
             self._roles[role.id] = role
 
-        self._default = self._roles[default]
+        self._default = self._roles[default] if self._roles else RoleSpec.get_dummy()
 
     def can_manage(self, role, other):
         return self.get(role).rank >= self.get(other).rank

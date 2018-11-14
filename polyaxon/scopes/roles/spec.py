@@ -11,3 +11,7 @@ class RoleSpec(namedtuple("RoleSpec", "rank name desc scopes is_global")):
 
     def has_scope(self, scope):
         return scope in self.scopes
+
+    @classmethod
+    def get_dummy(cls):
+        return cls(0, 'dummy', '', '', True)
