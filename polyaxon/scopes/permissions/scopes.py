@@ -21,6 +21,9 @@ class ScopesPermission(PolyaxonPermission):
             # Session users are granted total access
             return True
 
+        # TODO Add internal/ephemeral here
+        # (if that type of auth is allowed, then we should not check he scope)
+
         if request.user.is_authenticated and request.user.is_superuser:
             return True
 
