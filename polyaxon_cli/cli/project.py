@@ -26,28 +26,28 @@ from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
 
 
-def get_project_info(project):  # pylint:disable=redefined-outer-name
-    parts = project.replace('.', '/').split('/')
+def get_project_info(_project):
+    parts = _project.replace('.', '/').split('/')
     if len(parts) == 2:
         user, project_name = parts
     else:
         user = AuthConfigManager.get_value('username')
-        project_name = project
+        project_name = _project
 
     return user, project_name
 
 
-def get_project_or_local(project=None):  # pylint:disable=redefined-outer-name
-    if not project and not ProjectManager.is_initialized():
+def get_project_or_local(_project=None):
+    if not _project and not ProjectManager.is_initialized():
         Printer.print_error('Please provide a valid project, or init a new project. '
                             ' {}'.format(constants.INIT_COMMAND))
         sys.exit(1)
 
-    if project:
-        user, project_name = get_project_info(project)
+    if _project:
+        user, project_name = get_project_info(_project)
     else:
-        project = ProjectManager.get_config()
-        user, project_name = project.user, project.name
+        _project = ProjectManager.get_config()
+        user, project_name = _project.user, _project.name
 
     if not all([user, project_name]):
         Printer.print_error('Please provide a valid project, or init a new project.'
@@ -56,12 +56,12 @@ def get_project_or_local(project=None):  # pylint:disable=redefined-outer-name
     return user, project_name
 
 
-def get_project_details(project):  # pylint:disable=redefined-outer-name
-    if project.description:
+def get_project_details(_project):
+    if _project.description:
         Printer.print_header("Project description:")
-        click.echo('{}\n'.format(project.description))
+        click.echo('{}\n'.format(_project.description))
 
-    response = project.to_light_dict(
+    response = _project.to_light_dict(
         humanize_values=True,
         exclude_attrs=['uuid', 'experiment_groups', 'experiments', 'description'])
 
