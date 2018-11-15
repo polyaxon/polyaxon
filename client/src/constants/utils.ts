@@ -95,7 +95,7 @@ export let getGroupUrl = (username: string,
                           groupId: number | string,
                           app: boolean = true) => {
   const projectUrl = getProjectUrl(username, projectName, app);
-  return `${projectUrl}/groups/${groupId}/`;
+  return `${projectUrl}/groups/${groupId}`;
 };
 
 export let getSelectionUrl = (username: string,
@@ -103,7 +103,7 @@ export let getSelectionUrl = (username: string,
                               groupId: number | string,
                               app: boolean = true) => {
   const projectUrl = getProjectUrl(username, projectName, app);
-  return `${projectUrl}/selections/${groupId}/`;
+  return `${projectUrl}/selections/${groupId}`;
 };
 
 
@@ -119,7 +119,7 @@ export let getExperimentUrl = (username: string,
                                experimentId: number | string,
                                app: boolean = true) => {
   const projectUrl = getProjectUrl(username, projectName, app);
-  return `${projectUrl}/experiments/${experimentId}/`;
+  return `${projectUrl}/experiments/${experimentId}`;
 };
 
 export let getExperimentUniqueName = (username: string,
@@ -170,7 +170,7 @@ export let getJobUrl = (username: string,
                         app: boolean = true) => {
   const projectUrl = getProjectUrl(username, projectName, app);
 
-  return `${projectUrl}/jobs/${jobId}/`;
+  return `${projectUrl}/jobs/${jobId}`;
 };
 
 export let getBuildUrl = (username: string,
@@ -179,7 +179,7 @@ export let getBuildUrl = (username: string,
                           app: boolean = true) => {
   const projectUrl = getProjectUrl(username, projectName, app);
 
-  return `${projectUrl}/builds/${buildId}/`;
+  return `${projectUrl}/builds/${buildId}`;
 };
 
 export let getExperimentJobUrl = (username: string,
@@ -189,7 +189,7 @@ export let getExperimentJobUrl = (username: string,
                                   app: boolean = true) => {
   const experimentUrl = getExperimentUrl(username, projectName, experimentId, app);
 
-  return `${experimentUrl}/jobs/${jobId}/`;
+  return `${experimentUrl}/jobs/${jobId}`;
 };
 
 export let getExperimentJobUniqueName = (username: string,
