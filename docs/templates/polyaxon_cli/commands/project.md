@@ -45,6 +45,7 @@ option | type | description
   --description | TEXT | Description of the project.
   --tags | TEXT | Tags, comma separated values, of the project.
   --private | | Set the visibility of the project to private.
+  --init | | Initialize the project after creation.
   --help | | Show this message and exit.
 
 ## list
