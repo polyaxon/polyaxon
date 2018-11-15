@@ -42,7 +42,7 @@ class Token(DiffModel):
         return self.started_at + timedelta(days=settings.TOKEN_EXPIRATION) <= timezone.now()
 
     def has_scope(self, scope):
-        return scope in self.scopes
+        return scope in self.scopes  # pylint:disable=unsupported-membership-tes
 
     def refresh(self, started_at=None):
         self.update(
