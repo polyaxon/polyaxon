@@ -146,7 +146,7 @@ export default class Metrics extends React.Component<Props, State> {
       view.name = value;
       updated = true;
     } else if (key === 'smoothing') {
-      view.meta.smoothing = parseFloat(value);
+      view.meta.smoothing = parseFloat(value === '1' ? '0.999' : value);
       updated = true;
     } else if (key === 'xAxis') {
       if (value === 'time') {
@@ -370,7 +370,7 @@ export default class Metrics extends React.Component<Props, State> {
         type: 'line'
       } as ChartModel);
     }
-    return {charts, name: 'untitled', meta: {smoothing: 0.1, xAxis: 'time'}} as ChartViewModel;
+    return {charts, name: 'untitled', meta: {smoothing: 0, xAxis: 'time'}} as ChartViewModel;
   };
 
   public getMetricNames = () => {

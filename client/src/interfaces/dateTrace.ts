@@ -7,10 +7,13 @@ export interface DataTrace {
 }
 
 export interface Trace extends DataTrace {
-  name: string;
+  name?: string;
   mode: TraceModes;
   type: TraceTypes;
   line?: Partial<Plotly.ScatterLine>;
   marker?: Partial<Plotly.PlotMarker>;
   connectgaps?: boolean;
+  hoverinfo?: string;
+  showlegend?: boolean;
+  opacity?: number;
 }

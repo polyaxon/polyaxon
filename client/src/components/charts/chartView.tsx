@@ -101,7 +101,9 @@ export default class ChartView extends React.Component<Props, {}> {
         chart.metricNames.forEach((metricName, idx) => {
           const traceName = getTraceName(metricName, prefix);
           if (metricName in traceNamesByMetrics) {
-            traceNamesByMetrics[metricName].push(traceName);
+            if (traceNamesByMetrics[metricName].indexOf(traceName) === -1) {
+              traceNamesByMetrics[metricName].push(traceName);
+            }
           } else {
             traceNamesByMetrics[metricName] = [traceName];
           }
@@ -205,6 +207,27 @@ export default class ChartView extends React.Component<Props, {}> {
         }) as Plotly.PlotData[];
     };
 
+    const smoothData = (data: Plotly.Datum[], smoothingWeight: number) => {
+      const newData: Plotly.Datum[] = [];
+      let lastVal = data.length > 0 ? 0 : NaN;
+      let numAccumulation = 0;
+      data.forEach((d, i) => {
+        const nextVal = data[i + 1];
+        if (!_.isFinite(nextVal)) {
+          newData.push(nextVal);
+        } else {
+          lastVal = lastVal * smoothingWeight + (1 - smoothingWeight) * (nextVal as number);
+          numAccumulation++;
+          let unbiasedWeight = 1;
+          if (smoothingWeight !== 1.0) {
+            unbiasedWeight = 1.0 - Math.pow(smoothingWeight, numAccumulation);
+          }
+          newData.push(lastVal / unbiasedWeight);
+        }
+      });
+      return newData;
+    };
+
     const getLineTraces = (chart: ChartModel,
                            xData: { [key: string]: Plotly.Datum[] },
                            yData: { [key: string]: Plotly.Datum[] },
@@ -212,31 +235,62 @@ export default class ChartView extends React.Component<Props, {}> {
                            traceMode: TraceModes,
                            traceType: TraceTypes) => {
       const traces: { [key: string]: Trace } = {};
+      const traceNames: { [key: string]: string } = {};
+      const orginalTraces: string[] = [];
 
-      chart.metricNames.forEach((metricName) => {
+      chart.metricNames.forEach((metricName, metricIdx) => {
         if (metricName in traceNamesByMetrics) {
           traceNamesByMetrics[metricName].forEach((traceName, idx) => {
-            traces[traceName] = {
-              x: xData[traceName],
-              y: yData[traceName],
-              name: traceName,
-              mode: traceMode,
-              type: traceType,
-              connectgaps: true,
-            };
+            const yDataCur = yData[traceName];
+            traceNames[traceName] = traceName;
+            orginalTraces.push(traceName);
+            if (this.props.view.meta.smoothing && yDataCur.length > 1) {
+              // Original trace (put in the background)
+              traces[traceName] = {
+                x: xData[traceName],
+                y: yDataCur,
+                name: traceName,
+                mode: traceMode,
+                type: traceType,
+                connectgaps: true,
+                hoverinfo: 'skip',
+                showlegend: false,
+                opacity: 0.17
+              };
+
+              // Smoothed trace
+              const smoothedTraceName = `s-${traceName}`;
+              traceNames[smoothedTraceName] = traceName;
+              traces[smoothedTraceName] = {
+                x: xData[traceName],
+                y: smoothData(yDataCur, this.props.view.meta.smoothing),
+                name: traceName,
+                mode: traceMode,
+                type: traceType,
+                connectgaps: true
+              };
+            } else {
+              traces[traceName] = {
+                x: xData[traceName],
+                y: yDataCur,
+                name: traceName,
+                mode: traceMode,
+                type: traceType,
+                connectgaps: true,
+              };
+            }
           });
         }
       });
 
       // Add colors
       return Object.keys(traces)
-        .map((traceName, idx) => {
+        .map((traceName) => {
           const trace = traces[traceName];
+          const color = CHARTS_COLORS[orginalTraces.indexOf(traceNames[traceName]) % CHARTS_COLORS.length];
           trace.line = {
-            width: 1.7,
-            shape: 'spline',
-            smoothing: this.props.view.meta.smoothing,
-            color: CHARTS_COLORS[idx % CHARTS_COLORS.length],
+            width: 1.4,
+            color
           } as Partial<Plotly.ScatterLine>;
           return trace;
         }) as Plotly.PlotData[];
@@ -417,7 +471,7 @@ export default class ChartView extends React.Component<Props, {}> {
 
     return (
       <div className="row">
-        {(this.props.metrics.length > 0 &&this.props.view.charts.length > 0)
+        {(this.props.metrics.length > 0 && this.props.view.charts.length > 0)
           ? this.props.view.charts.map((chart, idx) => getChart(chart, idx))
           : Empty(
             'chart',
