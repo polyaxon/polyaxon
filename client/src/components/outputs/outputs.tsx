@@ -110,7 +110,7 @@ export default class Outputs extends React.Component<Props, State> {
     if (outputsNode.children) {
       children = [];
       for (const nodeName of Object.keys(outputsNode.children)) {
-        children.push(this.getData(outputsNode.path, outputsNode.children[nodeName]));
+        children.push(this.getData(id, outputsNode.children[nodeName]));
       }
     }
 
