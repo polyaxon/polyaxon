@@ -7,8 +7,6 @@ import platform
 import socket
 import sys
 
-import pkg_resources
-
 from polyaxon_client import settings
 from polyaxon_client.logger import logger
 
@@ -37,16 +35,17 @@ def get_module_path():
         return 'not found'
 
 
-def get_packages():
-    try:
-        installed_packages = [d for d in pkg_resources.working_set]  # noqa
-        return sorted(["{}=={}".format(pkg.key, pkg.version) for pkg in installed_packages])
-    except Exception as e:
-        logger.debug('Could not detect installed packages, %s', e)
-        return []
-
-
 def get_run_env():
+    import pkg_resources
+
+    def get_packages():
+        try:
+            installed_packages = [d for d in pkg_resources.working_set]  # noqa
+            return sorted(["{}=={}".format(pkg.key, pkg.version) for pkg in installed_packages])
+        except Exception as e:
+            logger.debug('Could not detect installed packages, %s', e)
+            return []
+
     try:
         version = pkg_resources.get_distribution(PROJECT_CLIENT_NAME).version
     except pkg_resources.DistributionNotFound:
