@@ -21,7 +21,7 @@ class AuditorService(EventService):
         from db.models.clusters import Cluster
         from django.db import InterfaceError, OperationalError, ProgrammingError
         try:
-            self.ref_id = Cluster.load().uuid.hex
+            self.ref_id = Cluster.load().uuid
         except (Cluster.DoesNotExist, InterfaceError, ProgrammingError, OperationalError):
             pass
         return self.ref_id
