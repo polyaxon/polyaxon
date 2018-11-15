@@ -20,7 +20,7 @@ from api.endpoint.experiment import ExperimentEndpoint
 from api.endpoint.group import ExperimentGroupEndpoint
 from api.endpoint.job import JobEndpoint
 from api.endpoint.project import ProjectEndpoint
-from api.endpoint.public import PublicResourceActivityPermission, PublicActivityPermission
+from api.endpoint.public import PublicActivityPermission, PublicResourceActivityPermission
 from api.filters import OrderingFilter
 from constants import content_types
 from db.models.bookmarks import Bookmark

@@ -26,7 +26,10 @@ from scopes.permissions.internal import IsAuthenticatedOrInternal
 _logger = logging.getLogger('polyaxon.views.repos')
 
 
-class RepoDetailView(ProjectResourceListEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
+class RepoDetailView(ProjectResourceListEndpoint,
+                     RetrieveEndpoint,
+                     UpdateEndpoint,
+                     DestroyEndpoint):
     """
     get:
         Get a repo details.

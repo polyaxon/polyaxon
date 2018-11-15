@@ -3,7 +3,6 @@ import access
 from access.entities import Entities
 from api.endpoint.base import BaseEndpoint
 from db.models.activitylogs import ActivityLog
-from db.models.nodes import ClusterNode
 from scopes.permissions.scopes import ScopesPermission
 
 

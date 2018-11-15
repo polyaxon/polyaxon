@@ -90,7 +90,11 @@ jobs_urlpatterns = [
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN),
         views.ExperimentJobStatusListView.as_view()),
     re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/{}/?$'.format(
-        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN, UUID_PATTERN),
+        OWNER_NAME_PATTERN,
+        PROJECT_NAME_PATTERN,
+        EXPERIMENT_ID_PATTERN,
+        JOB_ID_PATTERN,
+        UUID_PATTERN),
         views.ExperimentJobStatusDetailView.as_view()),
 ]
 

@@ -92,6 +92,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
         but with extra logic to initialize a local context.
         Please check parent methods for more info.
         """
+        #  pylint:disable=attribute-defined-outside-init
         self.args = args
         self.kwargs = kwargs
         request = self.initialize_request(request, *args, **kwargs)

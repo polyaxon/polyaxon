@@ -37,6 +37,7 @@ class OwnerEndpoint(BaseEndpoint):
     lookup_url_kwarg = 'owner_name'
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.owner = self.get_object()
 
@@ -53,6 +54,7 @@ class OwnerResourceEndpoint(BaseEndpoint):
         return super().filter_queryset(queryset=queryset)
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.owner = get_object_or_404(Owner, name=self.owner_name)
 

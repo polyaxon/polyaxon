@@ -37,6 +37,7 @@ class NodeEndpoint(NodeListEndpoint):
     lookup_url_kwarg = 'sequence'
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.node = self.get_object()
 
@@ -49,6 +50,7 @@ class NodeResourceEndpoint(NodeListEndpoint):
         return queryset.filter(cluster_node=self.node)
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.node = get_object_or_404(ClusterNode,
                                       sequence=self.sequence)

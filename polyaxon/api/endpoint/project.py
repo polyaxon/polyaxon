@@ -51,6 +51,7 @@ class ProjectEndpoint(BaseEndpoint):
         return queryset.filter(owner__name=self.owner_name)
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         self.project = self.get_object()
         self.owner = self.project.owner
 
@@ -66,6 +67,7 @@ class ProjectResourceListEndpoint(BaseEndpoint):
         return super().enrich_queryset(queryset=queryset)
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.project = get_object_or_404(Project,
                                          owner__name=self.owner_name,
@@ -89,4 +91,5 @@ class ProjectResourceEndpoint(ProjectResourceListEndpoint):
     lookup_field = 'id'
 
     def _validate_context(self):
+        #  pylint:disable=bad-super-call
         super(ProjectResourceListEndpoint, self)._validate_context()

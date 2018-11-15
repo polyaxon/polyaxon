@@ -16,6 +16,7 @@ class OwnershipService(Service):
 
     def __init__(self):
         self.content_type_manager = None
+        self.owner_manager = None
 
     @staticmethod
     def check_owner_type(owner=None, owner_type=None):

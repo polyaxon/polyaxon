@@ -21,8 +21,8 @@ class RoleManager(object):
     def can_manage(self, role, other):
         return self.get(role).rank >= self.get(other).rank
 
-    def get(self, id):
-        return self._roles[id]
+    def get(self, role_id):
+        return self._roles[role_id]
 
     @cached_property
     def roles(self):

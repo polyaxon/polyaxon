@@ -13,6 +13,7 @@ class JobEndpoint(ProjectResourceEndpoint):
     lookup_url_kwarg = 'job_id'
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.job = self.get_object()
 
@@ -26,6 +27,7 @@ class JobResourceListEndpoint(ProjectResourceEndpoint):
         return queryset.filter(job=self.job)
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.job = get_object_or_404(Job,
                                      id=self.job_id,
@@ -46,4 +48,5 @@ class JobResourceEndpoint(JobResourceListEndpoint):
     lookup_url_kwarg = 'id'
 
     def _validate_context(self):
+        #  pylint:disable=bad-super-call
         super(JobResourceListEndpoint, self)._validate_context()

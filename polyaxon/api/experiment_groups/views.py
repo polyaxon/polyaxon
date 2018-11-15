@@ -185,7 +185,9 @@ class ExperimentGroupViewMixin(object):
         return queryset.filter(experiment_group=self.get_experiment_group())
 
 
-class ExperimentGroupStatusListView(ExperimentGroupResourceListEndpoint, ListEndpoint, CreateEndpoint):
+class ExperimentGroupStatusListView(ExperimentGroupResourceListEndpoint,
+                                    ListEndpoint,
+                                    CreateEndpoint):
     """
     get:
         List all statuses of experiment group.

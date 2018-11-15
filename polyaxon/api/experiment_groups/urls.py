@@ -1,6 +1,5 @@
-from rest_framework.urlpatterns import format_suffix_patterns
-
 from django.urls import re_path
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from api.bookmarks import views as bookmark_views
 from api.experiment_groups import views
@@ -14,10 +13,12 @@ from constants.urls import (
 )
 
 groups_urlpatterns = [
-    re_path(r'^{}/{}/groups/{}/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
-            views.ExperimentGroupDetailView.as_view()),
-    re_path(r'^{}/{}/selections/{}/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
-            views.ExperimentGroupSelectionView.as_view()),
+    re_path(r'^{}/{}/groups/{}/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
+        views.ExperimentGroupDetailView.as_view()),
+    re_path(r'^{}/{}/selections/{}/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
+        views.ExperimentGroupSelectionView.as_view()),
     re_path(r'^{}/{}/groups/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
         views.ExperimentGroupStatusListView.as_view()),

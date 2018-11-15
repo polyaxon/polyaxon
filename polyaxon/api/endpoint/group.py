@@ -13,6 +13,7 @@ class ExperimentGroupEndpoint(ProjectResourceEndpoint):
     lookup_url_kwarg = 'group_id'
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.group = self.get_object()
 
@@ -26,6 +27,7 @@ class ExperimentGroupResourceListEndpoint(ProjectResourceEndpoint):
         return queryset.filter(experiment_group=self.group)
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.group = get_object_or_404(ExperimentGroup,
                                        id=self.group_id,
@@ -46,4 +48,5 @@ class ExperimentGroupResourceEndpoint(ExperimentGroupResourceListEndpoint):
     lookup_url_kwarg = 'id'
 
     def _validate_context(self):
+        #  pylint:disable=bad-super-call
         super(ExperimentGroupResourceListEndpoint, self)._validate_context()

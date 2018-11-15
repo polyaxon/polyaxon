@@ -13,6 +13,7 @@ class ExperimentEndpoint(ProjectResourceEndpoint):
     lookup_url_kwarg = 'experiment_id'
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.experiment = self.get_object()
 
@@ -26,6 +27,7 @@ class ExperimentResourceListEndpoint(ProjectResourceEndpoint):
         return queryset.filter(experiment=self.experiment)
 
     def _initialize_context(self):
+        #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.experiment = get_object_or_404(Experiment,
                                             id=self.experiment_id,
@@ -46,4 +48,5 @@ class ExperimentResourceEndpoint(ExperimentResourceListEndpoint):
     lookup_url_kwarg = 'id'
 
     def _validate_context(self):
+        #  pylint:disable=bad-super-call
         super(ExperimentResourceListEndpoint, self)._validate_context()

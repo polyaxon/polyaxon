@@ -22,6 +22,3 @@ class PublishTrackerService(TrackerService):
             event.event_type,
             event.serialize(dumps=False, include_actor_name=False),
         )
-
-    def setup(self):
-        super().setup()
