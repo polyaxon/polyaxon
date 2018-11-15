@@ -7,13 +7,13 @@ import click
 
 from marshmallow import ValidationError
 
+from polyaxon_cli.cli.getters.project import get_project_or_local
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.schemas.project import ProjectConfig
-from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -22,46 +22,17 @@ from polyaxon_cli.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate
 )
+from polyaxon_cli.cli.init import init as init_project
 from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
 
 
-def get_project_info(_project):
-    parts = _project.replace('.', '/').split('/')
-    if len(parts) == 2:
-        user, project_name = parts
-    else:
-        user = AuthConfigManager.get_value('username')
-        project_name = _project
-
-    return user, project_name
-
-
-def get_project_or_local(_project=None):
-    if not _project and not ProjectManager.is_initialized():
-        Printer.print_error('Please provide a valid project, or init a new project. '
-                            ' {}'.format(constants.INIT_COMMAND))
-        sys.exit(1)
-
-    if _project:
-        user, project_name = get_project_info(_project)
-    else:
-        _project = ProjectManager.get_config()
-        user, project_name = _project.user, _project.name
-
-    if not all([user, project_name]):
-        Printer.print_error('Please provide a valid project, or init a new project.'
-                            ' {}'.format(constants.INIT_COMMAND))
-        sys.exit(1)
-    return user, project_name
-
-
-def get_project_details(_project):
-    if _project.description:
+def get_project_details(project):
+    if project.description:
         Printer.print_header("Project description:")
-        click.echo('{}\n'.format(_project.description))
+        click.echo('{}\n'.format(project.description))
 
-    response = _project.to_light_dict(
+    response = project.to_light_dict(
         humanize_values=True,
         exclude_attrs=['uuid', 'experiment_groups', 'experiments', 'description'])
 
@@ -86,8 +57,10 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
 @click.option('--description', type=str, help='Description of the project.')
 @click.option('--tags', type=str, help='Tags, comma separated values, of the project.')
 @click.option('--private', is_flag=True, help='Set the visibility of the project to private.')
+@click.option('--init', is_flag=True, help='Initialize the project after creation.')
+@click.pass_context
 @clean_outputs
-def create(name, description, tags, private):
+def create(ctx, name, description, tags, private, init):
     """Create a new project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -115,6 +88,10 @@ def create(name, description, tags, private):
         sys.exit(1)
 
     Printer.print_success("Project `{}` was created successfully.".format(_project.name))
+
+    if init:
+        ctx.obj = {}
+        ctx.invoke(init_project, project=name)
 
 
 @project.command()
