@@ -148,7 +148,10 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
 
 export const ExperimentsParamsReducer: Reducer<ExperimentParamStateSchema> =
   (state: ExperimentParamStateSchema = ExperimentsParamsEmptyState, action: ExperimentAction) => {
-    let newState = {...state};
+    let newState = {
+      ...state,
+      ...{lastFetched: new LastFetchedNames()}
+    };
 
     const processExperiment = (experiment: ExperimentModel) => {
       const uniqueName = getExperimentIndexName(experiment.unique_name);
