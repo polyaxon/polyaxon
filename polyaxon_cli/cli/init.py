@@ -8,7 +8,7 @@ import click
 
 from marshmallow import ValidationError
 
-from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.cli.getters.project import get_project_or_local
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs

@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.cli.getters.build import get_build_or_local
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
@@ -21,12 +21,6 @@ from polyaxon_cli.utils.formatting import (
 from polyaxon_cli.utils.log_handler import get_logs_handler
 from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
-
-
-def get_build_or_local(project=None, _build=None):
-    user, project_name = get_project_or_local(project)
-    _build = _build or BuildJobManager.get_config_or_raise().id
-    return user, project_name, _build
 
 
 def get_build_details(_build):

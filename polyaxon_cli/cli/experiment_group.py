@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.cli.getters.experiment_group import get_project_group_or_local
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
@@ -21,16 +21,6 @@ from polyaxon_cli.utils.formatting import (
 )
 from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
-
-
-def get_group_or_local(_group):
-    return _group or GroupManager.get_config_or_raise().id
-
-
-def get_project_group_or_local(project=None, group=None):  # pylint:disable=redefined-outer-name
-    user, project_name = get_project_or_local(project)
-    group = get_group_or_local(group)
-    return user, project_name, group
 
 
 def get_group_details(group):  # pylint:disable=redefined-outer-name

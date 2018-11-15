@@ -6,7 +6,7 @@ import sys
 import click
 import rhea
 
-from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.cli.getters.job import get_job_or_local
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
@@ -23,12 +23,6 @@ from polyaxon_cli.utils.formatting import (
 from polyaxon_cli.utils.log_handler import get_logs_handler
 from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
-
-
-def get_job_or_local(project=None, _job=None):
-    user, project_name = get_project_or_local(project)
-    _job = _job or JobManager.get_config_or_raise().id
-    return user, project_name, _job
 
 
 def get_job_details(_job):

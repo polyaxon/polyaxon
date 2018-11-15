@@ -5,10 +5,10 @@ import sys
 
 import click
 
+from polyaxon_cli.cli.getters.user import get_username_or_local
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
-from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -16,10 +16,6 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_client.exceptions import PolyaxonClientException
-
-
-def get_username_or_local(username):
-    return username or AuthConfigManager.get_value('username')
 
 
 @click.group()
