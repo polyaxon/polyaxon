@@ -61,6 +61,7 @@ class ProjectResourceListEndpoint(BaseEndpoint):
     AUDITOR_EVENT_TYPES = None
     CONTEXT_KEYS = ('owner_name', 'project_name')
     CONTEXT_OBJECTS = ('owner', 'project')
+    ALLOW_PUBLIC = False
 
     def enrich_queryset(self, queryset):
         queryset = queryset.filter(project=self.project)
@@ -74,22 +75,23 @@ class ProjectResourceListEndpoint(BaseEndpoint):
                                          name=self.project_name)
         self.owner = self.project.owner
 
-    def _validate_context(self):
-        super()._validate_context()
-        permission = self.permission_classes[0]()
-        if not permission.has_object_permission(request=self.request,
-                                                view=self,
-                                                obj=self.project):
+    def _validate_resource_permission(self):
+        permission = ProjectPermission()
+        cond = (permission.has_object_permission(request=self.request,
+                                                 view=self,
+                                                 obj=self.project)
+                or (self.ALLOW_PUBLIC and self.project.is_public))
+        if not cond:
             self.permission_denied(
                 self.request, message=getattr(permission, 'message', None)
             )
+
+    def _validate_context(self):
+        super()._validate_context()
+        self._validate_resource_permission()
 
 
 class ProjectResourceEndpoint(ProjectResourceListEndpoint):
     permission_classes = (ProjectResourcePermission,)
     AUDITOR_EVENT_TYPES = None
     lookup_field = 'id'
-
-    def _validate_context(self):
-        #  pylint:disable=bad-super-call
-        super(ProjectResourceListEndpoint, self)._validate_context()

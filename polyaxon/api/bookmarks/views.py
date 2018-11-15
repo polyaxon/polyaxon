@@ -170,6 +170,7 @@ class BuildJobBookmarkCreateView(BuildEndpoint, BookmarkCreateView):
     event_type = BUILD_JOB_BOOKMARKED
     content_type = content_types.BUILD_JOB
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class BuildJobBookmarkDeleteView(BuildEndpoint, BookmarkDeleteView):
@@ -177,6 +178,7 @@ class BuildJobBookmarkDeleteView(BuildEndpoint, BookmarkDeleteView):
     event_type = BUILD_JOB_UNBOOKMARKED
     content_type = content_types.BUILD_JOB
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class JobBookmarkCreateView(JobEndpoint, BookmarkCreateView):
@@ -184,6 +186,7 @@ class JobBookmarkCreateView(JobEndpoint, BookmarkCreateView):
     event_type = JOB_BOOKMARKED
     content_type = content_types.JOB
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class JobBookmarkDeleteView(JobEndpoint, BookmarkDeleteView):
@@ -191,6 +194,7 @@ class JobBookmarkDeleteView(JobEndpoint, BookmarkDeleteView):
     event_type = JOB_UNBOOKMARKED
     content_type = content_types.JOB
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class ExperimentBookmarkCreateView(ExperimentEndpoint, BookmarkCreateView):
@@ -198,6 +202,7 @@ class ExperimentBookmarkCreateView(ExperimentEndpoint, BookmarkCreateView):
     event_type = EXPERIMENT_BOOKMARKED
     content_type = content_types.EXPERIMENT
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class ExperimentBookmarkDeleteView(ExperimentEndpoint, BookmarkDeleteView):
@@ -205,6 +210,7 @@ class ExperimentBookmarkDeleteView(ExperimentEndpoint, BookmarkDeleteView):
     event_type = EXPERIMENT_UNBOOKMARKED
     content_type = content_types.EXPERIMENT
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class ExperimentGroupBookmarkCreateView(ExperimentGroupEndpoint, BookmarkCreateView):
@@ -212,6 +218,7 @@ class ExperimentGroupBookmarkCreateView(ExperimentGroupEndpoint, BookmarkCreateV
     event_type = EXPERIMENT_GROUP_BOOKMARKED
     content_type = content_types.EXPERIMENT_GROUP
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class ExperimentGroupBookmarkDeleteView(ExperimentGroupEndpoint, BookmarkDeleteView):
@@ -219,6 +226,7 @@ class ExperimentGroupBookmarkDeleteView(ExperimentGroupEndpoint, BookmarkDeleteV
     event_type = EXPERIMENT_GROUP_UNBOOKMARKED
     content_type = content_types.EXPERIMENT_GROUP
     permission_classes = (PublicResourceActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class ProjectBookmarkCreateView(ProjectEndpoint, BookmarkCreateView):
@@ -226,6 +234,7 @@ class ProjectBookmarkCreateView(ProjectEndpoint, BookmarkCreateView):
     event_type = PROJECT_BOOKMARKED
     content_type = content_types.PROJECT
     permission_classes = (PublicActivityPermission,)
+    ALLOW_PUBLIC = True
 
 
 class ProjectBookmarkDeleteView(ProjectEndpoint, BookmarkDeleteView):
@@ -233,3 +242,4 @@ class ProjectBookmarkDeleteView(ProjectEndpoint, BookmarkDeleteView):
     event_type = PROJECT_UNBOOKMARKED
     content_type = content_types.PROJECT
     permission_classes = (PublicActivityPermission,)
+    ALLOW_PUBLIC = True

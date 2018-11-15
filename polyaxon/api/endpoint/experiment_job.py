@@ -46,7 +46,3 @@ class ExperimentJobResourceEndpoint(ExperimentJobResourceListEndpoint):
     AUDITOR_EVENT_TYPES = None
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
-
-    def _validate_context(self):
-        #  pylint:disable=bad-super-call
-        super(ExperimentJobResourceListEndpoint, self)._validate_context()
