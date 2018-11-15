@@ -18,4 +18,3 @@ def get_project_experiment_or_local(project=None, experiment=None):
 
 def get_experiment_job_or_local(job=None):
     return job or ExperimentJobManager.get_config_or_raise().id
-

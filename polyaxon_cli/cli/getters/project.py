@@ -37,4 +37,3 @@ def get_project_or_local(project=None):
                             ' {}'.format(constants.INIT_COMMAND))
         sys.exit(1)
     return user, project_name
-

@@ -27,12 +27,12 @@ from polyaxon_cli.utils.validation import validate_tags
 from polyaxon_client.exceptions import PolyaxonClientException
 
 
-def get_project_details(project):
-    if project.description:
+def get_project_details(_project):
+    if _project.description:
         Printer.print_header("Project description:")
-        click.echo('{}\n'.format(project.description))
+        click.echo('{}\n'.format(_project.description))
 
-    response = project.to_light_dict(
+    response = _project.to_light_dict(
         humanize_values=True,
         exclude_attrs=['uuid', 'experiment_groups', 'experiments', 'description'])
 
