@@ -93,7 +93,7 @@ class AuthTokenLogin(ObtainAuthToken):
         response = Response({'token': token.key})
         if request.data.get('login'):
             auth_login(self.request, user)
-            response.set_cookie('token', value=token)
+            response.set_cookie('token', value=token.key)
             response.set_cookie('user', value=user.username)
         return response
 
