@@ -5,7 +5,7 @@ from db.models.bookmarks import Bookmark
 class BookmarkedListMixinView(object):
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
-        if not isinstance(serializer_class, BookmarkedSerializerMixin):
+        if not issubclass(serializer_class, BookmarkedSerializerMixin):
             return super().get_serializer(*args, **kwargs)
 
         queryset = args[0]
