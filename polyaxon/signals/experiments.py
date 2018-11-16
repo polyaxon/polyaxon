@@ -1,6 +1,11 @@
 import logging
 
-from hestia.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
+from hestia.signal_decorators import (
+    check_specification,
+    ignore_raw,
+    ignore_updates,
+    ignore_updates_pre
+)
 
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver

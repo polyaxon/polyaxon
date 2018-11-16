@@ -1,4 +1,4 @@
-from hestia.decorators import ignore_raw, ignore_updates
+from hestia.signal_decorators import ignore_raw, ignore_updates
 
 from django.conf import settings
 from django.db.models.signals import post_delete, post_save
