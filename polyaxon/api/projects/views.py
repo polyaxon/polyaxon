@@ -13,6 +13,7 @@ from api.projects.serializers import (
     ProjectDetailSerializer,
     ProjectSerializer
 )
+from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from db.models.projects import Project
 from event_manager.events.project import (
     PROJECT_CREATED,
@@ -37,7 +38,7 @@ class ProjectCreateView(CreateAPIView):
         auditor.record(event_type=PROJECT_CREATED, instance=instance)
 
 
-class ProjectListView(OwnerResourceEndpoint, ListEndpoint):
+class ProjectListView(BookmarkedListMixinView, OwnerResourceEndpoint, ListEndpoint):
     """List projects for a user."""
     queryset = queries.projects.order_by('-updated_at')
     permission_classes = (OwnerProjectListPermission,)
