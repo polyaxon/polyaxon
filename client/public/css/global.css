@@ -21,9 +21,7 @@ body>#container {
 }
 
 .navbar, #header {
-  background: #485563;
-  background: -webkit-linear-gradient(to left, #485563, #29323c);
-  background: linear-gradient(to left, #485563, #29323c);
+  background: #29323c;
   border-radius: 0.1rem;
 }
 
@@ -44,9 +42,7 @@ body>#container {
   align-items: center;
   margin-bottom: 10px;
   padding: 0 36px;
-  background: #485563;
-  background: -webkit-linear-gradient(to left, #485563, #29323c);
-  background: linear-gradient(to left, #485563, #29323c);
+  background: #29323c;
   border-radius: 0.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   height: 45px;

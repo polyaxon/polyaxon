@@ -21,9 +21,7 @@ body {
 #top {
   padding: 0 36px 0 0;
   margin-bottom: 10px;
-  background: #485563;
-  background: -webkit-linear-gradient(to left, #485563, #29323c);
-  background: linear-gradient(to left, #485563, #29323c);
+  background: #29323c;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   height: 45px;
   font-size: 14px;
