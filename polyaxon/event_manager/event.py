@@ -62,6 +62,7 @@ class Event(object):
                  instance=None,
                  instance_id=None,
                  instance_contenttype=None,
+                 ref_id=None,
                  event_data=None,
                  **items):
         self.uuid = UUID(uid) if uid else uuid1()
@@ -70,6 +71,8 @@ class Event(object):
         self.instance_id = instance_id
         self.instance_contenttype = instance_contenttype
         self.ref_id = None
+        if ref_id:
+            self.ref_id = UUID(ref_id) if isinstance(ref_id, str) else ref_id
 
         if self.event_type is None:
             raise ValueError('Event is missing a type')
@@ -91,7 +94,6 @@ class Event(object):
                     ))
                 data[attr.name] = attr.extract(item_value)
 
-            self.ref_id = self.ref_id or data.get('ref_id')
             actor_id = data.get(self.actor_id)
             actor_name = data.get(self.actor_name)
             if self.actor and actor_id is None:
@@ -190,7 +192,7 @@ class Event(object):
         return cls(**values)
 
     @classmethod
-    def from_event_data(cls, event_data):
+    def from_event_data(cls, event_data, **kwargs):
         return cls(
             datetime=to_datetime(event_data.get('timestamp')),
             uid=event_data.get('uuid'),
@@ -199,4 +201,5 @@ class Event(object):
             instance=event_data.get('instance'),
             instance_id=event_data.get('instance_id'),
             instance_contenttype=event_data.get('instance_contenttype'),
+            **kwargs
         )

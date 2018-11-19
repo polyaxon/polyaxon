@@ -1,3 +1,5 @@
+from uuid import uuid1
+
 import pytest
 
 from django.contrib.contenttypes.models import ContentType
@@ -477,8 +479,18 @@ class TestEvents(BaseTest):
         event = ExperimentSucceededEvent.from_instance(instance=instance,
                                                        actor_id=1,
                                                        actor_name='user')
+        assert event.ref_id is None
         event_serialized = event.serialize(dumps=False, include_instance_info=True)
+        assert event_serialized.get('ref_id') is None
         new_event = ExperimentSucceededEvent.from_event_data(event_data=event_serialized)
+        assert new_event.serialize(include_instance_info=True) == event_serialized
+
+        # Add ref id
+        event.ref_id = uuid1()
+        event_serialized = event.serialize(dumps=False, include_instance_info=True)
+        assert event_serialized['ref_id'] == event.ref_id
+        new_event = ExperimentSucceededEvent.from_event_data(event_data=event_serialized)
+        assert new_event.ref_id == event.ref_id
         assert new_event.serialize(include_instance_info=True) == event_serialized
 
     def test_get_value_from_instance(self):
