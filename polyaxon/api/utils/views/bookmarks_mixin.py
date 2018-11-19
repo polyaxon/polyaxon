@@ -21,7 +21,7 @@ class BookmarkedListMixinView(object):
             user=self.request.user,
             content_type__model=self.serializer_class.bookmarked_model,
             object_id__in=object_ids,
-            enabled=True).values_list('id', flat=True)
+            enabled=True).values_list('object_id', flat=True)
 
         context = self.get_serializer_context()
         context['bookmarks'] = list(bookmarks)
