@@ -230,8 +230,7 @@ class ExperimentNewMetricEvent(Event):
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
-        Attribute('experiment_group.id', is_required=False),
-        Attribute('last_metric', attr_type=dict, is_required=False),
+        Attribute('experiment_group.id', is_required=False)
     )
 
 
