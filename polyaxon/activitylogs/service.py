@@ -1,5 +1,3 @@
-import uuid
-
 from activitylogs.manager import default_manager
 from constants import user_system
 from event_manager.event_service import EventService
