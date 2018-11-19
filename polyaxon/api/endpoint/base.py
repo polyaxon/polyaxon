@@ -15,6 +15,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
     QUERY_CONTEXT_KEYS = ()
     CONTEXT_OBJECTS = ()
     create_serializer_class = None
+    _object = None  # This is a memoization for get_object, to avoid accidentally calling twice.
 
     def get_serializer_class(self):
         if self.create_serializer_class and self.request.method == 'POST':
@@ -29,22 +30,25 @@ class BaseEndpoint(mixins.CreateModelMixin,
         return queryset
 
     def get_object(self):
-        instance = super().get_object()
+        """We memoize the access to this function in case a second call is made."""
+        if self._object:
+            return self._object
+        self._object = super().get_object()
         if not self.AUDITOR_EVENT_TYPES:
-            return instance
+            return self._object
         method = self.request.method
         event_type = self.AUDITOR_EVENT_TYPES.get(method)
         if method == 'GET' and event_type:
             auditor.record(event_type=event_type,
-                           instance=instance,
+                           instance=self._object,
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username)
         elif method == 'DELETE' and event_type:
             auditor.record(event_type=event_type,
-                           instance=instance,
+                           instance=self._object,
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username)
-        return instance
+        return self._object
 
     def perform_update(self, serializer):
         instance = serializer.save()

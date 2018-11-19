@@ -42,7 +42,10 @@ class RepoDetailView(ProjectResourceListEndpoint,
     serializer_class = RepoSerializer
 
     def get_object(self):
-        return get_object_or_404(Repo, project=self.project)
+        if self._object:
+            return self._object
+        self._object = get_object_or_404(Repo, project=self.project)
+        return self._object
 
 
 class DownloadFilesView(ProjectResourceListEndpoint, ProtectedView):
@@ -54,13 +57,15 @@ class DownloadFilesView(ProjectResourceListEndpoint, ProtectedView):
     permission_classes = (IsAuthenticatedOrInternal, )
 
     def get_object(self):
-        repo = get_object_or_404(Repo, project=self.project)
+        if self._object:
+            return self._object
+        self._object = get_object_or_404(Repo, project=self.project)
         if not is_authenticated_internal_user(self.request.user):
             auditor.record(event_type=REPO_DOWNLOADED,
-                           instance=repo,
+                           instance=self._object,
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username)
-        return repo
+        return self._object
 
     def get(self, request, *args, **kwargs):
         repo = self.get_object()

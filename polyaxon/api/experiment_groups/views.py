@@ -275,11 +275,13 @@ class ExperimentGroupChartViewDetailView(ExperimentGroupResourceEndpoint,
     lookup_field = 'id'
 
     def get_object(self):
-        instance = super().get_object()
+        if self._object:
+            return self._object
+        self._object = super().get_object()
         if self.request.method == 'DELETE':
             auditor.record(event_type=CHART_VIEW_DELETED,
-                           instance=instance,
+                           instance=self._object,
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username,
-                           group=instance)
-        return instance
+                           group=self._object)
+        return self._object

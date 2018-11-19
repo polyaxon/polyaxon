@@ -9,7 +9,7 @@ class ExperimentLifeCycle(BaseStatuses):
 
     Props:
         * CREATED: created and waiting to be scheduled
-        * BUILDING: started building imagesif necessary
+        * BUILDING: started building images if necessary
         * SCHEDULED: scheduled waiting to be picked
         * STARTING: picked and is starting (jobs are created/building/pending)
         * RUNNING: one or all jobs is still running

@@ -11,4 +11,7 @@ class ClusterDetailView(ClusterEndpoint, RetrieveEndpoint):
         return ClusterSerializer
 
     def get_object(self):
-        return Cluster.load()
+        if self._object:
+            return self._object
+        self._object = Cluster.load()
+        return self._object
