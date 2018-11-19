@@ -147,7 +147,7 @@ class Event(object):
             'uuid': self.uuid.hex,
             'timestamp': to_timestamp(self.datetime),
             'type': self.event_type,
-            'ref_id': self.ref_id,
+            'ref_id': self.ref_id.hex if self.ref_id else None,
             'data': _data,
         }
         if include_instance_info:

@@ -1,7 +1,5 @@
 import pytest
 
-import ownership
-
 from api.projects import queries
 from api.projects.serializers import (
     BookmarkedProjectSerializer,

@@ -14,11 +14,11 @@ class PublishTrackerService(TrackerService):
 
         if event.event_type == 'cluster.created':
             self.analytics.identify(
-                event.ref_id,
+                event.ref_id.hex,
                 event.serialize(dumps=False),
             )
         self.analytics.track(
-            event.ref_id,
+            event.ref_id.hex,
             event.event_type,
             event.serialize(dumps=False, include_actor_name=False),
         )

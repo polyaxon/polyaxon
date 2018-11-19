@@ -488,7 +488,7 @@ class TestEvents(BaseTest):
         # Add ref id
         event.ref_id = uuid1()
         event_serialized = event.serialize(dumps=False, include_instance_info=True)
-        assert event_serialized['ref_id'] == event.ref_id
+        assert event_serialized['ref_id'] == event.ref_id.hex
         new_event = ExperimentSucceededEvent.from_event_data(event_data=event_serialized)
         assert new_event.ref_id == event.ref_id
         assert new_event.serialize(include_instance_info=True) == event_serialized
