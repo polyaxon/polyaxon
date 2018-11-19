@@ -113,8 +113,9 @@ class BaseEndpoint(mixins.CreateModelMixin,
             else:
                 handler = self.http_method_not_allowed
 
-            # Polyaxon's context initializer
-            self.initialize_context(request, *args, **kwargs)
+            if handler != self.http_method_not_allowed:
+                # Polyaxon's context initializer
+                self.initialize_context(request, *args, **kwargs)
 
             response = handler(request, *args, **kwargs)
 
