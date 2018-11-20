@@ -3,7 +3,7 @@
  * Add `--init` option to `polyaxon create` to allow users to create and initialize a project at the same time.
  * Use `done` instead of `succeeded` for experiment groups status.
  * Upgrade image and python to 3.6.
- * Update registration validation.
+ * Update the registration's validation.
  * Update smoothing algorithm: move from spline to moving average.
  * Add search algorithm to group schemas and to cli `polyaxon group get`.
  * Update heartbeat logic: start logic from running/starting status instead of scheduled.
