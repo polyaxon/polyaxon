@@ -25,6 +25,9 @@ class Owner(DiffModel):
         app_label = 'db'
         unique_together = (('content_type', 'object_id'),)
 
+    def __str__(self):
+        return self.name
+
     @cached_property
     def owner_type(self):
         return self.content_type.model

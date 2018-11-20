@@ -70,8 +70,8 @@ class OwnershipService(Service):
             pass
 
     def validate_owner_name(self, name):
-        if self.owner_manager.filter(name=name).exists():
-            raise ValidationError('The given name is already taken.')
+        if self.owner_manager.filter(name__iexact=name).exists():
+            raise ValidationError('The name is a reserved word or already taken.')
 
     def setup(self):
         super().setup()
