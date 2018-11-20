@@ -1,4 +1,3 @@
-from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import TemplateView
 
 
