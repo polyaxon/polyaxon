@@ -11,7 +11,7 @@ def login_user(request, response, user, login=True):
 
     if user.is_authenticated:
         token, _ = Token.objects.get_or_create(user=request.user)
-        response.set_cookie('token', value=token)
+        response.set_cookie('token', value=token.key)
         response.set_cookie('user', value=request.user.username)
 
 
