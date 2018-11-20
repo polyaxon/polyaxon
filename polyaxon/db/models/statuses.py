@@ -78,6 +78,10 @@ class LastStatusMixin(object):
         return self.STATUSES.succeeded(self.last_status)
 
     @property
+    def done(self):
+        return self.STATUSES.done(self.last_status)
+
+    @property
     def stopped(self):
         return self.STATUSES.stopped(self.last_status)
 

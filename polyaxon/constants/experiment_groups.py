@@ -7,37 +7,37 @@ class ExperimentGroupLifeCycle(BaseStatuses):
     Props:
         * CREATED: created and waiting to be scheduled
         * RUNNING: one or all jobs is still running
-        * SUCCEEDED: master and workers have finished successfully
+        * DONE: experiment group has finished scheduling and tracking all experiments
         * FAILED: one of the jobs has failed
         * STOPPED: was stopped/deleted/killed
     """
     CREATED = StatusOptions.CREATED
     RUNNING = StatusOptions.RUNNING
-    SUCCEEDED = StatusOptions.SUCCEEDED
+    DONE = StatusOptions.DONE
     FAILED = StatusOptions.FAILED
     STOPPED = StatusOptions.STOPPED
 
     CHOICES = (
         (CREATED, CREATED),
         (RUNNING, RUNNING),
-        (SUCCEEDED, SUCCEEDED),
+        (DONE, DONE),
         (FAILED, FAILED),
         (STOPPED, STOPPED),
     )
 
     VALUES = {
-        CREATED, RUNNING, SUCCEEDED, FAILED, STOPPED
+        CREATED, RUNNING, DONE, FAILED, STOPPED
     }
 
     PENDING_STATUS = {CREATED, }
     RUNNING_STATUS = {RUNNING, }
-    DONE_STATUS = {FAILED, STOPPED, SUCCEEDED}
+    DONE_STATUS = {FAILED, STOPPED, DONE}
     FAILED_STATUS = {FAILED, }
 
     TRANSITION_MATRIX = {
         CREATED: {None, },
         RUNNING: {CREATED, STOPPED},
-        SUCCEEDED: {RUNNING, },
+        DONE: {RUNNING, },
         FAILED: {CREATED, RUNNING},
         STOPPED: set(VALUES) - {STOPPED, },
     }

@@ -121,4 +121,4 @@ def experiments_group_check_finished(self, experiment_group_id):
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
         return
 
-    experiment_group.set_status(status=ExperimentGroupLifeCycle.SUCCEEDED)
+    experiment_group.set_status(status=ExperimentGroupLifeCycle.DONE)

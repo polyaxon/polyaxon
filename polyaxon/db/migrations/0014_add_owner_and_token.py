@@ -46,6 +46,11 @@ def migrate_activity_ref(apps, schema_editor):
             activity.save(update_fields=['ref'])
 
 
+def migrate_experiment_group(apps, schema_editor):
+    ExperimentGroupStatus = apps.get_model('db', 'ExperimentGroupStatus')
+    ExperimentGroupStatus.objects.filter(status='succeeded').update(status='done')
+
+
 class Migration(migrations.Migration):
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),

@@ -12,6 +12,7 @@ class StatusOptions:
     FINISHED = 'finished'
     SKIPPED = 'skipped'
     RETRYING = 'retrying'
+    DONE = 'done'
 
 
 class BaseStatuses(object):
@@ -47,6 +48,10 @@ class BaseStatuses(object):
     @classmethod
     def failed(cls, status):
         return status in cls.FAILED_STATUS
+
+    @classmethod
+    def done(cls, status):
+        return status == cls.DONE
 
     @classmethod
     def succeeded(cls, status):

@@ -3,7 +3,8 @@ export const RUNNING = 'running';
 export const STOPPED = 'stopped';
 export const FAILED = 'failed';
 export const SUCCEEDED = 'succeeded';
+export const DONE = 'done';
 
 export const isDone = (status: string): boolean => {
-  return [STOPPED, FAILED, SUCCEEDED].indexOf(status) > -1;
-}
+  return [STOPPED, FAILED, SUCCEEDED, DONE].indexOf(status) > -1;
+};
