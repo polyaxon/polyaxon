@@ -147,4 +147,5 @@ class Migration(migrations.Migration):
                                     to='contenttypes.ContentType'),
         ),
         migrations.RunPython(migrate_activity_ref),
+        migrations.RunPython(migrate_experiment_group),
     ]
