@@ -46,7 +46,7 @@ class Token(DiffModel):
 
     def refresh(self, started_at=None):
         self.update(
-            key=self.generate_token(),
-            refresh_key=self.generate_token(),
+            key=generate_token(),
+            refresh_key=generate_token(),
             started_at=started_at or timezone.now(),
         )
