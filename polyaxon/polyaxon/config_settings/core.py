@@ -17,7 +17,7 @@ ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
 # Heartbeat timeout (status -> failed as zombie)
 HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
                                    is_optional=True,
-                                   default=60 * 4)
+                                   default=60 * 30)
 # Token experiment time in days
 TOKEN_EXPIRATION = config.get_int('POLYAXON_TOKEN_EXPIRATION',
                                   is_optional=True,

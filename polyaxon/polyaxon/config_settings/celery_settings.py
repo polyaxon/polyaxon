@@ -80,7 +80,7 @@ class Intervals(object):
     HEARTBEAT_CHECK = config.get_int(
         'POLYAXON_INTERVALS_HEARTBEAT_CHECK',
         is_optional=True,
-        default=240)
+        default=60 * 10)
     CLUSTERS_NOTIFICATION_ALIVE = 150
     CLEAN_ACTIVITY_LOGS = config.get_int(
         'POLYAXON_INTERVALS_CLEAN_ACTIVITY_LOGS',

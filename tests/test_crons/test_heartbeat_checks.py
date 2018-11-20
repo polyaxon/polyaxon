@@ -23,7 +23,9 @@ class TestHeartBeatCrons(BaseTest):
         experiment3 = ExperimentFactory()
         ExperimentStatusFactory(experiment=experiment3, status=ExperimentLifeCycle.FAILED)
         experiment4 = ExperimentFactory()
-        ExperimentStatusFactory(experiment=experiment4, status=ExperimentLifeCycle.RUNNING)
+        ExperimentStatusFactory(experiment=experiment4, status=ExperimentLifeCycle.STARTING)
+        experiment5 = ExperimentFactory()
+        ExperimentStatusFactory(experiment=experiment5, status=ExperimentLifeCycle.RUNNING)
 
         with patch('scheduler.tasks.experiments'
                    '.experiments_check_heartbeat.apply_async') as mock_fct:
@@ -44,7 +46,7 @@ class TestHeartBeatCrons(BaseTest):
         with patch('scheduler.tasks.jobs.jobs_check_heartbeat.apply_async') as mock_fct:
             heartbeat_jobs()
 
-        assert mock_fct.call_count == 2
+        assert mock_fct.call_count == 1
 
     def test_heartbeat_builds(self):
         build1 = BuildJobFactory()
@@ -59,4 +61,4 @@ class TestHeartBeatCrons(BaseTest):
         with patch('scheduler.tasks.build_jobs.build_jobs_check_heartbeat.apply_async') as mock_fct:
             heartbeat_builds()
 
-        assert mock_fct.call_count == 2
+        assert mock_fct.call_count == 1

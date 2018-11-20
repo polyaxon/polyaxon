@@ -16,7 +16,7 @@ class CeleryTask(Task):
     abstract = True
 
     def on_success(self, retval, task_id, args, kwargs):
-        _logger.info("Celery task succeeded", extra={'task name': self.name})
+        _logger.info("Async task succeeded", extra={'task name': self.name})
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         extra = {
@@ -25,10 +25,10 @@ class CeleryTask(Task):
             'task args': args,
             'task kwargs': kwargs,
         }
-        _logger.error("Celery Task Failed", exc_info=einfo, extra=extra)
+        _logger.error("Async Task Failed", exc_info=einfo, extra=extra)
 
     def on_retry(self, exc, task_id, args, kwargs, einfo):
-        _logger.info("Celery task retry", extra={'task name': self.name})
+        _logger.info("Async task retry", extra={'task name': self.name})
 
 
 # Setup django env
