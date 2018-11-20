@@ -186,7 +186,7 @@ export function createProject(user: string, project: ProjectModel): any {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -205,7 +205,7 @@ export function updateProject(projectName: string, updateDict: { [key: string]: 
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -221,7 +221,7 @@ export function deleteProject(projectName: string, redirect: boolean = false): a
       method: 'DELETE',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -305,7 +305,7 @@ export function bookmark(projectName: string): any {
         method: 'POST',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -321,7 +321,7 @@ export function unbookmark(projectName: string): any {
         method: 'DELETE',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -337,7 +337,7 @@ export function startNotebook(projectName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -354,7 +354,7 @@ export function stopNotebook(projectName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -371,7 +371,7 @@ export function startTensorboard(projectName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -388,7 +388,7 @@ export function stopTensorboard(projectName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))

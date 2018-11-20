@@ -218,7 +218,7 @@ export function updateJob(jobName: string, updateDict: { [key: string]: any }): 
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -235,7 +235,7 @@ export function deleteJob(jobName: string, redirect: boolean = false): any {
         method: 'DELETE',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -258,7 +258,7 @@ export function stopJob(jobName: string): any {
         method: 'POST',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -274,7 +274,7 @@ export function bookmark(jobName: string): any {
         method: 'POST',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -290,7 +290,7 @@ export function unbookmark(jobName: string): any {
         method: 'DELETE',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))

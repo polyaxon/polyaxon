@@ -175,7 +175,7 @@ export function createChartView(projectUniqueName: string, resources: string, id
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         }
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -194,7 +194,7 @@ export function deleteChartView(projectUniqueName: string, resources: string, id
         method: 'DELETE',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))

@@ -287,7 +287,7 @@ export function deleteExperiment(experimentName: string, redirect: boolean = fal
       method: 'DELETE',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -312,7 +312,7 @@ export function deleteExperiments(projectName: string, experimentIds: number[]):
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -332,7 +332,7 @@ export function updateExperiment(experimentName: string, updateDict: { [key: str
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -348,7 +348,7 @@ export function stopExperiment(experimentName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -366,7 +366,7 @@ export function stopExperiments(projectName: string, experimentIds: number[]): a
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -382,7 +382,7 @@ export function bookmark(experimentName: string): any {
         method: 'POST',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -398,7 +398,7 @@ export function unbookmark(experimentName: string): any {
         method: 'DELETE',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -419,7 +419,7 @@ export function startTensorboard(experimentName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -434,7 +434,7 @@ export function stopTensorboard(experimentName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))

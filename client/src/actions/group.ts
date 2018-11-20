@@ -236,7 +236,7 @@ export function updateGroup(groupName: string, updateDict: { [key: string]: any 
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -256,7 +256,7 @@ export function updateSelection(groupName: string, updateDict: { [key: string]: 
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -278,7 +278,7 @@ export function deleteGroup(groupName: string, redirect: boolean = false): any {
         method: 'DELETE',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -304,7 +304,7 @@ export function createGroup(projectName: string, body: { [key: string]: any }): 
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -321,7 +321,7 @@ export function stopGroup(groupName: string): any {
         method: 'POST',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -337,7 +337,7 @@ export function bookmark(groupName: string): any {
         method: 'POST',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -353,7 +353,7 @@ export function unbookmark(groupName: string): any {
         method: 'DELETE',
         headers: {
           'Authorization': 'token ' + getState().auth.token,
-          // 'X-CSRFToken': getState().auth.csrftoken
+          'X-CSRFToken': getState().auth.csrftoken
         },
       })
       .then((response) => handleAuthError(response, dispatch))
@@ -368,7 +368,7 @@ export function startTensorboard(groupName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
@@ -383,7 +383,7 @@ export function stopTensorboard(groupName: string): any {
       method: 'POST',
       headers: {
         'Authorization': 'token ' + getState().auth.token,
-        // 'X-CSRFToken': getState().auth.csrftoken
+        'X-CSRFToken': getState().auth.csrftoken
       }
     })
       .then((response) => handleAuthError(response, dispatch))
