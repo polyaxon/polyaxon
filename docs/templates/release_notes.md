@@ -1,3 +1,27 @@
+## 0.3.2
+
+ * Add `--init` option to `polyaxon create` to allow users to create and initialize a project at the same time.
+ * Use `done` instead of `succeeded` for experiment groups status.
+ * Upgrade image and python to 3.6.
+ * Update registration validation.
+ * Update smoothing algorithm: move from spline to moving average.
+ * Add search algorithm to group schemas and to cli `polyaxon group get`.
+ * Update heartbeat logic: start logic from running/starting status instead of scheduled.
+ * Update heartbeat logic: lower check frequency.
+ * Move some abstractions from EE to CE.
+ * Update error handling for download requests in client.
+ * Update token with scopes and refresh mechanism.
+ * Improve some apis.
+ * Add mechanism to ensure CSRFToken refresh on page refresh.
+ * Update kubernetes client.
+ * Add dockerizer pull policy.
+ * Fix nested outputs relative paths.
+ * Fix tabs css behaviour outlining clicks.
+ * Fix admin readonly mixin.
+ * Fix issues with the ui client POST/DELETE/PATH requests.
+ * Fix notebook UI actions.
+ * Fix admin styles regression.
+
 ## 0.3.1
 
  * (Security) Add IPs/Hosts whitelist configuration.
