@@ -17,7 +17,9 @@ from polyaxon_schemas.base import BaseConfig
 def validate_image(image):
     if not image:
         raise ValidationError('Invalid docker image `{}`'.format(image))
-    tagged_image = image.rsplit(':', 1)
+    tagged_image = image.rsplit(':')
+    if len(tagged_image) >  3:
+        raise ValidationError('Invalid docker image `{}`'.format(image))
     if len(tagged_image) > 2:
         raise ValidationError('Invalid docker image `{}`'.format(image))
 
