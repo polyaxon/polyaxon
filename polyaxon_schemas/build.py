@@ -20,6 +20,8 @@ def validate_image(image):
     tagged_image = image.split(':')
     if len(tagged_image) > 3:
         raise ValidationError('Invalid docker image `{}`'.format(image))
+    if len(tagged_image) == 3 and ('/' not in tagged_image[1] or tagged_image[1].startswith('/')):
+        raise ValidationError('Invalid docker image `{}`'.format(image))
 
 
 class BuildSchema(Schema):
@@ -84,7 +86,3 @@ class BuildConfig(BaseConfig):
             return 'latest' if '/' in tagged_image[-1] else tagged_image[-1]
         if len(tagged_image) == 3:
             return tagged_image[-1]
-        if len(tagged_image) == 1:
-            return 'latest'
-
-        return tagged_image[-1]
