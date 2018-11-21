@@ -18,7 +18,7 @@ def validate_image(image):
     if not image:
         raise ValidationError('Invalid docker image `{}`'.format(image))
     tagged_image = image.split(':')
-    if len(tagged_image) > 2:
+    if len(tagged_image) > 3:
         raise ValidationError('Invalid docker image `{}`'.format(image))
 
 
@@ -80,5 +80,11 @@ class BuildConfig(BaseConfig):
         tagged_image = self.image.split(':')
         if len(tagged_image) == 1:
             return 'latest'
+        if len(tagged_image) == 2:
+            return 'latest' if '/' in tagged_image[-1] else tagged_image[-1]
+        if len(tagged_image) == 3:
+            return tagged_image[-1]
+        if len(tagged_image) == 1:
+            return 'latest'
 
-        return tagged_image[1]
+        return tagged_image[-1]
