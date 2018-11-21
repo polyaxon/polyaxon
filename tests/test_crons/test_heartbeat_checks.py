@@ -31,7 +31,7 @@ class TestHeartBeatCrons(BaseTest):
                    '.experiments_check_heartbeat.apply_async') as mock_fct:
             heartbeat_experiments()
 
-        assert mock_fct.call_count == 2
+        assert mock_fct.call_count == 1
 
     def test_heartbeat_jobs(self):
         job1 = JobFactory()

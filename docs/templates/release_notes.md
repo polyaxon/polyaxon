@@ -6,7 +6,7 @@
  * Update the registration's validation.
  * Update smoothing algorithm: move from spline to moving average.
  * Add search algorithm to group schemas and to cli `polyaxon group get`.
- * Update heartbeat logic: start logic from running/starting status instead of scheduled.
+ * Update heartbeat logic: start logic from running status instead of scheduled.
  * Update heartbeat logic: lower check frequency.
  * Move some abstractions from EE to CE.
  * Update error handling for download requests in client.
