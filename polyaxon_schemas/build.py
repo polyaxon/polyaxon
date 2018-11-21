@@ -87,4 +87,4 @@ class BuildConfig(BaseConfig):
         if len(tagged_image) == 1:
             return 'latest'
 
-        return tagged_image[1]
+        return tagged_image[-1]
