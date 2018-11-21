@@ -19,7 +19,7 @@ from polyaxon_client.tracking import (
     the order follows the order specified by the user:
 
         {
-            'experiments': [
+            'jobs': [
                 `user/project/job12/files`,
             ], 'experiments': [
                 `user/project/group/experiment1/files`,
