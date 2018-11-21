@@ -77,7 +77,7 @@ class BuildConfig(BaseConfig):
 
     @property
     def image_tag(self):
-        tagged_image = self.image.split(':')
+        tagged_image = self.image.rsplit(':', 1)
         if len(tagged_image) == 1:
             return 'latest'
 
