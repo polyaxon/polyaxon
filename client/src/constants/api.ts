@@ -8,4 +8,5 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export const BASE_URL = baseUrl;
-export const BASE_API_URL = `${baseUrl}/api/v1`;
+export const API_VERSION = '/api/v1';
+export const BASE_API_URL = `${baseUrl}${API_VERSION}`;

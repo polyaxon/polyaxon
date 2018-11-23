@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import './bookmarkStar.less';
-
 export interface Props {
   pullRight: boolean;
   callback: () => any;

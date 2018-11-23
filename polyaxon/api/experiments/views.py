@@ -414,9 +414,9 @@ class ExperimentOutputsFilesView(ExperimentEndpoint, RetrieveEndpoint):
             response['Content-Disposition'] = "attachment; filename={}".format(filename)
             return response
         except FileNotFoundError:
-            _logger.warning('Log file not found: log_path=%s', download_filepath)
+            _logger.warning('Outputs file not found: log_path=%s', download_filepath)
             return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Log file not found: log_path={}'.format(download_filepath))
+                            data='Outputs file not found: log_path={}'.format(download_filepath))
 
 
 class ExperimentStatusListView(ExperimentResourceListEndpoint,

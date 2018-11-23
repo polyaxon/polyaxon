@@ -5,6 +5,7 @@ import { decorators, Treebeard } from 'react-treebeard';
 import * as actions from '../../actions/outputs';
 import { CODE_EXTENSIONS, IMAGE_EXTENSIONS, TEXT_EXTENSIONS } from '../../constants/extensions';
 import { OutputsNode, TreeNode } from '../../models/outputs';
+import Download from '../download';
 import Refresh from '../refresh';
 import OutputsImg from './outputsImg';
 import OutputsTxt from './outputsTxt';
@@ -15,6 +16,8 @@ import './outputs.less';
 export interface Props {
   outputsTree: { [key: string]: OutputsNode };
   outputsFiles: { [key: string]: string };
+  downloadOutputsUrl: string;
+  downloadOutputsName: string;
   fetchOutputsTree: (path: string) => actions.OutputsAction;
   fetchOutputsFiles: (path: string, filetype: string) => actions.OutputsAction;
 }
@@ -237,8 +240,13 @@ export default class Outputs extends React.Component<Props, State> {
     return (
       <div className="outputs">
         <div className="row">
-          <div className="col-md-12 button-refresh-alone">
+          <div className="col-md-12 button-group-tools button-refresh-alone">
             <Refresh callback={this.refresh} pullRight={true}/>
+            <Download
+              name={`${this.props.downloadOutputsName}.tar.gz`}
+              url={this.props.downloadOutputsUrl}
+              pullRight={true}
+            />
           </div>
         </div>
         <div className="row">
