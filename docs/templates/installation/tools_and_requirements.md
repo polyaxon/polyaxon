@@ -60,6 +60,6 @@ In order to run Polyaxon on top of Kubernetes, you need:
 
 !!! note
     Although Polyaxon might work with previous versions than those recommended by us,
-    we officiall don't supprt them, and we don't recommend using them.
+    we officially don't support them, and we don't recommend using them.
 
 

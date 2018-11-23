@@ -42,7 +42,7 @@ Job 1 was created.
 
 ## Checking the jobs of a project
 
-We can check that the project has now a job creted.
+We can check that the project has now a job created.
 For that we can use Polyaxon dashboard or Polyaxon CLI,
 
 ```bash

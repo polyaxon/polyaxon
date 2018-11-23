@@ -4,7 +4,7 @@ Set and get global configurations.
 
 Usage:
 
-```basg
+```bash
 $ polyaxon config get [OPTIONS] [KEYS]...
 ```
 

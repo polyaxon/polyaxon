@@ -121,9 +121,9 @@ You can also provide different annotations for the ingress and it will not use `
 
 
 Note: using TLS requires either:
-a preconifgured secret with the TLS secrets in it or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
+a preconfigured secret with the TLS secrets in it or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
 
-It's alaso possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
+It's also possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
 
 ### Securing api server with TLS
 

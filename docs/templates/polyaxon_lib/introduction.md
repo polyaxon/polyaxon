@@ -18,8 +18,8 @@ Polyaxon then parses and build the model based on its specification, and start t
 The object behind this library is to provide a simple for train deep learning models, based on best practices.
 
 ``` caution
-    Polyaxon Lib is currently still under heavy developement, and it's based on tensorflow.
+    Polyaxon Lib is currently still under heavy development, and it's based on tensorflow.
     Future version, will include
-        * benshmarking
+        * benchmarking
         * models tuned to specific application
         * support for other deep learning frameworks

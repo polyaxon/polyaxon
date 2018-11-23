@@ -124,7 +124,7 @@ $ polyaxon update --tags="foo, bar"
 
 Options:
 
-option | type | descrition
+option | type | description
 -------|------|-----------
   --name | TEXT | Name of the project, must be unique for the same user,
   --description | TEXT | Description of the project.
