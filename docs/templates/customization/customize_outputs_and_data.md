@@ -138,7 +138,7 @@ You should create a secret based on that json file.
 `kubectl create secret generic gcs-secret --from-file=key.json=path/key.json -n polyaxon`
 
 Polyaxon client does not bundle by default the google cloud requirements to keep the client lightweight, 
-the user need to add a `pip intstall google-cloud-storage`
+the user need to add a `pip install google-cloud-storage`
 
 ```yaml
 build:

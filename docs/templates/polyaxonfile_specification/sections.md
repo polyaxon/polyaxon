@@ -301,7 +301,7 @@ The values of this section are:
 
 ### resources
 
-The resources to use for the job. In the case of distributed run, its the resources to use for the master job.
+The resources to use for the job. In the case of distributed run, it's the resources to use for the master job.
 A resources definition, is optional and made of three optional fields:
 
  * cpu: {limits: value, requests: value}
@@ -370,7 +370,7 @@ environment:
 
 ### tolerations
 
-The tolrations to use for the scheduling the job.
+The tolerations to use for the scheduling the job.
 You can also set default [tolerations](/reference_polyaxon_helm/#node-and-deployment-manipulation)
 during the deployment and use this subsection to override the default values.
 
