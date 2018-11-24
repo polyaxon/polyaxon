@@ -39,7 +39,7 @@ class Token(DiffModel):
 
     @property
     def is_expired(self):
-        return self.started_at + timedelta(days=settings.TOKEN_EXPIRATION) <= timezone.now()
+        return self.started_at + timedelta(days=settings.TOKEN_TTL) <= timezone.now()
 
     def has_scope(self, scope):
         return scope in self.scopes  # pylint:disable=unsupported-membership-test
