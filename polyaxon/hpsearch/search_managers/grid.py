@@ -29,6 +29,3 @@ class GridSearchManager(BaseSearchAlgorithmManager):
             if n_suggestions:
                 return suggestions[:n_suggestions]
         return suggestions
-
-    def scheduled_all_suggestions(self, iteration_config):
-        return

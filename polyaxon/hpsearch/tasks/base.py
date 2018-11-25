@@ -50,7 +50,7 @@ def start_group_experiments(experiment_group):
     if experiment_to_start <= 0:
         # This could happen due to concurrency or not created yet experiments
         return (experiment_group.pending_experiments.exists() or
-                not experiment_group.scheduled_all_suggestions)
+                not experiment_group.scheduled_all_suggestions())
     pending_experiments = experiment_group.pending_experiments[:experiment_to_start]
     n_pending_experiment = experiment_group.pending_experiments.count()
 
@@ -60,9 +60,10 @@ def start_group_experiments(experiment_group):
             kwargs={'experiment_id': experiment.id})
 
     return (n_pending_experiment - experiment_to_start > 0 or
-            not experiment_group.scheduled_all_suggestions)
+            not experiment_group.scheduled_all_suggestions())
 
 
-def check_group_experiments_finished(experiment_group_id):
+def check_group_experiments_finished(experiment_group_id, auto_retry=False):
     celery_app.send_task(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
-                         kwargs={'experiment_group_id': experiment_group_id})
+                         kwargs={'experiment_group_id': experiment_group_id,
+                                 'auto_retry': auto_retry})

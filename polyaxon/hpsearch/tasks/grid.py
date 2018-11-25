@@ -84,4 +84,4 @@ def hp_grid_search_start(self, experiment_group_id, auto_retry=False):
             self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
         return
 
-    base.check_group_experiments_finished(experiment_group_id)
+    base.check_group_experiments_finished(experiment_group_id, auto_retry=auto_retry)

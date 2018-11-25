@@ -51,7 +51,7 @@ def get_random_suggestions(matrix, n_suggestions, suggestion_params=None, seed=N
             all_discrete = False
             break
     if all_discrete:
-        space = reduce(mul, [v.lenght for v in matrix.values()])
+        space = reduce(mul, [v.length for v in matrix.values()])
         n_suggestions = n_suggestions if n_suggestions <= space else space
 
     while n_suggestions > 0:

@@ -111,14 +111,15 @@ def experiments_group_stop_experiments(experiment_group_id,
                  bind=True,
                  max_retries=None,
                  ignore_result=True)
-def experiments_group_check_finished(self, experiment_group_id):
+def experiments_group_check_finished(self, experiment_group_id, auto_retry=False):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group or experiment_group.is_done:
         # No need to check this group
         return
 
     if experiment_group.non_done_experiments.exists():
-        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        if auto_retry:
+            self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
         return
 
     experiment_group.set_status(status=ExperimentGroupLifeCycle.DONE)

@@ -12,8 +12,10 @@ class BaseSearchAlgorithmManager(object):
     def get_suggestions(self, iteration_config=None):
         raise NotImplementedError  # noqa
 
-    def get_num_suggestions(self, iteration_config):
+    @staticmethod
+    def get_num_suggestions(iteration_config):
         return iteration_config.num_suggestions
 
-    def scheduled_all_suggestions(self, iteration_config):
-        raise iteration_config.num_suggestions == len(iteration_config.experiment_ids)
+    @staticmethod
+    def scheduled_all_suggestions(iteration_config):
+        return iteration_config.num_suggestions == len(iteration_config.experiment_ids)
