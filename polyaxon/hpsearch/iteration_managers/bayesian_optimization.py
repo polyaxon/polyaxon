@@ -6,7 +6,10 @@ class BOIterationManager(BaseIterationManager):
     def get_metric_name(self):
         return self.experiment_group.hptuning_config.bo.metric.name
 
-    def create_iteration(self, num_suggestions, experiment_ids, experiments_configs):
+    def create_iteration(self,  # pylint:disable=arguments-differ
+                         num_suggestions,
+                         experiment_ids,
+                         experiments_configs):
         """Create an iteration for the experiment group."""
         from db.models.experiment_groups import ExperimentGroupIteration
 

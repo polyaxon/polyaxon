@@ -8,7 +8,9 @@ class HyperbandIterationManager(BaseIterationManager):
     def get_metric_name(self):
         return self.experiment_group.hptuning_config.hyperband.metric.name
 
-    def create_iteration(self, experiment_ids=None, num_suggestions=0):
+    def create_iteration(self,  # pylint:disable=arguments-differ
+                         experiment_ids=None,
+                         num_suggestions=0):
         """Create an iteration for the experiment group."""
         from db.models.experiment_groups import ExperimentGroupIteration
 
