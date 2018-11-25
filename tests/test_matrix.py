@@ -32,6 +32,7 @@ class TestMatrixConfigs(TestCase):
         assert config.to_dict() == config_dict
         assert config.to_numpy() == config_dict['values']
         assert config.sample() in [1, 2, 3]
+        assert config.length == 3
         assert config.is_categorical is False
         assert config.is_distribution is False
         assert config.is_range is False
@@ -46,6 +47,7 @@ class TestMatrixConfigs(TestCase):
         assert config.to_dict() == config_dict
         assert config.to_numpy() == config_dict['values']
         assert config.sample() in ['ok', 'nook']
+        assert config.length == 2
         assert config.is_categorical is True
         assert config.is_distribution is False
         assert config.is_range is False
@@ -87,6 +89,7 @@ class TestMatrixConfigs(TestCase):
         with self.assertRaises(ValidationError):
             config.to_numpy()
         assert config.sample() in [1, 2, 3]
+        assert config.length == 3
         assert config.is_categorical is False
         assert config.is_distribution is True
         assert config.is_range is False
@@ -101,6 +104,7 @@ class TestMatrixConfigs(TestCase):
             result = {'start': v1, 'stop': v2, 'step': v3}
             assert config.to_dict()['range'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.arange(**result))
+            assert config.length == len(np.arange(**result))
             assert config.sample() in np.arange(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
@@ -133,6 +137,7 @@ class TestMatrixConfigs(TestCase):
             result = {'start': v1, 'stop': v2, 'num': v3}
             assert config.to_dict()['linspace'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.linspace(**result))
+            assert config.length == len(np.linspace(**result))
             assert config.sample() in np.linspace(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
@@ -165,6 +170,7 @@ class TestMatrixConfigs(TestCase):
             result = {'start': v1, 'stop': v2, 'num': v3}
             assert config.to_dict()['geomspace'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.geomspace(**result))
+            assert config.length == len(np.geomspace(**result))
             assert config.sample() in np.geomspace(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
@@ -200,6 +206,7 @@ class TestMatrixConfigs(TestCase):
 
             assert config.to_dict()['logspace'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.logspace(**result))
+            assert config.length == len(np.logspace(**result))
             assert config.sample() in np.logspace(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
@@ -250,6 +257,10 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['uniform'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert v1 <= config.sample() <= v2
             assert config.is_categorical is False
             assert config.is_distribution is True
@@ -285,6 +296,8 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['quniform'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert isinstance(config.sample(), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
@@ -320,6 +333,8 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['loguniform'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert isinstance(config.sample(), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
@@ -355,6 +370,8 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['qloguniform'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert isinstance(config.sample(), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
@@ -390,6 +407,8 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['normal'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert isinstance(config.sample(), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
@@ -425,6 +444,8 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['qnormal'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert isinstance(config.sample(), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
@@ -460,6 +481,8 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['lognormal'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert isinstance(config.sample(), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
@@ -495,6 +518,8 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['qlognormal'] == result
             with self.assertRaises(ValidationError):
                 config.to_numpy()
+            with self.assertRaises(ValidationError):
+                config.length
             assert isinstance(config.sample(), float)
             assert config.is_categorical is False
             assert config.is_distribution is True

@@ -239,6 +239,18 @@ class MatrixConfig(BaseConfig):
 
         return None
 
+    @property
+    def length(self):
+        key, value = list(six.iteritems(self.to_dict()))[0]
+        if key in ['values', 'pvalues']:
+            return len(value)
+
+        if key in self.DISTRIBUTIONS:
+            raise ValidationError('Distribution should not call `to_numpy`, '
+                                  'instead it should call `sample`.')
+
+        return len(self.NUMPY_MAPPING[key](**value))
+
     def to_numpy(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
         if key == 'values':
