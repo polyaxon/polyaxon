@@ -307,6 +307,14 @@ class ExperimentGroup(DiffModel,
             return self.search_manager.get_suggestions(iteration_config=iteration_config)
         return self.search_manager.get_suggestions()
 
+    def get_num_suggestions(self):
+        iteration_config = self.iteration_config
+        return self.search_manager.get_num_suggestions(iteration_config=iteration_config)
+
+    def scheduled_all_suggestions(self):
+        iteration_config = self.iteration_config
+        return self.search_manager.scheduled_all_suggestions(iteration_config=iteration_config)
+
 
 class ExperimentGroupIteration(DiffModel):
     experiment_group = models.ForeignKey(

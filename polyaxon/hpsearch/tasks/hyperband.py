@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group
 from hpsearch.tasks import base
@@ -7,16 +9,50 @@ from polyaxon.settings import HPCeleryTasks, Intervals
 
 
 def create(experiment_group):
+    # This is a bit different since hyperband requires an iteration to work correctly
+    # May search manager's needs to be updated.
     experiment_group.iteration_manager.create_iteration()
-    experiments = base.create_group_experiments(experiment_group=experiment_group)
-
-    if not experiments:
-        logger.error('Experiment group `%s` could not create any experiment.',
+    suggestions = base.get_suggestions(experiment_group=experiment_group)
+    if not suggestions:
+        logger.error('Experiment group `%s` could not create any suggestion.',
                      experiment_group.id)
         experiment_group.set_status(ExperimentGroupLifeCycle.FAILED,
                                     message='Experiment group could not create new suggestions.')
         return
+    experiment_group.iteration_manager.update_iteration_num_suggestions(
+        num_suggestions=len(suggestions))
 
+    def send_chunk():
+        celery_app.send_task(
+            HPCeleryTasks.HP_HYPERBAND_CREATE_EXPERIMENTS,
+            kwargs={'experiment_group_id': experiment_group.id,
+                    'suggestions': chunk_suggestions},
+            countdown=1)
+
+    chunk_suggestions = []
+    for suggestion in suggestions:
+        chunk_suggestions.append(suggestion)
+        if len(chunk_suggestions) == settings.GROUP_CHUNKS:
+            send_chunk()
+            chunk_suggestions = []
+
+    if chunk_suggestions:
+        send_chunk()
+
+    celery_app.send_task(
+        HPCeleryTasks.HP_HYPERBAND_START,
+        kwargs={'experiment_group_id': experiment_group.id, 'auto_retry': True},
+        countdown=1)
+
+
+@celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_CREATE_EXPERIMENTS, ignore_result=True)
+def hp_hyperband_create_experiments(experiment_group_id, suggestions):
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
+    if not experiment_group:
+        return
+
+    experiments = base.create_group_experiments(experiment_group=experiment_group,
+                                                suggestions=suggestions)
     experiment_group.iteration_manager.add_iteration_experiments(
         experiment_ids=[xp.id for xp in experiments])
 
@@ -32,41 +68,44 @@ def hp_hyperband_create(experiment_group_id):
     if not experiment_group:
         return
 
-    create(experiment_group)
+    create(experiment_group=experiment_group)
 
 
 @celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_START,
                  bind=True,
                  max_retries=None,
                  ignore_result=True)
-def hp_hyperband_start(self, experiment_group_id):
+def hp_hyperband_start(self, experiment_group_id, auto_retry=False):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return
 
     should_retry = base.start_group_experiments(experiment_group=experiment_group)
     if should_retry:
-        # Schedule another task
-        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        if auto_retry:
+            # Schedule another task
+            self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
         return
 
     celery_app.send_task(
         HPCeleryTasks.HP_HYPERBAND_ITERATE,
-        kwargs={'experiment_group_id': experiment_group_id})
+        kwargs={'experiment_group_id': experiment_group_id,
+                'auto_retry': auto_retry})
 
 
 @celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_ITERATE,
                  bind=True,
                  max_retries=None,
                  ignore_result=True)
-def hp_hyperband_iterate(self, experiment_group_id):
+def hp_hyperband_iterate(self, experiment_group_id, auto_retry=False):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return
 
     if experiment_group.non_done_experiments.count() > 0:
-        # Schedule another task, because all experiment must be done
-        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        if auto_retry:
+            # Schedule another task, because all experiment must be done
+            self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
         return
 
     iteration_config = experiment_group.iteration_config

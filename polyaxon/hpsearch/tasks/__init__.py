@@ -42,3 +42,30 @@ def create(experiment_group):
                        instance=experiment_group)
         return bo.create(experiment_group=experiment_group)
     return None
+
+
+@celery_app.task(name=HPCeleryTasks.HP_START, ignore_result=True)
+def hp_start(experiment_group_id):
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
+    if not experiment_group:
+        return
+
+    start(experiment_group)
+
+
+def start(experiment_group):
+    task = None
+    if SearchAlgorithms.is_grid(experiment_group.search_algorithm):
+        task = HPCeleryTasks.HP_GRID_SEARCH_START,
+    elif SearchAlgorithms.is_random(experiment_group.search_algorithm):
+        task = HPCeleryTasks.HP_RANDOM_SEARCH_START
+    elif SearchAlgorithms.is_hyperband(experiment_group.search_algorithm):
+        task = HPCeleryTasks.HP_HYPERBAND_START
+    elif SearchAlgorithms.is_bo(experiment_group.search_algorithm):
+        task = HPCeleryTasks.HP_BO_START
+
+    if task:
+        celery_app.send_task(
+            task,
+            kwargs={'experiment_group_id': experiment_group.id},
+            countdown=1)

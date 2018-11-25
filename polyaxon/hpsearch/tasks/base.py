@@ -4,7 +4,7 @@ from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
-def create_group_experiments(experiment_group):
+def get_suggestions(experiment_group):
     # Parse polyaxonfile content and create the experiments
     specification = experiment_group.specification
     suggestions = experiment_group.get_suggestions()
@@ -14,6 +14,13 @@ def create_group_experiments(experiment_group):
                      specification.search_algorithm,
                      extra={'stack': True})
         return
+
+    return suggestions
+
+
+def create_group_experiments(experiment_group, suggestions):
+    # Parse polyaxonfile content and create the experiments
+    specification = experiment_group.specification
 
     experiments = []
     for suggestion in suggestions:
@@ -41,8 +48,9 @@ def start_group_experiments(experiment_group):
 
     experiment_to_start = experiment_group.n_experiments_to_start
     if experiment_to_start <= 0:
-        # This could happen due to concurrency
-        return experiment_group.pending_experiments.exists()
+        # This could happen due to concurrency or not created yet experiments
+        return (experiment_group.pending_experiments.exists() or
+                not experiment_group.scheduled_all_suggestions)
     pending_experiments = experiment_group.pending_experiments[:experiment_to_start]
     n_pending_experiment = experiment_group.pending_experiments.count()
 
@@ -51,7 +59,8 @@ def start_group_experiments(experiment_group):
             SchedulerCeleryTasks.EXPERIMENTS_BUILD,
             kwargs={'experiment_id': experiment.id})
 
-    return n_pending_experiment - experiment_to_start > 0
+    return (n_pending_experiment - experiment_to_start > 0 or
+            not experiment_group.scheduled_all_suggestions)
 
 
 def check_group_experiments_finished(experiment_group_id):

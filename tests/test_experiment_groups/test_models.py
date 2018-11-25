@@ -1,8 +1,10 @@
+import math
 import random
 
 from unittest.mock import patch
 
 import pytest
+from django.conf import settings
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -26,7 +28,8 @@ from factories.fixtures import (
     experiment_group_spec_content_hyperband,
     experiment_group_spec_content_hyperband_trigger_reschedule
 )
-from hpsearch.iteration_managers import BOIterationManager, HyperbandIterationManager
+from hpsearch.iteration_managers import BOIterationManager, HyperbandIterationManager, \
+    BaseIterationManager
 from hpsearch.search_managers import (
     BOSearchManager,
     GridSearchManager,
@@ -314,7 +317,7 @@ class TestExperimentGroupModel(BaseTest):
         experiment_group.save()
         experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
         assert isinstance(experiment_group.search_manager, GridSearchManager)
-        assert experiment_group.iteration_manager is None
+        assert isinstance(experiment_group.iteration_manager, BaseIterationManager)
 
         # Adding hptuning
         experiment_group.hptuning = {
@@ -325,7 +328,7 @@ class TestExperimentGroupModel(BaseTest):
         experiment_group.save()
         experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
         assert isinstance(experiment_group.search_manager, RandomSearchManager)
-        assert experiment_group.iteration_manager is None
+        assert isinstance(experiment_group.iteration_manager, BaseIterationManager)
 
         # Adding hptuning
         experiment_group.hptuning = {
@@ -384,7 +387,8 @@ class TestExperimentGroupModel(BaseTest):
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
+        assert experiment_group.iteration_config.num_suggestions == 2
         assert experiment_group.pending_experiments.count() == 2
         assert experiment_group.running_experiments.count() == 0
         experiment = Experiment.objects.filter(experiment_group=experiment_group).first()
@@ -408,7 +412,7 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
         experiment = ExperimentFactory(project=experiment_group.project,
                                        experiment_group=experiment_group)
         # Set this experiment to scheduled
@@ -426,22 +430,26 @@ class TestExperimentGroupModel(BaseTest):
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
 
     def test_experiment_create_a_max_of_experiments(self):
+        assert ExperimentGroupIteration.objects.count() == 0
         with patch('hpsearch.tasks.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
         assert experiment_group.specification.matrix_space == 3
         assert experiment_group.experiments.count() == 2
+        assert ExperimentGroupIteration.objects.count() == 1
+        assert ExperimentGroupIteration.objects.last().data['num_suggestions'] == 2
 
     def test_experiment_group_should_stop_early(self):
         with patch('hpsearch.tasks.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
         assert experiment_group.should_stop_early() is False
         assert experiment_group.pending_experiments.count() == 2
+        assert experiment_group.iteration_config.num_suggestions == 2
 
         # Make a metric for one of the experiments
         experiment1, experiment2 = list(experiment_group.experiments.all())
@@ -481,7 +489,7 @@ class TestExperimentGroupModel(BaseTest):
         experiment = ExperimentFactory(experiment_group=experiment_group)
         ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
         assert experiment_group.pending_experiments.count() == 2
         assert experiment_group.running_experiments.count() == 1
 
@@ -495,7 +503,7 @@ class TestExperimentGroupModel(BaseTest):
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
 
         # Add a running experiment
         experiment = ExperimentFactory(experiment_group=experiment_group)
@@ -519,7 +527,10 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.hyperband.hp_hyperband_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
-        assert mock_fct.call_count == 1
+        self.assertEqual(
+            mock_fct.call_count,
+            math.ceil(experiment_group.experiments.count() / settings.GROUP_CHUNKS) + 1
+        )
         ExperimentGroupIteration.objects.create(
             experiment_group=experiment_group,
             data={
@@ -542,32 +553,44 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.hyperband.hp_hyperband_start.apply_async') as mock_fct:
             ExperimentGroupFactory(content=experiment_group_spec_content_hyperband)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
 
         with patch('hpsearch.tasks.hyperband.hp_hyperband_iterate.apply_async') as mock_fct1:
             with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct2:
-                ExperimentGroupFactory(
+                experiment_group = ExperimentGroupFactory(
                     content=experiment_group_spec_content_hyperband_trigger_reschedule)
 
-        assert mock_fct1.call_count == 1
-        assert mock_fct2.call_count == 9
+        assert experiment_group.iteration_config.num_suggestions == 9
+        # 3 calls, 2 non auto retry and one auto retry
+        assert mock_fct1.call_count == 3
+        # 9 experiments, but since we are mocking the scheduling function, it's ~ 3 x calls,
+        # every call to start tries to schedule again, but in reality it's just 9 calls
+        assert mock_fct2.call_count >= 9 * 2
 
         # Fake reschedule
         with patch('hpsearch.tasks.hyperband.hp_hyperband_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
-        assert mock_fct.call_count == 1
+        self.assertEqual(
+            mock_fct.call_count,
+            math.ceil(experiment_group.experiments.count() / settings.GROUP_CHUNKS) + 1
+        )
         ExperimentGroupIteration.objects.create(
             experiment_group=experiment_group,
             data={
                 'iteration': 0,
-                'bracket_iteration': 21
+                'bracket_iteration': 21,
+                'num_suggestions': 9
             })
 
-        # Mark experiment as done
+        # Mark experiments as done
         with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
-            for xp in experiment_group.experiments.all():
-                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+            with patch('hpsearch.tasks.hyperband.'
+                       'hp_hyperband_start.apply_async') as xp_trigger_start:
+                for xp in experiment_group.experiments.all():
+                    ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+
+        assert xp_trigger_start.call_count == experiment_group.experiments.count()
         with patch('hpsearch.tasks.hyperband.hp_hyperband_create.apply_async') as mock_fct1:
             hp_hyperband_start(experiment_group.id)
 
@@ -577,13 +600,20 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.hyperband.hp_hyperband_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
-        assert mock_fct.call_count == 1
+        self.assertEqual(
+            mock_fct.call_count,
+            math.ceil(experiment_group.experiments.count() / settings.GROUP_CHUNKS) + 1
+        )
         assert experiment_group.non_done_experiments.count() == 9
 
         # Mark experiment as done
         with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
-            for xp in experiment_group.experiments.all():
-                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+            with patch('hpsearch.tasks.hyperband.'
+                       'hp_hyperband_start.apply_async') as xp_trigger_start:
+                for xp in experiment_group.experiments.all():
+                    ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+
+        assert xp_trigger_start.call_count == experiment_group.experiments.count()
         with patch('hpsearch.tasks.hyperband.hp_hyperband_start.apply_async') as mock_fct2:
             with patch.object(HyperbandIterationManager, 'reduce_configs') as mock_fct3:
                 hp_hyperband_start(experiment_group.id)
@@ -594,35 +624,42 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.bo.hp_bo_start.apply_async') as mock_fct:
             ExperimentGroupFactory(content=experiment_group_spec_content_bo)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
 
         with patch('hpsearch.tasks.bo.hp_bo_iterate.apply_async') as mock_fct1:
             with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct2:
                 ExperimentGroupFactory(
                     content=experiment_group_spec_content_bo)
 
-        assert mock_fct1.call_count == 1
-        assert mock_fct2.call_count == 2
+        assert mock_fct1.call_count == 2
+        # 2 experiments, but since we are mocking the scheduling function, it's 4 calls,
+        # every call to start tries to schedule again, but in reality it's just 2 calls
+        assert mock_fct2.call_count == 4
 
         # Fake
         with patch('hpsearch.tasks.bo.hp_bo_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_bo)
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
         assert experiment_group.non_done_experiments.count() == 2
 
         # Mark experiment as done
         with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
-            for xp in experiment_group.experiments.all():
-                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+            with patch('hpsearch.tasks.bo.hp_bo_start.apply_async') as xp_trigger_start:
+                for xp in experiment_group.experiments.all():
+                    ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+
+        assert xp_trigger_start.call_count == experiment_group.experiments.count()
         with patch('hpsearch.tasks.bo.hp_bo_iterate.apply_async') as mock_fct1:
             hp_bo_start(experiment_group.id)
         assert mock_fct1.call_count == 1
 
         # Mark experiment as done
         with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
-            for xp in experiment_group.experiments.all():
-                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+            with patch('hpsearch.tasks.bo.hp_bo_start.apply_async') as xp_trigger_start:
+                for xp in experiment_group.experiments.all():
+                    ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+        assert xp_trigger_start.call_count == experiment_group.experiments.count()
         with patch('hpsearch.tasks.bo.hp_bo_create.apply_async') as mock_fct1:
             hp_bo_start(experiment_group.id)
         assert mock_fct1.call_count == 1
@@ -691,7 +728,7 @@ class TestExperimentGroupCommit(BaseViewTest):
         with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(project=self.project)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
         assert experiment_group.experiments.count() == 2
 
         assert experiment_group.code_reference is not None

@@ -45,6 +45,9 @@ CELERY_HARD_TIME_LIMIT_DELAY = config.get_int('POLYAXON_CELERY_HARD_TIME_LIMIT_D
 HEALTH_CHECK_WORKER_TIMEOUT = config.get_int('POLYAXON_HEALTH_CHECK_WORKER_TIMEOUT',
                                              is_optional=True,
                                              default=4)
+GROUP_CHUNKS = config.get_int('POLYAXON_GROUP_CHUNKS',
+                              is_optional=True,
+                              default=5)
 
 
 class Intervals(object):
@@ -261,18 +264,23 @@ class HPCeleryTasks(object):
     HP_HEALTH = 'hp_health'
 
     HP_CREATE = 'hp_create'
+    HP_START = 'hp_start'
 
     HP_GRID_SEARCH_CREATE = 'hp_grid_search_create'
+    HP_GRID_SEARCH_CREATE_EXPERIMENTS = 'hp_grid_search_create_experiments'
     HP_GRID_SEARCH_START = 'hp_grid_search_start'
 
     HP_RANDOM_SEARCH_CREATE = 'hp_random_search_create'
+    HP_RANDOM_SEARCH_CREATE_EXPERIMENTS = 'hp_random_search_create_experiments'
     HP_RANDOM_SEARCH_START = 'hp_random_search_start'
 
     HP_HYPERBAND_CREATE = 'hp_hyperband_create'
+    HP_HYPERBAND_CREATE_EXPERIMENTS = 'hp_hyperband_create_experiments'
     HP_HYPERBAND_START = 'hp_hyperband_start'
     HP_HYPERBAND_ITERATE = 'hp_hyperband_iterate'
 
     HP_BO_CREATE = 'hp_bo_create'
+    HP_BO_CREATE_EXPERIMENTS = 'hp_bo_create_experiments'
     HP_BO_START = 'hp_bo_start'
     HP_BO_ITERATE = 'hp_bo_iterate'
 
@@ -472,21 +480,31 @@ CELERY_TASK_ROUTES = {
     # HP ops
     HPCeleryTasks.HP_CREATE:
         {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_START:
+        {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_GRID_SEARCH_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_GRID_SEARCH_CREATE_EXPERIMENTS:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_GRID_SEARCH_START:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_RANDOM_SEARCH_CREATE:
         {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_RANDOM_SEARCH_CREATE_EXPERIMENTS:
+        {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_RANDOM_SEARCH_START:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_HYPERBAND_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_HYPERBAND_CREATE_EXPERIMENTS:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_HYPERBAND_START:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_HYPERBAND_ITERATE:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_BO_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_BO_CREATE_EXPERIMENTS:
         {'queue': CeleryQueues.HP},
     HPCeleryTasks.HP_BO_START:
         {'queue': CeleryQueues.HP},

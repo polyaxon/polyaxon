@@ -1,17 +1,12 @@
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, post_dump, post_load, validate
 
-from schemas.base import BaseConfig
+from hpsearch.schemas.base_iteration import BaseIterationSchema, BaseIterationConfig
 
 
-class HyperbandIterationSchema(Schema):
-    iteration = fields.Int()
+class HyperbandIterationSchema(BaseIterationSchema):
     bracket_iteration = fields.Int()
-    experiment_ids = fields.List(fields.Int(), allow_none=True)
     experiments_metrics = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                                       allow_none=True)
-
-    class Meta:
-        ordered = True
 
     @post_load
     def make(self, data):
@@ -22,11 +17,17 @@ class HyperbandIterationSchema(Schema):
         return HyperbandIterationConfig.remove_reduced_attrs(data)
 
 
-class HyperbandIterationConfig(BaseConfig):
+class HyperbandIterationConfig(BaseIterationConfig):
     SCHEMA = HyperbandIterationSchema
 
-    def __init__(self, iteration, bracket_iteration, experiment_ids=None, experiments_metrics=None):
-        self.iteration = iteration
+    def __init__(self,
+                 iteration,
+                 num_suggestions,
+                 bracket_iteration,
+                 experiment_ids=None,
+                 experiments_metrics=None):
+        super().__init__(iteration=iteration,
+                         num_suggestions=num_suggestions,
+                         experiment_ids=experiment_ids)
         self.bracket_iteration = bracket_iteration
-        self.experiment_ids = experiment_ids
         self.experiments_metrics = experiments_metrics

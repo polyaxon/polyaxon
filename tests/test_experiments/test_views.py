@@ -823,7 +823,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
                     content=content)
 
         assert start_fct.call_count == 1
-        assert build_fct.call_count == 1
+        assert build_fct.call_count == 2
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/{}/{}/experiments?group={}'.format(
             API_V1,

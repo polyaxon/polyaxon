@@ -1,14 +1,14 @@
-from hpsearch.iteration_managers.base import BaseIterationManger
+from hpsearch.iteration_managers.base import BaseIterationManager
 from hpsearch.iteration_managers.logger import logger
 from hpsearch.schemas import HyperbandIterationConfig
 from schemas.hptuning import Optimization
 
 
-class HyperbandIterationManager(BaseIterationManger):
+class HyperbandIterationManager(BaseIterationManager):
     def get_metric_name(self):
         return self.experiment_group.hptuning_config.hyperband.metric.name
 
-    def create_iteration(self, experiment_ids=None):
+    def create_iteration(self, experiment_ids=None, num_suggestions=0):
         """Create an iteration for the experiment group."""
         from db.models.experiment_groups import ExperimentGroupIteration
 
@@ -39,9 +39,9 @@ class HyperbandIterationManager(BaseIterationManger):
         # Create a new iteration config
         iteration_config = HyperbandIterationConfig(
             iteration=iteration,
+            num_suggestions=num_suggestions,
             bracket_iteration=bracket_iteration)
-        if experiment_ids:
-            iteration_config.experiment_ids = experiment_ids
+        iteration_config.experiment_ids = experiment_ids or []
         return ExperimentGroupIteration.objects.create(
             experiment_group=self.experiment_group,
             data=iteration_config.to_dict())

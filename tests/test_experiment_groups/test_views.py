@@ -553,7 +553,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:
             self.object = self.factory_class(project=project)
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 2
         # Add a running experiment
         experiment = ExperimentFactory(experiment_group=self.object)
         ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)

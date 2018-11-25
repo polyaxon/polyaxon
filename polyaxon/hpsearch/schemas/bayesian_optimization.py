@@ -1,10 +1,9 @@
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, post_dump, post_load, validate
 
-from schemas.base import BaseConfig
+from hpsearch.schemas.base_iteration import BaseIterationSchema, BaseIterationConfig
 
 
-class BOIterationSchema(Schema):
-    iteration = fields.Int()
+class BOIterationSchema(BaseIterationSchema):
     old_experiment_ids = fields.List(fields.Int(), allow_none=True)
     old_experiments_configs = fields.List(
         fields.List(fields.Raw(), validate=validate.Length(equal=2)),
@@ -12,16 +11,12 @@ class BOIterationSchema(Schema):
     old_experiments_metrics = fields.List(
         fields.List(fields.Raw(), validate=validate.Length(equal=2)),
         allow_none=True)
-    experiment_ids = fields.List(fields.Int(), allow_none=True)
     experiments_configs = fields.List(
         fields.List(fields.Raw(), validate=validate.Length(equal=2)),
         allow_none=True)
     experiments_metrics = fields.List(
         fields.List(fields.Raw(), validate=validate.Length(equal=2)),
         allow_none=True)
-
-    class Meta:
-        ordered = True
 
     @post_load
     def make(self, data):
@@ -32,22 +27,24 @@ class BOIterationSchema(Schema):
         return BOIterationConfig.remove_reduced_attrs(data)
 
 
-class BOIterationConfig(BaseConfig):
+class BOIterationConfig(BaseIterationConfig):
     SCHEMA = BOIterationSchema
 
     def __init__(self,
                  iteration,
+                 num_suggestions,
                  old_experiment_ids=None,
                  old_experiments_metrics=None,
                  old_experiments_configs=None,
                  experiment_ids=None,
                  experiments_metrics=None,
                  experiments_configs=None):
-        self.iteration = iteration
+        super().__init__(iteration=iteration,
+                         num_suggestions=num_suggestions,
+                         experiment_ids=experiment_ids)
         self.old_experiment_ids = old_experiment_ids
         self.old_experiments_metrics = old_experiments_metrics
         self.old_experiments_configs = old_experiments_configs
-        self.experiment_ids = experiment_ids
         self.experiments_configs = experiments_configs
         self.experiments_metrics = experiments_metrics
 

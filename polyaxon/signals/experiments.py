@@ -31,7 +31,7 @@ from event_manager.events.experiment import (
 from libs.paths.experiments import delete_experiment_logs, delete_experiment_outputs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
-from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks, HPCeleryTasks
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.run_time import (
     set_finished_at,
@@ -179,6 +179,12 @@ def experiment_status_post_save(sender, **kwargs):
         auditor.record(event_type=EXPERIMENT_DONE,
                        instance=experiment,
                        previous_status=previous_status)
+        # Check if it's part of an experiment group, and start following tasks
+        if not experiment.is_independent:
+            celery_app.send_task(
+                HPCeleryTasks.HP_START,
+                kwargs={'experiment_group_id': experiment.experiment_group.id},
+                countdown=1)
 
 
 @receiver(post_save, sender=ExperimentMetric, dispatch_uid="experiment_metric_post_save")

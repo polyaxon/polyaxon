@@ -6,7 +6,8 @@ from factories.fixtures import (
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
-from hpsearch.schemas import BOIterationConfig, HyperbandIterationConfig, get_iteration_config
+from hpsearch.schemas import BOIterationConfig, HyperbandIterationConfig, get_iteration_config, \
+    BaseIterationConfig
 from tests.utils import BaseTest
 
 
@@ -15,20 +16,29 @@ class TestSearchManagers(BaseTest):
     DISABLE_RUNNER = True
 
     def test_get_search_algorithm_manager(self):
+        iteration = {
+            'iteration': 1,
+            'num_suggestions': 12,
+        }
         # Grid search
         experiment_group = ExperimentGroupFactory()
-        assert get_iteration_config(experiment_group.search_algorithm) is None
+        assert isinstance(get_iteration_config(experiment_group.search_algorithm,
+                                               iteration=iteration),
+                          BaseIterationConfig)
 
         # Random search
         experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_early_stopping)
-        assert get_iteration_config(experiment_group.search_algorithm) is None
+        assert isinstance(get_iteration_config(experiment_group.search_algorithm,
+                                               iteration=iteration),
+                          BaseIterationConfig)
 
         # Hyperband
         experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_hyperband)
         iteration = {
             'iteration': 1,
+            'num_suggestions': 12,
             'bracket_iteration': 0,
             'experiment_ids': [1, 2, 3],
             'experiments_metrics': None
@@ -42,6 +52,7 @@ class TestSearchManagers(BaseTest):
             content=experiment_group_spec_content_bo)
         iteration = {
             'iteration': 1,
+            'num_suggestions': 12,
             'experiment_ids': [1, 2, 3],
             'experiment_configs': [[1, {1: 1}], [2, {2: 2}], [3, {3: 3}]],
             'experiments_metrics': None
@@ -52,12 +63,27 @@ class TestSearchManagers(BaseTest):
 
 
 @pytest.mark.experiment_groups_mark
+class TestaseIterationConfig(BaseTest):
+    DISABLE_RUNNER = True
+
+    def test_base_iteration_config(self):
+        config = {
+            'iteration': 1,
+            'num_suggestions': 10,
+            'experiment_ids': [1, 2, 3],
+        }
+
+        assert BaseIterationConfig.from_dict(config).to_dict() == config
+
+
+@pytest.mark.experiment_groups_mark
 class TestHyperbandIterationConfig(BaseTest):
     DISABLE_RUNNER = True
 
     def test_hyperband_iteration_config(self):
         config = {
             'iteration': 1,
+            'num_suggestions': 10,
             'bracket_iteration': 0,
             'experiment_ids': [1, 2, 3],
             'experiments_metrics': [[1, 0.5], [2, 0.8], [3, 0.8]],
@@ -71,6 +97,7 @@ class TestBOIterationConfig(BaseTest):
     def test_bo_iteration_config(self):
         config = {
             'iteration': 2,
+            'num_suggestions': 10,
             'experiment_ids': [5, 6, 7],
             'experiments_configs': [
                 [5, {'param1': 0.5}], [6, {'param1': 0.5}], [7, {'param1': 0.5}]],

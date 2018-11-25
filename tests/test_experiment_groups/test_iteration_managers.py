@@ -9,13 +9,13 @@ from factories.factory_experiments import ExperimentFactory
 from factories.fixtures import (
     experiment_group_spec_content_bo,
     experiment_group_spec_content_early_stopping,
-    experiment_group_spec_content_hyperband
-)
+    experiment_group_spec_content_hyperband,
+    experiment_group_spec_content_2_xps)
 from hpsearch.iteration_managers import (
     BOIterationManager,
     HyperbandIterationManager,
-    get_search_iteration_manager
-)
+    get_search_iteration_manager,
+    BaseIterationManager)
 from tests.utils import BaseTest
 
 
@@ -26,12 +26,12 @@ class TestIterationManagers(BaseTest):
     def test_get_search_iteration_manager(self):
         # Grid search
         experiment_group = ExperimentGroupFactory()
-        assert get_search_iteration_manager(experiment_group) is None
+        assert isinstance(get_search_iteration_manager(experiment_group), BaseIterationManager)
 
         # Random search
         experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_early_stopping)
-        assert get_search_iteration_manager(experiment_group) is None
+        assert isinstance(get_search_iteration_manager(experiment_group), BaseIterationManager)
 
         # Hyperband
         experiment_group = ExperimentGroupFactory(
@@ -42,6 +42,58 @@ class TestIterationManagers(BaseTest):
         experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_bo)
         assert isinstance(get_search_iteration_manager(experiment_group), BOIterationManager)
+
+
+@pytest.mark.experiment_groups_mark
+class TestBaseIterationManagers(BaseTest):
+    DISABLE_RUNNER = True
+
+    def setUp(self):
+        super().setUp()
+        self.experiment_group = ExperimentGroupFactory(
+            content=experiment_group_spec_content_2_xps)
+        for _ in range(3):
+            ExperimentFactory(experiment_group=self.experiment_group)
+        self.iteration_manager = BaseIterationManager(experiment_group=self.experiment_group)
+
+    @flaky(max_runs=3)
+    def test_create_iteration(self):
+        assert ExperimentGroupIteration.objects.count() == 0
+        experiment_ids = [self.experiment_group.experiments.first().id]
+        iteration = self.iteration_manager.create_iteration(num_suggestions=10)
+        assert isinstance(iteration, ExperimentGroupIteration)
+        assert ExperimentGroupIteration.objects.count() == 1
+        assert iteration.experiment_group == self.experiment_group
+        assert iteration.data == {
+            'num_suggestions': 10,
+            'iteration': 0,
+            'experiment_ids': [],
+        }
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
+        iteration.refresh_from_db()
+        assert iteration.data == {
+            'num_suggestions': 10,
+            'iteration': 0,
+            'experiment_ids': experiment_ids,
+        }
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
+        iteration.refresh_from_db()
+        assert iteration.data == {
+            'num_suggestions': 10,
+            'iteration': 0,
+            'experiment_ids': experiment_ids + experiment_ids,
+        }
+        self.iteration_manager.update_iteration_num_suggestions(num_suggestions=3)
+        iteration.refresh_from_db()
+        assert iteration.data == {
+            'num_suggestions': 3,
+            'iteration': 0,
+            'experiment_ids': experiment_ids + experiment_ids,
+        }
+
+    def test_update_iteration_raises_if_not_iteration_is_created(self):
+        self.iteration_manager.update_iteration()
+        assert ExperimentGroupIteration.objects.count() == 0
 
 
 @pytest.mark.experiment_groups_mark
@@ -66,8 +118,9 @@ class TestHyperbandIterationManagers(BaseTest):
         assert iteration.experiment_group == self.experiment_group
         assert iteration.data == {
             'iteration': 0,
+            'num_suggestions': 0,
             'bracket_iteration': 0,
-            'experiment_ids': None,
+            'experiment_ids': [],
             'experiments_metrics': None,
         }
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
@@ -75,7 +128,26 @@ class TestHyperbandIterationManagers(BaseTest):
         assert iteration.data == {
             'iteration': 0,
             'bracket_iteration': 0,
+            'num_suggestions': 0,
             'experiment_ids': experiment_ids,
+            'experiments_metrics': None,
+        }
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
+        iteration.refresh_from_db()
+        assert iteration.data == {
+            'iteration': 0,
+            'bracket_iteration': 0,
+            'num_suggestions': 0,
+            'experiment_ids': experiment_ids + experiment_ids,
+            'experiments_metrics': None,
+        }
+        self.iteration_manager.update_iteration_num_suggestions(num_suggestions=3)
+        iteration.refresh_from_db()
+        assert iteration.data == {
+            'iteration': 0,
+            'bracket_iteration': 0,
+            'num_suggestions': 3,
+            'experiment_ids': experiment_ids + experiment_ids,
             'experiments_metrics': None,
         }
 
@@ -141,6 +213,7 @@ class TestBOIterationManagers(BaseTest):
         experiments_iter1_configs = [[experiment.id, experiment.declarations]
                                      for experiment in self.experiments_iter1]
         iteration = self.iteration_manager.create_iteration(
+            num_suggestions=2,
             experiment_ids=experiment_iter1_ids,
             experiments_configs=experiments_iter1_configs
         )
@@ -150,6 +223,7 @@ class TestBOIterationManagers(BaseTest):
         assert iteration.experiment_group == self.experiment_group
         assert iteration.data == {
             'iteration': 0,
+            'num_suggestions': 2,
             'old_experiment_ids': None,
             'old_experiments_configs': None,
             'old_experiments_metrics': None,
@@ -175,12 +249,14 @@ class TestBOIterationManagers(BaseTest):
         experiments_iter2_configs = [[experiment.id, experiment.declarations]
                                      for experiment in self.experiments_iter2]
         iteration = self.iteration_manager.create_iteration(
+            num_suggestions=2,
             experiment_ids=experiment_iter2_ids,
             experiments_configs=experiments_iter2_configs
         )
         assert self.experiment_group.current_iteration == 2
         assert iteration.data == {
             'iteration': 1,
+            'num_suggestions': 2,
             'old_experiment_ids': experiment_iter1_ids,
             'old_experiments_configs': experiments_iter1_configs,
             'old_experiments_metrics': experiment_iter1_metrics,
@@ -206,12 +282,14 @@ class TestBOIterationManagers(BaseTest):
         experiments_iter3_configs = [[experiment.id, experiment.declarations]
                                      for experiment in self.experiments_iter3]
         iteration = self.iteration_manager.create_iteration(
+            num_suggestions=2,
             experiment_ids=experiment_iter3_ids,
             experiments_configs=experiments_iter3_configs
         )
         assert self.experiment_group.current_iteration == 3
         assert iteration.data == {
             'iteration': 2,
+            'num_suggestions': 2,
             'old_experiment_ids': experiment_iter1_ids + experiment_iter2_ids,
             'old_experiments_configs': experiments_iter1_configs + experiments_iter2_configs,
             'old_experiments_metrics': experiment_iter1_metrics + experiment_iter2_metrics,
@@ -231,6 +309,49 @@ class TestBOIterationManagers(BaseTest):
             [experiment_id, 0.9] for experiment_id in reversed(experiment_iter3_ids)
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter3_metrics
+
+    @flaky(max_runs=3)
+    def test_update_iteration_data(self):
+        assert ExperimentGroupIteration.objects.count() == 0
+        assert self.experiment_group.current_iteration == 0
+        experiment_iter1_ids = [experiment.id for experiment in self.experiments_iter1]
+        experiments_iter1_configs = [[experiment.id, experiment.declarations]
+                                     for experiment in self.experiments_iter1]
+        iteration = self.iteration_manager.create_iteration(
+            num_suggestions=2,
+            experiment_ids=experiment_iter1_ids,
+            experiments_configs=experiments_iter1_configs
+        )
+        assert isinstance(iteration, ExperimentGroupIteration)
+        assert ExperimentGroupIteration.objects.count() == 1
+        assert self.experiment_group.current_iteration == 1
+        assert iteration.experiment_group == self.experiment_group
+        assert iteration.data == {
+            'iteration': 0,
+            'num_suggestions': 2,
+            'old_experiment_ids': None,
+            'old_experiments_configs': None,
+            'old_experiments_metrics': None,
+            'experiment_ids': experiment_iter1_ids,
+            'experiments_configs': experiments_iter1_configs,
+            'experiments_metrics': None
+        }
+
+        self.iteration_manager.update_iteration_data(
+            experiment_ids=experiment_iter1_ids,
+            experiments_configs=experiments_iter1_configs,
+        )
+        iteration.refresh_from_db()
+        assert iteration.data == {
+            'iteration': 0,
+            'num_suggestions': 2,
+            'old_experiment_ids': None,
+            'old_experiments_configs': None,
+            'old_experiments_metrics': None,
+            'experiment_ids': experiment_iter1_ids + experiment_iter1_ids,
+            'experiments_configs': experiments_iter1_configs + experiments_iter1_configs,
+            'experiments_metrics': None
+        }
 
     def test_update_iteration_raises_if_not_iteration_is_created(self):
         self.iteration_manager.update_iteration()

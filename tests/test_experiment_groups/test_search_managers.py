@@ -538,7 +538,8 @@ class TestHyperbandSearchManager(BaseTest):
             experiment_group=experiment_group,
             data={
                 'iteration': 0,
-                'bracket_iteration': 2
+                'bracket_iteration': 2,
+                'num_suggestions': 9
             })
         suggestions = self.manager1.get_suggestions(
             iteration_config=experiment_group.iteration_config)
@@ -556,7 +557,8 @@ class TestHyperbandSearchManager(BaseTest):
             experiment_group=experiment_group,
             data={
                 'iteration': 1,
-                'bracket_iteration': 0
+                'bracket_iteration': 0,
+                'num_suggestions': 5
             })
         suggestions = self.manager1.get_suggestions(
             iteration_config=experiment_group.iteration_config)
@@ -573,7 +575,8 @@ class TestHyperbandSearchManager(BaseTest):
             experiment_group=experiment_group,
             data={
                 'iteration': 2,
-                'bracket_iteration': 0
+                'bracket_iteration': 0,
+                'num_suggestions': 3
             })
         suggestions = self.manager1.get_suggestions(
             iteration_config=experiment_group.iteration_config)
@@ -595,7 +598,8 @@ class TestHyperbandSearchManager(BaseTest):
             experiment_group=experiment_group,
             data={
                 'iteration': 2,
-                'bracket_iteration': 0
+                'bracket_iteration': 0,
+                'num_suggestions': 15
             })
         suggestions = self.manager2.get_suggestions(
             iteration_config=experiment_group.iteration_config)
@@ -613,7 +617,8 @@ class TestHyperbandSearchManager(BaseTest):
             experiment_group=experiment_group,
             data={
                 'iteration': 4,
-                'bracket_iteration': 0
+                'bracket_iteration': 0,
+                'num_suggestions': 5
             })
         suggestions = self.manager2.get_suggestions(
             iteration_config=experiment_group.iteration_config)
@@ -698,6 +703,7 @@ class TestBOSearchManager(BaseTest):
     def test_iteration_suggestions_calls_optimizer(self):
         iteration_config = BOIterationConfig.from_dict({
             'iteration': 2,
+            'num_suggestions': 1,
             'old_experiment_ids': [1, 2, 3],
             'old_experiments_configs': [[1, {'feature1': 1, 'feature2': 1, 'feature3': 1}],
                                         [2, {'feature1': 2, 'feature2': 1.2, 'feature3': 2}],
