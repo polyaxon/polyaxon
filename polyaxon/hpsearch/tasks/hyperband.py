@@ -76,6 +76,11 @@ def hp_hyperband_create(experiment_group_id):
                  max_retries=None,
                  ignore_result=True)
 def hp_hyperband_start(self, experiment_group_id, auto_retry=False):
+    if not base.should_group_start(experiment_group_id=experiment_group_id,
+                                   task=HPCeleryTasks.HP_HYPERBAND_START,
+                                   auto_retry=auto_retry):
+        return
+
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return

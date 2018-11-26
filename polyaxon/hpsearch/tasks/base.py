@@ -1,4 +1,5 @@
 from db.models.experiments import Experiment
+from db.redis.group_check import GroupChecks
 from hpsearch.tasks.logger import logger
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -67,3 +68,19 @@ def check_group_experiments_finished(experiment_group_id, auto_retry=False):
     celery_app.send_task(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
                          kwargs={'experiment_group_id': experiment_group_id,
                                  'auto_retry': auto_retry})
+
+
+def should_group_start(experiment_group_id, task, auto_retry):
+    group_checks = GroupChecks(group=experiment_group_id)
+    if group_checks.is_delayed():
+        return False
+    if group_checks.is_checked():
+        group_checks.delay()
+        celery_app.send_task(
+            task,
+            kwargs={'experiment_group_id': experiment_group_id, 'auto_retry': auto_retry},
+            countdown=GroupChecks.GROUP_CHECKS_INTERVAL)
+        return False
+
+    group_checks.check()
+    return True

@@ -27,6 +27,11 @@ EPHEMERAL_TOKEN_TTL = config.get_int('POLYAXON_EPHEMERAL_TOKEN_TTL',
                                      is_optional=True,
                                      default=60 * 60 * 3)
 
+# Group checks interval
+GROUP_CHECKS_INTERVAL = config.get_int('POLYAXON_GROUP_CHECKS_INTERVAL',
+                                       is_optional=True,
+                                       default=5)
+
 # Auditor backend
 AUDITOR_BACKEND = config.get_string('POLYAXON_AUDITOR_BACKEND', is_optional=True)
 

@@ -8,6 +8,7 @@ import pytest
 from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import override_settings
 from django.test.client import MULTIPART_CONTENT
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
@@ -15,6 +16,7 @@ from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration, GroupTypes
 from db.models.experiments import Experiment, ExperimentMetric
+from db.redis.group_check import GroupChecks
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -558,10 +560,13 @@ class TestExperimentGroupModel(BaseTest):
 
         assert mock_fct.call_count == 2
 
-        with patch('hpsearch.tasks.hyperband.hp_hyperband_iterate.apply_async') as mock_fct1:
-            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct2:
-                experiment_group = ExperimentGroupFactory(
-                    content=experiment_group_spec_content_hyperband_trigger_reschedule)
+        with patch.object(GroupChecks, 'is_checked') as mock_is_check:
+            with patch('hpsearch.tasks.hyperband.hp_hyperband_iterate.apply_async') as mock_fct1:
+                with patch('scheduler.tasks.experiments.'
+                           'experiments_build.apply_async') as mock_fct2:
+                    mock_is_check.return_value = False
+                    experiment_group = ExperimentGroupFactory(
+                        content=experiment_group_spec_content_hyperband_trigger_reschedule)
 
         assert experiment_group.iteration_config.num_suggestions == 9
         assert mock_fct1.call_count == 2
@@ -631,10 +636,13 @@ class TestExperimentGroupModel(BaseTest):
 
         assert mock_fct.call_count == 2
 
-        with patch('hpsearch.tasks.bo.hp_bo_iterate.apply_async') as mock_fct1:
-            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct2:
-                ExperimentGroupFactory(
-                    content=experiment_group_spec_content_bo)
+        with patch.object(GroupChecks, 'is_checked') as mock_is_check:
+            with patch('hpsearch.tasks.bo.hp_bo_iterate.apply_async') as mock_fct1:
+                with patch('scheduler.tasks.experiments.'
+                           'experiments_build.apply_async') as mock_fct2:
+                    mock_is_check.return_value = False
+                    ExperimentGroupFactory(
+                        content=experiment_group_spec_content_bo)
 
         assert mock_fct1.call_count == 2
         # 2 experiments, but since we are mocking the scheduling function, it's 4 calls,
@@ -665,6 +673,7 @@ class TestExperimentGroupModel(BaseTest):
                 for xp in experiment_group.experiments.all():
                     ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
         assert xp_trigger_start.call_count == experiment_group.experiments.count()
+        GroupChecks(group=experiment_group.id).clear()
         with patch('hpsearch.tasks.bo.hp_bo_create.apply_async') as mock_fct1:
             hp_bo_start(experiment_group.id)
         assert mock_fct1.call_count == 1

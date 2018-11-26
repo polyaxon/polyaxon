@@ -41,6 +41,7 @@ from db.models.experiments import (
 )
 from db.models.repos import CodeReference
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
+from db.redis.group_check import GroupChecks
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from factories.factory_code_reference import CodeReferenceFactory
@@ -815,12 +816,14 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           meta_data_file: "../data/mnist/meta_data.json"
 """
         self.project = ProjectFactory()
-        with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as start_fct:
-            with patch('scheduler.tasks.experiments.'
-                       'experiments_build.apply_async') as build_fct:
-                self.experiment_group = ExperimentGroupFactory(
-                    project=self.project,
-                    content=content)
+        with patch.object(GroupChecks, 'is_checked') as mock_is_check:
+                with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as start_fct:
+                    with patch('scheduler.tasks.experiments.'
+                               'experiments_build.apply_async') as build_fct:
+                        mock_is_check.return_value = False
+                        self.experiment_group = ExperimentGroupFactory(
+                            project=self.project,
+                            content=content)
 
         assert start_fct.call_count == 1
         assert build_fct.call_count == 2

@@ -16,3 +16,5 @@ class RedisPools(object):
         config.get_string('POLYAXON_REDIS_TTL_URL'))
     HEARTBEAT = redis.ConnectionPool.from_url(
         config.get_string('POLYAXON_HEARTBEAT_URL'))
+    GROUP_CHECKS = redis.ConnectionPool.from_url(
+        config.get_string('POLYAXON_GROUP_CHECKS_URL'))
