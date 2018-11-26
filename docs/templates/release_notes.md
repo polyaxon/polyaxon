@@ -1,3 +1,11 @@
+## 0.3.3
+
+ * Add download button for logs.
+ * Add download button for outputs.
+ * Make ephemeral tokens ttl a configurable param.
+ * Optimize experiment group studies.
+ * Extend specification to accept registries with port numbers in the build section.
+
 ## 0.3.2
 
  * Add `--init` option to `polyaxon create` to allow users to create and initialize a project at the same time.
