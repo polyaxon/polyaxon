@@ -561,8 +561,7 @@ class TestExperimentGroupModel(BaseTest):
                     content=experiment_group_spec_content_hyperband_trigger_reschedule)
 
         assert experiment_group.iteration_config.num_suggestions == 9
-        # 3 calls, 2 non auto retry and one auto retry
-        assert mock_fct1.call_count == 3
+        assert mock_fct1.call_count == 2
         # 9 experiments, but since we are mocking the scheduling function, it's ~ 3 x calls,
         # every call to start tries to schedule again, but in reality it's just 9 calls
         assert mock_fct2.call_count >= 9 * 2
