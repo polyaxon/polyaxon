@@ -43,6 +43,9 @@ data:
   {{- if .Values.heartbeatTimeout }}
   POLYAXON_HEARTBEAT_TIMEOUT: {{ .Values.heartbeatTimeout | quote }}
   {{- end }}
+  {{- if .Values.ephemeralTokenTTL }}
+  POLYAXON_EPHEMERAL_TOKEN_TTL: {{ .Values.ephemeralTokenTTL | quote }}
+  {{- end }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
   # Run Env
   {{- if ge (int (include "k8s.minor" .)) 8 }}
