@@ -8,9 +8,7 @@ class HyperbandIterationManager(BaseIterationManager):
     def get_metric_name(self):
         return self.experiment_group.hptuning_config.hyperband.metric.name
 
-    def create_iteration(self,  # pylint:disable=arguments-differ
-                         experiment_ids=None,
-                         num_suggestions=0):
+    def create_iteration(self,  num_suggestions=0):
         """Create an iteration for the experiment group."""
         from db.models.experiment_groups import ExperimentGroupIteration
 
@@ -43,7 +41,7 @@ class HyperbandIterationManager(BaseIterationManager):
             iteration=iteration,
             num_suggestions=num_suggestions,
             bracket_iteration=bracket_iteration)
-        iteration_config.experiment_ids = experiment_ids or []
+        iteration_config.experiment_ids = []
         return ExperimentGroupIteration.objects.create(
             experiment_group=self.experiment_group,
             data=iteration_config.to_dict())
@@ -79,7 +77,7 @@ class HyperbandIterationManager(BaseIterationManager):
         """Reduce the experiments to restart."""
         experiment_ids = self.get_reduced_configs()
         experiments = self.experiment_group.experiments.filter(id__in=experiment_ids)
-        self.create_iteration(experiment_ids=experiment_ids)
+        self.create_iteration()
         iteration_config = self.experiment_group.iteration_config
         hptuning_config = self.experiment_group.hptuning_config
         n_resources = self.experiment_group.search_manager.get_resources_for_iteration(

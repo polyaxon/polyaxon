@@ -1,5 +1,3 @@
-from celery import group
-
 from django.conf import settings
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
@@ -19,18 +17,14 @@ def create(experiment_group):
                                     message='Experiment group could not create new suggestions.')
         return
 
-    experiment_group.iteration_manager.create_iteration(
-        num_suggestions=len(suggestions),
-        experiment_ids=[],
-        experiments_configs=[]
-    )
-
-    group_tasks = []
+    experiment_group.iteration_manager.create_iteration(num_suggestions=len(suggestions))
 
     def send_chunk():
-        group_tasks.append(
-            hp_bo_create_experiments.s(experiment_group_id=experiment_group.id,
-                                       suggestions=chunk_suggestions))
+        celery_app.send_task(
+            HPCeleryTasks.HP_BO_CREATE_EXPERIMENTS,
+            kwargs={'experiment_group_id': experiment_group.id,
+                    'suggestions': chunk_suggestions},
+            countdown=1)
 
     chunk_suggestions = []
     for suggestion in suggestions:
@@ -41,9 +35,6 @@ def create(experiment_group):
 
     if chunk_suggestions:
         send_chunk()
-
-    # Start the group
-    group(group_tasks)()
 
     celery_app.send_task(
         HPCeleryTasks.HP_BO_START,
@@ -59,11 +50,8 @@ def hp_bo_create_experiments(experiment_group_id, suggestions):
 
     experiments = base.create_group_experiments(experiment_group=experiment_group,
                                                 suggestions=suggestions)
-    experiment_ids = [xp.id for xp in experiments]
-    experiments_configs = [[xp.id, xp.declarations] for xp in experiments]
-    experiment_group.iteration_manager.update_iteration_data(
-        experiment_ids=experiment_ids,
-        experiments_configs=experiments_configs)
+    experiment_group.iteration_manager.add_iteration_experiments(
+        experiment_ids=[xp.id for xp in experiments])
 
     celery_app.send_task(
         HPCeleryTasks.HP_BO_START,

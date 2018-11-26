@@ -236,7 +236,11 @@ class ExperimentGroup(DiffModel,
 
     @property
     def iteration_data(self):
-        return self.iteration.data if self.iteration else None
+        data = self.iteration.data if self.iteration else None
+        if data:
+            data['experiment_ids'] = list(self.iteration.experiments.values_list('id', flat=True))
+
+        return data
 
     @property
     def current_iteration(self):
@@ -279,6 +283,9 @@ class ExperimentGroup(DiffModel,
             experiment_ids=experiment_ids)
         return query.values_list('id', metric)
 
+    def get_experiments_declarations(self, experiment_ids=None):
+        return self.experiments.filter(id__in=experiment_ids).values_list('id', 'declarations')
+
     @cached_property
     def search_manager(self):
         from hpsearch.search_managers import get_search_algorithm_manager
@@ -295,10 +302,12 @@ class ExperimentGroup(DiffModel,
     def iteration_config(self):
         from hpsearch.schemas import get_iteration_config
 
-        if self.iteration_data and self.search_algorithm:
+        iteration_data = self.iteration_data
+
+        if iteration_data and self.search_algorithm:
             return get_iteration_config(
                 search_algorithm=self.search_algorithm,
-                iteration=self.iteration_data)
+                iteration=iteration_data)
         return None
 
     def get_suggestions(self):
@@ -322,6 +331,11 @@ class ExperimentGroupIteration(DiffModel):
         on_delete=models.CASCADE,
         related_name='iterations',
         help_text='The experiment group.')
+    experiments = models.ManyToManyField(
+        'db.Experiment',
+        blank=True,
+        related_name='+'
+    )
     data = JSONField(
         help_text='The experiment group iteration meta data.')
 

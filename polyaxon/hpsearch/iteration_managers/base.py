@@ -55,9 +55,11 @@ class BaseIterationManager(object):
         self._update_config(iteration_config)
 
     def add_iteration_experiments(self, experiment_ids):
-        iteration_config = self.get_iteration_config()
-        if not iteration_config:
+        iteration = self.experiment_group.iteration
+        if not iteration:
+            logger.warning(
+                'Experiment group `%s` attempted to update iteration, but has no iteration',
+                self.experiment_group.id)
             return
 
-        iteration_config.experiment_ids += experiment_ids
-        self._update_config(iteration_config)
+        iteration.experiments.add(*experiment_ids)

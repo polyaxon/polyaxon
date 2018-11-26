@@ -66,32 +66,33 @@ class TestBaseIterationManagers(BaseTest):
         assert isinstance(iteration, ExperimentGroupIteration)
         assert ExperimentGroupIteration.objects.count() == 1
         assert iteration.experiment_group == self.experiment_group
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'num_suggestions': 10,
             'iteration': 0,
             'experiment_ids': [],
         }
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
-        iteration.refresh_from_db()
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'num_suggestions': 10,
             'iteration': 0,
             'experiment_ids': experiment_ids,
         }
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
-        iteration.refresh_from_db()
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'num_suggestions': 10,
             'iteration': 0,
-            'experiment_ids': experiment_ids + experiment_ids,
+            'experiment_ids': experiment_ids,
         }
         self.iteration_manager.update_iteration_num_suggestions(num_suggestions=3)
-        iteration.refresh_from_db()
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'num_suggestions': 3,
             'iteration': 0,
-            'experiment_ids': experiment_ids + experiment_ids,
+            'experiment_ids': experiment_ids,
         }
+        experiment_ids = list(self.experiment_group.experiments.values_list('id', flat=True))
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
+        self.assertEqual(sorted(self.experiment_group.iteration_data['experiment_ids']),
+                         sorted(experiment_ids))
 
     def test_update_iteration_raises_if_not_iteration_is_created(self):
         self.iteration_manager.update_iteration()
@@ -126,8 +127,7 @@ class TestHyperbandIterationManagers(BaseTest):
             'experiments_metrics': None,
         }
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
-        iteration.refresh_from_db()
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'iteration': 0,
             'bracket_iteration': 0,
             'num_suggestions': 0,
@@ -135,23 +135,25 @@ class TestHyperbandIterationManagers(BaseTest):
             'experiments_metrics': None,
         }
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
-        iteration.refresh_from_db()
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'iteration': 0,
             'bracket_iteration': 0,
             'num_suggestions': 0,
-            'experiment_ids': experiment_ids + experiment_ids,
+            'experiment_ids': experiment_ids,
             'experiments_metrics': None,
         }
         self.iteration_manager.update_iteration_num_suggestions(num_suggestions=3)
-        iteration.refresh_from_db()
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'iteration': 0,
             'bracket_iteration': 0,
             'num_suggestions': 3,
-            'experiment_ids': experiment_ids + experiment_ids,
+            'experiment_ids': experiment_ids,
             'experiments_metrics': None,
         }
+        experiment_ids = list(self.experiment_group.experiments.values_list('id', flat=True))
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
+        self.assertEqual(sorted(self.experiment_group.iteration_data['experiment_ids']),
+                         sorted(experiment_ids))
 
     def test_update_iteration_raises_if_not_iteration_is_created(self):
         self.iteration_manager.update_iteration()
@@ -207,30 +209,42 @@ class TestBOIterationManagers(BaseTest):
             for i in range(2)]
         self.iteration_manager = BOIterationManager(experiment_group=self.experiment_group)
 
+    # @staticmethod
+    # def assert_equal_configs(config1, config2):
+    #     assert config1['iteration'] == config2['iteration']
+    #     assert config1['num_suggestions'] == config2['num_suggestions']
+    #     assert sorted(config1['old_experiment_ids']) == sorted(config2['old_experiment_ids'])
+    #     for v in config2['old_experiments_configs']:
+    #         assert v in config1['old_experiments_configs']
+    #     for v in config2['old_experiments_metrics']:
+    #         assert v in config1['old_experiments_metrics']
+    #     assert sorted(config1['experiment_ids']) == sorted(config2['experiment_ids'])
+    #     for v in config2['experiments_configs']:
+    #         assert v in config1['experiments_configs']
+    #     for v in config2['experiments_metrics']:
+    #         assert v in config1['experiments_metrics']
+
     @flaky(max_runs=3)
     def test_create_iteration(self):
         assert ExperimentGroupIteration.objects.count() == 0
         assert self.experiment_group.current_iteration == 0
         experiment_iter1_ids = [experiment.id for experiment in self.experiments_iter1]
         experiments_iter1_configs = [[experiment.id, experiment.declarations]
-                                     for experiment in self.experiments_iter1]
-        iteration = self.iteration_manager.create_iteration(
-            num_suggestions=2,
-            experiment_ids=experiment_iter1_ids,
-            experiments_configs=experiments_iter1_configs
-        )
+                                     for experiment in reversed(self.experiments_iter1)]
+        iteration = self.iteration_manager.create_iteration(num_suggestions=2)
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_iter1_ids)
         assert isinstance(iteration, ExperimentGroupIteration)
         assert ExperimentGroupIteration.objects.count() == 1
         assert self.experiment_group.current_iteration == 1
         assert iteration.experiment_group == self.experiment_group
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'iteration': 0,
             'num_suggestions': 2,
             'old_experiment_ids': None,
             'old_experiments_configs': None,
             'old_experiments_metrics': None,
             'experiment_ids': experiment_iter1_ids,
-            'experiments_configs': experiments_iter1_configs,
+            'experiments_configs': [],
             'experiments_metrics': None
         }
 
@@ -249,14 +263,13 @@ class TestBOIterationManagers(BaseTest):
         # Creating a new iteration uses data from previous iteration
         experiment_iter2_ids = [experiment.id for experiment in self.experiments_iter2]
         experiments_iter2_configs = [[experiment.id, experiment.declarations]
-                                     for experiment in self.experiments_iter2]
-        iteration = self.iteration_manager.create_iteration(
-            num_suggestions=2,
-            experiment_ids=experiment_iter2_ids,
-            experiments_configs=experiments_iter2_configs
-        )
+                                     for experiment in reversed(self.experiments_iter2)]
+        iteration = self.iteration_manager.create_iteration(num_suggestions=2)
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_iter2_ids)
+        self.iteration_manager.update_iteration()
+
         assert self.experiment_group.current_iteration == 2
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'iteration': 1,
             'num_suggestions': 2,
             'old_experiment_ids': experiment_iter1_ids,
@@ -264,7 +277,7 @@ class TestBOIterationManagers(BaseTest):
             'old_experiments_metrics': experiment_iter1_metrics,
             'experiment_ids': experiment_iter2_ids,
             'experiments_configs': experiments_iter2_configs,
-            'experiments_metrics': None
+            'experiments_metrics': []
         }
 
         # Update iteration
@@ -282,14 +295,12 @@ class TestBOIterationManagers(BaseTest):
         # Creating a new iteration uses data from previous iteration
         experiment_iter3_ids = [experiment.id for experiment in self.experiments_iter3]
         experiments_iter3_configs = [[experiment.id, experiment.declarations]
-                                     for experiment in self.experiments_iter3]
-        iteration = self.iteration_manager.create_iteration(
-            num_suggestions=2,
-            experiment_ids=experiment_iter3_ids,
-            experiments_configs=experiments_iter3_configs
-        )
+                                     for experiment in reversed(self.experiments_iter3)]
+        iteration = self.iteration_manager.create_iteration(num_suggestions=2)
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_iter3_ids)
+        self.iteration_manager.update_iteration()
         assert self.experiment_group.current_iteration == 3
-        assert iteration.data == {
+        assert self.experiment_group.iteration_data == {
             'iteration': 2,
             'num_suggestions': 2,
             'old_experiment_ids': experiment_iter1_ids + experiment_iter2_ids,
@@ -297,7 +308,7 @@ class TestBOIterationManagers(BaseTest):
             'old_experiments_metrics': experiment_iter1_metrics + experiment_iter2_metrics,
             'experiment_ids': experiment_iter3_ids,
             'experiments_configs': experiments_iter3_configs,
-            'experiments_metrics': None
+            'experiments_metrics': []
         }
 
         # Update iteration
@@ -311,49 +322,6 @@ class TestBOIterationManagers(BaseTest):
             [experiment_id, 0.9] for experiment_id in reversed(experiment_iter3_ids)
         ]
         assert iteration.data['experiments_metrics'] == experiment_iter3_metrics
-
-    @flaky(max_runs=3)
-    def test_update_iteration_data(self):
-        assert ExperimentGroupIteration.objects.count() == 0
-        assert self.experiment_group.current_iteration == 0
-        experiment_iter1_ids = [experiment.id for experiment in self.experiments_iter1]
-        experiments_iter1_configs = [[experiment.id, experiment.declarations]
-                                     for experiment in self.experiments_iter1]
-        iteration = self.iteration_manager.create_iteration(
-            num_suggestions=2,
-            experiment_ids=experiment_iter1_ids,
-            experiments_configs=experiments_iter1_configs
-        )
-        assert isinstance(iteration, ExperimentGroupIteration)
-        assert ExperimentGroupIteration.objects.count() == 1
-        assert self.experiment_group.current_iteration == 1
-        assert iteration.experiment_group == self.experiment_group
-        assert iteration.data == {
-            'iteration': 0,
-            'num_suggestions': 2,
-            'old_experiment_ids': None,
-            'old_experiments_configs': None,
-            'old_experiments_metrics': None,
-            'experiment_ids': experiment_iter1_ids,
-            'experiments_configs': experiments_iter1_configs,
-            'experiments_metrics': None
-        }
-
-        self.iteration_manager.update_iteration_data(
-            experiment_ids=experiment_iter1_ids,
-            experiments_configs=experiments_iter1_configs,
-        )
-        iteration.refresh_from_db()
-        assert iteration.data == {
-            'iteration': 0,
-            'num_suggestions': 2,
-            'old_experiment_ids': None,
-            'old_experiments_configs': None,
-            'old_experiments_metrics': None,
-            'experiment_ids': experiment_iter1_ids + experiment_iter1_ids,
-            'experiments_configs': experiments_iter1_configs + experiments_iter1_configs,
-            'experiments_metrics': None
-        }
 
     def test_update_iteration_raises_if_not_iteration_is_created(self):
         self.iteration_manager.update_iteration()
