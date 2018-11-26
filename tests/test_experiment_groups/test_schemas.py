@@ -6,8 +6,12 @@ from factories.fixtures import (
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
-from hpsearch.schemas import BOIterationConfig, HyperbandIterationConfig, get_iteration_config, \
-    BaseIterationConfig
+from hpsearch.schemas import (
+    BaseIterationConfig,
+    BOIterationConfig,
+    HyperbandIterationConfig,
+    get_iteration_config
+)
 from tests.utils import BaseTest
 
 

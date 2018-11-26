@@ -1,6 +1,6 @@
 from marshmallow import fields, post_dump, post_load, validate
 
-from hpsearch.schemas.base_iteration import BaseIterationSchema, BaseIterationConfig
+from hpsearch.schemas.base_iteration import BaseIterationConfig, BaseIterationSchema
 
 
 class HyperbandIterationSchema(BaseIterationSchema):

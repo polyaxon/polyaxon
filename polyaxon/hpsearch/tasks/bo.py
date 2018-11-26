@@ -1,4 +1,5 @@
 from celery import group
+
 from django.conf import settings
 
 from constants.experiment_groups import ExperimentGroupLifeCycle

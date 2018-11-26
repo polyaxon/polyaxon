@@ -4,8 +4,8 @@ import random
 from unittest.mock import patch
 
 import pytest
-from django.conf import settings
 
+from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
@@ -28,8 +28,11 @@ from factories.fixtures import (
     experiment_group_spec_content_hyperband,
     experiment_group_spec_content_hyperband_trigger_reschedule
 )
-from hpsearch.iteration_managers import BOIterationManager, HyperbandIterationManager, \
-    BaseIterationManager
+from hpsearch.iteration_managers import (
+    BaseIterationManager,
+    BOIterationManager,
+    HyperbandIterationManager
+)
 from hpsearch.search_managers import (
     BOSearchManager,
     GridSearchManager,

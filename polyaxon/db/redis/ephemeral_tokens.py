@@ -1,9 +1,9 @@
 import base64
 import uuid
 
-from django.conf import settings
 from hestia.crypto import get_hmac
 
+from django.conf import settings
 from django.utils.crypto import constant_time_compare
 
 from db.redis.base import BaseRedisDb

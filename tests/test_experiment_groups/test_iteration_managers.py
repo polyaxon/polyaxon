@@ -7,15 +7,17 @@ from db.models.experiments import ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.fixtures import (
+    experiment_group_spec_content_2_xps,
     experiment_group_spec_content_bo,
     experiment_group_spec_content_early_stopping,
-    experiment_group_spec_content_hyperband,
-    experiment_group_spec_content_2_xps)
+    experiment_group_spec_content_hyperband
+)
 from hpsearch.iteration_managers import (
+    BaseIterationManager,
     BOIterationManager,
     HyperbandIterationManager,
-    get_search_iteration_manager,
-    BaseIterationManager)
+    get_search_iteration_manager
+)
 from tests.utils import BaseTest
 
 

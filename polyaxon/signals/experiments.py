@@ -31,7 +31,7 @@ from event_manager.events.experiment import (
 from libs.paths.experiments import delete_experiment_logs, delete_experiment_outputs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
-from polyaxon.settings import SchedulerCeleryTasks, HPCeleryTasks
+from polyaxon.settings import HPCeleryTasks, SchedulerCeleryTasks
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.run_time import (
     set_finished_at,
