@@ -51,7 +51,7 @@
   "POLYAXON_REDIS_EPHEMERAL_TOKENS_URL": "redis://127.0.0.1:6379/6",
   "POLYAXON_REDIS_TTL_URL": "redis://127.0.0.1:6379/7",
   "POLYAXON_HEARTBEAT_URL": "redis://127.0.0.1:6379/8",
-  "GROUP_CHECKS_URL": "redis://redis:6379/9",
+  "POLYAXON_GROUP_CHECKS_URL": "redis://127.0.0.1:6379/9",
   "POLYAXON_ROLE_LABELS_WORKER": "polyaxon-workers",
   "POLYAXON_ROLE_LABELS_DASHBOARD": "polyaxon-dashboard",
   "POLYAXON_ROLE_LABELS_LOG": "polyaxon-logs",

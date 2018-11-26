@@ -8,7 +8,6 @@ import pytest
 from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import override_settings
 from django.test.client import MULTIPART_CONTENT
 
 from constants.experiment_groups import ExperimentGroupLifeCycle

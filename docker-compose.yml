@@ -55,7 +55,7 @@ services:
       POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: "redis://redis:6379/6"
       POLYAXON_REDIS_TTL_URL: "redis://redis:6379/7"
       POLYAXON_HEARTBEAT_URL: "redis://redis:6379/8"
-      GROUP_CHECKS_URL: "redis://redis:6379/9"
+      POLYAXON_GROUP_CHECKS_URL: "redis://redis:6379/9"
       POLYAXON_RABBITMQ_DEFAULT_USER: admin
       POLYAXON_RABBITMQ_DEFAULT_PASS: mypass
 
@@ -74,7 +74,7 @@ services:
       POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: "redis://redis:6379/6"
       POLYAXON_REDIS_TTL_URL: "redis://redis:6379/7"
       POLYAXON_HEARTBEAT_URL: "redis://redis:6379/8"
-      GROUP_CHECKS_URL: "redis://redis:6379/9"
+      POLYAXON_GROUP_CHECKS_URL: "redis://redis:6379/9"
     networks:
       - polyaxon
     depends_on:

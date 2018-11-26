@@ -817,13 +817,13 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
 """
         self.project = ProjectFactory()
         with patch.object(GroupChecks, 'is_checked') as mock_is_check:
-                with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as start_fct:
-                    with patch('scheduler.tasks.experiments.'
-                               'experiments_build.apply_async') as build_fct:
-                        mock_is_check.return_value = False
-                        self.experiment_group = ExperimentGroupFactory(
-                            project=self.project,
-                            content=content)
+            with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as start_fct:
+                with patch('scheduler.tasks.experiments.'
+                           'experiments_build.apply_async') as build_fct:
+                    mock_is_check.return_value = False
+                    self.experiment_group = ExperimentGroupFactory(
+                        project=self.project,
+                        content=content)
 
         assert start_fct.call_count == 1
         assert build_fct.call_count == 2
