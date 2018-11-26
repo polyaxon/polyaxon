@@ -578,6 +578,7 @@ class TestExperimentGroupModel(BaseTest):
             experiment_group=experiment_group,
             data={
                 'iteration': 0,
+                'experiment_ids': list(experiment_group.experiments.values_list('id', flat=True)),
                 'bracket_iteration': 21,
                 'num_suggestions': 9
             })
