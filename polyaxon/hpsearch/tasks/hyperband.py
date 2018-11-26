@@ -1,3 +1,4 @@
+from celery import group
 from django.conf import settings
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
@@ -22,12 +23,12 @@ def create(experiment_group):
     experiment_group.iteration_manager.update_iteration_num_suggestions(
         num_suggestions=len(suggestions))
 
+    group_tasks = []
+
     def send_chunk():
-        celery_app.send_task(
-            HPCeleryTasks.HP_HYPERBAND_CREATE_EXPERIMENTS,
-            kwargs={'experiment_group_id': experiment_group.id,
-                    'suggestions': chunk_suggestions},
-            countdown=1)
+        group_tasks.append(
+            hp_hyperband_create_experiments.s(experiment_group_id=experiment_group.id,
+                                              suggestions=chunk_suggestions))
 
     chunk_suggestions = []
     for suggestion in suggestions:
@@ -38,6 +39,9 @@ def create(experiment_group):
 
     if chunk_suggestions:
         send_chunk()
+
+    # Start the group
+    group(group_tasks)()
 
     celery_app.send_task(
         HPCeleryTasks.HP_HYPERBAND_START,
