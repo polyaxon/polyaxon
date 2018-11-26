@@ -47,7 +47,7 @@ HEALTH_CHECK_WORKER_TIMEOUT = config.get_int('POLYAXON_HEALTH_CHECK_WORKER_TIMEO
                                              default=4)
 GROUP_CHUNKS = config.get_int('POLYAXON_GROUP_CHUNKS',
                               is_optional=True,
-                              default=5)
+                              default=50)
 
 
 class Intervals(object):
