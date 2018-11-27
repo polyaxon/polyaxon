@@ -6,10 +6,13 @@ import django.db.models.deletion
 
 def migrate_iteration_experiments(apps, schema_editor):
     ExperimentGroupIteration = apps.get_model('db', 'ExperimentGroupIteration')
+    Experiment = apps.get_model('db', 'Experiment')
 
     for iteration in ExperimentGroupIteration.objects.all():
         if iteration.data and 'experiment_ids' in iteration.data:
-            iteration.experiments.set(iteration.data['experiment_ids'])
+            experiment_ids = Experiment.objects.filter(
+                id__in=iteration.data['experiment_ids']).values_list('id', flat=True)
+            iteration.experiments.set(experiment_ids)
 
 
 class Migration(migrations.Migration):
