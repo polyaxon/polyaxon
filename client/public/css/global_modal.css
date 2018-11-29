@@ -54,6 +54,10 @@ li, dt, dd {
   line-height: 20px;
 }
 
+#branding h1 {
+  font-size: 16px;
+}
+
 a.brand {
   font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
   text-decoration: none;

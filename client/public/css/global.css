@@ -56,6 +56,10 @@ body>#container {
   color: white;
 }
 
+#branding h1 {
+  font-size: 16px;
+}
+
 #top #top-brand span,
 #top #top-brand a,
 #branding h1 a {
