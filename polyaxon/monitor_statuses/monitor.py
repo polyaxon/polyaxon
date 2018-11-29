@@ -62,6 +62,7 @@ def run(k8s_manager):
                           label_selector=get_label_selector()):
         logger.debug("Received event: %s", event['type'])
         event_object = event['object'].to_dict()
+        logger.info(event_object)
         job_state = get_job_state(
             event_type=event['type'],
             event=event_object,
