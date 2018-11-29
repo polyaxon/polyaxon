@@ -199,12 +199,12 @@ a.brand {
   text-decoration: none;
 }
 
-.site-footer .container a.social-icon {
+.site-footer .container a.footer-icon {
   margin-left: 3px;
   margin-right: 3px;
 }
 
-.site-footer .container a.social-icon svg {
+.site-footer .container a.footer-icon svg {
   vertical-align: middle;
 }
 

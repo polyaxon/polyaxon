@@ -18,7 +18,7 @@ function Footer() {
                     </a>
                   </div>
                   <div>
-                    <a href="https://github.com/polyaxon" target="_blank" className="social-icon">
+                    <a href="https://github.com/polyaxon" target="_blank" className="footer-icon">
                       <svg
                         fill="currentColor"
                         height="1.5em"
@@ -32,7 +32,7 @@ function Footer() {
                         </g>
                       </svg>
                     </a>
-                    <a href="https://hub.docker.com/r/polyaxon" target="_blank" className="social-icon">
+                    <a href="https://hub.docker.com/r/polyaxon" target="_blank" className="footer-icon">
                       <svg
                         fill="currentColor"
                         height="1.6em"
@@ -47,7 +47,7 @@ function Footer() {
                         </g>
                       </svg>
                     </a>
-                    <a href="https://twitter.com/polyaxonAI" target="_blank" className="social-icon">
+                    <a href="https://twitter.com/polyaxonAI" target="_blank" className="footer-icon">
                       <svg
                         fill="currentColor"
                         height="1.5em"
@@ -61,7 +61,7 @@ function Footer() {
                         </g>
                       </svg>
                     </a>
-                    <a href="https://medium.com/polyaxon" target="_blank" className="social-icon">
+                    <a href="https://medium.com/polyaxon" target="_blank" className="footer-icon">
                       <svg
                         fill="currentColor"
                         height="1.7em"
@@ -76,14 +76,14 @@ function Footer() {
                         </g>
                       </svg>
                     </a>
-                    <a href="https://www.linkedin.com/company/polyaxon" target="_blank" className="social-icon">
+                    <a href="https://www.linkedin.com/company/polyaxon" target="_blank" className="footer-icon">
                       <svg
                         fill="currentColor"
                         height="1.7em"
                         width="1.7em"
                         viewBox="0 0 32 32"
                         style={iconStyle}
-                        className="social-icon"
+                        className="footer-icon"
                       >
                         <g id="surface1">
                           <path
@@ -91,14 +91,14 @@ function Footer() {
                         </g>
                       </svg>
                     </a>
-                    <a href="https://angel.co/polyaxon" target="_blank" className="social-icon">
+                    <a href="https://angel.co/polyaxon" target="_blank" className="footer-icon">
                       <svg
                         fill="currentColor"
                         height="1.7em"
                         width="1.4em"
                         viewBox="5 3 20 20"
                         style={iconStyle}
-                        className="social-icon"
+                        className="footer-icon"
                       >
                         <g id="surface1">
                           <path

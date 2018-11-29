@@ -117,12 +117,12 @@ body {
   text-decoration: none;
 }
 
-.footer .content a.social-icon {
+.footer .content a.footer-icon {
   margin-left: 3px;
   margin-right: 3px;
 }
 
-.footer .content a.social-icon svg {
+.footer .content a.footer-icon svg {
   vertical-align: middle;
 }
 
