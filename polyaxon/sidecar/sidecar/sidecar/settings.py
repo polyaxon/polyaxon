@@ -55,6 +55,9 @@ MESSAGES_TIMEOUT = config.get_string('POLYAXON_MESSAGES_TIMEOUT',
 MESSAGES_TIMEOUT_SHORT = config.get_string('POLYAXON_MESSAGES_TIMEOUT_SHORT',
                                            is_optional=True,
                                            default=2)
+CHECK_ALIVE_INTERVAL = config.get_string('POLYAXON_CHECK_ALIVE_INTERVAL',
+                                         is_optional=True,
+                                         default=10)
 
 CELERY_TRACK_STARTED = True
 

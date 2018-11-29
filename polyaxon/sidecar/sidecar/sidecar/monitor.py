@@ -12,9 +12,16 @@ from sidecar.settings import LogsCelerySignals
 logger = logging.getLogger('polyaxon.monitors.sidecar')
 
 
-def _handle_log_stream(stream, publish):
+def _is_alive(k8s_manager, pod_id):
+    status = k8s_manager.k8s_api.read_namespaced_pod_status(pod_id,
+                                                            k8s_manager.namespace)
+    return status.status.phase == PodLifeCycle.RUNNING
+
+
+def _handle_log_stream(stream, publish, is_alive):
     log_lines = []
     last_emit_time = time.time()
+    last_check_time = time.time()
     for log_line in stream:
         log_lines.append(log_line.decode('utf-8').strip())
         publish_cond = (
@@ -25,6 +32,13 @@ def _handle_log_stream(stream, publish):
             publish(log_lines)
             log_lines = []
             last_emit_time = time.time()
+
+        check_cond = time.time() - last_check_time > settings.CHECK_ALIVE_INTERVAL
+        if check_cond:
+            if not is_alive():
+                raise RuntimeError('Main pod is not running anymore')
+            last_check_time = time.time()
+
     if log_lines:
         publish(log_lines)
 
@@ -57,7 +71,9 @@ def run_for_experiment_job(k8s_manager,
             }
         )
 
-    _handle_log_stream(stream=raw.stream(), publish=publish)
+    _handle_log_stream(stream=raw.stream(),
+                       publish=publish,
+                       is_alive=_is_alive(k8s_manager=k8s_manager, pod_id=pod_id))
 
 
 def run_for_job(k8s_manager,
@@ -83,7 +99,9 @@ def run_for_job(k8s_manager,
             }
         )
 
-    _handle_log_stream(stream=raw.stream(), publish=publish)
+    _handle_log_stream(stream=raw.stream(),
+                       publish=publish,
+                       is_alive=_is_alive(k8s_manager=k8s_manager, pod_id=pod_id))
 
 
 def can_log(k8s_manager, pod_id, log_sleep_interval):
