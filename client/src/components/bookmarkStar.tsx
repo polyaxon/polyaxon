@@ -12,11 +12,11 @@ function BookmarkStar({active, callback}: Props) {
   const className = active ? 'icon-bookmark-active' : '';
   const tooltip = active ? 'Remove from bookmarks' : 'Add to bookmarks';
   return (
-    <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">{tooltip}</Tooltip>}>
-      <span className={`icon-bookmark ${className}`}>
-        <a onClick={callback}> <i className="fa fa-star" aria-hidden="true"/> </a>
-      </span>
-    </OverlayTrigger>
+    <span className={`icon-bookmark ${className}`}>
+      <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">{tooltip}</Tooltip>}>
+        <a onClick={callback}><i className="fa fa-star" aria-hidden="true"/> </a>
+      </OverlayTrigger>
+    </span>
   );
 }
 
