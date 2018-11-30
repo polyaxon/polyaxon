@@ -153,6 +153,12 @@ class ProjectExperimentListView(BookmarkedListMixinView,
 
         return self.serializer_class
 
+    @property
+    def paginator(self):
+        if self.request.query_params.get('all', None):
+            self.pagination_class = LargeLimitOffsetPagination
+        return super().paginator
+
     def get_group(self, project, group_id):
         group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
         auditor.record(event_type=EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,

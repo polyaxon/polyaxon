@@ -563,6 +563,21 @@ class TestProjectExperimentLastMetricListViewV1(BaseViewTest):
         assert resp.data['results'] == self.declarations_serializer_class(
             self.queryset, many=True).data
 
+    def test_get_all(self):
+        Experiment.objects.bulk_create([
+            Experiment(project=self.project, user=self.auth_client.user)
+            for _ in range(30)
+        ])
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == self.queryset.count()
+        assert len(resp.data['results']) < self.queryset.count()
+
+        resp = self.auth_client.get(self.url + '?all=true')
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == self.queryset.count()
+        assert len(resp.data['results']) == self.queryset.count()
+
 
 @pytest.mark.experiments_mark
 class TestExperimentGroupExperimentListViewV1(BaseViewTest):
@@ -602,6 +617,28 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset, many=True).data
 
     def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}&limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_pagination_all(self):
         limit = self.num_objects - 1
         resp = self.auth_client.get("{}&limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
