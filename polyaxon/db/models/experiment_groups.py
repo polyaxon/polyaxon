@@ -141,7 +141,9 @@ class ExperimentGroup(DiffModel,
     def last_status_before(self, status_date=None):
         if not status_date:
             return self.last_status
-        status = ExperimentGroupStatus.objects.filter(created_at__lt=status_date).last()
+        status = ExperimentGroupStatus.objects.filter(
+            experiment_group=self,
+            created_at__lte=status_date).last()
         return status.status if status else None
 
     def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):

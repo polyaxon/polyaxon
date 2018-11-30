@@ -34,7 +34,7 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
     def last_status_before(self, status_model, status_date=None):  # pylint:disable=arguments-differ
         if not status_date:
             return self.last_status
-        status = status_model.objects.filter(created_at__lt=status_date).last()
+        status = status_model.objects.filter(job=self, created_at__lte=status_date).last()
         return status.status if status else None
 
     def _set_status(self,
