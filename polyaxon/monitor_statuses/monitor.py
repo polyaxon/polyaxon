@@ -1,5 +1,4 @@
 import logging
-import time
 
 from django.utils import timezone
 from kubernetes import watch

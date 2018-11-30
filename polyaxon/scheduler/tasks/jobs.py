@@ -6,7 +6,6 @@ from db.redis.heartbeat import RedisHeartBeat
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, job_scheduler
-from schemas.specifications import JobSpecification
 
 _logger = logging.getLogger(__name__)
 

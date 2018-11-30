@@ -3,8 +3,6 @@ import tarfile
 
 from django.conf import settings
 
-from libs.paths.experiments import get_experiment_outputs_path
-from libs.paths.jobs import get_job_outputs_path
 from libs.stores import get_outputs_store
 
 
