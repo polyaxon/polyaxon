@@ -89,5 +89,5 @@ class LastStatusMixin(object):
     def last_status_before(self, status_date):
         raise NotImplemented  # noqa
 
-    def set_status(self, status, message=None, traceback=None, **kwargs):
+    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
         raise NotImplemented  # noqa
