@@ -71,15 +71,12 @@ def jobs_stop(self,
               project_uuid,
               job_name,
               job_uuid,
-              specification,
               update_status=True):
-    specification = JobSpecification.read(specification)
     deleted = job_scheduler.stop_job(
         project_name=project_name,
         project_uuid=project_uuid,
         job_name=job_name,
-        job_uuid=job_uuid,
-        specification=specification)
+        job_uuid=job_uuid)
 
     if not deleted and self.request.retries < 2:
         _logger.info('Trying again to delete job `%s`.', job_name)

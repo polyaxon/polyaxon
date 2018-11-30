@@ -88,15 +88,15 @@ def start_job(job):
                 traceback=error.get('traceback'))
 
 
-def stop_job(project_name, project_uuid, job_name, job_uuid, specification):
+def stop_job(project_name, project_uuid, job_name, job_uuid):
     spawner = JobSpawner(
         project_name=project_name,
         project_uuid=project_uuid,
         job_name=job_name,
         job_uuid=job_uuid,
-        spec=specification,
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
+        spec=None,
         in_cluster=True)
 
     return spawner.stop_job()

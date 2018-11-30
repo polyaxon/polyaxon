@@ -122,7 +122,6 @@ def job_status_post_save(sender, **kwargs):
                 'project_uuid': job.project.uuid.hex,
                 'job_name': job.unique_name,
                 'job_uuid': job.uuid.hex,
-                'specification': job.config,
                 'update_status': False
             },
             countdown=RedisTTL.get_for_job(job_id=job.id))
@@ -147,7 +146,6 @@ def job_pre_delete(sender, **kwargs):
             'project_uuid': job.project.uuid.hex,
             'job_name': job.unique_name,
             'job_uuid': job.uuid.hex,
-            'specification': job.config,
             'update_status': False
         })
 

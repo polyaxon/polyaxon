@@ -59,7 +59,7 @@ class JobSpawner(K8SManager):
                                            ports=ports,
                                            use_sidecar=use_sidecar,
                                            sidecar_config=sidecar_config,
-                                           log_level=self.spec.log_level,
+                                           log_level=self.spec.log_level if self.spec else None,
                                            health_check_url=get_job_health_url(job_name))
         self.persist = persist
 

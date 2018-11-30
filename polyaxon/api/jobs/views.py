@@ -265,7 +265,6 @@ class JobStopView(JobEndpoint, PostEndpoint):
                 'project_uuid': self.project.uuid.hex,
                 'job_name': self.job.unique_name,
                 'job_uuid': self.job.uuid.hex,
-                'specification': self.job.specification,
                 'update_status': True
             })
         return Response(status=status.HTTP_200_OK)

@@ -13,7 +13,6 @@ class Command(BaseCleanCommand):
                 project_name=job.project.unique_name,
                 project_uuid=job.project.uuid.hex,
                 job_name=job.unique_name,
-                job_uuid=job.uuid.hex,
-                specification=job.specification)
+                job_uuid=job.uuid.hex)
             job.set_status(JobLifeCycle.STOPPED,
                            message='Stop triggered by the cleaning hook.')
