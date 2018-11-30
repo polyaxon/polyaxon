@@ -354,7 +354,7 @@ class Migration(migrations.Migration):
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
                 ('definition', django.contrib.postgres.fields.jsonb.JSONField(default=dict, help_text='The specific values/manifest for this job.')),
                 ('config', django.contrib.postgres.fields.jsonb.JSONField(help_text='The compiled polyaxonfile for the run job.', validators=[libs.spec_validation.validate_job_spec_config])),
-                ('cloning_strategy', models.CharField(blank=True, choices=[('copy', 'copy'), ('restart', 'restart'), ('resume', 'resume')], default='restart', max_length=16, null=True)),
+                ('cloning_strategy', models.CharField(blank=True, choices=[('copy', 'copy'), ('restart', 'restart'), ('resume', 'resume')], max_length=16, null=True)),
                 ('build_job', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.BuildJob')),
                 ('code_reference', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.CodeReference')),
                 ('original_job', models.ForeignKey(blank=True, help_text='The original job that was cloned from.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='clones', to='db.Job')),
