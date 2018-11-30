@@ -51,6 +51,7 @@ def k8s_events_handle_experiment_job_statuses(self, payload):
         set_node_scheduling(job, details['node_name'])
         job.set_status(status=payload['status'],
                        message=payload['message'],
+                       created_at=payload.get('created_at'),
                        traceback=payload.get('traceback'),
                        details=details)
         logger.debug('status %s is set for job %s %s', payload['status'], job_uuid, job.id)

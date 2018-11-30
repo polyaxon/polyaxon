@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.utils import timezone
 
 
 class StatusModel(models.Model):
@@ -26,7 +27,7 @@ class StatusModel(models.Model):
         editable=False,
         unique=True,
         null=False)
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+    created_at = models.DateTimeField(default=timezone.now, db_index=True)
     message = models.CharField(max_length=256, null=True, blank=True)
     traceback = models.TextField(null=True, blank=True)
 
@@ -84,6 +85,9 @@ class LastStatusMixin(object):
     @property
     def stopped(self):
         return self.STATUSES.stopped(self.last_status)
+
+    def last_status_before(self, status_date):
+        raise NotImplemented  # noqa
 
     def set_status(self, status, message=None, traceback=None, **kwargs):
         raise NotImplemented  # noqa

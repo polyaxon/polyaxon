@@ -53,13 +53,16 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
     def set_status(self,  # pylint:disable=arguments-differ
                    status,
                    message=None,
+                   created_at=None,
                    traceback=None,
                    details=None):
+        params = {'created_at': created_at} if created_at else {}
         return self._set_status(status_model=ExperimentJobStatus,
                                 status=status,
                                 message=message,
                                 traceback=traceback,
-                                details=details)
+                                details=details,
+                                **params)
 
 
 class ExperimentJobStatus(AbstractJobStatus):

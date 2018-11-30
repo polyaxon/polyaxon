@@ -54,10 +54,12 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     def set_status(self,  # pylint:disable=arguments-differ
                    status,
+                   created_at=None,
                    message=None,
                    traceback=None,
                    details=None):
         return self._set_status(status_model=TensorboardJobStatus,
+                                created_at=created_at,
                                 status=status,
                                 message=message,
                                 traceback=traceback,

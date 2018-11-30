@@ -31,8 +31,20 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
         """Run's heartbeat callback."""
         pass
 
-    def _set_status(self, status_model, status, message=None, traceback=None, details=None):
-        current_status = self.last_status
+    def last_status_before(self, status_model, status_date=None):  # pylint:disable=arguments-differ
+        if not status_date:
+            return self.last_status
+        status = status_model.objects.filter(created_at__lt=status_date).last()
+        return status.status if status else None
+
+    def _set_status(self,
+                    status_model,
+                    status,
+                    created_at=None,
+                    message=None,
+                    traceback=None,
+                    details=None):
+        current_status = self.last_status_before(status_model=status_model, status_date=created_at)
         if self.is_done:
             # We should not update statuses anymore
             _logger.debug(
@@ -44,11 +56,13 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
             self._ping_heartbeat()
         if JobLifeCycle.can_transition(status_from=current_status, status_to=status):
             # Add new status to the job
+            params = {'created_at': created_at} if created_at else {}
             status_model.objects.create(job=self,
                                         status=status,
                                         message=message,
                                         traceback=traceback,
-                                        details=details)
+                                        details=details,
+                                        **params)
             return True
         return False
 

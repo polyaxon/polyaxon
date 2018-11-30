@@ -1,6 +1,7 @@
 import pytest
 
 from django.conf import settings
+from django.utils import timezone
 
 from constants.jobs import JobLifeCycle
 from constants.pods import EventTypes, PodConditions
@@ -20,6 +21,7 @@ class TestSpawner(BaseTest):
     def test_get_pending_job_state(self):
         job_state = get_job_state(
             event_type=status_experiment_job_event['type'],
+            created_at=timezone.now(),
             event=status_experiment_job_event['object'],
             job_container_names=(settings.CONTAINER_NAME_EXPERIMENT_JOB,),
             experiment_type_label=settings.TYPE_LABELS_RUNNER)
@@ -38,6 +40,7 @@ class TestSpawner(BaseTest):
 
     def test_get_failed_job_state(self):
         job_state = get_job_state(event_type=status_experiment_job_event_with_conditions['type'],
+                                  created_at=timezone.now(),
                                   event=status_experiment_job_event_with_conditions['object'],
                                   job_container_names=(settings.CONTAINER_NAME_EXPERIMENT_JOB,),
                                   experiment_type_label=settings.TYPE_LABELS_RUNNER)

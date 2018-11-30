@@ -89,14 +89,15 @@ def get_job_status(pod_state, job_container_names):
     return JobLifeCycle.UNKNOWN, None
 
 
-def get_job_state(event_type, event, job_container_names, experiment_type_label):
+def get_job_state(event_type, event, job_container_names, experiment_type_label, created_at):
     pod_state = get_pod_state(event_type=event_type, event=event)
     if pod_state.labels.type != experiment_type_label:  # 2 types: core and experiment
         return
 
     status, message = get_job_status(pod_state, job_container_names)
+    params = {'created_at': created_at} if created_at else {}
     return JobStateConfig(
         status=status,
         message=message,
         details=pod_state,
-    )
+        **params)

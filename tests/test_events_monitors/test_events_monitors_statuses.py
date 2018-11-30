@@ -1,4 +1,7 @@
+import datetime
+
 import pytest
+from django.utils import timezone
 
 from mock import patch
 
@@ -53,6 +56,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         job_state = get_job_state(
             event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
             event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
+            created_at=timezone.now() + datetime.timedelta(days=1),
             job_container_names=(self.CONTAINER_NAME,),
             experiment_type_label=settings.TYPE_LABELS_RUNNER)
         self.STATUS_HANDLER(job_state.to_dict())  # pylint:disable=not-callable
@@ -63,6 +67,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         job_state = get_job_state(
             event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
             event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
+            created_at=timezone.now() + datetime.timedelta(days=1),
             job_container_names=(self.CONTAINER_NAME,),
             experiment_type_label=settings.TYPE_LABELS_RUNNER)
 
@@ -78,6 +83,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         job_state = get_job_state(
             event_type=self.EVENT_WITH_CONDITIONS['type'],  # pylint:disable=unsubscriptable-object
             event=self.EVENT_WITH_CONDITIONS['object'],  # pylint:disable=unsubscriptable-object
+            created_at=timezone.now() + datetime.timedelta(days=1),
             job_container_names=(self.CONTAINER_NAME,),
             experiment_type_label=settings.TYPE_LABELS_RUNNER)
 

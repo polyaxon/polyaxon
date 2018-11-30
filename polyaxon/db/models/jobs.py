@@ -118,13 +118,16 @@ class Job(AbstractJob,
 
     def set_status(self,  # pylint:disable=arguments-differ
                    status,
+                   created_at=None,
                    message=None,
                    traceback=None,
                    details=None):
+        params = {'created_at': created_at} if created_at else {}
         return self._set_status(status_model=JobStatus,
                                 status=status,
                                 message=message,
-                                details=details)
+                                details=details,
+                                **params)
 
     def _clone(self,
                cloning_strategy,

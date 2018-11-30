@@ -1,4 +1,5 @@
 import logging
+import time
 
 from kubernetes import watch
 
@@ -60,6 +61,7 @@ def run(k8s_manager):
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
                           namespace=k8s_manager.namespace,
                           label_selector=get_label_selector()):
+        created_at = time.time()
         logger.debug("Received event: %s", event['type'])
         event_object = event['object'].to_dict()
         logger.info(event_object)
@@ -70,7 +72,8 @@ def run(k8s_manager):
                                  settings.CONTAINER_NAME_PLUGIN_JOB,
                                  settings.CONTAINER_NAME_JOB,
                                  settings.CONTAINER_NAME_DOCKERIZER_JOB),
-            experiment_type_label=settings.TYPE_LABELS_RUNNER)
+            experiment_type_label=settings.TYPE_LABELS_RUNNER,
+            created_at=created_at)
 
         if job_state:
             status = job_state.status

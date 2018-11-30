@@ -1,6 +1,7 @@
 import uuid
 
 import pytest
+from django.utils import timezone
 
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig
 from schemas.job import JobLabelConfig
@@ -73,4 +74,5 @@ class Test(BaseTest):
         }
         config = JobStateConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
+        config_to_dict.pop('created_at')
         assert config_to_dict == config_dict

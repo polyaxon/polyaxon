@@ -325,16 +325,16 @@ class RunModel(DiffModel, RunTimeModel, LastStatusMixin):
     def skipped(self):
         return self.STATUSES.skipped(self.last_status)
 
-    def can_transition(self, status):
+    def can_transition(self, status_from, status_to):
         """Update the status of the current instance.
 
         Returns:
             boolean: if the instance is updated.
         """
-        if not self.STATUSES.can_transition(status_from=self.last_status, status_to=status):
+        if not self.STATUSES.can_transition(status_from=status_from, status_to=status_to):
             _logger.info(
                 '`%s` tried to transition from status `%s` to non permitted status `%s`',
-                str(self), self.last_status, status)
+                str(self), status_from, status_to)
             return False
 
         return True
@@ -396,17 +396,26 @@ class PipelineRun(RunModel):
     def on_finished(self, message=None):
         self.set_status(status=self.STATUSES.FINISHED, message=message)
 
-    def set_status(self, status, message=None, traceback=None, **kwargs):
-        if not self.can_transition(status):
+    def last_status_before(self, status_date=None):
+        if not status_date:
+            return self.last_status
+        status = PipelineRunStatus.objects.filter(created_at__lt=status_date).last()
+        return status.status if status else None
+
+    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
+        last_status = self.last_status_before(status_date=created_at)
+        if not self.can_transition(status_from=last_status, status_to=status):
             return
 
         if PipelineStatuses.FINISHED != status:
             # If the status that we want to transition to is not a final state,
             # then no further checks are required
+            params = {'created_at': created_at} if created_at else {}
             PipelineRunStatus.objects.create(pipeline_run=self,
                                              status=status,
                                              message=message,
-                                             traceback=traceback)
+                                             traceback=traceback,
+                                             **params)
             return
 
         # If we reached a final state,
@@ -476,12 +485,21 @@ class OperationRun(RunModel):
     class Meta:
         app_label = 'db'
 
-    def set_status(self, status, message=None, traceback=None, **kwargs):
-        if self.can_transition(status):
+    def last_status_before(self, status_date=None):
+        if not status_date:
+            return self.last_status
+        status = OperationRunStatus.objects.filter(created_at__lt=status_date).last()
+        return status.status if status else None
+
+    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
+        last_status = self.last_status_before(status_date=created_at)
+        if self.can_transition(status_from=last_status, status_to=status):
+            params = {'created_at': created_at} if created_at else {}
             OperationRunStatus.objects.create(operation_run=self,
                                               status=status,
                                               traceback=traceback,
-                                              message=message)
+                                              message=message,
+                                              **params)
 
     def check_concurrency(self):
         """Checks the concurrency of the operation run.

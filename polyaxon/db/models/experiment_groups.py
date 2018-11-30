@@ -124,28 +124,38 @@ class ExperimentGroup(DiffModel,
     def is_selection(self):
         return self.group_type == GroupTypes.SELECTION
 
-    def can_transition(self, status):
+    def can_transition(self, status_from, status_to):
         """Update the status of the current instance.
 
         Returns:
             boolean: if the instance is updated.
         """
-        if not self.STATUSES.can_transition(status_from=self.last_status, status_to=status):
+        if not self.STATUSES.can_transition(status_from=status_from, status_to=status_to):
             _logger.info(
                 '`%s` tried to transition from status `%s` to non permitted status `%s`',
-                str(self), self.last_status, status)
+                str(self), status_from, status_to)
             return False
 
         return True
 
-    def set_status(self, status, message=None, traceback=None, **kwargs):
-        if not self.can_transition(status):
+    def last_status_before(self, status_date=None):
+        if not status_date:
+            return self.last_status
+        status = ExperimentGroupStatus.objects.filter(created_at__lt=status_date).last()
+        return status.status if status else None
+
+    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
+        status_from = self.last_status_before(status_date=created_at)
+
+        if not self.can_transition(status_from=status_from, status_to=status):
             return
 
+        params = {'created_at': created_at} if created_at else {}
         ExperimentGroupStatus.objects.create(experiment_group=self,
                                              status=status,
                                              message=message,
-                                             traceback=traceback)
+                                             traceback=traceback,
+                                             **params)
 
     @cached_property
     def hptuning_config(self):

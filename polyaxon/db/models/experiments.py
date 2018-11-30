@@ -217,14 +217,23 @@ class Experiment(DiffModel,
             return True
         return False
 
-    def set_status(self, status, message=None, traceback=None, **kwargs):
+    def last_status_before(self, status_date=None):
+        if not status_date:
+            return self.last_status
+        status = ExperimentStatus.objects.filter(created_at__lt=status_date).last()
+        return status.status if status else None
+
+    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
         if status in ExperimentLifeCycle.HEARTBEAT_STATUS:
             RedisHeartBeat.experiment_ping(self.id)
-        if ExperimentLifeCycle.can_transition(status_from=self.last_status, status_to=status):
+        last_status = self.last_status_before(status_date=created_at)
+        if ExperimentLifeCycle.can_transition(status_from=last_status, status_to=status):
+            params = {'created_at': created_at} if created_at else {}
             ExperimentStatus.objects.create(experiment=self,
                                             status=status,
                                             message=message,
-                                            traceback=traceback)
+                                            traceback=traceback,
+                                            **params)
 
     def _clone(self,
                cloning_strategy,

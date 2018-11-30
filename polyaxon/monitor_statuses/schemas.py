@@ -49,6 +49,7 @@ class PodStateConfig(BaseConfig):
 
 class JobStateSchema(Schema):
     status = fields.Str()
+    created_at = fields.LocalDateTime(allow_none=True)
     message = fields.Str(allow_none=True)
     details = fields.Nested(PodStateSchema, allow_none=True)
 
@@ -68,7 +69,8 @@ class JobStateConfig(BaseConfig):
     SCHEMA = JobStateSchema
     IDENTIFIER = 'JobState'
 
-    def __init__(self, status, message=None, details=None):
+    def __init__(self, status, created_at=None, message=None, details=None):
         self.status = status
+        self.created_at = self.localize_date(created_at)
         self.message = message
         self.details = details
