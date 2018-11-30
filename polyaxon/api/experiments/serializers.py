@@ -136,6 +136,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
             'finished_at',
             'last_status',
             'original',
+            'cloning_strategy',
             'project',
             'experiment_group',
             'build_job',

@@ -21,6 +21,7 @@ class JobSerializer(serializers.ModelSerializer):
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
     build_job = fields.SerializerMethodField()
+    original = fields.SerializerMethodField()
 
     class Meta:
         model = Job
@@ -36,6 +37,8 @@ class JobSerializer(serializers.ModelSerializer):
             'last_status',
             'started_at',
             'finished_at',
+            'original',
+            'cloning_strategy',
             'tags',
             'project',
             'build_job',
@@ -50,6 +53,9 @@ class JobSerializer(serializers.ModelSerializer):
     def get_build_job(self, obj):
         return obj.build_job.unique_name if obj.build_job else None
 
+    def get_original(self, obj):
+        return obj.original_job.unique_name if obj.original_job else None
+
 
 class BookmarkedJobSerializer(JobSerializer, BookmarkedSerializerMixin):
     bookmarked_model = 'job'
@@ -59,7 +65,6 @@ class BookmarkedJobSerializer(JobSerializer, BookmarkedSerializerMixin):
 
 
 class JobDetailSerializer(BookmarkedJobSerializer, TagsSerializerMixin, DataRefsSerializerMixin):
-    original = fields.SerializerMethodField()
     resources = fields.SerializerMethodField()
     merge = fields.BooleanField(write_only=True, required=False)
 
@@ -67,7 +72,6 @@ class JobDetailSerializer(BookmarkedJobSerializer, TagsSerializerMixin, DataRefs
         fields = BookmarkedJobSerializer.Meta.fields + (
             'merge',
             'is_clone',
-            'original',
             'original_job',
             'description',
             'readme',
@@ -77,9 +81,6 @@ class JobDetailSerializer(BookmarkedJobSerializer, TagsSerializerMixin, DataRefs
             'node_scheduled',
         )
         extra_kwargs = {'original_job': {'write_only': True}}
-
-    def get_original(self, obj):
-        return obj.original_job.unique_name if obj.original_job else None
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
