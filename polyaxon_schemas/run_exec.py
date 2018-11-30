@@ -4,10 +4,11 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import Schema, fields, post_dump, post_load
 
 from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.utils import ObjectOrListObject
 
 
 class RunSchema(Schema):
-    cmd = fields.Str()
+    cmd = ObjectOrListObject(fields.Str)
 
     class Meta:
         ordered = True
