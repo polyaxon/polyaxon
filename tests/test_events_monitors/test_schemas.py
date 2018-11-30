@@ -1,7 +1,6 @@
 import uuid
 
 import pytest
-from django.utils import timezone
 
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig
 from schemas.job import JobLabelConfig
