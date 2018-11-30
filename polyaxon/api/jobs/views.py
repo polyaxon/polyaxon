@@ -51,7 +51,7 @@ from event_manager.events.job import (
     JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_JOBS_VIEWED
-from libs.archive import archive_job_outputs, archive_outputs_file
+from libs.archive import archive_outputs, archive_outputs_file
 from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.spec_validation import validate_job_spec_config
@@ -279,9 +279,12 @@ class JobDownloadOutputsView(JobEndpoint, ProtectedView):
                        instance=self.job,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        archived_path, archive_name = archive_job_outputs(
+        job_outputs_path = get_job_outputs_path(
             persistence_outputs=self.job.persistence_outputs,
             job_name=self.job.unique_name)
+        archived_path, archive_name = archive_outputs(
+            outputs_path=job_outputs_path,
+            name=self.job.unique_name)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 

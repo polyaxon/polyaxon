@@ -90,7 +90,7 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
-from libs.archive import archive_experiment_outputs, archive_outputs_file
+from libs.archive import archive_outputs, archive_outputs_file
 from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.spec_validation import validate_experiment_spec_config
@@ -743,9 +743,14 @@ class ExperimentDownloadOutputsView(ExperimentEndpoint, ProtectedView):
                        instance=self.experiment,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        archived_path, archive_name = archive_experiment_outputs(
+        experiment_outputs_path = get_experiment_outputs_path(
             persistence_outputs=self.experiment.persistence_outputs,
-            experiment_name=self.experiment.unique_name)
+            experiment_name=self.experiment.unique_name,
+            original_name=self.experiment.original_unique_name,
+            cloning_strategy=self.experiment.cloning_strategy)
+        archived_path, archive_name = archive_outputs(
+            outputs_path=experiment_outputs_path,
+            name=self.experiment.unique_name)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 
