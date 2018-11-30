@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('building', 'building'), ('scheduled', 'scheduled'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('stopped', 'stopped'), ('unknown', 'unknown')], default='created', max_length=64, null=True)),
                 ('details', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict, null=True)),
@@ -259,7 +259,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('running', 'running'), ('done', 'done'), ('failed', 'failed'), ('stopped', 'stopped')], default='created', max_length=64, null=True)),
                 ('experiment_group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='db.ExperimentGroup')),
@@ -288,7 +288,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('building', 'building'), ('scheduled', 'scheduled'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('stopped', 'stopped'), ('unknown', 'unknown')], default='created', max_length=64, null=True)),
                 ('details', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict, null=True)),
@@ -317,7 +317,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('resuming', 'resuming'), ('building', 'building'), ('scheduled', 'scheduled'), ('starting', 'starting'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('stopped', 'stopped'), ('unknown', 'unknown')], default='created', max_length=64, null=True)),
                 ('experiment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='db.Experiment')),
@@ -379,7 +379,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('building', 'building'), ('scheduled', 'scheduled'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('stopped', 'stopped'), ('unknown', 'unknown')], default='created', max_length=64, null=True)),
                 ('details', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict, null=True)),
@@ -444,7 +444,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('building', 'building'), ('scheduled', 'scheduled'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('stopped', 'stopped'), ('unknown', 'unknown')], default='created', max_length=64, null=True)),
                 ('details', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict, null=True)),
@@ -500,7 +500,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('scheduled', 'scheduled'), ('running', 'running'), ('finished', 'finished'), ('stopped', 'stopped'), ('skipped', 'skipped')], default='created', max_length=64, null=True)),
                 ('operation_run', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='db.OperationRun')),
@@ -551,7 +551,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('scheduled', 'scheduled'), ('running', 'running'), ('finished', 'finished'), ('stopped', 'stopped'), ('skipped', 'skipped')], default='created', max_length=64, null=True)),
                 ('pipeline_run', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='db.PipelineRun')),
@@ -672,7 +672,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('building', 'building'), ('scheduled', 'scheduled'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('stopped', 'stopped'), ('unknown', 'unknown')], default='created', max_length=64, null=True)),
                 ('details', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict, null=True)),
