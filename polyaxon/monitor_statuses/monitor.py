@@ -1,6 +1,7 @@
 import logging
 import time
 
+from django.utils import timezone
 from kubernetes import watch
 
 from django.conf import settings
@@ -61,7 +62,7 @@ def run(k8s_manager):
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
                           namespace=k8s_manager.namespace,
                           label_selector=get_label_selector()):
-        created_at = time.time()
+        created_at = timezone.now()
         logger.debug("Received event: %s", event['type'])
         event_object = event['object'].to_dict()
         logger.info(event_object)
