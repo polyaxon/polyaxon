@@ -95,16 +95,16 @@ class TestPodCmdArgs(TestCase):
             """]
         self.list_cmd6 = MagicMock()
         self.list_cmd6.cmd = [
-        "/bin/bash run1.sh",
-        """
-        video_prediction_train --model=DNA --num_masks=1 || \
-        python3 model.py --batch_size={{ batch_size }} \
-                         --num_steps={{ num_steps }} \
-                         --learning_rate={{ learning_rate }} \
-                         --dropout={{ dropout }} \
-                         --num_epochs={{ num_epochs }} \
-                         --activation={{ activation }}
-        """]
+            "/bin/bash run1.sh",
+            """
+            video_prediction_train --model=DNA --num_masks=1 || \
+            python3 model.py --batch_size={{ batch_size }} \
+                             --num_steps={{ num_steps }} \
+                             --learning_rate={{ learning_rate }} \
+                             --dropout={{ dropout }} \
+                             --num_epochs={{ num_epochs }} \
+                             --activation={{ activation }}
+            """]
 
     def test_get_pod_command_args_cmd(self):
         assert get_pod_command_args(self.cmd1) == (
