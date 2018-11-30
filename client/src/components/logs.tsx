@@ -12,7 +12,17 @@ export interface Props {
   downloadLogsName: string;
 }
 
-export default class Logs extends React.Component<Props, {}> {
+export interface State {
+  logsOnly: boolean;
+}
+
+export default class Logs extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      logsOnly: false
+    };
+  }
 
   public componentDidMount() {
     this.props.fetchData();
@@ -22,12 +32,22 @@ export default class Logs extends React.Component<Props, {}> {
     this.props.fetchData();
   };
 
+  public updateLogs = () => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState, logsOnly: !prevState.logsOnly
+    }));
+  };
+
   public render() {
-    const lineRe = /(\d{2}(?:\d{2})?-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\s\w+\s)/;
+    const lineRegex = /(\d{2}(?:\d{2})?-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\s\w+\s(?:\w+\.\d\s)?--\s)/;
     const formatLogs = (line: string) => {
-      const values = line.split(lineRe);
+      const values = line.split(lineRegex);
       if (values.length === 3) {
-        return (<span><span className="timestamp">{values[1]}</span>{values[2]}</span>);
+        if ( this.state.logsOnly ) {
+          return (<span>{values[2]}</span>);
+        } else {
+          return (<span><span className="logs-info">{values[1]}</span>{values[2]}</span>);
+        }
       }
       return line;
     };
@@ -41,6 +61,19 @@ export default class Logs extends React.Component<Props, {}> {
         <div className="row">
           <div className="col-md-12 button-group-tools button-refresh-alone">
             <Refresh callback={this.refresh} pullRight={true}/>
+            <div className="pull-right">
+            <span>
+              <button
+                onClick={() => this.updateLogs()}
+                className="btn btn-sm btn-default"
+              >
+                {this.state.logsOnly
+                  ? <><i className="fa fa-plus-square icon" aria-hidden="true"/> Add info</>
+                  : <><i className="fa fa-minus-square icon" aria-hidden="true"/> Logs Only</>
+                }
+              </button>
+            </span>
+            </div>
             <Download
               name={`${this.props.downloadLogsName}.txt`}
               url={this.props.downloadLogsUrl}
