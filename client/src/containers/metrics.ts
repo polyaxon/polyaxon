@@ -79,9 +79,10 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.MetricsAction>, pa
       if (params.resource === 'groups') {
         const filters = {
           group: params.id,
-          declarations: true
+          declarations: true,
+          all: true
         };
-        return dispatch(experimentActions.fetchExperiments(params.project, filters));
+        return dispatch(experimentActions.fetchExperiments(params.project, filters, false));
       }
     },
     fetchViews: () => {

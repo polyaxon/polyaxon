@@ -217,16 +217,17 @@ function _fetchExperiments(experimentsUrl: string,
                            bookmarks: boolean,
                            filters: { [key: string]: number | boolean | string } = {},
                            dispatch: any,
-                           getState: any): any {
+                           getState: any,
+                           updateHistory: boolean = true): any {
   dispatch(requestExperimentsActionCreator());
   const urlPieces = location.hash.split('?');
   const baseUrl = urlPieces[0];
   if (Object.keys(filters).length) {
     experimentsUrl += url.format({query: filters});
-    if (baseUrl) {
+    if (baseUrl && updateHistory) {
       history.push(baseUrl + url.format({query: filters}));
     }
-  } else if (urlPieces.length > 1) {
+  } else if (urlPieces.length > 1 && updateHistory) {
     history.push(baseUrl);
   }
 
@@ -258,10 +259,11 @@ export function fetchBookmarkedExperiments(user: string,
 }
 
 export function fetchExperiments(projectUniqueName: string,
-                                 filters: { [key: string]: number | boolean | string } = {}): any {
+                                 filters: { [key: string]: number | boolean | string } = {},
+                                 updateHistory: boolean = true): any {
   return (dispatch: any, getState: any) => {
     const experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
-    return _fetchExperiments(experimentsUrl, false, filters, dispatch, getState);
+    return _fetchExperiments(experimentsUrl, false, filters, dispatch, getState, updateHistory);
   };
 }
 
