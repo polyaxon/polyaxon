@@ -4,9 +4,11 @@ import * as React from 'react';
 import * as actions from '../../actions/experiment';
 import { getExperimentTensorboardUrl } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
+import { getExperimentCloning } from '../../utils/cloning';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
 import MDEditor from '../mdEditor/mdEditor';
+import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
@@ -58,6 +60,12 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
                 inline={true}
               />
               <JobCountMetaInfo count={experiment.num_jobs} inline={true}/>
+              {experiment.original &&
+              <CloningLinkMetaInfo
+                cloning={getExperimentCloning(experiment.original, experiment.cloning_strategy)}
+                inline={true}
+              />
+              }
             </div>
             <div className="meta">
               <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at} inline={true}/>

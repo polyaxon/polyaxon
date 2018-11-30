@@ -8,9 +8,11 @@ import { getBuildUrl, getJobUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { JobModel } from '../../models/job';
 import { getBookmark } from '../../utils/bookmarks';
+import { getJobCloning } from '../../utils/cloning';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
+import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
@@ -69,6 +71,11 @@ function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props
           value={buildValues[3]}
           link={buildUrl}
         />
+        {job.original &&
+        <CloningLinkMetaInfo
+          cloning={getJobCloning(job.original, job.cloning_strategy)}
+        />
+        }
       </td>
       <td className="block">
         <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>

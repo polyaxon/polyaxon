@@ -3,9 +3,11 @@ import * as React from 'react';
 
 import * as actions from '../../actions/job';
 import { JobModel } from '../../models/job';
+import { getJobCloning } from '../../utils/cloning';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
 import MDEditor from '../mdEditor/mdEditor';
+import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
@@ -55,6 +57,12 @@ export default class JobOverview extends React.Component<Props, {}> {
                 updatedAt={job.updated_at}
                 inline={true}
               />
+              {job.original &&
+              <CloningLinkMetaInfo
+                cloning={getJobCloning(job.original, job.cloning_strategy)}
+                inline={true}
+              />
+              }
             </div>
             <div className="meta">
               <NodeMetaInfo

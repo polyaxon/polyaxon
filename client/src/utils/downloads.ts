@@ -18,4 +18,3 @@ export function downloadName(projectUniqueName: string,
                              id: number) {
   return `${projectUniqueName}.${resources}.${id}`;
 }
-

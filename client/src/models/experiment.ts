@@ -4,6 +4,8 @@ export class ExperimentModel {
   public uuid: string;
   public unique_name: string;
   public id: number;
+  public original: string;
+  public cloning_strategy: string;
   public description: string;
   public user: string;
   public config: { [key: string]: any };

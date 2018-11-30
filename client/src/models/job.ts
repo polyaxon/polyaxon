@@ -5,6 +5,8 @@ export class JobModel {
   public uuid: string;
   public unique_name: string;
   public name: string;
+  public original: string;
+  public cloning_strategy: string;
   public last_status: string;
   public user: string;
   public definition: string;

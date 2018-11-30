@@ -9,9 +9,11 @@ import { isDone } from '../../constants/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';
 import { getBookmark } from '../../utils/bookmarks';
+import { getExperimentCloning } from '../../utils/cloning';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
+import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import GroupLinkMetaInfo from '../metaInfo/groupLinkMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
@@ -119,6 +121,11 @@ function Experiment({
           value={buildValues[3]}
           link={buildUrl}
         />
+        {experiment.original &&
+        <CloningLinkMetaInfo
+          cloning={getExperimentCloning(experiment.original, experiment.cloning_strategy)}
+        />
+        }
       </td>
       <td className="block">
         <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at}/>

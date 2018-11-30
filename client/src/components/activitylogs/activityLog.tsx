@@ -29,13 +29,13 @@ function ActivityLog({activityLog}: Props) {
       objectUrl = getExperimentUrl(values[0], values[1], experimentId);
     } else if (activityLog.event_subject === 'experiment_group') {
       const values = splitUniqueName(activityLog.object_name);
-      objectUrl = getGroupUrl(values[0], values[1], values[2]);
+      objectUrl = getGroupUrl(values[0], values[1], values[values.length - 1]);
     } else if (activityLog.event_subject === 'job') {
       const values = splitUniqueName(activityLog.object_name);
-      objectUrl = getJobUrl(values[0], values[1], values[2]);
+      objectUrl = getJobUrl(values[0], values[1], values[values.length - 1]);
     } else if (activityLog.event_subject === 'job') {
       const values = splitUniqueName(activityLog.object_name);
-      objectUrl = getBuildUrl(values[0], values[1], values[2]);
+      objectUrl = getBuildUrl(values[0], values[1], values[values.length - 1]);
     } else if (activityLog.event_subject === 'user') {
       objectUrl = urlifyProjectName(activityLog.object_name);
     }
