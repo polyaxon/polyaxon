@@ -505,6 +505,25 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(run, RunConfig)
         assert run.cmd == "video_prediction_train --model=DNA --num_masks=1"
 
+    def test_run_simple_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file_list_cmds.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.logging is None
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
+        assert spec.is_experiment
+        assert isinstance(spec.build, BuildConfig)
+        assert isinstance(spec.run, RunConfig)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.model is None
+        run = spec.run
+        assert isinstance(run, RunConfig)
+        assert run.cmd == ['video_prediction_train --model=DNA --num_masks=1',
+                           'video_prediction_train --model=DNA --num_masks=10']
+
     def test_run_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_file.yml'))
         spec = plxfile.specification
