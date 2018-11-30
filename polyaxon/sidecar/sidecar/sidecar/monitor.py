@@ -73,7 +73,7 @@ def run_for_experiment_job(k8s_manager,
 
     _handle_log_stream(stream=raw.stream(),
                        publish=publish,
-                       is_alive=_is_alive(k8s_manager=k8s_manager, pod_id=pod_id))
+                       is_alive=lambda: _is_alive(k8s_manager=k8s_manager, pod_id=pod_id))
 
 
 def run_for_job(k8s_manager,
@@ -101,7 +101,7 @@ def run_for_job(k8s_manager,
 
     _handle_log_stream(stream=raw.stream(),
                        publish=publish,
-                       is_alive=_is_alive(k8s_manager=k8s_manager, pod_id=pod_id))
+                       is_alive=lambda: _is_alive(k8s_manager=k8s_manager, pod_id=pod_id))
 
 
 def can_log(k8s_manager, pod_id, log_sleep_interval):
