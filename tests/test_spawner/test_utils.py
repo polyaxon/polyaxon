@@ -56,7 +56,7 @@ class TestSpawner(BaseTest):
         assert set(job_state.details.container_statuses.keys()) == {
             settings.CONTAINER_NAME_EXPERIMENT_JOB, }
         assert job_state.status == JobLifeCycle.FAILED
-        assert job_state.message is None
+        assert job_state.message is not None
 
     def test_update_job_containers_with_no_container_statuses(self):
         update_job_containers(event=status_experiment_job_event['object'],
