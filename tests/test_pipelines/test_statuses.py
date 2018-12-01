@@ -16,7 +16,7 @@ class TestStatusesTransition(BaseTest):
         for status in PipelineStatuses.VALUES:
             can_transition = PipelineStatuses.can_transition(
                 status_from=status, status_to=PipelineStatuses.SCHEDULED)
-            if status == PipelineStatuses.CREATED:
+            if status in {PipelineStatuses.CREATED, PipelineStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -25,7 +25,7 @@ class TestStatusesTransition(BaseTest):
         for status in PipelineStatuses.VALUES:
             can_transition = PipelineStatuses.can_transition(
                 status_from=status, status_to=PipelineStatuses.RUNNING)
-            if status == PipelineStatuses.SCHEDULED:
+            if status in {PipelineStatuses.SCHEDULED, PipelineStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -36,6 +36,7 @@ class TestStatusesTransition(BaseTest):
                 status_from=status, status_to=PipelineStatuses.FINISHED)
             if status in {PipelineStatuses.CREATED,
                           PipelineStatuses.SCHEDULED,
+                          PipelineStatuses.WARNING,
                           PipelineStatuses.RUNNING}:
                 assert can_transition is True
             else:
@@ -47,6 +48,7 @@ class TestStatusesTransition(BaseTest):
                 status_from=status, status_to=PipelineStatuses.STOPPED)
             if status in {PipelineStatuses.CREATED,
                           PipelineStatuses.SCHEDULED,
+                          PipelineStatuses.WARNING,
                           PipelineStatuses.RUNNING}:
                 assert can_transition is True
             else:
@@ -58,6 +60,7 @@ class TestStatusesTransition(BaseTest):
                 status_from=status, status_to=PipelineStatuses.SKIPPED)
             if status in {PipelineStatuses.CREATED,
                           PipelineStatuses.SCHEDULED,
+                          PipelineStatuses.WARNING,
                           PipelineStatuses.STOPPED}:
                 assert can_transition is True
             else:
@@ -73,7 +76,9 @@ class TestStatusesTransition(BaseTest):
         for status in OperationStatuses.VALUES:
             can_transition = OperationStatuses.can_transition(
                 status_from=status, status_to=OperationStatuses.SCHEDULED)
-            if status in {OperationStatuses.CREATED, OperationStatuses.RETRYING}:
+            if status in {OperationStatuses.CREATED,
+                          OperationStatuses.RETRYING,
+                          OperationStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -82,7 +87,7 @@ class TestStatusesTransition(BaseTest):
         for status in OperationStatuses.VALUES:
             can_transition = OperationStatuses.can_transition(
                 status_from=status, status_to=OperationStatuses.RUNNING)
-            if status == OperationStatuses.SCHEDULED:
+            if status in {OperationStatuses.SCHEDULED, OperationStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -91,7 +96,7 @@ class TestStatusesTransition(BaseTest):
         for status in OperationStatuses.VALUES:
             can_transition = OperationStatuses.can_transition(
                 status_from=status, status_to=OperationStatuses.SUCCEEDED)
-            if status == OperationStatuses.RUNNING:
+            if status in {OperationStatuses.RUNNING, OperationStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -100,7 +105,9 @@ class TestStatusesTransition(BaseTest):
         for status in OperationStatuses.VALUES:
             can_transition = OperationStatuses.can_transition(
                 status_from=status, status_to=OperationStatuses.FAILED)
-            if status in {OperationStatuses.SCHEDULED, OperationStatuses.RUNNING}:
+            if status in {OperationStatuses.SCHEDULED,
+                          OperationStatuses.RUNNING,
+                          OperationStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -120,7 +127,8 @@ class TestStatusesTransition(BaseTest):
                 status_from=status, status_to=OperationStatuses.STOPPED)
             if status in {OperationStatuses.CREATED,
                           OperationStatuses.SCHEDULED,
-                          OperationStatuses.RUNNING}:
+                          OperationStatuses.RUNNING,
+                          OperationStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -131,7 +139,8 @@ class TestStatusesTransition(BaseTest):
                 status_from=status, status_to=OperationStatuses.SKIPPED)
             if status in {OperationStatuses.CREATED,
                           OperationStatuses.SCHEDULED,
-                          OperationStatuses.STOPPED}:
+                          OperationStatuses.STOPPED,
+                          OperationStatuses.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -145,6 +154,7 @@ class TestStatusesTransition(BaseTest):
                           OperationStatuses.FAILED,
                           OperationStatuses.STOPPED,
                           OperationStatuses.SKIPPED,
+                          OperationStatuses.WARNING,
                           OperationStatuses.RETRYING}:
                 assert can_transition is True
             else:
