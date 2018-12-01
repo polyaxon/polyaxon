@@ -469,7 +469,7 @@ export default class Experiments extends React.Component<Props, State> {
     const addToSelectionModal = (
       <Modal show={this.state.showAddSelectionModal} onHide={this.handleClose}>
         <Modal.Header closeButton={true}>
-          <Modal.Title>Save View</Modal.Title>
+          <Modal.Title>Save Selection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="form-horizontal" onSubmit={this.addToSelection}>
@@ -496,7 +496,7 @@ export default class Experiments extends React.Component<Props, State> {
     const createSelectionModal = (
       <Modal show={this.state.showCreateSelectionModal} onHide={this.handleClose}>
         <Modal.Header closeButton={true}>
-          <Modal.Title>Save View</Modal.Title>
+          <Modal.Title>Save Selection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="form-horizontal" onSubmit={this.createSelection}>
