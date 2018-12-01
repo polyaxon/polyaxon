@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CREATED, DONE, FAILED, STOPPED, SUCCEEDED } from '../constants/statuses';
+import { CREATED, DONE, FAILED, STOPPED, SUCCEEDED, WARNING } from '../constants/statuses';
 
 import './status.less';
 
@@ -19,6 +19,8 @@ function Status({status}: Props) {
       return 'danger';
     } else if (status === CREATED) {
       return 'info';
+    } else if (status === WARNING) {
+      return 'warning';
     }
     return 'running';
   };
