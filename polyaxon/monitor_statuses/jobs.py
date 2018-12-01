@@ -39,10 +39,36 @@ def get_pod_state(event_type, event):
     })
 
 
+def get_container_status(pod_state, job_container_names):
+    job_container_status = None
+    for job_container_name in job_container_names:
+        job_container_status = pod_state.container_statuses.get(job_container_name)
+        if job_container_status:
+            break
+    return job_container_status
+
+
+def get_failed_status(job_container_status):
+    if not job_container_status:
+        return JobLifeCycle.FAILED, None
+
+    job_container_status_terminated = job_container_status['state'][
+        ContainerStatuses.TERMINATED]
+
+    if job_container_status_terminated['reason'] == 'Error':
+        return JobLifeCycle.FAILED, 'exist-code({})-message({})'.format(
+            job_container_status_terminated['exit_code'],
+            job_container_status_terminated['message'])
+
+    return JobLifeCycle.FAILED, job_container_status_terminated['reason']
+
+
 def get_job_status(pod_state, job_container_names):  # pylint:disable=too-many-branches
     # For terminated pods that failed and successfully terminated pods
     if pod_state.phase == PodLifeCycle.FAILED:
-        return JobLifeCycle.FAILED, None
+        job_container_status = get_container_status(pod_state=pod_state,
+                                                    job_container_names=job_container_names)
+        return get_failed_status(job_container_status=job_container_status)
 
     if pod_state.phase == PodLifeCycle.SUCCEEDED:
         return JobLifeCycle.SUCCEEDED, None
@@ -74,11 +100,8 @@ def get_job_status(pod_state, job_container_names):  # pylint:disable=too-many-b
     if pod_has_scheduled_cond and not pod_has_ready_cond:
         return JobLifeCycle.BUILDING, None
 
-    job_container_status = None
-    for job_container_name in job_container_names:
-        job_container_status = pod_state.container_statuses.get(job_container_name)
-        if job_container_status:
-            break
+    job_container_status = get_container_status(pod_state=pod_state,
+                                                job_container_names=job_container_names)
 
     if not job_container_status:
         return JobLifeCycle.UNKNOWN, None
@@ -87,10 +110,7 @@ def get_job_status(pod_state, job_container_names):  # pylint:disable=too-many-b
     if job_container_status_terminated:
         if job_container_status_terminated['reason'] == 'Completed':
             return JobLifeCycle.SUCCEEDED, job_container_status_terminated['reason']
-        if job_container_status_terminated['reason'] == 'Error':
-            return JobLifeCycle.FAILED, 'exist-code({})-message({})'.format(
-                job_container_status_terminated['exit_code'],
-                job_container_status_terminated['message'])
+        return get_failed_status(job_container_status=job_container_status)
 
     job_container_status_waiting = job_container_status['state'][ContainerStatuses.WAITING]
     if job_container_status_waiting:
