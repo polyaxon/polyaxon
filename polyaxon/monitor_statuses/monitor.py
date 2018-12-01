@@ -87,26 +87,22 @@ def run(k8s_manager):
 
             experiment_job_condition = (
                 settings.CONTAINER_NAME_EXPERIMENT_JOB in job_state['details']['container_statuses']
-                or (status == PodLifeCycle.FAILED and
-                    labels['app'] == settings.APP_LABELS_EXPERIMENT)
+                or (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             job_condition = (
                 settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses'] or
-                (status == PodLifeCycle.FAILED and
-                 labels['app'] == settings.APP_LABELS_EXPERIMENT)
+                (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             plugin_job_condition = (
                 settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses'] or
-                (status == PodLifeCycle.FAILED and
-                 labels['app'] == settings.APP_LABELS_EXPERIMENT)
+                (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             dockerizer_job_condition = (
                 settings.CONTAINER_NAME_DOCKERIZER_JOB in job_state['details']['container_statuses']
-                or (status == PodLifeCycle.FAILED and
-                    labels['app'] == settings.APP_LABELS_EXPERIMENT)
+                or (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
             )
 
             if experiment_job_condition:
