@@ -68,7 +68,7 @@ class ExperimentLifeCycle(BaseStatuses):
         FAILED: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING, WARNING, UNKNOWN, },
         STOPPED: set(VALUES) - {STOPPED, },
         WARNING: set(VALUES) - {SUCCEEDED, FAILED, STOPPED, WARNING, },
-        UNKNOWN: set(VALUES),
+        UNKNOWN: set(VALUES) - {UNKNOWN, },
     }
 
     @staticmethod

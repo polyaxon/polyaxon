@@ -71,7 +71,7 @@ def get_job_status(pod_state, job_container_names):  # pylint:disable=too-many-b
     if check_cond:
         return JobLifeCycle.BUILDING, pod_state.pod_conditions[PodConditions.SCHEDULED]['reason']
 
-    if not (pod_has_scheduled_cond or pod_has_ready_cond):
+    if pod_has_scheduled_cond and not pod_has_ready_cond:
         return JobLifeCycle.BUILDING, None
 
     job_container_status = None
