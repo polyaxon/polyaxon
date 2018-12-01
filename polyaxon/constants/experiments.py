@@ -20,6 +20,8 @@ class ExperimentLifeCycle(BaseStatuses):
     """
     CREATED = StatusOptions.CREATED
     RESUMING = StatusOptions.RESUMING
+    WARNING = StatusOptions.WARNING
+    UNSCHEDULABLE = StatusOptions.UNSCHEDULABLE
     BUILDING = StatusOptions.BUILDING
     SCHEDULED = StatusOptions.SCHEDULED
     STARTING = StatusOptions.STARTING
@@ -32,6 +34,7 @@ class ExperimentLifeCycle(BaseStatuses):
     CHOICES = (
         (CREATED, CREATED),
         (RESUMING, RESUMING),
+        (WARNING, WARNING),
         (BUILDING, BUILDING),
         (SCHEDULED, SCHEDULED),
         (STARTING, STARTING),
@@ -43,11 +46,12 @@ class ExperimentLifeCycle(BaseStatuses):
     )
 
     VALUES = {
-        CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING,
+        CREATED, RESUMING, WARNING, BUILDING, SCHEDULED, STARTING, RUNNING,
         SUCCEEDED, FAILED, STOPPED, UNKNOWN
     }
 
     HEARTBEAT_STATUS = {RUNNING, }
+    WARNING_STATUS = {WARNING, }
     PENDING_STATUS = {CREATED, RESUMING}
     RUNNING_STATUS = {SCHEDULED, BUILDING, STARTING, RUNNING}
     DONE_STATUS = {FAILED, STOPPED, SUCCEEDED}
@@ -55,16 +59,27 @@ class ExperimentLifeCycle(BaseStatuses):
 
     TRANSITION_MATRIX = {
         CREATED: {None, },
-        RESUMING: {CREATED, SUCCEEDED, STOPPED, },
-        BUILDING: {CREATED, RESUMING, },
-        SCHEDULED: {CREATED, RESUMING, BUILDING, },
-        STARTING: {CREATED, RESUMING, BUILDING, SCHEDULED, },
-        RUNNING: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, UNKNOWN},
-        SUCCEEDED: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING, UNKNOWN, },
-        FAILED: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING, UNKNOWN, },
+        RESUMING: {CREATED, WARNING, SUCCEEDED, STOPPED, },
+        BUILDING: {CREATED, RESUMING, WARNING, },
+        SCHEDULED: {CREATED, RESUMING, BUILDING, WARNING, },
+        STARTING: {CREATED, RESUMING, BUILDING, SCHEDULED, WARNING, },
+        RUNNING: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, WARNING, UNKNOWN},
+        SUCCEEDED: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING, WARNING, UNKNOWN, },
+        FAILED: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING, WARNING, UNKNOWN, },
         STOPPED: set(VALUES) - {STOPPED, },
+        WARNING: set(VALUES) - {SUCCEEDED, FAILED, STOPPED, },
         UNKNOWN: set(VALUES),
     }
+
+    @staticmethod
+    def jobs_unschedulable(job_statuses):
+        return any([True if JobLifeCycle.is_unschedulable(job_status) else False
+                    for job_status in job_statuses])
+
+    @staticmethod
+    def jobs_warning(job_statuses):
+        return any([True if JobLifeCycle.is_warning(job_status) else False
+                    for job_status in job_statuses])
 
     @staticmethod
     def jobs_starting(job_statuses):
@@ -103,6 +118,12 @@ class ExperimentLifeCycle(BaseStatuses):
 
         if cls.jobs_unknown(job_statuses):
             return cls.UNKNOWN
+
+        if cls.jobs_unschedulable(job_statuses):
+            return cls.UNSCHEDULABLE
+
+        if cls.jobs_warning(job_statuses):
+            return cls.WARNING
 
         if cls.jobs_stopped(job_statuses):
             return cls.STOPPED

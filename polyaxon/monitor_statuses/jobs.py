@@ -1,3 +1,5 @@
+from hestia.bool_utils import to_bool
+
 from constants.containers import ContainerStatuses
 from constants.jobs import JobLifeCycle
 from constants.pods import PodConditions
@@ -22,8 +24,11 @@ def get_pod_state(event_type, event):
         }
 
     if pod_conditions:
-        pod_conditions = {c['type']: {'status': c['status'], 'reason': c['reason']}
-                          for c in pod_conditions}
+        pod_conditions = {c['type']: {
+            'status': c['status'],
+            'reason': c['reason'],
+            'message': c.get('message')
+        } for c in pod_conditions}
 
     return PodStateConfig.from_dict({
         'event_type': event_type,
@@ -50,14 +55,25 @@ def get_job_status(pod_state, job_container_names):
     if not pod_state.pod_conditions:
         return JobLifeCycle.UNKNOWN, 'Unknown pod conditions'
 
-    if not pod_state.pod_conditions[PodConditions.SCHEDULED]['status']:
-        return JobLifeCycle.BUILDING, pod_state['pod_conditions'][PodConditions.SCHEDULED]['reason']
+    if PodConditions.UNSCHEDULABLE in pod_state.pod_conditions:
+        return (JobLifeCycle.UNSCHEDULABLE,
+                pod_state.pod_conditions[PodConditions.UNSCHEDULABLE]['reason'])
 
-    if not (pod_state.pod_conditions[PodConditions.SCHEDULED] or
-            pod_state['pod_conditions'][PodConditions.READY]):
-        return JobLifeCycle.BUILDING, PodConditions.READY
+    pod_has_scheduled_cond = PodConditions.SCHEDULED in pod_state.pod_conditions
+    pod_has_ready_cond = PodConditions.READY in pod_state.pod_conditions
 
-    if PodConditions.READY not in pod_state.pod_conditions:
+    check_cond = (pod_has_scheduled_cond and
+                  not pod_state.pod_conditions[PodConditions.SCHEDULED]['status'])
+    pod_is_unschedulable = (
+        pod_has_scheduled_cond and
+        pod_state.pod_conditions[PodConditions.SCHEDULED]['reason'] == PodConditions.UNSCHEDULABLE)
+    if pod_is_unschedulable:
+        return (JobLifeCycle.UNSCHEDULABLE,
+                pod_state.pod_conditions[PodConditions.SCHEDULED]['message'])
+    if check_cond:
+        return JobLifeCycle.BUILDING, pod_state.pod_conditions[PodConditions.SCHEDULED]['reason']
+
+    if not (pod_has_scheduled_cond or pod_has_ready_cond):
         return JobLifeCycle.BUILDING, None
 
     job_container_status = None

@@ -212,8 +212,13 @@ class Experiment(DiffModel,
         current_status = self.last_status
         calculated_status = self.calculated_status
         if calculated_status != current_status:
-            # Add new status to the experiment
-            self.set_status(calculated_status)
+            if calculated_status == ExperimentLifeCycle.UNSCHEDULABLE:
+                # Add details augmentation if the it's UNSCHEDULABLE
+                self.set_status(ExperimentLifeCycle.WARNING,
+                                message='One of jobs is unschedulable.')
+            else:
+                # Add new status to the experiment
+                self.set_status(calculated_status)
             return True
         return False
 

@@ -1,6 +1,8 @@
 class StatusOptions:
     CREATED = 'created'
     SCHEDULED = 'scheduled'
+    UNSCHEDULABLE = 'unschedulable'
+    WARNING = 'warning'
     BUILDING = 'building'
     RESUMING = 'resuming'
     STARTING = 'starting'
@@ -19,6 +21,7 @@ class BaseStatuses(object):
     VALUES = set([])
     CHOICES = ()
     HEARTBEAT_STATUS = set([])
+    WARNING_STATUS = set([])
     STARTING_STATUS = set([])
     DONE_STATUS = set([])
     RUNNING_STATUS = set([])
@@ -32,6 +35,14 @@ class BaseStatuses(object):
             return False
 
         return status_from in cls.TRANSITION_MATRIX[status_to]
+
+    @classmethod
+    def is_unschedulable(cls, status):
+        return status == StatusOptions.UNSCHEDULABLE
+
+    @classmethod
+    def is_warning(cls, status):
+        return status in cls.WARNING_STATUS
 
     @classmethod
     def is_starting(cls, status):

@@ -10,6 +10,7 @@ class JobLifeCycle(BaseStatuses):
         * CREATED: created.
         * BUILDING: This includes time before being bound to a node,
                     as well as time spent pulling images onto the host.
+        * UNSCHEDULABLE: The pod is not schedulable for different reasons (e.g. wrong selectors)
         * RUNNING: The pod has been bound to a node and all of the containers have been started.
         * SUCCEEDED: All containers in the pod have voluntarily terminated with a
                      container exit code of 0, and the system is
@@ -22,6 +23,7 @@ class JobLifeCycle(BaseStatuses):
     """
     CREATED = StatusOptions.CREATED
     BUILDING = StatusOptions.BUILDING
+    UNSCHEDULABLE = StatusOptions.UNSCHEDULABLE
     SCHEDULED = StatusOptions.SCHEDULED
     RUNNING = StatusOptions.RUNNING
     SUCCEEDED = StatusOptions.SUCCEEDED
@@ -32,6 +34,7 @@ class JobLifeCycle(BaseStatuses):
     CHOICES = (
         (CREATED, CREATED),
         (BUILDING, BUILDING),
+        (UNSCHEDULABLE, UNSCHEDULABLE),
         (SCHEDULED, SCHEDULED),
         (RUNNING, RUNNING),
         (SUCCEEDED, SUCCEEDED),
@@ -41,10 +44,11 @@ class JobLifeCycle(BaseStatuses):
     )
 
     VALUES = {
-        CREATED, BUILDING, SCHEDULED, RUNNING, SUCCEEDED, FAILED, STOPPED, UNKNOWN
+        CREATED, BUILDING, UNSCHEDULABLE, SCHEDULED, RUNNING, SUCCEEDED, FAILED, STOPPED, UNKNOWN
     }
 
     HEARTBEAT_STATUS = {RUNNING, }
+    WARNING_STATUS = {UNSCHEDULABLE, }
     STARTING_STATUS = {CREATED, BUILDING}
     RUNNING_STATUS = {BUILDING, SCHEDULED, RUNNING}
     DONE_STATUS = {FAILED, STOPPED, SUCCEEDED}
@@ -55,11 +59,12 @@ class JobLifeCycle(BaseStatuses):
     # 2. Kubernetes building phase
     TRANSITION_MATRIX = {
         CREATED: {None, },
-        BUILDING: {None, CREATED, SCHEDULED},
-        SCHEDULED: {CREATED, BUILDING},
-        RUNNING: {CREATED, SCHEDULED, BUILDING, UNKNOWN},
-        SUCCEEDED: {CREATED, BUILDING, SCHEDULED, RUNNING, UNKNOWN, },
-        FAILED: {CREATED, BUILDING, SCHEDULED, RUNNING, UNKNOWN, },
+        BUILDING: {None, CREATED, SCHEDULED, UNSCHEDULABLE},
+        SCHEDULED: {CREATED, BUILDING, UNSCHEDULABLE},
+        RUNNING: {CREATED, SCHEDULED, BUILDING, UNSCHEDULABLE, UNKNOWN},
+        SUCCEEDED: {CREATED, BUILDING, UNSCHEDULABLE, SCHEDULED, RUNNING, UNKNOWN, },
+        FAILED: {CREATED, BUILDING, UNSCHEDULABLE, SCHEDULED, RUNNING, UNKNOWN, },
         STOPPED: set(VALUES) - {STOPPED, },
         UNKNOWN: set(VALUES),
+        UNSCHEDULABLE: set(VALUES) - {SUCCEEDED, FAILED, STOPPED, },
     }
