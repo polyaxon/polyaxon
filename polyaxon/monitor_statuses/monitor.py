@@ -92,17 +92,18 @@ def run(k8s_manager):
 
             job_condition = (
                 settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses'] or
-                (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
+                (status and labels['app'] == settings.APP_LABELS_JOB)
             )
 
             plugin_job_condition = (
                 settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses'] or
-                (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
+                (status and
+                 labels['app'] in (settings.APP_LABELS_TENSORBOARD, settings.APP_LABELS_NOTEBOOK))
             )
 
             dockerizer_job_condition = (
                 settings.CONTAINER_NAME_DOCKERIZER_JOB in job_state['details']['container_statuses']
-                or (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
+                or (status and labels['app'] == settings.APP_LABELS_DOCKERIZER)
             )
 
             if experiment_job_condition:
@@ -115,18 +116,21 @@ def run(k8s_manager):
 
             elif job_condition:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
+                logger.info("Sending state to handler %s, %s", status, labels)
                 # Handle experiment job statuses
                 celery_app.send_task(
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif plugin_job_condition:
+                logger.info("Sending state to handler %s, %s", status, labels)
                 # Handle plugin job statuses
                 celery_app.send_task(
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif dockerizer_job_condition:
+                logger.info("Sending state to handler %s, %s", status, labels)
                 # Handle dockerizer job statuses
                 celery_app.send_task(
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
