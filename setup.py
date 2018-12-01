@@ -44,7 +44,7 @@ setup(name='polyaxon-schemas',
       install_requires=[
           'hestia==0.1.4',
           'Jinja2==2.10',
-          'marshmallow==2.16.1',
+          'marshmallow==2.16.3',
           'numpy>=1.15.2',
           'python-dateutil>=2.7.3',
           'pytz==2018.7',
