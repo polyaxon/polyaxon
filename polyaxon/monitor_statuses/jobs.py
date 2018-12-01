@@ -1,5 +1,3 @@
-from hestia.bool_utils import to_bool
-
 from constants.containers import ContainerStatuses
 from constants.jobs import JobLifeCycle
 from constants.pods import PodConditions
@@ -41,7 +39,7 @@ def get_pod_state(event_type, event):
     })
 
 
-def get_job_status(pod_state, job_container_names):
+def get_job_status(pod_state, job_container_names):  # pylint:disable=too-many-branches
     # For terminated pods that failed and successfully terminated pods
     if pod_state.phase == PodLifeCycle.FAILED:
         return JobLifeCycle.FAILED, None
