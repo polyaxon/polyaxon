@@ -13,6 +13,7 @@ import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Name from '../name';
 import Refresh from '../refresh';
 import Status from '../status';
 import Tags from '../tags';
@@ -48,6 +49,16 @@ export default class BuildOverview extends React.Component<Props, {}> {
               </div>
               <div className="col-md-1">
                 <Refresh callback={this.refresh} pullRight={false}/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-11">
+                <Name
+                  name="Build Name"
+                  value={build.name || build.unique_name}
+                  icon="fa-gavel"
+                  onSave={(name: string) =>  { this.props.onUpdate({name}); }}
+                />
               </div>
             </div>
             <div className="meta">

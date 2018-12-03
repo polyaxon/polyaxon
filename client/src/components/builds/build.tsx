@@ -10,6 +10,7 @@ import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import IdMetaInfo from '../metaInfo/idMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
@@ -39,7 +40,7 @@ function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <LinkContainer to={getBuildUrl(values[0], values[1], build.id)}>
           <a className="title">
             <i className="fa fa-gavel icon" aria-hidden="true"/>
-            {build.unique_name}
+            {build.name || build.unique_name}
           </a>
         </LinkContainer>
         {showBookmarks &&
@@ -47,6 +48,7 @@ function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         }
         <Description description={build.description}/>
         <div className="meta">
+          <IdMetaInfo value={build.id} inline={true}/>
           <UserMetaInfo user={build.user} inline={true}/>
           <DatesMetaInfo
             createdAt={build.created_at}

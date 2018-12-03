@@ -14,6 +14,7 @@ import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
+import Name from '../name';
 import Refresh from '../refresh';
 import Status from '../status';
 import VerticalTable from '../tables/verticalTable';
@@ -50,6 +51,16 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               </div>
               <div className="col-md-1">
                 <Refresh callback={this.refresh} pullRight={false}/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-11">
+                <Name
+                  name="Experiment Name"
+                  value={experiment.name || experiment.unique_name}
+                  icon="fa-cube"
+                  onSave={(name: string) =>  { this.props.onUpdate({name}); }}
+                />
               </div>
             </div>
             <div className="meta">

@@ -16,6 +16,7 @@ import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
 import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import GroupLinkMetaInfo from '../metaInfo/groupLinkMetaInfo';
+import IdMetaInfo from '../metaInfo/idMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
@@ -93,7 +94,7 @@ function Experiment({
         <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.id)}>
           <a className="title">
             <i className="fa fa-cube icon" aria-hidden="true"/>
-            {experiment.unique_name}
+            {experiment.name || experiment.unique_name}
           </a>
         </LinkContainer>
         {showBookmarks &&
@@ -102,6 +103,7 @@ function Experiment({
         {!reducedForm && <Description description={experiment.description}/>}
         {!reducedForm &&
         <div className="meta">
+          <IdMetaInfo value={experiment.id} inline={true}/>
           <UserMetaInfo user={experiment.user} inline={true}/>
           <DatesMetaInfo
             createdAt={experiment.created_at}

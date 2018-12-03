@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { ExperimentJobModel } from '../../models/experimentJob';
+import IdMetaInfo from '../metaInfo/idMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
@@ -20,7 +21,7 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
       <div className="col-md-7 block">
         <span className="title">
           <i className="fa fa-tasks icon" aria-hidden="true"/>
-          {experimentJob.unique_name}
+          {experimentJob.name || experimentJob.unique_name}
         </span>
         <div className="meta">
           <span className="meta-info">
@@ -28,11 +29,7 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
             <span className="title">Role:</span>
             {experimentJob.role}
           </span>
-          <span className="meta-info">
-            <i className="fa fa-circle icon" aria-hidden="true"/>
-            <span className="title">id:</span>
-            {experimentJob.id}
-          </span>
+          <IdMetaInfo value={experimentJob.id} inline={true}/>
         </div>
         <ResourcesMetaInfo resources={experimentJob.resources}/>
       </div>

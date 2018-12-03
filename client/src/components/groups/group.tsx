@@ -12,6 +12,7 @@ import Description from '../description';
 import ConcurrencyMetaInfo from '../metaInfo/concurrencyMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import GroupType from '../metaInfo/groupType';
+import IdMetaInfo from '../metaInfo/idMetaInfo';
 import SearchAlgorithmMetaInfo from '../metaInfo/searchAlgorithmMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
@@ -42,7 +43,7 @@ function Group({group, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <LinkContainer to={getGroupUrl(values[0], values[1], group.id)}>
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
-            {group.unique_name}
+            {group.name || group.unique_name}
           </a>
         </LinkContainer>
         {showBookmarks &&
@@ -50,6 +51,7 @@ function Group({group, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         }
         <Description description={group.description}/>
         <div className="meta">
+          <IdMetaInfo value={group.id} inline={true}/>
           <UserMetaInfo user={group.user} inline={true}/>
           <DatesMetaInfo
             createdAt={group.created_at}

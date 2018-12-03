@@ -14,6 +14,7 @@ import Description from '../description';
 import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
 import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
+import IdMetaInfo from '../metaInfo/idMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
@@ -49,7 +50,7 @@ function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props
         <LinkContainer to={getJobUrl(values[0], values[1], job.id)}>
           <a className="title">
             <i className="fa fa-tasks icon" aria-hidden="true"/>
-            {job.unique_name}
+            {job.name || job.unique_name}
           </a>
         </LinkContainer>
         {showBookmarks &&
@@ -57,6 +58,7 @@ function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props
         }
         <Description description={job.description}/>
         <div className="meta">
+          <IdMetaInfo value={job.id} inline={true}/>
           <UserMetaInfo user={job.user} inline={true}/>
           <DatesMetaInfo
             createdAt={job.created_at}
