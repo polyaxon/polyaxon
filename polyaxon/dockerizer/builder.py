@@ -283,14 +283,15 @@ def download_code(build_job, build_path, filename):
             else 'master'
         )
         archive_url = '/archive'
-        if 'gitlab' in download_url.lower():
-            if access_token:
-                headers = {'PRIVATE-TOKEN': access_token}
-            download_url += '/-'  # Gitlab requires this underscore for valid urls
         if 'bitbucket' in download_url.lower():
             if access_token:
                 headers = {'Authorization': 'Bearer {}'.format(access_token)}
             archive_url = '/get'
+        elif 'github' not in download_url.lower():
+            # We assume it's a gitlab (either saas or on-premis)
+            if access_token:
+                headers = {'PRIVATE-TOKEN': access_token}
+            download_url += '/-'  # Gitlab requires this underscore for valid urls
         download_url += archive_url
         download_url += '/{}'.format(tar_suffix)
         download_url += '.tar.gz'
