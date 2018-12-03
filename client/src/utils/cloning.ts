@@ -10,9 +10,10 @@ const CLONING_MAPPING = {
 export function getExperimentCloning(original: string,
                                      strategy: string) {
   const values = splitUniqueName(original);
-  const link = getExperimentUrl(values[0], values[1], values[2]);
+  const originalExperiment = values[values.length - 1];
+  const link = getExperimentUrl(values[0], values[1], originalExperiment);
   return {
-    original: values[2],
+    original: originalExperiment,
     link,
     strategy: CLONING_MAPPING[strategy],
   } as CloningInterface;
@@ -21,9 +22,10 @@ export function getExperimentCloning(original: string,
 export function getJobCloning(original: string,
                               strategy: string) {
   const values = splitUniqueName(original);
-  const link = getJobUrl(values[0], values[1], values[values.length - 1]);
+  const originalJob = values[values.length - 1];
+  const link = getJobUrl(values[0], values[1], originalJob);
   return {
-    original: values[2],
+    original: originalJob,
     link,
     strategy: CLONING_MAPPING[strategy],
   } as CloningInterface;
