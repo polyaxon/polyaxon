@@ -88,6 +88,8 @@ class Printer(object):
             return cls.add_color(status, color='green')
         elif status in ['failed', 'stopped']:
             return cls.add_color(status, color='red')
+        elif status == 'done':
+            return cls.add_color(status, color='white')
 
         return cls.add_color(status, color='yellow')
 
