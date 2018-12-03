@@ -63,7 +63,7 @@ def run(k8s_manager):
         created_at = timezone.now()
         logger.debug("Received event: %s", event['type'])
         event_object = event['object'].to_dict()
-        logger.info(event_object)
+        logger.debug(event_object)
         job_state = get_job_state(
             event_type=event['type'],
             event=event_object,
@@ -107,7 +107,7 @@ def run(k8s_manager):
 
             if experiment_job_condition:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_EXPERIMENT_JOB)
-                logger.info("Sending state to handler %s, %s", status, labels)
+                logger.debug("Sending state to handler %s, %s", status, labels)
                 # Handle experiment job statuses
                 celery_app.send_task(
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
@@ -115,24 +115,24 @@ def run(k8s_manager):
 
             elif job_condition:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
-                logger.info("Sending state to handler %s, %s", status, labels)
+                logger.debug("Sending state to handler %s, %s", status, labels)
                 # Handle experiment job statuses
                 celery_app.send_task(
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif plugin_job_condition:
-                logger.info("Sending state to handler %s, %s", status, labels)
+                logger.debug("Sending state to handler %s, %s", status, labels)
                 # Handle plugin job statuses
                 celery_app.send_task(
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                     kwargs={'payload': job_state})
 
             elif dockerizer_job_condition:
-                logger.info("Sending state to handler %s, %s", status, labels)
+                logger.debug("Sending state to handler %s, %s", status, labels)
                 # Handle dockerizer job statuses
                 celery_app.send_task(
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
                     kwargs={'payload': job_state})
             else:
-                logger.debug("Lost state %s, %s", status, job_state)
+                logger.info("Lost state %s, %s", status, job_state)
