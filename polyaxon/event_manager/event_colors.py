@@ -25,6 +25,9 @@ class EventColor(object):
         if event_content_object.last_status in [StatusOptions.FINISHED, StatusOptions.SKIPPED]:
             return cls.GREEN
 
+        if event_content_object.last_status == StatusOptions.DONE:
+            return cls.GREY
+
         if event_content_object.last_status == StatusOptions.CREATED:
             return cls.BLUE
 
