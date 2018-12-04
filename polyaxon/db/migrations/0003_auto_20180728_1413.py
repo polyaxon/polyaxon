@@ -49,11 +49,6 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(blank=True, help_text='The user who triggered this activity, if null we assume a user `system`.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
-            model_name='operationrunstatus',
-            name='status',
-            field=models.CharField(blank=True, choices=[('created', 'created'), ('scheduled', 'scheduled'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('upstream_failed', 'upstream_failed'), ('stopped', 'stopped'), ('skipped', 'skipped'), ('retrying', 'retrying')], default='created', max_length=64, null=True),
-        ),
-        migrations.AlterField(
             model_name='project',
             name='name',
             field=models.CharField(max_length=128, validators=[django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'), "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.", 'invalid'), libs.blacklist.validate_blacklist_name]),
