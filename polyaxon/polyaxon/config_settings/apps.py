@@ -1,7 +1,13 @@
+from polyaxon.config_manager import config
+
+
 DEFAULT_APPS = (
     'polyaxon',
     'db.apps.DBConfig',
 )
+
+EXTRA_APPS = config.get_string('POLYAXON_EXTRA_APPS', is_list=True, is_optional=True)
+EXTRA_APPS = tuple(EXTRA_APPS) if EXTRA_APPS else ()
 
 THIRD_PARTY_APPS = (
     'rest_framework',
@@ -19,4 +25,4 @@ INSTALLED_APPS = (
     'raven.contrib.django.raven_compat',
 )
 
-INSTALLED_APPS += THIRD_PARTY_APPS + DEFAULT_APPS
+INSTALLED_APPS += THIRD_PARTY_APPS + DEFAULT_APPS + EXTRA_APPS
