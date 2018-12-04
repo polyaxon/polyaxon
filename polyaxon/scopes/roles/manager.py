@@ -8,6 +8,7 @@ from scopes.roles.spec import RoleSpec
 class RoleManager(object):
     def __init__(self, config, default):
         self._roles = OrderedDict()
+        role = None
         for idx, role in enumerate(config):
             role = RoleSpec(rank=idx,
                             name=role['name'],
@@ -17,6 +18,7 @@ class RoleManager(object):
             self._roles[role.id] = role
 
         self._default = self._roles[default] if self._roles else RoleSpec.get_dummy()
+        self._top = role
 
     def can_manage(self, role, other):
         return self.get(role).rank >= self.get(other).rank
@@ -35,6 +37,10 @@ class RoleManager(object):
     @cached_property
     def default(self):
         return self._default
+
+    @cached_property
+    def top(self):
+        return self._top
 
     def roles_for_scope(self, scope):
         for role in self.roles:
