@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 def has_project_permissions(user, project, request_method):
     """This logic is extracted here to be used also with Sanic api."""
     # Superusers and the creator is allowed to do everything
-    if user.is_staff or project.user == user:
+    if user.is_staff or user.is_superuser or project.user == user:
         return True
 
     # Other user

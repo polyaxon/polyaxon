@@ -14,6 +14,10 @@ class ScopesPermission(PolyaxonPermission):
     def _check_internal_or_ephemeral(request):
         return any([is_ephemeral_user(request.user), is_internal_user(request.user)])
 
+    @staticmethod
+    def _check_staff_or_superuser(request):
+        return request.user.is_superuser or request.user.is_staff
+
     def has_permission(self, request, view):
         if not request.auth:
             if not request.user.is_authenticated:
@@ -21,10 +25,12 @@ class ScopesPermission(PolyaxonPermission):
             # Session users are granted total access
             return True
 
-        # TODO Add internal/ephemeral here
         # (if that type of auth is allowed, then we should not check he scope)
+        # This means that we allowed this auth backend on this endpoint
+        if self._check_internal_or_ephemeral(request=request):
+            return True
 
-        if request.user.is_authenticated and request.user.is_superuser:
+        if request.user.is_authenticated and self._check_staff_or_superuser(request=request):
             return True
 
         allowed_scopes = set(self.SCOPE_MAPPING.get(request.method, []))

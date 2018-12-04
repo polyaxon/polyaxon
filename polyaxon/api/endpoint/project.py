@@ -28,7 +28,7 @@ class ProjectPermission(OwnerPermission):
 
 
 class ProjectResourceListPermission(ProjectPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('ProjectResourceListPermission')
+    SCOPE_MAPPING = access.get_scope_mapping_for('ProjectResource')
 
 
 class ProjectResourcePermission(ProjectPermission):

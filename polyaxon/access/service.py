@@ -12,6 +12,8 @@ class AccessService(Service):
 
     ENTITY_MAPPING = {
         Entities.OWNER: owner.has_object_permission,
+        Entities.CLUSTER: owner.has_object_permission,
+        Entities.NODE: owner.has_object_permission,
         Entities.PROJECT: project.has_object_permission
     }
 

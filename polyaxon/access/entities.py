@@ -1,8 +1,7 @@
 class Entities(object):
     OWNER = 'Owner'
+    CLUSTER = 'Cluster'
     NODE = 'Node'
     PROJECT = 'Project'
-    GROUP = 'Group'
-    EXPERIMENT = 'Experiment'
 
-    VALUES = {OWNER, NODE, PROJECT, GROUP, EXPERIMENT}
+    VALUES = {OWNER, CLUSTER, NODE, PROJECT, }

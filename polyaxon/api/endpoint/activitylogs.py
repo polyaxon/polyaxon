@@ -15,7 +15,7 @@ class ActivityLogPermission(ScopesPermission):
             return True
 
         return access.has_object_permission(
-            entity=Entities.OWNER,
+            entity=Entities.CLUSTER,
             permission=ActivityLogPermission,
             request=request,
             view=view,

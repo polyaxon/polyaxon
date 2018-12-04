@@ -17,6 +17,7 @@ class InternalUser(object):
         self.is_anonymous = False
         self.is_authenticated = True
         self.is_staff = False
+        self.is_superuser = False
 
     @property
     def access_token(self):

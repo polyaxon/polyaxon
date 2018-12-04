@@ -8,7 +8,7 @@ def has_object_permission(permission, request, view, obj):
         request.access = DEFAULT_ACCESS
         return False
 
-    if user.is_staff:
+    if user.is_superuser or user.is_staff:
         request.access = SUPERUSER_ACCESS
         return True
 

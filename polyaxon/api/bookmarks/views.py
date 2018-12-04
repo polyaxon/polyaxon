@@ -57,7 +57,10 @@ class BookmarkListView(BaseEndpoint, ListEndpoint):
             user = self.request.user
         else:
             user = get_object_or_404(get_user_model(), username=username)
-        if self.request.user.is_staff or self.request.user.username == username:
+        should_access = (self.request.user.is_staff or
+                         self.request.user.is_superuser
+                         or self.request.user.username == username)
+        if should_access:
             auditor.record(event_type=self.event_type,
                            instance=user,
                            actor_id=self.request.user.id,

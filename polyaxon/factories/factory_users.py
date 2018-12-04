@@ -17,3 +17,4 @@ class UserFactory(factory.DjangoModelFactory):
     email = factory.LazyAttribute(lambda x: fake.email())
     password = factory.PostGenerationMethodCall('set_password', 'defaultpassword')
     is_staff = False
+    is_superuser = False

@@ -21,6 +21,7 @@ class EphemeralUser(object):
         self.is_anonymous = False
         self.is_authenticated = True
         self.is_staff = False
+        self.is_superuser = False
         self.scope = scope
 
     @property

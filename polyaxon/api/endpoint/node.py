@@ -17,7 +17,7 @@ class NodePermission(ScopesPermission):
             return True
 
         return access.has_object_permission(
-            entity=Entities.OWNER,
+            entity=Entities.NODE,
             permission=NodePermission,
             request=request,
             view=view,

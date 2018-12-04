@@ -15,7 +15,7 @@ class ClusterPermission(ScopesPermission):
             return True
 
         return access.has_object_permission(
-            entity=Entities.OWNER,
+            entity=Entities.CLUSTER,
             permission=ClusterPermission,
             request=request,
             view=view,
