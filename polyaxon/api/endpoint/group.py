@@ -2,6 +2,7 @@ from rest_framework.generics import get_object_or_404
 
 import access
 
+from access.resources import Resources
 from api.endpoint.project import ProjectPermission, ProjectResourceEndpoint
 from db.models.experiment_groups import ExperimentGroup
 
@@ -35,7 +36,7 @@ class ExperimentGroupResourceListEndpoint(ProjectResourceEndpoint):
 
 
 class ExperimentGroupResourcePermission(ProjectPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('ProjectResource')
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT_RESOURCE)
 
     def has_object_permission(self, request, view, obj):
         return super().has_object_permission(request, view, obj.experiment_group.project)

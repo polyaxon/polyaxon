@@ -2,14 +2,14 @@ from django.shortcuts import get_object_or_404
 
 import access
 
-from access.entities import Entities
+from access.resources import Resources
 from api.endpoint.base import BaseEndpoint
-from api.endpoint.owner import OwnerPermission
+from api.endpoint.admin import AdminPermission
 from db.models.projects import Project
 
 
-class ProjectPermission(OwnerPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('Project')
+class ProjectPermission(AdminPermission):
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT)
 
     def has_object_permission(self, request, view, obj):
         if self._check_internal_or_ephemeral(request=request):
@@ -20,7 +20,7 @@ class ProjectPermission(OwnerPermission):
             return result
 
         return access.has_object_permission(
-            entity=Entities.PROJECT,
+            resource=Resources.PROJECT,
             permission=ProjectPermission,
             request=request,
             view=view,
@@ -28,11 +28,11 @@ class ProjectPermission(OwnerPermission):
 
 
 class ProjectResourceListPermission(ProjectPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('ProjectResource')
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT_RESOURCE)
 
 
 class ProjectResourcePermission(ProjectPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('ProjectResource')
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT_RESOURCE)
 
     def has_object_permission(self, request, view, obj):
         return super().has_object_permission(request, view, obj.project)

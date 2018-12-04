@@ -2,8 +2,8 @@ from hestia.service_interface import InvalidService, Service
 
 from django.conf import settings
 
-from access.permissions import owner, project
-from access.entities import Entities
+from access.object_permissions import admin, project
+from access.resources import Resources
 from scopes.manager import ScopeMappingManager
 
 
@@ -11,10 +11,11 @@ class AccessService(Service):
     __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission',)
 
     ENTITY_MAPPING = {
-        Entities.OWNER: owner.has_object_permission,
-        Entities.CLUSTER: owner.has_object_permission,
-        Entities.NODE: owner.has_object_permission,
-        Entities.PROJECT: project.has_object_permission
+        Resources.ADMIN: admin.has_object_permission,
+        Resources.CLUSTER: admin.has_object_permission,
+        Resources.NODE: admin.has_object_permission,
+        Resources.PROJECT: project.has_object_permission,
+        Resources.PROJECT_SETTINGS: project.has_object_permission,
     }
 
     def __init__(self):
@@ -23,14 +24,14 @@ class AccessService(Service):
     def get_scope_mapping_for(self, endpoint):
         return self._scope_mapping_manager.get(endpoint=endpoint)
 
-    def has_object_permission(self, entity, permission, request, view, obj):
-        if entity not in Entities.VALUES:
-            raise InvalidService('Entity not support `{}`'.format(entity))
+    def has_object_permission(self, resource, permission, request, view, obj):
+        if resource not in Resources.VALUES:
+            raise InvalidService('Resources not support `{}`'.format(resource))
 
-        return self.ENTITY_MAPPING[entity](permission=permission,
-                                           request=request,
-                                           view=view,
-                                           obj=obj)
+        return self.ENTITY_MAPPING[resource](permission=permission,
+                                             request=request,
+                                             view=view,
+                                             obj=obj)
 
     def setup(self):
         super().setup()

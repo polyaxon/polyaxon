@@ -2,14 +2,14 @@ from rest_framework.generics import get_object_or_404
 
 import access
 
-from access.entities import Entities
+from access.resources import Resources
 from api.endpoint.base import BaseEndpoint
 from db.models.owner import Owner
 from scopes.permissions.scopes import ScopesPermission
 
 
-class OwnerPermission(ScopesPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('Owner')
+class AdminPermission(ScopesPermission):
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.ADMIN)
 
     def has_object_permission(self, request, view, obj):
         # This means that we allowed this auth backend on this endpoint
@@ -17,20 +17,20 @@ class OwnerPermission(ScopesPermission):
             return True
 
         return access.has_object_permission(
-            entity=Entities.OWNER,
-            permission=OwnerPermission,
+            resource=Resources.ADMIN,
+            permission=AdminPermission,
             request=request,
             view=view,
             obj=obj)
 
 
-class OwnerProjectListPermission(OwnerPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('OwnerProjectList')
+class AdminProjectListPermission(AdminPermission):
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.ADMIN)
 
 
-class OwnerEndpoint(BaseEndpoint):
+class AdminEndpoint(BaseEndpoint):
     queryset = Owner.objects
-    permission_classes = (OwnerPermission,)
+    permission_classes = (AdminPermission,)
     AUDITOR_EVENT_TYPES = None
     CONTEXT_KEYS = ('owner_name',)
     CONTEXT_OBJECTS = ('owner',)
@@ -42,8 +42,8 @@ class OwnerEndpoint(BaseEndpoint):
         self.owner = self.get_object()
 
 
-class OwnerResourceEndpoint(BaseEndpoint):
-    permission_classes = (OwnerPermission,)
+class AdminResourceEndpoint(BaseEndpoint):
+    permission_classes = (AdminPermission,)
     AUDITOR_EVENT_TYPES = None
     CONTEXT_KEYS = ('owner_name',)
     CONTEXT_OBJECTS = ('owner',)

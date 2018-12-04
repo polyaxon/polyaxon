@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 import auditor
 
 from api.endpoint.base import DestroyEndpoint, ListEndpoint, RetrieveEndpoint, UpdateEndpoint
-from api.endpoint.owner import OwnerProjectListPermission, OwnerResourceEndpoint
+from api.endpoint.admin import AdminProjectListPermission, AdminResourceEndpoint
 from api.endpoint.project import ProjectEndpoint
 from api.projects import queries
 from api.projects.serializers import (
@@ -38,10 +38,10 @@ class ProjectCreateView(CreateAPIView):
         auditor.record(event_type=PROJECT_CREATED, instance=instance)
 
 
-class ProjectListView(BookmarkedListMixinView, OwnerResourceEndpoint, ListEndpoint):
+class ProjectListView(BookmarkedListMixinView, AdminResourceEndpoint, ListEndpoint):
     """List projects for a user."""
     queryset = queries.projects.order_by('-updated_at')
-    permission_classes = (OwnerProjectListPermission,)
+    permission_classes = (AdminProjectListPermission,)
     serializer_class = BookmarkedProjectSerializer
 
     def filter_queryset(self, queryset):

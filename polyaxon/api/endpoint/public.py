@@ -1,5 +1,6 @@
 import access
 
+from access.resources import Resources
 from api.endpoint.project import ProjectPermission, ProjectResourcePermission
 
 
@@ -10,7 +11,7 @@ class PublicActivityPermission(ProjectPermission):
 
     This is useful to allow to create bookmarks, searches, ...
     """
-    SCOPE_MAPPING = access.get_scope_mapping_for('PublicInteraction')
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PUBLIC)
 
     def has_object_permission(self, request, view, obj):
         result = super().has_object_permission(request, view, obj)
@@ -24,7 +25,7 @@ class PublicResourceActivityPermission(ProjectResourcePermission):
 
     This is useful to allow to create bookmarks, searches, ...
     """
-    SCOPE_MAPPING = access.get_scope_mapping_for('PublicInteraction')
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PUBLIC)
 
     def has_object_permission(self, request, view, obj):
         result = super().has_object_permission(request, view, obj)

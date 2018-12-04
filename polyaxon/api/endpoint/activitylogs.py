@@ -1,13 +1,13 @@
 import access
 
-from access.entities import Entities
+from access.resources import Resources
 from api.endpoint.base import BaseEndpoint
 from db.models.activitylogs import ActivityLog
 from scopes.permissions.scopes import ScopesPermission
 
 
 class ActivityLogPermission(ScopesPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('ActivityLog')
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.ACTIVITY_LOG)
 
     def has_object_permission(self, request, view, obj):
         # This means that we allowed this auth backend on this endpoint
@@ -15,7 +15,7 @@ class ActivityLogPermission(ScopesPermission):
             return True
 
         return access.has_object_permission(
-            entity=Entities.CLUSTER,
+            resource=Resources.ACTIVITY_LOG,
             permission=ActivityLogPermission,
             request=request,
             view=view,

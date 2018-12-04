@@ -1,13 +1,13 @@
 import access
 
-from access.entities import Entities
+from access.resources import Resources
 from api.endpoint.base import BaseEndpoint
 from db.models.clusters import Cluster
 from scopes.permissions.scopes import ScopesPermission
 
 
 class ClusterPermission(ScopesPermission):
-    SCOPE_MAPPING = access.get_scope_mapping_for('Cluster')
+    SCOPE_MAPPING = access.get_scope_mapping_for(Resources.CLUSTER)
 
     def has_object_permission(self, request, view, obj):
         # This means that we allowed this auth backend on this endpoint
@@ -15,7 +15,7 @@ class ClusterPermission(ScopesPermission):
             return True
 
         return access.has_object_permission(
-            entity=Entities.CLUSTER,
+            resource=Resources.CLUSTER,
             permission=ClusterPermission,
             request=request,
             view=view,
