@@ -103,13 +103,13 @@ from rhea import Rhea
 
 rhea_config = Rhea.read_configs([...])
 
-rhea_config.get_boolean('BOOL_ENV_VALUE')
+rhea_config.get_boolean('BOOL_ENV_VALUE1')
 # True
-rhea_config.get_boolean('BOOL_ENV_VALUE')
+rhea_config.get_boolean('BOOL_ENV_VALUE2')
 # True
-rhea_config.get_boolean('BOOL_ENV_VALUE')
+rhea_config.get_boolean('BOOL_ENV_VALUE3')
 # False
-rhea_config.get_boolean('BOOL_ENV_VALUE')
+rhea_config.get_boolean('BOOL_ENV_VALUE4')
 # True
 
 rhea_config.get_int('INT_ENV_VALUE1')  
