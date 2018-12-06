@@ -5,11 +5,13 @@ class Access(object):
                  is_owner=False,
                  public_only=True,
                  is_authenticated=True,
+                 role=None,
                  scopes=None,
                  permissions=None):
         self.is_superuser = is_superuser
         self.is_owner = is_owner
         self.is_authenticated = is_authenticated
+        self.role = role
         self.scopes = scopes or frozenset()
         self.permissions = permissions or frozenset()
         self.public_only = public_only
