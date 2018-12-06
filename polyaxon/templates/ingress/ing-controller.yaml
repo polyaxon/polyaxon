@@ -42,7 +42,7 @@ spec:
 {{ toYaml .Values.tolerations.core | indent 8 }}
       {{- end }}
       containers:
-      - image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.15
+      - image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
         name: nginx-ingress-controller
         readinessProbe:
           httpGet:
