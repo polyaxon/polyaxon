@@ -41,15 +41,18 @@ spec:
   {{- end }}  {{- /* end loop */ -}}
   {{- else }}  {{- /* else if tls.enabled */ -}}
   rules:
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ template "polyaxon.fullname" . }}-api
-          servicePort: {{ .Values.api.service.externalPort }}
-      - path: /ws
-        backend:
-          serviceName: {{ template "polyaxon.fullname" . }}-api
-          servicePort: {{ .Values.streams.service.externalPort }}
-  {{- end -}} {{- /* end if tls.enabled */ -}}
+  {{- range .Values.ingress.hosts }}
+    - host: {{ . }}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: {{ $fullName }}-api
+            servicePort: {{ $.Values.api.service.externalPort }}
+        - path: /ws
+          backend:
+            serviceName: {{ $fullName }}-api
+            servicePort: {{ $.Values.streams.service.externalPort }}
+  {{- end }} {{- /* end range ingress.hosts */ -}}
+  {{- end }} {{- /* end if tls.enabled */ -}}
 {{- end }}
