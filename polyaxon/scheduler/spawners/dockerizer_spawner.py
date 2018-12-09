@@ -1,9 +1,9 @@
 from django.conf import settings
 
+from constants.k8s_jobs import JOB_NAME
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
-from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_from_secret, get_service_env_vars
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
@@ -73,15 +73,13 @@ class DockerizerSpawner(ProjectJobSpawner):
             role=settings.ROLE_LABELS_WORKER,
             type=settings.TYPE_LABELS_RUNNER,
             restart_policy='Never')
-        pod_name = constants.JOB_NAME.format(
-            job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
+        pod_name = JOB_NAME.format(job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
 
         pod_resp, _ = self.create_or_update_pod(name=pod_name, data=pod)
         return pod_resp.to_dict()
 
     def stop_dockerizer(self):
-        pod_name = constants.JOB_NAME.format(job_uuid=self.job_uuid,
-                                             name=self.DOCKERIZER_JOB_NAME)
+        pod_name = JOB_NAME.format(job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
         try:
             self.delete_pod(name=pod_name, reraise=True)
             return True

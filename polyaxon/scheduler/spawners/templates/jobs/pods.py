@@ -4,6 +4,7 @@ from kubernetes import client
 
 from django.conf import settings
 
+from constants.k8s_jobs import JOB_NAME
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
@@ -80,7 +81,7 @@ class PodManager(object):
         self.log_level = log_level
 
     def get_k8s_job_name(self):
-        return constants.JOB_NAME.format(name=self.name, job_uuid=self.job_uuid)
+        return JOB_NAME.format(name=self.name, job_uuid=self.job_uuid)
 
     def get_labels(self):
         labels = {
@@ -115,7 +116,7 @@ class PodManager(object):
             outputs_path=get_job_outputs_path(persistence_outputs=persistence_outputs,
                                               job_name=self.job_name),
             persistence_data=persistence_data,
-            logs_path=get_job_logs_path(job_name=self.job_name),
+            logs_path=get_job_logs_path(job_name=self.job_name, temp=False),
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments
         )

@@ -5,6 +5,7 @@ from hestia.crypto import get_hmac
 
 from django.conf import settings
 
+from constants.k8s_jobs import JOB_NAME
 from libs.paths.notebooks import get_notebook_job_outputs_path
 from libs.paths.projects import get_project_repos_path
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -136,8 +137,7 @@ class NotebookSpawner(ProjectJobSpawner):
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
-        deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
-                                                    job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
 
         node_selector = get_node_selector(
             node_selector=node_selector,
@@ -210,8 +210,7 @@ class NotebookSpawner(ProjectJobSpawner):
         return results
 
     def stop_notebook(self):
-        deployment_name = constants.JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME,
-                                                    job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
         try:
             self.delete_deployment(name=deployment_name, reraise=True)
             self.delete_service(name=deployment_name)

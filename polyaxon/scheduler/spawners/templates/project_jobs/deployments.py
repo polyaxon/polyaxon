@@ -1,7 +1,8 @@
 from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
-from scheduler.spawners.templates import constants
+
+from constants.k8s_jobs import JOB_NAME
 from scheduler.spawners.templates.project_jobs.labels import get_labels
 from scheduler.spawners.templates.project_jobs.pods import get_project_pod_spec
 
@@ -37,7 +38,7 @@ def get_deployment_spec(namespace,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.JOB_NAME.format(name=name, job_uuid=job_uuid),
+        name=JOB_NAME.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     pod_spec = get_project_pod_spec(volume_mounts=volume_mounts,
@@ -88,7 +89,7 @@ def get_deployment(namespace,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.JOB_NAME.format(name=name, job_uuid=job_uuid),
+        name=JOB_NAME.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     spec = get_deployment_spec(namespace=namespace,

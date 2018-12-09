@@ -3,10 +3,11 @@ import random
 
 from django.conf import settings
 
+from constants.k8s_jobs import JOB_NAME
 from constants.stores import GCS, S3
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
-from scheduler.spawners.templates import constants, ingresses, services
+from scheduler.spawners.templates import ingresses, services
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -171,8 +172,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_RUNNER)
-        deployment_name = constants.JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME,
-                                                    job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
@@ -211,8 +211,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         return results
 
     def stop_tensorboard(self):
-        deployment_name = constants.JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME,
-                                                    job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
         try:
             self.delete_deployment(name=deployment_name)
             self.delete_service(name=deployment_name)

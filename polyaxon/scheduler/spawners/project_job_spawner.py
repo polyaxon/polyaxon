@@ -1,7 +1,8 @@
 from django.conf import settings
 
 from polyaxon_k8s.manager import K8SManager
-from scheduler.spawners.templates import constants
+
+from constants.k8s_jobs import JOB_NAME
 
 
 class ProjectJobSpawner(K8SManager):
@@ -32,8 +33,7 @@ class ProjectJobSpawner(K8SManager):
             port)
 
     def _get_service_url(self, job_name):
-        deployment_name = constants.JOB_NAME.format(name=job_name,
-                                                    job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME.format(name=job_name, job_uuid=self.job_uuid)
         service = self.get_service(deployment_name)
         if service:
             return self._get_proxy_url(

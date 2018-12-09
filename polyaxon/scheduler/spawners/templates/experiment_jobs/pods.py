@@ -5,6 +5,7 @@ from kubernetes import client
 
 from django.conf import settings
 
+from constants.k8s_jobs import EXPERIMENT_JOB_NAME
 from db.models.cloning_strategies import CloningStrategy
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.utils import get_list
@@ -93,9 +94,9 @@ class PodManager(object):
         self.cluster_def = cluster_def
 
     def get_job_name(self, task_type, task_idx):
-        return constants.EXPERIMENT_JOB_NAME.format(task_type=task_type,
-                                                    task_idx=task_idx,
-                                                    experiment_uuid=self.experiment_uuid)
+        return EXPERIMENT_JOB_NAME.format(task_type=task_type,
+                                          task_idx=task_idx,
+                                          experiment_uuid=self.experiment_uuid)
 
     def get_experiment_labels(self):
         labels = {'app': self.app_label,
@@ -148,7 +149,7 @@ class PodManager(object):
             outputs_path=outputs_path,
             persistence_data=persistence_data,
             log_level=self.log_level,
-            logs_path=get_experiment_logs_path(self.experiment_name),
+            logs_path=get_experiment_logs_path(self.experiment_name, temp=False),
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             ephemeral_token=ephemeral_token,
