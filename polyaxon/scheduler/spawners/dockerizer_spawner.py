@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from constants.k8s_jobs import JOB_NAME
+from constants.k8s_jobs import JOB_NAME_FORMAT, DOCKERIZER_JOB_NAME
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
@@ -15,8 +15,6 @@ from scheduler.spawners.templates.volumes import get_docker_volumes
 
 
 class DockerizerSpawner(ProjectJobSpawner):
-    DOCKERIZER_JOB_NAME = 'build'
-
     def get_env_vars(self):
         env_vars = get_service_env_vars(namespace=self.namespace)
         for k, v in config.get_requested_params(to_str=True).items():
@@ -52,7 +50,7 @@ class DockerizerSpawner(ProjectJobSpawner):
         pod = pods.get_pod(
             namespace=self.namespace,
             app=settings.APP_LABELS_DOCKERIZER,
-            name=self.DOCKERIZER_JOB_NAME,
+            name=DOCKERIZER_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             job_name=self.job_name,
@@ -73,13 +71,13 @@ class DockerizerSpawner(ProjectJobSpawner):
             role=settings.ROLE_LABELS_WORKER,
             type=settings.TYPE_LABELS_RUNNER,
             restart_policy='Never')
-        pod_name = JOB_NAME.format(job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
+        pod_name = JOB_NAME_FORMAT.format(job_uuid=self.job_uuid, name=DOCKERIZER_JOB_NAME)
 
         pod_resp, _ = self.create_or_update_pod(name=pod_name, data=pod)
         return pod_resp.to_dict()
 
     def stop_dockerizer(self):
-        pod_name = JOB_NAME.format(job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
+        pod_name = JOB_NAME_FORMAT.format(job_uuid=self.job_uuid, name=DOCKERIZER_JOB_NAME)
         try:
             self.delete_pod(name=pod_name, reraise=True)
             return True

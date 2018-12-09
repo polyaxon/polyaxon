@@ -32,8 +32,8 @@ class TestProjectPaths(BaseTest):
     def test_project_logs_path_creation_deletion(self):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
-        experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
-        create_experiment_logs_path(experiment.unique_name)
+        experiment_logs_path = get_experiment_logs_path(experiment.unique_name, temp=False)
+        create_experiment_logs_path(experiment.unique_name, temp=False)
         open(experiment_logs_path, '+w')
         project_logs_path = get_project_logs_path(self.project.unique_name)
         project_repos_path = get_project_logs_path(self.project.unique_name)
@@ -51,7 +51,6 @@ class TestProjectPaths(BaseTest):
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
                                        experiment_name=experiment.unique_name)
-        create_experiment_logs_path(experiment.unique_name)
         experiment_outputs_path = get_experiment_outputs_path(
             persistence_outputs=experiment.persistence_outputs,
             experiment_name=experiment.unique_name)

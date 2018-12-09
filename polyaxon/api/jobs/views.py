@@ -36,6 +36,7 @@ from api.jobs.serializers import (
 )
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
+from constants.k8s_jobs import JOB_NAME_FORMAT, JOB_NAME
 from db.models.jobs import Job, JobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
@@ -56,6 +57,7 @@ from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.spec_validation import validate_job_spec_config
 from libs.stores import get_outputs_store
+from logs_handlers.log_queries.job import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
@@ -233,7 +235,15 @@ class JobLogsView(JobEndpoint, RetrieveEndpoint):
                        instance=self.job,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        log_path = get_job_logs_path(self.job.unique_name)
+        job_name = self.job.unique_name
+        pod_id = JOB_NAME_FORMAT.format(name=JOB_NAME, job_uuid=self.job.uuid.hex)
+        if self.job.is_done:
+            log_path = get_job_logs_path(job_name, temp=False)
+        else:
+            process_logs(pod_id=pod_id,
+                         job_name=job_name,
+                         temp=True)
+            log_path = get_job_logs_path(job_name, temp=True)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192

@@ -2,7 +2,7 @@ from kubernetes import client
 
 from django.conf import settings
 
-from constants.k8s_jobs import JOB_NAME
+from constants.k8s_jobs import JOB_NAME_FORMAT
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.env_vars import get_resources_env_vars
@@ -112,7 +112,7 @@ def get_pod(namespace,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=JOB_NAME.format(name=name, job_uuid=job_uuid),
+        name=JOB_NAME_FORMAT.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,

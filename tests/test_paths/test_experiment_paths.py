@@ -23,9 +23,9 @@ class TestExperimentPaths(BaseTest):
         self.experiment = ExperimentFactory()
 
     def test_experiment_logs_path_creation_deletion(self):
-        create_experiment_logs_path(self.experiment.unique_name)
-        experiment_logs_path = get_experiment_logs_path(self.experiment.unique_name)
-        filepath = get_experiment_logs_path(self.experiment.unique_name)
+        create_experiment_logs_path(self.experiment.unique_name, temp=False)
+        experiment_logs_path = get_experiment_logs_path(self.experiment.unique_name, temp=False)
+        filepath = get_experiment_logs_path(self.experiment.unique_name, temp=False)
         open(filepath, '+w')
         assert os.path.exists(experiment_logs_path) is True
         assert os.path.exists(filepath) is True

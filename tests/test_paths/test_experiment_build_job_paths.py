@@ -13,8 +13,8 @@ class TestBuildJobPaths(BaseTest):
 
     def test_build_job_logs_path_creation_deletion(self):
         job = BuildJobFactory()
-        job_logs_path = get_job_logs_path(job.unique_name)
-        create_job_logs_path(job.unique_name)
+        job_logs_path = get_job_logs_path(job.unique_name, temp=False)
+        create_job_logs_path(job.unique_name, temp=False)
         open(job_logs_path, '+w')
         # Should be true, created by the signal
         assert os.path.exists(job_logs_path) is True

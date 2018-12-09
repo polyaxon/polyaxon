@@ -8,15 +8,16 @@ from logs_handlers.utils import safe_log_job
 
 def stream_logs(pod_id):
     k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-    return base.stream_logs(k8s_manager=k8s_manager,
-                            pod_id=pod_id,
-                            container_job_name=settings.CONTAINER_NAME_JOB)
+    for log_line in base.stream_logs(k8s_manager=k8s_manager,
+                                     pod_id=pod_id,
+                                     container_job_name=settings.CONTAINER_NAME_DOCKERIZER_JOB):
+        yield log_line
 
 
 def process_logs(pod_id, job_name, temp=True):
     k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
     log_lines = base.process_logs(k8s_manager=k8s_manager,
                                   pod_id=pod_id,
-                                  container_job_name=settings.CONTAINER_NAME_JOB)
+                                  container_job_name=settings.CONTAINER_NAME_DOCKERIZER_JOB)
 
     safe_log_job(job_name=job_name, log_lines=log_lines, temp=temp)

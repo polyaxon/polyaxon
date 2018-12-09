@@ -40,18 +40,18 @@ async def experiment_job_resources(request, ws, username, project_name, experime
         logger.info('Job resources with uuid `%s` is now being monitored', job_name)
         RedisToStream.monitor_job_resources(job_uuid=job_uuid)
 
-    if job_uuid in request.app.job_resources_ws_mangers:
-        ws_manager = request.app.job_resources_ws_mangers[job_uuid]
+    if job_uuid in request.app.job_resources_ws_managers:
+        ws_manager = request.app.job_resources_ws_managers[job_uuid]
     else:
         ws_manager = SocketManager()
-        request.app.job_resources_ws_mangers[job_uuid] = ws_manager
+        request.app.job_resources_ws_managers[job_uuid] = ws_manager
 
     def handle_job_disconnected_ws(ws):
         ws_manager.remove_sockets(ws)
         if not ws_manager.ws:
             logger.info('Stopping resources monitor for job %s', job_name)
             RedisToStream.remove_job_resources(job_uuid=job_uuid)
-            request.app.job_resources_ws_mangers.pop(job_uuid, None)
+            request.app.job_resources_ws_managers.pop(job_uuid, None)
 
         logger.info('Quitting resources socket for job %s', job_name)
 

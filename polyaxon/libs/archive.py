@@ -3,12 +3,8 @@ import tarfile
 
 from django.conf import settings
 
+from libs.paths.utils import check_archive_path
 from libs.stores import get_outputs_store
-
-
-def check_archive_path(archive_path=None):
-    if not os.path.exists(archive_path):
-        os.makedirs(archive_path)
 
 
 def create_tarfile(files, tar_path):

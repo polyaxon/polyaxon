@@ -3,7 +3,7 @@ import random
 
 from django.conf import settings
 
-from constants.k8s_jobs import JOB_NAME
+from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
 from constants.stores import GCS, S3
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
@@ -27,14 +27,13 @@ class TensorboardValidation(Exception):
 
 
 class TensorboardSpawner(ProjectJobSpawner):
-    TENSORBOARD_JOB_NAME = 'tensorboard'
     PORT = 6006
     STORE_SECRET_VOLUME_NAME = 'plx-{}-secret'  # noqa
     STORE_SECRET_MOUNT_PATH = '/tmp'  # noqa
     STORE_SECRET_KEY_MOUNT_PATH = STORE_SECRET_MOUNT_PATH + '/.' + STORE_SECRET_VOLUME_NAME
 
     def get_tensorboard_url(self):
-        return self._get_service_url(self.TENSORBOARD_JOB_NAME)
+        return self._get_service_url(TENSORBOARD_JOB_NAME)
 
     def request_tensorboard_port(self):
         if not self._use_ingress():
@@ -154,7 +153,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=settings.APP_LABELS_TENSORBOARD,
-            name=self.TENSORBOARD_JOB_NAME,
+            name=TENSORBOARD_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             job_name=self.job_name,
@@ -172,7 +171,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_RUNNER)
-        deployment_name = JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
@@ -211,7 +210,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         return results
 
     def stop_tensorboard(self):
-        deployment_name = JOB_NAME.format(name=self.TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
         try:
             self.delete_deployment(name=deployment_name)
             self.delete_service(name=deployment_name)

@@ -74,7 +74,7 @@ class TestExperimentJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def get_log_path(instance):
-        return get_experiment_logs_path(instance.unique_name)
+        return get_experiment_logs_path(instance.unique_name, temp=False)
 
     @staticmethod
     def handle_job_logs(**params):
@@ -100,7 +100,7 @@ class TestJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def get_log_path(instance):
-        return get_job_logs_path(instance.unique_name)
+        return get_job_logs_path(instance.unique_name, temp=False)
 
     @staticmethod
     def handle_job_logs(**params):
@@ -125,7 +125,7 @@ class TestBuildJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def get_log_path(instance):
-        return get_job_logs_path(instance.unique_name)
+        return get_job_logs_path(instance.unique_name, temp=False)
 
     @staticmethod
     def handle_job_logs(**params):

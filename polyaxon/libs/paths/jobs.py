@@ -3,7 +3,7 @@ import os
 from django.conf import settings
 
 from libs.paths.outputs_paths import get_outputs_paths
-from libs.paths.utils import create_path, delete_path
+from libs.paths.utils import check_archive_path, create_path, delete_path
 
 
 def get_job_outputs_path(persistence_outputs, job_name):
@@ -38,7 +38,10 @@ def create_job_path(job_name, path):
     return path
 
 
-def create_job_logs_path(job_name):
+def create_job_logs_path(job_name, temp):
+    if temp:
+        check_archive_path(settings.LOGS_ARCHIVE_ROOT)
+        return create_job_path(job_name, settings.LOGS_ARCHIVE_ROOT)
     return create_job_path(job_name, settings.LOGS_MOUNT_PATH)
 
 

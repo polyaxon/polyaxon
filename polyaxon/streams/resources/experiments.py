@@ -36,18 +36,18 @@ async def experiment_resources(request, ws, username, project_name, experiment_i
         logger.info('Experiment resource with uuid `%s` is now being monitored', experiment_uuid)
         RedisToStream.monitor_experiment_resources(experiment_uuid=experiment_uuid)
 
-    if experiment_uuid in request.app.experiment_resources_ws_mangers:
-        ws_manager = request.app.experiment_resources_ws_mangers[experiment_uuid]
+    if experiment_uuid in request.app.experiment_resources_ws_managers:
+        ws_manager = request.app.experiment_resources_ws_managers[experiment_uuid]
     else:
         ws_manager = SocketManager()
-        request.app.experiment_resources_ws_mangers[experiment_uuid] = ws_manager
+        request.app.experiment_resources_ws_managers[experiment_uuid] = ws_manager
 
     def handle_experiment_disconnected_ws(ws):
         ws_manager.remove_sockets(ws)
         if not ws_manager.ws:
             logger.info('Stopping resources monitor for uuid %s', experiment_uuid)
             RedisToStream.remove_experiment_resources(experiment_uuid=experiment_uuid)
-            request.app.experiment_resources_ws_mangers.pop(experiment_uuid, None)
+            request.app.experiment_resources_ws_managers.pop(experiment_uuid, None)
 
         logger.info('Quitting resources socket for uuid %s', experiment_uuid)
 

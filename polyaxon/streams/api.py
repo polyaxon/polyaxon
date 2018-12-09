@@ -1,6 +1,6 @@
 from sanic import Sanic
 
-from streams.resources.builds import build_logs
+from streams.resources.builds import build_logs_v2
 from streams.resources.experiment_jobs import experiment_job_logs, experiment_job_resources
 from streams.resources.experiments import experiment_logs, experiment_resources
 from streams.resources.health import health
@@ -36,21 +36,23 @@ add_url(endpoint=job_logs, base_url=JOB_URL, url='logs')
 
 # Build Job urls
 # add_url(endpoint=job_resources, base_url=EXPERIMENT_URL, url='resources')
-add_url(endpoint=build_logs, base_url=BUILD_URL, url='logs')
+add_url(endpoint=build_logs_v2, base_url=BUILD_URL, url='logs')
 
 
 @app.listener('after_server_start')
 async def notify_server_started(app, loop):  # pylint:disable=redefined-outer-name
-    app.job_resources_ws_mangers = {}
-    app.experiment_resources_ws_mangers = {}
+    app.job_resources_ws_managers = {}
+    app.experiment_resources_ws_managers = {}
+    app.experiment_logs_ws_managers = {}
+    app.job_logs_ws_managers = {}
     app.job_logs_consumers = {}
     app.experiment_logs_consumers = {}
 
 
 @app.listener('after_server_stop')
 async def notify_server_stopped(app, loop):  # pylint:disable=redefined-outer-name
-    app.job_resources_ws_mangers = {}
-    app.experiment_resources_ws_manger = {}
+    app.job_resources_ws_managers = {}
+    app.experiment_resources_ws_manager = {}
 
     consumer_keys = list(app.job_logs_consumers.keys())
     for consumer_key in consumer_keys:

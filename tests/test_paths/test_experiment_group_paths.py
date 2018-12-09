@@ -32,8 +32,8 @@ class TestExperimentGroupPaths(BaseTest):
         experiment = ExperimentFactory(user=self.project.user,
                                        project=self.project,
                                        experiment_group=self.experiment_group)
-        experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
-        create_experiment_logs_path(experiment.unique_name)
+        experiment_logs_path = get_experiment_logs_path(experiment.unique_name, temp=False)
+        create_experiment_logs_path(experiment.unique_name, temp=False)
         open(experiment_logs_path, '+w')
         experiment_group_logs_path = get_experiment_group_logs_path(
             self.experiment_group.unique_name)

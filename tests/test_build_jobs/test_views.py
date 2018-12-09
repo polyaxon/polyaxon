@@ -538,15 +538,16 @@ class TestBuildLogsViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        job = BuildJobFactory(project=project)
+        self.job = BuildJobFactory(project=project)
         self.url = '/{}/{}/{}/builds/{}/logs'.format(
             API_V1,
             project.user.username,
             project.name,
-            job.id)
+            self.job.id)
 
-        log_path = get_job_logs_path(job.unique_name)
-        create_job_logs_path(job_name=job.unique_name)
+    def create_logs(self, temp):
+        log_path = get_job_logs_path(self.job.unique_name, temp=temp)
+        create_job_logs_path(job_name=self.job.unique_name, temp=temp)
         fake = Faker()
         self.logs = []
         for _ in range(self.num_log_lines):
@@ -556,7 +557,38 @@ class TestBuildLogsViewV1(BaseViewTest):
                 file.write(line)
                 file.write('\n')
 
-    def test_get(self):
+    def test_get_done_job(self):
+        self.job.set_status(JobLifeCycle.SUCCEEDED)
+        self.assertTrue(self.job.is_done)
+        # No logs
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check the it does not return temp file
+        self.create_logs(temp=True)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check returns the correct file
+        self.create_logs(temp=False)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        data = [i for i in resp._iterator]  # pylint:disable=protected-access
+        data = [d for d in data[0].decode('utf-8').split('\n') if d]
+        assert len(data) == len(self.logs)
+        assert data == self.logs
+
+    @patch('api.build_jobs.views.process_logs')
+    def test_get_non_done_job(self, _):
+        self.assertFalse(self.job.is_done)
+        # No logs
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check the it does not return non temp file
+        self.create_logs(temp=False)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check returns the correct file
+        self.create_logs(temp=True)
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 

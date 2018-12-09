@@ -1918,7 +1918,7 @@ class TestDeleteExperimentManyViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
-class TestExperimentOutputsLogsViewV1(BaseViewTest):
+class TestExperimentLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
     DISABLE_RUNNER = True
@@ -1926,15 +1926,16 @@ class TestExperimentOutputsLogsViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        experiment = ExperimentFactory(project=project)
+        self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/logs'.format(
             API_V1,
             project.user.username,
             project.name,
-            experiment.id)
+            self.experiment.id)
 
-        log_path = get_experiment_logs_path(experiment.unique_name)
-        create_experiment_logs_path(experiment_name=experiment.unique_name)
+    def create_logs(self, temp):
+        log_path = get_experiment_logs_path(self.experiment.unique_name, temp=temp)
+        create_experiment_logs_path(experiment_name=self.experiment.unique_name, temp=temp)
         fake = Faker()
         self.logs = []
         for _ in range(self.num_log_lines):
@@ -1944,7 +1945,38 @@ class TestExperimentOutputsLogsViewV1(BaseViewTest):
                 file.write(line)
                 file.write('\n')
 
-    def test_get(self):
+    def test_get_done_experiment(self):
+        self.experiment.set_status(ExperimentLifeCycle.SUCCEEDED)
+        self.assertTrue(self.experiment.is_done)
+        # No logs
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check the it does not return temp file
+        self.create_logs(temp=True)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check returns the correct file
+        self.create_logs(temp=False)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        data = [i for i in resp._iterator]  # pylint:disable=protected-access
+        data = [d for d in data[0].decode('utf-8').split('\n') if d]
+        assert len(data) == len(self.logs)
+        assert data == self.logs
+
+    @patch('api.experiments.views.process_logs')
+    def test_get_non_done_experiment(self, _):
+        self.assertFalse(self.experiment.is_done)
+        # No logs
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check the it does not return non temp file
+        self.create_logs(temp=False)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check returns the correct file
+        self.create_logs(temp=True)
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 

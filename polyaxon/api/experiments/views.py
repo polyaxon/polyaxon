@@ -56,6 +56,7 @@ from api.paginator import LargeLimitOffsetPagination
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
+from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import (
@@ -95,8 +96,10 @@ from libs.paths.exceptions import VolumeNotFoundError
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.spec_validation import validate_experiment_spec_config
 from libs.stores import get_outputs_store
+from logs_handlers.log_queries.experiment import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
+from schemas.tasks import TaskType
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
@@ -561,7 +564,18 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
                        instance=self.experiment,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        log_path = get_experiment_logs_path(self.experiment.unique_name)
+        experiment_name = self.experiment.unique_name
+        pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(
+            task_type=TaskType.MASTER,  # We default to master
+            task_idx=0,
+            experiment_uuid=self.experiment.uuid.hex)
+        if self.experiment.is_done:
+            log_path = get_experiment_logs_path(experiment_name, temp=False)
+        else:
+            process_logs(pod_id=pod_id,
+                         experiment_name=experiment_name,
+                         temp=True)
+            log_path = get_experiment_logs_path(experiment_name=experiment_name, temp=True)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192

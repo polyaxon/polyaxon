@@ -98,6 +98,8 @@ class DockerBuilder(object):
         for raw_line in raw_lines:
             try:
                 json_line = json.loads(raw_line)
+                print(str(json_line))
+                _logger.warning(str(json_line))  # TODO
 
                 if json_line.get('error'):
                     log_lines.append(

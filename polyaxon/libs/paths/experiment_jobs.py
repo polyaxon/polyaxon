@@ -2,7 +2,7 @@ import os
 
 from django.conf import settings
 
-from libs.paths.utils import create_path, delete_path
+from libs.paths.utils import check_archive_path, create_path, delete_path
 
 
 def get_experiment_job_logs_path(experiment_job_name, temp):
@@ -39,5 +39,8 @@ def create_experiment_job_path(experiment_job_name, path):
     return path
 
 
-def create_experiment_job_logs_path(experiment_job_name):
+def create_experiment_job_logs_path(experiment_job_name, temp):
+    if temp:
+        check_archive_path(settings.LOGS_ARCHIVE_ROOT)
+        return create_experiment_job_path(experiment_job_name, settings.LOGS_ARCHIVE_ROOT)
     return create_experiment_job_path(experiment_job_name, settings.LOGS_MOUNT_PATH)

@@ -1,3 +1,4 @@
+from constants.k8s_jobs import JOB_NAME
 from libs.unique_urls import get_job_health_url
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -18,8 +19,6 @@ from scheduler.spawners.templates.volumes import (
 
 
 class JobSpawner(K8SManager):
-    JOB_NAME = 'job'
-
     def __init__(self,
                  project_name,
                  project_uuid,
@@ -45,7 +44,7 @@ class JobSpawner(K8SManager):
         self.job_name = job_name
         self.job_uuid = job_uuid
         self.pod_manager = pods.PodManager(namespace=namespace,
-                                           name=self.JOB_NAME,
+                                           name=JOB_NAME,
                                            project_name=self.project_name,
                                            project_uuid=self.project_uuid,
                                            job_name=job_name,

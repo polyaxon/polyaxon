@@ -5,7 +5,7 @@ from hestia.crypto import get_hmac
 
 from django.conf import settings
 
-from constants.k8s_jobs import JOB_NAME
+from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
 from libs.paths.notebooks import get_notebook_job_outputs_path
 from libs.paths.projects import get_project_repos_path
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -33,11 +33,10 @@ from scheduler.spawners.templates.volumes import (
 
 
 class NotebookSpawner(ProjectJobSpawner):
-    NOTEBOOK_JOB_NAME = 'notebook'
     PORT = 8888
 
     def get_notebook_url(self):
-        return self._get_service_url(self.NOTEBOOK_JOB_NAME)
+        return self._get_service_url(NOTEBOOK_JOB_NAME)
 
     def get_notebook_token(self):
         return get_hmac(settings.APP_LABELS_NOTEBOOK, self.project_uuid)
@@ -68,7 +67,7 @@ class NotebookSpawner(ProjectJobSpawner):
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
-            job_name=self.NOTEBOOK_JOB_NAME,
+            job_name=NOTEBOOK_JOB_NAME,
             deployment_name=deployment_name,
             port=ports[0])
 
@@ -137,7 +136,7 @@ class NotebookSpawner(ProjectJobSpawner):
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
-        deployment_name = JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME_FORMAT.format(name=NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
 
         node_selector = get_node_selector(
             node_selector=node_selector,
@@ -151,7 +150,7 @@ class NotebookSpawner(ProjectJobSpawner):
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=settings.APP_LABELS_NOTEBOOK,
-            name=self.NOTEBOOK_JOB_NAME,
+            name=NOTEBOOK_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             job_name=self.job_name,
@@ -210,7 +209,7 @@ class NotebookSpawner(ProjectJobSpawner):
         return results
 
     def stop_notebook(self):
-        deployment_name = JOB_NAME.format(name=self.NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
+        deployment_name = JOB_NAME_FORMAT.format(name=NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
         try:
             self.delete_deployment(name=deployment_name, reraise=True)
             self.delete_service(name=deployment_name)

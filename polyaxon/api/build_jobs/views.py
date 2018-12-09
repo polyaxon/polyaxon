@@ -34,6 +34,7 @@ from api.endpoint.build import BuildEndpoint, BuildResourceEndpoint, BuildResour
 from api.endpoint.project import ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
+from constants.k8s_jobs import JOB_NAME_FORMAT, DOCKERIZER_JOB_NAME
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
@@ -48,6 +49,7 @@ from event_manager.events.build_job import (
 )
 from event_manager.events.project import PROJECT_BUILDS_VIEWED
 from libs.paths.jobs import get_job_logs_path
+from logs_handlers.log_queries.build_job import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
@@ -175,7 +177,15 @@ class BuildLogsView(BuildEndpoint, RetrieveEndpoint):
                        instance=self.build,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        log_path = get_job_logs_path(self.build.unique_name)
+        job_name = self.build.unique_name
+        pod_id = JOB_NAME_FORMAT.format(name=DOCKERIZER_JOB_NAME, job_uuid=self.build.uuid.hex)
+        if self.build.is_done:
+            log_path = get_job_logs_path(job_name, temp=False)
+        else:
+            process_logs(pod_id=pod_id,
+                         job_name=job_name,
+                         temp=True)
+            log_path = get_job_logs_path(job_name, temp=True)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192

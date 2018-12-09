@@ -4,7 +4,7 @@ from db.models.build_jobs import BuildJob
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from logs_handlers.tasks.logger import logger
-from logs_handlers.utils import safe_log_experiment_job, safe_log_job
+from logs_handlers.utils import safe_log_experiment, safe_log_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks
 
@@ -16,7 +16,7 @@ def handle_experiment_job_log(experiment_name,
         return
 
     logger.debug('handling log event for %s', experiment_uuid)
-    safe_log_experiment_job(experiment_name=experiment_name, log_lines=log_lines)
+    safe_log_experiment(experiment_name=experiment_name, log_lines=log_lines, temp=False)
 
 
 @celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_EXPERIMENTS, ignore_result=True)
@@ -47,7 +47,7 @@ def handle_job_logs(job_uuid, job_name, log_lines):
         return
 
     logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_lines=log_lines)
+    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False)
 
 
 @celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_JOBS, ignore_result=True)
@@ -77,7 +77,7 @@ def handle_build_job_logs(job_uuid, job_name, log_lines):
         return
 
     logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_lines=log_lines)
+    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False)
 
 
 @celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_BUILDS, ignore_result=True)
