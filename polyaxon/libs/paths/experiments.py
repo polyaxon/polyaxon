@@ -23,17 +23,20 @@ def get_experiment_outputs_path(persistence_outputs,
     return os.path.join(persistence_outputs, '/'.join(values))
 
 
-def get_experiment_logs_path(experiment_name):
+def get_experiment_logs_path(experiment_name, temp):
     values = experiment_name.split('.')
     if len(values) == 3:
         values.insert(2, 'experiments')
     else:
         values.insert(2, 'groups')
+
+    if temp:
+        return os.path.join(settings.LOGS_ARCHIVE_ROOT, '/'.join(values))
     return os.path.join(settings.LOGS_MOUNT_PATH, '/'.join(values))
 
 
 def delete_experiment_logs(experiment_name):
-    path = get_experiment_logs_path(experiment_name)
+    path = get_experiment_logs_path(experiment_name, temp=False)
     delete_path(path)
 
 
