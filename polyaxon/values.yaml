@@ -3,7 +3,9 @@ namespace: "polyaxon"
 rbac:
   enabled: true
 ingress:
-  enabled: true
+  enabled: false
+  hosts:
+    - chart-example.local
   tls:
     enabled: false
     hosts:
@@ -19,8 +21,6 @@ ingress:
     ingress.kubernetes.io/proxy-send-timeout: "600"
     ingress.kubernetes.io/send-timeout: "600"
     ingress.kubernetes.io/proxy-body-size: 4G
-  hosts:
-    - chart-example.local
   resources:
     limits:
       cpu: 10m
@@ -30,7 +30,7 @@ ingress:
       memory: 20Mi
 # If you enable ingress, please set this value to ClusterIP or NodePort
 # Otherwise you should set it to LoadBalancer
-serviceType: ClusterIP
+serviceType: LoadBalancer
 limitResources: false
 
 # Initial admin user to create

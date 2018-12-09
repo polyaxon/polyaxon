@@ -42,17 +42,17 @@ spec:
   {{- else }}  {{- /* else if tls.enabled */ -}}
   rules:
   {{- range .Values.ingress.hosts }}
-    - host: {{ . }}
-      http:
-        paths:
-        - path: /
-          backend:
-            serviceName: {{ $fullName }}-api
-            servicePort: {{ $.Values.api.service.externalPort }}
-        - path: /ws
-          backend:
-            serviceName: {{ $fullName }}-api
-            servicePort: {{ $.Values.streams.service.externalPort }}
+  - host: {{ . }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.api.service.externalPort }}
+      - path: /ws
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.streams.service.externalPort }}
   {{- end }} {{- /* end range ingress.hosts */ -}}
   {{- end }} {{- /* end if tls.enabled */ -}}
 {{- end }}
