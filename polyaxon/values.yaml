@@ -19,6 +19,8 @@ ingress:
     ingress.kubernetes.io/proxy-send-timeout: "600"
     ingress.kubernetes.io/send-timeout: "600"
     ingress.kubernetes.io/proxy-body-size: 4G
+  hosts:
+    - chart-example.local
   resources:
     limits:
       cpu: 10m
