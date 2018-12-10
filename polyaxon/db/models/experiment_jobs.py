@@ -15,6 +15,7 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
         on_delete=models.CASCADE,
         related_name='jobs')
     role = models.CharField(max_length=64, default=TaskType.MASTER)
+    sequence = models.IntegerField(null=True, blank=True, default=0)
     resources = models.OneToOneField(
         'db.JobResources',
         related_name='+',

@@ -35,6 +35,7 @@ def create_job(job_uuid,
                experiment,
                definition,
                role=None,
+               sequence=None,
                resources=None,
                node_selector=None,
                affinity=None,
@@ -44,6 +45,9 @@ def create_job(job_uuid,
                         definition=definition)
     if role:
         job.role = role
+
+    if sequence:
+        job.sequence = sequence
 
     if node_selector:
         job.node_selector = node_selector
@@ -134,6 +138,7 @@ def handle_tensorflow_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
+                   sequence=i,
                    resources=worker_resources.get(i),
                    node_selector=worker_node_selectors.get(i),
                    affinity=worker_affinities.get(i),
@@ -167,6 +172,7 @@ def handle_tensorflow_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(ps),
                    role=TaskType.PS,
+                   sequence=i,
                    resources=ps_resources.get(i),
                    node_selector=ps_node_selectors.get(i),
                    affinity=ps_affinities.get(i),
@@ -216,6 +222,7 @@ def handle_horovod_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
+                   sequence=i,
                    resources=worker_resources.get(i),
                    node_selector=worker_node_selectors.get(i),
                    affinity=worker_affinities.get(i),
@@ -265,6 +272,7 @@ def handle_pytorch_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
+                   sequence=i,
                    resources=worker_resources.get(i),
                    node_selector=worker_node_selectors.get(i),
                    affinity=worker_affinities.get(i),
@@ -314,6 +322,7 @@ def handle_mxnet_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(worker),
                    role=TaskType.WORKER,
+                   sequence=i,
                    resources=worker_resources.get(i),
                    node_selector=worker_node_selectors.get(i),
                    affinity=worker_affinities.get(i),
@@ -346,6 +355,7 @@ def handle_mxnet_experiment(experiment, spawner, response):
                    experiment=experiment,
                    definition=get_job_definition(server),
                    role=TaskType.SERVER,
+                   sequence=i,
                    resources=server_resources.get(i),
                    node_selector=server_node_selectors,
                    affinity=server_affinities,

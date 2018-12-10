@@ -211,7 +211,7 @@ async def experiment_logs_v2(request, ws, username, project_name, experiment_id)
                    actor_id=request.app.user.id,
                    actor_name=request.app.user.username)
 
-    pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_tpye=TaskType.MASTER,
+    pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_type=TaskType.MASTER,
                                                task_idx=0,
                                                job_uuid=job_uuid)
     # Stream logs
