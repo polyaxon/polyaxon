@@ -19,3 +19,10 @@ async def notify(consumer, message):
         except ConnectionClosed:
             disconnected_ws.add(_ws)
     consumer.remove_sockets(disconnected_ws)
+
+
+async def notify_ws(ws, message):
+    try:
+        await ws.send(message)
+    except ConnectionClosed:
+        pass

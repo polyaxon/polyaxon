@@ -1,8 +1,10 @@
 import asyncio
 
+from django.conf import settings
 from websockets import ConnectionClosed
 
 import auditor
+from constants.k8s_jobs import JOB_NAME_FORMAT, EXPERIMENT_JOB_NAME_FORMAT
 
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment_job import (
@@ -14,6 +16,7 @@ from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, MAX_RETRIES, RESOURCES_CHECK, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
+from streams.resources.logs import log_pod
 from streams.resources.utils import get_error_message, notify
 from streams.socket_manager import SocketManager
 from streams.validation.experiment_job import validate_experiment_job
@@ -157,3 +160,33 @@ async def experiment_job_logs(request, ws, username, project_name, experiment_id
             return
 
         await asyncio.sleep(SOCKET_SLEEP)
+
+
+@authorized()
+async def experiment_job_logs_v2(request, ws, username, project_name, experiment_id, job_id):
+    job, experiment, message = validate_experiment_job(request=request,
+                                                       username=username,
+                                                       project_name=project_name,
+                                                       experiment_id=experiment_id,
+                                                       job_id=job_id)
+    if job is None:
+        await ws.send(get_error_message(message))
+        return
+
+    job_uuid = job.uuid.hex
+
+    auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
+                   instance=job,
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
+
+    pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_tpye=job.role,
+                                               task_idx=job.sequence,
+                                               job_uuid=job_uuid)
+    # Stream logs
+    await log_pod(request=request,
+                  ws=ws,
+                  job=job,
+                  pod_id=pod_id,
+                  container=settings.CONTAINER_NAME_EXPERIMENT_JOB,
+                  namespace=settings.K8S_NAMESPACE)

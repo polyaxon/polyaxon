@@ -1,5 +1,4 @@
 from django.conf import settings
-
 from polyaxon_k8s.manager import K8SManager
 
 from logs_handlers.log_queries import base
@@ -8,10 +7,9 @@ from logs_handlers.utils import safe_log_job
 
 def stream_logs(pod_id):
     k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-    for log_line in base.stream_logs(k8s_manager=k8s_manager,
-                                     pod_id=pod_id,
-                                     container_job_name=settings.CONTAINER_NAME_DOCKERIZER_JOB):
-        yield log_line
+    return base.stream_logs(k8s_manager=k8s_manager,
+                            pod_id=pod_id,
+                            container_job_name=settings.CONTAINER_NAME_DOCKERIZER_JOB)
 
 
 def process_logs(pod_id, job_name, temp=True):

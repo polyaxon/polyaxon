@@ -1,10 +1,12 @@
 import asyncio
 
+from django.conf import settings
 from websockets import ConnectionClosed
 
 import auditor
 
 from constants.experiments import ExperimentLifeCycle
+from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
 from polyaxon.settings import CeleryQueues, RoutingKeys
@@ -12,9 +14,11 @@ from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, MAX_RETRIES, RESOURCES_CHECK, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
+from streams.resources.logs import log_pod
 from streams.resources.utils import get_error_message, get_status_message, notify
 from streams.socket_manager import SocketManager
 from streams.validation.experiment import validate_experiment
+from schemas.tasks import TaskType
 
 
 @authorized()
@@ -187,3 +191,33 @@ async def experiment_logs(request,  # pylint:disable=too-many-branches
             return
 
         await asyncio.sleep(SOCKET_SLEEP)
+
+
+@authorized()
+async def experiment_logs_v2(request, ws, username, project_name, experiment_id):
+    experiment, message = validate_experiment(request=request,
+                                              username=username,
+                                              project_name=project_name,
+                                              experiment_id=experiment_id)
+    if experiment is None:
+        await ws.send(get_error_message(message))
+        return
+
+    job = experiment.jobs.filter(role=TaskType.MASTER).first()
+    job_uuid = job.uuid.hex
+
+    auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
+                   instance=experiment,
+                   actor_id=request.app.user.id,
+                   actor_name=request.app.user.username)
+
+    pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_tpye=TaskType.MASTER,
+                                               task_idx=0,
+                                               job_uuid=job_uuid)
+    # Stream logs
+    await log_pod(request=request,
+                  ws=ws,
+                  job=job,
+                  pod_id=pod_id,
+                  container=settings.CONTAINER_NAME_EXPERIMENT_JOB,
+                  namespace=settings.K8S_NAMESPACE)

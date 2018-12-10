@@ -1,19 +1,20 @@
 import asyncio
 
+from django.conf import settings
+
 import auditor
 
 from constants.jobs import JobLifeCycle
 from constants.k8s_jobs import JOB_NAME_FORMAT, DOCKERIZER_JOB_NAME
 from db.redis.to_stream import RedisToStream
 from event_manager.events.build_job import BUILD_JOB_LOGS_VIEWED
-from logs_handlers.log_queries.build_job import stream_logs
 from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, MAX_RETRIES, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
 from streams.resources.utils import get_error_message, get_status_message, notify
-from streams.socket_manager import SocketManager
+from streams.resources.logs import log_pod
 from streams.validation.build import validate_build
 
 
@@ -116,11 +117,7 @@ async def build_logs(request,  # pylint:disable=too-many-branches
 
 
 @authorized()
-async def build_logs_v2(request,  # pylint:disable=too-many-branches
-                        ws,
-                        username,
-                        project_name,
-                        build_id):
+async def build_logs_v2(request, ws, username, project_name, build_id):
     job, message = validate_build(request=request,
                                   username=username,
                                   project_name=project_name,
@@ -135,56 +132,11 @@ async def build_logs_v2(request,  # pylint:disable=too-many-branches
                    instance=job,
                    actor_id=request.app.user.id,
                    actor_name=request.app.user.username)
-
-    if job_uuid in request.app.job_logs_ws_managers:
-        ws_manager = request.app.job_logs_ws_managers[job_uuid]
-    else:
-        ws_manager = SocketManager()
-        request.app.job_logs_ws_managers[job_uuid] = ws_manager
-
-    def handle_job_disconnected_ws(ws):
-        ws_manager.remove_sockets(ws)
-        if not ws_manager.ws:
-            logger.info('Stopping resources monitor for uuid %s', job_uuid)
-            request.app.job_logs_ws_managers.pop(job_uuid, None)
-
-        logger.info('Quitting resources socket for uuid %s', job_uuid)
-
-    def should_disconnect():
-        return not ws_manager.ws
-
     pod_id = JOB_NAME_FORMAT.format(name=DOCKERIZER_JOB_NAME, job_uuid=job_uuid)
-    ws_manager.add_socket(ws)
-    should_quite = False
-
-    # Stream phase changes
-    status = None
-    while status != JobLifeCycle.RUNNING and not JobLifeCycle.is_done(status):
-        job.refresh_from_db()
-        if status != job.last_status:
-            status = job.last_status
-            await notify(consumer=ws_manager, message=get_status_message(status))
-            if should_disconnect():
-                return
-        await asyncio.sleep(SOCKET_SLEEP)
-
-    if JobLifeCycle.is_done(status):
-        await notify(consumer=ws_manager, message=get_status_message(status))
-        return
-
     # Stream logs
-    for message in stream_logs(pod_id=pod_id):
-        if message:
-            await notify(consumer=ws_manager, message=message)
-
-        # Just to check if connection closed
-        if ws._connection_lost:  # pylint:disable=protected-access
-            handle_job_disconnected_ws(ws)
-            should_quite = True
-
-        if should_disconnect():
-            should_quite = True
-
-        if should_quite:
-            return
-        await asyncio.sleep(SOCKET_SLEEP)
+    await log_pod(request=request,
+                  ws=ws,
+                  job=job,
+                  pod_id=pod_id,
+                  container=settings.CONTAINER_NAME_DOCKERIZER_JOB,
+                  namespace=settings.K8S_NAMESPACE)

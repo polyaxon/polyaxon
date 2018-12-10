@@ -1,10 +1,10 @@
 from sanic import Sanic
 
 from streams.resources.builds import build_logs_v2
-from streams.resources.experiment_jobs import experiment_job_logs, experiment_job_resources
-from streams.resources.experiments import experiment_logs, experiment_resources
+from streams.resources.experiment_jobs import experiment_job_logs_v2, experiment_job_resources
+from streams.resources.experiments import experiment_logs_v2, experiment_resources
 from streams.resources.health import health
-from streams.resources.jobs import job_logs
+from streams.resources.jobs import job_logs_v2
 
 app = Sanic(__name__)
 
@@ -24,15 +24,15 @@ def add_url(endpoint, base_url, url):
 
 # Experiment Job urls
 add_url(endpoint=experiment_job_resources, base_url=EXPERIMENT_JOB_URL, url='resources')
-add_url(endpoint=experiment_job_logs, base_url=EXPERIMENT_JOB_URL, url='logs')
+add_url(endpoint=experiment_job_logs_v2, base_url=EXPERIMENT_JOB_URL, url='logs')
 
 # Experiment urls
 add_url(endpoint=experiment_resources, base_url=EXPERIMENT_URL, url='resources')
-add_url(endpoint=experiment_logs, base_url=EXPERIMENT_URL, url='logs')
+add_url(endpoint=experiment_logs_v2, base_url=EXPERIMENT_URL, url='logs')
 
 # Job urls
 # add_url(endpoint=job_resources, base_url=EXPERIMENT_URL, url='resources')
-add_url(endpoint=job_logs, base_url=JOB_URL, url='logs')
+add_url(endpoint=job_logs_v2, base_url=JOB_URL, url='logs')
 
 # Build Job urls
 # add_url(endpoint=job_resources, base_url=EXPERIMENT_URL, url='resources')
