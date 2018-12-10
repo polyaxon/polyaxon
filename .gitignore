@@ -1,13 +1,18 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.pytest_cache/
 *.py[cod]
 *$py.class
+
+# temp files
+*~
 
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
+docker/environment/
 build/
 develop-eggs/
 dist/
@@ -19,11 +24,10 @@ lib64/
 parts/
 sdist/
 var/
-wheels/
+public/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -43,25 +47,28 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*.cover
+*,cover
 .hypothesis/
-.pytest_cache/
 
 # Translations
 *.mo
-*.pot
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
+# Mr Developer
+.mr.developer.cfg
+.pydevproject
+.project
+.settings/
+.idea/
+.DS_Store
 
-# Flask stuff:
-instance/
-.webassets-cache
+# fab files
+fabsettings.py
+fabfile.py
+fab_templates/
 
-# Scrapy stuff:
-.scrapy
+# graphviz files
+*_graphviz.png
+*_graphviz.dot
 
 # Sphinx documentation
 docs/_build/
@@ -69,36 +76,55 @@ docs/_build/
 # PyBuilder
 target/
 
-# Jupyter Notebook
+# IPython Notebook
 .ipynb_checkpoints
 
 # pyenv
 .python-version
 
+# locals
+local.py
+
 # celery beat schedule file
-celerybeat-schedule
+celerybeat-schedule*
+celeryev.pid
+celeryd*pid
+celeryd*log
 
-# SageMath parsed files
-*.sage.py
-
-# Environments
+# dotenv
 .env
-.venv
-env/
+
+# virtualenv
 venv/
 ENV/
-env.bak/
-venv.bak/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# data
+big_data/
+examples/data/
 
-# Rope project settings
-.ropeproject
+# project
+setup.log
+static/
+reports/
+logs/
+media/
+data/
 
-# mkdocs documentation
-/site
+# environment vars
+polyaxon/polyaxon/env_vars/local.json
 
-# mypy
-.mypy_cache/
+# project
+logs/*
+static/debug_toolbar
+static/rest_framework
+
+# npm modules and transpiled typescript files
+client/dist/
+client/node_modules/
+client/css/
+client/polyaxon/**/*.js
+client/polyaxon/**/*.js.map
+/examples/polyaxon-logs/
+client/npm-debug.log
+# don't ignore static dist
+!/static/dist
