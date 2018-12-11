@@ -3,6 +3,7 @@ from django.conf import settings
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from logs_handlers.log_queries import base
 from logs_handlers.utils import safe_log_experiment
+from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
 from polyaxon_k8s.manager import K8SManager
 from schemas.tasks import TaskType
 
@@ -29,3 +30,11 @@ def process_logs(experiment, temp=True):
                                   container_job_name=settings.CONTAINER_NAME_EXPERIMENT_JOB)
 
     safe_log_experiment(experiment_name=experiment.unique_name, log_lines=log_lines, temp=temp)
+
+
+def process_experiment_jobs_logs(experiment, temp=True):
+    k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+    for experiment_job in experiment.jobs.all():
+        process_experiment_job_logs(experiment_job=experiment_job,
+                                    temp=temp,
+                                    k8s_manager=k8s_manager)
