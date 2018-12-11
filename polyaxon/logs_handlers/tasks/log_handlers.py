@@ -16,7 +16,10 @@ def handle_experiment_job_log(experiment_name,
         return
 
     logger.debug('handling log event for %s', experiment_uuid)
-    safe_log_experiment(experiment_name=experiment_name, log_lines=log_lines, temp=False)
+    safe_log_experiment(experiment_name=experiment_name,
+                        log_lines=log_lines,
+                        temp=False,
+                        append=True)
 
 
 @celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_EXPERIMENTS, ignore_result=True)
@@ -47,7 +50,7 @@ def handle_job_logs(job_uuid, job_name, log_lines):
         return
 
     logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False)
+    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False, append=True)
 
 
 @celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_JOBS, ignore_result=True)
@@ -77,7 +80,7 @@ def handle_build_job_logs(job_uuid, job_name, log_lines):
         return
 
     logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False)
+    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False, append=True)
 
 
 @celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_BUILDS, ignore_result=True)

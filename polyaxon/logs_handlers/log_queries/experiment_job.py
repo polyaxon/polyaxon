@@ -32,4 +32,5 @@ def process_logs(experiment_job, temp=True, k8s_manager=None):
 
     safe_log_experiment_job(experiment_job_name=experiment_job.unique_name,
                             log_lines=log_lines,
-                            temp=temp)
+                            temp=temp,
+                            append=False)

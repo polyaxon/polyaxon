@@ -20,4 +20,4 @@ def process_logs(job, temp=True):
                                   pod_id=pod_id,
                                   container_job_name=settings.CONTAINER_NAME_JOB)
 
-    safe_log_job(job_name=job.unique_name, log_lines=log_lines, temp=temp)
+    safe_log_job(job_name=job.unique_name, log_lines=log_lines, temp=temp, append=False)

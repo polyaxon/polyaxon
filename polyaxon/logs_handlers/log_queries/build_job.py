@@ -21,4 +21,4 @@ def process_logs(build, temp=True):
                                   pod_id=pod_id,
                                   container_job_name=settings.CONTAINER_NAME_DOCKERIZER_JOB)
 
-    safe_log_job(job_name=build.unique_name, log_lines=log_lines, temp=temp)
+    safe_log_job(job_name=build.unique_name, log_lines=log_lines, temp=temp, append=False)

@@ -29,7 +29,10 @@ def process_logs(experiment, temp=True):
                                   pod_id=pod_id,
                                   container_job_name=settings.CONTAINER_NAME_EXPERIMENT_JOB)
 
-    safe_log_experiment(experiment_name=experiment.unique_name, log_lines=log_lines, temp=temp)
+    safe_log_experiment(experiment_name=experiment.unique_name,
+                        log_lines=log_lines,
+                        temp=temp,
+                        append=False)
 
 
 def process_experiment_jobs_logs(experiment, temp=True):

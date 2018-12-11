@@ -255,6 +255,7 @@ class SchedulerCeleryTasks(object):
     JOBS_NOTIFY_DONE = 'jobs_notify_done'
     JOBS_CHECK_HEARTBEAT = 'jobs_check_heartbeat'
 
+    LOGS_COLLECT_EXPERIMENT_JOBS = 'logs_collect_experiment_jobs'
     LOGS_COLLECT_EXPERIMENT_JOB = 'logs_collect_experiment_job'
     LOGS_COLLECT_JOB = 'logs_collect_job'
     LOGS_COLLECT_BUILD_JOB = 'logs_collect_build_job'
@@ -454,6 +455,8 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_JOBS},
 
     # Scheduler logs collectors
+    SchedulerCeleryTasks.LOGS_COLLECT_EXPERIMENT_JOBS:
+        {'queue': CeleryQueues.SCHEDULER_LOGS_COLLECTORS},
     SchedulerCeleryTasks.LOGS_COLLECT_EXPERIMENT_JOB:
         {'queue': CeleryQueues.SCHEDULER_LOGS_COLLECTORS},
     SchedulerCeleryTasks.LOGS_COLLECT_JOB:

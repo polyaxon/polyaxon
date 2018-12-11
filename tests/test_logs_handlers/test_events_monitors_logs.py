@@ -9,7 +9,7 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from libs.paths.experiments import get_experiment_logs_path
 from libs.paths.jobs import get_job_logs_path
-from logs_handlers.tasks.logs import (
+from logs_handlers.tasks.log_handlers import (
     logs_handle_build_job,
     logs_handle_experiment_job,
     logs_handle_job
