@@ -1,7 +1,6 @@
-hestia==0.1.4
+hestia==0.1.5
 Jinja2==2.10
 marshmallow==2.16.3
 numpy>=1.15.2
-python-dateutil>=2.7.3
 pytz==2018.7
 rhea==0.4.0
