@@ -260,8 +260,8 @@ def handle_new_experiment_status(sender, **kwargs):
         experiment.jobs.count() > 0
     )
     if stop_condition:
-        _logger.info('One of the workers failed or Master for experiment `%s` is done, '
-                     'send signal to other workers to stop.', experiment.unique_name)
+        _logger.debug('One of the workers failed or Master for experiment `%s` is done, '
+                      'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
         group = experiment.experiment_group
         celery_app.send_task(
