@@ -14,7 +14,7 @@ from streams.constants import CHECK_DELAY, MAX_RETRIES, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
 from streams.resources.utils import get_error_message, get_status_message, notify
-from streams.resources.logs import log_pod
+from streams.resources.logs import log_job
 from streams.validation.build import validate_build
 
 
@@ -134,7 +134,7 @@ async def build_logs_v2(request, ws, username, project_name, build_id):
                    actor_name=request.app.user.username)
     pod_id = JOB_NAME_FORMAT.format(name=DOCKERIZER_JOB_NAME, job_uuid=job_uuid)
     # Stream logs
-    await log_pod(request=request,
+    await log_job(request=request,
                   ws=ws,
                   job=job,
                   pod_id=pod_id,
