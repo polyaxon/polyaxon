@@ -24,9 +24,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from scheduler import notebook_scheduler
-from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
-from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 from tests.utils import BaseViewTest
 
 

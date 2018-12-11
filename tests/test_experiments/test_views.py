@@ -1927,6 +1927,7 @@ class TestExperimentLogsViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.experiment = ExperimentFactory(project=project)
+        self.logs = []
         self.url = '/{}/{}/{}/experiments/{}/logs'.format(
             API_V1,
             project.user.username,

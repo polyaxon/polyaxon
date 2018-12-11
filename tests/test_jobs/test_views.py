@@ -636,6 +636,7 @@ class TestJobLogsViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.job = JobFactory(project=project)
+        self.logs = []
         self.url = '/{}/{}/{}/jobs/{}/logs'.format(
             API_V1,
             project.user.username,
