@@ -1,18 +1,19 @@
 import asyncio
 
+from django.conf import settings
+
 import auditor
 
 from constants.jobs import JobLifeCycle
 from constants.k8s_jobs import JOB_NAME_FORMAT, JOB_NAME
 from db.redis.to_stream import RedisToStream
 from event_manager.events.job import JOB_LOGS_VIEWED
-from polyaxon import settings
 from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, MAX_RETRIES, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
-from streams.resources.logs import log_pod
+from streams.resources.logs import log_job
 from streams.resources.utils import get_error_message, get_status_message, notify
 from streams.validation.job import validate_job
 
@@ -134,7 +135,7 @@ async def job_logs_v2(request, ws, username, project_name, job_id):
 
     pod_id = JOB_NAME_FORMAT.format(name=JOB_NAME, job_uuid=job_uuid)
     # Stream logs
-    await log_pod(request=request,
+    await log_job(request=request,
                   ws=ws,
                   job=job,
                   pod_id=pod_id,

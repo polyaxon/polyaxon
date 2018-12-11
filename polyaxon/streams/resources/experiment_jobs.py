@@ -4,7 +4,7 @@ from django.conf import settings
 from websockets import ConnectionClosed
 
 import auditor
-from constants.k8s_jobs import JOB_NAME_FORMAT, EXPERIMENT_JOB_NAME_FORMAT
+from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment_job import (
@@ -16,7 +16,7 @@ from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, MAX_RETRIES, RESOURCES_CHECK, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
-from streams.resources.logs import log_pod
+from streams.resources.logs import log_job
 from streams.resources.utils import get_error_message, notify
 from streams.socket_manager import SocketManager
 from streams.validation.experiment_job import validate_experiment_job
@@ -184,7 +184,7 @@ async def experiment_job_logs_v2(request, ws, username, project_name, experiment
                                                task_idx=job.sequence,
                                                job_uuid=job_uuid)
     # Stream logs
-    await log_pod(request=request,
+    await log_job(request=request,
                   ws=ws,
                   job=job,
                   pod_id=pod_id,

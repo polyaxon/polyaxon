@@ -11,6 +11,13 @@ def get_status_message(status):
     return json.dumps({'status': status, 'log_lines': None})
 
 
+def should_disconnect(ws, ws_manager):
+    if ws._connection_lost:  # pylint:disable=protected-access
+        ws_manager.remove_sockets({ws, })
+        return True
+    return not ws_manager.ws
+
+
 async def notify(consumer, message):
     disconnected_ws = set()
     for _ws in consumer.ws:
