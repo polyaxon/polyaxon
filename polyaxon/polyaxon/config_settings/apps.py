@@ -1,6 +1,5 @@
 from polyaxon.config_manager import config
 
-
 DEFAULT_APPS = (
     'polyaxon',
     'db.apps.DBConfig',

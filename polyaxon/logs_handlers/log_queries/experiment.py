@@ -1,10 +1,9 @@
 from django.conf import settings
 
-from polyaxon_k8s.manager import K8SManager
-
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from logs_handlers.log_queries import base
 from logs_handlers.utils import safe_log_experiment
+from polyaxon_k8s.manager import K8SManager
 from schemas.tasks import TaskType
 
 

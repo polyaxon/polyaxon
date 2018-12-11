@@ -1,9 +1,9 @@
 import logging
 
-from django.utils import timezone
 from kubernetes import watch
 
 from django.conf import settings
+from django.utils import timezone
 
 from constants.jobs import JobLifeCycle
 from db.redis.containers import RedisJobContainers

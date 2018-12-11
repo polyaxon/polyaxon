@@ -1,8 +1,7 @@
 from django.conf import settings
 
-from polyaxon_k8s.manager import K8SManager
-
 from constants.k8s_jobs import JOB_NAME_FORMAT
+from polyaxon_k8s.manager import K8SManager
 
 
 class ProjectJobSpawner(K8SManager):

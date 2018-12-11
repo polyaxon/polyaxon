@@ -1,7 +1,8 @@
 import asyncio
 
-from django.conf import settings
 from websockets import ConnectionClosed
+
+from django.conf import settings
 
 import auditor
 

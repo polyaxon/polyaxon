@@ -8,7 +8,7 @@ from constants.jobs import JobLifeCycle
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from logs_handlers.log_queries.base import process_log_line
 from streams.constants import SOCKET_SLEEP
-from streams.resources.utils import notify, get_status_message, notify_ws, should_disconnect
+from streams.resources.utils import get_status_message, notify, notify_ws, should_disconnect
 from streams.socket_manager import SocketManager
 
 

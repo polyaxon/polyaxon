@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from constants.k8s_jobs import JOB_NAME_FORMAT, DOCKERIZER_JOB_NAME
+from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner

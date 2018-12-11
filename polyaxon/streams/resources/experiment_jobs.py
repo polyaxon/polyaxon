@@ -1,11 +1,12 @@
 import asyncio
 
-from django.conf import settings
 from websockets import ConnectionClosed
 
-import auditor
-from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
+from django.conf import settings
 
+import auditor
+
+from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_LOGS_VIEWED,

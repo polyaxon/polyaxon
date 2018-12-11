@@ -1,9 +1,9 @@
 from django.conf import settings
-from polyaxon_k8s.manager import K8SManager
 
-from constants.k8s_jobs import JOB_NAME_FORMAT, DOCKERIZER_JOB_NAME
+from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
 from logs_handlers.log_queries import base
 from logs_handlers.utils import safe_log_job
+from polyaxon_k8s.manager import K8SManager
 
 
 def stream_logs(build):

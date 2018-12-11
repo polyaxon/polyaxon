@@ -1,8 +1,7 @@
 from kubernetes import client
 
-from polyaxon_k8s import constants as k8s_constants
-
 from constants.k8s_jobs import JOB_NAME_FORMAT
+from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.project_jobs.labels import get_labels
 from scheduler.spawners.templates.project_jobs.pods import get_project_pod_spec
 

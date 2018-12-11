@@ -3,8 +3,8 @@ from django.shortcuts import get_object_or_404
 import access
 
 from access.resources import Resources
-from api.endpoint.base import BaseEndpoint
 from api.endpoint.admin import AdminPermission
+from api.endpoint.base import BaseEndpoint
 from db.models.projects import Project
 
 

@@ -9,7 +9,7 @@ from rest_framework import status
 from api.plugins.serializers import ProjectTensorboardJobSerializer
 from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
-from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME, NOTEBOOK_JOB_NAME
+from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
 from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment

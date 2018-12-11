@@ -5,7 +5,7 @@ from django.conf import settings
 import auditor
 
 from constants.jobs import JobLifeCycle
-from constants.k8s_jobs import JOB_NAME_FORMAT, DOCKERIZER_JOB_NAME
+from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
 from db.redis.to_stream import RedisToStream
 from event_manager.events.build_job import BUILD_JOB_LOGS_VIEWED
 from polyaxon.settings import CeleryQueues, RoutingKeys
@@ -13,8 +13,8 @@ from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, MAX_RETRIES, SOCKET_SLEEP
 from streams.consumers import Consumer
 from streams.logger import logger
-from streams.resources.utils import get_error_message, get_status_message, notify
 from streams.resources.logs import log_job
+from streams.resources.utils import get_error_message, get_status_message, notify
 from streams.validation.build import validate_build
 
 

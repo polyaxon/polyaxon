@@ -5,7 +5,7 @@ from django.conf import settings
 import auditor
 
 from constants.jobs import JobLifeCycle
-from constants.k8s_jobs import JOB_NAME_FORMAT, JOB_NAME
+from constants.k8s_jobs import JOB_NAME, JOB_NAME_FORMAT
 from db.redis.to_stream import RedisToStream
 from event_manager.events.job import JOB_LOGS_VIEWED
 from polyaxon.settings import CeleryQueues, RoutingKeys

@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 
 import auditor
 
-from api.endpoint.base import DestroyEndpoint, ListEndpoint, RetrieveEndpoint, UpdateEndpoint
 from api.endpoint.admin import AdminProjectListPermission, AdminResourceEndpoint
+from api.endpoint.base import DestroyEndpoint, ListEndpoint, RetrieveEndpoint, UpdateEndpoint
 from api.endpoint.project import ProjectEndpoint
 from api.projects import queries
 from api.projects.serializers import (

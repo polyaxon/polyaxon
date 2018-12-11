@@ -1,11 +1,11 @@
 import datetime
 
 import pytest
-from django.utils import timezone
 
 from mock import patch
 
 from django.conf import settings
+from django.utils import timezone
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus
