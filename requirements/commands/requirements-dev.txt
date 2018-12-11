@@ -2,4 +2,4 @@
 
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@94b273759faf21960adc63ee53749245c98dbca5#egg=polyaxon-k8s==0.3.3
 -e git+https://github.com/polyaxon/polyaxon-client.git@00133f35d0920167599e3cb86ced1d2d412f10a3#egg=polyaxon-client==0.3.4
--e git+https://github.com/polyaxon/polyaxon-schemas.git@a50a7b5724a21a7921edb0e6e8d0b09468aa634d#egg=polyaxon-schemas==0.3.4
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@ab2c144e427996b87aec364e3aec5bb3d0e067bf#egg=polyaxon-schemas==0.3.4
