@@ -36,7 +36,6 @@ from api.jobs.serializers import (
 )
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
-from constants.k8s_jobs import JOB_NAME_FORMAT, JOB_NAME
 from db.models.jobs import Job, JobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
@@ -236,13 +235,10 @@ class JobLogsView(JobEndpoint, RetrieveEndpoint):
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         job_name = self.job.unique_name
-        pod_id = JOB_NAME_FORMAT.format(name=JOB_NAME, job_uuid=self.job.uuid.hex)
         if self.job.is_done:
             log_path = get_job_logs_path(job_name, temp=False)
         else:
-            process_logs(pod_id=pod_id,
-                         job_name=job_name,
-                         temp=True)
+            process_logs(job=self.job, temp=True)
             log_path = get_job_logs_path(job_name, temp=True)
 
         filename = os.path.basename(log_path)
