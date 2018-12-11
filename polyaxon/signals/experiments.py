@@ -242,7 +242,8 @@ def stop_running_experiment(sender, **kwargs):
                 'specification': instance.config,
                 'update_status': False,
                 'collect_logs': False,
-            })
+            },
+            countdown=5)
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass
