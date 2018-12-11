@@ -575,11 +575,16 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
 
         # Execute the function
-        with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
-            resp = self.auth_client.post(self.url, data)
+        with patch('scheduler.experiment_scheduler.stop_experiment') as stop_mock_fct:  # noqa
+            with patch('logs_handlers.collectors.'
+                       'logs_collect_experiment_jobs') as logs_collector_mock_fct:
+                resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_200_OK
         assert self.object.stopped_experiments.count() == 3
+        # 3 and only 1 running the other will have a stopped directly
+        assert stop_mock_fct.call_count == 1
+        assert logs_collector_mock_fct.call_count == 1
 
     def test_stop_pending(self):
         data = {'pending': True}

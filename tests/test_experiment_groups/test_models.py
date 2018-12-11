@@ -518,12 +518,16 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.stopped_experiments.count() == 0
 
         with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_fct:
-            experiments_group_stop_experiments(experiment_group_id=experiment_group.id,
-                                               pending=False)
+            with patch('logs_handlers.collectors.'
+                       'logs_collect_experiment_jobs') as logs_collector_mock_fct:
+                experiments_group_stop_experiments(
+                    experiment_group_id=experiment_group.id,
+                    pending=False)
 
         assert experiment_group.pending_experiments.count() == 0
         assert experiment_group.running_experiments.count() == 0
         assert spawner_mock_fct.call_count == 1  # Should be stopped with this function
+        assert logs_collector_mock_fct.call_count == 1
         assert experiment_group.stopped_experiments.count() == 3
 
     def test_stopping_group_stops_iteration(self):

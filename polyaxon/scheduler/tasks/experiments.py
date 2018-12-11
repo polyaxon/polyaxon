@@ -9,7 +9,7 @@ from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.experiments import copy_experiment_outputs
-from logs_handlers.tasks.log_collectors import logs_collect_experiment_jobs
+from logs_handlers import collectors
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, experiment_scheduler
@@ -164,7 +164,7 @@ def experiments_stop(self,
                      update_status=True,
                      collect_logs=True):
     if collect_logs:
-        logs_collect_experiment_jobs(experiment_uuid=experiment_uuid)
+        collectors.logs_collect_experiment_jobs(experiment_uuid=experiment_uuid)
     if specification:
         specification = ExperimentSpecification.read(specification)
         deleted = experiment_scheduler.stop_experiment(

@@ -3,7 +3,7 @@ import logging
 from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from db.redis.heartbeat import RedisHeartBeat
-from logs_handlers.tasks.log_collectors import logs_collect_job
+from logs_handlers.collectors import logs_collect_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, job_scheduler

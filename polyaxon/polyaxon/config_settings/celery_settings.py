@@ -255,11 +255,6 @@ class SchedulerCeleryTasks(object):
     JOBS_NOTIFY_DONE = 'jobs_notify_done'
     JOBS_CHECK_HEARTBEAT = 'jobs_check_heartbeat'
 
-    LOGS_COLLECT_EXPERIMENT_JOBS = 'logs_collect_experiment_jobs'
-    LOGS_COLLECT_EXPERIMENT_JOB = 'logs_collect_experiment_job'
-    LOGS_COLLECT_JOB = 'logs_collect_job'
-    LOGS_COLLECT_BUILD_JOB = 'logs_collect_build_job'
-
 
 class HPCeleryTasks(object):
     """Hyperparams celery tasks.
@@ -308,7 +303,6 @@ class CeleryQueues(object):
     SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS')
     SCHEDULER_BUILD_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS')
     SCHEDULER_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_JOBS')
-    SCHEDULER_LOGS_COLLECTORS = config.get_string('POLYAXON_QUEUES_SCHEDULER_LOGS_COLLECTORS')
 
     PIPELINES_HEALTH = config.get_string('POLYAXON_QUEUES_PIPELINES_HEALTH')
     PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES')
@@ -453,16 +447,6 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_JOBS},
     SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT:
         {'queue': CeleryQueues.SCHEDULER_JOBS},
-
-    # Scheduler logs collectors
-    SchedulerCeleryTasks.LOGS_COLLECT_EXPERIMENT_JOBS:
-        {'queue': CeleryQueues.SCHEDULER_LOGS_COLLECTORS},
-    SchedulerCeleryTasks.LOGS_COLLECT_EXPERIMENT_JOB:
-        {'queue': CeleryQueues.SCHEDULER_LOGS_COLLECTORS},
-    SchedulerCeleryTasks.LOGS_COLLECT_JOB:
-        {'queue': CeleryQueues.SCHEDULER_LOGS_COLLECTORS},
-    SchedulerCeleryTasks.LOGS_COLLECT_BUILD_JOB:
-        {'queue': CeleryQueues.SCHEDULER_LOGS_COLLECTORS},
 
     # Crons health
     CronsCeleryTasks.CRONS_HEALTH:
