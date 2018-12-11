@@ -1,0 +1,21 @@
+---
+version: 1
+
+kind: experiment
+
+declarations:
+  C: 1.0
+  max_features: 20000
+  max_df: 1.0
+  ngram: 1
+
+build:
+  image: python:2.7
+  build_steps:
+    - pip install --no-cache-dir -r requirements.txt
+
+run:
+  cmd: python run.py --C={{ C }} \
+                     --max_features={{ max_features }} \
+                     --max_df={{ max_df }} \
+                     --ngram={{ ngram }}
