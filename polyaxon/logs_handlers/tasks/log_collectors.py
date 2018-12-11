@@ -20,7 +20,7 @@ def logs_collect_experiment_jobs(experiment_uuid):
     except Experiment.DoesNotExist:
         return
 
-    if experiment.jobs.coutn() > 0:
+    if experiment.jobs.count() > 0:
         process_experiment_jobs_logs(experiment=experiment, temp=False)
     else:
         process_experiment_logs(experiment=experiment, temp=False)
@@ -35,7 +35,7 @@ def logs_collect_experiment_job(experiment_job_uuid):
     except (ExperimentJob.DoesNotExist, Experiment.DoesNotExist):
         return
 
-    if experiment.jobs.coutn() > 0:
+    if experiment.jobs.count() > 0:
         process_experiment_job_logs(experiment_job=experiment_job, temp=False)
     else:
         process_experiment_logs(experiment=experiment, temp=False)
