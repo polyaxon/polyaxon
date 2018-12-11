@@ -79,7 +79,8 @@ async def log_experiment(request, ws, experiment, namespace, container):
         job_uuid = job.uuid.hex
         pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_type=job.role,
                                                    task_idx=job.sequence,
-                                                   job_uuid=job_uuid)
+                                                   job_uuid=job_uuid,
+                                                   experiment_uuid=experiment_uuid)
         log_requests.append(
             log_job_pod(k8s_api=k8s_api,
                         ws=ws,

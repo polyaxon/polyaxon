@@ -174,6 +174,7 @@ async def experiment_job_logs_v2(request, ws, username, project_name, experiment
         return
 
     job_uuid = job.uuid.hex
+    experiment_uuid = experiment.uuid.hex
 
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
                    instance=job,
@@ -182,7 +183,8 @@ async def experiment_job_logs_v2(request, ws, username, project_name, experiment
 
     pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_type=job.role,
                                                task_idx=job.sequence,
-                                               job_uuid=job_uuid)
+                                               job_uuid=job_uuid,
+                                               experiment_uuid=experiment_uuid)
     # Stream logs
     await log_job(request=request,
                   ws=ws,
