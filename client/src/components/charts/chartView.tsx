@@ -209,14 +209,14 @@ export default class ChartView extends React.Component<Props, {}> {
 
     const smoothData = (data: Plotly.Datum[], smoothingWeight: number) => {
       const newData: Plotly.Datum[] = [];
-      let lastVal = data.length > 0 ? 0 : NaN;
+      let lastVal = (data.length > 0) ? 0 : NaN;
       let numAccumulation = 0;
       data.forEach((d, i) => {
-        const nextVal = data[i + 1];
+        const nextVal = data[i];
         if (!_.isFinite(nextVal)) {
           newData.push(nextVal);
         } else {
-          lastVal = lastVal * smoothingWeight + (1 - smoothingWeight) * (nextVal as number);
+          lastVal = lastVal as number * smoothingWeight + (1 - smoothingWeight) * (nextVal as number);
           numAccumulation++;
           let unbiasedWeight = 1;
           if (smoothingWeight !== 1.0) {
