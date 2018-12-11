@@ -20,7 +20,7 @@ def logs_collect_experiment_jobs(experiment_uuid):
     except Experiment.DoesNotExist:
         return
 
-    if experiment.jobs.count() > 0:
+    if experiment.jobs.count() > 1:
         process_experiment_jobs_logs(experiment=experiment, temp=False)
     else:
         process_experiment_logs(experiment=experiment, temp=False)
