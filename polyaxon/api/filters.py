@@ -24,7 +24,8 @@ class QueryFilter(BaseFilterBackend):
     def get_query_manager(self, view):
         query_manager = getattr(view, 'query_manager', self.query_manager)
         if not query_manager:
-            raise ImproperlyConfigured('QueryFilter requires a query_manager to be set on the view.')
+            raise ImproperlyConfigured(
+                'QueryFilter requires a query_manager to be set on the view.')
         return query_manager
 
     def filter_queryset(self, request, queryset, view):

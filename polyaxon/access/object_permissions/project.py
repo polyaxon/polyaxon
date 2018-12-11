@@ -1,6 +1,6 @@
 from rest_framework import permissions
 
-from scopes.access import DEFAULT_ACCESS, OWNER_ACCESS, SUPERUSER_ACCESS, UNAUTHENTICATED_ACCESS
+from scopes.access import DEFAULT_ACCESS
 
 
 def has_object_permission(permission, request, view, obj):
