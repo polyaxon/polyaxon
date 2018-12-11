@@ -18,14 +18,15 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
-setup(name='polyaxon-client',
-      version='0.3.4',
-      description='Python client to interact with Polyaxon API.',
+setup(name='polystores',
+      version='0.0.1',
+      description='Polystores is an abstraction and a collection of clients '
+                  'to interact with cloud storages.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
       author='Mourad Mourafiq',
       author_email='mourad@polyaxon.com',
-      url='https://github.com/polyaxon/polyaxon-cli',
+      url='https://github.com/polyaxon/polystores',
       license='MIT',
       platforms='any',
       packages=find_packages(),
@@ -37,23 +38,17 @@ setup(name='polyaxon-client',
           'azure',
           'google cloud storage',
           'gcs',
-          'tensorFlow',
-          'deep-learning',
           'machine-learning',
           'data-science',
-          'neural-networks',
           'artificial-intelligence',
           'ai',
           'reinforcement-learning',
           'kubernetes',
+          'docker'
       ],
       install_requires=[
-          "clint==0.5.1",
-          "polyaxon-schemas==0.3.4",
-          "psutil==5.4.7",
-          "requests>=2.20.0",
-          "requests-toolbelt==0.8.0",
-          "websocket-client>=0.53.0,<=0.54.0",
+          "rhea==0.4.0",
+          "six==1.11.0"
       ],
       classifiers=[
           'Programming Language :: Python',
@@ -64,7 +59,5 @@ setup(name='polyaxon-client',
       ],
       tests_require=[
           "pytest",
-          "httpretty==0.8.14",
-          "fake-factory==0.7.2"
       ],
       cmdclass={'test': PyTest})

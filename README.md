@@ -7,13 +7,36 @@
 
 # polystores
 
-Polystores is an abstraction and a collection of cloud storages.
+Polystores is an abstraction and a collection of clients to interact with cloud storages.
 
 
 ## Install
 
 ```bash
 $ pip install -U polystores
+```
+
+N.B. this module does not include by default the cloud storage's client requirements 
+to keep the library lightweight, the user needs to install the appropriate module to use with `polystores`.
+
+### Install S3
+
+```bash
+pip install boto3 botocore
+```
+
+### Install GCS
+
+
+```bash
+pip install google-cloud-storage
+```
+
+### Install Azure Storage
+
+
+```bash
+pip install azure-storage
 ```
 
 ## Stores
