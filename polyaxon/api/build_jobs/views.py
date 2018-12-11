@@ -214,7 +214,8 @@ class BuildStopView(BuildEndpoint, CreateEndpoint):
                 'project_uuid': self.project.uuid.hex,
                 'build_job_name': self.build.unique_name,
                 'build_job_uuid': self.build.uuid.hex,
-                'update_status': True
+                'update_status': True,
+                'collect_logs': True,
             })
         return Response(status=status.HTTP_200_OK)
 

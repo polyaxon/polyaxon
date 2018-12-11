@@ -8,6 +8,7 @@ from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
 from db.redis.heartbeat import RedisHeartBeat
+from logs_handlers.tasks.log_collectors import logs_collect_build_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
@@ -35,7 +36,10 @@ def build_jobs_stop(self,
                     project_uuid,
                     build_job_name,
                     build_job_uuid,
-                    update_status=True):
+                    update_status=True,
+                    collect_logs=True):
+    if collect_logs:
+        logs_collect_build_job(build_uuid=build_job_uuid)
     deleted = dockerizer_scheduler.stop_dockerizer(
         project_name=project_name,
         project_uuid=project_uuid,

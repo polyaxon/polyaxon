@@ -271,7 +271,8 @@ class JobStopView(JobEndpoint, PostEndpoint):
                 'project_uuid': self.project.uuid.hex,
                 'job_name': self.job.unique_name,
                 'job_uuid': self.job.uuid.hex,
-                'update_status': True
+                'update_status': True,
+                'collect_logs': True,
             })
         return Response(status=status.HTTP_200_OK)
 

@@ -697,7 +697,8 @@ class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
                 'specification': obj.config,
-                'update_status': True
+                'update_status': True,
+                'collect_logs': True,
             })
         return Response(status=status.HTTP_200_OK)
 
@@ -725,7 +726,8 @@ class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
                     'experiment_group_name': group.unique_name if group else None,
                     'experiment_group_uuid': group.uuid.hex if group else None,
                     'specification': experiment.config,
-                    'update_status': True
+                    'update_status': True,
+                    'collect_logs': True,
                 })
         return Response(status=status.HTTP_200_OK)
 

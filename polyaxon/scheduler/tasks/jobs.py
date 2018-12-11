@@ -3,6 +3,7 @@ import logging
 from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from db.redis.heartbeat import RedisHeartBeat
+from logs_handlers.tasks.log_collectors import logs_collect_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, job_scheduler
@@ -70,7 +71,10 @@ def jobs_stop(self,
               project_uuid,
               job_name,
               job_uuid,
-              update_status=True):
+              update_status=True,
+              collect_logs=True):
+    if collect_logs:
+        logs_collect_job(job_uuid=job_uuid)
     deleted = job_scheduler.stop_job(
         project_name=project_name,
         project_uuid=project_uuid,

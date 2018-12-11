@@ -240,7 +240,8 @@ def stop_running_experiment(sender, **kwargs):
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
                 'specification': instance.config,
-                'update_status': False
+                'update_status': False,
+                'collect_logs': False,
             })
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
@@ -274,6 +275,7 @@ def handle_new_experiment_status(sender, **kwargs):
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
                 'specification': experiment.config,
-                'update_status': False
+                'update_status': False,
+                'collect_logs': True,
             },
             countdown=RedisTTL.get_for_experiment(experiment_id=experiment.id))

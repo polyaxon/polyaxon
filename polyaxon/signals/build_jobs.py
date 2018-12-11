@@ -88,7 +88,8 @@ def build_job_status_post_save(sender, **kwargs):
                 'project_uuid': job.project.uuid.hex,
                 'build_job_name': job.unique_name,
                 'build_job_uuid': job.uuid.hex,
-                'update_status': False
+                'update_status': False,
+                'collect_logs': True,
             },
             countdown=RedisTTL.get_for_build(build_id=job.id))
 
