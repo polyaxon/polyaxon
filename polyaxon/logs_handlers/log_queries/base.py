@@ -15,6 +15,7 @@ def query_logs(k8s_manager, pod_id, container_job_name, stream=False):
         pod_id,
         k8s_manager.namespace,
         container=container_job_name,
+        timestamps=True,
         **params)
 
 
