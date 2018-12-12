@@ -55,17 +55,19 @@ class DeletedModel(models.Model):
 
     def archive(self):
         if self.deleted:
-            return
+            return False
 
         self.deleted = True
         self.save(update_fields=['deleted'])
+        return True
 
     def unarchive(self):
         if not self.deleted:
-            return
+            return False
 
         self.deleted = False
         self.save(update_fields=['deleted'])
+        return True
 
 
 class SequenceManager(models.Manager):

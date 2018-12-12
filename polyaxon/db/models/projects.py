@@ -143,10 +143,23 @@ class Project(DiffModel,
         return bool(self.owner_id)
 
     def archive(self):
-        super().archive()
+        if not super().archive():
+            return False
         self.experiment_groups.update(deleted=True)
         self.experiments.update(deleted=True)
         self.jobs.update(deleted=True)
         self.build_jobs.update(deleted=True)
         self.notebook_jobs.update(deleted=True)
         self.tensorboard_jobs.update(deleted=True)
+        return True
+
+    def unarchive(self):
+        if not super().unarchive():
+            return False
+        self.all_experiment_groups.update(deleted=False)
+        self.all_experiments.update(deleted=False)
+        self.all_jobs.update(deleted=False)
+        self.all_build_jobs.update(deleted=False)
+        self.all_notebook_jobs.update(deleted=False)
+        self.all_tensorboard_jobs.update(deleted=False)
+        return True

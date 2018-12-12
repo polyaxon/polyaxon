@@ -9,8 +9,10 @@ from db.managers.deleted import LiveManager
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.projects import Project
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
+from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
@@ -61,12 +63,16 @@ class TestProjectModel(BaseTest):
         project = ProjectFactory()
         ExperimentGroupFactory(project=project)
         ExperimentFactory(project=project)
+        JobFactory(project=project)
+        BuildJobFactory(project=project)
         NotebookJobFactory(project=project)
         TensorboardJobFactory(project=project)
 
         assert project.deleted is False
         assert project.experiments.count() == 1
         assert project.experiment_groups.count() == 1
+        assert project.jobs.count() == 1
+        assert project.build_jobs.count() == 1
         assert project.notebook_jobs.count() == 1
         assert project.tensorboard_jobs.count() == 1
         assert project.all_experiments.count() == 1
@@ -78,8 +84,23 @@ class TestProjectModel(BaseTest):
         assert project.deleted is True
         assert project.experiments.count() == 0
         assert project.experiment_groups.count() == 0
+        assert project.jobs.count() == 0
+        assert project.build_jobs.count() == 0
         assert project.notebook_jobs.count() == 0
         assert project.tensorboard_jobs.count() == 0
+        assert project.all_experiments.count() == 1
+        assert project.all_experiment_groups.count() == 1
+        assert project.all_notebook_jobs.count() == 1
+        assert project.all_tensorboard_jobs.count() == 1
+
+        project.unarchive()
+        assert project.deleted is False
+        assert project.experiments.count() == 1
+        assert project.experiment_groups.count() == 1
+        assert project.jobs.count() == 1
+        assert project.build_jobs.count() == 1
+        assert project.notebook_jobs.count() == 1
+        assert project.tensorboard_jobs.count() == 1
         assert project.all_experiments.count() == 1
         assert project.all_experiment_groups.count() == 1
         assert project.all_notebook_jobs.count() == 1

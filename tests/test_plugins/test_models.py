@@ -70,11 +70,23 @@ class TestPluginsModel(BaseTest):
 
         assert NotebookJob.objects.count() == 1
         assert TensorboardJob.all.count() == 1
+
         notebook_job.archive()
         tensorboard_job.archive()
         assert notebook_job.deleted is True
         assert tensorboard_job.deleted is True
         assert NotebookJob.objects.count() == 0
+        assert TensorboardJob.objects.count() == 0
+        assert NotebookJob.all.count() == 1
+        assert TensorboardJob.all.count() == 1
+
+        notebook_job.unarchive()
+        tensorboard_job.unarchive()
+        assert notebook_job.deleted is False
+        assert tensorboard_job.deleted is False
+        assert NotebookJob.objects.count() == 1
+        assert TensorboardJob.objects.count() == 1
+        assert NotebookJob.all.count() == 1
         assert TensorboardJob.all.count() == 1
 
 

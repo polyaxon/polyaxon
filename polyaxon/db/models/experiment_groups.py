@@ -162,8 +162,16 @@ class ExperimentGroup(DiffModel,
                                              **params)
 
     def archive(self):
-        super().archive()
+        if not super().archive():
+            return False
         self.experiments.update(deleted=True)
+        return True
+
+    def unarchive(self):
+        if not super().unarchive():
+            return False
+        self.all_experiments.update(deleted=False)
+        return True
 
     @cached_property
     def hptuning_config(self):

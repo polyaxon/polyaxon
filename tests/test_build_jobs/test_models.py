@@ -258,7 +258,13 @@ class TestBuildJobModels(BaseTest):
         assert build_job.deleted is False
         assert BuildJob.objects.count() == 1
         assert BuildJob.all.count() == 1
+
         build_job.archive()
         assert build_job.deleted is True
         assert BuildJob.objects.count() == 0
+        assert BuildJob.all.count() == 1
+
+        build_job.unarchive()
+        assert build_job.deleted is False
+        assert BuildJob.objects.count() == 1
         assert BuildJob.all.count() == 1
