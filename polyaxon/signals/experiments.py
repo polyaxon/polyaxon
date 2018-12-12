@@ -243,7 +243,7 @@ def stop_running_experiment(sender, **kwargs):
                 'update_status': False,
                 'collect_logs': False,
             },
-            countdown=5)
+            countdown=1)
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass
