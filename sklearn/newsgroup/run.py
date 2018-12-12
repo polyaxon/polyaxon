@@ -33,7 +33,9 @@ if __name__ == '__main__':
     experiment = Experiment()
 
     # Train and eval the model with given parameters.
-    metrics = train_and_eval(ngram_range=(int(args.ngram), int(args.ngram)),
+    output_path = os.path.join(get_outputs_path(), "model.joblib")
+    metrics = train_and_eval(output=output_path,
+                             ngram_range=(int(args.ngram), int(args.ngram)),
                              max_features=int(args.max_features),
                              max_df=args.max_df,
                              C=args.C)

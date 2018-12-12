@@ -3,13 +3,14 @@ from __future__ import print_function
 from time import time
 
 from sklearn.datasets import fetch_20newsgroups
+from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.metrics.classification import accuracy_score, f1_score, recall_score
 
 
-def train_and_eval(ngram_range=(1, 1), max_features=None, max_df=1.0, C=1.0):
+def train_and_eval(output, ngram_range=(1, 1), max_features=None, max_df=1.0, C=1.0):
     """Train and eval newsgroup classification.
 
     :param ngram_range: ngram range
@@ -56,4 +57,8 @@ def train_and_eval(ngram_range=(1, 1), max_features=None, max_df=1.0, C=1.0):
         'recall': recall,
         'f1': f1,
     }
+
+    # Persistent the model.
+    joblib.dump(pipeline, output)
+
     return metrics
