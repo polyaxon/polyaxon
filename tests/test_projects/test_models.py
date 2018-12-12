@@ -41,8 +41,9 @@ class TestProjectModel(BaseTest):
 
     def test_delete_remove_paths(self):
         project = ProjectFactory()
-        [ExperimentGroupFactory(project=project) for _ in range(2)]
-        [ExperimentFactory(project=project) for _ in range(2)]
+        for _ in range(2):
+            ExperimentGroupFactory(project=project)
+            ExperimentFactory(project=project)
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 2
 

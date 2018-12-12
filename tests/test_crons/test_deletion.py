@@ -1,12 +1,4 @@
-import uuid
-
-from datetime import timedelta
-
 import pytest
-
-from django.test import override_settings
-
-from crons.tasks.cleaning import clean_activity_logs, clean_notifications
 from crons.tasks.deletion import (
     delete_archived_build_jobs,
     delete_archived_experiment_groups,
@@ -16,23 +8,19 @@ from crons.tasks.deletion import (
     delete_archived_projects,
     delete_archived_tensorboard_jobs
 )
-from db.models.activitylogs import ActivityLog
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
-from db.models.notification import Notification, NotificationEvent
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
-from event_manager.events.experiment import EXPERIMENT_SUCCEEDED
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from factories.factory_users import UserFactory
 from polyaxon.config_settings import CleaningIntervals
 from tests.utils import BaseTest
 

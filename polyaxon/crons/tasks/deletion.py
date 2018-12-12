@@ -58,7 +58,7 @@ def delete_archived_experiments():
         updated_at__lte=last_date).exclude(
         # We exclude as well experiments that will be deleted in groups
         experiment_group__deleted=False,
-        ).values_list('id', flat=True)
+    ).values_list('id', flat=True)
     for _id in ids:
         celery_app.send_task(
             CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
