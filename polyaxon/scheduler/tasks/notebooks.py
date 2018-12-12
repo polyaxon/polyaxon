@@ -58,6 +58,31 @@ def projects_notebook_start(notebook_job_id):
     notebook_scheduler.start_notebook(notebook_job)
 
 
+@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION, ignore_result=True)
+def projects_notebook_schedule_deletion(notebook_job_id):
+    notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id, include_deleted=True)
+    if not notebook_job:
+        return None
+
+    notebook_job.archive()
+
+    if not notebook_job.is_running:
+        return
+
+    project = notebook_job.project
+    celery_app.send_task(
+        SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
+        kwargs={
+            'project_name': project.unique_name,
+            'project_uuid': project.uuid.hex,
+            'notebook_job_name': notebook_job.unique_name,
+            'notebook_job_uuid': notebook_job.uuid.hex,
+            'update_status': True,
+            'collect_logs': False,
+            'message': 'Notebook is scheduled for deletion.'
+        })
+
+
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
                  bind=True,
                  max_retries=3,
@@ -67,7 +92,8 @@ def projects_notebook_stop(self,
                            project_uuid,
                            notebook_job_name,
                            notebook_job_uuid,
-                           update_status=True):
+                           update_status=True,
+                           message=None):
     deleted = notebook_scheduler.stop_notebook(
         project_name=project_name,
         project_uuid=project_uuid,
@@ -82,10 +108,10 @@ def projects_notebook_stop(self,
     if not update_status:
         return
 
-    notebook = get_valid_notebook(notebook_job_uuid=notebook_job_uuid)
+    notebook = get_valid_notebook(notebook_job_uuid=notebook_job_uuid, include_deleted=True)
     if not notebook:
         return None
 
     # Update notebook status to show that its stopped
     notebook.set_status(status=JobLifeCycle.STOPPED,
-                        message='Notebook was stopped')
+                        message=message or 'Notebook was stopped')

@@ -9,6 +9,7 @@ from django.test.client import MULTIPART_CONTENT
 
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.managers.deleted import LiveManager
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
@@ -163,6 +164,19 @@ class TestJobModel(BaseTest):
             job.delete()
         assert delete_path.call_count == 2 + 2  # outputs + logs
         assert mock_fct.call_count == 1
+
+    def test_managers(self):
+        assert isinstance(Job.objects, LiveManager)
+
+    def test_archive(self):
+        job = JobFactory()
+        assert job.deleted is False
+        assert Job.objects.count() == 1
+        assert Job.all.count() == 1
+        job.archive()
+        assert job.deleted is True
+        assert Job.objects.count() == 0
+        assert Job.all.count() == 1
 
 
 @pytest.mark.jobs_mark

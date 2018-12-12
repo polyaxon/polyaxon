@@ -149,6 +149,36 @@ def experiments_start(experiment_id):
     experiment_scheduler.start_experiment(experiment)
 
 
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION, ignore_result=True)
+def experiments_schedule_deletion(experiment_id):
+    experiment = get_valid_experiment(experiment_id=experiment_id, include_deleted=True)
+    if not experiment:
+        _logger.info('Something went wrong, '
+                     'the Experiment `%s` does not exist anymore.', experiment_id)
+        return
+
+    experiment.archive()
+
+    if not experiment.is_running:
+        return
+
+    project = experiment.project
+    celery_app.send_task(
+        SchedulerCeleryTasks.EXPERIMENTS_STOP,
+        kwargs={
+            'project_name': project.unique_name,
+            'project_uuid': project.uuid.hex,
+            'experiment_name': experiment.unique_name,
+            'experiment_uuid': experiment.uuid.hex,
+            'experiment_group_name': None,
+            'experiment_group_uuid': None,
+            'specification': experiment.config,
+            'update_status': True,
+            'collect_logs': False,
+            'message': 'Experiment is scheduled for deletion.'
+        })
+
+
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,
                  bind=True,
                  max_retries=3,
@@ -162,7 +192,8 @@ def experiments_stop(self,
                      experiment_uuid,
                      specification,
                      update_status=True,
-                     collect_logs=True):
+                     collect_logs=True,
+                     message=None):
     if collect_logs:
         collectors.logs_collect_experiment_jobs(experiment_uuid=experiment_uuid)
     if specification:
@@ -187,7 +218,7 @@ def experiments_stop(self,
     if not update_status:
         return
 
-    experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
+    experiment = get_valid_experiment(experiment_uuid=experiment_uuid, include_deleted=True)
     if not experiment:
         _logger.info('Something went wrong, '
                      'the Experiment `%s` does not exist anymore.', experiment_uuid)
@@ -195,4 +226,4 @@ def experiments_stop(self,
 
     # Update experiment status to show that its stopped
     experiment.set_status(ExperimentLifeCycle.STOPPED,
-                          message='Experiment was stopped')
+                          message=message or 'Experiment was stopped')

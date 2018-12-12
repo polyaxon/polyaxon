@@ -121,6 +121,12 @@ class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEn
         'DELETE': BUILD_JOB_DELETED_TRIGGERED
     }
 
+    def perform_destroy(self, instance):
+        instance.archive()
+        celery_app.send_task(
+            SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
+            kwargs={'build_job_id': instance.id})
+
 
 class BuildViewMixin(object):
     """A mixin to filter by job."""

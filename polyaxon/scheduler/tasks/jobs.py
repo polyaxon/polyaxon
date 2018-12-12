@@ -65,6 +65,31 @@ def jobs_start(job_id):
     job_scheduler.start_job(job)
 
 
+@celery_app.task(name=SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION, ignore_result=True)
+def jobs_schedule_deletion(job_id):
+    job = get_valid_job(job_id=job_id, include_deleted=True)
+    if not job:
+        return None
+
+    job.archive()
+
+    if not job.is_running:
+        return
+
+    project = job.project
+    celery_app.send_task(
+        SchedulerCeleryTasks.JOBS_STOP,
+        kwargs={
+            'project_name': project.unique_name,
+            'project_uuid': project.uuid.hex,
+            'job_name': job.unique_name,
+            'job_uuid': job.uuid.hex,
+            'update_status': True,
+            'collect_logs': False,
+            'message': 'Job is scheduled for deletion.'
+        })
+
+
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)
 def jobs_stop(self,
               project_name,
@@ -72,7 +97,8 @@ def jobs_stop(self,
               job_name,
               job_uuid,
               update_status=True,
-              collect_logs=True):
+              collect_logs=True,
+              message=None):
     if collect_logs:
         logs_collect_job(job_uuid=job_uuid)
     deleted = job_scheduler.stop_job(
@@ -89,13 +115,13 @@ def jobs_stop(self,
     if not update_status:
         return
 
-    job = get_valid_job(job_uuid=job_uuid)
+    job = get_valid_job(job_uuid=job_uuid, include_deleted=True)
     if not job:
         return None
 
     # Update notebook status to show that its stopped
     job.set_status(status=JobLifeCycle.STOPPED,
-                   message='Job was stopped')
+                   message=message or 'Job was stopped.')
 
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT, ignore_result=True)

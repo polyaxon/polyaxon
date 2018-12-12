@@ -3,6 +3,7 @@ import logging
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group, get_valid_experiment_group
+from db.models.experiments import Experiment
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
@@ -71,20 +72,46 @@ def experiments_group_create(self, experiment_group_id):
     hp_create()
 
 
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION, ignore_result=True)
+def experiments_group_schedule_deletion(experiment_group_id):
+    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id,
+                                                  include_deleted=True)
+    if not experiment_group:
+        # No need to check this group
+        return
+
+    experiment_group.archive()
+
+    if not experiment_group.is_running:
+        return
+
+    celery_app.send_task(
+        SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+        kwargs={
+            'experiment_group_id': experiment_group_id,
+            'pending': False,
+            'collect_logs': False,
+            'message': 'Experiment Group is scheduled for deletion.'
+        })
+
+
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS, ignore_result=True)
 def experiments_group_stop_experiments(experiment_group_id,
                                        pending,
+                                       collect_logs=True,
                                        message=None):
-    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id,
+                                                    include_deleted=True)
     if not experiment_group:
         return
 
     if pending:
+        # this won't work for archived groups anyways!
         for experiment in experiment_group.pending_experiments:
             # Update experiment status to show that its stopped
             experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
     else:
-        experiments = experiment_group.experiments.exclude(
+        experiments = experiment_group.all_experiments.exclude(
             status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
         for experiment in experiments:
             if experiment.is_running:
@@ -99,7 +126,7 @@ def experiments_group_stop_experiments(experiment_group_id,
                         'experiment_group_uuid': experiment_group.uuid.hex,
                         'specification': experiment.config,
                         'update_status': True,
-                        'collect_logs': True
+                        'collect_logs': collect_logs
                     })
             else:
                 # Update experiment status to show that its stopped

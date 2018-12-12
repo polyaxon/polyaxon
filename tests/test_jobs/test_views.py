@@ -402,16 +402,25 @@ class TestJobDetailViewV1(BaseViewTest):
         assert new_object.is_clone is True
         assert new_object.original_job == new_job
 
-    def test_delete(self):
+    def test_delete_archives_and_schedules_stop(self):
         self.object.set_status(JobLifeCycle.SCHEDULED)
         assert self.model_class.objects.count() == 1
         with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
-            with patch('libs.paths.jobs.delete_path') as outputs_mock_stop:
-                resp = self.auth_client.delete(self.url)
+            resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1
-        assert outputs_mock_stop.call_count == 2  # Outputs and Logs
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+
+    def test_delete_archives_and_schedules_deletion(self):
+        self.object.set_status(JobLifeCycle.SCHEDULED)
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.jobs.jobs_schedule_deletion.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
 
 
 @pytest.mark.jobs_mark

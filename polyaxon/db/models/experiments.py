@@ -24,7 +24,8 @@ from db.models.utils import (
     PersistenceModel,
     ReadmeModel,
     RunTimeModel,
-    TagModel
+    TagModel,
+    DeletedModel,
 )
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.experiment import (
@@ -50,6 +51,7 @@ class Experiment(DiffModel,
                  DescribableModel,
                  ReadmeModel,
                  TagModel,
+                 DeletedModel,
                  LastStatusMixin,
                  TensorboardJobMixin):
     """A model that represents experiments."""

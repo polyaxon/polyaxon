@@ -124,6 +124,12 @@ class JobDetailView(JobEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoi
         'DELETE': JOB_DELETED_TRIGGERED
     }
 
+    def perform_destroy(self, instance):
+        instance.archive()
+        celery_app.send_task(
+            SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
+            kwargs={'job_id': instance.id})
+
 
 class JobCloneView(JobEndpoint, CreateEndpoint):
     serializer_class = JobSerializer

@@ -6,7 +6,13 @@ from django.utils.functional import cached_property
 from constants.images_tags import LATEST_IMAGE_TAG
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
-from db.models.utils import DescribableModel, NameableModel, NodeSchedulingModel, TagModel
+from db.models.utils import (
+    DescribableModel,
+    NameableModel,
+    NodeSchedulingModel,
+    TagModel,
+    DeletedModel,
+)
 from db.redis.heartbeat import RedisHeartBeat
 from libs.spec_validation import validate_build_spec_config
 from schemas.specifications import BuildSpecification
@@ -17,6 +23,7 @@ class BuildJob(AbstractJob,
                NameableModel,
                DescribableModel,
                TagModel,
+               DeletedModel,
                JobMixin):
     """A model that represents the configuration for build job."""
     user = models.ForeignKey(

@@ -27,6 +27,33 @@ def build_jobs_start(build_job_id):
     dockerizer_scheduler.start_dockerizer(build_job)
 
 
+@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION, ignore_result=True)
+def build_jobs_schedule_deletion(build_job_id):
+    build_job = get_valid_build_job(build_job_id=build_job_id, include_deleted=True)
+    if not build_job:
+        _logger.info('Something went wrong, '
+                     'the BuildJob `%s` does not exist anymore.', build_job_id)
+        return
+
+    build_job.archive()
+
+    if not build_job.is_running:
+        return
+
+    project = build_job.project
+    celery_app.send_task(
+        SchedulerCeleryTasks.BUILD_JOBS_STOP,
+        kwargs={
+            'project_name': project.unique_name,
+            'project_uuid': project.uuid.hex,
+            'build_job_name': build_job.unique_name,
+            'build_job_uuid': build_job.uuid.hex,
+            'update_status': True,
+            'collect_logs': False,
+            'message': 'Build is scheduled for deletion.'
+        })
+
+
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP,
                  bind=True,
                  max_retries=3,
@@ -37,7 +64,8 @@ def build_jobs_stop(self,
                     build_job_name,
                     build_job_uuid,
                     update_status=True,
-                    collect_logs=True):
+                    collect_logs=True,
+                    message=None):
     if collect_logs:
         logs_collect_build_job(build_uuid=build_job_uuid)
     deleted = dockerizer_scheduler.stop_dockerizer(
@@ -54,7 +82,7 @@ def build_jobs_stop(self,
     if not update_status:
         return
 
-    build_job = get_valid_build_job(build_job_uuid=build_job_uuid)
+    build_job = get_valid_build_job(build_job_uuid=build_job_uuid, include_deleted=True)
     if not build_job:
         _logger.info('Something went wrong, '
                      'the BuildJob `%s` does not exist anymore.', build_job_uuid)
@@ -62,7 +90,7 @@ def build_jobs_stop(self,
 
     # Update build job status to show that its stopped
     build_job.set_status(status=JobLifeCycle.STOPPED,
-                         message='BuildJob was stopped.')
+                         message=message or 'BuildJob was stopped.')
 
 
 def notify_build_job_failed(build_job):
@@ -138,7 +166,7 @@ def notify_build_job_succeeded(build_job):
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE, ignore_result=True)
 def build_jobs_notify_done(build_job_id):
-    build_job = get_valid_build_job(build_job_id=build_job_id)
+    build_job = get_valid_build_job(build_job_id=build_job_id, include_deleted=True)
     if not build_job:
         _logger.info('Something went wrong, '
                      'the BuildJob `%s` does not exist anymore.', build_job_id)

@@ -11,7 +11,8 @@ from django.dispatch import Signal
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
-from db.models.utils import DescribableModel, DiffModel, NameableModel, RunTimeModel, TagModel
+from db.models.utils import DescribableModel, DiffModel, NameableModel, RunTimeModel, TagModel, \
+    DeletedModel
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals
 
@@ -76,7 +77,7 @@ class ExecutableModel(models.Model):
         abstract = True
 
 
-class Pipeline(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableModel):
+class Pipeline(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableModel, DeletedModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
     A Pipeline is a collection / namespace of operations with directional dependencies.
@@ -135,7 +136,12 @@ class Pipeline(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableM
         return dags.get_dag(operations, get_downstream)
 
 
-class Operation(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableModel):
+class Operation(DiffModel,
+                NameableModel,
+                DescribableModel,
+                TagModel,
+                ExecutableModel,
+                DeletedModel):
     """ Base class for all Operations.
 
     To derive this class, you are expected to override
@@ -306,7 +312,7 @@ class OperationRunStatus(StatusModel):
         return '{} <{}>'.format(self.operation_run, self.status)
 
 
-class RunModel(DiffModel, RunTimeModel, LastStatusMixin):
+class RunModel(DiffModel, RunTimeModel, DeletedModel, LastStatusMixin):
     """
     A model that represents an execution behaviour of instance/run of a operation or a pipeline.
     """

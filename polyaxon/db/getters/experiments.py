@@ -5,15 +5,16 @@ from db.models.experiments import Experiment
 _logger = logging.getLogger('polyaxon.db')
 
 
-def get_valid_experiment(experiment_id=None, experiment_uuid=None):
+def get_valid_experiment(experiment_id=None, experiment_uuid=None, include_deleted=False):
     if not any([experiment_id, experiment_uuid]) or all([experiment_id, experiment_uuid]):
         raise ValueError('`get_valid_experiment` function expects an experiment id or uuid.')
 
     try:
+        qs = Experiment.all if include_deleted else Experiment.objects
         if experiment_uuid:
-            experiment = Experiment.objects.get(uuid=experiment_uuid)
+            experiment = qs.get(uuid=experiment_uuid)
         else:
-            experiment = Experiment.objects.get(id=experiment_id)
+            experiment = qs.get(id=experiment_id)
     except Experiment.DoesNotExist:
         _logger.info('Experiment `%s` does not exist', experiment_id or experiment_uuid)
         return None

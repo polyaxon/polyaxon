@@ -21,6 +21,8 @@ from event_manager.events.project import (
     PROJECT_UPDATED,
     PROJECT_VIEWED
 )
+from polyaxon.celery_api import celery_app
+from polyaxon.settings import SchedulerCeleryTasks
 
 
 class ProjectCreateView(CreateAPIView):
@@ -66,3 +68,9 @@ class ProjectDetailView(ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, Destr
         'UPDATE': PROJECT_UPDATED,
         'DELETE': PROJECT_DELETED_TRIGGERED,
     }
+
+    def perform_destroy(self, instance):
+        instance.archive()
+        celery_app.send_task(
+            SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION,
+            kwargs={'project_id': instance.id})

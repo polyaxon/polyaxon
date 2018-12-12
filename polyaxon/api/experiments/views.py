@@ -238,6 +238,12 @@ class ExperimentDetailView(ExperimentEndpoint,
         'DELETE': EXPERIMENT_DELETED_TRIGGERED
     }
 
+    def perform_destroy(self, instance):
+        instance.archive()
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
+            kwargs={'experiment_id': instance.id})
+
 
 class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
     serializer_class = ExperimentSerializer

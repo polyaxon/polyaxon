@@ -4,6 +4,7 @@ from django.core.validators import validate_slug
 from django.db import models
 from django.utils.functional import cached_property
 
+from db.managers.deleted import LiveManager
 from libs.blacklist import validate_blacklist_name
 from libs.spec_validation import validate_outputs_config, validate_persistence_config
 from schemas.environments import OutputsConfig, PersistenceConfig
@@ -41,6 +42,30 @@ class ReadmeModel(models.Model):
     @property
     def has_readme(self):
         return bool(self.readme)
+
+
+class DeletedModel(models.Model):
+    deleted = models.BooleanField(default=False)
+
+    objects = LiveManager()
+    all = models.Manager()
+
+    class Meta:
+        abstract = True
+
+    def archive(self):
+        if self.deleted:
+            return
+
+        self.deleted = True
+        self.save(update_fields=['deleted'])
+
+    def unarchive(self):
+        if not self.deleted:
+            return
+
+        self.deleted = False
+        self.save(update_fields=['deleted'])
 
 
 class SequenceManager(models.Manager):

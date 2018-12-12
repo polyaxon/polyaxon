@@ -14,6 +14,7 @@ from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from crons.tasks.experiments_statuses import experiments_sync_jobs_statuses
+from db.managers.deleted import LiveManager
 from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentStatus
@@ -446,6 +447,19 @@ class TestExperimentModel(BaseTest):
 
         assert os.path.exists(experiment2_outputs_path) is True
         assert os.path.exists(os.path.join(experiment2_outputs_path, 'file')) is True
+
+    def test_managers(self):
+        assert isinstance(Experiment.objects, LiveManager)
+
+    def test_archive(self):
+        experiment = ExperimentFactory()
+        assert experiment.deleted is False
+        assert Experiment.objects.count() == 1
+        assert Experiment.all.count() == 1
+        experiment.archive()
+        assert experiment.deleted is True
+        assert Experiment.objects.count() == 0
+        assert Experiment.all.count() == 1
 
 
 @pytest.mark.experiments_mark

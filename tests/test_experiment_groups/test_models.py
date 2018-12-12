@@ -13,6 +13,7 @@ from django.test.client import MULTIPART_CONTENT
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
+from db.managers.deleted import LiveManager
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration, GroupTypes
 from db.models.experiments import Experiment, ExperimentMetric
 from db.redis.group_check import GroupChecks
@@ -308,7 +309,7 @@ class TestExperimentGroupModel(BaseTest):
             [m for m in experiment_metrics if m[1] is not None]) == 0
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
-    def test_managers(self, _):
+    def test_search_managers(self, _):
         experiment_group = ExperimentGroupFactory(content=None, hptuning=None)
         assert experiment_group.search_manager is None
 
@@ -680,6 +681,28 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.bo.hp_bo_create.apply_async') as mock_fct1:
             hp_bo_start(experiment_group.id)
         assert mock_fct1.call_count == 1
+
+    def test_managers(self):
+        assert isinstance(ExperimentGroup.objects, LiveManager)
+
+    def test_archive(self):
+        with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:
+            experiment_group = ExperimentGroupFactory()
+        assert mock_fct.call_count == 2
+
+        assert experiment_group.deleted is False
+        assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
+        assert ExperimentGroup.objects.count() == 1
+        assert ExperimentGroup.all.count() == 1
+
+        experiment_group.archive()
+        assert experiment_group.deleted is True
+        assert ExperimentGroup.objects.count() == 0
+        assert ExperimentGroup.all.count() == 1
+        assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
+        assert Experiment.all.filter(experiment_group=experiment_group).count() == 2
+        assert experiment_group.experiments.count() == 0
+        assert experiment_group.all_experiments.count() == 2
 
 
 @pytest.mark.experiment_groups_mark

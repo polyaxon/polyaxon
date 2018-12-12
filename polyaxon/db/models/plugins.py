@@ -9,7 +9,8 @@ from db.models.utils import (
     NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
-    TagModel
+    TagModel,
+    DeletedModel,
 )
 
 
@@ -19,7 +20,8 @@ class PluginJobBase(AbstractJob,
                     NodeSchedulingModel,
                     NameableModel,
                     DescribableModel,
-                    TagModel):
+                    TagModel,
+                    DeletedModel):
     """A base model for plugin jobs."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

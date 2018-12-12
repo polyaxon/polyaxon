@@ -24,7 +24,8 @@ from db.models.utils import (
     PersistenceModel,
     ReadmeModel,
     RunTimeModel,
-    TagModel
+    TagModel,
+    DeletedModel,
 )
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from schemas.hptuning import HPTuningConfig, Optimization
@@ -51,6 +52,7 @@ class ExperimentGroup(DiffModel,
                       DescribableModel,
                       ReadmeModel,
                       TagModel,
+                      DeletedModel,
                       LastStatusMixin,
                       TensorboardJobMixin):
     """A model that saves Specification/Polyaxonfiles."""
@@ -159,6 +161,10 @@ class ExperimentGroup(DiffModel,
                                              traceback=traceback,
                                              **params)
 
+    def archive(self):
+        super().archive()
+        self.experiments.update(deleted=True)
+
     @cached_property
     def hptuning_config(self):
         return HPTuningConfig.from_dict(self.hptuning) if self.hptuning else None
@@ -194,6 +200,28 @@ class ExperimentGroup(DiffModel,
         if self.is_selection:
             return self.selection_experiments
         return self.experiments
+
+    @property
+    def all_experiments(self):
+        """
+        Similar to experiments,
+        but uses the default manager to return archived experiments as well.
+        """
+        from db.models.experiments import Experiment
+
+        return Experiment.all.filter(experiment_group=self)
+
+    @property
+    def all_group_experiments(self):
+        """
+        Similar to group_experiments,
+        but uses the default manager to return archived experiments as well.
+        """
+        from db.models.experiments import Experiment
+
+        if self.is_selection:
+            return Experiment.all.filter(selections=self)
+        return Experiment.all.filter(experiment_group=self)
 
     @property
     def scheduled_experiments(self):

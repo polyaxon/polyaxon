@@ -231,29 +231,37 @@ class SchedulerCeleryTasks(object):
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     EXPERIMENTS_CHECK_HEARTBEAT = 'experiments_check_heartbeat'
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
+    EXPERIMENTS_SCHEDULE_DELETION = 'experiments_schedule_deletion'
 
     EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
     EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
     EXPERIMENTS_GROUP_CHECK_FINISHED = 'experiments_group_check_finished'
+    EXPERIMENTS_GROUP_SCHEDULE_DELETION = 'experiments_group_schedule_deletion'
 
     TENSORBOARDS_START = 'tensorboards_start'
     TENSORBOARDS_STOP = 'tensorboards_stop'
+    TENSORBOARDS_SCHEDULE_DELETION = 'tensorboards_schedule_deletion'
 
     PROJECTS_NOTEBOOK_BUILD = 'projects_notebook_build'
     PROJECTS_NOTEBOOK_START = 'projects_notebook_start'
     PROJECTS_NOTEBOOK_STOP = 'projects_notebook_stop'
+    PROJECTS_NOTEBOOK_SCHEDULE_DELETION = 'projects_notebook_schedule_deletion'
 
     BUILD_JOBS_START = 'build_jobs_start'
     BUILD_JOBS_STOP = 'build_jobs_stop'
     BUILD_JOBS_NOTIFY_DONE = 'build_jobs_notify_done'
     BUILD_JOBS_SET_DOCKERFILE = 'build_jobs_set_dockerfile'
     BUILD_JOBS_CHECK_HEARTBEAT = 'build_jobs_check_heartbeat'
+    BUILD_JOBS_SCHEDULE_DELETION = 'build_jobs_schedule_deletion'
 
     JOBS_BUILD = 'jobs_build'
     JOBS_START = 'jobs_start'
     JOBS_STOP = 'jobs_stop'
     JOBS_NOTIFY_DONE = 'jobs_notify_done'
     JOBS_CHECK_HEARTBEAT = 'jobs_check_heartbeat'
+    JOBS_SCHEDULE_DELETION = 'jobs_schedule_deletion'
+
+    PROJECTS_SCHEDULE_DELETION = 'projects_schedule_deletion'
 
 
 class HPCeleryTasks(object):
@@ -403,6 +411,8 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
     SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
+    SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
 
     # Scheduler groups
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE:
@@ -411,11 +421,15 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
+    SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
 
-    # Scheduler tensorboards
+    # Scheduler tensorboards/notebooks
     SchedulerCeleryTasks.TENSORBOARDS_START:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
     SchedulerCeleryTasks.TENSORBOARDS_STOP:
+        {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+    SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
     SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
@@ -423,6 +437,8 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
     SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+    SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
 
     # Scheduler builds
     SchedulerCeleryTasks.BUILD_JOBS_START:
@@ -435,6 +451,8 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
     SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT:
         {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+    SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
 
     # Scheduler jobs
     SchedulerCeleryTasks.JOBS_BUILD:
@@ -447,6 +465,12 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_JOBS},
     SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT:
         {'queue': CeleryQueues.SCHEDULER_JOBS},
+    SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
+
+    # Scheduler projects
+    SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
 
     # Crons health
     CronsCeleryTasks.CRONS_HEALTH:

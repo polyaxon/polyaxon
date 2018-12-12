@@ -113,6 +113,12 @@ class ExperimentGroupDetailView(ExperimentGroupEndpoint,
         'DELETE': EXPERIMENT_GROUP_DELETED_TRIGGERED
     }
 
+    def perform_destroy(self, instance):
+        instance.archive()
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION,
+            kwargs={'experiment_group_id': instance.id})
+
 
 class ExperimentGroupSelectionView(ExperimentGroupEndpoint, UpdateEndpoint):
     queryset = ExperimentGroup.objects

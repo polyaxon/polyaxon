@@ -23,6 +23,32 @@ def tensorboards_start(tensorboard_job_id):
     tensorboard_scheduler.start_tensorboard(tensorboard)
 
 
+@celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION, ignore_result=True)
+def tensorboards_schedule_deletion(tensorboard_job_id):
+    tensorboard = get_valid_tensorboard(tensorboard_job_id=tensorboard_job_id,
+                                        include_deleted=True)
+    if not tensorboard:
+        return None
+
+    tensorboard.archive()
+
+    if not tensorboard.is_running:
+        return
+
+    project = tensorboard.project
+    celery_app.send_task(
+        SchedulerCeleryTasks.TENSORBOARDS_STOP,
+        kwargs={
+            'project_name': project.unique_name,
+            'project_uuid': project.uuid.hex,
+            'tensorboard_job_name': tensorboard.unique_name,
+            'tensorboard_job_uuid': tensorboard.uuid.hex,
+            'update_status': True,
+            'collect_logs': False,
+            'message': 'Tensorboard is scheduled for deletion.'
+        })
+
+
 @celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_STOP,
                  bind=True,
                  max_retries=3,
@@ -32,7 +58,8 @@ def tensorboards_stop(self,
                       project_uuid,
                       tensorboard_job_name,
                       tensorboard_job_uuid,
-                      update_status=True):
+                      update_status=True,
+                      message=None):
     deleted = tensorboard_scheduler.stop_tensorboard(
         project_name=project_name,
         project_uuid=project_uuid,
@@ -48,10 +75,11 @@ def tensorboards_stop(self,
     if not update_status:
         return
 
-    tensorboard = get_valid_tensorboard(tensorboard_job_uuid=tensorboard_job_uuid)
+    tensorboard = get_valid_tensorboard(tensorboard_job_uuid=tensorboard_job_uuid,
+                                        include_deleted=True)
     if not tensorboard:
         return None
 
     # Update tensorboard status to show that its stopped
     tensorboard.set_status(status=JobLifeCycle.STOPPED,
-                           message='Tensorboard was stopped')
+                           message=message or 'Tensorboard was stopped')

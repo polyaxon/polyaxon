@@ -16,7 +16,8 @@ from db.models.utils import (
     OutputsModel,
     PersistenceModel,
     ReadmeModel,
-    TagModel
+    TagModel,
+    DeletedModel,
 )
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED
@@ -33,6 +34,7 @@ class Job(AbstractJob,
           DescribableModel,
           ReadmeModel,
           TagModel,
+          DeletedModel,
           JobMixin):
     """A model that represents the configuration for run job."""
     user = models.ForeignKey(

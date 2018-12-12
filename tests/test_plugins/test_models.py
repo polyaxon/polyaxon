@@ -8,6 +8,7 @@ from django.test.client import MULTIPART_CONTENT
 
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
+from db.managers.deleted import LiveManager
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
@@ -54,6 +55,27 @@ class TestPluginsModel(BaseTest):
 
         assert NotebookJobStatus.objects.count() == 1
         assert project.notebook.last_status == JobLifeCycle.CREATED
+
+    def test_managers(self):
+        assert isinstance(NotebookJob.objects, LiveManager)
+        assert isinstance(TensorboardJob.objects, LiveManager)
+
+    def test_archive(self):
+        project = ProjectFactory()
+        notebook_job = NotebookJobFactory(project=project)
+        tensorboard_job = TensorboardJobFactory(project=project)
+
+        assert notebook_job.deleted is False
+        assert tensorboard_job.deleted is False
+
+        assert NotebookJob.objects.count() == 1
+        assert TensorboardJob.all.count() == 1
+        notebook_job.archive()
+        tensorboard_job.archive()
+        assert notebook_job.deleted is True
+        assert tensorboard_job.deleted is True
+        assert NotebookJob.objects.count() == 0
+        assert TensorboardJob.all.count() == 1
 
 
 @pytest.mark.plugins_mark
