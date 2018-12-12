@@ -7,7 +7,7 @@ from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT
-from db.models.utils import DescribableModel, DiffModel, ReadmeModel, TagModel, DeletedModel
+from db.models.utils import DeletedModel, DescribableModel, DiffModel, ReadmeModel, TagModel
 from libs.blacklist import validate_blacklist_name
 
 

@@ -10,3 +10,7 @@ class CleaningIntervals(object):
         'POLYAXON_CLEANING_INTERVALS_NOTIFICATIONS',
         is_optional=True,
         default=30)
+    ARCHIVED = config.get_int(
+        'POLYAXON_CLEANING_INTERVALS_ARCHIVED',
+        is_optional=True,
+        default=7)

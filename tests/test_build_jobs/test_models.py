@@ -5,7 +5,7 @@ import pytest
 from django.test import override_settings
 
 from constants.jobs import JobLifeCycle
-from db.managers.deleted import LiveManager
+from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_code_reference import CodeReferenceFactory
@@ -243,6 +243,7 @@ class TestBuildJobModels(BaseTest):
 
     def test_managers(self):
         assert isinstance(BuildJob.objects, LiveManager)
+        assert isinstance(BuildJob.archived, ArchivedManager)
 
     def test_archive(self):
         assert BuildJobStatus.objects.count() == 0

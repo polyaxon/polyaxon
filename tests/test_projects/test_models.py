@@ -1,11 +1,11 @@
 import pytest
-from mock import patch
 
+from mock import patch
 from rest_framework.exceptions import ValidationError
 
 from django.test import override_settings
 
-from db.managers.deleted import LiveManager
+from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.projects import Project
@@ -58,6 +58,7 @@ class TestProjectModel(BaseTest):
 
     def test_managers(self):
         assert isinstance(Project.objects, LiveManager)
+        assert isinstance(Project.archived, ArchivedManager)
 
     def test_archive(self):
         project = ProjectFactory()

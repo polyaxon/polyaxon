@@ -10,14 +10,14 @@ from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DataReference,
+    DeletedModel,
     DescribableModel,
     NameableModel,
     NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
     ReadmeModel,
-    TagModel,
-    DeletedModel,
+    TagModel
 )
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED

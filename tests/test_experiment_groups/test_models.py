@@ -13,7 +13,7 @@ from django.test.client import MULTIPART_CONTENT
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.urls import API_V1
-from db.managers.deleted import LiveManager
+from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration, GroupTypes
 from db.models.experiments import Experiment, ExperimentMetric
 from db.redis.group_check import GroupChecks
@@ -684,6 +684,7 @@ class TestExperimentGroupModel(BaseTest):
 
     def test_managers(self):
         assert isinstance(ExperimentGroup.objects, LiveManager)
+        assert isinstance(ExperimentGroup.archived, ArchivedManager)
 
     def test_archive(self):
         with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:

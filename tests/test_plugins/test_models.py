@@ -8,7 +8,7 @@ from django.test.client import MULTIPART_CONTENT
 
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
-from db.managers.deleted import LiveManager
+from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
@@ -58,7 +58,9 @@ class TestPluginsModel(BaseTest):
 
     def test_managers(self):
         assert isinstance(NotebookJob.objects, LiveManager)
+        assert isinstance(NotebookJob.archived, ArchivedManager)
         assert isinstance(TensorboardJob.objects, LiveManager)
+        assert isinstance(TensorboardJob.archived, ArchivedManager)
 
     def test_archive(self):
         project = ProjectFactory()

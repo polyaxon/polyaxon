@@ -7,11 +7,11 @@ from constants.images_tags import LATEST_IMAGE_TAG
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    DeletedModel,
     DescribableModel,
     NameableModel,
     NodeSchedulingModel,
-    TagModel,
-    DeletedModel,
+    TagModel
 )
 from db.redis.heartbeat import RedisHeartBeat
 from libs.spec_validation import validate_build_spec_config

@@ -17,6 +17,7 @@ from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DataReference,
+    DeletedModel,
     DescribableModel,
     DiffModel,
     NameableModel,
@@ -24,8 +25,7 @@ from db.models.utils import (
     PersistenceModel,
     ReadmeModel,
     RunTimeModel,
-    TagModel,
-    DeletedModel,
+    TagModel
 )
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.experiment import (

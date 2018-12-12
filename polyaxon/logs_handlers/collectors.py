@@ -3,10 +3,8 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from logs_handlers.log_queries.build_job import process_logs as process_build_logs
-from logs_handlers.log_queries.experiment import (
-    process_logs as process_experiment_logs,
-    process_experiment_jobs_logs,
-)
+from logs_handlers.log_queries.experiment import process_experiment_jobs_logs
+from logs_handlers.log_queries.experiment import process_logs as process_experiment_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
 from logs_handlers.log_queries.job import process_logs as process_job_logs
 

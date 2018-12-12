@@ -9,7 +9,7 @@ from django.test.client import MULTIPART_CONTENT
 
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
-from db.managers.deleted import LiveManager
+from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
@@ -167,6 +167,7 @@ class TestJobModel(BaseTest):
 
     def test_managers(self):
         assert isinstance(Job.objects, LiveManager)
+        assert isinstance(Job.archived, ArchivedManager)
 
     def test_archive(self):
         job = JobFactory()

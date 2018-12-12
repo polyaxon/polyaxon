@@ -4,13 +4,13 @@ from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import AbstractJob
 from db.models.utils import (
+    DeletedModel,
     DescribableModel,
     NameableModel,
     NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
-    TagModel,
-    DeletedModel,
+    TagModel
 )
 
 

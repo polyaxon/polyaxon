@@ -18,14 +18,14 @@ from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    DeletedModel,
     DescribableModel,
     DiffModel,
     NameableModel,
     PersistenceModel,
     ReadmeModel,
     RunTimeModel,
-    TagModel,
-    DeletedModel,
+    TagModel
 )
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from schemas.hptuning import HPTuningConfig, Optimization

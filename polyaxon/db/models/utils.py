@@ -4,7 +4,7 @@ from django.core.validators import validate_slug
 from django.db import models
 from django.utils.functional import cached_property
 
-from db.managers.deleted import LiveManager
+from db.managers.deleted import ArchivedManager, LiveManager
 from libs.blacklist import validate_blacklist_name
 from libs.spec_validation import validate_outputs_config, validate_persistence_config
 from schemas.environments import OutputsConfig, PersistenceConfig
@@ -49,6 +49,7 @@ class DeletedModel(models.Model):
 
     objects = LiveManager()
     all = models.Manager()
+    archived = ArchivedManager()
 
     class Meta:
         abstract = True

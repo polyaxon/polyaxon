@@ -136,16 +136,34 @@ class CronsCeleryTasks(object):
     N.B. make sure that the task name is not < 128.
     """
     CRONS_HEALTH = 'crons_health'
+
     EXPERIMENTS_SYNC_JOBS_STATUSES = 'experiments_sync_jobs_statuses'
+
     HEARTBEAT_EXPERIMENTS = 'heartbeat_experiments'
     HEARTBEAT_JOBS = 'heartbeat_jobs'
     HEARTBEAT_BUILDS = 'heartbeat_builds'
+
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
     CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
     CLEAN_ACTIVITY_LOGS = 'clean_activity_logs'
     CLEAN_NOTIFICATIONS = 'clean_notifications'
+
+    DELETE_ARCHIVED_PROJECTS = 'delete_archived_projects'
+    DELETE_ARCHIVED_PROJECT = 'delete_archived_project'
+    DELETE_ARCHIVED_EXPERIMENT_GROUPS = 'delete_archived_experiment_groups'
+    DELETE_ARCHIVED_EXPERIMENT_GROUP = 'delete_archived_experiment_group'
+    DELETE_ARCHIVED_EXPERIMENTS = 'delete_archived_experiments'
+    DELETE_ARCHIVED_EXPERIMENT = 'delete_archived_experiment'
+    DELETE_ARCHIVED_JOBS = 'delete_archived_jobs'
+    DELETE_ARCHIVED_JOB = 'delete_archived_job'
+    DELETE_ARCHIVED_BUILD_JOBS = 'delete_archived_build_jobs'
+    DELETE_ARCHIVED_BUILD_JOB = 'delete_archived_build_job'
+    DELETE_ARCHIVED_NOTEBOOK_JOBS = 'delete_archived_notebook_jobs'
+    DELETE_ARCHIVED_NOTEBOOK_JOB = 'delete_archived_notebook_job'
+    DELETE_ARCHIVED_TENSORBOARD_JOBS = 'delete_archived_tensorboard_jobs'
+    DELETE_ARCHIVED_TENSORBOARD_JOB = 'delete_archived_tensorboard_job'
 
 
 class ReposCeleryTasks(object):
@@ -479,12 +497,14 @@ CELERY_TASK_ROUTES = {
     # Crons
     CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES:
         {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+
     CronsCeleryTasks.HEARTBEAT_EXPERIMENTS:
         {'queue': CeleryQueues.CRONS_HEARTBEAT},
     CronsCeleryTasks.HEARTBEAT_JOBS:
         {'queue': CeleryQueues.CRONS_HEARTBEAT},
     CronsCeleryTasks.HEARTBEAT_BUILDS:
         {'queue': CeleryQueues.CRONS_HEARTBEAT},
+
     CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE:
         {'queue': CeleryQueues.CRONS_CLUSTERS},
     CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO:
@@ -496,6 +516,35 @@ CELERY_TASK_ROUTES = {
     CronsCeleryTasks.CLEAN_ACTIVITY_LOGS:
         {'queue': CeleryQueues.CRONS_CLEAN},
     CronsCeleryTasks.CLEAN_NOTIFICATIONS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+
+    CronsCeleryTasks.DELETE_ARCHIVED_PROJECTS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_PROJECT:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUPS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENTS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_JOBS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_JOB:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOBS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOB:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOBS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOBS:
+        {'queue': CeleryQueues.CRONS_CLEAN},
+    CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB:
         {'queue': CeleryQueues.CRONS_CLEAN},
 
     # HP health
