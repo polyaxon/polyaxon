@@ -9,10 +9,10 @@ import six
 
 from collections import Mapping, defaultdict
 
+from hestia.list_utils import to_list
 from rhea.utils import deep_update
 
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.utils import to_list
 
 
 class Parser(object):

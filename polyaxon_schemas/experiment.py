@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from hestia.humanize import humanize_timedelta
 from marshmallow import Schema, fields, post_dump, post_load, validate
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.environments import PodResourcesSchema
-from polyaxon_schemas.utils import UUID, humanize_timedelta
+from polyaxon_schemas.utils import UUID
 
 
 class ExperimentJobSchema(Schema):

@@ -5,6 +5,8 @@ import uuid
 
 from unittest import TestCase
 
+from hestia.tz_utils import local_now
+
 from polyaxon_schemas.experiment import (
     ContainerGPUResourcesConfig,
     ContainerResourcesConfig,
@@ -14,7 +16,6 @@ from polyaxon_schemas.experiment import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
-from polyaxon_schemas.utils import local_now
 
 
 class TestExperimentConfigs(TestCase):

@@ -5,12 +5,14 @@ import six
 
 from collections import Mapping, OrderedDict
 
+from hestia.humanize import humanize_timesince
+from hestia.tz_utils import get_time_zone
 from hestia.units import to_percentage, to_unit_memory
 from marshmallow import Schema, ValidationError, post_dump, post_load
 from marshmallow.utils import utc
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
-from polyaxon_schemas.utils import TIME_ZONE, humanize_timesince, to_camel_case
+from polyaxon_schemas.utils import to_camel_case
 
 
 class BaseConfig(object):
@@ -91,7 +93,7 @@ class BaseConfig(object):
             return dt
         if not dt.tzinfo:
             dt = utc.localize(dt)
-        return dt.astimezone(TIME_ZONE)
+        return dt.astimezone(get_time_zone())
 
 
 class BaseMultiSchema(Schema):

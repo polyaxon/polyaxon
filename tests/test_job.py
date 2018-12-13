@@ -5,8 +5,9 @@ import uuid
 
 from unittest import TestCase
 
+from hestia.tz_utils import local_now
+
 from polyaxon_schemas.job import JobConfig, JobStatusConfig, TensorboardJobConfig
-from polyaxon_schemas.utils import local_now
 
 
 class TestJobConfigs(TestCase):

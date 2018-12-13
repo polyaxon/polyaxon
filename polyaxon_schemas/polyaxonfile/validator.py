@@ -3,10 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
-from polyaxon_schemas.exceptions import PolyaxonfileError
-
 from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.environments import EnvironmentConfig
+from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.hptuning import HPTuningConfig
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.ml.eval import EvalConfig

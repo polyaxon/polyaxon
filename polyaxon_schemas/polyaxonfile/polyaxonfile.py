@@ -5,10 +5,11 @@ import os
 
 import rhea
 
+from hestia.list_utils import to_list
+
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.specification import SPECIFICATION_BY_KIND
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
-from polyaxon_schemas.utils import to_list
 
 
 class PolyaxonFile(object):
