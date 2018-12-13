@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import numpy as np
 
+from hestia.tz_utils import utc
+
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
@@ -12,7 +14,6 @@ from polyaxon_client.schemas import (
     ExperimentStatusConfig
 )
 from polyaxon_schemas.code_reference import CodeReferenceConfig
-from hestia.tz_utils import utc
 
 
 class ExperimentApi(BaseApiHandler):
