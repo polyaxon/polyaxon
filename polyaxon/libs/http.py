@@ -1,6 +1,5 @@
 import os
 import requests
-import shutil
 import tarfile
 
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
