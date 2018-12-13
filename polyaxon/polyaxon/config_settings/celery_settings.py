@@ -93,6 +93,10 @@ class Intervals(object):
         'POLYAXON_INTERVALS_CLEAN_NOTIFICATIONS',
         is_optional=True,
         default=300)
+    DELETE_ARCHIVED = config.get_int(
+        'POLYAXON_INTERVALS_DELETE_ARCHIVED',
+        is_optional=True,
+        default=300)
 
     @staticmethod
     def get_schedule(interval):
@@ -696,6 +700,55 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': Intervals.get_schedule(Intervals.CLEAN_NOTIFICATIONS),
         'options': {
             'expires': Intervals.get_expires(Intervals.CLEAN_NOTIFICATIONS),
+        },
+    },
+    CronsCeleryTasks.DELETE_ARCHIVED_PROJECTS + '_beat': {
+        'task': CronsCeleryTasks.DELETE_ARCHIVED_PROJECTS,
+        'schedule': Intervals.get_schedule(Intervals.DELETE_ARCHIVED),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.DELETE_ARCHIVED),
+        },
+    },
+    CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUPS + '_beat': {
+        'task': CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUPS,
+        'schedule': Intervals.get_schedule(Intervals.DELETE_ARCHIVED),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.DELETE_ARCHIVED),
+        },
+    },
+    CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENTS + '_beat': {
+        'task': CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENTS,
+        'schedule': Intervals.get_schedule(Intervals.DELETE_ARCHIVED),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.DELETE_ARCHIVED),
+        },
+    },
+    CronsCeleryTasks.DELETE_ARCHIVED_JOBS + '_beat': {
+        'task': CronsCeleryTasks.DELETE_ARCHIVED_JOBS,
+        'schedule': Intervals.get_schedule(Intervals.DELETE_ARCHIVED),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.DELETE_ARCHIVED),
+        },
+    },
+    CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOBS + '_beat': {
+        'task': CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOBS,
+        'schedule': Intervals.get_schedule(Intervals.DELETE_ARCHIVED),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.DELETE_ARCHIVED),
+        },
+    },
+    CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOBS + '_beat': {
+        'task': CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOBS,
+        'schedule': Intervals.get_schedule(Intervals.DELETE_ARCHIVED),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.DELETE_ARCHIVED),
+        },
+    },
+    CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOBS + '_beat': {
+        'task': CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOBS,
+        'schedule': Intervals.get_schedule(Intervals.DELETE_ARCHIVED),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.DELETE_ARCHIVED),
         },
     },
 }
