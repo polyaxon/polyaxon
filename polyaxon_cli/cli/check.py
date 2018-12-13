@@ -8,9 +8,10 @@ from collections import OrderedDict
 
 import click
 
+from hestia.list_utils import to_list
+
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.schemas.polyaxonfile import PolyaxonFile
-from polyaxon_cli.schemas.utils import to_list
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 

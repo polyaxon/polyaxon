@@ -2,8 +2,9 @@ import re
 
 from collections import deque
 
+from hestia.list_utils import to_list
+
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_schemas.utils import to_list
 
 MASTER_REGEX = re.compile(r'master\.\d+')
 WORKER_REGEX = re.compile(r'worker\.\d+')

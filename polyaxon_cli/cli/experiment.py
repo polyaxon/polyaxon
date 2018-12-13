@@ -7,8 +7,8 @@ import click
 import rhea
 
 from polyaxon_cli.cli.getters.experiment import (
-    get_project_experiment_or_local,
-    get_experiment_job_or_local
+    get_experiment_job_or_local,
+    get_project_experiment_or_local
 )
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient

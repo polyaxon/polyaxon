@@ -9,12 +9,12 @@ from collections import OrderedDict
 
 import click
 
+from hestia.list_utils import to_list
 from hestia.units import to_percentage, to_unit_memory
 from tabulate import tabulate
 
 from polyaxon_cli.schemas.containers import ContainerResourcesConfig
 from polyaxon_cli.schemas.environments import K8SResourcesConfig
-from polyaxon_cli.schemas.utils import to_list
 
 
 def get_meta_response(response):
