@@ -18,14 +18,14 @@ def should_disconnect(ws, ws_manager):
     return not ws_manager.ws
 
 
-async def notify(consumer, message):
+async def notify(ws_manager, message):
     disconnected_ws = set()
-    for _ws in consumer.ws:
+    for _ws in ws_manager.ws:
         try:
             await _ws.send(message)
         except ConnectionClosed:
             disconnected_ws.add(_ws)
-    consumer.remove_sockets(disconnected_ws)
+    ws_manager.remove_sockets(disconnected_ws)
 
 
 async def notify_ws(ws, message):
