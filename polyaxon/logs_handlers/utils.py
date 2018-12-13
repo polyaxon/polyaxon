@@ -1,4 +1,5 @@
 import fcntl
+import os
 
 from libs.paths.experiment_jobs import create_experiment_job_logs_path, get_experiment_job_logs_path
 from libs.paths.experiments import create_experiment_logs_path, get_experiment_logs_path
@@ -16,28 +17,31 @@ def _lock_log(log_path, log_lines, append=False):
 def safe_log_job(job_name, log_lines, temp, append=False):
     log_path = get_job_logs_path(job_name, temp)
     try:
+        create_job_logs_path(job_name=job_name, temp=temp)
         _lock_log(log_path, log_lines, append=append)
     except OSError:
-        create_job_logs_path(job_name=job_name, temp=temp)
         # Retry
+        create_job_logs_path(job_name=job_name, temp=temp)
         _lock_log(log_path, log_lines, append=append)
 
 
 def safe_log_experiment(experiment_name, log_lines, temp, append=False):
     log_path = get_experiment_logs_path(experiment_name, temp)
     try:
+        create_experiment_logs_path(experiment_name=experiment_name, temp=temp)
         _lock_log(log_path, log_lines, append=append)
     except OSError:
-        create_experiment_logs_path(experiment_name=experiment_name, temp=temp)
         # Retry
+        create_experiment_logs_path(experiment_name=experiment_name, temp=temp)
         _lock_log(log_path, log_lines, append=append)
 
 
 def safe_log_experiment_job(experiment_job_name, log_lines, temp, append=False):
     log_path = get_experiment_job_logs_path(experiment_job_name, temp)
     try:
+        create_experiment_job_logs_path(experiment_job_name=experiment_job_name, temp=temp)
         _lock_log(log_path, log_lines, append=append)
     except OSError:
-        create_experiment_job_logs_path(experiment_job_name=experiment_job_name, temp=temp)
         # Retry
+        create_experiment_job_logs_path(experiment_job_name=experiment_job_name, temp=temp)
         _lock_log(log_path, log_lines, append=append)

@@ -100,7 +100,10 @@ def jobs_stop(self,
               collect_logs=True,
               message=None):
     if collect_logs:
-        logs_collect_job(job_uuid=job_uuid)
+        try:
+            logs_collect_job(job_uuid=job_uuid)
+        except OSError:
+            _logger.warning('Scheduler could not collect the logs for job `%s`.', job_name)
     deleted = job_scheduler.stop_job(
         project_name=project_name,
         project_uuid=project_uuid,

@@ -195,7 +195,11 @@ def experiments_stop(self,
                      collect_logs=True,
                      message=None):
     if collect_logs:
-        collectors.logs_collect_experiment_jobs(experiment_uuid=experiment_uuid)
+        try:
+            collectors.logs_collect_experiment_jobs(experiment_uuid=experiment_uuid)
+        except OSError:
+            _logger.warning('Scheduler could not collect '
+                            'the logs for experiment `%s`.', experiment_name)
     if specification:
         specification = ExperimentSpecification.read(specification)
         deleted = experiment_scheduler.stop_experiment(

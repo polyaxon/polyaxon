@@ -58,11 +58,11 @@ class ClassBasedTask(object):
             retry_for.append(SoftTimeLimitExceeded)
         try:
             return cls._run(task_bind, *args, **kwargs)
-        except tuple(retry_for) as exc:
+        except tuple(retry_for) as exc:  # pylint:disable=catching-non-exception
             if task_bind.request.retries < task_bind.max_retries:
                 raise task_bind.retry(countdown=task_bind.countdown)
             else:
-                raise exc
+                raise exc  # pylint:disable=raising-non-exception
 
     @staticmethod
     def _run(task_bind, *args, **kwargs):

@@ -67,7 +67,10 @@ def build_jobs_stop(self,
                     collect_logs=True,
                     message=None):
     if collect_logs:
-        logs_collect_build_job(build_uuid=build_job_uuid)
+        try:
+            logs_collect_build_job(build_uuid=build_job_uuid)
+        except OSError:
+            _logger.warning('Scheduler could not collect the logs for build `%s`.', build_job_name)
     deleted = dockerizer_scheduler.stop_dockerizer(
         project_name=project_name,
         project_uuid=project_uuid,
