@@ -13,7 +13,7 @@ from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 from polyaxon_client import settings
 from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
 from polyaxon_client.logger import logger
-from polyaxon_client.schemas.utils import to_list
+from hestia.list_utils import to_list
 
 
 class HttpTransportMixin(object):

@@ -12,7 +12,7 @@ from polyaxon_client.schemas import (
     ExperimentStatusConfig
 )
 from polyaxon_schemas.code_reference import CodeReferenceConfig
-from polyaxon_schemas.utils import TIME_ZONE
+from hestia.tz_utils import utc
 
 
 class ExperimentApi(BaseApiHandler):
@@ -216,7 +216,7 @@ class ExperimentApi(BaseApiHandler):
         json_data = {'values': {key: parse_numbers(values[key]) for key in values}}
 
         if created_at:
-            json_data['created_at'] = str(TIME_ZONE.localize(created_at))
+            json_data['created_at'] = str(utc.localize(created_at))
 
         if background:
             self.transport.async_post(request_url, json_data=json_data)

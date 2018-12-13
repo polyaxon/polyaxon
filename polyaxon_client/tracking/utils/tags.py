@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import six
 
 from polyaxon_client.exceptions import PolyaxonClientException
-from polyaxon_client.schemas.utils import to_list
+from hestia.list_utils import to_list
 
 
 def validate_tags(tags):
