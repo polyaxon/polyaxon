@@ -73,7 +73,11 @@ class BuildSpecification(BaseSpecification):
         return self.environment.tolerations if self.environment else None
 
     @classmethod
-    def create_specification(cls, build_config, to_dict=True):
+    def create_specification(cls,
+                             build_config,
+                             secret_refs=None,
+                             configmap_refs=None,
+                             to_dict=True):
         if isinstance(build_config, BuildConfig):
             config = build_config.to_light_dict()
         elif isinstance(build_config, Mapping):
@@ -88,6 +92,14 @@ class BuildSpecification(BaseSpecification):
             cls.KIND: cls._SPEC_KIND,
             cls.BUILD: config
         }
+
+        env = {}
+        if secret_refs:
+            env['secret_refs'] = secret_refs
+        if configmap_refs:
+            env['configmap_refs'] = configmap_refs
+        if env:
+            specification[cls.ENVIRONMENT] = env
 
         if to_dict:
             return specification

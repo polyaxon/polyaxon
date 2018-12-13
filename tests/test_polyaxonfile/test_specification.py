@@ -72,9 +72,32 @@ class TestSpecifications(TestCase):
         run_config = {'image': 'blabla', 'cmd': 'some command'}
         config = BuildSpecification.create_specification(run_config)
         assert BuildSpecification.read(config).parsed_data == config
+
+        config = BuildSpecification.create_specification(run_config,
+                                                         configmap_refs=None,
+                                                         secret_refs=None)
+        assert 'configmap_refs' not in config
+        assert 'secret_refs' not in config
+
+        config = BuildSpecification.create_specification(run_config, configmap_refs=['foo'])
+        assert BuildSpecification.read(config).parsed_data == config
+        assert config['environment']['configmap_refs'] == ['foo']
+        config = BuildSpecification.create_specification(run_config, secret_refs=['foo'])
+        assert BuildSpecification.read(config).parsed_data == config
+        assert config['environment']['secret_refs'] == ['foo']
+
         assert config['build'] == {'image': 'blabla'}
         spec = BuildSpecification.create_specification(run_config, to_dict=False)
         assert spec.build.image == run_config['image']
+
+        assert config['build'] == {'image': 'blabla'}
+        spec = BuildSpecification.create_specification(run_config,
+                                                       configmap_refs=['foo'],
+                                                       secret_refs=['foo'],
+                                                       to_dict=False)
+        assert spec.build.image == run_config['image']
+        assert spec.environment.secret_refs == ['foo']
+        assert spec.environment.configmap_refs == ['foo']
 
     def test_create_job_specification(self):
         build_config = {'image': 'blabla'}
