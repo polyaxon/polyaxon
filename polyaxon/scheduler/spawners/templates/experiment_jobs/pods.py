@@ -137,7 +137,7 @@ class PodManager(object):
         assert self.cluster_def is not None
 
         # Env vars preparations
-        env_vars = to_list(env_vars)
+        env_vars = to_list(env_vars, check_none=True)
         outputs_path = get_experiment_outputs_path(
             persistence_outputs=persistence_outputs,
             experiment_name=self.experiment_name,
@@ -238,15 +238,15 @@ class PodManager(object):
                           tolerations=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
-        volume_mounts = to_list(volume_mounts)
-        volumes = to_list(volumes)
+        volume_mounts = to_list(volume_mounts, check_none=True)
+        volumes = to_list(volumes, check_none=True)
 
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts
         volumes += gpu_volumes
 
         # Add job information
-        env_vars = to_list(env_vars)
+        env_vars = to_list(env_vars, check_none=True)
         env_vars.append(
             client.V1EnvVar(
                 name=constants.CONFIG_MAP_TASK_INFO_KEY_NAME,

@@ -50,8 +50,8 @@ class DockerBuilder(object):
         self.copy_code = copy_code
 
         self.build_path = '/'.join(self.repo_path.split('/')[:-1])
-        self.build_steps = to_list(build_steps)
-        self.env_vars = to_list(env_vars)
+        self.build_steps = to_list(build_steps, check_none=True)
+        self.env_vars = to_list(env_vars, check_none=True)
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()

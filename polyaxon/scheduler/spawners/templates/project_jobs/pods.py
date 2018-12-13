@@ -28,9 +28,9 @@ def get_project_pod_spec(volume_mounts,
                          restart_policy=None,
                          use_service_account=False):
     """Pod spec to be used to create pods for project: tensorboard, notebooks."""
-    env_vars = to_list(env_vars)
-    volume_mounts = to_list(volume_mounts)
-    volumes = to_list(volumes)
+    env_vars = to_list(env_vars, check_none=True)
+    volume_mounts = to_list(volume_mounts, check_none=True)
+    volumes = to_list(volumes, check_none=True)
 
     gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
     volume_mounts += gpu_volume_mounts

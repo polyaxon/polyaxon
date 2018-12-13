@@ -108,7 +108,7 @@ class PodManager(object):
                           resources=None):
         """Pod job container for task."""
         # Env vars preparation
-        env_vars = to_list(env_vars)
+        env_vars = to_list(env_vars, check_none=True)
         env_vars += get_job_env_vars(
             log_level=self.log_level,
             persistence_outputs=persistence_outputs,
@@ -183,8 +183,8 @@ class PodManager(object):
                           tolerations=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
-        volume_mounts = to_list(volume_mounts)
-        volumes = to_list(volumes)
+        volume_mounts = to_list(volume_mounts, check_none=True)
+        volumes = to_list(volumes, check_none=True)
 
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts
