@@ -2,10 +2,11 @@ import uuid
 
 from urllib.parse import parse_qsl, urlencode
 
+from hestia.http import safe_request
+
 from django.http import HttpResponseRedirect
 from django.views import View
 
-from libs.http import safe_request
 from libs.json_utils import loads
 
 

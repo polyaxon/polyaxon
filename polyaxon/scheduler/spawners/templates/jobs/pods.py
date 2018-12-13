@@ -1,12 +1,12 @@
 import json
 
+from hestia.list_utils import to_list
 from kubernetes import client
 
 from django.conf import settings
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
-from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
@@ -26,7 +26,6 @@ from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
 from scheduler.spawners.templates.volumes import get_pod_outputs_volume
 from schemas.exceptions import PolyaxonConfigurationError
-from schemas.utils import to_list
 
 
 class PodManager(object):
@@ -109,7 +108,7 @@ class PodManager(object):
                           resources=None):
         """Pod job container for task."""
         # Env vars preparation
-        env_vars = get_list(env_vars)
+        env_vars = to_list(env_vars)
         env_vars += get_job_env_vars(
             log_level=self.log_level,
             persistence_outputs=persistence_outputs,
@@ -184,8 +183,8 @@ class PodManager(object):
                           tolerations=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
-        volume_mounts = get_list(volume_mounts)
-        volumes = get_list(volumes)
+        volume_mounts = to_list(volume_mounts)
+        volumes = to_list(volumes)
 
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts

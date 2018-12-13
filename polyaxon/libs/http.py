@@ -6,6 +6,7 @@ import tarfile
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 from hestia.auth import AuthenticationTypes
+from hestia.fs import move_recursively
 
 from django.conf import settings
 
@@ -34,53 +35,6 @@ def add_notification_referrer_param(url, provider, is_absolute=True):
     url_list = list(parsed_url)
     url_list[4] = urlencode(query, doseq=True)
     return urlunparse(url_list)
-
-
-def safe_request(
-    url,
-    method=None,
-    params=None,
-    data=None,
-    json=None,
-    headers=None,
-    allow_redirects=False,
-    timeout=30,
-    verify_ssl=True,
-):
-    """A slightly safer version of `request`."""
-
-    session = requests.Session()
-
-    kwargs = {}
-
-    if json:
-        kwargs['json'] = json
-        if not headers:
-            headers = {}
-        headers.setdefault('Content-Type', 'application/json')
-
-    if data:
-        kwargs['data'] = data
-
-    if params:
-        kwargs['params'] = params
-
-    if headers:
-        kwargs['headers'] = headers
-
-    if method is None:
-        method = 'POST' if (data or json) else 'GET'
-
-    response = session.request(
-        method=method,
-        url=url,
-        allow_redirects=allow_redirects,
-        timeout=timeout,
-        verify=verify_ssl,
-        **kwargs
-    )
-
-    return response
 
 
 def download(url,
@@ -133,13 +87,6 @@ def download(url,
     except requests.exceptions.RequestException:
         logger.error("Download exception", exc_info=True)
         return None
-
-
-def move_recursively(src, dst):
-    files = os.listdir(src)
-
-    for f in files:
-        shutil.move(os.path.join(src, f), dst)
 
 
 def untar_file(build_path, filename, logger, delete_tar=False, internal=False, tar_suffix=None):

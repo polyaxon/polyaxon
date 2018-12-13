@@ -1,9 +1,9 @@
+from hestia.list_utils import to_list
 from kubernetes import client
 
 from django.conf import settings
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
-from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.env_vars import get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
@@ -28,9 +28,9 @@ def get_project_pod_spec(volume_mounts,
                          restart_policy=None,
                          use_service_account=False):
     """Pod spec to be used to create pods for project: tensorboard, notebooks."""
-    env_vars = get_list(env_vars)
-    volume_mounts = get_list(volume_mounts)
-    volumes = get_list(volumes)
+    env_vars = to_list(env_vars)
+    volume_mounts = to_list(volume_mounts)
+    volumes = to_list(volumes)
 
     gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
     volume_mounts += gpu_volume_mounts

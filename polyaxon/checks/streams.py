@@ -1,7 +1,8 @@
+from hestia.http import safe_request
+
 from checks.base import Check
 from checks.results import Result
 from libs.api import get_settings_ws_api_url
-from libs.http import safe_request
 
 
 class StreamsCheck(Check):

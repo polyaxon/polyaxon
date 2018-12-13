@@ -1,3 +1,5 @@
+from hestia.np_utils import sanitize_np_types
+
 from db.models.experiments import Experiment
 from db.redis.group_check import GroupChecks
 from hpsearch.tasks.logger import logger
@@ -16,7 +18,8 @@ def get_suggestions(experiment_group):
                      extra={'stack': True})
         return
 
-    return suggestions
+    # We sanitize numpy types to be able to jsonify and split the scheduling of different tasks
+    return [{k: sanitize_np_types(v) for k, v in suggestion.items()} for suggestion in suggestions]
 
 
 def create_group_experiments(experiment_group, suggestions):

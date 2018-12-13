@@ -1,11 +1,11 @@
 from collections import namedtuple
 
 from hestia.date_formatter import DateTimeFormatter, DateTimeFormatterException
+from hestia.list_utils import to_list
 
 from django.db.models import Q
 
 from query.exceptions import QueryConditionException
-from schemas.utils import to_list
 
 
 class QueryCondSpec(namedtuple("QueryCondSpec", "cond params")):

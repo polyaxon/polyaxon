@@ -1,6 +1,7 @@
 import json
 import uuid
 
+from hestia.list_utils import to_list
 from kubernetes import client
 
 from django.conf import settings
@@ -8,7 +9,6 @@ from django.conf import settings
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.cloning_strategies import CloningStrategy
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
-from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
@@ -28,7 +28,6 @@ from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_container
 from scheduler.spawners.templates.volumes import get_pod_outputs_volume
 from schemas.exceptions import PolyaxonConfigurationError
-from schemas.utils import to_list
 
 
 class PodManager(object):
@@ -138,7 +137,7 @@ class PodManager(object):
         assert self.cluster_def is not None
 
         # Env vars preparations
-        env_vars = get_list(env_vars)
+        env_vars = to_list(env_vars)
         outputs_path = get_experiment_outputs_path(
             persistence_outputs=persistence_outputs,
             experiment_name=self.experiment_name,
@@ -239,15 +238,15 @@ class PodManager(object):
                           tolerations=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
-        volume_mounts = get_list(volume_mounts)
-        volumes = get_list(volumes)
+        volume_mounts = to_list(volume_mounts)
+        volumes = to_list(volumes)
 
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts
         volumes += gpu_volumes
 
         # Add job information
-        env_vars = get_list(env_vars)
+        env_vars = to_list(env_vars)
         env_vars.append(
             client.V1EnvVar(
                 name=constants.CONFIG_MAP_TASK_INFO_KEY_NAME,

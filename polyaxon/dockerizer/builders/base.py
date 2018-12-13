@@ -8,13 +8,13 @@ import uuid
 
 from docker import APIClient
 from docker.errors import DockerException
+from hestia.list_utils import to_list
 
 from django.conf import settings
 
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from libs.paths.utils import copy_to_tmp_dir, delete_path, delete_tmp_dir
 from libs.repos import git
-from libs.utils import get_list
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -49,8 +49,8 @@ class BaseDockerBuilder(object):
             self.build_repo_path = self.repo_path
 
         self.build_path = '/'.join(self.build_repo_path.split('/')[:-1])
-        self.build_steps = get_list(build_steps)
-        self.env_vars = get_list(env_vars)
+        self.build_steps = to_list(build_steps)
+        self.env_vars = to_list(env_vars)
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()

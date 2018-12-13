@@ -1,11 +1,11 @@
 from hestia.auth import AuthenticationTypes
+from hestia.list_utils import to_list
 from kubernetes import client
 
 from django.conf import settings
 
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
-from schemas.utils import to_list
 
 
 def get_sidecar_env_vars(job_name, job_container_name, internal_health_check_url):

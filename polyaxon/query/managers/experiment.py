@@ -1,6 +1,6 @@
 from hestia.bool_utils import to_bool
+from hestia.list_utils import to_list
 
-from polyaxon_schemas.utils import to_list
 from query.builder import (
     ArrayCondition,
     CallbackCondition,

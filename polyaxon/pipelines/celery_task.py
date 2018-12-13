@@ -1,8 +1,8 @@
 from billiard.exceptions import SoftTimeLimitExceeded
+from hestia.list_utils import to_list
 
 from db.models.pipelines import OperationRun
 from polyaxon.celery_api import CeleryTask
-from schemas.utils import to_list
 
 
 class OperationRunDoesNotExist(Exception):

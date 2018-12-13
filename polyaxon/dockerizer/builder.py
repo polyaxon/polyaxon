@@ -7,6 +7,7 @@ import time
 
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
+from hestia.list_utils import to_list
 from hestia.logging_utils import LogSpec
 
 from django.conf import settings
@@ -19,10 +20,8 @@ from docker_images.image_info import get_image_name, get_tagged_image
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from libs.http import download, untar_file
 from libs.paths.utils import delete_path
-from libs.utils import get_list
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks, SchedulerCeleryTasks
-from polyaxon_schemas.utils import to_list
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -51,8 +50,8 @@ class DockerBuilder(object):
         self.copy_code = copy_code
 
         self.build_path = '/'.join(self.repo_path.split('/')[:-1])
-        self.build_steps = get_list(build_steps)
-        self.env_vars = get_list(env_vars)
+        self.build_steps = to_list(build_steps)
+        self.env_vars = to_list(env_vars)
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()

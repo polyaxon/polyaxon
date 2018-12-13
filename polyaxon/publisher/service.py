@@ -1,4 +1,5 @@
 from amqp import AMQPError
+from hestia.list_utils import to_list
 from hestia.service_interface import Service
 from redis import RedisError
 
@@ -7,7 +8,6 @@ from django.conf import settings
 from db.redis.to_stream import RedisToStream
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, RoutingKeys
-from schemas.utils import to_list
 
 
 class PublisherService(Service):
