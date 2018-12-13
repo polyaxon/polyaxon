@@ -9,6 +9,7 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError, Polyaxonfile
 from polyaxon_schemas.polyaxonfile.specification import (
     BuildSpecification,
     ExperimentSpecification,
+    GroupSpecification,
     JobSpecification,
     NotebookSpecification,
     TensorboardSpecification
@@ -154,3 +155,34 @@ class TestSpecifications(TestCase):
         wrong_config = {'lr': {'values': [0.1, 0.2]}}
         with self.assertRaises(PolyaxonfileError):
             spec.patch(values=wrong_config)
+
+    def test_group_environment(self):
+        content = {
+            'version': 1,
+            'kind': 'group',
+            'hptuning': {'matrix': {'lr': {'values': [0.1, 0.2]}}},
+            'build': {'image': 'my_image'},
+            'run': {'cmd': 'train'}
+        }
+        spec = GroupSpecification.read(content)
+        assert spec.environment is None
+        assert spec.configmap_refs is None
+        assert spec.secret_refs is None
+
+        content['environment'] = {'configmap_refs': ['foo', 'boo']}
+        spec = GroupSpecification.read(content)
+        assert spec.environment is not None
+        assert spec.configmap_refs == ['foo', 'boo']
+        assert spec.secret_refs is None
+
+        content['environment'] = {'secret_refs': ['foo', 'boo']}
+        spec = GroupSpecification.read(content)
+        assert spec.environment is not None
+        assert spec.configmap_refs is None
+        assert spec.secret_refs == ['foo', 'boo']
+
+        content['environment'] = {'secret_refs': ['foo', 'boo'], 'configmap_refs': ['foo', 'boo']}
+        spec = GroupSpecification.read(content)
+        assert spec.environment is not None
+        assert spec.configmap_refs == ['foo', 'boo']
+        assert spec.secret_refs == ['foo', 'boo']

@@ -83,6 +83,14 @@ class GroupSpecification(BaseSpecification):
         return parsed_data.get(self.ENVIRONMENT, None)
 
     @cached_property
+    def secret_refs(self):
+        return self.environment.get('secret_refs') if self.environment else None
+
+    @cached_property
+    def configmap_refs(self):
+        return self.environment.get('configmap_refs') if self.environment else None
+
+    @cached_property
     def persistence(self):
         persistence = self.environment.get('persistence') if self.environment else None
         return PersistenceConfig.from_dict(persistence) if persistence else None
