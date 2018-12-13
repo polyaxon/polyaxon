@@ -20,7 +20,7 @@ async def job_logs(request,  # pylint:disable=too-many-branches
                    project_name,
                    job_id):
     from streams.consumers.consumers import Consumer
-    
+
     job, message = validate_job(request=request,
                                 username=username,
                                 project_name=project_name,
