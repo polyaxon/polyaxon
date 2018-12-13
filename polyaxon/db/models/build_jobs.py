@@ -87,8 +87,17 @@ class BuildJob(AbstractJob,
                                 **params)
 
     @staticmethod
-    def create(user, project, config, code_reference, nocache=False):
-        build_config = BuildSpecification.create_specification(config, to_dict=False)
+    def create(user,
+               project,
+               config,
+               code_reference,
+               configmap_refs=None,
+               secret_refs=None,
+               nocache=False):
+        build_config = BuildSpecification.create_specification(config,
+                                                               configmap_refs=configmap_refs,
+                                                               secret_refs=secret_refs,
+                                                               to_dict=False)
         if not nocache and build_config.build.nocache is not None:
             # Set the config's nocache rebuild
             nocache = build_config.build.nocache

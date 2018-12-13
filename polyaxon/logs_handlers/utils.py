@@ -1,5 +1,4 @@
 import fcntl
-import os
 
 from libs.paths.experiment_jobs import create_experiment_job_logs_path, get_experiment_job_logs_path
 from libs.paths.experiments import create_experiment_logs_path, get_experiment_logs_path

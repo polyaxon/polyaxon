@@ -55,6 +55,8 @@ def experiments_group_create(self, experiment_group_id):
         user=experiment_group.user,
         project=experiment_group.project,
         config=experiment_group.specification.build,
+        configmap_refs=experiment_group.specification.configmap_refs,
+        secret_refs=experiment_group.specification.secret_refs,
         code_reference=experiment_group.code_reference)
 
     if image_exists:

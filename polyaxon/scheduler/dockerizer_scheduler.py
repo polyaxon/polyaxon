@@ -25,7 +25,7 @@ def check_image(build_job):
     return docker.images(get_tagged_image(build_job))
 
 
-def create_build_job(user, project, config, code_reference):
+def create_build_job(user, project, config, code_reference, configmap_refs=None, secret_refs=None):
     """Get or Create a build job based on the params.
 
     If a build job already exists, then we check if the build has already an image created.
@@ -38,7 +38,9 @@ def create_build_job(user, project, config, code_reference):
         user=user,
         project=project,
         config=config,
-        code_reference=code_reference)
+        code_reference=code_reference,
+        configmap_refs=configmap_refs,
+        secret_refs=secret_refs)
 
     if build_job.succeeded and not rebuild:
         # Check if image was built in less than an 6 hours
@@ -54,6 +56,8 @@ def create_build_job(user, project, config, code_reference):
             project=project,
             config=config,
             code_reference=code_reference,
+            configmap_refs=configmap_refs,
+            secret_refs=secret_refs,
             nocache=True)
 
     if not build_job.is_running:

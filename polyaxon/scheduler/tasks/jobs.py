@@ -27,6 +27,8 @@ def jobs_build(job_id):
         user=job.user,
         project=job.project,
         config=job.specification.build,
+        configmap_refs=job.specification.configmap_refs,
+        secret_refs=job.specification.secret_refs,
         code_reference=job.code_reference)
 
     job.build_job = build_job
