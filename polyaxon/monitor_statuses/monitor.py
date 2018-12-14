@@ -61,9 +61,9 @@ def run(k8s_manager):
                           namespace=k8s_manager.namespace,
                           label_selector=get_label_selector()):
         created_at = timezone.now()
-        logger.debug("Received event: %s", event['type'])
+        logger.info("Received event: %s", event['type'])
         event_object = event['object'].to_dict()
-        logger.debug(event_object)
+        logger.info(event_object)
         job_state = get_job_state(
             event_type=event['type'],
             event=event_object,
@@ -73,7 +73,7 @@ def run(k8s_manager):
                                  settings.CONTAINER_NAME_DOCKERIZER_JOB),
             experiment_type_label=settings.TYPE_LABELS_RUNNER,
             created_at=created_at)
-
+        logger.info('Job status %s', job_state.status)
         if job_state:
             status = job_state.status
             labels = None
