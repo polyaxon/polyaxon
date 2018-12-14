@@ -2,6 +2,7 @@ namespace: "polyaxon"
 
 rbac:
   enabled: true
+
 ingress:
   enabled: false
   hosts:
@@ -631,6 +632,9 @@ intervals:  # in seconds
   pipelines_scheduler: 60
   operations_default_retry_delay: 60
   operations_max_retry_delay: 3600
+
+cleaningIntervals:  # in days
+  archived: 7
 
 queues:
   repos: 'queues.repos'

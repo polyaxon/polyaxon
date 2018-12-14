@@ -128,6 +128,7 @@ data:
   POLYAXON_INTERVALS_PIPELINES_SCHEDULER: {{ .Values.intervals.pipelines_scheduler | quote }}
   POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operations_default_retry_delay | quote }}
   POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operations_max_retry_delay | quote }}
+  POLYAXON_CLEANING_INTERVALS_ARCHIVED: {{ .Values.cleaningIntervals.archived | quote }}
   POLYAXON_CELERY_ALWAYS_EAGER: {{ default "false" .Values.celeryEagerMode | quote }}
   POLYAXON_CELERYD_PREFETCH_MULTIPLIER: {{ default "4" .Values.celeryPrefetchMultiplier | quote }}
   # DB
