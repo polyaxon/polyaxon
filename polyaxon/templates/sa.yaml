@@ -12,11 +12,12 @@ kind: ClusterRole
 metadata:
   name: {{ template "polyaxon.fullname" . }}-clusterrole
 rules:
-  - apiGroups:
-    - ""
-    resources:
-      - nodes
+  - apiGroups: [""]
+    resources: ["nodes"]
     verbs: ["watch", "list", "patch"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods", "nodes"]
+    verbs: ["get", "list"]
   - nonResourceURLs:
     - /version/
     verbs: ["get"]
@@ -36,7 +37,7 @@ rules:
   - apiGroups: ["", "extensions"]
     resources: ["services", "ingresses", "deployments", "replicasets"]
     verbs: ["get", "create", "patch", "delete", "list"]
-  - apiGroups: ["", "metrics.k8s.io"]
+  - apiGroups: ["metrics.k8s.io"]
     resources: ["pods", "nodes", "apis"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["", "*"]
