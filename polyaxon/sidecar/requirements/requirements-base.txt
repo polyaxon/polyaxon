@@ -1,2 +1,0 @@
-celery==4.2.1
-Unipath==1.1

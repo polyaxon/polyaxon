@@ -1,10 +1,15 @@
+import time
+
 import argparse
 
 from polyaxon_client.client import PolyaxonClient
 
-# from polyaxon_k8s.manager import K8SManager
+from polyaxon_k8s.manager import K8SManager
 # from sidecar import monitor, settings
 # from sidecar.commands import start_experiment_sidecar, start_job_side_car
+from sidecar.monitor import is_running
+
+from polyaxon import settings
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -29,9 +34,11 @@ if __name__ == '__main__':
     app_label = arguments.pop('app_label')
     log_sleep_interval = arguments.pop('log_sleep_interval')
 
-    # k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+    k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
     client = PolyaxonClient()
     client.set_internal_health_check()
+    while is_running(k8s_manager, pod_id):
+        time.sleep(5)
     # is_running, labels = monitor.can_log(k8s_manager, pod_id, log_sleep_interval)
     #
     # if not is_running:
