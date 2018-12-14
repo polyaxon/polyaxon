@@ -24,9 +24,9 @@ from kubernetes import client
 api_client = client.api_client.ApiClient(configuration=...)
 
 for event in ocular.monitor(api_client, 
-                     namespace='polyaxon', 
-                     container_names=('polyaxon-experiment-job',), 
-                     label_selector='app in (workers,dashboard),type=runner'):
+                            namespace='polyaxon', 
+                            container_names=('polyaxon-experiment-job',), 
+                            label_selector='app in (workers,dashboard),type=runner'):
     print(event)
 ```
 
