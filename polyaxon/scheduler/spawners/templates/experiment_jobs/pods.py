@@ -284,8 +284,8 @@ class PodManager(object):
             tolerations=tolerations,
             default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
         service_account_name = None
-        if settings.K8S_RBAC_ENABLED:
-            service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
+        if settings.K8S_RBAC_ENABLED and settings.K8S_SERVICE_ACCOUNT_EXPERIMENTS:
+            service_account_name = settings.K8S_SERVICE_ACCOUNT_EXPERIMENTS
         return client.V1PodSpec(
             restart_policy=restart_policy,
             service_account_name=service_account_name,

@@ -171,7 +171,8 @@ class NotebookSpawner(ProjectJobSpawner):
             affinity=affinity,
             tolerations=tolerations,
             role=settings.ROLE_LABELS_DASHBOARD,
-            type=settings.TYPE_LABELS_RUNNER)
+            type=settings.TYPE_LABELS_RUNNER,
+            service_account_name=settings.K8S_SERVICE_ACCOUNT_EXPERIMENTS)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_NOTEBOOK,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,

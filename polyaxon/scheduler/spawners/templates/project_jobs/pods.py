@@ -26,7 +26,7 @@ def get_project_pod_spec(volume_mounts,
                          tolerations=None,
                          image_pull_policy=None,
                          restart_policy=None,
-                         use_service_account=False):
+                         service_account_name=None):
     """Pod spec to be used to create pods for project: tensorboard, notebooks."""
     env_vars = to_list(env_vars, check_none=True)
     volume_mounts = to_list(volume_mounts, check_none=True)
@@ -50,9 +50,8 @@ def get_project_pod_spec(volume_mounts,
                                      resources=get_resources(resources),
                                      volume_mounts=volume_mounts)]
 
-    service_account_name = None
-    if use_service_account and settings.K8S_RBAC_ENABLED:
-        service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
+    if service_account_name and not settings.K8S_RBAC_ENABLED:
+        service_account_name = None
 
     return client.V1PodSpec(restart_policy=restart_policy,
                             service_account_name=service_account_name,
@@ -86,7 +85,7 @@ def get_pod(namespace,
             role=None,
             image_pull_policy=None,
             restart_policy=None,
-            use_service_account=False):
+            service_account_name=None):
     pod_spec = get_project_pod_spec(
         volume_mounts=volume_mounts,
         volumes=volumes,
@@ -101,7 +100,7 @@ def get_pod(namespace,
         tolerations=tolerations,
         ports=ports,
         env_vars=env_vars,
-        use_service_account=use_service_account,
+        service_account_name=service_account_name,
         restart_policy=restart_policy)
 
     labels = get_labels(app=app,

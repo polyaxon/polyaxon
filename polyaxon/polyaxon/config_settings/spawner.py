@@ -4,6 +4,12 @@ PUBLIC_PLUGIN_JOBS = config.get_boolean('POLYAXON_PUBLIC_PLUGIN_JOBS', is_option
 
 # k8s
 K8S_SERVICE_ACCOUNT_NAME = config.get_string('POLYAXON_K8S_SERVICE_ACCOUNT_NAME')
+K8S_SERVICE_ACCOUNT_EXPERIMENTS = config.get_string('POLYAXON_K8S_SERVICE_ACCOUNT_NAME',
+                                                    is_optional=True)
+K8S_SERVICE_ACCOUNT_JOBS = config.get_string('POLYAXON_K8S_SERVICE_ACCOUNT_JOBS',
+                                             is_optional=True)
+K8S_SERVICE_ACCOUNT_BUILDS = config.get_string('K8S_SERVICE_ACCOUNT_BUILDS',
+                                               is_optional=True)
 K8S_RBAC_ENABLED = config.get_boolean('POLYAXON_K8S_RBAC_ENABLED')
 K8S_PROVISIONER_ENABLED = config.get_boolean('POLYAXON_K8S_PROVISIONER_ENABLED')
 K8S_INGRESS_ENABLED = config.get_boolean('POLYAXON_K8S_INGRESS_ENABLED')

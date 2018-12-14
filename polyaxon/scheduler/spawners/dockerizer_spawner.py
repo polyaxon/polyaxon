@@ -70,6 +70,7 @@ class DockerizerSpawner(ProjectJobSpawner):
             tolerations=tolerations,
             role=settings.ROLE_LABELS_WORKER,
             type=settings.TYPE_LABELS_RUNNER,
+            service_account_name=settings.K8S_SERVICE_ACCOUNT_BUILDS,
             restart_policy='Never')
         pod_name = JOB_NAME_FORMAT.format(job_uuid=self.job_uuid, name=DOCKERIZER_JOB_NAME)
 
