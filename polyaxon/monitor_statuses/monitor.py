@@ -1,13 +1,11 @@
 import logging
 
-from kubernetes import watch
+import ocular
 
 from django.conf import settings
-from django.utils import timezone
 
 from constants.jobs import JobLifeCycle
 from db.redis.containers import RedisJobContainers
-from monitor_statuses.jobs import get_job_state
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks
 
@@ -17,11 +15,11 @@ logger = logging.getLogger('polyaxon.monitors.statuses')
 def update_job_containers(event, status, job_container_name):
     if JobLifeCycle.is_done(status):
         # Remove the job monitoring
-        job_uuid = event['metadata']['labels']['job_uuid']
+        job_uuid = event['details']['labels']['job_uuid']
         logger.info('Stop monitoring job_uuid: %s', job_uuid)
         RedisJobContainers.remove_job(job_uuid)
 
-    if event['status']['container_statuses'] is None:
+    if event['details']['container_statuses'] is None:
         return
 
     def get_container_id(container_id):
@@ -31,7 +29,7 @@ def update_job_containers(event, status, job_container_name):
             return container_id[len('docker://'):]
         return container_id
 
-    for container_status in event['status']['container_statuses']:
+    for container_status in event['details']['container_statuses']:
         if container_status['name'] != job_container_name:
             continue
 
@@ -55,84 +53,73 @@ def get_label_selector():
 
 
 def run(k8s_manager):
-    w = watch.Watch()
+    for (event_object, pod_state) in ocular.monitor(k8s_manager.k8s_api,
+                                                    namespace=settings.K8S_NAMESPACE,
+                                                    job_container_names=(
+                                                        settings.CONTAINER_NAME_EXPERIMENT_JOB,
+                                                        settings.CONTAINER_NAME_PLUGIN_JOB,
+                                                        settings.CONTAINER_NAME_JOB,
+                                                        settings.CONTAINER_NAME_DOCKERIZER_JOB),
+                                                    label_selector=get_label_selector(),
+                                                    return_event=True):
+        logger.info('-------------------------------------------\n%s\n'.format(pod_state))
+        if pod_state:
+            continue
 
-    for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
-                          namespace=k8s_manager.namespace,
-                          label_selector=get_label_selector()):
-        created_at = timezone.now()
-        logger.info("Received event: %s", event['type'])
-        event_object = event['object'].to_dict()
-        logger.info(event_object)
-        job_state = get_job_state(
-            event_type=event['type'],
-            event=event_object,
-            job_container_names=(settings.CONTAINER_NAME_EXPERIMENT_JOB,
-                                 settings.CONTAINER_NAME_PLUGIN_JOB,
-                                 settings.CONTAINER_NAME_JOB,
-                                 settings.CONTAINER_NAME_DOCKERIZER_JOB),
-            experiment_type_label=settings.TYPE_LABELS_RUNNER,
-            created_at=created_at)
-        logger.info('Job status %s', job_state.status)
-        if job_state:
-            status = job_state.status
-            labels = None
-            if job_state.details and job_state.details.labels:
-                labels = job_state.details.labels.to_dict()
-            logger.info("Updating job container %s, %s", status, labels)
-            logger.debug(event_object)
-            job_state = job_state.to_dict()
-            logger.debug(job_state)
+        status = pod_state['status']
+        labels = None
+        if pod_state['details'] and pod_state['details']['labels']:
+            labels = pod_state['details']['labels']
+        logger.info("Updating job container %s, %s", status, labels)
+        experiment_job_condition = (
+            settings.CONTAINER_NAME_EXPERIMENT_JOB in pod_state['details']['container_statuses']
+            or (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
+        )
 
-            experiment_job_condition = (
-                settings.CONTAINER_NAME_EXPERIMENT_JOB in job_state['details']['container_statuses']
-                or (status and labels['app'] == settings.APP_LABELS_EXPERIMENT)
-            )
+        job_condition = (
+            settings.CONTAINER_NAME_JOB in pod_state['details']['container_statuses'] or
+            (status and labels['app'] == settings.APP_LABELS_JOB)
+        )
 
-            job_condition = (
-                settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses'] or
-                (status and labels['app'] == settings.APP_LABELS_JOB)
-            )
+        plugin_job_condition = (
+            settings.CONTAINER_NAME_PLUGIN_JOB in pod_state['details']['container_statuses'] or
+            (status and
+             labels['app'] in (settings.APP_LABELS_TENSORBOARD, settings.APP_LABELS_NOTEBOOK))
+        )
 
-            plugin_job_condition = (
-                settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses'] or
-                (status and
-                 labels['app'] in (settings.APP_LABELS_TENSORBOARD, settings.APP_LABELS_NOTEBOOK))
-            )
+        dockerizer_job_condition = (
+            settings.CONTAINER_NAME_DOCKERIZER_JOB in pod_state['details']['container_statuses']
+            or (status and labels['app'] == settings.APP_LABELS_DOCKERIZER)
+        )
 
-            dockerizer_job_condition = (
-                settings.CONTAINER_NAME_DOCKERIZER_JOB in job_state['details']['container_statuses']
-                or (status and labels['app'] == settings.APP_LABELS_DOCKERIZER)
-            )
+        if experiment_job_condition:
+            update_job_containers(event_object, status, settings.CONTAINER_NAME_EXPERIMENT_JOB)
+            logger.debug("Sending state to handler %s, %s", status, labels)
+            # Handle experiment job statuses
+            celery_app.send_task(
+                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+                kwargs={'payload': pod_state})
 
-            if experiment_job_condition:
-                update_job_containers(event_object, status, settings.CONTAINER_NAME_EXPERIMENT_JOB)
-                logger.debug("Sending state to handler %s, %s", status, labels)
-                # Handle experiment job statuses
-                celery_app.send_task(
-                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    kwargs={'payload': job_state})
+        elif job_condition:
+            update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
+            logger.debug("Sending state to handler %s, %s", status, labels)
+            # Handle experiment job statuses
+            celery_app.send_task(
+                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
+                kwargs={'payload': pod_state})
 
-            elif job_condition:
-                update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
-                logger.debug("Sending state to handler %s, %s", status, labels)
-                # Handle experiment job statuses
-                celery_app.send_task(
-                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
-                    kwargs={'payload': job_state})
+        elif plugin_job_condition:
+            logger.debug("Sending state to handler %s, %s", status, labels)
+            # Handle plugin job statuses
+            celery_app.send_task(
+                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
+                kwargs={'payload': pod_state})
 
-            elif plugin_job_condition:
-                logger.debug("Sending state to handler %s, %s", status, labels)
-                # Handle plugin job statuses
-                celery_app.send_task(
-                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
-                    kwargs={'payload': job_state})
-
-            elif dockerizer_job_condition:
-                logger.debug("Sending state to handler %s, %s", status, labels)
-                # Handle dockerizer job statuses
-                celery_app.send_task(
-                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
-                    kwargs={'payload': job_state})
-            else:
-                logger.info("Lost state %s, %s", status, job_state)
+        elif dockerizer_job_condition:
+            logger.debug("Sending state to handler %s, %s", status, labels)
+            # Handle dockerizer job statuses
+            celery_app.send_task(
+                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
+                kwargs={'payload': pod_state})
+        else:
+            logger.info("Lost state %s, %s", status, pod_state)

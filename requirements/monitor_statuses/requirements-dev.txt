@@ -2,3 +2,4 @@
 
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@94b273759faf21960adc63ee53749245c98dbca5#egg=polyaxon-k8s==0.3.3
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@868c640687e7a53a2d10caf1e5595877b4ebfaa7#egg=polyaxon-schemas==0.3.4
+-e git+https://github.com/polyaxon/ocular.git@24b401a28b289f9a3e29b9ea3ec04229c10d7617#egg=ocular==0.0.1
