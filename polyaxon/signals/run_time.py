@@ -3,8 +3,9 @@ from django.utils.timezone import now
 from constants.jobs import JobLifeCycle
 
 
-def set_started_at(instance, status, starting_statuses):
-    if instance.started_at is not None:
+def set_started_at(instance, status, starting_statuses, running_status=None):
+    # We allow to override started_at if the value is running
+    if instance.started_at is not None and status != running_status:
         return
 
     if status in starting_statuses:
@@ -22,7 +23,8 @@ def set_job_started_at(instance, status):
     set_started_at(
         instance=instance,
         status=status,
-        starting_statuses=[JobLifeCycle.BUILDING, JobLifeCycle.SCHEDULED, JobLifeCycle.RUNNING])
+        starting_statuses=[JobLifeCycle.BUILDING, JobLifeCycle.SCHEDULED, JobLifeCycle.RUNNING],
+        running_status=JobLifeCycle.RUNNING)
 
 
 def set_job_finished_at(instance, status):

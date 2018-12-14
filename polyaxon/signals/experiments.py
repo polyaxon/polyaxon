@@ -148,7 +148,8 @@ def experiment_status_post_save(sender, **kwargs):
     experiment.status = instance
     set_started_at(instance=experiment,
                    status=instance.status,
-                   starting_statuses=[ExperimentLifeCycle.STARTING])
+                   starting_statuses=[ExperimentLifeCycle.STARTING, ExperimentLifeCycle.RUNNING],
+                   running_status=ExperimentLifeCycle.RUNNING)
     set_finished_at(instance=experiment,
                     status=instance.status,
                     is_done=ExperimentLifeCycle.is_done)
