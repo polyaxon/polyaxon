@@ -1,5 +1,6 @@
 -r requirements-base.txt
 
+ocular==0.0.1
 polyaxon-k8s==0.3.3
 polyaxon-gpustat==0.3.3
 polyaxon-client==0.3.4

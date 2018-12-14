@@ -62,7 +62,7 @@ def run(k8s_manager):
                                                         settings.CONTAINER_NAME_DOCKERIZER_JOB),
                                                     label_selector=get_label_selector(),
                                                     return_event=True):
-        logger.info('-------------------------------------------\n%s\n'.format(pod_state))
+        logger.info('-------------------------------------------\n%s\n', pod_state)
         if pod_state:
             continue
 
