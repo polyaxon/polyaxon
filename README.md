@@ -8,6 +8,24 @@
 # ocular
 A tool for observing Kubernetes pods' statuses in real time.
 
+## Description
+
+Often times it's very hard to translate a Kubernetes event to a concrete state, 
+and that's the gap that ocular tries fill, i.e. return one of the following statuses:
+
+```
+created
+building
+unschedulable
+scheduled
+running
+succeeded
+failed
+stopped
+unknown
+``` 
+
+ocular returns as well a condensed information about the reason of that status.
 
 ## Install
 
