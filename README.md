@@ -179,6 +179,13 @@ az_store.upload_dir(dirname, blob, container_name=None, use_basename=True)
 az_store.download_dir(blob, local_path, container_name=None, use_basename=True)
 ```
 
+## Running tests
+
+```
+pytest
+```
+
+
 ## License
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolystores.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolystores?ref=badge_large)
