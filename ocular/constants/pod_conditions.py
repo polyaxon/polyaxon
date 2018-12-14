@@ -1,0 +1,6 @@
+READY = 'Ready'
+INITIALIZED = 'Initialized'
+SCHEDULED = 'PodScheduled'
+UNSCHEDULABLE = 'Unschedulable'
+
+VALUES = [READY, INITIALIZED, SCHEDULED]

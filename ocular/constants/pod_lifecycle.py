@@ -1,0 +1,5 @@
+CONTAINER_CREATING = 'ContainerCreating'
+PENDING = 'Pending'
+RUNNING = 'Running'
+SUCCEEDED = 'Succeeded'
+FAILED = 'Failed'
