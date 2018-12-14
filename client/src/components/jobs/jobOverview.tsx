@@ -51,8 +51,7 @@ export default class JobOverview extends React.Component<Props, {}> {
                 <Refresh callback={this.refresh} pullRight={false}/>
               </div>
             </div>
-            </div>
-             <div className="row">
+            <div className="row">
               <div className="col-md-11">
                 <Name
                   name="Group Name"
@@ -61,6 +60,7 @@ export default class JobOverview extends React.Component<Props, {}> {
                   onSave={(name: string) =>  { this.props.onUpdate({name}); }}
                 />
               </div>
+            </div>
             <div className="meta">
               <UserMetaInfo user={job.user} inline={true}/>
               <DatesMetaInfo
