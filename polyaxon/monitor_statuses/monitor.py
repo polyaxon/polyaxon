@@ -15,11 +15,11 @@ logger = logging.getLogger('polyaxon.monitors.statuses')
 def update_job_containers(event, status, job_container_name):
     if JobLifeCycle.is_done(status):
         # Remove the job monitoring
-        job_uuid = event['details']['labels']['job_uuid']
+        job_uuid = event['metadata']['labels']['job_uuid']
         logger.info('Stop monitoring job_uuid: %s', job_uuid)
         RedisJobContainers.remove_job(job_uuid)
 
-    if event['details']['container_statuses'] is None:
+    if event['status']['container_statuses'] is None:
         return
 
     def get_container_id(container_id):
@@ -29,7 +29,7 @@ def update_job_containers(event, status, job_container_name):
             return container_id[len('docker://'):]
         return container_id
 
-    for container_status in event['details']['container_statuses']:
+    for container_status in event['status']['container_statuses']:
         if container_status['name'] != job_container_name:
             continue
 
