@@ -8,8 +8,7 @@ from polyaxon_k8s.manager import K8SManager
 # from sidecar import monitor, settings
 # from sidecar.commands import start_experiment_sidecar, start_job_side_car
 from sidecar.monitor import is_running
-
-from polyaxon import settings
+from sidecar import settings
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
