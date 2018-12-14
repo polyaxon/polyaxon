@@ -18,12 +18,12 @@ $ pip install -U ocular
 ## Usage
 
 ```python
+import ocular
 from kubernetes import client
-from ocular import monitor
 
 api_client = client.api_client.ApiClient(configuration=...)
 
-for event in monitor(api_client, 
+for event in ocular.monitor(api_client, 
                      namespace='polyaxon', 
                      container_names=('polyaxon-experiment-job',), 
                      label_selector='app in (workers,dashboard),type=runner'):
