@@ -55,15 +55,15 @@ def get_label_selector():
 def run(k8s_manager):
     for (event_object, pod_state) in ocular.monitor(k8s_manager.k8s_api,
                                                     namespace=settings.K8S_NAMESPACE,
-                                                    job_container_names=(
+                                                    container_names=(
                                                         settings.CONTAINER_NAME_EXPERIMENT_JOB,
                                                         settings.CONTAINER_NAME_PLUGIN_JOB,
                                                         settings.CONTAINER_NAME_JOB,
                                                         settings.CONTAINER_NAME_DOCKERIZER_JOB),
                                                     label_selector=get_label_selector(),
                                                     return_event=True):
-        logger.info('-------------------------------------------\n%s\n', pod_state)
-        if pod_state:
+        logger.debug('-------------------------------------------\n%s\n', pod_state)
+        if not pod_state:
             continue
 
         status = pod_state['status']
