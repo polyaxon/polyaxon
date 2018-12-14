@@ -39,7 +39,7 @@
     "@types/showdown": "^1.7.5",
     "@types/sprintf-js": "0.0.27",
     "awesome-typescript-loader": "3.5.0",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.0",
     "css-loader": "0.28.11",
     "file-loader": "0.11.2",
     "font-awesome": "4.7.0",
