@@ -149,7 +149,9 @@ class PodManager(object):
             sidecar_docker_image_pull_policy=self.sidecar_docker_image_pull_policy,
             namespace=self.namespace,
             sidecar_config=self.sidecar_config,
-            sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name, app_label=self.app_label),
+            sidecar_args=get_sidecar_args(pod_id=self.k8s_job_name,
+                                          container_id=self.job_container_name,
+                                          app_label=self.app_label),
             internal_health_check_url=self.health_check_url)
 
     def get_init_container(self, persistence_outputs):

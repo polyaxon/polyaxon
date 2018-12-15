@@ -11,7 +11,7 @@ from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_v
 def get_sidecar_env_vars(job_name, job_container_name, internal_health_check_url):
     return [
         get_env_var(name='POLYAXON_POD_ID', value=job_name),
-        get_env_var(name='POLYAXON_JOB_ID', value=job_container_name),
+        get_env_var(name='POLYAXON_CONTAINER_ID', value=job_container_name),
         get_env_var(name='POLYAXON_INTERNAL_HEALTH_CHECK_URL', value=internal_health_check_url),
         get_env_var(name='POLYAXON_AUTHENTICATION_TYPE', value=AuthenticationTypes.INTERNAL_TOKEN),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
@@ -21,8 +21,9 @@ def get_sidecar_env_vars(job_name, job_container_name, internal_health_check_url
     ]
 
 
-def get_sidecar_args(pod_id, app_label):
+def get_sidecar_args(pod_id, container_id, app_label):
     return ["--pod_id={}".format(pod_id),
+            "--container_id={}".format(container_id),
             "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
             "--app_label={}".format(app_label)]
 

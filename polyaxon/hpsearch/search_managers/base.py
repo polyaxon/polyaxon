@@ -18,4 +18,4 @@ class BaseSearchAlgorithmManager(object):
 
     @staticmethod
     def scheduled_all_suggestions(iteration_config):
-        return iteration_config.num_suggestions == len(iteration_config.experiment_ids)
+        return iteration_config.num_suggestions <= len(iteration_config.experiment_ids)

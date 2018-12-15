@@ -23,6 +23,10 @@ if __name__ == '__main__':
         type=str
     )
     parser.add_argument(
+        '--container_id',
+        type=str
+    )
+    parser.add_argument(
         '--log_sleep_interval',
         default=2,
         type=int
@@ -31,7 +35,7 @@ if __name__ == '__main__':
     arguments = args.__dict__
 
     pod_id = arguments.pop('pod_id')
-    container_name = arguments.pop('container_name')
+    container_id = arguments.pop('container_id')
     app_label = arguments.pop('app_label')
     log_sleep_interval = arguments.pop('log_sleep_interval')
 
@@ -41,8 +45,9 @@ if __name__ == '__main__':
     retry = 0
     is_running = True
     while is_running and retry < 3:
+        time.sleep(log_sleep_interval)
         try:
-            is_running = is_pod_running(k8s_manager, pod_id, container_name)
+            is_running = is_pod_running(k8s_manager, pod_id, container_id)
         except ApiException:
             retry += 1
-        time.sleep(log_sleep_interval)
+            time.sleep(log_sleep_interval)  # We wait a bit more before try

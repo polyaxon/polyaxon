@@ -122,7 +122,9 @@ class ExperimentSpawner(K8SManager):
                     restart_policy='Never'):
         ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
-        sidecar_args = get_sidecar_args(pod_id=job_name, app_label=self.pod_manager.app_label)
+        sidecar_args = get_sidecar_args(pod_id=job_name,
+                                        container_id=self.pod_manager.job_container_name,
+                                        app_label=self.pod_manager.app_label)
         labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
         # Set and validate volumes
