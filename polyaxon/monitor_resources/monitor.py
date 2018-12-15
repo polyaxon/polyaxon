@@ -163,10 +163,11 @@ def run(containers, node, persist):
             payload = None
         if payload:
             payload = payload.to_dict()
-            logger.debug("Publishing resources event")
-            celery_app.send_task(
-                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_RESOURCES,
-                kwargs={'payload': payload, 'persist': persist})
+            # Re-enable publishing
+            # logger.debug("Publishing resources event")
+            # celery_app.send_task(
+            #     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_RESOURCES,
+            #     kwargs={'payload': payload, 'persist': persist})
 
             job_uuid = payload['job_uuid']
             # Check if we should stream the payload
