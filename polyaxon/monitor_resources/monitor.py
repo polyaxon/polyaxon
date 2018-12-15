@@ -15,8 +15,6 @@ from constants.containers import ContainerStatuses
 from db.models.nodes import ClusterNode, NodeGPU
 from db.redis.containers import RedisJobContainers
 from db.redis.to_stream import RedisToStream
-from polyaxon.celery_api import celery_app
-from polyaxon.settings import K8SEventsCeleryTasks
 from schemas.containers import ContainerResourcesConfig
 
 logger = logging.getLogger('polyaxon.monitors.resources')
@@ -163,7 +161,7 @@ def run(containers, node, persist):
             payload = None
         if payload:
             payload = payload.to_dict()
-            # Re-enable publishing
+            # todo: Re-enable publishing
             # logger.debug("Publishing resources event")
             # celery_app.send_task(
             #     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_RESOURCES,

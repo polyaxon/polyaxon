@@ -15,6 +15,7 @@ class Command(BaseMonitorCommand):
 
     def handle(self, *args, **options):
         log_sleep_interval = options['log_sleep_interval']
+        time.sleep(log_sleep_interval)
         self.stdout.write(
             "Started a new statuses monitor with, "
             "log sleep interval: `{}`.".format(log_sleep_interval),
