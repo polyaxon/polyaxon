@@ -1,4 +1,13 @@
-from ocular.constants import container_statuses, pod_statuses, pod_conditions, event_types, pod_lifecycle
+from ocular.constants import container_statuses, pod_statuses, pod_conditions, pod_lifecycle
+
+
+def get_container_statuses_by_name(statuses):
+    return {
+        container_status['name']: {
+            'ready': container_status['ready'],
+            'state': container_status['state'],
+        } for container_status in statuses
+    }
 
 
 def get_pod_details(event_type, event):
@@ -6,39 +15,34 @@ def get_pod_details(event_type, event):
     node_name = event['spec']['node_name']
     pod_phase = event['status']['phase']
     deletion_timestamp = event['metadata']['deletion_timestamp']
-    pod_conditions = event['status']['conditions']
-    container_statuses = event['status']['container_statuses']
+    conditions = event['status']['conditions']
+    statuses = event['status']['container_statuses']
     container_statuses_by_name = {}
-    if container_statuses:
-        container_statuses_by_name = {
-            container_status['name']: {
-                'ready': container_status['ready'],
-                'state': container_status['state'],
-            } for container_status in container_statuses
-        }
+    if statuses:
+        container_statuses_by_name = get_container_statuses_by_name(statuses=statuses)
 
-    if pod_conditions:
-        pod_conditions = {c['type']: {
+    if conditions:
+        conditions = {c['type']: {
             'status': c['status'],
             'reason': c['reason'],
             'message': c.get('message')
-        } for c in pod_conditions}
+        } for c in conditions}
 
     return {
         'event_type': event_type,
         'labels': labels,
         'phase': pod_phase,
         'deletion_timestamp': str(deletion_timestamp) if deletion_timestamp else None,
-        'pod_conditions': pod_conditions,
+        'pod_conditions': conditions,
         'container_statuses': container_statuses_by_name,
         'node_name': node_name
     }
 
 
-def get_container_status(pod_details, job_container_names):
+def get_container_status(statuses, job_container_names):
     job_container_status = None
     for job_container_name in job_container_names:
-        job_container_status = pod_details['container_statuses'].get(job_container_name)
+        job_container_status = statuses.get(job_container_name)
         if job_container_status:
             break
     return job_container_status
@@ -62,8 +66,9 @@ def get_failed_status(job_container_status):
 def get_job_status(pod_details, job_container_names):  # pylint:disable=too-many-branches
     # For terminated pods that failed and successfully terminated pods
     if pod_details['phase'] == pod_lifecycle.FAILED:
-        job_container_status = get_container_status(pod_details=pod_details,
-                                                    job_container_names=job_container_names)
+        job_container_status = get_container_status(
+            statuses=pod_details['container_statuses'],
+            job_container_names=job_container_names)
         return get_failed_status(job_container_status=job_container_status)
 
     if pod_details['phase'] == pod_lifecycle.SUCCEEDED:
@@ -86,18 +91,21 @@ def get_job_status(pod_details, job_container_names):  # pylint:disable=too-many
                   not pod_details['pod_conditions'][pod_conditions.SCHEDULED]['status'])
     pod_is_unschedulable = (
         pod_has_scheduled_cond and
-        pod_details['pod_conditions'][pod_conditions.SCHEDULED]['reason'] == pod_conditions.UNSCHEDULABLE)
+        pod_details['pod_conditions'][pod_conditions.SCHEDULED]['reason'] ==
+        pod_conditions.UNSCHEDULABLE)
     if pod_is_unschedulable:
         return (pod_statuses.UNSCHEDULABLE,
                 pod_details['pod_conditions'][pod_conditions.SCHEDULED]['message'])
     if check_cond:
-        return pod_statuses.BUILDING, pod_details['pod_conditions'][pod_conditions.SCHEDULED]['reason']
+        return (pod_statuses.BUILDING,
+                pod_details['pod_conditions'][pod_conditions.SCHEDULED]['reason'])
 
     if pod_has_scheduled_cond and not pod_has_ready_cond:
         return pod_statuses.BUILDING, None
 
-    job_container_status = get_container_status(pod_details=pod_details,
-                                                job_container_names=job_container_names)
+    job_container_status = get_container_status(
+        statuses=pod_details['container_statuses'],
+        job_container_names=job_container_names)
 
     if not job_container_status:
         return pod_statuses.UNKNOWN, None
