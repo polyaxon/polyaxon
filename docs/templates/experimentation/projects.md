@@ -40,7 +40,7 @@ After creating a project, you can start your experimentation process,
 and the first step is to initialize a workspace for your project on your workstation.
 
 ```bash
-$ mkdir mnsit
+$ mkdir mnist
 $ cd mnist
 
 $ polyaxon init mnist
