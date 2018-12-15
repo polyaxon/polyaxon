@@ -2,12 +2,13 @@ import time
 
 import argparse
 
+from kubernetes.client.rest import ApiException
+
 from polyaxon_client.client import PolyaxonClient
 
 from polyaxon_k8s.manager import K8SManager
-# from sidecar import monitor, settings
-# from sidecar.commands import start_experiment_sidecar, start_job_side_car
-from sidecar.monitor import is_running
+
+from sidecar.monitor import is_pod_running
 from sidecar import settings
 
 if __name__ == '__main__':
@@ -30,29 +31,18 @@ if __name__ == '__main__':
     arguments = args.__dict__
 
     pod_id = arguments.pop('pod_id')
+    container_name = arguments.pop('container_name')
     app_label = arguments.pop('app_label')
     log_sleep_interval = arguments.pop('log_sleep_interval')
 
     k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
     client = PolyaxonClient()
     client.set_internal_health_check()
-    while is_running(k8s_manager, pod_id):
-        time.sleep(5)
-    # is_running, labels = monitor.can_log(k8s_manager, pod_id, log_sleep_interval)
-    #
-    # if not is_running:
-    #     monitor.logger.info('Pod is not running anymore.')
-    # else:
-    #     if app_label == settings.APP_LABELS_EXPERIMENT:
-    #         start_experiment_sidecar(monitor=monitor,
-    #                                  k8s_manager=k8s_manager,
-    #                                  pod_id=pod_id,
-    #                                  labels=labels)
-    #     elif app_label == settings.APP_LABELS_JOB:
-    #         start_job_side_car(monitor=monitor,
-    #                            k8s_manager=k8s_manager,
-    #                            pod_id=pod_id,
-    #                            labels=labels)
-    #     else:
-    #         monitor.logger.error('Pod app_label is not recognized.')
-    # monitor.logger.info('Finished logging')
+    retry = 0
+    is_running = True
+    while is_running and retry < 3:
+        try:
+            is_running = is_pod_running(k8s_manager, pod_id, container_name)
+        except ApiException:
+            retry += 1
+        time.sleep(log_sleep_interval)
