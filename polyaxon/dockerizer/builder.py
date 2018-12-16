@@ -8,7 +8,7 @@ import time
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 from hestia.list_utils import to_list
-from hestia.logging_utils import LogSpec, LogLevels
+from hestia.logging_utils import LogLevels
 
 from django.conf import settings
 
@@ -92,33 +92,23 @@ class DockerBuilder(object):
         raw_lines = raw.split('\n')
         log_lines = []
         status = True
+        is_pushing = False
         for raw_line in raw_lines:
             try:
                 json_line = json.loads(raw_line)
 
                 if json_line.get('error'):
-                    log_lines.append(
-                        LogSpec(
-                            log_line='Build: {}'.format(str(json_line.get('error', json_line))),
-                            log_level=LogLevels.ERROR
-                        ))
+                    log_lines.append('{}: {}'.format(
+                        LogLevels.ERROR, str(json_line.get('error', json_line))))
                     status = False
                 else:
                     if json_line.get('stream'):
-                        log_lines.append(
-                            LogSpec(
-                                log_line='Build: {}'.format(json_line['stream'].strip())
-                            ))
-                    elif json_line.get('status'):
-                        log_lines.append(
-                            LogSpec(
-                                log_line='Push: {} {}'.format(json_line['status'],
-                                                              json_line.get('progress'))
-                            ))
+                        log_lines.append('Build: {}'.format(json_line['stream'].strip()))
+                    elif json_line.get('status') and not is_pushing:
+                        is_pushing = True
+                        log_lines.append('Pushing ...')
                     elif json_line.get('aux'):
-                        log_lines.append(LogSpec(
-                            log_line='Push finished: {}'.format(json_line.get('aux'))
-                        ))
+                        log_lines.append('Pushing finished: {}'.format(json_line.get('aux')))
                     else:
                         log_lines.append(str(json_line))
             except json.JSONDecodeError:
@@ -147,8 +137,8 @@ class DockerBuilder(object):
             if log_lines:
                 self._handle_logs(log_lines)
         except (BuildError, APIError) as e:
-            self._handle_logs(LogSpec(log_line='Build Error {}'.format(e),
-                                      log_level=LogLevels.ERROR))
+            self._handle_logs('{}: Could not build the image, '
+                              'encountered {}'.format(LogLevels.ERROR, e))
             return False
 
         return status

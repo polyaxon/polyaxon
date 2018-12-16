@@ -89,11 +89,11 @@ async def experiment_job_resources(request, ws, username, project_name, experime
 
 @authorized()
 async def experiment_job_logs_v2(request, ws, username, project_name, experiment_id, job_id):
-    job, experiment, message = validate_experiment_job(request=request,
-                                                       username=username,
-                                                       project_name=project_name,
-                                                       experiment_id=experiment_id,
-                                                       job_id=job_id)
+    job, _, message = validate_experiment_job(request=request,
+                                              username=username,
+                                              project_name=project_name,
+                                              experiment_id=experiment_id,
+                                              job_id=job_id)
     if job is None:
         await ws.send(get_error_message(message))
         return
