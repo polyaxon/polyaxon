@@ -13,6 +13,7 @@ class ExperimentJobSchema(Schema):
     id = fields.Int(allow_none=True)
     uuid = UUID()
     unique_name = fields.Str(allow_none=True)
+    pod_id = fields.Str(allow_none=True)
     role = fields.Str(allow_none=True)
     experiment = fields.Int()
     experiment_name = fields.Str()
@@ -51,6 +52,7 @@ class ExperimentJobConfig(BaseConfig):
                  updated_at,
                  definition=None,
                  unique_name=None,
+                 pod_id=None,
                  id=None,  # pylint:disable=redefined-builtin
                  role=None,
                  last_status=None,
@@ -60,6 +62,7 @@ class ExperimentJobConfig(BaseConfig):
                  total_run=None):
         self.uuid = uuid
         self.unique_name = unique_name
+        self.pod_id = pod_id
         self.id = id
         self.role = role
         self.experiment = experiment

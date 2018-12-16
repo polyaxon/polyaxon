@@ -17,6 +17,7 @@ class TestJobConfigs(TestCase):
             'project': 'name.name',
             'build_job': 'name.name',
             'unique_name': 'user.proj.1',
+            'pod_id': 'job_1',
             'last_status': 'Running',
             'description': 'description',
             'config': {'k': 'v'},
@@ -47,6 +48,7 @@ class TestJobConfigs(TestCase):
         config_dict.pop('updated_at')
         config_dict.pop('definition')
         config_dict.pop('tags')
+        config_dict.pop('pod_id')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
@@ -88,6 +90,7 @@ class TestTensorboardJobConfigs(TestCase):
             'experiment': 1,
             'experiment_group': 1,
             'unique_name': 'user.proj.1',
+            'pod_id': 'job_1',
             'last_status': 'Running',
             'tags': ['test'],
             'created_at': local_now().isoformat(),

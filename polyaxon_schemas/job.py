@@ -13,6 +13,7 @@ class JobSchema(Schema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
+    pod_id = fields.Str(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = fields.Str(allow_none=True)
@@ -58,6 +59,7 @@ class JobConfig(BaseConfig):
                  uuid=None,
                  name=None,
                  unique_name=None,
+                 pod_id=None,
                  project=None,
                  build_job=None,
                  description=None,
@@ -80,6 +82,7 @@ class JobConfig(BaseConfig):
         self.uuid = uuid
         self.name = name
         self.unique_name = unique_name
+        self.pod_id = pod_id
         self.project = project
         self.build_job = build_job
         self.description = description
@@ -122,7 +125,7 @@ class TensorboardJobConfig(JobConfig):
     IDENTIFIER = 'TensorboardJob'
     DEFAULT_INCLUDE_ATTRIBUTES = [
         'id', 'unique_name', 'user', 'last_status', 'experiment', 'experiment_group',
-        'created_at', 'started_at', 'finished_at', 'total_run',
+        'created_at', 'started_at', 'finished_at', 'total_run', 'pod_id'
     ]
 
     def __init__(self,
@@ -131,6 +134,7 @@ class TensorboardJobConfig(JobConfig):
                  uuid=None,
                  name=None,
                  unique_name=None,
+                 pod_id=None,
                  project=None,
                  experiment=None,
                  experiment_group=None,
@@ -156,6 +160,7 @@ class TensorboardJobConfig(JobConfig):
             uuid=uuid,
             name=name,
             unique_name=unique_name,
+            pod_id=pod_id,
             project=project,
             build_job=build_job,
             description=description,

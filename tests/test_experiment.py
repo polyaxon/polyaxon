@@ -124,6 +124,7 @@ class TestExperimentConfigs(TestCase):
                        'definition': {},
                        'role': 'master',
                        'id': 1,
+                       'pod_id': 'job_1',
                        'unique_name': 'project.1.1.master'}
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
