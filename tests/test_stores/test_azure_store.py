@@ -138,14 +138,6 @@ class TestAzureStore(TestCase):
     def test_delete_file(self, client):
         client.return_value.list_blobs.return_value = MockBlobList([])
 
-        dirname = tempfile.mkdtemp()
-        fpath = dirname + '/test.txt'
-
-        def mkfile(container, cloud_path, fname):
-            return open(fname, 'w')
-
-        client.return_value.get_blob_to_path.side_effect = mkfile
-
         base_path = 'path/test.txt'
         store = AzureStore()
         key_path = self.wasbs_base + base_path
