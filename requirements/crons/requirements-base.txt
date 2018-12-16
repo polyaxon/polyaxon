@@ -1,3 +1,3 @@
 -r ../requirements-base.txt
 
-polystores==0.0.1
+polystores==0.0.2

@@ -2,5 +2,5 @@
 
 polyaxon-k8s==0.3.3
 polyaxon-schemas==0.3.4
-polystores==0.0.1
+polystores==0.0.2
 

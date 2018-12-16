@@ -2,7 +2,7 @@
 
 django-auth-ldap==1.7.0
 GitPython==2.1.11
-polystores==0.0.1
+polystores==0.0.2
 uWSGI==2.0.17.1
 
 azure-storage==0.36.0
