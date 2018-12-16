@@ -1,15 +1,12 @@
-import time
-
 import argparse
+import time
 
 from kubernetes.client.rest import ApiException
 
 from polyaxon_client.client import PolyaxonClient
-
 from polyaxon_k8s.manager import K8SManager
-
-from sidecar.monitor import is_pod_running
 from sidecar import settings
+from sidecar.monitor import is_pod_running
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

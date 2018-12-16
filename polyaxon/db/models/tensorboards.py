@@ -2,7 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from constants.k8s_jobs import TENSORBOARD_JOB_NAME, JOB_NAME_FORMAT
+from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.outputs import OutputsRefsSpec
 from db.models.plugins import PluginJobBase

@@ -4,8 +4,8 @@ from django.db import models
 from django.utils.functional import cached_property
 
 import auditor
-from constants.k8s_jobs import JOB_NAME_FORMAT, JOB_NAME
 
+from constants.k8s_jobs import JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT

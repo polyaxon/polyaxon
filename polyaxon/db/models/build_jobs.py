@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.images_tags import LATEST_IMAGE_TAG
-from constants.k8s_jobs import JOB_NAME_FORMAT, DOCKERIZER_JOB_NAME
+from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.models.utils import (

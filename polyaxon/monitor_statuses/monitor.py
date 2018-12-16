@@ -1,8 +1,8 @@
 import logging
 
-import ocular
-
 from django.conf import settings
+
+import ocular
 
 from constants.jobs import JobLifeCycle
 from db.redis.containers import RedisJobContainers
