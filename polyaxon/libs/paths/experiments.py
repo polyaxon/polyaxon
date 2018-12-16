@@ -3,8 +3,9 @@ import shutil
 
 from django.conf import settings
 
+import stores
+
 from db.models.cloning_strategies import CloningStrategy
-from libs.paths.outputs_paths import get_outputs_paths
 from libs.paths.utils import check_archive_path, create_path, delete_path
 
 
@@ -12,7 +13,7 @@ def get_experiment_outputs_path(persistence_outputs,
                                 experiment_name,
                                 original_name=None,
                                 cloning_strategy=None):
-    persistence_outputs = get_outputs_paths(persistence_outputs)
+    persistence_outputs = stores.get_outputs_paths(persistence_outputs)
     values = experiment_name.split('.')
     if original_name is not None and cloning_strategy == CloningStrategy.RESUME:
         values = original_name.split('.')
@@ -32,7 +33,8 @@ def get_experiment_logs_path(experiment_name, temp):
 
     if temp:
         return os.path.join(settings.LOGS_ARCHIVE_ROOT, '/'.join(values))
-    return os.path.join(settings.LOGS_MOUNT_PATH, '/'.join(values))
+    persistence_logs = stores.get_logs_paths()
+    return os.path.join(persistence_logs, '/'.join(values))
 
 
 def delete_experiment_logs(experiment_name):
@@ -42,7 +44,7 @@ def delete_experiment_logs(experiment_name):
 
 def delete_experiment_outputs(persistence_outputs, experiment_name):
     path = get_experiment_outputs_path(persistence_outputs, experiment_name)
-    delete_path(path)
+    delete_path(path)  # TODO: should use polystores
 
 
 def create_experiment_path(experiment_name, path):
@@ -64,11 +66,13 @@ def create_experiment_logs_path(experiment_name, temp):
     if temp:
         check_archive_path(settings.LOGS_ARCHIVE_ROOT)
         return create_experiment_path(experiment_name, settings.LOGS_ARCHIVE_ROOT)
-    return create_experiment_path(experiment_name, settings.LOGS_MOUNT_PATH)
+
+    persistence_logs = stores.get_logs_paths()
+    return create_experiment_path(experiment_name, persistence_logs)
 
 
 def create_experiment_outputs_path(persistence_outputs, experiment_name):
-    persistence_outputs = get_outputs_paths(persistence_outputs)
+    persistence_outputs = stores.get_outputs_paths(persistence_outputs)
     values = experiment_name.split('.')
     path = create_experiment_path(experiment_name, persistence_outputs)
     path = os.path.join(path, values[-1])

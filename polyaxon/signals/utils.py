@@ -1,6 +1,5 @@
 from db.models.bookmarks import Bookmark
-from libs.paths.data_paths import validate_persistence_data
-from libs.paths.outputs_paths import validate_persistence_outputs
+from stores.validators import validate_persistence_data, validate_persistence_outputs
 from schemas.environments import PersistenceConfig
 
 

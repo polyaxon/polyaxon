@@ -5,7 +5,7 @@ import pytest
 from django.test import override_settings
 
 from db.models.outputs import OutputsRefsSpec
-from libs.paths.exceptions import VolumeNotFoundError
+from stores.exceptions import VolumeNotFoundError
 from scheduler.spawners.templates.stores import (
     get_data_store_secrets,
     get_outputs_refs_store_secrets,

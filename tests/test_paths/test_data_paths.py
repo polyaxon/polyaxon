@@ -3,8 +3,10 @@ import pytest
 from django.conf import settings
 from django.test import override_settings
 
-from libs.paths.data_paths import get_data_paths, validate_persistence_data
-from libs.paths.exceptions import VolumeNotFoundError
+import stores
+
+from stores.validators import validate_persistence_data
+from stores.exceptions import VolumeNotFoundError
 from tests.utils import BaseTest
 
 
@@ -33,14 +35,14 @@ class TestDataPaths(BaseTest):
 
     def test_get_data_paths_raises_for_unrecognised_paths(self):
         with self.assertRaises(VolumeNotFoundError):
-            get_data_paths(['path1', 'path2'])
+            stores.get_data_paths(['path1', 'path2'])
 
     @override_settings(PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_get_data_paths_works_as_expected(self):
         with self.assertRaises(VolumeNotFoundError):
-            get_data_paths(['path1', 'path2'])
+            stores.get_data_paths(['path1', 'path2'])
 
-        assert get_data_paths(['data2']) == {'data2': '/data/2'}
-        assert get_data_paths(['data3']) == {'data3': 'gs://data-bucket'}
-        assert get_data_paths(['data2', 'data3']) == {'data2': '/data/2',
-                                                      'data3': 'gs://data-bucket'}
+        assert stores.get_data_paths(['data2']) == {'data2': '/data/2'}
+        assert stores.get_data_paths(['data3']) == {'data3': 'gs://data-bucket'}
+        assert stores.get_data_paths(['data2', 'data3']) == {
+            'data2': '/data/2', 'data3': 'gs://data-bucket'}

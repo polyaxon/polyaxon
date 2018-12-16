@@ -3,8 +3,9 @@ import tarfile
 
 from django.conf import settings
 
+import stores
+
 from libs.paths.utils import check_archive_path
-from libs.stores import get_outputs_store
 
 
 def create_tarfile(files, tar_path):
@@ -46,7 +47,7 @@ def archive_outputs_file(persistence_outputs, outputs_path, namepath, filepath):
     download_filepath = os.path.join(settings.OUTPUTS_DOWNLOAD_ROOT, namepath, filepath)
     download_dir = '/'.join(download_filepath.split('/')[:-1])
     check_archive_path(download_dir)
-    store_manager = get_outputs_store(persistence_outputs=persistence_outputs)
+    store_manager = stores.get_outputs_store(persistence_outputs=persistence_outputs)
     outputs_filepath = os.path.join(outputs_path, filepath)
     store_manager.download_file(outputs_filepath, download_filepath)
     if store_manager.store.is_local_store:

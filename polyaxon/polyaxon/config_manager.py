@@ -219,6 +219,12 @@ class ConfigManager(rhea.Rhea):
         stats.validate()
         stats.setup()
 
+    def setup_stores_service(self):
+        import stores
+
+        stores.validate()
+        stores.setup()
+
     @cached_property
     def notification_url(self):
         value = self.get_string(

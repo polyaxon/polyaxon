@@ -7,7 +7,7 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
-from libs.paths.exceptions import VolumeNotFoundError
+from stores.exceptions import VolumeNotFoundError
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.utils import get_job_definition
 

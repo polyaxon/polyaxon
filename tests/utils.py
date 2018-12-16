@@ -221,7 +221,7 @@ class BaseTest(TestCase):
         # Mock dirs
         settings.REPOS_MOUNT_PATH = tempfile.mkdtemp()
         settings.UPLOAD_MOUNT_PATH = tempfile.mkdtemp()
-        settings.LOGS_MOUNT_PATH = tempfile.mkdtemp()
+        settings.PERSISTENCE_LOGS['mountPath'] = tempfile.mkdtemp()
         settings.PERSISTENCE_OUTPUTS['outputs']['mountPath'] = tempfile.mkdtemp()
         settings.REPOS_ARCHIVE_ROOT = tempfile.mkdtemp()
         settings.OUTPUTS_ARCHIVE_ROOT = tempfile.mkdtemp()

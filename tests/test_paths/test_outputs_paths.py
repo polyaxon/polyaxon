@@ -3,8 +3,10 @@ import pytest
 from django.conf import settings
 from django.test import override_settings
 
-from libs.paths.exceptions import VolumeNotFoundError
-from libs.paths.outputs_paths import get_outputs_paths, validate_persistence_outputs
+import stores
+
+from stores.exceptions import VolumeNotFoundError
+from stores.validators import validate_persistence_outputs
 from tests.utils import BaseTest
 
 
@@ -36,12 +38,12 @@ class TestOutputsPaths(BaseTest):
 
     def test_get_outputs_paths_raises_for_unrecognised_paths(self):
         with self.assertRaises(VolumeNotFoundError):
-            get_outputs_paths(['path1', 'path2'])
+            stores.get_outputs_paths(['path1', 'path2'])
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS)
     def test_get_outputs_paths_works_as_expected(self):
         with self.assertRaises(VolumeNotFoundError):
-            get_outputs_paths('path1')
+            stores.get_outputs_paths('path1')
 
-        assert get_outputs_paths('outputs2') == '/outputs/2'
-        assert get_outputs_paths('outputs3') == 'gs://output-bucket'
+        assert stores.get_outputs_paths('outputs2') == '/outputs/2'
+        assert stores.get_outputs_paths('outputs3') == 'gs://output-bucket'

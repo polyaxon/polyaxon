@@ -4,6 +4,7 @@ from ..debug import *
 PROJECT_APPS = AUDITOR_APPS + (
     'ownership.apps.OwnershipConfig',
     'access.apps.AccessConfig',
+    'stores.apps.StoresConfig',
     'api.apps.APIConfig',
     'query.apps.QueryConfig',
     'publisher.apps.PublisherConfig',

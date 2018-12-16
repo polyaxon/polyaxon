@@ -4,10 +4,11 @@ from kubernetes import client
 
 from django.conf import settings
 
+import stores
+
 from constants.urls import VERSION_V1
 from db.models.outputs import get_paths_from_specs
 from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
-from libs.paths.data_paths import get_data_paths
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.stores import (
     get_data_store_secrets,
@@ -121,7 +122,7 @@ def get_job_env_vars(persistence_outputs,
             get_env_var(name=constants.CONFIG_MAP_RUN_LOGS_PATH_KEY_NAME, value=logs_path))
 
     # Data and outputs paths
-    data_paths = get_data_paths(persistence_data)
+    data_paths = stores.get_data_paths(persistence_data)
     env_vars += [
         get_env_var(name=constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME, value=outputs_path),
         get_env_var(name=constants.CONFIG_MAP_RUN_DATA_PATHS_KEY_NAME, value=data_paths)

@@ -2,9 +2,8 @@ from kubernetes import client
 
 from django.conf import settings
 
-from libs.paths.data_paths import validate_persistence_data
-from libs.paths.exceptions import VolumeNotFoundError
-from libs.paths.outputs_paths import validate_persistence_outputs
+from stores.validators import validate_persistence_data, validate_persistence_outputs
+from stores.exceptions import VolumeNotFoundError
 from scheduler.spawners.templates import constants
 
 

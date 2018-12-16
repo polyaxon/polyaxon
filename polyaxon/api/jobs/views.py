@@ -14,6 +14,7 @@ from rest_framework.settings import api_settings
 from django.http import StreamingHttpResponse
 
 import auditor
+import stores
 
 from api.endpoint.base import (
     CreateEndpoint,
@@ -52,10 +53,9 @@ from event_manager.events.job import (
 )
 from event_manager.events.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_outputs, archive_outputs_file
-from libs.paths.exceptions import VolumeNotFoundError
+from stores.exceptions import VolumeNotFoundError
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.spec_validation import validate_job_spec_config
-from libs.stores import get_outputs_store
 from logs_handlers.log_queries.job import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -307,7 +307,7 @@ class JobOutputsTreeView(JobEndpoint, RetrieveEndpoint):
         Returns a the outputs directory tree.
     """
     def get(self, request, *args, **kwargs):
-        store_manager = get_outputs_store(persistence_outputs=self.job.persistence_outputs)
+        store_manager = stores.get_outputs_store(persistence_outputs=self.job.persistence_outputs)
         job_outputs_path = get_job_outputs_path(
             persistence_outputs=self.job.persistence_outputs,
             job_name=self.job.unique_name)
