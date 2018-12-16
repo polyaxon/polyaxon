@@ -8,11 +8,9 @@ import time
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 from hestia.list_utils import to_list
-from hestia.logging_utils import LogSpec
+from hestia.logging_utils import LogSpec, LogLevels
 
 from django.conf import settings
-
-import publisher
 
 from constants.jobs import JobLifeCycle
 from db.redis.heartbeat import RedisHeartBeat
@@ -97,14 +95,12 @@ class DockerBuilder(object):
         for raw_line in raw_lines:
             try:
                 json_line = json.loads(raw_line)
-                print(str(json_line))
-                _logger.warning(str(json_line))  # TODO
 
                 if json_line.get('error'):
                     log_lines.append(
                         LogSpec(
                             log_line='Build: {}'.format(str(json_line.get('error', json_line))),
-                            log_level=publisher.ERROR
+                            log_level=LogLevels.ERROR
                         ))
                     status = False
                 else:
@@ -130,16 +126,11 @@ class DockerBuilder(object):
         return log_lines, status
 
     def _handle_logs(self, log_lines):
-        publisher.publish_build_job_log(
-            log_lines='\n'.join(to_list(log_lines)),
-            job_uuid=self.job_uuid,
-            job_name=self.job_name,
-            send_task=True
-        )
+        for log_line in log_lines:
+            print(log_line)
 
     def _handle_log_stream(self, stream):
         log_lines = []
-        last_emit_time = time.time()
         last_heart_beat = time.time()
         status = True
         try:
@@ -148,14 +139,8 @@ class DockerBuilder(object):
                 log_lines += new_log_lines
                 if not new_status:
                     status = new_status
-                publish_cond = (
-                    len(log_lines) == publisher.MESSAGES_COUNT or
-                    (log_lines and time.time() - last_emit_time > publisher.MESSAGES_TIMEOUT)
-                )
-                if publish_cond:
-                    self._handle_logs(log_lines)
-                    log_lines = []
-                    last_emit_time = time.time()
+                self._handle_logs(log_lines)
+                log_lines = []
                 if time.time() - last_heart_beat > self.HEART_BEAT_INTERVAL:
                     last_heart_beat = time.time()
                     RedisHeartBeat.build_ping(build_id=self.build_job.id)
@@ -163,7 +148,7 @@ class DockerBuilder(object):
                 self._handle_logs(log_lines)
         except (BuildError, APIError) as e:
             self._handle_logs(LogSpec(log_line='Build Error {}'.format(e),
-                                      log_level=publisher.ERROR))
+                                      log_level=LogLevels.ERROR))
             return False
 
         return status
