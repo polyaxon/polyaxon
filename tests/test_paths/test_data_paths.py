@@ -5,8 +5,8 @@ from django.test import override_settings
 
 import stores
 
-from stores.validators import validate_persistence_data
 from stores.exceptions import VolumeNotFoundError
+from stores.validators import validate_persistence_data
 from tests.utils import BaseTest
 
 

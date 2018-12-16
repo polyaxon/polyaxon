@@ -6,9 +6,9 @@ from kubernetes.client.rest import ApiException
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
-from stores.exceptions import VolumeNotFoundError
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
 from scheduler.spawners.utils import get_job_definition
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.tensorboard')
 

@@ -25,7 +25,7 @@ class VolumeConfig(BaseConfig):
     SCHEMA = VolumeSchema
     IDENTIFIER = 'volume'
 
-    def __init__(self, existingClaim=None, mountPath=None, hostPath=None, readOnly=False):
+    def __init__(self, existingClaim=None, mountPath=None, hostPath=None, readOnly=False):  # noqa
         self.existingClaim = existingClaim
         self.mountPath = mountPath
         self.hostPath = hostPath

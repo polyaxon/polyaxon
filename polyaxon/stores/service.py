@@ -1,17 +1,16 @@
 from hestia.service_interface import InvalidService, Service
-
 from marshmallow import ValidationError
-
-from django.conf import settings
 from polystores import StoreManager
 from rhea import RheaError
 
+from django.conf import settings
+
+from polyaxon.config_manager import config
 from stores.exceptions import VolumeNotFoundError
-from stores.store_secrets import get_store_secret_for_persistence, get_store_secret_from_definition
-from stores.validators import validate_persistence_data, validate_persistence_outputs
 from stores.schemas.store import StoreConfig
 from stores.schemas.volume import VolumeConfig
-from polyaxon.config_manager import config
+from stores.store_secrets import get_store_secret_for_persistence, get_store_secret_from_definition
+from stores.validators import validate_persistence_data, validate_persistence_outputs
 
 
 class StoresService(Service):
@@ -50,13 +49,13 @@ class StoresService(Service):
                 'bucket' not in settings.PERSISTENCE_DATA[persistence]
             )
             if persistence_type_condition:
-                raise VolumeNotFoundError('Data volume with name `{}` '
-                                          'does not define a mountPath or bucket.'.format(
-                    persistence))
+                raise VolumeNotFoundError(
+                    'Data volume with name `{}` '
+                    'does not define a mountPath or bucket.'.format(persistence))
 
             persistence_paths[persistence] = (
-                    settings.PERSISTENCE_DATA[persistence].get('mountPath') or
-                    settings.PERSISTENCE_DATA[persistence].get('bucket'))
+                settings.PERSISTENCE_DATA[persistence].get('mountPath') or
+                settings.PERSISTENCE_DATA[persistence].get('bucket'))
 
         return persistence_paths
 

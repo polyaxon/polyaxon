@@ -92,7 +92,6 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_outputs, archive_outputs_file
-from stores.exceptions import VolumeNotFoundError
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.spec_validation import validate_experiment_spec_config
 from logs_handlers.log_queries.experiment import process_logs
@@ -103,6 +102,7 @@ from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
 from scopes.permissions.internal import IsAuthenticatedOrInternal
 from scopes.permissions.projects import get_permissible_project
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger("polyaxon.views.experiments")
 

@@ -53,7 +53,6 @@ from event_manager.events.job import (
 )
 from event_manager.events.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_outputs, archive_outputs_file
-from stores.exceptions import VolumeNotFoundError
 from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from libs.spec_validation import validate_job_spec_config
 from logs_handlers.log_queries.job import process_logs
@@ -62,6 +61,7 @@ from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal
 from scopes.permissions.projects import get_permissible_project
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger("polyaxon.views.jobs")
 

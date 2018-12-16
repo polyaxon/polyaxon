@@ -11,9 +11,9 @@ from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_tagged_image
 from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
-from stores.exceptions import VolumeNotFoundError
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.utils import get_job_definition
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.dockerizer')
 

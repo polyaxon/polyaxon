@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, post_dump, post_load, validates_schema, ValidationError
+from marshmallow import Schema, ValidationError, fields, post_dump, post_load, validates_schema
 
 from constants import stores
 from schemas.base import BaseConfig
@@ -36,7 +36,7 @@ class StoreConfig(BaseConfig):
     SCHEMA = StoreSchema
     IDENTIFIER = 'store'
 
-    def __init__(self, store, bucket, secret, secretKey):
+    def __init__(self, store, bucket, secret, secretKey):  # noqa
         self.store = store
         self.bucket = bucket
         self.secret = secret

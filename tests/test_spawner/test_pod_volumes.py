@@ -5,7 +5,6 @@ import pytest
 from django.test import override_settings
 
 from db.models.outputs import OutputsRefsSpec
-from stores.exceptions import VolumeNotFoundError
 from scheduler.spawners.templates.volumes import (
     get_pod_data_volume,
     get_pod_outputs_volume,
@@ -13,6 +12,7 @@ from scheduler.spawners.templates.volumes import (
     get_pod_volumes,
     get_shm_volumes
 )
+from stores.exceptions import VolumeNotFoundError
 
 
 @pytest.mark.spawner_mark

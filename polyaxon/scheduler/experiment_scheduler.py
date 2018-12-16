@@ -11,7 +11,6 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from docker_images.image_info import get_image_info
-from stores.exceptions import VolumeNotFoundError
 from polyaxon.config_manager import config
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
@@ -27,6 +26,7 @@ from schemas.specifications import (
     TensorflowSpecification
 )
 from schemas.tasks import TaskType
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.experiment')
 

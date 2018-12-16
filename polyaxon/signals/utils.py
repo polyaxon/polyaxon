@@ -1,6 +1,6 @@
 from db.models.bookmarks import Bookmark
-from stores.validators import validate_persistence_data, validate_persistence_outputs
 from schemas.environments import PersistenceConfig
+from stores.validators import validate_persistence_data, validate_persistence_outputs
 
 
 def set_tags(instance):

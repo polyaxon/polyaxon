@@ -2,9 +2,9 @@ from kubernetes import client
 
 from django.conf import settings
 
-from stores.validators import validate_persistence_data, validate_persistence_outputs
-from stores.exceptions import VolumeNotFoundError
 from scheduler.spawners.templates import constants
+from stores.exceptions import VolumeNotFoundError
+from stores.validators import validate_persistence_data, validate_persistence_outputs
 
 
 def get_volume_mount(volume, volume_mount=None, read_only=False):
