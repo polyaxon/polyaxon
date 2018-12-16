@@ -61,7 +61,7 @@ from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal
 from scopes.permissions.projects import get_permissible_project
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import VolumeNotFoundError  # noqa
 
 _logger = logging.getLogger("polyaxon.views.jobs")
 

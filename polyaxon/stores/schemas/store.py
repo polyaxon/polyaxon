@@ -5,7 +5,7 @@ from schemas.base import BaseConfig
 
 
 def validate_store(store):
-    if not store in stores.VALUES:
+    if store not in stores.VALUES:
         raise ValidationError("Store is not valid.")
 
 

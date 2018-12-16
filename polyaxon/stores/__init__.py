@@ -6,7 +6,7 @@ from stores.service import StoresService
 
 
 def get_paths_backend():
-    return settings.ACCESS_BACKEND or 'stores.service.StoresService'
+    return settings.STORES_BACKEND or 'stores.service.StoresService'
 
 
 backend = LazyServiceWrapper(
