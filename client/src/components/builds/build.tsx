@@ -11,6 +11,7 @@ import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
+import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
@@ -47,6 +48,9 @@ function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         }
         <Description description={build.description}/>
+        <div className="meta">
+          <PodIdMetaInfo value={build.pod_id} inline={true}/>
+        </div>
         <div className="meta">
           <IdMetaInfo value={build.id} inline={true}/>
           <UserMetaInfo user={build.user} inline={true}/>

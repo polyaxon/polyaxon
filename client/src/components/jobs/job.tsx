@@ -15,6 +15,7 @@ import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
 import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
+import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Status from '../status';
@@ -57,6 +58,9 @@ function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         }
         <Description description={job.description}/>
+        <div className="meta">
+          <PodIdMetaInfo value={job.pod_id} inline={true}/>
+        </div>
         <div className="meta">
           <IdMetaInfo value={job.id} inline={true}/>
           <UserMetaInfo user={job.user} inline={true}/>

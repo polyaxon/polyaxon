@@ -3,6 +3,7 @@ import * as React from 'react';
 import { ExperimentJobModel } from '../../models/experimentJob';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import Status from '../status';
@@ -23,6 +24,9 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
           <i className="fa fa-tasks icon" aria-hidden="true"/>
           {experimentJob.name || experimentJob.unique_name}
         </span>
+        <div className="meta">
+          <PodIdMetaInfo value={experimentJob.pod_id} inline={true}/>
+        </div>
         <div className="meta">
           <span className="meta-info">
             <i className="fa fa-certificate icon" aria-hidden="true"/>

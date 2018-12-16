@@ -4,6 +4,7 @@ export class BuildModel {
   public id: number;
   public uuid: string;
   public unique_name: string;
+  public pod_id: string;
   public name: string;
   public user: string;
   public definition: string;

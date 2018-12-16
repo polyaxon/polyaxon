@@ -4,6 +4,7 @@ export class JobModel {
   public id: number;
   public uuid: string;
   public unique_name: string;
+  public pod_id: string;
   public name: string;
   public original: string;
   public cloning_strategy: string;

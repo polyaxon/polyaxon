@@ -10,6 +10,7 @@ import MDEditor from '../mdEditor/mdEditor';
 import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
@@ -76,10 +77,8 @@ export default class JobOverview extends React.Component<Props, {}> {
               }
             </div>
             <div className="meta">
-              <NodeMetaInfo
-                node={job.node_scheduled}
-                inline={true}
-              />
+              <PodIdMetaInfo value={job.pod_id} inline={true}/>
+              <NodeMetaInfo node={job.node_scheduled} inline={true}/>
             </div>
             <div className="meta">
               <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at} inline={true}/>

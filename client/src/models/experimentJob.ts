@@ -3,6 +3,7 @@ import { LastFetchedNames } from './utils';
 export class ExperimentJobModel {
   public uuid: string;
   public unique_name: string;
+  public pod_id: string;
   public name: string;
   public id: number;
   public role: string;

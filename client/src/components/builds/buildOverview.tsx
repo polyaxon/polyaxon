@@ -10,6 +10,7 @@ import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo'
 import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
@@ -71,6 +72,7 @@ export default class BuildOverview extends React.Component<Props, {}> {
             </div>
             <div className="meta">
               <CommitMetaInfo commit={build.commit} inline={true}/>
+              <PodIdMetaInfo value={build.pod_id} inline={true}/>
               <NodeMetaInfo node={build.node_scheduled} inline={true}/>
             </div>
             <div className="meta">
