@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polystores.stores.manager import StoreManager
+
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
-from polystores.stores.manager import StoreManager
 from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.project import get_project_info
 
