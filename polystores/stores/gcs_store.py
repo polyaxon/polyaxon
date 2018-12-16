@@ -111,7 +111,7 @@ class GCSStore(BaseStore):
         if not bucket_name:
             bucket_name, key = self.parse_gcs_url(key)
         bucket = self.get_bucket(bucket_name)
-        bucket.delete_blob(key)
+        return bucket.delete_blob(key)
 
     def check_blob(self, blob, bucket_name=None):
         """

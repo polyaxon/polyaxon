@@ -53,6 +53,9 @@ class StoreManager(object):
     def list(self, path):
         return self.store.list(path)
 
+    def delete(self, path):
+        return self.store.delete(path)
+
     def upload_file(self, filename, **kwargs):
         self.store.upload_file(filename, self._path, **kwargs)
 

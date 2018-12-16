@@ -114,6 +114,20 @@ class TestGCSStore(TestCase):
 
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))
+    def test_delete(self, client, _):
+        test_bucket = 'test_bucket'
+        test_object = 'test_object'
+
+        bucket = mock.MagicMock()
+        client.return_value.get_bucket.return_value = bucket
+        bucket.delete_blob.return_value = True
+
+        response = GCSStore().delete(key=test_object, bucket_name=test_bucket)
+
+        assert response is True
+
+    @mock.patch(GCS_MODULE.format('get_gc_credentials'))
+    @mock.patch(GCS_MODULE.format('Client'))
     def test_list_empty(self, client, _):
         gcs_url = 'gs://bucket/path/to/blob'
         store = GCSStore()

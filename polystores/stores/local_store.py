@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
+from polystores.logger import logger
 from polystores.stores.base_store import BaseStore
 
 
@@ -64,3 +65,12 @@ class LocalStore(BaseStore):
 
     def download_dir(self, *args, **kwargs):
         pass
+
+    def delete(self, path, **kwargs):
+        if not os.path.exists(path):
+            return
+        try:
+            if os.path.isfile(path):
+                os.remove(path)
+        except OSError:
+            logger.warning('Could not delete path `%s`', path)

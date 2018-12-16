@@ -73,6 +73,20 @@ class TestAwsStore(TestCase):
         assert store.list_keys(bucket_name='bucket', prefix='dir/') == [('b', 1)]
 
     @mock_s3
+    def test_delete(self):
+        store = S3Store()
+        b = store.get_bucket('bucket')
+        b.create()
+        b.put_object(Key='a', Body=b'a')
+        b.put_object(Key='dir/b', Body=b'b')
+
+        store.delete(key='a', bucket_name='bucket')
+        assert store.list_prefixes(bucket_name='bucket', prefix='non-existent/') == []
+        assert store.list_prefixes(bucket_name='bucket', delimiter='/') == ['dir']
+        assert store.list_keys(bucket_name='bucket', delimiter='/') == []
+        assert store.list_keys(bucket_name='bucket', prefix='dir/') == [('b', 1)]
+
+    @mock_s3
     def test_list_prefixes_paged(self):
         store = S3Store()
         b = store.get_bucket('bucket')

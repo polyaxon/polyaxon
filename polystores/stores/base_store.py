@@ -97,6 +97,9 @@ class BaseStore(object):
     def list(self, *args, **kwargs):
         raise NotImplementedError
 
+    def delete(self, *args, **kwargs):
+        raise NotImplementedError
+
     def download_file(self, *args, **kwargs):
         raise NotImplementedError
 

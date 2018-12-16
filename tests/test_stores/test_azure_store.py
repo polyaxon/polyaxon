@@ -135,6 +135,27 @@ class TestAzureStore(TestCase):
             "container", base_path, fpath)
 
     @mock.patch(AZURE_MODULE.format('BlockBlobService'))
+    def test_delete_file(self, client):
+        client.return_value.list_blobs.return_value = MockBlobList([])
+
+        dirname = tempfile.mkdtemp()
+        fpath = dirname + '/test.txt'
+
+        def mkfile(container, cloud_path, fname):
+            return open(fname, 'w')
+
+        client.return_value.get_blob_to_path.side_effect = mkfile
+
+        base_path = 'path/test.txt'
+        store = AzureStore()
+        key_path = self.wasbs_base + base_path
+
+        # Test without basename
+        store.delete(key_path)
+        client.return_value.delete_blob.assert_called_with(
+            "container", 'path/test.txt')
+
+    @mock.patch(AZURE_MODULE.format('BlockBlobService'))
     def test_upload_dir(self, client):
         dirname1 = tempfile.mkdtemp()
         fpath1 = dirname1 + '/test1.txt'

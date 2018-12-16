@@ -331,6 +331,12 @@ class S3Store(BaseStore):
         obj = self.get_key(key, bucket_name)
         return obj.get()['Body'].read().decode('utf-8')
 
+    def delete(self, key, bucket_name=None):
+        if not bucket_name:
+            (bucket_name, key) = self.parse_s3_url(key)
+        obj = self.resource.Object(bucket_name, key)
+        obj.delete()
+
     def upload_bytes(self,
                      bytes_data,
                      key,
