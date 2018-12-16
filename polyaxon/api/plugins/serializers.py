@@ -14,7 +14,8 @@ class PluginJobBaseSerializer(serializers.ModelSerializer):
             'user',
             'name',
             'config',
-            'tags',  # Need ti implement TagsSerializerMixin
+            'pod_id',
+            'tags',  # Need to implement TagsSerializerMixin
         )
 
     def get_user(self, obj):
@@ -62,6 +63,7 @@ class ProjectTensorboardJobSerializer(serializers.ModelSerializer):
             'uuid',
             'name',
             'unique_name',
+            'pod_id',
             'user',
             'description',
             'created_at',

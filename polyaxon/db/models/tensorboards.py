@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
+from constants.k8s_jobs import TENSORBOARD_JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.outputs import OutputsRefsSpec
 from db.models.plugins import PluginJobBase
@@ -47,6 +48,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
         return TENSORBOARD_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @cached_property
+    def pod_id(self):
+        return JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
     def specification(self):

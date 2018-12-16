@@ -6,7 +6,6 @@ from django.conf import settings
 
 import auditor
 
-from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_LOGS_VIEWED,
@@ -99,18 +98,13 @@ async def experiment_job_logs_v2(request, ws, username, project_name, experiment
         await ws.send(get_error_message(message))
         return
 
-    job_uuid = job.uuid.hex
-    experiment_uuid = experiment.uuid.hex
+    pod_id = job.pod_id
 
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
                    instance=job,
                    actor_id=request.app.user.id,
                    actor_name=request.app.user.username)
 
-    pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_type=job.role,
-                                               task_idx=job.sequence,
-                                               job_uuid=job_uuid,
-                                               experiment_uuid=experiment_uuid)
     # Stream logs
     await log_job(request=request,
                   ws=ws,

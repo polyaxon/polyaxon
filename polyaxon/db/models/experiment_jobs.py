@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
+from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
 from db.models.utils import NodeSchedulingModel
@@ -49,6 +50,14 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
             experiment_name=self.experiment.unique_name,
             id=self.id,
             role=self.role
+        )
+
+    @cached_property
+    def pod_id(self):
+        return EXPERIMENT_JOB_NAME_FORMAT.format(
+            task_type=self.role,
+            task_idx=self.sequence,
+            experiment_uuid=self.experiment.uuid.hex
         )
 
     def set_status(self,  # pylint:disable=arguments-differ

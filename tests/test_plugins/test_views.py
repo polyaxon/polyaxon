@@ -9,7 +9,7 @@ from rest_framework import status
 from api.plugins.serializers import ProjectTensorboardJobSerializer
 from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
-from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
+from constants.k8s_jobs import NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
 from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
@@ -903,8 +903,7 @@ class TestTensorboardProjectViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         tensorboard = TensorboardJobFactory(project=project)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        deployment_name = tensorboard.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_tensorboard_url.return_value = service_url
@@ -920,8 +919,7 @@ class TestTensorboardProjectViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         tensorboard = TensorboardJobFactory(project=project)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        deployment_name = tensorboard.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_tensorboard_url.return_value = service_url
@@ -999,8 +997,7 @@ class TestTensorboardExperimentViewV1(BaseTestPluginViewV1):
         experiment = ExperimentFactory(project=project)
         tensorboard = TensorboardJobFactory(project=project, experiment=experiment)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        deployment_name = tensorboard.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_tensorboard_url.return_value = service_url
@@ -1017,8 +1014,7 @@ class TestTensorboardExperimentViewV1(BaseTestPluginViewV1):
         experiment = ExperimentFactory(project=project)
         tensorboard = TensorboardJobFactory(project=project, experiment=experiment)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        deployment_name = tensorboard.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_tensorboard_url.return_value = service_url
@@ -1106,8 +1102,7 @@ class TestTensorboardExperimentGroupViewV1(BaseTestPluginViewV1):
             group = ExperimentGroupFactory(project=project)
         tensorboard = TensorboardJobFactory(project=project, experiment_group=group)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        deployment_name = tensorboard.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_tensorboard_url.return_value = service_url
@@ -1126,8 +1121,7 @@ class TestTensorboardExperimentGroupViewV1(BaseTestPluginViewV1):
             group = ExperimentGroupFactory(project=project)
         tensorboard = TensorboardJobFactory(project=project, experiment_group=group)
         tensorboard.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=tensorboard.uuid.hex, name=self.plugin_app)
+        deployment_name = tensorboard.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_tensorboard_url.return_value = service_url
@@ -1175,8 +1169,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         notebook = NotebookJobFactory(project=project)
         notebook.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=notebook.uuid.hex, name=self.plugin_app)
+        deployment_name = notebook.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_notebook_url.return_value = service_url
@@ -1196,8 +1189,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user)
         notebook = NotebookJobFactory(project=project)
         notebook.set_status(status=JobLifeCycle.RUNNING)
-        deployment_name = JOB_NAME_FORMAT.format(
-            job_uuid=notebook.uuid.hex, name=self.plugin_app)
+        deployment_name = notebook.pod_id
         service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
         mock_instance.get_notebook_url.return_value = service_url

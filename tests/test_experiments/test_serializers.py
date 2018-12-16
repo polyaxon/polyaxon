@@ -397,6 +397,7 @@ class TestExperimentJobSerializer(BaseTest):
         'finished_at',
         'resources',
         'node_scheduled',
+        'pod_id'
     }
 
     def setUp(self):
@@ -435,6 +436,7 @@ class TestExperimentJobDetailsSerializer(BaseTest):
         'id',
         'uuid',
         'unique_name',
+        'pod_id',
         'role',
         'experiment',
         'definition',

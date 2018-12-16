@@ -5,7 +5,6 @@ from kubernetes_asyncio import client, config
 
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
-from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from logs_handlers.log_queries.base import process_log_line
 from streams.constants import SOCKET_SLEEP
 from streams.resources.utils import get_status_message, notify, notify_ws, should_disconnect
@@ -76,11 +75,7 @@ async def log_experiment(request, ws, experiment, namespace, container):
     k8s_api = client.CoreV1Api()
     log_requests = []
     for job in experiment.jobs.all():
-        job_uuid = job.uuid.hex
-        pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(task_type=job.role,
-                                                   task_idx=job.sequence,
-                                                   job_uuid=job_uuid,
-                                                   experiment_uuid=experiment_uuid)
+        pod_id = job.pod_id
         log_requests.append(
             log_job_pod(k8s_api=k8s_api,
                         ws=ws,

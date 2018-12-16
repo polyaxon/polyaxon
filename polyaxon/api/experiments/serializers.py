@@ -46,6 +46,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
             'finished_at',
             'resources',
             'node_scheduled',
+            'pod_id'
         )
 
 

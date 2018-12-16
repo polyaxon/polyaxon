@@ -25,6 +25,7 @@ class TestProjectTensorboardJobSerializer(BaseTest):
         'uuid',
         'name',
         'unique_name',
+        'pod_id',
         'user',
         'description',
         'created_at',

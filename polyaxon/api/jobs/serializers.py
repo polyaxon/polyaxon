@@ -30,6 +30,7 @@ class JobSerializer(serializers.ModelSerializer):
             'uuid',
             'name',
             'unique_name',
+            'pod_id',
             'user',
             'description',
             'created_at',

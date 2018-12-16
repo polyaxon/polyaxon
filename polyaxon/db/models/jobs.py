@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 import auditor
+from constants.k8s_jobs import JOB_NAME_FORMAT, JOB_NAME
 
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
@@ -89,6 +90,10 @@ class Job(AbstractJob,
         return JOB_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @cached_property
+    def pod_id(self):
+        return JOB_NAME_FORMAT.format(name=JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
     def specification(self):
