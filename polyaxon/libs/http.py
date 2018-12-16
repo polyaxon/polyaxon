@@ -65,7 +65,7 @@ def download(url,
         if internal:
             api_url = get_http_api_url()
             url = '{}/{}'.format(api_url, url)
-        logger.info("Downloading file from %s using %s" % (url, authentication_type))
+        print("Downloading file from %s using %s" % (url, authentication_type))
         response = requests.get(url,
                                 headers=request_headers,
                                 timeout=timeout,
@@ -77,7 +77,7 @@ def download(url,
             return None
 
         with open(filename, 'wb') as f:
-            logger.info("Processing file %s" % filename)
+            logger.debug("Processing file %s" % filename)
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
@@ -91,12 +91,12 @@ def download(url,
 def untar_file(build_path, filename, logger, delete_tar=False, internal=False, tar_suffix=None):
     extract_path = build_path if internal else '/tmp'
     if filename and os.path.exists(filename):
-        logger.info("Untarring the contents of the file ...")
+        logger.debug("Untarring the contents of the file ...")
         tar = tarfile.open(filename)
         tar.extractall(extract_path)
         tar.close()
         if delete_tar:
-            logger.info("Cleaning up the tar file ...")
+            logger.debug("Cleaning up the tar file ...")
             os.remove(filename)
 
         if not internal:
@@ -106,5 +106,5 @@ def untar_file(build_path, filename, logger, delete_tar=False, internal=False, t
                 move_recursively(src, build_path)
         return filename
     else:
-        logger.info("File was not found, build_path: %s" % os.listdir(build_path))
+        print("File was not found, build_path: %s" % os.listdir(build_path))
         return None

@@ -56,6 +56,7 @@ class DockerBuilder(object):
         self.docker = APIClient(version='auto')
         self.registry_host = None
         self.docker_url = None
+        self.is_pushing = False
 
     def get_tagged_image(self):
         return get_tagged_image(self.build_job)
@@ -86,13 +87,11 @@ class DockerBuilder(object):
                               registry=registry.host,
                               reauth=True)
 
-    @staticmethod
-    def _prepare_log_lines(log_line):
+    def _prepare_log_lines(self, log_line):
         raw = log_line.decode('utf-8').strip()
         raw_lines = raw.split('\n')
         log_lines = []
         status = True
-        is_pushing = False
         for raw_line in raw_lines:
             try:
                 json_line = json.loads(raw_line)
@@ -103,10 +102,11 @@ class DockerBuilder(object):
                     status = False
                 else:
                     if json_line.get('stream'):
-                        log_lines.append('Build: {}'.format(json_line['stream'].strip()))
-                    elif json_line.get('status') and not is_pushing:
-                        is_pushing = True
-                        log_lines.append('Pushing ...')
+                        log_lines.append('Building: {}'.format(json_line['stream'].strip()))
+                    elif json_line.get('status'):
+                        if not self.is_pushing:
+                            self.is_pushing = True
+                            log_lines.append('Pushing ...')
                     elif json_line.get('aux'):
                         log_lines.append('Pushing finished: {}'.format(json_line.get('aux')))
                     else:
@@ -191,7 +191,7 @@ class DockerBuilder(object):
         )
 
     def build(self, nocache=False, memory_limit=None):
-        _logger.debug('Starting build in `%s`', self.repo_path)
+        _logger.debug('Starting build for `%s`', self.repo_path)
         # Checkout to the correct commit
         # if self.image_tag != self.LATEST_IMAGE_TAG:
         #     git.checkout_commit(repo_path=self.repo_path, commit=self.image_tag)
