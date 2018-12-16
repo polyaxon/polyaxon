@@ -1,5 +1,4 @@
 -r requirements-base.txt
 
--e git+https://github.com/polyaxon/ocular.git@da552b76966e84f06b45f40c3980e9047e059737#egg=ocular==0.0.2
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@94b273759faf21960adc63ee53749245c98dbca5#egg=polyaxon-k8s==0.3.3
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@b7ac4423315044dc3f4a94276f79d0c3ac6d4d2a#egg=polyaxon-schemas==0.3.4

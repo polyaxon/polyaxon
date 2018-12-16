@@ -5,7 +5,7 @@ from django.conf import settings
 from constants import stores
 from libs.paths.exceptions import VolumeNotFoundError
 from polyaxon.config_manager import config
-from polyaxon_client.stores import StoreManager
+from polystores.stores.manager import StoreManager
 
 
 def get_store_secret_from_definition(volume_name, volume_settings):

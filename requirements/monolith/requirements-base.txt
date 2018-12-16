@@ -5,9 +5,10 @@ django-debug-toolbar
 docker==3.5.1
 GitPython==2.1.11
 Jinja2==2.10
+ocular==0.0.2
 pika==0.12.0
 sanic==0.8.3
-kubernetes_asyncio
+kubernetes-asyncio==8.0.1
 scikit-learn==0.20.0
 scipy==1.1.0
 uWSGI==2.0.17.1
