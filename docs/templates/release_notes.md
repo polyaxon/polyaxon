@@ -15,6 +15,7 @@
  * Fix UI issue in the job overview tab.
  * Fix smoothing algorithm, was dropping the first metric resulting in wrong visualization, now the smoothing has similar behaviour to the Tensorboard's.
  * Disable ingress by default, and use LoadBalancer as default value for charts.
+ * Add host list directly on ingress to use when tls is not enabled.
  * Remove deprecated `polyaxon-logs` service. 
  * Use ocular for monitoring statuses.
  * Use polystores for managing stores.
