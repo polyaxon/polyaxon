@@ -1,3 +1,25 @@
+## 0.3.5
+
+ * Update logging logic, logs are now collected lazily.
+ * Use k8s logs timestamps to avoid lags between Polyaxon and k8s.
+ * Expose pod name on experiments jobs, jobs, builds, tensorboards in UI & CLI.
+ * Update sidecar logic, first step to implement a collector sidecar logic for artiacts/outputs.
+ * Deletion of `projects`, `experiment groups`, `experiments`, `jobs`, is now asynchronous, and results in archiving the entity for a certain period.
+ * Add archiving period, configurable with `cleaningIntervals.archived` default 7 days, to allow users to recover deleted entities, otherwise, archived entities older than this interval get cleaned.
+ * Add support for TPU scheduling.
+ * Fix study groups issue related to creating chunks of serializable numpy suggestions.
+ * Schedule configmap and secret refs for builds created by experiments/jobs/notebooks.
+ * [Security, XSS fixes] Update: bootstrap 3.4.0.
+ * Update service account usage for workers to get less permissions.
+ * Calculate run time based on running status instead of starting status, the reason is that an experiment can be sent to k8s scheduler, hence it can wait for some time for resources before it starts actually running.
+ * Fix UI issue in the job overview tab.
+ * Fix smoothing algorithm, was dropping the first metric resulting in wrong visualization, now the smoothing has similar behaviour to the Tensorboard's.
+ * Disable ingress by default, and use LoadBalancer as default value for charts.
+ * Remove deprecated `polyaxon-logs` service. 
+ * Use ocular for monitoring statuses.
+ * Use polystores for managing stores.
+ 
+ 
 ## 0.3.4
  
  * Add new statuses: "warning" and "unschedulable".
