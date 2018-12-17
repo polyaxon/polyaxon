@@ -4,6 +4,12 @@ kind: ServiceAccount
 metadata:
   name: {{ template "polyaxon.fullname" . }}-serviceaccount
   namespace: {{ .Values.namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
+  namespace: {{ .Values.namespace }}
 
 {{- if .Values.rbac.enabled }}
 ---
@@ -69,5 +75,35 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ template "polyaxon.fullname" . }}-serviceaccount
+    namespace: {{ .Values.namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-workers-role
+  namespace: {{ .Values.namespace }}
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods", "nodes", "apis"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["", "*"]
+    resources: ["events", "pods/status", "pods/log"]
+    verbs: ["watch", "get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-workers-role-binding
+  namespace: {{ .Values.namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "polyaxon.fullname" . }}-workers-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
     namespace: {{ .Values.namespace }}
 {{- end }}
