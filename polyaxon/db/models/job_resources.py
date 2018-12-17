@@ -18,6 +18,10 @@ class JobResources(models.Model):
         null=True,
         blank=True,
         validators=[validate_resource])
+    tpu = JSONField(
+        null=True,
+        blank=True,
+        validators=[validate_resource])
 
     class Meta:
         app_label = 'db'
@@ -35,5 +39,6 @@ class JobResources(models.Model):
         cpu = get_resource(self.cpu, 'CPU')
         memory = get_resource(self.memory, 'Memory')
         gpu = get_resource(self.gpu, 'GPU')
-        resources = [cpu, memory, gpu]
+        tpu = get_resource(self.gpu, 'TPU')
+        resources = [cpu, memory, gpu, tpu]
         return ', '.join([r for r in resources if r])

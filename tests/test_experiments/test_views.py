@@ -999,6 +999,9 @@ class TestExperimentDetailViewV1(BaseViewTest):
                 gpu:
                   requests: 1
                   limits: 1
+                tpu:
+                  requests: 1
+                  limits: 1
 
             build:
               image: my_image

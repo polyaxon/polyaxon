@@ -33,4 +33,10 @@ def get_resources(resources):  # pylint:disable=too-many-branches
             limits[settings.K8S_GPU_RESOURCE_KEY] = resources.gpu.limits
         if resources.gpu.requests:
             requests[settings.K8S_GPU_RESOURCE_KEY] = resources.gpu.requests
+
+    if resources.tpu:
+        if resources.tpu.limits:
+            limits[settings.K8S_TPU_RESOURCE_KEY] = resources.tpu.limits
+        if resources.tpu.requests:
+            requests[settings.K8S_TPU_RESOURCE_KEY] = resources.tpu.requests
     return client.V1ResourceRequirements(limits=limits or None, requests=requests or None)

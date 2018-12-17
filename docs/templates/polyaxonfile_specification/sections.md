@@ -307,6 +307,7 @@ A resources definition, is optional and made of three optional fields:
  * cpu: {limits: value, requests: value}
  * memory: {limits: value, requests: value}
  * gpu: {limits: value, requests: value}
+ * tpu: {limits: value, requests: value} 
 
 
 ```yaml

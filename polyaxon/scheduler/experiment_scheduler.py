@@ -72,6 +72,10 @@ def create_job(job_uuid,
             _resources = resources.gpu.to_dict()
             if any(_resources.values()):
                 job_resources['gpu'] = _resources
+        if resources.tpu:
+            _resources = resources.tpu.to_dict()
+            if any(_resources.values()):
+                job_resources['tpu'] = _resources
         if job_resources:
             job.resources = JobResources.objects.create(**job_resources)
 

@@ -358,6 +358,9 @@ class TestJobDetailViewV1(BaseViewTest):
                 gpu:
                   requests: 1
                   limits: 1
+                gpu:
+                  requests: 1
+                  limits: 1
 
             build:
               image: my_image
