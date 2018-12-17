@@ -52,8 +52,8 @@ spec:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
 {{ include "config.envs" . | indent 8 }}
-        {{ include "config.persistence.data" . | indent 8 }}
-        {{ include "config.persistence.outputs" . | indent 8 }}
+{{ include "config.persistence.data" . | indent 8 }}
+{{ include "config.persistence.outputs" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.hpsearch.resources.requests | indent 12 }}
