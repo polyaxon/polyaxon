@@ -141,10 +141,13 @@ class TestSpecifications(TestCase):
 
         # Add env
         assert spec.environment is None
-        env = {'environment': {'resources': {'gpu': {'requests': 1, 'limits': 1}}}}
+        env = {'environment': {'resources': {
+            'gpu': {'requests': 1, 'limits': 1},
+            'tpu': {'requests': 1, 'limits': 1}}}}
         spec = spec.patch(values=env)
         assert spec.declarations == declarations['declarations']
         assert spec.environment.resources.gpu.to_dict() == env['environment']['resources']['gpu']
+        assert spec.environment.resources.tpu.to_dict() == env['environment']['resources']['gpu']
 
         # Patch with unsupported spec
         matrix = {'hptuning': {'matrix': {'lr': {'values': [0.1, 0.2]}}}}

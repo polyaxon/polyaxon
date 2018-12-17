@@ -44,6 +44,10 @@ class TestEnvironmentsConfigs(TestCase):
                 'requests': 2,
                 'limits': 4
             },
+            'tpu': {
+                'requests': 2,
+                'limits': 4
+            },
             'memory': {
                 'requests': 265,
                 'limits': 512
@@ -60,6 +64,10 @@ class TestEnvironmentsConfigs(TestCase):
             'gpu': {
                 'requests': 2,
             },
+            'tpu': {
+                'requests': 2,
+                'limits': 4
+            },
             'memory': {
                 'requests': 200,
                 'limits': 300
@@ -69,6 +77,9 @@ class TestEnvironmentsConfigs(TestCase):
         config_dict2 = {
             'gpu': {
                 'limits': 4
+            },
+            'tpu': {
+                'requests': 2,
             },
             'memory': {
                 'requests': 300,
@@ -82,6 +93,7 @@ class TestEnvironmentsConfigs(TestCase):
         assert config.cpu.to_dict() == {'requests': 0.8, 'limits': None}
         assert config.memory.to_dict() == {'requests': 500, 'limits': 500}
         assert config.gpu.to_dict() == {'requests': 2, 'limits': 4}
+        assert config.tpu.to_dict() == {'requests': 4, 'limits': 4}
 
     def test_gpu_options_config(self):
         config_dict = {
@@ -218,7 +230,9 @@ class TestEnvironmentsConfigs(TestCase):
         config_dict['default_worker'] = {
             'resources': PodResourcesConfig(
                 cpu=K8SResourcesConfig(0.5, 1),
-                gpu=K8SResourcesConfig(2, 4)).to_dict()
+                gpu=K8SResourcesConfig(2, 4),
+                tpu=K8SResourcesConfig(2, 8)
+            ).to_dict(),
         }
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
@@ -298,6 +312,7 @@ class TestEnvironmentsConfigs(TestCase):
         config_dict['default_worker'] = {
             'resources': PodResourcesConfig(
                 cpu=K8SResourcesConfig(0.5, 1),
+                tpu=K8SResourcesConfig(2, 8),
                 gpu=K8SResourcesConfig(2, 4)).to_dict()
         }
         config = HorovodConfig.from_dict(config_dict)
@@ -324,6 +339,7 @@ class TestEnvironmentsConfigs(TestCase):
         config_dict['default_worker'] = {
             'resources': PodResourcesConfig(
                 cpu=K8SResourcesConfig(0.5, 1),
+                tpu=K8SResourcesConfig(1, 1),
                 gpu=K8SResourcesConfig(2, 4)).to_dict()
         }
         config = PytorchConfig.from_dict(config_dict)
@@ -350,6 +366,7 @@ class TestEnvironmentsConfigs(TestCase):
         config_dict['default_worker'] = {
             'resources': PodResourcesConfig(
                 cpu=K8SResourcesConfig(0.5, 1),
+                tpu=K8SResourcesConfig(1, 1),
                 gpu=K8SResourcesConfig(2, 4)).to_dict()
         }
         config = MXNetConfig.from_dict(config_dict)

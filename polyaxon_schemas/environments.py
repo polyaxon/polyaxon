@@ -195,6 +195,7 @@ class PodResourcesSchema(Schema):
     cpu = fields.Nested(K8SResourcesSchema, allow_none=True)
     memory = fields.Nested(K8SResourcesSchema, allow_none=True)
     gpu = fields.Nested(K8SResourcesSchema, allow_none=True)
+    tpu = fields.Nested(K8SResourcesSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -216,14 +217,16 @@ class PodResourcesConfig(BaseConfig):
         cpu: `K8SResourcesConfig`.
         memory: `K8SResourcesConfig`.
         gpu: `K8SResourcesConfig`.
+        tpu: `K8SResourcesConfig`.
     """
     IDENTIFIER = 'pod_resources'
     SCHEMA = PodResourcesSchema
 
-    def __init__(self, cpu=None, memory=None, gpu=None):
+    def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
         self.cpu = cpu
         self.memory = memory
         self.gpu = gpu
+        self.tpu = tpu
 
     def __add__(self, other):
         if not other:
@@ -249,6 +252,13 @@ class PodResourcesConfig(BaseConfig):
         elif other.gpu:
             self.gpu = K8SResourcesConfig()
             self.gpu += other.gpu
+
+        if self.tpu:
+            if other.tpu:
+                self.tpu += other.tpu
+        elif other.gpu:
+            self.tpu = K8SResourcesConfig()
+            self.tpu += other.tpu
         return self
 
 

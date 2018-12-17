@@ -260,7 +260,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 2 * 9, 'limits': 2 + 4 * 9},
             'memory': {'requests': 512, 'limits': 1024},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -711,7 +712,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -791,7 +793,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -904,7 +907,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -962,7 +966,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1059,7 +1064,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1117,7 +1123,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1260,7 +1267,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1344,7 +1352,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1404,7 +1413,8 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1439,7 +1449,8 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1478,7 +1489,8 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1512,7 +1524,8 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None
+            'gpu': None,
+            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
