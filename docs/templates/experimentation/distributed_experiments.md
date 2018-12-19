@@ -197,7 +197,7 @@ add a pytorch subsection to the environment section of your polyaxonfile:
 environment:
   ...
 
-  mxnet:
+  pytorch:
     n_workers: 3
 ```
 
