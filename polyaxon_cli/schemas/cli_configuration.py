@@ -1,28 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_cli.schemas.base import BaseConfig
+from polyaxon_cli.schemas.base import BaseConfig, BaseSchema
 from polyaxon_cli.schemas.log_handler import LogHandlerSchema
 
 
-class CliConfigurationSchema(Schema):
+class CliConfigurationSchema(BaseSchema):
     check_count = fields.Int(allow_none=True)
     current_version = fields.Str(allow_none=True)
     min_version = fields.Str(allow_none=True)
     log_handler = fields.Nested(LogHandlerSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return CliConfigurationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return CliConfigurationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return CliConfigurationConfig
 
 
 class CliConfigurationConfig(BaseConfig):

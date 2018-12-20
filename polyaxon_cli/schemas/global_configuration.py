@@ -1,28 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_cli.schemas.base import BaseConfig
+from polyaxon_cli.schemas.base import BaseConfig, BaseSchema
 
 
-class GlobalConfigurationSchema(Schema):
+class GlobalConfigurationSchema(BaseSchema):
     verbose = fields.Bool(allow_none=True)
     host = fields.Str(allow_none=True)
     http_port = fields.Str(allow_none=True)
     ws_port = fields.Str(allow_none=True)
     use_https = fields.Bool(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlobalConfigurationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlobalConfigurationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlobalConfigurationConfig
 
 
 class GlobalConfigurationConfig(BaseConfig):
