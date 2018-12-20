@@ -15,6 +15,25 @@ from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.utils import to_camel_case
 
 
+class BaseSchema(Schema):
+    """Base schema."""
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return self.schema_config()(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return self.schema_config().remove_reduced_attrs(data)
+
+    @staticmethod
+    def schema_config():
+        raise NotImplementedError()
+
+
 class BaseConfig(object):
     """Base for config classes."""
 

@@ -3,17 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
-from marshmallow import (
-    Schema,
-    ValidationError,
-    fields,
-    post_dump,
-    post_load,
-    validate,
-    validates_schema
-)
+from marshmallow import ValidationError, fields, validate, validates_schema
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.utils import cached_property
@@ -27,22 +19,15 @@ from polyaxon_schemas.utils import (
 )
 
 
-class EarlyStoppingMetricSchema(Schema):
+class EarlyStoppingMetricSchema(BaseSchema):
     metric = fields.Str()
     value = fields.Float()
     optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
     policy = fields.Str(allow_none=True, validate=validate.OneOf(EarlyStoppingPolicy.VALUES))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return EarlyStoppingMetricConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return EarlyStoppingMetricConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return EarlyStoppingMetricConfig
 
 
 class EarlyStoppingMetricConfig(BaseConfig):
@@ -68,19 +53,12 @@ class EarlyStoppingMetricConfig(BaseConfig):
         self.policy = policy
 
 
-class RandomSearchSchema(Schema):
+class RandomSearchSchema(BaseSchema):
     n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return RandomSearchConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RandomSearchConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RandomSearchConfig
 
 
 class RandomSearchConfig(BaseConfig):
@@ -92,19 +70,12 @@ class RandomSearchConfig(BaseConfig):
         self.n_experiments = n_experiments
 
 
-class GridSearchSchema(Schema):
+class GridSearchSchema(BaseSchema):
     n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GridSearchConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GridSearchConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GridSearchConfig
 
 
 class GridSearchConfig(BaseConfig):
@@ -116,20 +87,13 @@ class GridSearchConfig(BaseConfig):
         self.n_experiments = n_experiments
 
 
-class SearchMetricSchema(Schema):
+class SearchMetricSchema(BaseSchema):
     name = fields.Str()
     optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SearchMetricConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SearchMetricConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SearchMetricConfig
 
 
 class SearchMetricConfig(BaseConfig):
@@ -143,20 +107,13 @@ class SearchMetricConfig(BaseConfig):
         self.optimization = optimization
 
 
-class ResourceSchema(Schema):
+class ResourceSchema(BaseSchema):
     name = fields.Str()
     type = fields.Str(allow_none=True, validate=validate.OneOf(ResourceTypes.VALUES))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ResourceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ResourceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ResourceConfig
 
 
 class ResourceConfig(BaseConfig):
@@ -177,23 +134,16 @@ class ResourceConfig(BaseConfig):
         return value
 
 
-class HyperbandSchema(Schema):
+class HyperbandSchema(BaseSchema):
     max_iter = fields.Int(validate=validate.Range(min=1))
     eta = fields.Float(validate=validate.Range(min=0))
     resource = fields.Nested(ResourceSchema)
     metric = fields.Nested(SearchMetricSchema)
     resume = fields.Boolean(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HyperbandConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HyperbandConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HyperbandConfig
 
 
 class HyperbandConfig(BaseConfig):
@@ -208,22 +158,15 @@ class HyperbandConfig(BaseConfig):
         self.resume = resume
 
 
-class GaussianProcessSchema(Schema):
+class GaussianProcessSchema(BaseSchema):
     kernel = fields.Str(allow_none=True, validate=validate.OneOf(GaussianProcessesKernels.VALUES))
     length_scale = fields.Float(allow_none=True)
     nu = fields.Float(allow_none=True)
     n_restarts_optimizer = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GaussianProcessConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GaussianProcessConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GaussianProcessConfig
 
 
 class GaussianProcessConfig(BaseConfig):
@@ -255,7 +198,7 @@ def validate_utility_function(acquisition_function, kappa, eps):
         ))
 
 
-class UtilityFunctionSchema(Schema):
+class UtilityFunctionSchema(BaseSchema):
     acquisition_function = fields.Str(allow_none=True,
                                       validate=validate.OneOf(AcquisitionFunctions.VALUES))
     gaussian_process = fields.Nested(GaussianProcessSchema, allow_none=True)
@@ -264,16 +207,9 @@ class UtilityFunctionSchema(Schema):
     n_warmup = fields.Int(allow_none=True)
     n_iter = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return UtilityFunctionConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return UtilityFunctionConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return UtilityFunctionConfig
 
     @validates_schema
     def validate_utility_function(self, data):
@@ -308,22 +244,15 @@ class UtilityFunctionConfig(BaseConfig):
         self.n_iter = n_iter
 
 
-class BOSchema(Schema):
+class BOSchema(BaseSchema):
     utility_function = fields.Nested(UtilityFunctionSchema, allow_none=True)
     n_initial_trials = fields.Int()
     n_iterations = fields.Int()
     metric = fields.Nested(SearchMetricSchema)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return BOConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BOConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BOConfig
 
 
 class BOConfig(BaseConfig):
@@ -385,7 +314,7 @@ def validate_matrix(matrix, is_grid_search=False, is_bo=False):
     return matrix_data
 
 
-class HPTuningSchema(Schema):
+class HPTuningSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
     matrix = fields.Dict(allow_none=True)
     concurrency = fields.Int(allow_none=True)
@@ -395,16 +324,9 @@ class HPTuningSchema(Schema):
     bo = fields.Nested(BOSchema, allow_none=None)
     early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HPTuningConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HPTuningConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HPTuningConfig
 
     @validates_schema
     def validate_search_algorithm(self, data):

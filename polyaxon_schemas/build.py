@@ -1,17 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import (
-    Schema,
-    ValidationError,
-    fields,
-    post_dump,
-    post_load,
-    validate,
-    validates_schema
-)
+from marshmallow import ValidationError, fields, validate, validates_schema
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
 def validate_image(image):
@@ -24,7 +16,7 @@ def validate_image(image):
         raise ValidationError('Invalid docker image `{}`'.format(image))
 
 
-class BuildSchema(Schema):
+class BuildSchema(BaseSchema):
     image = fields.Str()
     build_steps = fields.List(fields.Str(), allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
@@ -33,16 +25,9 @@ class BuildSchema(Schema):
     ref = fields.Str(allow_none=True)
     nocache = fields.Boolean(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return BuildConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BuildConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BuildConfig
 
     @validates_schema
     def validate_image(self, data):

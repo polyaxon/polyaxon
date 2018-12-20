@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.utils import UUID
 
 
-class NodeGPUSchema(Schema):
+class NodeGPUSchema(BaseSchema):
     index = fields.Int()
     name = fields.Str()
     uuid = UUID()
@@ -15,16 +15,9 @@ class NodeGPUSchema(Schema):
     serial = fields.Str()
     cluster_node = UUID()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return NodeGPUConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return NodeGPUConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return NodeGPUConfig
 
 
 class NodeGPUConfig(BaseConfig):
@@ -52,7 +45,7 @@ class NodeGPUConfig(BaseConfig):
         self.cluster_node = cluster_node
 
 
-class ClusterNodeSchema(Schema):
+class ClusterNodeSchema(BaseSchema):
     sequence = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
     uuid = UUID()
@@ -70,16 +63,9 @@ class ClusterNodeSchema(Schema):
     schedulable_state = fields.Bool(allow_none=True)
     gpus = fields.Nested(NodeGPUSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ClusterNodeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ClusterNodeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ClusterNodeConfig
 
 
 class ClusterNodeConfig(BaseConfig):
@@ -145,20 +131,13 @@ class ClusterNodeConfig(BaseConfig):
         self.gpus = gpus
 
 
-class PolyaxonClusterSchema(Schema):
+class PolyaxonClusterSchema(BaseSchema):
     version_api = fields.Dict()
     nodes = fields.Nested(ClusterNodeSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PolyaxonClusterConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PolyaxonClusterConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PolyaxonClusterConfig
 
 
 class PolyaxonClusterConfig(BaseConfig):

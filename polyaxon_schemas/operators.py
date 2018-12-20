@@ -3,23 +3,17 @@ from __future__ import absolute_import, division, print_function
 
 import itertools
 
-from marshmallow import Schema, post_dump, post_load
-
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
-class ForSchema(Schema):
+class ForSchema(BaseSchema):
     class Meta:
         ordered = True
         fields = ('len', 'do', 'index')
 
-    @post_load
-    def make(self, data):
-        return ForConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ForConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ForConfig
 
 
 class ForConfig(BaseConfig):
@@ -45,18 +39,14 @@ class ForConfig(BaseConfig):
         return parsed_data
 
 
-class IfSchema(Schema):
+class IfSchema(BaseSchema):
     class Meta:
         ordered = True
         fields = ('cond', 'do', 'else_do')
 
-    @post_load
-    def make(self, data):
-        return IfConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return IfConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return IfConfig
 
 
 class IfConfig(BaseConfig):

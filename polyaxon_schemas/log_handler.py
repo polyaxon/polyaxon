@@ -3,26 +3,19 @@ from __future__ import absolute_import, division, print_function
 
 import base64
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
-class LogHandlerSchema(Schema):
+class LogHandlerSchema(BaseSchema):
     dsn = fields.Str(allow_none=True)
     environment = fields.Str()
     tags = fields.Dict()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LogHandlerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LogHandlerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LogHandlerConfig
 
 
 class LogHandlerConfig(BaseConfig):

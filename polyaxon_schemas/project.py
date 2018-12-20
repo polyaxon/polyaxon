@@ -2,14 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 from hestia.humanize import humanize_timedelta
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.experiment import ExperimentSchema
 from polyaxon_schemas.utils import UUID
 
 
-class ExperimentGroupSchema(Schema):
+class ExperimentGroupSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
@@ -38,16 +38,9 @@ class ExperimentGroupSchema(Schema):
     has_tensorboard = fields.Bool(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ExperimentGroupConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ExperimentGroupConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ExperimentGroupConfig
 
 
 class ExperimentGroupConfig(BaseConfig):
@@ -117,7 +110,7 @@ class ExperimentGroupConfig(BaseConfig):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
-class GroupStatusSchema(Schema):
+class GroupStatusSchema(BaseSchema):
     id = fields.Int()
     uuid = UUID()
     experiment_group = fields.Int()
@@ -126,16 +119,9 @@ class GroupStatusSchema(Schema):
     message = fields.Str(allow_none=True)
     details = fields.Dict(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GroupStatusConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GroupStatusConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GroupStatusConfig
 
 
 class GroupStatusConfig(BaseConfig):
@@ -161,7 +147,7 @@ class GroupStatusConfig(BaseConfig):
         self.details = details
 
 
-class ProjectSchema(Schema):
+class ProjectSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
@@ -183,16 +169,9 @@ class ProjectSchema(Schema):
     experiment_groups = fields.Nested(ExperimentGroupSchema, many=True, allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ProjectConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ProjectConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ProjectConfig
 
 
 class ProjectConfig(BaseConfig):

@@ -1,26 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
-class UserSchema(Schema):
+class UserSchema(BaseSchema):
     username = fields.Str()
     email = fields.Email(allow_none=True)
     is_superuser = fields.Bool(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return UserConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return UserConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return UserConfig
 
 
 class UserConfig(BaseConfig):

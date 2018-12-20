@@ -5,10 +5,10 @@ import copy
 import numpy as np
 import six
 
-from marshmallow import Schema, fields, post_dump, post_load, validates_schema
+from marshmallow import fields, validates_schema
 from marshmallow.exceptions import ValidationError
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.utils import (
     GeomSpace,
     LinSpace,
@@ -44,7 +44,7 @@ def validate_matrix(values):
         raise ValidationError("Matrix element is not valid, one and only one option is required.")
 
 
-class MatrixSchema(Schema):
+class MatrixSchema(BaseSchema):
     # Discrete
     values = fields.List(fields.Raw(), allow_none=True)
     pvalues = fields.List(PValue(), allow_none=True)
@@ -62,16 +62,9 @@ class MatrixSchema(Schema):
     lognormal = LogNormal(allow_none=True)
     qlognormal = QLogNormal(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MatrixConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MatrixConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MatrixConfig
 
     @validates_schema
     def validate_pvalues(self, data):

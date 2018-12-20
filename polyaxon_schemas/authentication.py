@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
-class AccessTokenSchema(Schema):
+class AccessTokenSchema(BaseSchema):
     username = fields.Str()
     token = fields.Str()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AccessTokenConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AccessTokenConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AccessTokenConfig
 
 
 class AccessTokenConfig(BaseConfig):
@@ -39,20 +32,13 @@ class AccessTokenConfig(BaseConfig):
         self.token = token
 
 
-class CredentialsSchema(Schema):
+class CredentialsSchema(BaseSchema):
     username = fields.Str()
     password = fields.Str()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return CredentialsConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return CredentialsConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return CredentialsConfig
 
 
 class CredentialsConfig(BaseConfig):

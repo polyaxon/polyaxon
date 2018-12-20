@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, ValidationError, fields, post_dump, post_load, validates_schema
+from marshmallow import ValidationError, fields, validates_schema
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.utils import UUID, IntOrStr
 
 
-class TensorflowClusterSchema(Schema):
+class TensorflowClusterSchema(BaseSchema):
     master = fields.List(fields.Str(), allow_none=True)
     worker = fields.List(fields.Str(), allow_none=True)
     ps = fields.List(fields.Str(), allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TensorflowClusterConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TensorflowClusterConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TensorflowClusterConfig
 
 
 class TensorflowClusterConfig(BaseConfig):
@@ -42,20 +35,13 @@ class TensorflowClusterConfig(BaseConfig):
         self.ps = ps
 
 
-class HorovodClusterSchema(Schema):
+class HorovodClusterSchema(BaseSchema):
     master = fields.List(fields.Str(), allow_none=True)
     worker = fields.List(fields.Str(), allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HorovodClusterConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HorovodClusterConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HorovodClusterConfig
 
 
 class HorovodClusterConfig(BaseConfig):
@@ -74,20 +60,13 @@ class HorovodClusterConfig(BaseConfig):
         self.worker = worker
 
 
-class PytorchClusterSchema(Schema):
+class PytorchClusterSchema(BaseSchema):
     master = fields.List(fields.Str(), allow_none=True)
     worker = fields.List(fields.Str(), allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PytorchClusterConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PytorchClusterConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PytorchClusterConfig
 
 
 class PytorchClusterConfig(BaseConfig):
@@ -106,21 +85,14 @@ class PytorchClusterConfig(BaseConfig):
         self.worker = worker
 
 
-class MXNetClusterSchema(Schema):
+class MXNetClusterSchema(BaseSchema):
     master = fields.List(fields.Str(), allow_none=True)
     worker = fields.List(fields.Str(), allow_none=True)
     server = fields.List(fields.Str(), allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MXNetClusterConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MXNetClusterConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MXNetClusterConfig
 
 
 class MXNetClusterConfig(BaseConfig):
@@ -141,20 +113,13 @@ class MXNetClusterConfig(BaseConfig):
         self.server = server
 
 
-class K8SResourcesSchema(Schema):
+class K8SResourcesSchema(BaseSchema):
     limits = fields.Float(allow_none=True)
     requests = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return K8SResourcesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return K8SResourcesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return K8SResourcesConfig
 
 
 class K8SResourcesConfig(BaseConfig):
@@ -191,22 +156,15 @@ class K8SResourcesConfig(BaseConfig):
         return self
 
 
-class PodResourcesSchema(Schema):
+class PodResourcesSchema(BaseSchema):
     cpu = fields.Nested(K8SResourcesSchema, allow_none=True)
     memory = fields.Nested(K8SResourcesSchema, allow_none=True)
     gpu = fields.Nested(K8SResourcesSchema, allow_none=True)
     tpu = fields.Nested(K8SResourcesSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PodResourcesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PodResourcesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PodResourcesConfig
 
 
 class PodResourcesConfig(BaseConfig):
@@ -262,21 +220,14 @@ class PodResourcesConfig(BaseConfig):
         return self
 
 
-class GPUOptionsSchema(Schema):
+class GPUOptionsSchema(BaseSchema):
     gpu_memory_fraction = fields.Float(allow_none=True)
     allow_growth = fields.Bool(allow_none=True)
     per_process_gpu_memory_fraction = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GPUOptionsConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GPUOptionsConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GPUOptionsConfig
 
 
 class GPUOptionsConfig(BaseConfig):
@@ -292,23 +243,16 @@ class GPUOptionsConfig(BaseConfig):
         self.per_process_gpu_memory_fraction = per_process_gpu_memory_fraction
 
 
-class SessionSchema(Schema):
+class SessionSchema(BaseSchema):
     gpu_options = fields.Nested(GPUOptionsSchema, allow_none=True)
     log_device_placement = fields.Bool(allow_none=True)
     allow_soft_placement = fields.Bool(allow_none=True)
     intra_op_parallelism_threads = fields.Int(allow_none=True)
     inter_op_parallelism_threads = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SessionConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SessionConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SessionConfig
 
 
 class SessionConfig(BaseConfig):
@@ -328,7 +272,7 @@ class SessionConfig(BaseConfig):
         self.inter_op_parallelism_threads = inter_op_parallelism_threads
 
 
-class TFRunSchema(Schema):
+class TFRunSchema(BaseSchema):
     tf_random_seed = fields.Int(allow_none=True)
     save_summary_steps = fields.Int(allow_none=True)
     save_checkpoints_secs = fields.Int(allow_none=True)
@@ -339,16 +283,9 @@ class TFRunSchema(Schema):
     session = fields.Nested(SessionSchema, allow_none=True)
     cluster = fields.Nested(TensorflowClusterSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TFRunConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TFRunConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TFRunConfig
 
 
 class TFRunConfig(BaseConfig):
@@ -374,7 +311,7 @@ class TFRunConfig(BaseConfig):
         self.cluster = cluster
 
 
-class PodEnvironmentSchema(Schema):
+class PodEnvironmentSchema(BaseSchema):
     # To indicate which worker/ps index this session config belongs to
     index = fields.Int(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
@@ -382,16 +319,9 @@ class PodEnvironmentSchema(Schema):
     affinity = fields.Dict(allow_none=True)
     tolerations = fields.List(fields.Dict(), allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PodEnvironmentConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PodEnvironmentConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PodEnvironmentConfig
 
 
 class PodEnvironmentConfig(BaseConfig):
@@ -426,16 +356,9 @@ class PodEnvironmentConfig(BaseConfig):
 class TensorflowPodEnvironmentSchema(PodEnvironmentSchema):
     config = fields.Nested(SessionSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TensorflowPodEnvironmentConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TensorflowPodEnvironmentConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TensorflowPodEnvironmentConfig
 
 
 class TensorflowPodEnvironmentConfig(PodEnvironmentConfig):
@@ -549,7 +472,7 @@ class FrameworkEnvironmentMixin(object):
         return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.tolerations)
 
 
-class TensorflowSchema(Schema):
+class TensorflowSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
@@ -559,16 +482,9 @@ class TensorflowSchema(Schema):
     worker = fields.Nested(TensorflowPodEnvironmentSchema, many=True, allow_none=True)
     ps = fields.Nested(TensorflowPodEnvironmentSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TensorflowConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TensorflowConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TensorflowConfig
 
 
 class TensorflowConfig(BaseConfig, FrameworkEnvironmentMixin):
@@ -608,21 +524,14 @@ class TensorflowConfig(BaseConfig, FrameworkEnvironmentMixin):
         self.ps = ps
 
 
-class HorovodSchema(Schema):
+class HorovodSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
     worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HorovodConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HorovodConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HorovodConfig
 
 
 class HorovodConfig(BaseConfig, FrameworkEnvironmentMixin):
@@ -648,21 +557,14 @@ class HorovodConfig(BaseConfig, FrameworkEnvironmentMixin):
         self.worker = worker
 
 
-class PytorchSchema(Schema):
+class PytorchSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
     worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PytorchConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PytorchConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PytorchConfig
 
 
 class PytorchConfig(BaseConfig, FrameworkEnvironmentMixin):
@@ -688,7 +590,7 @@ class PytorchConfig(BaseConfig, FrameworkEnvironmentMixin):
         self.worker = worker
 
 
-class MXNetSchema(Schema):
+class MXNetSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
@@ -696,16 +598,9 @@ class MXNetSchema(Schema):
     worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
     ps = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MXNetConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MXNetConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MXNetConfig
 
 
 class MXNetConfig(BaseConfig, FrameworkEnvironmentMixin):
@@ -746,20 +641,13 @@ def validate_frameworks(frameworks):
         raise ValidationError('Only one framework can be used.')
 
 
-class PersistenceSchema(Schema):
+class PersistenceSchema(BaseSchema):
     data = fields.List(fields.Str(), allow_none=True)
     outputs = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PersistenceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PersistenceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PersistenceConfig
 
 
 class PersistenceConfig(BaseConfig):
@@ -780,20 +668,13 @@ class PersistenceConfig(BaseConfig):
         self.outputs = outputs
 
 
-class OutputsSchema(Schema):
+class OutputsSchema(BaseSchema):
     jobs = fields.List(IntOrStr(), allow_none=True)
     experiments = fields.List(IntOrStr(), allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return OutputsConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return OutputsConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return OutputsConfig
 
 
 class OutputsConfig(BaseConfig):
@@ -827,16 +708,9 @@ class EnvironmentSchema(PodEnvironmentSchema):
     mxnet = fields.Nested(MXNetSchema, allow_none=True)
     pytorch = fields.Nested(PytorchSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return EnvironmentConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return EnvironmentConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return EnvironmentConfig
 
     @validates_schema
     def validate_quantity(self, data):

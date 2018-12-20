@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
-class BaseVersionSchema(Schema):
+class BaseVersionSchema(BaseSchema):
     latest_version = fields.Str()
     min_version = fields.Str()
 
@@ -18,16 +18,9 @@ class BaseVersionConfig(BaseConfig):
 
 
 class CliVersionSchema(BaseVersionSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return CliVersionConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return CliVersionConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return CliVersionConfig
 
 
 class CliVersionConfig(BaseVersionConfig):
@@ -41,16 +34,9 @@ class CliVersionConfig(BaseVersionConfig):
 
 
 class PlatformVersionSchema(BaseVersionSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PlatformVersionConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PlatformVersionConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PlatformVersionConfig
 
 
 class PlatformVersionConfig(BaseVersionConfig):
@@ -64,16 +50,9 @@ class PlatformVersionConfig(BaseVersionConfig):
 
 
 class LibVersionSchema(BaseVersionSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LibVersionConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LibVersionConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LibVersionConfig
 
 
 class LibVersionConfig(BaseVersionConfig):
@@ -86,19 +65,12 @@ class LibVersionConfig(BaseVersionConfig):
     IDENTIFIER = 'lib_version'
 
 
-class ChartVersionSchema(Schema):
+class ChartVersionSchema(BaseSchema):
     version = fields.Str()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ChartVersionConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ChartVersionConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ChartVersionConfig
 
 
 class ChartVersionConfig(BaseConfig):

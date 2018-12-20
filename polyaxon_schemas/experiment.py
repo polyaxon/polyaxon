@@ -2,14 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 from hestia.humanize import humanize_timedelta
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.environments import PodResourcesSchema
 from polyaxon_schemas.utils import UUID
 
 
-class ExperimentJobSchema(Schema):
+class ExperimentJobSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     uuid = UUID()
     unique_name = fields.Str(allow_none=True)
@@ -26,16 +26,9 @@ class ExperimentJobSchema(Schema):
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     definition = fields.Dict(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ExperimentJobConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ExperimentJobConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ExperimentJobConfig
 
 
 class ExperimentJobConfig(BaseConfig):
@@ -78,7 +71,7 @@ class ExperimentJobConfig(BaseConfig):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
-class ExperimentSchema(Schema):
+class ExperimentSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
@@ -106,16 +99,9 @@ class ExperimentSchema(Schema):
     ttl = fields.Int(allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ExperimentConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ExperimentConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ExperimentConfig
 
 
 class ExperimentConfig(BaseConfig):
@@ -184,7 +170,7 @@ class ExperimentConfig(BaseConfig):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
-class ExperimentStatusSchema(Schema):
+class ExperimentStatusSchema(BaseSchema):
     id = fields.Int()
     uuid = UUID()
     experiment = fields.Int()
@@ -192,16 +178,9 @@ class ExperimentStatusSchema(Schema):
     status = fields.Str()
     message = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ExperimentStatusConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ExperimentStatusConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ExperimentStatusConfig
 
 
 class ExperimentStatusConfig(BaseConfig):
@@ -225,23 +204,16 @@ class ExperimentStatusConfig(BaseConfig):
         self.message = message
 
 
-class ExperimentMetricSchema(Schema):
+class ExperimentMetricSchema(BaseSchema):
     id = fields.Int()
     uuid = UUID()
     experiment = fields.Int()
     created_at = fields.LocalDateTime()
     values = fields.Dict()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ExperimentMetricConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ExperimentMetricConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ExperimentMetricConfig
 
 
 class ExperimentMetricConfig(BaseConfig):
@@ -263,7 +235,7 @@ class ExperimentMetricConfig(BaseConfig):
         self.values = values
 
 
-class ExperimentJobStatusSchema(Schema):
+class ExperimentJobStatusSchema(BaseSchema):
     id = fields.Int()
     uuid = UUID()
     job = fields.Int()
@@ -272,16 +244,9 @@ class ExperimentJobStatusSchema(Schema):
     message = fields.Str(allow_none=True)
     details = fields.Dict(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ExperimentJobStatusConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ExperimentJobStatusConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ExperimentJobStatusConfig
 
 
 class ExperimentJobStatusConfig(BaseConfig):
@@ -307,7 +272,7 @@ class ExperimentJobStatusConfig(BaseConfig):
         self.details = details
 
 
-class ContainerGPUResourcesSchema(Schema):
+class ContainerGPUResourcesSchema(BaseSchema):
     index = fields.Int()
     uuid = fields.Str()
     name = fields.Str()
@@ -324,16 +289,9 @@ class ContainerGPUResourcesSchema(Schema):
     memory_utilization = fields.Int()
     processes = fields.List(fields.Dict(), allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ContainerGPUResourcesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ContainerGPUResourcesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ContainerGPUResourcesConfig
 
 
 class ContainerGPUResourcesConfig(BaseConfig):
@@ -374,7 +332,7 @@ class ContainerGPUResourcesConfig(BaseConfig):
         self.processes = processes
 
 
-class ContainerResourcesSchema(Schema):
+class ContainerResourcesSchema(BaseSchema):
     job_uuid = UUID()
     experiment_uuid = UUID()
     job_name = fields.Str()
@@ -386,16 +344,9 @@ class ContainerResourcesSchema(Schema):
     memory_limit = fields.Int()
     gpu_resources = fields.Nested(ContainerGPUResourcesSchema, many=True, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ContainerResourcesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ContainerResourcesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ContainerResourcesConfig
 
 
 class ContainerResourcesConfig(BaseConfig):

@@ -2,14 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 from hestia.humanize import humanize_timedelta
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.environments import PodResourcesSchema
 from polyaxon_schemas.utils import UUID
 
 
-class JobSchema(Schema):
+class JobSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
@@ -32,16 +32,9 @@ class JobSchema(Schema):
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     definition = fields.Dict(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return JobConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return JobConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return JobConfig
 
 
 class JobConfig(BaseConfig):
@@ -108,16 +101,9 @@ class TensorboardJobSchema(JobSchema):
     experiment = fields.Int(allow_none=True)
     experiment_group = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TensorboardJobConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TensorboardJobConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TensorboardJobConfig
 
 
 class TensorboardJobConfig(JobConfig):
@@ -182,7 +168,7 @@ class TensorboardJobConfig(JobConfig):
         self.experiment_group = experiment_group
 
 
-class JobStatusSchema(Schema):
+class JobStatusSchema(BaseSchema):
     id = fields.Int()
     uuid = UUID()
     job = fields.Int()
@@ -191,16 +177,9 @@ class JobStatusSchema(Schema):
     message = fields.Str(allow_none=True)
     details = fields.Dict(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return JobStatusConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return JobStatusConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return JobStatusConfig
 
 
 class JobStatusConfig(BaseConfig):
@@ -226,7 +205,7 @@ class JobStatusConfig(BaseConfig):
         self.details = details
 
 
-class JobLabelSchema(Schema):
+class JobLabelSchema(BaseSchema):
     app = fields.Str(allow_none=True)
     project_name = fields.Str()
     experiment_group_name = fields.Str(allow_none=True)
@@ -241,16 +220,9 @@ class JobLabelSchema(Schema):
     role = fields.Str()
     type = fields.Str()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return JobLabelConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return JobLabelConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return JobLabelConfig
 
 
 class JobLabelConfig(BaseConfig):

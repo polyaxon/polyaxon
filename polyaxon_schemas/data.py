@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.utils import UUID
 
 
-class DataDetailsSchema(Schema):
+class DataDetailsSchema(BaseSchema):
     state = fields.Str()
     size = fields.Float()
     uri = fields.Url()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return DataDetailsConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DataDetailsConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DataDetailsConfig
 
 
 class DataDetailsConfig(BaseConfig):
@@ -34,7 +27,7 @@ class DataDetailsConfig(BaseConfig):
         self.uri = uri
 
 
-class DataSchema(Schema):
+class DataSchema(BaseSchema):
     uuid = UUID()
     name = fields.Str()
     created_at = fields.LocalDateTime()
@@ -43,16 +36,9 @@ class DataSchema(Schema):
     version = fields.Str(allow_none=True)
     resource_id = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make_data(self, data):
-        return DataConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DataConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DataConfig
 
 
 class DataConfig(BaseConfig):
@@ -77,22 +63,15 @@ class DataConfig(BaseConfig):
         self.resource_id = resource_id
 
 
-class DatasetSchema(Schema):
+class DatasetSchema(BaseSchema):
     uuid = UUID()
     name = fields.Str()
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return DatasetConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DatasetConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DatasetConfig
 
 
 class DatasetConfig(BaseConfig):
