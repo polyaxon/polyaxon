@@ -1,20 +1,16 @@
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from schemas.base import BaseConfig
+from schemas.base import BaseConfig, BaseSchema
 
 
-class BaseIterationSchema(Schema):
+class BaseIterationSchema(BaseSchema):
     iteration = fields.Int()
     num_suggestions = fields.Int()
     experiment_ids = fields.List(fields.Int(), allow_none=True)
 
-    @post_load
-    def make(self, data):
-        return BaseIterationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BaseIterationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BaseIterationConfig
 
 
 class BaseIterationConfig(BaseConfig):

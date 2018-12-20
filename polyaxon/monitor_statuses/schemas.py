@@ -1,10 +1,10 @@
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from schemas.base import BaseConfig
+from schemas.base import BaseConfig, BaseSchema
 from schemas.job import JobLabelSchema
 
 
-class PodStateSchema(Schema):
+class PodStateSchema(BaseSchema):
     event_type = fields.Str()
     labels = fields.Nested(JobLabelSchema)
     phase = fields.Str()
@@ -13,16 +13,9 @@ class PodStateSchema(Schema):
     pod_conditions = fields.Dict(allow_none=True)
     container_statuses = fields.Dict(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PodStateConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PodStateConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PodStateConfig
 
 
 class PodStateConfig(BaseConfig):
@@ -47,22 +40,15 @@ class PodStateConfig(BaseConfig):
         self.container_statuses = container_statuses
 
 
-class JobStateSchema(Schema):
+class JobStateSchema(BaseSchema):
     status = fields.Str()
     created_at = fields.LocalDateTime(allow_none=True)
     message = fields.Str(allow_none=True)
     details = fields.Nested(PodStateSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return JobStateConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return JobStateConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return JobStateConfig
 
 
 class JobStateConfig(BaseConfig):

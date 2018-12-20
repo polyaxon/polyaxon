@@ -1,7 +1,7 @@
-from marshmallow import Schema, ValidationError, fields, post_dump, post_load, validates_schema
+from marshmallow import ValidationError, fields, validates_schema
 
 from constants import stores
-from schemas.base import BaseConfig
+from schemas.base import BaseConfig, BaseSchema
 
 
 def validate_store(store):
@@ -9,22 +9,15 @@ def validate_store(store):
         raise ValidationError("Store is not valid.")
 
 
-class StoreSchema(Schema):
+class StoreSchema(BaseSchema):
     store = fields.Str()
     bucket = fields.Str()
     secret = fields.Str()
     secretKey = fields.Str()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return StoreConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return StoreConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return StoreConfig
 
     @validates_schema
     def validate_store(self, data):

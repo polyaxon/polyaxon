@@ -1,1 +1,1 @@
-from polyaxon_schemas.base import BaseConfig  # noqa
+from polyaxon_schemas.base import BaseConfig, BaseSchema  # noqa
