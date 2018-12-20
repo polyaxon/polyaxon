@@ -52,7 +52,6 @@ class TestBuildConfigs(TestCase):
         with self.assertRaises(ValidationError):
             BuildConfig.from_dict(config_dict)
 
-
     def test_build_config(self):
         config_dict = {
             'image': 'some_image_name',
