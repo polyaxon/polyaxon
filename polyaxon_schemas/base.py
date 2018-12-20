@@ -95,6 +95,12 @@ class BaseConfig(object):
             dt = utc.localize(dt)
         return dt.astimezone(get_time_zone())
 
+    @classmethod
+    def to_jsonschema(cls):
+        from marshmallow_jsonschema import JSONSchema
+
+        return JSONSchema().dump(cls.SCHEMA()).data
+
 
 class BaseMultiSchema(Schema):
     __multi_schema_name__ = None
