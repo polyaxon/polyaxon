@@ -28,13 +28,17 @@ hpsearch:
 eventsHandlers:
   replicas: 3
 
+k8sEventsHandlers:
+  replicas: 3
+
 eventMonitors:
   replicas: 3
 ```
 
 ## Concurrency
 
-Replication might be easier to scale Polyaxon, but it comes at a memory cost, as it's not always efficient, 
+Replication might be the easiest option to scale Polyaxon, 
+but it comes at a memory cost, and it's not always the most efficient option, 
 Polyaxon provides a way to scale it's services' concurrency as well, 
 the rule of thumb is to set the concurrency of the worker you wish to scale to the number of cores available. 
 This will allow to reduce the memory footprint on your cluster and allow the worker to consume more events/tasks.
