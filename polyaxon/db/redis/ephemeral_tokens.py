@@ -19,7 +19,7 @@ class RedisEphemeralTokens(BaseRedisDb):
     KEY_SALT = 'polyaxon.scope.key_salt'
     SEPARATOR = 'XEPH:'
 
-    EXPIRATION_TTL = settings.EPHEMERAL_TOKEN_TTL
+    EXPIRATION_TTL = settings.TTL_EPHEMERAL_TOKEN
     KEY_EPHEMERAL_TOKENS = 'EPHEMERAL_TOKENS:{}'
 
     REDIS_POOL = RedisPools.EPHEMERAL_TOKENS

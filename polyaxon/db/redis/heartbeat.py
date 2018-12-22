@@ -13,7 +13,7 @@ class RedisHeartBeat(BaseRedisDb):
     KEY_BUILD = 'heartbeat.build:{}'
 
     # A Run should report under this value, otherwise it could be considered zombie
-    HEARTBEAT_TIMEOUT = settings.HEARTBEAT_TIMEOUT
+    TTL_HEARTBEAT = settings.TTL_HEARTBEAT
     REDIS_POOL = RedisPools.HEARTBEAT
 
     def __init__(self, experiment=None, job=None, build=None):
@@ -51,7 +51,7 @@ class RedisHeartBeat(BaseRedisDb):
         return True
 
     def ping(self):
-        self._red.setex(name=self.redis_key, value=1, time=self.HEARTBEAT_TIMEOUT)
+        self._red.setex(name=self.redis_key, value=1, time=self.TTL_HEARTBEAT)
 
     @property
     def redis_key(self):

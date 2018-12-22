@@ -18,7 +18,7 @@ class TokenTest(BaseTest):
         token = Token(started_at=timezone.now() + timedelta(days=1))
         self.assertEqual(token.is_expired, False)
 
-        token = Token(started_at=timezone.now() - timedelta(days=settings.TOKEN_TTL + 10))
+        token = Token(started_at=timezone.now() - timedelta(days=settings.TTL_TOKEN + 10))
         self.assertEqual(token.is_expired, True)
 
     def test_get_scopes(self):

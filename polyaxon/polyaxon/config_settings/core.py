@@ -19,15 +19,15 @@ ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
                                         is_optional=True,
                                         default=False)
 # Heartbeat timeout (status -> failed as zombie)
-HEARTBEAT_TIMEOUT = config.get_int('POLYAXON_HEARTBEAT_TIMEOUT',
-                                   is_optional=True,
-                                   default=60 * 30)
+TTL_HEARTBEAT = config.get_int('POLYAXON_TTL_HEARTBEAT',
+                               is_optional=True,
+                               default=60 * 30)
 # Token time in days
-TOKEN_TTL = config.get_int('POLYAXON_TOKEN_TTL',
+TTL_TOKEN = config.get_int('POLYAXON_TTL_TOKEN',
                            is_optional=True,
                            default=30)
 # Ephemeral token ttl
-EPHEMERAL_TOKEN_TTL = config.get_int('POLYAXON_EPHEMERAL_TOKEN_TTL',
+TTL_EPHEMERAL_TOKEN = config.get_int('POLYAXON_TTL_EPHEMERAL_TOKEN',
                                      is_optional=True,
                                      default=60 * 60 * 3)
 
