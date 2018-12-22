@@ -306,20 +306,6 @@ k8sEventsHandlers:
       cpu: 130m
       memory: 200Mi
 
-logsHandlers:
-  image: polyaxon/polyaxon-logs-handlers
-  imageTag: 0.3.5
-  imagePullPolicy: Always
-  replicas: 1
-  concurrency: 1
-  resources:
-    limits:
-      cpu: 200m
-      memory: 300Mi
-    requests:
-      cpu: 130m
-      memory: 200Mi
-
 beat:
   image: polyaxon/polyaxon-beat
   imageTag: 0.3.5
