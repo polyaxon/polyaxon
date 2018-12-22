@@ -184,9 +184,18 @@ class NodeGPU(DiffModel):
         unique=True,
         null=False)
     index = models.PositiveSmallIntegerField()
-    serial = models.CharField(max_length=256)
-    name = models.CharField(max_length=256)
-    memory = models.BigIntegerField()
+    serial = models.CharField(
+        max_length=256,
+        blank=True,
+        null=True)
+    name = models.CharField(
+        max_length=256,
+        blank=True,
+        null=True)
+    memory = models.BigIntegerField(
+        default=0,
+        blank=True,
+        null=True)
     cluster_node = models.ForeignKey(
         'db.ClusterNode',
         on_delete=models.CASCADE,
