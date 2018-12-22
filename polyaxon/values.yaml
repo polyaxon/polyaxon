@@ -64,15 +64,15 @@ mountPaths:
 persistence:
   logs:
     existingClaim:
-    mountPath: "/logs"
-    hostPath: "/logs"
+    mountPath: "/polyaxon/logs"
+    hostPath: "/tmp/logs"
   repos:
     existingClaim:
-    mountPath: "/repos"
-    hostPath: "/repos"
+    mountPath: "/polyaxon/repos"
+    hostPath: "/tmp/repos"
   upload:
     existingClaim:
-    mountPath: "/upload"
+    mountPath: "/tmp/upload"
     hostPath: "/tmp/upload"
   outputs: {}
   data: {}
@@ -136,11 +136,11 @@ defaultPersistence:
   data:
     data:
       mountPath: "/data"
-      hostPath: "/data"
+      hostPath: "/tmp/data"
   outputs:
     outputs:
       mountPath: "/outputs"
-      hostPath: "/outputs"
+      hostPath: "/tmp/outputs"
 
 auth:
   ldap:
