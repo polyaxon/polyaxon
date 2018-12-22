@@ -601,7 +601,7 @@ privateRegistries:
   #   user: "myname"
   #   password: "mypassword"
 
-# To receive email/notifcation with correct host
+# To receive email/notification with correct host
 #apiHost: 159.203.150.212 or polyaxon.foo.com
 
 # White list of ip/hosts that can communicate with the api
@@ -609,15 +609,19 @@ privateRegistries:
 #  - 127.0.0.1
 #  - 159.203.150.212
 
+ttl:
+  token:
+  ephemeralToken:
+  heartbeat:
 
 intervals:  # in seconds
-  experiments_scheduler: 15
-  experiments_sync: 60
-  clusters_update_system_info: 150
-  clusters_update_system_nodes: 150
-  pipelines_scheduler: 60
-  operations_default_retry_delay: 60
-  operations_max_retry_delay: 3600
+  experimentsScheduler: 15
+  experimentsSync: 60
+  clustersUpdateSystemInfo: 150
+  clustersUpdateSystemNodes: 150
+  pipelinesScheduler: 60
+  operationsDefaultRetryDelay: 60
+  operationsMaxRetryDelay: 3600
 
 cleaningIntervals:  # in days
   archived: 7

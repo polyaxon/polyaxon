@@ -40,11 +40,14 @@ data:
   {{- else }}
   POLYAXON_K8S_DB_SECRET_NAME: {{ template "polyaxon.fullname" . }}-postgres-secret
   {{- end}}
-  {{- if .Values.heartbeatTimeout }}
-  POLYAXON_HEARTBEAT_TIMEOUT: {{ .Values.heartbeatTimeout | quote }}
+  {{- if .Values.ttl.heartbeat }}
+  POLYAXON_TTL_HEARTBEAT: {{ .Values.ttl.heartbeat | quote }}
   {{- end }}
-  {{- if .Values.ephemeralTokenTTL }}
-  POLYAXON_EPHEMERAL_TOKEN_TTL: {{ .Values.ephemeralTokenTTL | quote }}
+  {{- if .Values.ttl.token }}
+  POLYAXON_TTL_TOKEN: {{ .Values.ttl.token | quote }}
+  {{- end }}
+  {{- if .Values.ttl.ephemeralToken }}
+  POLYAXON_TTL_EPHEMERAL_TOKEN: {{ .Values.ttl.ephemeralToken | quote }}
   {{- end }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
   # Run Env
@@ -121,13 +124,13 @@ data:
   POLYAXON_QUEUES_LOGS_HEALTH: {{ .Values.queues.logsHealth | quote }}
   POLYAXON_QUEUES_LOGS_SIDECARS: {{ .Values.queues.logsSidecars | quote }}
   POLYAXON_QUEUES_STREAM_LOGS_SIDECARS: {{ .Values.queues.streamLogsSidecars | quote }}
-  POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER: {{ .Values.intervals.experiments_scheduler | quote }}
-  POLYAXON_INTERVALS_EXPERIMENTS_SYNC: {{ .Values.intervals.experiments_sync | quote }}
-  POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO: {{ .Values.intervals.clusters_update_system_info | quote }}
-  POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES: {{ .Values.intervals.clusters_update_system_nodes | quote }}
-  POLYAXON_INTERVALS_PIPELINES_SCHEDULER: {{ .Values.intervals.pipelines_scheduler | quote }}
-  POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operations_default_retry_delay | quote }}
-  POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operations_max_retry_delay | quote }}
+  POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER: {{ .Values.intervals.experimentsScheduler | quote }}
+  POLYAXON_INTERVALS_EXPERIMENTS_SYNC: {{ .Values.intervals.experimentsSync | quote }}
+  POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO: {{ .Values.intervals.clustersUpdateSystemInfo | quote }}
+  POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES: {{ .Values.intervals.clustersUpdateSystemNodes | quote }}
+  POLYAXON_INTERVALS_PIPELINES_SCHEDULER: {{ .Values.intervals.pipelinesScheduler | quote }}
+  POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operationsDefaultRetryDelay | quote }}
+  POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operationsMaxRetryDelay | quote }}
   POLYAXON_CLEANING_INTERVALS_ARCHIVED: {{ .Values.cleaningIntervals.archived | quote }}
   POLYAXON_CELERY_ALWAYS_EAGER: {{ default "false" .Values.celeryEagerMode | quote }}
   POLYAXON_CELERYD_PREFETCH_MULTIPLIER: {{ default "4" .Values.celeryPrefetchMultiplier | quote }}
