@@ -18,6 +18,18 @@ secrets config
       name: {{ template "redis.fullname" . }}
       key: redis-password
 {{- end }}
+{{- if (index .Values "docker-registry").auth.password }}
+- name: POLYAXON_REGISTRY_USER
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-registry-secret
+      key: registry-user
+- name: POLYAXON_REGISTRY_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-registry-secret
+      key: registry-password
+{{- end }}
 - name: POLYAXON_DB_PASSWORD
   valueFrom:
     secretKeyRef:

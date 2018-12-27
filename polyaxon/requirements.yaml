@@ -12,4 +12,4 @@ dependencies:
   - name: docker-registry
     version: 1.0.1
     repository: https://kubernetes-charts.storage.googleapis.com/
-    condition: registry.install
+    condition: docker-registry.install

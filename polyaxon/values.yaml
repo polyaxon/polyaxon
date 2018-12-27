@@ -484,12 +484,11 @@ docker-registry:
   #     external:
   #       host:
   #       port:
-  #       user:
-  #       password:
   install: true
   external:
     host:
     port:
+  auth:
     user:
     password:
   service:
