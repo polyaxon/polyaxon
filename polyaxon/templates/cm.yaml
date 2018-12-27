@@ -40,7 +40,7 @@ data:
   {{- else }}
   POLYAXON_K8S_DB_SECRET_NAME: {{ template "polyaxon.fullname" . }}-postgres-secret
   {{- end}}
-  {{- if .Values.registry.install }}
+  {{- if (index .Values "docker-registry").install }}
   POLYAXON_K8S_REGISTRY_SECRET_NAME: {{ template "docker-registry.fullname" . }}-secret
   {{- else }}
   POLYAXON_K8S_REGISTRY_SECRET_NAME: {{ template "polyaxon.fullname" . }}-registry-secret
@@ -202,13 +202,13 @@ data:
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   POLYAXON_BUILD_ALWAYS_PULL_LATEST: {{ default "false" .Values.build_always_pull_latest | quote }}
   # Registry
-  {{- if .Values.registry.install }}
+  {{- if (index .Values "docker-registry").install }}
   POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
-  POLYAXON_REGISTRY_PORT: {{ .Values.registry.service.port | quote }} 
-  POLYAXON_REGISTRY_NODE_PORT: {{ .Values.registry.service.nodePort | quote }}
+  POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").service.port | quote }} 
+  POLYAXON_REGISTRY_NODE_PORT: {{ (index .Values "docker-registry").service.nodePort | quote }}
   {{- else }}
-  POLYAXON_REGISTRY_HOST: {{ .Values.registry.external.host }} 
-  POLYAXON_REGISTRY_PORT: {{ .Values.registry.external.port | quote }} 
+  POLYAXON_REGISTRY_HOST: {{ (index .Values "docker-registry").external.host }} 
+  POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").external.port | quote }} 
   {{- end }}
   # Versions
   POLYAXON_CLI_MIN_VERSION: "0.3.0"

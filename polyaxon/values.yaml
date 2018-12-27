@@ -476,7 +476,7 @@ rabbitmq:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
 
-registry:
+docker-registry:
   # Whether to deploy a docker registry in-cluster.
   # To use an external registry instance:
   #  * set install to False, to disable the in-cluster deployment
