@@ -81,14 +81,6 @@ k8sEventsHandlers:
       memory: 80Mi
       cpu: 30m
 
-logsHandlers:
-  imageTag: latest
-  imagePullPolicy: Always
-  resources:
-    requests:
-      memory: 80Mi
-      cpu: 30m
-
 beat:
   imageTag: latest
   imagePullPolicy: Always
