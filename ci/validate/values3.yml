@@ -11,7 +11,7 @@ user:
 
 
 postgresql:
-  enabled: false
+  install: false
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: postgres

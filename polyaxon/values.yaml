@@ -405,13 +405,13 @@ tablesHook:
 postgresql:
   # Whether to deploy a postgres server in-cluster.
   # To use an external postgres instance:
-  #  * set enabled to False, to disable the in-cluster deployment
+  #  * set install to False, to disable the in-cluster deployment
   #  * configure external postgresql required attributes:
   #     externalPostgresHost:
   #     postgresUser:
   #     postgresPassword:
   #     postgresDatabase:
-  enabled: true
+  install: true
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: polyaxon
@@ -477,6 +477,20 @@ rabbitmq:
             topologyKey: "kubernetes.io/hostname"
 
 docker-registry:
+  # Whether to deploy a docker registry in-cluster.
+  # To use an external registry instance:
+  #  * set install to False, to disable the in-cluster deployment
+  #  * configure external registry required attributes:
+  #     external:
+  #       host:
+  #       port:
+  install: true
+  external:
+    host:
+    port:
+  auth:
+    user:
+    password:
   service:
     type: NodePort
     nodePort: 31813
