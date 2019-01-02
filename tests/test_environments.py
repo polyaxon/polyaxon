@@ -20,8 +20,8 @@ from polyaxon_schemas.environments import (
     SessionConfig,
     TensorflowClusterConfig,
     TensorflowConfig,
-    TFRunConfig
-)
+    TFRunConfig,
+    K8SContainerResourcesConfig)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -32,6 +32,53 @@ class TestEnvironmentsConfigs(TestCase):
             'limits': 1,
         }
         config = K8SResourcesConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_container_resources_config(self):
+        config_dict = {
+                'requests': {
+                    'cpu': 0.8,
+                    'gpu': 2,
+                    'tpu': 2,
+                    'memory': 265
+                },
+                'limits': {
+                    'cpu': 1,
+                    'gpu': 4,
+                    'tpu': 4,
+                    'memory': 512
+                }
+            }
+        config = K8SContainerResourcesConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        config_dict = {
+            'requests': {
+                'cpu': '800m',
+                'gpu': 2,
+                'tpu': 2,
+                'memory': '100Ki'
+            },
+            'limits': {
+                'cpu': 1,
+                'tpu': 4,
+                'memory': '100Mi'
+            }
+        }
+        config = K8SContainerResourcesConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        config_dict = {
+            'requests': {
+                'cpu': '800m',
+                'tpu': 2,
+                'memory': '100Ki'
+            },
+            'limits': {
+                'cpu': 1,
+            }
+        }
+        config = K8SContainerResourcesConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
     def test_pod_resources_config(self):

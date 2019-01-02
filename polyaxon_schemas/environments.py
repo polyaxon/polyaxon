@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import ValidationError, fields, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import UUID, IntOrStr
+from polyaxon_schemas.utils import UUID, IntOrStr, FloatOrStr
 
 
 class TensorflowClusterSchema(BaseSchema):
@@ -111,6 +111,52 @@ class MXNetClusterConfig(BaseConfig):
         self.master = master
         self.worker = worker
         self.server = server
+
+
+class K8SResourcesEntrySchema(BaseSchema):
+    cpu = FloatOrStr(allow_none=True)
+    memory = IntOrStr(allow_none=True)
+    gpu = fields.Int(allow_none=True)
+    tpu = fields.Int(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return K8SResourcesEntryConfig
+
+
+class K8SResourcesEntryConfig(BaseConfig):
+    SCHEMA = K8SResourcesEntrySchema
+
+    def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
+        self.cpu = cpu
+        self.memory = memory
+        self.gpu = gpu
+        self.tpu = tpu
+
+
+class K8SContainerResourcesSchema(BaseSchema):
+    limits = fields.Nested(K8SResourcesEntrySchema, allow_none=True)
+    requests = fields.Nested(K8SResourcesEntrySchema, allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return K8SContainerResourcesConfig
+
+
+class K8SContainerResourcesConfig(BaseConfig):
+    """
+    K8S container resources config.
+
+    Args:
+        limits: `K8SResourcesEntry`.
+        requests: `K8SResourcesEntry`.
+    """
+    IDENTIFIER = 'resources'
+    SCHEMA = K8SContainerResourcesSchema
+
+    def __init__(self, limits=None, requests=None):
+        self.limits = limits
+        self.requests = requests
 
 
 class K8SResourcesSchema(BaseSchema):

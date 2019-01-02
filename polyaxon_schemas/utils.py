@@ -106,6 +106,25 @@ class IntOrStr(fields.Str):
         return super(IntOrStr, self)._deserialize(value=value, attr=attr, data=data)
 
 
+class FloatOrStr(fields.Str):
+    default_error_messages = {
+        'invalid': 'Not a valid string or float.',
+        'invalid_utf8': 'Not a valid utf-8 string.'
+    }
+
+    def _serialize(self, value, attr, obj):
+        if isinstance(value, (float, int)):
+            return float(value)
+
+        return super(FloatOrStr, self)._serialize(value=value, attr=attr, obj=obj)
+
+    def _deserialize(self, value, attr, data):
+        if isinstance(value, (float, int)):
+            return float(value)
+
+        return super(FloatOrStr, self)._deserialize(value=value, attr=attr, data=data)
+
+
 class Range(fields.Field):
     REQUIRED_KEYS = ['start', 'stop', 'step']
     OPTIONAL_KEY = None
