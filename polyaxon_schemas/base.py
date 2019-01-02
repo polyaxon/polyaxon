@@ -116,9 +116,9 @@ class BaseConfig(object):
 
     @classmethod
     def to_jsonschema(cls):
-        from marshmallow_jsonschema import JSONSchema
+        from marshmallow_jsonschema import JSONSchema  # pylint:disable=import-error
 
-        return JSONSchema().dump(cls.SCHEMA()).data
+        return JSONSchema().dump(cls.SCHEMA()).data  # pylint:disable=not-callable
 
 
 class BaseMultiSchema(Schema):

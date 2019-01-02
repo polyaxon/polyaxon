@@ -11,6 +11,7 @@ from polyaxon_schemas.environments import (
     GPUOptionsConfig,
     HorovodClusterConfig,
     HorovodConfig,
+    K8SContainerResourcesConfig,
     K8SResourcesConfig,
     MXNetClusterConfig,
     MXNetConfig,
@@ -20,8 +21,8 @@ from polyaxon_schemas.environments import (
     SessionConfig,
     TensorflowClusterConfig,
     TensorflowConfig,
-    TFRunConfig,
-    K8SContainerResourcesConfig)
+    TFRunConfig
+)
 from polyaxon_schemas.utils import TaskType
 
 
