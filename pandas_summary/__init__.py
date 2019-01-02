@@ -9,7 +9,6 @@ from pandas.api import types
 
 
 class DataFrameSummary(object):
-
     ALL = 'ALL'
     INCLUDE = 'INCLUDE'
     EXCLUDE = 'EXCLUDE'
@@ -252,27 +251,31 @@ class DataFrameSummary(object):
             return self._get_date_summary(column)
         if column_type == self.TYPE_CONSTANT:
             return self._get_constant_summary(column)
-        
+
     @property
-    def get_constants(self):
+    def constants(self):
         return self.df.columns[self.columns_stats.loc['types'] == 'constant']
+
     @property
-    def get_categoricals(self):
+    def categoricals(self):
         return self.df.columns[self.columns_stats.loc['types'] == 'categorical']
+
     @property
-    def get_numerics(self):
+    def numerics(self):
         return self.df.columns[self.columns_stats.loc['types'] == 'numeric']
+
     @property
-    def get_uniques(self):
+    def uniques(self):
         return self.df.columns[self.columns_stats.loc['types'] == 'unique']
+
     @property
-    def get_bools(self):
+    def bools(self):
         return self.df.columns[self.columns_stats.loc['types'] == 'bool']
-    
+
     @property
-    def get_missing_frac(self):
-        return self.columns_stats.loc['missing'].apply(lambda x: float(x)/self.length)
-    
+    def missing_frac(self):
+        return self.columns_stats.loc['missing'].apply(lambda x: float(x) / self.length)
+
     def get_columns(self, df, usage, columns=None):
         """
         Returns a `data_frame.columns`.
