@@ -126,6 +126,7 @@ class K8SResourcesEntrySchema(BaseSchema):
 
 class K8SResourcesEntryConfig(BaseConfig):
     SCHEMA = K8SResourcesEntrySchema
+    REDUCED_ATTRIBUTES = ['cpu', 'memory', 'gpu', 'tpu']
 
     def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
         self.cpu = cpu
@@ -153,6 +154,7 @@ class K8SContainerResourcesConfig(BaseConfig):
     """
     IDENTIFIER = 'resources'
     SCHEMA = K8SContainerResourcesSchema
+    REDUCED_ATTRIBUTES = ['limits', 'requests']
 
     def __init__(self, limits=None, requests=None):
         self.limits = limits

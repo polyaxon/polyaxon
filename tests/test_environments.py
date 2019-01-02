@@ -81,6 +81,10 @@ class TestEnvironmentsConfigs(TestCase):
         config = K8SContainerResourcesConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        config_dict = {'limits': {'cpu': 0.1}}
+        config = K8SContainerResourcesConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
     def test_pod_resources_config(self):
         config_dict = {
             'cpu': {
