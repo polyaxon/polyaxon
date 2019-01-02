@@ -252,7 +252,27 @@ class DataFrameSummary(object):
             return self._get_date_summary(column)
         if column_type == self.TYPE_CONSTANT:
             return self._get_constant_summary(column)
-
+        
+    @property
+    def get_constants(self):
+        return self.df.columns[self.columns_stats.loc['types'] == 'constant']
+    @property
+    def get_categoricals(self):
+        return self.df.columns[self.columns_stats.loc['types'] == 'categorical']
+    @property
+    def get_numerics(self):
+        return self.df.columns[self.columns_stats.loc['types'] == 'numeric']
+    @property
+    def get_uniques(self):
+        return self.df.columns[self.columns_stats.loc['types'] == 'unique']
+    @property
+    def get_bools(self):
+        return self.df.columns[self.columns_stats.loc['types'] == 'bool']
+    
+    @property
+    def get_missing_frac(self):
+        return self.columns_stats.loc['missing'].apply(lambda x: float(x)/self.length)
+    
     def get_columns(self, df, usage, columns=None):
         """
         Returns a `data_frame.columns`.
