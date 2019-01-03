@@ -25,7 +25,4 @@ class CmdOperator(object):
                                         stdout=stdout,
                                         stderr=stderr)
 
-            if is_json:
-                return json.load(stdout)
-            else:
-                return stdout.read()
+            return json.load(stdout) if is_json else stdout.read()
