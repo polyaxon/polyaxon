@@ -6,7 +6,7 @@ from polyaxon_cli.schemas.global_configuration import GlobalConfigurationConfig
 
 
 class GlobalConfigManager(BaseConfigManager):
-    """Manages global configuration .plxconfig file."""
+    """Manages global configuration .polyaxonconfig file."""
 
     IS_GLOBAL = True
     CONFIG_FILE_NAME = '.polyaxonconfig'

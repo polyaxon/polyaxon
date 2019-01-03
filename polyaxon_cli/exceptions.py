@@ -12,3 +12,7 @@ class PolyaxonException(ClickException):
 class PolyaxonConfigurationError(PolyaxonException):
     """Exception class to raise if a Configurable object has an issue."""
     pass
+
+
+class PolyaxonDeploymentConfigError(PolyaxonConfigurationError):
+    pass

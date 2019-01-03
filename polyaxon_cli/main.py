@@ -10,6 +10,7 @@ from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.cluster import cluster
 from polyaxon_cli.cli.config import config
 from polyaxon_cli.cli.dashboard import dashboard
+from polyaxon_cli.cli.deploy import deploy
 from polyaxon_cli.cli.experiment import experiment
 from polyaxon_cli.cli.experiment_group import group
 from polyaxon_cli.cli.init import init
@@ -68,3 +69,4 @@ cli.add_command(upload)
 cli.add_command(run)
 cli.add_command(dashboard)
 cli.add_command(bookmark)
+cli.add_command(deploy)

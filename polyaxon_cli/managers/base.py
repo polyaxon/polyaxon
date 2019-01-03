@@ -5,6 +5,7 @@ import json
 import os
 
 from polyaxon_cli.logger import logger
+from polyaxon_cli.utils.user_path import polyaxon_user_path
 
 
 class BaseConfigManager(object):
@@ -36,11 +37,7 @@ class BaseConfigManager(object):
                 if create:
                     cls._create_dir(base_path)
         else:
-            base_path = os.path.expanduser('~')
-            if not os.access(base_path, os.W_OK):
-                base_path = '/tmp'
-
-            base_path = os.path.join(base_path, '.polyaxon')
+            base_path = polyaxon_user_path()
             if create:
                 cls._create_dir(base_path)
 

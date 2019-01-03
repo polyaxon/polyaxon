@@ -1,0 +1,21 @@
+deploymentType: docker-compose
+
+rbac:
+  enabled: true
+
+ingress:
+  enabled: true
+
+serviceType: clusterIP
+
+environment: staging
+
+user:
+  password: root
+
+postgresql:
+  install: false
+  postgresUser: polyaxon
+  postgresPassword: polyaxon
+  postgresDatabase: postgres
+  externalPostgresHost: 35.226.163.84
