@@ -15,12 +15,13 @@ from polyaxon_cli.schemas.deployment_configuration import DeploymentConfig
 
 
 def read_deployment_config(filepaths):
+    if not filepaths:
+        return None
+
     filepaths = to_list(filepaths)
     for filepath in filepaths:
         if not os.path.isfile(filepath):
             raise PolyaxonDeploymentConfigError("`{}` must be a valid file".format(filepath))
-    if not filepaths:
-        return None
 
     data = rhea.read(filepaths)
     try:
