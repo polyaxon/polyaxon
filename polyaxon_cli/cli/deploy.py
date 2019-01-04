@@ -78,4 +78,4 @@ def deploy(file, check, upgrade, teardown):   # pylint:disable=redefined-builtin
             exception = e
 
     if exception:
-        Printer.print_error('Error message `{}`.'.format(e))
+        Printer.print_error('Error message `{}`.'.format(exception))
