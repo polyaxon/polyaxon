@@ -7,24 +7,16 @@ from hestia.signal_decorators import (
 
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
-from django.utils.timezone import now
 
 import auditor
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
-from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus, GroupTypes
-from event_manager.events.experiment_group import (
-    EXPERIMENT_GROUP_CREATED,
-    EXPERIMENT_GROUP_DELETED,
-    EXPERIMENT_GROUP_DONE,
-    EXPERIMENT_GROUP_NEW_STATUS,
-    EXPERIMENT_GROUP_STOPPED
-)
+from db.models.experiment_groups import ExperimentGroup, GroupTypes
+from event_manager.events.experiment_group import EXPERIMENT_GROUP_CREATED, EXPERIMENT_GROUP_DELETED
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.hptuning import SearchAlgorithms
-from signals.run_time import set_finished_at, set_started_at
 from signals.utils import remove_bookmarks, set_persistence, set_tags
 
 
@@ -106,38 +98,3 @@ def experiment_group_post_delete(sender, **kwargs):
     auditor.record(event_type=EXPERIMENT_GROUP_DELETED,
                    instance=instance)
     remove_bookmarks(object_id=instance.id, content_type='experimentgroup')
-
-
-@receiver(post_save, sender=ExperimentGroupStatus, dispatch_uid="experiment_group_status_post_save")
-@ignore_updates
-@ignore_raw
-def experiment_group_status_post_save(sender, **kwargs):
-    instance = kwargs['instance']
-    experiment_group = instance.experiment_group
-    previous_status = experiment_group.last_status
-
-    # update experiment last_status
-    experiment_group.status = instance
-    if instance.status == ExperimentGroupLifeCycle.RUNNING:
-        experiment_group.started_at = now()
-
-    set_started_at(instance=experiment_group,
-                   status=instance.status,
-                   starting_statuses=[ExperimentGroupLifeCycle.RUNNING])
-    set_finished_at(instance=experiment_group,
-                    status=instance.status,
-                    is_done=ExperimentGroupLifeCycle.is_done)
-    experiment_group.save(update_fields=['status', 'started_at', 'finished_at'])
-    auditor.record(event_type=EXPERIMENT_GROUP_NEW_STATUS,
-                   instance=experiment_group,
-                   previous_status=previous_status)
-
-    if instance.status == ExperimentGroupLifeCycle.STOPPED:
-        auditor.record(event_type=EXPERIMENT_GROUP_STOPPED,
-                       instance=experiment_group,
-                       previous_status=previous_status)
-
-    if ExperimentGroupLifeCycle.is_done(instance.status):
-        auditor.record(event_type=EXPERIMENT_GROUP_DONE,
-                       instance=experiment_group,
-                       previous_status=previous_status)

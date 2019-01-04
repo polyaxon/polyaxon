@@ -3,21 +3,12 @@ from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
-import auditor
-
 from constants.jobs import JobLifeCycle
-from db.models.notebooks import NotebookJob, NotebookJobStatus
-from event_manager.events.notebook import (
-    NOTEBOOK_FAILED,
-    NOTEBOOK_NEW_STATUS,
-    NOTEBOOK_STOPPED,
-    NOTEBOOK_SUCCEEDED
-)
+from db.models.notebooks import NotebookJob
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.outputs import set_outputs, set_outputs_refs
-from signals.run_time import set_job_finished_at, set_job_started_at
 from signals.utils import set_persistence, set_tags
 
 
@@ -39,51 +30,6 @@ def notebook_job_pre_save(sender, **kwargs):
 def notebook_job_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
-
-
-@receiver(post_save, sender=NotebookJobStatus, dispatch_uid="notebook_job_status_post_save")
-@ignore_updates
-@ignore_raw
-def notebook_job_status_post_save(sender, **kwargs):
-    instance = kwargs['instance']
-    job = instance.job
-    previous_status = job.last_status
-    # Update job last_status
-    job.status = instance
-    set_job_started_at(instance=job, status=instance.status)
-    set_job_finished_at(instance=job, status=instance.status)
-    job.save(update_fields=['status', 'started_at', 'finished_at'])
-    auditor.record(event_type=NOTEBOOK_NEW_STATUS,
-                   instance=job,
-                   previous_status=previous_status,
-                   target='project')
-    if instance.status == JobLifeCycle.STOPPED:
-        auditor.record(event_type=NOTEBOOK_STOPPED,
-                       instance=job,
-                       previous_status=previous_status,
-                       target='project')
-
-    if instance.status == JobLifeCycle.FAILED:
-        auditor.record(event_type=NOTEBOOK_FAILED,
-                       instance=job,
-                       previous_status=previous_status,
-                       target='project')
-        # Schedule stop for this notebook
-        celery_app.send_task(
-            SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
-            kwargs={
-                'project_name': job.project.unique_name,
-                'project_uuid': job.project.uuid.hex,
-                'notebook_job_name': job.unique_name,
-                'notebook_job_uuid': job.uuid.hex,
-                'update_status': False
-            })
-
-    if instance.status == JobLifeCycle.STOPPED:
-        auditor.record(event_type=NOTEBOOK_SUCCEEDED,
-                       instance=job,
-                       previous_status=previous_status,
-                       target='project')
 
 
 @receiver(pre_delete, sender=NotebookJob, dispatch_uid="notebook_job_pre_delete")

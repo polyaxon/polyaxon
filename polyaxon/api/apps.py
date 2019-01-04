@@ -18,5 +18,6 @@ class APIConfig(AppConfig):
         import signals.repos  # noqa
         import signals.users  # noqa
         import signals.pipelines  # noqa
+        import signals.statuses  # noqa
         if settings.AUTH_LDAP_ENABLED:
             from api.users.ldap_signals import populate_user_handler  # noqa
