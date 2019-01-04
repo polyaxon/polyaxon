@@ -7,3 +7,4 @@ class CronsConfig(AppConfig):
 
     def ready(self):
         import signals.nodes  # noqa
+        import signals.deletion  # noqa

@@ -1,15 +1,14 @@
 from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_pre
 
-from django.db.models.signals import post_save, pre_delete, pre_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from constants.jobs import JobLifeCycle
 from db.models.tensorboards import TensorboardJob
 from libs.repos.utils import assign_code_reference
-from polyaxon.celery_api import celery_app
-from polyaxon.settings import SchedulerCeleryTasks
 from signals.outputs import set_outputs, set_outputs_refs
-from signals.utils import set_persistence, set_tags
+from signals.persistence import set_persistence
+from signals.tags import set_tags
 
 
 @receiver(pre_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_pre_save")
@@ -35,19 +34,3 @@ def tensorboard_job_pre_save(sender, **kwargs):
 def tensorboard_job_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
-
-
-@receiver(pre_delete, sender=TensorboardJob, dispatch_uid="tensorboard_job_pre_delete")
-@ignore_raw
-def tensorboard_job_pre_delete(sender, **kwargs):
-    job = kwargs['instance']
-
-    celery_app.send_task(
-        SchedulerCeleryTasks.TENSORBOARDS_STOP,
-        kwargs={
-            'project_name': job.project.unique_name,
-            'project_uuid': job.project.uuid.hex,
-            'tensorboard_job_name': job.unique_name,
-            'tensorboard_job_uuid': job.uuid.hex,
-            'update_status': False
-        })

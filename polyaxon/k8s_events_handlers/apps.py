@@ -7,3 +7,4 @@ class K8SEventsHandlersConfig(AppConfig):
 
     def ready(self):
         import signals.statuses  # noqa
+        import signals.deletion  # noqa

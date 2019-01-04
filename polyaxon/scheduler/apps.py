@@ -14,4 +14,5 @@ class SchedulerConfig(AppConfig):
         import signals.project_notebook_jobs  # noqa
         import signals.project_tensorboard_jobs  # noqa
         import signals.statuses  # noqa
+        import signals.deletion  # noqa
         import signals.nodes  # noqa

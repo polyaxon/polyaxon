@@ -7,3 +7,4 @@ class CommandsConfig(AppConfig):
 
     def ready(self):
         import signals.users  # noqa
+        import signals.deletion  # noqa

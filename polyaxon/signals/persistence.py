@@ -1,11 +1,5 @@
-from db.models.bookmarks import Bookmark
 from schemas.environments import PersistenceConfig
 from stores.validators import validate_persistence_data, validate_persistence_outputs
-
-
-def set_tags(instance):
-    if not instance.tags and instance.specification:
-        instance.tags = instance.specification.tags
 
 
 def set_persistence(instance, default_persistence_data=None, default_persistence_outputs=None):
@@ -27,8 +21,3 @@ def set_persistence(instance, default_persistence_data=None, default_persistence
     persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence_outputs)
     persistence_config = PersistenceConfig(data=persistence_data, outputs=persistence_outputs)
     instance.persistence = persistence_config.to_dict()
-
-
-def remove_bookmarks(object_id, content_type):
-    # Remove any bookmark
-    Bookmark.objects.filter(content_type__model=content_type, object_id=object_id).delete()

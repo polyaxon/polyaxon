@@ -5,19 +5,20 @@ from hestia.signal_decorators import (
     ignore_updates_pre
 )
 
-from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 import auditor
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.models.experiment_groups import ExperimentGroup, GroupTypes
-from event_manager.events.experiment_group import EXPERIMENT_GROUP_CREATED, EXPERIMENT_GROUP_DELETED
+from event_manager.events.experiment_group import EXPERIMENT_GROUP_CREATED
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.hptuning import SearchAlgorithms
-from signals.utils import remove_bookmarks, set_persistence, set_tags
+from signals.persistence import set_persistence
+from signals.tags import set_tags
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")
@@ -64,37 +65,3 @@ def experiment_group_create_experiments(sender, **kwargs):
         SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE,
         kwargs={'experiment_group_id': instance.id},
         countdown=1)
-
-
-@receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_delete")
-@ignore_raw
-def experiment_group_pre_delete(sender, **kwargs):
-    """Delete all group outputs."""
-    instance = kwargs['instance']
-
-    if instance.is_selection:
-        return
-
-    # Delete outputs and logs
-    celery_app.send_task(
-        SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
-        kwargs={
-            'persistence': instance.persistence_outputs,
-            'subpath': instance.subpath,
-        })
-    celery_app.send_task(
-        SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
-        kwargs={
-            'persistence': instance.persistence_logs,
-            'subpath': instance.subpath,
-        })
-
-
-@receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_post_delete")
-@ignore_raw
-def experiment_group_post_delete(sender, **kwargs):
-    """Delete all group outputs."""
-    instance = kwargs['instance']
-    auditor.record(event_type=EXPERIMENT_GROUP_DELETED,
-                   instance=instance)
-    remove_bookmarks(object_id=instance.id, content_type='experimentgroup')

@@ -9,3 +9,5 @@ class HPSearchConfig(AppConfig):
         from hpsearch.signals import new_experiment_group_iteration  # noqa
         import signals.experiments  # noqa
         import signals.experiment_groups  # noqa
+        import signals.statuses  # noqA
+        import signals.deletion  # noqa
