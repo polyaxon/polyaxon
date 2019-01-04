@@ -172,7 +172,9 @@ class DeployManager(object):
         args = ['delete', '--purge', 'polyaxon']
         if hooks:
             args += ['--no-hooks']
+        click.echo('Running teardown command ...')
         self.helm.execute(args=args)
+        Printer.print_success('Deployment successfully deleted.', add_sign=True)
 
     def teardown_on_docker_compose(self, hooks):
         pass
