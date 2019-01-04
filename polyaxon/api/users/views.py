@@ -89,7 +89,9 @@ class AuthTokenLogin(ObtainAuthToken):
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token, _ = Token.objects.get_or_create(user=user)
+        token, created = Token.objects.get_or_create(user=user)
+        if not created and token.is_expired:
+            token.refresh()
         response = Response({'token': token.key})
         if request.data.get('login'):
             auth_login(self.request, user)
