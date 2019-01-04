@@ -25,8 +25,10 @@ from db.models.utils import (
     PersistenceModel,
     ReadmeModel,
     RunTimeModel,
+    SubPathModel,
     TagModel
 )
+from libs.paths.experiment_groups import get_experiment_group_subpath
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from schemas.hptuning import HPTuningConfig, Optimization
 from schemas.specifications import GroupSpecification
@@ -51,6 +53,7 @@ class ExperimentGroup(DiffModel,
                       PersistenceModel,
                       DescribableModel,
                       ReadmeModel,
+                      SubPathModel,
                       TagModel,
                       DeletedModel,
                       LastStatusMixin,
@@ -117,6 +120,10 @@ class ExperimentGroup(DiffModel,
         return GROUP_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @cached_property
+    def subpath(self):
+        return get_experiment_group_subpath(self.unique_name)
 
     @property
     def is_study(self):

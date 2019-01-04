@@ -10,6 +10,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
 
+import stores
+
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
@@ -36,7 +38,6 @@ from factories.fixtures import (
     exec_experiment_spec_content,
     experiment_spec_content
 )
-from libs.paths.experiments import create_experiment_outputs_path, get_experiment_outputs_path
 from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
 from schemas.specifications import ExperimentSpecification
 from schemas.tasks import TaskType
@@ -313,26 +314,36 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @patch('libs.paths.experiments.delete_path')
-    def test_delete_experiment_does_not_trigger_experiment_stop_if_not_running(self, delete_path):
+    @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
+    @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
+    def test_delete_experiment_does_not_trigger_experiment_stop_if_not_running(self,
+                                                                               delete_outputs_path,
+                                                                               delete_logs_path):
         experiment = ExperimentFactory()
-        assert delete_path.call_count == 2  # outputs + logs
+        assert delete_outputs_path.call_count == 0
+        assert delete_logs_path.call_count == 0
         with patch('scheduler.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()
-        assert delete_path.call_count == 2 + 2  # outputs + logs
+        assert delete_outputs_path.call_count == 1
+        assert delete_logs_path.call_count == 1
         assert mock_fct.call_count == 0
 
-    @patch('libs.paths.experiments.delete_path')
-    def test_delete_experiment_triggers_experiment_stop_mocks(self, delete_path):
+    @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
+    @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
+    def test_delete_experiment_triggers_experiment_stop_mocks(self,
+                                                              delete_outputs_path,
+                                                              delete_logs_path):
         experiment = ExperimentFactory()
         experiment.set_status(ExperimentLifeCycle.SCHEDULED)
         # Add job
         ExperimentJobFactory(experiment=experiment)
 
-        assert delete_path.call_count == 2  # outputs + logs
+        assert delete_outputs_path.call_count == 0
+        assert delete_logs_path.call_count == 0
         with patch('scheduler.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()
-        assert delete_path.call_count == 2 + 2  # outputs + logs
+        assert delete_outputs_path.call_count == 1
+        assert delete_logs_path.call_count == 1
         assert mock_fct.call_count == 1
 
     def test_set_metrics(self):
@@ -428,8 +439,9 @@ class TestExperimentModel(BaseTest):
             experiment1 = ExperimentFactory()
 
         # We create some outputs files for the experiment
-        path = create_experiment_outputs_path(persistence_outputs=experiment1.persistence_outputs,
-                                              experiment_name=experiment1.unique_name)
+        path = stores.create_experiment_outputs_path(
+            persistence=experiment1.persistence_outputs,
+            experiment_name=experiment1.unique_name)
         open(os.path.join(path, 'file'), 'w+')
 
         # Create a new experiment that is a clone of the previous
@@ -437,8 +449,8 @@ class TestExperimentModel(BaseTest):
             experiment2 = ExperimentFactory(original_experiment=experiment1)
 
         # Check that outputs path for experiment2 does not exist yet
-        experiment2_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=experiment2.persistence_outputs,
+        experiment2_outputs_path = stores.get_experiment_outputs_path(
+            persistence=experiment2.persistence_outputs,
             experiment_name=experiment2.unique_name)
         assert os.path.exists(experiment2_outputs_path) is False
 

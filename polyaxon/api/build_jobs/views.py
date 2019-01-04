@@ -13,6 +13,7 @@ from rest_framework.settings import api_settings
 from django.http import StreamingHttpResponse
 
 import auditor
+import stores
 
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
@@ -47,7 +48,6 @@ from event_manager.events.build_job import (
     BUILD_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_BUILDS_VIEWED
-from libs.paths.jobs import get_job_logs_path
 from logs_handlers.log_queries.build_job import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -184,10 +184,10 @@ class BuildLogsView(BuildEndpoint, RetrieveEndpoint):
                        actor_name=request.user.username)
         job_name = self.build.unique_name
         if self.build.is_done:
-            log_path = get_job_logs_path(job_name, temp=False)
+            log_path = stores.get_job_logs_path(job_name=job_name, temp=False)
         else:
             process_logs(build=self.build, temp=True)
-            log_path = get_job_logs_path(job_name, temp=True)
+            log_path = stores.get_job_logs_path(job_name=job_name, temp=True)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192

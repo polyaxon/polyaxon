@@ -11,6 +11,8 @@ from rest_framework import status
 
 from django.conf import settings
 
+import stores
+
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
@@ -59,12 +61,6 @@ from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
     exec_experiment_outputs_refs_parsed_content,
     exec_experiment_spec_parsed_content
-)
-from libs.paths.experiments import (
-    create_experiment_logs_path,
-    create_experiment_outputs_path,
-    get_experiment_logs_path,
-    get_experiment_outputs_path
 )
 from schemas.specifications import ExperimentSpecification
 from tests.utils import BaseFilesViewTest, BaseViewTest, EphemeralClient
@@ -1949,8 +1945,10 @@ class TestExperimentLogsViewV1(BaseViewTest):
             self.experiment.id)
 
     def create_logs(self, temp):
-        log_path = get_experiment_logs_path(self.experiment.unique_name, temp=temp)
-        create_experiment_logs_path(experiment_name=self.experiment.unique_name, temp=temp)
+        log_path = stores.get_experiment_logs_path(
+            experiment_name=self.experiment.unique_name,
+            temp=temp)
+        stores.create_experiment_logs_path(experiment_name=self.experiment.unique_name, temp=temp)
         fake = Faker()
         self.logs = []
         for _ in range(self.num_log_lines):
@@ -2035,13 +2033,14 @@ class TestExperimentOutputsTreeViewV1(BaseFilesViewTest):
             project.name,
             experiment.id)
 
-        outputs_path = get_experiment_outputs_path(
-            persistence_outputs=experiment.persistence_outputs,
+        outputs_path = stores.get_experiment_outputs_path(
+            persistence=experiment.persistence_outputs,
             experiment_name=experiment.unique_name,
             original_name=experiment.original_unique_name,
             cloning_strategy=experiment.cloning_strategy)
-        create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
-                                       experiment_name=experiment.unique_name)
+        stores.create_experiment_outputs_path(
+            persistence=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name)
 
         self.create_paths(path=outputs_path, url=self.url)
 
@@ -2078,13 +2077,14 @@ class TestExperimentOutputsFilesViewV1(BaseFilesViewTest):
             project.name,
             experiment.id)
 
-        outputs_path = get_experiment_outputs_path(
-            persistence_outputs=experiment.persistence_outputs,
+        outputs_path = stores.get_experiment_outputs_path(
+            persistence=experiment.persistence_outputs,
             experiment_name=experiment.unique_name,
             original_name=experiment.original_unique_name,
             cloning_strategy=experiment.cloning_strategy)
-        create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
-                                       experiment_name=experiment.unique_name)
+        stores.create_experiment_outputs_path(
+            persistence=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name)
         self.create_paths(path=outputs_path, url=self.url)
 
     def test_get(self):
@@ -2118,14 +2118,15 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
             self.project.user.username,
             self.project.name,
             self.experiment.id)
-        self.experiment_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=self.experiment.persistence_outputs,
+        self.experiment_outputs_path = stores.get_experiment_outputs_path(
+            persistence=self.experiment.persistence_outputs,
             experiment_name=self.experiment.unique_name)
         self.url = self.download_url
 
     def create_tmp_outputs(self):
-        create_experiment_outputs_path(persistence_outputs=self.experiment.persistence_outputs,
-                                       experiment_name=self.experiment.unique_name)
+        stores.create_experiment_outputs_path(
+            persistence=self.experiment.persistence_outputs,
+            experiment_name=self.experiment.unique_name)
         for i in range(4):
             open('{}/{}'.format(self.experiment_outputs_path, i), '+w')
 

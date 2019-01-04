@@ -18,7 +18,6 @@ from event_manager.events.build_job import (
     BUILD_JOB_STOPPED,
     BUILD_JOB_SUCCEEDED
 )
-from libs.paths.jobs import delete_job_logs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -109,7 +108,12 @@ def build_job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
 
     # Delete outputs and logs
-    delete_job_logs(job.unique_name)
+    celery_app.send_task(
+        SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
+        kwargs={
+            'persistence': job.persistence_logs,
+            'subpath': job.subpath,
+        })
 
     if not job.is_running:
         return

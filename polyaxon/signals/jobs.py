@@ -23,7 +23,6 @@ from event_manager.events.job import (
     JOB_STOPPED,
     JOB_SUCCEEDED
 )
-from libs.paths.jobs import delete_job_logs, delete_job_outputs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -67,10 +66,7 @@ def job_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
 
-    # Clean outputs and logs
-    delete_job_logs(instance.unique_name)
-    delete_job_outputs(persistence_outputs=instance.persistence_outputs,
-                       job_name=instance.unique_name)
+    # TODO: Clean outputs and logs
 
 
 @receiver(post_save, sender=JobStatus, dispatch_uid="job_status_post_save")
@@ -134,8 +130,18 @@ def job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
 
     # Delete outputs and logs
-    delete_job_outputs(persistence_outputs=job.persistence_outputs, job_name=job.unique_name)
-    delete_job_logs(job.unique_name)
+    celery_app.send_task(
+        SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
+        kwargs={
+            'persistence': job.persistence_outputs,
+            'subpath': job.subpath,
+        })
+    celery_app.send_task(
+        SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
+        kwargs={
+            'persistence': job.persistence_logs,
+            'subpath': job.subpath,
+        })
 
     if not job.is_running:
         return

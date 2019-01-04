@@ -8,6 +8,8 @@ from rest_framework import status
 
 from django.conf import settings
 
+import stores
+
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
     BookmarkedBuildJobSerializer,
@@ -23,7 +25,6 @@ from db.redis.tll import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
-from libs.paths.jobs import create_job_logs_path, get_job_logs_path
 from schemas.specifications import BuildSpecification
 from tests.utils import BaseViewTest
 
@@ -560,8 +561,8 @@ class TestBuildLogsViewV1(BaseViewTest):
             self.job.id)
 
     def create_logs(self, temp):
-        log_path = get_job_logs_path(self.job.unique_name, temp=temp)
-        create_job_logs_path(job_name=self.job.unique_name, temp=temp)
+        log_path = stores.get_job_logs_path(job_name=self.job.unique_name, temp=temp)
+        stores.create_job_logs_path(job_name=self.job.unique_name, temp=temp)
         fake = Faker()
         self.logs = []
         for _ in range(self.num_log_lines):

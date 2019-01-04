@@ -146,23 +146,33 @@ class TestJobModel(BaseTest):
         job.refresh_from_db()
         assert job.last_status == JobLifeCycle.SCHEDULED
 
-    @patch('libs.paths.jobs.delete_path')
-    def test_delete_job_does_not_trigger_job_stop_if_not_running(self, delete_path):
+    @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
+    @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
+    def test_delete_job_does_not_trigger_job_stop_if_not_running(self,
+                                                                 delete_outputs_path,
+                                                                 delete_logs_path):
         job = JobFactory()
-        assert delete_path.call_count == 2  # outputs + logs
+        assert delete_outputs_path.call_count == 0
+        assert delete_logs_path.call_count == 0
         with patch('scheduler.job_scheduler.stop_job') as mock_fct:
             job.delete()
-        assert delete_path.call_count == 2 + 2  # outputs + logs
+        assert delete_outputs_path.call_count == 1
+        assert delete_logs_path.call_count == 1
         assert mock_fct.call_count == 0
 
-    @patch('libs.paths.jobs.delete_path')
-    def test_delete_job_triggers_job_stop_mock(self, delete_path):
+    @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
+    @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
+    def test_delete_job_triggers_job_stop_mock(self,
+                                               delete_outputs_path,
+                                               delete_logs_path):
         job = JobFactory()
         job.set_status(JobLifeCycle.SCHEDULED)
-        assert delete_path.call_count == 2  # outputs + logs
+        assert delete_outputs_path.call_count == 0
+        assert delete_logs_path.call_count == 0
         with patch('scheduler.job_scheduler.stop_job') as mock_fct:
             job.delete()
-        assert delete_path.call_count == 2 + 2  # outputs + logs
+        assert delete_outputs_path.call_count == 1
+        assert delete_logs_path.call_count == 1
         assert mock_fct.call_count == 1
 
     def test_managers(self):

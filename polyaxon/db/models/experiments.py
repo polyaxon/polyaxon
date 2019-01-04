@@ -25,6 +25,7 @@ from db.models.utils import (
     PersistenceModel,
     ReadmeModel,
     RunTimeModel,
+    SubPathModel,
     TagModel
 )
 from db.redis.heartbeat import RedisHeartBeat
@@ -33,6 +34,7 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESTARTED,
     EXPERIMENT_RESUMED
 )
+from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
 from schemas.specifications import ExperimentSpecification
 from schemas.tasks import TaskType
@@ -48,6 +50,7 @@ class Experiment(DiffModel,
                  DataReference,
                  OutputsModel,
                  PersistenceModel,
+                 SubPathModel,
                  DescribableModel,
                  ReadmeModel,
                  TagModel,
@@ -138,6 +141,10 @@ class Experiment(DiffModel,
         else:
             parent_name = self.project.unique_name
         return EXPERIMENT_UNIQUE_NAME_FORMAT.format(parent_name=parent_name, id=self.id)
+
+    @property
+    def subpath(self):
+        return get_experiment_subpath(experiment_name=self.unique_name)
 
     @cached_property
     def specification(self):

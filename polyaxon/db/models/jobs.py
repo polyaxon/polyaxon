@@ -18,10 +18,12 @@ from db.models.utils import (
     OutputsModel,
     PersistenceModel,
     ReadmeModel,
+    SubPathModel,
     TagModel
 )
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED
+from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_job_spec_config
 from schemas.specifications import JobSpecification
 
@@ -30,6 +32,7 @@ class Job(AbstractJob,
           DataReference,
           OutputsModel,
           PersistenceModel,
+          SubPathModel,
           NodeSchedulingModel,
           NameableModel,
           DescribableModel,
@@ -90,6 +93,10 @@ class Job(AbstractJob,
         return JOB_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @property
+    def subpath(self):
+        return get_job_subpath(job_name=self.unique_name)
 
     @cached_property
     def pod_id(self):

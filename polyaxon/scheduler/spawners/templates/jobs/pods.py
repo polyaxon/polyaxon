@@ -5,8 +5,9 @@ from kubernetes import client
 
 from django.conf import settings
 
+import stores
+
 from constants.k8s_jobs import JOB_NAME_FORMAT
-from libs.paths.jobs import get_job_logs_path, get_job_outputs_path
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
@@ -109,13 +110,16 @@ class PodManager(object):
         """Pod job container for task."""
         # Env vars preparation
         env_vars = to_list(env_vars, check_none=True)
+        logs_path = stores.get_job_logs_path(job_name=self.job_name, temp=False)
+        outputs_path = stores.get_job_outputs_path(
+            persistence=persistence_outputs,
+            job_name=self.job_name)
         env_vars += get_job_env_vars(
             log_level=self.log_level,
             persistence_outputs=persistence_outputs,
-            outputs_path=get_job_outputs_path(persistence_outputs=persistence_outputs,
-                                              job_name=self.job_name),
+            outputs_path=outputs_path,
             persistence_data=persistence_data,
-            logs_path=get_job_logs_path(job_name=self.job_name, temp=False),
+            logs_path=logs_path,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments
         )
@@ -156,8 +160,9 @@ class PodManager(object):
 
     def get_init_container(self, persistence_outputs):
         """Pod init container for setting outputs path."""
-        outputs_path = get_job_outputs_path(persistence_outputs=persistence_outputs,
-                                            job_name=self.job_name)
+        outputs_path = stores.get_job_outputs_path(
+            persistence=persistence_outputs,
+            job_name=self.job_name)
         _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
         return client.V1Container(
             name=self.init_container_name,

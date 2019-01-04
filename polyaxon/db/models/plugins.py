@@ -10,6 +10,7 @@ from db.models.utils import (
     NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
+    SubPathModel,
     TagModel
 )
 
@@ -17,6 +18,7 @@ from db.models.utils import (
 class PluginJobBase(AbstractJob,
                     OutputsModel,
                     PersistenceModel,
+                    SubPathModel,
                     NodeSchedulingModel,
                     NameableModel,
                     DescribableModel,

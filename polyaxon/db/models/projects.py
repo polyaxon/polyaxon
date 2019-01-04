@@ -7,8 +7,17 @@ from django.utils.functional import cached_property
 
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT
-from db.models.utils import DeletedModel, DescribableModel, DiffModel, ReadmeModel, TagModel
+from db.models.utils import (
+    DeletedModel,
+    DescribableModel,
+    DiffModel,
+    PersistenceModel,
+    ReadmeModel,
+    SubPathModel,
+    TagModel
+)
 from libs.blacklist import validate_blacklist_name
+from libs.paths.projects import get_project_subpath
 
 
 class Project(DiffModel,
@@ -16,6 +25,8 @@ class Project(DiffModel,
               ReadmeModel,
               TagModel,
               DeletedModel,
+              PersistenceModel,
+              SubPathModel,
               TensorboardJobMixin):
     """A model that represents a set of experiments to solve a specific problem."""
     CACHED_PROPERTIES = ['notebook', 'has_notebook', 'tensorboard', 'has_tensorboard']
@@ -54,6 +65,10 @@ class Project(DiffModel,
         return PROJECT_UNIQUE_NAME_FORMAT.format(
             user=self.user.username,
             project=self.name)
+
+    @property
+    def subpath(self):
+        return get_project_subpath(project_name=self.unique_name)
 
     @property
     def has_code(self):

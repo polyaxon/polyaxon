@@ -6,9 +6,10 @@ from kubernetes import client
 
 from django.conf import settings
 
+import stores
+
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.cloning_strategies import CloningStrategy
-from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import (
@@ -138,8 +139,11 @@ class PodManager(object):
 
         # Env vars preparations
         env_vars = to_list(env_vars, check_none=True)
-        outputs_path = get_experiment_outputs_path(
-            persistence_outputs=persistence_outputs,
+        logs_path = stores.get_experiment_logs_path(
+            experiment_name=self.experiment_name,
+            temp=False),
+        outputs_path = stores.get_experiment_outputs_path(
+            persistence=persistence_outputs,
             experiment_name=self.experiment_name,
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy)
@@ -148,7 +152,7 @@ class PodManager(object):
             outputs_path=outputs_path,
             persistence_data=persistence_data,
             log_level=self.log_level,
-            logs_path=get_experiment_logs_path(self.experiment_name, temp=False),
+            logs_path=logs_path,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             ephemeral_token=ephemeral_token,
@@ -196,14 +200,16 @@ class PodManager(object):
             return []
         if self.original_name is not None and self.cloning_strategy == CloningStrategy.COPY:
             command = InitCommands.COPY
-            original_outputs_path = get_experiment_outputs_path(
-                persistence_outputs=persistence_outputs, experiment_name=self.original_name)
+            original_outputs_path = stores.get_experiment_outputs_path(
+                persistence=persistence_outputs,
+                experiment_name=self.original_name)
         else:
             command = InitCommands.CREATE
             original_outputs_path = None
 
-        outputs_path = get_experiment_outputs_path(persistence_outputs=persistence_outputs,
-                                                   experiment_name=self.experiment_name)
+        outputs_path = stores.get_experiment_outputs_path(
+            persistence=persistence_outputs,
+            experiment_name=self.experiment_name)
         _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
         return [
             client.V1Container(

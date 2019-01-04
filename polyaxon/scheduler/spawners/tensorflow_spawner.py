@@ -1,4 +1,5 @@
-from libs.paths.experiments import get_experiment_outputs_path
+import stores
+
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
 from schemas.environments import TensorflowClusterConfig
@@ -15,8 +16,8 @@ class TensorflowSpawner(ExperimentSpawner):
         tf_config = {
             'cluster': self.get_cluster(),
             'task': {'type': task_type, 'index': task_idx},
-            'model_dir': get_experiment_outputs_path(
-                persistence_outputs=self.persistence_config.outputs,
+            'model_dir': stores.get_experiment_outputs_path(
+                persistence=self.persistence_config.outputs,
                 experiment_name=self.experiment_name,
                 cloning_strategy=self.cloning_strategy),
             'environment': 'cloud'

@@ -92,7 +92,6 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_outputs, archive_outputs_file
-from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.spec_validation import validate_experiment_spec_config
 from logs_handlers.log_queries.experiment import process_logs
 from polyaxon.celery_api import celery_app
@@ -377,8 +376,8 @@ class ExperimentOutputsTreeView(ExperimentEndpoint, RetrieveEndpoint):
     def get(self, request, *args, **kwargs):
         store_manager = stores.get_outputs_store(
             persistence_outputs=self.experiment.persistence_outputs)
-        experiment_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=self.experiment.persistence_outputs,
+        experiment_outputs_path = stores.get_experiment_outputs_path(
+            persistence=self.experiment.persistence_outputs,
             experiment_name=self.experiment.unique_name,
             original_name=self.experiment.original_unique_name,
             cloning_strategy=self.experiment.cloning_strategy)
@@ -406,8 +405,8 @@ class ExperimentOutputsFilesView(ExperimentEndpoint, RetrieveEndpoint):
         if not filepath:
             raise ValidationError('Files view expect a path to the file.')
 
-        experiment_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=self.experiment.persistence_outputs,
+        experiment_outputs_path = stores.get_experiment_outputs_path(
+            persistence=self.experiment.persistence_outputs,
             experiment_name=self.experiment.unique_name,
             original_name=self.experiment.original_unique_name,
             cloning_strategy=self.experiment.cloning_strategy)
@@ -571,10 +570,10 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
                        actor_name=request.user.username)
         experiment_name = self.experiment.unique_name
         if self.experiment.is_done:
-            log_path = get_experiment_logs_path(experiment_name, temp=False)
+            log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=False)
         else:
             process_logs(experiment=self.experiment, temp=True)
-            log_path = get_experiment_logs_path(experiment_name=experiment_name, temp=True)
+            log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
 
         filename = os.path.basename(log_path)
         chunk_size = 8192
@@ -764,8 +763,8 @@ class ExperimentDownloadOutputsView(ExperimentEndpoint, ProtectedView):
                        instance=self.experiment,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
-        experiment_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=self.experiment.persistence_outputs,
+        experiment_outputs_path = stores.get_experiment_outputs_path(
+            persistence=self.experiment.persistence_outputs,
             experiment_name=self.experiment.unique_name,
             original_name=self.experiment.original_unique_name,
             cloning_strategy=self.experiment.cloning_strategy)

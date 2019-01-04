@@ -51,20 +51,31 @@ from tests.utils import BaseTest, BaseViewTest
 
 @pytest.mark.experiment_groups_mark
 class TestExperimentGroupModel(BaseTest):
-    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
-    @patch('libs.paths.experiment_groups.delete_path')
-    def test_experiment_group_creation_deletes_old_data(self, delete_path, _):
-        ExperimentGroupFactory()
+    # @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    # @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
+    # @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
+    # def test_experiment_group_creation_deletes_old_data(self,
+    #                                                     delete_outputs_path,
+    #                                                     delete_logs_path,
+    #                                                     _):
+    #     ExperimentGroupFactory()
+    #
+    #     assert delete_outputs_path.call_count == 1
+    #     assert delete_logs_path.call_count == 1
 
-        assert delete_path.call_count == 2  # outputs + logs
-
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
-    @patch('libs.paths.experiment_groups.delete_path')
-    def test_experiment_group_deletion_deletes_old_data(self, delete_path, _):
+    @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
+    @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
+    def test_experiment_group_deletion_deletes_old_data(self,
+                                                        delete_outputs_path,
+                                                        delete_logs_path,
+                                                        _):
         experiment_group = ExperimentGroupFactory()
-        assert delete_path.call_count == 2  # outputs + logs
+        assert delete_outputs_path.call_count == 0
+        assert delete_logs_path.call_count == 0
         experiment_group.delete()
-        assert delete_path.call_count == 2 + 2  # outputs + logs
+        assert delete_outputs_path.call_count == 1
+        assert delete_logs_path.call_count == 1
 
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     def test_experiment_group_without_spec_and_hptuning(self, _):

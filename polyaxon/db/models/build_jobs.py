@@ -12,9 +12,12 @@ from db.models.utils import (
     DescribableModel,
     NameableModel,
     NodeSchedulingModel,
+    PersistenceModel,
+    SubPathModel,
     TagModel
 )
 from db.redis.heartbeat import RedisHeartBeat
+from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config
 from schemas.specifications import BuildSpecification
 
@@ -23,6 +26,8 @@ class BuildJob(AbstractJob,
                NodeSchedulingModel,
                NameableModel,
                DescribableModel,
+               PersistenceModel,
+               SubPathModel,
                TagModel,
                DeletedModel,
                JobMixin):
@@ -65,6 +70,10 @@ class BuildJob(AbstractJob,
         return BUILD_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @cached_property
+    def subpath(self):
+        return get_job_subpath(job_name=self.unique_name)
 
     @cached_property
     def pod_id(self):

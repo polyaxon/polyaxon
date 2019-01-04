@@ -36,14 +36,14 @@ class TestOutputsPaths(BaseTest):
         assert validate_persistence_outputs('path2') == 'path2'
         assert validate_persistence_outputs(None) == list(settings.PERSISTENCE_OUTPUTS.keys())[0]
 
-    def test_get_outputs_paths_raises_for_unrecognised_paths(self):
+    def test_get_outputs_path_raises_for_unrecognised_paths(self):
         with self.assertRaises(VolumeNotFoundError):
-            stores.get_outputs_paths(['path1', 'path2'])
+            stores.get_outputs_path(['path1', 'path2'])
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS)
-    def test_get_outputs_paths_works_as_expected(self):
+    def test_get_outputs_path_works_as_expected(self):
         with self.assertRaises(VolumeNotFoundError):
-            stores.get_outputs_paths('path1')
+            stores.get_outputs_path('path1')
 
-        assert stores.get_outputs_paths('outputs2') == '/outputs/2'
-        assert stores.get_outputs_paths('outputs3') == 'gs://output-bucket'
+        assert stores.get_outputs_path('outputs2') == '/outputs/2'
+        assert stores.get_outputs_path('outputs3') == 'gs://output-bucket'

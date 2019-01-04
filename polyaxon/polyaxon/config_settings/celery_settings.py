@@ -285,6 +285,10 @@ class SchedulerCeleryTasks(object):
 
     PROJECTS_SCHEDULE_DELETION = 'projects_schedule_deletion'
 
+    STORES_SCHEDULE_DATA_DELETION = 'stores_schedule_data_deletion'
+    STORES_SCHEDULE_OUTPUTS_DELETION = 'stores_schedule_outputs_deletion'
+    STORES_SCHEDULE_LOGS_DELETION = 'stores_schedule_logs_deletion'
+
 
 class HPCeleryTasks(object):
     """Hyperparams celery tasks.
@@ -331,6 +335,7 @@ class CeleryQueues(object):
     SCHEDULER_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS')
     SCHEDULER_EXPERIMENT_GROUPS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS')
     SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS')
+    SCHEDULER_STORES = config.get_string('POLYAXON_QUEUES_SCHEDULER_STORES')
     SCHEDULER_BUILD_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS')
     SCHEDULER_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_JOBS')
 
@@ -492,7 +497,15 @@ CELERY_TASK_ROUTES = {
 
     # Scheduler projects
     SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION:
-        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
+        {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+
+    # Scheduler stores
+    SchedulerCeleryTasks.STORES_SCHEDULE_DATA_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_STORES},
+    SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_STORES},
+    SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION:
+        {'queue': CeleryQueues.SCHEDULER_STORES},
 
     # Crons health
     CronsCeleryTasks.CRONS_HEALTH:

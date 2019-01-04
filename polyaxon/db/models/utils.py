@@ -162,6 +162,20 @@ class PersistenceModel(models.Model):
     def persistence_outputs(self):
         return self.persistence_config.outputs if self.persistence_config else None
 
+    @cached_property
+    def persistence_logs(self):
+        return None
+
+
+class SubPathModel(models.Model):
+
+    class Meta:
+        abstract = True
+
+    @cached_property
+    def subpath(self):
+        raise NotImplementedError()
+
 
 class OutputsModel(models.Model):
     outputs = JSONField(

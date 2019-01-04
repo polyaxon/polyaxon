@@ -5,8 +5,9 @@ from hestia.crypto import get_hmac
 
 from django.conf import settings
 
+import stores
+
 from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
-from libs.paths.notebooks import get_notebook_job_outputs_path
 from libs.paths.projects import get_project_repos_path
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
@@ -124,8 +125,9 @@ class NotebookSpawner(ProjectJobSpawner):
         volume_mounts += shm_volume_mounts
         env_vars = get_job_env_vars(
             persistence_outputs=persistence_outputs,
-            outputs_path=get_notebook_job_outputs_path(persistence_outputs=persistence_outputs,
-                                                       notebook_job=self.job_name),
+            outputs_path=stores.get_notebook_job_outputs_path(
+                persistence=persistence_outputs,
+                notebook_job=self.job_name),
             persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments

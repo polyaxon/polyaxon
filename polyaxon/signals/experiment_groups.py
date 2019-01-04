@@ -20,10 +20,6 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_NEW_STATUS,
     EXPERIMENT_GROUP_STOPPED
 )
-from libs.paths.experiment_groups import (
-    delete_experiment_group_logs,
-    delete_experiment_group_outputs
-)
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -61,11 +57,7 @@ def experiment_group_pre_save(sender, **kwargs):
 def new_experiment_group(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(ExperimentGroupLifeCycle.CREATED)
-    # Clean outputs and logs
-    delete_experiment_group_outputs(
-        persistence_outputs=instance.persistence_outputs,
-        experiment_group_name=instance.unique_name)
-    delete_experiment_group_logs(instance.unique_name)
+    # TODO: Clean outputs and logs
     auditor.record(event_type=EXPERIMENT_GROUP_CREATED,
                    instance=instance)
 
@@ -88,11 +80,22 @@ def experiment_group_pre_delete(sender, **kwargs):
     """Delete all group outputs."""
     instance = kwargs['instance']
 
+    if instance.is_selection:
+        return
+
     # Delete outputs and logs
-    delete_experiment_group_outputs(
-        persistence_outputs=instance.persistence_outputs,
-        experiment_group_name=instance.unique_name)
-    delete_experiment_group_logs(instance.unique_name)
+    celery_app.send_task(
+        SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
+        kwargs={
+            'persistence': instance.persistence_outputs,
+            'subpath': instance.subpath,
+        })
+    celery_app.send_task(
+        SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
+        kwargs={
+            'persistence': instance.persistence_logs,
+            'subpath': instance.subpath,
+        })
 
 
 @receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_post_delete")

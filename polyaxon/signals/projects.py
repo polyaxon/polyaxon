@@ -8,7 +8,9 @@ import ownership
 
 from db.models.projects import Project
 from event_manager.events.project import PROJECT_DELETED
-from libs.paths.projects import delete_project_logs, delete_project_outputs, delete_project_repos
+from libs.paths.projects import delete_project_repos
+from polyaxon.celery_api import celery_app
+from polyaxon.settings import SchedulerCeleryTasks
 from signals.utils import remove_bookmarks
 
 
@@ -27,9 +29,8 @@ def project_pre_save(sender, **kwargs):
 @ignore_raw
 def project_post_save(sender, **kwargs):
     instance = kwargs['instance']
-    # Clean outputs, logs, and repos
-    delete_project_outputs(persistence_outputs=None, project_name=instance.unique_name)
-    delete_project_logs(instance.unique_name)
+    # TODO: Clean outputs, logs,
+    # Clean repos
     delete_project_repos(instance.unique_name)
 
 
@@ -37,10 +38,21 @@ def project_post_save(sender, **kwargs):
 @ignore_raw
 def project_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
-    # Clean outputs, logs, and repos
-    delete_project_outputs(persistence_outputs=None, project_name=instance.unique_name)
-    delete_project_logs(instance.unique_name)
+    # Clean repos
     delete_project_repos(instance.unique_name)
+    # Clean outputs and logs
+    celery_app.send_task(
+        SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
+        kwargs={
+            'persistence': instance.persistence_outputs,
+            'subpath': instance.subpath,
+        })
+    celery_app.send_task(
+        SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
+        kwargs={
+            'persistence': instance.persistence_logs,
+            'subpath': instance.subpath,
+        })
 
 
 @receiver(post_delete, sender=Project, dispatch_uid="project_deleted")

@@ -39,7 +39,9 @@ class TestProjectModel(BaseTest):
         with self.assertRaises(ValidationError):
             ProjectFactory()
 
-    def test_delete_remove_paths(self):
+    @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
+    @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
+    def test_delete_remove_paths(self, delete_outputs_path, delete_logs_path):
         project = ProjectFactory()
         for _ in range(2):
             ExperimentGroupFactory(project=project)
@@ -48,14 +50,12 @@ class TestProjectModel(BaseTest):
         assert Experiment.objects.count() == 2
 
         with patch('libs.paths.projects.delete_path') as delete_path_project_mock_stop:
-            with patch('libs.paths.experiment_groups.delete_path') as delete_path_group_mock_stop:
-                with patch('libs.paths.experiments.delete_path') as delete_path_xp_mock_stop:
-                    project.delete()
-        # 2 * project + 1 repo
-        assert delete_path_project_mock_stop.call_count == 3
-        # 2 * 2 * groups
-        assert delete_path_group_mock_stop.call_count
-        assert delete_path_xp_mock_stop.call_count == 4  # 2 * 2  * groups
+            project.delete()
+        # 1 repo
+        assert delete_path_project_mock_stop.call_count == 1
+        # 1 project + 2 * groups + 2 experiments
+        assert delete_outputs_path.call_count == 5
+        assert delete_logs_path.call_count == 5
 
     def test_managers(self):
         assert isinstance(Project.objects, LiveManager)

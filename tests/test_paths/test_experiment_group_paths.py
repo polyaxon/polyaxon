@@ -2,20 +2,11 @@ import os
 
 import pytest
 
+import stores
+
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
-from libs.paths.experiment_groups import (
-    delete_experiment_group_logs,
-    delete_experiment_group_outputs,
-    get_experiment_group_logs_path,
-    get_experiment_group_outputs_path
-)
-from libs.paths.experiments import (
-    create_experiment_logs_path,
-    create_experiment_outputs_path,
-    get_experiment_logs_path,
-    get_experiment_outputs_path
-)
+from scheduler.tasks.storage import stores_schedule_logs_deletion, stores_schedule_outputs_deletion
 from tests.utils import BaseTest
 
 
@@ -32,15 +23,17 @@ class TestExperimentGroupPaths(BaseTest):
         experiment = ExperimentFactory(user=self.project.user,
                                        project=self.project,
                                        experiment_group=self.experiment_group)
-        experiment_logs_path = get_experiment_logs_path(experiment.unique_name, temp=False)
-        create_experiment_logs_path(experiment.unique_name, temp=False)
+        experiment_logs_path = stores.get_experiment_logs_path(
+            experiment_name=experiment.unique_name,
+            temp=False)
+        stores.create_experiment_logs_path(experiment_name=experiment.unique_name, temp=False)
         open(experiment_logs_path, '+w')
-        experiment_group_logs_path = get_experiment_group_logs_path(
-            self.experiment_group.unique_name)
+        experiment_group_logs_path = stores.get_experiment_group_logs_path(
+            experiment_group_name=self.experiment_group.unique_name)
         # Should be true, created by the signal
         assert os.path.exists(experiment_logs_path) is True
         assert os.path.exists(experiment_group_logs_path) is True
-        delete_experiment_group_logs(self.experiment_group.unique_name)
+        stores_schedule_logs_deletion(persistence=None, subpath=self.experiment_group.subpath)
         assert os.path.exists(experiment_logs_path) is False
         assert os.path.exists(experiment_group_logs_path) is False
 
@@ -48,18 +41,17 @@ class TestExperimentGroupPaths(BaseTest):
         experiment = ExperimentFactory(user=self.project.user,
                                        project=self.project,
                                        experiment_group=self.experiment_group)
-        create_experiment_outputs_path(persistence_outputs=experiment.persistence_outputs,
-                                       experiment_name=experiment.unique_name)
-        experiment_outputs_path = get_experiment_outputs_path(
-            persistence_outputs=experiment.persistence_outputs,
+        stores.create_experiment_outputs_path(
+            persistence=experiment.persistence_outputs,
             experiment_name=experiment.unique_name)
-        experiment_group_outputs_path = get_experiment_group_outputs_path(
-            self.experiment_group.persistence_outputs,
-            self.experiment_group.unique_name)
+        experiment_outputs_path = stores.get_experiment_outputs_path(
+            persistence=experiment.persistence_outputs,
+            experiment_name=experiment.unique_name)
+        experiment_group_outputs_path = stores.get_experiment_group_outputs_path(
+            persistence=self.experiment_group.persistence_outputs,
+            experiment_group_name=self.experiment_group.unique_name)
         assert os.path.exists(experiment_outputs_path) is True
         assert os.path.exists(experiment_group_outputs_path) is True
-        delete_experiment_group_outputs(
-            persistence_outputs=self.experiment_group.persistence_outputs,
-            experiment_group_name=self.experiment_group.unique_name)
+        stores_schedule_outputs_deletion(persistence=None, subpath=self.experiment_group.subpath)
         assert os.path.exists(experiment_outputs_path) is False
         assert os.path.exists(experiment_group_outputs_path) is False

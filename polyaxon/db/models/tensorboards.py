@@ -7,6 +7,7 @@ from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.outputs import OutputsRefsSpec
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
+from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_tensorboard_spec_config
 from schemas.specifications import TensorboardSpecification
 
@@ -50,6 +51,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
             id=self.id)
 
     @cached_property
+    def subpath(self):
+        return get_job_subpath(job_name=self.unique_name)
+
+    @cached_property
     def pod_id(self):
         return JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.uuid.hex)
 
@@ -72,12 +77,12 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     @cached_property
     def outputs_path(self):
-        from libs.paths.experiments import get_experiment_outputs_path
+        import stores
 
         def get_named_experiment_outputs_path(experiment):
             persistence = experiment.persistence_outputs
-            outputs_path = get_experiment_outputs_path(
-                persistence_outputs=experiment.persistence_outputs,
+            outputs_path = stores.get_experiment_outputs_path(
+                persistence=experiment.persistence_outputs,
                 experiment_name=experiment.unique_name,
                 original_name=experiment.original_unique_name,
                 cloning_strategy=experiment.cloning_strategy)

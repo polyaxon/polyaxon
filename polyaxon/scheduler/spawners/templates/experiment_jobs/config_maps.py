@@ -3,8 +3,9 @@ import json
 
 from kubernetes import client
 
+import stores
+
 from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
-from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 
@@ -48,11 +49,14 @@ def get_config_map(namespace,
                             experiment_group_uuid,
                             experiment_uuid)
     metadata = client.V1ObjectMeta(name=name, labels=labels, namespace=namespace)
-    experiment_outputs_path = get_experiment_outputs_path(persistence_outputs=persistence_outputs,
-                                                          experiment_name=experiment_name,
-                                                          original_name=original_name,
-                                                          cloning_strategy=cloning_strategy)
-    experiment_logs_path = get_experiment_logs_path(experiment_name, temp=False)
+    experiment_outputs_path = stores.get_experiment_outputs_path(
+        persistence=persistence_outputs,
+        experiment_name=experiment_name,
+        original_name=original_name,
+        cloning_strategy=cloning_strategy)
+    experiment_logs_path = stores.get_experiment_logs_path(
+        experiment_name=experiment_name,
+        temp=False)
     data = {
         constants.CONFIG_MAP_CLUSTER_KEY_NAME: json.dumps(cluster_def),
         constants.CONFIG_MAP_DECLARATIONS_KEY_NAME: json.dumps(declarations) or '{}',

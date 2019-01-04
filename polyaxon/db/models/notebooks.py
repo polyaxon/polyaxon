@@ -7,6 +7,7 @@ from db.models.abstract_jobs import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from db.models.utils import DataReference
+from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_notebook_spec_config
 from schemas.specifications import NotebookSpecification
 
@@ -38,6 +39,10 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
         return NOTEBOOK_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @cached_property
+    def subpath(self):
+        return get_job_subpath(job_name=self.unique_name)
 
     @cached_property
     def pod_id(self):

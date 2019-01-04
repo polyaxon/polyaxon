@@ -4,11 +4,11 @@ from unittest.mock import patch
 
 import pytest
 
+import stores
+
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
-from libs.paths.experiments import get_experiment_logs_path
-from libs.paths.jobs import get_job_logs_path
 from logs_handlers.tasks.log_handlers import (
     logs_handle_build_job,
     logs_handle_experiment_job,
@@ -74,7 +74,7 @@ class TestExperimentJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def get_log_path(instance):
-        return get_experiment_logs_path(instance.unique_name, temp=False)
+        return stores.get_experiment_logs_path(experiment_name=instance.unique_name, temp=False)
 
     @staticmethod
     def handle_job_logs(**params):
@@ -100,7 +100,7 @@ class TestJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def get_log_path(instance):
-        return get_job_logs_path(instance.unique_name, temp=False)
+        return stores.get_job_logs_path(job_name=instance.unique_name, temp=False)
 
     @staticmethod
     def handle_job_logs(**params):
@@ -125,7 +125,7 @@ class TestBuildJobLogsHandling(BaseTestLogsHandling):
 
     @staticmethod
     def get_log_path(instance):
-        return get_job_logs_path(instance.unique_name, temp=False)
+        return stores.get_job_logs_path(job_name=instance.unique_name, temp=False)
 
     @staticmethod
     def handle_job_logs(**params):

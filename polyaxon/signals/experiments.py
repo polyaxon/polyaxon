@@ -28,7 +28,6 @@ from event_manager.events.experiment import (
     EXPERIMENT_STOPPED,
     EXPERIMENT_SUCCEEDED
 )
-from libs.paths.experiments import delete_experiment_logs, delete_experiment_outputs
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, SchedulerCeleryTasks
@@ -70,21 +69,29 @@ def experiment_post_save(sender, **kwargs):
     instance.set_status(ExperimentLifeCycle.CREATED)
 
     if instance.is_independent:
-        # Clean outputs and logs
-        delete_experiment_logs(instance.unique_name)
-        delete_experiment_outputs(persistence_outputs=instance.persistence_outputs,
-                                  experiment_name=instance.unique_name)
+        # TODO: Clean outputs and logs
+        pass
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_pre_delete")
 @ignore_raw
 def experiment_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
+
     # Delete outputs and logs
-    delete_experiment_outputs(
-        persistence_outputs=instance.persistence_outputs,
-        experiment_name=instance.unique_name)
-    delete_experiment_logs(instance.unique_name)
+    if instance.is_independent:
+        celery_app.send_task(
+            SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
+            kwargs={
+                'persistence': instance.persistence_outputs,
+                'subpath': instance.subpath,
+            })
+        celery_app.send_task(
+            SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
+            kwargs={
+                'persistence': instance.persistence_logs,
+                'subpath': instance.subpath,
+            })
 
     # Delete clones
     for experiment in instance.clones.filter(cloning_strategy=CloningStrategy.RESUME):

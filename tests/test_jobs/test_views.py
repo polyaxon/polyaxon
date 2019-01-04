@@ -10,6 +10,8 @@ from rest_framework import status
 
 from django.conf import settings
 
+import stores
+
 from api.jobs.serializers import (
     BookmarkedJobSerializer,
     JobDetailSerializer,
@@ -26,12 +28,6 @@ from db.redis.tll import RedisTTL
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
-from libs.paths.jobs import (
-    create_job_logs_path,
-    create_job_outputs_path,
-    get_job_logs_path,
-    get_job_outputs_path
-)
 from schemas.specifications import JobSpecification
 from tests.utils import BaseFilesViewTest, BaseViewTest
 
@@ -656,8 +652,8 @@ class TestJobLogsViewV1(BaseViewTest):
             self.job.id)
 
     def create_logs(self, temp):
-        log_path = get_job_logs_path(self.job.unique_name, temp=temp)
-        create_job_logs_path(job_name=self.job.unique_name, temp=temp)
+        log_path = stores.get_job_logs_path(job_name=self.job.unique_name, temp=temp)
+        stores.create_job_logs_path(job_name=self.job.unique_name, temp=temp)
         fake = Faker()
         self.logs = []
         for _ in range(self.num_log_lines):
@@ -725,14 +721,15 @@ class DownloadJobOutputsViewTest(BaseViewTest):
             self.project.user.username,
             self.project.name,
             self.job.id)
-        self.job_outputs_path = get_job_outputs_path(
-            persistence_outputs=self.job.persistence_outputs,
+        self.job_outputs_path = stores.get_job_outputs_path(
+            persistence=self.job.persistence_outputs,
             job_name=self.job.unique_name)
         self.url = self.download_url
 
     def create_tmp_outputs(self):
-        create_job_outputs_path(persistence_outputs=self.job.persistence_outputs,
-                                job_name=self.job.unique_name)
+        stores.create_job_outputs_path(
+            persistence=self.job.persistence_outputs,
+            job_name=self.job.unique_name)
         for i in range(4):
             open('{}/{}'.format(self.job_outputs_path, i), '+w')
 
@@ -794,11 +791,12 @@ class TestJobOutputsTreeViewV1(BaseFilesViewTest):
             project.name,
             job.id)
 
-        outputs_path = get_job_outputs_path(
-            persistence_outputs=job.persistence_outputs,
+        outputs_path = stores.get_job_outputs_path(
+            persistence=job.persistence_outputs,
             job_name=job.unique_name)
-        create_job_outputs_path(persistence_outputs=job.persistence_outputs,
-                                job_name=job.unique_name)
+        stores.create_job_outputs_path(
+            persistence=job.persistence_outputs,
+            job_name=job.unique_name)
         self.create_paths(path=outputs_path, url=self.url)
 
     def test_get(self):
@@ -834,11 +832,12 @@ class TestJobOutputsFilesViewV1(BaseFilesViewTest):
             project.name,
             job.id)
 
-        outputs_path = get_job_outputs_path(
-            persistence_outputs=job.persistence_outputs,
+        outputs_path = stores.get_job_outputs_path(
+            persistence=job.persistence_outputs,
             job_name=job.unique_name)
-        create_job_outputs_path(persistence_outputs=job.persistence_outputs,
-                                job_name=job.unique_name)
+        stores.create_job_outputs_path(
+            persistence=job.persistence_outputs,
+            job_name=job.unique_name)
         self.create_paths(path=outputs_path, url=self.url)
 
     def test_get(self):

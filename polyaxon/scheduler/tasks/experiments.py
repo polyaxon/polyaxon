@@ -3,12 +3,12 @@ import logging
 from rest_framework.exceptions import ValidationError
 
 import publisher
+import stores
 
 from api.experiments.serializers import ExperimentMetricSerializer
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
 from db.redis.heartbeat import RedisHeartBeat
-from libs.paths.experiments import copy_experiment_outputs
 from logs_handlers import collectors
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
@@ -29,7 +29,7 @@ def copy_experiment(experiment):
             experiment_name=experiment.unique_name,
             job_uuid='all',
         )
-        copy_experiment_outputs(
+        stores.copy_experiment_outputs(
             persistence_outputs_from=experiment.original_experiment.persistence_outputs,
             persistence_outputs_to=experiment.persistence_outputs,
             experiment_name_from=experiment.original_experiment.unique_name,

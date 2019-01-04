@@ -38,7 +38,7 @@ class OutputsRefs(models.Model):
         app_label = 'db'
 
     def get_jobs_outputs_spec(self):
-        from libs.paths.jobs import get_job_outputs_path
+        import stores
 
         if not self.jobs.count():
             return None
@@ -59,13 +59,13 @@ class OutputsRefs(models.Model):
                 project_name=project_name,
                 id=data[0]
             )
-            outputs_path = get_job_outputs_path(persistence_outputs=data[3], job_name=job_name)
+            outputs_path = stores.get_job_outputs_path(persistence=data[3], job_name=job_name)
             outputs_spec_data[data[0]] = OutputsRefsSpec(path=outputs_path, persistence=data[3])
 
         return outputs_spec_data
 
     def get_experiments_outputs_spec(self):
-        from libs.paths.experiments import get_experiment_outputs_path
+        import stores
 
         if not self.experiments.count():
             return None
@@ -95,8 +95,8 @@ class OutputsRefs(models.Model):
                 experiment_name = EXPERIMENT_UNIQUE_NAME_FORMAT.format(
                     parent_name=project_name,
                     id=data[0])
-            outputs_path = get_experiment_outputs_path(
-                persistence_outputs=data[4],
+            outputs_path = stores.get_experiment_outputs_path(
+                persistence=data[4],
                 experiment_name=experiment_name)
             outputs_spec_data[data[0]] = OutputsRefsSpec(path=outputs_path, persistence=data[4])
 
