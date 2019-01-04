@@ -69,12 +69,12 @@ class Printer(object):
         click.secho('\n{}\n'.format(text), fg='magenta')
 
     @staticmethod
-    def print_success(text):
-        click.secho('\n{}\n'.format(text), fg='green')
+    def print_success(text, add_sign=False):
+        click.secho('\n{}{}\n'.format('\u2713 ' if add_sign else '', text), fg='green')
 
     @staticmethod
-    def print_error(text):
-        click.secho('\n{}\n'.format(text), fg='red')
+    def print_error(text, add_sign=False):
+        click.secho('\n{}{}\n'.format('\u2717 ' if add_sign else '', text), fg='red')
 
     @staticmethod
     def add_color(value, color):

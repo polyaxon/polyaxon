@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import click
+
 from polyaxon_cli.exceptions import PolyaxonDeploymentConfigError
 from polyaxon_cli.operators.helm import HelmOperator
 from polyaxon_cli.operators.kubectl import KubectlOperator
 from polyaxon_cli.schemas.deployment_configuration import DeploymentTypes
+from polyaxon_cli.utils.formatting import Printer
 
 
 class DeployManager(object):
@@ -46,10 +49,12 @@ class DeployManager(object):
         command_exist = self.kubectl.execute(args=[], is_json=False)
         if not command_exist:
             raise PolyaxonDeploymentConfigError('kubectl is required to run this command.')
+        Printer.print_success('kubectl is installed', add_sign=True)
 
         command_exist = self.helm.execute(args=[])
         if not command_exist:
             raise PolyaxonDeploymentConfigError('helm is required to run this command.')
+        Printer.print_success('helm is installed', add_sign=True)
 
         # Check the version to ensure that there's a connection
         command_exist = self.kubectl.execute(args=['version'])
@@ -100,7 +105,11 @@ class DeployManager(object):
         args = ['install', 'polyaxon/polyaxon', '--name=polyaxon', '--namespace=polyaxon']
         if self.filepath:
             args += ['-f', self.filepath]
-        self.helm.execute(args=args)
+
+        click.echo('Running install command ...')
+        stdout = self.helm.execute(args=args)
+        click.echo(stdout)
+        Printer.print_success('Deployment finished.')
 
     def install_on_docker_compose(self):
         pass
@@ -130,7 +139,10 @@ class DeployManager(object):
         args = ['upgrade', 'polyaxon', 'polyaxon/polyaxon']
         if self.filepath:
             args += ['-f', self.filepath]
-        self.helm.execute(args=args)
+        click.echo('Running upgrade command ...')
+        stdout = self.helm.execute(args=args)
+        click.echo(stdout)
+        Printer.print_success('Deployment upgraded.')
 
     def upgrade_on_docker_compose(self):
         pass

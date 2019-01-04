@@ -22,7 +22,7 @@ def check_polyaxonfile(file, log=True):  # pylint:disable=redefined-builtin
 
     if not any(exists):
         Printer.print_error('Polyaxonfile is not present, '
-                            'please run {}'.format(constants.INIT_COMMAND))
+                            'please run {}'.format(constants.INIT_COMMAND), add_sign=True)
         sys.exit(1)
 
     try:
@@ -31,7 +31,7 @@ def check_polyaxonfile(file, log=True):  # pylint:disable=redefined-builtin
             Printer.print_success("Polyaxonfile valid")
         return plx_file
     except Exception as e:
-        Printer.print_error("Polyaxonfile is not valid ")
+        Printer.print_error("Polyaxonfile is not valid.", add_sign=True)
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -40,7 +40,7 @@ def check_polyaxonfile_kind(specification, kind):
     if specification.kind != kind:
         Printer.print_error(
             'Your polyaxonfile must be of kind: `{}`, '
-            'received: `{}`.'.format(kind, specification.kind))
+            'received: `{}`.'.format(kind, specification.kind), add_sign=True)
         sys.exit(-1)
 
 

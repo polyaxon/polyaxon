@@ -2,16 +2,17 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+import sys
 
 import click
 import rhea
 
 from hestia.list_utils import to_list
 
-from polyaxon_cli.exceptions import PolyaxonConfigurationError, PolyaxonDeploymentConfigError
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.deploy import DeployManager
 from polyaxon_cli.schemas.deployment_configuration import DeploymentConfig
+from polyaxon_cli.utils.formatting import Printer
 
 
 def read_deployment_config(filepaths):
@@ -21,13 +22,16 @@ def read_deployment_config(filepaths):
     filepaths = to_list(filepaths)
     for filepath in filepaths:
         if not os.path.isfile(filepath):
-            raise PolyaxonDeploymentConfigError("`{}` must be a valid file".format(filepath))
+            Printer.print_error("`{}` must be a valid file".format(filepath))
+            sys.exit(1)
 
     data = rhea.read(filepaths)
     try:
         deployment_config = DeploymentConfig.from_dict(data)
-    except PolyaxonConfigurationError as e:
-        raise PolyaxonDeploymentConfigError(e)
+    except Exception as e:
+        Printer.print_error("Polyaxon deployment file is not valid ")
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     return deployment_config
 
@@ -46,14 +50,32 @@ def deploy(file, check, upgrade, teardown):   # pylint:disable=redefined-builtin
     """Deploy polyaxon."""
     config = read_deployment_config(file)
     manager = DeployManager(config=config, filepath=file)
+    exception = None
     if check:
         manager.check()
+        Printer.print_success('Polyaxon deployment file is valid.', add_sign=True)
     elif upgrade:
-        manager.upgrade()
+        try:
+            manager.upgrade()
+        except Exception as e:
+            Printer.print_error('Polyaxon could not upgrade the deployment.', add_sign=True)
+            exception = e
+
     elif teardown:
-        if click.confirm('Would you like to execute pre-delete hooks?', default=False):
-            manager.teardown(hooks=True)
-        else:
-            manager.teardown(hooks=False)
+        try:
+            if click.confirm('Would you like to execute pre-delete hooks?', default=False):
+                manager.teardown(hooks=True)
+            else:
+                manager.teardown(hooks=False)
+        except Exception as e:
+            Printer.print_error('Polyaxon could not teardown the deployment.', add_sign=True)
+            exception = e
     else:
-        manager.install()
+        try:
+            manager.install()
+        except Exception as e:
+            Printer.print_error('Polyaxon could not be installed.', add_sign=True)
+            exception = e
+
+    if exception:
+        Printer.print_error('Error message `{}`.'.format(e))
