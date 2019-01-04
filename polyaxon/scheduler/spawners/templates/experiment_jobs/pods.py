@@ -141,7 +141,7 @@ class PodManager(object):
         env_vars = to_list(env_vars, check_none=True)
         logs_path = stores.get_experiment_logs_path(
             experiment_name=self.experiment_name,
-            temp=False),
+            temp=False)
         outputs_path = stores.get_experiment_outputs_path(
             persistence=persistence_outputs,
             experiment_name=self.experiment_name,
