@@ -1,4 +1,5 @@
 -r ../requirements-base.txt
 
+polystores==0.0.2
 scikit-learn==0.20.0
 scipy==1.1.0
