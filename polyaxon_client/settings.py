@@ -13,9 +13,9 @@ TMP_AUTH_GCS_ACCESS_PATH = '/tmp/.polyaxon/.gcsaccess.json'
 CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
 
 config = rhea.Rhea.read_configs([
+    rhea.ConfigSpec(CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False),
     os.environ,
-    rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False),
-    rhea.ConfigSpec(CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False)
+    rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False)
 ])
 
 IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',
