@@ -41,6 +41,7 @@
   "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES": "queues.k8s_events.jobStatuses",
   "POLYAXON_QUEUES_LOGS_HEALTH": "queues.logs.health",
   "POLYAXON_QUEUES_LOGS_SIDECARS": "queues.logs.sidecars",
+  "POLYAXON_QUEUES_LOGS_HANDLERS": "queues.logs.handlers",
   "POLYAXON_QUEUES_STREAM_LOGS_SIDECARS": "queues.stream.logs.sidecars",
   "POLYAXON_ROLE_LABELS_WORKER": "polyaxon-workers",
   "POLYAXON_ROLE_LABELS_DASHBOARD": "polyaxon-dashboard",

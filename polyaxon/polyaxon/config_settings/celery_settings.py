@@ -364,6 +364,7 @@ class CeleryQueues(object):
 
     LOGS_HEALTH = config.get_string('POLYAXON_QUEUES_LOGS_HEALTH')
     LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS')
+    LOGS_HANDLERS = config.get_string('POLYAXON_QUEUES_LOGS_HANDLERS')
     STREAM_LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_STREAM_LOGS_SIDECARS')
 
 
@@ -637,11 +638,11 @@ CELERY_TASK_ROUTES = {
 
     # Logs ops
     LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB:
-        {'queue': CeleryQueues.LOGS_SIDECARS},
+        {'queue': CeleryQueues.LOGS_HANDLERS},
     LogsCeleryTasks.LOGS_HANDLE_JOB:
-        {'queue': CeleryQueues.LOGS_SIDECARS},
+        {'queue': CeleryQueues.LOGS_HANDLERS},
     LogsCeleryTasks.LOGS_HANDLE_BUILD_JOB:
-        {'queue': CeleryQueues.LOGS_SIDECARS},
+        {'queue': CeleryQueues.LOGS_HANDLERS},
 }
 
 CELERY_BEAT_SCHEDULE = {
