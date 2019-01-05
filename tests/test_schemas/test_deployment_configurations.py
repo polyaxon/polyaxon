@@ -909,9 +909,9 @@ class TestDeploymentConfig(TestCase):
         assert len(config.persistence.outputs) == 3
 
     def test_read_deploy_config_wrong_values1(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(SystemExit):
             read_deployment_config('tests/fixtures/wrong_values2.yml')
 
     def test_read_deploy_config_wrong_values2(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(SystemExit):
             read_deployment_config('tests/fixtures/wrong_values2.yml')

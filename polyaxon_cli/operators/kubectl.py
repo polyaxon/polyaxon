@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
+from hestia.user_path import polyaxon_user_path
+
 from polyaxon_cli.operators.cmd_operator import CmdOperator
-from polyaxon_cli.utils.user_path import polyaxon_user_path
 
 
 class KubectlOperator(CmdOperator):

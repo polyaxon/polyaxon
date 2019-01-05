@@ -4,8 +4,9 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
+from hestia.user_path import polyaxon_user_path
+
 from polyaxon_cli.logger import logger
-from polyaxon_cli.utils.user_path import polyaxon_user_path
 
 
 class BaseConfigManager(object):
