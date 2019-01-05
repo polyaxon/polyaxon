@@ -39,7 +39,7 @@ export default class Logs extends React.Component<Props, State> {
   };
 
   public render() {
-    const lineRegex = /(\d{2}(?:\d{2})?-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\s\w+\s(?:\w+\.\d\s)?--\s)/;
+    const lineRegex = /(\d{2}(?:\d{2})?-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\s\w+\s(?:\w+\s)?(?:\w+\.\d\s)?--\s)/;
     const formatLogs = (line: string) => {
       const values = line.split(lineRegex);
       if (values.length === 3) {
