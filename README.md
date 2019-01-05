@@ -6,7 +6,7 @@ This repository contains tools to validate and deploy Polyaxon to one of the sup
  * [Kubernetes deployment]()
  
  The goal of this project is to streamline the deployment of Polyaxon to any container management platform, including: 
- [Kubernetes](https://kubernetes.io), [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/), [Docker Swarm](https://docs.docker.com/engine/swarm/), [Fargate](https://aws.amazon.com/fargate/), (Netflix's [Titus](https://netflix.github.io/titus/), Apache's [Mesos](http://mesos.apache.org/documentation/latest/docker-containerizer/), etc.
+ [Kubernetes](https://kubernetes.io), [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/), [Docker Swarm](https://docs.docker.com/engine/swarm/), [Fargate](https://aws.amazon.com/fargate/), Netflix's [Titus]https://netflix.github.io/titus/), Apache's [Mesos](http://mesos.apache.org/documentation/latest/docker-containerizer/), [Nomad](https://www.nomadproject.io), [Heroku](http://heroku.com/) etc.
  
  ## This work is still in Private Beta phase
 
