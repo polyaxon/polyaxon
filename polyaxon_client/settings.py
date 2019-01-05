@@ -6,13 +6,16 @@ import os
 import rhea
 
 from hestia.auth import AuthenticationTypes
+from hestia.user_path import polyaxon_user_path
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
 TMP_AUTH_GCS_ACCESS_PATH = '/tmp/.polyaxon/.gcsaccess.json'
+CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
 
 config = rhea.Rhea.read_configs([
     os.environ,
-    rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False)
+    rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False)
 ])
 
 IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',
@@ -32,7 +35,7 @@ API_HTTP_HOST = config.get_string('POLYAXON_API_HTTP_HOST',
 API_WS_HOST = config.get_string('POLYAXON_API_WS_HOST',
                                 is_optional=True)
 SECRET_USER_TOKEN_KEY = 'POLYAXON_SECRET_USER_TOKEN'  # noqa
-SECRET_USER_TOKEN = config.get_string('POLYAXON_SECRET_USER_TOKEN',
+SECRET_USER_TOKEN = config.get_string(SECRET_USER_TOKEN_KEY,
                                       is_optional=True)
 SECRET_EPHEMERAL_TOKEN_KEY = 'POLYAXON_SECRET_EPHEMERAL_TOKEN'  # noqa
 SECRET_EPHEMERAL_TOKEN = config.get_string(SECRET_EPHEMERAL_TOKEN_KEY,
