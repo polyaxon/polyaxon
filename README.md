@@ -14,7 +14,7 @@ This project is not yet heavily tested, and there may be major bugs or regressio
 
 ## Deploying
 
-Starting from polyaxon v0.4.0, the recommended method of install and managing a stable Polyaxon deployment will be through our [CLI](https://github.com/polyaxon/polyaxon-cli)
+Starting from polyaxon v0.4.0, the recommended method of installing and managing a stable Polyaxon deployment will be through our [CLI](https://github.com/polyaxon/polyaxon-cli)
 
 
 ### Checking a deployment file, requirements, and dependencies:
