@@ -42,7 +42,6 @@ def project_post_deleted(sender, **kwargs):
     remove_bookmarks(object_id=instance.id, content_type='project')
 
 
-
 @receiver(post_delete, sender=Repo, dispatch_uid="repo_deleted")
 def repo_deleted(sender, **kwargs):
     if kwargs.get('raw'):
