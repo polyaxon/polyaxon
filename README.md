@@ -1,4 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-0.3.5-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
+![Release](https://img.shields.io/badge/release-0.3.5-brightgreen.svg?longCache=true)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
 
 
@@ -6,15 +8,118 @@
 
 Code for polyaxon tutorials and examples.
 
-The code in this repo is used for training models on Polyaxon deployed on [Microsoft Azure Container Service](https://azure.microsoft.com/en-us/services/container-service/).
+This repository contains examples of using Polyaxon with all major Machine Learning and Deep Learning libraries, 
+including fastai, torch, sklearn, chainer, caffe, keras, tensorflow, mxnet, and Jupyter notebooks.
 
-The code in this repo is based on tensorflow/models, and trains and evaluate a CIFAR-10 ResNet model.
+If you don't see something you need, Don't hesitate to contact us.
 
-This repo also contains polyaxonfiles for training: single experiments, distributed experiments, and experiments with GPU.
+## Examples Structure
 
-The tutorial provides a step by step guide to:
+This repository contains examples for running experiments in-cluster, i.e. scheduled and managed by a Polyaxon Deployment, 
+as well as experiment running on different platforms and tracked by Polyaxon, i.e. experiments running on laptops, spark, other platforms.
 
- * [create a Kubernetes cluster on Azure](https://docs.polyaxon.com/tutorials/kubernetes_on_azure)
- * [create volumes for data and outputs on Azure](https://docs.polyaxon.com/tutorials/persistent_volumes)
- * [train experiments with Polyaxon](https://docs.polyaxon.com/tutorials/training_experiments_on_polyaxon)
+The examples have a comment `# polyaxon code` to show what is added to a raw code to enable the lightweight Polyaxon integration.
 
+### Getting Started
+
+If you are new to Polyaxon we recommend reading our getting started guide which explains some of the core Platform capabilities.
+
+### Setup & Installation
+
+Please follow check our [documentation](https://docs.polyaxon.com) to learn about how to deploy Polyaxon.
+
+All examples (in-cluster and on other examples) require our client to track and add instrumentation for the experiments.
+ 
+### in-cluster Examples
+
+In order to run these examples, you need to deploy a Polyaxon with a scheduling component enabled.
+
+Examples:
+
+ * Tensorflow
+ 
+    * mnist
+    * cifar10
+   
+ * sklearn
+ 
+    * newsgroup
+    * random forest
+    * sdg classifier
+   
+ * Pytorch
+ 
+    * mnist
+    * cifar10 with pytorch-ignite
+    * save-resume-restart
+ 
+ * mxnet
+ 
+    * cifar10
+ 
+ * keras
+ 
+    * save-resume-restart
+     
+
+### Tracking Examples
+
+These examples should run with all type of Polyaxon deployments.
+
+To run the tracking examples, you need to configure a client to communicate with Polyaxon API, 
+there many ways to configure the client, in this example we use an environment approach to have minimal impact on the code, 
+in other terms, this approach allow us to create an experiment with the minimum code required:
+
+```python
+from polyaxon_client.tracking import Experiment
+
+...
+experiment = Experiment(project='project-name')
+experiment.create()
+...
+# Tracking here, e.g.
+
+experiment.log_params(loss=args.loss, penalty=args.penalty, l1_ratio=args.l1_ratio, max_iter=args.max_iter, tol=args.tol)
+...
+experiment.log_data_ref(data=X, data_name='dataset_X')
+...
+experiment.log_metrics(loss=0.1, accuracy=0.9)
+```
+
+If you wish to explicitly set the configuration for your experiment, you need to provide a configured client:
+
+```python
+client = PolyaxonClient(host='123.123.123.123', token='my-token-hash')  # See other params, i.e. http_port, ws_port, ...
+experiment = Experiment(project='project-name', client=client)
+
+# Rest is the same
+``` 
+
+To learn more how to configure Polyaxon Client & Polyaxon Tracking, please check our [documentation](https://docs.polyaxon.com)
+
+Examples:
+
+ * Tensorflow
+ 
+    * mnist
+    * cifar10
+   
+ * sklearn
+ 
+    * newsgroup
+    * random forest
+    * sdg classifier
+   
+ * Pytorch
+ 
+    * mnist
+    * cifar10 with pytorch-ignite
+    * save-resume-restart
+ 
+ * mxnet
+ 
+    * cifar10
+ 
+ * keras
+ 
+    * save-resume-restart

@@ -1,0 +1,19 @@
+---
+version: 1
+
+kind: experiment
+
+declarations:
+  n_estimators: 3
+  max_features: 3
+  min_samples_leaf: 80
+
+build:
+  image: python:2.7
+  build_steps:
+    - pip install --no-cache-dir -r requirements.txt
+
+run:
+  cmd: python model.py --n_estimators={{ n_estimators }} \
+                       --max_features={{ max_features }} \
+                       --min_samples_leaf={{ min_samples_leaf }}
