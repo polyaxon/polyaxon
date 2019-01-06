@@ -15,50 +15,41 @@ If you don't see something you need, Don't hesitate to contact us.
 
 ## Examples Structure
 
-This repository contains examples for running experiments in-cluster, i.e. scheduled and managed by a Polyaxon Deployment, 
+This repository has 2 main directories containing examples for running experiments in-cluster, i.e. scheduled and managed by a Polyaxon Deployment, 
 as well as experiment running on different platforms and tracked by Polyaxon, i.e. experiments running on laptops, spark, other platforms.
 
-The examples have a comment `# polyaxon code` to show what is added to a raw code to enable the lightweight Polyaxon integration.
+The examples have a comment `# Polyaxon` to show what is added to a raw code to enable the lightweight Polyaxon integration.
 
 ### Getting Started
 
-If you are new to Polyaxon we recommend reading our getting started guide which explains some of the core Platform capabilities.
+If you are new to Polyaxon we recommend reading our [quick-start](https://docs.polyaxon.com/quick_start/) guide which explains some of the core Platform capabilities.
 
 ### Setup & Installation
 
-Please follow check our [documentation](https://docs.polyaxon.com) to learn about how to deploy Polyaxon.
+Please check our [documentation](https://docs.polyaxon.com) to learn about how to deploy Polyaxon.
 
-All examples (in-cluster and on other examples) require our client to track and add instrumentation for the experiments.
+All examples (in-cluster and on other examples running on other platforms) require our [client](https://github.com/polyaxon/polyaxon-client) to track and add instrumentation to the experiments.
  
 ### in-cluster Examples
 
 In order to run these examples, you need to deploy a Polyaxon with a scheduling component enabled.
 
-Examples:
+**Examples**:
 
  * Tensorflow
- 
     * mnist
     * cifar10
-   
  * sklearn
- 
     * newsgroup
     * random forest
     * sdg classifier
-   
  * Pytorch
- 
     * mnist
     * cifar10 with pytorch-ignite
     * save-resume-restart
- 
  * mxnet
- 
     * cifar10
- 
  * keras
- 
     * save-resume-restart
      
 
@@ -92,34 +83,26 @@ If you wish to explicitly set the configuration for your experiment, you need to
 client = PolyaxonClient(host='123.123.123.123', token='my-token-hash')  # See other params, i.e. http_port, ws_port, ...
 experiment = Experiment(project='project-name', client=client)
 
-# Rest is the same
+# The rest is the same
+...
 ``` 
 
-To learn more how to configure Polyaxon Client & Polyaxon Tracking, please check our [documentation](https://docs.polyaxon.com)
+To learn more how to configure Polyaxon Client & Polyaxon Tracking, please see our [documentation](https://docs.polyaxon.com)
 
-Examples:
+**Examples**:
 
  * Tensorflow
- 
     * mnist
     * cifar10
-   
  * sklearn
- 
     * newsgroup
     * random forest
     * sdg classifier
-   
  * Pytorch
- 
     * mnist
     * cifar10 with pytorch-ignite
     * save-resume-restart
- 
  * mxnet
- 
     * cifar10
- 
  * keras
- 
     * save-resume-restart
