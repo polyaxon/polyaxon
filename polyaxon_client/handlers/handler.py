@@ -10,7 +10,8 @@ class PolyaxonHandler(logging.Handler):
 
     def __init__(self, send_logs, **kwargs):
         self._send_logs = send_logs
-        logging.Handler.__init__(self, level=kwargs.get('level', logging.NOTSET))
+        logging.Handler.__init__(self,
+                                 level=kwargs.get('level', settings.LOGS_LEVEL or logging.NOTSET))
 
     def can_record(self, record):
         return not (

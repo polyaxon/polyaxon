@@ -88,3 +88,5 @@ HEALTH_CHECK_INTERVAL = config.get_int('HEALTH_CHECK_INTERVAL',
 QUEUE_CALL = config.get_int('POLYAXON_INTERVAL',
                             is_optional=True,
                             default=200)
+LOGS_LEVEL = config.get_int('POLYAXON_LOGS_LEVEL',
+                            is_optional=True)
