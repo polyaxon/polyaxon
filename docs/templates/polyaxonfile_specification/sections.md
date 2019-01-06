@@ -187,7 +187,7 @@ matrix:
     uniform: 0.01:0.8
 
   loss:
-    pvalues: [(MeanSquaredError, 0,2), (AbsoluteDifference, 0.8)]
+    pvalues: [[MeanSquaredError, 0,2], [AbsoluteDifference, 0.8]]
 ```
 
 These values can be accessed in the following way:

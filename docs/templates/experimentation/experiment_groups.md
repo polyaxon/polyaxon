@@ -71,7 +71,7 @@ So what we did is that we declared a constant value for `batch_size`, and a valu
 There are other options that we could have used such as
 
  * `values`: [value1, value2, value3, ...]
- * `pvalues`: [(value1, prob1), (value2, prob12), (value3, prob3), ...]
+ * `pvalues`: [[alue1, prob1], [value2, prob12], [value3, prob3], ...]
  * `range`: [start, stop, step]
  * `logspace`: [start, stop, step]
  * `linspace`: [start, stop, num]
