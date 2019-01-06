@@ -30,7 +30,7 @@ def transform_data(x_train, y_train, x_test, y_test):
     return x_train, y_train, x_test, y_test
 
 
-def model(conv1_size, conv2_size, dropout, hidden1_size, optimizer, log_learning_rate, epochs):
+def train(conv1_size, conv2_size, dropout, hidden1_size, optimizer, log_learning_rate, epochs):
     model = Sequential()
     model.add(Conv2D(filters=conv1_size,
                      kernel_size=(3, 3),
@@ -113,7 +113,7 @@ if __name__ == '__main__':
     experiment.log_data_ref(data=y_test, data_name='y_test')
 
     x_train, y_train, x_test, y_test = transform_data(x_train, y_train, x_test, y_test)
-    accuracy = model(conv1_size=args.conv1_size,
+    accuracy = train(conv1_size=args.conv1_size,
                      conv2_size=args.conv2_size,
                      dropout=args.dropout,
                      hidden1_size=args.hidden1_size,
