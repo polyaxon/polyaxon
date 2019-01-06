@@ -1,4 +1,4 @@
-from ocular.constants import container_statuses, pod_statuses, pod_conditions, pod_lifecycle
+from ocular.constants import container_statuses, pod_conditions, pod_lifecycle, pod_statuses
 
 
 def get_container_statuses_by_name(statuses):
