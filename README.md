@@ -49,7 +49,11 @@ In order to run these examples, you need to deploy a Polyaxon with a scheduling 
     * save-resume-restart
  * mxnet
     * cifar10
+    * mnist
  * keras
+    * cnn_lstm
+    * bidirectional_lstm
+    * mnist
     * save-resume-restart
      
 
@@ -103,6 +107,8 @@ To learn more how to configure Polyaxon Client & Polyaxon Tracking, please see o
     * cifar10 with pytorch-ignite
     * save-resume-restart
  * mxnet
-    * cifar10
+    * mnist
  * keras
-    * save-resume-restart
+    * cnn_lstm
+    * bidirectional_lstm
+    * mnist
