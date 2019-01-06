@@ -61,7 +61,8 @@ def run(k8s_manager):
                                                         settings.CONTAINER_NAME_JOB,
                                                         settings.CONTAINER_NAME_DOCKERIZER_JOB),
                                                     label_selector=get_label_selector(),
-                                                    return_event=True):
+                                                    return_event=True,
+                                                    watch_ttl=settings.TTL_WATCH_STATUSES):
         logger.debug('-------------------------------------------\n%s\n', pod_state)
         if not pod_state:
             continue
