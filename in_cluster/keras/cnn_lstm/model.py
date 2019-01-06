@@ -137,18 +137,6 @@ if __name__ == '__main__':
     # Polyaxon
     experiment = Experiment()
     experiment.log_tags(['keras'])
-    experiment.log_params(max_features=args.max_features,
-                          skip_top=args.skip_top,
-                          maxlen=args.maxlen,
-                          epochs=args.epochs,
-                          embedding_size=args.embedding_size,
-                          pool_size=args.pool_size,
-                          kernel_size=args.kernel_size,
-                          filters=args.filters,
-                          lstm_output_size=args.lstm_output_size,
-                          batch_size=args.batch_size,
-                          optimizer=args.optimizer,
-                          log_learning_rate=args.log_learning_rate)
 
     logger.info('Loading data...')
     (x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=args.max_features,
