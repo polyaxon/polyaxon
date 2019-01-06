@@ -18,6 +18,8 @@ def _monitor(k8s_api, namespace, container_names, label_selector, watch_ttl):
     params = {}
     if LAST_SEEN['resource_version']:
         params['resource_version'] = LAST_SEEN['resource_version']
+    if watch_ttl:
+        params['timeout_seconds'] = watch_ttl
     for event in w.stream(k8s_api.list_namespaced_pod,
                           namespace=namespace,
                           label_selector=label_selector,
