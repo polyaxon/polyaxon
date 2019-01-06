@@ -22,8 +22,7 @@ def model(X, y, loss, penalty, l1_ratio, max_iter, tol):
         max_iter=max_iter,
         tol=tol,
     )
-    accuracies = cross_val_score(classifier, X, y, cv=5)
-    return accuracies
+    return cross_val_score(classifier, X, y, cv=5)
 
 
 if __name__ == "__main__":
@@ -78,5 +77,4 @@ if __name__ == "__main__":
     print('Accuracy: {} +/- {}'.format(accuracy_mean, accuracy_std))
 
     # Polyaxon
-    experiment.log_metrics(accuracy_mean=accuracy_mean,
-                           accuracy_std=accuracy_std)
+    experiment.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)

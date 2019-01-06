@@ -20,8 +20,7 @@ def model(X, y, n_estimators, max_features, min_samples_leaf):
         max_features=max_features,
         min_samples_leaf=min_samples_leaf,
     )
-    accuracies = cross_val_score(classifier, X, y, cv=5)
-    return accuracies
+    return cross_val_score(classifier, X, y, cv=5)
 
 
 if __name__ == "__main__":
@@ -64,5 +63,4 @@ if __name__ == "__main__":
     print('Accuracy: {} +/- {}'.format(accuracy_mean, accuracy_std))
 
     # Polyaxon
-    experiment.log_metrics(accuracy_mean=accuracy_mean,
-                           accuracy_std=accuracy_std)
+    experiment.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)

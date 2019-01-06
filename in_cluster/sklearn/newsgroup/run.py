@@ -45,6 +45,4 @@ if __name__ == '__main__':
     # Logging metrics
     print("Testing metrics: {}", metrics)
     # Polyaxon
-    experiment.log_metrics(recall=metrics['recall'],
-                           accuracy=metrics['accuracy'],
-                           f1=metrics['f1'])
+    experiment.log_metrics(**metrics)
