@@ -55,7 +55,8 @@ In order to run these examples, you need to deploy a Polyaxon with a scheduling 
     * bidirectional_lstm
     * mnist
     * save-resume-restart
-     
+ * xgboost
+    * iris
 
 ### Tracking Examples
 
@@ -112,3 +113,5 @@ To learn more how to configure Polyaxon Client & Polyaxon Tracking, please see o
     * cnn_lstm
     * bidirectional_lstm
     * mnist
+ * xgboost
+    * iris

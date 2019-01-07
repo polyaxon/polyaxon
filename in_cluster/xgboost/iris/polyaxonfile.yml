@@ -1,0 +1,21 @@
+---
+version: 1
+
+kind: experiment
+
+declarations:
+  log_learning_rate: -3
+  max_depth: 3
+  num_rounds: 10
+  min_child_weight: 5
+
+build:
+  image: python:2.7
+  build_steps:
+    - pip install --no-cache-dir -r requirements.txt
+
+run:
+  cmd: python model.py --log_learning_rate={{ log_learning_rate }} \
+                       --max_depth={{ max_depth }} \
+                       --num_rounds={{ num_rounds }} \
+                       --min_child_weight={{ min_child_weight }}
