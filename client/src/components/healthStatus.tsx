@@ -21,7 +21,6 @@ export default class HealthStatus extends React.Component<Props, {}> {
       'Crons',
       'Events',
       'K8SEvents',
-      'Logs',
       'HPSearch',
       'Streams',
       'Postgres',
@@ -33,7 +32,6 @@ export default class HealthStatus extends React.Component<Props, {}> {
       Crons: null,
       Events: null,
       K8SEvents: null,
-      Logs: null,
       HPSearch: null,
       Streams: null,
       Postgres: null,
@@ -45,7 +43,6 @@ export default class HealthStatus extends React.Component<Props, {}> {
       status.Crons = this.props.healthStatus.CRONS.is_healthy;
       status.Events = this.props.healthStatus.EVENTS.is_healthy;
       status.K8SEvents = this.props.healthStatus.K8SEVENTS.is_healthy;
-      status.Logs = this.props.healthStatus.LOGS.is_healthy;
       status.HPSearch = this.props.healthStatus.HPSEARCH.is_healthy;
       status.Streams = this.props.healthStatus.STREAMS.is_healthy;
       status.Postgres = this.props.healthStatus.POSTGRES.is_healthy;
