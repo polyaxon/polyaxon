@@ -624,9 +624,10 @@ privateRegistries:
 #  - 159.203.150.212
 
 ttl:
-  token:
-  ephemeralToken:
-  heartbeat:
+  token:  # in days
+  ephemeralToken:  # in seconds
+  heartbeat:  # in seconds
+  watchStatuses:  # in seconds
 
 intervals:  # in seconds
   experimentsScheduler: 15
@@ -649,6 +650,7 @@ queues:
   schedulerProjects: 'queues.scheduler.projects'
   schedulerBuildJobs: 'queues.scheduler.build_jobs'
   schedulerJobs: 'queues.scheduler.jobs'
+  schedulerStores: 'queues.scheduler.stores'
 
   pipelinesHealth: 'queues.pipelines.health'
   pipelines: 'queues.pipelines'
@@ -674,5 +676,6 @@ queues:
   k8sEventsJobStatuses: 'queues.k8s_events.jobStatuses'
 
   logsHealth: 'queues.logs.health'
+  logsHandler: 'queues.logs.handler'
   logsSidecars: 'queues.logs.sidecars'
   streamLogsSidecars: 'queues.stream.logs.sidecars'

@@ -54,6 +54,9 @@ data:
   {{- if .Values.ttl.ephemeralToken }}
   POLYAXON_TTL_EPHEMERAL_TOKEN: {{ .Values.ttl.ephemeralToken | quote }}
   {{- end }}
+  {{- if .Values.ttl.watchStatuses }}
+  POLYAXON_TTL_WATCH_STATUSES: {{ .Values.ttl.watchStatuses | quote }}
+  {{- end }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
   # Run Env
   {{- if ge (int (include "k8s.minor" .)) 8 }}
@@ -108,6 +111,7 @@ data:
   POLYAXON_QUEUES_SCHEDULER_PROJECTS: {{ .Values.queues.schedulerProjects | quote }}
   POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS: {{ .Values.queues.schedulerBuildJobs | quote }}
   POLYAXON_QUEUES_SCHEDULER_JOBS: {{ .Values.queues.schedulerJobs | quote }}
+  POLYAXON_QUEUES_SCHEDULER_STORES: {{ .Values.queues.schedulerStores | quote }}
   POLYAXON_QUEUES_PIPELINES_HEALTH: {{ .Values.queues.pipelinesHealth | quote }}
   POLYAXON_QUEUES_PIPELINES: {{ .Values.queues.pipelines | quote }}
   POLYAXON_QUEUES_CRONS_HEALTH: {{ .Values.queues.cronsHealth | quote }}
@@ -128,6 +132,7 @@ data:
   POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES: {{ .Values.queues.k8sEventsJobStatuses | quote }}
   POLYAXON_QUEUES_LOGS_HEALTH: {{ .Values.queues.logsHealth | quote }}
   POLYAXON_QUEUES_LOGS_SIDECARS: {{ .Values.queues.logsSidecars | quote }}
+  POLYAXON_QUEUES_LOGS_HANDLERS: {{ .Values.queues.logsHandler | quote }}
   POLYAXON_QUEUES_STREAM_LOGS_SIDECARS: {{ .Values.queues.streamLogsSidecars | quote }}
   POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER: {{ .Values.intervals.experimentsScheduler | quote }}
   POLYAXON_INTERVALS_EXPERIMENTS_SYNC: {{ .Values.intervals.experimentsSync | quote }}
