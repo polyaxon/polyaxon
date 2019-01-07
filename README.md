@@ -34,30 +34,6 @@ All examples (in-cluster and on other examples running on other platforms) requi
 
 In order to run these examples, you need to deploy a Polyaxon with a scheduling component enabled.
 
-**Examples**:
-
- * Tensorflow
-    * mnist
-    * cifar10
- * sklearn
-    * newsgroup
-    * random forest
-    * sdg classifier
- * Pytorch
-    * mnist
-    * cifar10 with pytorch-ignite
-    * save-resume-restart
- * mxnet
-    * cifar10
-    * mnist
- * keras
-    * cnn_lstm
-    * bidirectional_lstm
-    * mnist
-    * save-resume-restart
- * xgboost
-    * iris
-
 ### Tracking Examples
 
 These examples should run with all type of Polyaxon deployments.
@@ -93,25 +69,3 @@ experiment = Experiment(project='project-name', client=client)
 ``` 
 
 To learn more how to configure Polyaxon Client & Polyaxon Tracking, please see our [documentation](https://docs.polyaxon.com)
-
-**Examples**:
-
- * Tensorflow
-    * mnist
-    * cifar10
- * sklearn
-    * newsgroup
-    * random forest
-    * sdg classifier
- * Pytorch
-    * mnist
-    * cifar10 with pytorch-ignite
-    * save-resume-restart
- * mxnet
-    * mnist
- * keras
-    * cnn_lstm
-    * bidirectional_lstm
-    * mnist
- * xgboost
-    * iris
