@@ -1,4 +1,4 @@
-from logs_handlers.handlers import handle_experiment_job_log, handle_job_logs, handle_build_job_logs
+from logs_handlers.handlers import handle_build_job_logs, handle_experiment_job_log, handle_job_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks
 
