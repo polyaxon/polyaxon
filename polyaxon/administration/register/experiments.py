@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from db.admin.abstract_job import JobStatusAdmin
-from db.admin.utils import DiffModelAdmin
+from administration.register.abstract_job import JobStatusAdmin
+from administration.register.utils import DiffModelAdmin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 
@@ -27,8 +27,9 @@ class ExperimentJobStatusAdmin(JobStatusAdmin):
     pass
 
 
-admin.site.register(Experiment, ExperimentAdmin)
-admin.site.register(ExperimentStatus, ExperimentStatusAdmin)
-admin.site.register(ExperimentMetric, ExperimentMetricAdmin)
-admin.site.register(ExperimentJob, ExperimentJobAdmin)
-admin.site.register(ExperimentJobStatus, ExperimentJobStatusAdmin)
+def register(admin_register):
+    admin_register(Experiment, ExperimentAdmin)
+    admin_register(ExperimentStatus, ExperimentStatusAdmin)
+    admin_register(ExperimentMetric, ExperimentMetricAdmin)
+    admin_register(ExperimentJob, ExperimentJobAdmin)
+    admin_register(ExperimentJobStatus, ExperimentJobStatusAdmin)

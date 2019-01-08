@@ -213,6 +213,12 @@ class ConfigManager(rhea.Rhea):
         access.validate()
         access.setup()
 
+    def setup_admin_service(self):
+        import administration
+
+        administration.validate()
+        administration.setup()
+
     def setup_stats_service(self):
         import stats
 

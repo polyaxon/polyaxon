@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from db.admin.utils import DiffModelAdmin
+from administration.register.utils import DiffModelAdmin
 from db.models.pipelines import (
     Operation,
     OperationRun,
@@ -40,10 +40,11 @@ class OperationRunAdmin(DiffModelAdmin):
     pass
 
 
-admin.site.register(Schedule, ScheduleAdmin)
-admin.site.register(Pipeline, PipelineAdmin)
-admin.site.register(Operation, OperationAdmin)
-admin.site.register(PipelineRunStatus, PipelineRunStatusAdmin)
-admin.site.register(OperationRunStatus, OperationRunStatusAdmin)
-admin.site.register(PipelineRun, PipelineRunAdmin)
-admin.site.register(OperationRun, OperationRunAdmin)
+def register(admin_register):
+    admin_register(Schedule, ScheduleAdmin)
+    admin_register(Pipeline, PipelineAdmin)
+    admin_register(Operation, OperationAdmin)
+    admin_register(PipelineRunStatus, PipelineRunStatusAdmin)
+    admin_register(OperationRunStatus, OperationRunStatusAdmin)
+    admin_register(PipelineRun, PipelineRunAdmin)
+    admin_register(OperationRun, OperationRunAdmin)

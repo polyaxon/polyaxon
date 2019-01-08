@@ -7,5 +7,6 @@ class RepoAdmin(admin.ModelAdmin):
     readonly_fields = ('project', 'path',)
 
 
-admin.site.register(Repo, RepoAdmin)
-admin.site.register(CodeReference)
+def register(admin_register):
+    admin_register(Repo, RepoAdmin)
+    admin_register(CodeReference)

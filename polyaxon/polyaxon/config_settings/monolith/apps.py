@@ -2,6 +2,7 @@ from ..auditor_apps import AUDITOR_APPS
 from ..debug import *
 
 PROJECT_APPS = AUDITOR_APPS + (
+    'administration.apps.AdministrationConfig',
     'ownership.apps.OwnershipConfig',
     'access.apps.AccessConfig',
     'stores.apps.StoresConfig',
