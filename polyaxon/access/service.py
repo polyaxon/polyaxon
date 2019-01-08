@@ -8,7 +8,7 @@ from scopes.manager import ScopeMappingManager
 
 
 class AccessService(Service):
-    __all__ = ('setup', 'get_scope_mapping_for', 'has_object_permission',)
+    __all__ = ('get_scope_mapping_for', 'has_object_permission',)
 
     ENTITY_MAPPING = {
         Resources.ADMIN: admin.has_object_permission,

@@ -2,7 +2,6 @@ from hestia.service_interface import Service
 
 
 class AdminService(Service):
-    __all__ = ('setup',)
 
     def __init__(self, models=None):
         self._models = models

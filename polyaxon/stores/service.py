@@ -22,8 +22,6 @@ from stores.validators import validate_persistence_data, validate_persistence_ou
 
 class StoresService(Service):
     __all__ = (
-        'setup',
-        'validate',
         'get_data_paths',
         'get_data_path',
         'delete_data_path',

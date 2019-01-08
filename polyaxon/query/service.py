@@ -10,7 +10,7 @@ from query.parser import parse_field
 
 
 class QueryService(Service):
-    __all__ = ('setup', 'filter_queryset', 'parse_field')
+    __all__ = ('filter_queryset', 'parse_field',)
 
     MANAGER_MAPPING = {
         ExperimentQueryManager.NAME: ExperimentQueryManager,

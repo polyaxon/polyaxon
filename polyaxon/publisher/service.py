@@ -11,10 +11,11 @@ from polyaxon.settings import LogsCeleryTasks, RoutingKeys
 
 
 class PublisherService(Service):
-    __all__ = ('publish_experiment_job_log',
-               'publish_build_job_log',
-               'publish_job_log',
-               'setup')
+    __all__ = (
+        'publish_experiment_job_log',
+        'publish_build_job_log',
+        'publish_job_log',
+    )
 
     def __init__(self):
         self._logger = None

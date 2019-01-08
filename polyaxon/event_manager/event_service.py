@@ -2,7 +2,7 @@ from hestia.service_interface import Service
 
 
 class EventService(Service):
-    __all__ = ('record', 'setup')
+    __all__ = ('record',)
 
     event_manager = None
 

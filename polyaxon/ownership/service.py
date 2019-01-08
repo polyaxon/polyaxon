@@ -7,12 +7,13 @@ from ownership import OwnershipError
 
 
 class OwnershipService(Service):
-    __all__ = ('setup',
-               'set_owner',
-               'set_default_owner',
-               'create_owner',
-               'delete_owner',
-               'validate_owner_name')
+    __all__ = (
+        'set_owner',
+        'set_default_owner',
+        'create_owner',
+        'delete_owner',
+        'validate_owner_name',
+    )
 
     def __init__(self):
         self.content_type_manager = None
