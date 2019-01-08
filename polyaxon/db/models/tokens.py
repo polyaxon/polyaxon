@@ -45,8 +45,7 @@ class Token(DiffModel):
         return scope in self.scopes  # pylint:disable=unsupported-membership-test
 
     def refresh(self, started_at=None):
-        self.update(
-            key=generate_token(),
-            refresh_key=generate_token(),
-            started_at=started_at or timezone.now(),
-        )
+        self.key = generate_token()
+        self.refresh_key = generate_token()
+        self.started_at = started_at or timezone.now()
+        self.save(update_fields=['key', 'refresh_key', 'started_at'])
