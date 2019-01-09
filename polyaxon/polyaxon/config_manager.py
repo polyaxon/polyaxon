@@ -51,6 +51,10 @@ class ConfigManager(rhea.Rhea):
         self._cluster_id = self.get_string('POLYAXON_CLUSTER_ID',
                                            is_optional=True,
                                            default=uuid.uuid4())
+        self._log_level = self.get_string('POLYAXON_LOG_LEVEL',
+                                          is_local=True,
+                                          is_optional=True,
+                                          default='INFO')
         self._chart_version = self.get_string('POLYAXON_CHART_VERSION',
                                               is_optional=True,
                                               default='0.0.0')
@@ -172,6 +176,10 @@ class ConfigManager(rhea.Rhea):
         if self.env == 'production':
             return True
         return False
+
+    @property
+    def log_level(self):
+        return config._log_level if config.is_staging_env else 'WARNING'
 
     def setup_auditor_services(self):
         if not self.is_testing_env:
