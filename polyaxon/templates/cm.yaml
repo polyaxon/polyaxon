@@ -35,6 +35,9 @@ data:
   {{- if .Values.k8s.ssl_ca_cert }}
   POLYAXON_K8S_SSL_CA_CERT: {{ .Values.k8s.ssl_ca_cert | quote }}
   {{- end }}
+  {{- if .Values.logLevel }}
+  POLYAXON_LOG_LEVEL: {{ .Values.logLevel | quote }}
+  {{- end }}
   {{- if .Values.postgresql.install }}
   POLYAXON_K8S_DB_SECRET_NAME: {{ template "postgresql.fullname" . }}
   {{- else }}
