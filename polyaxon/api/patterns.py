@@ -1,9 +1,10 @@
-from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import include, re_path
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic import RedirectView
+
+import conf
 
 from api.index.errors import Handler50xView, Handler403View, Handler404View  # noqa
 from api.index.health import HealthView
@@ -57,7 +58,7 @@ urlpatterns = [
         ('api.oauth.urls', 'oauth'), namespace='oauth')),
     re_path(r'^_admin/logout/$', LogoutView.as_view(), name='logout'),
     re_path(r'^_admin/login/$',
-            RedirectView.as_view(url=settings.LOGIN_URL, permanent=True, query_string=True),
+            RedirectView.as_view(url=conf.get('LOGIN_URL'), permanent=True, query_string=True),
             name='login'),
 
     re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
@@ -74,7 +75,7 @@ handler404 = Handler404View.as_view()
 handler403 = Handler403View.as_view()
 handler500 = Handler50xView.as_view()
 
-if settings.ADMIN_VIEW_ENABLED:
+if conf.get('ADMIN_VIEW_ENABLED'):
     urlpatterns += [re_path(r'^_admin/', admin.site.urls)]
 
 if config.is_debug_mode and config.is_monolith_service:

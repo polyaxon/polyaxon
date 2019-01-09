@@ -1,7 +1,7 @@
 from hestia.list_utils import to_list
 from kubernetes import client
 
-from django.conf import settings
+import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from polyaxon_k8s import constants as k8s_constants
@@ -50,7 +50,7 @@ def get_project_pod_spec(volume_mounts,
                                      resources=get_resources(resources),
                                      volume_mounts=volume_mounts)]
 
-    if service_account_name and not settings.K8S_RBAC_ENABLED:
+    if service_account_name and not conf.get('K8S_RBAC_ENABLED'):
         service_account_name = None
 
     return client.V1PodSpec(restart_policy=restart_policy,

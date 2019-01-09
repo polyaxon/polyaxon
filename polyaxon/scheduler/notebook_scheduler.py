@@ -5,6 +5,8 @@ from kubernetes.client.rest import ApiException
 
 from django.conf import settings
 
+import conf
+
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
 from scheduler.spawners.notebook_spawner import NotebookSpawner
@@ -34,13 +36,13 @@ def start_notebook(notebook):
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
     error = {}
     try:
         allow_commits = False
-        if settings.REPOS_CLAIM_NAME or notebook.node_selector:
+        if conf.get('REPOS_CLAIM_NAME') or notebook.node_selector:
             allow_commits = True
         results = spawner.start_notebook(image=job_docker_image,
                                          persistence_outputs=notebook.persistence_outputs,
@@ -100,7 +102,7 @@ def stop_notebook(project_name,
         job_name=notebook_job_name,
         job_uuid=notebook_job_uuid,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
     return spawner.stop_notebook()
@@ -113,7 +115,7 @@ def get_notebook_url(notebook):
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
     return spawner.get_notebook_url()
 
@@ -125,6 +127,6 @@ def get_notebook_token(notebook):
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
     return spawner.get_notebook_token()

@@ -1,4 +1,4 @@
-from django.conf import settings
+import conf
 
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from logs_handlers.log_queries import base
@@ -13,10 +13,10 @@ def stream_logs(experiment):
         task_type=TaskType.MASTER,  # We default to master
         task_idx=0,
         experiment_uuid=experiment.uuid.hex)
-    k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+    k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
     return base.stream_logs(k8s_manager=k8s_manager,
                             pod_id=pod_id,
-                            container_job_name=settings.CONTAINER_NAME_EXPERIMENT_JOB)
+                            container_job_name=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
 
 
 def process_logs(experiment, temp=True):
@@ -24,10 +24,10 @@ def process_logs(experiment, temp=True):
         task_type=TaskType.MASTER,  # We default to master
         task_idx=0,
         experiment_uuid=experiment.uuid.hex)
-    k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+    k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
     log_lines = base.process_logs(k8s_manager=k8s_manager,
                                   pod_id=pod_id,
-                                  container_job_name=settings.CONTAINER_NAME_EXPERIMENT_JOB)
+                                  container_job_name=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
 
     safe_log_experiment(experiment_name=experiment.unique_name,
                         log_lines=log_lines,
@@ -36,7 +36,7 @@ def process_logs(experiment, temp=True):
 
 
 def process_experiment_jobs_logs(experiment, temp=True):
-    k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+    k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
     for experiment_job in experiment.jobs.all():
         process_experiment_job_logs(experiment_job=experiment_job,
                                     temp=temp,

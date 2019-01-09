@@ -4,8 +4,9 @@ import pytest
 
 from mock import patch
 
-from django.conf import settings
 from django.utils import timezone
+
+import conf
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus
@@ -58,7 +59,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
             event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
             created_at=timezone.now() + datetime.timedelta(days=1),
             job_container_names=(self.CONTAINER_NAME,),
-            experiment_type_label=settings.TYPE_LABELS_RUNNER)
+            experiment_type_label=conf.get('TYPE_LABELS_RUNNER'))
         self.STATUS_HANDLER(job_state.to_dict())  # pylint:disable=not-callable
         assert self.STATUS_MODEL.objects.count() == 0
 
@@ -69,7 +70,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
             event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
             created_at=timezone.now() + datetime.timedelta(days=1),
             job_container_names=(self.CONTAINER_NAME,),
-            experiment_type_label=settings.TYPE_LABELS_RUNNER)
+            experiment_type_label=conf.get('TYPE_LABELS_RUNNER'))
 
         job = self.get_job_object(job_state)
 
@@ -85,7 +86,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
             event=self.EVENT_WITH_CONDITIONS['object'],  # pylint:disable=unsubscriptable-object
             created_at=timezone.now() + datetime.timedelta(days=1),
             job_container_names=(self.CONTAINER_NAME,),
-            experiment_type_label=settings.TYPE_LABELS_RUNNER)
+            experiment_type_label=conf.get('TYPE_LABELS_RUNNER'))
 
         job = self.get_job_object(job_state)
 
@@ -99,7 +100,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
 class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_experiment_job_event
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
-    CONTAINER_NAME = settings.CONTAINER_NAME_EXPERIMENT_JOB
+    CONTAINER_NAME = conf.get('CONTAINER_NAME_EXPERIMENT_JOB')
     STATUS_MODEL = ExperimentJobStatus
     STATUS_HANDLER = k8s_events_handle_experiment_job_statuses
 
@@ -112,7 +113,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
 class TestEventsJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_job_event
     EVENT_WITH_CONDITIONS = status_job_event_with_conditions
-    CONTAINER_NAME = settings.CONTAINER_NAME_JOB
+    CONTAINER_NAME = conf.get('CONTAINER_NAME_JOB')
     STATUS_MODEL = JobStatus
     STATUS_HANDLER = k8s_events_handle_job_statuses
 
@@ -126,7 +127,7 @@ class TestEventsJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
 class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_tensorboard_job_event
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
-    CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
+    CONTAINER_NAME = conf.get('CONTAINER_NAME_PLUGIN_JOB')
     STATUS_MODEL = TensorboardJobStatus
     STATUS_HANDLER = k8s_events_handle_plugin_job_statuses
 
@@ -141,7 +142,7 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
 class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_notebook_job_event
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions
-    CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
+    CONTAINER_NAME = conf.get('CONTAINER_NAME_PLUGIN_JOB')
     STATUS_MODEL = NotebookJobStatus
     STATUS_HANDLER = k8s_events_handle_plugin_job_statuses
 
@@ -156,7 +157,7 @@ class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling)
 class TestEventsDockerizerJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_build_job_event
     EVENT_WITH_CONDITIONS = status_build_job_event_with_conditions
-    CONTAINER_NAME = settings.CONTAINER_NAME_DOCKERIZER_JOB
+    CONTAINER_NAME = conf.get('CONTAINER_NAME_DOCKERIZER_JOB')
     STATUS_MODEL = BuildJobStatus
     STATUS_HANDLER = k8s_events_handle_build_job_statuses
 

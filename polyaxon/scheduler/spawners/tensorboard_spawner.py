@@ -3,6 +3,8 @@ import random
 
 from django.conf import settings
 
+import conf
+
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
 from constants.stores import GCS, S3
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -39,8 +41,8 @@ class TensorboardSpawner(ProjectJobSpawner):
         if not self._use_ingress():
             return self.PORT
 
-        labels = 'app={},role={}'.format(settings.APP_LABELS_TENSORBOARD,
-                                         settings.ROLE_LABELS_DASHBOARD)
+        labels = 'app={},role={}'.format(conf.get('APP_LABELS_TENSORBOARD'),
+                                         conf.get('ROLE_LABELS_DASHBOARD'))
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
         port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
         while port in ports:
@@ -152,7 +154,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             default_tolerations=settings.TOLERATIONS_TENSORBOARDS)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            app=settings.APP_LABELS_TENSORBOARD,
+            app=conf.get('APP_LABELS_TENSORBOARD'),
             name=TENSORBOARD_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
@@ -164,21 +166,21 @@ class TensorboardSpawner(ProjectJobSpawner):
             command=["/bin/sh", "-c"],
             args=[' && '.join(command_args)],
             ports=target_ports,
-            container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
+            container_name=conf.get('CONTAINER_NAME_PLUGIN_JOB'),
             resources=resources,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
-            role=settings.ROLE_LABELS_DASHBOARD,
-            type=settings.TYPE_LABELS_RUNNER)
+            role=conf.get('ROLE_LABELS_DASHBOARD'),
+            type=conf.get('TYPE_LABELS_RUNNER'))
         deployment_name = JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
-        deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
+        deployment_labels = deployments.get_labels(app=conf.get('APP_LABELS_TENSORBOARD'),
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    job_name=self.job_name,
                                                    job_uuid=self.job_uuid,
-                                                   role=settings.ROLE_LABELS_DASHBOARD,
-                                                   type=settings.TYPE_LABELS_RUNNER)
+                                                   role=conf.get('ROLE_LABELS_DASHBOARD'),
+                                                   type=conf.get('TYPE_LABELS_RUNNER'))
 
         dep_resp, _ = self.create_or_update_deployment(name=deployment_name, data=deployment)
         service = services.get_service(

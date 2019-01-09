@@ -9,6 +9,7 @@ K8S_GPU_RESOURCE_KEY = config.get_string('POLYAXON_K8S_GPU_RESOURCE_KEY')
 K8S_TPU_RESOURCE_KEY = config.get_string('POLYAXON_K8S_TPU_RESOURCE_KEY',
                                          is_optional=True,
                                          default='cloud-tpus.google.com/v2')
+CONF_BACKEND = config.get_string('POLYAXON_CONF_BACKEND', is_optional=True)
 CLUSTER_ID = config.cluster_id
 REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
 OUTPUTS_ARCHIVE_ROOT = '/tmp/archived_outputs'

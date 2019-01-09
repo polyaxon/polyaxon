@@ -2,6 +2,8 @@ import requests
 
 from django.conf import settings
 
+import conf
+
 from constants.sso_providers import Providers
 from event_manager.events.user import USER_GITHUB
 from sso.providers.oauth2.provider import OAuth2Provider
@@ -41,7 +43,7 @@ class GitHubIdentityProvider(OAuth2Provider):
         emails = self.get_emails(access_token=access_token)
         email = [e for e in emails if e['primary']]
         return email[0]['email'] if email else '{}@{}'.format(username,
-                                                              settings.DEFAULT_EMAIL_DOMAIN)
+                                                              conf.get('DEFAULT_EMAIL_DOMAIN'))
 
     @staticmethod
     def get_first_last_names(username, name):

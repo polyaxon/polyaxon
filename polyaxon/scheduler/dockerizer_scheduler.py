@@ -6,6 +6,7 @@ from kubernetes.client.rest import ApiException
 from django.conf import settings
 
 import auditor
+import conf
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
@@ -83,7 +84,7 @@ def start_dockerizer(build_job):
         job_name=build_job.unique_name,
         job_uuid=build_job.uuid.hex,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
     error = {}
@@ -138,7 +139,7 @@ def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):
         job_name=build_job_name,
         job_uuid=build_job_uuid,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
     return spawner.stop_dockerizer()

@@ -1,10 +1,11 @@
 from datetime import timedelta
 from uuid import uuid4
 
-from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
+
+import conf
 
 from db.models.utils import DiffModel
 
@@ -39,7 +40,7 @@ class Token(DiffModel):
 
     @property
     def is_expired(self):
-        return self.started_at + timedelta(days=settings.TTL_TOKEN) <= timezone.now()
+        return self.started_at + timedelta(days=conf.get('TTL_TOKEN')) <= timezone.now()
 
     def has_scope(self, scope):
         return scope in self.scopes  # pylint:disable=unsupported-membership-test

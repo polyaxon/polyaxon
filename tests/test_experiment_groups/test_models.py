@@ -5,10 +5,11 @@ from unittest.mock import patch
 
 import pytest
 
-from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
+
+import conf
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
@@ -549,7 +550,7 @@ class TestExperimentGroupModel(BaseTest):
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
         self.assertEqual(
             mock_fct.call_count,
-            math.ceil(experiment_group.experiments.count() / settings.GROUP_CHUNKS) + 1
+            math.ceil(experiment_group.experiments.count() / conf.get('GROUP_CHUNKS')) + 1
         )
         ExperimentGroupIteration.objects.create(
             experiment_group=experiment_group,
@@ -595,7 +596,7 @@ class TestExperimentGroupModel(BaseTest):
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
         self.assertEqual(
             mock_fct.call_count,
-            math.ceil(experiment_group.experiments.count() / settings.GROUP_CHUNKS) + 1
+            math.ceil(experiment_group.experiments.count() / conf.get('GROUP_CHUNKS')) + 1
         )
         ExperimentGroupIteration.objects.create(
             experiment_group=experiment_group,
@@ -627,7 +628,7 @@ class TestExperimentGroupModel(BaseTest):
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
         self.assertEqual(
             mock_fct.call_count,
-            math.ceil(experiment_group.experiments.count() / settings.GROUP_CHUNKS) + 1
+            math.ceil(experiment_group.experiments.count() / conf.get('GROUP_CHUNKS')) + 1
         )
         assert experiment_group.non_done_experiments.count() == 9
 

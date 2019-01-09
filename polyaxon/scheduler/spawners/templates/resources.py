@@ -1,6 +1,6 @@
 from kubernetes import client
 
-from django.conf import settings
+import conf
 
 
 def get_resources(resources):  # pylint:disable=too-many-branches
@@ -30,13 +30,13 @@ def get_resources(resources):  # pylint:disable=too-many-branches
 
     if resources.gpu:
         if resources.gpu.limits:
-            limits[settings.K8S_GPU_RESOURCE_KEY] = resources.gpu.limits
+            limits[conf.get('K8S_GPU_RESOURCE_KEY')] = resources.gpu.limits
         if resources.gpu.requests:
-            requests[settings.K8S_GPU_RESOURCE_KEY] = resources.gpu.requests
+            requests[conf.get('K8S_GPU_RESOURCE_KEY')] = resources.gpu.requests
 
     if resources.tpu:
         if resources.tpu.limits:
-            limits[settings.K8S_TPU_RESOURCE_KEY] = resources.tpu.limits
+            limits[conf.get('K8S_TPU_RESOURCE_KEY')] = resources.tpu.limits
         if resources.tpu.requests:
-            requests[settings.K8S_TPU_RESOURCE_KEY] = resources.tpu.requests
+            requests[conf.get('K8S_TPU_RESOURCE_KEY')] = resources.tpu.requests
     return client.V1ResourceRequirements(limits=limits or None, requests=requests or None)

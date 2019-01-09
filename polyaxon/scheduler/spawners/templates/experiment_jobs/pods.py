@@ -6,6 +6,7 @@ from kubernetes import client
 
 from django.conf import settings
 
+import conf
 import stores
 
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
@@ -66,17 +67,17 @@ class PodManager(object):
         self.experiment_uuid = experiment_uuid
         self.original_name = original_name
         self.cloning_strategy = cloning_strategy
-        self.job_container_name = job_container_name or settings.CONTAINER_NAME_EXPERIMENT_JOB
-        self.job_docker_image = job_docker_image or settings.JOB_DOCKER_NAME
-        self.sidecar_container_name = sidecar_container_name or settings.CONTAINER_NAME_SIDECAR
-        self.sidecar_docker_image = sidecar_docker_image or settings.JOB_SIDECAR_DOCKER_IMAGE
+        self.job_container_name = job_container_name or conf.get('CONTAINER_NAME_EXPERIMENT_JOB')
+        self.job_docker_image = job_docker_image or conf.get('JOB_DOCKER_NAME')
+        self.sidecar_container_name = sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR')
+        self.sidecar_docker_image = sidecar_docker_image or conf.get('JOB_SIDECAR_DOCKER_IMAGE')
         self.sidecar_docker_image_pull_policy = (
-            sidecar_docker_image_pull_policy or settings.JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY)
-        self.init_container_name = init_container_name or settings.CONTAINER_NAME_INIT
-        self.init_docker_image = init_docker_image or settings.JOB_INIT_DOCKER_IMAGE
-        self.role_label = role_label or settings.ROLE_LABELS_WORKER
-        self.type_label = type_label or settings.TYPE_LABELS_RUNNER
-        self.app_label = settings.APP_LABELS_EXPERIMENT
+            sidecar_docker_image_pull_policy or conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY'))
+        self.init_container_name = init_container_name or conf.get('CONTAINER_NAME_INIT')
+        self.init_docker_image = init_docker_image or conf.get('JOB_INIT_DOCKER_IMAGE')
+        self.role_label = role_label or conf.get('ROLE_LABELS_WORKER')
+        self.type_label = type_label or conf.get('TYPE_LABELS_RUNNER')
+        self.app_label = conf.get('APP_LABELS_EXPERIMENT')
         self.ports = ports or [constants.DEFAULT_PORT]
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
@@ -290,8 +291,8 @@ class PodManager(object):
             tolerations=tolerations,
             default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
         service_account_name = None
-        if settings.K8S_RBAC_ENABLED and settings.K8S_SERVICE_ACCOUNT_EXPERIMENTS:
-            service_account_name = settings.K8S_SERVICE_ACCOUNT_EXPERIMENTS
+        if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS'):
+            service_account_name = conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS')
         return client.V1PodSpec(
             restart_policy=restart_policy,
             service_account_name=service_account_name,

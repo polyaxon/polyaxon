@@ -2,9 +2,10 @@ import uuid
 
 from hestia.unknown import UNKNOWN
 
-from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+
+import conf
 
 from constants.nodes import NodeLifeCycle, NodeRoles
 from db.models.utils import DiffModel, SequenceModel
@@ -23,7 +24,7 @@ class NodeParser(object):
 
     @staticmethod
     def get_n_gpus(node):
-        return int(node.status.allocatable.get(settings.K8S_GPU_RESOURCE_KEY, 0))
+        return int(node.status.allocatable.get(conf.get('K8S_GPU_RESOURCE_KEY'), 0))
 
     @staticmethod
     def get_cpu(node):

@@ -1,5 +1,6 @@
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+
+import conf
 
 from constants.jobs import JobLifeCycle
 from db.models.repos import Repo
@@ -60,7 +61,7 @@ def get_job_repo_info(project, job):
     last_commit = project.repo.last_commit
     repo_name = project_name
 
-    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_name = '{}/{}'.format(conf.get('REGISTRY_HOST'), repo_name)
     if not last_commit:
         raise Repo.DoesNotExist
     image_tag = last_commit[0]
@@ -85,9 +86,9 @@ def build_job(project, job, job_builder, image_tag=None):
                                  image_tag=image_tag or build_info['image_tag'],
                                  build_steps=job_spec.build.build_steps,
                                  env_vars=job_spec.build.env_vars)
-    docker_builder.login(registry_user=settings.REGISTRY_USER,
-                         registry_password=settings.REGISTRY_PASSWORD,
-                         registry_host=settings.REGISTRY_HOST)
+    docker_builder.login(registry_user=conf.get('REGISTRY_USER'),
+                         registry_password=conf.get('REGISTRY_PASSWORD'),
+                         registry_host=conf.get('REGISTRY_HOST'))
     if docker_builder.check_image():
         # Image already built
         docker_builder.clean()

@@ -3,10 +3,10 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
-from django.conf import settings
 from django.http import Http404
 
 import auditor
+import conf
 
 from api.endpoint.base import CreateEndpoint, ListEndpoint, PostEndpoint
 from api.endpoint.project import ProjectEndpoint, ProjectResourceListEndpoint
@@ -45,7 +45,7 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
     @staticmethod
     def _get_default_tensorboard_config():
         specification = TensorboardSpecification.create_specification(
-            {'image': settings.TENSORBOARD_DOCKER_IMAGE})
+            {'image': conf.get('TENSORBOARD_DOCKER_IMAGE')})
         return {'config': specification}
 
     def _create_tensorboard(self, project, experiment_group=None, experiment=None):

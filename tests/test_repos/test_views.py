@@ -7,10 +7,11 @@ import pytest
 
 from rest_framework import status
 
-from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
+
+import conf
 
 from api.repos.serializers import RepoSerializer
 from api.utils.views.protected import ProtectedView
@@ -91,7 +92,7 @@ class TestUploadFilesView(BaseViewTest):
 
         # No repo was created yet
         assert self.model_class.objects.count() == 0
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
+        repo_path = '{}/{}/{}/{}'.format(conf.get('REPOS_MOUNT_PATH'),
                                          user.username,
                                          repo_name,
                                          repo_name)
@@ -104,7 +105,9 @@ class TestUploadFilesView(BaseViewTest):
                                  data={'repo': uploaded_file, 'json': json.dumps({'async': False})},
                                  content_type=MULTIPART_CONTENT)
 
-        file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH, user.username, repo_name)
+        file_path = '{}/{}/{}.tar.gz'.format(conf.get('UPLOAD_MOUNT_PATH'),
+                                             user.username,
+                                             repo_name)
         self.assertTrue(os.path.exists(file_path))
         assert mock_task.call_count == 1
         assert self.model_class.objects.count() == 1
@@ -116,10 +119,8 @@ class TestUploadFilesView(BaseViewTest):
 
         # No repo was created yet
         assert self.model_class.objects.count() == 0
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
-                                         user.username,
-                                         repo_name,
-                                         repo_name)
+        repo_path = '{}/{}/{}/{}'.format(
+            conf.get('REPOS_MOUNT_PATH'), user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
 
         uploaded_file = self.get_upload_file()
@@ -128,7 +129,8 @@ class TestUploadFilesView(BaseViewTest):
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
-        file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH, user.username, repo_name)
+        file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), user.username, repo_name)
         self.assertTrue(os.path.exists(file_path))
         assert mock_task.call_count == 1
         assert self.model_class.objects.count() == 1
@@ -138,10 +140,8 @@ class TestUploadFilesView(BaseViewTest):
         user = self.auth_client.user
         repo_name = self.project.name
 
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
-                                         user.username,
-                                         repo_name,
-                                         repo_name)
+        repo_path = '{}/{}/{}/{}'.format(
+            conf.get('REPOS_MOUNT_PATH'), user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
 
         repo = self.factory_class(project=self.project)
@@ -154,7 +154,8 @@ class TestUploadFilesView(BaseViewTest):
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
-        file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH, user.username, repo_name)
+        file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), user.username, repo_name)
         self.assertTrue(os.path.exists(file_path))
         assert mock_task.call_count == 1
         # No new repo was created and still exists
@@ -175,9 +176,8 @@ class TestUploadFilesView(BaseViewTest):
                              data={'repo': uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
-        upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH,
-                                                    user.username,
-                                                    repo_name)
+        upload_file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), user.username, repo_name)
         # Assert the the task handler takes care of cleaning the upload root after
         # committing changes
         self.assertFalse(os.path.exists(upload_file_path))
@@ -187,10 +187,8 @@ class TestUploadFilesView(BaseViewTest):
         repo = self.model_class.objects.first()
 
         # Assert new git repo was created in the repos root and that also the tar file was deleted
-        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
-                                              user.username,
-                                              self.project.name,
-                                              self.project.name)
+        code_file_path = '{}/{}/{}/{}'.format(
+            conf.get('REPOS_MOUNT_PATH'), user.username, self.project.name, self.project.name)
         tar_code_file_path = repo.get_tmp_tar_path()
         self.assertFalse(os.path.exists(tar_code_file_path))
         self.assertTrue(os.path.exists(code_file_path))
@@ -208,9 +206,8 @@ class TestUploadFilesView(BaseViewTest):
                              data={'repo': new_uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
-        upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH,
-                                                    user.username,
-                                                    repo_name)
+        upload_file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), user.username, repo_name)
         # Assert the the task handler takes care of cleaning the upload root after
         # committing changes
         self.assertFalse(os.path.exists(upload_file_path))
@@ -233,9 +230,8 @@ class TestUploadFilesView(BaseViewTest):
                              data={'repo': new_uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
-        upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH,
-                                                    user.username,
-                                                    repo_name)
+        upload_file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), user.username, repo_name)
         # Assert the the task handler takes care of cleaning the upload root after
         # committing changes
         self.assertFalse(os.path.exists(upload_file_path))
@@ -262,9 +258,8 @@ class TestUploadFilesView(BaseViewTest):
                                         content_type=MULTIPART_CONTENT)
 
         assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
-        upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH,
-                                                    new_user.username,
-                                                    repo_name)
+        upload_file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), new_user.username, repo_name)
         # Assert the the task handler takes care of cleaning the upload root after
         # committing changes
         self.assertFalse(os.path.exists(upload_file_path))
@@ -300,15 +295,14 @@ class TestUploadFilesView(BaseViewTest):
                                             data={'repo': uploaded_file},
                                             content_type=MULTIPART_CONTENT)
         assert response.status_code == status.HTTP_403_FORBIDDEN
-        file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_MOUNT_PATH, user.username, repo_name)
+        file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), user.username, repo_name)
         self.assertFalse(os.path.exists(file_path))
         assert mock_task.call_count == 0
         # No new repo was not created and still exists
         assert self.model_class.objects.count() == 0
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
-                                         user.username,
-                                         repo_name,
-                                         repo_name)
+        repo_path = '{}/{}/{}/{}'.format(
+            conf.get('REPOS_MOUNT_PATH'), user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
 
 
@@ -346,10 +340,8 @@ class DownloadRepoViewTest(BaseViewTest):
     def test_redirects_nginx_to_file(self):
         self.upload_file()
         user = self.auth_client.user
-        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
-                                              user.username,
-                                              self.project.name,
-                                              self.project.name)
+        code_file_path = '{}/{}/{}/{}'.format(
+            conf.get('REPOS_MOUNT_PATH'), user.username, self.project.name, self.project.name)
         # Assert that the code_file_path exists
         self.assertTrue(os.path.exists(code_file_path))
         # Assert that the code_file_path is a git repo
@@ -361,15 +353,13 @@ class DownloadRepoViewTest(BaseViewTest):
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(
             response[ProtectedView.NGINX_REDIRECT_HEADER],
-            '{}/{}-master.tar.gz'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
+            '{}/{}-master.tar.gz'.format(conf.get('REPOS_ARCHIVE_ROOT'), self.project.name))
 
     def test_redirects_nginx_to_file_works_with_internal_client(self):
         self.upload_file()
         user = self.auth_client.user
-        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
-                                              user.username,
-                                              self.project.name,
-                                              self.project.name)
+        code_file_path = '{}/{}/{}/{}'.format(
+            conf.get('REPOS_MOUNT_PATH'), user.username, self.project.name, self.project.name)
         # Assert that the code_file_path exists
         self.assertTrue(os.path.exists(code_file_path))
         # Assert that the code_file_path is a git repo
@@ -381,4 +371,4 @@ class DownloadRepoViewTest(BaseViewTest):
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(
             response[ProtectedView.NGINX_REDIRECT_HEADER],
-            '{}/{}-master.tar.gz'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
+            '{}/{}-master.tar.gz'.format(conf.get('REPOS_ARCHIVE_ROOT'), self.project.name))

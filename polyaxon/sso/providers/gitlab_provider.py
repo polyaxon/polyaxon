@@ -2,6 +2,8 @@ import requests
 
 from django.conf import settings
 
+import conf
+
 from constants.sso_providers import Providers
 from event_manager.events.user import USER_GITLAB
 from sso.providers.oauth2.provider import OAuth2Provider
@@ -37,7 +39,7 @@ class GitLabIdentityProvider(OAuth2Provider):
         return resp.json()
 
     def get_email(self, email, username):
-        return email if email else '{}@{}'.format(username, settings.DEFAULT_EMAIL_DOMAIN)
+        return email if email else '{}@{}'.format(username, conf.get('DEFAULT_EMAIL_DOMAIN'))
 
     @staticmethod
     def get_first_last_names(username, name):

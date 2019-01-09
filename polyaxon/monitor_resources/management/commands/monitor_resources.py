@@ -4,8 +4,9 @@ import redis
 
 from hestia.bool_utils import to_bool
 
-from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
+
+import conf
 
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode
@@ -19,7 +20,7 @@ class Command(BaseMonitorCommand):
     @staticmethod
     def get_node():
         cluster = Cluster.load()
-        node = ClusterNode.objects.filter(cluster=cluster, name=settings.K8S_NODE_NAME)
+        node = ClusterNode.objects.filter(cluster=cluster, name=conf.get('K8S_NODE_NAME'))
         if node.exists():
             return node.first()
         return None

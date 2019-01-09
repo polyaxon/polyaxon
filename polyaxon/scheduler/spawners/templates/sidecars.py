@@ -4,6 +4,8 @@ from kubernetes import client
 
 from django.conf import settings
 
+import conf
+
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
 
@@ -24,7 +26,7 @@ def get_sidecar_env_vars(job_name, job_container_name, internal_health_check_url
 def get_sidecar_args(pod_id, container_id, app_label):
     return ["--pod_id={}".format(pod_id),
             "--container_id={}".format(container_id),
-            "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
+            "--log_sleep_interval={}".format(conf.get('JOB_SIDECAR_LOG_SLEEP_INTERVAL')),
             "--app_label={}".format(app_label)]
 
 

@@ -3,7 +3,7 @@ import logging
 from amqp.exceptions import AccessRefused
 from kombu import Connection
 
-from django.conf import settings
+import conf
 
 from checks.base import Check
 from checks.results import Result
@@ -18,7 +18,7 @@ class RabbitMQCheck(Check):
         """Open and close the broker channel."""
         try:
             # Context to release connection
-            with Connection(settings.CELERY_BROKER_URL) as conn:
+            with Connection(conf.get('CELERY_BROKER_URL')) as conn:
                 conn.connect()
         except ConnectionRefusedError:
             return Result(message='Service unable to connect, "Connection was refused".',

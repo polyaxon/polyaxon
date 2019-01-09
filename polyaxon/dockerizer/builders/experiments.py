@@ -1,8 +1,8 @@
 import logging
 
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
+import conf
 import publisher
 
 from constants.experiments import ExperimentLifeCycle
@@ -85,7 +85,7 @@ def get_experiment_repo_info(experiment):
     repo_path = experiment.project.repo.path
     repo_name = project_name
 
-    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_name = '{}/{}'.format(conf.get('REGISTRY_HOST'), repo_name)
     image_tag = experiment.code_reference.commit
     if not image_tag:
         raise Repo.DoesNotExist
@@ -110,9 +110,9 @@ def build_experiment(experiment, image_tag=None):
                                              image_tag=image_tag or build_info['image_tag'],
                                              build_steps=experiment_spec.build.build_steps,
                                              env_vars=experiment_spec.build.env_vars)
-    docker_builder.login(registry_user=settings.REGISTRY_USER,
-                         registry_password=settings.REGISTRY_PASSWORD,
-                         registry_host=settings.REGISTRY_HOST)
+    docker_builder.login(registry_user=conf.get('REGISTRY_USER'),
+                         registry_password=conf.get('REGISTRY_PASSWORD'),
+                         registry_host=conf.get('REGISTRY_HOST'))
     if docker_builder.check_image():
         # Image already built
         docker_builder.clean()

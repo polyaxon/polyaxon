@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from rest_framework.schemas import ManualSchema
 from rest_framework.views import APIView
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -27,6 +26,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
 
 import auditor
+import conf
 
 from api.users.forms import RegistrationForm
 from api.users.utils import login_user, logout_user
@@ -197,7 +197,7 @@ class RegistrationView(FormView):
         """
         return {
             'activation_key': activation_key,
-            'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+            'expiration_days': conf.get('ACCOUNT_ACTIVATION_DAYS'),
             'site': get_current_site(self.request)
         }
 
@@ -219,7 +219,7 @@ class RegistrationView(FormView):
         subject = ''.join(subject.splitlines())
         message = render_to_string(self.email_body_template,
                                    context)
-        user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+        user.email_user(subject, message, conf.get('DEFAULT_FROM_EMAIL'))
 
 
 class SimpleRegistrationView(RegistrationView):
@@ -275,7 +275,7 @@ class ActivationView(TemplateView):
             username = signing.loads(
                 activation_key,
                 salt=self.key_salt,
-                max_age=settings.ACCOUNT_ACTIVATION_DAYS * 86400
+                max_age=conf.get('ACCOUNT_ACTIVATION_DAYS') * 86400
             )
             return username
         # SignatureExpired is a subclass of BadSignature, so this will

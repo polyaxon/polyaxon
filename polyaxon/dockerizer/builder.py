@@ -12,6 +12,8 @@ from hestia.logging_utils import LogLevels
 
 from django.conf import settings
 
+import conf
+
 from constants.jobs import JobLifeCycle
 from db.redis.heartbeat import RedisHeartBeat
 from docker_images.image_info import get_image_name, get_tagged_image
@@ -70,9 +72,9 @@ class DockerBuilder(object):
 
     def login_internal_registry(self):
         try:
-            self.docker.login(username=settings.REGISTRY_USER,
-                              password=settings.REGISTRY_PASSWORD,
-                              registry=settings.REGISTRY_HOST,
+            self.docker.login(username=conf.get('REGISTRY_USER'),
+                              password=conf.get('REGISTRY_PASSWORD'),
+                              registry=conf.get('REGISTRY_HOST'),
                               reauth=True)
         except DockerException as e:
             _logger.exception('Failed to connect to registry %s\n', e)
@@ -242,7 +244,7 @@ def download_code(build_job, build_path, filename):
     elif build_job.code_reference.git_url:
         download_url = build_job.code_reference.git_url
         internal = False
-        access_token = settings.REPOS_ACCESS_TOKEN
+        access_token = conf.get('REPOS_ACCESS_TOKEN')
         # Gitlab requires heaer `private-token`
         headers = {}
     else:

@@ -2,10 +2,11 @@ from rest_framework import exceptions as rest_exceptions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
-from django.conf import settings
 from django.core import exceptions as django_exceptions
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+
+import conf
 
 
 class ProtectedView(APIView):
@@ -46,7 +47,7 @@ class ProtectedView(APIView):
 
     def redirect(self, path, filename=None):
 
-        if settings.DEBUG:  # pragma: no cover
+        if conf.get('DEBUG'):  # pragma: no cover
             # Redirect to the checked-in test data. Works only with development settings.
             return HttpResponseRedirect(path)
 

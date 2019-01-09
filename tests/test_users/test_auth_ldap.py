@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from django.conf import settings
+import conf
 
 from api.users.ldap_signals import populate_user_handler
 from tests.utils import BaseTest
@@ -27,4 +27,4 @@ class TestAuthLdap(BaseTest):
         user.username = 'test'
         user.ldap_user.attrs = {}
         populate_user_handler(None, user=user, ldap_user=user.ldap_user)
-        assert user.email == 'test@%s' % settings.DEFAULT_EMAIL_DOMAIN
+        assert user.email == 'test@%s' % conf.get('DEFAULT_EMAIL_DOMAIN')

@@ -1,6 +1,6 @@
 import pytest
 
-from django.conf import settings
+import conf
 
 from docker_images.image_info import get_image_info, get_image_name, get_tagged_image
 from factories.factory_build_jobs import BuildJobFactory
@@ -15,7 +15,7 @@ class TestDockerImageInfo(BaseTest):
 
     def test_get_image_name(self):
         image_name = get_image_name(self.build_job)
-        expected_name = '{}/{}_{}'.format(settings.REGISTRY_HOST,
+        expected_name = '{}/{}_{}'.format(conf.get('REGISTRY_HOST'),
                                           self.build_job.project.name,
                                           self.build_job.project.id)
         assert image_name == expected_name

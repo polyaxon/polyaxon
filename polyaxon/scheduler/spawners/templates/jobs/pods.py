@@ -5,6 +5,7 @@ from kubernetes import client
 
 from django.conf import settings
 
+import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
@@ -57,17 +58,17 @@ class PodManager(object):
         self.project_uuid = project_uuid
         self.job_name = job_name
         self.job_uuid = job_uuid
-        self.job_container_name = job_container_name or settings.CONTAINER_NAME_JOB
+        self.job_container_name = job_container_name or conf.get('CONTAINER_NAME_JOB')
         self.job_docker_image = job_docker_image
-        self.sidecar_container_name = sidecar_container_name or settings.CONTAINER_NAME_SIDECAR
-        self.sidecar_docker_image = sidecar_docker_image or settings.JOB_SIDECAR_DOCKER_IMAGE
+        self.sidecar_container_name = sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR')
+        self.sidecar_docker_image = sidecar_docker_image or conf.get('JOB_SIDECAR_DOCKER_IMAGE')
         self.sidecar_docker_image_pull_policy = (
-            sidecar_docker_image_pull_policy or settings.JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY)
-        self.init_container_name = init_container_name or settings.CONTAINER_NAME_INIT
-        self.init_docker_image = init_docker_image or settings.JOB_INIT_DOCKER_IMAGE
-        self.role_label = role_label or settings.ROLE_LABELS_WORKER
-        self.type_label = type_label or settings.TYPE_LABELS_RUNNER
-        self.app_label = settings.APP_LABELS_JOB
+            sidecar_docker_image_pull_policy or conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY'))
+        self.init_container_name = init_container_name or conf.get('CONTAINER_NAME_INIT')
+        self.init_docker_image = init_docker_image or conf.get('JOB_INIT_DOCKER_IMAGE')
+        self.role_label = role_label or conf.get('ROLE_LABELS_WORKER')
+        self.type_label = type_label or conf.get('TYPE_LABELS_RUNNER')
+        self.app_label = conf.get('APP_LABELS_JOB')
         self.labels = self.get_labels()
         self.k8s_job_name = self.get_k8s_job_name()
         self.ports = to_list(ports) if ports else []
@@ -225,8 +226,8 @@ class PodManager(object):
             default_tolerations=settings.TOLERATIONS_JOBS)
 
         service_account_name = None
-        if settings.K8S_RBAC_ENABLED and settings.K8S_SERVICE_ACCOUNT_JOBS:
-            service_account_name = settings.K8S_SERVICE_ACCOUNT_JOBS
+        if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_JOBS'):
+            service_account_name = conf.get('K8S_SERVICE_ACCOUNT_JOBS')
         return client.V1PodSpec(
             restart_policy=restart_policy,
             service_account_name=service_account_name,

@@ -2,8 +2,9 @@ import time
 
 from kubernetes.client.rest import ApiException
 
-from django.conf import settings
 from django.db import InterfaceError, connection
+
+import conf
 
 from libs.base_monitor import BaseMonitorCommand
 from monitor_statuses import monitor
@@ -20,7 +21,7 @@ class Command(BaseMonitorCommand):
             "Started a new statuses monitor with, "
             "log sleep interval: `{}`.".format(log_sleep_interval),
             ending='\n')
-        k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+        k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
         while True:
             try:
                 monitor.run(k8s_manager)

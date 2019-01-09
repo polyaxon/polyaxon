@@ -5,6 +5,8 @@ from kubernetes.client.rest import ApiException
 
 from django.conf import settings
 
+import conf
+
 from constants.jobs import JobLifeCycle
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
 from scheduler.spawners.utils import get_job_definition
@@ -23,7 +25,7 @@ def start_tensorboard(tensorboard):
         job_name=tensorboard.unique_name,
         job_uuid=tensorboard.uuid.hex,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
     error = {}
@@ -97,7 +99,7 @@ def stop_tensorboard(project_name,
         job_name=tensorboard_job_name,
         job_uuid=tensorboard_job_uuid,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
     return spawner.stop_tensorboard()
@@ -110,6 +112,6 @@ def get_tensorboard_url(tensorboard):
         job_name=tensorboard.unique_name,
         job_uuid=tensorboard.uuid.hex,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
     return spawner.get_tensorboard_url()

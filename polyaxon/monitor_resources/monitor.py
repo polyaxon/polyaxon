@@ -7,8 +7,7 @@ import docker
 
 from docker.errors import NotFound
 
-from django.conf import settings
-
+import conf
 import polyaxon_gpustat
 
 from constants.containers import ContainerStatuses
@@ -132,7 +131,7 @@ def get_container_resources(node, container, gpu_resources):
 def update_cluster_node(node_gpus):
     if not node_gpus:
         return
-    node = ClusterNode.objects.filter(name=settings.K8S_NODE_NAME).first()
+    node = ClusterNode.objects.filter(name=conf.get('K8S_NODE_NAME')).first()
     for node_gpu_index in node_gpus.keys():
         node_gpu_value = node_gpus[node_gpu_index]
         try:

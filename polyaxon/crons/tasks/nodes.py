@@ -3,10 +3,10 @@ import uuid
 
 from hestia.units import to_unit_memory
 
-from django.conf import settings
 from django.db.models import Count, Sum
 
 import auditor
+import conf
 
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode
@@ -42,7 +42,7 @@ def update_system_info():
         cluster.save()
         auditor.record(event_type=CLUSTER_UPDATED,
                        instance=cluster,
-                       is_upgrade=settings.CHART_IS_UPGRADE)
+                       is_upgrade=conf.get('CHART_IS_UPGRADE'))
 
 
 @celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
@@ -106,15 +106,15 @@ def update_system_nodes():
 def cluster_nodes_analytics():
     cluster = get_cluster_resources()
     notification = uuid.uuid4()
-    notification_url = settings.POLYAXON_NOTIFICATION_CLUSTER_NODES_URL.format(
-        url=settings.CLUSTER_NOTIFICATION_URL,
+    notification_url = conf.get('POLYAXON_NOTIFICATION_CLUSTER_NODES_URL').format(
+        url=conf.get('CLUSTER_NOTIFICATION_URL'),
         cluster_uuid=cluster.uuid.hex,
         n_nodes=cluster.n_nodes,
         n_cpus=cluster.n_cpus,
         memory=to_unit_memory(cluster.memory or 0),
         n_gpus=cluster.n_gpus,
         notification=notification,
-        version=settings.CHART_VERSION)
+        version=conf.get('CHART_VERSION'))
     try:
         requests.get(notification_url)
     except requests.RequestException:

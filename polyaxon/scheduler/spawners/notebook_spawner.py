@@ -5,6 +5,7 @@ from hestia.crypto import get_hmac
 
 from django.conf import settings
 
+import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
@@ -40,24 +41,24 @@ class NotebookSpawner(ProjectJobSpawner):
         return self._get_service_url(NOTEBOOK_JOB_NAME)
 
     def get_notebook_token(self):
-        return get_hmac(settings.APP_LABELS_NOTEBOOK, self.project_uuid)
+        return get_hmac(conf.get('APP_LABELS_NOTEBOOK'), self.project_uuid)
 
     @staticmethod
     def get_notebook_code_volume():
-        volume = get_volume(volume=constants.REPOS_VOLUME,
-                            claim_name=settings.REPOS_CLAIM_NAME,
-                            host_path=settings.REPOS_HOST_PATH)
+        volume = get_volume(volume=conf.get('REPOS_VOLUME'),
+                            claim_name=conf.get('REPOS_CLAIM_NAME'),
+                            host_path=conf.get('REPOS_HOST_PATH'))
 
-        volume_mount = get_volume_mount(volume=constants.REPOS_VOLUME,
-                                        volume_mount=settings.REPOS_MOUNT_PATH)
+        volume_mount = get_volume_mount(volume=conf.get('REPOS_VOLUME'),
+                                        volume_mount=conf.get('REPOS_MOUNT_PATH'))
         return volume, volume_mount
 
     def request_notebook_port(self):
         if not self._use_ingress():
             return self.PORT
 
-        labels = 'app={},role={}'.format(settings.APP_LABELS_NOTEBOOK,
-                                         settings.ROLE_LABELS_DASHBOARD)
+        labels = 'app={},role={}'.format(conf.get('APP_LABELS_NOTEBOOK'),
+                                         conf.get('ROLE_LABELS_DASHBOARD'))
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
         port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
         while port in ports:
@@ -151,7 +152,7 @@ class NotebookSpawner(ProjectJobSpawner):
             default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            app=settings.APP_LABELS_NOTEBOOK,
+            app=conf.get('APP_LABELS_NOTEBOOK'),
             name=NOTEBOOK_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
@@ -172,16 +173,16 @@ class NotebookSpawner(ProjectJobSpawner):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
-            role=settings.ROLE_LABELS_DASHBOARD,
-            type=settings.TYPE_LABELS_RUNNER,
-            service_account_name=settings.K8S_SERVICE_ACCOUNT_EXPERIMENTS)
-        deployment_labels = deployments.get_labels(app=settings.APP_LABELS_NOTEBOOK,
+            role=conf.get('ROLE_LABELS_DASHBOARD'),
+            type=conf.get('TYPE_LABELS_RUNNER'),
+            service_account_name=conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS'))
+        deployment_labels = deployments.get_labels(app=conf.get('APP_LABELS_NOTEBOOK'),
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    job_name=self.job_name,
                                                    job_uuid=self.job_uuid,
-                                                   role=settings.ROLE_LABELS_DASHBOARD,
-                                                   type=settings.TYPE_LABELS_RUNNER)
+                                                   role=conf.get('ROLE_LABELS_DASHBOARD'),
+                                                   type=conf.get('TYPE_LABELS_RUNNER'))
         dep_resp, _ = self.create_or_update_deployment(name=deployment_name, data=deployment)
         service = services.get_service(
             namespace=self.namespace,

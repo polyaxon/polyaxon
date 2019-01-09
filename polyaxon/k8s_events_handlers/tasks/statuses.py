@@ -1,5 +1,6 @@
-from django.conf import settings
 from django.db import IntegrityError
+
+import conf
 
 from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
@@ -111,9 +112,9 @@ def k8s_events_handle_plugin_job_statuses(self, payload):
     logger.debug('handling events status for job %s %s', job_name, app)
 
     try:
-        if app == settings.APP_LABELS_TENSORBOARD:
+        if app == conf.get('APP_LABELS_TENSORBOARD'):
             job = TensorboardJob.objects.get(uuid=job_uuid)
-        elif app == settings.APP_LABELS_NOTEBOOK:
+        elif app == conf.get('APP_LABELS_NOTEBOOK'):
             job = NotebookJob.objects.get(uuid=job_uuid)
         else:
             logger.info('Plugin job `%s` does not exist', app)

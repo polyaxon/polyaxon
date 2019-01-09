@@ -1,6 +1,6 @@
 import random
 
-from django.conf import settings
+import conf
 
 from checks.base import Check
 from checks.health_task import health_task
@@ -9,21 +9,21 @@ from polyaxon.celery_api import celery_app
 
 
 class WorkerCheck(Check):
-    HEALTH_CHECK_TIMEOUT = settings.HEALTH_CHECK_WORKER_TIMEOUT
     WORKER_HEALTH_TASK = None
     WORKER_NAME = None
 
     @classmethod
     def run(cls):
+        timeout = conf.get('HEALTH_CHECK_WORKER_TIMEOUT')
         arg = random.randint(1, 10)
         result = None
         try:
             task_result = celery_app.send_task(
                 cls.WORKER_HEALTH_TASK,
                 args=[arg, arg],
-                expires=cls.HEALTH_CHECK_TIMEOUT,
+                expires=timeout,
             )
-            task_result.get(timeout=cls.HEALTH_CHECK_TIMEOUT)
+            task_result.get(timeout=timeout)
             if task_result.result != health_task(arg, arg):
                 result = Result(
                     message='Service returned wrong health result.',

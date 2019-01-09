@@ -2,9 +2,8 @@ import asyncio
 
 from websockets import ConnectionClosed
 
-from django.conf import settings
-
 import auditor
+import conf
 
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
@@ -108,5 +107,5 @@ async def experiment_logs_v2(request, ws, username, project_name, experiment_id)
     await log_experiment(request=request,
                          ws=ws,
                          experiment=experiment,
-                         container=settings.CONTAINER_NAME_EXPERIMENT_JOB,
-                         namespace=settings.K8S_NAMESPACE)
+                         container=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'),
+                         namespace=conf.get('K8S_NAMESPACE'))

@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from django.conf import settings
+import conf
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
@@ -14,7 +14,7 @@ from tests.utils import BaseTest
 class TestCopyPaths(BaseTest):
     def test_copy_repo_path_to_tmp_dir(self):
         project = ProjectFactory()
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
+        repo_path = '{}/{}/{}/{}'.format(conf.get('REPOS_MOUNT_PATH'),
                                          project.user.username,
                                          project.name,
                                          project.name)

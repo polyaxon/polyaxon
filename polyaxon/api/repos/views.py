@@ -5,10 +5,10 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
-from django.conf import settings
 from django.http import HttpResponseServerError
 
 import auditor
+import conf
 
 from api.endpoint.base import DestroyEndpoint, RetrieveEndpoint, UpdateEndpoint
 from api.endpoint.project import ProjectResourceListEndpoint
@@ -99,7 +99,7 @@ class UploadFilesView(ProjectResourceListEndpoint, UploadView):
     def put(self, request, *args, **kwargs):
         user = request.user
         repo = self.get_object()
-        path = os.path.join(settings.UPLOAD_MOUNT_PATH, user.username)
+        path = os.path.join(conf.get('UPLOAD_MOUNT_PATH'), user.username)
         if not os.path.exists(path):
             os.makedirs(path)
         try:

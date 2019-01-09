@@ -2,8 +2,9 @@ import time
 
 from kubernetes.client.rest import ApiException
 
-from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
+
+import conf
 
 from db.models.clusters import Cluster
 from libs.base_monitor import BaseMonitorCommand
@@ -32,7 +33,7 @@ class Command(BaseMonitorCommand):
             "Started a new namespace monitor with, "
             "log sleep interval: `{}`.".format(log_sleep_interval),
             ending='\n')
-        k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+        k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
         cluster = self.get_cluster_or_wait(log_sleep_interval)
         if not cluster:
             # End process

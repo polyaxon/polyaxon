@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from django.conf import settings
+import conf
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
@@ -16,7 +16,7 @@ class TestRepoModels(BaseTest):
         self.project = ProjectFactory()
 
     def test_repo_creation_results_in_repo_path_creation_deletion_results_in_path_deletion(self):
-        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_MOUNT_PATH,
+        repo_path = '{}/{}/{}/{}'.format(conf.get('REPOS_MOUNT_PATH'),
                                          self.project.user.username,
                                          self.project.name,
                                          self.project.name)

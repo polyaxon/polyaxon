@@ -1,6 +1,6 @@
 from hestia.string_utils import strip_spaces
 
-from django.conf import settings
+import conf
 
 from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
@@ -78,7 +78,7 @@ class EmailAction(Action):
 
     @classmethod
     def _execute(cls, data, config):
-        if not all([settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD]):
+        if not all([conf.get('EMAIL_HOST_USER'), conf.get('EMAIL_HOST_PASSWORD')]):
             logger.debug("Email was not setup, skipping send.")
             return
 

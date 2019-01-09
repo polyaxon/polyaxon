@@ -3,8 +3,9 @@ import uuid
 
 from hestia.crypto import get_hmac
 
-from django.conf import settings
 from django.utils.crypto import constant_time_compare
+
+import conf
 
 from db.redis.base import BaseRedisDb
 from libs.json_utils import dumps, loads
@@ -19,7 +20,6 @@ class RedisEphemeralTokens(BaseRedisDb):
     KEY_SALT = 'polyaxon.scope.key_salt'
     SEPARATOR = 'XEPH:'
 
-    EXPIRATION_TTL = settings.TTL_EPHEMERAL_TOKEN
     KEY_EPHEMERAL_TOKENS = 'EPHEMERAL_TOKENS:{}'
 
     REDIS_POOL = RedisPools.EPHEMERAL_TOKENS
@@ -63,7 +63,8 @@ class RedisEphemeralTokens(BaseRedisDb):
         return self.KEY_EPHEMERAL_TOKENS.format(self.key)
 
     @classmethod
-    def generate(cls, scope, ttl=EXPIRATION_TTL):
+    def generate(cls, scope, ttl=None):
+        ttl = ttl or conf.get('TTL_EPHEMERAL_TOKEN')
         token = RedisEphemeralTokens()
         salt = uuid.uuid4().hex
         value = dumps({

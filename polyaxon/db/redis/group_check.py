@@ -1,4 +1,4 @@
-from django.conf import settings
+import conf
 
 from db.redis.base import BaseRedisDb
 from polyaxon.settings import RedisPools
@@ -12,7 +12,6 @@ class GroupChecks(BaseRedisDb):
     KEY_DELAYED = 'group.delayed:{}'
 
     # If a group started a task in this interval we schedule at most one afterwards
-    GROUP_CHECKS_INTERVAL = settings.GROUP_CHECKS_INTERVAL
     REDIS_POOL = RedisPools.GROUP_CHECKS
 
     def __init__(self, group):
@@ -58,11 +57,15 @@ class GroupChecks(BaseRedisDb):
         return True
 
     def check(self):
-        self._red.setex(name=self.redis_key_checked, value=1, time=self.GROUP_CHECKS_INTERVAL)
+        self._red.setex(name=self.redis_key_checked,
+                        value=1,
+                        time=conf.get('GROUP_CHECKS_INTERVAL'))
 
     def delay(self):
         self.check()
-        self._red.setex(name=self.redis_key_delayed, value=1, time=self.GROUP_CHECKS_INTERVAL)
+        self._red.setex(name=self.redis_key_delayed,
+                        value=1,
+                        time=conf.get('GROUP_CHECKS_INTERVAL'))
 
     def clear(self):
         if self.redis_key_checked:

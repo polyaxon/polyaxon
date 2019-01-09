@@ -1,7 +1,8 @@
 import os
 
-from django.conf import settings
 from django.db import models
+
+import conf
 
 from constants.urls import API_V1
 from db.models.utils import DiffModel
@@ -10,7 +11,7 @@ from db.models.utils import DiffModel
 class RepoMixin(object):
     @property
     def user_path(self):
-        return os.path.join(settings.REPOS_MOUNT_PATH, self.project.user.username)
+        return os.path.join(conf.get('REPOS_MOUNT_PATH'), self.project.user.username)
 
     @property
     def project_path(self):

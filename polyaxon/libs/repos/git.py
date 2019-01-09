@@ -8,7 +8,7 @@ from git import InvalidGitRepositoryError
 from git import Repo as GitRepo
 from psutil import Popen
 
-from django.conf import settings
+import conf
 
 from libs.paths.utils import create_path, delete_path
 
@@ -16,7 +16,7 @@ _logger = logging.getLogger('polyaxon.repos.git')
 
 
 def get_repos(user):
-    user_repos_root = os.path.join(settings.REPOS_MOUNT_PATH, user)
+    user_repos_root = os.path.join(conf.get('REPOS_MOUNT_PATH'), user)
     repos = [get_git_repo(os.path.join(user, dir_name)) for dir_name in os.listdir(user_repos_root)]
     return [repo for repo in repos if repo is not None]
 

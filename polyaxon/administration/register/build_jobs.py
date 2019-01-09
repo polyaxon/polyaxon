@@ -1,6 +1,5 @@
 from administration.register.abstract_job import JobStatusAdmin
 from administration.register.utils import DiffModelAdmin
-
 from db.models.build_jobs import BuildJob, BuildJobStatus
 
 

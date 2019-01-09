@@ -2,10 +2,10 @@ import logging
 
 from django_auth_ldap.backend import populate_user
 
-from django.conf import settings
 from django.dispatch import receiver
 
 import auditor
+import conf
 
 from event_manager.events.user import USER_LDAP
 
@@ -26,6 +26,6 @@ def populate_user_handler(sender, **kwargs):
             _logger.error("%s does not have a value for the attribute %s",
                           ldap_user.dn, 'mail',
                           exc_info=True)
-            user.email = '%s@%s' % (user.username, settings.DEFAULT_EMAIL_DOMAIN)
+            user.email = '%s@%s' % (user.username, conf.get('DEFAULT_EMAIL_DOMAIN'))
         else:
             user.email = value

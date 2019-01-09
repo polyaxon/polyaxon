@@ -1,6 +1,5 @@
-from django.conf import settings
-
 import auditor
+import conf
 
 from event_manager.events.job import JOB_LOGS_VIEWED
 from streams.authentication import authorized
@@ -31,5 +30,5 @@ async def job_logs_v2(request, ws, username, project_name, job_id):
                   ws=ws,
                   job=job,
                   pod_id=pod_id,
-                  container=settings.CONTAINER_NAME_JOB,
-                  namespace=settings.K8S_NAMESPACE)
+                  container=conf.get('CONTAINER_NAME_JOB'),
+                  namespace=conf.get('K8S_NAMESPACE'))

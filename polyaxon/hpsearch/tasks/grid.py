@@ -1,4 +1,4 @@
-from django.conf import settings
+import conf
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group
@@ -29,7 +29,7 @@ def create(experiment_group):
     chunk_suggestions = []
     for suggestion in suggestions:
         chunk_suggestions.append(suggestion)
-        if len(chunk_suggestions) == settings.GROUP_CHUNKS:
+        if len(chunk_suggestions) == conf.get('GROUP_CHUNKS'):
             send_chunk()
             chunk_suggestions = []
 

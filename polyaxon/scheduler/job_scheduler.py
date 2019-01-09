@@ -5,6 +5,8 @@ from kubernetes.client.rest import ApiException
 
 from django.conf import settings
 
+import conf
+
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
 from polyaxon.config_manager import config
@@ -36,7 +38,7 @@ def start_job(job):
         job_uuid=job.uuid.hex,
         spec=job.specification,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         job_docker_image=job_docker_image,
         in_cluster=True,
         use_sidecar=True,
@@ -95,7 +97,7 @@ def stop_job(project_name, project_uuid, job_name, job_uuid):
         job_name=job_name,
         job_uuid=job_uuid,
         k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
+        namespace=conf.get('K8S_NAMESPACE'),
         spec=None,
         in_cluster=True)
 

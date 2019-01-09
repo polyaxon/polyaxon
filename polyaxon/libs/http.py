@@ -7,7 +7,7 @@ from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 from hestia.auth import AuthenticationTypes
 from hestia.fs import move_recursively
 
-from django.conf import settings
+import conf
 
 from libs.api import get_http_api_url
 
@@ -16,11 +16,12 @@ def absolute_uri(url):
     if not url:
         return None
 
-    if not settings.API_HOST:
+    api_host = conf.get('API_HOST')
+    if not api_host:
         return url
 
-    url = urljoin(settings.API_HOST.rstrip('/') + '/', url.lstrip('/'))
-    return '{}://{}'.format(settings.PROTOCOL, url)
+    url = urljoin(api_host.rstrip('/') + '/', url.lstrip('/'))
+    return '{}://{}'.format(conf.get('PROTOCOL'), url)
 
 
 def add_notification_referrer_param(url, provider, is_absolute=True):
@@ -51,7 +52,7 @@ def download(url,
         authentication_type = AuthenticationTypes.TOKEN
 
     if authentication_type == AuthenticationTypes.INTERNAL_TOKEN and not access_token:
-        access_token = settings.SECRET_INTERNAL_TOKEN
+        access_token = conf.get('SECRET_INTERNAL_TOKEN')
 
     # Auth headers if access_token is present
     request_headers = {}

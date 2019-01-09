@@ -10,6 +10,7 @@ from rest_framework import status
 
 from django.conf import settings
 
+import conf
 import stores
 
 from api.jobs.serializers import (
@@ -741,7 +742,7 @@ class DownloadJobOutputsViewTest(BaseViewTest):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         '{}/{}.tar.gz'.format(settings.OUTPUTS_ARCHIVE_ROOT,
+                         '{}/{}.tar.gz'.format(conf.get('OUTPUTS_ARCHIVE_ROOT'),
                                                self.job.unique_name.replace('.', '_')))
 
 

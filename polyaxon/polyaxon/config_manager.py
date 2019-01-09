@@ -189,6 +189,12 @@ class ConfigManager(rhea.Rhea):
             notifier.validate()
             notifier.setup()
 
+    def setup_conf_service(self):
+        import conf
+
+        conf.validate()
+        conf.setup()
+
     def setup_publisher_service(self):
         import publisher
 

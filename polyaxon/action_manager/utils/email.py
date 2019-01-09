@@ -1,8 +1,9 @@
 from hestia.string_utils import strip_spaces
 
-from django.conf import settings
 from django.core.mail import send_mass_mail
 from django.template.loader import render_to_string
+
+import conf
 
 
 def render_mail_template(subject_template, body_template, context):
@@ -31,7 +32,7 @@ def send_mass_template_mail(subject_template, body_template, recipients, context
     else:
         subject, body = subject_template, body_template
 
-    message_tuples = [(subject, body, settings.DEFAULT_FROM_EMAIL, [r]) for r in recipients]
+    message_tuples = [(subject, body, conf.get('DEFAULT_FROM_EMAIL'), [r]) for r in recipients]
 
     send_mass_mail(message_tuples)
 
@@ -48,7 +49,7 @@ def send_mass_user_template_mail(subject_template, body_template, users, context
         context['user'] = user
         subject, body = render_mail_template(subject_template, body_template, context)
 
-        message_tuples.append((subject, body, settings.DEFAULT_FROM_EMAIL, [user.email]))
+        message_tuples.append((subject, body, conf.get('DEFAULT_FROM_EMAIL'), [user.email]))
 
     if message_tuples:
         send_mass_mail(message_tuples)

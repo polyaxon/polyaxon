@@ -3,6 +3,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
+import conf
+
 from constants.images_tags import LATEST_IMAGE_TAG
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
@@ -118,7 +120,7 @@ class BuildJob(AbstractJob,
         # Check if image is not using latest tag, then we can reuse a previous build
         rebuild_cond = (
             nocache or
-            (settings.BUILD_ALWAYS_PULL_LATEST and
+            (conf.get('BUILD_ALWAYS_PULL_LATEST') and
              build_config.build.image_tag == LATEST_IMAGE_TAG)
         )
         if not rebuild_cond:

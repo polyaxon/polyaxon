@@ -6,6 +6,8 @@ from kubernetes.client.rest import ApiException
 
 from django.conf import settings
 
+import conf
+
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
@@ -441,7 +443,7 @@ def start_experiment(experiment):
                                 cloning_strategy=experiment.cloning_strategy,
                                 spec=experiment.specification,
                                 k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
+                                namespace=conf.get('K8S_NAMESPACE'),
                                 in_cluster=True,
                                 job_docker_image=job_docker_image,
                                 use_sidecar=True,
@@ -500,7 +502,7 @@ def stop_experiment(project_name,
                             experiment_uuid=experiment_uuid,
                             spec=specification,
                             k8s_config=settings.K8S_CONFIG,
-                            namespace=settings.K8S_NAMESPACE,
+                            namespace=conf.get('K8S_NAMESPACE'),
                             in_cluster=True,
                             use_sidecar=True,
                             sidecar_config=config.get_requested_params(to_str=True))

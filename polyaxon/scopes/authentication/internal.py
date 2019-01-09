@@ -5,6 +5,8 @@ from rest_framework.authentication import get_authorization_header
 
 from django.conf import settings
 
+import conf
+
 from scopes.authentication.base import PolyaxonAuthentication
 
 
@@ -21,7 +23,7 @@ class InternalUser(object):
 
     @property
     def access_token(self):
-        return settings.SECRET_INTERNAL_TOKEN
+        return conf.get('SECRET_INTERNAL_TOKEN')
 
     def __eq__(self, other):
         return isinstance(other, InternalUser) and other.username == self.username

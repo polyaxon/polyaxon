@@ -44,10 +44,10 @@ class ProjectJobSpawner(K8SManager):
 
     @staticmethod
     def _get_service_type():
-        if settings.PUBLIC_PLUGIN_JOBS:
-            return None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
+        if conf.get('PUBLIC_PLUGIN_JOBS'):
+            return None if conf.get('K8S_INGRESS_ENABLED') else 'LoadBalancer'
         return None
 
     @staticmethod
     def _use_ingress():
-        return settings.K8S_INGRESS_ENABLED and settings.PUBLIC_PLUGIN_JOBS
+        return conf.get('K8S_INGRESS_ENABLED') and conf.get('PUBLIC_PLUGIN_JOBS')

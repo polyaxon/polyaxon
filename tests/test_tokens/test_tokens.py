@@ -2,8 +2,9 @@ from datetime import timedelta
 
 import pytest
 
-from django.conf import settings
 from django.utils import timezone
+
+import conf
 
 from db.models.tokens import Token
 from tests.utils import BaseTest
@@ -18,7 +19,7 @@ class TokenTest(BaseTest):
         token = Token(started_at=timezone.now() + timedelta(days=1))
         self.assertEqual(token.is_expired, False)
 
-        token = Token(started_at=timezone.now() - timedelta(days=settings.TTL_TOKEN + 10))
+        token = Token(started_at=timezone.now() - timedelta(days=conf.get('TTL_TOKEN') + 10))
         self.assertEqual(token.is_expired, True)
 
     def test_get_scopes(self):
