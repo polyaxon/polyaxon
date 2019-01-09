@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
-from polyaxon_deploy.schemas.deployment_types import ServiceTypes
+from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.email import EmailSchema
 from polyaxon_deploy.schemas.ingress import IngressSchema
 from polyaxon_deploy.schemas.integrations import IntegrationsSchema
@@ -23,7 +23,7 @@ from polyaxon_deploy.schemas.service import (
     RabbitmqSchema,
     ServiceSchema
 )
-from polyaxon_deploy.schemas.service_types import DeploymentTypes
+from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
 
 from polyaxon_schemas.utils import DictOrStr
 

@@ -1,7 +1,6 @@
-class DeploymentTypes(object):
-    KUBERNETES = 'kubernetes'
-    DOCKER_COMPOSE = 'docker-compose'
-    DOCKER = 'docker'
-    HEROKU = 'heroku'
+class ServiceTypes(object):
+    LOAD_BALANCER = 'LoadBalancer'
+    NODE_PORT = 'NodePort'
+    CLUSTER_IP = 'clusterIP'
 
-    VALUES = [KUBERNETES, DOCKER_COMPOSE, DOCKER, HEROKU]
+    VALUES = [LOAD_BALANCER, NODE_PORT, CLUSTER_IP]
