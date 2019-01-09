@@ -39,7 +39,7 @@ In order to run these examples, you need to deploy a Polyaxon with a scheduling 
 These examples should run with all type of Polyaxon deployments.
 
 To run the tracking examples, you need to configure a client to communicate with Polyaxon API, 
-there many ways to configure the client, in this example we use an environment approach to have minimal impact on the code, 
+there are many ways to configure the client, in this example we use an environment approach to have minimal impact on the code, 
 in other terms, this approach allow us to create an experiment with the minimum code required:
 
 ```python
