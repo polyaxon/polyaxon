@@ -2,8 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import six
-from marshmallow import ValidationError, fields, validates_schema
 
+from marshmallow import ValidationError, fields, validates_schema
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 
 

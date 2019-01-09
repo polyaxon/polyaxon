@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError
 from unittest import TestCase
 
+from marshmallow import ValidationError
 from polyaxon_deploy.schemas.scheduling import (
     AffinityConfig,
     NodeSelectorsConfig,

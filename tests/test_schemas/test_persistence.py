@@ -6,6 +6,5 @@ from unittest import TestCase
 from marshmallow import ValidationError
 
 
-
 class TestPersistenceConfig(TestCase):
     pass

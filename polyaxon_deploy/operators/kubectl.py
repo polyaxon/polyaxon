@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import os
 
 from hestia.user_path import polyaxon_user_path
-
 from polyaxon_deploy.operators.cmd_operator import CmdOperator
 
 

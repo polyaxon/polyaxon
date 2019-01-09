@@ -3,11 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-
 from marshmallow import ValidationError
-
-from polyaxon_deploy.schemas.deployment import DeploymentConfig
 from polyaxon_deploy import reader
+from polyaxon_deploy.schemas.deployment import DeploymentConfig
 
 
 class TestDeploymentConfig(TestCase):

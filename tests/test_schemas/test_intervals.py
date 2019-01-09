@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError
 from unittest import TestCase
 
-from polyaxon_deploy.schemas.intervals import (
-    CleaningIntervalsConfig,
-    IntervalsConfig,
-    TTLConfig
-)
+from marshmallow import ValidationError
+from polyaxon_deploy.schemas.intervals import CleaningIntervalsConfig, IntervalsConfig, TTLConfig
 
 
 class TestIntervalsConfig(TestCase):

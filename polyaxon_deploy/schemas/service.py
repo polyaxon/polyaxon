@@ -2,9 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
-from polyaxon_schemas.environments import K8SContainerResourcesSchema
-
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
+
+from polyaxon_schemas.environments import K8SContainerResourcesSchema
 
 
 class ServiceSchema(BaseSchema):

@@ -17,3 +17,4 @@ class OperatorException(Exception):
                 self.stdout,
                 self.stderr,
             ))
+        super(OperatorException, self).__init__()

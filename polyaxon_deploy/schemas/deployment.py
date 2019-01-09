@@ -2,22 +2,30 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
-from polyaxon_schemas.utils import DictOrStr
-
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 from polyaxon_deploy.schemas.deployment_types import ServiceTypes
 from polyaxon_deploy.schemas.email import EmailSchema
 from polyaxon_deploy.schemas.ingress import IngressSchema
 from polyaxon_deploy.schemas.integrations import IntegrationsSchema
-from polyaxon_deploy.schemas.intervals import IntervalsSchema, CleaningIntervalsSchema, TTLSchema
+from polyaxon_deploy.schemas.intervals import CleaningIntervalsSchema, IntervalsSchema, TTLSchema
 from polyaxon_deploy.schemas.persistence import PersistenceSchema
 from polyaxon_deploy.schemas.rbac import RBACSchema
 from polyaxon_deploy.schemas.root_user import RootUserSchema
-from polyaxon_deploy.schemas.scheduling import NodeSelectorsSchema, TolerationsSchema, \
-    AffinitySchema
-from polyaxon_deploy.schemas.service import ServiceSchema, EventMonitorsSchema, PostgresqlSchema, \
-    RabbitmqSchema, DockerRegistrySchema
+from polyaxon_deploy.schemas.scheduling import (
+    AffinitySchema,
+    NodeSelectorsSchema,
+    TolerationsSchema
+)
+from polyaxon_deploy.schemas.service import (
+    DockerRegistrySchema,
+    EventMonitorsSchema,
+    PostgresqlSchema,
+    RabbitmqSchema,
+    ServiceSchema
+)
 from polyaxon_deploy.schemas.service_types import DeploymentTypes
+
+from polyaxon_schemas.utils import DictOrStr
 
 
 class DeploymentSchema(BaseSchema):
