@@ -119,9 +119,6 @@ static/rest_framework
 static/css
 
 # npm modules and transpiled typescript files
-client/dist/
-client/node_modules/
-client/npm-debug.log
 deploy/dist/
 deploy/node_modules/
 deploy/npm-debug.log

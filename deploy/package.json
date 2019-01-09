@@ -1,0 +1,53 @@
+{
+  "name": "polyaxon-deploy",
+  "version": "0.3.5",
+  "description": "Polyaxon deploy",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf js/* && mkdir -p public/js",
+    "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output public/js/bundle.min.js",
+    "dev": "webpack-dev-server --host 0.0.0.0 --port 8001 --env.dev --config webpack.config.dev.js  --output-public-path=dist/",
+    "build": "npm run clean && webpack --env.prod --config webpack.config.prod.js && npm run minify"
+  },
+  "author": "mourad mourafiq",
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "@types/node": "8.10.20",
+    "awesome-typescript-loader": "3.5.0",
+    "bulma": "^0.7.1",
+    "css-loader": "0.28.11",
+    "file-loader": "0.11.2",
+    "less": "2.7.3",
+    "less-loader": "4.1.0",
+    "source-map-loader": "0.2.3",
+    "style-loader": "0.18.2",
+    "tslint": "5.10.0",
+    "tslint-react": "3.6.0",
+    "typescript": "2.9.2",
+    "uglify-js": "3.4.2",
+    "url-loader": "0.5.9",
+    "webpack": "3.12.0",
+    "webpack-dev-server": "2.11.2"
+  },
+  "dependencies": {
+    "@types/history": "4.6.2",
+    "@types/js-yaml": "^3.11.2",
+    "@types/lodash": "^4.14.116",
+    "@types/raven": "2.5.1",
+    "@types/react": "16.4.2",
+    "@types/react-dom": "16.0.6",
+    "@types/react-router": "4.0.27",
+    "@types/react-router-dom": "4.2.7",
+    "@types/sprintf-js": "0.0.27",
+    "history": "4.7.2",
+    "js-yaml": "^3.12.0",
+    "lodash": "^4.17.10",
+    "normalizr": "3.2.4",
+    "raven-js": "3.26.3",
+    "react": "16.4.01",
+    "react-dom": "16.4.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "sprintf-js": "1.1.1"
+  }
+}
