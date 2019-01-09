@@ -45,11 +45,11 @@ class NotebookSpawner(ProjectJobSpawner):
 
     @staticmethod
     def get_notebook_code_volume():
-        volume = get_volume(volume=conf.get('REPOS_VOLUME'),
+        volume = get_volume(volume=constants.REPOS_VOLUME,
                             claim_name=conf.get('REPOS_CLAIM_NAME'),
                             host_path=conf.get('REPOS_HOST_PATH'))
 
-        volume_mount = get_volume_mount(volume=conf.get('REPOS_VOLUME'),
+        volume_mount = get_volume_mount(volume=constants.REPOS_VOLUME,
                                         volume_mount=conf.get('REPOS_MOUNT_PATH'))
         return volume, volume_mount
 

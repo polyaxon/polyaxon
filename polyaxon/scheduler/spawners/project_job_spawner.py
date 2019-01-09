@@ -1,4 +1,4 @@
-from django.conf import settings
+import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from polyaxon_k8s.manager import K8SManager
