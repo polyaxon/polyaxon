@@ -1,0 +1,110 @@
+rbac:
+  enabled: true
+
+ingress:
+  enabled: true
+
+serviceType: clusterIP
+environment: staging
+user:
+  password: root
+
+
+postgresql:
+  install: false
+  postgresUser: polyaxon
+  postgresPassword: polyaxon
+  postgresDatabase: postgres
+  externalPostgresHost: 35.226.163.84
+
+nodeSelectors:
+  core:
+    polyaxon: core
+  builds:
+    polyaxon: core
+
+
+nfsProvisioner:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 150Gi
+
+  pvc:
+    repos: 50
+    outputs:
+      size: 80Gi
+    logs:
+      size: 15Gi
+
+api:
+  replicas: 3
+
+scheduler:
+  replicas: 3
+
+hpsearch:
+  replicas: 3
+
+eventsHandlers:
+  replicas: 3
+
+k8sEventsHandlers:
+  replicas: 3
+
+eventMonitors:
+  replicas: 3
+
+auth:
+  bitbucket:
+    enabled: false
+    clientId: "593b4e1bfc3f4742cc23"
+    clientSecret: "c20621355af0c9f2032ee4bb20d0c3f12bf0cac6"
+
+
+persistence:
+  data:
+    data1:
+      mountPath: "/tmp/data"
+      hostPath: "/tmp/data"
+    data2:
+      mountPath: "/tmp/data"
+      existingClaim: "data-2-pvc"
+    data3:
+      mountPath: "/tmp/data"
+      existingClaim: "data-3-pvc"
+      readOnly: true
+  outputs:
+    outputs1:
+      mountPath: "/tmp/outputs"
+      hostPath: "/tmp/outputs"
+    outputs2:
+      mountPath: "/tmp/outputs"
+      existingClaim: "outputs-2-pvc"
+    outputs3:
+      mountPath: "/tmp/outputs"
+      existingClaim: "outputs-3-pvc"
+
+email:
+  host: "smtp.gmail.com"
+  port: 587
+  useTls: true
+  hostUser: "foo"
+  hostPassword: "bar"
+
+integrations:
+  slack:
+    - url: https://hooks.slack.com/services/sdfdfdsfsdf/sdflsdklfj
+    - url: https://hooks.slack.com/services/sdlkfjsdlk/lkjsdlkfjdklsjf2
+
+
+privateRegistries:
+  - host: "my.registry.com"
+    user: "_json_key"
+    password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'
+
+  - host: "another.registry.com"
+    user: "myname"
+    password: "mypassword"
+
+  - "user:password@foo.bar.registry.com"
