@@ -166,7 +166,7 @@ class NotebookSpawner(ProjectJobSpawner):
                                         ports=ports,
                                         allow_commits=allow_commits),
             ports=target_ports,
-            container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
+            container_name=conf.get('CONTAINER_NAME_PLUGIN_JOB'),
             env_vars=env_vars,
             env_from=env_from,
             resources=resources,

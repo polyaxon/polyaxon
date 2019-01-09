@@ -179,7 +179,7 @@ class ConfigManager(rhea.Rhea):
 
     @property
     def log_level(self):
-        return config._log_level if config.is_staging_env else 'WARNING'
+        return self._log_level if config.is_staging_env else 'WARNING'
 
     def setup_auditor_services(self):
         if not self.is_testing_env:

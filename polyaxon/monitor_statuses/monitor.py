@@ -82,7 +82,7 @@ def run(k8s_manager):
         )
 
         plugin_job_condition = (
-            conf.get('CONTAINER_NAME_PLUGIN_JOB ') in pod_state['details']['container_statuses'] or
+            conf.get('CONTAINER_NAME_PLUGIN_JOB') in pod_state['details']['container_statuses'] or
             (status and
              labels['app'] in (conf.get('APP_LABELS_TENSORBOARD'), conf.get('APP_LABELS_NOTEBOOK')))
         )
