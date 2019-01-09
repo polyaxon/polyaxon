@@ -5,13 +5,13 @@ import os
 import sys
 
 import click
-import rhea
 
 from hestia.list_utils import to_list
 
+from polyaxon_deploy import reader
+
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.deploy import DeployManager
-from polyaxon_cli.schemas.deployment_configuration import DeploymentConfig
 from polyaxon_cli.utils.formatting import Printer
 
 
@@ -24,10 +24,8 @@ def read_deployment_config(filepaths):
         if not os.path.isfile(filepath):
             Printer.print_error("`{}` must be a valid file".format(filepath))
             sys.exit(1)
-
-    data = rhea.read(filepaths)
     try:
-        deployment_config = DeploymentConfig.from_dict(data)
+        deployment_config = reader.read(filepaths)
     except Exception as e:
         Printer.print_error("Polyaxon deployment file is not valid ")
         Printer.print_error('Error message `{}`.'.format(e))

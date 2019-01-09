@@ -3,10 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_deploy.operators.helm import HelmOperator
+from polyaxon_deploy.operators.kubectl import KubectlOperator
+from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
+
 from polyaxon_cli.exceptions import PolyaxonDeploymentConfigError
-from polyaxon_cli.operators.helm import HelmOperator
-from polyaxon_cli.operators.kubectl import KubectlOperator
-from polyaxon_cli.schemas.deployment_configuration import DeploymentTypes
 from polyaxon_cli.utils.formatting import Printer
 
 
