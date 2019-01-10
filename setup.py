@@ -19,7 +19,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polystores',
-      version='0.0.3',
+      version='0.0.4',
       description='Polystores is an abstraction and a collection of clients '
                   'to interact with cloud storages.',
       maintainer='Mourad Mourafiq',
@@ -47,8 +47,7 @@ setup(name='polystores',
           'docker'
       ],
       install_requires=[
-          "rhea==0.4.1",
-          "six==1.11.0"
+          "rhea>=0.4.2",
       ],
       classifiers=[
           'Programming Language :: Python',
