@@ -8,8 +8,8 @@ Jinja2==2.10
 pika==0.12.0
 sanic==0.8.3
 kubernetes-asyncio==8.0.3
-ocular==0.0.4
-polyaxon-k8s==0.3.3
+ocular==0.0.5
+polyaxon-k8s==0.3.5
 polyaxon-gpustat==0.3.3
 scikit-learn==0.20.0
 scipy==1.1.0
