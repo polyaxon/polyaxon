@@ -176,6 +176,15 @@ ingress:
 serviceType: LoadBalancer
 ```
 
+It is however recommended to enable RBAC and start minikube with the option `--extra-config=apiserver.authorization-mode=RBAC`.
+
+After installing polyaxon, use the following command to enable access to the API service:
+
+```bash
+minikube service -n polyaxon polyaxon-polyaxon-api
+```
+
+Note that when using minikube, the IP address of the application is given by `minikube ip`.
 
 ## Upgrade Polyaxon
 
