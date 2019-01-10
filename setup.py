@@ -47,7 +47,7 @@ setup(name='polystores',
           'docker'
       ],
       install_requires=[
-          "rhea==0.4.0",
+          "rhea==0.4.1",
           "six==1.11.0"
       ],
       classifiers=[
