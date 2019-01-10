@@ -17,11 +17,11 @@ from scheduler.spawners.templates.volumes import get_docker_volumes
 class DockerizerSpawner(ProjectJobSpawner):
     def get_env_vars(self):
         env_vars = get_service_env_vars(namespace=self.namespace)
-        for k, v in config.get_requested_params(to_str=True).items():
+        for k, v in config.get_requested_data(to_str=True).items():
             env_vars.append(get_env_var(name=k, value=v))
 
         # Add private registries secrets keys
-        for key in config.params_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
+        for key in config.keys_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
             env_vars.append(get_from_secret(key, key))
 
         # Add repos access token secret key

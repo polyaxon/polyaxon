@@ -447,7 +447,7 @@ def start_experiment(experiment):
                                 in_cluster=True,
                                 job_docker_image=job_docker_image,
                                 use_sidecar=True,
-                                sidecar_config=config.get_requested_params(to_str=True),
+                                sidecar_config=config.get_requested_data(to_str=True),
                                 token_scope=token_scope)
         response = spawner.start_experiment()
         handle_experiment(experiment=experiment, spawner=spawner, response=response)
@@ -505,5 +505,5 @@ def stop_experiment(project_name,
                             namespace=conf.get('K8S_NAMESPACE'),
                             in_cluster=True,
                             use_sidecar=True,
-                            sidecar_config=config.get_requested_params(to_str=True))
+                            sidecar_config=config.get_requested_data(to_str=True))
     return spawner.stop_experiment()

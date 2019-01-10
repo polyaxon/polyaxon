@@ -42,7 +42,7 @@ def start_job(job):
         job_docker_image=job_docker_image,
         in_cluster=True,
         use_sidecar=True,
-        sidecar_config=config.get_requested_params(to_str=True))
+        sidecar_config=config.get_requested_data(to_str=True))
 
     error = {}
     try:

@@ -16,7 +16,7 @@ PRIVATE_REGISTRIES_PREFIX = 'POLYAXON_PRIVATE_REGISTRY_'
 
 def get_external_registries():
     registries = []
-    for key in config.params_startswith(PRIVATE_REGISTRIES_PREFIX):
+    for key in config.keys_startswith(PRIVATE_REGISTRIES_PREFIX):
 
         try:
             registry_dict = config.get_dict(key, is_secret=True)
