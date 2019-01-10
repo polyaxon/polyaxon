@@ -62,10 +62,10 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ```bash
     $ polyaxon init quick-start
 
-    Polyaxonfile was created successfully `polyaxonfile.yml`
+    Project `quick-start` was initialized and Polyaxonfile was created successfully `polyaxonfile.yml`
     ```
 
-5. Let's open the created `polyaxon.yml`, since we cloned the project,
+5. Let's open the created `polyaxonfile.yml`, since we cloned the project,
    this file is already populated with the minimum configuration needed to start an experiment:
 
     ```yaml
@@ -77,10 +77,10 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     build:
       image: tensorflow/tensorflow:1.4.1-py3
       build_steps:
-        - pip3 install polyaxon-client
+        - pip3 install --no-cache-dir -U polyaxon-client
 
     run:
-      cmd: python model.py
+      cmd: python3 model.py  # Use default params
     ```
 
     This configuration specifies:
