@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+
 from unittest import TestCase
 
 from polyaxon_client import settings
@@ -22,6 +24,11 @@ from polyaxon_client.transport import Transport
 
 
 class TestPolyaxonClient(TestCase):
+    def tearDown(self):
+        super(TestPolyaxonClient, self).tearDown()
+        if os.path.exists(settings.TMP_AUTH_TOKEN_PATH):
+            os.remove(settings.TMP_AUTH_TOKEN_PATH)
+
     def test_client(self):
         settings.SECRET_USER_TOKEN = None
         with self.assertRaises(PolyaxonClientException):
