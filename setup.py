@@ -19,7 +19,7 @@ class PyTest(TestCommand):
 
 
 setup(name='rhea',
-      version='0.4.0',
+      version='0.4.1',
       description='Efficient environment variables management and typing for python.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad.mourafiq@gmail.com',
