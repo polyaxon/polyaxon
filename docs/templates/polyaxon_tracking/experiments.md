@@ -18,7 +18,7 @@ experiment = Experiment(
     group_id=None,
     client=None,
     track_logs=True,
-    track_git=True,
+    track_code=True,
     track_env=True,
     outputs_store=None)
 ```
@@ -90,7 +90,7 @@ This step is done automatically when creating an instance with `track_env=True`
 experiment.log_code_ref()
 ```
 
-This step is done automatically when creating an instance with `track_git=True`
+This step is done automatically when creating an instance with `track_code=True`
 
 
 ### Log statuses
