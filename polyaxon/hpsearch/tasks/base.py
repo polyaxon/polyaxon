@@ -1,5 +1,7 @@
 from hestia.np_utils import sanitize_np_types
 
+import conf
+
 from db.models.experiments import Experiment
 from db.redis.group_check import GroupChecks
 from hpsearch.tasks.logger import logger
@@ -82,7 +84,7 @@ def should_group_start(experiment_group_id, task, auto_retry):
         celery_app.send_task(
             task,
             kwargs={'experiment_group_id': experiment_group_id, 'auto_retry': auto_retry},
-            countdown=GroupChecks.GROUP_CHECKS_INTERVAL)
+            countdown=conf.get('GROUP_CHECKS_INTERVAL'))
         return False
 
     group_checks.check()
