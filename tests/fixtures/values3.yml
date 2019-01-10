@@ -108,3 +108,13 @@ privateRegistries:
     password: "mypassword"
 
   - "user:password@foo.bar.registry.com"
+
+
+apiHost: 123.123.123.123
+allowedHosts:
+  - foo.bar.com
+  - 123.123.12.3
+secretRefs:
+  - foo
+  - moo
+configmapRefs: [foo, bar]

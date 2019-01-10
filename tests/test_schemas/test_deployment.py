@@ -152,10 +152,10 @@ class TestDeploymentConfig(TestCase):
         assert config.email is not None
         assert len(config.integrations.slack) == 2
         assert len(config.integrations.to_dict()) == 1
-        assert config.apiHost is None
-        assert config.allowedHosts is None
-        assert config.secretRefs is None
-        assert config.configmapRefs is None
+        assert config.apiHost == '123.123.123.123'
+        assert config.allowedHosts == ['foo.bar.com', '123.123.12.3']
+        assert config.secretRefs == ['foo', 'moo']
+        assert config.configmapRefs == ['foo', 'bar']
         assert config.intervals is None
         assert config.cleaningIntervals is None
         assert config.ttl is None
