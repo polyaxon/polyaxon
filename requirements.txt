@@ -1,4 +1,4 @@
-hestia>=0.2.0
+hestia>=0.2.3
 kubernetes>=7.0.0
-pytz==2018.7
-six==1.11.0
+pytz>=2018.7
+six==1.12.0
