@@ -3,8 +3,6 @@ import json
 from hestia.list_utils import to_list
 from kubernetes import client
 
-from django.conf import settings
-
 import conf
 import stores
 

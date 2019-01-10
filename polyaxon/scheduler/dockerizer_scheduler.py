@@ -3,8 +3,6 @@ import traceback
 
 from kubernetes.client.rest import ApiException
 
-from django.conf import settings
-
 import auditor
 import conf
 

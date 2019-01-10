@@ -4,8 +4,6 @@ import uuid
 
 from kubernetes.client.rest import ApiException
 
-from django.conf import settings
-
 import conf
 
 from constants.experiments import ExperimentLifeCycle
