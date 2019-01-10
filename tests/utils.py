@@ -10,6 +10,8 @@ from urllib.parse import urlparse
 import redis
 
 from hestia.auth import AuthenticationTypes
+from hestia.ephemeral_services import EphemeralServices
+from hestia.internal_services import InternalServices
 from mock import patch
 from rest_framework import status
 
@@ -17,6 +19,8 @@ from django.conf import settings
 from django.core.cache import cache
 from django.test import Client, TestCase
 from django.test.client import FakePayload
+
+import conf
 
 from db.models.tokens import Token
 from factories.factory_users import UserFactory
@@ -105,7 +109,7 @@ class EphemeralClient(BaseClient):
                  service=None,
                  **defaults):
         super().__init__(**defaults)
-        self.service = service or settings.EPHEMERAL_SERVICES.RUNNER
+        self.service = service or EphemeralServices.RUNNER
         self.authorization_header = '{} {}'.format(authentication_type, token)
 
     def request(self, **request):
@@ -126,9 +130,9 @@ class InternalClient(BaseClient):
                  service=None,
                  **defaults):
         super().__init__(**defaults)
-        self.service = service or settings.INTERNAL_SERVICES.HELPER
+        self.service = service or InternalServices.HELPER
         self.authorization_header = '{} {}'.format(authentication_type,
-                                                   settings.SECRET_INTERNAL_TOKEN)
+                                                   conf.get('SECRET_INTERNAL_TOKEN'))
 
     def request(self, **request):
         updated_request = {

@@ -1,6 +1,6 @@
 from kubernetes import client
 
-from django.conf import settings
+import conf
 
 from scheduler.spawners.templates import constants
 from stores.exceptions import VolumeNotFoundError
@@ -65,7 +65,7 @@ def get_pod_data_volume(persistence_data):
     for persistence_name in persistence_data:
         persistence_volumes, persistence_volume_mounts = get_volume_from_definition(
             volume_name=persistence_name,
-            volume_settings=settings.PERSISTENCE_DATA)
+            volume_settings=conf.get('PERSISTENCE_DATA'))
         volumes += persistence_volumes
         volume_mounts += persistence_volume_mounts
     return volumes, volume_mounts
@@ -74,7 +74,7 @@ def get_pod_data_volume(persistence_data):
 def get_pod_outputs_volume(persistence_outputs):
     persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence_outputs)
     return get_volume_from_definition(volume_name=persistence_outputs,
-                                      volume_settings=settings.PERSISTENCE_OUTPUTS)
+                                      volume_settings=conf.get('PERSISTENCE_OUTPUTS'))
 
 
 def get_pod_refs_outputs_volumes(outputs_refs, persistence_outputs):
@@ -88,7 +88,7 @@ def get_pod_refs_outputs_volumes(outputs_refs, persistence_outputs):
     for persistence in persistences:
         p_volumes, p_volume_mounts = get_volume_from_definition(
             volume_name=persistence,
-            volume_settings=settings.PERSISTENCE_OUTPUTS)
+            volume_settings=conf.get('PERSISTENCE_OUTPUTS'))
         volumes += p_volumes
         volume_mounts += p_volume_mounts
 
@@ -104,9 +104,9 @@ def get_pod_volumes(persistence_outputs, persistence_data):
 
 
 def get_docker_volumes():
-    volumes = [get_volume(volume=constants.DOCKER_VOLUME, host_path=settings.MOUNT_PATHS_DOCKER)]
+    volumes = [get_volume(volume=constants.DOCKER_VOLUME, host_path=conf.get('MOUNT_PATHS_DOCKER'))]
     volume_mounts = [get_volume_mount(volume=constants.DOCKER_VOLUME,
-                                      volume_mount=settings.MOUNT_PATHS_DOCKER)]
+                                      volume_mount=conf.get('MOUNT_PATHS_DOCKER'))]
     return volumes, volume_mounts
 
 

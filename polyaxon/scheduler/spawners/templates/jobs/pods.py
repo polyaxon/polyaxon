@@ -217,13 +217,13 @@ class PodManager(object):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTOR_JOBS)
+            default_node_selector=conf.get('NODE_SELECTOR_JOBS'))
         affinity = get_affinity(
             affinity=affinity,
-            default_affinity=settings.AFFINITY_JOBS)
+            default_affinity=conf.get('AFFINITY_JOBS'))
         tolerations = get_tolerations(
             tolerations=tolerations,
-            default_tolerations=settings.TOLERATIONS_JOBS)
+            default_tolerations=conf.get('TOLERATIONS_JOBS'))
 
         service_account_name = None
         if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_JOBS'):

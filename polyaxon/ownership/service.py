@@ -26,7 +26,9 @@ class OwnershipService(Service):
             raise OwnershipError('Received an invalid owner type `{}`.'.format(owner.owner_type))
 
     def set_default_owner(self, instance):
-        if settings.ALLOW_USER_PROJECTS:
+        import conf
+
+        if conf.get('ALLOW_USER_PROJECTS'):
             try:
                 self.set_owner(instance=instance, owner_obj=instance.user)
             except OwnershipError:

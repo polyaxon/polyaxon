@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
+from hestia.internal_services import InternalServices
 from rest_framework import status
 
 from django.conf import settings
@@ -618,7 +619,7 @@ class TestBuildHeartBeatViewV1(BaseViewTest):
     HAS_AUTH = True
     DISABLE_RUNNER = True
     HAS_INTERNAL = True
-    INTERNAL_SERVICE = settings.INTERNAL_SERVICES.SIDECAR
+    INTERNAL_SERVICE = InternalServices.SIDECAR
 
     def setUp(self):
         super().setUp()

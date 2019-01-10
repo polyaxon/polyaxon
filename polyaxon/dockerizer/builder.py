@@ -7,10 +7,9 @@ import time
 
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
+from hestia.internal_services import InternalServices
 from hestia.list_utils import to_list
 from hestia.logging_utils import LogLevels
-
-from django.conf import settings
 
 import conf
 
@@ -80,10 +79,10 @@ class DockerBuilder(object):
             _logger.exception('Failed to connect to registry %s\n', e)
 
     def login_private_registries(self):
-        if not settings.PRIVATE_REGISTRIES:
+        if not conf.get('PRIVATE_REGISTRIES'):
             return
 
-        for registry in settings.PRIVATE_REGISTRIES:
+        for registry in conf.get('PRIVATE_REGISTRIES'):
             self.docker.login(username=registry.user,
                               password=registry.password,
                               registry=registry.host,
@@ -188,7 +187,7 @@ class DockerBuilder(object):
             env_vars=self.env_vars,
             folder_name=self.folder_name,
             workdir=self.WORKDIR,
-            nvidia_bin=settings.MOUNT_PATHS_NVIDIA.get('bin'),
+            nvidia_bin=conf.get('MOUNT_PATHS_NVIDIA').get('bin'),
             copy_code=self.copy_code
         )
 
@@ -238,7 +237,7 @@ def download_code(build_job, build_path, filename):
         download_url = build_job.code_reference.repo.download_url
         internal = True
         headers = {
-            settings.HEADERS_INTERNAL.replace('_', '-'): settings.INTERNAL_SERVICES.DOCKERIZER
+            conf.get('HEADERS_INTERNAL').replace('_', '-'): InternalServices.DOCKERIZER
         }
         access_token = None
     elif build_job.code_reference.git_url:
@@ -351,7 +350,7 @@ def send_status(build_job, status, message=None, traceback=None):
                 'project_uuid': build_job.project.uuid.hex,
                 'project_name': build_job.project.unique_name,
             },
-            'node_name': settings.K8S_NODE_NAME
+            'node_name': conf.get('K8S_NODE_NAME')
         },
         'status': status,
         'message': message,

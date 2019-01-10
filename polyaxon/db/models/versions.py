@@ -6,20 +6,27 @@ from db.models.utils import Singleton
 
 
 class BaseValidationVersion(Singleton):
-    LATEST_VERSION = None
-    MIN_VERSION = None
-
     latest_version = models.CharField(max_length=16)
     min_version = models.CharField(max_length=16)
 
     class Meta:
         abstract = True
+        
+    @staticmethod
+    def get_min_version():
+        raise NotImplementedError
+
+    @staticmethod
+    def get_latest_version():
+        raise NotImplementedError
 
     @classmethod
     def may_be_update(cls, obj):
-        if obj.latest_version != cls.LATEST_VERSION or obj.min_version != cls.MIN_VERSION:
-            obj.min_version = cls.MIN_VERSION
-            obj.latest_version = cls.LATEST_VERSION
+        min_version = cls.get_min_version()
+        latest_version = cls.get_latest_version() 
+        if obj.latest_version != latest_version or obj.min_version != min_version:
+            obj.min_version = min_version
+            obj.latest_version = latest_version
             obj.save()
             obj.set_cache()
 
@@ -31,8 +38,8 @@ class BaseValidationVersion(Singleton):
             except cls.DoesNotExist:
                 obj = cls.objects.create(
                     pk=1,
-                    min_version=settings.CLI_MIN_VERSION,
-                    latest_version=settings.CLI_LATEST_VERSION)
+                    min_version=cls.get_min_version(),
+                    latest_version=cls.get_latest_version())
                 obj.set_cache()
         else:
             obj = cache.get(cls.__name__)
@@ -43,44 +50,69 @@ class BaseValidationVersion(Singleton):
 
 class CliVersion(BaseValidationVersion):
     """A model that represents the polyaxon cli version."""
-    LATEST_VERSION = settings.CLI_LATEST_VERSION
-    MIN_VERSION = settings.CLI_MIN_VERSION
-
     class Meta:
         app_label = 'db'
 
     def __str__(self):
         return 'Cli version'
 
+    @classmethod
+    def get_min_version(cls):
+        import conf
+        
+        return conf.get('CLI_LATEST_VERSION')
+
+    @classmethod
+    def get_latest_version(cls):
+        import conf
+
+        return conf.get('CLI_MIN_VERSION')
+
 
 class PlatformVersion(BaseValidationVersion):
     """A model that represents the polyaxon platform version."""
-    LATEST_VERSION = settings.PLATFORM_LATEST_VERSION
-    MIN_VERSION = settings.PLATFORM_MIN_VERSION
-
     class Meta:
         app_label = 'db'
 
     def __str__(self):
         return 'Platform version'
 
+    @classmethod
+    def get_min_version(cls):
+        import conf
+
+        return conf.get('PLATFORM_LATEST_VERSION')
+
+    @classmethod
+    def get_latest_version(cls):
+        import conf
+
+        return conf.get('PLATFORM_MIN_VERSION')
+
 
 class LibVersion(BaseValidationVersion):
     """A model that represents the polyaxon lib version."""
-    LATEST_VERSION = settings.LIB_LATEST_VERSION
-    MIN_VERSION = settings.LIB_MIN_VERSION
-
     class Meta:
         app_label = 'db'
 
     def __str__(self):
         return 'Lib version'
 
+    @classmethod
+    def get_min_version(cls):
+        import conf
+
+        return conf.get('LIB_LATEST_VERSION')
+
+    @classmethod
+    def get_latest_version(cls):
+        import conf
+
+        return conf.get('LIB_MIN_VERSION')
+
 
 class ChartVersion(Singleton):
     """A model that represents the polyaxon chart version."""
-    VERSION = settings.CHART_VERSION
-
     version = models.CharField(max_length=16)
 
     class Meta:
@@ -89,10 +121,18 @@ class ChartVersion(Singleton):
     def __str__(self):
         return 'Chart version'
 
+    @staticmethod
+    def get_version():
+        import conf
+
+        return conf.get('CHART_VERSION')
+
     @classmethod
     def may_be_update(cls, obj):
-        if obj.version != cls.VERSION:
-            obj.version = cls.VERSION
+        version = cls.get_version()
+
+        if obj.version != version:
+            obj.version = version
             obj.save()
         obj.set_cache()
 
@@ -102,7 +142,7 @@ class ChartVersion(Singleton):
             try:
                 obj = cls.objects.get(pk=1)
             except cls.DoesNotExist:
-                obj = cls.objects.create(pk=1, version=cls.VERSION)
+                obj = cls.objects.create(pk=1, version=cls.get_version())
         else:
             obj = cache.get(cls.__name__)
 

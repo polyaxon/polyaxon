@@ -10,7 +10,7 @@ from docker import APIClient
 from docker.errors import DockerException
 from hestia.list_utils import to_list
 
-from django.conf import settings
+import conf
 
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from libs.paths.utils import copy_to_tmp_dir, delete_path, delete_tmp_dir
@@ -123,7 +123,7 @@ class BaseDockerBuilder(object):
             env_vars=self.env_vars,
             folder_name=self.folder_name,
             workdir=self.WORKDIR,
-            nvidia_bin=settings.MOUNT_PATHS_NVIDIA.get('bin'),
+            nvidia_bin=conf.get('MOUNT_PATHS_NVIDIA').get('bin'),
             copy_code=self.copy_code
         )
 

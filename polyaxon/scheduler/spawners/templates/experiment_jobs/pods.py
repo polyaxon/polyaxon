@@ -4,8 +4,6 @@ import uuid
 from hestia.list_utils import to_list
 from kubernetes import client
 
-from django.conf import settings
-
 import conf
 import stores
 
@@ -283,13 +281,13 @@ class PodManager(object):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTOR_EXPERIMENTS)
+            default_node_selector=conf.get('NODE_SELECTOR_EXPERIMENTS'))
         affinity = get_affinity(
             affinity=affinity,
-            default_affinity=settings.AFFINITY_EXPERIMENTS)
+            default_affinity=conf.get('AFFINITY_EXPERIMENTS'))
         tolerations = get_tolerations(
             tolerations=tolerations,
-            default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
+            default_tolerations=conf.get('TOLERATIONS_EXPERIMENTS'))
         service_account_name = None
         if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS'):
             service_account_name = conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS')

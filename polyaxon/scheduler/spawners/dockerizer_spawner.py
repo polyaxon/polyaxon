@@ -1,5 +1,7 @@
 from django.conf import settings
 
+import conf
+
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -40,16 +42,16 @@ class DockerizerSpawner(ProjectJobSpawner):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTOR_BUILDS)
+            default_node_selector=conf.get('NODE_SELECTOR_BUILDS'))
         affinity = get_affinity(
             affinity=affinity,
-            default_affinity=settings.AFFINITY_BUILDS)
+            default_affinity=conf.get('AFFINITY_BUILDS'))
         tolerations = get_tolerations(
             tolerations=tolerations,
-            default_tolerations=settings.TOLERATIONS_BUILDS)
+            default_tolerations=conf.get('TOLERATIONS_BUILDS'))
         pod = pods.get_pod(
             namespace=self.namespace,
-            app=settings.APP_LABELS_DOCKERIZER,
+            app=conf.get('APP_LABELS_DOCKERIZER'),
             name=DOCKERIZER_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
@@ -57,20 +59,20 @@ class DockerizerSpawner(ProjectJobSpawner):
             job_uuid=self.job_uuid,
             volume_mounts=volume_mounts,
             volumes=volumes,
-            image=settings.JOB_DOCKERIZER_IMAGE,
-            image_pull_policy=settings.JOB_DOCKERIZER_IMAGE_PULL_POLICY,
+            image=conf.get('JOB_DOCKERIZER_IMAGE'),
+            image_pull_policy=conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY'),
             command=None,
             args=[self.job_uuid],
             ports=[],
             env_vars=self.get_env_vars(),
-            container_name=settings.CONTAINER_NAME_DOCKERIZER_JOB,
+            container_name=conf.get('CONTAINER_NAME_DOCKERIZER_JOB'),
             resources=resources,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
-            role=settings.ROLE_LABELS_WORKER,
-            type=settings.TYPE_LABELS_RUNNER,
-            service_account_name=settings.K8S_SERVICE_ACCOUNT_BUILDS,
+            role=conf.get('ROLE_LABELS_WORKER'),
+            type=conf.get('TYPE_LABELS_RUNNER'),
+            service_account_name=conf.get('K8S_SERVICE_ACCOUNT_BUILDS'),
             restart_policy='Never')
         pod_name = JOB_NAME_FORMAT.format(job_uuid=self.job_uuid, name=DOCKERIZER_JOB_NAME)
 

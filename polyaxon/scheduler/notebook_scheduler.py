@@ -35,7 +35,7 @@ def start_notebook(notebook):
         project_uuid=notebook.project.uuid.hex,
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
@@ -101,7 +101,7 @@ def stop_notebook(project_name,
         project_uuid=project_uuid,
         job_name=notebook_job_name,
         job_uuid=notebook_job_uuid,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
@@ -114,7 +114,7 @@ def get_notebook_url(notebook):
         project_uuid=notebook.project.uuid.hex,
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
     return spawner.get_notebook_url()
@@ -126,7 +126,7 @@ def get_notebook_token(notebook):
         project_uuid=notebook.project.uuid.hex,
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
     return spawner.get_notebook_token()

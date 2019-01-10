@@ -3,8 +3,6 @@ import random
 
 from hestia.crypto import get_hmac
 
-from django.conf import settings
-
 import conf
 import stores
 
@@ -60,9 +58,9 @@ class NotebookSpawner(ProjectJobSpawner):
         labels = 'app={},role={}'.format(conf.get('APP_LABELS_NOTEBOOK'),
                                          conf.get('ROLE_LABELS_DASHBOARD'))
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
-        port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
+        port = random.randint(*conf.get('NOTEBOOK_PORT_RANGE'))
         while port in ports:
-            port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
+            port = random.randint(*conf.get('NOTEBOOK_PORT_RANGE'))
         return port
 
     def get_notebook_args(self, deployment_name, ports, allow_commits=False):
@@ -143,13 +141,13 @@ class NotebookSpawner(ProjectJobSpawner):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTOR_EXPERIMENTS)
+            default_node_selector=conf.get('NODE_SELECTOR_EXPERIMENTS'))
         affinity = get_affinity(
             affinity=affinity,
-            default_affinity=settings.AFFINITY_EXPERIMENTS)
+            default_affinity=conf.get('AFFINITY_EXPERIMENTS'))
         tolerations = get_tolerations(
             tolerations=tolerations,
-            default_tolerations=settings.TOLERATIONS_EXPERIMENTS)
+            default_tolerations=conf.get('TOLERATIONS_EXPERIMENTS'))
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=conf.get('APP_LABELS_NOTEBOOK'),
@@ -196,7 +194,7 @@ class NotebookSpawner(ProjectJobSpawner):
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
-            annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
+            annotations = json.loads(conf.get('K8S_INGRESS_ANNOTATIONS'))
             paths = [{
                 'path': '/notebook/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {

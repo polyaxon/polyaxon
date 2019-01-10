@@ -1,9 +1,8 @@
 from hestia.auth import AuthenticationTypes
 from hestia.headers import get_header
+from hestia.internal_services import InternalServices
 from rest_framework import exceptions
 from rest_framework.authentication import get_authorization_header
-
-from django.conf import settings
 
 import conf
 
@@ -44,7 +43,7 @@ def get_internal_header(request):
     """
     Return request's 'X_POLYAXON_INTERNAL:' header, as a bytestring.
     """
-    return get_header(request=request, header_service=settings.HEADERS_INTERNAL)
+    return get_header(request=request, header_service=conf.get('HEADERS_INTERNAL'))
 
 
 class InternalAuthentication(PolyaxonAuthentication):
@@ -74,7 +73,7 @@ class InternalAuthentication(PolyaxonAuthentication):
                    'internal_service string should not contain invalid characters.')
             raise exceptions.AuthenticationFailed(msg)
 
-        if internal_service not in settings.INTERNAL_SERVICES.VALUES:
+        if internal_service not in InternalServices.VALUES:
             return None
 
         if not auth or auth[0].lower() != self.keyword.lower().encode():

@@ -1,4 +1,4 @@
-from django.conf import settings
+import conf
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from action_manager.exceptions import PolyaxonActionException
@@ -27,7 +27,7 @@ class DiscordWebHookAction(WebHookAction):
 
         If no method is given, then by default we use POST.
         """
-        return settings.INTEGRATIONS_DISCORD_WEBHOOKS
+        return conf.get('INTEGRATIONS_DISCORD_WEBHOOKS')
 
     @classmethod
     def serialize_event_to_context(cls, event):

@@ -1,4 +1,4 @@
-from django.conf import settings
+import conf
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from action_manager.utils import pagerduty
@@ -32,7 +32,7 @@ class PagerDutyWebHookAction(WebHookAction):
 
         If no method is given, then by default we use POST.
         """
-        return settings.INTEGRATIONS_PAGER_DUTY_WEBHOOKS
+        return conf.get('INTEGRATIONS_PAGER_DUTY_WEBHOOKS')
 
     @classmethod
     def serialize_event_to_context(cls, event):

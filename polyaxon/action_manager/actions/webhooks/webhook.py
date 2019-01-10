@@ -5,7 +5,7 @@ from hestia.http import safe_request
 from hestia.list_utils import to_list
 from hestia.urls_utils import validate_url
 
-from django.conf import settings
+import conf
 
 from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
@@ -75,7 +75,7 @@ class WebHookAction(Action):
 
         If no method is given, then by default we use POST.
         """
-        return settings.INTEGRATIONS_WEBHOOKS
+        return conf.get('INTEGRATIONS_WEBHOOKS')
 
     @classmethod
     def serialize_event_to_context(cls, event):

@@ -27,25 +27,3 @@ if SSL_ENABLED:
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     PROTOCOL = 'https'
-
-
-class INTERNAL_SERVICES(object):  # noqa
-    DOCKERIZER = 'dockerizer'
-    SIDECAR = 'sidecar'
-    HELPER = 'helper'
-    RUNNER = 'runner'
-
-    VALUES = [
-        DOCKERIZER,
-        SIDECAR,
-        HELPER,
-        RUNNER
-    ]
-
-
-class EPHEMERAL_SERVICES(object):  # noqa
-    RUNNER = 'runner'
-
-    VALUES = [
-        RUNNER,
-    ]

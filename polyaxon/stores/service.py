@@ -6,8 +6,6 @@ from marshmallow import ValidationError
 from polystores import StoreManager
 from rhea import RheaError
 
-from django.conf import settings
-
 from libs.paths.experiment_jobs import create_experiment_job_path
 from libs.paths.experiments import create_experiment_path
 from libs.paths.jobs import create_job_path
@@ -17,7 +15,6 @@ from stores.exceptions import VolumeNotFoundError
 from stores.schemas.store import StoreConfig
 from stores.schemas.volume import VolumeConfig
 from stores.store_secrets import get_store_secret_for_persistence, get_store_secret_from_definition
-from stores.validators import validate_persistence_data, validate_persistence_outputs
 
 
 class StoresService(Service):
@@ -52,16 +49,19 @@ class StoresService(Service):
 
     @staticmethod
     def get_data_paths(persistences):
+        import conf
+        from stores.validators import validate_persistence_data
+
         persistence_data = validate_persistence_data(persistence_data=persistences)
         persistence_paths = {}
         for persistence in persistence_data:
-            if persistence not in settings.PERSISTENCE_DATA:
+            if persistence not in conf.get('PERSISTENCE_DATA'):
                 raise VolumeNotFoundError(
                     'Data volume with name `{}` was defined in specification, '
                     'but was not found'.format(persistence))
             persistence_type_condition = (
-                'mountPath' not in settings.PERSISTENCE_DATA[persistence] and
-                'bucket' not in settings.PERSISTENCE_DATA[persistence]
+                'mountPath' not in conf.get('PERSISTENCE_DATA')[persistence] and
+                'bucket' not in conf.get('PERSISTENCE_DATA')[persistence]
             )
             if persistence_type_condition:
                 raise VolumeNotFoundError(
@@ -69,8 +69,8 @@ class StoresService(Service):
                     'does not define a mountPath or bucket.'.format(persistence))
 
             persistence_paths[persistence] = (
-                settings.PERSISTENCE_DATA[persistence].get('mountPath') or
-                settings.PERSISTENCE_DATA[persistence].get('bucket'))
+                conf.get('PERSISTENCE_DATA')[persistence].get('mountPath') or
+                conf.get('PERSISTENCE_DATA')[persistence].get('bucket'))
 
         return persistence_paths
 
@@ -88,21 +88,24 @@ class StoresService(Service):
 
     @staticmethod
     def get_outputs_path(persistence):
+        import conf
+        from stores.validators import validate_persistence_outputs
+
         persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence)
-        if persistence_outputs not in settings.PERSISTENCE_OUTPUTS:
+        if persistence_outputs not in conf.get('PERSISTENCE_OUTPUTS'):
             raise VolumeNotFoundError('Outputs volume with name `{}` was defined in specification, '
                                       'but was not found'.format(persistence_outputs))
         persistence_type_condition = (
-            'mountPath' not in settings.PERSISTENCE_OUTPUTS[persistence_outputs] and
-            'bucket' not in settings.PERSISTENCE_OUTPUTS[persistence_outputs]
+            'mountPath' not in conf.get('PERSISTENCE_OUTPUTS')[persistence_outputs] and
+            'bucket' not in conf.get('PERSISTENCE_OUTPUTS')[persistence_outputs]
         )
         if persistence_type_condition:
             raise VolumeNotFoundError(
                 'Outputs volume with name `{}` '
                 'does not define a mountPath or bucket.'.format(persistence_outputs))
 
-        return (settings.PERSISTENCE_OUTPUTS[persistence_outputs].get('mountPath') or
-                settings.PERSISTENCE_OUTPUTS[persistence_outputs].get('bucket'))
+        return (conf.get('PERSISTENCE_OUTPUTS')[persistence_outputs].get('mountPath') or
+                conf.get('PERSISTENCE_OUTPUTS')[persistence_outputs].get('bucket'))
 
     @classmethod
     def delete_outputs_path(cls, subpath, persistence):
@@ -112,14 +115,17 @@ class StoresService(Service):
 
     @staticmethod
     def get_logs_path(persistence='default'):
+        import conf
+
         persistence_type_condition = (
-            'mountPath' not in settings.PERSISTENCE_LOGS and
-            'bucket' not in settings.PERSISTENCE_LOGS
+            'mountPath' not in conf.get('PERSISTENCE_LOGS') and
+            'bucket' not in conf.get('PERSISTENCE_LOGS')
         )
         if persistence_type_condition:
             raise VolumeNotFoundError('Logs volume does not define a mountPath or bucket.')
 
-        return settings.PERSISTENCE_LOGS.get('mountPath') or settings.PERSISTENCE_LOGS.get('bucket')
+        return (conf.get('PERSISTENCE_LOGS').get('mountPath') or
+                conf.get('PERSISTENCE_LOGS').get('bucket'))
 
     @classmethod
     def delete_logs_path(cls, subpath, persistence='default'):
@@ -142,14 +148,18 @@ class StoresService(Service):
 
     @classmethod
     def get_outputs_store(cls, persistence_outputs):
+        import conf
+
         store, _, secret_key = get_store_secret_for_persistence(
             volume_name=persistence_outputs,
-            volume_settings=settings.PERSISTENCE_OUTPUTS)
+            volume_settings=conf.get('PERSISTENCE_OUTPUTS'))
         return cls._get_store(store, secret_key)
 
     @classmethod
     def get_logs_store(cls, persistence_logs='default'):
-        store, _, secret_key = get_store_secret_from_definition(settings.PERSISTENCE_LOGS)
+        import conf
+
+        store, _, secret_key = get_store_secret_from_definition(conf.get('PERSISTENCE_LOGS'))
         return cls._get_store(store, secret_key)
 
     @classmethod
@@ -168,6 +178,8 @@ class StoresService(Service):
 
     @classmethod
     def get_experiment_job_logs_path(cls, experiment_job_name, temp, persistence='default'):
+        import conf
+
         values = experiment_job_name.split('.')
         values = values[:-2] + ['.'.join(values[-2:])]
         if len(values) == 4:
@@ -176,7 +188,7 @@ class StoresService(Service):
             values.insert(2, 'groups')
 
         if temp:
-            return os.path.join(settings.LOGS_ARCHIVE_ROOT, '/'.join(values))
+            return os.path.join(conf.get('LOGS_ARCHIVE_ROOT'), '/'.join(values))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return os.path.join(persistence_logs, '/'.join(values))
 
@@ -200,6 +212,8 @@ class StoresService(Service):
 
     @classmethod
     def get_experiment_logs_path(cls, experiment_name, temp, persistence='default'):
+        import conf
+
         values = experiment_name.split('.')
         if len(values) == 3:
             values.insert(2, 'experiments')
@@ -207,7 +221,7 @@ class StoresService(Service):
             values.insert(2, 'groups')
 
         if temp:
-            return os.path.join(settings.LOGS_ARCHIVE_ROOT, '/'.join(values))
+            return os.path.join(conf.get('LOGS_ARCHIVE_ROOT'), '/'.join(values))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return os.path.join(persistence_logs, '/'.join(values))
 
@@ -218,16 +232,20 @@ class StoresService(Service):
 
     @classmethod
     def get_job_logs_path(cls, job_name, temp, persistence='default'):
+        import conf
+
         if temp:
-            return os.path.join(settings.LOGS_ARCHIVE_ROOT, job_name.replace('.', '/'))
+            return os.path.join(conf.get('LOGS_ARCHIVE_ROOT'), job_name.replace('.', '/'))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return os.path.join(persistence_logs, job_name.replace('.', '/'))
 
     @classmethod
     def create_experiment_job_logs_path(cls, experiment_job_name, temp, persistence='default'):
+        import conf
+
         if temp:
-            check_archive_path(settings.LOGS_ARCHIVE_ROOT)
-            return create_experiment_job_path(experiment_job_name, settings.LOGS_ARCHIVE_ROOT)
+            check_archive_path(conf.get('LOGS_ARCHIVE_ROOT'))
+            return create_experiment_job_path(experiment_job_name, conf.get('LOGS_ARCHIVE_ROOT'))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return create_experiment_job_path(experiment_job_name, persistence_logs)
 
@@ -248,9 +266,11 @@ class StoresService(Service):
 
     @classmethod
     def create_experiment_logs_path(cls, experiment_name, temp, persistence='default'):
+        import conf
+
         if temp:
-            check_archive_path(settings.LOGS_ARCHIVE_ROOT)
-            return create_experiment_path(experiment_name, settings.LOGS_ARCHIVE_ROOT)
+            check_archive_path(conf.get('LOGS_ARCHIVE_ROOT'))
+            return create_experiment_path(experiment_name, conf.get('LOGS_ARCHIVE_ROOT'))
 
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return create_experiment_path(experiment_name, persistence_logs)
@@ -278,9 +298,11 @@ class StoresService(Service):
 
     @classmethod
     def create_job_logs_path(cls, job_name, temp, persistence='default'):
+        import conf
+
         if temp:
-            check_archive_path(settings.LOGS_ARCHIVE_ROOT)
-            return create_job_path(job_name, settings.LOGS_ARCHIVE_ROOT)
+            check_archive_path(conf.get('LOGS_ARCHIVE_ROOT'))
+            return create_job_path(job_name, conf.get('LOGS_ARCHIVE_ROOT'))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return create_job_path(job_name, persistence_logs)
 
@@ -307,18 +329,24 @@ class StoresService(Service):
                 ))
 
     def _validate_logs(self):
-        self._validate_persistence(persistence=settings.PERSISTENCE_LOGS,
+        import conf
+
+        self._validate_persistence(persistence=conf.get('PERSISTENCE_LOGS'),
                                    persistence_name='default',
                                    persistence_type='PERSISTENCE_LOGS')
 
     def _validate_outputs(self):
-        for persistence_name, persistence in settings.PERSISTENCE_OUTPUTS.items():
+        import conf
+
+        for persistence_name, persistence in conf.get('PERSISTENCE_OUTPUTS').items():
             self._validate_persistence(persistence=persistence,
                                        persistence_name=persistence_name,
                                        persistence_type='PERSISTENCE_OUTPUTS')
 
     def _validate_data(self):
-        for persistence_name, persistence in settings.PERSISTENCE_DATA.items():
+        import conf
+
+        for persistence_name, persistence in conf.get('PERSISTENCE_DATA').items():
             self._validate_persistence(persistence=persistence,
                                        persistence_name=persistence_name,
                                        persistence_type='PERSISTENCE_DATA')

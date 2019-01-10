@@ -83,7 +83,7 @@ def start_dockerizer(build_job):
         project_uuid=build_job.project.uuid.hex,
         job_name=build_job.unique_name,
         job_uuid=build_job.uuid.hex,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 
@@ -138,7 +138,7 @@ def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):
         project_uuid=project_uuid,
         job_name=build_job_name,
         job_uuid=build_job_uuid,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         in_cluster=True)
 

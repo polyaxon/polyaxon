@@ -2,10 +2,9 @@ import base64
 import binascii
 
 from hestia.auth import AuthenticationTypes
+from hestia.ephemeral_services import EphemeralServices
 from rest_framework import exceptions
 from rest_framework.authentication import get_authorization_header
-
-from django.conf import settings
 
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from scopes.authentication.base import PolyaxonAuthentication
@@ -70,7 +69,7 @@ class EphemeralAuthentication(PolyaxonAuthentication):
                    'internal_service string should not contain invalid characters.')
             raise exceptions.AuthenticationFailed(msg)
 
-        if internal_service not in settings.EPHEMERAL_SERVICES.VALUES:
+        if internal_service not in EphemeralServices.VALUES:
             return None
 
         if not auth or auth[0].lower() != self.keyword.lower().encode():

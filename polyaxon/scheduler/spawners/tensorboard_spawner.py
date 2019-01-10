@@ -1,8 +1,6 @@
 import json
 import random
 
-from django.conf import settings
-
 import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
@@ -44,9 +42,9 @@ class TensorboardSpawner(ProjectJobSpawner):
         labels = 'app={},role={}'.format(conf.get('APP_LABELS_TENSORBOARD'),
                                          conf.get('ROLE_LABELS_DASHBOARD'))
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
-        port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
+        port = random.randint(*conf.get('TENSORBOARD_PORT_RANGE'))
         while port in ports:
-            port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
+            port = random.randint(*conf.get('TENSORBOARD_PORT_RANGE'))
         return port
 
     @staticmethod
@@ -145,13 +143,13 @@ class TensorboardSpawner(ProjectJobSpawner):
 
         node_selector = get_node_selector(
             node_selector=node_selector,
-            default_node_selector=settings.NODE_SELECTOR_TENSORBOARDS)
+            default_node_selector=conf.get('NODE_SELECTOR_TENSORBOARDS'))
         affinity = get_affinity(
             affinity=affinity,
-            default_affinity=settings.AFFINITY_TENSORBOARDS)
+            default_affinity=conf.get('AFFINITY_TENSORBOARDS'))
         tolerations = get_tolerations(
             tolerations=tolerations,
-            default_tolerations=settings.TOLERATIONS_TENSORBOARDS)
+            default_tolerations=conf.get('TOLERATIONS_TENSORBOARDS'))
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             app=conf.get('APP_LABELS_TENSORBOARD'),
@@ -194,7 +192,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
-            annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
+            annotations = json.loads(conf.get('K8S_INGRESS_ANNOTATIONS'))
             paths = [{
                 'path': '/tensorboard/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {

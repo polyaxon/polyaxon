@@ -37,7 +37,7 @@ def start_job(job):
         job_name=job.unique_name,
         job_uuid=job.uuid.hex,
         spec=job.specification,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         job_docker_image=job_docker_image,
         in_cluster=True,
@@ -96,7 +96,7 @@ def stop_job(project_name, project_uuid, job_name, job_uuid):
         project_uuid=project_uuid,
         job_name=job_name,
         job_uuid=job_uuid,
-        k8s_config=settings.K8S_CONFIG,
+        k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
         spec=None,
         in_cluster=True)

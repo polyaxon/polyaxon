@@ -1,9 +1,11 @@
 import json
 
+from hestia.internal_services import InternalServices
 from kubernetes import client
 
 from django.conf import settings
 
+import conf
 import stores
 
 from constants.urls import VERSION_V1
@@ -111,7 +113,7 @@ def get_job_env_vars(persistence_outputs,
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
                     value=settings.HEADERS_INTERNAL.replace('_', '-')),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
-                    value=settings.INTERNAL_SERVICES.RUNNER),
+                    value=InternalServices.RUNNER),
     ]
     if log_level:
         env_vars.append(
@@ -186,7 +188,7 @@ class EnvFromRefFoundError(Exception):
 
 def validate_secret_refs(secret_refs):
     for secret_ref in secret_refs or []:
-        if secret_ref not in settings.REFS_SECRETS:
+        if secret_ref not in conf.get('REFS_SECRETS'):
             raise EnvFromRefFoundError('secret_ref with name `{}` was defined in specification, '
                                        'but was not found'.format(secret_ref))
     return secret_refs
@@ -194,7 +196,7 @@ def validate_secret_refs(secret_refs):
 
 def validate_configmap_refs(configmap_refs):
     for configmap_ref in configmap_refs or []:
-        if configmap_ref not in settings.REFS_CONFIG_MAPS:
+        if configmap_ref not in conf.get('REFS_CONFIG_MAPS'):
             raise EnvFromRefFoundError('configmap_ref with name `{}` was defined in specification, '
                                        'but was not found'.format(configmap_ref))
     return configmap_refs

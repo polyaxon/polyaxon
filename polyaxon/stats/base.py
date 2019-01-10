@@ -1,13 +1,13 @@
 from random import random
 from threading import local
 
-from django.conf import settings
+import conf
 
 
 class BaseStatsBackend(local):
     def __init__(self, prefix=None):  # pylint:disable=super-init-not-called
         if prefix is None:
-            prefix = settings.DEFAULT_STATS_PREFIX
+            prefix = conf.get('DEFAULT_STATS_PREFIX')
         self.prefix = prefix
 
     def _get_key(self, key):
