@@ -230,7 +230,7 @@ rhea_config.get_int('INT_ENV_VALUE', options=[1, 2, 3, 11])
 # 11
 ```
 
-### Parsed params
+### Parsed data
 
 
 ```python
@@ -238,7 +238,7 @@ from rhea import Rhea
 
 rhea_config = Rhea.read_configs([...])
 
-rhea_config.get_requested_params(include_locals=False, include_secrets=False)
+rhea_config.get_requested_data(include_locals=False, include_secrets=False)
 # {'key1': 'value1', ...}
 ```
 

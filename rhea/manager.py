@@ -13,8 +13,8 @@ from rhea.specs import UriSpec
 
 
 class Rhea(object):
-    def __init__(self, **params):
-        self._params = params
+    def __init__(self, **data):
+        self._data = data
         self._requested_keys = set()
         self._secret_keys = set()
         self._local_keys = set()
@@ -24,22 +24,38 @@ class Rhea(object):
         config = reader.read(config_values)  # pylint:disable=redefined-outer-name
         return cls(**config) if config else None
 
-    def params_startswith(self, term):
-        return [k for k in self._params if k.startswith(term)]
+    def keys_startswith(self, term):
+        return [k for k in self._data if k.startswith(term)]
 
-    def params_endswith(self, term):
-        return [k for k in self._params if k.endswith(term)]
+    def keys_endswith(self, term):
+        return [k for k in self._data if k.endswith(term)]
 
-    def get_requested_params(self, include_secrets=False, include_locals=False, to_str=False):
-        params = {}
+    @property
+    def data(self):
+        return self._data
+
+    @property
+    def requested_keys(self):
+        return self._requested_keys
+
+    @property
+    def secret_keys(self):
+        return self._secret_keys
+
+    @property
+    def local_keys(self):
+        return self._local_keys
+
+    def get_requested_data(self, include_secrets=False, include_locals=False, to_str=False):
+        data = {}
         for key in self._requested_keys:
             if not include_secrets and key in self._secret_keys:
                 continue
             if not include_locals and key in self._local_keys:
                 continue
-            value = self._params[key]
-            params[key] = '{}'.format(value) if to_str else value
-        return params
+            value = self._data[key]
+            data[key] = '{}'.format(value) if to_str else value
+        return data
 
     def get_int(self,
                 key,
@@ -402,7 +418,7 @@ class Rhea(object):
         Raises:
             KeyError
         """
-        return self._params[key]
+        return self._data[key]
 
     def _add_key(self, key, is_secret=False, is_local=False):
         self._requested_keys.add(key)
