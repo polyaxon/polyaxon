@@ -10,7 +10,7 @@ class BaseValidationVersion(Singleton):
 
     class Meta:
         abstract = True
-        
+
     @staticmethod
     def get_min_version():
         raise NotImplementedError
@@ -58,7 +58,7 @@ class CliVersion(BaseValidationVersion):
     @classmethod
     def get_min_version(cls):
         import conf
-        
+
         return conf.get('CLI_LATEST_VERSION')
 
     @classmethod

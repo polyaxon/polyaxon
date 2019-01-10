@@ -9,8 +9,6 @@ import pytest
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
-from django.conf import settings
-
 import conf
 import stores
 

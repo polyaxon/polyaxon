@@ -1,5 +1,4 @@
 import uuid
-
 from django.contrib.postgres.fields import JSONField
 from django.core.cache import cache
 from django.db import models
@@ -29,21 +28,22 @@ class Cluster(Singleton):
 
         from event_manager.events.cluster import CLUSTER_CREATED
 
-        auditor.record(event_type=CLUSTER_CREATED,
-                       instance=obj,
-                       namespace=conf.get('K8S_NAMESPACE'),
-                       environment=conf.get('POLYAXON_ENVIRONMENT'),
-                       is_upgrade=conf.get('CHART_IS_UPGRADE'),
-                       provisioner_enabled=conf.get('K8S_PROVISIONER_ENABLED'),
-                       node_selector_core_enabled=bool(conf.get('NODE_SELECTOR_CORE')),
-                       node_selector_experiments_enabled=bool(conf.get('NODE_SELECTOR_EXPERIMENTS')),
-                       node_selector_jobs_enabled=bool(conf.get('NODE_SELECTOR_JOBS')),
-                       node_selector_builds_enabled=bool(conf.get('NODE_SELECTOR_BUILDS')),
-                       cli_min_version=conf.get('CLI_MIN_VERSION'),
-                       cli_latest_version=conf.get('CLI_LATEST_VERSION'),
-                       platform_min_version=conf.get('PLATFORM_LATEST_VERSION'),
-                       platform_latest_version=conf.get('PLATFORM_MIN_VERSION'),
-                       chart_version=conf.get('CHART_VERSION'))
+        auditor.record(
+            event_type=CLUSTER_CREATED,
+            instance=obj,
+            namespace=conf.get('K8S_NAMESPACE'),
+            environment=conf.get('POLYAXON_ENVIRONMENT'),
+            is_upgrade=conf.get('CHART_IS_UPGRADE'),
+            provisioner_enabled=conf.get('K8S_PROVISIONER_ENABLED'),
+            node_selector_core_enabled=bool(conf.get('NODE_SELECTOR_CORE')),
+            node_selector_experiments_enabled=bool(conf.get('NODE_SELECTOR_EXPERIMENTS')),
+            node_selector_jobs_enabled=bool(conf.get('NODE_SELECTOR_JOBS')),
+            node_selector_builds_enabled=bool(conf.get('NODE_SELECTOR_BUILDS')),
+            cli_min_version=conf.get('CLI_MIN_VERSION'),
+            cli_latest_version=conf.get('CLI_LATEST_VERSION'),
+            platform_min_version=conf.get('PLATFORM_LATEST_VERSION'),
+            platform_latest_version=conf.get('PLATFORM_MIN_VERSION'),
+            chart_version=conf.get('CHART_VERSION'))
 
     @classmethod
     def may_be_update(cls, obj):
