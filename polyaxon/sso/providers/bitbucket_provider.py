@@ -1,6 +1,6 @@
 import requests
 
-from django.conf import settings
+import conf
 
 from constants.sso_providers import Providers
 from event_manager.events.user import USER_BITBUCKET
@@ -22,10 +22,10 @@ class BitbucketIdentityProvider(OAuth2Provider):
     oauth_scopes = ()
 
     def get_oauth_client_id(self):
-        return settings.OAUTH_PROVIDERS.BITBUCKET.CLIENT_ID
+        return conf.get('OAUTH_BITBUCKET_CLIENT_ID')
 
     def get_oauth_client_secret(self):
-        return settings.OAUTH_PROVIDERS.BITBUCKET.CLIENT_SECRET
+        return conf.get('OAUTH_BITBUCKET_CLIENT_SECRET')
 
     def get_user(self, access_token):
         resp = requests.get(self.user_url, params={'access_token': access_token})
@@ -42,7 +42,7 @@ class BitbucketIdentityProvider(OAuth2Provider):
         emails = emails['values'] if emails else []
         email = [e for e in emails if e['is_primary']]
         return email[0]['email'] if email else '{}@{}'.format(username,
-                                                              settings.DEFAULT_EMAIL_DOMAIN)
+                                                              conf.get('DEFAULT_EMAIL_DOMAIN'))
 
     @staticmethod
     def get_first_last_names(username, name):

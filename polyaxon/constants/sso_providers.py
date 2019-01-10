@@ -1,4 +1,4 @@
-from django.conf import settings
+import conf
 
 
 class Providers(object):
@@ -16,14 +16,14 @@ class Providers(object):
         (AZURE, AZURE),
     )
 
-    VERIFICATION_SCHEDULES = {
-        GITHUB: settings.OAUTH_PROVIDERS.GITHUB.VERIFICATION_SCHEDULE,
-        BITBUCKET: settings.OAUTH_PROVIDERS.BITBUCKET.VERIFICATION_SCHEDULE,
-        GITLAB: settings.OAUTH_PROVIDERS.GITLAB.VERIFICATION_SCHEDULE,
-        AZURE: settings.OAUTH_PROVIDERS.AZURE.VERIFICATION_SCHEDULE,
-    }
-
     @classmethod
     def get_verification_schedule(cls, provider):
-        assert provider in cls.VERIFICATION_SCHEDULES
-        return cls.VERIFICATION_SCHEDULES[provider]
+        assert provider in cls.VALUES
+        if provider == cls.GITHUB:
+            return conf.get('OAUTH_GITHUB_VERIFICATION_SCHEDULE')
+        if provider == cls.BITBUCKET:
+            return conf.get('OAUTH_BITBUCKET_VERIFICATION_SCHEDULE')
+        if provider == cls.GITLAB:
+            return conf.get('OAUTH_GITLAB_VERIFICATION_SCHEDULE')
+        if provider == cls.AZURE:
+            return conf.get('OAUTH_AZURE_VERIFICATION_SCHEDULE')

@@ -1,7 +1,5 @@
 import requests
 
-from django.conf import settings
-
 import conf
 
 from constants.sso_providers import Providers
@@ -14,7 +12,7 @@ class GitLabIdentityProvider(OAuth2Provider):
     name = 'Gitlab'
     event_type = USER_GITLAB
 
-    web_url = settings.OAUTH_PROVIDERS.GITLAB.URL or 'https://gitlab.com'
+    web_url = conf.get('OAUTH_GITLAB_URL') or 'https://gitlab.com'
     api_url = '{}/api/v3'.format(web_url)
     oauth_access_token_url = '{}/oauth/token'.format(web_url)
     oauth_authorize_url = '{}/oauth/authorize'.format(web_url)
@@ -23,10 +21,10 @@ class GitLabIdentityProvider(OAuth2Provider):
     oauth_scopes = ('read_user',)
 
     def get_oauth_client_id(self):
-        return settings.OAUTH_PROVIDERS.GITLAB.CLIENT_ID
+        return conf.get('OAUTH_GITLAB_CLIENT_ID')
 
     def get_oauth_client_secret(self):
-        return settings.OAUTH_PROVIDERS.GITLAB.CLIENT_SECRET
+        return conf.get('OAUTH_GITLAB_CLIENT_SECRET')
 
     def get_user(self, access_token):
         resp = requests.get(self.user_url, params={'access_token': access_token})

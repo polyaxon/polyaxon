@@ -1,7 +1,5 @@
 import requests
 
-from django.conf import settings
-
 import conf
 
 from constants.sso_providers import Providers
@@ -24,10 +22,10 @@ class GitHubIdentityProvider(OAuth2Provider):
     oauth_scopes = ('read:user', 'user:email')
 
     def get_oauth_client_id(self):
-        return settings.OAUTH_PROVIDERS.GITHUB.CLIENT_ID
+        return conf.get('OAUTH_GITHUB_CLIENT_ID')
 
     def get_oauth_client_secret(self):
-        return settings.OAUTH_PROVIDERS.GITHUB.CLIENT_SECRET
+        return conf.get('OAUTH_GITHUB_CLIENT_SECRET')
 
     def get_user(self, access_token):
         resp = requests.get(self.user_url, params={'access_token': access_token})

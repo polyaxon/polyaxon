@@ -1,12 +1,12 @@
-from django.conf import settings
+import conf
 
 
 def sso_enabled(request):
     return {
-        'sso_enabled': settings.OAUTH_PROVIDERS.SSO_ENABLED,
-        'sso_github': settings.OAUTH_PROVIDERS.GITHUB.ENABLED,
-        'sso_gitlab': settings.OAUTH_PROVIDERS.GITLAB.ENABLED,
-        'sso_bitbucket': settings.OAUTH_PROVIDERS.BITBUCKET.ENABLED,
-        'sso_azure': settings.OAUTH_PROVIDERS.AZURE.ENABLED,
-        'admin_view_enabled': settings.ADMIN_VIEW_ENABLED
+        'sso_enabled': conf.get('SSO_ENABLED'),
+        'sso_github': conf.get('OAUTH_GITHUB_ENABLED'),
+        'sso_gitlab': conf.get('OAUTH_GITLAB_ENABLED'),
+        'sso_bitbucket': conf.get('OAUTH_BITBUCKET_ENABLED'),
+        'sso_azure': conf.get('OAUTH_AZURE_ENABLED'),
+        'admin_view_enabled': conf.get('ADMIN_VIEW_ENABLED')
     }

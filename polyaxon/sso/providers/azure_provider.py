@@ -1,6 +1,6 @@
 import requests
 
-from django.conf import settings
+import conf
 
 from constants.sso_providers import Providers
 from event_manager.events.user import USER_AZURE
@@ -12,7 +12,7 @@ class AzureIdentityProvider(OAuth2Provider):
     name = 'Azure'
     event_type = USER_AZURE
 
-    tenant_id = settings.OAUTH_PROVIDERS.AZURE.TENANT_ID
+    tenant_id = conf.get('OAUTH_AZURE_TENANT_ID')
     web_url = 'https://login.microsoft.com/{}'.format(tenant_id)
     oauth_authorize_url = '{}/oauth2/authorize'.format(web_url)
     oauth_access_token_url = '{}/oauth2/token'.format(web_url)
@@ -24,10 +24,10 @@ class AzureIdentityProvider(OAuth2Provider):
         return self.oauth_scopes
 
     def get_oauth_client_id(self):
-        return settings.OAUTH_PROVIDERS.AZURE.CLIENT_ID
+        return conf.get('OAUTH_AZURE_CLIENT_ID')
 
     def get_oauth_client_secret(self):
-        return settings.OAUTH_PROVIDERS.AZURE.CLIENT_SECRET
+        return conf.get('OAUTH_AZURE_CLIENT_SECRET')
 
     def get_username(self, upn):
         # userPrincipalName format is <alias>@<tenant>.com, we only want the alias
