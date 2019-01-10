@@ -4,7 +4,7 @@ rbac:
 ingress:
   enabled: true
 
-serviceType: clusterIP
+serviceType: ClusterIP
 environment: staging
 user:
   password: root

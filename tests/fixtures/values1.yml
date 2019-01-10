@@ -6,7 +6,7 @@ rbac:
 ingress:
   enabled: true
 
-serviceType: clusterIP
+serviceType: ClusterIP
 
 environment: staging
 

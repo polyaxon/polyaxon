@@ -20,7 +20,7 @@ class TestDeploymentConfig(TestCase):
         assert config.timeZone is None
         assert config.environment == 'staging'
         assert config.ingress.enabled is True
-        assert config.serviceType == 'clusterIP'
+        assert config.serviceType == 'ClusterIP'
         assert config.user.to_dict() == {'password': 'root'}
         assert config.nodeSelectors is None
         assert config.tolerations is None
@@ -122,7 +122,7 @@ class TestDeploymentConfig(TestCase):
         assert config.timeZone is None
         assert config.environment == 'staging'
         assert config.ingress.enabled is True
-        assert config.serviceType == 'clusterIP'
+        assert config.serviceType == 'ClusterIP'
         assert config.user.to_dict() == {'password': 'root'}
         assert config.nodeSelectors.to_dict() == {
             'core': {'polyaxon': 'core'},
