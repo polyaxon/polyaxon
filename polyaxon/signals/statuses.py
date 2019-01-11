@@ -58,7 +58,7 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_SUCCEEDED
 )
 from polyaxon.celery_api import celery_app
-from polyaxon.settings import HPCeleryTasks, SchedulerCeleryTasks, LogsCeleryTasks
+from polyaxon.settings import HPCeleryTasks, LogsCeleryTasks, SchedulerCeleryTasks
 from signals.run_time import (
     set_finished_at,
     set_job_finished_at,

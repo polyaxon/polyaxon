@@ -91,7 +91,7 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
-from libs.archive import archive_outputs, archive_outputs_file, archive_logs_file
+from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
 from libs.spec_validation import validate_experiment_spec_config
 from logs_handlers.log_queries.experiment import process_logs
 from polyaxon.celery_api import celery_app
