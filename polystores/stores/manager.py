@@ -56,11 +56,13 @@ class StoreManager(object):
     def delete(self, path):
         return self.store.delete(path)
 
-    def upload_file(self, filename, **kwargs):
-        self.store.upload_file(filename, self._path, **kwargs)
+    def upload_file(self, filename, path=None, **kwargs):
+        path = path or self._path
+        self.store.upload_file(filename, path, **kwargs)
 
-    def upload_dir(self, dirname, **kwargs):
-        self.store.upload_dir(dirname, self._path, **kwargs)
+    def upload_dir(self, dirname, path=None, **kwargs):
+        path = path or self._path
+        self.store.upload_dir(dirname, path, **kwargs)
 
     def download_file(self, filename, local_path=None, use_basename=False, **kwargs):
         if self._path:  # We assume rel paths
