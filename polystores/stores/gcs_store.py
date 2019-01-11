@@ -32,7 +32,7 @@ class GCSStore(BaseStore):
         self._project_id = kwargs.get('project_id')
         self._credentials = kwargs.get('credentials')
         self._key_path = kwargs.get('key_path')
-        self._keyfile_dict = kwargs.get('key_path')
+        self._keyfile_dict = kwargs.get('keyfile_dict')
         self._scopes = kwargs.get('scopes')
         self._encoding = kwargs.get('encoding', 'utf-8')
 
