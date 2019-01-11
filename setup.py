@@ -50,7 +50,7 @@ setup(name='polyaxon-client',
       install_requires=[
           "clint==0.5.1",
           "polyaxon-schemas==0.3.5",
-          "polystores==0.0.4",
+          "polystores==0.0.5",
           "psutil==5.4.7",
           "requests>=2.20.0",
           "requests-toolbelt==0.8.0",
