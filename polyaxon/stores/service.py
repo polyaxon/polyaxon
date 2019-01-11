@@ -170,7 +170,7 @@ class StoresService(Service):
     def is_bucket_logs_persistence(cls, persistence='default'):
         import conf
 
-        return 'bucket' not in conf.get('PERSISTENCE_LOGS')
+        return bool(conf.get('PERSISTENCE_LOGS').get('bucket'))
 
     @classmethod
     def get_experiment_group_outputs_path(cls, experiment_group_name, persistence):
