@@ -4,6 +4,8 @@ import stores
 
 
 def _lock_log(log_path, log_lines, append=False):
+    if not log_lines:
+        return
     write_mode = 'a' if append else 'w'
     with open(log_path, write_mode) as log_file:
         fcntl.flock(log_file, fcntl.LOCK_EX)

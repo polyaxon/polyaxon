@@ -91,7 +91,7 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
-from libs.archive import archive_outputs, archive_outputs_file
+from libs.archive import archive_outputs, archive_outputs_file, archive_logs_file
 from libs.spec_validation import validate_experiment_spec_config
 from logs_handlers.log_queries.experiment import process_logs
 from polyaxon.celery_api import celery_app
@@ -571,6 +571,9 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
         experiment_name = self.experiment.unique_name
         if self.experiment.is_done:
             log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=False)
+            log_path = archive_logs_file(
+                log_path=log_path,
+                namepath=experiment_name)
         else:
             process_logs(experiment=self.experiment, temp=True)
             log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
@@ -600,7 +603,8 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
             kwargs={
                 'experiment_name': self.experiment.unique_name,
                 'experiment_uuid': self.experiment.uuid.hex,
-                'log_lines': log_lines
+                'log_lines': log_lines,
+                'temp': True
             })
         return Response(status=status.HTTP_200_OK)
 

@@ -34,7 +34,9 @@ class PublisherService(Service):
                 kwargs={
                     'experiment_name': experiment_name,
                     'experiment_uuid': experiment_uuid,
-                    'log_lines': log_lines})
+                    'log_lines': log_lines,
+                    'temp': True
+                })
         try:
             should_stream = (RedisToStream.is_monitored_job_logs(job_uuid) or
                              RedisToStream.is_monitored_experiment_logs(experiment_uuid))

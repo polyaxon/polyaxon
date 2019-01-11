@@ -41,7 +41,7 @@ def archive_outputs(outputs_path, name):
     return archive_root, tar_name
 
 
-def archive_outputs_file(persistence_outputs, outputs_path, namepath, filepath):
+def archive_outputs_file(outputs_path, namepath, filepath, persistence_outputs):
     check_archive_path(conf.get('OUTPUTS_DOWNLOAD_ROOT'))
     namepath = namepath.replace('.', '/')
     download_filepath = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'), namepath, filepath)
@@ -52,4 +52,17 @@ def archive_outputs_file(persistence_outputs, outputs_path, namepath, filepath):
     store_manager.download_file(outputs_filepath, download_filepath)
     if store_manager.store.is_local_store:
         return outputs_filepath
+    return download_filepath
+
+
+def archive_logs_file(log_path, namepath, persistence_logs='default'):
+    check_archive_path(conf.get('LOGS_DOWNLOAD_ROOT'))
+    namepath = namepath.replace('.', '/')
+    download_filepath = os.path.join(conf.get('LOGS_DOWNLOAD_ROOT'), namepath)
+    download_dir = '/'.join(download_filepath.split('/')[:-1])
+    check_archive_path(download_dir)
+    store_manager = stores.get_logs_store(persistence_logs=persistence_logs)
+    store_manager.download_file(log_path, download_filepath)
+    if store_manager.store.is_local_store:
+        return log_path
     return download_filepath

@@ -52,7 +52,7 @@ from event_manager.events.job import (
     JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_JOBS_VIEWED
-from libs.archive import archive_outputs, archive_outputs_file
+from libs.archive import archive_outputs, archive_outputs_file, archive_logs_file
 from libs.spec_validation import validate_job_spec_config
 from logs_handlers.log_queries.job import process_logs
 from polyaxon.celery_api import celery_app
@@ -242,6 +242,9 @@ class JobLogsView(JobEndpoint, RetrieveEndpoint):
         job_name = self.job.unique_name
         if self.job.is_done:
             log_path = stores.get_job_logs_path(job_name=job_name, temp=False)
+            log_path = archive_logs_file(
+                log_path=log_path,
+                namepath=job_name)
         else:
             process_logs(job=self.job, temp=True)
             log_path = stores.get_job_logs_path(job_name=job_name, temp=True)

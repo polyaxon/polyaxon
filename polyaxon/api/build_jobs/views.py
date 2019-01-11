@@ -48,6 +48,7 @@ from event_manager.events.build_job import (
     BUILD_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_BUILDS_VIEWED
+from libs.archive import archive_logs_file
 from logs_handlers.log_queries.build_job import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -185,6 +186,9 @@ class BuildLogsView(BuildEndpoint, RetrieveEndpoint):
         job_name = self.build.unique_name
         if self.build.is_done:
             log_path = stores.get_job_logs_path(job_name=job_name, temp=False)
+            log_path = archive_logs_file(
+                log_path=log_path,
+                namepath=job_name)
         else:
             process_logs(build=self.build, temp=True)
             log_path = stores.get_job_logs_path(job_name=job_name, temp=True)

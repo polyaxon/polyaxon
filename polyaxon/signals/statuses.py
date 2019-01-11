@@ -58,7 +58,7 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_SUCCEEDED
 )
 from polyaxon.celery_api import celery_app
-from polyaxon.settings import HPCeleryTasks, SchedulerCeleryTasks
+from polyaxon.settings import HPCeleryTasks, SchedulerCeleryTasks, LogsCeleryTasks
 from signals.run_time import (
     set_finished_at,
     set_job_finished_at,
@@ -419,3 +419,12 @@ def handle_new_experiment_status(sender, **kwargs):
                 'collect_logs': True,
             },
             countdown=RedisTTL.get_for_experiment(experiment_id=experiment.id))
+    else:  # Collect tracked remote logs
+        celery_app.send_task(
+            LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
+            kwargs={
+                'experiment_name': experiment.unique_name,
+                'experiment_uuid': experiment.uuid.hex,
+                'log_lines': '',
+                'temp': False
+            })

@@ -255,6 +255,8 @@ class StoresService(Service):
         temp_path = cls.get_experiment_job_logs_path(experiment_job_name=experiment_job_name,
                                                      temp=True,
                                                      persistence=persistence)
+        if not os.path.exists(temp_path):
+            return
         logs_path = cls.get_experiment_job_logs_path(experiment_job_name=experiment_job_name,
                                                      temp=False,
                                                      persistence=persistence)
@@ -291,6 +293,8 @@ class StoresService(Service):
         temp_path = cls.get_experiment_logs_path(experiment_name=experiment_name,
                                                  temp=True,
                                                  persistence=persistence)
+        if not os.path.exists(temp_path):
+            return
         logs_path = cls.get_experiment_logs_path(experiment_name=experiment_name,
                                                  temp=False,
                                                  persistence=persistence)
@@ -332,6 +336,8 @@ class StoresService(Service):
     def upload_job_logs(cls, job_name, persistence='default'):
         store = cls.get_logs_store(persistence_logs=persistence)
         temp_path = cls.get_job_logs_path(job_name=job_name, temp=True, persistence=persistence)
+        if not os.path.exists(temp_path):
+            return
         logs_path = cls.get_job_logs_path(job_name=job_name, temp=False, persistence=persistence)
         store.upload_file(filename=temp_path, path=logs_path, use_basename=False)
 

@@ -7,28 +7,29 @@ from logs_handlers.utils import safe_log_experiment, safe_log_job
 
 def handle_experiment_job_log(experiment_name,
                               experiment_uuid,
-                              log_lines):
+                              log_lines,
+                              temp=True):
     if not Experiment.objects.filter(uuid=experiment_uuid).exists():
         return
 
     logger.debug('handling log event for %s', experiment_uuid)
     safe_log_experiment(experiment_name=experiment_name,
                         log_lines=log_lines,
-                        temp=False,
+                        temp=temp,
                         append=True)
 
 
-def handle_job_logs(job_uuid, job_name, log_lines):
+def handle_job_logs(job_uuid, job_name, log_lines, temp=True):
     if not Job.objects.filter(uuid=job_uuid).exists():
         return
 
     logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False, append=True)
+    safe_log_job(job_name=job_name, log_lines=log_lines, temp=temp, append=True)
 
 
-def handle_build_job_logs(job_uuid, job_name, log_lines):
+def handle_build_job_logs(job_uuid, job_name, log_lines, temp=True):
     if not BuildJob.objects.filter(uuid=job_uuid).exists():
         return
 
     logger.debug('handling log event for %s', job_name)
-    safe_log_job(job_name=job_name, log_lines=log_lines, temp=False, append=True)
+    safe_log_job(job_name=job_name, log_lines=log_lines, temp=temp, append=True)

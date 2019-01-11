@@ -14,6 +14,7 @@ CLUSTER_ID = config.cluster_id
 REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
 OUTPUTS_ARCHIVE_ROOT = '/tmp/archived_outputs'
 OUTPUTS_DOWNLOAD_ROOT = '/tmp/download_outputs'
+LOGS_DOWNLOAD_ROOT = '/tmp/download_logs'
 LOGS_ARCHIVE_ROOT = '/tmp/archived_logs'
 FILE_UPLOAD_PERMISSIONS = 0o644
 ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
