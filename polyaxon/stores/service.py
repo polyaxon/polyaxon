@@ -29,19 +29,23 @@ class StoresService(Service):
         'delete_logs_path',
         'get_outputs_store',
         'get_logs_store',
+        'is_bucket_logs_persistence',
         'get_experiment_group_outputs_path',
         'get_experiment_group_logs_path',
         'get_experiment_job_logs_path',
+        'upload_experiment_job_logs',
         'get_experiment_outputs_path',
         'get_experiment_logs_path',
         'get_job_outputs_path',
         'get_job_logs_path',
+        'upload_job_logs',
         'get_notebook_job_outputs_path',
         'get_project_outputs_path',
         'get_project_logs_path',
         'create_experiment_logs_path',
         'create_experiment_outputs_path',
         'create_experiment_job_logs_path',
+        'upload_experiment_logs',
         'copy_experiment_outputs',
         'create_job_logs_path',
         'create_job_outputs_path'
@@ -163,6 +167,12 @@ class StoresService(Service):
         return cls._get_store(store, secret_key)
 
     @classmethod
+    def is_bucket_logs_persistence(cls, persistence='default'):
+        import conf
+
+        return 'bucket' not in conf.get('PERSISTENCE_LOGS')
+
+    @classmethod
     def get_experiment_group_outputs_path(cls, experiment_group_name, persistence):
         persistence_outputs = cls.get_outputs_path(persistence=persistence)
         values = experiment_group_name.split('.')
@@ -240,6 +250,17 @@ class StoresService(Service):
         return os.path.join(persistence_logs, job_name.replace('.', '/'))
 
     @classmethod
+    def upload_experiment_job_logs(cls, experiment_job_name, persistence='default'):
+        store = cls.get_logs_store(persistence_logs=persistence)
+        temp_path = cls.get_experiment_job_logs_path(experiment_job_name=experiment_job_name,
+                                                     temp=True,
+                                                     persistence=persistence)
+        logs_path = cls.get_experiment_job_logs_path(experiment_job_name=experiment_job_name,
+                                                     temp=False,
+                                                     persistence=persistence)
+        store.upload_file(filename=temp_path, path=logs_path, use_basename=False)
+
+    @classmethod
     def create_experiment_job_logs_path(cls, experiment_job_name, temp, persistence='default'):
         import conf
 
@@ -263,6 +284,17 @@ class StoresService(Service):
     def get_project_logs_path(cls, project_name, persistence='default'):
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return os.path.join(persistence_logs, project_name.replace('.', '/'))
+
+    @classmethod
+    def upload_experiment_logs(cls, experiment_name, persistence='default'):
+        store = cls.get_logs_store(persistence_logs=persistence)
+        temp_path = cls.get_experiment_logs_path(experiment_name=experiment_name,
+                                                 temp=True,
+                                                 persistence=persistence)
+        logs_path = cls.get_experiment_logs_path(experiment_name=experiment_name,
+                                                 temp=False,
+                                                 persistence=persistence)
+        store.upload_file(filename=temp_path, path=logs_path, use_basename=False)
 
     @classmethod
     def create_experiment_logs_path(cls, experiment_name, temp, persistence='default'):
@@ -295,6 +327,13 @@ class StoresService(Service):
                                                     experiment_name_from)
         path_to = cls.get_experiment_outputs_path(persistence_outputs_to, experiment_name_to)
         shutil.copytree(path_from, path_to)
+
+    @classmethod
+    def upload_job_logs(cls, job_name, persistence='default'):
+        store = cls.get_logs_store(persistence_logs=persistence)
+        temp_path = cls.get_job_logs_path(job_name=job_name, temp=True, persistence=persistence)
+        logs_path = cls.get_job_logs_path(job_name=job_name, temp=False, persistence=persistence)
+        store.upload_file(filename=temp_path, path=logs_path, use_basename=False)
 
     @classmethod
     def create_job_logs_path(cls, job_name, temp, persistence='default'):
