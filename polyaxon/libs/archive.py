@@ -8,7 +8,7 @@ import conf
 import stores
 
 from libs.paths.utils import check_archive_path
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
 
 
 def create_tarfile(files, tar_path):
