@@ -53,10 +53,10 @@ def archive_outputs_file(outputs_path, namepath, filepath, persistence_outputs):
     check_archive_path(download_dir)
     try:
         store_manager = stores.get_outputs_store(persistence_outputs=persistence_outputs)
+        outputs_filepath = os.path.join(outputs_path, filepath)
+        store_manager.download_file(outputs_filepath, download_filepath)
     except (PolyaxonStoresException, VolumeNotFoundError) as e:
         raise ValidationError(e)
-    outputs_filepath = os.path.join(outputs_path, filepath)
-    store_manager.download_file(outputs_filepath, download_filepath)
     if store_manager.store.is_local_store:
         return outputs_filepath
     return download_filepath
@@ -70,9 +70,9 @@ def archive_logs_file(log_path, namepath, persistence_logs='default'):
     check_archive_path(download_dir)
     try:
         store_manager = stores.get_logs_store(persistence_logs=persistence_logs)
+        store_manager.download_file(log_path, download_filepath)
     except (PolyaxonStoresException, VolumeNotFoundError) as e:
         raise ValidationError(e)
-    store_manager.download_file(log_path, download_filepath)
     if store_manager.store.is_local_store:
         return log_path
     return download_filepath
