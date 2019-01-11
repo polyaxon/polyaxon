@@ -386,8 +386,8 @@ def experiment_status_post_save(sender, **kwargs):
                 HPCeleryTasks.HP_START,
                 kwargs={'experiment_group_id': experiment.experiment_group.id},
                 countdown=1)
-        if not experiment.run_env.get('in_cluster'):  # Collect tracked remote logs
-            _logger.warning('Saving logs')
+        if experiment.run_env and not experiment.run_env.get('in_cluster'):
+            # Collect tracked remote logs
             celery_app.send_task(
                 LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
                 kwargs={
