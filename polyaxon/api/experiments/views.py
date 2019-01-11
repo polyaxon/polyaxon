@@ -574,9 +574,12 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
             log_path = archive_logs_file(
                 log_path=log_path,
                 namepath=experiment_name)
-        else:
+        elif self.experiment.run_env.get('in_cluster'):
             process_logs(experiment=self.experiment, temp=True)
             log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data='Experiment is still running, no logs.')
 
         filename = os.path.basename(log_path)
         chunk_size = 8192

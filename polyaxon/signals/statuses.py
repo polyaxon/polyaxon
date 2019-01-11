@@ -386,6 +386,16 @@ def experiment_status_post_save(sender, **kwargs):
                 HPCeleryTasks.HP_START,
                 kwargs={'experiment_group_id': experiment.experiment_group.id},
                 countdown=1)
+        if not experiment.run_env.get('in_cluster'):  # Collect tracked remote logs
+            _logger.warning('Saving logs')
+            celery_app.send_task(
+                LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
+                kwargs={
+                    'experiment_name': experiment.unique_name,
+                    'experiment_uuid': experiment.uuid.hex,
+                    'log_lines': '',
+                    'temp': False
+                })
 
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="handle_new_experiment_status")
@@ -419,12 +429,3 @@ def handle_new_experiment_status(sender, **kwargs):
                 'collect_logs': True,
             },
             countdown=RedisTTL.get_for_experiment(experiment_id=experiment.id))
-    else:  # Collect tracked remote logs
-        celery_app.send_task(
-            LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
-            kwargs={
-                'experiment_name': experiment.unique_name,
-                'experiment_uuid': experiment.uuid.hex,
-                'log_lines': '',
-                'temp': False
-            })
