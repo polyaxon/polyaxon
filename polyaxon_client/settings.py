@@ -9,7 +9,6 @@ from hestia.auth import AuthenticationTypes
 from hestia.user_path import polyaxon_user_path
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
-TMP_AUTH_GCS_ACCESS_PATH = '/tmp/.polyaxon/.gcsaccess.json'
 CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
 
 config = rhea.Rhea.read_configs([
@@ -59,9 +58,6 @@ INTERNAL_HEADER_SERVICE = config.get_string('POLYAXON_INTERNAL_HEADER_SERVICE',
 SCHEMA_RESPONSE = config.get_boolean('POLYAXON_SCHEMA_RESPONSE',
                                      is_optional=True,
                                      default=False)
-RUN_STORES_ACCESS_KEYS = config.get_dict('POLYAXON_RUN_STORES_ACCESS_KEYS',
-                                         is_optional=True,
-                                         default={})
 INTERNAL_HEALTH_CHECK_URL = config.get_string('POLYAXON_INTERNAL_HEALTH_CHECK_URL',
                                               is_optional=True)
 
