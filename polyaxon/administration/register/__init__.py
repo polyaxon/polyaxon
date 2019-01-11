@@ -28,6 +28,7 @@ from administration.register import (
 
 def register(models=None):
     admin_register = site.register
+    groups.register(admin_register)
     if not models:
         tokens.register(admin_register)
         users.register(admin_register)
@@ -45,8 +46,6 @@ def register(models=None):
         experiment_groups.register(admin_register)
     if 'experiments' in models:
         experiments.register(admin_register)
-    if 'groups' in models:
-        groups.register(admin_register)
     if 'job_resources' in models:
         job_resources.register(admin_register)
     if 'jobs' in models:

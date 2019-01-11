@@ -38,6 +38,9 @@ class Token(DiffModel):
     class Meta:
         app_label = 'db'
 
+    def __str__(self):
+        return 'Token <{}>'.format(self.user)
+
     @property
     def is_expired(self):
         return self.started_at + timedelta(days=conf.get('TTL_TOKEN')) <= timezone.now()
