@@ -5,6 +5,7 @@ import os
 from wsgiref.util import FileWrapper
 
 from hestia.bool_utils import to_bool
+from polystores.exceptions import PolyaxonStoresException
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, get_object_or_404
@@ -374,8 +375,11 @@ class ExperimentOutputsTreeView(ExperimentEndpoint, RetrieveEndpoint):
         Returns a the outputs directory tree.
     """
     def get(self, request, *args, **kwargs):
-        store_manager = stores.get_outputs_store(
-            persistence_outputs=self.experiment.persistence_outputs)
+        try:
+            store_manager = stores.get_outputs_store(
+                persistence_outputs=self.experiment.persistence_outputs)
+        except (PolyaxonStoresException, VolumeNotFoundError) as e:
+            raise ValidationError(e)
         experiment_outputs_path = stores.get_experiment_outputs_path(
             persistence=self.experiment.persistence_outputs,
             experiment_name=self.experiment.unique_name,
@@ -416,6 +420,10 @@ class ExperimentOutputsFilesView(ExperimentEndpoint, RetrieveEndpoint):
             outputs_path=experiment_outputs_path,
             namepath=self.experiment.unique_name,
             filepath=filepath)
+
+        if not download_filepath:
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data='Log file not found: log_path={}'.format(download_filepath))
 
         filename = os.path.basename(download_filepath)
         chunk_size = 8192

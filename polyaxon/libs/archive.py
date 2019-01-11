@@ -1,10 +1,14 @@
 import os
 import tarfile
 
+from polystores.exceptions import PolyaxonStoresException
+from rest_framework.exceptions import ValidationError
+
 import conf
 import stores
 
 from libs.paths.utils import check_archive_path
+from stores.exceptions import VolumeNotFoundError
 
 
 def create_tarfile(files, tar_path):
@@ -47,7 +51,10 @@ def archive_outputs_file(outputs_path, namepath, filepath, persistence_outputs):
     download_filepath = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'), namepath, filepath)
     download_dir = '/'.join(download_filepath.split('/')[:-1])
     check_archive_path(download_dir)
-    store_manager = stores.get_outputs_store(persistence_outputs=persistence_outputs)
+    try:
+        store_manager = stores.get_outputs_store(persistence_outputs=persistence_outputs)
+    except (PolyaxonStoresException, VolumeNotFoundError) as e:
+        raise ValidationError(e)
     outputs_filepath = os.path.join(outputs_path, filepath)
     store_manager.download_file(outputs_filepath, download_filepath)
     if store_manager.store.is_local_store:
@@ -61,7 +68,10 @@ def archive_logs_file(log_path, namepath, persistence_logs='default'):
     download_filepath = os.path.join(conf.get('LOGS_DOWNLOAD_ROOT'), namepath)
     download_dir = '/'.join(download_filepath.split('/')[:-1])
     check_archive_path(download_dir)
-    store_manager = stores.get_logs_store(persistence_logs=persistence_logs)
+    try:
+        store_manager = stores.get_logs_store(persistence_logs=persistence_logs)
+    except (PolyaxonStoresException, VolumeNotFoundError) as e:
+        raise ValidationError(e)
     store_manager.download_file(log_path, download_filepath)
     if store_manager.store.is_local_store:
         return log_path
