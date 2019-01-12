@@ -134,7 +134,7 @@ function Experiment({
       </td>
       {declarations.length > 0 && declarations.map((declaration: string, idx: number) =>
         <td className="block" key={idx}>
-          {experiment.declarations ? experiment.declarations[declaration] : ''}
+          {experiment.declarations ? JSON.stringify(experiment.declarations[declaration]) : ''}
         </td>)
       }
       {metrics.length > 0 && metrics.map((metric: string, idx: number) =>
