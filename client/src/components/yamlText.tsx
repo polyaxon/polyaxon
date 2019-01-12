@@ -2,6 +2,8 @@ import * as jsYaml from 'js-yaml';
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import CopyToClipboard from './copyToClipboard';
+
 import './text.less';
 
 export interface Props {
@@ -43,6 +45,19 @@ function YamlText({config, configText, title}: Props) {
     }
   }
 
+  // const copyToClipboard = (e: any) => {
+  //   const copyArea = document.getElementById('yaml-content');
+  //   if (copyArea) {
+  //     copyArea.select();
+  //     document.execCommand('copy');
+  //     // This is just personal preference.
+  //     // I prefer to not show the the whole text area selected.
+  //     e.target.focus();
+  //   }
+  // };
+
+  // const textAreaRef = useRef(null);
+
   const processedText = (!_.isNil(config)) ?
     jsYaml.dump(orderedConfig) :
     'No content!';
@@ -60,6 +75,11 @@ function YamlText({config, configText, title}: Props) {
         <div className="row">
           <div className="col-md-12">
             <div className="text-content">
+              <CopyToClipboard text={processedText}>
+                <span className="pull-right btn btn-sm btn-default">
+                  <i className={`fa fa-clipboard icon`} aria-hidden="true"/> Copy
+                </span>
+              </CopyToClipboard>
               <p>{processedText}</p>
             </div>
           </div>
