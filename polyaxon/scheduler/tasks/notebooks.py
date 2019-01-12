@@ -95,6 +95,7 @@ def projects_notebook_stop(self,
                            notebook_job_name,
                            notebook_job_uuid,
                            update_status=True,
+                           collect_logs=False,
                            message=None):
     deleted = notebook_scheduler.stop_notebook(
         project_name=project_name,

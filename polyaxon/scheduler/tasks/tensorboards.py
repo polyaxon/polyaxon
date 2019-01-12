@@ -59,6 +59,7 @@ def tensorboards_stop(self,
                       tensorboard_job_name,
                       tensorboard_job_uuid,
                       update_status=True,
+                      collect_logs=False,
                       message=None):
     deleted = tensorboard_scheduler.stop_tensorboard(
         project_name=project_name,
