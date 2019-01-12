@@ -188,7 +188,9 @@ class GCSStore(BaseStore):
             list_blobs = []
             for blob in _blobs:
                 name = blob.name[len(key):]
-                list_blobs.append((name, blob.size))
+                size = blob.size
+                if any([name, size]):
+                    list_blobs.append((name, blob.size))
             return list_blobs
 
         def get_prefixes(_prefixes):
