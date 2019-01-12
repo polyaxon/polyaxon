@@ -15,11 +15,13 @@ Volume mounts
 {{- end -}}  {{- /* end def upload volume mounts */ -}}
 {{- define "volumes.volumeMounts.logs" -}}
 {{- if .Values.persistence.logs }}
+{{- if not .Values.persistence.logs.store }}
 - mountPath: {{ .Values.persistence.logs.mountPath | quote }}
   name: logs
   {{ if .Values.persistence.logs.subPath -}}
   subPath: {{ .Values.persistence.logs.subPath | quote }}
   {{- end }}
+{{- end }}  {{- /* end if store */ -}}
 {{- else if .Values.nfsProvisioner.enabled }}
 - mountPath: {{ .Values.nfsProvisioner.pvc.logs.mountPath | quote }}
   name: logs
@@ -110,8 +112,9 @@ Volumes
 {{- end }}
 {{- end -}}  {{- /* end def repos volume mounts */ -}}
 {{- define "volumes.volumes.logs" -}}
-- name: logs
 {{- if .Values.persistence.logs }}
+{{- if not .Values.persistence.logs.store }}
+- name: logs
 {{- if .Values.persistence.logs.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.logs.existingClaim | quote }}
@@ -119,7 +122,9 @@ Volumes
   hostPath:
     path: {{ .Values.persistence.logs.hostPath | default .Values.persistence.logs.mountPath | quote }}
 {{- end }}  {{- /* end persistence logs */ -}}
+{{- end }} {{- /* end store check */ -}}
 {{- else if .Values.nfsProvisioner.enabled }}
+- name: logs
   persistentVolumeClaim:
     claimName: {{ .Values.nfsProvisioner.pvc.logs.name | quote }}
 {{- end }}
@@ -160,7 +165,7 @@ Volumes
   hostPath:
     path: {{ $val.hostPath | default $val.mountPath | quote }}
 {{- end }}
-{{- end }} {{- /* end volume check */ -}}
+{{- end }} {{- /* end store check */ -}}
 {{- end}}  {{- /* end range */ -}}
 {{- else if .Values.nfsProvisioner.enabled }}
 - name: outputs
