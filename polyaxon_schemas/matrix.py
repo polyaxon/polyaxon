@@ -189,7 +189,8 @@ class MatrixConfig(BaseConfig):
         if key != 'values':
             return False
 
-        return any([v for v in value if isinstance(v, six.string_types)])
+        return any([v for v in value
+                    if not isinstance(v, (int, float, complex, np.integer, np.floating))])
 
     @property
     def is_uniform(self):
@@ -262,7 +263,11 @@ class MatrixConfig(BaseConfig):
         if key in {'values', 'range', 'linspace', 'logspace', 'geomspace'}:
             value = self.to_numpy()
             rand_generator = rand_generator or np.random
-            return rand_generator.choice(value, size=size)
+            try:
+                return rand_generator.choice(value, size=size)
+            except ValueError:
+                idx = rand_generator.randint(0, len(value))
+                return value[idx]
 
         if key == 'pvalues':
             return pvalues(values=value, size=size, rand_generator=rand_generator)

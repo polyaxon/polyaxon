@@ -57,6 +57,21 @@ class TestMatrixConfigs(TestCase):
         assert config.min is None
         assert config.max is None
 
+        config_dict['values'] = [[1, 2], [2, 4]]
+        config = MatrixConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.to_numpy() == config_dict['values']
+        assert config.sample() in [[1, 2], [2, 4]]
+        assert config.length == 2
+        assert config.is_categorical is True
+        assert config.is_distribution is False
+        assert config.is_range is False
+        assert config.is_uniform is False
+        assert config.is_discrete is True
+        assert config.is_continuous is False
+        assert config.min is None
+        assert config.max is None
+
     def test_matrix_pvalues_option(self):
         config_dict = {
             'pvalues': [(1, 0.1), (2, 0.3), (3, 6)],
