@@ -32,6 +32,7 @@ def register(models=None):
     if not models:
         tokens.register(admin_register)
         users.register(admin_register)
+        projects.register(admin_register)
         return
 
     if 'activitylogs' in models:
@@ -60,8 +61,6 @@ def register(models=None):
         owners.register(admin_register)
     if 'pipelines' in models:
         pipelines.register(admin_register)
-    if 'projects' in models:
-        projects.register(admin_register)
     if 'repos' in models:
         repos.register(admin_register)
     if 'searches' in models:
