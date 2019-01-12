@@ -42,6 +42,7 @@ user:
 
 # Time zone
 timeZone: 'UTC'
+adminViewEnabled: true
 
 dirs:
   nvidia:
