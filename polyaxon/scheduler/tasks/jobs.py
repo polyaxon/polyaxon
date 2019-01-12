@@ -1,5 +1,7 @@
 import logging
 
+from polystores.exceptions import PolyaxonStoresException
+
 from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from db.redis.heartbeat import RedisHeartBeat
@@ -7,6 +9,7 @@ from logs_handlers.collectors import logs_collect_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, job_scheduler
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger(__name__)
 
@@ -104,7 +107,7 @@ def jobs_stop(self,
     if collect_logs:
         try:
             logs_collect_job(job_uuid=job_uuid)
-        except OSError:
+        except (OSError, VolumeNotFoundError, PolyaxonStoresException):
             _logger.warning('Scheduler could not collect the logs for job `%s`.', job_name)
     deleted = job_scheduler.stop_job(
         project_name=project_name,

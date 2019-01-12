@@ -1,5 +1,7 @@
 import logging
 
+from polystores.exceptions import PolyaxonStoresException
+
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.getters.build_jobs import get_valid_build_job
@@ -12,6 +14,7 @@ from logs_handlers.collectors import logs_collect_build_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.build_jobs')
 
@@ -69,7 +72,7 @@ def build_jobs_stop(self,
     if collect_logs:
         try:
             logs_collect_build_job(build_uuid=build_job_uuid)
-        except OSError:
+        except (OSError, VolumeNotFoundError, PolyaxonStoresException):
             _logger.warning('Scheduler could not collect the logs for build `%s`.', build_job_name)
     deleted = dockerizer_scheduler.stop_dockerizer(
         project_name=project_name,

@@ -1,5 +1,6 @@
 import logging
 
+from polystores.exceptions import PolyaxonStoresException
 from rest_framework.exceptions import ValidationError
 
 import publisher
@@ -14,6 +15,7 @@ from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, experiment_scheduler
 from schemas.specifications import ExperimentSpecification
+from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
 
 _logger = logging.getLogger('polyaxon.scheduler.experiments')
 
@@ -199,7 +201,7 @@ def experiments_stop(self,
     if collect_logs:
         try:
             collectors.logs_collect_experiment_jobs(experiment_uuid=experiment_uuid)
-        except OSError:
+        except (OSError, VolumeNotFoundError, PolyaxonStoresException):
             _logger.warning('Scheduler could not collect '
                             'the logs for experiment `%s`.', experiment_name)
     if specification:
