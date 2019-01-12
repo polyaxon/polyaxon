@@ -4,6 +4,7 @@ from polyaxon.config_settings.cleaning import *
 from polyaxon.config_settings.cors import *
 from polyaxon.config_settings.dirs import *
 from polyaxon.config_settings.k8s import *
+from polyaxon.config_settings.labels import *
 from polyaxon.config_settings.middlewares import *
 from polyaxon.config_settings.notification_urls import *
 from polyaxon.config_settings.oauth import *
