@@ -46,8 +46,11 @@ def safe_log_experiment(experiment_name, log_lines, temp, append=False):
             stores.create_experiment_logs_path(experiment_name=experiment_name, temp=_temp)
             _lock_log(log_path, log_lines, append=append)
 
-    # We are storing a temp file or a mounted path
-    if temp or not stores.is_bucket_logs_persistence():
+    # Check if we are appending and the store is local
+    if append and not stores.is_bucket_logs_persistence():
+        _safe_log_experiment(False)
+    elif temp or not stores.is_bucket_logs_persistence():
+        # We are storing a temp file or a mounted path
         _safe_log_experiment()
     else:
         # We are storing a file to bucket; Store the file as temp and then upload it
