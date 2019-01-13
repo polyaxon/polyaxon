@@ -1,3 +1,3 @@
 -r ../requirements-base.txt
 
-polyaxon-k8s==0.3.5
+polyaxon-k8s==0.3.7
