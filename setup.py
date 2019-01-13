@@ -6,6 +6,11 @@ from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 
+def read_readme():
+    with open('README.md') as f:
+        return f.read()
+
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -19,8 +24,9 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-cli',
-      version='0.3.5',
+      version='0.3.7',
       description='Command Line Interface (CLI) for Polyaxon.',
+      long_description=read_readme(),
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
       author='Mourad Mourafiq',
@@ -44,10 +50,10 @@ setup(name='polyaxon-cli',
       install_requires=[
           "click==6.7",
           "pathlib==1.0.1",
-          "polyaxon-client==0.3.5",
+          "polyaxon-client==0.3.7",
+          "polyaxon-deploy==0.0.1",
           "raven==6.7.0",
           "tabulate==0.8.2",
-          "six==1.11.0",
       ],
       entry_points={
           "console_scripts": [
