@@ -6,6 +6,11 @@ from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 
+def read_readme():
+    with open('README.md') as f:
+        return f.read()
+
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -19,8 +24,9 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-client',
-      version='0.3.6',
+      version='0.3.7',
       description='Python client to interact with Polyaxon API.',
+      long_description=read_readme(),
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
       author='Mourad Mourafiq',
@@ -49,8 +55,8 @@ setup(name='polyaxon-client',
       ],
       install_requires=[
           "clint==0.5.1",
-          "polyaxon-schemas==0.3.6",
-          "polystores==0.0.8",
+          "polyaxon-schemas==0.3.7",
+          "polystores==0.0.9",
           "psutil==5.4.7",
           "requests>=2.20.0",
           "requests-toolbelt==0.8.0",
