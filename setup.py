@@ -6,6 +6,11 @@ from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 
+def read_readme():
+    with open('README.md') as f:
+        return f.read()
+
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -19,8 +24,9 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-schemas',
-      version='0.3.6',
+      version='0.3.7',
       description='Schema definitions and validation for Polyaxon.',
+      long_description=read_readme(),
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
       author='Mourad Mourafiq',
@@ -42,13 +48,13 @@ setup(name='polyaxon-schemas',
           'kubernetes',
       ],
       install_requires=[
-          'hestia==0.2.3',
+          'hestia==0.2.4',
           'Jinja2==2.10',
           'marshmallow==2.16.3',
           'numpy>=1.15.2',
           'python-dateutil>=2.7.3',
           'pytz==2018.7',
-          'rhea==0.4.2'
+          'rhea==0.4.3'
       ],
       classifiers=[
           'Programming Language :: Python',
