@@ -55,6 +55,7 @@ from api.experiments.serializers import (
 )
 from api.filters import OrderingFilter, QueryFilter
 from api.paginator import LargeLimitOffsetPagination
+from api.utils.gzip import gzip
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
@@ -216,6 +217,10 @@ class ProjectExperimentListView(BookmarkedListMixinView,
         auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_experiment(experiment_id=instance.id, value=ttl)
+
+    @gzip()
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 
 class ExperimentDetailView(ExperimentEndpoint,
@@ -506,6 +511,7 @@ class ExperimentMetricListView(ExperimentResourceEndpoint,
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+    @gzip()
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         auditor.record(event_type=EXPERIMENT_METRICS_VIEWED,
