@@ -6,6 +6,11 @@ from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 
+def read_readme():
+    with open('README.md') as f:
+        return f.read()
+
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -19,8 +24,9 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-deploy',
-      version='0.3.5',
+      version='0.0.1',
       description='Tools to validate and deploy Polyaxon to one of the supported platforms.',
+      long_description=read_readme(),
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
       author='Mourad Mourafiq',
@@ -47,7 +53,7 @@ setup(name='polyaxon-deploy',
           'kubernetes',
       ],
       install_requires=[
-          "polyaxon-schemas==0.3.5",
+          "polyaxon-schemas==0.3.7",
       ],
       classifiers=[
           'Programming Language :: Python',
