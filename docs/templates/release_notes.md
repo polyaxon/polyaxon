@@ -6,20 +6,21 @@
  * Add validation for values containing lists.
  * Add copy-to-clipboard to preserve configuration yaml structure when copying from browser.
  * Add confirmation dialogue before deleting/stopping entities on Dashborad.
- * Add better handling for in-cluster jobs and experiments running on other platforms.
+ * Add better logs handling for in-cluster jobs and experiments running on other platforms.
  * Enable admin view by default with useful models only.
  * Enhance statuses watch.
  * Add gzip decorator for some endpoints.
  * Enhance stores and options management (internal improvements).
  * Add external registries for managing build images (Beta).
+ * Add graceful Handling of wrongly detected gpu nodes.
  * Fix token auto-refresh.
  * Fix user deletion from admin UI.
  * Fis issue with declarations of type list not being handled correctly on dashboard.
  * Fix issue relates to `ls` on GCS.
  * Fix some issues related to detecting changes on Azure.
- * Fix error when the command `config --list` when no configuration is not initialized.  
+ * Fix error when the command `config --list` when the cli configuration is not initialized.  
  * Extend in-cluster examples.
- * Add several examples for tracking experiments outside of Polyaxon.
+ * Add examples for tracking experiments outside of Polyaxon.
  * Introduce Polyaxon deployment lifecycle management (Beta).
 
 ## 0.3.5
