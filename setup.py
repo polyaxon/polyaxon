@@ -6,6 +6,11 @@ from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 
+def read_readme():
+    with open('README.md') as f:
+        return f.read()
+
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -19,8 +24,9 @@ class PyTest(TestCommand):
 
 
 setup(name='rhea',
-      version='0.4.2',
+      version='0.4.3',
       description='Efficient environment variables management and typing for python.',
+      long_description=read_readme(),
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad.mourafiq@gmail.com',
       author='Mourad Mourafiq',
