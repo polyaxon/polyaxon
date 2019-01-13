@@ -6,6 +6,10 @@ from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 
+def read_readme():
+    with open('README.md') as f:
+        return f.read()
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -19,8 +23,9 @@ class PyTest(TestCommand):
 
 
 setup(name='ocular',
-      version='0.0.5',
+      version='0.0.6',
       description="A tool for observing Kubernetes pods' statuses in real time.",
+      long_description=read_readme(),
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
       author='Mourad Mourafiq',
@@ -39,8 +44,8 @@ setup(name='ocular',
           'docker'
       ],
       install_requires=[
-          "hestia>=0.2.3",
-          "kubernetes>=7.0.0",
+          "hestia>=0.2.4",
+          "kubernetes>=7.0.1",
           "six==1.12.0"
       ],
       classifiers=[
