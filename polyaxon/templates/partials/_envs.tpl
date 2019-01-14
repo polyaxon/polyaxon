@@ -33,7 +33,7 @@ secrets config
 - name: POLYAXON_DB_PASSWORD
   valueFrom:
     secretKeyRef:
-{{- if .Values.postgresql.install }}
+{{- if .Values.postgresql.enabled }}
       name: {{ template "postgresql.fullname" . }}
 {{- else }}
       name: {{ template "polyaxon.fullname" . }}-postgres-secret

@@ -38,12 +38,12 @@ data:
   {{- if .Values.logLevel }}
   POLYAXON_LOG_LEVEL: {{ .Values.logLevel | quote }}
   {{- end }}
-  {{- if .Values.postgresql.install }}
+  {{- if .Values.postgresql.enabled }}
   POLYAXON_K8S_DB_SECRET_NAME: {{ template "postgresql.fullname" . }}
   {{- else }}
   POLYAXON_K8S_DB_SECRET_NAME: {{ template "polyaxon.fullname" . }}-postgres-secret
   {{- end}}
-  {{- if (index .Values "docker-registry").install }}
+  {{- if (index .Values "docker-registry").enabled }}
   POLYAXON_K8S_REGISTRY_SECRET_NAME: {{ template "docker-registry.fullname" . }}-secret
   {{- else }}
   POLYAXON_K8S_REGISTRY_SECRET_NAME: {{ template "polyaxon.fullname" . }}-registry-secret
@@ -152,7 +152,7 @@ data:
   POLYAXON_DB_NAME: {{ default "polyaxon" .Values.postgresql.postgresDatabase | quote }}
   POLYAXON_DB_PORT: "5432"
   POLYAXON_DB_CONN_MAX_AGE: {{ default "60" .Values.postgresql.connMaxAge | quote }}
-  {{- if .Values.postgresql.install }}
+  {{- if .Values.postgresql.enabled }}
   POLYAXON_DB_HOST: {{  template "postgresql.fullname" . }}
   {{- else }}
   POLYAXON_DB_HOST: {{ .Values.postgresql.externalPostgresHost | quote }}
@@ -210,7 +210,7 @@ data:
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   POLYAXON_BUILD_ALWAYS_PULL_LATEST: {{ default "false" .Values.build_always_pull_latest | quote }}
   # Registry
-  {{- if (index .Values "docker-registry").install }}
+  {{- if (index .Values "docker-registry").enabled }}
   POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
   POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").service.port | quote }}
   POLYAXON_REGISTRY_NODE_PORT: {{ (index .Values "docker-registry").service.nodePort | quote }}
