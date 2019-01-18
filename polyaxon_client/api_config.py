@@ -20,6 +20,7 @@ class ApiConfig(object):
                  version=None,
                  authentication_type=None,
                  use_https=None,
+                 verify_ssl=None,
                  in_cluster=None,
                  schema_response=None,
                  reraise=False,
@@ -30,6 +31,7 @@ class ApiConfig(object):
         self.host = host or settings.API_HOST
         self.in_cluster = self._get_bool(in_cluster, settings.IN_CLUSTER)
         self.use_https = self._get_bool(use_https, settings.USE_HTTPS)
+        self.verify_ssl = self._get_bool(verify_ssl, settings.VERIFY_SSL)
 
         if not self.host and not self.in_cluster:
             raise PolyaxonClientException(

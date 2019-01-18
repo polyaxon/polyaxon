@@ -25,6 +25,7 @@ class PolyaxonClient(object):
                  http_port=None,
                  ws_port=None,
                  use_https=False,
+                 verify_ssl=True,
                  in_cluster=None,
                  authentication_type=None,
                  api_version=None,
@@ -39,6 +40,7 @@ class PolyaxonClient(object):
                                                    authentication_type=authentication_type,
                                                    version=api_version,
                                                    use_https=use_https,
+                                                   verify_ssl=verify_ssl,
                                                    in_cluster=in_cluster,
                                                    schema_response=schema_response,
                                                    reraise=reraise,
@@ -88,6 +90,10 @@ class PolyaxonClient(object):
         return self.api_config.use_https
 
     @property
+    def verify_ssl(self):
+        return self.api_config.verify_ssl
+
+    @property
     def token(self):
         return self.api_config.token
 
@@ -125,6 +131,10 @@ class PolyaxonClient(object):
 
     def set_use_https(self, use_https):
         self.api_config.use_https = use_https
+        self.reset()
+    
+    def set_verify_ssl(self, verify_ssl):
+        self.api_config.verify_ssl = verify_ssl
         self.reset()
 
     def set_token(self, token):
