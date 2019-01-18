@@ -2,9 +2,8 @@ This section assumes that you have already familiarized yourself with the concep
 
 Hyperparameters selection is crucial for creating robust models,
 since they heavily influence the behavior of the learned model.
-Finding good hyperparameters involves can be very challenging,
-and requires to efficiently search the space of possible hyperparameters as well as
-how to manage a large set of experiments for hyperparameter tuning.
+Finding good hyperparameters can be very challenging,
+it requires to efficiently search the space of possible hyperparameters and manage a large set of experiments for hyperparameter tuning.
 
 The way Polyaxon performs hyperparameters tuning is by providing to the data scientists a selection of search algorithms.
 Polyaxon supports both simple approaches such as `random search` and `grid search`, and provides a simple interface for
@@ -16,7 +15,7 @@ Some of these approaches are also iterative and improve based on previous experi
 
 In order to search a hyperparameter space, all search algorithms require a `hptuning` section,
 they also share some subsections such as: `matrix` definition of hyperparameters, `early_stopping`, and `concurrency`.
-Each one of this algorithms has a dedicated subsection to define the required options.
+Each one of these algorithms has a dedicated subsection to define the required options.
 
 ## Grid search
 

@@ -110,9 +110,8 @@ A `Job` is the execution of your code to do some data processing or any generic 
 
 ### Hyperparameters search
 
-Finding good hyperparameters involves can be very challenging,
-and requires to efficiently search the space of possible hyperparameters as well as
-how to manage a large set of experiments for hyperparameter tuning.
+Finding good hyperparameters can be very challenging,
+it requires to efficiently search the space of possible hyperparameters and to manage a large set of experiments for hyperparameter tuning.
 
 !!! info "More details"
     Please refer to the [hyperparameters search](hyperparameters_search) for more details.
