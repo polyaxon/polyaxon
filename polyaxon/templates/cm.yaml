@@ -115,6 +115,7 @@ data:
   POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS: {{ .Values.queues.schedulerBuildJobs | quote }}
   POLYAXON_QUEUES_SCHEDULER_JOBS: {{ .Values.queues.schedulerJobs | quote }}
   POLYAXON_QUEUES_SCHEDULER_STORES: {{ .Values.queues.schedulerStores | quote }}
+  POLYAXON_QUEUES_SCHEDULER_CLEAN: {{ .Values.queues.schedulerClean | quote }}
   POLYAXON_QUEUES_PIPELINES_HEALTH: {{ .Values.queues.pipelinesHealth | quote }}
   POLYAXON_QUEUES_PIPELINES: {{ .Values.queues.pipelines | quote }}
   POLYAXON_QUEUES_CRONS_HEALTH: {{ .Values.queues.cronsHealth | quote }}
