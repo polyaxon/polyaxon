@@ -7,7 +7,7 @@ from db.models.notebooks import NotebookJob
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from polyaxon.celery_api import celery_app
-from polyaxon.settings import CleaningIntervals, CronsCeleryTasks
+from polyaxon.settings import CleaningIntervals, CronsCeleryTasks, SchedulerCeleryTasks
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_PROJECTS, ignore_result=True)
@@ -16,16 +16,8 @@ def delete_archived_projects():
     ids = Project.archived.filter(updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
         celery_app.send_task(
-            CronsCeleryTasks.DELETE_ARCHIVED_PROJECT,
+            SchedulerCeleryTasks.DELETE_ARCHIVED_PROJECT,
             kwargs={'project_id': _id})
-
-
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_PROJECT, ignore_result=True)
-def delete_archived_project(project_id):
-    try:
-        Project.archived.get(id=project_id).delete()
-    except Project.DoesNotExist:
-        pass
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUPS, ignore_result=True)
@@ -37,16 +29,8 @@ def delete_archived_experiment_groups():
         updated_at__lte=last_date).values_list('id', flat=True)
     for group in groups:
         celery_app.send_task(
-            CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP,
+            SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP,
             kwargs={'group_id': group})
-
-
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP, ignore_result=True)
-def delete_archived_experiment_group(group_id):
-    try:
-        ExperimentGroup.archived.get(id=group_id).delete()
-    except ExperimentGroup.DoesNotExist:
-        pass
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENTS, ignore_result=True)
@@ -61,16 +45,8 @@ def delete_archived_experiments():
     ).values_list('id', flat=True)
     for _id in ids:
         celery_app.send_task(
-            CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
+            SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
             kwargs={'experiment_id': _id})
-
-
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT, ignore_result=True)
-def delete_archived_experiment(experiment_id):
-    try:
-        Experiment.archived.get(id=experiment_id).delete()
-    except Experiment.DoesNotExist:
-        pass
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_JOBS, ignore_result=True)
@@ -82,16 +58,8 @@ def delete_archived_jobs():
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
         celery_app.send_task(
-            CronsCeleryTasks.DELETE_ARCHIVED_JOB,
+            SchedulerCeleryTasks.DELETE_ARCHIVED_JOB,
             kwargs={'job_id': _id})
-
-
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_JOB, ignore_result=True)
-def delete_archived_job(job_id):
-    try:
-        Job.archived.get(id=job_id).delete()
-    except Job.DoesNotExist:
-        pass
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOBS, ignore_result=True)
@@ -103,16 +71,8 @@ def delete_archived_build_jobs():
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
         celery_app.send_task(
-            CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOB,
+            SchedulerCeleryTasks.DELETE_ARCHIVED_BUILD_JOB,
             kwargs={'job_id': _id})
-
-
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOB, ignore_result=True)
-def delete_archived_build_job(job_id):
-    try:
-        BuildJob.archived.get(id=job_id).delete()
-    except BuildJob.DoesNotExist:
-        pass
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOBS, ignore_result=True)
@@ -124,16 +84,8 @@ def delete_archived_notebook_jobs():
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
         celery_app.send_task(
-            CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB,
+            SchedulerCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB,
             kwargs={'job_id': _id})
-
-
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB, ignore_result=True)
-def delete_archived_notebook_job(job_id):
-    try:
-        NotebookJob.archived.get(id=job_id).delete()
-    except NotebookJob.DoesNotExist:
-        pass
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOBS, ignore_result=True)
@@ -145,13 +97,5 @@ def delete_archived_tensorboard_jobs():
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
         celery_app.send_task(
-            CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB,
+            SchedulerCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB,
             kwargs={'job_id': _id})
-
-
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB, ignore_result=True)
-def delete_archived_tensorboard_job(job_id):
-    try:
-        TensorboardJob.archived.get(id=job_id).delete()
-    except TensorboardJob.DoesNotExist:
-        pass
