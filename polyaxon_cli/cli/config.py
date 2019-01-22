@@ -62,9 +62,15 @@ def get(keys):
 @click.option('--http_port', type=int, help='To set the http port.')
 @click.option('--ws_port', type=int, help='To set the stream port.')
 @click.option('--use_https', type=bool, help='To set whether or not to use https.')
-@click.option('--verify_ssl', type=bool, help='To set whether or not to verify the SSL certificate.')
+@click.option('--verify_ssl', type=bool,
+              help='To set whether or not to verify the SSL certificate.')
 @clean_outputs
-def set(verbose, host, http_port, ws_port, use_https, verify_ssl):  # pylint:disable=redefined-builtin
+def set(verbose,
+        host,
+        http_port,
+        ws_port,
+        use_https,
+        verify_ssl):  # pylint:disable=redefined-builtin
     """Set the global config values.
 
     Example:
@@ -91,7 +97,7 @@ def set(verbose, host, http_port, ws_port, use_https, verify_ssl):  # pylint:dis
     if use_https is not None:
         _config.use_https = use_https
 
-    if verify_ssl is not None:
+    if verify_ssl is False:
         _config.verify_ssl = verify_ssl
 
     GlobalConfigManager.set_config(_config)

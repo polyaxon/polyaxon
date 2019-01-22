@@ -29,7 +29,7 @@ class GlobalConfigurationConfig(BaseConfig):
                  http_port=80,
                  ws_port=80,
                  use_https=False,
-                 verify_ssl=True):
+                 verify_ssl=None):
         self.verbose = verbose
         self.host = host
         self.http_port = str(http_port)

@@ -12,6 +12,7 @@ class TestGlobalConfigs(TestCase):
                        'host': 'localhost',
                        'http_port': '80',
                        'ws_port': '1338',
+                       'verify_ssl': True,
                        'use_https': False}
         config = GlobalConfigurationConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
