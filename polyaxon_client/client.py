@@ -25,7 +25,7 @@ class PolyaxonClient(object):
                  http_port=None,
                  ws_port=None,
                  use_https=False,
-                 verify_ssl=True,
+                 verify_ssl=None,
                  in_cluster=None,
                  authentication_type=None,
                  api_version=None,

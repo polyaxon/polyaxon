@@ -81,7 +81,6 @@ class HttpTransportMixin(object):
         request_headers = self._get_headers(headers=headers)
         timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
         session = session or self.session
-        verify = settings.VERIFY_SSL if settings.VERIFY_SSL is not None else True
 
         try:
             response = session.request(method,
@@ -92,7 +91,7 @@ class HttpTransportMixin(object):
                                        headers=request_headers,
                                        files=files,
                                        timeout=timeout,
-                                       verify=verify)
+                                       verify=self.config.verify_ssl)
         except (requests.exceptions.RequestException,
                 requests.exceptions.Timeout,
                 requests.exceptions.HTTPError) as exception:
