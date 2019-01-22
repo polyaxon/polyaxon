@@ -113,3 +113,6 @@ client/polyaxon/**/*.js
 client/polyaxon/**/*.js.map
 /examples/polyaxon-logs/
 lastfailed
+
+# IDE
+.vscode
