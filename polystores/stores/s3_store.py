@@ -48,6 +48,12 @@ class S3Store(BaseStore):
         self._region_name = (kwargs.get('region') or
                              kwargs.get('aws_region') or
                              kwargs.get('AWS_REGION'))
+        self._aws_verify_ssl = kwargs.get('verify_ssl',
+                                          kwargs.get('aws_verify_ssl',
+                                                     kwargs.get('AWS_VERIFY_SSL', None)))
+        self._aws_use_ssl = (kwargs.get('use_ssl') or
+                             kwargs.get('aws_use_ssl') or
+                             kwargs.get('AWS_USE_SSL'))
 
     @property
     def client(self):
@@ -56,7 +62,9 @@ class S3Store(BaseStore):
                             aws_access_key_id=self._aws_access_key_id,
                             aws_secret_access_key=self._aws_secret_access_key,
                             aws_session_token=self._aws_session_token,
-                            region_name=self._region_name)
+                            region_name=self._region_name,
+                            aws_use_ssl=self._aws_use_ssl,
+                            aws_verify_ssl=self._aws_verify_ssl)
         return self._client
 
     def set_env_vars(self):
@@ -70,6 +78,10 @@ class S3Store(BaseStore):
             os.environ['AWS_SECURITY_TOKEN'] = self._aws_session_token
         if self._region_name:
             os.environ['AWS_REGION'] = self._region_name
+        if self._aws_use_ssl is not None:
+            os.environ['AWS_USE_SSL'] = self._aws_use_ssl
+        if self._aws_verify_ssl is not None:
+            os.environ['AWS_VERIFY_SSL'] = self._aws_verify_ssl
 
     @property
     def resource(self):
@@ -86,7 +98,9 @@ class S3Store(BaseStore):
                    aws_access_key_id=None,
                    aws_secret_access_key=None,
                    aws_session_token=None,
-                   region_name=None):
+                   region_name=None,
+                   aws_use_ssl=True,
+                   aws_verify_ssl=None):
         """
         Sets a new s3 boto3 client.
 
@@ -107,7 +121,9 @@ class S3Store(BaseStore):
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
-            region_name=region_name)
+            region_name=region_name,
+            aws_use_ssl=aws_use_ssl,
+            aws_verify_ssl=aws_verify_ssl)
 
     def set_resource(self,
                      endpoint_url=None,

@@ -31,6 +31,17 @@ def get_endpoint_url(keys=None):
     return get_from_env(keys)
 
 
+def get_aws_use_ssl(keys=None):
+    keys = keys or ['AWS_USE_SSL']
+    return get_from_env(keys)
+
+
+def get_aws_verify_ssl(keys=None):
+    keys = ['AWS_VERIFY_SSL'] if keys is None else keys
+    env = get_from_env(keys)
+    return False if env == 'False' else env
+
+
 def get_aws_session(aws_access_key_id=None,
                     aws_secret_access_key=None,
                     aws_session_token=None,
@@ -51,13 +62,24 @@ def get_aws_client(client_type,
                    aws_access_key_id=None,
                    aws_secret_access_key=None,
                    aws_session_token=None,
-                   region_name=None):
+                   region_name=None,
+                   aws_use_ssl=True,
+                   aws_verify_ssl=None):
     session = get_aws_session(aws_access_key_id=aws_access_key_id,
                               aws_secret_access_key=aws_secret_access_key,
                               aws_session_token=aws_session_token,
                               region_name=region_name)
     endpoint_url = endpoint_url or get_endpoint_url()
-    return session.client(client_type, endpoint_url=endpoint_url)
+    aws_use_ssl = aws_use_ssl or get_aws_use_ssl()
+    if aws_verify_ssl is None:
+        aws_verify_ssl = get_aws_verify_ssl()
+    else:
+        aws_verify_ssl = aws_verify_ssl
+    return session.client(
+        client_type,
+        endpoint_url=endpoint_url,
+        use_ssl=aws_use_ssl,
+        verify=aws_verify_ssl)
 
 
 def get_aws_resource(resource_type,
@@ -65,10 +87,21 @@ def get_aws_resource(resource_type,
                      aws_access_key_id=None,
                      aws_secret_access_key=None,
                      aws_session_token=None,
-                     region_name=None):
+                     region_name=None,
+                     aws_use_ssl=True,
+                     aws_verify_ssl=None):
     session = get_aws_session(aws_access_key_id=aws_access_key_id,
                               aws_secret_access_key=aws_secret_access_key,
                               aws_session_token=aws_session_token,
                               region_name=region_name)
     endpoint_url = endpoint_url or get_endpoint_url()
-    return session.resource(resource_type, endpoint_url=endpoint_url)
+    aws_use_ssl = aws_use_ssl or get_aws_use_ssl()
+    if aws_verify_ssl is None:
+        aws_verify_ssl = get_aws_verify_ssl()
+    else:
+        aws_verify_ssl = aws_verify_ssl
+    return session.resource(
+        resource_type,
+        endpoint_url=endpoint_url,
+        use_ssl=aws_use_ssl,
+        verify=aws_verify_ssl)
