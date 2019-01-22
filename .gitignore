@@ -128,3 +128,6 @@ client/polyaxon/**/*.js.map
 client/npm-debug.log
 # don't ignore static dist
 !/static/dist
+
+# IDE
+.vscode
