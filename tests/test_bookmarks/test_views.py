@@ -26,7 +26,6 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.bookmarks_mark
 class BaseTestBookmarkCreateView(BaseViewTest):
-    DISABLE_RUNNER = True
     HAS_AUTH = True
     model_class = None
     factory_class = None
@@ -59,7 +58,6 @@ class BaseTestBookmarkCreateView(BaseViewTest):
 
 @pytest.mark.bookmarks_mark
 class BaseTestBookmarkDeleteView(BaseViewTest):
-    DISABLE_RUNNER = True
     HAS_AUTH = True
     model_class = None
     factory_class = None
@@ -185,7 +183,6 @@ class TestBuildBookmarkDeleteView(BaseTestBookmarkDeleteView):
 @pytest.mark.bookmarks_mark
 class BaseTestBookmarkListViewV1(BaseViewTest):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     model_class = Bookmark
     serializer_class = None
     factory_class = None
@@ -255,7 +252,6 @@ class BaseTestBookmarkListViewV1(BaseViewTest):
 @pytest.mark.bookmarks_mark
 class TestBuildBookmarkListView(BaseTestBookmarkListViewV1):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     serializer_class = BuildJobBookmarkSerializer
     factory_class = BuildJobFactory
     entity = 'builds'
@@ -264,7 +260,6 @@ class TestBuildBookmarkListView(BaseTestBookmarkListViewV1):
 @pytest.mark.bookmarks_mark
 class TestJobBookmarkListView(BaseTestBookmarkListViewV1):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     serializer_class = JobBookmarkSerializer
     factory_class = JobFactory
     entity = 'jobs'
@@ -273,7 +268,6 @@ class TestJobBookmarkListView(BaseTestBookmarkListViewV1):
 @pytest.mark.bookmarks_mark
 class TestExperimentBookmarkListView(BaseTestBookmarkListViewV1):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     serializer_class = ExperimentBookmarkSerializer
     factory_class = ExperimentFactory
     entity = 'experiments'
@@ -282,7 +276,6 @@ class TestExperimentBookmarkListView(BaseTestBookmarkListViewV1):
 @pytest.mark.bookmarks_mark
 class TestExperimentGroupBookmarkListView(BaseTestBookmarkListViewV1):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     serializer_class = ExperimentGroupBookmarkSerializer
     factory_class = ExperimentGroupFactory
     entity = 'groups'
@@ -291,7 +284,6 @@ class TestExperimentGroupBookmarkListView(BaseTestBookmarkListViewV1):
 @pytest.mark.bookmarks_mark
 class TestProjectBookmarkListView(BaseTestBookmarkListViewV1):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     serializer_class = ProjectBookmarkSerializer
     factory_class = ProjectFactory
     entity = 'projects'

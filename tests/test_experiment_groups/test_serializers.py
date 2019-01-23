@@ -17,8 +17,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.experiment_groups_mark
 class TestExperimentGroupSerializer(BaseTest):
-    DISABLE_RUNNER = True
-
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
@@ -132,6 +130,8 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         'bookmarked',
     }
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
+    DISABLE_AUDITOR = True
 
     def setUp(self):
         super().setUp()
@@ -175,6 +175,8 @@ class TestExperimentGroupDetailSerializer(BaseTest):
 @pytest.mark.experiment_groups_mark
 class TestExperimentGroupChartViewSerializer(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
+    DISABLE_AUDITOR = True
     serializer_class = ExperimentGroupChartViewSerializer
     model_class = ExperimentGroupChartView
     factory_class = ExperimentGroupChartViewFactory

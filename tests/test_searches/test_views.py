@@ -13,7 +13,6 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.search_mark
 class BaseTestSearchListView(BaseViewTest):
-    DISABLE_RUNNER = True
     HAS_AUTH = True
     model_class = Search
     factory_class = SearchFactory
@@ -78,6 +77,7 @@ class BaseTestSearchListView(BaseViewTest):
 @pytest.mark.search_mark
 class BaseTestSearchDeleteView(BaseViewTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
     HAS_AUTH = True
     model_class = Search
     factory_class = SearchFactory

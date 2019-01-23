@@ -22,8 +22,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.query_mark
 class TestEqualityCondition(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_equality_operators(self):
         op = EqualityCondition._eq_operator('field', 'value')
         assert op == Q(field='value')
@@ -67,8 +65,6 @@ class TestEqualityCondition(BaseTest):
 
 @pytest.mark.query_mark
 class TestComparisonCondition(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_comparison_operators(self):
         op = ComparisonCondition._lt_operator('field', 'value')
         assert op == Q(field__lt='value')
@@ -224,6 +220,7 @@ class TestComparisonCondition(BaseTest):
 @pytest.mark.query_mark
 class TestDateTimeCondition(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
 
     def test_range_operators(self):
         with self.assertRaises(AssertionError):
@@ -422,8 +419,6 @@ class TestDateTimeCondition(BaseTest):
 
 @pytest.mark.query_mark
 class TestValueCondition(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_value_operators(self):
         op = ValueCondition._in_operator('field', ['v1', 'v2'])
         assert op == Q(field__in=['v1', 'v2'])

@@ -35,7 +35,6 @@ class TestProjectBuildListViewV1(BaseViewTest):
     factory_class = BuildJobFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -546,7 +545,6 @@ class TestStopBuildViewV1(BaseViewTest):
 class TestBuildLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -615,7 +613,6 @@ class TestBuildLogsViewV1(BaseViewTest):
 @pytest.mark.build_jobs_mark
 class TestBuildHeartBeatViewV1(BaseViewTest):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     HAS_INTERNAL = True
     INTERNAL_SERVICE = InternalServices.SIDECAR
 

@@ -17,8 +17,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.query_mark
 class TestParser(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_base_parser_raises_for_invalid_expressions(self):
         with self.assertRaises(QueryParserException):
             parse_expression('foo:bar:moo')

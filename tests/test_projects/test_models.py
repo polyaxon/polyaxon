@@ -21,8 +21,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.projects_mark
 class TestProjectModel(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_has_code(self):
         project = ProjectFactory()
         self.assertEqual(project.has_code, False)

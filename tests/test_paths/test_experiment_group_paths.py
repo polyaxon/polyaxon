@@ -12,8 +12,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.paths_mark
 class TestExperimentGroupPaths(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()

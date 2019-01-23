@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestSchedulerHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_scheduler_is_healthy(self):
         results = SchedulerCheck.run()
         assert results['SCHEDULER'].is_healthy is True

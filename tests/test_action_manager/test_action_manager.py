@@ -9,7 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.actions_mark
 class TestActionManager(BaseTest):
-    DISABLE_RUNNER = True
 
     def setUp(self):
         self.manager = ActionManager()

@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestCronsHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_crons_is_healthy(self):
         results = CronsCheck.run()
         assert results['CRONS'].is_healthy is True

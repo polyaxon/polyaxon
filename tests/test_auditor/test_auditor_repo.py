@@ -4,10 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-import activitylogs
 import auditor
-import notifier
-import tracker
 
 from event_manager.events import repo as repo_events
 from factories.factory_repos import RepoFactory
@@ -17,18 +14,10 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorRepoTest(BaseTest):
     """Testing subscribed events"""
-    DISABLE_RUNNER = True
+    DISABLE_AUDITOR = False
 
     def setUp(self):
         self.project = RepoFactory()
-        auditor.validate()
-        auditor.setup()
-        tracker.validate()
-        tracker.setup()
-        activitylogs.validate()
-        activitylogs.setup()
-        notifier.validate()
-        notifier.setup()
         super().setUp()
 
     @patch('notifier.service.NotifierService.record_event')

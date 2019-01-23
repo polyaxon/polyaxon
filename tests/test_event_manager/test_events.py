@@ -32,8 +32,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.events_mark
 class TestEvents(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_events_subjects(self):  # pylint:disable=too-many-statements
         # Cluster
         assert cluster.ClusterCreatedEvent.get_event_subject() == 'cluster'

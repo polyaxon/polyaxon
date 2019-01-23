@@ -10,7 +10,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.search_mark
 class TestSearchSerializer(BaseTest):
-    DISABLE_RUNNER = True
     model_class = Search
     expected_keys = {
         'id',

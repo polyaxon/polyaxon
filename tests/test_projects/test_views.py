@@ -155,7 +155,6 @@ class TestProjectDetailViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()

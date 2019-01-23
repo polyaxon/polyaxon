@@ -14,7 +14,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.build_jobs_mark
 class TestBuildJobStatuses(BaseTest):
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()

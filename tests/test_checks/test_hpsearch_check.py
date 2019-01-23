@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestHPHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_hp_is_healthy(self):
         results = HPSearchCheck.run()
         assert results['HPSEARCH'].is_healthy is True

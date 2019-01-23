@@ -22,6 +22,8 @@ from tests.utils import BaseTest, BaseViewTest
 
 @pytest.mark.jobs_mark
 class TestJobModel(BaseTest):
+    DISABLE_EXECUTOR = False
+    DISABLE_RUNNER = False
 
     def test_create_job(self):
         job = JobFactory()
@@ -38,12 +40,19 @@ class TestJobModel(BaseTest):
         assert JobStatus.objects.filter(job=job).count() == 1
         assert job.last_status == JobLifeCycle.CREATED
 
+    def test_job_created_status_triggers_scheduling(self):
+        with patch('scheduler.tasks.jobs.jobs_build.apply_async') as mock_fct:
+            job = JobFactory()
+
+        assert mock_fct.call_count == 1
+        assert job.last_status == JobLifeCycle.CREATED
+
     def test_job_creation_triggers_scheduling_mocks(self):
         with patch('scheduler.tasks.jobs.jobs_build.apply_async') as mock_fct:
             with patch.object(Job, 'set_status') as mock_fct2:
                 JobFactory()
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 0
         assert mock_fct2.call_count == 1
 
     def test_job_creation_triggers_build(self):

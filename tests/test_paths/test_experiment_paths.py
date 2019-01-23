@@ -11,8 +11,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.paths_mark
 class TestExperimentPaths(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         super().setUp()
         self.experiment = ExperimentFactory()

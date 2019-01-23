@@ -29,7 +29,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.bookmarks_mark
 class TestBookmarkSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = None
     model_serializer_class = None
     model_class = None

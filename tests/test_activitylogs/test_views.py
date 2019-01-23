@@ -21,7 +21,6 @@ from tests.utils import BaseViewTest
 @pytest.mark.activitylogs_mark
 class TestActivityLogsListViewV1(BaseViewTest):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     model_class = ActivityLog
     serializer_class = ActivityLogsSerializer
     num_objects = 3

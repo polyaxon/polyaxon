@@ -14,6 +14,9 @@ from tests.utils import BaseTest
 
 @pytest.mark.dockerizer_mark
 class TestDockerizerScheduler(BaseTest):
+    DISABLE_EXECUTOR = False
+    DISABLE_RUNNER = False
+
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()

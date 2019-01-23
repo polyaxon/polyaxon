@@ -16,7 +16,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.plugins_mark
 class TestProjectTensorboardJobSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ProjectTensorboardJobSerializer
     model_class = TensorboardJob
     factory_class = TensorboardJobFactory

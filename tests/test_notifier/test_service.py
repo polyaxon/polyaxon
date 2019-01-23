@@ -20,13 +20,11 @@ from tests.utils import BaseTest
 
 @pytest.mark.notifier_mark
 class NotifierTest(BaseTest):
-    DISABLE_RUNNER = True
+    DISABLE_AUDITOR = False
 
     def setUp(self):
         super().setUp()
         self.experiment = ExperimentFactory()
-        notifier.validate()
-        notifier.setup()
 
     @patch.object(EmailAction, 'execute')
     @patch.object(WebHookAction, 'execute')

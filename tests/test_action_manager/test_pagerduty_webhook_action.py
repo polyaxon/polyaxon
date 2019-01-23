@@ -11,7 +11,6 @@ from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
 @pytest.mark.actions_mark
 class TestPagerDutyWebHookAction(TestWebHookAction):
-    DISABLE_RUNNER = True
     webhook = PagerDutyWebHookAction
 
     def test_attrs(self):

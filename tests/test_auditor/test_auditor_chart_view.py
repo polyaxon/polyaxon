@@ -20,20 +20,12 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorChartViewsTest(BaseTest):
     """Testing subscribed events"""
-    DISABLE_RUNNER = True
+    DISABLE_AUDITOR = False
 
     def setUp(self):
         super().setUp()
         self.experiment = ExperimentFactory()
         self.experiment_group = ExperimentGroupFactory()
-        auditor.validate()
-        auditor.setup()
-        tracker.validate()
-        tracker.setup()
-        activitylogs.validate()
-        activitylogs.setup()
-        notifier.validate()
-        notifier.setup()
 
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')

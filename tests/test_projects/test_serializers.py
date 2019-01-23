@@ -13,7 +13,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.projects_mark
 class TestProjectSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
@@ -81,6 +80,7 @@ class TestBookmarkedProjectSerializer(TestProjectSerializer):
 @pytest.mark.projects_mark
 class TestProjectDetailSerializer(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
     serializer_class = ProjectDetailSerializer
     model_class = Project
     factory_class = ProjectFactory

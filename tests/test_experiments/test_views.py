@@ -73,7 +73,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         super().setUp()
@@ -528,7 +528,6 @@ class TestProjectExperimentLastMetricListViewV1(BaseViewTest):
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -582,7 +581,6 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -702,7 +700,6 @@ class TestExperimentSelectionListViewV1(BaseViewTest):
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -802,6 +799,8 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
+    DISABLE_EXECUTOR = False
+    DISABLE_RUNNER = False
 
     def setUp(self):
         super().setUp()
@@ -949,6 +948,8 @@ class TestExperimentDetailViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     HAS_AUTH = True
+    DISABLE_RUNNER = False
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         super().setUp()
@@ -1126,7 +1127,6 @@ class TestExperimentCodeReferenceViewV1(BaseViewTest):
     serializer_class = CodeReferenceSerializer
     model_class = CodeReference
     factory_class = CodeReferenceFactory
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -1264,7 +1264,6 @@ class TestExperimentMetricListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
     HAS_INTERNAL = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -1646,6 +1645,8 @@ class TestRestartExperimentViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     HAS_AUTH = True
+    DISABLE_RUNNER = False
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         super().setUp()
@@ -1778,6 +1779,8 @@ class TestCopyExperimentViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     HAS_AUTH = True
+    DISABLE_RUNNER = False
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         super().setUp()
@@ -1901,7 +1904,6 @@ class TestStopExperimentManyViewV1(BaseViewTest):
 class TestDeleteExperimentManyViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
-    DISABLE_RUNNER = True
     HAS_AUTH = True
 
     def setUp(self):
@@ -1931,7 +1933,6 @@ class TestDeleteExperimentManyViewV1(BaseViewTest):
 class TestExperimentLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -2021,7 +2022,6 @@ class TestExperimentLogsViewV1(BaseViewTest):
 class TestExperimentOutputsTreeViewV1(BaseFilesViewTest):
     num_log_lines = 10
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -2065,7 +2065,6 @@ class TestExperimentOutputsTreeViewV1(BaseFilesViewTest):
 class TestExperimentOutputsFilesViewV1(BaseFilesViewTest):
     num_log_lines = 10
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -2107,7 +2106,6 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
     factory_class = ExperimentFactory
     HAS_AUTH = True
     HAS_INTERNAL = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -2145,7 +2143,6 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
 @pytest.mark.users_mark
 class TestExperimentTokenViewV1(BaseViewTest):
     HAS_AUTH = False
-    DISABLE_RUNNER = True
     factory_class = ExperimentFactory
 
     def setUp(self):
@@ -2246,7 +2243,6 @@ class TestExperimentChartViewListViewV1(BaseViewTest):
     factory_class = ExperimentChartViewFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -2314,7 +2310,6 @@ class TestExperimentChartViewDetailViewV1(BaseViewTest):
     model_class = ExperimentChartView
     factory_class = ExperimentChartViewFactory
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -2350,7 +2345,6 @@ class TestExperimentChartViewDetailViewV1(BaseViewTest):
 @pytest.mark.experiments_mark
 class TestExperimentHeartBeatViewV1(BaseViewTest):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     HAS_INTERNAL = True
     INTERNAL_SERVICE = InternalServices.SIDECAR
 

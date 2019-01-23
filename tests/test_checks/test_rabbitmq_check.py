@@ -12,8 +12,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestRabbitMQHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     @override_settings(CELERY_BROKER_URL='broker_url')
     @mock.patch('checks.rabbitmq.Connection')
     def test_broker_refused_connection(self, mocked_connection):

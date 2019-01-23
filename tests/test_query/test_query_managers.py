@@ -23,8 +23,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.query_mark
 class TestQueryManager(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         super().setUp()
         self.query1 = 'updated_at:<=2020-10-10, started_at:>2010-10-10, started_at:~2016-10-01'

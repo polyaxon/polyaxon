@@ -17,8 +17,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.build_jobs_mark
 class TestBuildJobModels(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()

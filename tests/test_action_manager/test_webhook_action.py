@@ -10,7 +10,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.actions_mark
 class TestWebHookAction(BaseTest):
-    DISABLE_RUNNER = True
     webhook = WebHookAction
 
     def test_attrs(self):

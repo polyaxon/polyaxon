@@ -11,8 +11,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.paths_mark
 class TestBuildJobPaths(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_build_job_logs_path_creation_deletion(self):
         job = BuildJobFactory()
         job_logs_path = stores.get_job_logs_path(job_name=job.unique_name, temp=False)

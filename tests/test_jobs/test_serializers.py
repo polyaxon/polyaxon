@@ -16,7 +16,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.jobs_mark
 class TestJobSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = JobSerializer
     model_class = Job
     factory_class = JobFactory
@@ -123,7 +122,6 @@ class TestBookmarkedJobSerializer(TestJobSerializer):
 
 @pytest.mark.jobs_mark
 class TestJobDetailSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = JobDetailSerializer
     model_class = Job
     factory_class = JobFactory
@@ -227,7 +225,6 @@ class TestJobDetailSerializer(BaseTest):
 
 @pytest.mark.jobs_mark
 class TestJobStatusSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = JobStatusSerializer
     model_class = JobStatus
     factory_class = JobStatusFactory

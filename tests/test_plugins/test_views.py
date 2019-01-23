@@ -35,7 +35,6 @@ class TestProjectTensorboardListViewV1(BaseViewTest):
     factory_class = TensorboardJobFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()

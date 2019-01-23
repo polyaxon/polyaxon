@@ -8,8 +8,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestPostgresHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_database_is_healthy(self):
         results = PostgresCheck.run()
         assert results['POSTGRES'].is_healthy is True

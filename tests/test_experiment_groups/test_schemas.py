@@ -17,8 +17,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.experiment_groups_mark
 class TestSearchManagers(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_get_search_algorithm_manager(self):
         iteration = {
             'iteration': 1,
@@ -69,6 +67,7 @@ class TestSearchManagers(BaseTest):
 @pytest.mark.experiment_groups_mark
 class TestaseIterationConfig(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
 
     def test_base_iteration_config(self):
         config = {
@@ -83,6 +82,7 @@ class TestaseIterationConfig(BaseTest):
 @pytest.mark.experiment_groups_mark
 class TestHyperbandIterationConfig(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
 
     def test_hyperband_iteration_config(self):
         config = {

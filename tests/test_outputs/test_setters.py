@@ -21,8 +21,6 @@ class InstanceSpec(namedtuple("InstanceSpec", "user project")):
 
 @pytest.mark.outputs_mark
 class TestOutputsSetters(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         super().setUp()
         self.user = UserFactory()

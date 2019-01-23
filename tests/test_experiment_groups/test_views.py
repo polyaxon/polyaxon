@@ -45,7 +45,6 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
     factory_class = ExperimentGroupFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -415,7 +414,6 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -498,7 +496,6 @@ class TestExperimentGroupSelectionViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -567,6 +564,8 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     HAS_AUTH = True
+    DISABLE_EXECUTOR = False
+    DISABLE_RUNNER = False
 
     def setUp(self):
         super().setUp()
@@ -630,7 +629,6 @@ class TestExperimentGroupStatusListViewV1(BaseViewTest):
     factory_class = ExperimentGroupStatusFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -704,7 +702,6 @@ class TestExperimentGroupChartViewListViewV1(BaseViewTest):
     factory_class = ExperimentGroupChartViewFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -772,7 +769,6 @@ class TestExperimentGroupChartViewDetailViewV1(BaseViewTest):
     model_class = ExperimentGroupChartView
     factory_class = ExperimentGroupChartViewFactory
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -813,7 +809,6 @@ class TestExperimentGroupMetricListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
     HAS_INTERNAL = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()

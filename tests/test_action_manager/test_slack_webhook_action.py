@@ -11,7 +11,6 @@ from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
 @pytest.mark.actions_mark
 class TestSlackWebHookAction(TestWebHookAction):
-    DISABLE_RUNNER = True
     webhook = SlackWebHookAction
 
     def test_attrs(self):

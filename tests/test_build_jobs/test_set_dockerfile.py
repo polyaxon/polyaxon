@@ -7,8 +7,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.build_jobs_mark
 class TestBuildJobModels(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_set_dockerfile(self):
         build_job = BuildJobFactory()
 

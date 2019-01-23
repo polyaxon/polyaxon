@@ -11,7 +11,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.actions_mark
 class TestEmailAction(BaseTest):
-    DISABLE_RUNNER = True
 
     def test_attrs(self):
         assert EmailAction.action_key == 'email'

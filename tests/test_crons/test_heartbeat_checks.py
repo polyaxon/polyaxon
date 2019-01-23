@@ -13,8 +13,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.crons_mark
 class TestHeartBeatCrons(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_heartbeat_experiments(self):
         experiment1 = ExperimentFactory()
         ExperimentStatusFactory(experiment=experiment1, status=ExperimentLifeCycle.SCHEDULED)

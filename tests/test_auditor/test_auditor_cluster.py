@@ -18,19 +18,12 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorClusterTest(BaseTest):
     """Testing subscribed events"""
+    DISABLE_AUDITOR = False
 
     def setUp(self):
         self.cluster = Cluster.load()
         self.cluster_node = ClusterNodeFactory(cluster=self.cluster)
         self.node_gpu = GPUFactory(cluster_node=self.cluster_node)
-        auditor.validate()
-        auditor.setup()
-        tracker.validate()
-        tracker.setup()
-        activitylogs.validate()
-        activitylogs.setup()
-        notifier.validate()
-        notifier.setup()
         super().setUp()
 
     @patch('notifier.service.NotifierService.record_event')

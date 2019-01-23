@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestEventsHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_events_is_healthy(self):
         results = EventsCheck.run()
         assert results['EVENTS'].is_healthy is True

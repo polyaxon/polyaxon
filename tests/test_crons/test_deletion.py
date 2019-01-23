@@ -28,8 +28,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.crons_mark
 class TestDeletionCrons(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_delete_projects(self):
         project1 = ProjectFactory()
         ExperimentFactory(project=project1)

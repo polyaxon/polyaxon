@@ -39,7 +39,7 @@ class TestProjectJobListViewV1(BaseViewTest):
     factory_class = JobFactory
     num_objects = 3
     HAS_AUTH = True
-    DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         super().setUp()
@@ -539,7 +539,7 @@ class TestRestartJobViewV1(BaseViewTest):
     model_class = Job
     factory_class = JobFactory
     HAS_AUTH = True
-    DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         super().setUp()
@@ -638,7 +638,6 @@ class TestStopJobViewV1(BaseViewTest):
 class TestJobLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -710,7 +709,6 @@ class DownloadJobOutputsViewTest(BaseViewTest):
     factory_class = JobFactory
     HAS_AUTH = True
     HAS_INTERNAL = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -748,7 +746,6 @@ class DownloadJobOutputsViewTest(BaseViewTest):
 @pytest.mark.jobs_mark
 class TestJobHeartBeatViewV1(BaseViewTest):
     HAS_AUTH = True
-    DISABLE_RUNNER = True
     HAS_INTERNAL = True
     INTERNAL_SERVICE = InternalServices.SIDECAR
 
@@ -779,7 +776,6 @@ class TestJobHeartBeatViewV1(BaseViewTest):
 class TestJobOutputsTreeViewV1(BaseFilesViewTest):
     num_log_lines = 10
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -820,7 +816,6 @@ class TestJobOutputsTreeViewV1(BaseFilesViewTest):
 class TestJobOutputsFilesViewV1(BaseFilesViewTest):
     num_log_lines = 10
     HAS_AUTH = True
-    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()

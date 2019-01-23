@@ -14,8 +14,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.scheduler_mark
 class TestHeartBeatChecks(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_experiments_check_heartbeat(self):
         experiment1 = ExperimentFactory()
         ExperimentStatusFactory(experiment=experiment1, status=ExperimentLifeCycle.RUNNING)

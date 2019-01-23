@@ -52,6 +52,8 @@ from tests.utils import BaseTest, BaseViewTest
 
 @pytest.mark.experiment_groups_mark
 class TestExperimentGroupModel(BaseTest):
+    DISABLE_RUNNER = False
+    DISABLE_EXECUTOR = False
     # @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     # @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
     # @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')
@@ -729,6 +731,9 @@ class TestExperimentGroupModel(BaseTest):
 
 @pytest.mark.experiment_groups_mark
 class TestExperimentGroupCommit(BaseViewTest):
+    DISABLE_RUNNER = False
+    DISABLE_EXECUTOR = False
+
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)

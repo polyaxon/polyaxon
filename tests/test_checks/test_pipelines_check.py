@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestPipelinesHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_hp_is_healthy(self):
         results = PipelinesCheck.run()
         assert results['PIPELINES'].is_healthy is True

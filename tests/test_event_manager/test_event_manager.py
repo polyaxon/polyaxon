@@ -12,8 +12,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.events_mark
 class TestEventManager(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         self.manager = EventManager()
         super().setUp()

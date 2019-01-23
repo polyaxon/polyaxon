@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestK8SEventsHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_k8s_events_is_healthy(self):
         results = K8SEventsCheck.run()
         assert results['K8SEVENTS'].is_healthy is True

@@ -17,8 +17,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.events_mark
 class TestEventContext(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_get_event_subject(self):
         assert event_context.get_event_subject('foo.bar') == 'foo'
         assert event_context.get_event_subject('foo.bar.moo') == 'foo'

@@ -8,7 +8,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.experiments_mark
 class TestCodeReferenceSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = CodeReferenceSerializer
     model_class = CodeReference
     factory_class = CodeReferenceFactory

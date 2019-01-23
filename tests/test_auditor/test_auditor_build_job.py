@@ -18,18 +18,10 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorBuildJobTest(BaseTest):
     """Testing subscribed events"""
-    DISABLE_RUNNER = True
+    DISABLE_AUDITOR = False
 
     def setUp(self):
         self.build_job = BuildJobFactory(project=ProjectFactory())
-        auditor.validate()
-        auditor.setup()
-        tracker.validate()
-        tracker.setup()
-        activitylogs.validate()
-        activitylogs.setup()
-        notifier.validate()
-        notifier.setup()
         super().setUp()
 
     @patch('notifier.service.NotifierService.record_event')

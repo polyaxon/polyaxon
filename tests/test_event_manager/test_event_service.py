@@ -31,8 +31,6 @@ class DummyObject(object):
 
 @pytest.mark.events_mark
 class TestEventService(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         self.service = DummyEventService()
         self.service.event_manager = EventManager()

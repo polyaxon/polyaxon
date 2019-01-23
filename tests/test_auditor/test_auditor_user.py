@@ -4,9 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-import activitylogs
 import auditor
-import tracker
 
 from event_manager.events import user as user_events
 from factories.factory_users import UserFactory
@@ -16,15 +14,10 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorUserTest(BaseTest):
     """Testing subscribed events"""
+    DISABLE_AUDITOR = False
 
     def setUp(self):
         self.user = UserFactory()
-        auditor.validate()
-        auditor.setup()
-        tracker.validate()
-        tracker.setup()
-        activitylogs.validate()
-        activitylogs.setup()
         super().setUp()
 
     @patch('notifier.service.NotifierService.record_event')

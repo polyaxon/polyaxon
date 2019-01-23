@@ -21,8 +21,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.libs_mark
 class TestUniqueUrls(BaseTest):
-    DISABLE_RUNNER = True
-
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()

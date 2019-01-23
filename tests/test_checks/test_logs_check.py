@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestLogsHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_logs_is_healthy(self):
         results = LogsCheck.run()
         assert results['LOGS'].is_healthy is True

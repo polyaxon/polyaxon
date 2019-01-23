@@ -28,8 +28,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.experiment_groups_mark
 class TestSearchManagers(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_get_search_manager(self):
         # Grid search
         experiment_group = ExperimentGroupFactory()
@@ -58,6 +56,8 @@ class TestSearchManagers(BaseTest):
 @pytest.mark.experiment_groups_mark
 class TestGridSearchManager(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
+    DISABLE_AUDITOR = True
 
     def test_get_suggestions(self):
         hptuning_config = HPTuningConfig.from_dict({
@@ -110,6 +110,8 @@ class TestGridSearchManager(BaseTest):
 @pytest.mark.experiment_groups_mark
 class TestRandomSearchManager(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
+    DISABLE_AUDITOR = True
 
     def test_get_suggestions(self):
         hptuning_config = HPTuningConfig.from_dict({
@@ -196,6 +198,8 @@ class TestRandomSearchManager(BaseTest):
 @pytest.mark.experiment_groups_mark
 class TestHyperbandSearchManager(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
+    DISABLE_AUDITOR = True
 
     def setUp(self):
         super().setUp()
@@ -648,6 +652,8 @@ class TestHyperbandSearchManager(BaseTest):
 @pytest.mark.experiment_groups_mark
 class TestBOSearchManager(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
+    DISABLE_AUDITOR = True
 
     def setUp(self):
         super().setUp()

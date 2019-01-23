@@ -47,6 +47,9 @@ from tests.utils import BaseTest, BaseViewTest
 
 @pytest.mark.experiments_mark
 class TestExperimentModel(BaseTest):
+    DISABLE_EXECUTOR = False
+    DISABLE_RUNNER = False
+
     def test_create_experiment_with_no_spec_or_declarations(self):
         experiment = ExperimentFactory(declarations=None, config=None)
         assert experiment.declarations is None
@@ -207,8 +210,15 @@ class TestExperimentModel(BaseTest):
             with patch.object(Experiment, 'set_status') as mock_fct2:
                 ExperimentFactory()
 
-        assert mock_fct.call_count == 1
+        assert mock_fct.call_count == 0
         assert mock_fct2.call_count == 1
+
+    def test_independent_experiment_created_status_triggers_experiment_scheduling(self):
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
+            experiment = ExperimentFactory()
+
+        assert mock_fct.call_count == 1
+        assert experiment.last_status == ExperimentLifeCycle.CREATED
 
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
         content = ExperimentSpecification.read(experiment_spec_content)
@@ -425,7 +435,9 @@ class TestExperimentModel(BaseTest):
         assert check_status_mock.call_count == 1
 
         # Call sync experiments and jobs constants
-        ExperimentStatusFactory(experiment=xp_with_jobs, status=JobLifeCycle.CREATED)
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as build_mock:
+            ExperimentStatusFactory(experiment=xp_with_jobs, status=JobLifeCycle.CREATED)
+        assert build_mock.call_count == 1
         experiments_sync_jobs_statuses()
         done_xp.refresh_from_db()
         no_jobs_xp.refresh_from_db()
@@ -483,6 +495,8 @@ class TestExperimentModel(BaseTest):
 
 @pytest.mark.experiments_mark
 class TestExperimentCommit(BaseViewTest):
+    DISABLE_EXECUTOR = False
+
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)

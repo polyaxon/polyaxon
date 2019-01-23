@@ -29,7 +29,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.experiments_mark
 class TestExperimentLastMetricSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ExperimentLastMetricSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -69,7 +68,6 @@ class TestExperimentLastMetricSerializer(BaseTest):
 
 @pytest.mark.experiments_mark
 class TestExperimentDeclarationsSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ExperimentDeclarationsSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -107,6 +105,7 @@ class TestExperimentDeclarationsSerializer(BaseTest):
 @pytest.mark.experiments_mark
 class TestExperimentSerializer(BaseTest):
     DISABLE_RUNNER = True
+    DISABLE_EXECUTOR = True
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -221,7 +220,6 @@ class TestBookmarkedExperimentSerializer(TestExperimentSerializer):
 
 @pytest.mark.experiments_mark
 class TestExperimentDetailSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -380,7 +378,6 @@ class TestExperimentDetailSerializer(BaseTest):
 
 @pytest.mark.experiments_mark
 class TestExperimentJobSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ExperimentJobSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
@@ -428,7 +425,6 @@ class TestExperimentJobSerializer(BaseTest):
 
 @pytest.mark.experiments_mark
 class TestExperimentJobDetailsSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ExperimentJobDetailSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
@@ -477,7 +473,6 @@ class TestExperimentJobDetailsSerializer(BaseTest):
 
 @pytest.mark.experiments_mark
 class TestExperimentStatusSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory
@@ -509,7 +504,6 @@ class TestExperimentStatusSerializer(BaseTest):
 
 @pytest.mark.experiments_mark
 class TestExperimentChartViewSerializer(BaseTest):
-    DISABLE_RUNNER = True
     serializer_class = ExperimentChartViewSerializer
     model_class = ExperimentChartView
     factory_class = ExperimentChartViewFactory

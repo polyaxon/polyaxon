@@ -4,9 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-import activitylogs
 import auditor
-import tracker
 
 from event_manager.events import notebook as notebook_events
 from factories.factory_plugins import NotebookJobFactory
@@ -17,16 +15,10 @@ from tests.utils import BaseTest
 @pytest.mark.auditor_mark
 class AuditorNotebookTest(BaseTest):
     """Testing subscribed events"""
-    DISABLE_RUNNER = True
+    DISABLE_AUDITOR = False
 
     def setUp(self):
         self.notebook = NotebookJobFactory(project=ProjectFactory())
-        auditor.validate()
-        auditor.setup()
-        tracker.validate()
-        tracker.setup()
-        activitylogs.validate()
-        activitylogs.setup()
         super().setUp()
 
     @patch('notifier.service.NotifierService.record_event')

@@ -9,8 +9,6 @@ from tests.utils import BaseTest
 
 @pytest.mark.checks_mark
 class TestRedisHealthCheck(BaseTest):
-    DISABLE_RUNNER = True
-
     def test_redis_is_healthy(self):
         results = RedisCheck.run()
         assert results['REDIS'].is_healthy is True

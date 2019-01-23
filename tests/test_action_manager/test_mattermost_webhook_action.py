@@ -11,7 +11,6 @@ from tests.test_action_manager.test_webhook_action import TestWebHookAction
 
 @pytest.mark.actions_mark
 class TestMattermostWebHookAction(TestWebHookAction):
-    DISABLE_RUNNER = True
     webhook = MattermostWebHookAction
 
     def test_attrs(self):
