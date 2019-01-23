@@ -7,9 +7,9 @@ import os
 from six.moves import urllib
 
 from polystores import settings
-from polystores.logger import logger
 from polystores.clients import gc_client
 from polystores.exceptions import PolyaxonStoresException
+from polystores.logger import logger
 from polystores.stores.base_store import BaseStore
 from polystores.utils import (
     append_basename,

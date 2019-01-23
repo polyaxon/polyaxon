@@ -7,8 +7,8 @@ import os
 from contextlib import contextmanager
 from decimal import Decimal
 
-from polystores.logger import logger
 from polystores.exceptions import PolyaxonStoresException
+from polystores.logger import logger
 
 
 def get_from_env(keys):

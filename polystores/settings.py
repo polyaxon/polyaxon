@@ -2,7 +2,6 @@ import os
 
 import rhea
 
-
 config = rhea.Rhea.read_configs([
     os.environ,
 ])

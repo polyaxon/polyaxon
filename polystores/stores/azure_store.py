@@ -12,11 +12,7 @@ from azure.storage.blob.models import BlobPrefix
 from polystores.clients.azure_client import get_blob_service_connection
 from polystores.exceptions import PolyaxonStoresException
 from polystores.stores.base_store import BaseStore
-from polystores.utils import (
-    append_basename,
-    check_dirname_exists,
-    get_files_in_current_directory
-)
+from polystores.utils import append_basename, check_dirname_exists, get_files_in_current_directory
 
 # pylint:disable=arguments-differ
 

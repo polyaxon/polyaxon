@@ -12,8 +12,8 @@ import google.oauth2.service_account
 from google.cloud.storage.client import Client
 from google.oauth2.service_account import Credentials
 
-from polystores.logger import logger
 from polystores.exceptions import PolyaxonStoresException
+from polystores.logger import logger
 from polystores.utils import get_from_env
 
 DEFAULT_SCOPES = ('https://www.googleapis.com/auth/cloud-platform',)

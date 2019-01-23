@@ -8,9 +8,9 @@ from six.moves import urllib
 
 from botocore.exceptions import ClientError
 
-from polystores.logger import logger
 from polystores.clients import aws_client
 from polystores.exceptions import PolyaxonStoresException
+from polystores.logger import logger
 from polystores.stores.base_store import BaseStore
 from polystores.utils import (
     append_basename,
