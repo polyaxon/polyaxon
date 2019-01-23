@@ -9,7 +9,7 @@ from polyaxon_client.tracking.in_cluster import ensure_in_custer
 
 def get_data_paths():
     """
-    The data paths dictionary that yu mounted for the job/experiment.
+    The data paths dictionary that you mounted for the job/experiment.
     {'data1': '/data/1/', 'data-foo': '/data/foo'}
     """
     ensure_in_custer()

@@ -19,6 +19,9 @@ class Job(BaseTracker):
                  track_code=True,
                  track_env=True,
                  outputs_store=None):
+        if settings.NO_OP:
+            return
+
         if project is None and settings.IN_CLUSTER:
             job_info = self.get_job_info()
             project = job_info['project_name']
@@ -37,6 +40,9 @@ class Job(BaseTracker):
         self.last_status = None
 
     def _set_health_url(self):
+        if settings.NO_OP:
+            return
+
         if self.job_type == 'jobs':
             health_url = self.client.job.get_heartbeat_url(
                 username=self.username,
@@ -60,6 +66,9 @@ class Job(BaseTracker):
             * type
             * app
         """
+        if settings.NO_OP:
+            return
+
         ensure_in_custer()
 
         info = os.getenv('POLYAXON_JOB_INFO', None)

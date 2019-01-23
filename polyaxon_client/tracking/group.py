@@ -33,6 +33,9 @@ class Group(BaseTracker):
         self.base_outputs_path = None
 
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
+        if settings.NO_OP:
+            return
+
         group_config = {}
         if name:
             group_config['name'] = name
@@ -61,6 +64,9 @@ class Group(BaseTracker):
         return self
 
     def create_experiment(self, name=None, tags=None, description=None, config=None):
+        if settings.NO_OP:
+            return
+
         experiment = Experiment(project=self.project,
                                 group_id=self.group_id,
                                 client=self.client,
@@ -76,6 +82,9 @@ class Group(BaseTracker):
         return experiment
 
     def _start(self):
+        if settings.NO_OP:
+            return
+
         atexit.register(self._end)
         self.start()
 
@@ -87,9 +96,15 @@ class Group(BaseTracker):
         sys.excepthook = excepthook
 
     def _end(self):
+        if settings.NO_OP:
+            return
+
         self.succeeded()
 
     def end(self, status, message=None):
+        if settings.NO_OP:
+            return
+
         if self.last_status in ['succeeded', 'failed', 'stopped']:
             return
         self.log_status(status, message)
@@ -97,19 +112,34 @@ class Group(BaseTracker):
         time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
 
     def start(self):
+        if settings.NO_OP:
+            return
+
         self.log_status('running')
         self.last_status = 'running'
 
     def succeeded(self):
+        if settings.NO_OP:
+            return
+
         self.end('succeeded')
 
     def stop(self):
+        if settings.NO_OP:
+            return
+
         self.end('stopped')
 
     def failed(self, message=None):
+        if settings.NO_OP:
+            return
+
         self.end(status='failed', message=message)
 
     def log_status(self, status, message=None):
+        if settings.NO_OP:
+            return
+
         self.client.experiment_group.create_status(username=self.username,
                                                    project_name=self.project_name,
                                                    group_id=self.group_id,

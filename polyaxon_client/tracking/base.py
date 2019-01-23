@@ -17,6 +17,9 @@ class BaseTracker(object):
                  track_code=True,
                  track_env=True,
                  outputs_store=None):
+        if settings.NO_OP:
+            return
+
         if not settings.IN_CLUSTER and project is None:
             raise PolyaxonClientException('Please provide a valid project.')
 
@@ -42,6 +45,9 @@ class BaseTracker(object):
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
 
     def set_outputs_store(self, outputs_store=None, outputs_path=None, set_env_vars=False):
+        if settings.NO_OP:
+            return
+
         if not any([outputs_store, outputs_path]):
             raise PolyaxonClientException(
                 'An Store instance or and outputs path is required.')
@@ -50,7 +56,13 @@ class BaseTracker(object):
             self.outputs_store.set_env_vars()
 
     def log_output(self, filename, **kwargs):
+        if settings.NO_OP:
+            return
+
         self.outputs_store.upload_file(filename=filename)
 
     def log_outputs(self, dirname, **kwargs):
+        if settings.NO_OP:
+            return
+
         self.outputs_store.upload_dir(dirname=dirname)

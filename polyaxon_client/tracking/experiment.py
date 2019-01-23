@@ -33,6 +33,9 @@ class Experiment(BaseTracker):
                  track_env=True,
                  outputs_store=None):
 
+        if settings.NO_OP:
+            return
+
         if project is None and settings.IN_CLUSTER:
             experiment_info = self.get_experiment_info()
             project = experiment_info['project_name']
@@ -73,6 +76,9 @@ class Experiment(BaseTracker):
             self.log_run_env()
 
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
+        if settings.NO_OP:
+            return
+
         experiment_config = {'run_env': get_run_env()} if self.track_env else {}
         if name:
             experiment_config['name'] = name
@@ -124,6 +130,9 @@ class Experiment(BaseTracker):
         return self
 
     def _set_health_url(self):
+        if settings.NO_OP:
+            return
+
         health_url = self.client.experiment.get_heartbeat_url(
             username=self.username,
             project_name=self.project_name,
@@ -131,6 +140,9 @@ class Experiment(BaseTracker):
         self.client.set_health_check(url=health_url)
 
     def _start(self):
+        if settings.NO_OP:
+            return
+
         atexit.register(self._end)
         self.start()
 
@@ -142,6 +154,9 @@ class Experiment(BaseTracker):
         sys.excepthook = excepthook
 
     def _send_logs(self, log_line):
+        if settings.NO_OP:
+            return
+
         self.client.experiment.send_logs(username=self.username,
                                          project_name=self.project_name,
                                          experiment_id=self.experiment_id,
@@ -149,9 +164,15 @@ class Experiment(BaseTracker):
                                          periodic=True)
 
     def _end(self):
+        if settings.NO_OP:
+            return
+
         self.succeeded()
 
     def end(self, status, message=None):
+        if settings.NO_OP:
+            return
+
         if self.last_status in ['succeeded', 'failed', 'stopped']:
             return
         self.log_status(status, message)
@@ -159,19 +180,34 @@ class Experiment(BaseTracker):
         time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
 
     def start(self):
+        if settings.NO_OP:
+            return
+
         self.log_status('running')
         self.last_status = 'running'
 
     def succeeded(self):
+        if settings.NO_OP:
+            return
+
         self.end('succeeded')
 
     def stop(self):
+        if settings.NO_OP:
+            return
+
         self.end('stopped')
 
     def failed(self, message=None):
+        if settings.NO_OP:
+            return
+
         self.end(status='failed', message=message)
 
     def log_run_env(self):
+        if settings.NO_OP:
+            return
+
         patch_dict = {'run_env': get_run_env()}
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
@@ -180,6 +216,9 @@ class Experiment(BaseTracker):
                                                  background=True)
 
     def log_code_ref(self):
+        if settings.NO_OP:
+            return
+
         self.client.experiment.create_code_reference(username=self.username,
                                                      project_name=self.project_name,
                                                      experiment_id=self.experiment_id,
@@ -187,6 +226,9 @@ class Experiment(BaseTracker):
                                                      background=True)
 
     def log_status(self, status, message=None):
+        if settings.NO_OP:
+            return
+
         self.client.experiment.create_status(username=self.username,
                                              project_name=self.project_name,
                                              experiment_id=self.experiment_id,
@@ -195,6 +237,9 @@ class Experiment(BaseTracker):
                                              background=True)
 
     def log_metrics(self, **metrics):
+        if settings.NO_OP:
+            return
+
         self.client.experiment.create_metric(username=self.username,
                                              project_name=self.project_name,
                                              experiment_id=self.experiment_id,
@@ -203,6 +248,9 @@ class Experiment(BaseTracker):
                                              periodic=True)
 
     def log_tags(self, tags, reset=False):
+        if settings.NO_OP:
+            return
+
         patch_dict = {'tags': validate_tags(tags)}
         if reset is False:
             patch_dict['merge'] = True
@@ -213,6 +261,9 @@ class Experiment(BaseTracker):
                                                  background=True)
 
     def log_params(self, reset=False, **params):
+        if settings.NO_OP:
+            return
+
         patch_dict = {'declarations': params}
         if reset is False:
             patch_dict['merge'] = True
@@ -223,6 +274,9 @@ class Experiment(BaseTracker):
                                                  background=True)
 
     def set_description(self, description):
+        if settings.NO_OP:
+            return
+
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
@@ -230,6 +284,9 @@ class Experiment(BaseTracker):
                                                  background=True)
 
     def set_name(self, name):
+        if settings.NO_OP:
+            return
+
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
@@ -237,6 +294,9 @@ class Experiment(BaseTracker):
                                                  background=True)
 
     def log_data_ref(self, data, data_name='data', reset=False):
+        if settings.NO_OP:
+            return
+
         try:
             import hashlib
 
@@ -265,6 +325,9 @@ class Experiment(BaseTracker):
         }
         :return: dict
         """
+        if settings.NO_OP:
+            return
+
         ensure_in_custer()
 
         cluster = os.getenv('POLYAXON_CLUSTER', None)
@@ -278,6 +341,9 @@ class Experiment(BaseTracker):
     @staticmethod
     def get_task_info():
         """Returns the task info: {"type": str, "index": int}."""
+        if settings.NO_OP:
+            return
+
         ensure_in_custer()
 
         info = os.getenv('POLYAXON_TASK_INFO', None)
@@ -294,6 +360,9 @@ class Experiment(BaseTracker):
         Returns the TF_CONFIG defining the cluster and the current task.
         if `envvar` is not null, it will set and env variable with `envvar`.
         """
+        if settings.NO_OP:
+            return
+
         ensure_in_custer()
 
         cluster_def = cls.get_cluster_def()
@@ -321,6 +390,9 @@ class Experiment(BaseTracker):
             * experiment_group_uuid
             * experiment_uuid
         """
+        if settings.NO_OP:
+            return
+
         ensure_in_custer()
 
         info = os.getenv('POLYAXON_EXPERIMENT_INFO', None)
@@ -338,6 +410,9 @@ class Experiment(BaseTracker):
             * declarations section
             * matrix section
         """
+        if settings.NO_OP:
+            return
+
         ensure_in_custer()
 
         declarations = os.getenv('POLYAXON_DECLARATIONS', None)
