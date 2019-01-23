@@ -74,7 +74,6 @@ from db.redis.tll import RedisTTL
 from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED_TRIGGERED,
-    EXPERIMENT_CREATED,
     EXPERIMENT_DELETED_TRIGGERED,
     EXPERIMENT_JOBS_VIEWED,
     EXPERIMENT_LOGS_VIEWED,
@@ -214,7 +213,6 @@ class ProjectExperimentListView(BookmarkedListMixinView,
         instance = serializer.save(user=self.request.user, project=self.project)
         if group and group.is_selection:  # Add the experiment to the group selection
             group.selection_experiments.add(instance)
-        auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_experiment(experiment_id=instance.id, value=ttl)
 

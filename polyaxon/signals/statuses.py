@@ -24,27 +24,27 @@ from event_manager.events.build_job import (
     BUILD_JOB_FAILED,
     BUILD_JOB_NEW_STATUS,
     BUILD_JOB_STOPPED,
-    BUILD_JOB_SUCCEEDED
-)
+    BUILD_JOB_SUCCEEDED,
+    BUILD_JOB_CREATED)
 from event_manager.events.experiment import (
     EXPERIMENT_DONE,
     EXPERIMENT_FAILED,
     EXPERIMENT_NEW_STATUS,
     EXPERIMENT_STOPPED,
-    EXPERIMENT_SUCCEEDED
-)
+    EXPERIMENT_SUCCEEDED,
+    EXPERIMENT_CREATED)
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DONE,
     EXPERIMENT_GROUP_NEW_STATUS,
-    EXPERIMENT_GROUP_STOPPED
-)
+    EXPERIMENT_GROUP_STOPPED,
+    EXPERIMENT_GROUP_CREATED)
 from event_manager.events.job import (
     JOB_DONE,
     JOB_FAILED,
     JOB_NEW_STATUS,
     JOB_STOPPED,
-    JOB_SUCCEEDED
-)
+    JOB_SUCCEEDED,
+    JOB_CREATED)
 from event_manager.events.notebook import (
     NOTEBOOK_FAILED,
     NOTEBOOK_NEW_STATUS,
@@ -85,17 +85,17 @@ def build_job_status_post_save(sender, **kwargs):
     auditor.record(event_type=BUILD_JOB_NEW_STATUS,
                    instance=job,
                    previous_status=previous_status)
-    if instance.status == JobLifeCycle.STOPPED:
+    if instance.status == JobLifeCycle.CREATED:
+        auditor.record(event_type=BUILD_JOB_CREATED, instance=job)
+    elif instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=BUILD_JOB_STOPPED,
                        instance=job,
                        previous_status=previous_status)
-
-    if instance.status == JobLifeCycle.FAILED:
+    elif instance.status == JobLifeCycle.FAILED:
         auditor.record(event_type=BUILD_JOB_FAILED,
                        instance=job,
                        previous_status=previous_status)
-
-    if instance.status == JobLifeCycle.SUCCEEDED:
+    elif instance.status == JobLifeCycle.SUCCEEDED:
         auditor.record(event_type=BUILD_JOB_SUCCEEDED,
                        instance=job,
                        previous_status=previous_status)
@@ -142,17 +142,18 @@ def job_status_post_save(sender, **kwargs):
     auditor.record(event_type=JOB_NEW_STATUS,
                    instance=job,
                    previous_status=previous_status)
-    if instance.status == JobLifeCycle.STOPPED:
+
+    if instance.status == JobLifeCycle.CREATED:
+        auditor.record(event_type=JOB_CREATED, instance=job)
+    elif instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=JOB_STOPPED,
                        instance=job,
                        previous_status=previous_status)
-
-    if instance.status == JobLifeCycle.FAILED:
+    elif instance.status == JobLifeCycle.FAILED:
         auditor.record(event_type=JOB_FAILED,
                        instance=job,
                        previous_status=previous_status)
-
-    if instance.status == JobLifeCycle.SUCCEEDED:
+    elif instance.status == JobLifeCycle.SUCCEEDED:
         auditor.record(event_type=JOB_SUCCEEDED,
                        instance=job,
                        previous_status=previous_status)
@@ -203,8 +204,7 @@ def notebook_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
-
-    if instance.status == JobLifeCycle.FAILED:
+    elif instance.status == JobLifeCycle.FAILED:
         auditor.record(event_type=NOTEBOOK_FAILED,
                        instance=job,
                        previous_status=previous_status,
@@ -219,8 +219,7 @@ def notebook_job_status_post_save(sender, **kwargs):
                 'notebook_job_uuid': job.uuid.hex,
                 'update_status': False
             })
-
-    if instance.status == JobLifeCycle.STOPPED:
+    elif instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=NOTEBOOK_SUCCEEDED,
                        instance=job,
                        previous_status=previous_status,
@@ -248,8 +247,7 @@ def tensorboard_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
-
-    if instance.status == JobLifeCycle.FAILED:
+    elif instance.status == JobLifeCycle.FAILED:
         auditor.record(event_type=TENSORBOARD_FAILED,
                        instance=job,
                        previous_status=previous_status,
@@ -264,8 +262,7 @@ def tensorboard_job_status_post_save(sender, **kwargs):
                 'tensorboard_job_uuid': job.uuid.hex,
                 'update_status': False
             })
-
-    if instance.status == JobLifeCycle.STOPPED:
+    elif instance.status == JobLifeCycle.STOPPED:
         auditor.record(event_type=TENSORBOARD_SUCCEEDED,
                        instance=job,
                        previous_status=previous_status,
@@ -296,7 +293,9 @@ def experiment_group_status_post_save(sender, **kwargs):
                    instance=experiment_group,
                    previous_status=previous_status)
 
-    if instance.status == ExperimentGroupLifeCycle.STOPPED:
+    if instance.status == ExperimentGroupLifeCycle.CREATED:
+        auditor.record(event_type=EXPERIMENT_GROUP_CREATED, instance=experiment_group)
+    elif instance.status == ExperimentGroupLifeCycle.STOPPED:
         auditor.record(event_type=EXPERIMENT_GROUP_STOPPED,
                        instance=experiment_group,
                        previous_status=previous_status)
@@ -358,7 +357,9 @@ def experiment_status_post_save(sender, **kwargs):
                    instance=experiment,
                    previous_status=previous_status)
 
-    if instance.status == ExperimentLifeCycle.SUCCEEDED:
+    if instance.status == ExperimentLifeCycle.CREATED:
+        auditor.record(event_type=EXPERIMENT_CREATED, instance=experiment)
+    elif instance.status == ExperimentLifeCycle.SUCCEEDED:
         # update all workers with succeeded status, since we will trigger a stop mechanism
         for job in experiment.jobs.all():
             if not job.is_done:
@@ -366,12 +367,11 @@ def experiment_status_post_save(sender, **kwargs):
         auditor.record(event_type=EXPERIMENT_SUCCEEDED,
                        instance=experiment,
                        previous_status=previous_status)
-    if instance.status == ExperimentLifeCycle.FAILED:
+    elif instance.status == ExperimentLifeCycle.FAILED:
         auditor.record(event_type=EXPERIMENT_FAILED,
                        instance=experiment,
                        previous_status=previous_status)
-
-    if instance.status == ExperimentLifeCycle.STOPPED:
+    elif instance.status == ExperimentLifeCycle.STOPPED:
         auditor.record(event_type=EXPERIMENT_STOPPED,
                        instance=experiment,
                        previous_status=previous_status)

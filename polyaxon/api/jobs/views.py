@@ -42,7 +42,6 @@ from db.models.jobs import Job, JobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.job import (
-    JOB_CREATED,
     JOB_DELETED_TRIGGERED,
     JOB_LOGS_VIEWED,
     JOB_OUTPUTS_DOWNLOADED,
@@ -101,7 +100,6 @@ class ProjectJobListView(BookmarkedListMixinView,
                 raise ValidationError('ttl must be an integer.')
         instance = serializer.save(user=self.request.user,
                                    project=self.project)
-        auditor.record(event_type=JOB_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_job(job_id=instance.id, value=ttl)
 

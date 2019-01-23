@@ -1,7 +1,6 @@
 import logging
 
 from hestia.signal_decorators import (
-    check_specification,
     ignore_raw,
     ignore_updates,
     ignore_updates_pre
@@ -13,8 +12,6 @@ from django.dispatch import receiver
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job
 from libs.repos.utils import assign_code_reference
-from polyaxon.celery_api import celery_app
-from polyaxon.settings import SchedulerCeleryTasks
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.persistence import set_persistence
 from signals.tags import set_tags
@@ -55,15 +52,3 @@ def job_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
     # TODO: Clean outputs and logs
-
-
-@receiver(post_save, sender=Job, dispatch_uid="start_job")
-@check_specification
-@ignore_updates
-@ignore_raw
-def start_job(sender, **kwargs):
-    instance = kwargs['instance']
-    celery_app.send_task(
-        SchedulerCeleryTasks.JOBS_BUILD,
-        kwargs={'job_id': instance.id},
-        countdown=1)

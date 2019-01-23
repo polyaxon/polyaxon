@@ -39,7 +39,6 @@ from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.build_job import (
-    BUILD_JOB_CREATED,
     BUILD_JOB_DELETED_TRIGGERED,
     BUILD_JOB_LOGS_VIEWED,
     BUILD_JOB_STATUSES_VIEWED,
@@ -95,7 +94,6 @@ class ProjectBuildListView(BookmarkedListMixinView,
 
         instance = serializer.save(user=self.request.user,
                                    project=self.project)
-        auditor.record(event_type=BUILD_JOB_CREATED, instance=instance)
         if ttl:
             RedisTTL.set_for_build(build_id=instance.id, value=ttl)
         # Trigger build scheduling
