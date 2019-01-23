@@ -65,12 +65,12 @@ def get(keys):
 @click.option('--verify_ssl', type=bool,
               help='To set whether or not to verify the SSL certificate.')
 @clean_outputs
-def set(verbose,
+def set(verbose,  # pylint:disable=redefined-builtin
         host,
         http_port,
         ws_port,
         use_https,
-        verify_ssl):  # pylint:disable=redefined-builtin
+        verify_ssl):
     """Set the global config values.
 
     Example:
