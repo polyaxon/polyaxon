@@ -9,9 +9,10 @@ class AuditorService(EventService):
     event_manager = default_manager
 
     def __init__(self):
+        self.activitylogs = None
+        self.executor = None
         self.notifier = None
         self.tracker = None
-        self.activitylogs = None
         self.ref_id = None
 
     def get_ref_id(self):
@@ -37,6 +38,7 @@ class AuditorService(EventService):
             event.ref_id = self.get_ref_id()
         event = event.serialize(dumps=False, include_actor_name=True, include_instance_info=True)
 
+        self.executor.record(event_type=event['type'], event_data=event)
         celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK, kwargs={'event': event})
         celery_app.send_task(EventsCeleryTasks.EVENTS_LOG, kwargs={'event': event})
         celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY, kwargs={'event': event})
@@ -55,10 +57,12 @@ class AuditorService(EventService):
         # Load default event types
         import auditor.events  # noqa
 
-        import notifier
         import activitylogs
+        import executor
+        import notifier
         import tracker
 
         self.notifier = notifier
         self.tracker = tracker
         self.activitylogs = activitylogs
+        self.executor = executor
