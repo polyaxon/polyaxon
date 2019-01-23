@@ -2,6 +2,7 @@ from event_manager.event_service import EventService
 from executor.handlers.build_job import BuildJobHandler
 from executor.handlers.experiment import ExperimentHandler
 from executor.handlers.experiment_group import ExperimentGroupHandler
+from executor.handlers.experiment_job import ExperimentJobHandler
 from executor.handlers.job import JobHandler
 from executor.handlers.notebook import NotebookHandler
 from executor.handlers.tensorboard import TensorboardHandler
@@ -18,6 +19,7 @@ class ExecutorService(EventService):
         JobHandler.SUBJECT: JobHandler,
         TensorboardHandler.SUBJECT: TensorboardHandler,
         NotebookHandler.SUBJECT: NotebookHandler,
+        ExperimentJobHandler.SUBJECT: ExperimentJobHandler,
     }
 
     def __init__(self):

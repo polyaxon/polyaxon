@@ -3,6 +3,7 @@ from event_manager.event import Attribute, Event
 
 EXPERIMENT_JOB_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
                                        event_actions.VIEWED)
+EXPERIMENT_JOB_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT_JOB, event_actions.NEW_STATUS)
 EXPERIMENT_JOB_RESOURCES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
                                                  event_actions.RESOURCES_VIEWED)
 EXPERIMENT_JOB_LOGS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
@@ -53,4 +54,11 @@ class ExperimentJobStatusesViewedEvent(Event):
         Attribute('experiment.id'),
         Attribute('experiment.user.id'),
         Attribute('last_status'),
+    )
+
+
+class ExperimentJobNewStatusEvent(Event):
+    event_type = EXPERIMENT_JOB_NEW_STATUS
+    attributes = (
+        Attribute('id'),
     )

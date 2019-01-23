@@ -119,6 +119,8 @@ class TestEvents(BaseTest):
         assert experiment_job.ExperimentJobLogsViewedEvent.get_event_subject() == 'experiment_job'
         assert (experiment_job.ExperimentJobStatusesViewedEvent.get_event_subject() ==
                 'experiment_job')
+        assert (experiment_job.ExperimentJobNewStatusEvent.get_event_subject() ==
+                'experiment_job')
 
         # Notebook
         assert notebook.NotebookStartedEvent.get_event_subject() == 'notebook'
@@ -323,6 +325,7 @@ class TestEvents(BaseTest):
         assert experiment_job.ExperimentJobLogsViewedEvent.get_event_action() == 'logs_viewed'
         assert (experiment_job.ExperimentJobStatusesViewedEvent.get_event_action() ==
                 'statuses_viewed')
+        assert experiment_job.ExperimentJobNewStatusEvent.get_event_action() is None
 
         # Notebook
         assert notebook.NotebookStartedEvent.get_event_action() is None
