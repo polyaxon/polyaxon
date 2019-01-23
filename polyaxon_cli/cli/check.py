@@ -52,7 +52,7 @@ def get_group_experiments_info(search_algorithm, concurrency, early_stopping=Fal
                            '{} concurrent runs'.format(concurrency))
     info['Early stopping'] = 'activated' if early_stopping else 'deactivated'
     if 'n_experiments' in kwargs:
-        info['Experiment to create'] = kwargs['n_experiments']
+        info['Experiments to create'] = kwargs['n_experiments']
 
     dict_tabulate(info)
 
