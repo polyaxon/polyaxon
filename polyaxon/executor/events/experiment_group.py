@@ -1,0 +1,11 @@
+import executor
+
+from event_manager.events import experiment_group
+
+executor.subscribe(experiment_group.ExperimentGroupCreatedEvent)
+executor.subscribe(experiment_group.ExperimentGroupDeletedEvent)
+executor.subscribe(experiment_group.ExperimentGroupStoppedEvent)
+executor.subscribe(experiment_group.ExperimentGroupResumedEvent)
+executor.subscribe(experiment_group.ExperimentGroupDoneEvent)
+executor.subscribe(experiment_group.ExperimentGroupNewStatusEvent)
+executor.subscribe(experiment_group.ExperimentGroupIterationEvent)

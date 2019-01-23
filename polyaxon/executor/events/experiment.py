@@ -1,0 +1,12 @@
+import executor
+
+from event_manager.events import experiment
+
+executor.subscribe(experiment.ExperimentCreatedEvent)
+executor.subscribe(experiment.ExperimentStoppedEvent)
+executor.subscribe(experiment.ExperimentResumedEvent)
+executor.subscribe(experiment.ExperimentRestartedEvent)
+executor.subscribe(experiment.ExperimentNewStatusEvent)
+executor.subscribe(experiment.ExperimentSucceededEvent)
+executor.subscribe(experiment.ExperimentFailedEvent)
+executor.subscribe(experiment.ExperimentDoneEvent)
