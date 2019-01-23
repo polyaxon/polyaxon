@@ -4,10 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-import activitylogs
 import auditor
-import notifier
-import tracker
 
 from event_manager.events import experiment as experiment_events
 from factories.factory_experiments import ExperimentFactory, ExperimentMetricFactory

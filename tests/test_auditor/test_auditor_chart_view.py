@@ -4,10 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-import activitylogs
 import auditor
-import notifier
-import tracker
 
 from db.models.experiment_groups import ExperimentGroupChartView
 from db.models.experiments import ExperimentChartView

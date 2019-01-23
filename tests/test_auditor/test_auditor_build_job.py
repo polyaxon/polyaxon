@@ -4,10 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-import activitylogs
 import auditor
-import notifier
-import tracker
 
 from event_manager.events import build_job as build_job_events
 from factories.factory_build_jobs import BuildJobFactory

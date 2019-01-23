@@ -4,10 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-import activitylogs
 import auditor
-import notifier
-import tracker
 
 from db.models.clusters import Cluster
 from event_manager.events import cluster as cluster_events
