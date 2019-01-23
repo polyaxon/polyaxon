@@ -188,6 +188,10 @@ class ExperimentGroup(DiffModel,
     def specification(self):
         return GroupSpecification.read(self.content) if self.content else None
 
+    @property
+    def has_specification(self):
+        return self.content is not None
+
     @cached_property
     def concurrency(self):
         if not self.hptuning_config:

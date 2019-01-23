@@ -150,6 +150,10 @@ class Experiment(DiffModel,
     def specification(self):
         return ExperimentSpecification(values=self.config) if self.config else None
 
+    @property
+    def has_specification(self):
+        return self.config is not None
+
     @cached_property
     def secret_refs(self):
         return self.specification.secret_refs

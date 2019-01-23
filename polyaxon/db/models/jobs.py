@@ -107,6 +107,10 @@ class Job(AbstractJob,
         return JobSpecification(values=self.config)
 
     @property
+    def has_specification(self):
+        return self.config is not None
+
+    @property
     def is_clone(self):
         return self.original_job is not None
 

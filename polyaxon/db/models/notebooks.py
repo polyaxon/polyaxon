@@ -52,6 +52,10 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
     def specification(self):
         return NotebookSpecification(values=self.config)
 
+    @property
+    def has_specification(self):
+        return self.config is not None
+
     def set_status(self,  # pylint:disable=arguments-differ
                    status,
                    created_at=None,

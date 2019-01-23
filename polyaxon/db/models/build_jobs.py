@@ -85,6 +85,10 @@ class BuildJob(AbstractJob,
     def specification(self):
         return BuildSpecification(values=self.config)
 
+    @property
+    def has_specification(self):
+        return self.config is not None
+
     def _ping_heartbeat(self):
         RedisHeartBeat.build_ping(self.id)
 
