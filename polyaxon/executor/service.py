@@ -1,3 +1,4 @@
+from event_manager.event_service import EventService
 from executor.handlers.build_job import BuildJobHandler
 from executor.handlers.experiment import ExperimentHandler
 from executor.handlers.experiment_group import ExperimentGroupHandler
@@ -5,7 +6,6 @@ from executor.handlers.job import JobHandler
 from executor.handlers.notebook import NotebookHandler
 from executor.handlers.tensorboard import TensorboardHandler
 from executor.manager import default_manager
-from event_manager.event_service import EventService
 
 
 class ExecutorService(EventService):

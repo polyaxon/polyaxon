@@ -1,7 +1,6 @@
 from event_manager import event_subjects
 from event_manager.events import experiment_group
 from executor.handlers.base import BaseHandler
-
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
