@@ -44,6 +44,7 @@ class JobCreatedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('created_at', is_datetime=True),
+        Attribute('has_specification', attr_type=bool),
         Attribute('has_description', attr_type=bool),
     )
 

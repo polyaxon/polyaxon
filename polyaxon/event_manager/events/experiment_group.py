@@ -55,6 +55,7 @@ class ExperimentGroupCreatedEvent(Event):
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency', is_required=False),
         Attribute('search_algorithm', is_required=False),
+        Attribute('has_specification', is_required=False),
         Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
     )

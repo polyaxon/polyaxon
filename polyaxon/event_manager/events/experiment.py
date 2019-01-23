@@ -76,6 +76,9 @@ class ExperimentCreatedEvent(Event):
         Attribute('is_resume', attr_type=bool),
         Attribute('is_restart', attr_type=bool),
         Attribute('is_copy', attr_type=bool),
+        Attribute('is_clone', attr_type=bool),
+        Attribute('is_independent', attr_type=bool),
+        Attribute('has_specification', attr_type=bool),
         Attribute('framework', attr_type=bool, is_required=False),
     )
 
