@@ -132,7 +132,7 @@ class PolyaxonClient(object):
     def set_use_https(self, use_https):
         self.api_config.use_https = use_https
         self.reset()
-    
+
     def set_verify_ssl(self, verify_ssl):
         self.api_config.verify_ssl = verify_ssl
         self.reset()
