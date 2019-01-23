@@ -38,8 +38,17 @@ def get_aws_use_ssl(keys=None):
 
 def get_aws_verify_ssl(keys=None):
     keys = ['AWS_VERIFY_SSL'] if keys is None else keys
-    env = get_from_env(keys)
-    return False if env == 'False' else env
+    return get_from_env(keys)
+
+
+def get_aws_legacy_api(keys=None):
+    keys = keys or ['AWS_LEGACY_API']
+    return get_from_env(keys)
+
+
+def get_legacy_api(legacy_api=False):
+    legacy_api = legacy_api or get_aws_legacy_api()
+    return legacy_api
 
 
 def get_aws_session(aws_access_key_id=None,

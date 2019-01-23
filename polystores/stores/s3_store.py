@@ -54,6 +54,9 @@ class S3Store(BaseStore):
         self._aws_use_ssl = (kwargs.get('use_ssl') or
                              kwargs.get('aws_use_ssl') or
                              kwargs.get('AWS_USE_SSL'))
+        self._aws_legacy_api = (kwargs.get('legacy_api') or
+                                kwargs.get('aws_legacy_api') or
+                                kwargs.get('AWS_LEGACY_API'))
 
     @property
     def client(self):
@@ -82,6 +85,8 @@ class S3Store(BaseStore):
             os.environ['AWS_USE_SSL'] = self._aws_use_ssl
         if self._aws_verify_ssl is not None:
             os.environ['AWS_VERIFY_SSL'] = self._aws_verify_ssl
+        if self._aws_legacy_api:
+            os.environ['AWS_LEGACY_API'] = self._aws_legacy_api
 
     @property
     def resource(self):
@@ -227,7 +232,13 @@ class S3Store(BaseStore):
             'MaxItems': max_items,
         }
 
-        paginator = self.client.get_paginator('list_objects_v2')
+        legacy_api = aws_client.get_legacy_api(legacy_api=self._aws_legacy_api)
+
+        if legacy_api:
+            paginator = self.client.get_paginator('list_objects')
+        else:
+            paginator = self.client.get_paginator('list_objects_v2')
+
         prefix = self.check_prefix_format(prefix=prefix, delimiter=delimiter)
         response = paginator.paginate(Bucket=bucket_name,
                                       Prefix=prefix,
