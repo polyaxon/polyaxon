@@ -26,6 +26,10 @@ def get_from_env(keys):
     for key in keys:
         value = os.environ.get(key)
         if value:
+            if value.lower() == 'true':
+                return True
+            if value.lower() == 'false':
+                return False
             return value
         # Prepend POLYAXON
         key = 'POLYAXON_{}'.format(key)
