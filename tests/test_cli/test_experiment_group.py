@@ -13,10 +13,11 @@ class TestExperimentGroup(BaseCommandTestCase):
     @patch('polyaxon_cli.managers.project.ProjectManager.is_initialized')
     @patch('polyaxon_cli.managers.experiment_group.GroupManager.set_config')
     @patch('polyaxon_cli.cli.experiment_group.get_group_details')
-    def test_get_group(self, get_group_details,
-                            set_config,
-                            is_initialized,
-                            get_experiment_group):
+    def test_get_group(self,
+                       get_group_details,
+                       set_config,
+                       is_initialized,
+                       get_experiment_group):
         self.runner.invoke(group, ['--project=admin/foo', '--group=1', 'get'])
         assert get_experiment_group.call_count == 1
         assert set_config.call_count == 1
