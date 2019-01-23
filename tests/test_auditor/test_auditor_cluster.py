@@ -16,6 +16,7 @@ from tests.utils import BaseTest
 class AuditorClusterTest(BaseTest):
     """Testing subscribed events"""
     DISABLE_AUDITOR = False
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         self.cluster = Cluster.load()
@@ -23,10 +24,15 @@ class AuditorClusterTest(BaseTest):
         self.node_gpu = GPUFactory(cluster_node=self.cluster_node)
         super().setUp()
 
+    @patch('executor.service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_created(self, activitylogs_record, tracker_record, notifier_record):
+    def test_cluster_created(self,
+                             activitylogs_record,
+                             tracker_record,
+                             notifier_record,
+                             executor_record):
         auditor.record(event_type=cluster_events.CLUSTER_CREATED,
                        instance=self.cluster,
                        namespace='test',
@@ -52,11 +58,17 @@ class AuditorClusterTest(BaseTest):
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
 
+    @patch('executor.service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_updated(self, activitylogs_record, tracker_record, notifier_record):
+    def test_cluster_updated(self,
+                             activitylogs_record,
+                             tracker_record,
+                             notifier_record,
+                             executor_record):
         auditor.record(event_type=cluster_events.CLUSTER_UPDATED,
                        instance=self.cluster,
                        is_upgrade=True)
@@ -64,11 +76,17 @@ class AuditorClusterTest(BaseTest):
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
 
+    @patch('executor.service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_resources_updated(self, activitylogs_record, tracker_record, notifier_record):
+    def test_cluster_resources_updated(self,
+                                       activitylogs_record,
+                                       tracker_record,
+                                       notifier_record,
+                                       executor_record):
         auditor.record(event_type=cluster_events.CLUSTER_RESOURCES_UPDATED,
                        instance=self.cluster,
                        n_nodes=0,
@@ -79,47 +97,72 @@ class AuditorClusterTest(BaseTest):
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
 
+    @patch('executor.service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_node_created(self, activitylogs_record, tracker_record, notifier_record):
+    def test_cluster_node_created(self,
+                                  activitylogs_record,
+                                  tracker_record,
+                                  notifier_record,
+                                  executor_record):
         auditor.record(event_type=cluster_events.CLUSTER_NODE_CREATED,
                        instance=self.cluster_node)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
 
+    @patch('executor.service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_node_updated(self, activitylogs_record, tracker_record, notifier_record):
+    def test_cluster_node_updated(self,
+                                  activitylogs_record,
+                                  tracker_record,
+                                  notifier_record,
+                                  executor_record):
         auditor.record(event_type=cluster_events.CLUSTER_NODE_UPDATED,
                        instance=self.cluster_node)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
 
+    @patch('executor.service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_node_deleted(self, activitylogs_record, tracker_record, notifier_record):
+    def test_cluster_node_deleted(self,
+                                  activitylogs_record,
+                                  tracker_record,
+                                  notifier_record,
+                                  executor_record):
         auditor.record(event_type=cluster_events.CLUSTER_NODE_DELETED,
                        instance=self.cluster_node)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
 
+    @patch('executor.service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_node_gpu(self, activitylogs_record, tracker_record, notifier_record):
+    def test_cluster_node_gpu(self,
+                              activitylogs_record,
+                              tracker_record,
+                              notifier_record,
+                              executor_record):
         auditor.record(event_type=cluster_events.CLUSTER_NODE_GPU,
                        instance=self.node_gpu)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0

@@ -9,6 +9,9 @@ BUILD_JOB_STOPPED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.STOPP
 BUILD_JOB_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
                                                 event_actions.STOPPED,
                                                 event_subjects.TRIGGER)
+BUILD_JOB_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
+                                                event_actions.CLEANED,
+                                                event_subjects.TRIGGER)
 BUILD_JOB_CREATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.CREATED)
 BUILD_JOB_VIEWED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.VIEWED)
 BUILD_JOB_BOOKMARKED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.BOOKMARKED)
@@ -96,6 +99,13 @@ class BuildJobSoppedTriggeredEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
+    )
+
+
+class BuildJobCleanedTriggeredEvent(Event):
+    event_type = BUILD_JOB_CLEANED_TRIGGERED
+    attributes = (
+        Attribute('id'),
     )
 
 

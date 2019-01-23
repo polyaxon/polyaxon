@@ -46,6 +46,9 @@ EXPERIMENT_METRICS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
 EXPERIMENT_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
                                                  event_actions.DELETED,
                                                  event_subjects.TRIGGER)
+EXPERIMENT_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+                                                 event_actions.CLEANED,
+                                                 event_subjects.TRIGGER)
 EXPERIMENT_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
                                                  event_actions.STOPPED,
                                                  event_subjects.TRIGGER)
@@ -365,6 +368,13 @@ class ExperimentDeletedTriggeredEvent(Event):
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
+    )
+
+
+class ExperimentCleanedTriggeredEvent(Event):
+    event_type = EXPERIMENT_CLEANED_TRIGGERED
+    attributes = (
+        Attribute('id'),
     )
 
 

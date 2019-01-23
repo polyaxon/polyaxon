@@ -19,6 +19,39 @@ class ExperimentHandler(BaseHandler):
                 countdown=1)
 
     @classmethod
+    def _handle_experiment_cleaned_triggered(cls, event):
+        from db.models.experiment_groups import ExperimentGroup
+
+        instance = event.instance
+        if not instance or not instance.has_specification or not instance.is_running:
+            return
+
+        if instance.jobs.count() == 0:
+            return
+
+        try:
+            group = instance.experiment_group
+            celery_app.send_task(
+                SchedulerCeleryTasks.EXPERIMENTS_STOP,
+                kwargs={
+                    'project_name': instance.project.unique_name,
+                    'project_uuid': instance.project.uuid.hex,
+                    'experiment_name': instance.unique_name,
+                    'experiment_uuid': instance.uuid.hex,
+                    'experiment_group_name': group.unique_name if group else None,
+                    'experiment_group_uuid': group.uuid.hex if group else None,
+                    'specification': instance.config,
+                    'update_status': False,
+                    'collect_logs': False,
+                },
+                countdown=1)
+        except ExperimentGroup.DoesNotExist:
+            # The experiment was already stopped when the group was deleted
+            pass
+
+    @classmethod
     def record_event(cls, event):
         if event.event_type == experiment.EXPERIMENT_CREATED:
             cls._handle_experiment_created(event=event)
+        elif event.event_type == experiment.EXPERIMENT_CLEANED_TRIGGERED:
+            cls._handle_experiment_cleaned_triggered(event=event)

@@ -36,12 +36,16 @@ class AuditorService(EventService):
 
         if not event.ref_id:
             event.ref_id = self.get_ref_id()
-        event = event.serialize(dumps=False, include_actor_name=True, include_instance_info=True)
+        serialized_event = event.serialize(dumps=False,
+                                           include_actor_name=True,
+                                           include_instance_info=True)
 
-        self.executor.record(event_type=event['type'], event_data=event)
-        celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK, kwargs={'event': event})
-        celery_app.send_task(EventsCeleryTasks.EVENTS_LOG, kwargs={'event': event})
-        celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY, kwargs={'event': event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK, kwargs={'event': serialized_event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_LOG, kwargs={'event': serialized_event})
+        celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY, kwargs={'event': serialized_event})
+        # We include the instance in the serialized event for executor
+        serialized_event['instance'] = event.instance
+        self.executor.record(event_type=event.event_type, event_data=serialized_event)
 
     def notify(self, event):
         self.notifier.record(event_type=event['type'], event_data=event)

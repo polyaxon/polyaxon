@@ -66,6 +66,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentDeletedTriggeredEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentStoppedTriggeredEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentResumedTriggeredEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentCleanedTriggeredEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentRestartedTriggeredEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentCopiedTriggeredEvent.get_event_subject() == 'experiment'
 
@@ -124,6 +125,7 @@ class TestEvents(BaseTest):
         assert notebook.NotebookStartedTriggeredEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSoppedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSoppedTriggeredEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookCleanedTriggeredEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookViewedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookNewStatusEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookFailedEvent.get_event_subject() == 'notebook'
@@ -136,6 +138,7 @@ class TestEvents(BaseTest):
         assert job.JobStartedTriggeredEvent.get_event_subject() == 'job'
         assert job.JobSoppedEvent.get_event_subject() == 'job'
         assert job.JobSoppedTriggeredEvent.get_event_subject() == 'job'
+        assert job.JobCleanedTriggeredEvent.get_event_subject() == 'job'
         assert job.JobViewedEvent.get_event_subject() == 'job'
         assert job.JobBookmarkedEvent.get_event_subject() == 'job'
         assert job.JobUnBookmarkedEvent.get_event_subject() == 'job'
@@ -158,6 +161,7 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobStartedTriggeredEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobSoppedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobSoppedTriggeredEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobCleanedTriggeredEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobViewedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobBookmarkedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobUnBookmarkedEvent.get_event_subject() == 'build_job'
@@ -227,6 +231,7 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardStartedTriggeredEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardSoppedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardSoppedTriggeredEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardCleanedTriggeredEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardViewedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardBookmarkedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardUnBookmarkedEvent.get_event_subject() == 'tensorboard'
@@ -277,6 +282,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentStatusesViewedEvent.get_event_action() == 'statuses_viewed'
         assert experiment.ExperimentJobsViewedEvent.get_event_action() == 'jobs_viewed'
         assert experiment.ExperimentMetricsViewedEvent.get_event_action() == 'metrics_viewed'
+        assert experiment.ExperimentCleanedTriggeredEvent.get_event_action() is None
         assert experiment.ExperimentDeletedTriggeredEvent.get_event_action() == 'deleted'
         assert experiment.ExperimentStoppedTriggeredEvent.get_event_action() == 'stopped'
         assert experiment.ExperimentResumedTriggeredEvent.get_event_action() == 'resumed'
@@ -323,6 +329,7 @@ class TestEvents(BaseTest):
         assert notebook.NotebookStartedTriggeredEvent.get_event_action() == 'started'
         assert notebook.NotebookSoppedEvent.get_event_action() is None
         assert notebook.NotebookSoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert notebook.NotebookCleanedTriggeredEvent.get_event_action() is None
         assert notebook.NotebookViewedEvent.get_event_action() == 'viewed'
         assert notebook.NotebookNewStatusEvent.get_event_action() is None
         assert notebook.NotebookFailedEvent.get_event_action() is None
@@ -335,6 +342,7 @@ class TestEvents(BaseTest):
         assert job.JobStartedTriggeredEvent.get_event_action() == 'started'
         assert job.JobSoppedEvent.get_event_action() is None
         assert job.JobSoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert job.JobCleanedTriggeredEvent.get_event_action() is None
         assert job.JobViewedEvent.get_event_action() == 'viewed'
         assert job.JobBookmarkedEvent.get_event_action() == 'bookmarked'
         assert job.JobUnBookmarkedEvent.get_event_action() == 'unbookmarked'
@@ -357,6 +365,7 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobStartedTriggeredEvent.get_event_action() == 'started'
         assert build_job.BuildJobSoppedEvent.get_event_action() is None
         assert build_job.BuildJobSoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert build_job.BuildJobCleanedTriggeredEvent.get_event_action() is None
         assert build_job.BuildJobViewedEvent.get_event_action() == 'viewed'
         assert build_job.BuildJobBookmarkedEvent.get_event_action() == 'bookmarked'
         assert build_job.BuildJobUnBookmarkedEvent.get_event_action() == 'unbookmarked'
@@ -427,6 +436,7 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardStartedTriggeredEvent.get_event_action() == 'started'
         assert tensorboard.TensorboardSoppedEvent.get_event_action() is None
         assert tensorboard.TensorboardSoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert tensorboard.TensorboardCleanedTriggeredEvent.get_event_action() is None
         assert tensorboard.TensorboardViewedEvent.get_event_action() == 'viewed'
         assert tensorboard.TensorboardBookmarkedEvent.get_event_action() == 'bookmarked'
         assert tensorboard.TensorboardUnBookmarkedEvent.get_event_action() == 'unbookmarked'

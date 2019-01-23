@@ -23,6 +23,9 @@ JOB_DELETED = '{}.{}'.format(event_subjects.JOB, event_actions.DELETED)
 JOB_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
                                           event_actions.DELETED,
                                           event_subjects.TRIGGER)
+JOB_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
+                                          event_actions.CLEANED,
+                                          event_subjects.TRIGGER)
 JOB_LOGS_VIEWED = '{}.{}'.format(event_subjects.JOB, event_actions.LOGS_VIEWED)
 JOB_OUTPUTS_DOWNLOADED = '{}.{}'.format(event_subjects.JOB, event_actions.OUTPUTS_DOWNLOADED)
 JOB_RESTARTED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
@@ -207,6 +210,13 @@ class JobDeletedTriggeredEvent(Event):
         Attribute('project.user.id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+    )
+
+
+class JobCleanedTriggeredEvent(Event):
+    event_type = JOB_CLEANED_TRIGGERED
+    attributes = (
+        Attribute('id'),
     )
 
 

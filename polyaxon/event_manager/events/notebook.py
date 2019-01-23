@@ -9,6 +9,9 @@ NOTEBOOK_STOPPED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.STOPPED
 NOTEBOOK_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.NOTEBOOK,
                                                event_actions.STOPPED,
                                                event_subjects.TRIGGER)
+NOTEBOOK_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.NOTEBOOK,
+                                               event_actions.CLEANED,
+                                               event_subjects.TRIGGER)
 NOTEBOOK_VIEWED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.VIEWED)
 NOTEBOOK_NEW_STATUS = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.NEW_STATUS)
 NOTEBOOK_FAILED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.FAILED)
@@ -48,6 +51,13 @@ class NotebookSoppedEvent(Event):
         Attribute('target'),  # project, experiment_group, experiment
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+    )
+
+
+class NotebookCleanedTriggeredEvent(Event):
+    event_type = NOTEBOOK_CLEANED_TRIGGERED
+    attributes = (
+        Attribute('id'),
     )
 
 

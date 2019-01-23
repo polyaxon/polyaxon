@@ -9,6 +9,9 @@ TENSORBOARD_STOPPED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.S
 TENSORBOARD_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.TENSORBOARD,
                                                   event_actions.STOPPED,
                                                   event_subjects.TRIGGER)
+TENSORBOARD_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.TENSORBOARD,
+                                                  event_actions.CLEANED,
+                                                  event_subjects.TRIGGER)
 TENSORBOARD_VIEWED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.VIEWED)
 TENSORBOARD_BOOKMARKED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.BOOKMARKED)
 TENSORBOARD_UNBOOKMARKED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.UNBOOKMARKED)
@@ -63,6 +66,13 @@ class TensorboardSoppedTriggeredEvent(Event):
         Attribute('project.user.id'),
         Attribute('target'),  # project, experiment_group, experiment
         Attribute('last_status'),
+    )
+
+
+class TensorboardCleanedTriggeredEvent(Event):
+    event_type = TENSORBOARD_CLEANED_TRIGGERED
+    attributes = (
+        Attribute('id'),
     )
 
 

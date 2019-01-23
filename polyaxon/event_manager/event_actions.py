@@ -1,6 +1,7 @@
 CREATED = 'created'
 UPDATED = 'updated'
 DELETED = 'deleted'
+CLEANED = 'cleaned'
 VIEWED = 'viewed'
 DENIED = 'denied'
 REGISTERED = 'registered'
