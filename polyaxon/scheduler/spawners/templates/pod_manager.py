@@ -56,7 +56,7 @@ class BasePodManager(object):
         self.health_check_url = health_check_url
         self.log_level = log_level
 
-    def get_job_name(self, **kwargs):
+    def get_job_name(self):
         raise NotImplementedError()
 
     def get_labels(self):
