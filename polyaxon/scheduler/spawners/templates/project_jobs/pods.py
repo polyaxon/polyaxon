@@ -11,6 +11,32 @@ from scheduler.spawners.templates.project_jobs.labels import get_labels
 from scheduler.spawners.templates.resources import get_resources
 
 
+def get_pod_container(volume_mounts,
+                      image,
+                      command,
+                      args,
+                      ports,
+                      env_vars=None,
+                      env_from=None,
+                      container_name=None,
+                      resources=None,
+                      image_pull_policy=None):
+    env_vars = to_list(env_vars, check_none=True)
+    env_vars += get_resources_env_vars(resources=resources)
+
+    ports = [client.V1ContainerPort(container_port=port) for port in ports]
+    return client.V1Container(name=container_name,
+                              image=image,
+                              image_pull_policy=image_pull_policy,
+                              command=command,
+                              args=args,
+                              ports=ports,
+                              env=env_vars,
+                              env_from=env_from,
+                              resources=get_resources(resources),
+                              volume_mounts=volume_mounts)
+
+
 def get_project_pod_spec(volume_mounts,
                          volumes,
                          image,
@@ -28,7 +54,6 @@ def get_project_pod_spec(volume_mounts,
                          restart_policy=None,
                          service_account_name=None):
     """Pod spec to be used to create pods for project: tensorboard, notebooks."""
-    env_vars = to_list(env_vars, check_none=True)
     volume_mounts = to_list(volume_mounts, check_none=True)
     volumes = to_list(volumes, check_none=True)
 
@@ -37,18 +62,19 @@ def get_project_pod_spec(volume_mounts,
     volumes += gpu_volumes
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
-    env_vars += get_resources_env_vars(resources=resources)
 
-    containers = [client.V1Container(name=container_name,
-                                     image=image,
-                                     image_pull_policy=image_pull_policy,
-                                     command=command,
-                                     args=args,
-                                     ports=ports,
-                                     env=env_vars,
-                                     env_from=env_from,
-                                     resources=get_resources(resources),
-                                     volume_mounts=volume_mounts)]
+    pod_container = get_pod_container(
+        volume_mounts=volume_mounts,
+        image=image,
+        command=command,
+        args=args,
+        ports=ports,
+        env_vars=env_vars,
+        env_from=env_from,
+        container_name=container_name,
+        resources=resources,
+        image_pull_policy=image_pull_policy)
+    containers = [pod_container]
 
     if service_account_name and not conf.get('K8S_RBAC_ENABLED'):
         service_account_name = None
