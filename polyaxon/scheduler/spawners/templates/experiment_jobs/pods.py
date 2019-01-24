@@ -10,7 +10,7 @@ import stores
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.cloning_strategies import CloningStrategy
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.env_vars import get_env_var
+from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
 from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
@@ -34,11 +34,13 @@ class PodManager(BasePodManager):
                  cloning_strategy=None,
                  job_container_name=None,
                  job_docker_image=None,
+                 job_docker_image_pull_policy=None,
                  sidecar_container_name=None,
                  sidecar_docker_image=None,
                  sidecar_docker_image_pull_policy=None,
                  init_container_name=None,
                  init_docker_image=None,
+                 init_docker_image_pull_policy=None,
                  role_label=None,
                  type_label=None,
                  app_label=None,
@@ -54,6 +56,7 @@ class PodManager(BasePodManager):
             project_uuid=project_uuid,
             job_container_name=job_container_name or conf.get('CONTAINER_NAME_EXPERIMENT_JOB'),
             job_docker_image=job_docker_image or conf.get('JOB_DOCKER_NAME'),
+            job_docker_image_pull_policy=job_docker_image_pull_policy,
             sidecar_container_name=sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR'),
             sidecar_docker_image=sidecar_docker_image or conf.get('JOB_SIDECAR_DOCKER_IMAGE'),
             sidecar_docker_image_pull_policy=(
@@ -61,6 +64,7 @@ class PodManager(BasePodManager):
                 conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY')),
             init_container_name=init_container_name or conf.get('CONTAINER_NAME_INIT'),
             init_docker_image=init_docker_image or conf.get('JOB_INIT_DOCKER_IMAGE'),
+            init_docker_image_pull_policy=init_docker_image_pull_policy,
             role_label=role_label or conf.get('ROLE_LABELS_WORKER'),
             type_label=type_label or conf.get('TYPE_LABELS_RUNNER'),
             app_label=app_label or conf.get('APP_LABELS_EXPERIMENT'),
@@ -128,8 +132,25 @@ class PodManager(BasePodManager):
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy)
 
-    def _get_container_pod_env_vars(self):
-        return [
+    def _get_container_pod_env_vars(self,
+                                    persistence_outputs,
+                                    persistence_data,
+                                    outputs_refs_jobs,
+                                    outputs_refs_experiments,
+                                    ephemeral_token):
+        logs_path = self._get_logs_path()
+        outputs_path = self._get_outputs_path(persistence_outputs=persistence_outputs)
+        env_vars = get_job_env_vars(
+            persistence_outputs=persistence_outputs,
+            outputs_path=outputs_path,
+            persistence_data=persistence_data,
+            log_level=self.log_level,
+            logs_path=logs_path,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
+            ephemeral_token=ephemeral_token,
+        )
+        return env_vars + [
             get_env_var(name=constants.CONFIG_MAP_CLUSTER_KEY_NAME,
                         value=json.dumps(self.cluster_def)),
             get_env_var(name=constants.CONFIG_MAP_DECLARATIONS_KEY_NAME,

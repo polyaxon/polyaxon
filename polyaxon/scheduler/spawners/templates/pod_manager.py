@@ -3,7 +3,6 @@ from kubernetes import client
 from polyaxon_k8s import constants as k8s_constants
 
 from scheduler.spawners.templates.env_vars import (
-    get_job_env_vars,
     get_pod_env_from,
     get_resources_env_vars
 )
@@ -20,11 +19,13 @@ class BasePodManager(object):
                  project_uuid,
                  job_container_name,
                  job_docker_image,
+                 job_docker_image_pull_policy,
                  sidecar_container_name,
                  sidecar_docker_image,
                  sidecar_docker_image_pull_policy,
                  init_container_name,
                  init_docker_image,
+                 init_docker_image_pull_policy,
                  role_label,
                  type_label,
                  app_label,
@@ -38,11 +39,13 @@ class BasePodManager(object):
         self.project_uuid = project_uuid
         self.job_container_name = job_container_name
         self.job_docker_image = job_docker_image
+        self.job_docker_image_pull_policy = job_docker_image_pull_policy
         self.sidecar_container_name = sidecar_container_name
         self.sidecar_docker_image = sidecar_docker_image
         self.sidecar_docker_image_pull_policy = sidecar_docker_image_pull_policy
         self.init_container_name = init_container_name
         self.init_docker_image = init_docker_image
+        self.init_docker_image_pull_policy = init_docker_image_pull_policy
         self.role_label = role_label
         self.type_label = type_label
         self.app_label = app_label
@@ -71,7 +74,12 @@ class BasePodManager(object):
     def _get_outputs_path(self, persistence_outputs):
         raise NotImplementedError()
 
-    def _get_container_pod_env_vars(self):
+    def _get_container_pod_env_vars(self,
+                                    persistence_outputs,
+                                    persistence_data,
+                                    outputs_refs_jobs,
+                                    outputs_refs_experiments,
+                                    ephemeral_token):
         raise NotImplementedError()
 
     def get_pod_container(self,
@@ -92,19 +100,13 @@ class BasePodManager(object):
 
         # Env vars preparations
         env_vars = to_list(env_vars, check_none=True)
-        logs_path = self._get_logs_path()
-        outputs_path = self._get_outputs_path(persistence_outputs=persistence_outputs)
-        env_vars += get_job_env_vars(
+        env_vars += self._get_container_pod_env_vars(
             persistence_outputs=persistence_outputs,
-            outputs_path=outputs_path,
             persistence_data=persistence_data,
-            log_level=self.log_level,
-            logs_path=logs_path,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
-            ephemeral_token=ephemeral_token,
+            ephemeral_token=ephemeral_token
         )
-        env_vars += self._get_container_pod_env_vars()
         env_vars += get_resources_env_vars(resources=resources)
 
         # Env from configmap and secret refs
