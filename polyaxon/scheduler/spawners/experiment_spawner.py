@@ -3,9 +3,9 @@ from libs.unique_urls import get_experiment_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
-from scheduler.spawners.templates.base_pods import get_pod_command_args
 from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
+from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.sidecars import get_sidecar_args
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,

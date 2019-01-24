@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from scheduler.spawners.templates.base_pods import get_pod_command_args
+from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 
 
 @pytest.mark.spawner_mark
