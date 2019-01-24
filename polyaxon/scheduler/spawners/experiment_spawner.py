@@ -6,7 +6,6 @@ from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
 from scheduler.spawners.templates.experiment_jobs import config_maps, pods
 from scheduler.spawners.templates.pod_cmd import get_pod_command_args
-from scheduler.spawners.templates.sidecars import get_sidecar_args
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
@@ -74,10 +73,10 @@ class ExperimentSpawner(K8SManager):
             ports=ports,
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
-            log_level=self.spec.log_level,
+            log_level=self.spec.log_level if self.spec else None,
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy,
-            declarations=self.spec.declarations,
+            declarations=self.spec.declarations if self.spec else None,
             health_check_url=get_experiment_health_url(self.experiment_name))
         self.persist = persist
         self.token_scope = token_scope
@@ -122,9 +121,6 @@ class ExperimentSpawner(K8SManager):
                     restart_policy='Never'):
         ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
-        sidecar_args = get_sidecar_args(pod_id=job_name,
-                                        container_id=self.pod_manager.job_container_name,
-                                        app_label=self.pod_manager.app_label)
         labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
         # Set and validate volumes
@@ -149,7 +145,7 @@ class ExperimentSpawner(K8SManager):
         secret_refs = validate_secret_refs(self.spec.secret_refs)
         configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
 
-        pod = self.pod_manager.get_pod(
+        pod = self.pod_manager.get_task_pod(
             task_type=task_type,
             task_idx=task_idx,
             volume_mounts=volume_mounts,
@@ -158,7 +154,6 @@ class ExperimentSpawner(K8SManager):
             env_vars=env_vars,
             command=command,
             args=args,
-            sidecar_args=sidecar_args,
             persistence_outputs=self.persistence_config.outputs,
             persistence_data=self.persistence_config.data,
             outputs_refs_jobs=self.outputs_refs_jobs,
