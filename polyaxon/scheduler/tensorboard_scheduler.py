@@ -24,13 +24,13 @@ def start_tensorboard(tensorboard):
         job_uuid=tensorboard.uuid.hex,
         k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
+        job_docker_image=tensorboard.image,
         in_cluster=True)
 
     error = {}
     outputs_specs, tensorboard_paths = tensorboard.outputs_path
     try:
         results = spawner.start_tensorboard(
-            image=tensorboard.image,
             outputs_path=tensorboard_paths,
             persistence_outputs=tensorboard.persistence_outputs,
             outputs_specs=outputs_specs,
