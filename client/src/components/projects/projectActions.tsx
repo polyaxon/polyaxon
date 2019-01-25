@@ -40,9 +40,9 @@ export default class ProjectActions extends React.Component<Props, State> {
     if (action === 'delete') {
       confirmText = 'Are you sure you want to delete this project';
     } else if (action === 'stopNotebook') {
-      confirmText = 'Are you sure you want to stop notebook on this project';
+      confirmText = 'Are you sure you want to stop notebook for this project';
     } else if (action === 'stopTensorboard') {
-      confirmText = 'Are you sure you want to stop tensorboard on this project';
+      confirmText = 'Are you sure you want to stop tensorboard for this project';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}

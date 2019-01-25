@@ -42,7 +42,7 @@ export default class GroupActions extends React.Component<Props, State> {
     } else if (action === 'stop') {
       confirmText = 'Are you sure you want to stop this group';
     } else if (action === 'stopTensorboard') {
-      confirmText = 'Are you sure you want to stop tensorboard on this group';
+      confirmText = 'Are you sure you want to stop tensorboard for this group';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}

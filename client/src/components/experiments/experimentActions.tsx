@@ -44,7 +44,7 @@ export default class ExperimentActions extends React.Component<Props, State> {
     } else if (action === 'stop') {
       confirmText = 'Are you sure you want to stop this experiment';
     } else if (action === 'stopTensorboard') {
-      confirmText = 'Are you sure you want to stop tensorboad on this experiment';
+      confirmText = 'Are you sure you want to stop tensorboard for this experiment';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
