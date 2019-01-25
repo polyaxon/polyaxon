@@ -5,16 +5,12 @@ import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
 from constants.stores import GCS, S3
+from libs.unique_urls import get_tensorboard_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import ingresses, services
-from scheduler.spawners.templates.pod_environment import (
-    get_affinity,
-    get_node_selector,
-    get_tolerations
-)
-from scheduler.spawners.templates.project_jobs import deployments
 from scheduler.spawners.templates.stores import get_stores_secrets
+from scheduler.spawners.templates.tensorboards import manager
 from scheduler.spawners.templates.volumes import (
     get_pod_outputs_volume,
     get_pod_refs_outputs_volumes,
@@ -31,6 +27,49 @@ class TensorboardSpawner(ProjectJobSpawner):
     STORE_SECRET_VOLUME_NAME = 'plx-{}-secret'  # noqa
     STORE_SECRET_MOUNT_PATH = '/tmp'  # noqa
     STORE_SECRET_KEY_MOUNT_PATH = STORE_SECRET_MOUNT_PATH + '/.' + STORE_SECRET_VOLUME_NAME
+
+    def __init__(self,
+                 project_name,
+                 project_uuid,
+                 job_name,
+                 job_uuid,
+                 spec=None,
+                 k8s_config=None,
+                 namespace='default',
+                 in_cluster=False,
+                 job_container_name=None,
+                 job_docker_image=None,
+                 sidecar_container_name=None,
+                 sidecar_docker_image=None,
+                 role_label=None,
+                 type_label=None,
+                 use_sidecar=False,
+                 sidecar_config=None):
+        self.spec = spec
+        self.resource_manager = manager.ResourceManager(
+            namespace=namespace,
+            name=TENSORBOARD_JOB_NAME,
+            project_name=project_name,
+            project_uuid=project_uuid,
+            job_name=job_name,
+            job_uuid=job_uuid,
+            job_docker_image=job_docker_image,
+            job_container_name=job_container_name,
+            sidecar_container_name=sidecar_container_name,
+            sidecar_docker_image=sidecar_docker_image,
+            role_label=role_label,
+            type_label=type_label,
+            use_sidecar=use_sidecar,
+            sidecar_config=sidecar_config,
+            health_check_url=get_tensorboard_health_url(job_name),
+            log_level=self.spec.log_level if self.spec else None)
+        super().__init__(project_name=project_name,
+                         project_uuid=project_uuid,
+                         job_name=job_name,
+                         job_uuid=job_uuid,
+                         k8s_config=k8s_config,
+                         namespace=namespace,
+                         in_cluster=in_cluster)
 
     def get_tensorboard_url(self):
         return self._get_service_url(TENSORBOARD_JOB_NAME)
@@ -100,7 +139,6 @@ class TensorboardSpawner(ProjectJobSpawner):
         return commands
 
     def start_tensorboard(self,
-                          image,
                           outputs_path,
                           persistence_outputs,
                           outputs_specs=None,
@@ -137,75 +175,58 @@ class TensorboardSpawner(ProjectJobSpawner):
         volumes += secrets_volumes
         volume_mounts += secrets_volume_mounts
 
+        resource_name = self.resource_manager.get_resource_name()
         # Get persistence outputs secrets auth commands
         command_args = self.get_stores_secrets_command_args(stores_secrets=stores_secrets)
         command_args.append("tensorboard --logdir={} --port={}".format(outputs_path, self.PORT))
+        args = [' && '.join(command_args)]
+        command = ["/bin/sh", "-c"]
 
-        node_selector = get_node_selector(
-            node_selector=node_selector,
-            default_node_selector=conf.get('NODE_SELECTOR_TENSORBOARDS'))
-        affinity = get_affinity(
-            affinity=affinity,
-            default_affinity=conf.get('AFFINITY_TENSORBOARDS'))
-        tolerations = get_tolerations(
-            tolerations=tolerations,
-            default_tolerations=conf.get('TOLERATIONS_TENSORBOARDS'))
-        deployment = deployments.get_deployment(
-            namespace=self.namespace,
-            app=conf.get('APP_LABELS_TENSORBOARD'),
-            name=TENSORBOARD_JOB_NAME,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
-            job_name=self.job_name,
-            job_uuid=self.job_uuid,
+        deployment = self.resource_manager.get_deployment(
+            resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
-            image=image,
-            command=["/bin/sh", "-c"],
-            args=[' && '.join(command_args)],
-            ports=target_ports,
-            container_name=conf.get('CONTAINER_NAME_PLUGIN_JOB'),
+            labels=self.resource_manager.labels,
+            env_vars=None,
+            command=command,
+            args=args,
+            persistence_outputs=persistence_outputs,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
             resources=resources,
+            ephemeral_token=None,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
-            role=conf.get('ROLE_LABELS_DASHBOARD'),
-            type=conf.get('TYPE_LABELS_RUNNER'))
-        deployment_name = JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.job_uuid)
-        deployment_labels = deployments.get_labels(app=conf.get('APP_LABELS_TENSORBOARD'),
-                                                   project_name=self.project_name,
-                                                   project_uuid=self.project_uuid,
-                                                   job_name=self.job_name,
-                                                   job_uuid=self.job_uuid,
-                                                   role=conf.get('ROLE_LABELS_DASHBOARD'),
-                                                   type=conf.get('TYPE_LABELS_RUNNER'))
+            ports=target_ports,
+            restart_policy=None)
 
-        dep_resp, _ = self.create_or_update_deployment(name=deployment_name, data=deployment)
+        dep_resp, _ = self.create_or_update_deployment(name=resource_name, data=deployment)
         service = services.get_service(
             namespace=self.namespace,
-            name=deployment_name,
-            labels=deployment_labels,
+            name=resource_name,
+            labels=self.resource_manager.get_labels(),
             ports=ports,
             target_ports=target_ports,
             service_type=self._get_service_type())
-        service_resp, _ = self.create_or_update_service(name=deployment_name, data=service)
+        service_resp, _ = self.create_or_update_service(name=resource_name, data=service)
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
             annotations = json.loads(conf.get('K8S_INGRESS_ANNOTATIONS'))
             paths = [{
-                'path': '/tensorboard/{}'.format(self.project_name.replace('.', '/')),
+                'path': '/tensorboards/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {
-                    'serviceName': deployment_name,
+                    'serviceName': resource_name,
                     'servicePort': ports[0]
                 }
             }]
             ingress = ingresses.get_ingress(namespace=self.namespace,
-                                            name=deployment_name,
-                                            labels=deployment_labels,
+                                            name=resource_name,
+                                            labels=self.resource_manager.get_labels(),
                                             annotations=annotations,
                                             paths=paths)
-            self.create_or_update_ingress(name=deployment_name, data=ingress)
+            self.create_or_update_ingress(name=resource_name, data=ingress)
 
         return results
 

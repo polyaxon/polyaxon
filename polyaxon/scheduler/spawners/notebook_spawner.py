@@ -196,9 +196,7 @@ class NotebookSpawner(ProjectJobSpawner):
             ports=ports,
             target_ports=target_ports,
             service_type=self._get_service_type())
-
-        service_resp, _ = self.create_or_update_service(name=resource_name,
-                                                        data=service)
+        service_resp, _ = self.create_or_update_service(name=resource_name, data=service)
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
