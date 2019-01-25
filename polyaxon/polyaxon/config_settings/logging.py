@@ -61,7 +61,7 @@ LOGGING = {
         'polyaxon.dockerizer': {
             'handlers': ['console', ],
             'propagate': True,
-            'level': 'INFO' if config.is_staging_env else 'WARNING',
+            'level': config.log_level,
         },
         'django.request': {
             'level': config.log_level,
