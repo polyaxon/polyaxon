@@ -17,11 +17,11 @@ from scheduler.spawners.templates.pod_environment import (
     get_node_selector,
     get_tolerations
 )
-from scheduler.spawners.templates.pod_manager import BasePodManager
+from scheduler.spawners.templates.resource_manager import BaseResourceManager
 from scheduler.spawners.templates.volumes import get_pod_outputs_volume
 
 
-class PodManager(BasePodManager):
+class ResourceManager(BaseResourceManager):
     def __init__(self,
                  namespace,
                  project_name,
@@ -86,7 +86,7 @@ class PodManager(BasePodManager):
     def set_cluster_def(self, cluster_def):
         self.cluster_def = cluster_def
 
-    def get_job_name(self, task_type, task_idx):  # pylint:disable=arguments-differ
+    def get_resource_name(self, task_type, task_idx):  # pylint:disable=arguments-differ
         return EXPERIMENT_JOB_NAME_FORMAT.format(task_type=task_type,
                                                  task_idx=task_idx,
                                                  experiment_uuid=self.experiment_uuid)
@@ -228,7 +228,7 @@ class PodManager(BasePodManager):
                      affinity=None,
                      tolerations=None,
                      restart_policy=None):
-        job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
+        resource_name = self.get_resource_name(task_type=task_type, task_idx=task_idx)
         env_vars = to_list(env_vars, check_none=True)
         env_vars.append(
             client.V1EnvVar(
@@ -237,7 +237,7 @@ class PodManager(BasePodManager):
             )
         )
 
-        return self.get_pod(job_name=job_name,
+        return self.get_pod(resource_name=resource_name,
                             volume_mounts=volume_mounts,
                             volumes=volumes,
                             labels=labels,

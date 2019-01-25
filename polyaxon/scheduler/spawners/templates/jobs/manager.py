@@ -1,20 +1,25 @@
 import json
 
+from hestia.list_utils import to_list
+from kubernetes import client
+
 import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
+from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
     get_tolerations
 )
-from scheduler.spawners.templates.pod_manager import BasePodManager
+from scheduler.spawners.templates.resource_manager import BaseResourceManager
+from scheduler.spawners.templates.volumes import get_pod_outputs_volume
 
 
-class PodManager(BasePodManager):
+class ResourceManager(BaseResourceManager):
     def __init__(self,
                  namespace,
                  name,
@@ -23,8 +28,8 @@ class PodManager(BasePodManager):
                  job_name,
                  job_uuid,
                  job_docker_image,
-                 job_container_name=None,
                  job_docker_image_pull_policy=None,
+                 job_container_name=None,
                  sidecar_container_name=None,
                  sidecar_docker_image=None,
                  sidecar_docker_image_pull_policy=None,
@@ -42,7 +47,7 @@ class PodManager(BasePodManager):
             namespace=namespace,
             project_name=project_name,
             project_uuid=project_uuid,
-            job_container_name=job_container_name or conf.get('CONTAINER_NAME_PLUGIN_JOB'),
+            job_container_name=job_container_name or conf.get('CONTAINER_NAME_JOB'),
             job_docker_image=job_docker_image,
             job_docker_image_pull_policy=job_docker_image_pull_policy,
             sidecar_container_name=sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR'),
@@ -51,11 +56,11 @@ class PodManager(BasePodManager):
                 sidecar_docker_image_pull_policy or
                 conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY')),
             init_container_name=init_container_name or conf.get('CONTAINER_NAME_INIT'),
-            init_docker_image=init_docker_image or conf.get('JOB_INIT_DOCKER_IMAGE'),  # CHANGE
+            init_docker_image=init_docker_image or conf.get('JOB_INIT_DOCKER_IMAGE'),
             init_docker_image_pull_policy=init_docker_image_pull_policy,
-            role_label=role_label or conf.get('ROLE_LABELS_DASHBOARD'),
+            role_label=role_label or conf.get('ROLE_LABELS_WORKER'),
             type_label=type_label or conf.get('TYPE_LABELS_RUNNER'),
-            app_label=app_label or conf.get('APP_LABELS_NOTEBOOK'),
+            app_label=app_label or conf.get('APP_LABELS_JOB'),
             health_check_url=health_check_url,
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
@@ -66,7 +71,7 @@ class PodManager(BasePodManager):
         self.job_uuid = job_uuid
         self.labels = self.get_labels()
 
-    def get_job_name(self):
+    def get_resource_name(self):
         return JOB_NAME_FORMAT.format(name=self.name, job_uuid=self.job_uuid)
 
     def get_labels(self):
@@ -117,25 +122,35 @@ class PodManager(BasePodManager):
 
     def get_init_container(self, persistence_outputs):
         """Pod init container for setting outputs path."""
-        return None
+        outputs_path = stores.get_job_outputs_path(
+            persistence=persistence_outputs,
+            job_name=self.job_name)
+        _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
+        return client.V1Container(
+            name=self.init_container_name,
+            image=self.init_docker_image,
+            command=["/bin/sh", "-c"],
+            args=to_list(get_output_args(command=InitCommands.CREATE,
+                                         outputs_path=outputs_path)),
+            volume_mounts=outputs_volume_mount)
 
     def _get_node_selector(self, node_selector):
         return get_node_selector(
             node_selector=node_selector,
-            default_node_selector=conf.get('NODE_SELECTOR_EXPERIMENTS'))
+            default_node_selector=conf.get('NODE_SELECTOR_JOBS'))
 
     def _get_affinity(self, affinity):
         return get_affinity(
             affinity=affinity,
-            default_affinity=conf.get('AFFINITY_EXPERIMENTS'))
+            default_affinity=conf.get('AFFINITY_JOBS'))
 
     def _get_tolerations(self, tolerations):
         return get_tolerations(
             tolerations=tolerations,
-            default_tolerations=conf.get('TOLERATIONS_EXPERIMENTS'))
+            default_tolerations=conf.get('TOLERATIONS_JOBS'))
 
     def _get_service_account_name(self):
         service_account_name = None
-        if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS'):
-            service_account_name = conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS')
+        if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_JOBS'):
+            service_account_name = conf.get('K8S_SERVICE_ACCOUNT_JOBS')
         return service_account_name

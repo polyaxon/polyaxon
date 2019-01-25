@@ -90,15 +90,17 @@ class HorovodSpawner(ExperimentSpawner):
     def get_cluster(self):
         cluster_def, _ = self.spec.cluster_def
 
-        job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
+        resource_name = self.resource_manager.get_resource_name(task_type=TaskType.MASTER,
+                                                                task_idx=0)
         cluster_config = {
-            TaskType.MASTER: [self._get_pod_address(job_name)]
+            TaskType.MASTER: [self._get_pod_address(resource_name)]
         }
 
         workers = []
         for i in range(cluster_def.get(TaskType.WORKER, 0)):
-            job_name = self.pod_manager.get_job_name(task_type=TaskType.WORKER, task_idx=i)
-            workers.append(self._get_pod_address(job_name))
+            resource_name = self.resource_manager.get_resource_name(task_type=TaskType.WORKER,
+                                                                    task_idx=i)
+            workers.append(self._get_pod_address(resource_name))
 
         cluster_config[TaskType.WORKER] = workers
 

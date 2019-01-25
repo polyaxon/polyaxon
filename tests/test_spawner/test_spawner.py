@@ -26,7 +26,7 @@
 #                              spec_config=experiment.config)
 #
 #         def job_name(task_type, task_idx):
-#             return spawners.pod_manager.get_job_name(task_type, task_idx)
+#             return spawners.resource_manager.get_resource_name(task_type, task_idx)
 #
 #         cluster_def = spawners.get_cluster().to_dict()
 #         expected_cluster_def = {

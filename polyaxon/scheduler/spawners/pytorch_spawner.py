@@ -15,7 +15,8 @@ class PytorchSpawner(ExperimentSpawner):
             master_addr = 'localhost'
         else:
             rank = task_idx + 1
-            master_addr = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
+            master_addr = self.resource_manager.get_resource_name(task_type=TaskType.MASTER,
+                                                                  task_idx=0)
         env_vars = [
             get_env_var(name='MASTER_ADDR', value=master_addr),
             get_env_var(name='MASTER_PORT', value=self.ports[0]),
@@ -106,15 +107,17 @@ class PytorchSpawner(ExperimentSpawner):
     def get_cluster(self):
         cluster_def, _ = self.spec.cluster_def
 
-        job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
+        resource_name = self.resource_manager.get_resource_name(task_type=TaskType.MASTER,
+                                                                task_idx=0)
         cluster_config = {
-            TaskType.MASTER: [self._get_pod_address(job_name)]
+            TaskType.MASTER: [self._get_pod_address(resource_name)]
         }
 
         workers = []
         for i in range(cluster_def.get(TaskType.WORKER, 0)):
-            job_name = self.pod_manager.get_job_name(task_type=TaskType.WORKER, task_idx=i)
-            workers.append(self._get_pod_address(job_name))
+            resource_name = self.resource_manager.get_resource_name(task_type=TaskType.WORKER,
+                                                                    task_idx=i)
+            workers.append(self._get_pod_address(resource_name))
 
         cluster_config[TaskType.WORKER] = workers
 

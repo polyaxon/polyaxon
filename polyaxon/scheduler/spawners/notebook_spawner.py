@@ -5,18 +5,14 @@ from hestia.crypto import get_hmac
 
 import conf
 
-from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
+from constants.k8s_jobs import NOTEBOOK_JOB_NAME
 from libs.paths.projects import get_project_repos_path
-from polyaxon_k8s.exceptions import PolyaxonK8SError
-
 from libs.unique_urls import get_notebook_health_url
+from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
-from scheduler.spawners.templates.env_vars import (
-    validate_configmap_refs,
-    validate_secret_refs
-)
-from scheduler.spawners.templates.notebooks import pods
+from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
+from scheduler.spawners.templates.notebooks import manager
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
@@ -45,7 +41,7 @@ class NotebookSpawner(ProjectJobSpawner):
                  type_label=None,
                  use_sidecar=False,
                  sidecar_config=None):
-        self.pod_manager = pods.PodManager(
+        self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=NOTEBOOK_JOB_NAME,
             project_name=self.project_name,
@@ -163,15 +159,16 @@ class NotebookSpawner(ProjectJobSpawner):
         secret_refs = validate_secret_refs(secret_refs)
         configmap_refs = validate_configmap_refs(configmap_refs)
 
-        args = self.get_notebook_args(deployment_name=self.pod_manager.get_job_name(),
+        resource_name = self.resource_manager.get_resource_name()
+        args = self.get_notebook_args(deployment_name=resource_name,
                                       ports=ports,
                                       allow_commits=allow_commits),
         command = ["/bin/sh", "-c"]
-        deployment = self.pod_manager.get_deployment(
-            job_name=self.pod_manager.get_job_name(),
+        deployment = self.resource_manager.get_deployment(
+            resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
-            labels=self.pod_manager.labels,
+            labels=self.resource_manager.labels,
             env_vars=None,
             command=command,
             args=args,
@@ -188,17 +185,17 @@ class NotebookSpawner(ProjectJobSpawner):
             tolerations=tolerations,
             ports=target_ports,
             restart_policy='Never')
-        dep_resp, _ = self.create_or_update_deployment(name=self.pod_manager.get_job_name(),
+        dep_resp, _ = self.create_or_update_deployment(name=resource_name,
                                                        data=deployment)
         service = services.get_service(
             namespace=self.namespace,
-            name=self.pod_manager.get_job_name(),
-            labels=self.pod_manager.get_labels(),
+            name=resource_name,
+            labels=self.resource_manager.get_labels(),
             ports=ports,
             target_ports=target_ports,
             service_type=self._get_service_type())
 
-        service_resp, _ = self.create_or_update_service(name=self.pod_manager.get_job_name(),
+        service_resp, _ = self.create_or_update_service(name=resource_name,
                                                         data=service)
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
@@ -207,25 +204,25 @@ class NotebookSpawner(ProjectJobSpawner):
             paths = [{
                 'path': '/notebooks/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {
-                    'serviceName': self.pod_manager.get_job_name(),
+                    'serviceName': resource_name,
                     'servicePort': ports[0]
                 }
             }]
             ingress = ingresses.get_ingress(namespace=self.namespace,
-                                            name=self.pod_manager.get_job_name(),
-                                            labels=self.pod_manager.get_labels(),
+                                            name=resource_name,
+                                            labels=self.resource_manager.get_labels(),
                                             annotations=annotations,
                                             paths=paths)
-            self.create_or_update_ingress(name=self.pod_manager.get_job_name(), data=ingress)
+            self.create_or_update_ingress(name=resource_name, data=ingress)
         return results
 
     def stop_notebook(self):
-        deployment_name = JOB_NAME_FORMAT.format(name=NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
+        resource_name = self.resource_manager.get_resource_name()
         try:
-            self.delete_deployment(name=deployment_name, reraise=True)
-            self.delete_service(name=deployment_name)
+            self.delete_deployment(name=resource_name, reraise=True)
+            self.delete_service(name=resource_name)
             if self._use_ingress():
-                self.delete_ingress(name=deployment_name)
+                self.delete_ingress(name=resource_name)
             return True
         except PolyaxonK8SError:
             return False

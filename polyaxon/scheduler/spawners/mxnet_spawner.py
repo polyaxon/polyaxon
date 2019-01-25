@@ -15,7 +15,7 @@ class MXNetSpawner(ExperimentSpawner):
         env_vars = [
             get_env_var(name='DMLC_NUM_WORKER', value=self.get_n_pods(TaskType.WORKER)),
             get_env_var(name='DMLC_NUM_SERVER', value=self.get_n_pods(TaskType.SERVER)),
-            get_env_var(name='DMLC_PS_ROOT_URI', value=self.pod_manager.get_job_name(
+            get_env_var(name='DMLC_PS_ROOT_URI', value=self.resource_manager.get_resource_name(
                 task_type=TaskType.MASTER, task_idx=0)),
             get_env_var(name='DMLC_PS_ROOT_PORT', value=self.ports[0]),
             get_env_var(name='DMLC_ROLE', value=role)
@@ -138,22 +138,25 @@ class MXNetSpawner(ExperimentSpawner):
     def get_cluster(self):
         cluster_def, _ = self.spec.cluster_def
 
-        job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
+        resource_name = self.resource_manager.get_resource_name(task_type=TaskType.MASTER,
+                                                                task_idx=0)
         cluster_config = {
-            TaskType.MASTER: [self._get_pod_address(job_name)]
+            TaskType.MASTER: [self._get_pod_address(resource_name)]
         }
 
         workers = []
         for i in range(cluster_def.get(TaskType.WORKER, 0)):
-            job_name = self.pod_manager.get_job_name(task_type=TaskType.WORKER, task_idx=i)
-            workers.append(self._get_pod_address(job_name))
+            resource_name = self.resource_manager.get_resource_name(task_type=TaskType.WORKER,
+                                                                    task_idx=i)
+            workers.append(self._get_pod_address(resource_name))
 
         cluster_config[TaskType.WORKER] = workers
 
         servers = []
         for i in range(cluster_def.get(TaskType.SERVER, 0)):
-            job_name = self.pod_manager.get_job_name(task_type=TaskType.SERVER, task_idx=i)
-            servers.append(self._get_pod_address(job_name))
+            resource_name = self.resource_manager.get_resource_name(task_type=TaskType.SERVER,
+                                                                    task_idx=i)
+            servers.append(self._get_pod_address(resource_name))
 
         cluster_config[TaskType.SERVER] = servers
 

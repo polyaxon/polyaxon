@@ -1,15 +1,9 @@
 from constants.k8s_jobs import JOB_NAME
 from libs.unique_urls import get_job_health_url
-from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
-from scheduler.spawners.templates.env_vars import (
-    get_env_var,
-    get_service_env_vars,
-    validate_configmap_refs,
-    validate_secret_refs
-)
-from scheduler.spawners.templates.jobs import pods
+from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
+from scheduler.spawners.templates.jobs import manager
 from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
@@ -34,7 +28,6 @@ class JobSpawner(K8SManager):
                  sidecar_docker_image=None,
                  role_label=None,
                  type_label=None,
-                 ports=None,
                  use_sidecar=False,
                  sidecar_config=None):
         self.spec = spec
@@ -42,7 +35,7 @@ class JobSpawner(K8SManager):
         self.project_uuid = project_uuid
         self.job_name = job_name
         self.job_uuid = job_uuid
-        self.pod_manager = pods.PodManager(
+        self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=JOB_NAME,
             project_name=self.project_name,
@@ -55,7 +48,6 @@ class JobSpawner(K8SManager):
             sidecar_docker_image=sidecar_docker_image,
             role_label=role_label,
             type_label=type_label,
-            ports=ports,
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
             health_check_url=get_job_health_url(job_name),
@@ -99,11 +91,12 @@ class JobSpawner(K8SManager):
         configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
 
         command, args = self.get_pod_command_args()
-        pod = self.pod_manager.get_pod(
-            job_name=self.pod_manager.get_job_name(),
+        resource_name = self.resource_manager.get_resource_name()
+        pod = self.resource_manager.get_pod(
+            resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
-            labels=self.pod_manager.labels,
+            labels=self.resource_manager.labels,
             env_vars=None,
             command=command,
             args=args,
@@ -119,13 +112,13 @@ class JobSpawner(K8SManager):
             affinity=affinity,
             tolerations=tolerations,
             restart_policy='Never')
-        pod_resp, _ = self.create_or_update_pod(name=self.pod_manager.get_job_name(), data=pod)
+        pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
 
         return pod_resp.to_dict()
 
     def stop_job(self):
         try:
-            self.delete_pod(name=self.pod_manager.get_job_name(), reraise=True)
+            self.delete_pod(name=self.resource_manager.get_resource_name(), reraise=True)
             return True
         except PolyaxonK8SError:
             return False

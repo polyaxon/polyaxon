@@ -1,7 +1,7 @@
 from hestia.list_utils import to_list
 from kubernetes import client
-from polyaxon_k8s import constants as k8s_constants
 
+from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
@@ -9,7 +9,7 @@ from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_
 from schemas.exceptions import PolyaxonConfigurationError
 
 
-class BasePodManager(object):
+class BaseResourceManager(object):
     def __init__(self,
                  namespace,
                  project_name,
@@ -54,7 +54,7 @@ class BasePodManager(object):
         self.health_check_url = health_check_url
         self.log_level = log_level
 
-    def get_job_name(self):
+    def get_resource_name(self):
         raise NotImplementedError()
 
     def get_labels(self):
@@ -111,6 +111,7 @@ class BasePodManager(object):
         def get_ports():
             _ports = to_list(ports) if ports else []
             return [client.V1ContainerPort(container_port=port) for port in _ports] or None
+
         return client.V1Container(name=self.job_container_name,
                                   image=self.job_docker_image,
                                   command=command,
@@ -121,17 +122,17 @@ class BasePodManager(object):
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
 
-    def get_sidecar_container(self, job_name):
+    def get_sidecar_container(self, resource_name):
         """Pod sidecar container for task logs."""
         return get_sidecar_container(
-            job_name=job_name,
+            resource_name=resource_name,
             job_container_name=self.job_container_name,
             sidecar_container_name=self.sidecar_container_name,
             sidecar_docker_image=self.sidecar_docker_image,
             sidecar_docker_image_pull_policy=self.sidecar_docker_image_pull_policy,
             namespace=self.namespace,
             sidecar_config=self.sidecar_config,
-            sidecar_args=get_sidecar_args(pod_id=job_name,
+            sidecar_args=get_sidecar_args(pod_id=resource_name,
                                           container_id=self.job_container_name,
                                           app_label=self.app_label),
             internal_health_check_url=self.health_check_url)
@@ -143,7 +144,7 @@ class BasePodManager(object):
     def get_task_pod_spec(self,
                           volume_mounts,
                           volumes,
-                          job_name,
+                          resource_name,
                           persistence_outputs=None,
                           persistence_data=None,
                           outputs_refs_jobs=None,
@@ -184,7 +185,7 @@ class BasePodManager(object):
 
         containers = [pod_container]
         if self.use_sidecar:
-            sidecar_container = self.get_sidecar_container(job_name=job_name)
+            sidecar_container = self.get_sidecar_container(resource_name=resource_name)
             containers.append(sidecar_container)
 
         node_selector = self._get_node_selector(node_selector=node_selector)
@@ -214,7 +215,7 @@ class BasePodManager(object):
         raise NotImplementedError()
 
     def get_pod(self,
-                job_name,
+                resource_name,
                 volume_mounts,
                 volumes,
                 labels,
@@ -234,10 +235,10 @@ class BasePodManager(object):
                 affinity=None,
                 tolerations=None,
                 restart_policy=None):
-        metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
+        metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
 
         pod_spec = self.get_task_pod_spec(
-            job_name=job_name,
+            resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
             env_vars=env_vars,
@@ -262,7 +263,7 @@ class BasePodManager(object):
                             spec=pod_spec)
 
     def get_deployment_spec(self,
-                            job_name,
+                            resource_name,
                             volume_mounts,
                             volumes,
                             labels,
@@ -283,10 +284,10 @@ class BasePodManager(object):
                             tolerations=None,
                             restart_policy=None,
                             replicas=1):
-        metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
+        metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
 
         pod_spec = self.get_task_pod_spec(
-            job_name=job_name,
+            resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
             env_vars=env_vars,
@@ -309,7 +310,7 @@ class BasePodManager(object):
         return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
 
     def get_deployment(self,
-                       job_name,
+                       resource_name,
                        volume_mounts,
                        volumes,
                        labels,
@@ -331,7 +332,7 @@ class BasePodManager(object):
                        restart_policy=None,
                        replicas=1):
         deployment_spec = self.get_deployment_spec(
-            job_name=job_name,
+            resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
             labels=labels,
@@ -353,7 +354,7 @@ class BasePodManager(object):
             restart_policy=restart_policy,
             replicas=replicas,
         )
-        metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
+        metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
         return client.AppsV1beta1Deployment(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
                                             kind=k8s_constants.K8S_DEPLOYMENT_KIND,
                                             metadata=metadata,

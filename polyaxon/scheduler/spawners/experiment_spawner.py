@@ -4,7 +4,7 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
-from scheduler.spawners.templates.experiment_jobs import config_maps, pods
+from scheduler.spawners.templates.experiment_jobs import config_maps, manager
 from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
@@ -55,7 +55,7 @@ class ExperimentSpawner(K8SManager):
         self.persistence_config = persistence_config
         self.outputs_refs_experiments = outputs_refs_experiments
         self.outputs_refs_jobs = outputs_refs_jobs
-        self.pod_manager = pods.PodManager(
+        self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             project_name=self.project_name,
             experiment_group_name=self.experiment_group_name,
@@ -85,7 +85,7 @@ class ExperimentSpawner(K8SManager):
 
         # Set the cluster_def
         cluster_def = self.get_cluster()
-        self.pod_manager.set_cluster_def(cluster_def=cluster_def)
+        self.resource_manager.set_cluster_def(cluster_def=cluster_def)
 
     def get_env_vars(self, task_type, task_idx):
         return None
@@ -118,8 +118,9 @@ class ExperimentSpawner(K8SManager):
                     tolerations=None,
                     restart_policy='Never'):
         ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
-        job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
-        labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
+        resource_name = self.resource_manager.get_resource_name(task_type=task_type,
+                                                                task_idx=task_idx)
+        labels = self.resource_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
         # Set and validate volumes
         volumes, volume_mounts = get_pod_volumes(
@@ -143,7 +144,7 @@ class ExperimentSpawner(K8SManager):
         secret_refs = validate_secret_refs(self.spec.secret_refs)
         configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
 
-        pod = self.pod_manager.get_task_pod(
+        pod = self.resource_manager.get_task_pod(
             task_type=task_type,
             task_idx=task_idx,
             volume_mounts=volume_mounts,
@@ -165,15 +166,15 @@ class ExperimentSpawner(K8SManager):
             affinity=affinity,
             tolerations=tolerations,
             restart_policy=restart_policy)
-        pod_resp, _ = self.create_or_update_pod(name=job_name, data=pod)
+        pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
         results = {'pod': pod_resp.to_dict()}
         if add_service:
             service = services.get_service(namespace=self.namespace,
-                                           name=job_name,
+                                           name=resource_name,
                                            labels=labels,
                                            ports=self.ports,
                                            target_ports=self.ports)
-            service_resp, _ = self.create_or_update_service(name=job_name, data=service)
+            service_resp, _ = self.create_or_update_service(name=resource_name, data=service)
             results['service'] = service_resp.to_dict()
         return results
 
@@ -200,10 +201,11 @@ class ExperimentSpawner(K8SManager):
         return resp
 
     def _delete_job(self, task_type, task_idx, has_service):
-        job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
-        self.delete_pod(name=job_name, reraise=True)
+        resource_name = self.resource_manager.get_resource_name(task_type=task_type,
+                                                                task_idx=task_idx)
+        self.delete_pod(name=resource_name, reraise=True)
         if has_service:
-            self.delete_service(name=job_name, reraise=True)
+            self.delete_service(name=resource_name, reraise=True)
 
     def delete_multi_jobs(self, task_type, has_service):
         n_pods = self.get_n_pods(task_type=task_type)
@@ -285,7 +287,8 @@ class ExperimentSpawner(K8SManager):
         return '{}:{}'.format(host, self.ports[0])
 
     def get_cluster(self):
-        job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
+        resource_name = self.resource_manager.get_resource_name(task_type=TaskType.MASTER,
+                                                                task_idx=0)
         return {
-            TaskType.MASTER: [self._get_pod_address(job_name)]
+            TaskType.MASTER: [self._get_pod_address(resource_name)]
         }
