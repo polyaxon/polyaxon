@@ -79,14 +79,32 @@ class TensorboardJob(PluginJobBase, JobMixin):
                                 traceback=traceback,
                                 details=details)
 
-    @cached_property
-    def outputs_path(self):
+    def get_absolute_outputs_paths(self):
+        import stores
+
+        if self.experiment:
+            return stores.get_experiment_outputs_path(
+                persistence=self.experiment.persistence_outputs,
+                experiment_name=self.experiment.unique_name,
+                original_name=self.experiment.original_unique_name,
+                cloning_strategy=self.experiment.cloning_strategy)
+
+        if self.experiment_group:
+            return stores.get_experiment_group_outputs_path(
+                persistence=self.experiment_group.persistence_outputs,
+                experiment_group_name=self.experiment_group.unique_name)
+
+        return stores.get_project_outputs_path(
+            persistence_outputs=None,
+            project_name=self.project.unique_name)
+
+    def get_named_outputs_paths(self):
         import stores
 
         def get_named_experiment_outputs_path(experiment):
             persistence = experiment.persistence_outputs
             outputs_path = stores.get_experiment_outputs_path(
-                persistence=experiment.persistence_outputs,
+                persistence=persistence,
                 experiment_name=experiment.unique_name,
                 original_name=experiment.original_unique_name,
                 cloning_strategy=experiment.cloning_strategy)
@@ -106,12 +124,15 @@ class TensorboardJob(PluginJobBase, JobMixin):
         outputs_specs = []
         tensorboard_paths = []
         for experiment in experiments:
-            outputs_spec, tensorboard_path = get_named_experiment_outputs_path(
-                experiment)
+            outputs_spec, tensorboard_path = get_named_experiment_outputs_path(experiment)
             outputs_specs += outputs_spec
             tensorboard_paths.append(tensorboard_path)
 
         return outputs_specs, ','.join(tensorboard_paths)
+
+    @cached_property
+    def outputs_path(self):
+        return self.get_named_outputs_paths()
 
 
 class TensorboardJobStatus(AbstractJobStatus):
