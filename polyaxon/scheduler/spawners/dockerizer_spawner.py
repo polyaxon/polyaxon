@@ -28,8 +28,7 @@ class DockerizerSpawner(K8SManager):
                  type_label=None,
                  ports=None,
                  use_sidecar=False,
-                 sidecar_config=None,
-                 persist=False):
+                 sidecar_config=None):
         self.spec = spec
         self.project_name = project_name
         self.project_uuid = project_uuid
@@ -53,7 +52,6 @@ class DockerizerSpawner(K8SManager):
             sidecar_config=sidecar_config,
             health_check_url=get_build_health_url(job_name),
             log_level=self.spec.log_level if self.spec else None)
-        self.persist = persist
 
         super().__init__(k8s_config=k8s_config,
                          namespace=namespace,

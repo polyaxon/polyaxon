@@ -42,7 +42,6 @@ class ExperimentSpawner(K8SManager):
                  ports=None,
                  use_sidecar=False,
                  sidecar_config=None,
-                 persist=False,
                  token_scope=None):
         self.spec = spec
         self.project_name = project_name
@@ -78,7 +77,6 @@ class ExperimentSpawner(K8SManager):
             cloning_strategy=self.cloning_strategy,
             declarations=self.spec.declarations if self.spec else None,
             health_check_url=get_experiment_health_url(self.experiment_name))
-        self.persist = persist
         self.token_scope = token_scope
 
         super().__init__(k8s_config=k8s_config,
