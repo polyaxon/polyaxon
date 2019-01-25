@@ -10,11 +10,12 @@ class ExperimentGroupHandler(BaseHandler):
 
     @classmethod
     def _handle_experiment_group_created(cls, event):
-        if event.data['has_specification']:
-            celery_app.send_task(
-                SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE,
-                kwargs={'experiment_group_id': event.data['id']},
-                countdown=1)
+        if not event.data['has_specification'] or not event.data['is_study']:
+            return
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE,
+            kwargs={'experiment_group_id': event.data['id']},
+            countdown=1)
 
     @classmethod
     def record_event(cls, event):
