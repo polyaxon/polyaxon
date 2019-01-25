@@ -48,3 +48,14 @@ def get_build_url(unique_name):
 def get_build_health_url(unique_name):
     job_url = get_build_url(unique_name=unique_name)
     return '{}/_heartbeat'.format(job_url)
+
+
+def get_notebook_url(unique_name):
+    values = unique_name.split('.')
+    project_url = get_user_project_url(username=values[0], project_name=values[1])
+    return '{}/notebook'.format(project_url)
+
+
+def get_notebook_health_url(unique_name):
+    job_url = get_notebook_url(unique_name=unique_name)
+    return '{}/_heartbeat'.format(job_url)

@@ -4,25 +4,19 @@ import random
 from hestia.crypto import get_hmac
 
 import conf
-import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
 from libs.paths.projects import get_project_repos_path
 from polyaxon_k8s.exceptions import PolyaxonK8SError
+
+from libs.unique_urls import get_notebook_health_url
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.env_vars import (
-    get_job_env_vars,
-    get_pod_env_from,
     validate_configmap_refs,
     validate_secret_refs
 )
-from scheduler.spawners.templates.pod_environment import (
-    get_affinity,
-    get_node_selector,
-    get_tolerations
-)
-from scheduler.spawners.templates.project_jobs import deployments
+from scheduler.spawners.templates.notebooks import pods
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
@@ -34,6 +28,47 @@ from scheduler.spawners.templates.volumes import (
 
 class NotebookSpawner(ProjectJobSpawner):
     PORT = 8888
+
+    def __init__(self,
+                 project_name,
+                 project_uuid,
+                 job_name,
+                 job_uuid,
+                 k8s_config=None,
+                 namespace='default',
+                 in_cluster=False,
+                 job_container_name=None,
+                 job_docker_image=None,
+                 sidecar_container_name=None,
+                 sidecar_docker_image=None,
+                 role_label=None,
+                 type_label=None,
+                 use_sidecar=False,
+                 sidecar_config=None):
+        self.pod_manager = pods.PodManager(
+            namespace=namespace,
+            name=NOTEBOOK_JOB_NAME,
+            project_name=self.project_name,
+            project_uuid=self.project_uuid,
+            job_name=job_name,
+            job_uuid=job_uuid,
+            job_docker_image=job_docker_image,
+            job_container_name=job_container_name,
+            sidecar_container_name=sidecar_container_name,
+            sidecar_docker_image=sidecar_docker_image,
+            role_label=role_label,
+            type_label=type_label,
+            use_sidecar=use_sidecar,
+            sidecar_config=sidecar_config,
+            health_check_url=get_notebook_health_url(job_name),
+            log_level=self.spec.log_level if self.spec else None)
+        super().__init__(project_name=project_name,
+                         project_uuid=project_uuid,
+                         job_name=job_name,
+                         job_uuid=job_uuid,
+                         k8s_config=k8s_config,
+                         namespace=namespace,
+                         in_cluster=in_cluster)
 
     def get_notebook_url(self):
         return self._get_service_url(NOTEBOOK_JOB_NAME)
@@ -93,7 +128,6 @@ class NotebookSpawner(ProjectJobSpawner):
                 notebook_dir=notebook_dir)]
 
     def start_notebook(self,
-                       image,
                        persistence_outputs=None,
                        persistence_data=None,
                        outputs_refs_jobs=None,
@@ -122,92 +156,67 @@ class NotebookSpawner(ProjectJobSpawner):
         shm_volumes, shm_volume_mounts = get_shm_volumes()
         volumes += shm_volumes
         volume_mounts += shm_volume_mounts
-        env_vars = get_job_env_vars(
-            persistence_outputs=persistence_outputs,
-            outputs_path=stores.get_notebook_job_outputs_path(
-                persistence=persistence_outputs,
-                notebook_job=self.job_name),
-            persistence_data=persistence_data,
-            outputs_refs_jobs=outputs_refs_jobs,
-            outputs_refs_experiments=outputs_refs_experiments
-        )
-        secret_refs = validate_secret_refs(secret_refs)
-        configmap_refs = validate_configmap_refs(configmap_refs)
-        env_from = get_pod_env_from(secret_refs=secret_refs, configmap_refs=configmap_refs)
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
-        deployment_name = JOB_NAME_FORMAT.format(name=NOTEBOOK_JOB_NAME, job_uuid=self.job_uuid)
 
-        node_selector = get_node_selector(
-            node_selector=node_selector,
-            default_node_selector=conf.get('NODE_SELECTOR_EXPERIMENTS'))
-        affinity = get_affinity(
-            affinity=affinity,
-            default_affinity=conf.get('AFFINITY_EXPERIMENTS'))
-        tolerations = get_tolerations(
-            tolerations=tolerations,
-            default_tolerations=conf.get('TOLERATIONS_EXPERIMENTS'))
-        deployment = deployments.get_deployment(
-            namespace=self.namespace,
-            app=conf.get('APP_LABELS_NOTEBOOK'),
-            name=NOTEBOOK_JOB_NAME,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
-            job_name=self.job_name,
-            job_uuid=self.job_uuid,
+        secret_refs = validate_secret_refs(secret_refs)
+        configmap_refs = validate_configmap_refs(configmap_refs)
+
+        args = self.get_notebook_args(deployment_name=self.pod_manager.get_job_name(),
+                                      ports=ports,
+                                      allow_commits=allow_commits),
+        command = ["/bin/sh", "-c"]
+        deployment = self.pod_manager.get_deployment(
+            job_name=self.pod_manager.get_job_name(),
             volume_mounts=volume_mounts,
             volumes=volumes,
-            image=image,
-            command=["/bin/sh", "-c"],
-            args=self.get_notebook_args(deployment_name=deployment_name,
-                                        ports=ports,
-                                        allow_commits=allow_commits),
-            ports=target_ports,
-            container_name=conf.get('CONTAINER_NAME_PLUGIN_JOB'),
-            env_vars=env_vars,
-            env_from=env_from,
+            labels=self.pod_manager.labels,
+            env_vars=None,
+            command=command,
+            args=args,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
             resources=resources,
+            ephemeral_token=None,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
-            role=conf.get('ROLE_LABELS_DASHBOARD'),
-            type=conf.get('TYPE_LABELS_RUNNER'),
-            service_account_name=conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS'))
-        deployment_labels = deployments.get_labels(app=conf.get('APP_LABELS_NOTEBOOK'),
-                                                   project_name=self.project_name,
-                                                   project_uuid=self.project_uuid,
-                                                   job_name=self.job_name,
-                                                   job_uuid=self.job_uuid,
-                                                   role=conf.get('ROLE_LABELS_DASHBOARD'),
-                                                   type=conf.get('TYPE_LABELS_RUNNER'))
-        dep_resp, _ = self.create_or_update_deployment(name=deployment_name, data=deployment)
+            ports=target_ports,
+            restart_policy='Never')
+        dep_resp, _ = self.create_or_update_deployment(name=self.pod_manager.get_job_name(),
+                                                       data=deployment)
         service = services.get_service(
             namespace=self.namespace,
-            name=deployment_name,
-            labels=deployment_labels,
+            name=self.pod_manager.get_job_name(),
+            labels=self.pod_manager.get_labels(),
             ports=ports,
             target_ports=target_ports,
             service_type=self._get_service_type())
 
-        service_resp, _ = self.create_or_update_service(name=deployment_name, data=service)
+        service_resp, _ = self.create_or_update_service(name=self.pod_manager.get_job_name(),
+                                                        data=service)
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
             annotations = json.loads(conf.get('K8S_INGRESS_ANNOTATIONS'))
             paths = [{
-                'path': '/notebook/{}'.format(self.project_name.replace('.', '/')),
+                'path': '/notebooks/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {
-                    'serviceName': deployment_name,
+                    'serviceName': self.pod_manager.get_job_name(),
                     'servicePort': ports[0]
                 }
             }]
             ingress = ingresses.get_ingress(namespace=self.namespace,
-                                            name=deployment_name,
-                                            labels=deployment_labels,
+                                            name=self.pod_manager.get_job_name(),
+                                            labels=self.pod_manager.get_labels(),
                                             annotations=annotations,
                                             paths=paths)
-            self.create_or_update_ingress(name=deployment_name, data=ingress)
+            self.create_or_update_ingress(name=self.pod_manager.get_job_name(), data=ingress)
         return results
 
     def stop_notebook(self):

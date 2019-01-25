@@ -17,7 +17,7 @@ class MXNetSpawner(ExperimentSpawner):
             get_env_var(name='DMLC_NUM_SERVER', value=self.get_n_pods(TaskType.SERVER)),
             get_env_var(name='DMLC_PS_ROOT_URI', value=self.pod_manager.get_job_name(
                 task_type=TaskType.MASTER, task_idx=0)),
-            get_env_var(name='DMLC_PS_ROOT_PORT', value=self.pod_manager.ports[0]),
+            get_env_var(name='DMLC_PS_ROOT_PORT', value=self.ports[0]),
             get_env_var(name='DMLC_ROLE', value=role)
         ]
         if task_type == TaskType.SERVER:

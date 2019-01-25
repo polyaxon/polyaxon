@@ -69,7 +69,6 @@ class ExperimentSpawner(K8SManager):
             sidecar_docker_image=sidecar_docker_image,
             role_label=role_label,
             type_label=type_label,
-            ports=ports,
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
             log_level=self.spec.log_level if self.spec else None,
@@ -78,6 +77,7 @@ class ExperimentSpawner(K8SManager):
             declarations=self.spec.declarations if self.spec else None,
             health_check_url=get_experiment_health_url(self.experiment_name))
         self.token_scope = token_scope
+        self.ports = ports or [constants.DEFAULT_PORT]
 
         super().__init__(k8s_config=k8s_config,
                          namespace=namespace,
@@ -152,6 +152,7 @@ class ExperimentSpawner(K8SManager):
             env_vars=env_vars,
             command=command,
             args=args,
+            ports=self.ports,
             persistence_outputs=self.persistence_config.outputs,
             persistence_data=self.persistence_config.data,
             outputs_refs_jobs=self.outputs_refs_jobs,
@@ -170,8 +171,8 @@ class ExperimentSpawner(K8SManager):
             service = services.get_service(namespace=self.namespace,
                                            name=job_name,
                                            labels=labels,
-                                           ports=self.pod_manager.ports,
-                                           target_ports=self.pod_manager.ports)
+                                           ports=self.ports,
+                                           target_ports=self.ports)
             service_resp, _ = self.create_or_update_service(name=job_name, data=service)
             results['service'] = service_resp.to_dict()
         return results
@@ -281,7 +282,7 @@ class ExperimentSpawner(K8SManager):
         return self.delete_master()
 
     def _get_pod_address(self, host):
-        return '{}:{}'.format(host, self.pod_manager.ports[0])
+        return '{}:{}'.format(host, self.ports[0])
 
     def get_cluster(self):
         job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)

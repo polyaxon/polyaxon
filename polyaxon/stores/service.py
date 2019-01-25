@@ -39,7 +39,6 @@ class StoresService(Service):
         'get_job_outputs_path',
         'get_job_logs_path',
         'upload_job_logs',
-        'get_notebook_job_outputs_path',
         'get_project_outputs_path',
         'get_project_logs_path',
         'create_experiment_logs_path',
@@ -271,11 +270,6 @@ class StoresService(Service):
             return create_experiment_job_path(experiment_job_name, conf.get('LOGS_ARCHIVE_ROOT'))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return create_experiment_job_path(experiment_job_name, persistence_logs)
-
-    @classmethod
-    def get_notebook_job_outputs_path(cls, persistence, notebook_job):
-        persistence_outputs = cls.get_outputs_path(persistence=persistence)
-        return os.path.join(persistence_outputs, notebook_job.replace('.', '/'))
 
     @classmethod
     def get_project_outputs_path(cls, persistence, project_name):

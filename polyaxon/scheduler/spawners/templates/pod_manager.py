@@ -1,7 +1,7 @@
 from hestia.list_utils import to_list
 from kubernetes import client
-
 from polyaxon_k8s import constants as k8s_constants
+
 from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
@@ -26,7 +26,6 @@ class BasePodManager(object):
                  role_label,
                  type_label,
                  app_label,
-                 ports,
                  health_check_url,
                  use_sidecar,
                  sidecar_config,
@@ -46,7 +45,6 @@ class BasePodManager(object):
         self.role_label = role_label
         self.type_label = type_label
         self.app_label = app_label
-        self.ports = ports
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
             raise PolyaxonConfigurationError(
@@ -91,6 +89,7 @@ class BasePodManager(object):
                           command=None,
                           args=None,
                           resources=None,
+                          ports=None,
                           ephemeral_token=None):
         """Pod job container for task."""
         self._pod_container_checks()
@@ -109,12 +108,14 @@ class BasePodManager(object):
         # Env from configmap and secret refs
         env_from = get_pod_env_from(secret_refs=secret_refs, configmap_refs=configmap_refs)
 
-        ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
+        def get_ports():
+            _ports = to_list(ports) if ports else []
+            return [client.V1ContainerPort(container_port=port) for port in _ports] or None
         return client.V1Container(name=self.job_container_name,
                                   image=self.job_docker_image,
                                   command=command,
                                   args=args,
-                                  ports=ports or None,
+                                  ports=get_ports(),
                                   env=env_vars,
                                   env_from=env_from,
                                   resources=get_resources(resources),
@@ -151,6 +152,7 @@ class BasePodManager(object):
                           command=None,
                           args=None,
                           resources=None,
+                          ports=None,
                           secret_refs=None,
                           configmap_refs=None,
                           ephemeral_token=None,
@@ -177,6 +179,7 @@ class BasePodManager(object):
                                                env_vars=env_vars,
                                                command=command,
                                                args=args,
+                                               ports=ports,
                                                ephemeral_token=ephemeral_token)
 
         containers = [pod_container]
@@ -218,6 +221,7 @@ class BasePodManager(object):
                 env_vars=None,
                 command=None,
                 args=None,
+                ports=None,
                 persistence_outputs=None,
                 persistence_data=None,
                 outputs_refs_jobs=None,
@@ -239,6 +243,7 @@ class BasePodManager(object):
             env_vars=env_vars,
             command=command,
             args=args,
+            ports=ports,
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
@@ -255,3 +260,101 @@ class BasePodManager(object):
                             kind=k8s_constants.K8S_POD_KIND,
                             metadata=metadata,
                             spec=pod_spec)
+
+    def get_deployment_spec(self,
+                            job_name,
+                            volume_mounts,
+                            volumes,
+                            labels,
+                            env_vars=None,
+                            command=None,
+                            args=None,
+                            ports=None,
+                            persistence_outputs=None,
+                            persistence_data=None,
+                            outputs_refs_jobs=None,
+                            outputs_refs_experiments=None,
+                            secret_refs=None,
+                            configmap_refs=None,
+                            resources=None,
+                            ephemeral_token=None,
+                            node_selector=None,
+                            affinity=None,
+                            tolerations=None,
+                            restart_policy=None,
+                            replicas=1):
+        metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
+
+        pod_spec = self.get_task_pod_spec(
+            job_name=job_name,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            env_vars=env_vars,
+            command=command,
+            args=args,
+            ports=ports,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
+            resources=resources,
+            ephemeral_token=ephemeral_token,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            restart_policy=restart_policy)
+        template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
+        return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
+
+    def get_deployment(self,
+                       job_name,
+                       volume_mounts,
+                       volumes,
+                       labels,
+                       env_vars=None,
+                       command=None,
+                       args=None,
+                       ports=None,
+                       persistence_outputs=None,
+                       persistence_data=None,
+                       outputs_refs_jobs=None,
+                       outputs_refs_experiments=None,
+                       secret_refs=None,
+                       configmap_refs=None,
+                       resources=None,
+                       ephemeral_token=None,
+                       node_selector=None,
+                       affinity=None,
+                       tolerations=None,
+                       restart_policy=None,
+                       replicas=1):
+        deployment_spec = self.get_deployment_spec(
+            job_name=job_name,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            labels=labels,
+            env_vars=env_vars,
+            command=command,
+            args=args,
+            ports=ports,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
+            resources=resources,
+            ephemeral_token=ephemeral_token,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            restart_policy=restart_policy,
+            replicas=replicas,
+        )
+        metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
+        return client.AppsV1beta1Deployment(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
+                                            kind=k8s_constants.K8S_DEPLOYMENT_KIND,
+                                            metadata=metadata,
+                                            spec=deployment_spec)
