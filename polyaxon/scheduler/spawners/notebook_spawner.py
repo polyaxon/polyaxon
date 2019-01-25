@@ -162,7 +162,7 @@ class NotebookSpawner(ProjectJobSpawner):
         resource_name = self.resource_manager.get_resource_name()
         args = self.get_notebook_args(deployment_name=resource_name,
                                       ports=ports,
-                                      allow_commits=allow_commits),
+                                      allow_commits=allow_commits)
         command = ["/bin/sh", "-c"]
         deployment = self.resource_manager.get_deployment(
             resource_name=resource_name,
