@@ -38,8 +38,8 @@ class JobSpawner(K8SManager):
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=JOB_NAME,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
+            project_name=project_name,
+            project_uuid=project_uuid,
             job_name=job_name,
             job_uuid=job_uuid,
             job_docker_image=job_docker_image,

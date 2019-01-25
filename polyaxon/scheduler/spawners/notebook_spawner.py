@@ -30,6 +30,7 @@ class NotebookSpawner(ProjectJobSpawner):
                  project_uuid,
                  job_name,
                  job_uuid,
+                 spec=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -41,11 +42,12 @@ class NotebookSpawner(ProjectJobSpawner):
                  type_label=None,
                  use_sidecar=False,
                  sidecar_config=None):
+        self.spec = spec
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=NOTEBOOK_JOB_NAME,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
+            project_name=project_name,
+            project_uuid=project_uuid,
             job_name=job_name,
             job_uuid=job_uuid,
             job_docker_image=job_docker_image,
