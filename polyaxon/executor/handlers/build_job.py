@@ -1,7 +1,7 @@
 from db.redis.tll import RedisTTL
 from event_manager import event_subjects
 from event_manager.events import build_job
-from event_manager.events.build_job import BUILD_JOB_SUCCEEDED, BUILD_JOB_FAILED
+from event_manager.events.build_job import BUILD_JOB_FAILED, BUILD_JOB_SUCCEEDED
 from executor.handlers.base import BaseHandler
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks

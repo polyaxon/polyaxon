@@ -1,14 +1,11 @@
 from hestia.list_utils import to_list
 from kubernetes import client
-from polyaxon_k8s import constants as k8s_constants
 
-from scheduler.spawners.templates.env_vars import (
-    get_pod_env_from,
-    get_resources_env_vars
-)
+from polyaxon_k8s import constants as k8s_constants
+from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
-from scheduler.spawners.templates.sidecars import get_sidecar_container, get_sidecar_args
+from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
 from schemas.exceptions import PolyaxonConfigurationError
 
 
