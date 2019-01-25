@@ -81,13 +81,14 @@ class DockerizerSpawner(K8SManager):
                          affinity=None,
                          tolerations=None):
         volumes, volume_mounts = get_docker_volumes()
+        env_vars = self.get_env_vars()
 
         pod = self.pod_manager.get_pod(
             job_name=self.pod_manager.get_job_name(),
             volume_mounts=volume_mounts,
             volumes=volumes,
             labels=self.pod_manager.labels,
-            env_vars=None,
+            env_vars=env_vars,
             command=None,
             args=[self.job_uuid],
             persistence_outputs=None,

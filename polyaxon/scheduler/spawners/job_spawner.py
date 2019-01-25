@@ -67,13 +67,6 @@ class JobSpawner(K8SManager):
                          namespace=namespace,
                          in_cluster=in_cluster)
 
-    def get_env_vars(self):
-        env_vars = get_service_env_vars(namespace=self.namespace)
-        for k, v in config.get_requested_data(to_str=True).items():
-            env_vars.append(get_env_var(name=k, value=v))
-
-        return env_vars
-
     def get_pod_command_args(self):
         return get_pod_command_args(run_config=self.spec.run)
 
