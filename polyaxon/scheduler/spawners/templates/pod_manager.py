@@ -194,7 +194,7 @@ class BasePodManager(object):
         return client.V1PodSpec(
             restart_policy=restart_policy,
             service_account_name=service_account_name,
-            init_containers=to_list(self.get_init_container(persistence_outputs)),
+            init_containers=to_list(self.get_init_container(persistence_outputs), check_none=True),
             containers=containers,
             volumes=volumes,
             node_selector=node_selector,
