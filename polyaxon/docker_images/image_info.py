@@ -50,10 +50,11 @@ def get_job_image_info(project, job):
     #     last_commit = repo.last_commit
     # else:
     repo_name = project_name
-    last_commit = project.repo.last_commit
 
     image_name = '{}/{}'.format(conf.get('REGISTRY_HOST'), repo_name)
-    if not last_commit:
+    try:
+        last_commit = project.repo.last_commit
+    except ValueError:
         raise ValueError('Repo was not found for project `{}`.'.format(project))
     return image_name, last_commit[0]
 

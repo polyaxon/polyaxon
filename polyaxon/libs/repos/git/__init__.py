@@ -8,17 +8,10 @@ from git import InvalidGitRepositoryError
 from git import Repo as GitRepo
 from psutil import Popen
 
-import conf
-
+from libs.repos.git import internal, external  # noqa
 from libs.paths.utils import create_path, delete_path
 
 _logger = logging.getLogger('polyaxon.repos.git')
-
-
-def get_repos(user):
-    user_repos_root = os.path.join(conf.get('REPOS_MOUNT_PATH'), user)
-    repos = [get_git_repo(os.path.join(user, dir_name)) for dir_name in os.listdir(user_repos_root)]
-    return [repo for repo in repos if repo is not None]
 
 
 def get_git_repo(repo_path, init=False):
@@ -38,19 +31,6 @@ def get_git_repo(repo_path, init=False):
     raise ValueError('Could not create a repo on this path {}'.format(repo_path))
 
 
-def set_git_repo(repo):
-    # Check that the user has a dir
-    if not os.path.isdir(repo.user_path):
-        create_path(repo.user_path)
-
-    # Check that the project has a dir
-    if not os.path.isdir(repo.project_path):
-        create_path(repo.project_path)
-
-    # Create a new repo
-    get_git_repo(repo_path=repo.path, init=True)
-
-
 def clone_git_repo(repo_path, git_url):
     return GitRepo.clone_from(url=git_url, to_path=repo_path)
 
@@ -66,22 +46,24 @@ def commit(repo_path, user_email, user_name, message='updated'):
         data=None, location=repo_path, chw=True)
 
 
-def undo(repo_path):
-    run_command(cmd='git reset --hard', data=None, location=repo_path, chw=True)
-    run_command(cmd='git clean -fd', data=None, location=repo_path, chw=True)
-
-
-def get_last_commit(repo_path):
-    commit_hash = run_command(cmd='git --no-pager log --pretty=oneline -1', data=None,
-                              location=repo_path, chw=True).split(' ')[0]
-
-    return (commit_hash, get_commit(repo_path, commit_hash)) if commit_hash else None
-
-
 def get_commit(repo_path, commit):  # pylint:disable=redefined-outer-name
     repo = get_git_repo(repo_path)
     commit = repo.commit(commit)
     return commit
+
+
+def get_last_commit(repo_path: str) -> tuple:
+    commit_hash = run_command(cmd='git --no-pager log --pretty=oneline -1', data=None,
+                              location=repo_path, chw=True).split(' ')[0]
+
+    if commit_hash:
+        return commit_hash, get_commit(repo_path, commit_hash)
+    raise ValueError('Commit was not found.')
+
+
+def undo(repo_path):
+    run_command(cmd='git reset --hard', data=None, location=repo_path, chw=True)
+    run_command(cmd='git clean -fd', data=None, location=repo_path, chw=True)
 
 
 def get_committed_files(repo_path, commit):  # pylint:disable=redefined-outer-name

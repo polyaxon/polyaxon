@@ -19,7 +19,7 @@ from api.utils.views.upload import UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.archive import archive_repo
-from libs.repos.git import set_git_repo
+from libs.repos import git
 from scopes.authentication.internal import InternalAuthentication, is_authenticated_internal_user
 from scopes.permissions.internal import IsAuthenticatedOrInternal
 
@@ -88,7 +88,7 @@ class UploadFilesView(ProjectResourceListEndpoint, UploadView):
                     self.project.name))
         repo, created = Repo.objects.get_or_create(project=self.project)
         if not created and not os.path.isdir(repo.project_path):
-            set_git_repo(repo)
+            git.internal.set_git_repo(repo)
         else:
             auditor.record(event_type=REPO_CREATED,
                            instance=repo,

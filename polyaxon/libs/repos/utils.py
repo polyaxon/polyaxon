@@ -18,8 +18,9 @@ def get_internal_code_reference(instance, commit=None):
             return None
 
     # If no commit is provided we get the last commit, and save new ref if not found
-    last_commit = repo.last_commit
-    if not last_commit:
+    try:
+        last_commit = repo.last_commit
+    except ValueError:
         return None
 
     code_reference, _ = CodeReference.objects.get_or_create(repo=repo, commit=last_commit[0])

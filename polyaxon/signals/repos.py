@@ -12,9 +12,10 @@ from libs.repos import git
 @ignore_raw
 def new_repo(sender, **kwargs):
     instance = kwargs['instance']
-    git.set_git_repo(instance)
-    last_commit = instance.last_commit
-    if not last_commit:
+    git.internal.set_git_repo(instance)
+    try:
+        last_commit = instance.last_commit
+    except ValueError:
         return None
 
     # Set code reference
