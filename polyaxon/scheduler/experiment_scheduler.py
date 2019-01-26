@@ -501,7 +501,5 @@ def stop_experiment(project_name,
                             spec=specification,
                             k8s_config=conf.get('K8S_CONFIG'),
                             namespace=conf.get('K8S_NAMESPACE'),
-                            in_cluster=True,
-                            use_sidecar=True,
-                            sidecar_config=config.get_requested_data(to_str=True))
+                            in_cluster=True)
     return spawner.stop_experiment()
