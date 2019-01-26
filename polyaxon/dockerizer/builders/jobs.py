@@ -58,11 +58,12 @@ def get_job_repo_info(project, job):
     #     last_commit = repo.last_commit
     # else:
     repo_path = project.repo.path
-    last_commit = project.repo.last_commit
     repo_name = project_name
 
     image_name = '{}/{}'.format(conf.get('REGISTRY_HOST'), repo_name)
-    if not last_commit:
+    try:
+        last_commit = project.repo.last_commit
+    except ValueError:
         raise Repo.DoesNotExist
     image_tag = last_commit[0]
     return {

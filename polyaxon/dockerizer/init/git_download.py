@@ -6,6 +6,7 @@ from hestia.internal_services import InternalServices
 import conf
 
 from constants.jobs import JobLifeCycle
+from dockerizer.utils import send_status
 from libs.http import download, untar_file
 
 _logger = logging.getLogger('polyaxon.dockerizer')

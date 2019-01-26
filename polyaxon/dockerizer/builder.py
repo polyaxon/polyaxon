@@ -17,9 +17,10 @@ from db.redis.heartbeat import RedisHeartBeat
 from docker_images.image_info import get_image_name, get_tagged_image
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from dockerizer.init.git_download import download_code
+from dockerizer.utils import send_status
 from libs.paths.utils import delete_path
 from polyaxon.celery_api import celery_app
-from polyaxon.settings import K8SEventsCeleryTasks, SchedulerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -263,24 +264,3 @@ def build(build_job):
         return False
     docker_builder.clean()
     return True
-
-
-def send_status(build_job, status, message=None, traceback=None):
-    payload = {
-        'details': {
-            'labels': {
-                'app': 'dockerizer',
-                'job_uuid': build_job.uuid.hex,
-                'job_name': build_job.unique_name,
-                'project_uuid': build_job.project.uuid.hex,
-                'project_name': build_job.project.unique_name,
-            },
-            'node_name': conf.get('K8S_NODE_NAME')
-        },
-        'status': status,
-        'message': message,
-        'traceback': traceback
-    }
-    celery_app.send_task(
-        K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
-        kwargs={'payload': payload})
