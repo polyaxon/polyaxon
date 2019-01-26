@@ -188,6 +188,8 @@ data:
   POLYAXON_K8S_SERVICE_ACCOUNT_BUILDS: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
   POLYAXON_JOB_SIDECAR_DOCKER_IMAGE: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.imageTag }}"
   POLYAXON_JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY: "{{ .Values.sidecar.imagePullPolicy }}"
+  POLYAXON_JOB_INIT_DOCKER_IMAGE: "{{ .Values.init.image }}:{{ .Values.init.imageTag }}"
+  POLYAXON_JOB_INIT_DOCKER_IMAGE_PULL_POLICY: "{{ .Values.init.imagePullPolicy }}"
   POLYAXON_JOB_DOCKERIZER_IMAGE: "{{ .Values.dockerizer.image }}:{{ .Values.dockerizer.imageTag }}"
   POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY: "{{ .Values.dockerizer.imagePullPolicy }}"
   POLYAXON_NODE_SELECTOR_CORE: {{ toJson .Values.nodeSelectors.core | quote }}

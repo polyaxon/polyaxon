@@ -387,6 +387,11 @@ sidecar:
   imageTag: 0.3.7
   imagePullPolicy: Always
 
+init:
+  image: polyaxon/polyaxon-init
+  imageTag: 0.3.7
+  imagePullPolicy: Always
+
 dockerizer:
   image: polyaxon/polyaxon-dockerizer
   imageTag: 0.3.7
