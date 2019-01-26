@@ -50,6 +50,7 @@
   "POLYAXON_TYPE_LABELS_CORE": "",
   "POLYAXON_TYPE_LABELS_RUNNER": "",
   "POLYAXON_JOB_SIDECAR_DOCKER_IMAGE": "",
+  "POLYAXON_JOB_INIT_DOCKER_IMAGE": "",
   "POLYAXON_JOB_DOCKERIZER_IMAGE": "",
   "POLYAXON_PERSISTENCE_LOGS": "{\"existingClaim\":\"test-claim-logs\",\"hostPath\":null,\"mountPath\":\"/tmp/plx/logs\"}",
   "POLYAXON_PERSISTENCE_DATA": "{\"data\":{\"mountPath\":\"/tmp/plx/data\",\"existingClaim\":\"test-claim-data\"}}",

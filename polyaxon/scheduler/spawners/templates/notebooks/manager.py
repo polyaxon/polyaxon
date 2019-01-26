@@ -52,7 +52,9 @@ class ResourceManager(BaseResourceManager):
                 conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY')),
             init_container_name=init_container_name or conf.get('CONTAINER_NAME_INIT'),
             init_docker_image=init_docker_image or conf.get('JOB_INIT_DOCKER_IMAGE'),  # CHANGE
-            init_docker_image_pull_policy=init_docker_image_pull_policy,
+            init_docker_image_pull_policy=(
+                init_docker_image_pull_policy or
+                conf.get('JOB_INIT_DOCKER_IMAGE_PULL_POLICY')),
             role_label=role_label or conf.get('ROLE_LABELS_DASHBOARD'),
             type_label=type_label or conf.get('TYPE_LABELS_RUNNER'),
             app_label=app_label or conf.get('APP_LABELS_NOTEBOOK'),
