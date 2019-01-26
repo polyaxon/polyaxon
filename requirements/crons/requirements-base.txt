@@ -1,4 +1,4 @@
 -r ../requirements-base.txt
 
 polyaxon-k8s==0.3.7
-polystores==0.0.9
+polystores==0.1.0
