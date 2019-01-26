@@ -7,7 +7,6 @@ import conf
 
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
-from polyaxon.config_manager import config
 from scheduler.spawners.job_spawner import JobSpawner
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
@@ -39,8 +38,7 @@ def start_job(job):
         namespace=conf.get('K8S_NAMESPACE'),
         job_docker_image=job_docker_image,
         in_cluster=True,
-        use_sidecar=True,
-        sidecar_config=config.get_requested_data(to_str=True))
+        use_sidecar=True)
 
     error = {}
     try:

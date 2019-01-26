@@ -11,7 +11,6 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from docker_images.image_info import get_image_info
-from polyaxon.config_manager import config
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner
@@ -445,7 +444,6 @@ def start_experiment(experiment):
                                 in_cluster=True,
                                 job_docker_image=job_docker_image,
                                 use_sidecar=True,
-                                sidecar_config=config.get_requested_data(to_str=True),
                                 token_scope=token_scope)
         response = spawner.start_experiment()
         handle_experiment(experiment=experiment, spawner=spawner, response=response)

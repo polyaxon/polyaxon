@@ -84,7 +84,8 @@ def start_dockerizer(build_job):
         spec=build_job.specification,
         k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
-        in_cluster=True)
+        in_cluster=True,
+        use_sidecar=True)
 
     error = {}
     try:
