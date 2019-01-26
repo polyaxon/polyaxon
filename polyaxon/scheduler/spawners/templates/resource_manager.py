@@ -1,3 +1,5 @@
+from collections import Mapping
+
 from hestia.list_utils import to_list
 from kubernetes import client
 
@@ -47,6 +49,8 @@ class BaseResourceManager(object):
         self.app_label = app_label
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
+            sidecar_config = {}
+        if use_sidecar and not isinstance(sidecar_config, Mapping):
             raise PolyaxonConfigurationError(
                 'In order to use a `sidecar_config` is required. '
                 'The `sidecar_config` must correspond to the sidecar docker image used.')
