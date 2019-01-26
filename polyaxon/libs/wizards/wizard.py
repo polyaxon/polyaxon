@@ -1,3 +1,6 @@
+from typing import Optional, Mapping
+
+from django.http import HttpRequest
 from hestia.hashing import md5_text
 
 from django.shortcuts import render_to_response
@@ -25,7 +28,7 @@ class Wizard(object):
     model_cls = None
 
     @classmethod
-    def get_for_request(cls, request):
+    def get_for_request(cls, request: HttpRequest) -> Optional['Wizard']:
         state = RedisSessions(request, cls.name)
         if not state.is_valid():
             return None
@@ -39,7 +42,11 @@ class Wizard(object):
 
         return cls(request, provider_key, provider_model, config)
 
-    def __init__(self, request, provider_key, provider_model=None, config=None):
+    def __init__(self,
+                 request: HttpRequest,
+                 provider_key: str,
+                 provider_model=None,
+                 config: Optional[Mapping]=None) -> None:
         self.request = request
         self.state = RedisSessions(request, self.name)
         self.provider = self.manager.get(provider_key)()
@@ -60,10 +67,10 @@ class Wizard(object):
         """Retrieve the wizard views from the provider."""
         return self.provider.get_wizard_views()
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         return self.state.is_valid() and self.state.signature == self.signature
 
-    def initialize(self):
+    def initialize(self) -> None:
         self.state.regenerate({
             'user_id': self.request.user.id if self.request.user.is_authenticated else None,
             'provider_model_id': self.provider_model.id if self.provider_model else None,
@@ -88,7 +95,7 @@ class Wizard(object):
             wizard=self,
         )
 
-    def error(self, message):
+    def error(self, message: str):
         context = {'error': message}
         return render_to_response('polyaxon/wizard_error.html', context, self.request)
 
@@ -99,11 +106,11 @@ class Wizard(object):
     def finish_wizard(self):
         raise NotImplementedError
 
-    def bind_state(self, key, value):
+    def bind_state(self, key: str, value: Mapping) -> None:
         data = self.state.data
         data[key] = value
 
         self.state.data = data
 
-    def fetch_state(self, key=None):
+    def fetch_state(self, key: str=None) -> Optional[str]:
         return self.state.data if key is None else self.state.data.get(key)

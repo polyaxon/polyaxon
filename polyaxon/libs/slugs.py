@@ -4,7 +4,7 @@ import unicodedata
 from django.utils.safestring import mark_safe
 
 
-def slugify(value):
+def slugify(value: str) -> str:
     """
     Convert spaces/dots to hyphens.
     Remove characters that aren't alphanumerics, underscores, or hyphens.

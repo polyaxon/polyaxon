@@ -1,4 +1,6 @@
 import os
+from typing import Optional, Any, Mapping
+
 import requests
 import tarfile
 
@@ -12,7 +14,7 @@ import conf
 from libs.api import get_http_api_url
 
 
-def absolute_uri(url):
+def absolute_uri(url: str) -> Optional[str]:
     if not url:
         return None
 
@@ -24,7 +26,9 @@ def absolute_uri(url):
     return '{}://{}'.format(conf.get('PROTOCOL'), url)
 
 
-def add_notification_referrer_param(url, provider, is_absolute=True):
+def add_notification_referrer_param(url: str,
+                                    provider: str,
+                                    is_absolute: bool=True) -> Optional[Any]:
     if not is_absolute:
         url = absolute_uri(url)
     if not url:
@@ -37,14 +41,14 @@ def add_notification_referrer_param(url, provider, is_absolute=True):
     return urlunparse(url_list)
 
 
-def download(url,
-             filename,
+def download(url: str,
+             filename: str,
              logger,
-             authentication_type=None,
-             access_token=None,
-             headers=None,
-             internal=True,
-             timeout=60):
+             authentication_type: str=None,
+             access_token: str=None,
+             headers: Mapping=None,
+             internal: bool=True,
+             timeout: int=60) -> Optional[str]:
     """Get download url from the internal api."""
     if internal:
         authentication_type = authentication_type or AuthenticationTypes.INTERNAL_TOKEN
@@ -89,7 +93,12 @@ def download(url,
         return None
 
 
-def untar_file(build_path, filename, logger, delete_tar=False, internal=False, tar_suffix=None):
+def untar_file(build_path: str,
+               filename: str,
+               logger,
+               delete_tar: bool=False,
+               internal: bool=False,
+               tar_suffix: str=None) -> Optional[str]:
     extract_path = build_path if internal else '/tmp'
     if filename and os.path.exists(filename):
         logger.debug("Untarring the contents of the file ...")

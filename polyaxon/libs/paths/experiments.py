@@ -3,7 +3,7 @@ import os
 from libs.paths.utils import create_path
 
 
-def get_experiment_subpath(experiment_name):
+def get_experiment_subpath(experiment_name: str) -> str:
     values = experiment_name.split('.')
     if len(values) == 3:
         values.insert(2, 'experiments')
@@ -12,7 +12,7 @@ def get_experiment_subpath(experiment_name):
     return '/'.join(values)
 
 
-def create_experiment_path(experiment_name, path):
+def create_experiment_path(experiment_name: str, path: str) -> str:
     values = experiment_name.split('.')
     if len(values) == 3:
         values.insert(2, 'experiments')

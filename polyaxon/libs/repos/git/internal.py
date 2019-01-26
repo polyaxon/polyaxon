@@ -6,7 +6,7 @@ from libs.paths.utils import create_path
 _logger = logging.getLogger('polyaxon.repos.git')
 
 
-def set_git_repo(repo):
+def set_git_repo(repo: 'Repo') -> None:
     from libs.repos.git import get_git_repo
 
     # Check that the user has a dir

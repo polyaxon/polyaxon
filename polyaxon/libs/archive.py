@@ -1,5 +1,6 @@
 import os
 import tarfile
+from typing import List, Tuple, Any
 
 from polystores.exceptions import PolyaxonStoresException
 from rest_framework.exceptions import ValidationError
@@ -11,14 +12,14 @@ from libs.paths.utils import check_archive_path
 from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
 
 
-def create_tarfile(files, tar_path):
+def create_tarfile(files: List[str], tar_path: str) -> None:
     """Create a tar file based on the list of files passed"""
     with tarfile.open(tar_path, "w:gz") as tar:
         for f in files:
             tar.add(f)
 
 
-def get_files_in_path(path):
+def get_files_in_path(path: str) -> List[str]:
     result_files = []
     for root, _, files in os.walk(path):
         for file_name in files:
@@ -26,7 +27,7 @@ def get_files_in_path(path):
     return result_files
 
 
-def archive_repo(repo_git, repo_name, commit=None):
+def archive_repo(repo_git: Any, repo_name: str, commit: str=None) -> Tuple[str, str]:
     archive_root = conf.get('REPOS_ARCHIVE_ROOT')
     check_archive_path(archive_root)
     archive_name = '{}-{}.tar.gz'.format(repo_name, commit or 'master')
@@ -36,7 +37,7 @@ def archive_repo(repo_git, repo_name, commit=None):
     return archive_root, archive_name
 
 
-def archive_outputs(outputs_path, name):
+def archive_outputs(outputs_path: str, name: str) -> Tuple[str, str]:
     archive_root = conf.get('OUTPUTS_ARCHIVE_ROOT')
     check_archive_path(archive_root)
     outputs_files = get_files_in_path(outputs_path)
@@ -45,7 +46,10 @@ def archive_outputs(outputs_path, name):
     return archive_root, tar_name
 
 
-def archive_outputs_file(outputs_path, namepath, filepath, persistence_outputs):
+def archive_outputs_file(outputs_path: str,
+                         namepath: str,
+                         filepath: str,
+                         persistence_outputs: str) -> str:
     check_archive_path(conf.get('OUTPUTS_DOWNLOAD_ROOT'))
     namepath = namepath.replace('.', '/')
     download_filepath = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'), namepath, filepath)
@@ -62,7 +66,7 @@ def archive_outputs_file(outputs_path, namepath, filepath, persistence_outputs):
     return download_filepath
 
 
-def archive_logs_file(log_path, namepath, persistence_logs='default'):
+def archive_logs_file(log_path: str, namepath: str, persistence_logs: str='default') -> str:
     check_archive_path(conf.get('LOGS_DOWNLOAD_ROOT'))
     namepath = namepath.replace('.', '/')
     download_filepath = os.path.join(conf.get('LOGS_DOWNLOAD_ROOT'), namepath)

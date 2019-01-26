@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 
 
-def validate_resource(resource):
+def validate_resource(resource) -> None:
     """Validates a resource"""
     if resource is not None and not isinstance(resource, dict):
         raise ValidationError('The resource is not valid.')

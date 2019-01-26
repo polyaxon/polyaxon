@@ -13,7 +13,7 @@ def get_repo_name(git_url: str) -> str:
     return git_name.split('.git')[0]
 
 
-def set_git_repo(git_url: str):
+def set_git_repo(git_url: str) -> None:
     from libs.repos.git import get_git_repo
 
     mount_path = conf.get('REPOS_MOUNT_PATH')

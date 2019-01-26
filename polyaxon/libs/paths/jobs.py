@@ -3,11 +3,11 @@ import os
 from libs.paths.utils import create_path
 
 
-def get_job_subpath(job_name):
+def get_job_subpath(job_name: str) -> str:
     return job_name.replace('.', '/')
 
 
-def create_job_path(job_name, path):
+def create_job_path(job_name: str, path: str) -> str:
     values = job_name.split('.')
 
     for value in values[:-1]:

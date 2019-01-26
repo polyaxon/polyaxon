@@ -1,9 +1,11 @@
+from typing import Optional, Union
+
 from django.core.exceptions import ObjectDoesNotExist
 
 from db.models.repos import CodeReference
 
 
-def get_internal_code_reference(instance, commit=None):
+def get_internal_code_reference(instance, commit: str = None) -> Optional['CodeReference']:
     project = instance.project
 
     if not project.has_code:
@@ -27,14 +29,22 @@ def get_internal_code_reference(instance, commit=None):
     return code_reference
 
 
-def get_external_code_reference(git_url, commit=None):
+def get_external_code_reference(git_url: str, commit: str=None) -> 'CodeReference':
     code_reference, _ = CodeReference.objects.get_or_create(git_url=git_url, commit=commit)
     return code_reference
 
 
-def assign_code_reference(instance, commit=None):
+RefModel = Union['Experiment',
+                 'ExperimentGroup',
+                 'Job',
+                 'BuildJob',
+                 'TensorboardJob',
+                 'NotebookJob']
+
+
+def assign_code_reference(instance: RefModel, commit: str = None) -> RefModel:
     if instance.code_reference is not None or instance.specification is None:
-        return
+        return instance
     build = instance.specification.build if instance.specification else None
     if not commit and build:
         commit = build.ref
