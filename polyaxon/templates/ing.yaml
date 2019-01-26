@@ -41,6 +41,7 @@ spec:
   {{- end }}  {{- /* end loop */ -}}
   {{- else }}  {{- /* else if tls.enabled */ -}}
   rules:
+  {{ if .Values.ingress.hosts -}}  {{- /* else if ingress.hosts */ -}}
   {{- range .Values.ingress.hosts }}
   - host: {{ . }}
     http:
@@ -54,5 +55,17 @@ spec:
           serviceName: {{ $fullName }}-api
           servicePort: {{ $.Values.streams.service.externalPort }}
   {{- end }} {{- /* end range ingress.hosts */ -}}
+  {{- else }}  {{- /* else if not ingress.hosts (creates the ip only) */ -}}
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.api.service.externalPort }}
+      - path: /ws
+        backend:
+         serviceName: {{ $fullName }}-api
+         servicePort: {{ $.Values.streams.service.externalPort }}
+  {{- end }} {{- /* end if ingress.hosts */ -}}
   {{- end }} {{- /* end if tls.enabled */ -}}
 {{- end }}

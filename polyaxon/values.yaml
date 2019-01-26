@@ -6,11 +6,11 @@ rbac:
 ingress:
   enabled: false
   hosts:
-    - chart-example.local
+  # - polyaxon.foo.com
   tls:
     enabled: false
     hosts:
-    - chart-example.local
+    - polyaxon.local
     secretName: ""
   annotations:
     kubernetes.io/ingress.class: polyaxon-ingress
