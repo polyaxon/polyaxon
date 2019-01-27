@@ -119,7 +119,7 @@ class TestPeriodicTransport(BaseTestCaseTransport):
         time.sleep(0.0001)
         self.transport.periodic_post(url='url_post2', data={'d21': 'v21'})
         self.transport.periodic_post(url='url_post2', data={'d22': 'v22'})
-        time.sleep(0.03)
+        time.sleep(0.05)
         queue = self.transport.queue
         assert len(queue) == 2
         assert queue[0][0] == 'post'

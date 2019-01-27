@@ -42,7 +42,7 @@ class TestBaseApi(TestCase):
     def assert_async_call(self, api_handler_call, method):
         with patch.object(Transport, method) as mock_fct:
             api_handler_call()
-        time.sleep(0.01)
+        time.sleep(0.02)
         assert mock_fct.call_count == 1
 
     def assert_periodic_call(self, api_handler_call, method):

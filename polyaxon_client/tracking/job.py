@@ -67,7 +67,7 @@ class Job(BaseTracker):
             * app
         """
         if settings.NO_OP:
-            return
+            return None
 
         ensure_in_custer()
 

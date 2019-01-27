@@ -34,7 +34,7 @@ class Group(BaseTracker):
 
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
         if settings.NO_OP:
-            return
+            return None
 
         group_config = {}
         if name:
@@ -65,7 +65,7 @@ class Group(BaseTracker):
 
     def create_experiment(self, name=None, tags=None, description=None, config=None):
         if settings.NO_OP:
-            return
+            return None
 
         experiment = Experiment(project=self.project,
                                 group_id=self.group_id,

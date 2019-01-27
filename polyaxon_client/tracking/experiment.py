@@ -77,7 +77,7 @@ class Experiment(BaseTracker):
 
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
         if settings.NO_OP:
-            return
+            return None
 
         experiment_config = {'run_env': get_run_env()} if self.track_env else {}
         if name:
@@ -326,7 +326,7 @@ class Experiment(BaseTracker):
         :return: dict
         """
         if settings.NO_OP:
-            return
+            return None
 
         ensure_in_custer()
 
@@ -342,7 +342,7 @@ class Experiment(BaseTracker):
     def get_task_info():
         """Returns the task info: {"type": str, "index": int}."""
         if settings.NO_OP:
-            return
+            return None
 
         ensure_in_custer()
 
@@ -361,7 +361,7 @@ class Experiment(BaseTracker):
         if `envvar` is not null, it will set and env variable with `envvar`.
         """
         if settings.NO_OP:
-            return
+            return None
 
         ensure_in_custer()
 
@@ -391,7 +391,7 @@ class Experiment(BaseTracker):
             * experiment_uuid
         """
         if settings.NO_OP:
-            return
+            return None
 
         ensure_in_custer()
 
@@ -411,7 +411,7 @@ class Experiment(BaseTracker):
             * matrix section
         """
         if settings.NO_OP:
-            return
+            return None
 
         ensure_in_custer()
 
