@@ -1,3 +1,5 @@
+from typing import Iterable
+
 import conf
 
 from logs_handlers.log_queries import base
@@ -5,7 +7,7 @@ from logs_handlers.utils import safe_log_experiment_job
 from polyaxon_k8s.manager import K8SManager
 
 
-def stream_logs(pod_id, task_type, task_id):
+def stream_logs(pod_id: str, task_type: str, task_id: int) -> Iterable[str]:
     k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
     return base.stream_logs(k8s_manager=k8s_manager,
                             pod_id=pod_id,
@@ -14,7 +16,9 @@ def stream_logs(pod_id, task_type, task_id):
                             task_idx=task_id)
 
 
-def process_logs(experiment_job, temp=True, k8s_manager=None):
+def process_logs(experiment_job: 'ExperimentJob',
+                 temp: bool = True,
+                 k8s_manager: 'K8SManager' = None) -> None:
     task_type = experiment_job.role
     task_id = experiment_job.sequence
     if not k8s_manager:

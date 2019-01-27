@@ -1,9 +1,13 @@
 import fcntl
 
+from typing import Iterable, Optional, Union
+
 import stores
 
 
-def _lock_log(log_path, log_lines, append=False):
+def _lock_log(log_path: str,
+              log_lines: Optional[Union[str, Iterable[str]]],
+              append: bool = False) -> None:
     if not log_lines:
         return
     write_mode = 'a' if append else 'w'
@@ -13,7 +17,10 @@ def _lock_log(log_path, log_lines, append=False):
         fcntl.flock(log_file, fcntl.LOCK_UN)
 
 
-def safe_log_job(job_name, log_lines, temp, append=False):
+def safe_log_job(job_name: str,
+                 log_lines: Optional[Union[str, Iterable[str]]],
+                 temp: bool,
+                 append: bool = False) -> None:
     def _safe_log_job(_temp=temp):
         log_path = stores.get_job_logs_path(job_name=job_name, temp=_temp)
         try:
@@ -33,7 +40,10 @@ def safe_log_job(job_name, log_lines, temp, append=False):
         stores.upload_job_logs(job_name=job_name)  # Add to stores
 
 
-def safe_log_experiment(experiment_name, log_lines, temp, append=False):
+def safe_log_experiment(experiment_name: str,
+                        log_lines: Optional[Union[str, Iterable[str]]],
+                        temp: bool,
+                        append: bool = False) -> None:
     def _safe_log_experiment(_temp=temp):
         log_path = stores.get_experiment_logs_path(
             experiment_name=experiment_name,
@@ -58,7 +68,10 @@ def safe_log_experiment(experiment_name, log_lines, temp, append=False):
         stores.upload_experiment_logs(experiment_name=experiment_name)
 
 
-def safe_log_experiment_job(experiment_job_name, log_lines, temp, append=False):
+def safe_log_experiment_job(experiment_job_name: str,
+                            log_lines: Optional[Union[str, Iterable[str]]],
+                            temp: bool,
+                            append: bool = False) -> None:
     def _safe_log_experiment_job(_temp=temp):
         log_path = stores.get_experiment_job_logs_path(experiment_job_name=experiment_job_name,
                                                        temp=_temp)

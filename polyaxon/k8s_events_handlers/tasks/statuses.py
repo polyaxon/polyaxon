@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from django.db import IntegrityError
 
 import conf
@@ -14,7 +16,7 @@ from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, K8SEventsCeleryTasks
 
 
-def set_node_scheduling(job, node_name):
+def set_node_scheduling(job: Any, node_name: str) -> None:
     if job.node_scheduled or node_name is None:
         return
     job.node_scheduled = node_name
@@ -25,7 +27,7 @@ def set_node_scheduling(job, node_name):
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def k8s_events_handle_experiment_job_statuses(self, payload):
+def k8s_events_handle_experiment_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -66,7 +68,7 @@ def k8s_events_handle_experiment_job_statuses(self, payload):
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def k8s_events_handle_job_statuses(self, payload):
+def k8s_events_handle_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
     """Project jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -102,7 +104,7 @@ def k8s_events_handle_job_statuses(self, payload):
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def k8s_events_handle_plugin_job_statuses(self, payload):
+def k8s_events_handle_plugin_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
@@ -144,7 +146,7 @@ def k8s_events_handle_plugin_job_statuses(self, payload):
                  bind=True,
                  max_retries=3,
                  ignore_result=True)
-def k8s_events_handle_build_job_statuses(self, payload):
+def k8s_events_handle_build_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']

@@ -1,3 +1,5 @@
+from typing import Iterable
+
 import conf
 
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
@@ -8,7 +10,7 @@ from polyaxon_k8s.manager import K8SManager
 from schemas.tasks import TaskType
 
 
-def stream_logs(experiment):
+def stream_logs(experiment: 'Experiment') -> Iterable[str]:
     pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(
         task_type=TaskType.MASTER,  # We default to master
         task_idx=0,
@@ -19,7 +21,7 @@ def stream_logs(experiment):
                             container_job_name=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
 
 
-def process_logs(experiment, temp=True):
+def process_logs(experiment: 'Experiment', temp: bool = True) -> None:
     pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(
         task_type=TaskType.MASTER,  # We default to master
         task_idx=0,
@@ -35,7 +37,7 @@ def process_logs(experiment, temp=True):
                         append=False)
 
 
-def process_experiment_jobs_logs(experiment, temp=True):
+def process_experiment_jobs_logs(experiment: 'Experiment', temp: bool = True) -> None:
     k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
     for experiment_job in experiment.jobs.all():
         process_experiment_job_logs(experiment_job=experiment_job,

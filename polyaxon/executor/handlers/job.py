@@ -11,7 +11,7 @@ class JobHandler(BaseHandler):
     SUBJECT = event_subjects.JOB
 
     @classmethod
-    def _handle_job_created(cls, event):
+    def _handle_job_created(cls, event: 'Event') -> None:
         if not event.data['has_specification']:
             return
 
@@ -22,7 +22,7 @@ class JobHandler(BaseHandler):
             countdown=1)
 
     @classmethod
-    def _handle_job_cleaned_triggered(cls, event):
+    def _handle_job_cleaned_triggered(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification or not instance.is_running:
             return
@@ -39,7 +39,7 @@ class JobHandler(BaseHandler):
             })
 
     @classmethod
-    def _handle_job_post_run(cls, event):
+    def _handle_job_post_run(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification:
             return
@@ -57,7 +57,7 @@ class JobHandler(BaseHandler):
             countdown=RedisTTL.get_for_job(job_id=instance.id))
 
     @classmethod
-    def record_event(cls, event):
+    def record_event(cls, event: 'Event') -> None:
         if event.event_type == job.JOB_CREATED:
             cls._handle_job_created(event=event)
         elif event.event_type == job.JOB_CLEANED_TRIGGERED:

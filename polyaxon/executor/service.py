@@ -22,14 +22,14 @@ class ExecutorService(EventService):
         ExperimentJobHandler.SUBJECT: ExperimentJobHandler,
     }
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.activity_log_manager = None
 
-    def record_event(self, event):
+    def record_event(self, event: 'Event') -> None:
         event_subject = event.get_event_subject()
-        return self.HANDLER_MAPPING[event_subject].record_event(event=event)
+        self.HANDLER_MAPPING[event_subject].record_event(event=event)
 
-    def setup(self):
+    def setup(self) -> None:
         super().setup()
         # Load default event types
         import executor.events  # noqa

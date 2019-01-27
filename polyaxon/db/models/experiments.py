@@ -1,7 +1,8 @@
 import uuid
 
-from datetime import datetime
 from typing import Dict, List, Optional
+
+from hestia.datetime_typing import AwareDT
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
@@ -243,7 +244,7 @@ class Experiment(DiffModel,
             return True
         return False
 
-    def last_status_before(self, status_date: datetime = None) -> Optional[str]:
+    def last_status_before(self, status_date: AwareDT = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = ExperimentStatus.objects.filter(
@@ -253,7 +254,7 @@ class Experiment(DiffModel,
 
     def set_status(self,
                    status: str,
-                   created_at: datetime = None,
+                   created_at: AwareDT = None,
                    message: str = None,
                    traceback: Dict = None,
                    **kwargs):

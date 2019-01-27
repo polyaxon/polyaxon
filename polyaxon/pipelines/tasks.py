@@ -18,7 +18,7 @@ _logger = logging.getLogger(__name__)
                  bind=True,
                  max_retries=None,
                  ignore_result=True)
-def pipelines_start(self, pipeline_run_id):
+def pipelines_start(self: 'celery_app.task', pipeline_run_id: int) -> None:
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
         _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
@@ -44,7 +44,7 @@ def pipelines_start(self, pipeline_run_id):
 
 
 @celery_app.task(name=PipelinesCeleryTasks.PIPELINES_START_OPERATION, ignore_result=True)
-def pipelines_start_operation(operation_run_id):
+def pipelines_start_operation(operation_run_id: int) -> None:
     operation_run = get_operation_run(operation_run_id=operation_run_id)
     if not operation_run:
         _logger.info('Operation `%s` does not exist any more.', operation_run_id)
@@ -53,7 +53,7 @@ def pipelines_start_operation(operation_run_id):
 
 
 @celery_app.task(name=PipelinesCeleryTasks.PIPELINES_STOP_OPERATIONS, ignore_result=True)
-def pipelines_stop_operations(pipeline_run_id, message=None):
+def pipelines_stop_operations(pipeline_run_id: int, message: str = None) -> None:
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
         _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
@@ -62,7 +62,7 @@ def pipelines_stop_operations(pipeline_run_id, message=None):
 
 
 @celery_app.task(name=PipelinesCeleryTasks.PIPELINES_SKIP_OPERATIONS, ignore_result=True)
-def pipelines_skip_operations(pipeline_run_id, message=None):
+def pipelines_skip_operations(pipeline_run_id: int, message: str = None) -> None:
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
         _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
@@ -74,7 +74,7 @@ def pipelines_skip_operations(pipeline_run_id, message=None):
 
 
 @celery_app.task(name=PipelinesCeleryTasks.PIPELINES_CHECK_STATUSES, ignore_result=True)
-def pipelines_check_statuses(pipeline_run_id, status, message=None):
+def pipelines_check_statuses(pipeline_run_id: int, status: str, message: str = None) -> None:
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
         _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)

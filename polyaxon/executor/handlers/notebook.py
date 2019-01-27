@@ -9,7 +9,7 @@ class NotebookHandler(BaseHandler):
     SUBJECT = event_subjects.NOTEBOOK
 
     @classmethod
-    def _handle_notebook_cleaned_triggered(cls, event):
+    def _handle_notebook_cleaned_triggered(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification or not instance.is_running:
             return
@@ -26,7 +26,7 @@ class NotebookHandler(BaseHandler):
             })
 
     @classmethod
-    def _handle_notebook_post_run(cls, event):
+    def _handle_notebook_post_run(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification:
             return
@@ -43,7 +43,7 @@ class NotebookHandler(BaseHandler):
             })
 
     @classmethod
-    def record_event(cls, event):
+    def record_event(cls, event: 'Event') -> None:
         if event.event_type == notebook.NOTEBOOK_CLEANED_TRIGGERED:
             cls._handle_notebook_cleaned_triggered(event=event)
         if event.event_type in {notebook.NOTEBOOK_FAILED, notebook.NOTEBOOK_SUCCEEDED}:

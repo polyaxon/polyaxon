@@ -1,10 +1,15 @@
+from typing import Dict
+
 import conf
 
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import K8SEventsCeleryTasks
 
 
-def send_status(build_job, status, message=None, traceback=None):
+def send_status(build_job: 'BuildJob',
+                status: str,
+                message: str = None,
+                traceback: Dict = None):
     payload = {
         'details': {
             'labels': {

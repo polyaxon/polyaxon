@@ -10,7 +10,7 @@ class ExperimentHandler(BaseHandler):
     SUBJECT = event_subjects.EXPERIMENT
 
     @classmethod
-    def _handle_experiment_created(cls, event):
+    def _handle_experiment_created(cls, event: 'Event') -> None:
         if event.data['has_specification'] and (event.data['is_independent'] or
                                                 event.data['is_clone']):
             # Start building the experiment and then Schedule it to be picked by the spawners
@@ -20,7 +20,7 @@ class ExperimentHandler(BaseHandler):
                 countdown=1)
 
     @classmethod
-    def _handle_experiment_cleaned_triggered(cls, event):
+    def _handle_experiment_cleaned_triggered(cls, event: 'Event') -> None:
         from db.models.experiment_groups import ExperimentGroup
 
         instance = event.instance
@@ -51,7 +51,7 @@ class ExperimentHandler(BaseHandler):
             pass
 
     @classmethod
-    def _handle_experiment_post_run(cls, event):
+    def _handle_experiment_post_run(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification or not instance.jobs.count() > 0:
             return
@@ -74,7 +74,7 @@ class ExperimentHandler(BaseHandler):
             countdown=RedisTTL.get_for_experiment(experiment_id=instance.id))
 
     @classmethod
-    def _handle_experiment_done(cls, event):
+    def _handle_experiment_done(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance:
             return
@@ -98,7 +98,7 @@ class ExperimentHandler(BaseHandler):
                 })
 
     @classmethod
-    def record_event(cls, event):
+    def record_event(cls, event: 'Event') -> None:
         if event.event_type == experiment.EXPERIMENT_CREATED:
             cls._handle_experiment_created(event=event)
         elif event.event_type == experiment.EXPERIMENT_CLEANED_TRIGGERED:

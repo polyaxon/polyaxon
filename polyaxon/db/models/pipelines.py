@@ -1,10 +1,10 @@
 import logging
 import uuid
 
-from datetime import datetime
 from typing import Dict, Optional, Tuple
 
 from celery.result import AsyncResult
+from hestia.datetime_typing import AwareDT
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
@@ -411,7 +411,7 @@ class PipelineRun(RunModel):
     def on_finished(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.FINISHED, message=message)
 
-    def last_status_before(self, status_date: datetime = None) -> Optional[str]:
+    def last_status_before(self, status_date: AwareDT = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = PipelineRunStatus.objects.filter(
@@ -421,7 +421,7 @@ class PipelineRun(RunModel):
 
     def set_status(self,
                    status: str,
-                   created_at: datetime = None,
+                   created_at: AwareDT = None,
                    message: str = None,
                    traceback: Dict = None,
                    **kwargs) -> None:
@@ -507,7 +507,7 @@ class OperationRun(RunModel):
     class Meta:
         app_label = 'db'
 
-    def last_status_before(self, status_date: datetime = None) -> Optional[str]:
+    def last_status_before(self, status_date: AwareDT = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = OperationRunStatus.objects.filter(
@@ -517,7 +517,7 @@ class OperationRun(RunModel):
 
     def set_status(self,
                    status: str,
-                   created_at: datetime = None,
+                   created_at: AwareDT = None,
                    message: str = None,
                    traceback: Dict = None,
                    **kwargs) -> None:

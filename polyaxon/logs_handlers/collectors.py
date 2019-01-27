@@ -9,7 +9,7 @@ from logs_handlers.log_queries.experiment_job import process_logs as process_exp
 from logs_handlers.log_queries.job import process_logs as process_job_logs
 
 
-def logs_collect_experiment_jobs(experiment_uuid):
+def logs_collect_experiment_jobs(experiment_uuid: str) -> None:
     try:
         experiment = Experiment.objects.filter(uuid=experiment_uuid).get()
     except Experiment.DoesNotExist:
@@ -21,7 +21,7 @@ def logs_collect_experiment_jobs(experiment_uuid):
         process_experiment_logs(experiment=experiment, temp=False)
 
 
-def logs_collect_experiment_job(experiment_job_uuid):
+def logs_collect_experiment_job(experiment_job_uuid: str) -> None:
     try:
         experiment_job = ExperimentJob.objects.filter(
             uuid=experiment_job_uuid).select_related('experiment').get()
@@ -35,7 +35,7 @@ def logs_collect_experiment_job(experiment_job_uuid):
         process_experiment_logs(experiment=experiment, temp=False)
 
 
-def logs_collect_job(job_uuid):
+def logs_collect_job(job_uuid: str) -> None:
     try:
         job = Job.objects.filter(uuid=job_uuid).get()
     except Job.DoesNotExist:
@@ -43,7 +43,7 @@ def logs_collect_job(job_uuid):
     process_job_logs(job=job, temp=False)
 
 
-def logs_collect_build_job(build_uuid):
+def logs_collect_build_job(build_uuid: str) -> None:
     try:
         build = BuildJob.objects.filter(uuid=build_uuid).get()
     except BuildJob.DoesNotExist:

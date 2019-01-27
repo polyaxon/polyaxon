@@ -14,7 +14,7 @@ from polyaxon_k8s.manager import K8SManager
 class Command(BaseMonitorCommand):
     help = 'Watch jobs statuses events.'
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         log_sleep_interval = options['log_sleep_interval']
         time.sleep(log_sleep_interval)
         self.stdout.write(

@@ -1,4 +1,5 @@
 from collections import namedtuple
+from typing import Any, Optional
 
 from constants import user_system
 from event_manager import event_subjects
@@ -17,7 +18,7 @@ class EventContextSpec(
     pass
 
 
-def get_event_subject(event_type):
+def get_event_subject(event_type: str) -> str:
     """Return the first part of the event_type
 
     e.g.
@@ -28,7 +29,7 @@ def get_event_subject(event_type):
     return event_type.split('.')[0]
 
 
-def get_event_action(event_type):
+def get_event_action(event_type: str) -> str:
     """Return the second part of the event_type
 
     e.g.
@@ -39,7 +40,7 @@ def get_event_action(event_type):
     return event_type.split('.')[1]
 
 
-def get_event_actor_context(event):
+def get_event_actor_context(event: 'Event') -> Optional['EventItemContextSpec']:
     if not event.actor:
         return None
 
@@ -53,7 +54,8 @@ def get_event_actor_context(event):
                                 object_id=None)
 
 
-def get_event_object_context(event_content_object, event_type):
+def get_event_object_context(event_content_object: Any,
+                             event_type: str) -> Optional['EventItemContextSpec']:
     # Deleted objects don't have a content object any more
     if not event_content_object:
         return EventItemContextSpec(name=None, url=None, object_id=None)
@@ -90,7 +92,7 @@ def get_event_object_context(event_content_object, event_type):
     return EventItemContextSpec(name=object_name, url=object_url, object_id=object_id)
 
 
-def get_event_context(event):
+def get_event_context(event: 'Event') -> 'EventContextSpec':
     subject = get_event_subject(event_type=event.event_type)
     action = get_event_action(event_type=event.event_type)
     actor_context = get_event_actor_context(event=event)
@@ -105,7 +107,7 @@ def get_event_context(event):
                             datetime=event.datetime)
 
 
-def get_readable_event(event_context):
+def get_readable_event(event_context: 'EventContextSpec') -> str:
     description = '{} on {}'.format(event_context.subject_action, event_context.datetime)
     if event_context.actor_context:
         description += '\nActor: [{}]({})'.format(

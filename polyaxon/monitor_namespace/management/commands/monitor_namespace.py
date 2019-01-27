@@ -1,5 +1,7 @@
 import time
 
+from typing import Optional
+
 from kubernetes.client.rest import ApiException
 
 from django.db import InterfaceError, OperationalError, ProgrammingError
@@ -15,7 +17,7 @@ from polyaxon_k8s.manager import K8SManager
 class Command(BaseMonitorCommand):
     help = 'Watch namespace warning and errors events.'
 
-    def get_cluster_or_wait(self, log_sleep_interval):
+    def get_cluster_or_wait(self, log_sleep_interval: int) -> Optional['Cluster']:
         max_trials = 10
         trials = 0
         while trials < max_trials:
@@ -27,7 +29,7 @@ class Command(BaseMonitorCommand):
                 time.sleep(log_sleep_interval * 2)
         return None
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         log_sleep_interval = options['log_sleep_interval']
         self.stdout.write(
             "Started a new namespace monitor with, "

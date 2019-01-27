@@ -1,7 +1,8 @@
 import uuid
 
-from datetime import datetime
 from typing import Dict, Optional
+
+from hestia.datetime_typing import AwareDT
 
 from django.db import models
 from django.utils import timezone
@@ -89,12 +90,12 @@ class LastStatusMixin(object):
     def stopped(self) -> bool:
         return self.STATUSES.stopped(self.last_status)
 
-    def last_status_before(self, status_date: datetime) -> str:
+    def last_status_before(self, status_date: AwareDT) -> str:
         raise NotImplemented  # noqa
 
     def set_status(self,
                    status: str,
-                   created_at: datetime = None,
+                   created_at: AwareDT = None,
                    message: str = None,
                    traceback: Dict = None,
                    **kwargs) -> None:

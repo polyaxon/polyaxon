@@ -1,8 +1,9 @@
 import logging
 import uuid
 
-from datetime import datetime
 from typing import Dict, List, Optional
+
+from hestia.datetime_typing import AwareDT
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -37,7 +38,7 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
 
     def last_status_before(self,  # pylint:disable=arguments-differ
                            status_model,
-                           status_date: datetime = None) -> Optional[str]:
+                           status_date: AwareDT = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = status_model.objects.filter(job=self, created_at__lte=status_date).last()
@@ -46,7 +47,7 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
     def _set_status(self,
                     status_model,
                     status: str,
-                    created_at: datetime = None,
+                    created_at: AwareDT = None,
                     message: str = None,
                     traceback: Dict = None,
                     details: Dict = None) -> bool:

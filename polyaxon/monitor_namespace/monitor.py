@@ -12,7 +12,7 @@ LEVEL_MAPPING = {
 }
 
 
-def run(k8s_manager, cluster):  # pylint:disable=too-many-branches
+def run(k8s_manager: 'K8SManager', cluster: 'Cluster') -> None:  # pylint:disable=too-many-branches
     w = watch.Watch()
 
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_event,

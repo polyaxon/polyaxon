@@ -1,5 +1,6 @@
-from datetime import datetime
 from typing import Dict
+
+from hestia.datetime_typing import AwareDT
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -61,7 +62,7 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
 
     def set_status(self,  # pylint:disable=arguments-differ
                    status: str,
-                   created_at: datetime = None,
+                   created_at: AwareDT = None,
                    message: str = None,
                    traceback: Dict = None,
                    details: Dict = None) -> bool:

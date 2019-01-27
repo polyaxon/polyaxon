@@ -1,5 +1,7 @@
 import logging
 
+from typing import Mapping
+
 import conf
 import ocular
 
@@ -11,7 +13,9 @@ from polyaxon.settings import K8SEventsCeleryTasks
 logger = logging.getLogger('polyaxon.monitors.statuses')
 
 
-def update_job_containers(event, status, job_container_name):
+def update_job_containers(event: Mapping,
+                          status: str,
+                          job_container_name: str) -> None:
     if JobLifeCycle.is_done(status):
         # Remove the job monitoring
         job_uuid = event['metadata']['labels']['job_uuid']
@@ -44,14 +48,14 @@ def update_job_containers(event, status, job_container_name):
                 RedisJobContainers.remove_container(container_id=container_id)
 
 
-def get_label_selector():
+def get_label_selector() -> str:
     return 'role in ({},{}),type={}'.format(
         conf.get('ROLE_LABELS_WORKER'),
         conf.get('ROLE_LABELS_DASHBOARD'),
         conf.get('TYPE_LABELS_RUNNER'))
 
 
-def run(k8s_manager):
+def run(k8s_manager: 'K8SManager') -> None:
     for (event_object, pod_state) in ocular.monitor(k8s_manager.k8s_api,
                                                     namespace=conf.get('K8S_NAMESPACE'),
                                                     container_names=(

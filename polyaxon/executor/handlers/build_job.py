@@ -11,7 +11,7 @@ class BuildJobHandler(BaseHandler):
     SUBJECT = event_subjects.BUILD_JOB
 
     @classmethod
-    def _handle_build_job_cleaned_triggered(cls, event):
+    def _handle_build_job_cleaned_triggered(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification or not instance.is_running:
             return
@@ -28,7 +28,7 @@ class BuildJobHandler(BaseHandler):
             })
 
     @classmethod
-    def _handle_build_job_post_run(cls, event):
+    def _handle_build_job_post_run(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification:
             return
@@ -46,7 +46,7 @@ class BuildJobHandler(BaseHandler):
             countdown=RedisTTL.get_for_build(build_id=instance.id))
 
     @classmethod
-    def _handle_build_job_done(cls, event):
+    def _handle_build_job_done(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance:
             return
@@ -56,7 +56,7 @@ class BuildJobHandler(BaseHandler):
             kwargs={'build_job_id': instance.id})
 
     @classmethod
-    def record_event(cls, event):
+    def record_event(cls, event: 'Event') -> None:
         if event.event_type == build_job.BUILD_JOB_CLEANED_TRIGGERED:
             cls._handle_build_job_cleaned_triggered(event=event)
         elif event.event_type in {BUILD_JOB_FAILED, BUILD_JOB_SUCCEEDED}:

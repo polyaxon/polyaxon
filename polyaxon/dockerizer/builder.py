@@ -5,6 +5,8 @@ import os
 import stat
 import time
 
+from typing import Any, List, Optional, Tuple
+
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 from hestia.list_utils import to_list
@@ -31,13 +33,13 @@ class DockerBuilder(object):
     HEART_BEAT_INTERVAL = 60
 
     def __init__(self,
-                 build_job,
-                 repo_path,
-                 from_image,
-                 copy_code=True,
-                 build_steps=None,
-                 env_vars=None,
-                 dockerfile_name='Dockerfile'):
+                 build_job: 'BuildJob',
+                 repo_path: str,
+                 from_image: str,
+                 copy_code: bool = True,
+                 build_steps: Optional[List[str]] = None,
+                 env_vars: Optional[List[Tuple[str, str]]] = None,
+                 dockerfile_name: str = 'Dockerfile') -> None:
         self.build_job = build_job
         self.job_uuid = build_job.uuid.hex
         self.job_name = build_job.unique_name
@@ -59,17 +61,17 @@ class DockerBuilder(object):
         self.docker_url = None
         self.is_pushing = False
 
-    def get_tagged_image(self):
+    def get_tagged_image(self) -> str:
         return get_tagged_image(self.build_job)
 
-    def check_image(self):
+    def check_image(self) -> Any:
         return self.docker.images(self.get_tagged_image())
 
-    def clean(self):
+    def clean(self) -> None:
         # Clean dockerfile
         delete_path(self.dockerfile_path)
 
-    def login_internal_registry(self):
+    def login_internal_registry(self) -> None:
         try:
             self.docker.login(username=conf.get('REGISTRY_USER'),
                               password=conf.get('REGISTRY_PASSWORD'),
@@ -78,7 +80,7 @@ class DockerBuilder(object):
         except DockerException as e:
             _logger.exception('Failed to connect to registry %s\n', e)
 
-    def login_private_registries(self):
+    def login_private_registries(self) -> None:
         if not conf.get('PRIVATE_REGISTRIES'):
             return
 
@@ -88,7 +90,7 @@ class DockerBuilder(object):
                               registry=registry.host,
                               reauth=True)
 
-    def _prepare_log_lines(self, log_line):
+    def _prepare_log_lines(self, log_line) -> Tuple[List[str], bool]:
         raw = log_line.decode('utf-8').strip()
         raw_lines = raw.split('\n')
         log_lines = []
@@ -116,11 +118,11 @@ class DockerBuilder(object):
                 log_lines.append('JSON decode error: {}'.format(raw_line))
         return log_lines, status
 
-    def _handle_logs(self, log_lines):
+    def _handle_logs(self, log_lines) -> None:
         for log_line in log_lines:
             print(log_line)
 
-    def _handle_log_stream(self, stream):
+    def _handle_log_stream(self, stream) -> bool:
         log_lines = []
         last_heart_beat = time.time()
         status = True
@@ -144,7 +146,7 @@ class DockerBuilder(object):
 
         return status
 
-    def _get_requirements_path(self):
+    def _get_requirements_path(self) -> Optional[str]:
         def get_requirements(requirements_file):
             requirements_path = os.path.join(self.repo_path, requirements_file)
             if os.path.isfile(requirements_path):
@@ -159,7 +161,7 @@ class DockerBuilder(object):
             return requirements
         return None
 
-    def _get_setup_path(self):
+    def _get_setup_path(self) -> Optional[str]:
         def get_setup(setup_file):
             setup_file_path = os.path.join(self.repo_path, setup_file)
             has_setup = os.path.isfile(setup_file_path)
@@ -177,7 +179,7 @@ class DockerBuilder(object):
             return setup_file
         return None
 
-    def render(self):
+    def render(self) -> str:
         docker_template = jinja2.Template(POLYAXON_DOCKER_TEMPLATE)
         return docker_template.render(
             from_image=self.from_image,
@@ -191,7 +193,7 @@ class DockerBuilder(object):
             copy_code=self.copy_code
         )
 
-    def build(self, nocache=False, memory_limit=None):
+    def build(self, nocache: bool = False, memory_limit: Any = None) -> bool:
         _logger.debug('Starting build for `%s`', self.repo_path)
         # Checkout to the correct commit
         # if self.image_tag != self.LATEST_IMAGE_TAG:
@@ -222,12 +224,12 @@ class DockerBuilder(object):
             container_limits=limits)
         return self._handle_log_stream(stream=stream)
 
-    def push(self):
+    def push(self) -> bool:
         stream = self.docker.push(self.image_name, tag=self.image_tag, stream=True)
         return self._handle_log_stream(stream=stream)
 
 
-def build(build_job):
+def build(build_job: 'BuildJob') -> bool:
     """Build necessary code for a job to run"""
     build_path = '/tmp/build'
     filename = '_code'

@@ -1,10 +1,15 @@
+from typing import Any, Iterable
+
 from hestia.logging_utils import LogSpec
 from kubernetes.client.rest import ApiException
 
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 
 
-def query_logs(k8s_manager, pod_id, container_job_name, stream=False):
+def query_logs(k8s_manager: 'K8SManager',
+               pod_id: str,
+               container_job_name: str,
+               stream: bool = False) -> Any:
     params = {}
     if stream:
         params = {
@@ -20,7 +25,7 @@ def query_logs(k8s_manager, pod_id, container_job_name, stream=False):
         **params)
 
 
-def process_log_line(log_line, task_type=None, task_idx=None):
+def process_log_line(log_line: str, task_type: str = None, task_idx: int = None):
     name = ''
     if task_type is not None and task_idx is not None:
         name = '{}.{}'.format(task_type, int(task_idx) + 1)
@@ -31,7 +36,11 @@ def process_log_line(log_line, task_type=None, task_idx=None):
     return LogSpec(log_line=log_line.strip(), name=name)
 
 
-def stream_logs(k8s_manager, pod_id, container_job_name, task_type=None, task_idx=None):
+def stream_logs(k8s_manager: 'K8SManager',
+                pod_id: str,
+                container_job_name: str,
+                task_type: str = None,
+                task_idx: int = None) -> Iterable[str]:
     raw = None
     retries = 0
     no_logs = True
@@ -53,7 +62,11 @@ def stream_logs(k8s_manager, pod_id, container_job_name, task_type=None, task_id
                 yield process_log_line(log_line=log_line, task_type=task_type, task_idx=task_idx)
 
 
-def process_logs(k8s_manager, pod_id, container_job_name, task_type=None, task_idx=None):
+def process_logs(k8s_manager: 'K8SManager',
+                 pod_id: str,
+                 container_job_name: str,
+                 task_type: str = None,
+                 task_idx: int = None) -> str:
     logs = None
     retries = 0
     no_logs = True

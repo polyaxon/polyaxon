@@ -1,8 +1,10 @@
 import copy
 
+from typing import Any, Dict, Iterable, Mapping, Optional, Union
 from uuid import UUID, uuid1
 
 from hestia.date_utils import to_datetime, to_timestamp
+from hestia.datetime_typing import AwareDT
 
 from django.db.models import Model
 from django.utils import timezone
@@ -13,7 +15,12 @@ from libs.json_utils import dumps_htmlsafe
 
 
 class Attribute(object):
-    def __init__(self, name, attr_type=str, is_datetime=False, is_uuid=False, is_required=True):
+    def __init__(self,
+                 name: str,
+                 attr_type: Any = str,
+                 is_datetime: bool = False,
+                 is_uuid: bool = False,
+                 is_required: bool = True) -> None:
         assert name != 'instance'
         self.name = name
         self.attr_type = attr_type
@@ -21,7 +28,7 @@ class Attribute(object):
         self.is_uuid = is_uuid
         self.is_required = is_required
 
-    def extract(self, value):
+    def extract(self, value: Any) -> Any:
         if value is None:
             return value
         if self.is_datetime:
@@ -49,7 +56,7 @@ class Event(object):
     actor_name = 'actor_name'
 
     @classmethod
-    def get_event_attributes(cls):
+    def get_event_attributes(cls) -> Iterable['Attribute']:
         attributes = cls.attributes + (Attribute('ref_id', is_uuid=True, is_required=False),)
         if cls.actor:
             return attributes + (Attribute(cls.actor_id, attr_type=int),
@@ -57,14 +64,14 @@ class Event(object):
         return attributes
 
     def __init__(self,
-                 uid=None,
-                 datetime=None,
-                 instance=None,
-                 instance_id=None,
-                 instance_contenttype=None,
-                 ref_id=None,
-                 event_data=None,
-                 **items):
+                 uid: str = None,
+                 datetime: AwareDT = None,
+                 instance: Any = None,
+                 instance_id: int = None,
+                 instance_contenttype: str = None,
+                 ref_id: str = None,
+                 event_data: Mapping = None,
+                 **items) -> None:
         self.uuid = UUID(uid) if uid else uuid1()
         self.datetime = datetime or timezone.now()
         self.instance = instance
@@ -115,7 +122,7 @@ class Event(object):
             self.data = data
 
     @classmethod
-    def get_event_subject(cls):
+    def get_event_subject(cls) -> Optional[str]:
         """Return the first part of the event_type
 
         e.g.
@@ -126,7 +133,7 @@ class Event(object):
         return event_context.get_event_subject(cls.event_type)
 
     @classmethod
-    def get_event_action(cls):
+    def get_event_action(cls) -> Optional[str]:
         """Return the second part of the event_type
 
         e.g.
@@ -138,7 +145,10 @@ class Event(object):
             return None
         return event_context.get_event_action(cls.event_type)
 
-    def serialize(self, dumps=False, include_actor_name=True, include_instance_info=False):
+    def serialize(self,
+                  dumps: bool = False,
+                  include_actor_name: bool = True,
+                  include_instance_info: bool = False) -> Union[str, Dict]:
         _data = self.data
         if not include_actor_name and self.actor and self.actor_name in _data:
             _data = copy.deepcopy(self.data)
@@ -156,7 +166,7 @@ class Event(object):
         return dumps_htmlsafe(data) if dumps else data
 
     @classmethod
-    def get_value_from_instance(cls, attr, instance):
+    def get_value_from_instance(cls, attr: str, instance: Any) -> Any:
         # Handle dot notation
         path = attr.split('.')
         value = instance
@@ -168,7 +178,7 @@ class Event(object):
         return value
 
     @staticmethod
-    def get_instance_info(instance):
+    def get_instance_info(instance: Any) -> Dict:
         if isinstance(instance, Model):
             from django.contrib.contenttypes.models import ContentType
             return {
@@ -178,7 +188,7 @@ class Event(object):
         return {}
 
     @classmethod
-    def from_instance(cls, instance, **kwargs):
+    def from_instance(cls, instance: Any, **kwargs) -> 'Event':
         values = {'instance': instance}
         if instance:
             values.update(cls.get_instance_info(instance))
@@ -192,7 +202,7 @@ class Event(object):
         return cls(**values)
 
     @classmethod
-    def from_event_data(cls, event_data, **kwargs):
+    def from_event_data(cls, event_data: Mapping, **kwargs) -> 'Event':
         return cls(
             datetime=to_datetime(event_data.get('timestamp')),
             uid=event_data.get('uuid'),

@@ -1,5 +1,6 @@
-from datetime import datetime
 from typing import Dict, Tuple
+
+from hestia.datetime_typing import AwareDT
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
@@ -97,7 +98,7 @@ class BuildJob(AbstractJob,
 
     def set_status(self,  # pylint:disable=arguments-differ
                    status: str,
-                   created_at: datetime = None,
+                   created_at: AwareDT = None,
                    message: str = None,
                    traceback: Dict = None,
                    details: Dict = None) -> bool:

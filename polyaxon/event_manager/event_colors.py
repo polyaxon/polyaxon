@@ -1,3 +1,5 @@
+from typing import Any
+
 from constants.statuses import StatusOptions
 from event_manager import event_actions, event_context
 
@@ -10,7 +12,7 @@ class EventColor(object):
     GREY = '#485563'
 
     @classmethod
-    def get_for_event(cls, event_content_object, event_type):
+    def get_for_event(cls, event_content_object: Any, event_type: str) -> str:
         action = event_context.get_event_action(event_type=event_type)
         if action in [event_actions.FAILED,
                       event_actions.STOPPED,

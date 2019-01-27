@@ -12,7 +12,7 @@ from libs.http import download, untar_file
 _logger = logging.getLogger('polyaxon.dockerizer')
 
 
-def download_code(build_job, build_path, filename):
+def download_code(build_job: 'BuildJob', build_path: str, filename: str):
     if not os.path.exists(build_path):
         os.makedirs(build_path)
 

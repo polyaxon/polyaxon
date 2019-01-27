@@ -9,7 +9,7 @@ class TensorboardHandler(BaseHandler):
     SUBJECT = event_subjects.TENSORBOARD
 
     @classmethod
-    def _handle_tensorboard_cleaned_triggered(cls, event):
+    def _handle_tensorboard_cleaned_triggered(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification or not instance.is_running:
             return
@@ -26,7 +26,7 @@ class TensorboardHandler(BaseHandler):
             })
 
     @classmethod
-    def _handle_tensorboard_post_run(cls, event):
+    def _handle_tensorboard_post_run(cls, event: 'Event') -> None:
         instance = event.instance
         if not instance or not instance.has_specification:
             return
@@ -43,7 +43,7 @@ class TensorboardHandler(BaseHandler):
             })
 
     @classmethod
-    def record_event(cls, event):
+    def record_event(cls, event: 'Event') -> None:
         if event.event_type == tensorboard.TENSORBOARD_CLEANED_TRIGGERED:
             cls._handle_tensorboard_cleaned_triggered(event=event)
         if event.event_type in {tensorboard.TENSORBOARD_FAILED, tensorboard.TENSORBOARD_SUCCEEDED}:

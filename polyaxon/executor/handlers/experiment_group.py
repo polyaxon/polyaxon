@@ -9,7 +9,7 @@ class ExperimentGroupHandler(BaseHandler):
     SUBJECT = event_subjects.EXPERIMENT_GROUP
 
     @classmethod
-    def _handle_experiment_group_created(cls, event):
+    def _handle_experiment_group_created(cls, event: 'Event') -> None:
         if not event.data['has_specification'] or not event.data['is_study']:
             return
         celery_app.send_task(
@@ -18,6 +18,6 @@ class ExperimentGroupHandler(BaseHandler):
             countdown=1)
 
     @classmethod
-    def record_event(cls, event):
+    def record_event(cls, event: 'Event') -> None:
         if event.event_type == experiment_group.EXPERIMENT_GROUP_CREATED:
             cls._handle_experiment_group_created(event=event)
