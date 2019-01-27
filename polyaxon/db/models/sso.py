@@ -32,7 +32,7 @@ class SSOIdentity(DiffModel):
     def __str__(self):
         return '{} - {}'.format(self.user, self.provider)
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         if not self.valid:
             return False
         if not self.last_verified:

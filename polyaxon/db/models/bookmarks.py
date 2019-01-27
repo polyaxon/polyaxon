@@ -27,5 +27,5 @@ class Bookmark(DiffModel):
         verbose_name = 'bookmark'
         verbose_name_plural = 'bookmarks'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} - <{}-{}>'.format(self.user, self.content_type, self.created_at)

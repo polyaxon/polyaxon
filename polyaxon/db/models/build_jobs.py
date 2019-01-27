@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Dict, Tuple
+
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -68,36 +71,36 @@ class BuildJob(AbstractJob,
         unique_together = (('project', 'name'),)
 
     @cached_property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return BUILD_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
 
     @cached_property
-    def subpath(self):
+    def subpath(self) -> str:
         return get_job_subpath(job_name=self.unique_name)
 
     @cached_property
-    def pod_id(self):
+    def pod_id(self) -> str:
         return JOB_NAME_FORMAT.format(name=DOCKERIZER_JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
-    def specification(self):
+    def specification(self) -> 'BuildSpecification':
         return BuildSpecification(values=self.config)
 
     @property
-    def has_specification(self):
+    def has_specification(self) -> bool:
         return self.config is not None
 
-    def _ping_heartbeat(self):
+    def _ping_heartbeat(self) -> None:
         RedisHeartBeat.build_ping(self.id)
 
     def set_status(self,  # pylint:disable=arguments-differ
-                   status,
-                   created_at=None,
-                   message=None,
-                   traceback=None,
-                   details=None):
+                   status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None,
+                   details: Dict = None) -> bool:
         params = {'created_at': created_at} if created_at else {}
         return self._set_status(status_model=BuildJobStatus,
                                 status=status,
@@ -113,7 +116,7 @@ class BuildJob(AbstractJob,
                code_reference,
                configmap_refs=None,
                secret_refs=None,
-               nocache=False):
+               nocache=False) -> Tuple['BuildJob', bool]:
         build_config = BuildSpecification.create_specification(config,
                                                                configmap_refs=configmap_refs,
                                                                secret_refs=secret_refs,

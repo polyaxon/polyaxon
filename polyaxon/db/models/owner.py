@@ -30,9 +30,9 @@ class Owner(DiffModel):
         return self.name
 
     @cached_property
-    def owner_type(self):
+    def owner_type(self) -> str:
         return self.content_type.model
 
     @cached_property
-    def is_user_owner(self):
+    def is_user_owner(self) -> bool:
         return self.owner_type == content_types.USER

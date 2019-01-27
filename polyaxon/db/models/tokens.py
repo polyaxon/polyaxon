@@ -38,17 +38,17 @@ class Token(DiffModel):
     class Meta:
         app_label = 'db'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return 'Token <{}>'.format(self.user)
 
     @property
-    def is_expired(self):
+    def is_expired(self) -> bool:
         return self.started_at + timedelta(days=conf.get('TTL_TOKEN')) <= timezone.now()
 
-    def has_scope(self, scope):
+    def has_scope(self, scope) -> bool:
         return scope in self.scopes  # pylint:disable=unsupported-membership-test
 
-    def refresh(self, started_at=None):
+    def refresh(self, started_at=None) -> None:
         self.key = generate_token()
         self.refresh_key = generate_token()
         self.started_at = started_at or timezone.now()

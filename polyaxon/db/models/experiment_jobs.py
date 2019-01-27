@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Dict
+
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
@@ -45,7 +48,7 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
         app_label = 'db'
 
     @cached_property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return EXPERIMENT_JOB_UNIQUE_NAME_FORMAT.format(
             experiment_name=self.experiment.unique_name,
             id=self.id,
@@ -53,7 +56,7 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
         )
 
     @cached_property
-    def pod_id(self):
+    def pod_id(self) -> str:
         return EXPERIMENT_JOB_NAME_FORMAT.format(
             task_type=self.role,
             task_idx=self.sequence,
@@ -61,11 +64,11 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
         )
 
     def set_status(self,  # pylint:disable=arguments-differ
-                   status,
-                   created_at=None,
-                   message=None,
-                   traceback=None,
-                   details=None):
+                   status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None,
+                   details: Dict = None) -> bool:
         params = {'created_at': created_at} if created_at else {}
         return self._set_status(status_model=ExperimentJobStatus,
                                 status=status,

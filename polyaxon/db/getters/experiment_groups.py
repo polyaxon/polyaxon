@@ -5,7 +5,7 @@ from db.models.experiment_groups import ExperimentGroup
 _logger = logging.getLogger('polyaxon.db')
 
 
-def get_valid_experiment_group(experiment_group_id, include_deleted=False):
+def get_valid_experiment_group(experiment_group_id: int, include_deleted: bool = False):
     try:
         qs = ExperimentGroup.all if include_deleted else ExperimentGroup.objects
         return qs.get(id=experiment_group_id)
@@ -14,7 +14,7 @@ def get_valid_experiment_group(experiment_group_id, include_deleted=False):
         return None
 
 
-def get_running_experiment_group(experiment_group_id, include_deleted=False):
+def get_running_experiment_group(experiment_group_id: int, include_deleted: bool = False):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id,
                                                   include_deleted=include_deleted)
 

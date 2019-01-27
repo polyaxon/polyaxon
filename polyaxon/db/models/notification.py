@@ -30,7 +30,7 @@ class NotificationEvent(models.Model):
         verbose_name = 'notification event'
         verbose_name_plural = 'notification events'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} - {}'.format(self.event_type, self.created_at)
 
 
@@ -52,5 +52,5 @@ class Notification(models.Model):
         verbose_name = 'notification'
         verbose_name_plural = 'notifications'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} - <{} - {}>'.format(self.event, self.user, self.is_active)

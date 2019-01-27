@@ -5,9 +5,9 @@ from db.models.tensorboards import TensorboardJob
 _logger = logging.getLogger('polyaxon.db')
 
 
-def get_valid_tensorboard(tensorboard_job_id=None,
-                          tensorboard_job_uuid=None,
-                          include_deleted=False):
+def get_valid_tensorboard(tensorboard_job_id: int = None,
+                          tensorboard_job_uuid: str = None,
+                          include_deleted: bool = False):
     exists_cond = (not any([tensorboard_job_id, tensorboard_job_uuid])
                    or all([tensorboard_job_id, tensorboard_job_uuid]))
     if exists_cond:

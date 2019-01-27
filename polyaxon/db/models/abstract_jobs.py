@@ -1,6 +1,9 @@
 import logging
 import uuid
 
+from datetime import datetime
+from typing import Dict, List, Optional
+
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
@@ -8,6 +11,7 @@ from django.utils.functional import cached_property
 from constants.jobs import JobLifeCycle
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.utils import CachedMixin, DiffModel, RunTimeModel
+from polyaxon_schemas.environments import PodResourcesConfig
 
 _logger = logging.getLogger('polyaxon.db.jobs')
 
@@ -31,7 +35,9 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
         """Run's heartbeat callback."""
         pass
 
-    def last_status_before(self, status_model, status_date=None):  # pylint:disable=arguments-differ
+    def last_status_before(self,  # pylint:disable=arguments-differ
+                           status_model,
+                           status_date: datetime = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = status_model.objects.filter(job=self, created_at__lte=status_date).last()
@@ -39,11 +45,11 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
 
     def _set_status(self,
                     status_model,
-                    status,
-                    created_at=None,
-                    message=None,
-                    traceback=None,
-                    details=None):
+                    status: str,
+                    created_at: datetime = None,
+                    message: str = None,
+                    traceback: Dict = None,
+                    details: Dict = None) -> bool:
         current_status = self.last_status_before(status_model=status_model, status_date=created_at)
         if self.is_done:
             # We should not update statuses anymore
@@ -69,47 +75,47 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
 
 class JobMixin(object):
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.unique_name
 
     @cached_property
-    def unique_name(self):
+    def unique_name(self) -> str:
         pass
 
     @cached_property
-    def image(self):
+    def image(self) -> str:
         return self.specification.build.image
 
     @cached_property
-    def secret_refs(self):
+    def secret_refs(self) -> Optional[List[str]]:
         return self.specification.secret_refs
 
     @cached_property
-    def configmap_refs(self):
+    def configmap_refs(self) -> Optional[List[str]]:
         return self.specification.configmap_refs
 
     @cached_property
-    def resources(self):
+    def resources(self) -> Optional[PodResourcesConfig]:
         return self.specification.resources
 
     @cached_property
-    def node_selector(self):
+    def node_selector(self) -> Optional[Dict]:
         return self.specification.node_selector
 
     @cached_property
-    def affinity(self):
+    def affinity(self) -> Optional[Dict]:
         return self.specification.affinity
 
     @cached_property
-    def tolerations(self):
+    def tolerations(self) -> Optional[List[Dict]]:
         return self.specification.tolerations
 
     @cached_property
-    def build_steps(self):
+    def build_steps(self) -> List[str]:
         return self.specification.build.build_steps
 
     @cached_property
-    def env_vars(self):
+    def env_vars(self) -> Optional[List[str]]:
         return self.specification.build.env_vars
 
 
@@ -117,11 +123,11 @@ class TensorboardJobMixin(CachedMixin):
     CACHED_PROPERTIES = ['tensorboard', 'has_tensorboard']
 
     @cached_property
-    def tensorboard(self):
+    def tensorboard(self) -> 'TensorboardJob':
         return self.tensorboard_jobs.last()
 
     @cached_property
-    def has_tensorboard(self):
+    def has_tensorboard(self) -> bool:
         tensorboard = self.tensorboard
         return tensorboard and tensorboard.is_running
 
@@ -138,7 +144,7 @@ class AbstractJobStatus(StatusModel):
         choices=STATUSES.CHOICES)
     details = JSONField(null=True, blank=True, default=dict)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.job.unique_name, self.status)
 
     class Meta:

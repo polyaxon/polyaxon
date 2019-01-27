@@ -1,5 +1,9 @@
 import uuid
 
+from typing import Any, Dict, Optional
+
+from django.http import HttpRequest
+
 from db.redis.base import BaseRedisDb
 from libs.json_utils import dumps, loads
 from polyaxon.settings import RedisPools
@@ -32,21 +36,21 @@ class RedisSessions(BaseRedisDb):
 
     REDIS_POOL = RedisPools.SESSIONS
 
-    def __init__(self, request, prefix, ttl=EXPIRATION_TTL):
+    def __init__(self, request: HttpRequest, prefix: str, ttl: int = EXPIRATION_TTL) -> None:
         self.__dict__['request'] = request
         self.__dict__['prefix'] = prefix
         self.__dict__['ttl'] = ttl
         self.__dict__['_red'] = self._get_redis()
 
     @property
-    def session_key(self):
+    def session_key(self) -> str:
         return self.KEY_SESSION_KEYS.format(self.prefix)
 
     @property
-    def redis_key(self):
+    def redis_key(self) -> str:
         return self.request.session.get(self.session_key)
 
-    def regenerate(self, initial_state=None):
+    def regenerate(self, initial_state: Dict = None) -> None:
         if initial_state is None:
             initial_state = {}
 
@@ -57,17 +61,17 @@ class RedisSessions(BaseRedisDb):
         value = dumps(initial_state)
         self._red.setex(name=redis_key, time=self.ttl, value=value)
 
-    def clear(self):
+    def clear(self) -> None:
         if not self.redis_key:
             return
 
         self._red.delete(self.redis_key)
         del self.request.session[self.session_key]
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         return self.redis_key and self._red.get(self.redis_key)
 
-    def get_state(self):
+    def get_state(self) -> Optional[Dict]:
         if not self.redis_key:
             return None
 
@@ -77,7 +81,7 @@ class RedisSessions(BaseRedisDb):
 
         return loads(state_json.decode())
 
-    def __getattr__(self, key):
+    def __getattr__(self, key: str) -> Optional[Dict]:
         state = self.get_state()
 
         try:
@@ -85,7 +89,7 @@ class RedisSessions(BaseRedisDb):
         except KeyError as e:
             raise AttributeError(e)
 
-    def __setattr__(self, key, value):
+    def __setattr__(self, key: str, value: Any) -> None:
         state = self.get_state()
 
         if state is None:

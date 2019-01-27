@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Dict, List, Tuple
+
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
@@ -45,33 +48,33 @@ class TensorboardJob(PluginJobBase, JobMixin):
         app_label = 'db'
 
     @cached_property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return TENSORBOARD_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
 
     @cached_property
-    def subpath(self):
+    def subpath(self) -> str:
         return get_job_subpath(job_name=self.unique_name)
 
     @cached_property
-    def pod_id(self):
+    def pod_id(self) -> str:
         return JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
-    def specification(self):
+    def specification(self) -> 'TensorboardSpecification':
         return TensorboardSpecification(values=self.config)
 
     @property
-    def has_specification(self):
+    def has_specification(self) -> bool:
         return self.config is not None
 
     def set_status(self,  # pylint:disable=arguments-differ
-                   status,
-                   created_at=None,
-                   message=None,
-                   traceback=None,
-                   details=None):
+                   status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None,
+                   details: Dict = None) -> bool:
         return self._set_status(status_model=TensorboardJobStatus,
                                 created_at=created_at,
                                 status=status,
@@ -79,7 +82,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
                                 traceback=traceback,
                                 details=details)
 
-    def get_absolute_outputs_paths(self):
+    def get_absolute_outputs_paths(self) -> str:
         import stores
 
         if self.experiment:
@@ -98,7 +101,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
             persistence_outputs=None,
             project_name=self.project.unique_name)
 
-    def get_named_outputs_paths(self):
+    def get_named_outputs_paths(self) -> Tuple[List, str]:
         import stores
 
         def get_named_experiment_outputs_path(experiment):
@@ -131,7 +134,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
         return outputs_specs, ','.join(tensorboard_paths)
 
     @cached_property
-    def outputs_path(self):
+    def outputs_path(self) -> str:
         return self.get_named_outputs_paths()
 
 

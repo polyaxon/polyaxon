@@ -1,5 +1,8 @@
 import uuid
 
+from datetime import datetime
+from typing import Dict, List, Optional
+
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -36,11 +39,12 @@ from event_manager.events.experiment import (
 )
 from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
+from polyaxon_schemas.environments import PodResourcesConfig
 from schemas.specifications import ExperimentSpecification
 from schemas.tasks import TaskType
 
 
-def default_run_env():
+def default_run_env() -> Dict:
     return {'in_cluster': True}
 
 
@@ -135,7 +139,7 @@ class Experiment(DiffModel,
         unique_together = (('project', 'name'),)
 
     @property
-    def unique_name(self):
+    def unique_name(self) -> str:
         if self.experiment_group:
             parent_name = self.experiment_group.unique_name
         else:
@@ -143,37 +147,37 @@ class Experiment(DiffModel,
         return EXPERIMENT_UNIQUE_NAME_FORMAT.format(parent_name=parent_name, id=self.id)
 
     @property
-    def subpath(self):
+    def subpath(self) -> str:
         return get_experiment_subpath(experiment_name=self.unique_name)
 
     @cached_property
-    def specification(self):
+    def specification(self) -> 'ExperimentSpecification':
         return ExperimentSpecification(values=self.config) if self.config else None
 
     @property
-    def has_specification(self):
+    def has_specification(self) -> bool:
         return self.config is not None
 
     @cached_property
-    def secret_refs(self):
+    def secret_refs(self) -> Optional[List[str]]:
         return self.specification.secret_refs
 
     @cached_property
-    def configmap_refs(self):
+    def configmap_refs(self) -> Optional[List[str]]:
         return self.specification.configmap_refs
 
     @cached_property
-    def resources(self):
+    def resources(self) -> Optional[PodResourcesConfig]:
         if not self.specification:
             return None
         return self.specification.total_resources
 
     @cached_property
-    def framework(self):
+    def framework(self) -> Optional[str]:
         return self.specification.framework
 
     @property
-    def last_job_statuses(self):
+    def last_job_statuses(self) -> List[str]:
         """The last constants of the job in this experiment."""
         statuses = []
         for status in self.jobs.values_list('status__status', flat=True):
@@ -182,12 +186,12 @@ class Experiment(DiffModel,
         return statuses
 
     @property
-    def has_running_jobs(self):
+    def has_running_jobs(self) -> bool:
         """"Return a boolean indicating if the experiment has any running jobs"""
         return self.jobs.exclude(status__status__in=ExperimentLifeCycle.DONE_STATUS).exists()
 
     @property
-    def calculated_status(self):
+    def calculated_status(self) -> str:
         master_status = self.jobs.filter(role=TaskType.MASTER)[0].last_status
         calculated_status = master_status if JobLifeCycle.is_done(master_status) else None
         if calculated_status is None:
@@ -197,31 +201,31 @@ class Experiment(DiffModel,
         return calculated_status
 
     @property
-    def is_clone(self):
+    def is_clone(self) -> bool:
         return self.original_experiment is not None
 
     @property
-    def original_unique_name(self):
+    def original_unique_name(self) -> Optional[str]:
         return self.original_experiment.unique_name if self.original_experiment else None
 
     @property
-    def is_restart(self):
+    def is_restart(self) -> bool:
         return self.is_clone and self.cloning_strategy == CloningStrategy.RESTART
 
     @property
-    def is_resume(self):
+    def is_resume(self) -> bool:
         return self.is_clone and self.cloning_strategy == CloningStrategy.RESUME
 
     @property
-    def is_copy(self):
+    def is_copy(self) -> bool:
         return self.is_clone and self.cloning_strategy == CloningStrategy.COPY
 
     @property
-    def is_independent(self):
+    def is_independent(self) -> bool:
         """If the experiment belongs to a experiment_group or is independently created."""
         return self.experiment_group is None
 
-    def update_status(self):
+    def update_status(self) -> bool:
         current_status = self.last_status
         calculated_status = self.calculated_status
         if calculated_status != current_status:
@@ -239,7 +243,7 @@ class Experiment(DiffModel,
             return True
         return False
 
-    def last_status_before(self, status_date=None):
+    def last_status_before(self, status_date: datetime = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = ExperimentStatus.objects.filter(
@@ -247,7 +251,12 @@ class Experiment(DiffModel,
             created_at__lte=status_date).last()
         return status.status if status else None
 
-    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
+    def set_status(self,
+                   status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None,
+                   **kwargs):
         if status in ExperimentLifeCycle.HEARTBEAT_STATUS:
             RedisHeartBeat.experiment_ping(self.id)
         last_status = self.last_status_before(status_date=created_at)
@@ -260,15 +269,15 @@ class Experiment(DiffModel,
                                             **params)
 
     def _clone(self,
-               cloning_strategy,
-               event_type,
+               cloning_strategy: str,
+               event_type: str,
                user=None,
-               description=None,
+               description: str = None,
                config=None,
-               declarations=None,
+               declarations: dict = None,
                code_reference=None,
-               update_code_reference=False,
-               experiment_group=None):
+               update_code_reference: bool = False,
+               experiment_group=None) -> 'Experiment':
         if not code_reference and not update_code_reference:
             code_reference = self.code_reference
         instance = Experiment.objects.create(
@@ -286,12 +295,12 @@ class Experiment(DiffModel,
 
     def resume(self,
                user=None,
-               description=None,
+               description: str = None,
                config=None,
-               declarations=None,
+               declarations: Dict = None,
                code_reference=None,
-               update_code_reference=False,
-               experiment_group=None):
+               update_code_reference: bool = False,
+               experiment_group=None) -> 'Experiment':
         # TODO: We need to check if this instance was stopped after it was created
         # TODO: If that's the case and no updates are passed we just resume this very same instance
         # If the current instance is a resume of an original than we need to resume the original
@@ -318,12 +327,12 @@ class Experiment(DiffModel,
 
     def restart(self,
                 user=None,
-                description=None,
+                description: str = None,
                 config=None,
-                declarations=None,
+                declarations: Dict = None,
                 code_reference=None,
-                update_code_reference=False,
-                experiment_group=None):
+                update_code_reference: bool = False,
+                experiment_group=None) -> 'Experiment':
         return self._clone(cloning_strategy=CloningStrategy.RESTART,
                            event_type=EXPERIMENT_RESTARTED,
                            user=user,
@@ -336,12 +345,12 @@ class Experiment(DiffModel,
 
     def copy(self,
              user=None,
-             description=None,
+             description: str = None,
              config=None,
-             declarations=None,
+             declarations: Dict = None,
              code_reference=None,
-             update_code_reference=False,
-             experiment_group=None):
+             update_code_reference: bool = False,
+             experiment_group=None) -> 'Experiment':
         return self._clone(cloning_strategy=CloningStrategy.COPY,
                            event_type=EXPERIMENT_COPIED,
                            user=user,
@@ -373,7 +382,7 @@ class ExperimentStatus(StatusModel):
         verbose_name_plural = 'Experiment Statuses'
         ordering = ['created_at']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.experiment.unique_name, self.status)
 
 
@@ -386,7 +395,7 @@ class ExperimentMetric(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     values = JSONField()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.experiment.unique_name, self.created_at)
 
     class Meta:

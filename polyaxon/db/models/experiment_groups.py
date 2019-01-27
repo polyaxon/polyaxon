@@ -2,7 +2,9 @@ import functools
 import logging
 import uuid
 
+from datetime import datetime
 from operator import __or__ as OR
+from typing import Dict, List, Optional
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
@@ -112,28 +114,28 @@ class ExperimentGroup(DiffModel,
         app_label = 'db'
         unique_together = (('project', 'name'),)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.unique_name
 
     @property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return GROUP_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
 
     @cached_property
-    def subpath(self):
+    def subpath(self) -> str:
         return get_experiment_group_subpath(self.unique_name)
 
     @property
-    def is_study(self):
+    def is_study(self) -> bool:
         return self.group_type == GroupTypes.STUDY
 
     @property
-    def is_selection(self):
+    def is_selection(self) -> bool:
         return self.group_type == GroupTypes.SELECTION
 
-    def can_transition(self, status_from, status_to):
+    def can_transition(self, status_from, status_to) -> bool:
         """Update the status of the current instance.
 
         Returns:
@@ -147,7 +149,7 @@ class ExperimentGroup(DiffModel,
 
         return True
 
-    def last_status_before(self, status_date=None):
+    def last_status_before(self, status_date: datetime = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = ExperimentGroupStatus.objects.filter(
@@ -155,7 +157,10 @@ class ExperimentGroup(DiffModel,
             created_at__lte=status_date).last()
         return status.status if status else None
 
-    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
+    def set_status(self, status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None, **kwargs) -> None:
         status_from = self.last_status_before(status_date=created_at)
 
         if not self.can_transition(status_from=status_from, status_to=status):
@@ -168,48 +173,48 @@ class ExperimentGroup(DiffModel,
                                              traceback=traceback,
                                              **params)
 
-    def archive(self):
+    def archive(self) -> bool:
         if not super().archive():
             return False
         self.experiments.update(deleted=True)
         return True
 
-    def unarchive(self):
+    def unarchive(self) -> bool:
         if not super().unarchive():
             return False
         self.all_experiments.update(deleted=False)
         return True
 
     @cached_property
-    def hptuning_config(self):
+    def hptuning_config(self) -> Optional['HPTuningConfig']:
         return HPTuningConfig.from_dict(self.hptuning) if self.hptuning else None
 
     @cached_property
-    def specification(self):
+    def specification(self) -> Optional['GroupSpecification']:
         return GroupSpecification.read(self.content) if self.content else None
 
     @property
-    def has_specification(self):
+    def has_specification(self) -> bool:
         return self.content is not None
 
     @cached_property
-    def concurrency(self):
+    def concurrency(self) -> Optional[int]:
         if not self.hptuning_config:
             return None
         return self.hptuning_config.concurrency
 
     @cached_property
-    def search_algorithm(self):
+    def search_algorithm(self) -> Optional[str]:
         if not self.hptuning_config:
             return None
         return self.hptuning_config.search_algorithm
 
     @cached_property
-    def has_early_stopping(self):
+    def has_early_stopping(self) -> bool:
         return bool(self.early_stopping)
 
     @cached_property
-    def early_stopping(self):
+    def early_stopping(self) -> Optional[List]:
         if not self.hptuning_config:
             return None
         return self.hptuning_config.early_stopping or []
@@ -283,7 +288,7 @@ class ExperimentGroup(DiffModel,
             status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
 
     @property
-    def n_experiments_to_start(self):
+    def n_experiments_to_start(self) -> int:
         """We need to check if we are allowed to start the experiment
         If the polyaxonfile has concurrency we need to check how many experiments are running.
         """
@@ -302,10 +307,10 @@ class ExperimentGroup(DiffModel,
         return data
 
     @property
-    def current_iteration(self):
+    def current_iteration(self) -> int:
         return self.iterations.count()
 
-    def should_stop_early(self):
+    def should_stop_early(self) -> bool:
         filters = []
         for early_stopping_metric in self.early_stopping:
             comparison = (
@@ -317,7 +322,7 @@ class ExperimentGroup(DiffModel,
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
 
-    def get_annotated_experiments_with_metric(self, metric, experiment_ids=None):
+    def get_annotated_experiments_with_metric(self, metric: str, experiment_ids: List[int] = None):
         query = self.experiments
         if experiment_ids:
             query = query.filter(id__in=experiment_ids)
@@ -326,7 +331,10 @@ class ExperimentGroup(DiffModel,
         }
         return query.annotate(**annotation)
 
-    def get_ordered_experiments_by_metric(self, experiment_ids, metric, optimization):
+    def get_ordered_experiments_by_metric(self,
+                                          experiment_ids: List[int],
+                                          metric: str,
+                                          optimization: str):
         query = self.get_annotated_experiments_with_metric(
             metric=metric,
             experiment_ids=experiment_ids)
@@ -336,29 +344,29 @@ class ExperimentGroup(DiffModel,
             metric)
         return query.order_by(metric_order_by)
 
-    def get_experiments_metrics(self, metric, experiment_ids=None):
+    def get_experiments_metrics(self, metric: str, experiment_ids: List[int] = None):
         query = self.get_annotated_experiments_with_metric(
             metric=metric,
             experiment_ids=experiment_ids)
         return query.values_list('id', metric)
 
-    def get_experiments_declarations(self, experiment_ids=None):
+    def get_experiments_declarations(self, experiment_ids: List[int] = None):
         return self.experiments.filter(id__in=experiment_ids).values_list('id', 'declarations')
 
     @cached_property
-    def search_manager(self):
+    def search_manager(self) -> 'BaseSearchAlgorithmManager':
         from hpsearch.search_managers import get_search_algorithm_manager
 
         return get_search_algorithm_manager(hptuning_config=self.hptuning_config)
 
     @cached_property
-    def iteration_manager(self):
+    def iteration_manager(self) -> 'BaseIterationManager':
         from hpsearch.iteration_managers import get_search_iteration_manager
 
         return get_search_iteration_manager(experiment_group=self)
 
     @property
-    def iteration_config(self):
+    def iteration_config(self) -> 'BaseIterationConfig':
         from hpsearch.schemas import get_iteration_config
 
         iteration_data = self.iteration_data
@@ -375,7 +383,7 @@ class ExperimentGroup(DiffModel,
             return self.search_manager.get_suggestions(iteration_config=iteration_config)
         return self.search_manager.get_suggestions()
 
-    def get_num_suggestions(self):
+    def get_num_suggestions(self) -> int:
         iteration_config = self.iteration_config
         return self.search_manager.get_num_suggestions(iteration_config=iteration_config)
 
@@ -402,7 +410,7 @@ class ExperimentGroupIteration(DiffModel):
         app_label = 'db'
         ordering = ['created_at']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.experiment_group, self.created_at)
 
 
@@ -425,7 +433,7 @@ class ExperimentGroupStatus(StatusModel):
         app_label = 'db'
         verbose_name_plural = 'Experiment Group Statuses'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.experiment_group.unique_name, self.status)
 
 

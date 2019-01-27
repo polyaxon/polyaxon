@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Dict, Optional
+
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -89,56 +92,56 @@ class Job(AbstractJob,
         unique_together = (('project', 'name'),)
 
     @cached_property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return JOB_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
 
     @property
-    def subpath(self):
+    def subpath(self) -> str:
         return get_job_subpath(job_name=self.unique_name)
 
     @cached_property
-    def pod_id(self):
+    def pod_id(self) -> str:
         return JOB_NAME_FORMAT.format(name=JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
-    def specification(self):
+    def specification(self) -> 'JobSpecification':
         return JobSpecification(values=self.config)
 
     @property
-    def has_specification(self):
+    def has_specification(self) -> bool:
         return self.config is not None
 
     @property
-    def is_clone(self):
+    def is_clone(self) -> bool:
         return self.original_job is not None
 
     @property
-    def original_unique_name(self):
+    def original_unique_name(self) -> Optional[str]:
         return self.original_job.unique_name if self.original_job else None
 
     @property
-    def is_restart(self):
+    def is_restart(self) -> bool:
         return self.is_clone and self.cloning_strategy == CloningStrategy.RESTART
 
     @property
-    def is_resume(self):
+    def is_resume(self) -> bool:
         return self.is_clone and self.cloning_strategy == CloningStrategy.RESUME
 
     @property
-    def is_copy(self):
+    def is_copy(self) -> bool:
         return self.is_clone and self.cloning_strategy == CloningStrategy.COPY
 
-    def _ping_heartbeat(self):
+    def _ping_heartbeat(self) -> None:
         RedisHeartBeat.job_ping(self.id)
 
     def set_status(self,  # pylint:disable=arguments-differ
-                   status,
-                   created_at=None,
-                   message=None,
-                   traceback=None,
-                   details=None):
+                   status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None,
+                   details: Dict = None) -> bool:
         params = {'created_at': created_at} if created_at else {}
         return self._set_status(status_model=JobStatus,
                                 status=status,
@@ -147,13 +150,13 @@ class Job(AbstractJob,
                                 **params)
 
     def _clone(self,
-               cloning_strategy,
-               event_type,
+               cloning_strategy: str,
+               event_type: str,
                user=None,
-               description=None,
+               description: str = None,
                config=None,
                code_reference=None,
-               update_code_reference=False):
+               update_code_reference: bool = False) -> 'Job':
         if not code_reference and not update_code_reference:
             code_reference = self.code_reference
         instance = Job.objects.create(
@@ -169,10 +172,10 @@ class Job(AbstractJob,
 
     def restart(self,
                 user=None,
-                description=None,
+                description: str = None,
                 config=None,
                 code_reference=None,
-                update_code_reference=False):
+                update_code_reference: bool = False) -> 'Job':
         return self._clone(cloning_strategy=CloningStrategy.RESTART,
                            event_type=JOB_RESTARTED,
                            user=user,

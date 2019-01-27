@@ -1,3 +1,5 @@
+from typing import List, Optional, Tuple
+
 from db.redis.base import BaseRedisDb
 from polyaxon.settings import RedisPools
 
@@ -15,19 +17,19 @@ class RedisJobContainers(BaseRedisDb):
     REDIS_POOL = RedisPools.JOB_CONTAINERS
 
     @classmethod
-    def get_containers(cls):
+    def get_containers(cls) -> List[str]:
         red = cls._get_redis()
         container_ids = red.smembers(cls.KEY_CONTAINERS)
         return [container_id.decode('utf-8') for container_id in container_ids]
 
     @classmethod
-    def get_experiment_for_job(cls, job_uuid, red=None):
+    def get_experiment_for_job(cls, job_uuid: str, red=None) -> Optional[str]:
         red = red or cls._get_redis()
         experiment_uuid = red.hget(cls.KEY_JOBS_TO_EXPERIMENTS, job_uuid)
         return experiment_uuid.decode('utf-8') if experiment_uuid else None
 
     @classmethod
-    def get_job(cls, container_id):
+    def get_job(cls, container_id: str) -> Tuple[Optional[str], Optional[str]]:
         red = cls._get_redis()
         if red.sismember(cls.KEY_CONTAINERS, container_id):
             job_uuid = red.hget(cls.KEY_CONTAINERS_TO_JOBS, container_id)
@@ -40,13 +42,13 @@ class RedisJobContainers(BaseRedisDb):
         return None, None
 
     @classmethod
-    def remove_container(cls, container_id, red=None):
+    def remove_container(cls, container_id: str, red=None) -> None:
         red = red or cls._get_redis()
         red.srem(cls.KEY_CONTAINERS, container_id)
         red.hdel(cls.KEY_CONTAINERS_TO_JOBS, container_id)
 
     @classmethod
-    def remove_job(cls, job_uuid):
+    def remove_job(cls, job_uuid: str) -> None:
         red = cls._get_redis()
         key_jobs_to_containers = cls.KEY_JOBS_TO_CONTAINERS.format(job_uuid)
         containers = red.smembers(key_jobs_to_containers)
@@ -59,7 +61,7 @@ class RedisJobContainers(BaseRedisDb):
         red.hdel(cls.KEY_CONTAINERS_TO_JOBS, job_uuid)
 
     @classmethod
-    def monitor(cls, container_id, job_uuid):
+    def monitor(cls, container_id: str, job_uuid: str) -> None:
         red = cls._get_redis()
         if not red.sismember(cls.KEY_CONTAINERS, container_id):
             from db.models.experiment_jobs import ExperimentJob

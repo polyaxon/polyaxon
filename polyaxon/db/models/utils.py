@@ -1,3 +1,5 @@
+from typing import List, Optional, Union
+
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.cache import cache
 from django.core.validators import validate_slug
@@ -17,7 +19,7 @@ class DescribableModel(models.Model):
         abstract = True
 
     @property
-    def has_description(self):
+    def has_description(self) -> bool:
         return bool(self.description)
 
 
@@ -40,7 +42,7 @@ class ReadmeModel(models.Model):
         abstract = True
 
     @property
-    def has_readme(self):
+    def has_readme(self) -> bool:
         return bool(self.readme)
 
 
@@ -54,7 +56,7 @@ class DeletedModel(models.Model):
     class Meta:
         abstract = True
 
-    def archive(self):
+    def archive(self) -> bool:
         if self.deleted:
             return False
 
@@ -62,7 +64,7 @@ class DeletedModel(models.Model):
         self.save(update_fields=['deleted'])
         return True
 
-    def unarchive(self):
+    def unarchive(self) -> bool:
         if not self.deleted:
             return False
 
@@ -87,7 +89,7 @@ class SequenceModel(models.Model):
     class Meta:
         abstract = True
 
-    def _set_sequence(self, filter_query):
+    def _set_sequence(self, filter_query) -> None:
         if self.pk is None:
             last = filter_query.last()
             self.sequence = 1
@@ -151,19 +153,19 @@ class PersistenceModel(models.Model):
         abstract = True
 
     @cached_property
-    def persistence_config(self):
+    def persistence_config(self) -> Optional['PersistenceConfig']:
         return PersistenceConfig.from_dict(self.persistence) if self.persistence else None
 
     @cached_property
-    def persistence_data(self):
+    def persistence_data(self) -> Optional[List[str]]:
         return self.persistence_config.data if self.persistence_config else None
 
     @cached_property
-    def persistence_outputs(self):
+    def persistence_outputs(self) -> Optional[List[str]]:
         return self.persistence_config.outputs if self.persistence_config else None
 
     @cached_property
-    def persistence_logs(self):
+    def persistence_logs(self) -> Optional[List[str]]:
         return None
 
 
@@ -173,7 +175,7 @@ class SubPathModel(models.Model):
         abstract = True
 
     @cached_property
-    def subpath(self):
+    def subpath(self) -> str:
         raise NotImplementedError()
 
 
@@ -195,15 +197,15 @@ class OutputsModel(models.Model):
         abstract = True
 
     @cached_property
-    def outputs_config(self):
+    def outputs_config(self) -> Optional['OutputsConfig']:
         return OutputsConfig.from_dict(self.outputs) if self.outputs else None
 
     @cached_property
-    def outputs_jobs(self):
+    def outputs_jobs(self) -> Optional[List[Union[str, int]]]:
         return self.outputs_config.jobs if self.outputs_config else None
 
     @cached_property
-    def outputs_experiments(self):
+    def outputs_experiments(self) -> Optional[List[Union[str, int]]]:
         return self.outputs_config.experiments if self.outputs_config else None
 
     @cached_property

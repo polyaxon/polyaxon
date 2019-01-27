@@ -5,7 +5,9 @@ from db.models.jobs import Job
 _logger = logging.getLogger('polyaxon.db')
 
 
-def get_valid_job(job_id=None, job_uuid=None, include_deleted=False):
+def get_valid_job(job_id: int = None,
+                  job_uuid: str = None,
+                  include_deleted: bool = False):
     if not any([job_id, job_uuid]) or all([job_id, job_uuid]):
         raise ValueError('`get_valid_job` function expects an job id or uuid.')
 
@@ -22,7 +24,8 @@ def get_valid_job(job_id=None, job_uuid=None, include_deleted=False):
     return job
 
 
-def is_job_still_running(job_id=None, job_uuid=None):
+def is_job_still_running(job_id: int = None,
+                         job_uuid: str = None):
     job = get_valid_job(job_id=job_id, job_uuid=job_uuid)
 
     if not job or not job.is_running:

@@ -1,5 +1,7 @@
 import uuid
 
+from typing import Dict
+
 from hestia.unknown import UNKNOWN
 
 from django.contrib.postgres.fields import JSONField
@@ -14,7 +16,7 @@ from db.models.utils import DiffModel, SequenceModel
 class NodeParser(object):
 
     @staticmethod
-    def get_status(node):
+    def get_status(node) -> str:
         status = [c.status for c in node.status.conditions if c.type == 'Ready'][0]
         if status == 'True':
             return NodeLifeCycle.READY
@@ -23,18 +25,18 @@ class NodeParser(object):
         return NodeLifeCycle.UNKNOWN
 
     @staticmethod
-    def get_n_gpus(node):
+    def get_n_gpus(node) -> int:
         return int(node.status.allocatable.get(conf.get('K8S_GPU_RESOURCE_KEY'), 0))
 
     @staticmethod
-    def get_cpu(node):
+    def get_cpu(node) -> float:
         cpu = node.status.allocatable['cpu']
         if cpu.lower()[-1] == 'm':
             cpu = int(cpu[:-1]) / 1000
         return float(cpu)
 
     @staticmethod
-    def to_bytes(size_str):
+    def to_bytes(size_str: str) -> int:
         try:
             return int(float(size_str))
         except (ValueError, TypeError):
@@ -63,11 +65,11 @@ class NodeParser(object):
         return 0
 
     @classmethod
-    def get_memory(cls, node):
+    def get_memory(cls, node) -> int:
         return cls.to_bytes(node.status.allocatable['memory'])
 
     @staticmethod
-    def is_master(node):
+    def is_master(node) -> bool:
         if ('node-role.kubernetes.io/master' in node.metadata.labels or
                 node.metadata.labels.get('kubernetes.io/role') == NodeRoles.MASTER or
                 node.metadata.labels.get('kubernetes.io/hostname') == 'minikube'):
@@ -75,16 +77,16 @@ class NodeParser(object):
         return False
 
     @classmethod
-    def get_role(cls, node):
+    def get_role(cls, node) -> str:
         return NodeRoles.MASTER if cls.is_master(node) else NodeRoles.AGENT
 
     @staticmethod
-    def get_docker_version(node):
+    def get_docker_version(node) -> str:
         cri = node.status.node_info.container_runtime_version
         return cri[len('docker://'):] if cri.startswith('docker://') else UNKNOWN
 
     @staticmethod
-    def is_schedulable(node):
+    def is_schedulable(node) -> bool:
         if not node.spec.taints:
             return True
 
@@ -95,11 +97,11 @@ class NodeParser(object):
         return True
 
     @staticmethod
-    def get_schedulable_state(node):
+    def get_schedulable_state(node) -> bool:
         return not node.spec.unschedulable
 
     @staticmethod
-    def get_hostname(node):
+    def get_hostname(node) -> str:
         for a in node.status.addresses:
             if a.type == 'Hostname':
                 return a.address
@@ -160,7 +162,7 @@ class ClusterNode(SequenceModel):
         super().save(*args, **kwargs)
 
     @classmethod
-    def from_node_item(cls, node):
+    def from_node_item(cls, node) -> Dict:
         return {
             'name': node.metadata.name,
             'hostname': NodeParser.get_hostname(node),
@@ -207,7 +209,7 @@ class NodeGPU(DiffModel):
         ordering = ['index']
         unique_together = (('cluster_node', 'index'),)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.serial
 
 
@@ -225,5 +227,5 @@ class ClusterEvent(models.Model):
     class Meta:
         app_label = 'db'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return 'Event {} at {}'.format(self.level, self.created_at)

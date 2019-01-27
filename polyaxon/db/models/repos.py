@@ -1,5 +1,7 @@
 import os
 
+from typing import Any, Tuple
+
 from django.db import models
 
 import conf
@@ -10,27 +12,27 @@ from db.models.utils import DiffModel
 
 class RepoMixin(object):
     @property
-    def user_path(self):
+    def user_path(self) -> str:
         return os.path.join(conf.get('REPOS_MOUNT_PATH'), self.project.user.username)
 
     @property
-    def project_path(self):
+    def project_path(self) -> str:
         return os.path.join(self.user_path, self.project.name)
 
     @property
-    def path(self):
+    def path(self) -> str:
         """We need to nest the git path inside the project path to make it easier
         to create docker images."""
         return os.path.join(self.project_path, self.project.name)
 
     @property
-    def git(self):
+    def git(self) -> Any:
         from libs.repos import git
 
         return git.get_git_repo(repo_path=self.path)
 
     @property
-    def last_commit(self):
+    def last_commit(self) -> Tuple:
         """Returns a tuple (hash, and commit object)"""
         from libs.repos import git
 
@@ -41,7 +43,7 @@ class RepoMixin(object):
         """Returns the last code reference"""
         return self.references.last()
 
-    def get_tmp_tar_path(self):
+    def get_tmp_tar_path(self) -> str:
         return os.path.join(self.path, '{}_new.tar.gz'.format(self.project.name))
 
 
@@ -56,11 +58,11 @@ class Repo(DiffModel, RepoMixin):
     class Meta:
         app_label = 'db'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <repo>'.format(self.project)
 
     @property
-    def download_url(self):
+    def download_url(self) -> str:
         return '{}/{}/{}/repo/download'.format(API_V1,
                                                self.project.user.username,
                                                self.project.name)
@@ -93,5 +95,5 @@ class CodeReference(DiffModel):
     class Meta:
         app_label = 'db'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.repo, self.commit)

@@ -5,7 +5,9 @@ from db.models.projects import Project
 _logger = logging.getLogger('polyaxon.db')
 
 
-def get_valid_project(project_id=None, project_uuid=None, include_deleted=False):
+def get_valid_project(project_id: int = None,
+                      project_uuid: str = None,
+                      include_deleted: bool = False):
     if not any([project_id, project_uuid]) or all([project_id, project_uuid]):
         raise ValueError('`get_valid_project` function expects an project id or uuid.')
 

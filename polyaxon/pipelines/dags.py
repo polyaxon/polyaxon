@@ -1,9 +1,10 @@
 import copy
 
 from collections import deque
+from typing import Dict, Tuple
 
 
-def get_dag(nodes, downstream_fn):
+def get_dag(nodes, downstream_fn) -> Tuple[Dict, Dict]:
     """Return a dag representation of the nodes passed.
 
     This is equally used for pipelines and pipeline runs.

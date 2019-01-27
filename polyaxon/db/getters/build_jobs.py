@@ -5,7 +5,9 @@ from db.models.build_jobs import BuildJob
 _logger = logging.getLogger('polyaxon.db')
 
 
-def get_valid_build_job(build_job_id=None, build_job_uuid=None, include_deleted=False):
+def get_valid_build_job(build_job_id: int = None,
+                        build_job_uuid: str = None,
+                        include_deleted: bool = False):
     if not any([build_job_id, build_job_uuid]) or all([build_job_id, build_job_uuid]):
         raise ValueError('`get_valid_build_job` function expects an build_job id or uuid.')
 
@@ -22,7 +24,8 @@ def get_valid_build_job(build_job_id=None, build_job_uuid=None, include_deleted=
     return build_job
 
 
-def is_build_job_still_running(build_job_id=None, build_job_uuid=None):
+def is_build_job_still_running(build_job_id: int = None,
+                               build_job_uuid: str = None):
     build_job = get_valid_build_job(build_job_id=build_job_id, build_job_uuid=build_job_uuid)
 
     if not build_job or not build_job.is_running:

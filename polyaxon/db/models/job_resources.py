@@ -28,7 +28,7 @@ class JobResources(models.Model):
         verbose_name = 'job resources'
         verbose_name_plural = 'jobs resources'
 
-    def __str__(self):
+    def __str__(self) -> str:
         def get_resource(resource, resource_name):
             if not resource:
                 return ''

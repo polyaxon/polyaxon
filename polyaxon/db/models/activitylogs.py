@@ -31,5 +31,5 @@ class ActivityLog(models.Model):
         verbose_name = 'activity log'
         verbose_name_plural = 'activities logs'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} - {}'.format(self.event_type, self.created_at)

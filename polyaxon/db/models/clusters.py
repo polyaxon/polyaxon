@@ -23,7 +23,7 @@ class Cluster(Singleton):
         return 'Cluster: {}'.format(self.uuid.hex)
 
     @staticmethod
-    def record(obj):
+    def record(obj: 'Cluster') -> None:
         import auditor
         import conf
 
@@ -47,11 +47,11 @@ class Cluster(Singleton):
             chart_version=conf.get('CHART_VERSION'))
 
     @classmethod
-    def may_be_update(cls, obj):
+    def may_be_update(cls, obj: 'Cluster') -> None:
         pass
 
     @classmethod
-    def load(cls):
+    def load(cls) -> 'Cluster':
         import conf
 
         if cache.get(cls.__name__) is None:

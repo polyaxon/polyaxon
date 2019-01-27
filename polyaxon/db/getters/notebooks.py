@@ -5,7 +5,9 @@ from db.models.notebooks import NotebookJob
 _logger = logging.getLogger('polyaxon.db')
 
 
-def get_valid_notebook(notebook_job_id=None, notebook_job_uuid=None, include_deleted=False):
+def get_valid_notebook(notebook_job_id: int = None,
+                       notebook_job_uuid: str = None,
+                       include_deleted: bool = False):
     exists_cond = (not any([notebook_job_id, notebook_job_uuid])
                    or all([notebook_job_id, notebook_job_uuid]))
     if exists_cond:

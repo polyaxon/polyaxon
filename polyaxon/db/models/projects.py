@@ -53,7 +53,7 @@ class Project(DiffModel,
         default=True,
         help_text='If project is public or private.')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.unique_name
 
     class Meta:
@@ -61,17 +61,17 @@ class Project(DiffModel,
         unique_together = (('user', 'name'),)
 
     @property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return PROJECT_UNIQUE_NAME_FORMAT.format(
             user=self.user.username,
             project=self.name)
 
     @property
-    def subpath(self):
+    def subpath(self) -> str:
         return get_project_subpath(project_name=self.unique_name)
 
     @property
-    def has_code(self):
+    def has_code(self) -> bool:
         return hasattr(self, 'repo')
 
     @cached_property
@@ -79,7 +79,7 @@ class Project(DiffModel,
         return self.notebook_jobs.last()
 
     @cached_property
-    def has_notebook(self):
+    def has_notebook(self) -> bool:
         notebook = self.notebook
         return notebook and notebook.is_running
 
@@ -88,7 +88,7 @@ class Project(DiffModel,
         return self.tensorboard_jobs.filter(experiment=None, experiment_group=None).last()
 
     @cached_property
-    def has_tensorboard(self):
+    def has_tensorboard(self) -> bool:
         tensorboard = self.tensorboard
         return tensorboard and tensorboard.is_running
 
@@ -153,11 +153,11 @@ class Project(DiffModel,
         return TensorboardJob.all.filter(project=self)
 
     @property
-    def has_owner(self):
+    def has_owner(self) -> bool:
         """Quick test to check the instance has an owner."""
         return bool(self.owner_id)
 
-    def archive(self):
+    def archive(self) -> bool:
         if not super().archive():
             return False
         self.experiment_groups.update(deleted=True)
@@ -168,7 +168,7 @@ class Project(DiffModel,
         self.tensorboard_jobs.update(deleted=True)
         return True
 
-    def unarchive(self):
+    def unarchive(self) -> bool:
         if not super().unarchive():
             return False
         self.all_experiment_groups.update(deleted=False)

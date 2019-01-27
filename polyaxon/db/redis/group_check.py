@@ -14,11 +14,11 @@ class GroupChecks(BaseRedisDb):
     # If a group started a task in this interval we schedule at most one afterwards
     REDIS_POOL = RedisPools.GROUP_CHECKS
 
-    def __init__(self, group):
+    def __init__(self, group) -> None:
         self.__dict__['key'] = group
         self.__dict__['_red'] = self._get_redis()
 
-    def __getattr__(self, key):
+    def __getattr__(self, key: str):
         value = self.get_value()
 
         try:
@@ -27,14 +27,14 @@ class GroupChecks(BaseRedisDb):
             raise AttributeError(e)
 
     @property
-    def redis_key_checked(self):
+    def redis_key_checked(self) -> str:
         return self.KEY_CHECKED.format(self.key)
 
     @property
-    def redis_key_delayed(self):
+    def redis_key_delayed(self) -> str:
         return self.KEY_DELAYED.format(self.key)
 
-    def is_checked(self):
+    def is_checked(self) -> bool:
         """One task ran (checked)."""
         if not self.redis_key_checked:
             return False
@@ -45,7 +45,7 @@ class GroupChecks(BaseRedisDb):
 
         return True
 
-    def is_delayed(self):
+    def is_delayed(self) -> bool:
         """One task ran (checked), and one task has been delayed."""
         if not self.redis_key_delayed:
             return False
@@ -56,18 +56,18 @@ class GroupChecks(BaseRedisDb):
 
         return True
 
-    def check(self):
+    def check(self) -> None:
         self._red.setex(name=self.redis_key_checked,
                         value=1,
                         time=conf.get('GROUP_CHECKS_INTERVAL'))
 
-    def delay(self):
+    def delay(self) -> None:
         self.check()
         self._red.setex(name=self.redis_key_delayed,
                         value=1,
                         time=conf.get('GROUP_CHECKS_INTERVAL'))
 
-    def clear(self):
+    def clear(self) -> None:
         if self.redis_key_checked:
             self._red.delete(self.redis_key_checked)
         if self.redis_key_delayed:

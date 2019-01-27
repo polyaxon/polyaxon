@@ -1,6 +1,9 @@
 import logging
 import uuid
 
+from datetime import datetime
+from typing import Dict, Optional, Tuple
+
 from celery.result import AsyncResult
 
 from django.conf import settings
@@ -124,13 +127,13 @@ class Pipeline(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableM
         unique_together = (('project', 'name'),)
 
     @property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return PIPELINES_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
 
     @property
-    def dag(self):
+    def dag(self) -> Tuple[Dict, Dict]:
         """Construct the DAG of this pipeline based on the its operations and their downstream."""
         from pipelines import dags
 
@@ -237,12 +240,12 @@ class Operation(DiffModel,
         unique_together = (('pipeline', 'name'),)
 
     @property
-    def unique_name(self):
+    def unique_name(self) -> str:
         return OPS_UNIQUE_NAME_FORMAT.format(
             pipeline_name=self.pipeline.unique_name,
             id=self.id)
 
-    def get_countdown(self, retries):
+    def get_countdown(self, retries) -> int:
         """Calculate the countdown for a celery task retry."""
         retry_delay = self.retry_delay
         if self.retry_exponential_backoff:
@@ -252,7 +255,7 @@ class Operation(DiffModel,
             )
         return retry_delay
 
-    def get_run_params(self):
+    def get_run_params(self) -> Dict:
         """Return the params to run the celery task."""
         params = {}
         if self.celery_queue:
@@ -290,7 +293,7 @@ class PipelineRunStatus(StatusModel):
         verbose_name_plural = 'Pipeline Run Statuses'
         ordering = ['created_at']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.pipeline_run, self.status)
 
 
@@ -314,7 +317,7 @@ class OperationRunStatus(StatusModel):
         verbose_name_plural = 'Operation Run Statuses'
         ordering = ['created_at']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{} <{}>'.format(self.operation_run, self.status)
 
 
@@ -334,10 +337,10 @@ class RunModel(DiffModel, RunTimeModel, DeletedModel, LastStatusMixin):
         abstract = True
 
     @property
-    def skipped(self):
+    def skipped(self) -> bool:
         return self.STATUSES.skipped(self.last_status)
 
-    def can_transition(self, status_from, status_to):
+    def can_transition(self, status_from: str, status_to: str) -> bool:
         """Update the status of the current instance.
 
         Returns:
@@ -351,19 +354,19 @@ class RunModel(DiffModel, RunTimeModel, DeletedModel, LastStatusMixin):
 
         return True
 
-    def on_scheduled(self, message=None):
+    def on_scheduled(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.SCHEDULED, message=message)
 
-    def on_run(self, message=None):
+    def on_run(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.RUNNING, message=message)
 
-    def on_timeout(self, message=None):
+    def on_timeout(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.FAILED, message=message)
 
-    def on_stop(self, message=None):
+    def on_stop(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.STOPPED, message=message)
 
-    def on_skip(self, message=None):
+    def on_skip(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.SKIPPED, message=message)
 
 
@@ -392,7 +395,7 @@ class PipelineRun(RunModel):
         app_label = 'db'
 
     @property
-    def dag(self):
+    def dag(self) -> Tuple[Dict, Dict]:
         """Construct the DAG of this pipeline run
         based on the its operation runs and their downstream.
         """
@@ -405,10 +408,10 @@ class PipelineRun(RunModel):
 
         return dags.get_dag(operation_runs, get_downstream)
 
-    def on_finished(self, message=None):
+    def on_finished(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.FINISHED, message=message)
 
-    def last_status_before(self, status_date=None):
+    def last_status_before(self, status_date: datetime = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = PipelineRunStatus.objects.filter(
@@ -416,7 +419,12 @@ class PipelineRun(RunModel):
             created_at__lte=status_date).last()
         return status.status if status else None
 
-    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
+    def set_status(self,
+                   status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None,
+                   **kwargs) -> None:
         last_status = self.last_status_before(status_date=created_at)
         if not self.can_transition(status_from=last_status, status_to=status):
             return
@@ -451,7 +459,7 @@ class PipelineRun(RunModel):
         """We need to check if we are allowed to start any operations"""
         return self.pipeline.concurrency - self.running_operation_runs.count()
 
-    def check_concurrency(self):
+    def check_concurrency(self) -> bool:
         """ Check the pipeline concurrency.
 
         Checks the concurrency of the pipeline run
@@ -499,7 +507,7 @@ class OperationRun(RunModel):
     class Meta:
         app_label = 'db'
 
-    def last_status_before(self, status_date=None):
+    def last_status_before(self, status_date: datetime = None) -> Optional[str]:
         if not status_date:
             return self.last_status
         status = OperationRunStatus.objects.filter(
@@ -507,7 +515,12 @@ class OperationRun(RunModel):
             created_at__lte=status_date).last()
         return status.status if status else None
 
-    def set_status(self, status, created_at=None, message=None, traceback=None, **kwargs):
+    def set_status(self,
+                   status: str,
+                   created_at: datetime = None,
+                   message: str = None,
+                   traceback: Dict = None,
+                   **kwargs) -> None:
         last_status = self.last_status_before(status_date=created_at)
         if self.can_transition(status_from=last_status, status_to=status):
             params = {'created_at': created_at} if created_at else {}
@@ -517,7 +530,7 @@ class OperationRun(RunModel):
                                               message=message,
                                               **params)
 
-    def check_concurrency(self):
+    def check_concurrency(self) -> bool:
         """Checks the concurrency of the operation run.
 
         Checks the concurrency of the operation run
@@ -533,7 +546,7 @@ class OperationRun(RunModel):
             status__status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.operation.concurrency
 
-    def check_upstream_trigger(self):
+    def check_upstream_trigger(self) -> bool:
         """Checks the upstream and the trigger rule."""
         if self.operation.trigger_policy == TriggerPolicy.ONE_DONE:
             return self.upstream_runs.filter(
@@ -557,12 +570,12 @@ class OperationRun(RunModel):
                              if status not in self.STATUSES.FAILED_STATUS])
 
     @property
-    def is_upstream_done(self):
+    def is_upstream_done(self) -> bool:
         statuses = self.upstream_runs.values_list('status__status', flat=True)
         return not bool([True for status in statuses
                          if status not in self.STATUSES.DONE_STATUS])
 
-    def schedule_start(self):
+    def schedule_start(self) -> bool:
         """Schedule the task: check first if the task can start:
             1. we check that the task is still in the CREATED state.
             2. we check that the upstream dependency is met.
@@ -609,7 +622,7 @@ class OperationRun(RunModel):
         self.start()
         return False
 
-    def start(self):
+    def start(self) -> None:
         """Start the celery task of this operation."""
         kwargs = self.celery_task_context
         # Update we the operation run id
@@ -622,24 +635,24 @@ class OperationRun(RunModel):
         self.celery_task_id = async_result.id
         self.save()
 
-    def stop(self, message=None):
+    def stop(self, message: str = None) -> None:
         if self.is_running:
             task = AsyncResult(self.celery_task_id)
             task.revoke(terminate=True, signal='SIGKILL')
         self.on_stop(message=message)
 
-    def skip(self, message=None):
+    def skip(self, message: str = None) -> None:
         self.on_skip(message=message)
 
-    def on_retry(self):
+    def on_retry(self) -> None:
         self.set_status(status=self.STATUSES.RETRYING)
 
-    def on_upstream_failed(self):
+    def on_upstream_failed(self) -> None:
         self.set_status(status=self.STATUSES.UPSTREAM_FAILED)
 
-    def on_failure(self, message=None):
+    def on_failure(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.FAILED, message=message)
         self.save()
 
-    def on_success(self, message=None):
+    def on_success(self, message: str = None) -> None:
         self.set_status(status=self.STATUSES.SUCCEEDED, message=message)

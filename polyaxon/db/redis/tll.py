@@ -1,3 +1,5 @@
+from typing import Any, Optional, Union
+
 from db.redis.base import BaseRedisDb
 from polyaxon.settings import RedisPools
 
@@ -15,7 +17,7 @@ class RedisTTL(BaseRedisDb):
 
     REDIS_POOL = RedisPools.TTL
 
-    def __init__(self, experiment=None, job=None, build=None):
+    def __init__(self, experiment: int = None, job: int = None, build: int = None) -> None:
         if len([1 for i in [experiment, job, build] if i]) != 1:
             raise ValueError('RedisTTL expects an experiment, build or a job.')
 
@@ -31,7 +33,7 @@ class RedisTTL(BaseRedisDb):
         self.__dict__['key'] = experiment or job or build
         self.__dict__['_red'] = self._get_redis()
 
-    def __getattr__(self, key):
+    def __getattr__(self, key: str) -> Any:
         value = self.get_value()
 
         try:
@@ -39,7 +41,7 @@ class RedisTTL(BaseRedisDb):
         except KeyError as e:
             raise AttributeError(e)
 
-    def get_value(self):
+    def get_value(self) -> Optional[int]:
         if not self.redis_key:
             return None
 
@@ -49,7 +51,7 @@ class RedisTTL(BaseRedisDb):
 
         return int(value.decode())
 
-    def set_value(self, value):
+    def set_value(self, value: Union[int, str]) -> None:
         try:
             value = int(value)
         except (TypeError, ValueError):
@@ -57,7 +59,7 @@ class RedisTTL(BaseRedisDb):
         self._red.set(name=self.redis_key, value=value)
 
     @property
-    def redis_key(self):
+    def redis_key(self) -> str:
         if self._is_experiment:
             return self.KEY_EXPERIMENT.format(self.key)
         if self._is_job:
@@ -66,39 +68,39 @@ class RedisTTL(BaseRedisDb):
             return self.KEY_BUILD.format(self.key)
         raise KeyError('Wrong RedisTTL key')
 
-    def clear(self):
+    def clear(self) -> None:
         if not self.redis_key:
             return
 
         self._red.delete(self.redis_key)
 
     @staticmethod
-    def validate_ttl(value):
+    def validate_ttl(value) -> int:
         try:
             return int(value)
         except (TypeError, ValueError):
             raise ValueError('RedisTTL expects int values.')
 
     @classmethod
-    def set_for_experiment(cls, experiment_id, value):
+    def set_for_experiment(cls, experiment_id: int, value: Union[int, str]) -> None:
         value = cls.validate_ttl(value)
         ttl = RedisTTL(experiment=experiment_id)
         ttl.set_value(value)
 
     @classmethod
-    def set_for_job(cls, job_id, value):
+    def set_for_job(cls, job_id: int, value: Union[int, str]) -> None:
         value = cls.validate_ttl(value)
         ttl = RedisTTL(job=job_id)
         ttl.set_value(value)
 
     @classmethod
-    def set_for_build(cls, build_id, value):
+    def set_for_build(cls, build_id: int, value: Union[int, str]) -> None:
         value = cls.validate_ttl(value)
         ttl = RedisTTL(build=build_id)
         ttl.set_value(value)
 
     @classmethod
-    def get_for_experiment(cls, experiment_id):
+    def get_for_experiment(cls, experiment_id: int) -> int:
         ttl = RedisTTL(experiment=experiment_id)
         ttl_value = ttl.get_value()
         if ttl_value:
@@ -107,7 +109,7 @@ class RedisTTL(BaseRedisDb):
         return 2  # Default value to collect logs
 
     @classmethod
-    def get_for_job(cls, job_id):
+    def get_for_job(cls, job_id: int) -> int:
         ttl = RedisTTL(job=job_id)
         ttl_value = ttl.get_value()
         if ttl_value:
@@ -116,7 +118,7 @@ class RedisTTL(BaseRedisDb):
         return 2  # Default value to collect logs@classmethod
 
     @classmethod
-    def get_for_build(cls, build_id):
+    def get_for_build(cls, build_id: int) -> int:
         ttl = RedisTTL(build=build_id)
         ttl_value = ttl.get_value()
         if ttl_value:

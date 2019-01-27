@@ -1,5 +1,7 @@
 import json
 
+from typing import Dict, List, Optional, Union
+
 from db.redis.base import BaseRedisDb
 from polyaxon.settings import RedisPools
 
@@ -22,70 +24,73 @@ class RedisToStream(BaseRedisDb):
     REDIS_POOL = RedisPools.JOB_CONTAINERS
 
     @classmethod
-    def _monitor(cls, key, object_id):
+    def _monitor(cls, key: str, object_id: str) -> None:
         red = cls._get_redis()
         red.sadd(key, object_id)
 
     @classmethod
-    def monitor_job_resources(cls, job_uuid):
+    def monitor_job_resources(cls, job_uuid: str) -> None:
         cls._monitor(cls.KEY_JOB_RESOURCES, job_uuid)
 
     @classmethod
-    def monitor_job_logs(cls, job_uuid):
+    def monitor_job_logs(cls, job_uuid: str) -> None:
         cls._monitor(cls.KEY_JOB_LOGS, job_uuid)
 
     @classmethod
-    def monitor_experiment_resources(cls, experiment_uuid):
+    def monitor_experiment_resources(cls, experiment_uuid: str) -> None:
         cls._monitor(cls.KEY_EXPERIMENT_RESOURCES, experiment_uuid)
 
     @classmethod
-    def monitor_experiment_logs(cls, experiment_uuid):
+    def monitor_experiment_logs(cls, experiment_uuid: str) -> None:
         cls._monitor(cls.KEY_EXPERIMENT_LOGS, experiment_uuid)
 
     @classmethod
-    def _is_monitored(cls, key, object_id):
+    def _is_monitored(cls, key: str, object_id: str) -> bool:
         red = cls._get_redis()
         return red.sismember(key, object_id)
 
     @classmethod
-    def is_monitored_job_resources(cls, job_uuid):
+    def is_monitored_job_resources(cls, job_uuid: str) -> bool:
         return cls._is_monitored(cls.KEY_JOB_RESOURCES, job_uuid)
 
     @classmethod
-    def is_monitored_job_logs(cls, job_uuid):
+    def is_monitored_job_logs(cls, job_uuid: str) -> bool:
         return cls._is_monitored(cls.KEY_JOB_LOGS, job_uuid)
 
     @classmethod
-    def is_monitored_experiment_resources(cls, experiment_uuid):
+    def is_monitored_experiment_resources(cls, experiment_uuid: str) -> bool:
         return cls._is_monitored(cls.KEY_EXPERIMENT_RESOURCES, experiment_uuid)
 
     @classmethod
-    def is_monitored_experiment_logs(cls, experiment_uuid):
+    def is_monitored_experiment_logs(cls, experiment_uuid: str) -> bool:
         return cls._is_monitored(cls.KEY_EXPERIMENT_LOGS, experiment_uuid)
 
     @classmethod
-    def _remove_object(cls, key, object_id):
+    def _remove_object(cls, key: str, object_id: str) -> None:
         red = cls._get_redis()
         red.srem(key, object_id)
 
     @classmethod
-    def remove_job_resources(cls, job_uuid):
+    def remove_job_resources(cls, job_uuid: str) -> None:
         cls._remove_object(cls.KEY_JOB_RESOURCES, job_uuid)
 
     @classmethod
-    def remove_job_logs(cls, job_uuid):
+    def remove_job_logs(cls, job_uuid: str) -> None:
         cls._remove_object(cls.KEY_JOB_LOGS, job_uuid)
 
     @classmethod
-    def remove_experiment_resources(cls, experiment_uuid):
+    def remove_experiment_resources(cls, experiment_uuid: str) -> None:
         cls._remove_object(cls.KEY_EXPERIMENT_RESOURCES, experiment_uuid)
 
     @classmethod
-    def remove_experiment_logs(cls, experiment_uuid):
+    def remove_experiment_logs(cls, experiment_uuid: str) -> None:
         cls._remove_object(cls.KEY_EXPERIMENT_LOGS, experiment_uuid)
 
     @classmethod
-    def get_latest_job_resources(cls, job, job_name, as_json=False):
+    def get_latest_job_resources(cls,
+                                 job: str,
+                                 job_name: str,
+                                 as_json: bool = False) -> Optional[Union[str, Dict]]:
         red = cls._get_redis()
         resources = red.hget(cls.KEY_JOB_LATEST_STATS, job)
         if resources:
@@ -96,7 +101,9 @@ class RedisToStream(BaseRedisDb):
         return None
 
     @classmethod
-    def get_latest_experiment_resources(cls, jobs, as_json=False):
+    def get_latest_experiment_resources(cls,
+                                        jobs: List[Dict],
+                                        as_json: bool = False) -> List[Optional[Union[str, Dict]]]:
         stats = []
         for job in jobs:
             job_resources = cls.get_latest_job_resources(job=job['uuid'],
@@ -107,6 +114,6 @@ class RedisToStream(BaseRedisDb):
         return stats if as_json else json.dumps(stats)
 
     @classmethod
-    def set_latest_job_resources(cls, job, payload):
+    def set_latest_job_resources(cls, job: str, payload: Dict) -> None:
         red = cls._get_redis()
         red.hset(cls.KEY_JOB_LATEST_STATS, job, json.dumps(payload))
