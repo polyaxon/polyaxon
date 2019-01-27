@@ -1,3 +1,5 @@
+from typing import Dict
+
 from django.db import connection
 
 from checks.base import Check
@@ -6,7 +8,7 @@ from checks.results import Result
 
 class PostgresCheck(Check):
     @staticmethod
-    def pg_health():
+    def pg_health() -> Result:
         try:
             with connection.cursor() as cursor:
                 cursor.execute('SELECT 1; -- Healthcheck')
@@ -21,6 +23,6 @@ class PostgresCheck(Check):
                           severity=Result.ERROR)
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         result = cls.pg_health()
         return {'POSTGRES': result}

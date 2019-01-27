@@ -1,3 +1,5 @@
+from typing import Dict
+
 from hestia.string_utils import strip_spaces
 
 import conf
@@ -5,6 +7,7 @@ import conf
 from action_manager.action import Action, logger
 from action_manager.action_event import ActionExecutedEvent
 from action_manager.utils.email import send_mass_template_mail
+from event_manager.event import Event
 from event_manager.event_actions import EXECUTED
 from event_manager.event_context import get_event_context, get_readable_event
 
@@ -25,7 +28,7 @@ class EmailAction(Action):
                    "or manually triggered by a user operation.")
 
     @classmethod
-    def _validate_config(cls, config):
+    def _validate_config(cls, config: Dict) -> Dict:
         if not config:
             return {}
 
@@ -40,11 +43,11 @@ class EmailAction(Action):
         return config
 
     @classmethod
-    def _get_config(cls):
+    def _get_config(cls) -> None:
         return None
 
     @classmethod
-    def serialize_event_to_context(cls, event):
+    def serialize_event_to_context(cls, event: Event) -> Dict:
         event_context = get_event_context(event)
 
         context = {
@@ -58,7 +61,7 @@ class EmailAction(Action):
         }
 
     @classmethod
-    def _prepare(cls, context):
+    def _prepare(cls, context: Dict):
         context = context or {}
         context['subject_template'] = (
             context.get('subject_template') or
@@ -77,7 +80,7 @@ class EmailAction(Action):
         return context
 
     @classmethod
-    def _execute(cls, data, config):
+    def _execute(cls, data: Dict, config: Dict) -> None:
         if not all([conf.get('EMAIL_HOST_USER'), conf.get('EMAIL_HOST_PASSWORD')]):
             logger.debug("Email was not setup, skipping send.")
             return

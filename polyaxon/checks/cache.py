@@ -1,3 +1,5 @@
+from typing import Dict
+
 from django.core.cache import CacheKeyWarning, cache
 
 from checks.base import Check
@@ -7,7 +9,7 @@ from checks.results import Result
 class CacheCheck(Check):
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         try:
             cache.set('health_check', 'test', 1)
             if cache.get('health_check') != 'test':

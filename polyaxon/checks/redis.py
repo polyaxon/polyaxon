@@ -1,3 +1,5 @@
+from typing import Dict
+
 import redis
 
 from checks.base import Check
@@ -12,7 +14,7 @@ from db.redis.to_stream import RedisToStream
 class RedisCheck(Check):
 
     @staticmethod
-    def redis_health(connection):
+    def redis_health(connection) -> Result:
         try:
             info = connection.info()
             return Result(message='Service is healthy, db size {}'.format(info['used_memory']))
@@ -24,7 +26,7 @@ class RedisCheck(Check):
                           severity=Result.ERROR)
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         results = {}
         result = cls.redis_health(RedisEphemeralTokens.connection())
         if not result.is_healthy:

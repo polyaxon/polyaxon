@@ -1,3 +1,5 @@
+from typing import List
+
 from hestia.unknown import UNKNOWN
 
 from constants.jobs import JobLifeCycle
@@ -72,47 +74,47 @@ class ExperimentLifeCycle(BaseStatuses):
     }
 
     @staticmethod
-    def jobs_unschedulable(job_statuses):
+    def jobs_unschedulable(job_statuses: List[str]) -> bool:
         return any([True if JobLifeCycle.is_unschedulable(job_status) else False
                     for job_status in job_statuses])
 
     @staticmethod
-    def jobs_warning(job_statuses):
+    def jobs_warning(job_statuses: List[str]) -> bool:
         return any([True if JobLifeCycle.is_warning(job_status) else False
                     for job_status in job_statuses])
 
     @staticmethod
-    def jobs_starting(job_statuses):
+    def jobs_starting(job_statuses: List[str]) -> bool:
         return any([True if JobLifeCycle.is_starting(job_status) else False
                     for job_status in job_statuses])
 
     @staticmethod
-    def jobs_running(job_statuses):
+    def jobs_running(job_statuses: List[str]) -> bool:
         return any([True if JobLifeCycle.is_running(job_status) else False
                     for job_status in job_statuses])
 
     @staticmethod
-    def jobs_succeeded(job_statuses):
+    def jobs_succeeded(job_statuses: List[str]) -> bool:
         return all([True if job_status == JobLifeCycle.SUCCEEDED else False
                     for job_status in job_statuses])
 
     @staticmethod
-    def jobs_failed(job_statuses):
+    def jobs_failed(job_statuses: List[str]) -> bool:
         return any([True if job_status == JobLifeCycle.FAILED else False
                     for job_status in job_statuses])
 
     @staticmethod
-    def jobs_stopped(job_statuses):
+    def jobs_stopped(job_statuses: List[str]) -> bool:
         return any([True if job_status == JobLifeCycle.STOPPED else False
                     for job_status in job_statuses])
 
     @classmethod
-    def jobs_unknown(cls, job_statuses):
+    def jobs_unknown(cls, job_statuses: List[str]) -> bool:
         return any([True if job_status == JobLifeCycle.UNKNOWN else False
                     for job_status in job_statuses])
 
     @classmethod
-    def jobs_status(cls, job_statuses):
+    def jobs_status(cls, job_statuses: List[str]) -> str:
         if not job_statuses:
             return None
 

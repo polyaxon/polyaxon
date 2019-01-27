@@ -16,7 +16,7 @@ from libs.paths.utils import create_path, delete_path
 _logger = logging.getLogger('polyaxon.repos.git')
 
 
-def get_git_repo(repo_path: str, init: bool=False) -> Any:
+def get_git_repo(repo_path: str, init: bool = False) -> Any:
     if os.path.isdir(repo_path):
         try:
             return GitRepo(repo_path)
@@ -41,7 +41,7 @@ def get_status(repo_path: str) -> str:
     return run_command(cmd='git status -s', data=None, location=repo_path, chw=True)
 
 
-def commit(repo_path: str, user_email: str, user_name: str, message: str='updated') -> None:
+def commit(repo_path: str, user_email: str, user_name: str, message: str = 'updated') -> None:
     run_command(cmd='git add -A', data=None, location=repo_path, chw=True)
     run_command(cmd='git -c user.email=<{}> -c user.name={} commit -m "{}"'.format(
         user_email, user_name, message),
@@ -76,7 +76,7 @@ def get_committed_files(repo_path: str,
     return [f for f in files_committed if f]
 
 
-def fetch(git_url: str, repo_path: str, overwrite: bool=False) -> Optional[Any]:
+def fetch(git_url: str, repo_path: str, overwrite: bool = False) -> Optional[Any]:
     if os.path.isdir(repo_path):
         _logger.info('Current checkout path has content.')
         if overwrite:
@@ -91,7 +91,7 @@ def fetch(git_url: str, repo_path: str, overwrite: bool=False) -> Optional[Any]:
 
 
 def checkout_commit(repo_path: str,
-                    commit: Any=None) -> None:  # pylint:disable=redefined-outer-name
+                    commit: Any = None) -> None:  # pylint:disable=redefined-outer-name
     """Checkout to a specific commit.
 
     If commit is None then checkout to master.

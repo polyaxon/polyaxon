@@ -1,5 +1,8 @@
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
+from rest_framework.serializers import Serializer
+
+from django.http import HttpRequest, HttpResponse
 
 import auditor
 
@@ -17,7 +20,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
     create_serializer_class = None
     _object = None  # This is a memoization for get_object, to avoid accidentally calling twice.
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> Serializer:
         if self.create_serializer_class and self.request.method == 'POST':
             return self.create_serializer_class
         return self.serializer_class
@@ -50,7 +53,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
                            actor_name=self.request.user.username)
         return self._object
 
-    def perform_update(self, serializer):
+    def perform_update(self, serializer: Serializer) -> None:
         instance = serializer.save()
         if not self.AUDITOR_EVENT_TYPES:
             return instance
@@ -73,12 +76,12 @@ class BaseEndpoint(mixins.CreateModelMixin,
         """
         pass
 
-    def validate_context(self):
+    def validate_context(self) -> None:
         for key in self.CONTEXT_OBJECTS:
             assert hasattr(self, key)
         self._validate_context()
 
-    def initialize_context(self, request, *args, **kwargs):
+    def initialize_context(self, request: HttpRequest, *args, **kwargs) -> None:
         """
         Initializes the endpoint with the context keys based on the passed
         and/or based on the query parameters (request.GET).
@@ -90,7 +93,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
         self._initialize_context()
         self.validate_context()
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """
         `.dispatch()` is pretty much the same as DRF's regular dispatch,
         but with extra logic to initialize a local context.
@@ -127,12 +130,12 @@ class BaseEndpoint(mixins.CreateModelMixin,
 
 
 class CreateEndpoint(object):
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.create(request, *args, **kwargs)
 
 
 class PostEndpoint(object):
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.create(request, *args, **kwargs)
 
     def get_serializer(self, *args, **kwargs):
@@ -140,23 +143,23 @@ class PostEndpoint(object):
 
 
 class ListEndpoint(object):
-    def get(self, request, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.list(request, *args, **kwargs)
 
 
 class RetrieveEndpoint(object):
-    def get(self, request, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.retrieve(request, *args, **kwargs)
 
 
 class DestroyEndpoint(object):
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.destroy(request, *args, **kwargs)
 
 
 class UpdateEndpoint(object):
-    def put(self, request, *args, **kwargs):
+    def put(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.update(request, *args, **kwargs)
 
-    def patch(self, request, *args, **kwargs):
+    def patch(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.partial_update(request, *args, **kwargs)

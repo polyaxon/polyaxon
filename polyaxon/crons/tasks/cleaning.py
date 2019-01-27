@@ -6,12 +6,12 @@ from polyaxon.settings import CleaningIntervals, CronsCeleryTasks
 
 
 @celery_app.task(name=CronsCeleryTasks.CLEAN_ACTIVITY_LOGS, ignore_result=True)
-def clean_activity_logs():
+def clean_activity_logs() -> None:
     last_date = get_date_check(days=CleaningIntervals.ACTIVITY_LOGS)
     ActivityLog.objects.filter(created_at__lte=last_date).delete()
 
 
 @celery_app.task(name=CronsCeleryTasks.CLEAN_NOTIFICATIONS, ignore_result=True)
-def clean_notifications():
+def clean_notifications() -> None:
     last_date = get_date_check(days=CleaningIntervals.NOTIFICATIONS)
     NotificationEvent.objects.filter(created_at__lte=last_date).delete()

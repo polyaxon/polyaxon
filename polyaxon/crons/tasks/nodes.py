@@ -22,7 +22,7 @@ from polyaxon.settings import CronsCeleryTasks
 from polyaxon_k8s.manager import K8SManager
 
 
-def get_cluster_resources():
+def get_cluster_resources() -> Cluster:
     return Cluster.objects.annotate(
         n_nodes=Count('nodes'),
         n_cpus=Sum('nodes__cpu'),
@@ -33,7 +33,7 @@ def get_cluster_resources():
 @celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
                  time_limit=150,
                  ignore_result=True)
-def update_system_info():
+def update_system_info() -> None:
     k8s_manager = K8SManager(in_cluster=True)
     version_api = k8s_manager.get_version()
     cluster = Cluster.load()
@@ -48,7 +48,7 @@ def update_system_info():
 @celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
                  time_limit=150,
                  ignore_result=True)
-def update_system_nodes():
+def update_system_nodes() -> None:
     k8s_manager = K8SManager(in_cluster=True)
     nodes = k8s_manager.list_nodes()
     cluster = Cluster.load()
@@ -103,7 +103,7 @@ def update_system_nodes():
 @celery_app.task(name=CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
                  time_limits=60,
                  ignore_result=True)
-def cluster_nodes_analytics():
+def cluster_nodes_analytics() -> None:
     cluster = get_cluster_resources()
     notification = uuid.uuid4()
     notification_url = conf.get('POLYAXON_NOTIFICATION_CLUSTER_NODES_URL').format(

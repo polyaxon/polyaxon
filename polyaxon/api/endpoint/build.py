@@ -1,5 +1,7 @@
 from rest_framework.generics import get_object_or_404
 
+from django.http import HttpRequest
+
 import access
 
 from access.resources import Resources
@@ -13,7 +15,7 @@ class BuildEndpoint(ProjectResourceEndpoint):
     CONTEXT_OBJECTS = ProjectResourceEndpoint.CONTEXT_OBJECTS + ('build',)
     lookup_url_kwarg = 'build_id'
 
-    def _initialize_context(self):
+    def _initialize_context(self) -> None:
         #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.build = self.get_object()
@@ -27,7 +29,7 @@ class BuildResourceListEndpoint(ProjectResourceEndpoint):
     def enrich_queryset(self, queryset):
         return queryset.filter(job=self.build)
 
-    def _initialize_context(self):
+    def _initialize_context(self) -> None:
         #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.build = get_object_or_404(BuildJob,
@@ -38,7 +40,7 @@ class BuildResourceListEndpoint(ProjectResourceEndpoint):
 class BuildResourcePermission(ProjectPermission):
     SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT_RESOURCE)
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
         return super().has_object_permission(request, view, obj.job.project)
 
 

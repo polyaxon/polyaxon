@@ -1,6 +1,9 @@
+from typing import Dict, List, Optional
+
+
 class TagsSerializerMixin(object):
 
-    def validated_tags(self, validated_data, tags):
+    def validated_tags(self, validated_data: Dict, tags: Optional[List[str]]):
         new_tags = validated_data.get('tags')
 
         if new_tags:

@@ -1,2 +1,2 @@
-def health_task(x, y):
+def health_task(x: int, y: int) -> int:
     return x + y

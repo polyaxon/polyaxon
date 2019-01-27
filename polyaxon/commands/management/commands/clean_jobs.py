@@ -6,7 +6,7 @@ from scheduler import job_scheduler
 
 class Command(BaseCleanCommand):
     @staticmethod
-    def _clean():
+    def _clean() -> None:
         for job in Job.objects.filter(
                 status__status__in=JobLifeCycle.RUNNING_STATUS):
             job_scheduler.stop_job(

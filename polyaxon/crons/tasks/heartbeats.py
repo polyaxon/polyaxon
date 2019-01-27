@@ -8,7 +8,7 @@ from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_EXPERIMENTS, ignore_result=True)
-def heartbeat_experiments():
+def heartbeat_experiments() -> None:
     experiments = Experiment.objects.filter(status__status__in=ExperimentLifeCycle.HEARTBEAT_STATUS)
     for experiment in experiments.values_list('id', flat=True):
         celery_app.send_task(
@@ -17,7 +17,7 @@ def heartbeat_experiments():
 
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_JOBS, ignore_result=True)
-def heartbeat_jobs():
+def heartbeat_jobs() -> None:
     jobs = Job.objects.filter(status__status__in=JobLifeCycle.HEARTBEAT_STATUS)
     for job in jobs.values_list('id', flat=True):
         celery_app.send_task(
@@ -26,7 +26,7 @@ def heartbeat_jobs():
 
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_BUILDS, ignore_result=True)
-def heartbeat_builds():
+def heartbeat_builds() -> None:
     build_jobs = BuildJob.objects.filter(status__status__in=JobLifeCycle.HEARTBEAT_STATUS)
     for build_job in build_jobs.values_list('id', flat=True):
         celery_app.send_task(

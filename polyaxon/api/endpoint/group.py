@@ -13,7 +13,7 @@ class ExperimentGroupEndpoint(ProjectResourceEndpoint):
     CONTEXT_OBJECTS = ProjectResourceEndpoint.CONTEXT_OBJECTS + ('group',)
     lookup_url_kwarg = 'group_id'
 
-    def _initialize_context(self):
+    def _initialize_context(self) -> None:
         #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.group = self.get_object()
@@ -27,7 +27,7 @@ class ExperimentGroupResourceListEndpoint(ProjectResourceEndpoint):
     def enrich_queryset(self, queryset):
         return queryset.filter(experiment_group=self.group)
 
-    def _initialize_context(self):
+    def _initialize_context(self) -> None:
         #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.group = get_object_or_404(ExperimentGroup,

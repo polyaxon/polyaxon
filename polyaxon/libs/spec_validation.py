@@ -16,7 +16,7 @@ from schemas.specifications import (
 )
 
 
-def validate_experiment_spec_config(config, raise_for_rest: bool=False):
+def validate_experiment_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = ExperimentSpecification.read(config)
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
@@ -29,7 +29,7 @@ def validate_experiment_spec_config(config, raise_for_rest: bool=False):
     return spec
 
 
-def validate_group_spec_content(content, raise_for_rest: bool=False):
+def validate_group_spec_content(content, raise_for_rest: bool = False):
     try:
         spec = GroupSpecification.read(content)
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
@@ -42,7 +42,7 @@ def validate_group_spec_content(content, raise_for_rest: bool=False):
     return spec
 
 
-def validate_group_hptuning_config(config, raise_for_rest: bool=False):
+def validate_group_hptuning_config(config, raise_for_rest: bool = False):
     try:
         HPTuningConfig.from_dict(config)
     except MarshmallowValidationError as e:
@@ -52,7 +52,7 @@ def validate_group_hptuning_config(config, raise_for_rest: bool=False):
             raise DjangoValidationError(e)
 
 
-def validate_notebook_spec_config(config, raise_for_rest: bool=False):
+def validate_notebook_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = NotebookSpecification.read(config)
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
@@ -65,7 +65,7 @@ def validate_notebook_spec_config(config, raise_for_rest: bool=False):
     return spec
 
 
-def validate_tensorboard_spec_config(config, raise_for_rest: bool=False):
+def validate_tensorboard_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = TensorboardSpecification.read(config)
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
@@ -78,7 +78,7 @@ def validate_tensorboard_spec_config(config, raise_for_rest: bool=False):
     return spec
 
 
-def validate_build_spec_config(config, raise_for_rest: bool=False):
+def validate_build_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = BuildSpecification.read(config)
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
@@ -91,7 +91,7 @@ def validate_build_spec_config(config, raise_for_rest: bool=False):
     return spec
 
 
-def validate_job_spec_config(config, raise_for_rest: bool=False):
+def validate_job_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = JobSpecification.read(config)
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
@@ -104,7 +104,7 @@ def validate_job_spec_config(config, raise_for_rest: bool=False):
     return spec
 
 
-def validate_persistence_config(config, raise_for_rest: bool=False) -> None:
+def validate_persistence_config(config, raise_for_rest: bool = False) -> None:
     if not config:
         return None
     try:
@@ -116,7 +116,7 @@ def validate_persistence_config(config, raise_for_rest: bool=False) -> None:
             raise DjangoValidationError(e)
 
 
-def validate_outputs_config(config, raise_for_rest: bool=False) -> None:
+def validate_outputs_config(config, raise_for_rest: bool = False) -> None:
     if not config:
         return None
     try:

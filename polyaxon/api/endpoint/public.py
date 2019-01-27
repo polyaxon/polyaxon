@@ -1,3 +1,5 @@
+from django.http import HttpRequest
+
 import access
 
 from access.resources import Resources
@@ -13,7 +15,7 @@ class PublicActivityPermission(ProjectPermission):
     """
     SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PUBLIC)
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
         result = super().has_object_permission(request, view, obj)
         return result or obj.is_public
 
@@ -27,6 +29,6 @@ class PublicResourceActivityPermission(ProjectResourcePermission):
     """
     SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PUBLIC)
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
         result = super().has_object_permission(request, view, obj)
         return result or obj.project.is_public

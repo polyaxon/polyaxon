@@ -6,7 +6,7 @@ from scheduler import notebook_scheduler
 
 class Command(BaseCleanCommand):
     @staticmethod
-    def _clean():
+    def _clean() -> None:
         for job in NotebookJob.objects.filter(
                 status__status__in=JobLifeCycle.RUNNING_STATUS):
             notebook_scheduler.stop_notebook(

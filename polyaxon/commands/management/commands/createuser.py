@@ -1,5 +1,7 @@
 import logging
 
+from typing import Dict
+
 from hestia.bool_utils import to_bool
 
 from django.contrib.auth import get_user_model
@@ -25,7 +27,7 @@ class Command(BaseCommand):
     help = 'Used to create a user/superuser.'
     requires_migrations_checks = True
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.UserModel = get_user_model()
         # pylint:disable= protected-access
@@ -33,7 +35,7 @@ class Command(BaseCommand):
         # pylint:disable= protected-access
         self.email_field = self.UserModel._meta.get_field('email')
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser) -> None:
         parser.add_argument(
             '--%s' % self.UserModel.USERNAME_FIELD,
             required=True,
@@ -67,7 +69,7 @@ class Command(BaseCommand):
             help='To force create the user even if the user is not valid.',
         )
 
-    def validate_password(self, password, user_data, force):
+    def validate_password(self, password: str, user_data: Dict, force: bool) -> None:
         try:
             validate_password(password, self.UserModel(**user_data))
         except ValidationError as e:

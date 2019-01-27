@@ -23,18 +23,18 @@ class ActivityLogsSerializer(serializers.ModelSerializer):
             'object_name'
         ]
 
-    def get_actor(self, obj):
+    def get_actor(self, obj: 'ActivityLog') -> str:
         if not obj.actor:
             return user_system.USER_SYSTEM_NAME
         return obj.actor.username
 
-    def get_event_action(self, obj):
+    def get_event_action(self, obj: 'ActivityLog') -> str:
         return event_context.get_event_action(event_type=obj.event_type)
 
-    def get_event_subject(self, obj):
+    def get_event_subject(self, obj: 'ActivityLog') -> str:
         return event_context.get_event_subject(event_type=obj.event_type)
 
-    def get_object_name(self, obj):
+    def get_object_name(self, obj: 'ActivityLog') -> str:
         return event_context.get_event_object_context(
             event_content_object=obj.content_object,
             event_type=obj.event_type

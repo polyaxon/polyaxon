@@ -29,7 +29,7 @@ def get_internal_code_reference(instance, commit: str = None) -> Optional['CodeR
     return code_reference
 
 
-def get_external_code_reference(git_url: str, commit: str=None) -> 'CodeReference':
+def get_external_code_reference(git_url: str, commit: str = None) -> 'CodeReference':
     code_reference, _ = CodeReference.objects.get_or_create(git_url=git_url, commit=commit)
     return code_reference
 

@@ -8,7 +8,7 @@ from scheduler import notebook_scheduler, tensorboard_scheduler
 
 class Command(BaseCleanCommand):
     @staticmethod
-    def _clean():
+    def _clean() -> None:
         filters = Q(tensorboard_jobs=None) | Q(notebook_jobs=None)
         for project in Project.objects.exclude(filters):
             if project.has_notebook:

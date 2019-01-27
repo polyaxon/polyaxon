@@ -1,9 +1,14 @@
 from rest_framework import permissions
 
+from django.http import HttpRequest
+
 from scopes.access import DEFAULT_ACCESS
 
 
-def has_object_permission(permission, request, view, obj):
+def has_object_permission(permission: permissions.BasePermission,
+                          request: HttpRequest,
+                          view,
+                          obj: any) -> bool:
     # We check if the access type before continuing other checks
     if request.access.is_superuser or request.access.is_owner:
         return True

@@ -1,3 +1,5 @@
+from typing import Dict
+
 from checks.crons import CronsCheck
 from checks.events import EventsCheck
 from checks.hpsearch import HPSearchCheck
@@ -11,7 +13,7 @@ from checks.scheduler import SchedulerCheck
 from checks.streams import StreamsCheck
 
 
-def get_status():
+def get_status() -> Dict:
     status = {}
     status.update(CronsCheck.run())
     status.update(EventsCheck.run())

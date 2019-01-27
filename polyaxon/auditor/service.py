@@ -1,4 +1,7 @@
+from typing import Dict
+
 from auditor.manager import default_manager
+from event_manager.event import Event
 from event_manager.event_service import EventService
 
 
@@ -15,7 +18,7 @@ class AuditorService(EventService):
         self.tracker = None
         self.ref_id = None
 
-    def get_ref_id(self):
+    def get_ref_id(self) -> str:
         if self.ref_id:
             return self.ref_id
 
@@ -27,7 +30,7 @@ class AuditorService(EventService):
             pass
         return self.ref_id
 
-    def record_event(self, event):
+    def record_event(self, event: Event) -> None:
         """
         Record the event async.
         """
@@ -47,16 +50,16 @@ class AuditorService(EventService):
         serialized_event['instance'] = event.instance
         self.executor.record(event_type=event.event_type, event_data=serialized_event)
 
-    def notify(self, event):
+    def notify(self, event: Dict) -> None:
         self.notifier.record(event_type=event['type'], event_data=event)
 
-    def track(self, event):
+    def track(self, event: Dict) -> None:
         self.tracker.record(event_type=event['type'], event_data=event)
 
-    def log(self, event):
+    def log(self, event: Dict) -> None:
         self.activitylogs.record(event_type=event['type'], event_data=event)
 
-    def setup(self):
+    def setup(self) -> None:
         super().setup()
         # Load default event types
         import auditor.events  # noqa

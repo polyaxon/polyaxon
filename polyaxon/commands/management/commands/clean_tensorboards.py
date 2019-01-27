@@ -6,7 +6,7 @@ from scheduler import tensorboard_scheduler
 
 class Command(BaseCleanCommand):
     @staticmethod
-    def _clean():
+    def _clean() -> None:
         for job in TensorboardJob.objects.filter(
                 status__status__in=JobLifeCycle.RUNNING_STATUS):
             tensorboard_scheduler.stop_tensorboard(

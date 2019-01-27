@@ -1,3 +1,5 @@
+from typing import Dict
+
 import psutil
 
 from checks.base import Check
@@ -10,7 +12,7 @@ class DiskCheck(Check):
     HOST = None
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         try:
             disk = psutil.disk_usage('/')
             if disk.percent >= cls.ERROR_THRESHOLD:

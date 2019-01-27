@@ -1,3 +1,5 @@
+from typing import Dict
+
 from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
@@ -77,19 +79,19 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, TagsSerializerMixin
             'commit',
         )
 
-    def get_commit(self, obj):
+    def get_commit(self, obj: 'BuildJob'):
         return obj.code_reference.commit if obj.code_reference else None
 
-    def get_resources(self, obj):
+    def get_resources(self, obj: 'BuildJob'):
         return obj.resources.to_dict() if obj.resources else None
 
-    def get_num_jobs(self, obj):
+    def get_num_jobs(self, obj: 'BuildJob'):
         return Job.objects.filter(build_job=obj).count()
 
-    def get_num_experiments(self, obj):
+    def get_num_experiments(self, obj: 'BuildJob'):
         return Experiment.objects.filter(build_job=obj).count()
 
-    def update(self, instance, validated_data):
+    def update(self, instance: 'BuildJob', validated_data: Dict) -> 'BuildJob':
         validated_data = self.validated_tags(validated_data=validated_data,
                                              tags=instance.tags)
 
@@ -103,10 +105,10 @@ class BuildJobCreateSerializer(serializers.ModelSerializer):
         model = BuildJob
         fields = ('id', 'user', 'name', 'description', 'config', 'tags')
 
-    def get_user(self, obj):
+    def get_user(self, obj: 'BuildJob'):
         return obj.user.username
 
-    def validate_config(self, config):
+    def validate_config(self, config: Dict) -> Dict:
         """We only validate the config if passed.
 
         Also we use the BuildSpecification to check if this config was

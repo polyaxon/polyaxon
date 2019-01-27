@@ -1,8 +1,8 @@
-from typing import Optional, Mapping
+from typing import Dict, Optional
 
-from django.http import HttpRequest
 from hestia.hashing import md5_text
 
+from django.http import HttpRequest
 from django.shortcuts import render_to_response
 
 from db.redis.sessions import RedisSessions
@@ -46,7 +46,7 @@ class Wizard(object):
                  request: HttpRequest,
                  provider_key: str,
                  provider_model=None,
-                 config: Optional[Mapping]=None) -> None:
+                 config: Optional[Dict] = None) -> None:
         self.request = request
         self.state = RedisSessions(request, self.name)
         self.provider = self.manager.get(provider_key)()
@@ -106,11 +106,11 @@ class Wizard(object):
     def finish_wizard(self):
         raise NotImplementedError
 
-    def bind_state(self, key: str, value: Mapping) -> None:
+    def bind_state(self, key: str, value: Dict) -> None:
         data = self.state.data
         data[key] = value
 
         self.state.data = data
 
-    def fetch_state(self, key: str=None) -> Optional[str]:
+    def fetch_state(self, key: str = None) -> Optional[str]:
         return self.state.data if key is None else self.state.data.get(key)

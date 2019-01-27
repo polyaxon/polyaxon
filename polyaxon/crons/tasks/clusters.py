@@ -11,7 +11,7 @@ from polyaxon.settings import CronsCeleryTasks
 @celery_app.task(name=CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE,
                  time_limits=60,
                  ignore_result=True)
-def cluster_analytics():
+def cluster_analytics() -> None:
     cluster = Cluster.load()
     notification = uuid.uuid4()
     notification_url = conf.get('POLYAXON_NOTIFICATION_CLUSTER_ALIVE_URL').format(

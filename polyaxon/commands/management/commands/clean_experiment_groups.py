@@ -6,7 +6,7 @@ from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 
 class Command(BaseCleanCommand):
     @staticmethod
-    def _clean():
+    def _clean() -> None:
         for experiment_group in ExperimentGroup.objects.filter(
                 status__status__in=ExperimentGroupLifeCycle.RUNNING_STATUS):
             experiments_group_stop_experiments(

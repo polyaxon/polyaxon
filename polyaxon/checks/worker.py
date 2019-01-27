@@ -1,5 +1,7 @@
 import random
 
+from typing import Dict
+
 import conf
 
 from checks.base import Check
@@ -13,7 +15,7 @@ class WorkerCheck(Check):
     WORKER_NAME = None
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         timeout = conf.get('HEALTH_CHECK_WORKER_TIMEOUT')
         arg = random.randint(1, 10)
         result = None

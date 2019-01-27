@@ -1,6 +1,7 @@
 import os
 import tarfile
-from typing import List, Tuple, Any
+
+from typing import Any, List, Tuple
 
 from polystores.exceptions import PolyaxonStoresException
 from rest_framework.exceptions import ValidationError
@@ -27,7 +28,7 @@ def get_files_in_path(path: str) -> List[str]:
     return result_files
 
 
-def archive_repo(repo_git: Any, repo_name: str, commit: str=None) -> Tuple[str, str]:
+def archive_repo(repo_git: Any, repo_name: str, commit: str = None) -> Tuple[str, str]:
     archive_root = conf.get('REPOS_ARCHIVE_ROOT')
     check_archive_path(archive_root)
     archive_name = '{}-{}.tar.gz'.format(repo_name, commit or 'master')
@@ -66,7 +67,7 @@ def archive_outputs_file(outputs_path: str,
     return download_filepath
 
 
-def archive_logs_file(log_path: str, namepath: str, persistence_logs: str='default') -> str:
+def archive_logs_file(log_path: str, namepath: str, persistence_logs: str = 'default') -> str:
     check_archive_path(conf.get('LOGS_DOWNLOAD_ROOT'))
     namepath = namepath.replace('.', '/')
     download_filepath = os.path.join(conf.get('LOGS_DOWNLOAD_ROOT'), namepath)

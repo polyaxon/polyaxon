@@ -5,7 +5,7 @@ import shutil
 _logger = logging.getLogger('polyaxon.libs.paths')
 
 
-def check_archive_path(archive_path: str=None) -> None:
+def check_archive_path(archive_path: str = None) -> None:
     if not os.path.exists(archive_path):
         os.makedirs(archive_path)
 

@@ -1,3 +1,5 @@
+from typing import Optional
+
 import conf
 
 
@@ -17,7 +19,7 @@ class Providers(object):
     )
 
     @classmethod
-    def get_verification_schedule(cls, provider):
+    def get_verification_schedule(cls, provider: str) -> Optional[int]:
         assert provider in cls.VALUES
         if provider == cls.GITHUB:
             return conf.get('OAUTH_GITHUB_VERIFICATION_SCHEDULE')

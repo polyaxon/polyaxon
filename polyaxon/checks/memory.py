@@ -1,3 +1,5 @@
+from typing import Dict
+
 import psutil
 
 from checks.base import Check
@@ -10,7 +12,7 @@ class MemoryCheck(Check):
     HOST = None
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         try:
             memory = psutil.virtual_memory()
             available = '{:n}'.format(int(memory.available / 1024 / 1024))

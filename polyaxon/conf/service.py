@@ -1,3 +1,5 @@
+from typing import Any
+
 from hestia.service_interface import Service
 
 from conf.exceptions import ConfException
@@ -9,20 +11,20 @@ class ConfService(Service):
     def __init__(self):
         self._settings = None
 
-    def get(self, key):
+    def get(self, key: str) -> Any:
         if hasattr(self._settings, key):
             return getattr(self._settings, key)
         else:
             raise ConfException(
                 'The configuration option `{}` was not found or not correctly set.'.format(key))
 
-    def set(self, name, value):
+    def set(self, name: str, value: Any) -> None:
         setattr(self._settings, name, value)
 
-    def delete(self, name):
+    def delete(self, name: str) -> None:
         delattr(self._settings, name)
 
-    def setup(self):
+    def setup(self) -> None:
         from django.conf import settings
 
         self._settings = settings

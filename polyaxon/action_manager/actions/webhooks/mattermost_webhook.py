@@ -1,7 +1,10 @@
+from typing import Dict, List
+
 import conf
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from action_manager.utils import mattermost
+from event_manager.event import Event
 from event_manager.event_actions import EXECUTED
 
 MATTERMOST_WEBHOOK_ACTION_EXECUTED = 'mattermost_webhook_action.{}'.format(EXECUTED)
@@ -19,13 +22,13 @@ class MattermostWebHookAction(WebHookAction):
     raise_empty_context = True
 
     @classmethod
-    def _validate_config(cls, config):
+    def _validate_config(cls, config: Dict) -> List[Dict]:
         if not config:
             return []
         return cls._get_valid_config(config, 'channel')
 
     @classmethod
-    def _get_config(cls):
+    def _get_config(cls) -> List[Dict]:
         """Configuration for mattermost webhooks.
 
         should be a list of urls and potentially a method.
@@ -35,7 +38,7 @@ class MattermostWebHookAction(WebHookAction):
         return conf.get('INTEGRATIONS_MATTERMOST_WEBHOOKS')
 
     @classmethod
-    def serialize_event_to_context(cls, event):
+    def serialize_event_to_context(cls, event: Event) -> Dict:
         return mattermost.serialize_event_to_context(event)
 
     @classmethod

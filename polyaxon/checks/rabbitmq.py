@@ -1,5 +1,7 @@
 import logging
 
+from typing import Dict
+
 from amqp.exceptions import AccessRefused
 from kombu import Connection
 
@@ -14,7 +16,7 @@ logger = logging.getLogger(__name__)
 class RabbitMQCheck(Check):
 
     @staticmethod
-    def check():
+    def check() -> Result:
         """Open and close the broker channel."""
         try:
             # Context to release connection
@@ -37,5 +39,5 @@ class RabbitMQCheck(Check):
             return Result()
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         return {'RABBITMQ': cls.check()}

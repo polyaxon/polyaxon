@@ -1,3 +1,5 @@
+from typing import Dict
+
 from hestia.http import safe_request
 
 from checks.base import Check
@@ -8,7 +10,7 @@ from libs.api import get_settings_ws_api_url
 class StreamsCheck(Check):
 
     @classmethod
-    def run(cls):
+    def run(cls) -> Dict:
         response = safe_request('{}/_health'.format(get_settings_ws_api_url()), 'GET')
         status_code = response.status_code
         if status_code == 200:

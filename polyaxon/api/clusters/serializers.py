@@ -9,7 +9,7 @@ class ClusterSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     nodes = SerializerMethodField()
 
-    def get_nodes(self, cluster):
+    def get_nodes(self, cluster: 'Cluster'):
         qs = cluster.nodes.filter(is_current=True)
         serializer = ClusterNodeSerializer(instance=qs, many=True)
         return serializer.data

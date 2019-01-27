@@ -1,3 +1,4 @@
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 
 import access
@@ -11,7 +12,7 @@ from db.models.projects import Project
 class ProjectPermission(AdminPermission):
     SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT)
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
         if self._check_internal_or_ephemeral(request=request):
             return True
 
@@ -34,7 +35,7 @@ class ProjectResourceListPermission(ProjectPermission):
 class ProjectResourcePermission(ProjectPermission):
     SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT_RESOURCE)
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
         return super().has_object_permission(request, view, obj.project)
 
 
@@ -50,7 +51,7 @@ class ProjectEndpoint(BaseEndpoint):
     def enrich_queryset(self, queryset):
         return queryset.filter(owner__name=self.owner_name)
 
-    def _initialize_context(self):
+    def _initialize_context(self) -> None:
         #  pylint:disable=attribute-defined-outside-init
         self.project = self.get_object()
         self.owner = self.project.owner
@@ -67,7 +68,7 @@ class ProjectResourceListEndpoint(BaseEndpoint):
         queryset = queryset.filter(project=self.project)
         return super().enrich_queryset(queryset=queryset)
 
-    def _initialize_context(self):
+    def _initialize_context(self) -> None:
         #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.project = get_object_or_404(Project,
@@ -75,7 +76,7 @@ class ProjectResourceListEndpoint(BaseEndpoint):
                                          name=self.project_name)
         self.owner = self.project.owner
 
-    def _validate_resource_permission(self):
+    def _validate_resource_permission(self) -> None:
         permission = ProjectPermission()
         cond = (permission.has_object_permission(request=self.request,
                                                  view=self,
@@ -86,7 +87,7 @@ class ProjectResourceListEndpoint(BaseEndpoint):
                 self.request, message=getattr(permission, 'message', None)
             )
 
-    def _validate_context(self):
+    def _validate_context(self) -> None:
         super()._validate_context()
         self._validate_resource_permission()
 

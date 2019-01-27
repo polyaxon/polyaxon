@@ -1,4 +1,5 @@
 from requests import RequestException
+from typing import Dict, List
 
 from hestia.date_utils import to_timestamp
 from hestia.http import safe_request
@@ -7,9 +8,10 @@ from hestia.urls_utils import validate_url
 
 import conf
 
-from action_manager.action import Action, logger
+from action_manager.action import Action, ConfigType, logger
 from action_manager.action_event import ActionExecutedEvent
 from action_manager.exceptions import PolyaxonActionException
+from event_manager.event import Event
 from event_manager.event_actions import EXECUTED
 from event_manager.event_context import get_event_context, get_readable_event
 
@@ -31,13 +33,13 @@ class WebHookAction(Action):
     raise_empty_context = False
 
     @classmethod
-    def _validate_config(cls, config):
+    def _validate_config(cls, config: ConfigType) -> ConfigType:
         if not config:
             return []
         return cls._get_valid_config(config)
 
     @classmethod
-    def _get_valid_config(cls, config, *fields):
+    def _get_valid_config(cls, config, *fields) -> ConfigType:
         config = to_list(config)
         web_hooks = []
         for web_hook in config:
@@ -68,7 +70,7 @@ class WebHookAction(Action):
         return web_hooks
 
     @classmethod
-    def _get_config(cls):
+    def _get_config(cls) -> ConfigType:
         """Configuration for webhooks.
 
         Should be a list of urls and potentially a method.
@@ -78,7 +80,7 @@ class WebHookAction(Action):
         return conf.get('INTEGRATIONS_WEBHOOKS')
 
     @classmethod
-    def serialize_event_to_context(cls, event):
+    def serialize_event_to_context(cls, event: Event) -> Dict:
         event_context = get_event_context(event)
 
         context = {
@@ -89,11 +91,11 @@ class WebHookAction(Action):
         return context
 
     @classmethod
-    def _pre_execute_web_hook(cls, data, config):
+    def _pre_execute_web_hook(cls, data: Dict, config: Dict) -> Dict:
         return data
 
     @classmethod
-    def _execute(cls, data, config):
+    def _execute(cls, data: Dict, config: List[Dict]) -> None:
         for web_hook in config:
             data = cls._pre_execute_web_hook(data=data, config=web_hook)
             try:

@@ -1,5 +1,8 @@
+from typing import Dict, Optional
+
 from activitylogs.manager import default_manager
 from constants import user_system
+from event_manager.event import Event
 from event_manager.event_service import EventService
 
 
@@ -9,7 +12,7 @@ class ActivityLogService(EventService):
     def __init__(self):
         self.activity_log_manager = None
 
-    def record_event(self, event):
+    def record_event(self, event: Event) -> Optional[Dict]:
         if not event.ref_id:
             return
         assert event.actor_id is not None
@@ -24,7 +27,7 @@ class ActivityLogService(EventService):
             content_type_id=event.instance_contenttype
         )
 
-    def setup(self):
+    def setup(self) -> None:
         super().setup()
         # Load default event types
         import activitylogs.events  # noqa

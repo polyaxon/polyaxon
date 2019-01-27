@@ -1,7 +1,10 @@
+from typing import Dict
+
 import conf
 
 from action_manager.actions.webhooks.webhook import WebHookAction, WebHookActionExecutedEvent
 from action_manager.utils import slack
+from event_manager.event import Event
 from event_manager.event_actions import EXECUTED
 
 SLACK_WEBHOOK_ACTION_EXECUTED = 'slack_webhook_action.{}'.format(EXECUTED)
@@ -35,7 +38,7 @@ class SlackWebHookAction(WebHookAction):
         return conf.get('INTEGRATIONS_SLACK_WEBHOOKS')
 
     @classmethod
-    def serialize_event_to_context(cls, event):
+    def serialize_event_to_context(cls, event: Event) -> Dict:
         return slack.serialize_event_to_context(event)
 
     @classmethod

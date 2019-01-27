@@ -1,7 +1,14 @@
+from rest_framework import permissions
+
+from django.http import HttpRequest
+
 from scopes.access import DEFAULT_ACCESS, OWNER_ACCESS, SUPERUSER_ACCESS, UNAUTHENTICATED_ACCESS
 
 
-def has_object_permission(permission, request, view, obj):
+def has_object_permission(permission: permissions.BasePermission,
+                          request: HttpRequest,
+                          view,
+                          obj: any) -> bool:
     user = request.user
 
     if not user or user.is_anonymous or not user.is_active:
