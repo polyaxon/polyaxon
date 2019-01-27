@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import tempfile
 import time
 
 from unittest import TestCase
 
 from mock import patch
 
+from polyaxon_client import settings
 from polyaxon_client.api_config import ApiConfig
 from polyaxon_client.transport import Transport
 
@@ -28,6 +30,8 @@ class TestBaseApi(TestCase):
                                     timeout=0.01,
                                     schema_response=True)
         self.transport = Transport(config=self.api_config)
+        settings.TMP_AUTH_TOKEN_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.plx')
+        settings.CLIENT_CONFIG_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.plx')
 
     def set_raw_response(self):
         self.api_config.schema_response = False
