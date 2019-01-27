@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon',
-      version='0.3.7',
+      version='0.3.8',
       description='A platform for reproducible and scalable deep learning and machine learning.',
       long_description=read_readme(),
       maintainer='Mourad Mourafiq',
