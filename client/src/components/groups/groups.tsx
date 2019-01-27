@@ -46,7 +46,7 @@ export default class Groups extends React.Component<Props, {}> {
       {
         filter: 'concurrency',
         type: 'scalar',
-        desc: FILTER_EXAMPLES.scalar('concurrency'),
+        desc: FILTER_EXAMPLES.int('concurrency'),
         icon: 'share-alt'
       }
     ] as FilterOption[];
