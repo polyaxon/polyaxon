@@ -10,7 +10,7 @@ from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.cluster import cluster
 from polyaxon_cli.cli.config import config
 from polyaxon_cli.cli.dashboard import dashboard
-from polyaxon_cli.cli.deploy import deploy
+from polyaxon_cli.cli.deploy import deploy, teardown
 from polyaxon_cli.cli.experiment import experiment
 from polyaxon_cli.cli.experiment_group import group
 from polyaxon_cli.cli.init import init
@@ -43,7 +43,8 @@ def cli(context, verbose):
     Check the help available for each command listed below.
     """
     configure_logger(verbose or GlobalConfigManager.get_value('verbose'))
-    if context.invoked_subcommand not in ['config', 'version', 'login', 'logout', 'deploy']:
+    non_check_cmds = ['config', 'version', 'login', 'logout', 'deploy', 'teardown']
+    if context.invoked_subcommand not in non_check_cmds:
         check_cli_version()
 
 
@@ -70,3 +71,4 @@ cli.add_command(run)
 cli.add_command(dashboard)
 cli.add_command(bookmark)
 cli.add_command(deploy)
+cli.add_command(teardown)

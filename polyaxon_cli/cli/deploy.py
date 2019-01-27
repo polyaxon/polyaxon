@@ -41,10 +41,8 @@ def read_deployment_config(filepaths):
               help='Check if deployment file and other requirements are met.')
 @click.option('--upgrade', is_flag=True, default=False,
               help='Upgrade a Polyaxon deployment.')
-@click.option('--teardown', is_flag=True, default=False,
-              help='Upgrade a Polyaxon deployment.')
 @clean_outputs
-def deploy(file, check, upgrade, teardown):   # pylint:disable=redefined-builtin
+def deploy(file, check, upgrade):   # pylint:disable=redefined-builtin
     """Deploy polyaxon."""
     config = read_deployment_config(file)
     manager = DeployManager(config=config, filepath=file)
@@ -59,21 +57,34 @@ def deploy(file, check, upgrade, teardown):   # pylint:disable=redefined-builtin
             Printer.print_error('Polyaxon could not upgrade the deployment.', add_sign=True)
             exception = e
 
-    elif teardown:
-        try:
-            if click.confirm('Would you like to execute pre-delete hooks?', default=False):
-                manager.teardown(hooks=True)
-            else:
-                manager.teardown(hooks=False)
-        except Exception as e:
-            Printer.print_error('Polyaxon could not teardown the deployment.', add_sign=True)
-            exception = e
     else:
         try:
             manager.install()
         except Exception as e:
             Printer.print_error('Polyaxon could not be installed.', add_sign=True)
             exception = e
+
+    if exception:
+        Printer.print_error('Error message `{}`.'.format(exception))
+
+
+@click.command()
+@click.option('--file', '-f', type=click.Path(exists=True),
+              help='The polyaxon deployment config file(s) to check.')
+@clean_outputs
+def teardown(file):   # pylint:disable=redefined-builtin
+    """Teardown a polyaxon deployment given a config file."""
+    config = read_deployment_config(file)
+    manager = DeployManager(config=config, filepath=file)
+    exception = None
+    try:
+        if click.confirm('Would you like to execute pre-delete hooks?', default=False):
+            manager.teardown(hooks=True)
+        else:
+            manager.teardown(hooks=False)
+    except Exception as e:
+        Printer.print_error('Polyaxon could not teardown the deployment.', add_sign=True)
+        exception = e
 
     if exception:
         Printer.print_error('Error message `{}`.'.format(exception))
