@@ -460,7 +460,7 @@ redis:
             topologyKey: "kubernetes.io/hostname"
 
 rabbitmq:
-  image: rabbitmq:3.7.4-management
+  image: rabbitmq:3.7.8-management
   imagePullPolicy: IfNotPresent
   rabbitmqUsername: polyaxon
   persistence:
