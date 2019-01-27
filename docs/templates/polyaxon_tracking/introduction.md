@@ -52,3 +52,21 @@ build:
 run:
   cmd: ...
 ```
+
+## Disabling polyaxon tracking without changing the code
+
+Since using the Polyaxon client and the tracking api requires code change, e.g.
+
+```python
+# Polyaxon experiment
+experimet = Experiment()
+# training code ...
+# Metrics reporting
+experiment.log_metrics(step=1000, loss=0.01, accuracy=0.97)
+``` 
+
+Users might need to run the same code outside of a Polyaxon context, 
+which will break since Polyaxon related operations perform api calls.
+  
+Starting from **v0.3.8**, users won't need to perform any change to their code, 
+they just need to set an environment variable `POLYAXON_NO_OP` to true/1, and the Polyaxon code will be ignored.   

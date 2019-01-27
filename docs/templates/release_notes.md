@@ -1,3 +1,13 @@
+## 0.3.8
+
+ * Fix an issue with a cron job that handles the deletion of archived projects/jobs/experiments/builds.
+ * Update ingress to allow users to create an ingress with an IP only without requiring a host.
+ * Add `POLYAXON_NO_OP` option to the client/tracking api (polyaxon tracking operation will be ignored), 
+ to allow users to perform a dry-run of their code when used outside of a Polyaxon context without crashing.
+ * Add possibility to disable verify ssl for Polyaxon client and Polyaxon cli. 
+ * Update default rabbitmq image version.
+ * Several internal enhancements.
+ 
 ## 0.3.7
 
  * Add possibility to collect logs to a cloud storage bucket (S3/GCS/Azure storage).
