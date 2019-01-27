@@ -1,3 +1,5 @@
+from typing import Any, Optional, Tuple
+
 from hestia.service_interface import Service
 
 from query.exceptions import QueryError
@@ -21,11 +23,11 @@ class QueryService(Service):
     }
 
     @classmethod
-    def filter_queryset(cls, manager, query_spec, queryset):
+    def filter_queryset(cls, manager: str, query_spec: str, queryset: Any) -> Any:
         if manager not in cls.MANAGER_MAPPING:
             raise QueryError('Manager `{}` was not configured'.format(manager))
         return cls.MANAGER_MAPPING[manager].apply(query_spec=query_spec, queryset=queryset)
 
     @classmethod
-    def parse_field(cls, field):
+    def parse_field(cls, field: str) -> Tuple[str, Optional[str]]:
         return parse_field(field=field)

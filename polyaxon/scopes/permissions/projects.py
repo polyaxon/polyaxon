@@ -1,7 +1,12 @@
 import logging
 
+from typing import Any
+
 from rest_framework import permissions
 from rest_framework.generics import get_object_or_404
+
+from django.http import HttpRequest
+from django.views import View
 
 from db.models.projects import Project
 from scopes.authentication.internal import is_authenticated_internal_user
@@ -11,7 +16,7 @@ from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInternal
 _logger = logging.getLogger(__name__)
 
 
-def has_project_permissions(user, project, request_method):
+def has_project_permissions(user: 'User', project: 'Project', request_method: str) -> bool:
     """This logic is extracted here to be used also with Sanic api."""
     # Superusers and the creator is allowed to do everything
     if user.is_staff or user.is_superuser or project.user == user:
@@ -26,7 +31,7 @@ class IsProjectOwnerOrPublicReadOnly(permissions.BasePermission):
 
     Other users can have read access if the project is public."""
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request: HttpRequest, view: View, obj: Any) -> bool:
         # Check object type
         if not isinstance(obj, Project):
             _logger.error(
@@ -44,7 +49,7 @@ class IsItemProjectOwnerOrPublicReadOnly(PolyaxonPermission):
 
     Other users can have read access if the project is public."""
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request: HttpRequest, view: View, obj: Any) -> bool:
         # Check that obj has project attr
         if not hasattr(obj, 'project'):
             _logger.error(

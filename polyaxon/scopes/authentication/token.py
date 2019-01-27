@@ -1,6 +1,10 @@
+from typing import Optional, Tuple
+
 from hestia.auth import AuthenticationTypes
 from rest_framework.authentication import get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
+
+from django.http import HttpRequest
 
 from db.models.tokens import Token
 from scopes.authentication.base import PolyaxonAuthentication
@@ -18,7 +22,7 @@ class TokenAuthentication(PolyaxonAuthentication):
 
     keyword = AuthenticationTypes.TOKEN
 
-    def authenticate(self, request):
+    def authenticate(self, request: HttpRequest) -> Optional[Tuple['User', 'Token']]:
         auth = get_authorization_header(request).split()
 
         if not auth or auth[0].lower() != self.keyword.lower().encode():
@@ -39,7 +43,8 @@ class TokenAuthentication(PolyaxonAuthentication):
 
         return self.authenticate_credentials(token)
 
-    def authenticate_credentials(self, key):  # pylint:disable=arguments-differ
+    def authenticate_credentials(self,  # pylint:disable=arguments-differ
+                                 key: str) -> Optional[Tuple['User', 'Token']]:
         try:
             token = Token.objects.select_related('user').get(key=key)
         except Token.DoesNotExist:

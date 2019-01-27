@@ -1,3 +1,5 @@
+from typing import Any, Dict, Iterable
+
 from query.builder import QueryCondSpec
 from query.exceptions import QueryError
 from query.parser import parse_field, tokenize_query
@@ -10,14 +12,14 @@ class BaseQueryManager(object):
     CONDITIONS_BY_FIELD = {}
 
     @classmethod
-    def proxy_field(cls, field):
+    def proxy_field(cls, field: str) -> str:
         field, suffix = parse_field(field)
         if field in cls.FIELDS_PROXY:
             field = cls.FIELDS_PROXY[field]
         return '{}__{}'.format(field, suffix) if suffix else field
 
     @classmethod
-    def tokenize(cls, query_spec):
+    def tokenize(cls, query_spec: str) -> Dict[str, Iterable]:
         tokenized_query = tokenize_query(query_spec)
         for key in tokenized_query.keys():
             field, _ = parse_field(key)
@@ -29,7 +31,7 @@ class BaseQueryManager(object):
         return tokenized_query
 
     @classmethod
-    def parse(cls, tokenized_query):
+    def parse(cls, tokenized_query: Dict[str, Iterable]) -> Dict[str, Iterable]:
         parsed_query = {}
         for key, expressions in tokenized_query.items():
             field, _ = parse_field(key)
@@ -37,7 +39,7 @@ class BaseQueryManager(object):
         return parsed_query
 
     @classmethod
-    def build(cls, parsed_query):
+    def build(cls, parsed_query: Dict[str, Iterable]) -> Dict[str, Iterable]:
         built_query = {}
         for key, operations in parsed_query.items():
             field, _ = parse_field(key)
@@ -49,14 +51,14 @@ class BaseQueryManager(object):
         return built_query
 
     @classmethod
-    def handle_query(cls, query_spec):
+    def handle_query(cls, query_spec: str) -> Dict[str, Iterable]:
         tokenized_query = cls.tokenize(query_spec=query_spec)
         parsed_query = cls.parse(tokenized_query=tokenized_query)
         built_query = cls.build(parsed_query=parsed_query)
         return built_query
 
     @classmethod
-    def apply(cls, query_spec, queryset):
+    def apply(cls, query_spec: str, queryset: Any) -> Any:
         built_query = cls.handle_query(query_spec=query_spec)
         for key, cond_specs in built_query.items():
             key = cls.proxy_field(key)

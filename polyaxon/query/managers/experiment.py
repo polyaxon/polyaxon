@@ -1,3 +1,5 @@
+from typing import Any, Iterable, Union
+
 from hestia.bool_utils import to_bool
 from hestia.list_utils import to_list
 
@@ -12,7 +14,7 @@ from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_scalar_operation, parse_value_operation
 
 
-def _indepenent_condition(queryset, params, negation):
+def _indepenent_condition(queryset: Any, params: Union[str, Iterable], negation: bool) -> Any:
     params = to_list(params)
     if len(params) == 1 and to_bool(params[0]) is True:
         return queryset.filter(experiment_group__isnull=True)

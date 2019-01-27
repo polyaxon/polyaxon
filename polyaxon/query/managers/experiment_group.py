@@ -1,3 +1,5 @@
+from typing import Any
+
 from hestia.list_utils import to_list
 
 from django.db.models import Q
@@ -13,7 +15,7 @@ from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_scalar_operation, parse_value_operation
 
 
-def _search_algorithm_condition(queryset, params, negation):
+def _search_algorithm_condition(queryset: Any, params: Any, negation: bool) -> Any:
     params = to_list(params)
     updated_params = []
     for param in params:

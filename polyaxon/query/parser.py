@@ -1,4 +1,5 @@
 from collections import defaultdict, namedtuple
+from typing import Dict, Iterable, List, Optional, Tuple
 
 from query.exceptions import QueryParserException
 
@@ -9,7 +10,7 @@ class QueryOpSpec(namedtuple("QueryOpSpec", "op negation params")):
         return self._asdict().items()
 
 
-def parse_negation_operation(operation):
+def parse_negation_operation(operation: str) -> Tuple[bool, str]:
     """Parse the negation modifier in an operation."""
     _operation = operation.strip()
     if not _operation:
@@ -22,7 +23,7 @@ def parse_negation_operation(operation):
     return negation, _operation.strip()
 
 
-def parse_comparison_operation(operation):
+def parse_comparison_operation(operation: str) -> Tuple[Optional[str], str]:
     """Parse the comparision operator in an operation."""
     _operation = operation.strip()
     if not _operation:
@@ -41,7 +42,7 @@ def parse_comparison_operation(operation):
     return None, _operation
 
 
-def parse_datetime_operation(operation):
+def parse_datetime_operation(operation: str) -> 'QueryOpSpec':
     """Parse datetime operations.
 
     A datetime operation can one of the following:
@@ -87,7 +88,7 @@ def parse_datetime_operation(operation):
     return QueryOpSpec(op, negation, _operation)
 
 
-def parse_scalar_operation(operation):
+def parse_scalar_operation(operation: str) -> 'QueryOpSpec':
     """Parse scalar operations.
 
     A scalar operation can one of the following:
@@ -129,7 +130,7 @@ def parse_scalar_operation(operation):
     return QueryOpSpec(op, negation, _operation)
 
 
-def parse_value_operation(operation):
+def parse_value_operation(operation: str) -> 'QueryOpSpec':
     """Parse value operations.
 
     A value operation can one of the following:
@@ -176,7 +177,7 @@ def parse_value_operation(operation):
     return QueryOpSpec('=', negation, _operation)
 
 
-def parse_expression(expression):
+def parse_expression(expression: str) -> Tuple[str, str]:
     """Base parsing for expressions.
 
     Every expression must follow a basic format:
@@ -198,7 +199,7 @@ def parse_expression(expression):
     return name, operation
 
 
-def split_query(query):
+def split_query(query: str) -> List[str]:
     """Split a query into different expressions.
 
     Example:
@@ -217,7 +218,7 @@ def split_query(query):
     return expressions
 
 
-def tokenize_query(query):
+def tokenize_query(query: str) -> Dict[str, Iterable]:
     """Tokenizes a standard search query in name: operations mapping.
 
     Example:
@@ -236,7 +237,7 @@ def tokenize_query(query):
     return operation_by_name
 
 
-def parse_field(field):
+def parse_field(field: str) -> Tuple[str, Optional[str]]:
     """Parses fields with underscores, and return field and suffix.
 
     Example:

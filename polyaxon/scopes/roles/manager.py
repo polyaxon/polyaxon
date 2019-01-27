@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from typing import Iterable, Tuple
 
 from django.utils.functional import cached_property
 
@@ -20,29 +21,29 @@ class RoleManager(object):
         self._default = self._roles[default] if self._roles else RoleSpec.get_dummy()
         self._top = role
 
-    def can_manage(self, role, other):
+    def can_manage(self, role: str, other: str) -> bool:
         return self.get(role).rank >= self.get(other).rank
 
-    def get(self, role_id):
+    def get(self, role_id: str) -> 'RoleSpec':
         return self._roles[role_id]
 
     @cached_property
-    def roles(self):
+    def roles(self) -> Iterable['RoleSpec']:
         return self._roles.values()
 
     @cached_property
-    def choices(self):
+    def choices(self) -> Tuple:
         return tuple((r.id, r.name) for r in self.roles)
 
     @cached_property
-    def default(self):
+    def default(self) -> 'RoleSpec':
         return self._default
 
     @cached_property
-    def top(self):
+    def top(self) -> 'RoleSpec':
         return self._top
 
-    def roles_for_scope(self, scope):
+    def roles_for_scope(self, scope: str) -> Iterable['RoleSpec']:
         for role in self.roles:
             if role.has_scope(scope):
                 yield role

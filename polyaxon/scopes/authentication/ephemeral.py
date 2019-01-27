@@ -1,10 +1,14 @@
 import base64
 import binascii
 
+from typing import Any, Optional, Tuple
+
 from hestia.auth import AuthenticationTypes
 from hestia.ephemeral_services import EphemeralServices
 from rest_framework import exceptions
 from rest_framework.authentication import get_authorization_header
+
+from django.http import HttpRequest
 
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from scopes.authentication.base import PolyaxonAuthentication
@@ -12,7 +16,7 @@ from scopes.authentication.internal import get_internal_header
 
 
 class EphemeralUser(object):
-    def __init__(self, scope):
+    def __init__(self, scope: str) -> None:
         self.username = 'ephemeral_user'
         self.pk = -1
         self.id = -1
@@ -27,15 +31,15 @@ class EphemeralUser(object):
     def access_token(self):
         return None
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any):
         return isinstance(other, EphemeralUser) and other.username == self.username
 
 
-def is_ephemeral_user(user):
+def is_ephemeral_user(user: Any) -> bool:
     return hasattr(user, 'is_ephemeral')
 
 
-def is_authenticated_ephemeral_user(user):
+def is_authenticated_ephemeral_user(user: Any):
     if is_ephemeral_user(user):
         return user.is_ephemeral
 
@@ -58,7 +62,7 @@ class EphemeralAuthentication(PolyaxonAuthentication):
 
     keyword = AuthenticationTypes.EPHEMERAL_TOKEN
 
-    def authenticate(self, request):
+    def authenticate(self, request: HttpRequest) -> Optional[Tuple['EphemeralUser', None]]:
         auth = get_authorization_header(request).split()
         internal_service = get_internal_header(request)
 
@@ -90,7 +94,8 @@ class EphemeralAuthentication(PolyaxonAuthentication):
 
         return self.authenticate_credentials(token)
 
-    def authenticate_credentials(self, key):  # pylint:disable=arguments-differ
+    def authenticate_credentials(self,  # pylint:disable=arguments-differ
+                                 key: str) -> Tuple['EphemeralUser', None]:
         try:
             auth_parts = base64.b64decode(key).decode('utf-8').split(RedisEphemeralTokens.SEPARATOR)
         except (TypeError, UnicodeDecodeError, binascii.Error):

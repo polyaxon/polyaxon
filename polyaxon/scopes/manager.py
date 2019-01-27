@@ -10,5 +10,5 @@ class ScopeMappingManager(object):
             'DELETE': (),
         }
 
-    def get(self, endpoint):
+    def get(self, endpoint: str):
         return self._config.get(endpoint, self._default)

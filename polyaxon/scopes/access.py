@@ -1,10 +1,10 @@
 class Access(object):
 
     def __init__(self,
-                 is_superuser=False,
-                 is_owner=False,
-                 public_only=True,
-                 is_authenticated=True,
+                 is_superuser: bool = False,
+                 is_owner: bool = False,
+                 public_only: bool = True,
+                 is_authenticated: bool = True,
                  role=None,
                  scopes=None,
                  permissions=None):

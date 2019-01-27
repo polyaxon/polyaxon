@@ -1,3 +1,5 @@
+from django.http import HttpRequest
+
 from scopes.authentication.ephemeral import is_ephemeral_user
 from scopes.authentication.internal import is_internal_user
 from scopes.permissions.base import PolyaxonPermission
@@ -11,11 +13,11 @@ class ScopesPermission(PolyaxonPermission):
     SCOPE_MAPPING = None
 
     @staticmethod
-    def _check_internal_or_ephemeral(request):
+    def _check_internal_or_ephemeral(request: HttpRequest) -> bool:
         return any([is_ephemeral_user(request.user), is_internal_user(request.user)])
 
     @staticmethod
-    def _check_staff_or_superuser(request):
+    def _check_staff_or_superuser(request: HttpRequest) -> bool:
         return request.user.is_superuser or request.user.is_staff
 
     def has_permission(self, request, view):
