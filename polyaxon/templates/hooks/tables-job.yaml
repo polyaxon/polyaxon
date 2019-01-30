@@ -40,7 +40,7 @@ spec:
       - name: tables-job
         image: "{{ .Values.tablesHook.image }}:{{ .Values.tablesHook.imageTag }}"
         imagePullPolicy: {{ .Values.tablesHook.imagePullPolicy }}
-        args: ["--db=$(POLYAXON_DB_NAME)", "--host=$(POLYAXON_DB_HOST)", "--port=$(POLYAXON_DB_PORT)", "--username=$(POLYAXON_DB_USER)", "--password=$(POLYAXON_DB_USER)"]
+        args: ["--db=$(POLYAXON_DB_NAME)", "--host=$(POLYAXON_DB_HOST)", "--port=$(POLYAXON_DB_PORT)", "--username=$(POLYAXON_DB_USER)", "--password=$(POLYAXON_DB_PASSWORD)"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
