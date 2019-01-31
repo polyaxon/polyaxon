@@ -59,13 +59,13 @@ class CliVersion(BaseValidationVersion):
     def get_min_version(cls):
         import conf
 
-        return conf.get('CLI_LATEST_VERSION')
+        return conf.get('CLI_MIN_VERSION')
 
     @classmethod
     def get_latest_version(cls):
         import conf
 
-        return conf.get('CLI_MIN_VERSION')
+        return conf.get('CLI_LATEST_VERSION')
 
 
 class PlatformVersion(BaseValidationVersion):
