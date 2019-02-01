@@ -47,11 +47,11 @@ features or select read_repository and read_user to only have ability to use exi
 This will enable Polyaxon to read your repositories and detect new commits. 
 Click the Generate Token button at the bottom to create the token.
 
-![gitlab-integration2](../../content/images/integrations/github/img2.png)
+![gitlab-integration2](../../content/images/integrations/gitlab/img2.png)
 
 Or If you only want to allow Polyaxon read access please select:
 
-![gitlab-integration3](../../content/images/integrations/github/img3.png)
+![gitlab-integration3](../../content/images/integrations/gitlab/img3.png)
 
 ## Copy the token
 
