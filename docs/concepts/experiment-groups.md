@@ -1,5 +1,5 @@
 ---
-title: "Experiment Groupss"
+title: "Experiment Groups"
 sub_link: "experiment_groups"
 meta_title: "Experiment Groups in Polyaxon - Core Concepts"
 meta_description: "An Experiment Group is an automatic and practical way to run a version of your model and data with different hyper parameters."
