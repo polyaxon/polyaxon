@@ -121,7 +121,7 @@ def delete(ctx):
         sys.exit(1)
 
     if response.status_code == 204:
-        Printer.print_success("Experiment `{}` was delete successfully".format(_build))
+        Printer.print_success("Build job `{}` was deleted successfully".format(_build))
 
 
 @build.command()
