@@ -1,10 +1,9 @@
 import os
-
 from unittest import TestCase
 
 from rhea.exceptions import RheaError
 from rhea.manager import Rhea
-from rhea.specs import UriSpec
+from rhea.specs import AuthSpec, UriSpec
 
 
 class TestRhea(TestCase):
@@ -390,6 +389,69 @@ class TestRhea(TestCase):
                                 default=[UriSpec("user", "pass", "siteweb.ca"),
                                          UriSpec("user2", "pass", "localhost:8080")]),
             [UriSpec("user", "pass", "siteweb.ca"), UriSpec("user2", "pass", "localhost:8080")])
+
+    def test_get_auth(self):
+        value = self.config.get_auth('auth_key_1')
+        self.assertEqual(value, AuthSpec("user", "pass"))
+
+        value = self.config.get_auth('auth_list_key_1', is_list=True)
+        self.assertEqual(value, [
+            AuthSpec("user", "pass"),
+            AuthSpec("user2", "pass"),
+        ])
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_error_key_1')
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_error_key_2')
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_error_key_3')
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_error_key_4')
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_list_key_1')
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_list_error_key_1', is_list=True)
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_list_error_key_2', is_list=True)
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_list_error_key_3', is_list=True)
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_list_error_key_4', is_list=True)
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_key_1', is_list=True)
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_non_existing_key')
+
+        with self.assertRaises(RheaError):
+            self.config.get_auth('auth_non_existing_key', is_list=True)
+
+        self.assertEqual(self.config.get_auth('auth_non_existing_key', is_optional=True), None)
+        self.assertEqual(
+            self.config.get_auth('auth_non_existing_key',
+                                 is_optional=True,
+                                 default=AuthSpec("user2", "pass")),
+            AuthSpec("user2", "pass"))
+
+        self.assertEqual(
+            self.config.get_auth('auth_non_existing_key', is_list=True, is_optional=True), None)
+        self.assertEqual(
+            self.config.get_auth('auth_non_existing_key',
+                                 is_list=True,
+                                 is_optional=True,
+                                 default=[AuthSpec("user", "pass"),
+                                          AuthSpec("user2", "pass")]),
+            [AuthSpec("user", "pass"), AuthSpec("user2", "pass")])
 
     def test_get_list(self):
         value = self.config.get_list('list_key_1')

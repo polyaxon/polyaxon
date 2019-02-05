@@ -9,3 +9,10 @@ class UriSpec(namedtuple("UriSpec", "user password host")):
     A specification for uris configuration.
     """
     pass
+
+
+class AuthSpec(namedtuple("UriSpec", "user password")):
+    """
+    A specification for auth configuration.
+    """
+    pass

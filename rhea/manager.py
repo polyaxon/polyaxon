@@ -9,7 +9,7 @@ from distutils.util import strtobool  # pylint:disable=import-error
 
 from rhea import reader
 from rhea.exceptions import RheaError
-from rhea.specs import UriSpec
+from rhea.specs import AuthSpec, UriSpec
 
 
 class Rhea(object):
@@ -365,6 +365,48 @@ class Rhea(object):
                                      default=default,
                                      options=options)
 
+    def get_auth(self,
+                 key,
+                 is_list=False,
+                 is_optional=False,
+                 is_secret=False,
+                 is_local=False,
+                 default=None,
+                 options=None):
+        """
+        Get a the value corresponding to the key and converts it to `AuthSpec`.
+
+        Args
+            key: the dict key.
+            is_list: If this is one element or a list of elements.
+            is_optional: To raise an error if key was not found.
+            is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
+            default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
+
+        Returns:
+             `str`: value corresponding to the key.
+        """
+        if is_list:
+            return self._get_typed_list_value(key=key,
+                                              target_type=AuthSpec,
+                                              type_convert=self.parse_auth_spec,
+                                              is_optional=is_optional,
+                                              is_secret=is_secret,
+                                              is_local=is_local,
+                                              default=default,
+                                              options=options)
+
+        return self._get_typed_value(key=key,
+                                     target_type=AuthSpec,
+                                     type_convert=self.parse_auth_spec,
+                                     is_optional=is_optional,
+                                     is_secret=is_secret,
+                                     is_local=is_local,
+                                     default=default,
+                                     options=options)
+
     def get_list(self,
                  key,
                  is_optional=False,
@@ -556,3 +598,12 @@ class Rhea(object):
                 'The uri must be in the format `user:pass@host`'.format(uri_spec))
 
         return UriSpec(user=user_pass[0], password=user_pass[1], host=host)
+    
+    def parse_auth_spec(self, auth_spec):
+        user_pass = auth_spec.split(':')
+        if len(user_pass) != 2:
+            raise RheaError(
+                'Received invalid uri_spec `{}`. `user:host` is not conform.'
+                'The uri must be in the format `user:pass`'.format(auth_spec))
+
+        return AuthSpec(user=user_pass[0], password=user_pass[1])

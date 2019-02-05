@@ -94,6 +94,8 @@ LIST_ENV_VALUE: 'foo, bar, boo'
 
 URI_ENV_VALUE1: user:pass@host.com
 URI_ENV_VALUE2: user:pass@host:4000
+
+AUTH_ENV_VALUE: user:pass
 ```
 
 Reading:
@@ -140,6 +142,9 @@ rhea_config.get_uri('URI_ENV_VALUE1')
 
 rhea_config.get_uri('URI_ENV_VALUE2')
 # UriSpec('user', 'pass', 'host:4000')
+
+rhea_config.get_uri('AUTH_ENV_VALUE')
+# AuthSpec('user', 'pass')
 ```
 
 ### List of base types
@@ -154,6 +159,7 @@ FLOATS_ENV_VALUE: '[1.1, -1.3, 0.03, 1111.1, 1.]'
 DICTS_ENV_VALUE: '[{"foo": "bar", "1": 2}, {"foo": "bar", "1": 2}]'
 DICT_OF_DICTS_ENV_VALUE: '{"key1": {"foo": "bar", "1": 2}, "key2": {"foo": "bar", "1": 2}}'
 URIS_ENV_VALUE: '["user:pass@host.com", "user:pass@host:4000"]'
+AUTHS_ENV_VALUE: '["user1:pass1", "user2:pass2"]'
 ```
 
 Reading:
@@ -183,6 +189,9 @@ rhea_config.get_dict_of_dicts('DICT_OF_DICTS_ENV_VALUE')
 
 rhea_config.get_uri('URIS_ENV_VALUE', is_list=True)
 # [UriSpec('user', 'pass', 'host'), UriSpec('user', 'pass', 'host:4000')]
+
+rhea_config.get_uri('AUTHS_ENV_VALUE', is_list=True)
+# [UriSpec('user1', 'pass1'), UriSpec('user2', 'pass2')]
 ```
 
 ### Optional values and default values
