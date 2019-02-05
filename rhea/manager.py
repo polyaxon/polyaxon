@@ -598,7 +598,7 @@ class Rhea(object):
                 'The uri must be in the format `user:pass@host`'.format(uri_spec))
 
         return UriSpec(user=user_pass[0], password=user_pass[1], host=host)
-    
+
     def parse_auth_spec(self, auth_spec):
         user_pass = auth_spec.split(':')
         if len(user_pass) != 2:
