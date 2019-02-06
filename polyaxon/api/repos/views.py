@@ -145,7 +145,8 @@ class UploadFilesView(ProjectResourceListEndpoint, UploadView):
             auditor.record(event_type=REPO_CREATED,
                            instance=repo,
                            actor_id=self.request.user.id,
-                           actor_name=self.request.user.username)
+                           actor_name=self.request.user.username,
+                           external=False)
         return repo
 
     def put(self, request, *args, **kwargs):

@@ -33,7 +33,8 @@ class AuditorRepoTest(BaseTest):
         auditor.record(event_type=repo_events.REPO_CREATED,
                        instance=self.project,
                        actor_id=1,
-                       actor_name='foo')
+                       actor_name='foo',
+                       external=True)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 1
