@@ -13,6 +13,7 @@ class RepoCreatedEvent(Event):
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
+        Attribute('external', attr_type=bool)
     )
 
 
