@@ -379,6 +379,13 @@ class TestBuildDetailViewV1(BaseViewTest):
         assert new_object.user == self.object.user
         assert new_object.description != self.object.description
         assert new_object.description == new_description
+        dockerfile = 'foo'
+        data = {'dockerfile': dockerfile}
+        assert new_object.dockerfile is None
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.dockerfile == dockerfile
 
     def test_delete_archives_and_schedules_stop(self):
         self.object.set_status(JobLifeCycle.SCHEDULED)
