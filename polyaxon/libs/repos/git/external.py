@@ -1,9 +1,10 @@
 import logging
-import os
+
+from hestia.urls_utils import validate_url
 
 import conf
 
-from libs.paths.utils import create_path
+from libs.repos.git.exceptions import GitCloneException
 
 _logger = logging.getLogger('polyaxon.repos.git')
 
@@ -13,22 +14,26 @@ def get_repo_name(git_url: str) -> str:
     return git_name.split('.git')[0]
 
 
-def set_git_repo(git_url: str) -> None:
-    from libs.repos.git import get_git_repo
+def set_git_repo(repo: 'ExternalRepo') -> str:
+    from libs.repos.git import clone_git_repo, ensure_repo_paths
 
-    mount_path = conf.get('REPOS_MOUNT_PATH')
-    repo_name = get_repo_name(git_url=git_url)
-    repo_owner = repo_name.split('/')[0]
-
-    # Check that the owner has a dir
-    owner_path = '{}/{}'.format(mount_path, repo_owner)
-    if not os.path.isdir(owner_path):
-        create_path(owner_path)
-
-    # Check that the project has a dir
-    repo_path = '{}/{}'.format(mount_path, repo_name)
-    if not os.path.isdir(repo_path):
-        create_path(repo_path)
+    # Ensure paths
+    ensure_repo_paths(repo=repo)
 
     # Create a new repo
-    get_git_repo(repo_path=repo_path, init=True)
+    try:
+        clone_git_repo(repo_path=repo.path, git_url=repo.git_clone_url)
+    except Exception as e:
+        raise GitCloneException(e)
+    return repo.path
+
+
+def get_private_clone_url(git_url: str) -> str:
+    # We make sure that the project has the credentials to use for the private repo
+    access_token = conf.get('REPOS_ACCESS_TOKEN')
+    if not access_token or not validate_url(git_url):
+        raise GitCloneException
+
+    # Add user:pass to the git url
+    url = git_url.split('https://')[1]
+    return 'https://{}:{}@{}'.format(access_token.user, access_token.password, url)

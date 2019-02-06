@@ -5,13 +5,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from db.models.repos import CodeReference
 
 
-def get_internal_code_reference(instance, commit: str = None) -> Optional['CodeReference']:
+def get_code_reference(instance, commit: str = None) -> Optional['CodeReference']:
     project = instance.project
 
     if not project.has_code:
         return None
 
-    repo = project.repo
+    repo = project.repo or project.external_repo
 
     if commit:
         try:
@@ -29,11 +29,6 @@ def get_internal_code_reference(instance, commit: str = None) -> Optional['CodeR
     return code_reference
 
 
-def get_external_code_reference(git_url: str, commit: str = None) -> 'CodeReference':
-    code_reference, _ = CodeReference.objects.get_or_create(git_url=git_url, commit=commit)
-    return code_reference
-
-
 RefModel = Union['Experiment',
                  'ExperimentGroup',
                  'Job',
@@ -48,11 +43,7 @@ def assign_code_reference(instance: RefModel, commit: str = None) -> RefModel:
     build = instance.specification.build if instance.specification else None
     if not commit and build:
         commit = build.ref
-    git_url = build.git if build and build.git else None
-    if git_url:
-        code_reference = get_external_code_reference(git_url=git_url, commit=commit)
-    else:
-        code_reference = get_internal_code_reference(instance=instance, commit=commit)
+    code_reference = get_code_reference(instance=instance, commit=commit)
     if code_reference:
         instance.code_reference = code_reference
 

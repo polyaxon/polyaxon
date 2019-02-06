@@ -1,21 +1,14 @@
 import logging
-import os
-
-from libs.paths.utils import create_path
 
 _logger = logging.getLogger('polyaxon.repos.git')
 
 
-def set_git_repo(repo: 'Repo') -> None:
-    from libs.repos.git import get_git_repo
+def set_git_repo(repo: 'Repo') -> str:
+    from libs.repos.git import ensure_repo_paths, get_git_repo
 
-    # Check that the user has a dir
-    if not os.path.isdir(repo.user_path):
-        create_path(repo.user_path)
-
-    # Check that the project has a dir
-    if not os.path.isdir(repo.project_path):
-        create_path(repo.project_path)
+    # Ensure paths
+    ensure_repo_paths(repo=repo)
 
     # Create a new repo
     get_git_repo(repo_path=repo.path, init=True)
+    return repo.path

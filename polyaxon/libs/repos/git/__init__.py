@@ -4,16 +4,27 @@ import shlex
 
 from subprocess import PIPE
 
-from typing import Tuple, Any, List, Optional
+from typing import Tuple, Any, List, Optional, Union
 
 from git import InvalidGitRepositoryError
 from git import Repo as GitRepo
 from psutil import Popen
 
+from libs.repos.git.exceptions import GitCloneException
 from libs.repos.git import internal, external  # noqa
 from libs.paths.utils import create_path, delete_path
 
 _logger = logging.getLogger('polyaxon.repos.git')
+
+
+def ensure_repo_paths(repo: Union['Repo', 'ExternalRepo']):
+    # Check that the user has a dir
+    if not os.path.isdir(repo.user_path):
+        create_path(repo.user_path)
+
+    # Check that the project has a dir
+    if not os.path.isdir(repo.project_path):
+        create_path(repo.project_path)
 
 
 def get_git_repo(repo_path: str, init: bool = False) -> Any:
