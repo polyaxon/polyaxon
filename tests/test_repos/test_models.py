@@ -45,8 +45,7 @@ class TestRepoModels(BaseTest):
         repo.save()
 
         # Check last commit
-        with self.assertRaises(ValueError):
-            _ = repo.last_commit
+        assert len(repo.last_commit) == 2
 
         # Add new file
         file_path = os.path.join(repo.path, 'file1.dat')

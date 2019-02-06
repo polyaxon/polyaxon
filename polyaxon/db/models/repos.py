@@ -99,10 +99,10 @@ class ExternalRepo(DiffModel, RepoMixin):
     def git_clone_url(self):
         if self.is_public:
             return self.git_url
-        else:
-            from libs.repos import git
 
-            return git.external.get_private_clone_url(git_url=self.git_url)
+        from libs.repos import git
+
+        return git.external.get_private_clone_url(git_url=self.git_url)
 
 
 class CodeReference(DiffModel):

@@ -41,7 +41,7 @@ class TestExternalRepoSerializer(BaseTest):
     serializer_class = ExternalRepoSerializer
     model_class = ExternalRepo
     factory_class = ExternalRepoFactory
-    expected_keys = {'project', 'created_at', 'updated_at', 'is_public', 'git_url',}
+    expected_keys = {'project', 'created_at', 'updated_at', 'is_public', 'git_url', }
 
     def setUp(self):
         super().setUp()
