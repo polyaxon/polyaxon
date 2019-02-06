@@ -562,28 +562,10 @@ class TestExperimentCommit(BaseViewTest):
         model_experiment = self.create_experiment(experiment_spec_content)
         assert model_experiment.code_reference is None
 
-    def test_experiment_is_saved_with_git_url(self):
+    def test_experiment_is_saved_without_code(self):
         # Check experiment is created with commit
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             experiment = self.create_experiment(exec_experiment_ext_repo_spec_content)
         assert mock_fct.call_count == 1
 
-        assert experiment.code_reference.commit is None
-        assert experiment.code_reference.git_url == 'https://github.com/foo/bar/archive/master.zip'
-
-        # Cloning an experiment does not assign commit
-        clone_experiment = Experiment.objects.create(
-            project=experiment.project,
-            user=self.project.user,
-            description=experiment.description,
-            experiment_group=experiment.experiment_group,
-            config=experiment.config,
-            original_experiment=experiment,
-            code_reference=experiment.code_reference
-        )
-
-        assert clone_experiment.code_reference == experiment.code_reference
-
-        # Model experiments should not get a commit
-        model_experiment = self.create_experiment(experiment_spec_content)
-        assert model_experiment.code_reference is None
+        assert experiment.code_reference is None

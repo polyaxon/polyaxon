@@ -72,7 +72,15 @@ class Project(DiffModel,
 
     @property
     def has_code(self) -> bool:
+        return self.has_repo or self.has_external_repo
+
+    @property
+    def has_repo(self):
         return hasattr(self, 'repo')
+
+    @property
+    def has_external_repo(self):
+        return hasattr(self, 'external_repo')
 
     @cached_property
     def notebook(self):

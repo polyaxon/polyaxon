@@ -1,5 +1,4 @@
 import os
-
 from typing import Any, Tuple
 
 from django.db import models
@@ -68,10 +67,53 @@ class Repo(DiffModel, RepoMixin):
                                                self.project.name)
 
 
+class ExternalRepo(DiffModel, RepoMixin):
+    """A model that represents an external repository containing code."""
+    project = models.OneToOneField(
+        'db.Project',
+        on_delete=models.CASCADE,
+        related_name='external_repo')
+    git_url = models.URLField()
+    is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
+
+    class Meta:
+        app_label = 'db'
+        unique_together = (('project', 'git_url'),)
+
+    def __str__(self):
+        return '{} - {}'.format(self.project, self.name)
+
+    @property
+    def name(self):
+        git_name = self.git_url.split('/')[-1]
+        return git_name.split('.git')[0]
+
+    @property
+    def path(self):
+        """We need to nest the git path inside the project path to make it easier
+        to create docker images."""
+        return os.path.join(self.project_path, self.name)
+
+    @property
+    def git_clone_url(self):
+        if self.is_public:
+            return self.git_url
+        else:
+            from libs.repos import git
+
+            return git.external.get_private_clone_url(git_url=self.git_url)
+
+
 class CodeReference(DiffModel):
     """A model that represents a reference to repo and code commit."""
     repo = models.ForeignKey(
         'db.Repo',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='references')
+    external_repo = models.ForeignKey(
+        'db.ExternalRepo',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
