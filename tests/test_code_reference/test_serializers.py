@@ -14,6 +14,7 @@ class TestCodeReferenceSerializer(BaseTest):
     expected_keys = {
         'id',
         'repo',
+        'external_repo',
         'branch',
         'commit',
         'head',
