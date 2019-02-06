@@ -6,18 +6,18 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
-from django.http import HttpResponseServerError, Http404
+from django.http import Http404, HttpResponseServerError
 
 import auditor
 import conf
 
-from api.endpoint.base import DestroyEndpoint, RetrieveEndpoint, UpdateEndpoint, CreateEndpoint
+from api.endpoint.base import CreateEndpoint, DestroyEndpoint, RetrieveEndpoint, UpdateEndpoint
 from api.endpoint.project import ProjectResourceListEndpoint
-from api.repos.serializers import RepoSerializer, ExternalRepoSerializer
+from api.repos.serializers import ExternalRepoSerializer, RepoSerializer
 from api.repos.tasks import handle_new_files
 from api.utils.views.protected import ProtectedView
 from api.utils.views.upload import UploadView
-from db.models.repos import Repo, ExternalRepo
+from db.models.repos import ExternalRepo, Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.archive import archive_repo
 from libs.repos import git

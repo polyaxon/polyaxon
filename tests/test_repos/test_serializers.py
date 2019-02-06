@@ -1,8 +1,8 @@
 import pytest
 
-from api.repos.serializers import RepoSerializer, ExternalRepoSerializer
-from db.models.repos import Repo, ExternalRepo
-from factories.factory_repos import RepoFactory, ExternalRepoFactory
+from api.repos.serializers import ExternalRepoSerializer, RepoSerializer
+from db.models.repos import ExternalRepo, Repo
+from factories.factory_repos import ExternalRepoFactory, RepoFactory
 from tests.utils import BaseTest
 
 

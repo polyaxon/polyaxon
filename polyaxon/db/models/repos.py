@@ -1,4 +1,5 @@
 import os
+
 from typing import Any, Tuple
 
 from django.db import models

@@ -1,8 +1,9 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from hestia.signal_decorators import ignore_raw, ignore_updates
 
-from db.models.repos import CodeReference, Repo, ExternalRepo
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from db.models.repos import CodeReference, ExternalRepo, Repo
 from libs.repos import git
 
 
