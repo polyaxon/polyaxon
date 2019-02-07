@@ -18,7 +18,7 @@ import conf
 from constants.jobs import JobLifeCycle
 from db.redis.heartbeat import RedisHeartBeat
 from docker_images.image_info import get_image_name, get_tagged_image
-from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
+from dockerizer.init.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from dockerizer.init.git_download import download_code
 from dockerizer.utils import send_status
 from polyaxon.celery_api import celery_app
