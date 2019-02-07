@@ -16,7 +16,6 @@ from db.models.experiments import Experiment
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
-from dockerizer.tasks import build_project_notebook
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
@@ -700,11 +699,6 @@ class TestStartNotebookViewV1(BaseViewTest):
                    'projects_notebook_build.apply_async') as build_mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert build_mock_fct.call_count == 1
-
-        # Simulate build
-        with patch('dockerizer.builders.notebooks.build_notebook_job') as mock_fct:
-            build_project_notebook(project_id=self.object.id)
-        assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
 

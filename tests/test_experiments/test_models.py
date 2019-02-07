@@ -21,7 +21,6 @@ from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentStatus
 from db.models.job_resources import JobResources
-from dockerizer.tasks import build_experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -38,7 +37,7 @@ from factories.fixtures import (
     exec_experiment_spec_content,
     experiment_spec_content
 )
-from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
+from scheduler.tasks.experiments import copy_experiment, experiments_build, experiments_set_metrics
 from schemas.specifications import ExperimentSpecification
 from schemas.tasks import TaskType
 from tests.fixtures import start_experiment_value
@@ -233,7 +232,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.FAILED
 
-    def test_independent_experiment_creation_with_run_triggers_experiment_building_scheduling(self):
+    def test_independent_experiment_creation_with_run_triggers_experiment_building(self):
         config = ExperimentSpecification.read(exec_experiment_spec_content)
         # Create a repo for the project
         repo = RepoFactory()
@@ -249,14 +248,44 @@ class TestExperimentModel(BaseTest):
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED]
 
-        with patch('dockerizer.builders.experiments.build_experiment') as mock_build:
-            build_experiment(experiment_id=experiment.id)
+        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
+            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
+                mock_check.return_value = False
+                experiments_build(experiment_id=experiment.id)
 
-        assert mock_build.call_count == 1
-        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 4
+        assert mock_start.call_count == 1
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 2
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,
-                                      ExperimentLifeCycle.BUILDING,
+                                      ExperimentLifeCycle.BUILDING]
+        experiment.refresh_from_db()
+        assert experiment.last_status == ExperimentLifeCycle.BUILDING
+
+    def test_independent_experiment_creation_with_run_triggers_experiment_scheduling(self):
+        config = ExperimentSpecification.read(exec_experiment_spec_content)
+        # Create a repo for the project
+        repo = RepoFactory()
+
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_build:
+            experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
+
+        assert mock_build.call_count == 1
+        assert experiment.project.repo is not None
+        assert experiment.is_independent is True
+
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
+
+        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
+            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
+                mock_check.return_value = True
+                experiments_build(experiment_id=experiment.id)
+
+        assert mock_start.call_count == 0
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED,
                                       ExperimentLifeCycle.SCHEDULED,
                                       ExperimentLifeCycle.FAILED]
         experiment.refresh_from_db()

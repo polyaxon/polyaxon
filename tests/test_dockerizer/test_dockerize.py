@@ -8,6 +8,7 @@ import pytest
 import conf
 
 from dockerizer.builder import DockerBuilder
+from dockerizer.init.generate import DockerFileGenerator
 from factories.factory_build_jobs import BuildJobFactory
 from tests.utils import BaseTest
 
@@ -21,9 +22,9 @@ class TestDockerize(BaseTest):
         repo_path = os.path.join(conf.get('REPOS_MOUNT_PATH'), 'repo')
         os.mkdir(repo_path)
 
-        builder = DockerBuilder(build_job=build_job,
-                                repo_path=repo_path,
-                                from_image='busybox')
+        builder = DockerFileGenerator(build_job=build_job,
+                                      repo_path=repo_path,
+                                      from_image='busybox')
         assert builder.polyaxon_requirements_path is None
         assert builder.polyaxon_setup_path is None
         builder.clean()
@@ -47,9 +48,9 @@ class TestDockerize(BaseTest):
         Path(os.path.join(repo_path, 'requirements.txt')).touch()
         Path(os.path.join(repo_path, 'setup.sh')).touch()
 
-        builder = DockerBuilder(build_job=build_job,
-                                repo_path=repo_path,
-                                from_image='busybox')
+        builder = DockerFileGenerator(build_job=build_job,
+                                      repo_path=repo_path,
+                                      from_image='busybox')
         assert builder.polyaxon_requirements_path == 'repo/requirements.txt'
         assert builder.polyaxon_setup_path == 'repo/setup.sh'
         builder.clean()
@@ -63,9 +64,9 @@ class TestDockerize(BaseTest):
         os.mkdir(repo_path)
 
         # By default it should user FROM image declare WORKDIR and COPY code
-        builder = DockerBuilder(build_job=build_job,
-                                repo_path=repo_path,
-                                from_image='busybox')
+        builder = DockerFileGenerator(build_job=build_job,
+                                      repo_path=repo_path,
+                                      from_image='busybox')
 
         dockerfile = builder.render()
         builder.clean()
@@ -75,10 +76,10 @@ class TestDockerize(BaseTest):
         assert 'COPY {}'.format(builder.folder_name) in dockerfile
 
         # Add env vars
-        builder = DockerBuilder(build_job=build_job,
-                                repo_path=repo_path,
-                                from_image='busybox',
-                                env_vars=[('BLA', 'BLA')])
+        builder = DockerFileGenerator(build_job=build_job,
+                                      repo_path=repo_path,
+                                      from_image='busybox',
+                                      env_vars=[('BLA', 'BLA')])
 
         dockerfile = builder.render()
         assert 'ENV BLA BLA' in dockerfile
@@ -93,10 +94,10 @@ class TestDockerize(BaseTest):
             './polyaxon_setup.sh'
         ]
 
-        builder = DockerBuilder(build_job=build_job,
-                                repo_path=repo_path,
-                                from_image='busybox',
-                                build_steps=build_steps)
+        builder = DockerFileGenerator(build_job=build_job,
+                                      repo_path=repo_path,
+                                      from_image='busybox',
+                                      build_steps=build_steps)
 
         dockerfile = builder.render()
         assert 'COPY {} {}'.format(
