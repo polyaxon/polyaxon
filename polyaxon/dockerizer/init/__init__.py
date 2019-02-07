@@ -3,7 +3,7 @@ from dockerizer.init.generate import generate
 from dockerizer.init.git_download import download_code
 
 
-def init(build_job: 'BuildJob', build_path: str = BUILD_PATH):
+def init(build_job: 'BuildJob', build_path: str = BUILD_PATH) -> bool:
     # Check image if exists
     # Download repo
     filename = '_code'
@@ -14,4 +14,4 @@ def init(build_job: 'BuildJob', build_path: str = BUILD_PATH):
     if not status:
         return status
     # Generate dockerfile
-    generate(build_job=build_job, build_path=build_path)
+    return generate(build_job=build_job, build_path=build_path)

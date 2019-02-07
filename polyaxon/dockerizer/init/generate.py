@@ -112,7 +112,7 @@ class DockerFileGenerator(object):
         )
 
 
-def generate(build_job: 'BuildJob', build_path: str) -> None:
+def generate(build_job: 'BuildJob', build_path: str) -> bool:
     """Build necessary code for a job to run"""
     _logger.info('Generating dockerfile ...')
     # Build the image
@@ -131,3 +131,4 @@ def generate(build_job: 'BuildJob', build_path: str) -> None:
             kwargs={'build_job_uuid': dockerfile_generator.job_uuid,
                     'dockerfile': rendered_dockerfile})
         dockerfile.write(rendered_dockerfile)
+    return True
