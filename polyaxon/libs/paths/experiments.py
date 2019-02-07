@@ -1,6 +1,6 @@
 import os
 
-from libs.paths.utils import create_path
+from hestia.paths import create_path
 
 
 def get_experiment_subpath(experiment_name: str) -> str:

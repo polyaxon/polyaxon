@@ -1,12 +1,12 @@
 import os
 
 import pytest
+from hestia.paths import copy_to_tmp_dir, get_tmp_path
 
 import conf
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
-from libs.paths.utils import copy_to_tmp_dir, get_tmp_path
 from tests.utils import BaseTest
 
 

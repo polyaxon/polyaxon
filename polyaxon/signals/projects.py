@@ -1,3 +1,4 @@
+from hestia.paths import delete_path
 from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_pre
 
 from django.db.models.signals import post_delete, post_save, pre_save
@@ -10,7 +11,6 @@ from db.models.projects import Project
 from db.models.repos import Repo
 from event_manager.events.project import PROJECT_DELETED
 from libs.paths.projects import delete_project_repos
-from libs.paths.utils import delete_path
 from signals.bookmarks import remove_bookmarks
 
 

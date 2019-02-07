@@ -9,11 +9,11 @@ import uuid
 from docker import APIClient
 from docker.errors import DockerException
 from hestia.list_utils import to_list
+from hestia.paths import delete_path, copy_to_tmp_dir, delete_tmp_dir
 
 import conf
 
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
-from libs.paths.utils import copy_to_tmp_dir, delete_path, delete_tmp_dir
 from libs.repos import git
 
 _logger = logging.getLogger('polyaxon.dockerizer')

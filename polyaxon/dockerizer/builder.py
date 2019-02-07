@@ -11,6 +11,7 @@ from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 from hestia.list_utils import to_list
 from hestia.logging_utils import LogLevels
+from hestia.paths import delete_path
 
 import conf
 
@@ -20,7 +21,6 @@ from docker_images.image_info import get_image_name, get_tagged_image
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from dockerizer.init.git_download import download_code
 from dockerizer.utils import send_status
-from libs.paths.utils import delete_path
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

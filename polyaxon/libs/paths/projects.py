@@ -1,8 +1,8 @@
 import os
 
-import conf
+from hestia.paths import delete_path
 
-from libs.paths.utils import delete_path
+import conf
 
 
 def get_project_subpath(project_name: str) -> str:

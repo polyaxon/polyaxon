@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from hestia.paths import check_or_create_path, create_path, delete_path
 from hestia.service_interface import InvalidService, Service
 from marshmallow import ValidationError
 from polystores import StoreManager
@@ -9,7 +10,6 @@ from rhea import RheaError
 from libs.paths.experiment_jobs import create_experiment_job_path
 from libs.paths.experiments import create_experiment_path
 from libs.paths.jobs import create_job_path
-from libs.paths.utils import check_archive_path, create_path, delete_path
 from polyaxon.config_manager import config
 from stores.exceptions import VolumeNotFoundError
 from stores.schemas.store import StoreConfig
@@ -266,7 +266,7 @@ class StoresService(Service):
         import conf
 
         if temp:
-            check_archive_path(conf.get('LOGS_ARCHIVE_ROOT'))
+            check_or_create_path(conf.get('LOGS_ARCHIVE_ROOT'))
             return create_experiment_job_path(experiment_job_name, conf.get('LOGS_ARCHIVE_ROOT'))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return create_experiment_job_path(experiment_job_name, persistence_logs)
@@ -299,7 +299,7 @@ class StoresService(Service):
         import conf
 
         if temp:
-            check_archive_path(conf.get('LOGS_ARCHIVE_ROOT'))
+            check_or_create_path(conf.get('LOGS_ARCHIVE_ROOT'))
             return create_experiment_path(experiment_name, conf.get('LOGS_ARCHIVE_ROOT'))
 
         persistence_logs = cls.get_logs_path(persistence=persistence)
@@ -340,7 +340,7 @@ class StoresService(Service):
         import conf
 
         if temp:
-            check_archive_path(conf.get('LOGS_ARCHIVE_ROOT'))
+            check_or_create_path(conf.get('LOGS_ARCHIVE_ROOT'))
             return create_job_path(job_name, conf.get('LOGS_ARCHIVE_ROOT'))
         persistence_logs = cls.get_logs_path(persistence=persistence)
         return create_job_path(job_name, persistence_logs)

@@ -8,11 +8,11 @@ from typing import Tuple, Any, List, Optional, Union
 
 from git import InvalidGitRepositoryError
 from git import Repo as GitRepo
+from hestia.paths import create_path, delete_path
 from psutil import Popen
 
 from libs.repos.git.exceptions import GitCloneException
 from libs.repos.git import internal, external  # noqa
-from libs.paths.utils import create_path, delete_path
 
 _logger = logging.getLogger('polyaxon.repos.git')
 
