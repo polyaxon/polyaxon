@@ -215,6 +215,7 @@ data:
   POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner }}
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   POLYAXON_BUILD_ALWAYS_PULL_LATEST: {{ default "false" .Values.build_always_pull_latest | quote }}
+  POLYAXON_TENSORBOARD_DOCKER_IMAGE: {{ .Values.tensorboardDockerImage }}
   # Registry
   {{- if (index .Values "docker-registry").enabled }}
   POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
