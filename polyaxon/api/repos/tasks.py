@@ -3,8 +3,9 @@ import os
 import shutil
 import tarfile
 
-from django.contrib.auth import get_user_model
 from hestia.paths import delete_path
+
+from django.contrib.auth import get_user_model
 
 import auditor
 

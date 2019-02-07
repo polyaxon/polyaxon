@@ -3,9 +3,9 @@ import tarfile
 
 from typing import Any, List, Tuple
 
+from hestia.paths import check_or_create_path
 from polystores.exceptions import PolyaxonStoresException
 from rest_framework.exceptions import ValidationError
-from hestia.paths import check_or_create_path
 
 import conf
 import stores

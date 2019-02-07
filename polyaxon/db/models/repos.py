@@ -46,6 +46,12 @@ class RepoMixin(object):
     def get_tmp_tar_path(self) -> str:
         return os.path.join(self.path, '{}_new.tar.gz'.format(self.project.name))
 
+    @property
+    def download_url(self) -> str:
+        return '{}/{}/{}/repo/download'.format(API_V1,
+                                               self.project.user.username,
+                                               self.project.name)
+
 
 class Repo(DiffModel, RepoMixin):
     """A model that represents a repository containing code."""
@@ -60,12 +66,6 @@ class Repo(DiffModel, RepoMixin):
 
     def __str__(self) -> str:
         return '{} <repo>'.format(self.project)
-
-    @property
-    def download_url(self) -> str:
-        return '{}/{}/{}/repo/download'.format(API_V1,
-                                               self.project.user.username,
-                                               self.project.name)
 
 
 class ExternalRepo(DiffModel, RepoMixin):
