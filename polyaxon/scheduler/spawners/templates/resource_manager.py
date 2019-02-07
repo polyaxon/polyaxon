@@ -148,6 +148,7 @@ class BaseResourceManager(object):
     def get_init_container(self,
                            init_command,
                            init_args,
+                           env_vars,
                            context_mounts,
                            persistence_outputs,
                            persistence_data):
@@ -212,6 +213,7 @@ class BaseResourceManager(object):
 
         init_container = self.get_init_container(init_command=init_command,
                                                  init_args=init_args,
+                                                 env_vars=env_vars,
                                                  context_mounts=context_mounts,
                                                  persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)

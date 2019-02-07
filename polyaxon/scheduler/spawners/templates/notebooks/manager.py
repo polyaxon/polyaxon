@@ -120,6 +120,7 @@ class ResourceManager(BaseResourceManager):
     def get_init_container(self,
                            init_command,
                            init_args,
+                           env_vars,
                            context_mounts,
                            persistence_outputs,
                            persistence_data):

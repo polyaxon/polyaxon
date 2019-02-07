@@ -110,6 +110,7 @@ class ResourceManager(BaseResourceManager):
     def get_init_container(self,
                            init_command,
                            init_args,
+                           env_vars,
                            context_mounts,
                            persistence_outputs,
                            persistence_data):
@@ -119,6 +120,7 @@ class ResourceManager(BaseResourceManager):
             image=self.init_docker_image,
             image_pull_policy=self.init_docker_image_pull_policy,
             command=init_command,
+            env=env_vars,
             args=init_args,
             volume_mounts=context_mounts)
 
