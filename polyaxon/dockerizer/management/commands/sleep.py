@@ -11,4 +11,4 @@ class Command(BaseCommand):
     help = 'Used to initialize a context to build a docker image.'
 
     def handle(self, *args, **options):
-        time.sleep(60*60)
+        time.sleep(60 * 60)
