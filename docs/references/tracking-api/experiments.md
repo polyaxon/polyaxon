@@ -17,6 +17,8 @@ sidebar: "tracking-api"
 
 Experiments tracking is a high-level API allowing data scientists to track information related to their experiments.
 
+For tracking experiment running inside a Polyaxon context you can go straight to this [section](/references/tracking-api/experiments/#tracking-experiments-running-inside-polyaxon).
+
 ## Tracking
 
 When a user creates an `Experiment` instance, the instance will automatically log 
