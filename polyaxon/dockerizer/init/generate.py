@@ -114,7 +114,7 @@ class DockerFileGenerator(object):
 
 def generate(build_job: 'BuildJob', build_path: str) -> None:
     """Build necessary code for a job to run"""
-    _logger.info('Starting build ...')
+    _logger.info('Generating dockerfile ...')
     # Build the image
     dockerfile_generator = DockerFileGenerator(
         build_job=build_job,

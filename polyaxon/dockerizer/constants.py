@@ -1,1 +1,1 @@
-BUILD_CONTEXT = '/plx-build'
+BUILD_CONTEXT = '/plx-build/build'
