@@ -797,8 +797,8 @@ The declaration are particularly important for descriptive models.
 
 All your declaration will be exported under the environment variable name `POLYAXON_DECLARATIONS`.
 
-!!! tip "Polyaxon export your declarations under environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the experiment declarations](/polyaxon_tracking/experiments) to use them with your models.
+> tip "Polyaxon export your declarations under environment variable name `POLYAXON_DECLARATIONS`"
+    Check how you can [get the experiment declarations](references/tracking-api/experiments/#tracking-experiments-running-inside-polyaxon) to use them with your models.
 
 ## build
 
