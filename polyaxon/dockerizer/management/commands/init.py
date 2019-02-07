@@ -1,13 +1,11 @@
 import logging
 import traceback
 
-from docker.errors import DockerException
-
 from django.core.management.base import BaseCommand
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
-from dockerizer.builders import native
+from dockerizer.init import init
 from dockerizer.utils import send_status
 
 _logger = logging.getLogger('polyaxon.dockerizer.commands')
@@ -15,7 +13,7 @@ _logger = logging.getLogger('polyaxon.dockerizer.commands')
 
 class Command(BaseCommand):
     """Management utility to start building a docker image."""
-    help = 'Used to build a docker image.'
+    help = 'Used to initialize a context to build a docker image.'
 
     def add_arguments(self, parser):
         parser.add_argument('build_job_uuid')
@@ -31,22 +29,15 @@ class Command(BaseCommand):
                 ending='\n')
             return
 
-        # Building the docker image
+        # Initializing the docker context
         error = {}
         try:
-            status = native.build(build_job=build_job)
+            status = init(build_job=build_job)
             if not status:
                 error = {
                     'raised': True,
-                    'message': 'Failed to build job.'
+                    'message': 'Failed to initialize build job job.'
                 }
-        except DockerException as e:
-            error = {
-                'raised': True,
-                'traceback': traceback.format_exc(),
-                'message': 'Failed to build job encountered an {} exception'.format(
-                    e.__class__.__name__)
-            }
         except Exception as e:  # Other exceptions
             error = {
                 'raised': True,
@@ -63,7 +54,3 @@ class Command(BaseCommand):
                 traceback=error.get('traceback'))
             _logger.exception('Failed to create build job %s', error.get('traceback'))
             return
-
-        send_status(
-            build_job=build_job,
-            status=JobLifeCycle.SUCCEEDED)

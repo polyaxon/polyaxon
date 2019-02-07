@@ -18,8 +18,11 @@ def download_code(build_job: 'BuildJob', build_path: str, filename: str):
 
     filename = '{}/{}'.format(build_path, filename)
 
-    if build_job.code_reference.repo:
-        download_url = build_job.code_reference.repo.download_url
+    if build_job.code_reference.repo or build_job.code_reference.external_repo:
+        if build_job.code_reference.repo:
+            download_url = build_job.code_reference.repo.download_url
+        else:
+            download_url = build_job.code_reference.external_repo.download_url
         internal = True
         headers = {
             conf.get('HEADERS_INTERNAL').replace('_', '-'): InternalServices.DOCKERIZER
@@ -29,7 +32,7 @@ def download_code(build_job: 'BuildJob', build_path: str, filename: str):
         download_url = build_job.code_reference.git_url
         internal = False
         access_token = conf.get('REPOS_ACCESS_TOKEN')
-        # Gitlab requires heaer `private-token`
+        # Gitlab requires header `private-token`
         headers = {}
     else:
         raise ValueError('Code reference for this build job does not have any repo.')
