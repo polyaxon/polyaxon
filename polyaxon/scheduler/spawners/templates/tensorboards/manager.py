@@ -117,7 +117,12 @@ class ResourceManager(BaseResourceManager):
                         value=json.dumps(self.labels)),
         ]
 
-    def get_init_container(self, persistence_outputs):
+    def get_init_container(self,
+                           init_command,
+                           init_args,
+                           context_mounts,
+                           persistence_outputs,
+                           persistence_data):
         """Pod init container for setting outputs path."""
         return None
 

@@ -126,7 +126,10 @@ class BaseResourceManager(object):
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
 
-    def get_sidecar_container(self, resource_name):
+    def get_sidecar_volume_mounts(self, context_mounts, persistence_outputs, persistence_data):
+        return context_mounts
+
+    def get_sidecar_container(self, resource_name, volume_mounts):
         """Pod sidecar container for task logs."""
         return get_sidecar_container(
             resource_name=resource_name,
@@ -139,9 +142,15 @@ class BaseResourceManager(object):
             sidecar_args=get_sidecar_args(pod_id=resource_name,
                                           container_id=self.job_container_name,
                                           app_label=self.app_label),
-            internal_health_check_url=self.health_check_url)
+            internal_health_check_url=self.health_check_url,
+            volume_mounts=volume_mounts)
 
-    def get_init_container(self, persistence_outputs):
+    def get_init_container(self,
+                           init_command,
+                           init_args,
+                           context_mounts,
+                           persistence_outputs,
+                           persistence_data):
         """Pod init container for setting outputs path."""
         raise NotImplementedError()
 
@@ -156,6 +165,8 @@ class BaseResourceManager(object):
                           env_vars=None,
                           command=None,
                           args=None,
+                          init_command=None,
+                          init_args=None,
                           resources=None,
                           ports=None,
                           secret_refs=None,
@@ -164,8 +175,10 @@ class BaseResourceManager(object):
                           node_selector=None,
                           affinity=None,
                           tolerations=None,
+                          context_mounts=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
+        context_mounts = to_list(context_mounts, check_none=True)
         volume_mounts = to_list(volume_mounts, check_none=True)
         volumes = to_list(volumes, check_none=True)
 
@@ -189,8 +202,20 @@ class BaseResourceManager(object):
 
         containers = [pod_container]
         if self.use_sidecar:
-            sidecar_container = self.get_sidecar_container(resource_name=resource_name)
+            sidecar_volume_mounts = self.get_sidecar_volume_mounts(
+                persistence_outputs=persistence_outputs,
+                persistence_data=persistence_data,
+                context_mounts=context_mounts)
+            sidecar_container = self.get_sidecar_container(resource_name=resource_name,
+                                                           volume_mounts=sidecar_volume_mounts)
             containers.append(sidecar_container)
+
+        init_container = self.get_init_container(init_command=init_command,
+                                                 init_args=init_args,
+                                                 context_mounts=context_mounts,
+                                                 persistence_outputs=persistence_outputs,
+                                                 persistence_data=persistence_data)
+        init_containers = to_list(init_container, check_none=True)
 
         node_selector = self._get_node_selector(node_selector=node_selector)
         affinity = self._get_affinity(affinity=affinity)
@@ -199,7 +224,7 @@ class BaseResourceManager(object):
         return client.V1PodSpec(
             restart_policy=restart_policy,
             service_account_name=service_account_name,
-            init_containers=to_list(self.get_init_container(persistence_outputs), check_none=True),
+            init_containers=init_containers,
             containers=containers,
             volumes=volumes,
             node_selector=node_selector,
@@ -226,6 +251,8 @@ class BaseResourceManager(object):
                 env_vars=None,
                 command=None,
                 args=None,
+                init_command=None,
+                init_args=None,
                 ports=None,
                 persistence_outputs=None,
                 persistence_data=None,
@@ -238,6 +265,7 @@ class BaseResourceManager(object):
                 node_selector=None,
                 affinity=None,
                 tolerations=None,
+                context_mounts=None,
                 restart_policy=None):
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
 
@@ -248,6 +276,8 @@ class BaseResourceManager(object):
             env_vars=env_vars,
             command=command,
             args=args,
+            init_command=init_command,
+            init_args=init_args,
             ports=ports,
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
@@ -260,6 +290,7 @@ class BaseResourceManager(object):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
+            context_mounts=context_mounts,
             restart_policy=restart_policy)
         return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
                             kind=k8s_constants.K8S_POD_KIND,
@@ -274,6 +305,8 @@ class BaseResourceManager(object):
                             env_vars=None,
                             command=None,
                             args=None,
+                            init_command=None,
+                            init_args=None,
                             ports=None,
                             persistence_outputs=None,
                             persistence_data=None,
@@ -287,6 +320,7 @@ class BaseResourceManager(object):
                             affinity=None,
                             tolerations=None,
                             restart_policy=None,
+                            context_mounts=None,
                             replicas=1):
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
 
@@ -297,6 +331,8 @@ class BaseResourceManager(object):
             env_vars=env_vars,
             command=command,
             args=args,
+            init_command=init_command,
+            init_args=init_args,
             ports=ports,
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
@@ -309,6 +345,7 @@ class BaseResourceManager(object):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
+            context_mounts=context_mounts,
             restart_policy=restart_policy)
         template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
         return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
@@ -321,6 +358,8 @@ class BaseResourceManager(object):
                        env_vars=None,
                        command=None,
                        args=None,
+                       init_command=None,
+                       init_args=None,
                        ports=None,
                        persistence_outputs=None,
                        persistence_data=None,
@@ -334,6 +373,7 @@ class BaseResourceManager(object):
                        affinity=None,
                        tolerations=None,
                        restart_policy=None,
+                       context_mounts=None,
                        replicas=1):
         deployment_spec = self.get_deployment_spec(
             resource_name=resource_name,
@@ -343,6 +383,8 @@ class BaseResourceManager(object):
             env_vars=env_vars,
             command=command,
             args=args,
+            init_command=init_command,
+            init_args=init_args,
             ports=ports,
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
@@ -356,6 +398,7 @@ class BaseResourceManager(object):
             affinity=affinity,
             tolerations=tolerations,
             restart_policy=restart_policy,
+            context_mounts=context_mounts,
             replicas=replicas,
         )
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)

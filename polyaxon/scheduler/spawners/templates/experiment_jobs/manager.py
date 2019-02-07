@@ -159,7 +159,12 @@ class ResourceManager(BaseResourceManager):
                         value=json.dumps(self.experiment_labels)),
         ]
 
-    def get_init_container(self, persistence_outputs):
+    def get_init_container(self,
+                           init_command,
+                           init_args,
+                           context_mounts,
+                           persistence_outputs,
+                           persistence_data):
         """Pod init container for setting outputs path."""
         if self.original_name is not None and self.cloning_strategy == CloningStrategy.RESUME:
             return []
@@ -176,14 +181,18 @@ class ResourceManager(BaseResourceManager):
             persistence=persistence_outputs,
             experiment_name=self.experiment_name)
         _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
+        init_command = init_command or ["/bin/sh", "-c"],
+        init_args = init_args or to_list(
+            get_output_args(command=command,
+                            outputs_path=outputs_path,
+                            original_outputs_path=original_outputs_path))
         return [
             client.V1Container(
                 name=self.init_container_name,
                 image=self.init_docker_image,
-                command=["/bin/sh", "-c"],
-                args=to_list(get_output_args(command=command,
-                                             outputs_path=outputs_path,
-                                             original_outputs_path=original_outputs_path)),
+                image_pull_policy=self.init_docker_image_pull_policy,
+                command=init_command,
+                args=init_args,
                 volume_mounts=outputs_volume_mount)
         ]
 

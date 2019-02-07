@@ -42,6 +42,7 @@ def get_sidecar_container(resource_name,
                           sidecar_config,
                           sidecar_args,
                           internal_health_check_url,
+                          volume_mounts,
                           env_vars=None):
     """Return a pod sidecar container."""
     env_vars = to_list(env_vars) if env_vars else []
@@ -56,4 +57,5 @@ def get_sidecar_container(resource_name,
                               image_pull_policy=sidecar_docker_image_pull_policy,
                               command=get_sidecar_command(),
                               env=env_vars,
+                              volume_mounts=volume_mounts,
                               args=sidecar_args)

@@ -7,7 +7,7 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates.dockerizers import manager
 from scheduler.spawners.templates.env_vars import get_env_var, get_from_secret, get_service_env_vars
-from scheduler.spawners.templates.volumes import get_docker_volumes
+from scheduler.spawners.templates.volumes import get_build_context_volumes, get_docker_volumes
 
 
 class DockerizerSpawner(K8SManager):
@@ -71,23 +71,36 @@ class DockerizerSpawner(K8SManager):
 
         return env_vars
 
+    def get_pod_command_args(self):
+        return ["python3", "polyaxon/manage.py",  "build"], [self.job_uuid]
+
+    def get_init_command_args(self):
+        return ["python3", "polyaxon/manage.py",  "init"], [self.job_uuid]
+
     def start_dockerizer(self,
                          resources=None,
                          node_selector=None,
                          affinity=None,
                          tolerations=None):
         volumes, volume_mounts = get_docker_volumes()
+        context_volumes, context_mounts = get_build_context_volumes()
+        volumes += context_volumes
+        volume_mounts += context_mounts
         env_vars = self.get_env_vars()
 
         resource_name = self.resource_manager.get_resource_name()
+        command, args = self.get_pod_command_args()
+        init_command, init_args = self.get_init_command_args()
         pod = self.resource_manager.get_pod(
             resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
             labels=self.resource_manager.labels,
             env_vars=env_vars,
-            command=None,
-            args=[self.job_uuid],
+            command=command,
+            args=args,
+            init_command=init_command,
+            init_args=init_args,
             persistence_outputs=None,
             persistence_data=None,
             outputs_refs_jobs=None,
@@ -99,6 +112,7 @@ class DockerizerSpawner(K8SManager):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
+            context_mounts=context_mounts,
             restart_policy='Never')
 
         pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)

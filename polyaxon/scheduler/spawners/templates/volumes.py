@@ -2,6 +2,7 @@ from kubernetes import client
 
 import conf
 
+from dockerizer.constants import BUILD_CONTEXT
 from scheduler.spawners.templates import constants
 from stores.exceptions import VolumeNotFoundError
 from stores.validators import validate_persistence_data, validate_persistence_outputs
@@ -107,6 +108,13 @@ def get_docker_volumes():
     volumes = [get_volume(volume=constants.DOCKER_VOLUME, host_path=conf.get('MOUNT_PATHS_DOCKER'))]
     volume_mounts = [get_volume_mount(volume=constants.DOCKER_VOLUME,
                                       volume_mount=conf.get('MOUNT_PATHS_DOCKER'))]
+    return volumes, volume_mounts
+
+
+def get_build_context_volumes():
+    volumes = [get_volume(volume=constants.BUILD_CONTEXT_VOLUME)]
+    volume_mounts = [get_volume_mount(volume=constants.BUILD_CONTEXT_VOLUME,
+                                      volume_mount=BUILD_CONTEXT)]
     return volumes, volume_mounts
 
 

@@ -1,5 +1,7 @@
 import json
 
+from kubernetes import client
+
 import conf
 import stores
 
@@ -105,9 +107,20 @@ class ResourceManager(BaseResourceManager):
                         value=json.dumps(self.labels)),
         ]
 
-    def get_init_container(self, persistence_outputs):
+    def get_init_container(self,
+                           init_command,
+                           init_args,
+                           context_mounts,
+                           persistence_outputs,
+                           persistence_data):
         """Pod init container for setting outputs path."""
-        return None
+        return client.V1Container(
+            name=self.init_container_name,
+            image=self.init_docker_image,
+            image_pull_policy=self.init_docker_image_pull_policy,
+            command=init_command,
+            args=init_args,
+            volume_mounts=context_mounts)
 
     def _get_node_selector(self, node_selector):
         return get_node_selector(
