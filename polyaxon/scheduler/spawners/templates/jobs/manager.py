@@ -134,7 +134,7 @@ class ResourceManager(BaseResourceManager):
             persistence=persistence_outputs,
             job_name=self.job_name)
         _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
-        init_command = init_command or ["/bin/sh", "-c"],
+        init_command = init_command or ["/bin/sh", "-c"]
         init_args = init_args or to_list(
             get_output_args(command=InitCommands.CREATE,
                             outputs_path=outputs_path))

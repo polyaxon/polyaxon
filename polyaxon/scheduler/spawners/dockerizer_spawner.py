@@ -72,10 +72,10 @@ class DockerizerSpawner(K8SManager):
         return env_vars
 
     def get_pod_command_args(self):
-        return ["python3", "polyaxon/manage.py",  "build"], [self.job_uuid]
+        return ["python3", "polyaxon/manage.py", "build"], [self.job_uuid]
 
     def get_init_command_args(self):
-        return ["python3", "polyaxon/manage.py",  "init"], [self.job_uuid]
+        return ["python3", "polyaxon/manage.py", "init"], [self.job_uuid]
 
     def start_dockerizer(self,
                          resources=None,

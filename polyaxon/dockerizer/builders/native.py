@@ -13,7 +13,7 @@ import conf
 
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_project_image_name, get_project_tagged_image
-from dockerizer.constants import BUILD_CONTEXT
+from dockerizer.constants import BUILD_PATH
 from dockerizer.utils import send_status
 
 _logger = logging.getLogger('polyaxon.dockerizer')
@@ -171,7 +171,7 @@ class DockerBuilder(object):
         return self._handle_log_stream(stream=stream)
 
 
-def build(build_job: 'BuildJob', build_path: str = BUILD_CONTEXT) -> bool:
+def build(build_job: 'BuildJob', build_path: str = BUILD_PATH) -> bool:
     """Build necessary code for a job to run"""
     _logger.info('Starting build ...')
 

@@ -1,9 +1,9 @@
-from dockerizer.constants import BUILD_CONTEXT
+from dockerizer.constants import BUILD_PATH
 from dockerizer.init.generate import generate
 from dockerizer.init.git_download import download_code
 
 
-def init(build_job: 'BuildJob', build_path: str = BUILD_CONTEXT):
+def init(build_job: 'BuildJob', build_path: str = BUILD_PATH):
     # Check image if exists
     # Download repo
     filename = '_code'
