@@ -115,6 +115,6 @@ JOB_DOCKERIZER_IMAGE_PULL_POLICY = config.get_string(
     is_optional=True,)
 TENSORBOARD_DOCKER_IMAGE = config.get_string('POLYAXON_TENSORBOARD_DOCKER_IMAGE',
                                              is_optional=True,
-                                             default='tensorflow/tensorflow:1.4.1-py3')
+                                             default='tensorflow/tensorflow:1.12.0-py3')
 JOB_SIDECAR_LOG_SLEEP_INTERVAL = config.get_int('POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL',
                                                 is_optional=True)
