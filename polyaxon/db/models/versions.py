@@ -22,7 +22,7 @@ class BaseValidationVersion(Singleton):
     @classmethod
     def may_be_update(cls, obj):
         min_version = cls.get_min_version()
-        latest_version = cls.get_latest_version() 
+        latest_version = cls.get_latest_version()
         if obj.latest_version != latest_version or obj.min_version != min_version:
             obj.min_version = min_version
             obj.latest_version = latest_version
@@ -49,6 +49,7 @@ class BaseValidationVersion(Singleton):
 
 class CliVersion(BaseValidationVersion):
     """A model that represents the polyaxon cli version."""
+
     class Meta:
         app_label = 'db'
 
@@ -70,6 +71,7 @@ class CliVersion(BaseValidationVersion):
 
 class PlatformVersion(BaseValidationVersion):
     """A model that represents the polyaxon platform version."""
+
     class Meta:
         app_label = 'db'
 
@@ -91,6 +93,7 @@ class PlatformVersion(BaseValidationVersion):
 
 class LibVersion(BaseValidationVersion):
     """A model that represents the polyaxon lib version."""
+
     class Meta:
         app_label = 'db'
 
