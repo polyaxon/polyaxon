@@ -84,6 +84,8 @@ class Experiment(BaseTracker):
             experiment_config['description'] = description
         if config:
             experiment_config['config'] = config
+        if not settings.IN_CLUSTER:
+            experiment_config['in_cluster'] = False
 
         experiment = self.client.project.create_experiment(
             username=self.username,
@@ -150,8 +152,6 @@ class Experiment(BaseTracker):
             return
 
         patch_dict = {'run_env': get_run_env()}
-        if not settings.IN_CLUSTER:
-            patch_dict['in_cluster'] = False
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
