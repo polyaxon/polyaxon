@@ -2,9 +2,9 @@
 title: "Training cifar10 on Polyaxon"
 title_link: "Training cifar10"
 meta_title: "Training cifar10 on Polyaxon - Tutorials"
-meta_description: "Training cifar10 on Polyaxon."
+meta_description: "CIFAR-10 classification is a common benchmark problem in machine learning. The problem is to classify RGB 32x32 pixel images across 10 categories."
+custom_excerpt: "CIFAR-10 classification is a common benchmark problem in machine learning. The problem is to classify RGB 32x32 pixel images across 10 categories. "
 featured: false
-custom_excerpt: "Training cifar10 on Polyaxon. "
 author:
   name: "Polyaxon"
   slug: "Polyaxon"

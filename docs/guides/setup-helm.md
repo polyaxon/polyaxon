@@ -3,8 +3,8 @@ title: "Setup helm"
 title_link: "Setup helm"
 meta_title: "Setup helm - Guide"
 meta_description: "Polyaxon uses Helm to install and manage a deployment on Kubernetes."
-featured: true
 custom_excerpt: "Polyaxon uses Helm to install and manage a deployment on Kubernetes."
+featured: true
 author:
   name: "Polyaxon"
   slug: "Polyaxon"

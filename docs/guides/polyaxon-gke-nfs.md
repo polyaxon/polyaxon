@@ -3,8 +3,8 @@ title: "Using Polyaxon on GKE with an NFS server"
 title_link: "Using Polyaxon on GKE with an NFS server"
 meta_title: "Deploying Polyaxon on GKE with an NFS servers - Tutorials"
 meta_description: "Deploying Polyaxon on GKE with an NFS servers."
-featured: false
 custom_excerpt: "Deploying Polyaxon on GKE with an NFS servers."
+featured: false
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
