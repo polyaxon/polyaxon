@@ -5,6 +5,7 @@ import json
 import os
 
 from polyaxon_client import settings
+from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
 
@@ -45,6 +46,7 @@ class Job(BaseTracker):
             return self.client.job
         elif self.job_type == 'builds':
             return self.client.build_job
+        raise PolyaxonClientException('Job type {} not supported'.format(self.job_type))
 
     def _set_health_url(self):
         if settings.NO_OP:
