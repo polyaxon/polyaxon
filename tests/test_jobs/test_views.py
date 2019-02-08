@@ -494,6 +494,19 @@ class TestJobStatusListViewV1(BaseViewTest):
         assert last_object.job == self.job
         assert last_object.status == data['status']
 
+        # Create with message and traceback
+        data = {'status': JobLifeCycle.FAILED,
+                'message': 'message1',
+                'traceback': 'traceback1'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 3
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+        assert last_object.message == data['message']
+        assert last_object.traceback == data['traceback']
+
 
 @pytest.mark.jobs_mark
 class TestJobStatusDetailViewV1(BaseViewTest):

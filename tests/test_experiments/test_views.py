@@ -1278,11 +1278,11 @@ class TestExperimentStatusListViewV1(BaseViewTest):
                 'traceback': 'traceback1'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
-        assert self.model_class.objects.count() == self.num_objects + 2
+        assert self.model_class.objects.count() == self.num_objects + 3
         last_object = self.model_class.objects.last()
         assert last_object.experiment == self.experiment
         assert last_object.message == data['message']
-        assert last_object.message == data['traceback']
+        assert last_object.traceback == data['traceback']
 
 
 @pytest.mark.experiments_mark
