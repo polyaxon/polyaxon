@@ -26,7 +26,6 @@ export default class RunEnv extends React.Component<Props, {}> {
     let keys: string[] = [];
     if ('client_version' in runEnv && 'python_version' in runEnv) {
       keys = [
-        'in_cluster',
         'client_version',
         'is_notebook',
         'filename',
