@@ -21,6 +21,7 @@ class TestJobConfigs(TestCase):
             'last_status': 'Running',
             'description': 'description',
             'config': {'k': 'v'},
+            'in_cluster': False,
             'tags': ['test'],
             'definition': None,
             'created_at': local_now().isoformat(),
@@ -49,6 +50,7 @@ class TestJobConfigs(TestCase):
         config_dict.pop('definition')
         config_dict.pop('tags')
         config_dict.pop('pod_id')
+        config_dict.pop('in_cluster')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
@@ -85,7 +87,7 @@ class TestJobConfigs(TestCase):
 
 
 class TestTensorboardJobConfigs(TestCase):
-    def test_job_config(self):
+    def test_tensorboard_job_config(self):
         config_dict = {
             'uuid': uuid.uuid4().hex,
             'project': 'name.name',
@@ -95,6 +97,7 @@ class TestTensorboardJobConfigs(TestCase):
             'pod_id': 'job_1',
             'last_status': 'Running',
             'tags': ['test'],
+            'in_cluster': False,
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat(),
             'started_at': local_now().isoformat(),
@@ -120,6 +123,7 @@ class TestTensorboardJobConfigs(TestCase):
         config_dict.pop('project')
         config_dict.pop('updated_at')
         config_dict.pop('tags')
+        config_dict.pop('in_cluster')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
@@ -131,7 +135,7 @@ class TestTensorboardJobConfigs(TestCase):
         assert config_to_dict.pop('started_at') == 'a few seconds ago'
         assert config_to_dict.pop('finished_at') == 'a few seconds ago'
 
-    def test_job_status_config(self):
+    def test_tensorboard_status_config(self):
         config_dict = {'id': 1,
                        'uuid': uuid.uuid4().hex,
                        'job': 1,

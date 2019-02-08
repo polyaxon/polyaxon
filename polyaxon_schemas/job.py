@@ -28,6 +28,7 @@ class JobSchema(BaseSchema):
     total_run = fields.Str(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
+    in_cluster = fields.Bool(allow_none=True)
     ttl = fields.Int(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     definition = fields.Dict(allow_none=True)
@@ -65,6 +66,7 @@ class JobConfig(BaseConfig):
                  finished_at=None,
                  is_clone=None,
                  config=None,
+                 in_cluster=None,
                  num_jobs=0,
                  resources=None,
                  ttl=None,
@@ -87,7 +89,8 @@ class JobConfig(BaseConfig):
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
         self.is_clone = is_clone
-        self.config = config  # The json compiled content of this experiment
+        self.config = config  # The json compiled content of this job
+        self.in_cluster = in_cluster
         self.num_jobs = num_jobs
         self.resources = resources
         self.ttl = ttl
@@ -135,6 +138,7 @@ class TensorboardJobConfig(JobConfig):
                  finished_at=None,
                  is_clone=None,
                  config=None,
+                 in_cluster=None,
                  num_jobs=0,
                  resources=None,
                  ttl=None,
@@ -159,6 +163,7 @@ class TensorboardJobConfig(JobConfig):
             finished_at=finished_at,
             is_clone=is_clone,
             config=config,
+            in_cluster=in_cluster,
             num_jobs=num_jobs,
             resources=resources,
             jobs=jobs,

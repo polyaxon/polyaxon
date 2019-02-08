@@ -96,6 +96,7 @@ class ExperimentSchema(BaseSchema):
     tags = fields.List(fields.Str(), allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     run_env = fields.Dict(allow_none=True)
+    in_cluster = fields.Bool(allow_none=True)
     ttl = fields.Int(allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
@@ -136,6 +137,7 @@ class ExperimentConfig(BaseConfig):
                  declarations=None,
                  tags=None,
                  resources=None,
+                 in_cluster=None,
                  run_env=None,
                  jobs=None,
                  ttl=None,
@@ -162,6 +164,7 @@ class ExperimentConfig(BaseConfig):
         self.declarations = declarations
         self.tags = tags
         self.resources = resources
+        self.in_cluster = in_cluster
         self.run_env = run_env
         self.jobs = jobs
         self.ttl = ttl
