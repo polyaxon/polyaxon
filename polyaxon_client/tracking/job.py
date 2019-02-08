@@ -39,20 +39,21 @@ class Job(BaseTracker):
         self.job = None
         self.last_status = None
 
+    @property
+    def client_backend(self):
+        if self.job_type == 'jobs':
+            return self.client.job
+        elif self.job_type == 'builds':
+            return self.client.build_job
+
     def _set_health_url(self):
         if settings.NO_OP:
             return
 
-        if self.job_type == 'jobs':
-            health_url = self.client.job.get_heartbeat_url(
-                username=self.username,
-                project_name=self.project_name,
-                experiment_id=self.job_id)
-        else:
-            health_url = self.client.build_job.get_heartbeat_url(
-                username=self.username,
-                project_name=self.project_name,
-                experiment_id=self.job_id)
+        health_url = self.client_backend.get_heartbeat_url(
+            username=self.username,
+            project_name=self.project_name,
+            job_id=self.job_id)
         self.client.set_health_check(url=health_url)
 
     @staticmethod
@@ -78,3 +79,15 @@ class Job(BaseTracker):
             print('Could get experiment info, '
                   'please make sure this is running inside a polyaxon job.')
             return None
+
+    def log_status(self, status, message=None, traceback=None):
+        if settings.NO_OP:
+            return
+
+        self.client_backend.create_status(username=self.username,
+                                          project_name=self.project_name,
+                                          job_id=self.job_id,
+                                          status=status,
+                                          message=message,
+                                          traceback=traceback,
+                                          background=True)

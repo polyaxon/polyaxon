@@ -133,6 +133,54 @@ class TestBuildJobApi(TestBaseApi):
         assert isinstance(response['results'][0], Mapping)
 
     @httpretty.activate
+    def test_create_build_status(self):
+        exp = JobStatusConfig(id=1,
+                              uuid=uuid.uuid4().hex,
+                              job=1,
+                              created_at=datetime.datetime.now(),
+                              status='Running').to_dict()
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'builds',
+                1,
+                'statuses'),
+            body=json.dumps(exp),
+            content_type='application/json',
+            status=200)
+
+        # Schema response
+        response = self.api_handler.create_status('username',
+                                                  'project_name',
+                                                  1,
+                                                  status='running')
+        assert response.to_dict() == exp
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.create_status('username',
+                                                  'project_name',
+                                                  1,
+                                                  traceback='traceback',
+                                                  status='failed')
+        assert response == exp
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_status(
+                'username',
+                'project_name',
+                1,
+                traceback='traceback',
+                status='running',
+                background=True),
+            method='post')
+
+    @httpretty.activate
     def test_stop_build(self):
         httpretty.register_uri(
             httpretty.POST,

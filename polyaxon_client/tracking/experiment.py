@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import atexit
 import json
 import os
-import sys
-import time
 
 from datetime import datetime
 
@@ -50,7 +47,6 @@ class Experiment(BaseTracker):
         self.experiment_id = experiment_id
         self.group_id = group_id
         self.experiment = None
-        self.last_status = None
 
         # Check if there's an ephemeral token
         check_ephemeral_token = (settings.IN_CLUSTER and
@@ -139,20 +135,6 @@ class Experiment(BaseTracker):
             experiment_id=self.experiment_id)
         self.client.set_health_check(url=health_url)
 
-    def _start(self):
-        if settings.NO_OP:
-            return
-
-        atexit.register(self._end)
-        self.start()
-
-        def excepthook(exception, value, tb):
-            self.failed(message='Type: {}, Value: {}'.format(exception, value))
-            # Resume normal work
-            sys.__excepthook__(exception, value, tb)
-
-        sys.excepthook = excepthook
-
     def _send_logs(self, log_line):
         if settings.NO_OP:
             return
@@ -162,47 +144,6 @@ class Experiment(BaseTracker):
                                          experiment_id=self.experiment_id,
                                          log_lines=log_line,
                                          periodic=True)
-
-    def _end(self):
-        if settings.NO_OP:
-            return
-
-        self.succeeded()
-
-    def end(self, status, message=None):
-        if settings.NO_OP:
-            return
-
-        if self.last_status in ['succeeded', 'failed', 'stopped']:
-            return
-        self.log_status(status, message)
-        self.last_status = status
-        time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
-
-    def start(self):
-        if settings.NO_OP:
-            return
-
-        self.log_status('running')
-        self.last_status = 'running'
-
-    def succeeded(self):
-        if settings.NO_OP:
-            return
-
-        self.end('succeeded')
-
-    def stop(self):
-        if settings.NO_OP:
-            return
-
-        self.end('stopped')
-
-    def failed(self, message=None):
-        if settings.NO_OP:
-            return
-
-        self.end(status='failed', message=message)
 
     def log_run_env(self):
         if settings.NO_OP:
@@ -227,7 +168,7 @@ class Experiment(BaseTracker):
                                                      coderef=get_code_reference(),
                                                      background=True)
 
-    def log_status(self, status, message=None):
+    def log_status(self, status, message=None, traceback=None):
         if settings.NO_OP:
             return
 
@@ -236,6 +177,7 @@ class Experiment(BaseTracker):
                                              experiment_id=self.experiment_id,
                                              status=status,
                                              message=message,
+                                             traceback=traceback,
                                              background=True)
 
     def log_metrics(self, **metrics):

@@ -106,6 +106,7 @@ class ExperimentApi(BaseApiHandler):
                       experiment_id,
                       status,
                       message=None,
+                      traceback=None,
                       background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
@@ -117,6 +118,8 @@ class ExperimentApi(BaseApiHandler):
         json_data = {'status': status}
         if message:
             json_data['message'] = message
+        if traceback:
+            json_data['traceback'] = traceback
         if background:
             self.transport.async_post(request_url, json_data=json_data)
             return None

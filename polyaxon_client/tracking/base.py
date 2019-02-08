@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import atexit
+import sys
+import time
+
 from polystores.stores.manager import StoreManager
 
 from polyaxon_client import PolyaxonClient, settings
@@ -23,6 +27,7 @@ class BaseTracker(object):
         if not settings.IN_CLUSTER and project is None:
             raise PolyaxonClientException('Please provide a valid project.')
 
+        self.last_status = None
         self.client = client or PolyaxonClient()
         if settings.IN_CLUSTER:
             self.user = None
@@ -43,6 +48,67 @@ class BaseTracker(object):
         # Setup the outputs store
         if outputs_store is None and settings.IN_CLUSTER:
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
+
+    def _set_health_url(self):
+        raise NotImplementedError
+
+    def log_status(self, status, message=None, traceback=None):
+        raise NotImplementedError
+
+    def _start(self):
+        if settings.NO_OP:
+            return
+
+        atexit.register(self._end)
+        self.start()
+
+        def excepthook(exception, value, tb):
+            self.failed(message='Type: {}, Value: {}'.format(exception, value))
+            # Resume normal work
+            sys.__excepthook__(exception, value, tb)
+
+        sys.excepthook = excepthook
+
+    def _end(self):
+        if settings.NO_OP:
+            return
+
+        self.succeeded()
+
+    def start(self):
+        if settings.NO_OP:
+            return
+
+        self.log_status('running')
+        self.last_status = 'running'
+
+    def end(self, status, message=None):
+        if settings.NO_OP:
+            return
+
+        if self.last_status in ['succeeded', 'failed', 'stopped']:
+            return
+        self.log_status(status, message)
+        self.last_status = status
+        time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
+
+    def succeeded(self):
+        if settings.NO_OP:
+            return
+
+        self.end('succeeded')
+
+    def stop(self):
+        if settings.NO_OP:
+            return
+
+        self.end('stopped')
+
+    def failed(self, message=None):
+        if settings.NO_OP:
+            return
+
+        self.end(status='failed', message=message)
 
     def set_outputs_store(self, outputs_store=None, outputs_path=None, set_env_vars=False):
         if settings.NO_OP:

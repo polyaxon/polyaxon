@@ -74,6 +74,39 @@ class JobApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving job statuses.')
             return None
 
+    def create_status(self,
+                      username,
+                      project_name,
+                      job_id,
+                      status,
+                      message=None,
+                      traceback=None,
+                      background=False):
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'statuses')
+
+        json_data = {'status': status}
+        if message:
+            json_data['message'] = message
+        if traceback:
+            json_data['traceback'] = traceback
+        if background:
+            self.transport.async_post(request_url, json_data=json_data)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=json_data)
+            return self.prepare_results(response_json=response.json(),
+                                        config=JobStatusConfig)
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while creating job status.')
+            return None
+
     def restart(self,
                 username,
                 project_name,
