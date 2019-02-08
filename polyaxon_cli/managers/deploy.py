@@ -171,7 +171,7 @@ class DeployManager(object):
 
     def teardown_on_kubernetes(self, hooks):
         args = ['delete', '--purge', 'polyaxon']
-        if hooks:
+        if not hooks:
             args += ['--no-hooks']
         click.echo('Running teardown command ...')
         self.helm.execute(args=args)

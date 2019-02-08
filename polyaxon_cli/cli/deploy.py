@@ -78,7 +78,7 @@ def teardown(file):   # pylint:disable=redefined-builtin
     manager = DeployManager(config=config, filepath=file)
     exception = None
     try:
-        if click.confirm('Would you like to execute pre-delete hooks?', default=False):
+        if click.confirm('Would you like to execute pre-delete hooks?', default=True):
             manager.teardown(hooks=True)
         else:
             manager.teardown(hooks=False)
