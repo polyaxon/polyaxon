@@ -100,6 +100,73 @@ class JobConfig(BaseConfig):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
+class BuildJobSchema(JobSchema):
+    dockerfile = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return BuildJobConfig
+
+
+class BuildJobConfig(JobConfig):
+    SCHEMA = BuildJobSchema
+    IDENTIFIER = 'BuildJob'
+
+    def __init__(self,
+                 id=None,  # pylint:disable=redefined-builtin
+                 user=None,
+                 uuid=None,
+                 name=None,
+                 unique_name=None,
+                 pod_id=None,
+                 project=None,
+                 build_job=None,
+                 description=None,
+                 tags=None,
+                 last_status=None,
+                 definition=None,
+                 created_at=None,
+                 updated_at=None,
+                 started_at=None,
+                 finished_at=None,
+                 is_clone=None,
+                 config=None,
+                 in_cluster=None,
+                 num_jobs=0,
+                 resources=None,
+                 ttl=None,
+                 jobs=None,
+                 dockerfile=None,
+                 total_run=None):
+        super(BuildJobConfig, self).__init__(
+            id=id,
+            user=user,
+            uuid=uuid,
+            name=name,
+            unique_name=unique_name,
+            pod_id=pod_id,
+            project=project,
+            build_job=build_job,
+            description=description,
+            tags=tags,
+            last_status=last_status,
+            definition=definition,
+            created_at=created_at,
+            updated_at=updated_at,
+            started_at=started_at,
+            finished_at=finished_at,
+            is_clone=is_clone,
+            config=config,
+            in_cluster=in_cluster,
+            num_jobs=num_jobs,
+            resources=resources,
+            jobs=jobs,
+            ttl=ttl,
+            total_run=total_run,
+        )
+        self.dockerfile = dockerfile
+
+
 class TensorboardJobSchema(JobSchema):
     experiment = fields.Int(allow_none=True)
     experiment_group = fields.Int(allow_none=True)
@@ -167,6 +234,7 @@ class TensorboardJobConfig(JobConfig):
             num_jobs=num_jobs,
             resources=resources,
             jobs=jobs,
+            ttl=ttl,
             total_run=total_run,
         )
         self.experiment = experiment
