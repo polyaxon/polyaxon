@@ -156,7 +156,7 @@ class HttpTransportMixin(object):
 
         return response
 
-    def download(self, url, filename, headers=None, timeout=None, session=None):
+    def download(self, url, filename, params=None, headers=None, timeout=None, session=None):
         """
         Download the file from the given url at the current path
         """
@@ -168,6 +168,7 @@ class HttpTransportMixin(object):
 
         try:
             response = session.get(url,
+                                   params=params,
                                    headers=request_headers,
                                    timeout=timeout,
                                    stream=True)
