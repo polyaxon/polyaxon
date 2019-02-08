@@ -130,6 +130,7 @@ class TestBuildJobDetailSerializer(BaseTest):
         'last_status',
         'description',
         'config',
+        'in_cluster',
         'tags',
         'started_at',
         'finished_at',

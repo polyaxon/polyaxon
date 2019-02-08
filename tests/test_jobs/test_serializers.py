@@ -140,6 +140,7 @@ class TestJobDetailSerializer(BaseTest):
         'description',
         'readme',
         'config',
+        'in_cluster',
         'tags',
         'started_at',
         'finished_at',
