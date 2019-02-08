@@ -87,7 +87,7 @@ class ExperimentHandler(BaseHandler):
                 countdown=1)
 
         # Collect tracked remote logs
-        if instance.run_env and not instance.run_env.get('in_cluster'):
+        if instance.in_cluster:
             celery_app.send_task(
                 LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
                 kwargs={

@@ -23,8 +23,8 @@ from db.models.utils import (
     PersistenceModel,
     ReadmeModel,
     SubPathModel,
-    TagModel
-)
+    TagModel,
+    InCluster)
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED
 from libs.paths.jobs import get_job_subpath
@@ -33,6 +33,7 @@ from schemas.specifications import JobSpecification
 
 
 class Job(AbstractJob,
+          InCluster,
           DataReference,
           OutputsModel,
           PersistenceModel,

@@ -13,11 +13,12 @@ from db.models.utils import (
     OutputsModel,
     PersistenceModel,
     SubPathModel,
-    TagModel
-)
+    TagModel,
+    InCluster)
 
 
 class PluginJobBase(AbstractJob,
+                    InCluster,
                     OutputsModel,
                     PersistenceModel,
                     SubPathModel,

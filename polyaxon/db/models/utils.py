@@ -120,6 +120,13 @@ class RunTimeModel(models.Model):
         abstract = True
 
 
+class InCluster(models.Model):
+    in_cluster = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+
+
 class TypeModel(models.Model):
     name = models.CharField(max_length=128, unique=True)
     schema_definition = models.TextField()

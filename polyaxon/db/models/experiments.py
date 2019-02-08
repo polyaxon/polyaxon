@@ -30,8 +30,8 @@ from db.models.utils import (
     ReadmeModel,
     RunTimeModel,
     SubPathModel,
-    TagModel
-)
+    TagModel,
+    InCluster)
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,
@@ -45,12 +45,9 @@ from schemas.specifications import ExperimentSpecification
 from schemas.tasks import TaskType
 
 
-def default_run_env() -> Dict:
-    return {'in_cluster': True}
-
-
 class Experiment(DiffModel,
                  RunTimeModel,
+                 InCluster,
                  NameableModel,
                  DataReference,
                  OutputsModel,
@@ -103,7 +100,6 @@ class Experiment(DiffModel,
     run_env = JSONField(
         blank=True,
         null=True,
-        default=default_run_env,
         help_text='The run environment of the experiment.')
     original_experiment = models.ForeignKey(
         'self',

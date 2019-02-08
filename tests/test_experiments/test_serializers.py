@@ -252,6 +252,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'resources',
         'data_refs',
         'run_env',
+        'in_cluster',
         'bookmarked',
     }
 

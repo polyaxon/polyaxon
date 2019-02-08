@@ -20,8 +20,8 @@ from db.models.utils import (
     NodeSchedulingModel,
     PersistenceModel,
     SubPathModel,
-    TagModel
-)
+    TagModel,
+    InCluster)
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config
@@ -29,6 +29,7 @@ from schemas.specifications import BuildSpecification
 
 
 class BuildJob(AbstractJob,
+               InCluster,
                NodeSchedulingModel,
                NameableModel,
                DescribableModel,

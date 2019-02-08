@@ -71,6 +71,7 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, TagsSerializerMixin
             'merge',
             'description',
             'config',
+            'in_cluster',
             'resources',
             'node_scheduled',
             'num_jobs',
@@ -103,7 +104,7 @@ class BuildJobCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BuildJob
-        fields = ('id', 'user', 'name', 'description', 'config', 'tags')
+        fields = ('id', 'user', 'name', 'description', 'config', 'in_cluster', 'tags')
 
     def get_user(self, obj: 'BuildJob'):
         return obj.user.username

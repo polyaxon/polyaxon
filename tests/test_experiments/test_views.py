@@ -376,6 +376,21 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
+    def test_create_in_cluster(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Experiment.objects.last()
+        assert xp.in_cluster is True
+        assert xp.run_env is None
+
+        data = {'in_cluster': False, 'run_env': {'foo': 'bar'}}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Experiment.objects.last()
+        assert xp.in_cluster is False
+        assert xp.run_env == {'foo': 'bar'}
+
     def test_create(self):
         data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
