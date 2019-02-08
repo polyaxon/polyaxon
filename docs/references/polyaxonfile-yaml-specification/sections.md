@@ -145,13 +145,13 @@ you are defining and the value is one of these options:
 
     * 0:1:0.1
     * [0, 1, 0.1]
-    * {'low': 0, 'high': 1}
+    * {'low': 0, 'high': 1, 'q': 0.1}
 
  * `loguniform`: Draws samples from a log uniform distribution over [low, high], e.g.
 
     * 0:1
     * [0, 1]
-    * {'low': 0, 'high': 1, 'q': 0.1}
+    * {'low': 0, 'high': 1}
 
  * `qloguniform`: Draws samples from a quantized log uniform distribution over [low, high]
 
