@@ -64,5 +64,4 @@ def get_run_env():
         'filename': get_filename(),
         'module_path': get_module_path(),
         'packages': get_packages(),
-        'in_cluster': settings.IN_CLUSTER,
     }

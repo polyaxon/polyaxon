@@ -209,6 +209,8 @@ class Experiment(BaseTracker):
             return
 
         patch_dict = {'run_env': get_run_env()}
+        if not settings.IN_CLUSTER:
+            patch_dict['in_cluster'] = False
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
