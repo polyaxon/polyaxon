@@ -67,6 +67,7 @@ class TestJobConfigs(TestCase):
                        'created_at': local_now().isoformat(),
                        'status': 'Running',
                        'message': None,
+                       'traceback': None,
                        'details': None}
         config = JobStatusConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
@@ -75,6 +76,7 @@ class TestJobConfigs(TestCase):
         config_dict.pop('job', None)
         config_dict.pop('uuid', None)
         config_dict.pop('details', None)
+        config_dict.pop('traceback', None)
         config_to_dict = config.to_light_dict()
         assert config_to_dict == config_dict
 
@@ -136,6 +138,7 @@ class TestTensorboardJobConfigs(TestCase):
                        'created_at': local_now().isoformat(),
                        'status': 'Running',
                        'message': None,
+                       'traceback': None,
                        'details': None}
         config = JobStatusConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
@@ -144,6 +147,7 @@ class TestTensorboardJobConfigs(TestCase):
         config_dict.pop('job', None)
         config_dict.pop('uuid', None)
         config_dict.pop('details', None)
+        config_dict.pop('traceback', None)
         config_to_dict = config.to_light_dict()
         assert config_to_dict == config_dict
 

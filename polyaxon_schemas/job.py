@@ -175,6 +175,7 @@ class JobStatusSchema(BaseSchema):
     created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)
+    traceback = fields.Str(allow_none=True)
     details = fields.Dict(allow_none=True)
 
     @staticmethod
@@ -186,7 +187,7 @@ class JobStatusConfig(BaseConfig):
     SCHEMA = JobStatusSchema
     IDENTIFIER = 'JobStatus'
     DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'uuid', 'details']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'uuid', 'details', 'traceback']
 
     def __init__(self,
                  id,  # pylint:disable=redefined-builtin
@@ -195,6 +196,7 @@ class JobStatusConfig(BaseConfig):
                  created_at,
                  status,
                  message=None,
+                 traceback=None,
                  details=None):
         self.id = id
         self.uuid = uuid
@@ -202,6 +204,7 @@ class JobStatusConfig(BaseConfig):
         self.created_at = self.localize_date(created_at)
         self.status = status
         self.message = message
+        self.traceback = traceback
         self.details = details
 
 

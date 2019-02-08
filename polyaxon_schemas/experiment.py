@@ -177,6 +177,7 @@ class ExperimentStatusSchema(BaseSchema):
     created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)
+    traceback = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -187,7 +188,7 @@ class ExperimentStatusConfig(BaseConfig):
     SCHEMA = ExperimentStatusSchema
     IDENTIFIER = 'ExperimentStatus'
     DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid', 'traceback']
 
     def __init__(self,
                  id,  # pylint:disable=redefined-builtin
@@ -195,13 +196,15 @@ class ExperimentStatusConfig(BaseConfig):
                  experiment,
                  created_at,
                  status,
-                 message=None):
+                 message=None,
+                 traceback=None):
         self.id = id
         self.uuid = uuid
         self.experiment = experiment
         self.created_at = self.localize_date(created_at)
         self.status = status
         self.message = message
+        self.traceback = traceback
 
 
 class ExperimentMetricSchema(BaseSchema):

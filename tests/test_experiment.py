@@ -155,6 +155,7 @@ class TestExperimentConfigs(TestCase):
                        'experiment': 1,
                        'created_at': local_now().isoformat(),
                        'status': 'Running',
+                       'traceback': 'None',
                        'message': None}
         config = ExperimentStatusConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
@@ -162,6 +163,7 @@ class TestExperimentConfigs(TestCase):
 
         config_dict.pop('experiment', None)
         config_dict.pop('uuid', None)
+        config_dict.pop('traceback', None)
         config_to_dict = config.to_light_dict()
         assert config_to_dict == config_dict
 
