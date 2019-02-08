@@ -82,13 +82,13 @@ class BaseTracker(object):
         self.log_status('running')
         self.last_status = 'running'
 
-    def end(self, status, message=None):
+    def end(self, status, message=None, traceback=None):
         if settings.NO_OP:
             return
 
         if self.last_status in ['succeeded', 'failed', 'stopped']:
             return
-        self.log_status(status, message)
+        self.log_status(status=status, message=message, traceback=traceback)
         self.last_status = status
         time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
 
@@ -104,11 +104,11 @@ class BaseTracker(object):
 
         self.end('stopped')
 
-    def failed(self, message=None):
+    def failed(self, message=None, traceback=None):
         if settings.NO_OP:
             return
 
-        self.end(status='failed', message=message)
+        self.end(status='failed', message=message, traceback=traceback)
 
     def set_outputs_store(self, outputs_store=None, outputs_path=None, set_env_vars=False):
         if settings.NO_OP:
