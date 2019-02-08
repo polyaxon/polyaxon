@@ -11,7 +11,7 @@ from polyaxon_schemas.experiment import (
     ExperimentMetricConfig,
     ExperimentStatusConfig
 )
-from polyaxon_schemas.job import JobConfig, JobStatusConfig, TensorboardJobConfig
+from polyaxon_schemas.job import BuildJobConfig, JobConfig, JobStatusConfig, TensorboardJobConfig
 from polyaxon_schemas.log_handler import LogHandlerConfig
 from polyaxon_schemas.project import ExperimentGroupConfig, GroupStatusConfig, ProjectConfig
 from polyaxon_schemas.user import UserConfig

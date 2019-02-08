@@ -12,7 +12,7 @@ from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.build_job import BuildJobApi
-from polyaxon_client.schemas import JobConfig, JobStatusConfig
+from polyaxon_client.schemas import BuildJobConfig, JobStatusConfig
 
 
 class TestBuildJobApi(TestBaseApi):
@@ -23,7 +23,7 @@ class TestBuildJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_build(self):
-        job = JobConfig(config={}).to_dict()
+        job = BuildJobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -49,7 +49,7 @@ class TestBuildJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_update_build(self):
-        job = JobConfig(config={}).to_dict()
+        job = BuildJobConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler.build_url(

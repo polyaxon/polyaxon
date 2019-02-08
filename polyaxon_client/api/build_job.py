@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
-from polyaxon_client.schemas import JobConfig, JobStatusConfig
+from polyaxon_client.schemas import BuildJobConfig, JobStatusConfig
 
 
 class BuildJobApi(BaseApiHandler):
@@ -20,7 +20,7 @@ class BuildJobApi(BaseApiHandler):
                                      job_id)
         try:
             response = self.transport.get(request_url)
-            return self.prepare_results(response_json=response.json(), config=JobConfig)
+            return self.prepare_results(response_json=response.json(), config=BuildJobConfig)
         except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving build')
             return None
@@ -38,7 +38,7 @@ class BuildJobApi(BaseApiHandler):
 
         try:
             response = self.transport.patch(request_url, json_data=patch_dict)
-            return self.prepare_results(response_json=response.json(), config=JobConfig)
+            return self.prepare_results(response_json=response.json(), config=BuildJobConfig)
         except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating build')
             return None
