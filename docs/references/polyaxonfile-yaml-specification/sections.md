@@ -143,9 +143,9 @@ you are defining and the value is one of these options:
 
  * `quniform`: Draws samples from a quantized uniform distribution over [low, high], `round(uniform(low, high) / q) * q`, e.g.
 
-    * 0:1
-    * [0, 1]
-    * {'low': 0, 'high': 1}
+    * 0:1:0.1
+    * [0, 1, 0.1]
+    * {'low': 0, 'high': 1, 'q': 0.1}
 
  * `loguniform`: Draws samples from a log uniform distribution over [low, high], e.g.
 
@@ -155,9 +155,9 @@ you are defining and the value is one of these options:
 
  * `qloguniform`: Draws samples from a quantized log uniform distribution over [low, high]
 
-    * 0:1
-    * [0, 1]
-    * {'low': 0, 'high': 1}
+    * 0:1:0.1
+    * [0, 1, 0.1]
+    * {'low': 0, 'high': 1, 'q': 0.1}
 
  * `normal`: Draws random samples from a normal (Gaussian) distribution defined by [loc, scale]
 
@@ -167,9 +167,9 @@ you are defining and the value is one of these options:
 
  * `qnormal`: Draws random samples from a quantized normal (Gaussian) distribution defined by [loc, scale]
 
-    * 0:1
-    * [0, 1]
-    * {'loc': 0, 'loc': 1}
+    * 0:1:0.1
+    * [0, 1, 0.1]
+    * {'low': 0, 'high': 1, 'q': 0.1}
 
  * `lognormal`: Draws random samples from a log normal (Gaussian) distribution defined by [loc, scale]
 
@@ -179,9 +179,9 @@ you are defining and the value is one of these options:
 
  * `qlognormal`: Draws random samples from a quantized log normal (Gaussian) distribution defined by [loc, scale]
 
-    * 0:1
-    * [0, 1]
-    * {'loc': 0, 'loc': 1}
+    * 0:1:0.1
+    * [0, 1, 0.1]
+    * {'low': 0, 'high': 1, 'q': 0.1}
 
 
 Example:
