@@ -214,7 +214,8 @@ you generally don't need to
 
 You can access this context using the following methods:
 
- * `experiment.get_cluster_def`: Returns cluster definition created by polyaxon.
+ * `experiment.get_cluster_def`: Returns cluster definition created by polyaxon, 
+ this value is also exposed as an env var `POLYAXON_CLUSTER`.
     ```json
     {
         "master": ["plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
@@ -223,7 +224,8 @@ You can access this context using the following methods:
         "ps": ["plxjob-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
     }
     ```
- * `experiment.get_declarations`: Returns all the experiment declarations based on both,
+ * `experiment.get_declarations`: Returns all the experiment declarations based on both, 
+ this value is also exposed as an env var `POLYAXON_DECLARATIONS`.
 
     * declarations section
     * matrix section
@@ -232,7 +234,8 @@ You can access this context using the following methods:
     if the experiment is running a distributed tensorflow graph.
     if `envvar` is not null, it will set and env variable with `envvar`.
 
- * `experiment.get_experiment_info`: Returns information about the experiment.
+ * `experiment.get_experiment_info`: Returns information about the experiment, 
+ this value is also exposed as an env var `POLYAXON_EXPERIMENT_INFO`.
 
     * project_name
     * experiment_group_name
@@ -241,7 +244,8 @@ You can access this context using the following methods:
     * experiment_group_uuid
     * experiment_uuid
 
- * `experiment.get_task_info`: Returns the task info: `{"type": str, "index": int}`.
+ * `experiment.get_task_info`: Returns the task info: `{"type": str, "index": int}`, 
+ this value is also exposed as an env var `POLYAXON_TASK_INFO`.
 
 
 ### Accessing the API

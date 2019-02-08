@@ -29,7 +29,7 @@ job = Job()
 
 ### Get job info
 
-Get information about the job.
+Get information about the job, this value is also exposed as an env var `POLYAXON_JOB_INFO`.
 
 ```python
 get_job_info

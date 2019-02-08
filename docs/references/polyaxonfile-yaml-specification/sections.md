@@ -101,29 +101,29 @@ you are defining and the value is one of these options:
 
 #### Discrete values
 
- * `values`: a list of values, e.g.
+ * **values**: a list of values, e.g.
 
     * `[1, 2, 3, 4]`
 
- * `range`: [start, stop, step] same way you would define a range in python, e.g.
+ * **range**: [start, stop, step] same way you would define a range in python, e.g.
 
     * `[1, 10, 2]`
     * `{start: 1, stop: 10, step: 2}`
     * `'1:10:2'`
 
- * `linspace`: [start, stop, num] steps from start to stop spaced evenly on a `linear scale`, e.g.
+ * **linspace**: [start, stop, num] steps from start to stop spaced evenly on a `linear scale`, e.g.
 
     * `[1, 10, 5]`
     * `{start: 1, stop: 10, num: 20}`
     * `'1:2:20'`
 
- * `logspace`: [start, stop, num] steps from start to stop spaced evenly on a `log scale`, e.g.
+ * **logspace**: [start, stop, num] steps from start to stop spaced evenly on a `log scale`, e.g.
 
     * `[1, 10, 5]`
     * `{start: 1, stop: 10, num: 20}`
     * `'1:2:20'`
 
- * `geomspace`: [start, stop, num] steps from start to stop, numbers spaced evenly on a log scale (a geometric progression).
+ * **geomspace**: [start, stop, num] steps from start to stop, numbers spaced evenly on a log scale (a geometric progression).
 
     * `[1, 10, 5]`
     * `{start: 1, stop: 10, num: 20}`
@@ -131,53 +131,53 @@ you are defining and the value is one of these options:
 
 #### Distributions
 
- * `pvalues`: Draws a value_i from values with probability  prob_i, e.g.
+ * **pvalues**: Draws a value_i from values with probability  prob_i, e.g.
 
     * [(value1, prob1), (value2, prob12), (value3, prob3), ...]
 
- * `uniform`: Draws samples from a uniform distribution over the half-open interval `[low, high)`, e.g.
+ * **uniform**: Draws samples from a uniform distribution over the half-open interval `[low, high)`, e.g.
 
     * 0:1
     * [0, 1]
     * {'low': 0, 'high': 1}
 
- * `quniform`: Draws samples from a quantized uniform distribution over [low, high], `round(uniform(low, high) / q) * q`, e.g.
+ * **quniform**: Draws samples from a quantized uniform distribution over [low, high], `round(uniform(low, high) / q) * q`, e.g.
 
     * 0:1:0.1
     * [0, 1, 0.1]
     * {'low': 0, 'high': 1, 'q': 0.1}
 
- * `loguniform`: Draws samples from a log uniform distribution over [low, high], e.g.
+ * **loguniform**: Draws samples from a log uniform distribution over [low, high], e.g.
 
     * 0:1
     * [0, 1]
     * {'low': 0, 'high': 1}
 
- * `qloguniform`: Draws samples from a quantized log uniform distribution over [low, high]
+ * **qloguniform**: Draws samples from a quantized log uniform distribution over [low, high]
 
     * 0:1:0.1
     * [0, 1, 0.1]
     * {'low': 0, 'high': 1, 'q': 0.1}
 
- * `normal`: Draws random samples from a normal (Gaussian) distribution defined by [loc, scale]
+ * **normal**: Draws random samples from a normal (Gaussian) distribution defined by [loc, scale]
 
     * 0:1
     * [0, 1]
     * {'loc': 0, 'loc': 1}
 
- * `qnormal`: Draws random samples from a quantized normal (Gaussian) distribution defined by [loc, scale]
+ * **qnormal**: Draws random samples from a quantized normal (Gaussian) distribution defined by [loc, scale]
 
     * 0:1:0.1
     * [0, 1, 0.1]
     * {'low': 0, 'high': 1, 'q': 0.1}
 
- * `lognormal`: Draws random samples from a log normal (Gaussian) distribution defined by [loc, scale]
+ * **lognormal**: Draws random samples from a log normal (Gaussian) distribution defined by [loc, scale]
 
     * 0:1
     * [0, 1]
     * {'loc': 0, 'loc': 1}
 
- * `qlognormal`: Draws random samples from a quantized log normal (Gaussian) distribution defined by [loc, scale]
+ * **qlognormal**: Draws random samples from a quantized log normal (Gaussian) distribution defined by [loc, scale]
 
     * 0:1:0.1
     * [0, 1, 0.1]
@@ -216,8 +216,8 @@ and the value is chosen directly by the algorithm doing the search defined in th
 For each experiment generated during the hyperparameters search, Polyaxon will also add these values
 to your declarations, and will export them under the environment variable name `POLYAXON_DECLARATIONS`.
 
-!!! tip "Polyaxon append the matrix value combination to your declarations and export them under the environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the cluster definition](references/tracking-api/experiments/#tracking-experiments-running-inside-polyaxon) to use it with your models.
+> tip "Polyaxon append the matrix value combination to your declarations and export them under the environment variable name `POLYAXON_DECLARATIONS`" 
+Check how you can [get the cluster definition](/references/tracking-api/experiments/#tracking-experiments-running-inside-polyaxon) to use it with your models.
 
 
 ### search algorithm: grid_search
