@@ -90,7 +90,14 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while updating project repo.')
             return None
 
-    def download_repo(self, username, project_name, commit=None, filename=None):
+    def download_repo(self,
+                      username,
+                      project_name,
+                      commit=None,
+                      filename=None,
+                      untar=False,
+                      delete_tar=True,
+                      extract_path=None):
         """Downloads code for this project to the current dir."""
         request_url = self.build_url(
             self._get_http_url(), username, project_name, 'repo', 'download')
@@ -102,7 +109,13 @@ class ProjectApi(BaseApiHandler):
         filename = filename or 'repo.tar.gz'
 
         try:
-            response = self.transport.download(request_url, filename=filename, params=params)
+            response = self.transport.download(
+                request_url,
+                filename=filename,
+                params=params,
+                untar=untar,
+                delete_tar=delete_tar,
+                extract_path=extract_path)
             return response
         except PolyaxonClientException as e:
             self.transport.handle_exception(

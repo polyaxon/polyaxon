@@ -156,7 +156,16 @@ class HttpTransportMixin(object):
 
         return response
 
-    def download(self, url, filename, params=None, headers=None, timeout=None, session=None):
+    def download(self,
+                 url,
+                 filename,
+                 params=None,
+                 headers=None,
+                 timeout=None,
+                 session=None,
+                 untar=False,
+                 delete_tar=True,
+                 extract_path=None):
         """
         Download the file from the given url at the current path
         """
@@ -188,6 +197,11 @@ class HttpTransportMixin(object):
                     for chunk in response.iter_content(chunk_size=1024):
                         if chunk:
                             f.write(chunk)
+
+            if untar:
+                filename = self.untar(filename=filename,
+                                      delete_tar=delete_tar,
+                                      extract_path=extract_path)
             return filename
         except (requests.exceptions.ConnectionError,
                 requests.exceptions.RequestException,
@@ -204,25 +218,16 @@ class HttpTransportMixin(object):
                 "Check your host and ports configuration "
                 "and your internet connection.".format(url, exception))
 
-    def download_tar(self, url, untar=True, delete_tar=False):
-        """
-        Download and optionally untar the tar file from the given url
-        """
-        try:
-            logger.info("Downloading the tar file to the current directory ...")
-            filename = self.download(url=url, filename='output.tar')
-            if filename and untar:
-                logger.info("Untarring the contents of the file ...")
-                tar = tarfile.open(filename)
-                tar.extractall()
-                tar.close()
-            if delete_tar:
-                logger.info("Cleaning up the tar file ...")
-                os.remove(filename)
-            return filename
-        except ERRORS_MAPPING['base'] as e:
-            logger.info("Download URL ERROR! %s", e.message)
-            return False
+    def untar(self, filename, delete_tar=True, extract_path=None):
+        extract_path = extract_path or '.'
+        logger.info("Untarring the contents of the file ...")
+        tar = tarfile.open(filename)
+        tar.extractall(extract_path)
+        tar.close()
+        if delete_tar:
+            logger.info("Cleaning up the tar file ...")
+            os.remove(filename)
+        return filename
 
     def check_response_status(self, response, endpoint):
         """Check if response is successful. Else raise Exception."""
