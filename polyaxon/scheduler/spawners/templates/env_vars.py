@@ -37,6 +37,18 @@ def get_from_secret(key_name, secret_key_name, secret_ref_name=None):
     return client.V1EnvVar(name=key_name, value_from=value_from)
 
 
+def get_internal_env_vars(namespace='default'):
+    return [
+        get_env_var(name='POLYAXON_K8S_NAMESPACE', value=namespace),
+        get_from_secret('POLYAXON_SECRET_KEY', 'POLYAXON_SECRET_KEY'),
+        get_from_secret('POLYAXON_SECRET_INTERNAL_TOKEN', 'POLYAXON_SECRET_INTERNAL_TOKEN'),
+        get_env_var(name=API_HTTP_URL, value=get_settings_http_api_url()),
+        get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
+        get_env_var(name=constants.CONFIG_MAP_IN_CLUSTER, value=True),
+        get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
+    ]
+
+
 def get_service_env_vars(namespace='default'):
     return [
         get_env_var(name='POLYAXON_K8S_NAMESPACE', value=namespace),

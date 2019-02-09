@@ -64,11 +64,6 @@ class DockerizerSpawner(K8SManager):
         for key in config.keys_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
             env_vars.append(get_from_secret(key, key))
 
-        # Add repos access token secret key
-        if settings.REPOS_ACCESS_TOKEN:
-            env_vars.append(get_from_secret(settings.REPOS_ACCESS_TOKEN_KEY,
-                                            settings.REPOS_ACCESS_TOKEN_KEY))
-
         return env_vars
 
     def get_pod_command_args(self):
@@ -101,6 +96,7 @@ class DockerizerSpawner(K8SManager):
             args=args,
             init_command=init_command,
             init_args=init_args,
+            init_env_vars=env_vars,
             persistence_outputs=None,
             persistence_data=None,
             outputs_refs_jobs=None,

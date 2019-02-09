@@ -6,7 +6,7 @@ from kubernetes import client
 import conf
 
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.env_vars import get_env_var, get_service_env_vars
+from scheduler.spawners.templates.env_vars import get_env_var, get_internal_env_vars
 
 
 def get_sidecar_env_vars(resource_name, job_container_name, internal_health_check_url):
@@ -49,7 +49,7 @@ def get_sidecar_container(resource_name,
     env_vars += get_sidecar_env_vars(resource_name=resource_name,
                                      job_container_name=job_container_name,
                                      internal_health_check_url=internal_health_check_url)
-    env_vars += get_service_env_vars(namespace=namespace)
+    env_vars += get_internal_env_vars(namespace=namespace)
     for k, v in sidecar_config.items():
         env_vars.append(get_env_var(name=k, value=v))
     return client.V1Container(name=sidecar_container_name,
