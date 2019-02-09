@@ -102,7 +102,7 @@ class ProjectApi(BaseApiHandler):
         request_url = self.build_url(
             self._get_http_url(), username, project_name, 'repo', 'download')
 
-        params = None
+        params = {}
         if commit:
             params['commit'] = commit
 
