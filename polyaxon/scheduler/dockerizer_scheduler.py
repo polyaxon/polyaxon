@@ -87,6 +87,7 @@ def start_dockerizer(build_job):
         image_name=get_image_name(build_job),
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars,
+        nocache=build_job.build.nocache,
         spec=build_job.specification,
         k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),

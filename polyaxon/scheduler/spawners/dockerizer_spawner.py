@@ -28,6 +28,7 @@ class DockerizerSpawner(K8SManager):
                  image_name=None,
                  build_steps=None,
                  env_vars=None,
+                 nocache=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -50,6 +51,7 @@ class DockerizerSpawner(K8SManager):
         self.image_name = image_name
         self.build_steps = build_steps
         self.env_vars = env_vars
+        self.nocache = nocache
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=DOCKERIZER_JOB_NAME,
@@ -78,17 +80,18 @@ class DockerizerSpawner(K8SManager):
         # Add containers env vars
         env_vars += [
             get_env_var(name='POLYAXON_REPO_COMMIT', value=self.commit),
-            get_env_var(name='CONTAINER_FROM_IMAGE', value=self.from_image),
+            get_env_var(name='POLYAXON_CONTAINER_FROM_IMAGE', value=self.from_image),
             get_env_var(name='POLYAXON_CONTAINER_IMAGE_TAG', value=self.image_tag),
             get_env_var(name='POLYAXON_CONTAINER_IMAGE_NAME', value=self.image_name),
             get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),
             get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
+            get_env_var(name='POLYAXON_CONTAINER_NOCACHE', value=self.nocache),
             get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get('MOUNT_PATHS_NVIDIA')),
-            get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get('REGISTRY_USER')),
-            get_env_var(name='POLYAXON_REGISTRY_HOST', value=conf.get('REGISTRY_HOST_NAME')),
         ]
-        if conf.get('REGISTRY_PASSWORD'):
+        if conf.get('REGISTRY_PASSWORD') and conf.get('REGISTRY_USER'):
             env_vars += [
+                get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get('REGISTRY_USER')),
+                get_env_var(name='POLYAXON_REGISTRY_HOST', value=conf.get('REGISTRY_HOST')),
                 get_from_secret('POLYAXON_REGISTRY_PASSWORD',
                                 'registry-password',
                                 settings.POLYAXON_K8S_REGISTRY_SECRET_NAME),
