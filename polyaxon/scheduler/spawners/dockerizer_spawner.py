@@ -54,7 +54,7 @@ class DockerizerSpawner(K8SManager):
         self.image_name = image_name
         self.build_steps = build_steps
         self.env_vars = env_vars
-        self.nocache = nocache
+        self.nocache = bool(nocache)
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=DOCKERIZER_JOB_NAME,

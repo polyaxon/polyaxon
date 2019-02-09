@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-#noqa
+
+# noqa
+
 
 import sys
 
@@ -9,6 +11,7 @@ from setuptools.command.test import test as TestCommand
 
 class PyTest(TestCommand):
     def finalize_options(self):
+        # pylint:disable=attribute-defined-outside-init
         TestCommand.finalize_options(self)
         self.test_args = []
         self.test_suite = True
