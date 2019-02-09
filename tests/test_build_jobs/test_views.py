@@ -311,6 +311,8 @@ class TestBuildDetailViewV1(BaseViewTest):
     model_class = BuildJob
     factory_class = BuildJobFactory
     HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.DOCKERIZER
 
     def setUp(self):
         super().setUp()
@@ -325,6 +327,10 @@ class TestBuildDetailViewV1(BaseViewTest):
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.object_query).data
+
+        resp = self.internal_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object_query).data
 
@@ -387,6 +393,14 @@ class TestBuildDetailViewV1(BaseViewTest):
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.dockerfile == dockerfile
 
+        dockerfile = 'boo'
+        data = {'dockerfile': dockerfile}
+        assert new_object.dockerfile == 'foo'
+        resp = self.internal_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.dockerfile == dockerfile
+
     def test_delete_archives_and_schedules_stop(self):
         self.object.set_status(JobLifeCycle.SCHEDULED)
         assert self.model_class.objects.count() == 1
@@ -416,6 +430,8 @@ class TestBuildStatusListViewV1(BaseViewTest):
     factory_class = BuildJobStatusFactory
     num_objects = 3
     HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.SIDECAR
 
     def setUp(self):
         super().setUp()
@@ -435,6 +451,9 @@ class TestBuildStatusListViewV1(BaseViewTest):
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        resp = self.internal_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -489,6 +508,15 @@ class TestBuildStatusListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 3
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+        assert last_object.message == data['message']
+        assert last_object.traceback == data['traceback']
+
+        resp = self.internal_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 4
         last_object = self.model_class.objects.last()
         assert last_object.job == self.job
         assert last_object.status == data['status']

@@ -1222,6 +1222,8 @@ class TestExperimentStatusListViewV1(BaseViewTest):
     factory_class = ExperimentStatusFactory
     num_objects = 3
     HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.SIDECAR
 
     def setUp(self):
         super().setUp()
@@ -1241,6 +1243,8 @@ class TestExperimentStatusListViewV1(BaseViewTest):
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        resp = self.internal_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -1299,6 +1303,12 @@ class TestExperimentStatusListViewV1(BaseViewTest):
         assert last_object.experiment == self.experiment
         assert last_object.message == data['message']
         assert last_object.traceback == data['traceback']
+
+        # Test internal
+        data = {}
+        resp = self.internal_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 4
 
 
 @pytest.mark.experiments_mark

@@ -5,6 +5,7 @@ from rest_framework.serializers import Serializer
 from django.http import HttpRequest, HttpResponse
 
 import auditor
+from scopes.authentication.utils import is_user
 
 
 class BaseEndpoint(mixins.CreateModelMixin,
@@ -41,12 +42,12 @@ class BaseEndpoint(mixins.CreateModelMixin,
             return self._object
         method = self.request.method
         event_type = self.AUDITOR_EVENT_TYPES.get(method)
-        if method == 'GET' and event_type:
+        if method == 'GET' and event_type and is_user(self.request.user):
             auditor.record(event_type=event_type,
                            instance=self._object,
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username)
-        elif method == 'DELETE' and event_type:
+        elif method == 'DELETE' and event_type and is_user(self.request.user):
             auditor.record(event_type=event_type,
                            instance=self._object,
                            actor_id=self.request.user.id,
@@ -58,7 +59,7 @@ class BaseEndpoint(mixins.CreateModelMixin,
         if not self.AUDITOR_EVENT_TYPES:
             return instance
         event_type = self.AUDITOR_EVENT_TYPES.get('UPDATE')
-        if event_type:
+        if event_type and is_user(self.request.user):
             auditor.record(event_type=event_type,
                            instance=instance,
                            actor_id=self.request.user.id,

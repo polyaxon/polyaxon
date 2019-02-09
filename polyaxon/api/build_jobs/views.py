@@ -119,6 +119,9 @@ class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEn
         'UPDATE': BUILD_JOB_UPDATED,
         'DELETE': BUILD_JOB_DELETED_TRIGGERED
     }
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
 
     def perform_destroy(self, instance):
         instance.archive()
@@ -152,6 +155,9 @@ class BuildStatusListView(BuildResourceListEndpoint, ListEndpoint, CreateEndpoin
     """
     queryset = BuildJobStatus.objects.order_by('created_at')
     serializer_class = BuildJobStatusSerializer
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
 
     def perform_create(self, serializer):
         serializer.save(job=self.build)

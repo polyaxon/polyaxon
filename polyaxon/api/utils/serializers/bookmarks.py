@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from db.models.bookmarks import Bookmark
+from scopes.authentication.utils import is_user
 
 
 class BookmarkedSerializerMixin(serializers.Serializer):
@@ -16,7 +17,7 @@ class BookmarkedSerializerMixin(serializers.Serializer):
         else:
             # Get the requesting user if set in the context
             request = self.context.get('request', None)
-            if request:
+            if request and is_user(request.user):
                 return Bookmark.objects.filter(
                     user=request.user,
                     content_type__model=self.bookmarked_model,

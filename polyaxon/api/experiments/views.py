@@ -454,6 +454,9 @@ class ExperimentStatusListView(ExperimentResourceListEndpoint,
     """
     queryset = ExperimentStatus.objects.order_by('created_at')
     serializer_class = ExperimentStatusSerializer
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
 
     def perform_create(self, serializer):
         serializer.save(experiment=self.experiment)
