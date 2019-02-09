@@ -8,6 +8,8 @@ POLYAXON_K8S_APP_CONFIG_NAME = config.get_string('POLYAXON_K8S_APP_CONFIG_NAME')
 POLYAXON_K8S_APP_SECRET_NAME = config.get_string('POLYAXON_K8S_APP_SECRET_NAME')
 POLYAXON_K8S_RABBITMQ_SECRET_NAME = config.get_string('POLYAXON_K8S_RABBITMQ_SECRET_NAME')
 POLYAXON_K8S_DB_SECRET_NAME = config.get_string('POLYAXON_K8S_DB_SECRET_NAME')
+POLYAXON_K8S_REGISTRY_SECRET_NAME = config.get_string('POLYAXON_K8S_REGISTRY_SECRET_NAME',
+                                                      is_optional=True)
 
 K8S_AUTHORISATION = config.get_string('POLYAXON_K8S_AUTHORISATION',
                                       is_optional=True,
