@@ -1,12 +1,17 @@
 from django.conf import settings
+from hestia.internal_services import InternalServices
 
+import conf
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME
 from libs.unique_urls import get_build_health_url
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
+
+from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
-from scheduler.spawners.templates.env_vars import get_env_var, get_from_secret, get_service_env_vars
+from scheduler.spawners.templates.env_vars import get_env_var, get_from_secret, \
+    get_service_env_vars, get_internal_env_vars
 from scheduler.spawners.templates.volumes import get_build_context_volumes, get_docker_volumes
 
 
@@ -17,6 +22,12 @@ class DockerizerSpawner(K8SManager):
                  job_name,
                  job_uuid,
                  spec,
+                 commit=None,
+                 from_image=None,
+                 image_tag=None,
+                 image_name=None,
+                 build_steps=None,
+                 env_vars=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -33,6 +44,12 @@ class DockerizerSpawner(K8SManager):
         self.project_uuid = project_uuid
         self.job_name = job_name
         self.job_uuid = job_uuid
+        self.commit = commit
+        self.from_image = from_image
+        self.image_tag = image_tag
+        self.image_name = image_name
+        self.build_steps = build_steps
+        self.env_vars = env_vars
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=DOCKERIZER_JOB_NAME,
@@ -56,10 +73,21 @@ class DockerizerSpawner(K8SManager):
                          in_cluster=in_cluster)
 
     def get_env_vars(self):
-        env_vars = get_service_env_vars(namespace=self.namespace)
-        for k, v in config.get_requested_data(to_str=True).items():
-            env_vars.append(get_env_var(name=k, value=v))
-
+        env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
+                                         namespace=self.namespace)
+        # Add containers env vars
+        env_vars += [
+            get_env_var(name='POLYAXON_REPO_COMMIT', value=self.commit),
+            get_env_var(name='CONTAINER_FROM_IMAGE', value=self.from_image),
+            get_env_var(name='POLYAXON_CONTAINER_IMAGE_TAG', value=self.image_tag),
+            get_env_var(name='POLYAXON_CONTAINER_IMAGE_NAME', value=self.image_name),
+            get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),
+            get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
+            get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get('MOUNT_PATHS_NVIDIA')),
+            get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get('REGISTRY_USER')),
+            get_env_var(name='POLYAXON_REGISTRY_HOST', value=conf.get('POLYAXON_REGISTRY_HOST')),
+            get_from_secret('POLYAXON_REGISTRY_USER', 'POLYAXON_REGISTRY_USER'),
+        ]
         # Add private registries secrets keys
         for key in config.keys_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
             env_vars.append(get_from_secret(key, key))
@@ -67,10 +95,10 @@ class DockerizerSpawner(K8SManager):
         return env_vars
 
     def get_pod_command_args(self):
-        return ["python3", "polyaxon/manage.py", "build"], [self.job_uuid]
+        return ["/bin/bash", "-c"], ["while true; do echo hello; sleep 10;done"]
 
     def get_init_command_args(self):
-        return ["python3", "polyaxon/manage.py", "init"], [self.job_uuid]
+        return ["/bin/bash", "-c"], ["echo init"]
 
     def start_dockerizer(self,
                          resources=None,

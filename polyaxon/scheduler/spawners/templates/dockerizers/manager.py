@@ -1,5 +1,6 @@
 import json
 
+from hestia.list_utils import to_list
 from kubernetes import client
 
 import conf
@@ -115,6 +116,11 @@ class ResourceManager(BaseResourceManager):
                            persistence_outputs,
                            persistence_data):
         """Pod init container for setting outputs path."""
+        env_vars = to_list(env_vars, check_none=True)
+        env_vars += [
+            get_env_var(name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME,
+                        value=json.dumps(self.labels)),
+        ]
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,

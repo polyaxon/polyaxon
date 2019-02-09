@@ -8,7 +8,7 @@ import conf
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
-from docker_images.image_info import get_tagged_image
+from docker_images.image_info import get_tagged_image, get_image_name
 from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.utils import get_job_definition
@@ -81,6 +81,12 @@ def start_dockerizer(build_job):
         project_uuid=build_job.project.uuid.hex,
         job_name=build_job.unique_name,
         job_uuid=build_job.uuid.hex,
+        commit=build_job.code_reference.commit,
+        from_image=build_job.image,
+        image_tag=build_job.uuid.hex,
+        image_name=get_image_name(build_job),
+        build_steps=build_job.build_steps,
+        env_vars=build_job.env_vars,
         spec=build_job.specification,
         k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),

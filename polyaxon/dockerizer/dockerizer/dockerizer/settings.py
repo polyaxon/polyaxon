@@ -27,8 +27,6 @@ config = rhea.Rhea.read_configs(config_values)
 
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
 MOUNT_PATHS_NVIDIA = config.get_string('POLYAXON_MOUNT_PATHS_NVIDIA', is_optional=True)
-REPO_DOWNLOAD_URL = config.get_string('POLYAXON_REPO_DOWNLOAD_URL')
-REPO_IS_INTERNAL = config.get_boolean('POLYAXON_REPO_IS_INTERNAL')
 REPO_COMMIT = config.get_boolean('POLYAXON_REPO_COMMIT')
 CONTAINER_FROM_IMAGE = config.get_string('POLYAXON_CONTAINER_FROM_IMAGE')
 CONTAINER_IMAGE_TAG = config.get_string('POLYAXON_CONTAINER_IMAGE_TAG')
