@@ -17,14 +17,15 @@ from db.models.utils import (
     DataReference,
     DeletedModel,
     DescribableModel,
+    InCluster,
     NameableModel,
     NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
     ReadmeModel,
     SubPathModel,
-    TagModel,
-    InCluster)
+    TagModel
+)
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED
 from libs.paths.jobs import get_job_subpath

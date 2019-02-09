@@ -67,7 +67,8 @@ class DockerBuilder(object):
                               registry=registry.host,
                               reauth=True)
 
-    def _prepare_log_lines(self, log_line) -> Tuple[List[str], bool]:
+    def _prepare_log_lines(self,  # pylint:disable=too-many-branches
+                           log_line) -> Tuple[List[str], bool]:
         raw = log_line.decode('utf-8').strip()
         raw_lines = raw.split('\n')
         log_lines = []

@@ -2,8 +2,8 @@ import argparse
 
 from polyaxon_client.tracking import Job
 
-from .dockerizer.init import cmd as init_cmd
 from .dockerizer.build import cmd as build_cmd
+from .dockerizer.init import cmd as init_cmd
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

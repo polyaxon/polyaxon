@@ -8,7 +8,7 @@ import conf
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
-from docker_images.image_info import get_tagged_image, get_image_name
+from docker_images.image_info import get_image_name, get_tagged_image
 from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.utils import get_job_definition
@@ -87,7 +87,7 @@ def start_dockerizer(build_job):
         image_name=get_image_name(build_job),
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars,
-        nocache=build_job.build.nocache,
+        nocache=build_job.specification.nocache,
         spec=build_job.specification,
         k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),

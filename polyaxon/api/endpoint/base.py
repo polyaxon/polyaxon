@@ -5,6 +5,7 @@ from rest_framework.serializers import Serializer
 from django.http import HttpRequest, HttpResponse
 
 import auditor
+
 from scopes.authentication.utils import is_user
 
 

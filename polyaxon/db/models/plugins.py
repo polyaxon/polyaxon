@@ -8,13 +8,14 @@ from db.models.abstract_jobs import AbstractJob
 from db.models.utils import (
     DeletedModel,
     DescribableModel,
+    InCluster,
     NameableModel,
     NodeSchedulingModel,
     OutputsModel,
     PersistenceModel,
     SubPathModel,
-    TagModel,
-    InCluster)
+    TagModel
+)
 
 
 class PluginJobBase(AbstractJob,

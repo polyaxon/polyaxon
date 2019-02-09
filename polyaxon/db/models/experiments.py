@@ -24,14 +24,15 @@ from db.models.utils import (
     DeletedModel,
     DescribableModel,
     DiffModel,
+    InCluster,
     NameableModel,
     OutputsModel,
     PersistenceModel,
     ReadmeModel,
     RunTimeModel,
     SubPathModel,
-    TagModel,
-    InCluster)
+    TagModel
+)
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,

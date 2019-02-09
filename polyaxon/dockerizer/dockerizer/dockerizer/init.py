@@ -2,8 +2,8 @@ import traceback
 
 from . import settings
 from .constants import BUILD_PATH
-from .initializer.generate import generate
 from .initializer.download import download
+from .initializer.generate import generate
 
 
 def init(job: 'Job', build_path: str = BUILD_PATH) -> bool:
@@ -17,7 +17,8 @@ def init(job: 'Job', build_path: str = BUILD_PATH) -> bool:
     if not status:
         return status
     # Generate dockerfile
-    return generate(build_path=build_path,
+    return generate(job=job,
+                    build_path=build_path,
                     image_tag=settings.CONTAINER_IMAGE_TAG,
                     from_image=settings.CONTAINER_FROM_IMAGE,
                     image_name=settings.CONTAINER_IMAGE_NAME,

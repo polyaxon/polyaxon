@@ -16,12 +16,13 @@ from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.models.utils import (
     DeletedModel,
     DescribableModel,
+    InCluster,
     NameableModel,
     NodeSchedulingModel,
     PersistenceModel,
     SubPathModel,
-    TagModel,
-    InCluster)
+    TagModel
+)
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config

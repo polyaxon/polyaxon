@@ -2,9 +2,9 @@ import json
 import os
 
 import rhea
+
 from rhea import RheaError
 from rhea.specs import UriSpec
-
 from unipath import Path
 
 
@@ -36,7 +36,7 @@ CONTAINER_BUILD_STEPS = config.get_list('POLYAXON_CONTAINER_BUILD_STEPS', is_opt
 if CONTAINER_BUILD_STEPS:
     CONTAINER_BUILD_STEPS = json.loads(CONTAINER_BUILD_STEPS)
 
-CONTAINER_ENV_VARS = config.get_string('POLYAXON_CONTAINER_ENV_VARS',is_optional=True)
+CONTAINER_ENV_VARS = config.get_string('POLYAXON_CONTAINER_ENV_VARS', is_optional=True)
 if CONTAINER_ENV_VARS:
     CONTAINER_ENV_VARS = json.loads(CONTAINER_ENV_VARS)
 

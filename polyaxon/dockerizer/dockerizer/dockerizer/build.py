@@ -2,7 +2,7 @@ import traceback
 
 from docker.errors import DockerException
 
-from . import settings, constants
+from . import constants, settings
 from .builders import native
 
 

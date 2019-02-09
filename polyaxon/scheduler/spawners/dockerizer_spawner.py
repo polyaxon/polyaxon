@@ -1,17 +1,20 @@
-from django.conf import settings
 from hestia.internal_services import InternalServices
 
+from django.conf import settings
+
 import conf
+
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME
 from libs.unique_urls import get_build_health_url
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
-
-from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
-from scheduler.spawners.templates.env_vars import get_env_var, get_from_secret, \
-    get_service_env_vars, get_internal_env_vars
+from scheduler.spawners.templates.env_vars import (
+    get_env_var,
+    get_from_secret,
+    get_internal_env_vars,
+)
 from scheduler.spawners.templates.volumes import get_build_context_volumes, get_docker_volumes
 
 
