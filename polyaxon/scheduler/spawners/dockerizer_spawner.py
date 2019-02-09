@@ -85,8 +85,8 @@ class DockerizerSpawner(K8SManager):
             get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
             get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get('MOUNT_PATHS_NVIDIA')),
             get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get('REGISTRY_USER')),
-            get_env_var(name='POLYAXON_REGISTRY_HOST', value=conf.get('POLYAXON_REGISTRY_HOST')),
-            get_from_secret('POLYAXON_REGISTRY_USER', 'POLYAXON_REGISTRY_USER'),
+            get_env_var(name='POLYAXON_REGISTRY_HOST', value=conf.get('REGISTRY_HOST_NAME')),
+            get_from_secret('POLYAXON_REGISTRY_PASSWORD', 'POLYAXON_REGISTRY_PASSWORD'),
         ]
         # Add private registries secrets keys
         for key in config.keys_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
