@@ -28,6 +28,15 @@ class Group(BaseTracker):
         self.last_status = None
         self.base_outputs_path = None
 
+    def get_data(self):
+        if settings.NO_OP:
+            return
+
+        self._data = self.client.experiment_group.get_experiment_group(
+            username=self.username,
+            project_name=self.project_name,
+            group_id=self.group_id)
+
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
         if settings.NO_OP:
             return None

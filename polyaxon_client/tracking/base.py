@@ -14,6 +14,8 @@ from polyaxon_client.tracking.utils.project import get_project_info
 
 
 class BaseTracker(object):
+    REQUIRES_OUTPUTS = True
+
     def __init__(self,
                  project=None,
                  client=None,
@@ -44,10 +46,14 @@ class BaseTracker(object):
         self.username = username
         self.project_name = project_name
         self.outputs_store = outputs_store
+        self._data = None
 
         # Setup the outputs store
-        if outputs_store is None and settings.IN_CLUSTER:
+        if outputs_store is None and settings.IN_CLUSTER and self.REQUIRES_OUTPUTS:
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
+
+    def get_data(self):
+        raise NotImplementedError
 
     def _set_health_url(self):
         raise NotImplementedError

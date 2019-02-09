@@ -71,6 +71,15 @@ class Experiment(BaseTracker):
         if settings.IN_CLUSTER and self.track_env:
             self.log_run_env()
 
+    def get_data(self):
+        if settings.NO_OP:
+            return
+
+        self._data = self.client.experiment.get_experiment(
+            username=self.username,
+            project_name=self.project_name,
+            experiment_id=self.experiment_id)
+
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
         if settings.NO_OP:
             return None

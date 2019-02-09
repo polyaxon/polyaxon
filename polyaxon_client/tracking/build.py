@@ -6,6 +6,8 @@ from polyaxon_client.tracking import Job
 
 
 class BuildJob(Job):
+    REQUIRES_OUTPUTS = False
+
     def __init__(self,
                  project=None,
                  job_id=None,

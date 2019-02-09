@@ -40,8 +40,27 @@ class Job(BaseTracker):
         self.job = None
         self.last_status = None
 
+    def get_data(self):
+        if settings.NO_OP:
+            return
+
+        if self.job_type == 'jobs':
+            self._data = self.client_backend.get_job(
+                username=self.username,
+                project_name=self.project_name,
+                job_id=self.job_id)
+        elif self.job_type == 'builds':
+            self._data = self.client_backend.get_build(
+                username=self.username,
+                project_name=self.project_name,
+                job_id=self.job_id)
+        raise PolyaxonClientException('Job type {} not supported'.format(self.job_type))
+
     @property
     def client_backend(self):
+        if settings.NO_OP:
+            return None
+
         if self.job_type == 'jobs':
             return self.client.job
         elif self.job_type == 'builds':
