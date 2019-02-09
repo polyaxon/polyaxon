@@ -1,3 +1,4 @@
+from hestia.auth import AuthenticationTypes
 from hestia.internal_services import InternalServices
 
 from django.conf import settings
@@ -79,7 +80,8 @@ class DockerizerSpawner(K8SManager):
 
     def get_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
-                                         namespace=self.namespace)
+                                         namespace=self.namespace,
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
         # Add containers env vars
         env_vars += [
             get_env_var(name='POLYAXON_REPO_COMMIT', value=self.commit),

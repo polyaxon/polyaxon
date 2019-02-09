@@ -37,8 +37,8 @@ def get_from_secret(key_name, secret_key_name, secret_ref_name=None):
     return client.V1EnvVar(name=key_name, value_from=value_from)
 
 
-def get_internal_env_vars(service_internal_header, namespace='default'):
-    return [
+def get_internal_env_vars(service_internal_header, namespace='default', authentication_type=None):
+    env_vars = [
         get_env_var(name='POLYAXON_K8S_NAMESPACE', value=namespace),
         get_from_secret('POLYAXON_SECRET_KEY', 'POLYAXON_SECRET_KEY'),
         get_from_secret('POLYAXON_SECRET_INTERNAL_TOKEN', 'POLYAXON_SECRET_INTERNAL_TOKEN'),
@@ -51,6 +51,10 @@ def get_internal_env_vars(service_internal_header, namespace='default'):
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
                     value=service_internal_header),
     ]
+    if authentication_type:
+        env_vars.append(
+            get_env_var(name='POLYAXON_AUTHENTICATION_TYPE', value=authentication_type))
+    return env_vars
 
 
 def get_service_env_vars(namespace='default'):
