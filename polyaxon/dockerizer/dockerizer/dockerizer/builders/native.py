@@ -9,12 +9,7 @@ from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 from hestia.logging_utils import LogLevels
 
-import conf
-
-from constants.jobs import JobLifeCycle
-from docker_images.image_info import get_project_image_name, get_project_tagged_image
-from dockerizer.constants import BUILD_PATH
-from dockerizer.utils import send_status
+from .. import settings
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -24,17 +19,15 @@ class DockerBuilder(object):
     WORKDIR = '/code'
 
     def __init__(self,
-                 build_job: 'BuildJob',
                  repo_path: str,
                  from_image: str,
+                 image_name: str,
+                 image_tag: str,
                  copy_code: bool = True,
                  dockerfile_name: str = 'Dockerfile') -> None:
-        self.build_job = build_job
-        self.job_uuid = build_job.uuid.hex
         self.from_image = from_image
-        self.image_name = get_project_image_name(project_name=self.build_job.project.name,
-                                                 project_id=self.build_job.project.id)
-        self.image_tag = self.job_uuid
+        self.image_name = image_name
+        self.image_tag = image_tag
         self.folder_name = repo_path.split('/')[-1]
         self.repo_path = repo_path
         self.copy_code = copy_code
@@ -47,9 +40,7 @@ class DockerBuilder(object):
         self.is_pushing = False
 
     def get_tagged_image(self) -> str:
-        return get_project_tagged_image(project_name=self.build_job.project.name,
-                                        project_id=self.build_job.project.id,
-                                        image_tag=self.build_job.uuid.hex)
+        return '{}:{}'.format(self.image_name, self.image_tag)
 
     def check_image(self) -> Any:
         return self.docker.images(self.get_tagged_image())
@@ -59,18 +50,18 @@ class DockerBuilder(object):
 
     def login_internal_registry(self) -> None:
         try:
-            self.docker.login(username=conf.get('REGISTRY_USER'),
-                              password=conf.get('REGISTRY_PASSWORD'),
-                              registry=conf.get('REGISTRY_HOST'),
+            self.docker.login(username=settings.REGISTRY_USER,
+                              password=settings.REGISTRY_PASSWORD,
+                              registry=settings.REGISTRY_HOST,
                               reauth=True)
         except DockerException as e:
             _logger.exception('Failed to connect to registry %s\n', e)
 
     def login_private_registries(self) -> None:
-        if not conf.get('PRIVATE_REGISTRIES'):
+        if not settings.PRIVATE_REGISTRIES:
             return
 
-        for registry in conf.get('PRIVATE_REGISTRIES'):
+        for registry in settings.PRIVATE_REGISTRIES:
             self.docker.login(username=registry.user,
                               password=registry.password,
                               registry=registry.host,
@@ -171,30 +162,32 @@ class DockerBuilder(object):
         return self._handle_log_stream(stream=stream)
 
 
-def build(build_job: 'BuildJob', build_path: str = BUILD_PATH) -> bool:
+def build(job,
+          image_tag: str,
+          build_path: str,
+          from_image: str,
+          image_name: str) -> bool:
     """Build necessary code for a job to run"""
     _logger.info('Starting build ...')
 
     # Build the image
     docker_builder = DockerBuilder(
-        build_job=build_job,
         repo_path=build_path,
-        from_image=build_job.image)
+        from_image=from_image,
+        image_name=image_name,
+        image_tag=image_tag)
     docker_builder.login_internal_registry()
     docker_builder.login_private_registries()
     if docker_builder.check_image():
         # Image already built
         docker_builder.clean()
         return True
-    nocache = True if build_job.specification.build.nocache is True else False
-    if not docker_builder.build(nocache=nocache):
+    if not docker_builder.build(nocache=settings.CONTAINER_NO_CACHE):
         docker_builder.clean()
         return False
     if not docker_builder.push():
         docker_builder.clean()
-        send_status(build_job=build_job,
-                    status=JobLifeCycle.FAILED,
-                    message='The docker image could not be pushed.')
+        job.failed(message='The docker image could not be pushed.')
         return False
     docker_builder.clean()
     return True
