@@ -108,6 +108,7 @@ class ResourceManager(BaseResourceManager):
         logs_path = self._get_logs_path()
         outputs_path = self._get_outputs_path(persistence_outputs=persistence_outputs)
         env_vars = get_job_env_vars(
+            namespace=self.namespace,
             persistence_outputs=persistence_outputs,
             outputs_path=outputs_path,
             persistence_data=persistence_data,

@@ -37,7 +37,7 @@ def get_from_secret(key_name, secret_key_name, secret_ref_name=None):
     return client.V1EnvVar(name=key_name, value_from=value_from)
 
 
-def get_internal_env_vars(namespace='default'):
+def get_internal_env_vars(service_internal_header, namespace='default'):
     return [
         get_env_var(name='POLYAXON_K8S_NAMESPACE', value=namespace),
         get_from_secret('POLYAXON_SECRET_KEY', 'POLYAXON_SECRET_KEY'),
@@ -46,6 +46,10 @@ def get_internal_env_vars(namespace='default'):
         get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
         get_env_var(name=constants.CONFIG_MAP_IN_CLUSTER, value=True),
         get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
+        get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
+                    value=conf.get('HEADERS_INTERNAL').replace('_', '-')),
+        get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
+                    value=service_internal_header),
     ]
 
 
@@ -109,7 +113,8 @@ def get_job_stores_secrets_env_vars(persistence_outputs,
     return env_vars
 
 
-def get_job_env_vars(persistence_outputs,
+def get_job_env_vars(namespace,
+                     persistence_outputs,
                      outputs_path,
                      persistence_data,
                      log_level=None,
@@ -117,16 +122,8 @@ def get_job_env_vars(persistence_outputs,
                      outputs_refs_jobs=None,
                      outputs_refs_experiments=None,
                      ephemeral_token=None):
-    env_vars = [
-        get_env_var(name=API_HTTP_URL, value=get_settings_http_api_url()),
-        get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
-        get_env_var(name=constants.CONFIG_MAP_IN_CLUSTER, value=True),
-        get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
-        get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
-                    value=settings.HEADERS_INTERNAL.replace('_', '-')),
-        get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
-                    value=InternalServices.RUNNER),
-    ]
+    env_vars = get_internal_env_vars(service_internal_header=InternalServices.RUNNER,
+                                     namespace=namespace)
     if log_level:
         env_vars.append(
             get_env_var(name=constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME, value=log_level))
