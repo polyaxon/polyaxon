@@ -49,11 +49,13 @@ class Job(BaseTracker):
                 username=self.username,
                 project_name=self.project_name,
                 job_id=self.job_id)
+            return
         elif self.job_type == 'builds':
             self._data = self.client_backend.get_build(
                 username=self.username,
                 project_name=self.project_name,
                 job_id=self.job_id)
+            return
         raise PolyaxonClientException('Job type {} not supported'.format(self.job_type))
 
     @property
