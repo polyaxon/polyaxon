@@ -3,6 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
+from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
@@ -170,6 +171,7 @@ class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerM
 
 
 class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
+                                 InClusterMixin,
                                  TagsSerializerMixin,
                                  DataRefsSerializerMixin):
     resources = fields.SerializerMethodField()
@@ -227,7 +229,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class ExperimentCreateSerializer(serializers.ModelSerializer):
+class ExperimentCreateSerializer(serializers.ModelSerializer, InClusterMixin):
     user = fields.SerializerMethodField()
 
     class Meta:

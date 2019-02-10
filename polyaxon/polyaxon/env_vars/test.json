@@ -53,6 +53,7 @@
   "POLYAXON_JOB_SIDECAR_DOCKER_IMAGE": "",
   "POLYAXON_JOB_INIT_DOCKER_IMAGE": "",
   "POLYAXON_JOB_DOCKERIZER_IMAGE": "",
+  "POLYAXON_JOB_KANIKO_IMAGE": "",
   "POLYAXON_PERSISTENCE_LOGS": "{\"existingClaim\":\"test-claim-logs\",\"hostPath\":null,\"mountPath\":\"/tmp/plx/logs\"}",
   "POLYAXON_PERSISTENCE_DATA": "{\"data\":{\"mountPath\":\"/tmp/plx/data\",\"existingClaim\":\"test-claim-data\"}}",
   "POLYAXON_PERSISTENCE_OUTPUTS": "{\"outputs\":{\"mountPath\":\"/tmp/plx/outputs\",\"existingClaim\":\"test-claim-outputs\"}}",

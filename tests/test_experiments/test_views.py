@@ -1047,7 +1047,25 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert new_object.description == new_description
         assert new_object.jobs.count() == 2
 
-        # path in_cluter
+        # path in_cluster
+        data = {'in_cluster': False}
+        assert self.object.in_cluster is True
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.jobs.count() == 2
+        assert new_object.in_cluster is False
+
+        # path in_cluster
+        data = {'in_cluster': None}
+        assert self.object.in_cluster is False
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.jobs.count() == 2
+        assert new_object.in_cluster is True
+
+        # path in_cluster
         data = {'in_cluster': False}
         assert self.object.in_cluster is True
         resp = self.auth_client.patch(self.url, data=data)

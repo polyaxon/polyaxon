@@ -2,11 +2,9 @@ import logging
 import traceback
 
 from kubernetes.client.rest import ApiException
-from polyaxon_schemas.utils import BuildBackend
 
 import auditor
 import conf
-
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_image_name
@@ -14,6 +12,7 @@ from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.kaniko_spawner import KanikoSpawner
 from scheduler.spawners.utils import get_job_definition
+from schemas.build_backends import BuildBackend
 from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.dockerizer')
@@ -62,12 +61,20 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
     return build_job, False, build_status
 
 
+def get_default_spawner():
+    if conf.get('DOCKERIZER_BACKEND') == BuildBackend.NATIVE:
+        return DockerizerSpawner
+    elif conf.get('DOCKERIZER_BACKEND') == BuildBackend.KANIKO:
+        return KanikoSpawner
+    return DockerizerSpawner
+
+
 def get_spawner_class(builder):
     if builder == BuildBackend.NATIVE:
         return DockerizerSpawner
     elif builder == BuildBackend.KANIKO:
         return KanikoSpawner
-    return conf.get('DOCKERIZER_BACKEND')
+    return get_default_spawner()
 
 
 def start_dockerizer(build_job):

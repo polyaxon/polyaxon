@@ -12,7 +12,7 @@ from django.utils.functional import cached_property
 from constants.jobs import JobLifeCycle
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.utils import CachedMixin, DiffModel, RunTimeModel
-from polyaxon_schemas.environments import PodResourcesConfig
+from schemas.pod_resources import PodResourcesConfig
 
 _logger = logging.getLogger('polyaxon.db.jobs')
 

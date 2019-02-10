@@ -3,6 +3,7 @@ from typing import Dict
 from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.models.experiments import Experiment
@@ -59,7 +60,7 @@ class BookmarkedBuildJobSerializer(BuildJobSerializer, BookmarkedSerializerMixin
         fields = BuildJobSerializer.Meta.fields + ('bookmarked',)
 
 
-class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, TagsSerializerMixin):
+class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, InClusterMixin, TagsSerializerMixin):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
@@ -99,7 +100,7 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, TagsSerializerMixin
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class BuildJobCreateSerializer(serializers.ModelSerializer):
+class BuildJobCreateSerializer(serializers.ModelSerializer, InClusterMixin):
     user = fields.SerializerMethodField()
 
     class Meta:

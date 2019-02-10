@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
+from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_job_spec_config
@@ -65,7 +66,10 @@ class BookmarkedJobSerializer(JobSerializer, BookmarkedSerializerMixin):
         fields = JobSerializer.Meta.fields + ('bookmarked',)
 
 
-class JobDetailSerializer(BookmarkedJobSerializer, TagsSerializerMixin, DataRefsSerializerMixin):
+class JobDetailSerializer(BookmarkedJobSerializer,
+                          InClusterMixin,
+                          TagsSerializerMixin,
+                          DataRefsSerializerMixin):
     resources = fields.SerializerMethodField()
     merge = fields.BooleanField(write_only=True, required=False)
 
@@ -96,7 +100,7 @@ class JobDetailSerializer(BookmarkedJobSerializer, TagsSerializerMixin, DataRefs
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class JobCreateSerializer(serializers.ModelSerializer):
+class JobCreateSerializer(serializers.ModelSerializer, InClusterMixin):
     user = fields.SerializerMethodField()
 
     class Meta:
