@@ -66,8 +66,9 @@ class DockerizerSpawner(K8SManager):
             project_uuid=self.project_uuid,
             job_name=job_name,
             job_uuid=job_uuid,
-            job_docker_image=job_docker_image,
-            job_docker_image_pull_policy=job_docker_image_pull_policy,
+            job_docker_image=job_docker_image or conf.get('JOB_DOCKERIZER_IMAGE'),
+            job_docker_image_pull_policy=(job_docker_image_pull_policy or
+                                          conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY')),
             job_container_name=job_container_name,
             sidecar_container_name=sidecar_container_name,
             sidecar_docker_image=sidecar_docker_image,

@@ -101,26 +101,29 @@ CONTAINER_NAME_DOCKERIZER_JOB = config.get_string('POLYAXON_CONTAINER_NAME_DOCKE
 JOB_DOCKER_NAME = config.get_string('POLYAXON_JOB_DOCKER_NAME',
                                     is_optional=True,
                                     default='polyaxon/polyaxon-lib')
-DOCKERIZER_BACKEND = config.get_string('POLYAXON_DOCKERIZER_BACKEND',
-                                       is_optional=True,
-                                       default='native')
+
 JOB_SIDECAR_DOCKER_IMAGE = config.get_string('POLYAXON_JOB_SIDECAR_DOCKER_IMAGE')
 JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY = config.get_string(
     'POLYAXON_JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY',
-    is_optional=True)
-JOB_SIDECAR_KANIKO_IMAGE = config.get_string('POLYAXON_JOB_SIDECAR_KANIKO_IMAGE')
-JOB_SIDECAR_KANIKO_IMAGE_PULL_POLICY = config.get_string(
-    'POLYAXON_JOB_SIDECAR_KANIKO_IMAGE_PULL_POLICY',
     is_optional=True)
 
 JOB_INIT_DOCKER_IMAGE = config.get_string('POLYAXON_JOB_INIT_DOCKER_IMAGE')
 JOB_INIT_DOCKER_IMAGE_PULL_POLICY = config.get_string(
     'POLYAXON_JOB_INIT_DOCKER_IMAGE_PULL_POLICY',
     is_optional=True)
+
+DOCKERIZER_BACKEND = config.get_string('POLYAXON_DOCKERIZER_BACKEND',
+                                       is_optional=True,
+                                       default='native')
+JOB_KANIKO_IMAGE = config.get_string('POLYAXON_JOB_KANIKO_IMAGE')
+JOB_KANIKO_IMAGE_PULL_POLICY = config.get_string(
+    'POLYAXON_JOB_KANIKO_IMAGE_PULL_POLICY',
+    is_optional=True)
 JOB_DOCKERIZER_IMAGE = config.get_string('POLYAXON_JOB_DOCKERIZER_IMAGE')
 JOB_DOCKERIZER_IMAGE_PULL_POLICY = config.get_string(
     'POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY',
     is_optional=True,)
+
 TENSORBOARD_DOCKER_IMAGE = config.get_string('POLYAXON_TENSORBOARD_DOCKER_IMAGE',
                                              is_optional=True,
                                              default='tensorflow/tensorflow:1.11.0-py3')

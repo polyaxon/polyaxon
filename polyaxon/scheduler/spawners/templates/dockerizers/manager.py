@@ -54,7 +54,7 @@ class ResourceManager(BaseResourceManager):
                 sidecar_docker_image_pull_policy or
                 conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY')),
             init_container_name=init_container_name or conf.get('CONTAINER_NAME_INIT'),
-            init_docker_image=init_docker_image or conf.get('JOB_DOCKERIZER_IMAGE'),  # CHANGE
+            init_docker_image=init_docker_image or conf.get('JOB_DOCKERIZER_IMAGE'),
             init_docker_image_pull_policy=(
                 init_docker_image_pull_policy or
                 conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY')),
