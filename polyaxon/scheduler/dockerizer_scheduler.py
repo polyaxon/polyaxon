@@ -92,7 +92,7 @@ def start_dockerizer(build_job):
         image_tag=build_job.uuid.hex,
         image_name=get_image_name(
             build_job,
-            local=build_job.specification.build.backend != BuildBackend.KANIKO),
+            local=build_job.specification.build.backend == BuildBackend.NATIVE),
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars,
         nocache=build_job.specification.build.nocache,

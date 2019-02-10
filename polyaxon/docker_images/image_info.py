@@ -38,8 +38,11 @@ def get_notebook_image_info(project: 'Project', job: Any) -> Tuple[str, str]:
     return image_name, LATEST_IMAGE_TAG
 
 
-def get_image_name(build_job: 'BuildJob', local=False) -> str:
-    registry = conf.get('REGISTRY_LOCAL_URI') if local else conf.get('REGISTRY_URI')
+def get_image_name(build_job: 'BuildJob', local=True) -> str:
+    if conf.get('REGISTRY_IN_CLUSTER'):
+        registry = conf.get('REGISTRY_LOCAL_URI') if local else conf.get('REGISTRY_URI')
+    else:
+        registry = conf.get('REGISTRY_URI')
     return '{}/{}_{}'.format(registry,
                              build_job.project.name.lower(),
                              build_job.project.id)
