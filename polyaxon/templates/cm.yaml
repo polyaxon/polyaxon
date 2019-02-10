@@ -218,7 +218,6 @@ data:
   POLYAXON_TENSORBOARD_DOCKER_IMAGE: {{ .Values.tensorboardDockerImage }}
   # Registry
   {{- if (index .Values "docker-registry").enabled }}
-  POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
   POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").service.port | quote }}
   POLYAXON_REGISTRY_NODE_PORT: {{ (index .Values "docker-registry").service.nodePort | quote }}
   {{- else }}
