@@ -121,12 +121,11 @@ class TestBuildConfigs(TestCase):
         assert config.image_tag == 'latest'
         assert config.nocache is True
 
-    def test_build_from_git_repo_with_install_step_config(self):
+    def test_build_repo_with_install_step_config(self):
         config_dict = {
             'image': 'tensorflow:1.3.0',
             'build_steps': ['pip install tensor2tensor'],
             'env_vars': [['LC_ALL', 'en_US.UTF-8']],
-            'git': 'https://github.com/tensorflow/tensor2tensor.git'
         }
         config = BuildConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

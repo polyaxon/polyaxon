@@ -21,7 +21,6 @@ class BuildSchema(BaseSchema):
     build_steps = fields.List(fields.Str(), allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
-    git = fields.Str(allow_none=True)
     ref = fields.Str(allow_none=True)
     nocache = fields.Boolean(allow_none=True)
 
@@ -45,20 +44,18 @@ class BuildConfig(BaseConfig):
             (translate to multiple RUN ...)
         env_vars: list((str, str)) The environment variable to set on you docker image.
         nocache: `bool`. To not use cache when building the image.
-        git: `str`. A url to git code, in case you are not using upload.
         ref: `str`. The commit/branch/treeish to use.
 
     """
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
-    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'git', 'nocache', 'ref']
+    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'nocache', 'ref']
 
-    def __init__(self, image, build_steps=None, env_vars=None, nocache=None, git=None, ref=None):
+    def __init__(self, image, build_steps=None, env_vars=None, nocache=None, ref=None):
         validate_image(image)
         self.image = image
         self.build_steps = build_steps
         self.env_vars = env_vars
-        self.git = git
         self.nocache = nocache
         self.ref = ref
 
