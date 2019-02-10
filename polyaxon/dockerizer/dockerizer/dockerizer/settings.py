@@ -27,10 +27,6 @@ config = rhea.Rhea.read_configs(config_values)
 
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
 MOUNT_PATHS_NVIDIA = config.get_dict('POLYAXON_MOUNT_PATHS_NVIDIA', is_optional=True)
-REPO_COMMIT = config.get_string('POLYAXON_REPO_COMMIT', is_optional=True)
-CONTAINER_FROM_IMAGE = config.get_string('POLYAXON_CONTAINER_FROM_IMAGE')
-CONTAINER_IMAGE_TAG = config.get_string('POLYAXON_CONTAINER_IMAGE_TAG')
-CONTAINER_IMAGE_NAME = config.get_string('POLYAXON_CONTAINER_IMAGE_NAME')
 
 CONTAINER_BUILD_STEPS = config.get_string('POLYAXON_CONTAINER_BUILD_STEPS', is_optional=True)
 if CONTAINER_BUILD_STEPS:
@@ -39,10 +35,6 @@ if CONTAINER_BUILD_STEPS:
 CONTAINER_ENV_VARS = config.get_string('POLYAXON_CONTAINER_ENV_VARS', is_optional=True)
 if CONTAINER_ENV_VARS:
     CONTAINER_ENV_VARS = json.loads(CONTAINER_ENV_VARS)
-
-CONTAINER_NO_CACHE = config.get_boolean('POLYAXON_CONTAINER_NOCACHE',
-                                        is_optional=True,
-                                        default=False)
 
 REGISTRY_USER = config.get_string('POLYAXON_REGISTRY_USER', is_optional=True)
 REGISTRY_PASSWORD = config.get_string('POLYAXON_REGISTRY_PASSWORD', is_optional=True)

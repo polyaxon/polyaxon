@@ -1,9 +1,8 @@
 import json
 import logging
 import os
-import stat
 
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Tuple
 
 from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
@@ -19,21 +18,17 @@ class DockerBuilder(object):
     WORKDIR = '/code'
 
     def __init__(self,
-                 repo_path: str,
-                 from_image: str,
+                 build_context: str,
                  image_name: str,
                  image_tag: str,
                  copy_code: bool = True,
                  dockerfile_name: str = 'Dockerfile') -> None:
-        self.from_image = from_image
         self.image_name = image_name
         self.image_tag = image_tag
-        self.folder_name = repo_path.split('/')[-1]
-        self.repo_path = repo_path
         self.copy_code = copy_code
 
-        self.build_path = '/'.join(self.repo_path.split('/')[:-1])
-        self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
+        self.build_context = build_context
+        self.dockerfile_path = os.path.join(self.build_context, dockerfile_name)
         self.docker = APIClient(version='auto')
         self.registry_host = None
         self.docker_url = None
@@ -120,27 +115,7 @@ class DockerBuilder(object):
 
         return status
 
-    def _get_setup_path(self) -> Optional[str]:
-        def get_setup(setup_file):
-            setup_file_path = os.path.join(self.repo_path, setup_file)
-            has_setup = os.path.isfile(setup_file_path)
-            if has_setup:
-                st = os.stat(setup_file_path)
-                os.chmod(setup_file_path, st.st_mode | stat.S_IEXEC)
-                return os.path.join(self.folder_name, setup_file)
-
-        setup_file = get_setup('polyaxon_setup.sh')
-        if setup_file:
-            return setup_file
-
-        setup_file = get_setup('setup.sh')
-        if setup_file:
-            return setup_file
-        return None
-
     def build(self, nocache: bool = False, memory_limit: Any = None) -> bool:
-        _logger.debug('Starting build for `%s`', self.repo_path)
-
         limits = {
             # Disable memory swap for building
             'memswap': -1
@@ -149,7 +124,7 @@ class DockerBuilder(object):
             limits['memory'] = memory_limit
 
         stream = self.docker.build(
-            path=self.build_path,
+            path=self.build_context,
             tag=self.get_tagged_image(),
             forcerm=True,
             rm=True,
@@ -164,17 +139,16 @@ class DockerBuilder(object):
 
 
 def build(job,
+          build_context: str,
           image_tag: str,
-          build_path: str,
-          from_image: str,
-          image_name: str) -> bool:
+          image_name: str,
+          nocache: bool) -> bool:
     """Build necessary code for a job to run"""
     _logger.info('Starting build ...')
 
     # Build the image
     docker_builder = DockerBuilder(
-        repo_path=build_path,
-        from_image=from_image,
+        build_context=build_context,
         image_name=image_name,
         image_tag=image_tag)
     docker_builder.login_internal_registry()
@@ -183,7 +157,7 @@ def build(job,
         # Image already built
         docker_builder.clean()
         return True
-    if not docker_builder.build(nocache=settings.CONTAINER_NO_CACHE):
+    if not docker_builder.build(nocache=nocache):
         docker_builder.clean()
         return False
     if not docker_builder.push():

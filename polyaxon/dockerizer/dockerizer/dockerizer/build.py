@@ -2,19 +2,18 @@ import traceback
 
 from docker.errors import DockerException
 
-from . import constants, settings
 from .builders import native
 
 
-def cmd(job: 'Job', build_path: str = constants.BUILD_PATH):
+def cmd(job: 'Job', build_context: str, image_name: str, image_tag: str, nocache: bool):
     # Building the docker image
     error = {}
     try:
         status = native.build(job=job,
-                              build_path=build_path,
-                              image_tag=settings.CONTAINER_IMAGE_TAG,
-                              from_image=settings.CONTAINER_FROM_IMAGE,
-                              image_name=settings.CONTAINER_IMAGE_NAME)
+                              build_context=build_context,
+                              image_name=image_name,
+                              image_tag=image_tag,
+                              nocache=nocache)
         if not status:
             error = {
                 'raised': True,

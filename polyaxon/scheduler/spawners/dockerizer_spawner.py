@@ -10,6 +10,8 @@ from libs.unique_urls import get_build_health_url
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
+
+from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
@@ -84,13 +86,8 @@ class DockerizerSpawner(K8SManager):
                                          authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
         # Add containers env vars
         env_vars += [
-            get_env_var(name='POLYAXON_REPO_COMMIT', value=self.commit),
-            get_env_var(name='POLYAXON_CONTAINER_FROM_IMAGE', value=self.from_image),
-            get_env_var(name='POLYAXON_CONTAINER_IMAGE_TAG', value=self.image_tag),
-            get_env_var(name='POLYAXON_CONTAINER_IMAGE_NAME', value=self.image_name),
             get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),
             get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
-            get_env_var(name='POLYAXON_CONTAINER_NOCACHE', value=self.nocache),
             get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get('MOUNT_PATHS_NVIDIA')),
         ]
         if conf.get('REGISTRY_PASSWORD') and conf.get('REGISTRY_USER'):
@@ -108,10 +105,19 @@ class DockerizerSpawner(K8SManager):
         return env_vars
 
     def get_pod_command_args(self):
-        return ["python3", "dockerizer/__main__.py"], ["--cmd=build"]
+        return (["python3", "dockerizer/build_cmd.py"],
+                ["--build_context={}".format(constants.BUILD_CONTEXT),
+                 "--image_name={}".format(self.image_name),
+                 "--image_tag={}".format(self.image_tag),
+                 "--nocache={}".format(self.nocache)])
 
     def get_init_command_args(self):
-        return ["python3", "dockerizer/__main__.py"], ["--cmd=init"]
+        return (["python3", "dockerizer/init_cmd.py"],
+                ["--build_context={}".format(constants.BUILD_CONTEXT),
+                 "--image_name={}".format(self.image_name),
+                 "--image_tag={}".format(self.image_tag),
+                 "--from_image={}".format(self.from_image),
+                 "--commit={}".format(self.commit if self.commit else '')])
 
     def start_dockerizer(self,
                          resources=None,
