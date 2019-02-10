@@ -1,5 +1,5 @@
 ---
-title: "Azure storage for data"
+title: "Data on Azure storage"
 meta_description: "Using data on Azure storage in your Polyaxon experiments and jobs."
 custom_excerpt: "Polyaxon allows users to connect to one or multiple blobs on Azure storage to access data directly on you machine learning experiments."
 image: "../../content/images/integrations/azure-storage.png"

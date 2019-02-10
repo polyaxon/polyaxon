@@ -1,5 +1,5 @@
 ---
-title: "GCS for outputs"
+title: "Outputs on GCS"
 meta_description: "Using  Google Cloud Storage GCS buckets to organize your jobs outputs and experiment artifacts."
 custom_excerpt: "Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage GCS to store job outputs and experiment artifacts."
 image: "../../content/images/integrations/gcs.png"

@@ -1,5 +1,5 @@
 ---
-title: "Azure storage for outputs"
+title: "Outputs on Azure storage"
 meta_description: "Using Azure storage to organize your jobs outputs and experiment artifacts."
 custom_excerpt: "Polyaxon allows users to connect to one or multiple blobs on Azure storage to store job outputs and experiment artifacts."
 image: "../../content/images/integrations/azure-storage.png"
