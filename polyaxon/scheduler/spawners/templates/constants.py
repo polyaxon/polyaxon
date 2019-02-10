@@ -23,6 +23,7 @@ SECRET_EPHEMERAL_TOKEN = 'POLYAXON_SECRET_EPHEMERAL_TOKEN'  # noqa, secret
 
 REPOS_VOLUME = 'repos'
 DOCKER_VOLUME = 'docker'
+DOCKER_MOUNT_PATHS = '/var/run/docker.sock'
 BUILD_CONTEXT_VOLUME = 'build'
 SHM_VOLUME = 'shm'
 BUILD_CONTEXT = '/plx-build'

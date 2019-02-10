@@ -104,9 +104,10 @@ def get_pod_volumes(persistence_outputs, persistence_data):
 
 
 def get_docker_volumes():
-    volumes = [get_volume(volume=constants.DOCKER_VOLUME, host_path=conf.get('MOUNT_PATHS_DOCKER'))]
+    volumes = [get_volume(volume=constants.DOCKER_VOLUME,
+                          host_path=constants.DOCKER_MOUNT_PATHS)]
     volume_mounts = [get_volume_mount(volume=constants.DOCKER_VOLUME,
-                                      volume_mount=conf.get('MOUNT_PATHS_DOCKER'))]
+                                      volume_mount=constants.DOCKER_MOUNT_PATHS)]
     return volumes, volume_mounts
 
 

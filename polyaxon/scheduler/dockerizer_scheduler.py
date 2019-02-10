@@ -17,13 +17,6 @@ from stores.exceptions import VolumeNotFoundError
 _logger = logging.getLogger('polyaxon.scheduler.dockerizer')
 
 
-def check_image(build_job):
-    from docker import APIClient
-
-    docker = APIClient(version='auto')
-    return docker.images(get_tagged_image(build_job))
-
-
 def create_build_job(user, project, config, code_reference, configmap_refs=None, secret_refs=None):
     """Get or Create a build job based on the params.
 
@@ -42,11 +35,6 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
         secret_refs=secret_refs)
 
     if build_job.succeeded and not rebuild:
-        # Check if image was built in less than an 6 hours
-        return build_job, True, False
-
-    if check_image(build_job=build_job):
-        # Check if image exists already
         return build_job, True, False
 
     if build_job.is_done:
