@@ -2,6 +2,7 @@ import logging
 import traceback
 
 from kubernetes.client.rest import ApiException
+from polyaxon_schemas.utils import BuildBackend
 
 import auditor
 import conf
@@ -62,11 +63,11 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
 
 
 def get_spawner_class(builder):
-    if builder == 'native':
+    if builder == BuildBackend.NATIVE:
         return DockerizerSpawner
-    elif builder == 'kaniko':
+    elif builder == BuildBackend.KANIKO:
         return KanikoSpawner
-    return DockerizerSpawner
+    return conf.get('DOCKERIZER_BACKEND')
 
 
 def start_dockerizer(build_job):
