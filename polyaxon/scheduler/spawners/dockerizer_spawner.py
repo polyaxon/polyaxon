@@ -105,11 +105,12 @@ class DockerizerSpawner(K8SManager):
         return env_vars
 
     def get_pod_command_args(self):
-        return (["python3", "dockerizer/build_cmd.py"],
-                ["--build_context={}".format(constants.BUILD_CONTEXT),
-                 "--image_name={}".format(self.image_name),
-                 "--image_tag={}".format(self.image_tag),
-                 "--nocache={}".format(self.nocache)])
+        args = ["--build_context={}".format(constants.BUILD_CONTEXT),
+                "--image_name={}".format(self.image_name),
+                "--image_tag={}".format(self.image_tag)]
+        if self.nocache:
+            args.append("--nocache")
+        return ["python3", "dockerizer/build_cmd.py"], args
 
     def get_init_command_args(self):
         return (["python3", "dockerizer/init_cmd.py"],

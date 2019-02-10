@@ -21,8 +21,10 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--nocache',
-        type=bool,
+        dest='nocache',
+        action='store_true'
     )
+    parser.set_defaults(nocache=False)
     args = parser.parse_args()
     arguments = args.__dict__
 
