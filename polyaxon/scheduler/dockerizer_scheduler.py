@@ -8,9 +8,10 @@ import conf
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
-from docker_images.image_info import get_image_name, get_tagged_image
+from docker_images.image_info import get_image_name
 from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
+from scheduler.spawners.kaniko_spawner import KanikoSpawner
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
 
@@ -60,11 +61,20 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
     return build_job, False, build_status
 
 
+def get_spawner_class(builder):
+    if builder == 'native':
+        return DockerizerSpawner
+    elif builder == 'kaniko':
+        return KanikoSpawner
+    return DockerizerSpawner
+
+
 def start_dockerizer(build_job):
     # Update job status to show that its started
     build_job.set_status(JobLifeCycle.SCHEDULED)
+    spawner_class = get_spawner_class('native')  # TODO
 
-    spawner = DockerizerSpawner(
+    spawner = spawner_class(
         project_name=build_job.project.unique_name,
         project_uuid=build_job.project.uuid.hex,
         job_name=build_job.unique_name,
@@ -72,7 +82,7 @@ def start_dockerizer(build_job):
         commit=build_job.code_reference.commit,
         from_image=build_job.image,
         image_tag=build_job.uuid.hex,
-        image_name=get_image_name(build_job),
+        image_name=get_image_name(build_job, local=True),
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars,
         nocache=build_job.specification.build.nocache,

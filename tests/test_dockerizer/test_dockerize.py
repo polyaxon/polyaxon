@@ -6,7 +6,7 @@ import pytest
 
 import conf
 
-from dockerizer.dockerizer.dockerizer.initializer.generate import DockerFileGenerator
+from dockerizer.dockerizer.initializer.generate import DockerFileGenerator
 from factories.factory_build_jobs import BuildJobFactory
 from tests.utils import BaseTest
 
@@ -21,8 +21,6 @@ class TestDockerize(BaseTest):
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
-                                      image_tag=build_job.uuid.hex,
-                                      image_name='foo',
                                       build_steps=build_job.build_steps,
                                       env_vars=build_job.env_vars)
         assert builder.polyaxon_requirements_path is None
@@ -35,8 +33,6 @@ class TestDockerize(BaseTest):
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
-                                      image_tag=build_job.uuid.hex,
-                                      image_name='foo',
                                       build_steps=build_job.build_steps,
                                       env_vars=build_job.env_vars)
         assert builder.polyaxon_requirements_path == 'repo/polyaxon_requirements.txt'
@@ -53,8 +49,6 @@ class TestDockerize(BaseTest):
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
-                                      image_tag=build_job.uuid.hex,
-                                      image_name='foo',
                                       build_steps=build_job.build_steps,
                                       env_vars=build_job.env_vars)
         assert builder.polyaxon_requirements_path == 'repo/requirements.txt'
@@ -86,8 +80,6 @@ class TestDockerize(BaseTest):
         # Add env vars
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
-                                      image_tag=build_job.uuid.hex,
-                                      image_name='foo',
                                       build_steps=build_job.build_steps,
                                       env_vars=[('BLA', 'BLA')])
 
@@ -106,8 +98,6 @@ class TestDockerize(BaseTest):
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
-                                      image_tag=build_job.uuid.hex,
-                                      image_name='foo',
                                       env_vars=build_job.env_vars,
                                       build_steps=build_steps)
 

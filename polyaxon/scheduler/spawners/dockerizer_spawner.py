@@ -84,16 +84,10 @@ class DockerizerSpawner(K8SManager):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
                                          namespace=self.namespace,
                                          authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
-        # Add containers env vars
-        env_vars += [
-            get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),
-            get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
-            get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get('MOUNT_PATHS_NVIDIA')),
-        ]
         if conf.get('REGISTRY_PASSWORD') and conf.get('REGISTRY_USER'):
             env_vars += [
                 get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get('REGISTRY_USER')),
-                get_env_var(name='POLYAXON_REGISTRY_HOST', value=conf.get('REGISTRY_HOST')),
+                get_env_var(name='POLYAXON_REGISTRY_URI', value=conf.get('REGISTRY_LOCAL_URI')),
                 get_from_secret('POLYAXON_REGISTRY_PASSWORD',
                                 'registry-password',
                                 settings.POLYAXON_K8S_REGISTRY_SECRET_NAME),
@@ -102,6 +96,18 @@ class DockerizerSpawner(K8SManager):
         for key in config.keys_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
             env_vars.append(get_from_secret(key, key))
 
+        return env_vars
+
+    def get_init_env_vars(self):
+        env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
+                                         namespace=self.namespace,
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
+        # Add containers env vars
+        env_vars += [
+            get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),
+            get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
+            get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get('MOUNT_PATHS_NVIDIA')),
+        ]
         return env_vars
 
     def get_pod_command_args(self):
@@ -115,8 +121,6 @@ class DockerizerSpawner(K8SManager):
     def get_init_command_args(self):
         return (["python3", "dockerizer/init_cmd.py"],
                 ["--build_context={}".format(constants.BUILD_CONTEXT),
-                 "--image_name={}".format(self.image_name),
-                 "--image_tag={}".format(self.image_tag),
                  "--from_image={}".format(self.from_image),
                  "--commit={}".format(self.commit if self.commit else '')])
 
@@ -129,7 +133,6 @@ class DockerizerSpawner(K8SManager):
         context_volumes, context_mounts = get_build_context_volumes()
         volumes += context_volumes
         volume_mounts += context_mounts
-        env_vars = self.get_env_vars()
 
         resource_name = self.resource_manager.get_resource_name()
         command, args = self.get_pod_command_args()
@@ -139,12 +142,12 @@ class DockerizerSpawner(K8SManager):
             volume_mounts=volume_mounts,
             volumes=volumes,
             labels=self.resource_manager.labels,
-            env_vars=env_vars,
+            env_vars=self.get_env_vars(),
             command=command,
             args=args,
             init_command=init_command,
             init_args=init_args,
-            init_env_vars=env_vars,
+            init_env_vars=self.get_init_env_vars(),
             persistence_outputs=None,
             persistence_data=None,
             outputs_refs_jobs=None,
