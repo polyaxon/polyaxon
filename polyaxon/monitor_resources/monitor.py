@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Mapping, Optional
 
 import docker
 
-from docker.errors import NotFound
+from docker.errors import NotFound, DockerException
 
 import conf
 import polyaxon_gpustat
@@ -20,7 +20,10 @@ from schemas.containers import ContainerResourcesConfig
 
 logger = logging.getLogger('polyaxon.monitors.resources')
 
-docker_client = docker.from_env(version="auto", timeout=10)
+try:
+    docker_client = docker.from_env(version="auto", timeout=10)
+except DockerException:
+    docker_client = None
 
 
 def get_gpu_resources() -> Any:
@@ -41,6 +44,8 @@ def get_container_gpu_indices(container: Any) -> List[int]:
 
 
 def get_container(containers: Dict, container_id: str) -> Any:
+    if not docker_client:
+        return None
     try:  # we check first that the container is visible in this node
         container = docker_client.containers.get(container_id)
     except NotFound:
