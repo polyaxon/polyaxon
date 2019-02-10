@@ -183,9 +183,6 @@ Volumes
 Dirs
 */}}
 {{- define "volumes.dirs" -}}
-- name: docker
-  hostPath:
-    path: {{ .Values.dirs.docker | quote }}
 {{- if and .Values.dirs.nvidia.lib .Values.dirs.nvidia.bin .Values.dirs.nvidia.libcuda }}
 - name: nvidia-lib
   hostPath:
@@ -204,8 +201,6 @@ Dirs
 Dir mounts
 */}}
 {{- define "volumes.dirMounts" -}}
-- name: docker
-  mountPath: {{ .Values.mountPaths.docker }}
 {{- if and .Values.dirs.nvidia.lib .Values.dirs.nvidia.bin .Values.dirs.nvidia.libcuda }}
 - name: nvidia-lib
 {{- if .Values.mountPaths.nvidia.lib }}

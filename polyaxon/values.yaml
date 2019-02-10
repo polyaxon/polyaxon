@@ -49,7 +49,6 @@ dirs:
     lib: ""  # e.g. "/usr/lib/nvidia-384"
     bin: ""  # e.g. "/usr/lib/nvidia-384/bin"
     libcuda: ""  # e.g. "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
-  docker: "/var/run/docker.sock"
 
 secretRefs:  # e.g. ['secret1', 'secret2', ...]
 configmapRefs:  # e.g. ['cm1', 'cm2', ...]

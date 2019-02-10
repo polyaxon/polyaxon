@@ -71,13 +71,7 @@ data:
   POLYAXON_REFS_SECRETS: {{ toJson .Values.secretRefs | quote }}
   POLYAXON_REFS_CONFIG_MAPS: {{ toJson .Values.configmapRefs | quote }}
   # Dirs
-  POLYAXON_DIRS_DOCKER: {{ .Values.dirs.docker | quote }}
   POLYAXON_DIRS_NVIDIA: {{ toJson .Values.dirs.nvidia | quote }}
-  {{- if .Values.mountPaths.docker }}
-  POLYAXON_MOUNT_PATHS_DOCKER: {{ .Values.mountPaths.docker | quote }}
-  {{- else }}
-  POLYAXON_MOUNT_PATHS_DOCKER: {{ .Values.dirs.docker | quote }}
-  {{- end }}
   {{- if and .Values.mountPaths.nvidia.lib .Values.mountPaths.nvidia.bin .Values.mountPaths.nvidia.libcuda }}
   POLYAXON_MOUNT_PATHS_NVIDIA: {{ toJson .Values.mountPaths.nvidia | quote }}
   LD_LIBRARY_PATH: "{{ .Values.mountPaths.nvidia.lib }}:{{ .Values.mountPaths.nvidia.libcuda }}"
