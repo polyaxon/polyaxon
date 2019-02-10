@@ -8,7 +8,7 @@ from docker import APIClient
 from docker.errors import APIError, BuildError, DockerException
 from hestia.logging_utils import LogLevels
 
-from .. import settings
+from . import settings
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -30,8 +30,6 @@ class DockerBuilder(object):
         self.build_context = build_context
         self.dockerfile_path = os.path.join(self.build_context, dockerfile_name)
         self.docker = APIClient(version='auto')
-        self.registry_host = None
-        self.docker_url = None
         self.is_pushing = False
 
     def get_tagged_image(self) -> str:
@@ -47,7 +45,7 @@ class DockerBuilder(object):
         try:
             self.docker.login(username=settings.REGISTRY_USER,
                               password=settings.REGISTRY_PASSWORD,
-                              registry=settings.REGISTRY_HOST,
+                              registry=settings.REGISTRY_URI,
                               reauth=True)
         except DockerException as e:
             _logger.exception('Failed to connect to registry %s\n', e)

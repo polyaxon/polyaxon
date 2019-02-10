@@ -2,7 +2,7 @@ import argparse
 
 from polyaxon_client.tracking import BuildJob
 
-from dockerizer.build import cmd
+from builders.build import cmd
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

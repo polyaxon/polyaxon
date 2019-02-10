@@ -20,16 +20,12 @@ class DockerFileGenerator(object):
     def __init__(self,
                  repo_path: str,
                  from_image: str,
-                 image_name: str,
-                 image_tag: str,
                  copy_code: bool = True,
                  build_steps: Optional[List[str]] = None,
                  env_vars: Optional[List[Tuple[str, str]]] = None,
                  nvidia_bin: str = None,
                  dockerfile_name: str = 'Dockerfile') -> None:
         self.from_image = from_image
-        self.image_name = image_name
-        self.image_tag = image_tag
         self.folder_name = repo_path.split('/')[-1]
         self.repo_path = repo_path
         self.copy_code = copy_code
@@ -41,12 +37,7 @@ class DockerFileGenerator(object):
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()
-        self.registry_host = None
-        self.docker_url = None
         self.is_pushing = False
-
-    def get_tagged_image(self) -> str:
-        return '{}:{}'.format(self.image_name, self.image_tag)
 
     def clean(self) -> None:
         # Clean dockerfile
@@ -101,10 +92,8 @@ class DockerFileGenerator(object):
 
 
 def generate(job,
-             image_tag: str,
              build_path: str,
              from_image: str,
-             image_name: str,
              build_steps: Optional[List[str]] = None,
              env_vars: Optional[List[Tuple[str, str]]] = None,
              nvidia_bin: str = None) -> bool:
@@ -114,8 +103,6 @@ def generate(job,
     dockerfile_generator = DockerFileGenerator(
         repo_path=build_path,
         from_image=from_image,
-        image_name=image_name,
-        image_tag=image_tag,
         build_steps=build_steps,
         env_vars=env_vars,
         nvidia_bin=nvidia_bin)

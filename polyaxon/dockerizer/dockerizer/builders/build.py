@@ -2,7 +2,7 @@ import traceback
 
 from docker.errors import DockerException
 
-from .builders import native
+from . import native
 
 
 def cmd(job: 'Job', build_context: str, image_name: str, image_tag: str, nocache: bool):
