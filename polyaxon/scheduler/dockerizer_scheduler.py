@@ -73,7 +73,7 @@ def get_spawner_class(builder):
 def start_dockerizer(build_job):
     # Update job status to show that its started
     build_job.set_status(JobLifeCycle.SCHEDULED)
-    spawner_class = get_spawner_class('native')  # TODO
+    spawner_class = get_spawner_class(build_job.specification.build.backend)
 
     spawner = spawner_class(
         project_name=build_job.project.unique_name,
@@ -83,7 +83,9 @@ def start_dockerizer(build_job):
         commit=build_job.code_reference.commit,
         from_image=build_job.image,
         image_tag=build_job.uuid.hex,
-        image_name=get_image_name(build_job, local=True),
+        image_name=get_image_name(
+            build_job,
+            local=build_job.specification.build.backend != BuildBackend.KANIKO),
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars,
         nocache=build_job.specification.build.nocache,
