@@ -8141,12 +8141,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -8345,11 +8340,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -9212,12 +9202,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -9416,11 +9401,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -10290,12 +10270,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -10494,11 +10469,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -11368,12 +11338,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -11572,11 +11537,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -12446,12 +12406,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -12650,11 +12605,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -13524,12 +13474,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -13728,11 +13673,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -14602,12 +14542,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -14806,11 +14741,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -15680,12 +15610,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -15884,11 +15809,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -16758,12 +16678,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -16962,11 +16877,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -17836,12 +17746,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -18040,11 +17945,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -18914,12 +18814,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -19118,11 +19013,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -19992,12 +19882,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -20196,11 +20081,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -21070,12 +20950,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -21274,11 +21149,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -22148,12 +22018,7 @@
                                     "value_from": null,
                                     "value": "smtp"
                                 },
-                                {
-                                    "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
-                                },
-                                {
+                               {
                                     "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                     "value_from": null,
                                     "value": "0.1.1"
@@ -22352,11 +22217,6 @@
                                     "name": "POLYAXON_CLI_LATEST_VERSION",
                                     "value_from": null,
                                     "value": "0.1.8"
-                                },
-                                {
-                                    "name": "POLYAXON_DIRS_DOCKER",
-                                    "value_from": null,
-                                    "value": "/var/run/docker.sock"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_HP",
@@ -32228,11 +32088,6 @@
                                 "value": "smtp"
                             },
                             {
-                                "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                "value_from": null,
-                                "value": "/var/run/docker.sock"
-                            },
-                            {
                                 "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                 "value_from": null,
                                 "value": "0.1.1"
@@ -33260,11 +33115,6 @@
                                 "value": "smtp"
                             },
                             {
-                                "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                "value_from": null,
-                                "value": "/var/run/docker.sock"
-                            },
-                            {
                                 "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                 "value_from": null,
                                 "value": "0.1.1"
@@ -34290,11 +34140,6 @@
                                 "name": "POLYAXON_EMAIL_HOST",
                                 "value_from": null,
                                 "value": "smtp"
-                            },
-                            {
-                                "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                "value_from": null,
-                                "value": "/var/run/docker.sock"
                             },
                             {
                                 "name": "POLYAXON_PLATFORM_MIN_VERSION",
@@ -35370,11 +35215,6 @@
                                 "name": "POLYAXON_EMAIL_HOST",
                                 "value_from": null,
                                 "value": "smtp"
-                            },
-                            {
-                                "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                "value_from": null,
-                                "value": "/var/run/docker.sock"
                             },
                             {
                                 "name": "POLYAXON_PLATFORM_MIN_VERSION",
@@ -37904,11 +37744,6 @@
                                 "value": "smtp"
                             },
                             {
-                                "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                "value_from": null,
-                                "value": "/var/run/docker.sock"
-                            },
-                            {
                                 "name": "POLYAXON_PLATFORM_MIN_VERSION",
                                 "value_from": null,
                                 "value": "0.1.1"
@@ -38747,11 +38582,6 @@
                                 "name": "POLYAXON_EMAIL_HOST",
                                 "value_from": null,
                                 "value": "smtp"
-                            },
-                            {
-                                "name": "POLYAXON_MOUNT_PATHS_DOCKER",
-                                "value_from": null,
-                                "value": "/var/run/docker.sock"
                             },
                             {
                                 "name": "POLYAXON_PLATFORM_MIN_VERSION",
