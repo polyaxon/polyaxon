@@ -25,14 +25,13 @@ You can use code from your GitHub repositories directly in Polyaxon projects wit
 having to check them out on your local machine first. 
 
 N.B. Polyaxon supports public and private GitHub repos, you don't need to have a GitHub account
-to use code from public GitHub repositories. e.g.
+to use code from public GitHub repositories. e.g. `https://github.com/polyaxon/polyaxon-quick-start`
 
 ```yaml
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip3 install --no-cache -U polyaxon-client
-  git: https://github.com/polyaxon/polyaxon-quick-start
   ref: 4b798d5663e336bc6a5e1021bd84174e0303ef4a
 ```
 
