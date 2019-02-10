@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.utils import BuildBackend
 
 
 def validate_image(image):
@@ -16,7 +17,13 @@ def validate_image(image):
         raise ValidationError('Invalid docker image `{}`'.format(image))
 
 
+def validate_backend(backend):
+    if backend and backend not in BuildBackend.VALUES:
+        raise ValidationError('Build backend `{}` not supported'.format(backend))
+
+
 class BuildSchema(BaseSchema):
+    backend = fields.Str(allow_none=True)
     image = fields.Str()
     build_steps = fields.List(fields.Str(), allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
@@ -32,6 +39,11 @@ class BuildSchema(BaseSchema):
     def validate_image(self, data):
         """Validates docker image structure"""
         validate_image(data.get('image'))
+
+    @validates_schema
+    def validate_backend(self, data):
+        """Validate backend"""
+        validate_backend(data.get('backend'))
 
 
 class BuildConfig(BaseConfig):
@@ -49,10 +61,18 @@ class BuildConfig(BaseConfig):
     """
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
-    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'nocache', 'ref']
+    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'nocache', 'ref', 'backend']
 
-    def __init__(self, image, build_steps=None, env_vars=None, nocache=None, ref=None):
+    def __init__(self,
+                 image,
+                 backend=None,
+                 build_steps=None,
+                 env_vars=None,
+                 nocache=None,
+                 ref=None):
         validate_image(image)
+        validate_backend(backend)
+        self.backend = backend
         self.image = image
         self.build_steps = build_steps
         self.env_vars = env_vars

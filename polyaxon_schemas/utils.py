@@ -554,6 +554,13 @@ class TaskType(object):
     VALUES = [MASTER, PS, WORKER, SERVER, SCHEDULER]
 
 
+class BuildBackend(object):
+    NATIVE = 'native'
+    KANIKO = 'kaniko'
+
+    VALUES = [NATIVE, KANIKO]
+
+
 class Frameworks(object):
     TENSORFLOW = 'tensorflow'
     MXNET = 'mxnet'

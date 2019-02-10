@@ -6,6 +6,7 @@ from unittest import TestCase
 from marshmallow import ValidationError
 
 from polyaxon_schemas.build import BuildConfig
+from polyaxon_schemas.utils import BuildBackend
 
 
 class TestBuildConfigs(TestCase):
@@ -130,3 +131,15 @@ class TestBuildConfigs(TestCase):
         config = BuildConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.image_tag == '1.3.0'
+
+    def test_build_with_kaniko(self):
+        config_dict = {
+            'image': 'tensorflow:1.3.0',
+            'build_steps': ['pip install tensor2tensor'],
+            'env_vars': [['LC_ALL', 'en_US.UTF-8']],
+            'backend': BuildBackend.KANIKO
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag == '1.3.0'
+        assert config.backend == BuildBackend.KANIKO
