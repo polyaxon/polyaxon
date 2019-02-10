@@ -127,8 +127,8 @@ class StoresService(Service):
         if persistence_type_condition:
             raise VolumeNotFoundError('Logs volume does not define a mountPath or bucket.')
 
-        return (conf.get('PERSISTENCE_LOGS').get('mountPath') or
-                conf.get('PERSISTENCE_LOGS').get('bucket'))
+        return (conf.get('PERSISTENCE_LOGS').get('bucket') or
+                conf.get('PERSISTENCE_LOGS').get('mountPath'))
 
     @classmethod
     def delete_logs_path(cls, subpath, persistence='default'):
