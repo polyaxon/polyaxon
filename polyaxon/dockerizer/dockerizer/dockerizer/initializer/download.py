@@ -13,8 +13,8 @@ def download(job: 'Job', build_path: str, filename: str):
     filename = '{}/{}'.format(build_path, filename)
 
     repo_file = job.client.project.download_repo(
-        username=job.user,
-        project_name=job.project,
+        username=job.username,
+        project_name=job.project_name,
         commit=settings.REPO_COMMIT,
         filename=filename,
         untar=True,
