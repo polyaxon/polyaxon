@@ -108,10 +108,10 @@ class DockerizerSpawner(K8SManager):
         return env_vars
 
     def get_pod_command_args(self):
-        return ["/bin/bash", "-c"], ["while true; do echo hello; sleep 10;done"]
+        return ["python3", "dockerizer/__main__.py"], ["--cmd=build"]
 
     def get_init_command_args(self):
-        return ["/bin/bash", "-c"], ["echo init"]
+        return ["python3", "dockerizer/__main__.py"], ["--cmd=init"]
 
     def start_dockerizer(self,
                          resources=None,

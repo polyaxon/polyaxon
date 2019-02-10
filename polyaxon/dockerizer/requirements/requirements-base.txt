@@ -1,1 +1,3 @@
+docker==3.5.1
+Jinja2==2.10
 Unipath==1.1
