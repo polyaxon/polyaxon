@@ -46,10 +46,8 @@ class ResourceManager(BaseResourceManager):
             project_name=project_name,
             project_uuid=project_uuid,
             job_container_name=job_container_name or conf.get('CONTAINER_NAME_DOCKERIZER_JOB'),
-            job_docker_image=job_docker_image or conf.get('JOB_DOCKERIZER_IMAGE'),
-            job_docker_image_pull_policy=(
-                job_docker_image_pull_policy or
-                conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY')),
+            job_docker_image=job_docker_image,
+            job_docker_image_pull_policy=job_docker_image_pull_policy,
             sidecar_container_name=sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR'),
             sidecar_docker_image=sidecar_docker_image or conf.get('JOB_SIDECAR_DOCKER_IMAGE'),
             sidecar_docker_image_pull_policy=(
