@@ -118,13 +118,19 @@ class TestGCSStore(TestCase):
         test_bucket = 'test_bucket'
         test_object = 'test_object'
 
+        # Correct file
         bucket = mock.MagicMock()
         client.return_value.get_bucket.return_value = bucket
         bucket.delete_blob.return_value = True
 
-        response = GCSStore().delete(key=test_object, bucket_name=test_bucket)
+        GCSStore().delete(key=test_object, bucket_name=test_bucket)
 
-        assert response is True
+        # Wrong file
+        bucket = mock.MagicMock()
+        client.return_value.get_bucket.return_value = bucket
+        bucket.delete_blob.return_value = True
+
+        GCSStore().delete(key=test_object, bucket_name=test_bucket)
 
     @mock.patch(GCS_MODULE.format('get_gc_credentials'))
     @mock.patch(GCS_MODULE.format('Client'))

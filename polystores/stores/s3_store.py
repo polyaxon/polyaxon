@@ -358,12 +358,6 @@ class S3Store(BaseStore):
         obj = self.get_key(key, bucket_name)
         return obj.get()['Body'].read().decode('utf-8')
 
-    def delete(self, key, bucket_name=None):
-        if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
-        obj = self.resource.Object(bucket_name, key)
-        obj.delete()
-
     def upload_bytes(self,
                      bytes_data,
                      key,
@@ -583,3 +577,30 @@ class S3Store(BaseStore):
                                local_path=filename,
                                bucket_name=bucket_name,
                                use_basename=False)
+
+    def delete(self, key, bucket_name=None):
+        if not bucket_name:
+            (bucket_name, key) = self.parse_s3_url(key)
+
+        results = self.list(bucket_name=bucket_name, prefix=key, delimiter='/')
+
+        if not any([results['prefixes'], results['keys']]):
+            self.delete_file(key=key, bucket_name=bucket_name)
+
+        # Delete directories
+        for prefix in sorted(results['prefixes']):
+            prefix = os.path.join(key, prefix)
+            # Download files under
+            self.delete(key=prefix, bucket_name=bucket_name)
+
+        # Delete files
+        for file_key in results['keys']:
+            file_key = file_key[0]
+            file_key = os.path.join(key, file_key)
+            self.delete_file(key=file_key, bucket_name=bucket_name)
+
+    def delete_file(self, key, bucket_name=None):
+        if not bucket_name:
+            (bucket_name, key) = self.parse_s3_url(key)
+        obj = self.resource.Object(bucket_name, key)
+        obj.delete()

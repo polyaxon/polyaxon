@@ -106,22 +106,6 @@ class AzureStore(BaseStore):
         except AzureMissingResourceHttpError:
             return None
 
-    def delete(self, blob, container_name=None):
-        """
-        Deletes if a blob exists.
-
-        Args:
-            blob: `str`. Name of existing blob.
-            container_name: `str`. Name of existing container.
-        """
-        if not container_name:
-            container_name, _, blob = self.parse_wasbs_url(blob)
-
-        try:
-            self.connection.delete_blob(container_name, blob)
-        except AzureMissingResourceHttpError:
-            pass
-
     def ls(self, path):
         results = self.list(key=path)
         return {'files': results['blobs'], 'dirs': results['prefixes']}
@@ -283,3 +267,40 @@ class AzureStore(BaseStore):
                                local_path=filename,
                                container_name=container_name,
                                use_basename=False)
+
+    def delete(self, blob, container_name=None):
+        if not container_name:
+            container_name, _, blob = self.parse_wasbs_url(blob)
+
+        results = self.list(container_name=container_name, key=blob, delimiter='/')
+
+        if not any([results['prefixes'], results['blobs']]):
+            self.delete_file(blob=blob, container_name=container_name)
+
+        # Delete directories
+        for prefix in sorted(results['prefixes']):
+            prefix = os.path.join(blob, prefix)
+            # Download files under
+            self.delete(blob=prefix, container_name=container_name)
+
+        # Delete files
+        for file_key in results['blobs']:
+            file_key = file_key[0]
+            file_key = os.path.join(blob, file_key)
+            self.delete_file(blob=file_key, container_name=container_name)
+
+    def delete_file(self, blob, container_name=None):
+        """
+        Deletes if a blob exists.
+
+        Args:
+            blob: `str`. Name of existing blob.
+            container_name: `str`. Name of existing container.
+        """
+        if not container_name:
+            container_name, _, blob = self.parse_wasbs_url(blob)
+
+        try:
+            self.connection.delete_blob(container_name, blob)
+        except AzureMissingResourceHttpError:
+            pass
