@@ -7,6 +7,7 @@ import rhea
 
 from hestia.auth import AuthenticationTypes
 from hestia.user_path import polyaxon_user_path
+from rhea import RheaError
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
 CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
@@ -53,8 +54,11 @@ if USE_HTTPS is None:  # Check global config config
 VERIFY_SSL = config.get_boolean('POLYAXON_VERIFY_SSL',
                                 is_optional=True)
 if VERIFY_SSL is None:  # Check global config config
-    VERIFY_SSL = global_config.get_boolean('verify_ssl',
-                                           is_optional=True)
+    try:
+        VERIFY_SSL = global_config.get_boolean('verify_ssl',
+                                               is_optional=True)
+    except RheaError:
+        VERIFY_SSL = False
 API_HTTP_HOST = config.get_string('POLYAXON_API_HTTP_HOST',
                                   is_optional=True)
 API_WS_HOST = config.get_string('POLYAXON_API_WS_HOST',
