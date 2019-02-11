@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+import shutil
 
 from polystores.logger import logger
 from polystores.stores.base_store import BaseStore
@@ -72,5 +73,7 @@ class LocalStore(BaseStore):
         try:
             if os.path.isfile(path):
                 os.remove(path)
+            else:
+                shutil.rmtree(path)
         except OSError:
             logger.warning('Could not delete path `%s`', path)
