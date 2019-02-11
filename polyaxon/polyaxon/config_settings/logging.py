@@ -78,4 +78,7 @@ if not (config.is_testing_env or config.is_local_env) and config.platform_dsn:
     RAVEN_CONFIG['release'] = config.get_string('POLYAXON_CHART_VERSION',
                                                 is_optional=True,
                                                 default='0.0.0')
+    RAVEN_CONFIG['IGNORE_EXCEPTIONS'] = ['django.db.ProgrammingError',
+                                         'django.db.OperationalError',
+                                         'django.db.InterfaceError']
     RAVEN_CONFIG['environment'] = config.env
