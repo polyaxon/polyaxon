@@ -1,6 +1,6 @@
 import argparse
 
-from initializer.init import cmd
+from initializer.init import cmd  # noqa
 from polyaxon_client.tracking import BuildJob
 
 if __name__ == '__main__':

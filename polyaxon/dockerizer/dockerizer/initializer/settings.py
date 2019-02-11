@@ -3,8 +3,6 @@ import os
 
 import rhea
 
-from rhea import RheaError
-from rhea.specs import UriSpec
 from unipath import Path
 
 
