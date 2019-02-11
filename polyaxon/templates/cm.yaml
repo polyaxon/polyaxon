@@ -186,6 +186,8 @@ data:
   POLYAXON_JOB_INIT_DOCKER_IMAGE_PULL_POLICY: "{{ .Values.init.imagePullPolicy }}"
   POLYAXON_JOB_DOCKERIZER_IMAGE: "{{ .Values.dockerizer.image }}:{{ .Values.dockerizer.imageTag }}"
   POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY: "{{ .Values.dockerizer.imagePullPolicy }}"
+  POLYAXON_JOB_KANIKO_IMAGE: "{{ .Values.kaniko.image }}:{{ .Values.kaniko.imageTag }}"
+  POLYAXON_JOB_KANIKO_IMAGE_PULL_POLICY: "{{ .Values.kaniko.imagePullPolicy }}"
   POLYAXON_NODE_SELECTOR_CORE: {{ toJson .Values.nodeSelectors.core | quote }}
   POLYAXON_NODE_SELECTOR_EXPERIMENTS: {{ toJson .Values.nodeSelectors.experiments | quote }}
   POLYAXON_NODE_SELECTOR_JOBS: {{ toJson .Values.nodeSelectors.jobs | quote }}
@@ -212,10 +214,13 @@ data:
   POLYAXON_TENSORBOARD_DOCKER_IMAGE: {{ .Values.tensorboardDockerImage }}
   # Registry
   {{- if (index .Values "docker-registry").enabled }}
+  POLYAXON_REGISTRY_IN_CLUSTER: "true"
+  POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
   POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").service.port | quote }}
   POLYAXON_REGISTRY_NODE_PORT: {{ (index .Values "docker-registry").service.nodePort | quote }}
   {{- else }}
-  POLYAXON_REGISTRY_HOST: {{ (index .Values "docker-registry").external.host }} 
+  POLYAXON_REGISTRY_IN_CLUSTER: "false"
+  POLYAXON_REGISTRY_HOST: {{ (index .Values "docker-registry").external.host }}
   POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").external.port | quote }} 
   {{- end }}
   # Versions

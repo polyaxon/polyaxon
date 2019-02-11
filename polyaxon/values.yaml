@@ -396,6 +396,11 @@ dockerizer:
   imageTag: 0.3.8
   imagePullPolicy: Always
 
+kaniko:
+  image: gcr.io/kaniko-project/executor
+  imageTag: latest
+  imagePullPolicy: Always
+
 hooks:
   image: polyaxon/polyaxon-manage
   imageTag: 0.3.8
