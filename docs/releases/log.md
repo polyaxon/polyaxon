@@ -1,3 +1,13 @@
+---
+title: "Polyaxon Release notes"
+meta_title: "Polyaxon release notes - Polyaxon Releases"
+meta_description: "Polyaxon release notes, migrations, and deprecation notes."
+visibility: public
+status: published
+tags:
+    - reference
+---
+
 ## 0.3.8
 
  * Fix an issue with a cron job that handles the deletion of archived projects/jobs/experiments/builds.
