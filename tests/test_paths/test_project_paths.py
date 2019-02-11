@@ -55,6 +55,6 @@ class TestProjectPaths(BaseTest):
             project_name=self.project.unique_name)
         assert os.path.exists(experiment_outputs_path) is True
         assert os.path.exists(project_outputs_path) is True
-        stores_schedule_outputs_deletion(persistence=None, subpath=self.project.subpath)
+        stores_schedule_outputs_deletion(persistence='outputs', subpath=self.project.subpath)
         assert os.path.exists(experiment_outputs_path) is False
         assert os.path.exists(project_outputs_path) is False

@@ -50,6 +50,7 @@ class TestExperimentGroupPaths(BaseTest):
             experiment_group_name=self.experiment_group.unique_name)
         assert os.path.exists(experiment_outputs_path) is True
         assert os.path.exists(experiment_group_outputs_path) is True
-        stores_schedule_outputs_deletion(persistence=None, subpath=self.experiment_group.subpath)
+        stores_schedule_outputs_deletion(persistence='outputs',
+                                         subpath=self.experiment_group.subpath)
         assert os.path.exists(experiment_outputs_path) is False
         assert os.path.exists(experiment_group_outputs_path) is False

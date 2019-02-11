@@ -30,5 +30,5 @@ class TestJobPaths(BaseTest):
             persistence=job.persistence_outputs,
             job_name=job.unique_name)
         assert os.path.exists(job_outputs_path) is True
-        stores_schedule_outputs_deletion(persistence=None, subpath=job.subpath)
+        stores_schedule_outputs_deletion(persistence='outputs', subpath=job.subpath)
         assert os.path.exists(job_outputs_path) is False
