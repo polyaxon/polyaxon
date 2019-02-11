@@ -62,6 +62,11 @@ setup(name='polyaxon-client',
           "requests-toolbelt==0.8.0",
           "websocket-client>=0.53.0,<=0.54.0",
       ],
+      extras_require={
+          'gcs': ['google-cloud-storage'],
+          's3': ['boto3', 'botocore'],
+          'azure': ['azure-storage'],
+      },
       classifiers=[
           'Programming Language :: Python',
           'Operating System :: OS Independent',
