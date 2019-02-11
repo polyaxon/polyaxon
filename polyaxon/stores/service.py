@@ -22,7 +22,6 @@ class StoresService(Service):
         'get_data_paths',
         'get_data_path',
         'delete_data_path',
-        'get_logs_path',
         'get_outputs_path',
         'delete_outputs_path',
         'get_logs_path',
@@ -114,7 +113,8 @@ class StoresService(Service):
     def delete_outputs_path(cls, subpath, persistence):
         outputs_path = cls.get_outputs_path(persistence=persistence)
         path = os.path.join(outputs_path, subpath)
-        delete_path(path)
+        store = cls.get_outputs_store(persistence_outputs=persistence)
+        store.delete(path)
 
     @staticmethod
     def get_logs_path(persistence='default'):
@@ -132,9 +132,10 @@ class StoresService(Service):
 
     @classmethod
     def delete_logs_path(cls, subpath, persistence='default'):
-        outputs_path = cls.get_logs_path(persistence=persistence)
-        path = os.path.join(outputs_path, subpath)
-        delete_path(path)
+        logs_path = cls.get_logs_path(persistence=persistence)
+        path = os.path.join(logs_path, subpath)
+        store = cls.get_logs_store(persistence_logs=persistence)
+        store.delete(path)
 
     @staticmethod
     def _get_store(store, secret_key):
