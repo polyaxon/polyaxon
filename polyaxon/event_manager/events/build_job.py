@@ -14,6 +14,8 @@ BUILD_JOB_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
                                                 event_subjects.TRIGGER)
 BUILD_JOB_CREATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.CREATED)
 BUILD_JOB_VIEWED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.VIEWED)
+BUILD_JOB_ARCHIVED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.ARCHIVED)
+BUILD_JOB_UNARCHIVED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.UNARCHIVED)
 BUILD_JOB_BOOKMARKED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.BOOKMARKED)
 BUILD_JOB_UNBOOKMARKED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.UNBOOKMARKED)
 BUILD_JOB_UPDATED = '{}.{}'.format(event_subjects.BUILD_JOB, event_actions.UPDATED)
@@ -111,6 +113,30 @@ class BuildJobCleanedTriggeredEvent(Event):
 
 class BuildJobViewedEvent(Event):
     event_type = BUILD_JOB_VIEWED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+    )
+
+
+class BuildJobArchivedEvent(Event):
+    event_type = BUILD_JOB_ARCHIVED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+    )
+
+
+class BuildJobUnarchivedEvent(Event):
+    event_type = BUILD_JOB_UNARCHIVED
     actor = True
     attributes = (
         Attribute('id'),

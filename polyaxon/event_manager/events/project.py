@@ -8,6 +8,8 @@ PROJECT_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.PROJECT,
                                               event_actions.DELETED,
                                               event_subjects.TRIGGER)
 PROJECT_VIEWED = '{}.{}'.format(event_subjects.PROJECT, event_actions.VIEWED)
+PROJECT_ARCHIVED = '{}.{}'.format(event_subjects.PROJECT, event_actions.ARCHIVED)
+PROJECT_UNARCHIVED = '{}.{}'.format(event_subjects.PROJECT, event_actions.UNARCHIVED)
 PROJECT_BOOKMARKED = '{}.{}'.format(event_subjects.PROJECT, event_actions.BOOKMARKED)
 PROJECT_UNBOOKMARKED = '{}.{}'.format(event_subjects.PROJECT, event_actions.UNBOOKMARKED)
 PROJECT_SET_PUBLIC = '{}.set_public'.format(event_subjects.PROJECT)  # Not set
@@ -69,6 +71,26 @@ class ProjectDeletedTriggeredEvent(Event):
 
 class ProjectViewedEvent(Event):
     event_type = PROJECT_VIEWED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('is_public', attr_type=bool),
+    )
+
+
+class ProjectArchivedEvent(Event):
+    event_type = PROJECT_ARCHIVED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('is_public', attr_type=bool),
+    )
+
+
+class ProjectUnarchivedEvent(Event):
+    event_type = PROJECT_UNARCHIVED
     actor = True
     attributes = (
         Attribute('id'),

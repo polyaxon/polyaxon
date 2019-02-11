@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION, ignore_result=True)
-def projects_schedule_deletion(project_id):
+def projects_schedule_deletion(project_id, immediate=False):
     project = get_valid_project(project_id=project_id, include_deleted=True)
     if not project:
         # No need to check this project
@@ -80,3 +80,10 @@ def projects_schedule_deletion(project_id):
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
             kwargs={'tensorboard_job_id': tensorboard})
+
+    if immediate:
+        celery_app.send_task(
+            SchedulerCeleryTasks.DELETE_ARCHIVED_PROJECT,
+            kwargs={
+                'project_id': project_id,
+            })

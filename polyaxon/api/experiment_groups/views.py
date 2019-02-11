@@ -42,10 +42,12 @@ from db.models.experiment_groups import (
 from db.models.experiments import ExperimentMetric
 from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment_group import (
+    EXPERIMENT_GROUP_ARCHIVED,
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
     EXPERIMENT_GROUP_METRICS_VIEWED,
     EXPERIMENT_GROUP_STATUSES_VIEWED,
     EXPERIMENT_GROUP_STOPPED_TRIGGERED,
+    EXPERIMENT_GROUP_UNARCHIVED,
     EXPERIMENT_GROUP_UPDATED,
     EXPERIMENT_GROUP_VIEWED
 )
@@ -117,7 +119,38 @@ class ExperimentGroupDetailView(ExperimentGroupEndpoint,
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION,
-            kwargs={'experiment_group_id': instance.id})
+            kwargs={'experiment_group_id': instance.id, 'immediate': True})
+
+
+class ExperimentGroupArchiveView(ExperimentGroupEndpoint, CreateEndpoint):
+    """Unarchive an experiment."""
+    serializer_class = ExperimentGroupSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=EXPERIMENT_GROUP_ARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION,
+            kwargs={'experiment_group_id': obj.id, 'immediate': False})
+        return Response(status=status.HTTP_200_OK)
+
+
+class ExperimentGroupUnarchiveView(ExperimentGroupEndpoint, CreateEndpoint):
+    """Unarchive an experiment."""
+    queryset = ExperimentGroup.all
+    serializer_class = ExperimentGroupSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=EXPERIMENT_GROUP_UNARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        obj.unarchive()
+        return Response(status=status.HTTP_200_OK)
 
 
 class ExperimentGroupSelectionView(ExperimentGroupEndpoint, UpdateEndpoint):

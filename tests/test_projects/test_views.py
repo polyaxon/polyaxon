@@ -232,13 +232,13 @@ class TestProjectDetailViewV1(BaseViewTest):
     @patch('scheduler.tasks.jobs.jobs_stop.apply_async')
     @patch('scheduler.tasks.experiments.experiments_stop.apply_async')
     @patch('scheduler.tasks.experiment_groups.experiments_group_stop_experiments.apply_async')
-    def test_delete_archives_and_schedule_stop(self,
-                                               xp_group_scheduler_mock,
-                                               xp_scheduler_mock,
-                                               job_scheduler_mock,
-                                               build_scheduler_mock,
-                                               notebook_scheduler_mock,
-                                               tensorboard_scheduler_mock):
+    def test_delete_archives_and_schedules_deletion(self,
+                                                    xp_group_scheduler_mock,
+                                                    xp_scheduler_mock,
+                                                    job_scheduler_mock,
+                                                    build_scheduler_mock,
+                                                    notebook_scheduler_mock,
+                                                    tensorboard_scheduler_mock):
         for _ in range(2):
             JobFactory(project=self.object)
             BuildJobFactory(project=self.object)
@@ -270,19 +270,13 @@ class TestProjectDetailViewV1(BaseViewTest):
 
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
-        assert Project.all.filter(user=self.object.user).count() == 1
-        assert ExperimentGroup.objects.count() == 0
-        assert ExperimentGroup.all.count() == 2
-        assert Experiment.objects.count() == 0
-        assert Experiment.all.count() == 2
-        assert Job.objects.count() == 0
-        assert Job.all.count() == 2
-        assert BuildJob.objects.count() == 0
-        assert BuildJob.all.count() == 2
-        assert TensorboardJob.objects.count() == 0
-        assert TensorboardJob.all.count() == 2
-        assert NotebookJob.objects.count() == 0
-        assert NotebookJob.all.count() == 2
+        assert Project.all.filter(user=self.object.user).count() == 0
+        assert ExperimentGroup.all.count() == 0
+        assert Experiment.all.count() == 0
+        assert Job.all.count() == 0
+        assert BuildJob.all.count() == 0
+        assert TensorboardJob.all.count() == 0
+        assert NotebookJob.all.count() == 0
 
     def test_delete_triggers_stopping_of_experiment_groups(self):
         assert self.queryset.count() == 1
@@ -302,10 +296,8 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert xp_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
-        assert ExperimentGroup.objects.count() == 0
-        assert ExperimentGroup.all.count() == 2
-        assert Experiment.objects.count() == 0
-        assert Experiment.all.count() == 3
+        assert ExperimentGroup.all.count() == 0
+        assert Experiment.all.count() == 0
 
     def test_delete_triggers_stopping_of_experiments(self):
         assert self.queryset.count() == 1
@@ -323,8 +315,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert xp_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
-        assert Experiment.objects.count() == 0
-        assert Experiment.all.count() == 3
+        assert Experiment.all.count() == 0
 
     def test_delete_triggers_stopping_of_jobs(self):
         assert self.queryset.count() == 1
@@ -338,8 +329,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert job_mock_stop.call_count == 2
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
-        assert Job.objects.count() == 0
-        assert Job.all.count() == 2
+        assert Job.all.count() == 0
 
     def test_delete_triggers_stopping_of_build_jobs(self):
         assert self.queryset.count() == 1
@@ -353,8 +343,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert job_mock_stop.call_count == 2
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
-        assert BuildJob.objects.count() == 0
-        assert BuildJob.all.count() == 2
+        assert BuildJob.all.count() == 0
 
     def test_delete_triggers_stopping_of_plugin_jobs(self):
         assert self.queryset.count() == 1
@@ -377,6 +366,163 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert notebook_mock_stop.call_count == 1
         assert tensorboard_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.queryset.count() == 0
+        assert TensorboardJob.objects.count() == 0
+        assert NotebookJob.objects.count() == 0
+        assert TensorboardJob.all.count() == 0
+        assert NotebookJob.all.count() == 0
+
+    @patch('scheduler.tasks.tensorboards.tensorboards_stop.apply_async')
+    @patch('scheduler.tasks.notebooks.projects_notebook_stop.apply_async')
+    @patch('scheduler.tasks.build_jobs.build_jobs_stop.apply_async')
+    @patch('scheduler.tasks.jobs.jobs_stop.apply_async')
+    @patch('scheduler.tasks.experiments.experiments_stop.apply_async')
+    @patch('scheduler.tasks.experiment_groups.experiments_group_stop_experiments.apply_async')
+    def test_archive_schedules_deletion(self,
+                                        xp_group_scheduler_mock,
+                                        xp_scheduler_mock,
+                                        job_scheduler_mock,
+                                        build_scheduler_mock,
+                                        notebook_scheduler_mock,
+                                        tensorboard_scheduler_mock):
+        for _ in range(2):
+            JobFactory(project=self.object)
+            BuildJobFactory(project=self.object)
+            TensorboardJobFactory(project=self.object)
+            NotebookJobFactory(project=self.object)
+
+        self.object.experiment_groups.first().set_status(ExperimentGroupLifeCycle.RUNNING)
+        self.object.experiments.first().set_status(ExperimentLifeCycle.RUNNING)
+        self.object.jobs.first().set_status(JobLifeCycle.RUNNING)
+        self.object.build_jobs.first().set_status(JobLifeCycle.RUNNING)
+        self.object.notebook_jobs.first().set_status(JobLifeCycle.RUNNING)
+        self.object.tensorboard_jobs.first().set_status(JobLifeCycle.RUNNING)
+
+        assert self.queryset.count() == 1
+        assert ExperimentGroup.objects.count() == 2
+        assert Experiment.objects.count() == 2
+        assert Job.objects.count() == 2
+        assert BuildJob.objects.count() == 2
+        assert NotebookJob.objects.count() == 2
+        assert TensorboardJob.objects.count() == 2
+
+        resp = self.auth_client.post(self.url + 'archive/')
+        assert xp_group_scheduler_mock.call_count == 2
+        assert xp_scheduler_mock.call_count == 1
+        assert job_scheduler_mock.call_count == 1
+        assert build_scheduler_mock.call_count == 1
+        assert notebook_scheduler_mock.call_count == 1
+        assert tensorboard_scheduler_mock.call_count == 1
+
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 0
+        assert Project.all.filter(user=self.object.user).count() == 1
+        assert ExperimentGroup.objects.count() == 0
+        assert ExperimentGroup.all.count() == 2
+        assert Experiment.objects.count() == 0
+        assert Experiment.all.count() == 2
+        assert Job.objects.count() == 0
+        assert Job.all.count() == 2
+        assert BuildJob.objects.count() == 0
+        assert BuildJob.all.count() == 2
+        assert TensorboardJob.objects.count() == 0
+        assert TensorboardJob.all.count() == 2
+        assert NotebookJob.objects.count() == 0
+        assert NotebookJob.all.count() == 2
+
+    def test_archive_triggers_stopping_of_experiment_groups(self):
+        assert self.queryset.count() == 1
+        assert ExperimentGroup.objects.count() == 2
+        experiment_group = ExperimentGroup.objects.first()
+        # Add running experiment
+        experiment = ExperimentFactory(project=experiment_group.project,
+                                       experiment_group=experiment_group)
+        # Set one experiment to running with one job
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+
+        assert Experiment.objects.count() == 3
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as xp_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert xp_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 0
+        assert ExperimentGroup.objects.count() == 0
+        assert ExperimentGroup.all.count() == 2
+        assert Experiment.objects.count() == 0
+        assert Experiment.all.count() == 3
+
+    def test_archive_triggers_stopping_of_experiments(self):
+        assert self.queryset.count() == 1
+        assert ExperimentGroup.objects.count() == 2
+        # Add experiment
+        experiment = ExperimentFactory(project=self.object)
+        # Set one experiment to running with one job
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+
+        assert Experiment.objects.count() == 3
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as xp_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert xp_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 0
+        assert Experiment.objects.count() == 0
+        assert Experiment.all.count() == 3
+
+    def test_archive_triggers_stopping_of_jobs(self):
+        assert self.queryset.count() == 1
+        for _ in range(2):
+            job = JobFactory(project=self.object)
+            job.set_status(JobLifeCycle.SCHEDULED)
+        assert Job.objects.count() == 2
+
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as job_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert job_mock_stop.call_count == 2
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 0
+        assert Job.objects.count() == 0
+        assert Job.all.count() == 2
+
+    def test_archive_triggers_stopping_of_build_jobs(self):
+        assert self.queryset.count() == 1
+        for _ in range(2):
+            job = BuildJobFactory(project=self.object)
+            job.set_status(JobLifeCycle.SCHEDULED)
+        assert BuildJob.objects.count() == 2
+
+        with patch('scheduler.tasks.build_jobs.build_jobs_stop.apply_async') as job_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert job_mock_stop.call_count == 2
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 0
+        assert BuildJob.objects.count() == 0
+        assert BuildJob.all.count() == 2
+
+    def test_archive_triggers_stopping_of_plugin_jobs(self):
+        assert self.queryset.count() == 1
+
+        notebook_job = NotebookJobFactory(project=self.object)
+        notebook_job.set_status(JobLifeCycle.SCHEDULED)
+
+        tensorboard_job = TensorboardJobFactory(project=self.object)
+        tensorboard_job.set_status(JobLifeCycle.SCHEDULED)
+
+        assert NotebookJob.objects.count() == 1
+        assert TensorboardJob.objects.count() == 1
+
+        with patch('scheduler.tasks.notebooks.'
+                   'projects_notebook_stop.apply_async') as notebook_mock_stop:
+            with patch('scheduler.tasks.tensorboards.'
+                       'tensorboards_stop.apply_async') as tensorboard_mock_stop:
+                resp = self.auth_client.post(self.url + 'archive/')
+
+        assert notebook_mock_stop.call_count == 1
+        assert tensorboard_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 0
         assert TensorboardJob.objects.count() == 0
         assert NotebookJob.objects.count() == 0

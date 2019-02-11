@@ -10,6 +10,12 @@ build_jobs_urlpatterns = [
     re_path(
         r'^{}/{}/builds/{}/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildDetailView.as_view()),
+    re_path(r'^{}/{}/builds/{}/archive/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
+        views.BuildArchiveView.as_view()),
+    re_path(r'^{}/{}/builds/{}/unarchive/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
+        views.BuildUnarchiveView.as_view()),
     re_path(r'^{}/{}/builds/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildStatusListView.as_view()),

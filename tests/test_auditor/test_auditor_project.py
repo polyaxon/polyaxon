@@ -116,6 +116,44 @@ class AuditorProjectTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_project_archived(self,
+                              activitylogs_record,
+                              tracker_record,
+                              notifier_record,
+                              executor_record):
+        auditor.record(event_type=project_events.PROJECT_ARCHIVED,
+                       instance=self.project,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_project_unarchived(self,
+                                activitylogs_record,
+                                tracker_record,
+                                notifier_record,
+                                executor_record):
+        auditor.record(event_type=project_events.PROJECT_UNARCHIVED,
+                       instance=self.project,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
     def test_project_unbookmarked(self,
                                   activitylogs_record,
                                   tracker_record,

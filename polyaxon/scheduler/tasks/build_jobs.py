@@ -31,7 +31,7 @@ def build_jobs_start(build_job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION, ignore_result=True)
-def build_jobs_schedule_deletion(build_job_id):
+def build_jobs_schedule_deletion(build_job_id, immediate=False):
     build_job = get_valid_build_job(build_job_id=build_job_id, include_deleted=True)
     if not build_job:
         _logger.info('Something went wrong, '
@@ -55,6 +55,13 @@ def build_jobs_schedule_deletion(build_job_id):
             'collect_logs': False,
             'message': 'Build is scheduled for deletion.'
         })
+
+    if immediate:
+        celery_app.send_task(
+            SchedulerCeleryTasks.DELETE_ARCHIVED_BUILD_JOB,
+            kwargs={
+                'job_id': build_job_id,
+            })
 
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP,

@@ -154,7 +154,7 @@ def experiments_start(experiment_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION, ignore_result=True)
-def experiments_schedule_deletion(experiment_id):
+def experiments_schedule_deletion(experiment_id, immediate=False):
     experiment = get_valid_experiment(experiment_id=experiment_id, include_deleted=True)
     if not experiment:
         _logger.info('Something went wrong, '
@@ -181,6 +181,13 @@ def experiments_schedule_deletion(experiment_id):
             'collect_logs': False,
             'message': 'Experiment is scheduled for deletion.'
         })
+
+    if immediate:
+        celery_app.send_task(
+            SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
+            kwargs={
+                'experiment_id': experiment_id,
+            })
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,

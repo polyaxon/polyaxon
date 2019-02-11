@@ -20,6 +20,12 @@ groups_urlpatterns = [
     re_path(r'^{}/{}/selections/{}/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
         views.ExperimentGroupSelectionView.as_view()),
+    re_path(r'^{}/{}/groups/{}/archive/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
+        views.ExperimentGroupArchiveView.as_view()),
+    re_path(r'^{}/{}/groups/{}/unarchive/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
+        views.ExperimentGroupUnarchiveView.as_view()),
     re_path(r'^{}/{}/groups/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
         views.ExperimentGroupStatusListView.as_view()),

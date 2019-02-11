@@ -42,12 +42,14 @@ from db.models.jobs import Job, JobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.job import (
+    JOB_ARCHIVED,
     JOB_DELETED_TRIGGERED,
     JOB_LOGS_VIEWED,
     JOB_OUTPUTS_DOWNLOADED,
     JOB_RESTARTED_TRIGGERED,
     JOB_STATUSES_VIEWED,
     JOB_STOPPED_TRIGGERED,
+    JOB_UNARCHIVED,
     JOB_UPDATED,
     JOB_VIEWED
 )
@@ -126,7 +128,38 @@ class JobDetailView(JobEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoi
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
-            kwargs={'job_id': instance.id})
+            kwargs={'job_id': instance.id, 'immediate': True})
+
+
+class JobArchiveView(JobEndpoint, CreateEndpoint):
+    """Unarchive an Build."""
+    serializer_class = JobSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=JOB_ARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        celery_app.send_task(
+            SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
+            kwargs={'job_id': obj.id, 'immediate': False})
+        return Response(status=status.HTTP_200_OK)
+
+
+class JobUnarchiveView(JobEndpoint, CreateEndpoint):
+    """Unarchive an Build."""
+    queryset = Job.all
+    serializer_class = JobSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=JOB_UNARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        obj.unarchive()
+        return Response(status=status.HTTP_200_OK)
 
 
 class JobCloneView(JobEndpoint, CreateEndpoint):

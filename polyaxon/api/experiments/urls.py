@@ -23,6 +23,12 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentDetailView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/archive/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        views.ExperimentArchiveView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/unarchive/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        views.ExperimentUnarchiveView.as_view()),
     re_path(r'^{}/{}/experiments/{}/restart/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentRestartView.as_view()),

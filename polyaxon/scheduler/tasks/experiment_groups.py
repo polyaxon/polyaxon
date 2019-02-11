@@ -74,7 +74,7 @@ def experiments_group_create(self, experiment_group_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION, ignore_result=True)
-def experiments_group_schedule_deletion(experiment_group_id):
+def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id,
                                                   include_deleted=True)
     if not experiment_group:
@@ -94,6 +94,13 @@ def experiments_group_schedule_deletion(experiment_group_id):
             'collect_logs': False,
             'message': 'Experiment Group is scheduled for deletion.'
         })
+
+    if immediate:
+        celery_app.send_task(
+            SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP,
+            kwargs={
+                'group_id': experiment_group_id,
+            })
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS, ignore_result=True)

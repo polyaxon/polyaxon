@@ -73,6 +73,7 @@ from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from event_manager.events.experiment import (
+    EXPERIMENT_ARCHIVED,
     EXPERIMENT_COPIED_TRIGGERED,
     EXPERIMENT_DELETED_TRIGGERED,
     EXPERIMENT_JOBS_VIEWED,
@@ -83,6 +84,7 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESUMED_TRIGGERED,
     EXPERIMENT_STATUSES_VIEWED,
     EXPERIMENT_STOPPED_TRIGGERED,
+    EXPERIMENT_UNARCHIVED,
     EXPERIMENT_UPDATED,
     EXPERIMENT_VIEWED
 )
@@ -245,7 +247,38 @@ class ExperimentDetailView(ExperimentEndpoint,
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
-            kwargs={'experiment_id': instance.id})
+            kwargs={'experiment_id': instance.id, 'immediate': True})
+
+
+class ExperimentArchiveView(ExperimentEndpoint, CreateEndpoint):
+    """Unarchive an experiment."""
+    serializer_class = ExperimentSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=EXPERIMENT_ARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
+            kwargs={'experiment_id': obj.id, 'immediate': False})
+        return Response(status=status.HTTP_200_OK)
+
+
+class ExperimentUnarchiveView(ExperimentEndpoint, CreateEndpoint):
+    """Unarchive an experiment."""
+    queryset = Experiment.all
+    serializer_class = ExperimentSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=EXPERIMENT_UNARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        obj.unarchive()
+        return Response(status=status.HTTP_200_OK)
 
 
 class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):

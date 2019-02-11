@@ -71,7 +71,7 @@ def jobs_start(job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION, ignore_result=True)
-def jobs_schedule_deletion(job_id):
+def jobs_schedule_deletion(job_id, immediate=False):
     job = get_valid_job(job_id=job_id, include_deleted=True)
     if not job:
         return None
@@ -93,6 +93,13 @@ def jobs_schedule_deletion(job_id):
             'collect_logs': False,
             'message': 'Job is scheduled for deletion.'
         })
+
+    if immediate:
+        celery_app.send_task(
+            SchedulerCeleryTasks.DELETE_ARCHIVED_JOB,
+            kwargs={
+                'job_id': job_id,
+            })
 
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)

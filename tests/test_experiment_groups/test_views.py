@@ -452,7 +452,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert new_object.description == new_description
         assert new_object.experiments.count() == 2
 
-    def test_delete_archives_and_schedules_stop(self):
+    def test_delete_archives_deletes_immediately_and_schedules_stop(self):
         assert self.model_class.objects.count() == 1
         assert Experiment.objects.count() == 2
         experiment = ExperimentFactory(project=self.object.project,
@@ -468,9 +468,10 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
             resp = self.auth_client.delete(self.url)
         assert scheduler_mock.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Delete
         assert self.model_class.objects.count() == 0
-        assert self.model_class.all.count() == 1
-        assert Experiment.all.count() == 3
+        assert self.model_class.all.count() == 0
+        assert Experiment.all.count() == 0
         assert Experiment.objects.count() == 0
 
     def test_delete_archives_and_schedules_deletion(self):
@@ -487,10 +488,68 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
             resp = self.auth_client.delete(self.url)
         assert scheduler_mock.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Patched
         assert self.model_class.objects.count() == 0
         assert self.model_class.all.count() == 1
         assert Experiment.all.count() == 3
         assert Experiment.objects.count() == 0
+
+    def test_archive_schedule_deletion(self):
+        assert self.model_class.objects.count() == 1
+        experiment = ExperimentFactory(project=self.object.project,
+                                       experiment_group=self.object)
+        assert Experiment.objects.count() == 3
+        # Set one experiment to running with one job
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_schedule_deletion.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 1
+        assert self.model_class.all.count() == 1
+        assert Experiment.all.count() == 3
+        assert Experiment.objects.count() == 3
+
+    def test_archive_schedule_archives_and_schedules_stop(self):
+        assert self.model_class.objects.count() == 1
+        experiment = ExperimentFactory(project=self.object.project,
+                                       experiment_group=self.object)
+        assert Experiment.objects.count() == 3
+        # Set the object to running
+        self.object.set_status(ExperimentGroupLifeCycle.RUNNING)
+        # Set one experiment to running with one job
+        experiment.set_status(ExperimentLifeCycle.SCHEDULED)
+        # Add job
+        ExperimentJobFactory(experiment=experiment)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_stop_experiments.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+        assert Experiment.all.count() == 3
+        assert Experiment.objects.count() == 0
+
+    def test_unarchive(self):
+        ExperimentFactory(project=self.object.project, experiment_group=self.object)
+        assert Experiment.objects.count() == 3
+        self.object.archive()
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+        assert Experiment.all.count() == 3
+        assert Experiment.objects.count() == 0
+
+        resp = self.auth_client.post(self.url + 'unarchive/')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert self.model_class.objects.count() == 1
+        assert self.model_class.all.count() == 1
+        assert Experiment.all.count() == 3
+        assert Experiment.objects.count() == 3
 
 
 @pytest.mark.experiment_groups_mark

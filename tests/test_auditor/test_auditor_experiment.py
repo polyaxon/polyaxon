@@ -114,6 +114,44 @@ class AuditorExperimentTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_archived(self,
+                                 activitylogs_record,
+                                 tracker_record,
+                                 notifier_record,
+                                 executor_record):
+        auditor.record(event_type=experiment_events.EXPERIMENT_ARCHIVED,
+                       instance=self.experiment,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_unarchived(self,
+                                   activitylogs_record,
+                                   tracker_record,
+                                   notifier_record,
+                                   executor_record):
+        auditor.record(event_type=experiment_events.EXPERIMENT_UNARCHIVED,
+                       instance=self.experiment,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
     def test_experiment_bookmarked(self,
                                    activitylogs_record,
                                    tracker_record,

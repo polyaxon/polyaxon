@@ -9,6 +9,10 @@ EXPERIMENT_DELETED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                     event_actions.DELETED)
 EXPERIMENT_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                    event_actions.VIEWED)
+EXPERIMENT_ARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                     event_actions.ARCHIVED)
+EXPERIMENT_UNARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                       event_actions.UNARCHIVED)
 EXPERIMENT_STOPPED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                     event_actions.STOPPED)
 EXPERIMENT_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT,
@@ -123,6 +127,34 @@ class ExperimentViewedEvent(Event):
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
+    )
+
+
+class ExperimentArchivedEvent(Event):
+    event_type = EXPERIMENT_ARCHIVED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentUnarchivedEvent(Event):
+    event_type = EXPERIMENT_UNARCHIVED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('last_status'),
     )
 
 

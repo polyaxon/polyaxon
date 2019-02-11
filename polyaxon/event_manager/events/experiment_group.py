@@ -9,6 +9,10 @@ EXPERIMENT_GROUP_DELETED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.DELETED)
 EXPERIMENT_GROUP_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                          event_actions.VIEWED)
+EXPERIMENT_GROUP_ARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                           event_actions.ARCHIVED)
+EXPERIMENT_GROUP_UNARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                             event_actions.UNARCHIVED)
 EXPERIMENT_GROUP_BOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                              event_actions.BOOKMARKED)
 EXPERIMENT_GROUP_UNBOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
@@ -94,6 +98,40 @@ class ExperimentGroupDeletedEvent(Event):
 
 class ExperimentGroupViewedEvent(Event):
     event_type = EXPERIMENT_GROUP_VIEWED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentGroupArchivedEvent(Event):
+    event_type = EXPERIMENT_GROUP_ARCHIVED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentGroupUnarchivedEvent(Event):
+    event_type = EXPERIMENT_GROUP_UNARCHIVED
     actor = True
     attributes = (
         Attribute('id'),

@@ -206,6 +206,44 @@ class AuditorBuildJobTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_build_job_archived(self,
+                                activitylogs_record,
+                                tracker_record,
+                                notifier_record,
+                                executor_record):
+        auditor.record(event_type=build_job_events.BUILD_JOB_ARCHIVED,
+                       instance=self.build_job,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_build_job_unarchived(self,
+                                  activitylogs_record,
+                                  tracker_record,
+                                  notifier_record,
+                                  executor_record):
+        auditor.record(event_type=build_job_events.BUILD_JOB_UNARCHIVED,
+                       instance=self.build_job,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
     def test_build_job_bookmarked(self,
                                   activitylogs_record,
                                   tracker_record,

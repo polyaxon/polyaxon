@@ -1143,9 +1143,10 @@ class TestExperimentDetailViewV1(BaseViewTest):
             resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Deleted
         assert self.model_class.objects.count() == 0
-        assert self.model_class.all.count() == 1
-        assert ExperimentJob.objects.count() == 2
+        assert self.model_class.all.count() == 0
+        assert ExperimentJob.objects.count() == 0
 
     def test_delete_from_running_status_archives_and_schedules_stop(self):
         self.object.set_status(ExperimentLifeCycle.RUNNING)
@@ -1155,9 +1156,10 @@ class TestExperimentDetailViewV1(BaseViewTest):
             resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Deleted
         assert self.model_class.objects.count() == 0
-        assert self.model_class.all.count() == 1
-        assert ExperimentJob.objects.count() == 2
+        assert self.model_class.all.count() == 0
+        assert ExperimentJob.objects.count() == 0
 
     def test_delete_archives_and_schedules_deletion(self):
         self.object.set_status(ExperimentLifeCycle.RUNNING)
@@ -1168,7 +1170,43 @@ class TestExperimentDetailViewV1(BaseViewTest):
             resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Patched
         assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+        assert ExperimentJob.objects.count() == 2
+
+    def test_archive_schedule_deletion(self):
+        self.object.set_status(ExperimentLifeCycle.RUNNING)
+        assert self.model_class.objects.count() == 1
+        assert ExperimentJob.objects.count() == 2
+        with patch('scheduler.tasks.experiments.'
+                   'experiments_schedule_deletion.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 1
+        assert self.model_class.all.count() == 1
+
+    def test_archive_schedule_archives_and_schedules_stop(self):
+        self.object.set_status(ExperimentLifeCycle.RUNNING)
+        assert self.model_class.objects.count() == 1
+        assert ExperimentJob.objects.count() == 2
+        with patch('scheduler.tasks.experiments.'
+                   'experiments_stop.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+        assert ExperimentJob.objects.count() == 2
+
+    def test_unarchive(self):
+        self.object.archive()
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+        resp = self.auth_client.post(self.url + 'unarchive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.model_class.objects.count() == 1
         assert self.model_class.all.count() == 1
         assert ExperimentJob.objects.count() == 2
 
