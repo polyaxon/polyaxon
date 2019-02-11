@@ -83,17 +83,15 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
 
     experiment_group.archive()
 
-    if not experiment_group.is_running:
-        return
-
-    celery_app.send_task(
-        SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
-        kwargs={
-            'experiment_group_id': experiment_group_id,
-            'pending': False,
-            'collect_logs': False,
-            'message': 'Experiment Group is scheduled for deletion.'
-        })
+    if experiment_group.is_running:
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            kwargs={
+                'experiment_group_id': experiment_group_id,
+                'pending': False,
+                'collect_logs': False,
+                'message': 'Experiment Group is scheduled for deletion.'
+            })
 
     if immediate:
         celery_app.send_task(

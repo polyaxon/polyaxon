@@ -40,21 +40,19 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
 
     build_job.archive()
 
-    if not build_job.is_running:
-        return
-
-    project = build_job.project
-    celery_app.send_task(
-        SchedulerCeleryTasks.BUILD_JOBS_STOP,
-        kwargs={
-            'project_name': project.unique_name,
-            'project_uuid': project.uuid.hex,
-            'build_job_name': build_job.unique_name,
-            'build_job_uuid': build_job.uuid.hex,
-            'update_status': True,
-            'collect_logs': False,
-            'message': 'Build is scheduled for deletion.'
-        })
+    if build_job.is_running:
+        project = build_job.project
+        celery_app.send_task(
+            SchedulerCeleryTasks.BUILD_JOBS_STOP,
+            kwargs={
+                'project_name': project.unique_name,
+                'project_uuid': project.uuid.hex,
+                'build_job_name': build_job.unique_name,
+                'build_job_uuid': build_job.uuid.hex,
+                'update_status': True,
+                'collect_logs': False,
+                'message': 'Build is scheduled for deletion.'
+            })
 
     if immediate:
         celery_app.send_task(

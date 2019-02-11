@@ -78,21 +78,19 @@ def jobs_schedule_deletion(job_id, immediate=False):
 
     job.archive()
 
-    if not job.is_running:
-        return
-
-    project = job.project
-    celery_app.send_task(
-        SchedulerCeleryTasks.JOBS_STOP,
-        kwargs={
-            'project_name': project.unique_name,
-            'project_uuid': project.uuid.hex,
-            'job_name': job.unique_name,
-            'job_uuid': job.uuid.hex,
-            'update_status': True,
-            'collect_logs': False,
-            'message': 'Job is scheduled for deletion.'
-        })
+    if job.is_running:
+        project = job.project
+        celery_app.send_task(
+            SchedulerCeleryTasks.JOBS_STOP,
+            kwargs={
+                'project_name': project.unique_name,
+                'project_uuid': project.uuid.hex,
+                'job_name': job.unique_name,
+                'job_uuid': job.uuid.hex,
+                'update_status': True,
+                'collect_logs': False,
+                'message': 'Job is scheduled for deletion.'
+            })
 
     if immediate:
         celery_app.send_task(

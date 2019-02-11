@@ -163,24 +163,22 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
 
     experiment.archive()
 
-    if not experiment.is_running:
-        return
-
-    project = experiment.project
-    celery_app.send_task(
-        SchedulerCeleryTasks.EXPERIMENTS_STOP,
-        kwargs={
-            'project_name': project.unique_name,
-            'project_uuid': project.uuid.hex,
-            'experiment_name': experiment.unique_name,
-            'experiment_uuid': experiment.uuid.hex,
-            'experiment_group_name': None,
-            'experiment_group_uuid': None,
-            'specification': experiment.config,
-            'update_status': True,
-            'collect_logs': False,
-            'message': 'Experiment is scheduled for deletion.'
-        })
+    if experiment.is_running:
+        project = experiment.project
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_STOP,
+            kwargs={
+                'project_name': project.unique_name,
+                'project_uuid': project.uuid.hex,
+                'experiment_name': experiment.unique_name,
+                'experiment_uuid': experiment.uuid.hex,
+                'experiment_group_name': None,
+                'experiment_group_uuid': None,
+                'specification': experiment.config,
+                'update_status': True,
+                'collect_logs': False,
+                'message': 'Experiment is scheduled for deletion.'
+            })
 
     if immediate:
         celery_app.send_task(
