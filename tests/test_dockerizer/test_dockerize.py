@@ -65,8 +65,6 @@ class TestDockerize(BaseTest):
         # By default it should user FROM image declare WORKDIR and COPY code
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
-                                      image_tag=build_job.uuid.hex,
-                                      image_name='foo',
                                       build_steps=build_job.build_steps,
                                       env_vars=build_job.env_vars)
 

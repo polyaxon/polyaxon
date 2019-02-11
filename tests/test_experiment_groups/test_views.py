@@ -14,14 +14,17 @@ from api.experiment_groups.serializers import (
 from api.experiments.serializers import ExperimentMetricSerializer
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
+from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
+from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_groups import (
     ExperimentGroup,
     ExperimentGroupChartView,
     ExperimentGroupStatus
 )
 from db.models.experiments import Experiment, ExperimentMetric
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiment_groups import (
     ExperimentGroupChartViewFactory,
     ExperimentGroupFactory,
@@ -571,7 +574,11 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:
-            self.object = self.factory_class(project=project)
+            with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+                build = BuildJobFactory()
+                BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
+                mock_start.return_value = build, True, True
+                self.object = self.factory_class(project=project)
 
         assert mock_fct.call_count == 2
         # Add a running experiment

@@ -74,6 +74,12 @@ class BuildJob(AbstractJob,
         unique_together = (('project', 'name'),)
 
     @cached_property
+    def commit(self):
+        if self.code_reference:
+            return self.code_reference.commit
+        return None
+
+    @cached_property
     def unique_name(self) -> str:
         return BUILD_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,

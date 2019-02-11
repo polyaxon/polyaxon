@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Mapping, Optional
 
 import docker
 
-from docker.errors import NotFound, DockerException
+from docker.errors import DockerException, NotFound
 
 import conf
 import polyaxon_gpustat

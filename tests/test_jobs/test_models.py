@@ -10,7 +10,9 @@ from django.test.client import MULTIPART_CONTENT
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.managers.deleted import ArchivedManager, LiveManager
+from db.models.build_jobs import BuildJobStatus
 from db.models.jobs import Job, JobStatus
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
@@ -70,13 +72,10 @@ class TestJobModel(BaseTest):
             'status', flat=True)) == [JobLifeCycle.CREATED]
 
         with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_start.return_value = True
-                mock_check.return_value = False
-                jobs_build(job_id=job.id)
+            mock_start.return_value = True
+            jobs_build(job_id=job.id)
 
         assert mock_start.call_count == 1
-        assert mock_check.call_count == 1
         assert JobStatus.objects.filter(job=job).count() == 2
         assert list(JobStatus.objects.filter(job=job).values_list(
             'status', flat=True)) == [JobLifeCycle.CREATED,
@@ -98,14 +97,13 @@ class TestJobModel(BaseTest):
         assert list(JobStatus.objects.filter(job=job).values_list(
             'status', flat=True)) == [JobLifeCycle.CREATED]
 
-        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_start.return_value = False
-                mock_check.return_value = True
-                jobs_build(job_id=job.id)
+        with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+            build = BuildJobFactory()
+            BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
+            mock_start.return_value = build, True, True
+            jobs_build(job_id=job.id)
 
-        assert mock_start.call_count == 0
-        assert mock_check.call_count == 1
+        assert mock_start.call_count == 1
         assert JobStatus.objects.filter(job=job).count() == 2
         assert list(JobStatus.objects.filter(job=job).values_list(
             'status', flat=True)) == [JobLifeCycle.CREATED,
@@ -121,11 +119,11 @@ class TestJobModel(BaseTest):
         mock_instance.start_job.return_value = {'pod': 'pod_content'}
         mock_instance.spec = config
 
-        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_start.return_value = False
-                mock_check.return_value = True
-                job = JobFactory(config=config.parsed_data)
+        with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+            build = BuildJobFactory()
+            BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
+            mock_start.return_value = build, True, True
+            job = JobFactory(config=config.parsed_data)
 
         assert JobStatus.objects.filter(job=job).count() == 2
         assert list(JobStatus.objects.filter(job=job).values_list(
@@ -141,11 +139,13 @@ class TestJobModel(BaseTest):
         mock_instance.start_job.return_value = {'pod': 'pod_content'}
         mock_instance.spec = config
 
-        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_start.return_value = False
-                mock_check.return_value = True
-                job = JobFactory(config=config.parsed_data)
+        with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+            build = BuildJobFactory()
+            BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
+            mock_start.return_value = build, True, True
+            job = JobFactory(config=config.parsed_data)
+
+        assert mock_start.call_count == 1
 
         assert JobStatus.objects.filter(job=job).count() == 2
         assert list(JobStatus.objects.filter(job=job).values_list(

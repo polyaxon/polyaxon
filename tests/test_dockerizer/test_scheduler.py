@@ -26,17 +26,14 @@ class TestDockerizerScheduler(BaseTest):
         """Test the case when the job needs to be built and started."""
         assert BuildJob.objects.count() == 0
         with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_start.return_value = True
-                mock_check.return_value = False
-                _, image_exists, build_status = dockerizer_scheduler.create_build_job(
-                    user=self.project.user,
-                    project=self.project,
-                    config={'image': 'bar:foo'},
-                    code_reference=self.code_reference
+            mock_start.return_value = True
+            _, image_exists, build_status = dockerizer_scheduler.create_build_job(
+                user=self.project.user,
+                project=self.project,
+                config={'image': 'bar:foo'},
+                code_reference=self.code_reference
                 )
         assert mock_start.call_count == 1
-        assert mock_check.call_count == 1
         assert image_exists is False
         assert build_status is True
         assert BuildJob.objects.count() == 1
@@ -53,16 +50,13 @@ class TestDockerizerScheduler(BaseTest):
 
         assert BuildJob.objects.count() == 1
         with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_check.return_value = False
-                build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
-                    user=self.project.user,
-                    project=self.project,
-                    config=config,
-                    code_reference=self.code_reference
-                )
+            build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
+                user=self.project.user,
+                project=self.project,
+                config=config,
+                code_reference=self.code_reference
+            )
         assert mock_start.call_count == 0
-        assert mock_check.call_count == 1
         assert image_exists is False
         assert build_status is True
         assert BuildJob.objects.count() == 1
@@ -79,41 +73,14 @@ class TestDockerizerScheduler(BaseTest):
 
         assert BuildJob.objects.count() == 1
         with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_start.return_value = True
-                mock_check.return_value = False
-                build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
-                    user=self.project.user,
-                    project=self.project,
-                    config=config,
-                    code_reference=self.code_reference
-                )
+            mock_start.return_value = True
+            build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
+                user=self.project.user,
+                project=self.project,
+                config=config,
+                code_reference=self.code_reference
+            )
         assert mock_start.call_count == 1
-        assert mock_check.call_count == 1
         assert image_exists is False
         assert build_status is True
         assert BuildJob.objects.count() == 2
-
-    def test_scheduler_create_build_job_image_already_exists(self):
-        """Check the case when the image is already built."""
-        config = {'image': 'busybox:tag'}
-        BuildJobFactory(project=self.project,
-                        user=self.project.user,
-                        code_reference=self.code_reference,
-                        config=BuildSpecification.create_specification(config))
-
-        assert BuildJob.objects.count() == 1
-        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_check.return_value = True
-                _, image_exists, build_status = dockerizer_scheduler.create_build_job(
-                    user=self.project.user,
-                    project=self.project,
-                    config=config,
-                    code_reference=self.code_reference
-                )
-        assert mock_start.call_count == 0
-        assert mock_check.call_count == 1
-        assert image_exists is True
-        assert build_status is False
-        assert BuildJob.objects.count() == 1

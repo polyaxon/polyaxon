@@ -1,8 +1,7 @@
 import argparse
 
-from polyaxon_client.tracking import BuildJob
-
 from builders.build import cmd
+from polyaxon_client.tracking import BuildJob
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

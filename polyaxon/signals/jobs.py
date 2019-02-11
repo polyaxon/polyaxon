@@ -32,7 +32,6 @@ def job_pre_save(sender, **kwargs):
     # that is not an external repo (because we did not clone it yet)
     # if the instance has a primary key then is getting updated
     condition = (
-        instance.specification.build.git or
         instance.code_reference or
         not instance.project.has_code)
     if condition:

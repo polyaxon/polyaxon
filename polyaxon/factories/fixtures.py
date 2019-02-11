@@ -287,7 +287,6 @@ exec_experiment_ext_repo_spec_content = """---
 
     build:
       image: my_image
-      git: https://github.com/foo/bar/archive/master.zip
 
     run:
       cmd: video_prediction_train --model=DNA --num_masks=1

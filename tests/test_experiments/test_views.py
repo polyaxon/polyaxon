@@ -969,7 +969,9 @@ class TestExperimentDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        self.object = self.factory_class(project=project)
+        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as spawner_mock_start:
+            self.object = self.factory_class(project=project)
+        assert spawner_mock_start.call_count == 1
         self.url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
                                                       project.user.username,
                                                       project.name,
@@ -1058,7 +1060,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
 
         # path in_cluster
         data = {'in_cluster': None}
-        assert self.object.in_cluster is False
+        assert new_object.in_cluster is False
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
@@ -1067,7 +1069,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
 
         # path in_cluster
         data = {'in_cluster': False}
-        assert self.object.in_cluster is True
+        assert new_object.in_cluster is True
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
@@ -1139,7 +1141,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert ExperimentJob.objects.count() == 2
         with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_stop:
             resp = self.auth_client.delete(self.url)
-        assert spawner_mock_stop.call_count == 0
+        assert spawner_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert self.model_class.all.count() == 1

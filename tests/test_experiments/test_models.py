@@ -17,10 +17,12 @@ from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from crons.tasks.experiments_statuses import experiments_sync_jobs_statuses
 from db.managers.deleted import ArchivedManager, LiveManager
+from db.models.build_jobs import BuildJobStatus
 from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentStatus
 from db.models.job_resources import JobResources
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -184,7 +186,12 @@ class TestExperimentModel(BaseTest):
         assert Experiment.objects.count() == 0
         assert mock_stop.call_count == 0  # No running experiment
 
-    def test_non_independent_experiment_creation_doesnt_trigger_start(self):
+    @patch('scheduler.dockerizer_scheduler.create_build_job')
+    def test_non_independent_experiment_creation_doesnt_trigger_start(self, create_build_job):
+        build = BuildJobFactory()
+        BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
+        create_build_job.return_value = build, True, True
+
         with patch('hpsearch.tasks.hp_create.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
@@ -249,9 +256,7 @@ class TestExperimentModel(BaseTest):
             'status', flat=True)) == [ExperimentLifeCycle.CREATED]
 
         with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_check.return_value = False
-                experiments_build(experiment_id=experiment.id)
+            experiments_build(experiment_id=experiment.id)
 
         assert mock_start.call_count == 1
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 2
@@ -277,12 +282,13 @@ class TestExperimentModel(BaseTest):
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED]
 
-        with patch('scheduler.dockerizer_scheduler.start_dockerizer') as mock_start:
-            with patch('scheduler.dockerizer_scheduler.check_image') as mock_check:
-                mock_check.return_value = True
-                experiments_build(experiment_id=experiment.id)
+        with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+            build = BuildJobFactory()
+            BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
+            mock_start.return_value = build, True, True
+            experiments_build(experiment_id=experiment.id)
 
-        assert mock_start.call_count == 0
+        assert mock_start.call_count == 1
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,

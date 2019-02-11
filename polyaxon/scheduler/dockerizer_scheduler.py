@@ -5,6 +5,7 @@ from kubernetes.client.rest import ApiException
 
 import auditor
 import conf
+
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_image_name
@@ -87,7 +88,7 @@ def start_dockerizer(build_job):
         project_uuid=build_job.project.uuid.hex,
         job_name=build_job.unique_name,
         job_uuid=build_job.uuid.hex,
-        commit=build_job.code_reference.commit,
+        commit=build_job.commit,
         from_image=build_job.image,
         image_tag=build_job.uuid.hex,
         image_name=get_image_name(
