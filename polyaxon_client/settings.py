@@ -7,7 +7,7 @@ import rhea
 
 from hestia.auth import AuthenticationTypes
 from hestia.user_path import polyaxon_user_path
-from rhea import RheaError
+from rhea import RheaError  # noqa
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
 CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
