@@ -32,7 +32,7 @@ class TestDockerizerScheduler(BaseTest):
                 project=self.project,
                 config={'image': 'bar:foo'},
                 code_reference=self.code_reference
-                )
+            )
         assert mock_start.call_count == 1
         assert image_exists is False
         assert build_status is True

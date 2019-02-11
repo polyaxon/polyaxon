@@ -406,7 +406,7 @@ class TestJobDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
             resp = self.auth_client.delete(self.url)
-        assert spawner_mock_stop.call_count == 1
+        assert spawner_mock_stop.called
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         # Deleted
         assert self.model_class.objects.count() == 0

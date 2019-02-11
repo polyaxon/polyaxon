@@ -263,10 +263,10 @@ class TestProjectDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url)
         assert xp_group_scheduler_mock.call_count == 2
         assert xp_scheduler_mock.call_count == 1
-        assert job_scheduler_mock.call_count == 1
-        assert build_scheduler_mock.call_count == 1
-        assert notebook_scheduler_mock.call_count == 1
-        assert tensorboard_scheduler_mock.call_count == 1
+        assert job_scheduler_mock.called
+        assert build_scheduler_mock.called
+        assert notebook_scheduler_mock.called
+        assert tensorboard_scheduler_mock.called
 
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
@@ -293,7 +293,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 3
         with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as xp_mock_stop:
             resp = self.auth_client.delete(self.url)
-        assert xp_mock_stop.call_count == 1
+        assert xp_mock_stop.called
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert ExperimentGroup.all.count() == 0
@@ -312,7 +312,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 3
         with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as xp_mock_stop:
             resp = self.auth_client.delete(self.url)
-        assert xp_mock_stop.call_count == 1
+        assert xp_mock_stop.called
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert Experiment.all.count() == 0
@@ -326,7 +326,7 @@ class TestProjectDetailViewV1(BaseViewTest):
 
         with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as job_mock_stop:
             resp = self.auth_client.delete(self.url)
-        assert job_mock_stop.call_count == 2
+        assert job_mock_stop.called
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert Job.all.count() == 0
@@ -337,10 +337,11 @@ class TestProjectDetailViewV1(BaseViewTest):
             job = BuildJobFactory(project=self.object)
             job.set_status(JobLifeCycle.SCHEDULED)
         assert BuildJob.objects.count() == 2
+        assert BuildJob.all.count() == 2
 
         with patch('scheduler.tasks.build_jobs.build_jobs_stop.apply_async') as job_mock_stop:
             resp = self.auth_client.delete(self.url)
-        assert job_mock_stop.call_count == 2
+        assert job_mock_stop.called
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert BuildJob.all.count() == 0
@@ -363,8 +364,8 @@ class TestProjectDetailViewV1(BaseViewTest):
                        'tensorboards_stop.apply_async') as tensorboard_mock_stop:
                 resp = self.auth_client.delete(self.url)
 
-        assert notebook_mock_stop.call_count == 1
-        assert tensorboard_mock_stop.call_count == 1
+        assert notebook_mock_stop.called
+        assert tensorboard_mock_stop.called
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert TensorboardJob.objects.count() == 0

@@ -1037,7 +1037,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         exp_query = queries.experiments_details.get(id=exp.id)
         assert resp.data == self.serializer_class(exp_query).data
 
-    def test_patch_exp(self):
+    def test_patch_exp(self):  # pylint:disable=too-many-statements
         new_description = 'updated_xp_name'
         data = {'description': new_description}
         assert self.object.description != data['description']
