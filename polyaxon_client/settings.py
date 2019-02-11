@@ -13,7 +13,8 @@ CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
 CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonconfig')
 
 global_config = rhea.Rhea.read_configs([
-    rhea.ConfigSpec(CONFIG_PATH, config_type='.json', check_if_exists=False)
+    rhea.ConfigSpec(CONFIG_PATH, config_type='.json', check_if_exists=False),
+    {'dummy': 'dummy'}
 ])
 config = rhea.Rhea.read_configs([
     rhea.ConfigSpec(CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False),
