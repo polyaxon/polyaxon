@@ -83,6 +83,8 @@ def start_dockerizer(build_job):
     build_job.set_status(JobLifeCycle.SCHEDULED)
     spawner_class = get_spawner_class(build_job.specification.build.backend)
 
+    local_build = build_job.specification.build.backend in {BuildBackend.NATIVE, None}
+
     spawner = spawner_class(
         project_name=build_job.project.unique_name,
         project_uuid=build_job.project.uuid.hex,
@@ -93,7 +95,7 @@ def start_dockerizer(build_job):
         image_tag=build_job.uuid.hex,
         image_name=get_image_name(
             build_job,
-            local=build_job.specification.build.backend == BuildBackend.NATIVE),
+            local=local_build),
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars,
         nocache=build_job.specification.build.nocache,
