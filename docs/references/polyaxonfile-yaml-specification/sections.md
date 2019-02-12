@@ -79,7 +79,7 @@ Example:
 concurrency: 3
 ```
 
-#`## matr`ix`
+### matrix
 
 The matrix section works the same way as travisCI matrix section,
 and it basically creates multiple specifications.
