@@ -119,4 +119,19 @@ environment:
 ## Using the store manager to access data
 
 In your experiment/job, Polyaxon exposes all data [paths](/references/tracking-api/paths/#get-data-paths) scheduled for the run, 
-and provides an interface to get an authenticated client for each one of these Paths. 
+and provides an interface to get an authenticated client for each one of these Paths.
+
+For every path in the data paths dictionary, you can create an authenticated store using the `StoreManager` 
+
+```python
+from polystores.stores.manager import StoreManager
+
+store = StoreManager(path=data_path)
+
+store.delete(path)
+store.ls(path)
+store.upload_file(filename)
+store.upload_dir(dirname)
+store.download_file(filename, local_path)
+store.download_dir(dirname, local_path)
+```

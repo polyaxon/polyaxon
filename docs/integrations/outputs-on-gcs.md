@@ -14,7 +14,7 @@ tags:
   - storage
 featured: true
 visibility: public
-status: publish
+status: published
 ---
 
 ## Create an Google cloud storage bucket
