@@ -5,6 +5,7 @@ import * as actions from '../../actions/build';
 import { BuildModel } from '../../models/build';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
+import BuildBackendMetaInfo from '../metaInfo/BuildBackendMetaInfo';
 import CommitMetaInfo from '../metaInfo/commitMetaInfo';
 import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo';
 import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
@@ -72,6 +73,9 @@ export default class BuildOverview extends React.Component<Props, {}> {
             </div>
             <div className="meta">
               <CommitMetaInfo commit={build.commit} inline={true}/>
+              <BuildBackendMetaInfo value={build.backend} inline={true}/>
+            </div>
+            <div className="meta">
               <PodIdMetaInfo value={build.pod_id} inline={true}/>
               <NodeMetaInfo node={build.node_scheduled} inline={true}/>
             </div>

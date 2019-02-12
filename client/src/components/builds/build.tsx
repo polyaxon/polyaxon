@@ -9,6 +9,7 @@ import { BuildModel } from '../../models/build';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
+import BuildBackendMetaInfo from '../metaInfo/BuildBackendMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
@@ -48,6 +49,9 @@ function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         }
         <Description description={build.description}/>
+        <div className="meta">
+          <BuildBackendMetaInfo value={build.backend} inline={true}/>
+        </div>
         <div className="meta">
           <PodIdMetaInfo value={build.pod_id} inline={true}/>
         </div>
