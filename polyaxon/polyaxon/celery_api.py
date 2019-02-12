@@ -16,7 +16,7 @@ class CeleryTask(Task):
     abstract = True
 
     def on_success(self, retval, task_id, args, kwargs):
-        _logger.info("Async task succeeded", extra={'task name': self.name})
+        _logger.debug("Async task succeeded", extra={'task name': self.name})
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         extra = {
