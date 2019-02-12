@@ -9,8 +9,14 @@ from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from libs.repos.utils import assign_code_reference
 from signals.tags import set_tags
+from schemas.build_backends import BuildBackend
 
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
+
+
+def set_backend(instance):
+    if not instance.backend and instance.specification:
+        instance.backend = instance.specification.build.backend or BuildBackend.NATIVE
 
 
 @receiver(pre_save, sender=BuildJob, dispatch_uid="build_job_pre_save")
@@ -19,6 +25,7 @@ _logger = logging.getLogger('polyaxon.signals.build_jobs')
 def build_job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     set_tags(instance=instance)
+    set_backend(instance=instance)
     assign_code_reference(instance)
 
 

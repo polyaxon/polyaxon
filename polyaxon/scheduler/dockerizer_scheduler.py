@@ -81,9 +81,9 @@ def get_spawner_class(builder):
 def start_dockerizer(build_job):
     # Update job status to show that its started
     build_job.set_status(JobLifeCycle.SCHEDULED)
-    spawner_class = get_spawner_class(build_job.specification.build.backend)
+    spawner_class = get_spawner_class(build_job.backend)
 
-    local_build = build_job.specification.build.backend in {BuildBackend.NATIVE, None}
+    local_build = build_job.backend in {BuildBackend.NATIVE, None}
 
     spawner = spawner_class(
         project_name=build_job.project.unique_name,

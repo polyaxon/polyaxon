@@ -44,6 +44,7 @@ class BuildJobSerializer(serializers.ModelSerializer):
             'last_status',
             'tags',
             'project',
+            'backend',
         )
 
     def get_user(self, obj):
@@ -79,6 +80,7 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, InClusterMixin, Tag
             'num_experiments',
             'dockerfile',
             'commit',
+            'backend',
         )
 
     def get_commit(self, obj: 'BuildJob'):

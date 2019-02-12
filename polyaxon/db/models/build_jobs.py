@@ -57,6 +57,10 @@ class BuildJob(AbstractJob,
         blank=True,
         null=True,
         related_name='+')
+    backend = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True)
     dockerfile = models.TextField(
         blank=True,
         null=True,

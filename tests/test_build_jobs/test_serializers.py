@@ -36,6 +36,7 @@ class TestBuildJobSerializer(BaseTest):
         'started_at',
         'finished_at',
         'tags',
+        'backend',
         'project',
     }
 
@@ -139,6 +140,7 @@ class TestBuildJobDetailSerializer(BaseTest):
         'num_jobs',
         'num_experiments',
         'dockerfile',
+        'backend',
         'commit',
         'bookmarked'
     }
