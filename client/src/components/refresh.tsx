@@ -7,7 +7,7 @@ export interface Props {
 
 function Refresh({callback, pullRight}: Props) {
   const refresh = (
-    <span>
+    <span className="pull-right">
       <button
         className="btn btn-sm btn-default"
         onClick={callback}
