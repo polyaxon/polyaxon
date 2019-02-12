@@ -227,11 +227,11 @@ class AuditorJobTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_job_RESTORED(self,
-                            activitylogs_record,
-                            tracker_record,
-                            notifier_record,
-                            executor_record):
+    def test_job_restored(self,
+                          activitylogs_record,
+                          tracker_record,
+                          notifier_record,
+                          executor_record):
         auditor.record(event_type=job_events.JOB_RESTORED,
                        instance=self.job,
                        actor_id=1,
