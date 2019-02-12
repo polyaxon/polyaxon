@@ -17,7 +17,7 @@ tags:
 sidebar: "configuration"
 ---
 
-Polyaxon allows to mount a data volume or a cloud storage to store logs.
+Polyaxon allows to mount a volume or a cloud storage to store logs.
 
 ## Default behaviour
 
@@ -89,6 +89,6 @@ and providing the secret name and key name to use from that secret.
 
 Please refer to this integration sections for more details:
 
- * [Data on GCS](/integrations/logs-on-gcs/)
- * [Data on AWS S3](/integrations/logs-on-s3/)
- * [Data on Azure storage](/integrations/logs-on-azure/)
+ * [Logs on GCS](/integrations/logs-on-gcs/)
+ * [Logs on AWS S3](/integrations/logs-on-s3/)
+ * [Logs on Azure storage](/integrations/logs-on-azure/)

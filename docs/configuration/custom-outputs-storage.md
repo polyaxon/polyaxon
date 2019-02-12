@@ -93,6 +93,6 @@ and providing the secret name and key name to use from that secret.
 
 Please refer to this integration sections for more details:
 
- * [Data on GCS](/integrations/outputs-on-gcs/)
- * [Data on AWS S3](/integrations/outputs-on-s3/)
- * [Data on Azure storage](/integrations/outputs-on-azure/)
+ * [Outputs on GCS](/integrations/outputs-on-gcs/)
+ * [Outputs on AWS S3](/integrations/outputs-on-s3/)
+ * [Outputs on Azure storage](/integrations/outputs-on-azure/)
