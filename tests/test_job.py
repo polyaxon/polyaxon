@@ -101,6 +101,7 @@ class TestBuildJobConfigs(TestCase):
             'tags': ['test'],
             'definition': None,
             'dockerfile': 'some container',
+            'backend': 'kaniko',
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat(),
             'started_at': local_now().isoformat(),

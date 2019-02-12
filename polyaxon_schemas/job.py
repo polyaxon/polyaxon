@@ -102,6 +102,7 @@ class JobConfig(BaseConfig):
 
 class BuildJobSchema(JobSchema):
     dockerfile = fields.Str(allow_none=True)
+    backend = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -111,6 +112,7 @@ class BuildJobSchema(JobSchema):
 class BuildJobConfig(JobConfig):
     SCHEMA = BuildJobSchema
     IDENTIFIER = 'BuildJob'
+    DEFAULT_INCLUDE_ATTRIBUTES = JobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ['backend']
 
     def __init__(self,
                  id=None,  # pylint:disable=redefined-builtin
@@ -137,6 +139,7 @@ class BuildJobConfig(JobConfig):
                  ttl=None,
                  jobs=None,
                  dockerfile=None,
+                 backend=None,
                  total_run=None):
         super(BuildJobConfig, self).__init__(
             id=id,
@@ -165,6 +168,7 @@ class BuildJobConfig(JobConfig):
             total_run=total_run,
         )
         self.dockerfile = dockerfile
+        self.backend = backend
 
 
 class TensorboardJobSchema(JobSchema):
