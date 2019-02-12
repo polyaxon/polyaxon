@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_client import settings
-from polyaxon_client.tracking import Job
+from polyaxon_client.tracking.job import Job
 
 
 class BuildJob(Job):
