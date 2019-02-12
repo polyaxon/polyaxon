@@ -63,9 +63,9 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
 
 
 def get_default_spawner():
-    if conf.get('DOCKERIZER_BACKEND') == BuildBackend.NATIVE:
+    if conf.get('BUILD_BACKEND') == BuildBackend.NATIVE:
         return DockerizerSpawner
-    elif conf.get('DOCKERIZER_BACKEND') == BuildBackend.KANIKO:
+    elif conf.get('BUILD_BACKEND') == BuildBackend.KANIKO:
         return KanikoSpawner
     return DockerizerSpawner
 

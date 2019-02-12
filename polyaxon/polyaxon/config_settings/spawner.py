@@ -112,9 +112,9 @@ JOB_INIT_DOCKER_IMAGE_PULL_POLICY = config.get_string(
     'POLYAXON_JOB_INIT_DOCKER_IMAGE_PULL_POLICY',
     is_optional=True)
 
-DOCKERIZER_BACKEND = config.get_string('POLYAXON_DOCKERIZER_BACKEND',
-                                       is_optional=True,
-                                       default='native')
+BUILD_BACKEND = config.get_string('POLYAXON_BUILD_BACKEND',
+                                  is_optional=True,
+                                  default='native')
 JOB_KANIKO_IMAGE = config.get_string('POLYAXON_JOB_KANIKO_IMAGE')
 JOB_KANIKO_IMAGE_PULL_POLICY = config.get_string(
     'POLYAXON_JOB_KANIKO_IMAGE_PULL_POLICY',
