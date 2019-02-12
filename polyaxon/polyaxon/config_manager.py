@@ -54,7 +54,7 @@ class ConfigManager(rhea.Rhea):
         self._log_level = self.get_string('POLYAXON_LOG_LEVEL',
                                           is_local=True,
                                           is_optional=True,
-                                          default='INFO').upper()
+                                          default='WARNING').upper()
         self._enable_scheduler = self.get_boolean('POLYAXON_ENABLE_SCHEDULER',
                                                   is_optional=True,
                                                   default=True)
