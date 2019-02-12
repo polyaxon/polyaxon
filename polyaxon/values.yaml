@@ -399,7 +399,7 @@ dockerizer:
 kaniko:
   image: gcr.io/kaniko-project/executor
   imageTag: latest
-  imagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
 
 hooks:
   image: polyaxon/polyaxon-manage

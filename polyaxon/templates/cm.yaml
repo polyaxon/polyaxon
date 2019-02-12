@@ -184,6 +184,9 @@ data:
   POLYAXON_JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY: "{{ .Values.sidecar.imagePullPolicy }}"
   POLYAXON_JOB_INIT_DOCKER_IMAGE: "{{ .Values.init.image }}:{{ .Values.init.imageTag }}"
   POLYAXON_JOB_INIT_DOCKER_IMAGE_PULL_POLICY: "{{ .Values.init.imagePullPolicy }}"
+  {{- if (index .Values.buildBackend }}
+  POLYAXON_BUILD_BACKEND: "{{ .Values.buildBackend }}"
+  {{- end }}
   POLYAXON_JOB_DOCKERIZER_IMAGE: "{{ .Values.dockerizer.image }}:{{ .Values.dockerizer.imageTag }}"
   POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY: "{{ .Values.dockerizer.imagePullPolicy }}"
   POLYAXON_JOB_KANIKO_IMAGE: "{{ .Values.kaniko.image }}:{{ .Values.kaniko.imageTag }}"
