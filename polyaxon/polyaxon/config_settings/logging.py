@@ -48,25 +48,29 @@ LOGGING = {
         },
     },
     'loggers': {
+        'celery': {
+            'handlers': config.log_handlers,
+            'level': config.log_level
+        },
         'polyaxon.streams': {
-            'handlers': ['console', ],
             'propagate': True,
+            'handlers': config.log_handlers,
             'level': config.log_level,
         },
         'polyaxon.monitors': {
-            'handlers': ['console', ],
             'propagate': True,
+            'handlers': config.log_handlers,
             'level': config.log_level,
         },
         'polyaxon.dockerizer': {
-            'handlers': ['console', ],
             'propagate': True,
+            'handlers': config.log_handlers,
             'level': config.log_level,
         },
         'django.request': {
-            'level': config.log_level,
             'propagate': True,
-            'handlers': ['console', ],
+            'handlers': config.log_handlers,
+            'level': config.log_level,
         },
     },
 }

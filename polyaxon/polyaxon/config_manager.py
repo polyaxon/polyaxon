@@ -187,6 +187,10 @@ class ConfigManager(rhea.Rhea):
         return False
 
     @property
+    def log_handlers(self):
+        return ['console', 'sentry']
+
+    @property
     def log_level(self):
         if config.is_staging_env:
             return self._log_level
