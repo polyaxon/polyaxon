@@ -18,7 +18,7 @@ status: published
 
 ## Overview
 
-You can easily add amany private registries to Polyaxon to pull private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.
+You can easily add many private registries to Polyaxon to pull private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.
 
 ## Add your private docker registry to the Polyaxon deployment config
 
