@@ -26,6 +26,7 @@ from db.models.utils import (
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config
+from schemas.build_backends import BuildBackend
 from schemas.specifications import BuildSpecification
 
 
@@ -60,7 +61,8 @@ class BuildJob(AbstractJob,
     backend = models.CharField(
         max_length=16,
         blank=True,
-        null=True)
+        null=True,
+        default=BuildBackend.NATIVE)
     dockerfile = models.TextField(
         blank=True,
         null=True,
