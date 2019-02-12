@@ -522,7 +522,7 @@ class TestExperimentModel(BaseTest):
         assert Experiment.objects.count() == 0
         assert Experiment.all.count() == 1
 
-        experiment.unarchive()
+        experiment.restore()
         assert experiment.deleted is False
         assert Experiment.objects.count() == 1
         assert Experiment.all.count() == 1

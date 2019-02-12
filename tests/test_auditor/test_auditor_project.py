@@ -135,12 +135,12 @@ class AuditorProjectTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_project_unarchived(self,
-                                activitylogs_record,
-                                tracker_record,
-                                notifier_record,
-                                executor_record):
-        auditor.record(event_type=project_events.PROJECT_UNARCHIVED,
+    def test_project_restored(self,
+                              activitylogs_record,
+                              tracker_record,
+                              notifier_record,
+                              executor_record):
+        auditor.record(event_type=project_events.PROJECT_RESTORED,
                        instance=self.project,
                        actor_name='foo',
                        actor_id=1)

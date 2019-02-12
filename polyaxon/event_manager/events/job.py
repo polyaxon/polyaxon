@@ -12,7 +12,7 @@ JOB_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.JOB,
 JOB_CREATED = '{}.{}'.format(event_subjects.JOB, event_actions.CREATED)
 JOB_VIEWED = '{}.{}'.format(event_subjects.JOB, event_actions.VIEWED)
 JOB_ARCHIVED = '{}.{}'.format(event_subjects.JOB, event_actions.ARCHIVED)
-JOB_UNARCHIVED = '{}.{}'.format(event_subjects.JOB, event_actions.UNARCHIVED)
+JOB_RESTORED = '{}.{}'.format(event_subjects.JOB, event_actions.RESTORED)
 JOB_BOOKMARKED = '{}.{}'.format(event_subjects.JOB, event_actions.BOOKMARKED)
 JOB_UNBOOKMARKED = '{}.{}'.format(event_subjects.JOB, event_actions.UNBOOKMARKED)
 JOB_UPDATED = '{}.{}'.format(event_subjects.JOB, event_actions.UPDATED)
@@ -139,8 +139,8 @@ class JobArchivedEvent(Event):
     )
 
 
-class JobUnarchivedEvent(Event):
-    event_type = JOB_UNARCHIVED
+class JobRestoredEvent(Event):
+    event_type = JOB_RESTORED
     actor = True
     attributes = (
         Attribute('id'),

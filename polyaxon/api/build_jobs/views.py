@@ -44,7 +44,7 @@ from event_manager.events.build_job import (
     BUILD_JOB_LOGS_VIEWED,
     BUILD_JOB_STATUSES_VIEWED,
     BUILD_JOB_STOPPED_TRIGGERED,
-    BUILD_JOB_UNARCHIVED,
+    BUILD_JOB_RESTORED,
     BUILD_JOB_UPDATED,
     BUILD_JOB_VIEWED
 )
@@ -133,7 +133,7 @@ class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEn
 
 
 class BuildArchiveView(BuildEndpoint, CreateEndpoint):
-    """Unarchive an Build."""
+    """Restore an Build."""
     serializer_class = BuildJobSerializer
 
     def post(self, request, *args, **kwargs):
@@ -148,18 +148,18 @@ class BuildArchiveView(BuildEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_200_OK)
 
 
-class BuildUnarchiveView(BuildEndpoint, CreateEndpoint):
-    """Unarchive an Build."""
+class BuildRestoreView(BuildEndpoint, CreateEndpoint):
+    """Restore an Build."""
     queryset = BuildJob.all
     serializer_class = BuildJobSerializer
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        auditor.record(event_type=BUILD_JOB_UNARCHIVED,
+        auditor.record(event_type=BUILD_JOB_RESTORED,
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        obj.unarchive()
+        obj.restore()
         return Response(status=status.HTTP_200_OK)
 
 

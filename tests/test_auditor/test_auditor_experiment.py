@@ -133,12 +133,12 @@ class AuditorExperimentTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_unarchived(self,
-                                   activitylogs_record,
-                                   tracker_record,
-                                   notifier_record,
-                                   executor_record):
-        auditor.record(event_type=experiment_events.EXPERIMENT_UNARCHIVED,
+    def test_experiment_restored(self,
+                                 activitylogs_record,
+                                 tracker_record,
+                                 notifier_record,
+                                 executor_record):
+        auditor.record(event_type=experiment_events.EXPERIMENT_RESTORED,
                        instance=self.experiment,
                        actor_name='foo',
                        actor_id=1)

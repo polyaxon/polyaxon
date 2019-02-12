@@ -47,7 +47,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_METRICS_VIEWED,
     EXPERIMENT_GROUP_STATUSES_VIEWED,
     EXPERIMENT_GROUP_STOPPED_TRIGGERED,
-    EXPERIMENT_GROUP_UNARCHIVED,
+    EXPERIMENT_GROUP_RESTORED,
     EXPERIMENT_GROUP_UPDATED,
     EXPERIMENT_GROUP_VIEWED
 )
@@ -123,7 +123,7 @@ class ExperimentGroupDetailView(ExperimentGroupEndpoint,
 
 
 class ExperimentGroupArchiveView(ExperimentGroupEndpoint, CreateEndpoint):
-    """Unarchive an experiment."""
+    """Restore an experiment."""
     serializer_class = ExperimentGroupSerializer
 
     def post(self, request, *args, **kwargs):
@@ -138,18 +138,18 @@ class ExperimentGroupArchiveView(ExperimentGroupEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_200_OK)
 
 
-class ExperimentGroupUnarchiveView(ExperimentGroupEndpoint, CreateEndpoint):
-    """Unarchive an experiment."""
+class ExperimentGroupRestoreView(ExperimentGroupEndpoint, CreateEndpoint):
+    """Restore an experiment."""
     queryset = ExperimentGroup.all
     serializer_class = ExperimentGroupSerializer
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        auditor.record(event_type=EXPERIMENT_GROUP_UNARCHIVED,
+        auditor.record(event_type=EXPERIMENT_GROUP_RESTORED,
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        obj.unarchive()
+        obj.restore()
         return Response(status=status.HTTP_200_OK)
 
 

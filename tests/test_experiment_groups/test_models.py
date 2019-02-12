@@ -772,7 +772,7 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.experiments.count() == 0
         assert experiment_group.all_experiments.count() == 2
 
-        experiment_group.unarchive()
+        experiment_group.restore()
         assert experiment_group.deleted is False
         assert ExperimentGroup.objects.count() == 1
         assert ExperimentGroup.all.count() == 1

@@ -1200,11 +1200,11 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert self.model_class.all.count() == 1
         assert ExperimentJob.objects.count() == 2
 
-    def test_unarchive(self):
+    def test_restore(self):
         self.object.archive()
         assert self.model_class.objects.count() == 0
         assert self.model_class.all.count() == 1
-        resp = self.auth_client.post(self.url + 'unarchive/')
+        resp = self.auth_client.post(self.url + 'restore/')
         assert resp.status_code == status.HTTP_200_OK
         assert self.model_class.objects.count() == 1
         assert self.model_class.all.count() == 1

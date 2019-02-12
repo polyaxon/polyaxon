@@ -82,8 +82,8 @@ class TestPluginsModel(BaseTest):
         assert NotebookJob.all.count() == 1
         assert TensorboardJob.all.count() == 1
 
-        notebook_job.unarchive()
-        tensorboard_job.unarchive()
+        notebook_job.restore()
+        tensorboard_job.restore()
         assert notebook_job.deleted is False
         assert tensorboard_job.deleted is False
         assert NotebookJob.objects.count() == 1

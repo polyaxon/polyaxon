@@ -11,8 +11,8 @@ EXPERIMENT_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                    event_actions.VIEWED)
 EXPERIMENT_ARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                      event_actions.ARCHIVED)
-EXPERIMENT_UNARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT,
-                                       event_actions.UNARCHIVED)
+EXPERIMENT_RESTORED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                     event_actions.RESTORED)
 EXPERIMENT_STOPPED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                     event_actions.STOPPED)
 EXPERIMENT_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT,
@@ -144,8 +144,8 @@ class ExperimentArchivedEvent(Event):
     )
 
 
-class ExperimentUnarchivedEvent(Event):
-    event_type = EXPERIMENT_UNARCHIVED
+class ExperimentRestoredEvent(Event):
+    event_type = EXPERIMENT_RESTORED
     actor = True
     attributes = (
         Attribute('id'),

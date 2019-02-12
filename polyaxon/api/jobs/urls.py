@@ -13,9 +13,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/archive/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobArchiveView.as_view()),
-    re_path(r'^{}/{}/jobs/{}/unarchive/?$'.format(
+    re_path(r'^{}/{}/jobs/{}/restore/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
-        views.JobUnarchiveView.as_view()),
+        views.JobRestoreView.as_view()),
     re_path(r'^{}/{}/jobs/{}/restart/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobRestartView.as_view()),

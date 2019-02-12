@@ -47,7 +47,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentDeletedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentArchivedEvent.get_event_subject() == 'experiment'
-        assert experiment.ExperimentUnarchivedEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentRestoredEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentBookmarkedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentUnBookmarkedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentStoppedEvent.get_event_subject() == 'experiment'
@@ -83,7 +83,7 @@ class TestEvents(BaseTest):
                 'experiment_group')
         assert (experiment_group.ExperimentGroupArchivedEvent.get_event_subject() ==
                 'experiment_group')
-        assert (experiment_group.ExperimentGroupUnarchivedEvent.get_event_subject() ==
+        assert (experiment_group.ExperimentGroupRestoredEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupBookmarkedEvent.get_event_subject() ==
                 'experiment_group')
@@ -149,7 +149,7 @@ class TestEvents(BaseTest):
         assert job.JobCleanedTriggeredEvent.get_event_subject() == 'job'
         assert job.JobViewedEvent.get_event_subject() == 'job'
         assert job.JobArchivedEvent.get_event_subject() == 'job'
-        assert job.JobUnarchivedEvent.get_event_subject() == 'job'
+        assert job.JobRestoredEvent.get_event_subject() == 'job'
         assert job.JobBookmarkedEvent.get_event_subject() == 'job'
         assert job.JobUnBookmarkedEvent.get_event_subject() == 'job'
         assert job.JobNewStatusEvent.get_event_subject() == 'job'
@@ -174,7 +174,7 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobCleanedTriggeredEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobViewedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobArchivedEvent.get_event_subject() == 'build_job'
-        assert build_job.BuildJobUnarchivedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobRestoredEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobBookmarkedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobUnBookmarkedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobNewStatusEvent.get_event_subject() == 'build_job'
@@ -221,7 +221,7 @@ class TestEvents(BaseTest):
         assert project.ProjectDeletedTriggeredEvent.get_event_subject() == 'project'
         assert project.ProjectViewedEvent.get_event_subject() == 'project'
         assert project.ProjectArchivedEvent.get_event_subject() == 'project'
-        assert project.ProjectUnarchivedEvent.get_event_subject() == 'project'
+        assert project.ProjectRestoredEvent.get_event_subject() == 'project'
         assert project.ProjectBookmarkedEvent.get_event_subject() == 'project'
         assert project.ProjectUnBookmarkedEvent.get_event_subject() == 'project'
         assert project.ProjectSetPublicEvent.get_event_subject() == 'project'
@@ -279,7 +279,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentDeletedEvent.get_event_action() is None
         assert experiment.ExperimentViewedEvent.get_event_action() == 'viewed'
         assert experiment.ExperimentArchivedEvent.get_event_action() == 'archived'
-        assert experiment.ExperimentUnarchivedEvent.get_event_action() == 'unarchived'
+        assert experiment.ExperimentRestoredEvent.get_event_action() == 'restored'
         assert experiment.ExperimentBookmarkedEvent.get_event_action() == 'bookmarked'
         assert experiment.ExperimentUnBookmarkedEvent.get_event_action() == 'unbookmarked'
         assert experiment.ExperimentStoppedEvent.get_event_action() is None
@@ -311,7 +311,7 @@ class TestEvents(BaseTest):
         assert experiment_group.ExperimentGroupDeletedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupViewedEvent.get_event_action() == 'viewed'
         assert experiment_group.ExperimentGroupArchivedEvent.get_event_action() == 'archived'
-        assert experiment_group.ExperimentGroupUnarchivedEvent.get_event_action() == 'unarchived'
+        assert experiment_group.ExperimentGroupRestoredEvent.get_event_action() == 'restored'
         assert experiment_group.ExperimentGroupBookmarkedEvent.get_event_action() == 'bookmarked'
         assert (experiment_group.ExperimentGroupUnBookmarkedEvent.get_event_action() ==
                 'unbookmarked')
@@ -387,7 +387,7 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobCleanedTriggeredEvent.get_event_action() is None
         assert build_job.BuildJobViewedEvent.get_event_action() == 'viewed'
         assert build_job.BuildJobArchivedEvent.get_event_action() == 'archived'
-        assert build_job.BuildJobUnarchivedEvent.get_event_action() == 'unarchived'
+        assert build_job.BuildJobRestoredEvent.get_event_action() == 'restored'
         assert build_job.BuildJobBookmarkedEvent.get_event_action() == 'bookmarked'
         assert build_job.BuildJobUnBookmarkedEvent.get_event_action() == 'unbookmarked'
         assert build_job.BuildJobNewStatusEvent.get_event_action() is None
@@ -434,7 +434,7 @@ class TestEvents(BaseTest):
         assert project.ProjectDeletedTriggeredEvent.get_event_action() == 'deleted'
         assert project.ProjectViewedEvent.get_event_action() == 'viewed'
         assert project.ProjectArchivedEvent.get_event_action() == 'archived'
-        assert project.ProjectUnarchivedEvent.get_event_action() == 'unarchived'
+        assert project.ProjectRestoredEvent.get_event_action() == 'restored'
         assert project.ProjectBookmarkedEvent.get_event_action() == 'bookmarked'
         assert project.ProjectUnBookmarkedEvent.get_event_action() == 'unbookmarked'
         assert project.ProjectSetPublicEvent.get_event_action() is None

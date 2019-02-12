@@ -49,7 +49,7 @@ from event_manager.events.job import (
     JOB_RESTARTED_TRIGGERED,
     JOB_STATUSES_VIEWED,
     JOB_STOPPED_TRIGGERED,
-    JOB_UNARCHIVED,
+    JOB_RESTORED,
     JOB_UPDATED,
     JOB_VIEWED
 )
@@ -132,7 +132,7 @@ class JobDetailView(JobEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoi
 
 
 class JobArchiveView(JobEndpoint, CreateEndpoint):
-    """Unarchive an Build."""
+    """Restore an Build."""
     serializer_class = JobSerializer
 
     def post(self, request, *args, **kwargs):
@@ -147,18 +147,18 @@ class JobArchiveView(JobEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_200_OK)
 
 
-class JobUnarchiveView(JobEndpoint, CreateEndpoint):
-    """Unarchive an Build."""
+class JobRestoreView(JobEndpoint, CreateEndpoint):
+    """Restore an Build."""
     queryset = Job.all
     serializer_class = JobSerializer
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        auditor.record(event_type=JOB_UNARCHIVED,
+        auditor.record(event_type=JOB_RESTORED,
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        obj.unarchive()
+        obj.restore()
         return Response(status=status.HTTP_200_OK)
 
 

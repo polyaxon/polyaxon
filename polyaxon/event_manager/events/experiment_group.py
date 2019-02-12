@@ -11,8 +11,8 @@ EXPERIMENT_GROUP_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                          event_actions.VIEWED)
 EXPERIMENT_GROUP_ARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                            event_actions.ARCHIVED)
-EXPERIMENT_GROUP_UNARCHIVED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
-                                             event_actions.UNARCHIVED)
+EXPERIMENT_GROUP_RESTORED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                           event_actions.RESTORED)
 EXPERIMENT_GROUP_BOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                              event_actions.BOOKMARKED)
 EXPERIMENT_GROUP_UNBOOKMARKED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
@@ -130,8 +130,8 @@ class ExperimentGroupArchivedEvent(Event):
     )
 
 
-class ExperimentGroupUnarchivedEvent(Event):
-    event_type = EXPERIMENT_GROUP_UNARCHIVED
+class ExperimentGroupRestoredEvent(Event):
+    event_type = EXPERIMENT_GROUP_RESTORED
     actor = True
     attributes = (
         Attribute('id'),

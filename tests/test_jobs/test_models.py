@@ -199,7 +199,7 @@ class TestJobModel(BaseTest):
         assert Job.objects.count() == 0
         assert Job.all.count() == 1
 
-        job.unarchive()
+        job.restore()
         assert job.deleted is False
         assert Job.objects.count() == 1
         assert Job.all.count() == 1

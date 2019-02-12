@@ -176,8 +176,8 @@ class Project(DiffModel,
         self.tensorboard_jobs.update(deleted=True)
         return True
 
-    def unarchive(self) -> bool:
-        if not super().unarchive():
+    def restore(self) -> bool:
+        if not super().restore():
             return False
         self.all_experiment_groups.update(deleted=False)
         self.all_experiments.update(deleted=False)

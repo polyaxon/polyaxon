@@ -93,7 +93,7 @@ class TestProjectModel(BaseTest):
         assert project.all_notebook_jobs.count() == 1
         assert project.all_tensorboard_jobs.count() == 1
 
-        project.unarchive()
+        project.restore()
         assert project.deleted is False
         assert project.experiments.count() == 1
         assert project.experiment_groups.count() == 1

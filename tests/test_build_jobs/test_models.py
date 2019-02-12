@@ -271,7 +271,7 @@ class TestBuildJobModels(BaseTest):
         assert BuildJob.objects.count() == 0
         assert BuildJob.all.count() == 1
 
-        build_job.unarchive()
+        build_job.restore()
         assert build_job.deleted is False
         assert BuildJob.objects.count() == 1
         assert BuildJob.all.count() == 1

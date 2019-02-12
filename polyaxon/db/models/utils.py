@@ -64,7 +64,7 @@ class DeletedModel(models.Model):
         self.save(update_fields=['deleted'])
         return True
 
-    def unarchive(self) -> bool:
+    def restore(self) -> bool:
         if not self.deleted:
             return False
 

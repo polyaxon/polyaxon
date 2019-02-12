@@ -534,7 +534,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert Experiment.all.count() == 3
         assert Experiment.objects.count() == 0
 
-    def test_unarchive(self):
+    def test_restore(self):
         ExperimentFactory(project=self.object.project, experiment_group=self.object)
         assert Experiment.objects.count() == 3
         self.object.archive()
@@ -543,7 +543,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert Experiment.all.count() == 3
         assert Experiment.objects.count() == 0
 
-        resp = self.auth_client.post(self.url + 'unarchive/')
+        resp = self.auth_client.post(self.url + 'restore/')
         assert resp.status_code == status.HTTP_200_OK
 
         assert self.model_class.objects.count() == 1

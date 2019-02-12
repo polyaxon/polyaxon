@@ -27,7 +27,7 @@ from event_manager.events.project import (
     PROJECT_ARCHIVED,
     PROJECT_CREATED,
     PROJECT_DELETED_TRIGGERED,
-    PROJECT_UNARCHIVED,
+    PROJECT_RESTORED,
     PROJECT_UPDATED,
     PROJECT_VIEWED
 )
@@ -87,7 +87,7 @@ class ProjectDetailView(ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, Destr
 
 
 class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
-    """Unarchive an experiment."""
+    """Restore an experiment."""
     serializer_class = ProjectSerializer
 
     def post(self, request, *args, **kwargs):
@@ -102,16 +102,16 @@ class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_200_OK)
 
 
-class ProjectUnarchiveView(ProjectEndpoint, CreateEndpoint):
-    """Unarchive an experiment."""
+class ProjectRestoreView(ProjectEndpoint, CreateEndpoint):
+    """Restore an experiment."""
     queryset = Project.all
     serializer_class = ProjectSerializer
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        auditor.record(event_type=PROJECT_UNARCHIVED,
+        auditor.record(event_type=PROJECT_RESTORED,
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        obj.unarchive()
+        obj.restore()
         return Response(status=status.HTTP_200_OK)
