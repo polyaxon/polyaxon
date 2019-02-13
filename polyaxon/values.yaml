@@ -212,7 +212,7 @@ affinity:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
 
-passwordLenght: 8
+passwordLength: 8
 
 api:
   image: polyaxon/polyaxon-api
