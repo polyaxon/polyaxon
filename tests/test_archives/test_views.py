@@ -2,11 +2,13 @@ import pytest
 
 from rest_framework import status
 
-from api.build_jobs.serializers import BookmarkedBuildJobSerializer
-from api.experiment_groups.serializers import BookmarkedExperimentGroupSerializer
-from api.experiments.serializers import BookmarkedExperimentSerializer
-from api.jobs.serializers import BookmarkedJobSerializer
-from api.projects.serializers import BookmarkedProjectSerializer
+from api.archives.serializers import (
+    ArchivedBuildJobSerializer,
+    ArchivedExperimentSerializer,
+    ArchivedExperimentGroupSerializer,
+    ArchivedJobSerializer,
+    ArchivedProjectSerializer,
+)
 from constants.urls import API_V1
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
@@ -84,7 +86,7 @@ class BaseTestArchiveListViewV1(BaseViewTest):
 class TestBuildArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = BuildJob
-    serializer_class = BookmarkedBuildJobSerializer
+    serializer_class = ArchivedBuildJobSerializer
     factory_class = BuildJobFactory
     entity = 'builds'
 
@@ -93,7 +95,7 @@ class TestBuildArchiveListView(BaseTestArchiveListViewV1):
 class TestJobArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = Job
-    serializer_class = BookmarkedJobSerializer
+    serializer_class = ArchivedJobSerializer
     factory_class = JobFactory
     entity = 'jobs'
 
@@ -102,7 +104,7 @@ class TestJobArchiveListView(BaseTestArchiveListViewV1):
 class TestExperimentArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = Experiment
-    serializer_class = BookmarkedExperimentSerializer
+    serializer_class = ArchivedExperimentSerializer
     factory_class = ExperimentFactory
     entity = 'experiments'
 
@@ -111,7 +113,7 @@ class TestExperimentArchiveListView(BaseTestArchiveListViewV1):
 class TestExperimentGroupArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = ExperimentGroup
-    serializer_class = BookmarkedExperimentGroupSerializer
+    serializer_class = ArchivedExperimentGroupSerializer
     factory_class = ExperimentGroupFactory
     entity = 'groups'
 
@@ -120,7 +122,7 @@ class TestExperimentGroupArchiveListView(BaseTestArchiveListViewV1):
 class TestProjectArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = Project
-    serializer_class = BookmarkedProjectSerializer
+    serializer_class = ArchivedProjectSerializer
     factory_class = ProjectFactory
     entity = 'projects'
 

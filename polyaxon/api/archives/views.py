@@ -5,13 +5,15 @@ from django.contrib.auth import get_user_model
 
 import auditor
 
-from api.build_jobs.serializers import BookmarkedBuildJobSerializer
+from api.archives.serializers import (
+    ArchivedBuildJobSerializer,
+    ArchivedExperimentSerializer,
+    ArchivedExperimentGroupSerializer,
+    ArchivedJobSerializer,
+    ArchivedProjectSerializer,
+)
 from api.endpoint.base import BaseEndpoint, ListEndpoint
-from api.experiment_groups.serializers import BookmarkedExperimentGroupSerializer
-from api.experiments.serializers import BookmarkedExperimentSerializer
 from api.filters import OrderingFilter
-from api.jobs.serializers import BookmarkedJobSerializer
-from api.projects.serializers import BookmarkedProjectSerializer
 from constants import content_types
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
@@ -60,7 +62,7 @@ class BuildArchiveListView(ArchiveListView):
     queryset = BuildJob.archived
     event_type = ARCHIVE_BUILD_JOBS_VIEWED
     content_type = content_types.BUILD_JOB
-    serializer_class = BookmarkedBuildJobSerializer
+    serializer_class = ArchivedBuildJobSerializer
 
 
 class JobArchiveListView(ArchiveListView):
@@ -68,7 +70,7 @@ class JobArchiveListView(ArchiveListView):
     queryset = Job.archived
     event_type = ARCHIVE_JOBS_VIEWED
     content_type = content_types.JOB
-    serializer_class = BookmarkedJobSerializer
+    serializer_class = ArchivedJobSerializer
 
 
 class ExperimentArchiveListView(ArchiveListView):
@@ -76,7 +78,7 @@ class ExperimentArchiveListView(ArchiveListView):
     queryset = Experiment.archived
     event_type = ARCHIVE_EXPERIMENTS_VIEWED
     content_type = content_types.EXPERIMENT
-    serializer_class = BookmarkedExperimentSerializer
+    serializer_class = ArchivedExperimentSerializer
 
 
 class ExperimentGroupArchiveListView(ArchiveListView):
@@ -84,7 +86,7 @@ class ExperimentGroupArchiveListView(ArchiveListView):
     queryset = ExperimentGroup.archived
     event_type = ARCHIVE_EXPERIMENT_GROUPS_VIEWED
     content_type = content_types.EXPERIMENT_GROUP
-    serializer_class = BookmarkedExperimentGroupSerializer
+    serializer_class = ArchivedExperimentGroupSerializer
 
 
 class ProjectArchiveListView(ArchiveListView):
@@ -92,4 +94,4 @@ class ProjectArchiveListView(ArchiveListView):
     queryset = Project.archived
     event_type = ARCHIVE_PROJECTS_VIEWED
     content_type = content_types.PROJECT
-    serializer_class = BookmarkedProjectSerializer
+    serializer_class = ArchivedProjectSerializer
