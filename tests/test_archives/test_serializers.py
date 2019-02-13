@@ -36,8 +36,8 @@ class TestArchiveSerializer(BaseTest):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()
-        self.obj1 = self.factory_class()  # pylint:disable=not-callable
-        self.obj2 = self.factory_class()  # pylint:disable=not-callable
+        self.obj1 = self.factory_class(deleted=True)  # pylint:disable=not-callable
+        self.obj2 = self.factory_class(deleted=True)  # pylint:disable=not-callable
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data  # pylint:disable=not-callable
