@@ -26,6 +26,15 @@
         </li>
         <li class="header-item">
             <a class="header-item-link header-tooltip"
+               href="{% url 'react-index' %}/archives/{{ user.username }}"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Archives">
+                <i class="fa fa-archive" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li class="header-item">
+            <a class="header-item-link header-tooltip"
                href="{% url 'react-index' %}/bookmarks/{{ user.username }}"
                data-toggle="tooltip"
                data-placement="bottom"

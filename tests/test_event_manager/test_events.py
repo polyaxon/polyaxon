@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from constants import user_system
 from event_manager.event import Attribute, Event
 from event_manager.events import (
+    archive,
     bookmark,
     build_job,
     chart_view,
@@ -192,6 +193,13 @@ class TestEvents(BaseTest):
         assert bookmark.BookmarkExperimentsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkExperimentGroupsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkProjectsViewedEvent.get_event_subject() == 'bookmark'
+
+        # Archives
+        assert archive.ArchiveBuildJobsViewedEvent.get_event_subject() == 'archive'
+        assert archive.ArchiveJobsViewedEvent.get_event_subject() == 'archive'
+        assert archive.ArchiveExperimentsViewedEvent.get_event_subject() == 'archive'
+        assert archive.ArchiveExperimentGroupsViewedEvent.get_event_subject() == 'archive'
+        assert archive.ArchiveProjectsViewedEvent.get_event_subject() == 'archive'
 
         # Searches
         assert search.SearchCreatedEvent.get_event_subject() == 'search'
@@ -406,6 +414,14 @@ class TestEvents(BaseTest):
         assert (bookmark.BookmarkExperimentGroupsViewedEvent.get_event_action() ==
                 'experiment_groups_viewed')
         assert bookmark.BookmarkProjectsViewedEvent.get_event_action() == 'projects_viewed'
+
+        # Archive
+        assert archive.ArchiveBuildJobsViewedEvent.get_event_action() == 'builds_viewed'
+        assert archive.ArchiveJobsViewedEvent.get_event_action() == 'jobs_viewed'
+        assert archive.ArchiveExperimentsViewedEvent.get_event_action() == 'experiments_viewed'
+        assert (archive.ArchiveExperimentGroupsViewedEvent.get_event_action() ==
+                'experiment_groups_viewed')
+        assert archive.ArchiveProjectsViewedEvent.get_event_action() == 'projects_viewed'
 
         # Searches
         assert search.SearchCreatedEvent.get_event_action() == 'created'

@@ -17,7 +17,7 @@ This example assumes that both Polyaxon is [installed](/setup/) and running.
 And you are logged in to your Polyaxon account through the [polyaxon-cli](/references/polyaxon-cli/auth/)
 
 
-1. The first step is to check that polyaxon is reporting your cluster correctly
+### The first step is to check that polyaxon is reporting your cluster correctly
 
     ```bash
     $ polyaxon cluster
@@ -45,13 +45,13 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
        3  k8s-master-13475325-0      k8s-master-13475325-0      master  6.7 Gb           2         0
     ```
 
-2. Now  we can create a project, you can do that with `Polyaxon Dashboard` or with `polyaxon CLI`
+### Now  we can create a project, you can do that with `Polyaxon Dashboard` or with `polyaxon CLI`
 
     ```bash
     $ polyaxon project create --name=quick-start --description='Polyaxon quick start.'
     ```
 
-3. Head to your terminal and clone our [quick-start repo](https://github.com/polyaxon/polyaxon-quick-start)
+### Head to your terminal and clone our [quick-start repo](https://github.com/polyaxon/polyaxon-quick-start)
 
     ```bash
     $ git clone https://github.com/polyaxon/polyaxon-quick-start.git
@@ -67,7 +67,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
     ....
     ```
 
-4. Initialize the project with the same name that you used when you created the project in Polyaxon
+### Initialize the project with the same name that you used when you created the project in Polyaxon
 
     ```bash
     $ polyaxon init quick-start
@@ -75,7 +75,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
     Project `quick-start` was initialized and Polyaxonfile was created successfully `polyaxonfile.yml`
     ```
 
-5. Let's open the created `polyaxonfile.yml`, since we cloned the project,
+### Let's open the created `polyaxonfile.yml`, since we cloned the project,
    this file is already populated with the minimum configuration needed to start an experiment:
 
     ```yaml
@@ -103,13 +103,13 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
          We are also installing the polyaxon-client for [tracking](/polyaxon_tracking/introduction) and to send metrics at the end of the experiment.
        * The `run` section to execute our code.
 
-6. Now let's upload our code to create a commit on Polyaxon
+### Now let's upload our code to create a commit on Polyaxon
 
     ```bash
     $ polyaxon upload
     ```
 
-7. Then start the experiment
+### Then start the experiment
 
     ```bash
     $ polyaxon run
@@ -119,13 +119,13 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
 
     > You can merge these 2 steps: `polyaxon run -u`
 
-8. Check your project experiments list
+### Check your project experiments list
 
     ```bash
     $ polyaxon project experiments
     ```
 
-9. Check the experiment logs and resource
+### Check the experiment logs and resource
 
     Info:
 
@@ -173,13 +173,13 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
     ...
     ```
 
-11. Start another experiment
+### Start another experiment
 
     ```bash
     $ polyaxon run -f polyaxonfile_declarations.yml
     ```
 
-12. Start an experiment group
+### Start an experiment group
 
     Check the run definition:
 
@@ -208,7 +208,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
     Experiment group was created
     ```
 
-13. Check experiments in the group
+### Check experiments in the group
 
     Group details:
 
@@ -373,7 +373,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
       59  root.quick-start.8.59  2m 14s       0.0471044     0.999445      0.9845
     ```
 
-14. More information about the project in the dashboard
+### More information about the project in the dashboard
 
     ```bash
     $ polyaxon dashboard
@@ -417,7 +417,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
     
         ![experiment](../../content/images/concepts/dashboard/experiment_logs.png)
 
-15. Finally, Let start a tensorboard to see the model outputs:
+### Finally, Let start a tensorboard to see the model outputs:
 
     You can start a tensorboard for a single experiment, for all experiments under a group, or all experiments in a Project
 

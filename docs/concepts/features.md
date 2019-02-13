@@ -13,7 +13,7 @@ tags:
 sidebar: "concepts"
 ---
 
-Polyaxon comes with powerful features built directly into the core software which can be customised and configured based on the needs of each individual site.
+Polyaxon comes with powerful features built directly into the core software which can be customised and configured based on the needs of each individual deployment.
 
 Here's a quick overview of the core features you'll probably be interested in as you're getting started. This isn't an exhaustive list, just some highlights.
 
@@ -57,7 +57,7 @@ Polyaxon exposes an ensemble of hyperparameters tuning algorithms that can effec
 Our optimization engine intelligently chooses the best parameters for your problem by balancing exploration and exploitation of your parameter search space to obtain high-performing results.
 
 With the robust scheduling provided by the platform, you can fully leverage and maximize your cluster resources and compute infrastructure, 
-to run a high number of parallel jobs and optimize experiments across up to hundreds of workers. 
+to run a high number of parallel jobs and optimize experiments across up to thousands of workers. 
 
 
 ## Plugins & integrations

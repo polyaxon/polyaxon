@@ -1,0 +1,9 @@
+import activitylogs
+
+from event_manager.events import archive
+
+activitylogs.subscribe(archive.ArchiveBuildJobsViewedEvent)
+activitylogs.subscribe(archive.ArchiveJobsViewedEvent)
+activitylogs.subscribe(archive.ArchiveExperimentsViewedEvent)
+activitylogs.subscribe(archive.ArchiveExperimentGroupsViewedEvent)
+activitylogs.subscribe(archive.ArchiveProjectsViewedEvent)
