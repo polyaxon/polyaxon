@@ -293,10 +293,10 @@ make the optimized hyperparameters are more spread out across the whole range.
 
 Polyaxon allows to tune the gaussian process.
 
- * kernel: `matern` or `rbf`.
- * length_scale: float
- * nu: float
- * n_restarts_optimizer: int
+ * `kernel`: `matern` or `rbf`.
+ * `length_scale`: float
+ * `nu`: float
+ * `n_restarts_optimizer`: int
 
 
 Example :
