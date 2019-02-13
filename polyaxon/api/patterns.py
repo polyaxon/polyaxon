@@ -29,6 +29,8 @@ api_patterns += [
     re_path(r'', include(
         ('api.bookmarks.urls', 'bookmarks'), namespace='bookmarks')),
     re_path(r'', include(
+        ('api.archives.urls', 'archives'), namespace='archives')),
+    re_path(r'', include(
         ('api.activitylogs.urls', 'activitylogs'), namespace='activitylogs')),
     re_path(r'', include(
         ('api.searches.urls', 'searches'), namespace='searches')),
