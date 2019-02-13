@@ -20,6 +20,8 @@ export function mapStateToProps(state: AppState, params: any) {
 export interface DispatchProps {
   onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onDelete: () => actions.ProjectAction;
+  onArchive: () => actions.ProjectAction;
+  onRestore: () => actions.ProjectAction;
   startNotebook: () => actions.ProjectAction;
   stopNotebook: () => actions.ProjectAction;
   startTensorboard: () => actions.ProjectAction;
@@ -43,6 +45,17 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, pa
           params.match.params.user,
           params.match.params.projectName),
         true)),
+    onArchive: () => dispatch(
+      actions.archiveProject(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName),
+        true)),
+    onRestore: () => dispatch(
+      actions.restoreProject(
+        getProjectUniqueName(
+          params.match.params.user,
+          params.match.params.projectName))),
     startNotebook: () => dispatch(
       actions.startNotebook(
         getProjectUniqueName(

@@ -7,6 +7,9 @@ import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { GroupModel } from '../../models/group';
 import { SearchModel } from '../../models/search';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { isLive } from '../../utils/isLive';
+import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
@@ -20,11 +23,14 @@ export interface Props {
   count: number;
   useFilters: boolean;
   showBookmarks: boolean;
-  bookmarks: boolean;
+  showDeleted: boolean;
+  endpointList: string;
   onCreate: (group: GroupModel) => actions.GroupAction;
   onUpdate: (group: GroupModel) => actions.GroupAction;
   onDelete: (GroupName: string) => actions.GroupAction;
   onStop: (GroupName: string) => actions.GroupAction;
+  onArchive: (GroupName: string) => actions.GroupAction;
+  onRestore: (GroupName: string) => actions.GroupAction;
   bookmark: (GroupName: string) => actions.GroupAction;
   unbookmark: (GroupName: string) => actions.GroupAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.GroupAction;
@@ -57,13 +63,18 @@ export default class Groups extends React.Component<Props, {}> {
         <table className="table table-hover table-responsive">
           <tbody>
           {GroupHeader()}
-          {groups.map(
+          {groups
+            .filter((group: GroupModel) =>
+              (!this.props.showDeleted && isLive(group)) || (this.props.showDeleted && !isLive(group)))
+            .map(
             (group: GroupModel) =>
               <Group
                 key={group.unique_name}
                 group={group}
                 onDelete={() => this.props.onDelete(group.unique_name)}
                 onStop={() => this.props.onStop(group.unique_name)}
+                onArchive={() => this.props.onArchive(group.unique_name)}
+                onRestore={() => this.props.onRestore((group.unique_name))}
                 showBookmarks={this.props.showBookmarks}
                 bookmark={() => this.props.bookmark(group.unique_name)}
                 unbookmark={() => this.props.unbookmark(group.unique_name)}
@@ -73,16 +84,24 @@ export default class Groups extends React.Component<Props, {}> {
       );
     };
 
-    const empty = this.props.bookmarks ?
-      EmptyBookmarks(
+    let empty: any;
+    if (this.props.endpointList === BOOKMARKS) {
+      empty = EmptyBookmarks(
         this.props.isCurrentUser,
         'experiment group',
-        'group')
-      : EmptyList(
+        'group');
+    } else if (this.props.endpointList === ARCHIVES) {
+       empty = EmptyArchives(
+        this.props.isCurrentUser,
+        'experiment group',
+        'group');
+    } else {
+      empty = EmptyList(
         this.props.isCurrentUser,
         'experiment group',
         'group',
         'polyaxon run --help');
+    }
 
     return (
       <PaginatedTable

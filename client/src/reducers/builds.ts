@@ -22,6 +22,9 @@ export const buildsReducer: Reducer<BuildStateSchema> =
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
+      if (_.isNil(build.deleted)) {
+        build.deleted = false;
+      }
       const normalizedBuilds = normalize(build, BuildSchema).entities.builds;
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedBuilds[build.unique_name]
@@ -44,6 +47,26 @@ export const buildsReducer: Reducer<BuildStateSchema> =
           lastFetched: {
             ...state.lastFetched,
             names: state.lastFetched.names.filter((name) => name !== action.buildName)
+          },
+        };
+      case actionTypes.ARCHIVE_BUILD:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.buildName]: {
+              ...state.byUniqueNames[action.buildName], deleted: true
+            }
+          },
+        };
+      case actionTypes.RESTORE_BUILD:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.buildName]: {
+              ...state.byUniqueNames[action.buildName], deleted: false
+            }
           },
         };
       case actionTypes.STOP_BUILD:

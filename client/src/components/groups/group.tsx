@@ -24,12 +24,22 @@ export interface Props {
   group: GroupModel;
   onDelete: () => actions.GroupAction;
   onStop: () => actions.GroupAction;
+  onArchive: () => actions.GroupAction;
+  onRestore: () => actions.GroupAction;
   showBookmarks: boolean;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
 }
 
-function Group({group, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
+function Group({
+                 group,
+                 onDelete,
+                 onStop,
+                 onArchive,
+                 onRestore,
+                 bookmark,
+                 unbookmark,
+                 showBookmarks}: Props) {
   const values = splitUniqueName(group.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
     group.bookmarked, bookmark, unbookmark);
@@ -83,6 +93,8 @@ function Group({group, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <GroupActions
           onDelete={onDelete}
           onStop={group.group_type === 'study' ? onStop : undefined}
+          onArchive={group.deleted ? undefined : onArchive}
+          onRestore={group.deleted ? onRestore : undefined}
           isRunning={!isDone(group.last_status)}
           pullRight={false}
         />

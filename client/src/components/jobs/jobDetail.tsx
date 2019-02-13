@@ -28,6 +28,8 @@ export interface Props {
   job: JobModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.JobAction;
   onDelete: () => actions.JobAction;
+  onArchive: () => actions.JobAction;
+  onRestore: () => actions.JobAction;
   onStop: () => actions.JobAction;
   fetchData: () => actions.JobAction;
   bookmark: () => actions.JobAction;
@@ -67,6 +69,8 @@ export default class JobDetail extends React.Component<Props, {}> {
                 <JobActions
                   onDelete={this.props.onDelete}
                   onStop={this.props.onStop}
+                  onArchive={job.deleted ? undefined : this.props.onArchive}
+                  onRestore={job.deleted ? this.props.onRestore : undefined}
                   isRunning={!isDone(this.props.job.last_status)}
                   pullRight={true}
                 />

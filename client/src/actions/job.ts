@@ -12,11 +12,14 @@ import { getJobUrlFromName } from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { JobModel } from '../models/job';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 
 export enum actionTypes {
   CREATE_JOB = 'CREATE_JOB',
   DELETE_JOB = 'DELETE_JOB',
   STOP_JOB = 'STOP_JOB',
+  ARCHIVE_JOB = 'ARCHIVE_JOB',
+  RESTORE_JOB = 'RESTORE_JOB',
   UPDATE_JOB = 'UPDATE_JOB',
   RECEIVE_JOB = 'RECEIVE_JOB',
   RECEIVE_JOBS = 'RECEIVE_JOBS',
@@ -33,6 +36,16 @@ export interface CreateUpdateReceiveJobAction extends Action {
 
 export interface DeleteJobAction extends Action {
   type: actionTypes.DELETE_JOB;
+  jobName: string;
+}
+
+export interface ArchiveJobAction extends Action {
+  type: actionTypes.ARCHIVE_JOB;
+  jobName: string;
+}
+
+export interface RestoreJobAction extends Action {
+  type: actionTypes.RESTORE_JOB;
   jobName: string;
 }
 
@@ -60,6 +73,8 @@ export type JobAction =
   CreateUpdateReceiveJobAction
   | DeleteJobAction
   | StopJobAction
+  | ArchiveJobAction
+  | RestoreJobAction
   | ReceiveJobsAction
   | RequestJobsAction
   | BookmarkJobAction;
@@ -88,6 +103,20 @@ export function deleteJobActionCreator(jobName: string): DeleteJobAction {
 export function stopJobActionCreator(jobName: string): StopJobAction {
   return {
     type: actionTypes.STOP_JOB,
+    jobName
+  };
+}
+
+export function archiveJobActionCreator(jobName: string): ArchiveJobAction {
+  return {
+    type: actionTypes.ARCHIVE_JOB,
+    jobName
+  };
+}
+
+export function restoreJobActionCreator(jobName: string): RestoreJobAction {
+  return {
+    type: actionTypes.RESTORE_JOB,
     jobName
   };
 }
@@ -147,7 +176,7 @@ export function unbookmarkJobActionCreator(jobName: string) {
 }
 
 function _fetchJobs(jobsUrl: string,
-                    bookmarks: boolean,
+                    endpointList: string,
                     filters: { [key: string]: number | boolean | string } = {},
                     dispatch: any,
                     getState: any): any {
@@ -162,6 +191,15 @@ function _fetchJobs(jobsUrl: string,
   } else if (urlPieces.length > 1) {
     history.push(baseUrl);
   }
+
+  const dispatchActionCreator = (results: any, count: number) => {
+    if (endpointList === BOOKMARKS) {
+      dispatch(receiveBookmarkedJobsActionCreator(results, count));
+    } else {
+      dispatch(receiveJobsActionCreator(results, count));
+    }
+  };
+
   return fetch(
     jobsUrl, {
       headers: {
@@ -170,16 +208,22 @@ function _fetchJobs(jobsUrl: string,
     })
     .then((response) => handleAuthError(response, dispatch))
     .then((response) => response.json())
-    .then((json) => bookmarks ?
-      dispatch(receiveBookmarkedJobsActionCreator(json.results, json.count)) :
-      dispatch(receiveJobsActionCreator(json.results, json.count)));
+    .then((json) => dispatchActionCreator(json.results, json.count));
 }
 
 export function fetchBookmarkedJobs(user: string,
                                     filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const jobsUrl = `${BASE_API_URL}/bookmarks/${user}/jobs/`;
-    return _fetchJobs(jobsUrl, true, filters, dispatch, getState);
+    return _fetchJobs(jobsUrl, BOOKMARKS, filters, dispatch, getState);
+  };
+}
+
+export function fetchArchivedJobs(user: string,
+                                    filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    const jobsUrl = `${BASE_API_URL}/archives/${user}/jobs/`;
+    return _fetchJobs(jobsUrl, ARCHIVES, filters, dispatch, getState);
   };
 }
 
@@ -187,7 +231,7 @@ export function fetchJobs(projectUniqueName: string,
                           filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const jobsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/jobs`;
-    return _fetchJobs(jobsUrl, false, filters, dispatch, getState);
+    return _fetchJobs(jobsUrl, '', filters, dispatch, getState);
   };
 }
 
@@ -263,6 +307,45 @@ export function stopJob(jobName: string): any {
       })
       .then((response) => handleAuthError(response, dispatch))
       .then(() => dispatch(stopJobActionCreator(jobName)));
+  };
+}
+
+export function archiveJob(jobName: string, redirect: boolean = false): any {
+  const jobUrl = getJobUrlFromName(jobName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${jobUrl}/archive`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        const dispatched = dispatch(archiveJobActionCreator(jobName));
+        if (redirect) {
+          const values = jobName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#jobs');
+        }
+        return dispatched;
+      });
+  };
+}
+
+export function restoreJob(jobName: string): any {
+  const jobUrl = getJobUrlFromName(jobName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${jobUrl}/restore`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(restoreJobActionCreator(jobName)));
   };
 }
 

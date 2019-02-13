@@ -11,6 +11,7 @@ import { getExperimentIndexName, isTrue } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 import { GroupModel } from '../models/group';
 import { SearchModel } from '../models/search';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 
 interface OwnProps {
   user: string;
@@ -18,8 +19,9 @@ interface OwnProps {
   groupId?: number;
   useFilters?: boolean;
   showBookmarks?: boolean;
+  showDeleted?: boolean;
   useCheckbox?: boolean;
-  bookmarks?: boolean;
+  endpointList?: string;
   fetchData?: () => actions.ExperimentAction;
 }
 
@@ -73,8 +75,9 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     count: results.count,
     useFilters: isTrue(ownProps.useFilters),
     showBookmarks: isTrue(ownProps.showBookmarks),
+    showDeleted: isTrue(ownProps.showDeleted),
     useCheckbox: isTrue(ownProps.useCheckbox),
-    bookmarks: isTrue(ownProps.bookmarks),
+    endpointList: ownProps.endpointList,
   };
 }
 
@@ -83,6 +86,8 @@ export interface DispatchProps {
   onDelete: (experimentName: string) => actions.ExperimentAction;
   onDeleteMany: (experimentIds: number[]) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
+  onArchive: (experimentName: string) => actions.ExperimentAction;
+  onRestore: (experimentName: string) => actions.ExperimentAction;
   onStopMany: (experimentIds: number[]) => actions.ExperimentAction;
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
@@ -108,6 +113,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       }
     },
     onStop: (experimentName: string) => dispatch(actions.stopExperiment(experimentName)),
+    onArchive: (experimentName: string) => dispatch(actions.archiveExperiment(experimentName)),
+    onRestore: (experimentName: string) => dispatch(actions.restoreExperiment(experimentName)),
     onStopMany: (experimentIds: number[]) => {
       if (ownProps.projectName) {
         return dispatch(actions.stopExperiments(ownProps.projectName, experimentIds));
@@ -190,12 +197,14 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(ownProps.projectName) && ownProps.bookmarks) {
+      if (_.isNil(ownProps.projectName) && ownProps.endpointList === BOOKMARKS) {
         return dispatch(actions.fetchBookmarkedExperiments(ownProps.user, filters));
+      } else if (_.isNil(ownProps.projectName) && ownProps.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedExperiments(ownProps.user, filters));
       } else if (ownProps.projectName) {
         return dispatch(actions.fetchExperiments(ownProps.projectName, filters));
       } else {
-        throw new Error('Experiments container expects either a project name or bookmarks.');
+        throw new Error('Experiments container expects either a project name or bookmarks or archives.');
       }
     }
   };

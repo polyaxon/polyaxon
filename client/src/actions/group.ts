@@ -15,12 +15,15 @@ import {
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { GroupModel } from '../models/group';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 import { deleteExperimentsActionCreator } from './experiment';
 
 export enum actionTypes {
   CREATE_GROUP = 'CREATE_GROUP',
   DELETE_GROUP = 'DELETE_GROUP',
   STOP_GROUP = 'STOP_GROUP',
+  ARCHIVE_GROUP = 'ARCHIVE_GROUP',
+  RESTORE_GROUP = 'RESTORE_GROUP',
   UPDATE_GROUP = 'UPDATE_GROUP',
   RECEIVE_GROUP = 'RECEIVE_GROUP',
   RECEIVE_GROUPS = 'RECEIVE_GROUPS',
@@ -44,6 +47,16 @@ export interface DeleteGroupAction extends Action {
 
 export interface StopGroupAction extends Action {
   type: actionTypes.STOP_GROUP;
+  groupName: string;
+}
+
+export interface ArchiveGroupAction extends Action {
+  type: actionTypes.ARCHIVE_GROUP;
+  groupName: string;
+}
+
+export interface RestoreGroupAction extends Action {
+  type: actionTypes.RESTORE_GROUP;
   groupName: string;
 }
 
@@ -71,6 +84,8 @@ export type GroupAction =
   CreateUpdateReceiveGroupAction
   | DeleteGroupAction
   | StopGroupAction
+  | ArchiveGroupAction
+  | RestoreGroupAction
   | ReceiveGroupsAction
   | RequestGroupsAction
   | BookmarkGroupAction
@@ -100,6 +115,20 @@ export function deleteGroupActionCreator(groupName: string): DeleteGroupAction {
 export function stopGroupActionCreator(groupName: string): StopGroupAction {
   return {
     type: actionTypes.STOP_GROUP,
+    groupName
+  };
+}
+
+export function archiveGroupActionCreator(groupName: string): ArchiveGroupAction {
+  return {
+    type: actionTypes.ARCHIVE_GROUP,
+    groupName
+  };
+}
+
+export function restoreGroupActionCreator(groupName: string): RestoreGroupAction {
+  return {
+    type: actionTypes.RESTORE_GROUP,
     groupName
   };
 }
@@ -167,7 +196,7 @@ export function stopGroupTensorboardActionCreator(groupName: string) {
 }
 
 function _fetchGroups(groupsUrl: string,
-                      bookmarks: boolean,
+                      endpointList: string,
                       filters: { [key: string]: number | boolean | string } = {},
                       dispatch: any,
                       getState: any): any {
@@ -182,6 +211,15 @@ function _fetchGroups(groupsUrl: string,
   } else if (urlPieces.length > 1) {
     history.push(baseUrl);
   }
+
+  const dispatchActionCreator = (results: any, count: number) => {
+    if (endpointList === BOOKMARKS) {
+      dispatch(receiveBookmarkedGroupsActionCreator(results, count));
+    } else {
+      dispatch(receiveGroupsActionCreator(results, count));
+    }
+  };
+
   return fetch(groupsUrl, {
     headers: {
       Authorization: 'token ' + getState().auth.token
@@ -189,16 +227,22 @@ function _fetchGroups(groupsUrl: string,
   })
     .then((response) => handleAuthError(response, dispatch))
     .then((response) => response.json())
-    .then((json) => bookmarks ?
-      dispatch(receiveBookmarkedGroupsActionCreator(json.results, json.count)) :
-      dispatch(receiveGroupsActionCreator(json.results, json.count)));
+    .then((json) => dispatchActionCreator(json.results, json.count));
 }
 
 export function fetchBookmarkedGroups(user: string,
                                       filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const groupsUrl = BASE_API_URL + `/bookmarks/${user}/groups/`;
-    return _fetchGroups(groupsUrl, true, filters, dispatch, getState);
+    return _fetchGroups(groupsUrl, BOOKMARKS, filters, dispatch, getState);
+  };
+}
+
+export function fetchArchivedGroups(user: string,
+                                    filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    const groupsUrl = BASE_API_URL + `/archives/${user}/groups/`;
+    return _fetchGroups(groupsUrl, ARCHIVES, filters, dispatch, getState);
   };
 }
 
@@ -206,7 +250,7 @@ export function fetchGroups(projectUniqueName: string,
                             filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const groupsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/groups/`;
-    return _fetchGroups(groupsUrl, false, filters, dispatch, getState);
+    return _fetchGroups(groupsUrl, '', filters, dispatch, getState);
   };
 }
 
@@ -310,6 +354,45 @@ export function createGroup(projectName: string, body: { [key: string]: any }): 
       .then((response) => handleAuthError(response, dispatch))
       .then((response) => response.json())
       .then((json) => dispatch(createGroupActionCreator(json)));
+  };
+}
+
+export function archiveGroup(groupName: string, redirect: boolean = false): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${groupUrl}/archive`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        const dispatched = dispatch(archiveGroupActionCreator(groupName));
+        if (redirect) {
+          const values = groupName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#group');
+        }
+        return dispatched;
+      });
+  };
+}
+
+export function restoreGroup(groupName: string): any {
+  const groupUrl = getGroupUrlFromName(groupName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${groupUrl}/restore`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(restoreGroupActionCreator(groupName)));
   };
 }
 

@@ -6,12 +6,15 @@ import { BUILD_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { BuildModel } from '../../models/build';
 import { SearchModel } from '../../models/search';
-import Build from './build';
-import BuildHeader from './buildHeader';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { isLive } from '../../utils/isLive';
+import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import PaginatedTable from '../tables/paginatedTable';
+import Build from './build';
+import BuildHeader from './buildHeader';
 
 export interface Props {
   isCurrentUser: boolean;
@@ -19,11 +22,14 @@ export interface Props {
   count: number;
   useFilters: boolean;
   showBookmarks: boolean;
-  bookmarks: boolean;
+  showDeleted: boolean;
+  endpointList: string;
   onCreate: (build: BuildModel) => actions.BuildAction;
   onUpdate: (build: BuildModel) => actions.BuildAction;
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
+  onArchive: (buildName: string) => actions.BuildAction;
+  onRestore: (buildName: string) => actions.BuildAction;
   bookmark: (buildName: string) => actions.BuildAction;
   unbookmark: (buildName: string) => actions.BuildAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
@@ -41,13 +47,19 @@ export default class Builds extends React.Component<Props, {}> {
         <table className="table table-hover table-responsive">
           <tbody>
           {BuildHeader()}
-          {builds.map(
+          {builds
+            .filter(
+              (build: BuildModel) =>
+                (!this.props.showDeleted && isLive(build)) || (this.props.showDeleted && !isLive(build)))
+            .map(
             (build: BuildModel) =>
               <Build
                 key={build.unique_name}
                 build={build}
                 onDelete={() => this.props.onDelete(build.unique_name)}
                 onStop={() => this.props.onStop(build.unique_name)}
+                onArchive={() => this.props.onArchive(build.unique_name)}
+                onRestore={() => this.props.onRestore(build.unique_name)}
                 showBookmarks={this.props.showBookmarks}
                 bookmark={() => this.props.bookmark(build.unique_name)}
                 unbookmark={() => this.props.unbookmark(build.unique_name)}
@@ -57,16 +69,24 @@ export default class Builds extends React.Component<Props, {}> {
       );
     };
 
-    const empty = this.props.bookmarks ?
-      EmptyBookmarks(
+    let empty: any;
+    if (this.props.endpointList === BOOKMARKS) {
+      empty = EmptyBookmarks(
         this.props.isCurrentUser,
         'build',
-        'build')
-      : EmptyList(
+        'build');
+    } else if (this.props.endpointList === ARCHIVES) {
+       empty = EmptyArchives(
+        this.props.isCurrentUser,
+        'build',
+        'build');
+    } else {
+      empty = EmptyList(
         this.props.isCurrentUser,
         'build',
         'build',
         'polyaxon run --help');
+    }
 
     return (
       <PaginatedTable

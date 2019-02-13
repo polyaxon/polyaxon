@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import Archives from '../containers/archives';
 import Bookmarks from '../containers/bookmarks';
 import BuildDetail from '../containers/buildDetail';
 import ExperimentDetail from '../containers/experimentDetail';
@@ -23,6 +24,7 @@ function Routes() {
   const historyLogsRoute = '/app/historylogs';
   const userRoute = '/app/:user/';
   const bookmarksRoute = '/app/bookmarks/:user/';
+  const archivesRoute = '/app/archives/:user/';
   const projectDetailRoute = '/app/:user/:projectName/';
   const buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
   const jobDetailRoute = '/app/:user/:projectName/jobs/:jobId/';
@@ -56,6 +58,7 @@ function Routes() {
       <Route path={groupDetailRoute} component={GroupDetail}/>
       <Route path={experimentDetailRoute} component={ExperimentDetail}/>
       <Route path={bookmarksRoute} component={Bookmarks}/>
+      <Route path={archivesRoute} component={Archives}/>
       <Route path={projectDetailRoute} component={ProjectDetail}/>
       <Route path={userRoute} component={User}/>
 

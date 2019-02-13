@@ -6,6 +6,9 @@ import { JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { JobModel } from '../../models/job';
 import { SearchModel } from '../../models/search';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { isLive } from '../../utils/isLive';
+import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
@@ -19,11 +22,14 @@ export interface Props {
   count: number;
   useFilters: boolean;
   showBookmarks: boolean;
-  bookmarks: boolean;
+  showDeleted: boolean;
+  endpointList: string;
   onCreate: (job: JobModel) => actions.JobAction;
   onUpdate: (job: JobModel) => actions.JobAction;
   onDelete: (jobName: string) => actions.JobAction;
   onStop: (jobName: string) => actions.JobAction;
+  onArchive: (jobName: string) => actions.JobAction;
+  onRestore: (jobName: string) => actions.JobAction;
   bookmark: (jobName: string) => actions.JobAction;
   unbookmark: (jobName: string) => actions.JobAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.JobAction;
@@ -41,13 +47,19 @@ export default class Jobs extends React.Component<Props, {}> {
         <table className="table table-hover table-responsive">
           <tbody>
           {JobHeader()}
-          {jobs.map(
+          {jobs
+            .filter(
+              (job: JobModel) =>
+              (!this.props.showDeleted && isLive(job)) || (this.props.showDeleted && !isLive(job)))
+            .map(
             (job: JobModel) =>
               <Job
                 key={job.unique_name}
                 job={job}
                 onDelete={() => this.props.onDelete(job.unique_name)}
                 onStop={() => this.props.onStop(job.unique_name)}
+                onArchive={() => this.props.onArchive(job.unique_name)}
+                onRestore={() => this.props.onRestore((job.unique_name))}
                 showBookmarks={this.props.showBookmarks}
                 bookmark={() => this.props.bookmark(job.unique_name)}
                 unbookmark={() => this.props.unbookmark(job.unique_name)}
@@ -57,16 +69,24 @@ export default class Jobs extends React.Component<Props, {}> {
       );
     };
 
-    const empty = this.props.bookmarks ?
-      EmptyBookmarks(
+    let empty: any;
+    if (this.props.endpointList === BOOKMARKS) {
+      empty = EmptyBookmarks(
         this.props.isCurrentUser,
         'job',
-        'job')
-      : EmptyList(
+        'job');
+    } else if (this.props.endpointList === ARCHIVES) {
+       empty = EmptyArchives(
+        this.props.isCurrentUser,
+        'job',
+        'job');
+    } else {
+      empty = EmptyList(
         this.props.isCurrentUser,
         'job',
         'job',
         'polyaxon run --help');
+    }
 
     return (
       <PaginatedTable

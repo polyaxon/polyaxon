@@ -22,6 +22,8 @@ export interface Props {
   project: ProjectModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onDelete: () => actions.ProjectAction;
+  onArchive: () => actions.ProjectAction;
+  onRestore: () => actions.ProjectAction;
   fetchData: () => actions.ProjectAction;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
@@ -58,6 +60,8 @@ export default class ProjectDetail extends React.Component<Props, {}> {
             actions={
               <ProjectActions
                 onDelete={this.props.onDelete}
+                onArchive={project.deleted ? undefined : this.props.onArchive}
+                onRestore={project.deleted ? this.props.onRestore : undefined}
                 notebookActionCallback={
                   project.has_notebook ? this.props.stopNotebook : this.props.startNotebook}
                 tensorboardActionCallback={

@@ -6,6 +6,7 @@ import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
 import Jobs from '../containers/jobs';
 import Projects from '../containers/projects';
+import { BOOKMARKS } from '../utils/endpointList';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';
 
@@ -33,7 +34,7 @@ export default class Bookmarks extends React.Component<Props, {}> {
                 title: 'Experiments',
                 component: <Experiments
                   user={this.props.user}
-                  bookmarks={true}
+                  endpointList={BOOKMARKS}
                   useFilters={false}
                   showBookmarks={false}
                   useCheckbox={false}
@@ -43,7 +44,7 @@ export default class Bookmarks extends React.Component<Props, {}> {
                 title: 'Experiment groups',
                 component: <Groups
                   user={this.props.user}
-                  bookmarks={true}
+                  endpointList={BOOKMARKS}
                   useFilters={false}
                   showBookmarks={false}
                 />,
@@ -52,7 +53,7 @@ export default class Bookmarks extends React.Component<Props, {}> {
                 title: 'Jobs',
                 component: <Jobs
                   user={this.props.user}
-                  bookmarks={true}
+                  endpointList={BOOKMARKS}
                   useFilters={false}
                   showBookmarks={false}
                 />,
@@ -61,14 +62,14 @@ export default class Bookmarks extends React.Component<Props, {}> {
                 title: 'Builds',
                 component: <Builds
                   user={this.props.user}
-                  bookmarks={true}
+                  endpointList={BOOKMARKS}
                   useFilters={false}
                   showBookmarks={false}
                 />,
                 relUrl: 'builds'
               }, {
                 title: 'Projects',
-                component: <Projects user={this.props.user} bookmarks={true}/>,
+                component: <Projects user={this.props.user} endpointList={BOOKMARKS}/>,
                 relUrl: 'Projects'
               }
             ]}

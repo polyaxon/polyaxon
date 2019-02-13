@@ -22,6 +22,8 @@ export interface DispatchProps {
   onUpdate: (updateDict: { [key: string]: any }) => actions.GroupAction;
   onDelete: () => actions.GroupAction;
   onStop: () => actions.GroupAction;
+  onArchive: () => actions.GroupAction;
+  onRestore: () => actions.GroupAction;
   fetchData?: () => actions.GroupAction;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
@@ -51,6 +53,18 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
       true
     )),
     onStop: () => dispatch(actions.stopGroup(
+      getGroupUniqueName(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.groupId)
+    )),
+    onArchive: () => dispatch(actions.archiveGroup(
+      getGroupUniqueName(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.groupId),
+    true)),
+    onRestore: () => dispatch(actions.restoreGroup(
       getGroupUniqueName(
         params.match.params.user,
         params.match.params.projectName,

@@ -21,6 +21,9 @@ export const groupsReducer: Reducer<GroupStateSchema> =
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
+      if (_.isNil(group.deleted)) {
+        group.deleted = false;
+      }
       const normalizedGroups = normalize(group, GroupSchema).entities.groups;
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedGroups[uniqueName]
@@ -46,6 +49,26 @@ export const groupsReducer: Reducer<GroupStateSchema> =
           lastFetched: {
             ...state.lastFetched,
             names: state.lastFetched.names.filter((name) => name !== action.groupName)
+          },
+        };
+      case actionTypes.ARCHIVE_GROUP:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.groupName]: {
+              ...state.byUniqueNames[action.groupName], deleted: true
+            }
+          },
+        };
+      case actionTypes.RESTORE_GROUP:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.groupName]: {
+              ...state.byUniqueNames[action.groupName], deleted: false
+            }
           },
         };
       case actionTypes.STOP_GROUP:

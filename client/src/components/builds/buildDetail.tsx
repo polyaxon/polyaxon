@@ -22,6 +22,8 @@ export interface Props {
   build: BuildModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.BuildAction;
   onDelete: () => actions.BuildAction;
+  onArchive: () => actions.BuildAction;
+  onRestore: () => actions.BuildAction;
   onStop: () => actions.BuildAction;
   fetchData: () => actions.BuildAction;
   bookmark: () => actions.BuildAction;
@@ -61,6 +63,8 @@ export default class BuildDetail extends React.Component<Props, {}> {
                 <BuildActions
                   onDelete={this.props.onDelete}
                   onStop={this.props.onStop}
+                  onArchive={build.deleted ? undefined : this.props.onArchive}
+                  onRestore={build.deleted ? this.props.onRestore : undefined}
                   isRunning={!isDone(this.props.build.last_status)}
                   pullRight={true}
                 />

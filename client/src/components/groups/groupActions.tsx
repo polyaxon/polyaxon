@@ -8,6 +8,8 @@ import '../actions.less';
 export interface Props {
   onDelete: () => any;
   onStop?: () => any;
+  onArchive?: () => any;
+  onRestore?: () => any;
   tensorboardActionCallback?: () => any;
   hasTensorboard?: boolean;
   isRunning: boolean;
@@ -17,7 +19,7 @@ export interface Props {
 interface State {
   confirmShow: boolean;
   confirmText?: string;
-  confirmAction?: 'delete' | 'stop' | 'stopTensorboard';
+  confirmAction?: 'delete' | 'stop' | 'stopTensorboard' | 'archive';
 }
 
 export default class GroupActions extends React.Component<Props, State> {
@@ -35,10 +37,12 @@ export default class GroupActions extends React.Component<Props, State> {
     }));
   };
 
-  public handleShow = (action: 'delete' | 'stop' | 'stopTensorboard') => {
+  public handleShow = (action: 'delete' | 'stop' | 'stopTensorboard' | 'archive') => {
     let confirmText = '';
     if (action === 'delete') {
       confirmText = 'Are you sure you want to delete this group';
+    } else if (action === 'archive') {
+      confirmText = 'Are you sure you want to archive this group';
     } else if (action === 'stop') {
       confirmText = 'Are you sure you want to stop this group';
     } else if (action === 'stopTensorboard') {
@@ -52,6 +56,8 @@ export default class GroupActions extends React.Component<Props, State> {
   public confirm = () => {
     if (this.state.confirmAction === 'delete') {
       this.props.onDelete();
+    } else if (this.state.confirmAction === 'archive' && this.props.onArchive) {
+      this.props.onArchive();
     } else if (this.state.confirmAction === 'stop' && this.props.onStop) {
       this.props.onStop();
     } else if (this.state.confirmAction === 'stopTensorboard' && this.props.tensorboardActionCallback) {
@@ -86,6 +92,16 @@ export default class GroupActions extends React.Component<Props, State> {
               className="fa fa-stop icon"
               aria-hidden="true"
             /> Stop Tensorboard
+          </MenuItem>
+          }
+          {this.props.onRestore &&
+          <MenuItem eventKey="1" onClick={this.props.onRestore}>
+            <i className="fa fa-recycle icon" aria-hidden="true"/> Restore
+          </MenuItem>
+          }
+          {this.props.onArchive &&
+          <MenuItem eventKey="1" onClick={() => this.handleShow('archive')}>
+            <i className="fa fa-archive icon" aria-hidden="true"/> Archive
           </MenuItem>
           }
           <MenuItem eventKey="2" onClick={() => this.handleShow('delete')}>

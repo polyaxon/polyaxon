@@ -23,6 +23,8 @@ export interface Props {
   onUpdate: (updateDict: { [key: string]: any }) => actions.GroupAction;
   onDelete: () => actions.GroupAction;
   onStop: () => actions.GroupAction;
+  onArchive: () => actions.GroupAction;
+  onRestore: () => actions.GroupAction;
   fetchData: () => actions.GroupAction;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
@@ -62,6 +64,8 @@ export default class GroupDetail extends React.Component<Props, {}> {
                 <GroupActions
                   onDelete={this.props.onDelete}
                   onStop={group.group_type === 'study' ? this.props.onStop : undefined}
+                  onArchive={group.deleted ? undefined : this.props.onArchive}
+                  onRestore={group.deleted ? this.props.onRestore : undefined}
                   tensorboardActionCallback={
                   group.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
                   hasTensorboard={group.has_tensorboard}

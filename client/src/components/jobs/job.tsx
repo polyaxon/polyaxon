@@ -26,12 +26,23 @@ export interface Props {
   job: JobModel;
   onDelete: () => actions.JobAction;
   onStop: () => actions.JobAction;
+  onArchive: () => actions.JobAction;
+  onRestore: () => actions.JobAction;
   showBookmarks: boolean;
   bookmark: () => actions.JobAction;
   unbookmark: () => actions.JobAction;
 }
 
-function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
+function Job({
+               job,
+               onDelete,
+               onStop,
+               onArchive,
+               onRestore,
+               bookmark,
+               unbookmark,
+               showBookmarks
+             }: Props) {
   const values = splitUniqueName(job.project);
   let buildUrl = '';
   let buildValues: string[] = [];
@@ -90,6 +101,8 @@ function Job({job, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props
         <JobActions
           onDelete={onDelete}
           onStop={onStop}
+          onArchive={job.deleted ? undefined : onArchive}
+          onRestore={job.deleted ? onRestore : undefined}
           isRunning={!isDone(job.last_status)}
           pullRight={false}
         />

@@ -23,6 +23,8 @@ export interface DispatchProps {
   onUpdate: (updateDict: { [key: string]: any }) => actions.BuildAction;
   onDelete: () => actions.BuildAction;
   onStop: () => actions.BuildAction;
+  onArchive: () => actions.BuildAction;
+  onRestore: () => actions.BuildAction;
   fetchData?: () => actions.BuildAction;
   bookmark: () => actions.BuildAction;
   unbookmark: () => actions.BuildAction;
@@ -49,6 +51,15 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
         params.match.params.buildId),
       true)),
     onStop: () => dispatch(actions.stopBuild(getBuildUniqueName(
+      params.match.params.user,
+      params.match.params.projectName,
+      params.match.params.buildId))),
+    onArchive: () => dispatch(actions.archiveBuild(getBuildUniqueName(
+      params.match.params.user,
+      params.match.params.projectName,
+      params.match.params.buildId),
+      true)),
+    onRestore: () => dispatch(actions.restoreBuild(getBuildUniqueName(
       params.match.params.user,
       params.match.params.projectName,
       params.match.params.buildId))),

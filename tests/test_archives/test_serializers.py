@@ -46,9 +46,6 @@ class TestArchiveSerializer(BaseTest):
         data.pop('deleted')
         assert data == self.model_serializer_class(self.obj1).data  # noqa
 
-        for k, v in data.items():
-            assert getattr(self.obj1, k) == v
-
     def test_serialize_many(self):
         data = self.serializer_class(self.model_class.archived.all(), many=True).data  # noqa
         assert len(data) == 2

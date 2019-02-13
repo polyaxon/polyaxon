@@ -13,12 +13,15 @@ import {
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { ExperimentModel } from '../models/experiment';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 import { fetchCodeReference } from './codeReference';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
   DELETE_EXPERIMENT = 'DELETE_EXPERIMENT',
   DELETE_EXPERIMENTS = 'DELETE_EXPERIMENTS',
+  ARCHIVE_EXPERIMENT = 'ARCHIVE_EXPERIMENT',
+  RESTORE_EXPERIMENT = 'RESTORE_EXPERIMENT',
   STOP_EXPERIMENT = 'STOP_EXPERIMENT',
   STOP_EXPERIMENTS = 'STOP_EXPERIMENTS',
   UPDATE_EXPERIMENT = 'UPDATE_EXPERIMENT',
@@ -46,6 +49,16 @@ export interface DeleteExperimentsAction extends Action {
   type: actionTypes.DELETE_EXPERIMENTS;
   projectName: string;
   experimentIds: number[];
+}
+
+export interface ArchiveExperimentAction extends Action {
+  type: actionTypes.ARCHIVE_EXPERIMENT;
+  experimentName: string;
+}
+
+export interface RestoreExperimentAction extends Action {
+  type: actionTypes.RESTORE_EXPERIMENT;
+  experimentName: string;
 }
 
 export interface StopExperimentAction extends Action {
@@ -89,6 +102,8 @@ export type ExperimentAction =
   CreateUpdateReceiveExperimentAction
   | DeleteExperimentAction
   | DeleteExperimentsAction
+  | ArchiveExperimentAction
+  | RestoreExperimentAction
   | StopExperimentAction
   | StopExperimentsAction
   | ReceiveExperimentsAction
@@ -123,6 +138,20 @@ export function deleteExperimentsActionCreator(projectName: string, experimentId
     type: actionTypes.DELETE_EXPERIMENTS,
     projectName,
     experimentIds,
+  };
+}
+
+export function archiveExperimentActionCreator(experimentName: string): ArchiveExperimentAction {
+  return {
+    type: actionTypes.ARCHIVE_EXPERIMENT,
+    experimentName,
+  };
+}
+
+export function restoreExperimentActionCreator(experimentName: string): RestoreExperimentAction {
+  return {
+    type: actionTypes.RESTORE_EXPERIMENT,
+    experimentName,
   };
 }
 
@@ -214,7 +243,7 @@ export function stopExperimentTensorboardActionCreator(experimentName: string) {
 }
 
 function _fetchExperiments(experimentsUrl: string,
-                           bookmarks: boolean,
+                           endpointList: string,
                            filters: { [key: string]: number | boolean | string } = {},
                            dispatch: any,
                            getState: any,
@@ -235,9 +264,11 @@ function _fetchExperiments(experimentsUrl: string,
     if (filters && filters.declarations) {
       return dispatch(receiveExperimentsParamsActionCreator(results, count));
     }
-    return bookmarks ?
-      dispatch(receiveBookmarkedExperimentsActionCreator(results, count)) :
+    if (endpointList === BOOKMARKS) {
+      dispatch(receiveBookmarkedExperimentsActionCreator(results, count));
+    } else {
       dispatch(receiveExperimentsActionCreator(results, count));
+    }
   };
 
   return fetch(experimentsUrl, {
@@ -254,7 +285,15 @@ export function fetchBookmarkedExperiments(user: string,
                                            filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const experimentsUrl = `${BASE_API_URL}/bookmarks/${user}/experiments/`;
-    return _fetchExperiments(experimentsUrl, true, filters, dispatch, getState);
+    return _fetchExperiments(experimentsUrl, BOOKMARKS, filters, dispatch, getState);
+  };
+}
+
+export function fetchArchivedExperiments(user: string,
+                                         filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    const experimentsUrl = `${BASE_API_URL}/archives/${user}/experiments/`;
+    return _fetchExperiments(experimentsUrl, ARCHIVES, filters, dispatch, getState);
   };
 }
 
@@ -263,7 +302,7 @@ export function fetchExperiments(projectUniqueName: string,
                                  updateHistory: boolean = true): any {
   return (dispatch: any, getState: any) => {
     const experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/experiments/`;
-    return _fetchExperiments(experimentsUrl, false, filters, dispatch, getState, updateHistory);
+    return _fetchExperiments(experimentsUrl, '', filters, dispatch, getState, updateHistory);
   };
 }
 
@@ -340,6 +379,43 @@ export function updateExperiment(experimentName: string, updateDict: { [key: str
       .then((response) => handleAuthError(response, dispatch))
       .then((response) => response.json())
       .then((json) => dispatch(updateExperimentActionCreator(json)));
+  };
+}
+
+export function archiveExperiment(experimentName: string, redirect: boolean = false): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${experimentUrl}/archive`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        const dispatched = dispatch(archiveExperimentActionCreator(experimentName));
+        if (redirect) {
+          const values = experimentName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#experiments');
+        }
+        return dispatched;
+      });
+  };
+}
+
+export function restoreExperiment(experimentName: string): any {
+  const experimentUrl = getExperimentUrlFromName(experimentName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${experimentUrl}/restore`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(restoreExperimentActionCreator(experimentName)));
   };
 }
 

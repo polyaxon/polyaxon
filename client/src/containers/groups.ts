@@ -10,13 +10,15 @@ import { GroupModel } from '../models/group';
 import * as actions from '../actions/group';
 import * as search_actions from '../actions/search';
 import { SearchModel } from '../models/search';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 
 interface OwnProps {
   user: string;
   projectName?: string;
   useFilters?: boolean;
-  bookmarks?: boolean;
+  endpointList?: string;
   showBookmarks?: boolean;
+  showDeleted?: boolean;
   fetchData?: () => search_actions.SearchAction;
   fetchSearches?: () => search_actions.SearchAction;
 }
@@ -52,7 +54,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     count: results.count,
     useFilters: isTrue(ownProps.useFilters),
     showBookmarks: isTrue(ownProps.showBookmarks),
-    bookmarks: isTrue(ownProps.bookmarks),
+    showDeleted: isTrue(ownProps.showDeleted),
+    endpointList: ownProps.endpointList,
   };
 }
 
@@ -60,6 +63,8 @@ export interface DispatchProps {
   onCreate?: (group: GroupModel) => actions.GroupAction;
   onDelete: (groupName: string) => actions.GroupAction;
   onStop: (groupName: string) => actions.GroupAction;
+  onArchive: (groupName: string) => actions.GroupAction;
+  onRestore: (groupName: string) => actions.GroupAction;
   bookmark: (groupName: string) => actions.GroupAction;
   unbookmark: (groupName: string) => actions.GroupAction;
   onUpdate?: (group: GroupModel) => actions.GroupAction;
@@ -74,6 +79,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onCreate: (group: GroupModel) => dispatch(actions.createGroupActionCreator(group)),
     onDelete: (groupName: string) => dispatch(actions.deleteGroup(groupName)),
     onStop: (groupName: string) => dispatch(actions.stopGroup(groupName)),
+    onArchive: (groupName: string) => dispatch(actions.archiveGroup(groupName)),
+    onRestore: (groupName: string) => dispatch(actions.restoreGroup(groupName)),
     bookmark: (groupName: string) => dispatch(actions.bookmark(groupName)),
     unbookmark: (groupName: string) => dispatch(actions.unbookmark(groupName)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
@@ -109,12 +116,14 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(ownProps.projectName) && ownProps.bookmarks) {
+      if (_.isNil(ownProps.projectName) && ownProps.endpointList === BOOKMARKS) {
         return dispatch(actions.fetchBookmarkedGroups(ownProps.user, filters));
+      } else if (_.isNil(ownProps.projectName) && ownProps.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedGroups(ownProps.user, filters));
       } else if (ownProps.projectName) {
         return dispatch(actions.fetchGroups(ownProps.projectName, filters));
       } else {
-        throw new Error('Groups container expects either a project name or bookmarks.');
+        throw new Error('Groups container expects either a project name or bookmarks or archives.');
       }
     }
   };

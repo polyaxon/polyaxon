@@ -12,8 +12,11 @@ import { FilterOption } from '../../interfaces/filterOptions';
 import { ExperimentModel } from '../../models/experiment';
 import { GroupModel } from '../../models/group';
 import { SearchModel } from '../../models/search';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { isLive } from '../../utils/isLive';
 import AutocompleteLabel from '../autocomplete/autocompleteLabel';
 import AutocompleteDropdown from '../autocomplete/autocomplteDorpdown';
+import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
@@ -31,13 +34,16 @@ export interface Props {
   count: number;
   useFilters: boolean;
   showBookmarks: boolean;
+  showDeleted: boolean;
   useCheckbox: boolean;
-  bookmarks: boolean;
+  endpointList?: string;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experimentName: string) => actions.ExperimentAction;
   onDeleteMany: (experimentIds: number[]) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
+  onArchive: (experimentName: string) => actions.ExperimentAction;
+  onRestore: (experimentName: string) => actions.ExperimentAction;
   onStopMany: (experimentIds: number[]) => actions.ExperimentAction;
   bookmark: (experimentName: string) => actions.ExperimentAction;
   unbookmark: (experimentName: string) => actions.ExperimentAction;
@@ -91,7 +97,7 @@ export default class Experiments extends React.Component<Props, State> {
 
   public shouldComponentUpdate(nextProps: Props, nextState: State) {
     const baseUrl = location.hash.split('?')[0];
-    return baseUrl === '#experiments' || (this.props.bookmarks && baseUrl === '');
+    return baseUrl === '#experiments' || (this.props.endpointList !== '' && baseUrl === '');
   }
 
   public selectAll = () => {
@@ -436,8 +442,12 @@ export default class Experiments extends React.Component<Props, State> {
                 }
               </th>
             </tr>
-            {this.props.experiments.map(
-              (xp: ExperimentModel) =>
+            {this.props.experiments
+              .filter(
+                (xp: ExperimentModel) =>
+                  (!this.props.showDeleted && isLive(xp)) || (this.props.showDeleted && !isLive(xp)))
+              .map(
+                (xp: ExperimentModel) =>
                 <Experiment
                   key={xp.unique_name}
                   experiment={xp}
@@ -445,6 +455,8 @@ export default class Experiments extends React.Component<Props, State> {
                   metrics={this.state.metrics}
                   onDelete={() => this.props.onDelete(xp.unique_name)}
                   onStop={() => this.props.onStop(xp.unique_name)}
+                  onArchive={() => this.props.onArchive(xp.unique_name)}
+                  onRestore={() => this.props.onRestore((xp.unique_name))}
                   showBookmarks={this.props.showBookmarks}
                   useCheckbox={this.props.useCheckbox}
                   bookmark={() => this.props.bookmark(xp.unique_name)}
@@ -531,16 +543,24 @@ export default class Experiments extends React.Component<Props, State> {
       </Modal>
     );
 
-    const empty = this.props.bookmarks ?
-      EmptyBookmarks(
+    let empty: any;
+    if (this.props.endpointList === BOOKMARKS) {
+      empty = EmptyBookmarks(
         this.props.isCurrentUser,
         'experiment',
-        'experiment')
-      : EmptyList(
+        'experiment');
+    } else if (this.props.endpointList === ARCHIVES) {
+       empty = EmptyArchives(
+        this.props.isCurrentUser,
+        'experiment',
+        'experiment');
+    } else {
+      empty = EmptyList(
         this.props.isCurrentUser,
         'experiment',
         'experiment',
         'polyaxon run --help');
+    }
     return (
       <PaginatedTable
         count={this.props.count}

@@ -23,12 +23,23 @@ export interface Props {
   build: BuildModel;
   onDelete: () => actions.BuildAction;
   onStop: () => actions.BuildAction;
+  onArchive: () => actions.BuildAction;
+  onRestore: () => actions.BuildAction;
   showBookmarks: boolean;
   bookmark: () => actions.BuildAction;
   unbookmark: () => actions.BuildAction;
 }
 
-function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: Props) {
+function Build({
+                 build,
+                 onDelete,
+                 onStop,
+                 onArchive,
+                 onRestore,
+                 bookmark,
+                 unbookmark,
+                 showBookmarks
+               }: Props) {
   const values = splitUniqueName(build.project);
   const bookmarkStar: BookmarkInterface = getBookmark(
     build.bookmarked, bookmark, unbookmark);
@@ -73,6 +84,8 @@ function Build({build, onDelete, onStop, bookmark, unbookmark, showBookmarks}: P
         <BuildActions
           onDelete={onDelete}
           onStop={onStop}
+          onArchive={build.deleted ? undefined : onArchive}
+          onRestore={build.deleted ? onRestore : undefined}
           isRunning={!isDone(build.last_status)}
           pullRight={false}
         />

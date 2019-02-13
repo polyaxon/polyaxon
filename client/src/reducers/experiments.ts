@@ -29,6 +29,9 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
+      if (_.isNil(experiment.deleted)) {
+        experiment.deleted = false;
+      }
       const normalizedExperiments = normalize(experiment, ExperimentSchema).entities.experiments;
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName],
@@ -71,6 +74,24 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
             ...state.lastFetched,
             names: state.lastFetched.names.filter(
               (name) => experimentNames.indexOf(name) === -1)},
+        };
+      case actionTypes.ARCHIVE_EXPERIMENT:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [getExperimentIndexName(action.experimentName)]: {
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: true}
+          },
+        };
+      case actionTypes.RESTORE_EXPERIMENT:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [getExperimentIndexName(action.experimentName)]: {
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: false}
+          },
         };
       case actionTypes.STOP_EXPERIMENT:
         return {

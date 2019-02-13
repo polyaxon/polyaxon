@@ -65,6 +65,7 @@ export let getProjectUrl = (username: string, projectName: string, app: boolean 
 };
 
 export let getBookmarksUrl = (username: string) => `/app/bookmarks/${username}`;
+export let getArchivesUrl = (username: string) => `/app/archives/${username}`;
 
 export let getProjectTensorboardUrl = (projectName: string) => {
   const values = splitUniqueName(projectName);

@@ -2,20 +2,18 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import { BASE_API_URL } from '../constants/api';
-import {
-  getProjectUrl,
-  getProjectUrlFromName,
-  getUserUrl,
-  handleAuthError
-} from '../constants/utils';
+import { getProjectUrl, getProjectUrlFromName, getUserUrl, handleAuthError } from '../constants/utils';
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { ProjectModel } from '../models/project';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 
 export enum actionTypes {
   CREATE_PROJECT = 'CREATE_PROJECT',
   DELETE_PROJECT = 'DELETE_PROJECT',
   UPDATE_PROJECT = 'UPDATE_PROJECT',
+  ARCHIVE_PROJECT = 'ARCHIVE_PROJECT',
+  RESTORE_PROJECT = 'RESTORE_PROJECT',
   RECEIVE_PROJECT = 'RECEIVE_PROJECT',
   REQUEST_PROJECT = 'REQUEST_PROJECT',
   RECEIVE_PROJECTS = 'RECEIVE_PROJECTS',
@@ -35,6 +33,16 @@ export interface CreateUpdateReceiveProjectAction extends Action {
 
 export interface DeleteProjectAction extends Action {
   type: actionTypes.DELETE_PROJECT;
+  projectName: string;
+}
+
+export interface RestoreProjectAction extends Action {
+  type: actionTypes.RESTORE_PROJECT;
+  projectName: string;
+}
+
+export interface ArchiveProjectAction extends Action {
+  type: actionTypes.ARCHIVE_PROJECT;
   projectName: string;
 }
 
@@ -66,6 +74,8 @@ export interface ProjectTensorboardAction extends Action {
 export type ProjectAction =
   CreateUpdateReceiveProjectAction
   | DeleteProjectAction
+  | ArchiveProjectAction
+  | RestoreProjectAction
   | ReceiveProjectsAction
   | RequestProjectsAction
   | BookmarkProjectAction
@@ -82,6 +92,20 @@ export function createProjectActionCreator(project: ProjectModel): CreateUpdateR
 export function deleteProjectActionCreator(projectName: string): DeleteProjectAction {
   return {
     type: actionTypes.DELETE_PROJECT,
+    projectName
+  };
+}
+
+export function archiveProjectActionCreator(projectName: string): ArchiveProjectAction {
+  return {
+    type: actionTypes.ARCHIVE_PROJECT,
+    projectName
+  };
+}
+
+export function restoreProjectActionCreator(projectName: string): RestoreProjectAction {
+  return {
+    type: actionTypes.RESTORE_PROJECT,
     projectName
   };
 }
@@ -236,8 +260,45 @@ export function deleteProject(projectName: string, redirect: boolean = false): a
   };
 }
 
+export function archiveProject(projectName: string, redirect: boolean = false): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projectUrl}/archive`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        const dispatched = dispatch(archiveProjectActionCreator(projectName));
+        if (redirect) {
+          const values = projectName.split('.');
+          history.push(getUserUrl(values[0], true));
+        }
+        return dispatched;
+      });
+  };
+}
+
+export function restoreProject(projectName: string): any {
+  const projectUrl = getProjectUrlFromName(projectName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(`${BASE_API_URL}${projectUrl}/restore`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(restoreProjectActionCreator(projectName)));
+  };
+}
+
 function _fetchProjects(projectsUrl: string,
-                        bookmarks: boolean,
+                        endpointList: string,
                         filters: { [key: string]: number | boolean | string } = {},
                         dispatch: any,
                         getState: any): any {
@@ -252,6 +313,15 @@ function _fetchProjects(projectsUrl: string,
   } else if (urlPieces.length > 1) {
     history.push(baseUrl);
   }
+
+  const dispatchActionCreator = (results: any, count: number) => {
+    if (endpointList === BOOKMARKS) {
+      return dispatch(receiveBookmarkedProjectsActionCreator(results, count));
+    } else {
+      return dispatch(receiveProjectsActionCreator(results, count));
+    }
+  };
+
   return fetch(projectsUrl, {
     headers: {
       Authorization: 'token ' + getState().auth.token
@@ -259,9 +329,7 @@ function _fetchProjects(projectsUrl: string,
   })
     .then((response) => handleAuthError(response, dispatch))
     .then((response) => response.json())
-    .then((json) => dispatch(bookmarks ?
-      receiveBookmarkedProjectsActionCreator(json.results, json.count) :
-      receiveProjectsActionCreator(json.results, json.count)))
+    .then((json) => dispatchActionCreator(json.results, json.count))
     .catch((error) => undefined);
 }
 
@@ -269,7 +337,15 @@ export function fetchBookmarkedProjects(user: string,
                                         filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const projectsUrl = `${BASE_API_URL}/bookmarks/${user}/projects`;
-    return _fetchProjects(projectsUrl, true, filters, dispatch, getState);
+    return _fetchProjects(projectsUrl, BOOKMARKS, filters, dispatch, getState);
+  };
+}
+
+export function fetchArchivedProjects(user: string,
+                                      filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    const projectsUrl = `${BASE_API_URL}/archives/${user}/projects`;
+    return _fetchProjects(projectsUrl, ARCHIVES, filters, dispatch, getState);
   };
 }
 
@@ -278,7 +354,7 @@ export function fetchProjects(user: string,
   return (dispatch: any, getState: any) => {
     const projectsUrl = `${BASE_API_URL}/${user}`;
 
-    return _fetchProjects(projectsUrl, false, filters, dispatch, getState);
+    return _fetchProjects(projectsUrl, '', filters, dispatch, getState);
   };
 }
 
@@ -328,7 +404,6 @@ export function unbookmark(projectName: string): any {
       .then(() => dispatch(unbookmarkProjectActionCreator(projectName)));
   };
 }
-
 
 export function startNotebook(projectName: string): any {
   const projectUrl = getProjectUrlFromName(projectName, false);

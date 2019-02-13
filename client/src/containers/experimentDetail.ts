@@ -24,6 +24,8 @@ export interface DispatchProps {
   onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
   onDelete: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
+  onArchive: () => actions.ExperimentAction;
+  onRestore: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
   startTensorboard: () => actions.ExperimentAction;
@@ -54,6 +56,19 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
         true)),
     onStop: () => dispatch(
       actions.stopExperiment(
+        getExperimentUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.experimentId))),
+    onArchive: () => dispatch(
+      actions.archiveExperiment(
+        getExperimentUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.experimentId),
+        true)),
+    onRestore: () => dispatch(
+      actions.restoreExperiment(
         getExperimentUniqueName(
           params.match.params.user,
           params.match.params.projectName,

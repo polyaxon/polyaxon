@@ -12,11 +12,14 @@ import {
 import history from '../history';
 import { BookmarkModel } from '../models/bookmark';
 import { BuildModel } from '../models/build';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 
 export enum actionTypes {
   CREATE_BUILD = 'CREATE_BUILD',
   DELETE_BUILD = 'DELETE_BUILD',
   STOP_BUILD = 'STOP_BUILD',
+  ARCHIVE_BUILD = 'ARCHIVE_BUILD',
+  RESTORE_BUILD = 'RESTORE_BUILD',
   UPDATE_BUILD = 'UPDATE_BUILD',
   RECEIVE_BUILD = 'RECEIVE_BUILD',
   RECEIVE_BUILDS = 'RECEIVE_BUILDS',
@@ -33,6 +36,16 @@ export interface CreateUpdateReceiveBuildAction extends Action {
 
 export interface DeleteBuildAction extends Action {
   type: actionTypes.DELETE_BUILD;
+  buildName: string;
+}
+
+export interface ArchiveBuildAction extends Action {
+  type: actionTypes.ARCHIVE_BUILD;
+  buildName: string;
+}
+
+export interface RestoreBuildAction extends Action {
+  type: actionTypes.RESTORE_BUILD;
   buildName: string;
 }
 
@@ -60,6 +73,8 @@ export type BuildAction =
   CreateUpdateReceiveBuildAction
   | DeleteBuildAction
   | StopBuildAction
+  | ArchiveBuildAction
+  | RestoreBuildAction
   | ReceiveBuildsAction
   | RequestBuildsAction
   | BookmarkBuildAction;
@@ -88,6 +103,20 @@ export function deleteBuildActionCreator(buildName: string): DeleteBuildAction {
 export function stopBuildActionCreator(buildName: string): StopBuildAction {
   return {
     type: actionTypes.STOP_BUILD,
+    buildName
+  };
+}
+
+export function archiveBuildActionCreator(buildName: string): ArchiveBuildAction {
+  return {
+    type: actionTypes.ARCHIVE_BUILD,
+    buildName
+  };
+}
+
+export function restoreBuildActionCreator(buildName: string): RestoreBuildAction {
+  return {
+    type: actionTypes.RESTORE_BUILD,
     buildName
   };
 }
@@ -147,7 +176,7 @@ export function unbookmarkBuildActionCreator(buildName: string) {
 }
 
 function _fetchBuilds(buildsUrl: string,
-                      bookmarks: boolean,
+                      endpointList: string,
                       filters: { [key: string]: number | boolean | string } = {},
                       dispatch: any,
                       getState: any): any {
@@ -162,6 +191,15 @@ function _fetchBuilds(buildsUrl: string,
   } else if (urlPieces.length > 1) {
     history.push(baseUrl);
   }
+
+  const dispatchActionCreator = (results: any, count: number) => {
+    if (endpointList === BOOKMARKS) {
+      dispatch(receiveBookmarkedBuildsActionCreator(results, count));
+    } else {
+      dispatch(receiveBuildsActionCreator(results, count));
+    }
+  };
+
   return fetch(
     buildsUrl, {
       headers: {
@@ -170,16 +208,22 @@ function _fetchBuilds(buildsUrl: string,
     })
     .then((response) => handleAuthError(response, dispatch))
     .then((response) => response.json())
-    .then((json) => bookmarks ?
-      dispatch(receiveBookmarkedBuildsActionCreator(json.results, json.count)) :
-      dispatch(receiveBuildsActionCreator(json.results, json.count)));
+    .then((json) => dispatchActionCreator(json.results, json.count));
 }
 
 export function fetchBookmarkedBuilds(user: string,
                                       filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const buildsUrl = `${BASE_API_URL}/bookmarks/${user}/builds/`;
-    return _fetchBuilds(buildsUrl, true, filters, dispatch, getState);
+    return _fetchBuilds(buildsUrl, BOOKMARKS, filters, dispatch, getState);
+  };
+}
+
+export function fetchArchivedBuilds(user: string,
+                                    filters: { [key: string]: number | boolean | string } = {}): any {
+  return (dispatch: any, getState: any) => {
+    const buildsUrl = `${BASE_API_URL}/archives/${user}/builds/`;
+    return _fetchBuilds(buildsUrl, ARCHIVES, filters, dispatch, getState);
   };
 }
 
@@ -187,7 +231,7 @@ export function fetchBuilds(projectUniqueName: string,
                             filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
     const buildsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/builds`;
-    return _fetchBuilds(buildsUrl, false, filters, dispatch, getState);
+    return _fetchBuilds(buildsUrl, '', filters, dispatch, getState);
   };
 }
 
@@ -206,7 +250,6 @@ export function fetchBuild(user: string, projectName: string, buildId: number | 
       .then((json) => dispatch(receiveBuildActionCreator(json)));
   };
 }
-
 
 export function updateBuild(buildName: string, updateDict: { [key: string]: any }): any {
   const buildUrl = getBuildUrlFromName(buildName, false);
@@ -248,6 +291,45 @@ export function deleteBuild(buildName: string, redirect: boolean = false): any {
         }
         return dispatched;
       });
+  };
+}
+
+export function archiveBuild(buildName: string, redirect: boolean = false): any {
+  const buildUrl = getBuildUrlFromName(buildName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${buildUrl}/archive`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => {
+        const dispatched = dispatch(archiveBuildActionCreator(buildName));
+        if (redirect) {
+          const values = buildName.split('.');
+          history.push(getProjectUrl(values[0], values[1], true) + '#builds');
+        }
+        return dispatched;
+      });
+  };
+}
+
+export function restoreBuild(buildName: string): any {
+  const buildUrl = getBuildUrlFromName(buildName, false);
+  return (dispatch: any, getState: any) => {
+    return fetch(
+      `${BASE_API_URL}${buildUrl}/restore`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + getState().auth.token,
+          'X-CSRFToken': getState().auth.csrftoken
+        },
+      })
+      .then((response) => handleAuthError(response, dispatch))
+      .then(() => dispatch(restoreBuildActionCreator(buildName)));
   };
 }
 

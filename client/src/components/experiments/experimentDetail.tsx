@@ -34,6 +34,8 @@ export interface Props {
   experiment: ExperimentModel;
   onDelete: () => actions.ExperimentAction;
   onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
+  onArchive: () => actions.ExperimentAction;
+  onRestore: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
   fetchData: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
@@ -89,6 +91,8 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                 <ExperimentActions
                   onDelete={this.props.onDelete}
                   onStop={this.props.onStop}
+                  onArchive={experiment.deleted ? undefined : this.props.onArchive}
+                  onRestore={experiment.deleted ? this.props.onRestore : undefined}
                   tensorboardActionCallback={
                   experiment.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
                   hasTensorboard={experiment.has_tensorboard}

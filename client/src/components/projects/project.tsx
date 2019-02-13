@@ -16,12 +16,22 @@ import ProjectActions from './projectActions';
 export interface Props {
   project: ProjectModel;
   onDelete: () => actions.ProjectAction;
+  onArchive: () => actions.ProjectAction;
+  onRestore: () => actions.ProjectAction;
   showBookmarks: boolean;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
 }
 
-function Project({project, onDelete, bookmark, unbookmark, showBookmarks}: Props) {
+function Project({
+                   project,
+                   onDelete,
+                   onArchive,
+                   onRestore,
+                   bookmark,
+                   unbookmark,
+                   showBookmarks
+                 }: Props) {
   const visibility = project.is_public ? 'Public' : 'Private';
   const bookmarkStar: BookmarkInterface = getBookmark(
     project.bookmarked, bookmark, unbookmark);
@@ -52,6 +62,8 @@ function Project({project, onDelete, bookmark, unbookmark, showBookmarks}: Props
       <td className="block pull-right">
         <ProjectActions
           onDelete={onDelete}
+          onArchive={project.deleted ? undefined : onArchive}
+          onRestore={project.deleted ? onRestore : undefined}
           pullRight={false}
         />
       </td>

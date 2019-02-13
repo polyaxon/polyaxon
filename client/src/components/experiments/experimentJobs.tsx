@@ -1,8 +1,8 @@
-import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/experimentJob';
 import { ExperimentJobModel } from '../../models/experimentJob';
+import { isLive } from '../../utils/isLive';
 import { EmptyList } from '../empty/emptyList';
 import PaginatedList from '../tables/paginatedList';
 import ExperimentJob from './experimentJob';
@@ -24,7 +24,7 @@ export default class ExperimentJobs extends React.Component<Props, {}> {
       return (
         <ul>
           {jobs.filter(
-            (xp: ExperimentJobModel) => _.isNil(xp.deleted) || !xp.deleted
+            (xp: ExperimentJobModel) => isLive(xp)
           ).map(
             (experimentJob: ExperimentJobModel) =>
               <li className="list-item" key={experimentJob.unique_name}>

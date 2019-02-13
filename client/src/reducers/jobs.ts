@@ -22,6 +22,9 @@ export const jobsReducer: Reducer<JobStateSchema> =
       if (!_.includes(newState.uniqueNames, uniqueName)) {
         newState.uniqueNames.push(uniqueName);
       }
+      if (_.isNil(job.deleted)) {
+        job.deleted = false;
+      }
       const normalizedJobs = normalize(job, JobSchema).entities.jobs;
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedJobs[job.unique_name]
@@ -44,6 +47,26 @@ export const jobsReducer: Reducer<JobStateSchema> =
           lastFetched: {
             ...state.lastFetched,
             names: state.lastFetched.names.filter((name) => name !== action.jobName)
+          },
+        };
+      case actionTypes.ARCHIVE_JOB:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.jobName]: {
+              ...state.byUniqueNames[action.jobName], deleted: true
+            }
+          },
+        };
+      case actionTypes.RESTORE_JOB:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.jobName]: {
+              ...state.byUniqueNames[action.jobName], deleted: false
+            }
           },
         };
       case actionTypes.STOP_JOB:

@@ -6,6 +6,7 @@ import Builds from '../components/builds/builds';
 import { AppState } from '../constants/types';
 import { isTrue } from '../constants/utils';
 import { BuildModel } from '../models/build';
+import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
 
 import * as actions from '../actions/build';
 import * as search_actions from '../actions/search';
@@ -14,9 +15,10 @@ import { SearchModel } from '../models/search';
 interface OwnProps {
   user: string;
   projectName?: string;
-  bookmarks?: boolean;
+  endpointList?: string;
   useFilters?: boolean;
   showBookmarks?: boolean;
+  showDeleted?: boolean;
   fetchData?: () => any;
 }
 
@@ -50,7 +52,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     count: results.count,
     useFilters: isTrue(ownProps.useFilters),
     showBookmarks: isTrue(ownProps.showBookmarks),
-    bookmarks: isTrue(ownProps.bookmarks),
+    showDeleted: isTrue(ownProps.showDeleted),
+    endpointList: ownProps.endpointList,
   };
 }
 
@@ -58,6 +61,8 @@ export interface DispatchProps {
   onCreate?: (build: BuildModel) => actions.BuildAction;
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
+  onArchive: (buildName: string) => actions.BuildAction;
+  onRestore: (buildName: string) => actions.BuildAction;
   onUpdate?: (build: BuildModel) => actions.BuildAction;
   bookmark?: (buildName: string) => actions.BuildAction;
   unbookmark?: (buildName: string) => actions.BuildAction;
@@ -72,6 +77,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
     onCreate: (build: BuildModel) => dispatch(actions.createBuildActionCreator(build)),
     onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
     onStop: (buildName: string) => dispatch(actions.stopBuild(buildName)),
+    onArchive: (buildName: string) => dispatch(actions.archiveBuild(buildName)),
+    onRestore: (buildName: string) => dispatch(actions.restoreBuild(buildName)),
     bookmark: (buildName: string) => dispatch(actions.bookmark(buildName)),
     unbookmark: (buildName: string) => dispatch(actions.unbookmark(buildName)),
     onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
@@ -107,12 +114,14 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(ownProps.projectName) && ownProps.bookmarks) {
+      if (_.isNil(ownProps.projectName) && ownProps.endpointList === BOOKMARKS) {
         return dispatch(actions.fetchBookmarkedBuilds(ownProps.user, filters));
+      } else if (_.isNil(ownProps.projectName) && ownProps.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedBuilds(ownProps.user, filters));
       } else if (ownProps.projectName) {
         return dispatch(actions.fetchBuilds(ownProps.projectName, filters));
       } else {
-        throw new Error('Builds container expects either a project name or bookmarks.');
+        throw new Error('Builds container expects either a project name or bookmarks or archives.');
       }
     }
   };
