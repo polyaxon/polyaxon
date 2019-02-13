@@ -2,13 +2,11 @@ import pytest
 
 from rest_framework import status
 
-from api.bookmarks.serializers import (
-    BuildJobBookmarkSerializer,
-    ExperimentBookmarkSerializer,
-    ExperimentGroupBookmarkSerializer,
-    JobBookmarkSerializer,
-    ProjectBookmarkSerializer
-)
+from api.build_jobs.serializers import BookmarkedBuildJobSerializer
+from api.experiment_groups.serializers import BookmarkedExperimentGroupSerializer
+from api.experiments.serializers import BookmarkedExperimentSerializer
+from api.jobs.serializers import BookmarkedJobSerializer
+from api.projects.serializers import BookmarkedProjectSerializer
 from constants.urls import API_V1
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
@@ -86,7 +84,7 @@ class BaseTestArchiveListViewV1(BaseViewTest):
 class TestBuildArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = BuildJob
-    serializer_class = BuildJobBookmarkSerializer
+    serializer_class = BookmarkedBuildJobSerializer
     factory_class = BuildJobFactory
     entity = 'builds'
 
@@ -95,7 +93,7 @@ class TestBuildArchiveListView(BaseTestArchiveListViewV1):
 class TestJobArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = Job
-    serializer_class = JobBookmarkSerializer
+    serializer_class = BookmarkedJobSerializer
     factory_class = JobFactory
     entity = 'jobs'
 
@@ -104,7 +102,7 @@ class TestJobArchiveListView(BaseTestArchiveListViewV1):
 class TestExperimentArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = Experiment
-    serializer_class = ExperimentBookmarkSerializer
+    serializer_class = BookmarkedExperimentSerializer
     factory_class = ExperimentFactory
     entity = 'experiments'
 
@@ -113,7 +111,7 @@ class TestExperimentArchiveListView(BaseTestArchiveListViewV1):
 class TestExperimentGroupArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = ExperimentGroup
-    serializer_class = ExperimentGroupBookmarkSerializer
+    serializer_class = BookmarkedExperimentGroupSerializer
     factory_class = ExperimentGroupFactory
     entity = 'groups'
 
@@ -122,7 +120,7 @@ class TestExperimentGroupArchiveListView(BaseTestArchiveListViewV1):
 class TestProjectArchiveListView(BaseTestArchiveListViewV1):
     HAS_AUTH = True
     model_class = Project
-    serializer_class = ProjectBookmarkSerializer
+    serializer_class = BookmarkedProjectSerializer
     factory_class = ProjectFactory
     entity = 'projects'
 
