@@ -17,7 +17,7 @@ def extract_dockerfile(extract_path: str, dockerfile_path: str, build_context: s
         # We move all files under the context to the build path
         context_dockerfile_path = os.path.join(extract_path, dockerfile_path)
         build_dockerfile_path = os.path.join(build_context, dockerfile_path)
-        shutil.copytree(context_dockerfile_path, build_dockerfile_path)
+        shutil.copy(context_dockerfile_path, build_dockerfile_path)
         return True
     except Exception:
         return False

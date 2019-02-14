@@ -71,7 +71,7 @@ def cmd(job: 'Job',
                                context_path=context_path,
                                dockerfile_path=dockerfile_path)
         if not status:
-            job.failed(message='Failed to initialize build job job ({}).'.format(message))
+            job.failed(message='Failed to initialize build job ({}).'.format(message))
             return
     except Exception as e:  # Other exceptions
         job.failed(
