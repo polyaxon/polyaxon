@@ -47,7 +47,7 @@ def create_polyaxonfile():
 @click.command()
 @click.argument('project', type=str)
 @click.option('--polyaxonfile', is_flag=True, default=False, show_default=False,
-              help='Init a polyaxon file with `exec` step template.')
+              help='Init a polyaxon file in this project.')
 @clean_outputs
 def init(project, polyaxonfile):
     """Initialize a new polyaxonfile specification."""
