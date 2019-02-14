@@ -66,6 +66,11 @@ API_WS_HOST = config.get_string('POLYAXON_API_WS_HOST',
 SECRET_USER_TOKEN_KEY = 'POLYAXON_SECRET_USER_TOKEN'  # noqa
 SECRET_USER_TOKEN = config.get_string(SECRET_USER_TOKEN_KEY,
                                       is_optional=True)
+if not SECRET_USER_TOKEN:  # Check global config
+    SECRET_USER_TOKEN = global_config.get_string('token',
+                                                 is_optional=True,
+                                                 is_secret=True,
+                                                 is_local=True)
 SECRET_EPHEMERAL_TOKEN_KEY = 'POLYAXON_SECRET_EPHEMERAL_TOKEN'  # noqa
 SECRET_EPHEMERAL_TOKEN = config.get_string(SECRET_EPHEMERAL_TOKEN_KEY,
                                            is_optional=True)
