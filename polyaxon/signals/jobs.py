@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job
 from libs.repos.utils import assign_code_reference
+from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.persistence import set_persistence
 from signals.tags import set_tags
