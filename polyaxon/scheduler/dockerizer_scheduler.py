@@ -92,6 +92,8 @@ def start_dockerizer(build_job):
         job_uuid=build_job.uuid.hex,
         commit=build_job.commit,
         from_image=build_job.build_image,
+        dockerfile_path=build_job.build_dockerfile,
+        context_path=build_job.build_context,
         image_tag=build_job.uuid.hex,
         image_name=get_image_name(
             build_job,

@@ -29,6 +29,8 @@ class DockerizerSpawner(K8SManager):
                  spec,
                  commit=None,
                  from_image=None,
+                 dockerfile_path=None,
+                 context_path=None,
                  image_tag=None,
                  image_name=None,
                  build_steps=None,
@@ -53,6 +55,8 @@ class DockerizerSpawner(K8SManager):
         self.job_uuid = job_uuid
         self.commit = commit
         self.from_image = from_image
+        self.dockerfile_path = dockerfile_path
+        self.context_path = context_path
         self.image_tag = image_tag
         self.image_name = image_name
         self.build_steps = build_steps
@@ -123,8 +127,10 @@ class DockerizerSpawner(K8SManager):
     def get_init_command_args(self):
         return (["python3", "dockerizer/init_cmd.py"],
                 ["--build_context={}".format(constants.BUILD_CONTEXT),
-                 "--from_image={}".format(self.from_image),
-                 "--commit={}".format(self.commit if self.commit else '')])
+                 "--from_image={}".format(self.from_image or ''),
+                 "--dockerfile_path={}".format(self.dockerfile_path or ''),
+                 "--context_path={}".format(self.context_path or ''),
+                 "--commit={}".format(self.commit or '')])
 
     def start_dockerizer(self,
                          resources=None,
