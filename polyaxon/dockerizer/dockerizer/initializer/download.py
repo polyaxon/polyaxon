@@ -1,23 +1,21 @@
 import logging
-import os
+
+from .utils import ensure_path
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
 
-def download(job: 'Job', build_path: str, filename: str, commit: str):
-    if not os.path.exists(build_path):
-        os.makedirs(build_path)
-
-    filename = '{}/{}'.format(build_path, filename)
+def download(job: 'Job', extract_path: str, download_file: str, commit: str):
+    ensure_path(extract_path)
 
     repo_file = job.client.project.download_repo(
         username=job.username,
         project_name=job.project_name,
         commit=commit,
-        filename=filename,
+        filename=download_file,
         untar=True,
         delete_tar=True,
-        extract_path=build_path
+        extract_path=extract_path
     )
     if not repo_file:
         job.failed(message='Could not download code to build the image.')
