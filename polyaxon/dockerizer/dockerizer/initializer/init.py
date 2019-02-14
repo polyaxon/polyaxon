@@ -7,7 +7,7 @@ from .download import download
 from .generate import generate
 
 
-def init(job: 'Job',
+def init(job: 'Job',  # pylint:disable=too-many-branches
          build_context: str,
          from_image: str,
          commit: str,
@@ -52,7 +52,7 @@ def init(job: 'Job',
                             build_steps=settings.CONTAINER_BUILD_STEPS,
                             env_vars=settings.CONTAINER_ENV_VARS,
                             nvidia_bin=settings.MOUNT_PATHS_NVIDIA), ''
-        except Exception as e:
+        except Exception:
             return False, 'An error occurred while generating the dockerfile.'
 
 
