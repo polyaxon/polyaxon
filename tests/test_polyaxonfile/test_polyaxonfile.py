@@ -1540,3 +1540,40 @@ class TestPolyaxonfile(TestCase):
 
         assert spec.environment.tolerations == tolerations
         assert spec.tolerations == tolerations
+
+    def test_build_job_with_context_and_dockerfile(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/build_with_context_and_dockerfile.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.is_build is True
+        assert spec.logging is None
+        assert spec.build.dockerfile == 'dockerfiles/Dockerfile'
+        assert spec.build.context == 'module1'
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
+        assert isinstance(spec.build, BuildConfig)
+        assert isinstance(spec.environment, EnvironmentConfig)
+
+        node_selector = {'polyaxon.com': 'node_for_build_jobs'}
+        assert spec.environment.node_selector == node_selector
+        assert spec.node_selector == node_selector
+
+        resources = {
+            'cpu': {'requests': 1, 'limits': 2},
+            'memory': {'requests': 200, 'limits': 200},
+            'gpu': None,
+            'tpu': None
+        }
+        assert spec.environment.resources.to_dict() == resources
+        assert spec.resources.to_dict() == resources
+
+        affinity = {
+            'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}
+        }
+        assert spec.environment.affinity == affinity
+        assert spec.affinity == affinity
+
+        tolerations = [{'key': 'key', 'operator': 'Exists'}]
+
+        assert spec.environment.tolerations == tolerations
+        assert spec.tolerations == tolerations

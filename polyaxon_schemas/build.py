@@ -9,7 +9,7 @@ from polyaxon_schemas.utils import BuildBackend
 
 def validate_image(image):
     if not image:
-        raise ValidationError('Invalid docker image `{}`'.format(image))
+        return image
     tagged_image = image.split(':')
     if len(tagged_image) > 3:
         raise ValidationError('Invalid docker image `{}`'.format(image))
@@ -22,9 +22,25 @@ def validate_backend(backend):
         raise ValidationError('Build backend `{}` not supported'.format(backend))
 
 
+def validate_build(image, dockerfile):
+    build_data = [image, dockerfile]
+    if all(build_data):
+        raise ValidationError(
+            'Invalid Build, only a dockerfile or image is required not both.'
+            'received: image: `{}` and dockerfile: `{}`'.format(
+                image,
+                dockerfile
+            ))
+    if not any(build_data):
+        raise ValidationError(
+            'Invalid Build, a dockerfile or an image is required, received none.')
+
+
 class BuildSchema(BaseSchema):
     backend = fields.Str(allow_none=True)
-    image = fields.Str()
+    dockerfile = fields.Str(allow_none=True)
+    context = fields.Str(allow_none=True)
+    image = fields.Str(allow_none=True)
     build_steps = fields.List(fields.Str(), allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
@@ -45,6 +61,10 @@ class BuildSchema(BaseSchema):
         """Validate backend"""
         validate_backend(data.get('backend'))
 
+    @validates_schema
+    def validate(self, data):
+        validate_build(image=data.get('image'), dockerfile=data.get('dockerfile'))
+
 
 class BuildConfig(BaseConfig):
     """
@@ -61,10 +81,14 @@ class BuildConfig(BaseConfig):
     """
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
-    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'nocache', 'ref', 'backend']
+    REDUCED_ATTRIBUTES = [
+        'build_steps', 'env_vars', 'nocache', 'ref', 'backend', 'context', 'dockerfile', 'image'
+    ]
 
     def __init__(self,
-                 image,
+                 dockerfile=None,
+                 image=None,
+                 context=None,
                  backend=None,
                  build_steps=None,
                  env_vars=None,
@@ -72,6 +96,9 @@ class BuildConfig(BaseConfig):
                  ref=None):
         validate_image(image)
         validate_backend(backend)
+        validate_build(image=image, dockerfile=dockerfile)
+        self.dockerfile = dockerfile
+        self.context = context
         self.backend = backend
         self.image = image
         self.build_steps = build_steps
@@ -81,6 +108,8 @@ class BuildConfig(BaseConfig):
 
     @property
     def image_tag(self):
+        if not self.image:
+            return None
         tagged_image = self.image.split(':')
         if len(tagged_image) == 1:
             return 'latest'

@@ -53,6 +53,19 @@ class TestBuildConfigs(TestCase):
         with self.assertRaises(ValidationError):
             BuildConfig.from_dict(config_dict)
 
+    def test_valid_dockerfile(self):
+        config_dict = {
+            'dockerfile': None,
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
+        config_dict = {
+            'dockerfile': '',
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
     def test_build_config(self):
         config_dict = {
             'image': 'some_image_name',
@@ -61,6 +74,25 @@ class TestBuildConfigs(TestCase):
         assert config.to_dict() == config_dict
         assert config.image_tag == 'latest'
         assert config.nocache is None
+        assert config.dockerfile is None
+        assert config.context is None
+
+        config_dict = {
+            'dockerfile': 'path/Dockerfile',
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag is None
+        assert config.nocache is None
+        assert config.dockerfile == 'path/Dockerfile'
+        assert config.context is None
+
+        config_dict = {
+            'dockerfile': 'path/Dockerfile',
+            'image': 'some_image_name',
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
 
     def test_build_config_image_use_cases(self):
         # Latest
@@ -121,6 +153,35 @@ class TestBuildConfigs(TestCase):
         assert config.to_dict() == config_dict
         assert config.image_tag == 'latest'
         assert config.nocache is True
+
+        config_dict = {
+            'dockerfile': 'Dockerfile',
+            'nocache': True
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag is None
+        assert config.dockerfile == 'Dockerfile'
+        assert config.nocache is True
+
+    def test_build_context(self):
+        config_dict = {
+            'image': 'some_image_name',
+            'context': 'path/to/module'
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag == 'latest'
+        assert config.context == 'path/to/module'
+
+        config_dict = {
+            'dockerfile': 'path/to/Dockerfile',
+            'context': 'path/to/module'
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.dockerfile == 'path/to/Dockerfile'
+        assert config.context == 'path/to/module'
 
     def test_build_repo_with_install_step_config(self):
         config_dict = {
