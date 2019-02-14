@@ -43,6 +43,7 @@ def init(job: 'Job',  # pylint:disable=too-many-branches
                                     build_context=build_context)
         if not status:
             return status, 'An error occurred while extracting the dockerfile from the context.'
+        return True, ''
     else:
         # Generate dockerfile
         try:
