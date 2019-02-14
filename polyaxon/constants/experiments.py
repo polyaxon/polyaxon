@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from hestia.unknown import UNKNOWN
 
@@ -114,7 +114,7 @@ class ExperimentLifeCycle(BaseStatuses):
                     for job_status in job_statuses])
 
     @classmethod
-    def jobs_status(cls, job_statuses: List[str]) -> str:
+    def jobs_status(cls, job_statuses: List[str]) -> Optional[str]:
         if not job_statuses:
             return None
 
