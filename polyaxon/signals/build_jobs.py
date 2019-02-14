@@ -16,7 +16,7 @@ _logger = logging.getLogger('polyaxon.signals.build_jobs')
 
 
 def set_backend(instance):
-    if not instance.backend and instance.specification:
+    if instance.specification and instance.specification.build.backend:
         instance.backend = instance.specification.build.backend or BuildBackend.NATIVE
 
 
