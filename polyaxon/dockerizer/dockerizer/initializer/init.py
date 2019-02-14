@@ -38,7 +38,8 @@ def init(job: 'Job',  # pylint:disable=too-many-branches
         return status, 'An error occurred while extracting the code.'
     if dockerfile_path:
         # Move dockerfile to the build context
-        status = extract_dockerfile(extract_path=extract_path,
+        status = extract_dockerfile(job=job,
+                                    extract_path=extract_path,
                                     dockerfile_path=dockerfile_path,
                                     build_context=build_context)
         if not status:

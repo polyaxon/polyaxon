@@ -12,7 +12,10 @@ def extract_code(extract_path: str, build_path: str, context_path: str) -> bool:
         return False
 
 
-def extract_dockerfile(job: 'DockerJob', extract_path: str, dockerfile_path: str, build_context: str) -> bool:
+def extract_dockerfile(job: 'DockerJob',
+                       extract_path: str,
+                       dockerfile_path: str,
+                       build_context: str) -> bool:
     try:
         # We move all files under the context to the build path
         context_dockerfile_path = os.path.join(extract_path, dockerfile_path)
