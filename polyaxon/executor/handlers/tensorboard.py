@@ -11,7 +11,7 @@ class TensorboardHandler(BaseHandler):
     @classmethod
     def _handle_tensorboard_cleaned_triggered(cls, event: 'Event') -> None:
         instance = event.instance
-        if not instance or not instance.has_specification or not instance.is_running:
+        if not instance or not instance.has_specification or not instance.is_stoppable:
             return
 
         celery_app.send_task(

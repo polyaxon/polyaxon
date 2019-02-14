@@ -24,7 +24,7 @@ class ExperimentHandler(BaseHandler):
         from db.models.experiment_groups import ExperimentGroup
 
         instance = event.instance
-        if not instance or not instance.has_specification or not instance.is_running:
+        if not instance or not instance.has_specification or not instance.is_stoppable:
             return
 
         if instance.jobs.count() == 0:

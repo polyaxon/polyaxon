@@ -78,7 +78,7 @@ def jobs_schedule_deletion(job_id, immediate=False):
 
     job.archive()
 
-    if job.is_running:
+    if job.is_stoppable:
         project = job.project
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_STOP,

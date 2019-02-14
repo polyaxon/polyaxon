@@ -32,7 +32,7 @@ def tensorboards_schedule_deletion(tensorboard_job_id):
 
     tensorboard.archive()
 
-    if tensorboard.is_running:
+    if tensorboard.is_stoppable:
         project = tensorboard.project
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_STOP,

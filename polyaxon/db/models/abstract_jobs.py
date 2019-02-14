@@ -134,7 +134,7 @@ class TensorboardJobMixin(CachedMixin):
     @cached_property
     def has_tensorboard(self) -> bool:
         tensorboard = self.tensorboard
-        return tensorboard and tensorboard.is_running
+        return tensorboard and tensorboard.is_stoppable
 
 
 class AbstractJobStatus(StatusModel):

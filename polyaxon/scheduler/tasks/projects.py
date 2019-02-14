@@ -36,7 +36,7 @@ def projects_schedule_deletion(project_id, immediate=False):
         experiment_group__isnull=True,
         status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
     for experiment in experiments:
-        if experiment.is_running:
+        if experiment.is_stoppable:
             celery_app.send_task(
                 SchedulerCeleryTasks.EXPERIMENTS_STOP,
                 kwargs={

@@ -71,6 +71,10 @@ class LastStatusMixin(object):
         return self.STATUSES.is_running(self.last_status)
 
     @property
+    def is_stoppable(self) -> bool:
+        return self.STATUSES.is_stoppable(self.last_status)
+
+    @property
     def is_done(self) -> bool:
         return self.STATUSES.is_done(self.last_status)
 

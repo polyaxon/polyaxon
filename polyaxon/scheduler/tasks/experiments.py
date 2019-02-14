@@ -163,7 +163,7 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
 
     experiment.archive()
 
-    if experiment.is_running:
+    if experiment.is_stoppable:
         project = experiment.project
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,

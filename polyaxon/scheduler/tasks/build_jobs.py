@@ -40,7 +40,7 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
 
     build_job.archive()
 
-    if build_job.is_running:
+    if build_job.is_stoppable:
         project = build_job.project
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,

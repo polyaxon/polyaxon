@@ -83,7 +83,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
 
     experiment_group.archive()
 
-    if experiment_group.is_running:
+    if experiment_group.is_stoppable:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
             kwargs={
@@ -120,7 +120,7 @@ def experiments_group_stop_experiments(experiment_group_id,
         experiments = experiment_group.all_experiments.exclude(
             status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
         for experiment in experiments:
-            if experiment.is_running:
+            if experiment.is_stoppable:
                 celery_app.send_task(
                     SchedulerCeleryTasks.EXPERIMENTS_STOP,
                     kwargs={

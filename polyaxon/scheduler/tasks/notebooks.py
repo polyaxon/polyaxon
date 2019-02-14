@@ -68,7 +68,7 @@ def projects_notebook_schedule_deletion(notebook_job_id):
 
     notebook_job.archive()
 
-    if notebook_job.is_running:
+    if notebook_job.is_stoppable:
         project = notebook_job.project
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,

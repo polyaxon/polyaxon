@@ -636,7 +636,7 @@ class OperationRun(RunModel):
         self.save()
 
     def stop(self, message: str = None) -> None:
-        if self.is_running:
+        if self.is_stoppable:
             task = AsyncResult(self.celery_task_id)
             task.revoke(terminate=True, signal='SIGKILL')
         self.on_stop(message=message)

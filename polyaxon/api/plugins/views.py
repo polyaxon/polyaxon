@@ -205,7 +205,7 @@ class StopNotebookView(ProjectEndpoint, PostEndpoint):
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username,
                            countdown=1)
-        elif self.project.notebook and self.project.notebook.is_running:
+        elif self.project.notebook and self.project.notebook.is_stoppable:
             self.project.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
                                              message='Notebook was stopped')
         return Response(status=status.HTTP_200_OK)
