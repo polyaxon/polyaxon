@@ -2,7 +2,7 @@
 
 docker==3.5.1
 GitPython==2.1.11
-polystores==0.1.2
+polystores==0.1.3
 polyaxon-k8s==0.3.7
 
 azure-storage==0.36.0
