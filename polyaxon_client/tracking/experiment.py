@@ -9,7 +9,6 @@ from datetime import datetime
 from polyaxon_client import settings
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonClientException
 from polyaxon_client.handlers.conf import setup_logging
-from polyaxon_client.handlers.handler import PolyaxonHandler
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
