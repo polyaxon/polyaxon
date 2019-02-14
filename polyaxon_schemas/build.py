@@ -62,7 +62,7 @@ class BuildSchema(BaseSchema):
         validate_backend(data.get('backend'))
 
     @validates_schema
-    def validate(self, data):
+    def validate_config(self, data):
         validate_build(image=data.get('image'), dockerfile=data.get('dockerfile'))
 
 
