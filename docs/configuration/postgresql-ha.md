@@ -58,8 +58,10 @@ you need to define a PVC and assign it to the `persistence.existingClaim`.
 
 If you prefer to have the postgresql database managed and hosted outside of Kubernetes,
 instead of the in-cluster one provided by Polyaxon, e.g.
-[Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql/),
-[Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/), or [GCP Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/).
+[Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/),
+[Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql/), 
+[GCP Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/), 
+or [DigitalOcean managed PostgreSQL](https://www.digitalocean.com/products/managed-databases/).
 You need to disable the in-cluster database, and provide the information needed to establish a connection to the external one, e.g.:
 
 
