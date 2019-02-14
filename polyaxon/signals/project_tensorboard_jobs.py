@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from constants.jobs import JobLifeCycle
 from db.models.tensorboards import TensorboardJob
 from libs.repos.utils import assign_code_reference
+from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.persistence import set_persistence
 from signals.tags import set_tags
@@ -26,6 +27,7 @@ def tensorboard_job_pre_save(sender, **kwargs):
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
     assign_code_reference(instance)
+    set_name(instance=instance, query=TensorboardJob.all)
 
 
 @receiver(post_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_post_save")

@@ -5,6 +5,7 @@ from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
+from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import (
@@ -173,7 +174,8 @@ class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerM
 class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
                                  InClusterMixin,
                                  TagsSerializerMixin,
-                                 DataRefsSerializerMixin):
+                                 DataRefsSerializerMixin,
+                                 NamesMixin):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
@@ -225,11 +227,14 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
                                                   data_refs=instance.data_refs)
         validated_data = self.validated_declarations(validated_data=validated_data,
                                                      declarations=instance.declarations)
+        validated_data = self.validated_name(validated_data, query=Experiment.all)
 
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class ExperimentCreateSerializer(serializers.ModelSerializer, InClusterMixin):
+class ExperimentCreateSerializer(serializers.ModelSerializer,
+                                 InClusterMixin,
+                                 NamesMixin):
     user = fields.SerializerMethodField()
 
     class Meta:
@@ -273,6 +278,10 @@ class ExperimentCreateSerializer(serializers.ModelSerializer, InClusterMixin):
         raise ValidationError('Current experiment creation could not be performed.\n'
                               'The reason is that the specification sent correspond '
                               'to a `{}`.\n'.format(spec.kind))
+
+    def create(self, validated_data):
+        validated_data = self.validated_name(validated_data, query=Experiment.all)
+        return super().create(validated_data)
 
     def validate(self, attrs):
         if self.initial_data.get('check_specification') and not attrs.get('config'):

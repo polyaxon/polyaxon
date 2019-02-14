@@ -7,6 +7,7 @@ from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.models.experiment_groups import ExperimentGroup, GroupTypes
 from libs.repos.utils import assign_code_reference
 from schemas.hptuning import SearchAlgorithms
+from signals.names import set_name
 from signals.persistence import set_persistence
 from signals.tags import set_tags
 
@@ -32,6 +33,7 @@ def experiment_group_pre_save(sender, **kwargs):
         instance.group_type = GroupTypes.SELECTION
     else:
         instance.group_type = GroupTypes.STUDY
+    set_name(instance=instance, query=ExperimentGroup.all)
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")

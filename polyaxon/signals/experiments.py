@@ -13,6 +13,7 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentMetric
 from event_manager.events.experiment import EXPERIMENT_NEW_METRIC
 from libs.repos.utils import assign_code_reference
+from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.persistence import set_persistence
 from signals.tags import set_tags
@@ -32,6 +33,7 @@ def experiment_pre_save(sender, **kwargs):
     set_persistence(instance=instance)
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
+    set_name(instance=instance, query=Experiment.all)
     if not instance.specification or not instance.specification.build:
         return
 

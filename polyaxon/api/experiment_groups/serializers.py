@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.experiment_groups import (
     ExperimentGroup,
@@ -62,7 +63,9 @@ class BookmarkedExperimentGroupSerializer(ExperimentGroupSerializer, BookmarkedS
         fields = ExperimentGroupSerializer.Meta.fields + ('bookmarked',)
 
 
-class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer, TagsSerializerMixin):
+class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
+                                      TagsSerializerMixin,
+                                      NamesMixin):
     num_experiments = fields.SerializerMethodField()
     num_pending_experiments = fields.SerializerMethodField()
     num_running_experiments = fields.SerializerMethodField()
@@ -126,11 +129,12 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer, TagsS
     def update(self, instance: ExperimentGroup, validated_data) -> ExperimentGroup:
         validated_data = self.validated_tags(validated_data=validated_data,
                                              tags=instance.tags)
+        validated_data = self.validated_name(validated_data, query=ExperimentGroup.all)
 
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class ExperimentGroupCreateSerializer(ExperimentGroupSerializer):
+class ExperimentGroupCreateSerializer(ExperimentGroupSerializer, NamesMixin):
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
@@ -150,6 +154,10 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer):
         if self.initial_data.get('check_specification') and not attrs.get('content'):
             raise ValidationError('Experiment group expects `content`.')
         return attrs
+
+    def create(self, validated_data):
+        validated_data = self.validated_name(validated_data, query=ExperimentGroup.all)
+        return super().create(validated_data)
 
 
 class ExperimentGroupChartViewSerializer(serializers.ModelSerializer):

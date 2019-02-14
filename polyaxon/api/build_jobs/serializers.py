@@ -4,6 +4,7 @@ from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.in_cluster import InClusterMixin
+from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.tags import TagsSerializerMixin
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.models.experiments import Experiment
@@ -61,7 +62,10 @@ class BookmarkedBuildJobSerializer(BuildJobSerializer, BookmarkedSerializerMixin
         fields = BuildJobSerializer.Meta.fields + ('bookmarked',)
 
 
-class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, InClusterMixin, TagsSerializerMixin):
+class BuildJobDetailSerializer(BookmarkedBuildJobSerializer,
+                               InClusterMixin,
+                               TagsSerializerMixin,
+                               NamesMixin):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
@@ -98,11 +102,13 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer, InClusterMixin, Tag
     def update(self, instance: 'BuildJob', validated_data: Dict) -> 'BuildJob':
         validated_data = self.validated_tags(validated_data=validated_data,
                                              tags=instance.tags)
-
+        validated_data = self.validated_name(validated_data, query=BuildJob.all)
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class BuildJobCreateSerializer(serializers.ModelSerializer, InClusterMixin):
+class BuildJobCreateSerializer(serializers.ModelSerializer,
+                               InClusterMixin,
+                               NamesMixin):
     user = fields.SerializerMethodField()
 
     class Meta:
@@ -120,3 +126,7 @@ class BuildJobCreateSerializer(serializers.ModelSerializer, InClusterMixin):
         """
         validate_build_spec_config(config)
         return config
+
+    def create(self, validated_data):
+        validated_data = self.validated_name(validated_data, query=BuildJob.all)
+        return super().create(validated_data)

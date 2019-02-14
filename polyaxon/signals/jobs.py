@@ -24,6 +24,7 @@ def job_pre_save(sender, **kwargs):
     set_persistence(instance=instance)
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
+    set_name(instance=instance, query=Job.all)
 
     # Add code reference
     # Check if :
