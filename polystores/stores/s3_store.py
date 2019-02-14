@@ -205,7 +205,7 @@ class S3Store(BaseStore):
 
     def ls(self, path):
         results = self.list(bucket_name=path)
-        return {'files': results['blobs'], 'dirs': results['prefixes']}
+        return {'files': results['keys'], 'dirs': results['prefixes']}
 
     def list(self,
              bucket_name,
