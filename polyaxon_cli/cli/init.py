@@ -24,9 +24,8 @@ from polyaxon_client.exceptions import PolyaxonClientException
 def create_polyaxonfile():
     if os.path.isfile(constants.INIT_FILE):
         try:
-            _ = PolyaxonFile(constants.INIT_FILE).specification
-            Printer.print_success(
-                "A valid polyaxonfile.yaml was found in the project.".format(constants.INIT_FILE))
+            _ = PolyaxonFile(constants.INIT_FILE).specification  # noqa
+            Printer.print_success("A valid polyaxonfile.yaml was found in the project.")
         except Exception as e:
             Printer.print_error("A Polyaxonfile was found but it is not valid.", add_sign=True)
             Printer.print_error('Error message `{}`.'.format(e))
