@@ -135,8 +135,14 @@ class TensorboardJob(PluginJobBase, JobMixin):
         return outputs_specs, ','.join(tensorboard_paths)
 
     @cached_property
-    def outputs_path(self) -> str:
-        return self.get_named_outputs_paths()
+    def outputs_path(self) -> Tuple[List, str]:
+        from stores.validators import validate_persistence_outputs
+
+        outputs_path = self.get_absolute_outputs_paths()
+        return (
+            [OutputsRefsSpec(path=outputs_path, persistence=validate_persistence_outputs(None))],
+            outputs_path
+        )
 
 
 class TensorboardJobStatus(AbstractJobStatus):
