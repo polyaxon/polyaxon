@@ -105,7 +105,7 @@ class Experiment(BaseTracker):
         if not experiment:
             raise PolyaxonClientException('Could not create experiment.')
         if not settings.IN_CLUSTER and self.track_logs:
-            setup_logging(PolyaxonHandler(send_logs=self._send_logs))
+            setup_logging(send_logs=self._send_logs)
         self.experiment_id = (experiment.id
                               if self.client.api_config.schema_response
                               else experiment.get('id'))

@@ -1,6 +1,7 @@
 import logging
 
 from polyaxon_client import settings
+from polyaxon_client.handlers.handler import PolyaxonHandler
 
 EXCLUDE_DEFAULT_LOGGERS = (
     'polyaxon.client',
@@ -8,15 +9,19 @@ EXCLUDE_DEFAULT_LOGGERS = (
 )
 
 
-def setup_logging(handler, exclude=EXCLUDE_DEFAULT_LOGGERS):
+def setup_logging(send_logs, exclude=EXCLUDE_DEFAULT_LOGGERS):
     if settings.IN_CLUSTER:
         return
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     logger.propagate = False
-    if handler.__class__ in map(type, logger.handlers):
-        del handler
+    if PolyaxonHandler in map(type, logger.handlers):
+        for handler in logger.handlers:
+            if isinstance(handler, PolyaxonHandler):
+                handler.set_send_logs(send_logs=send_logs)
+    else:
+        handler = PolyaxonHandler(send_logs=send_logs)
 
     logger.addHandler(handler)
 

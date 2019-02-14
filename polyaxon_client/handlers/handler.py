@@ -13,6 +13,9 @@ class PolyaxonHandler(logging.Handler):
         logging.Handler.__init__(self,
                                  level=kwargs.get('level', settings.LOGS_LEVEL or logging.NOTSET))
 
+    def set_send_logs(self, send_logs):
+        self._send_logs = send_logs
+
     def can_record(self, record):
         return not (
             record.name == 'polyaxon.client' or
