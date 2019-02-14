@@ -81,3 +81,34 @@ Some commands with caching:
  * `$ polyaxon group experiments`
  * `$ polyaxon job logs`
  * ...
+
+## Switching context
+
+Users don't have to change to a new project to access information about that project, 
+and its jobs, builds, experiments, groups, tensorboards, and notebooks.
+
+All commands allow to change the project context by providing `-p project` or `--project=project`.
+
+If you are an admin you can as well check other users projects without initializing the projects, `-p user/project` or `--project=user/project`.
+
+Here are some examples:
+
+ * Getting other projects experiments:
+ 
+    * `polyaxon project -p mnist experiments -s "-created_at"`
+    * `polyaxon project --project=adam/mnist experiments -q "status: failed"`
+    
+ * Getting tensorboards for some projects:
+ 
+    * `polyaxon project --project=mnist tensorboards --sort="-created_at"`
+    * `polyaxon project -p adam/mnist tensorboards --query="status: running"`
+
+ * Getting information about a specific experiment:
+ 
+    * `polyaxon experiment -p mnist -xp 13 get`
+    * `polyaxon experiment -p adam/mnist --experiment=13 get`
+
+ * Getting information about a specific build:
+ 
+    * `polyaxon build -p mnist -b 113 get`
+    * `polyaxon build -p adam/mnist --build=13 get`
