@@ -24,7 +24,7 @@ def start_tensorboard(tensorboard):
         job_uuid=tensorboard.uuid.hex,
         k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),
-        job_docker_image=tensorboard.image,
+        job_docker_image=tensorboard.build_image,
         in_cluster=True)
 
     error = {}

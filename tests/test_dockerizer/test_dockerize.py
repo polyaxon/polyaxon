@@ -22,7 +22,7 @@ class TestDockerize(BaseTest):
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
                                       build_steps=build_job.build_steps,
-                                      env_vars=build_job.env_vars)
+                                      env_vars=build_job.build_env_vars)
         assert builder.polyaxon_requirements_path is None
         assert builder.polyaxon_setup_path is None
         builder.clean()
@@ -34,7 +34,7 @@ class TestDockerize(BaseTest):
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
                                       build_steps=build_job.build_steps,
-                                      env_vars=build_job.env_vars)
+                                      env_vars=build_job.build_env_vars)
         assert builder.polyaxon_requirements_path == 'repo/polyaxon_requirements.txt'
         assert builder.polyaxon_setup_path == 'repo/polyaxon_setup.sh'
         builder.clean()
@@ -50,7 +50,7 @@ class TestDockerize(BaseTest):
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
                                       build_steps=build_job.build_steps,
-                                      env_vars=build_job.env_vars)
+                                      env_vars=build_job.build_env_vars)
         assert builder.polyaxon_requirements_path == 'repo/requirements.txt'
         assert builder.polyaxon_setup_path == 'repo/setup.sh'
         builder.clean()
@@ -66,7 +66,7 @@ class TestDockerize(BaseTest):
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
                                       build_steps=build_job.build_steps,
-                                      env_vars=build_job.env_vars)
+                                      env_vars=build_job.build_env_vars)
 
         dockerfile = builder.render()
         builder.clean()
@@ -96,7 +96,7 @@ class TestDockerize(BaseTest):
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
-                                      env_vars=build_job.env_vars,
+                                      env_vars=build_job.build_env_vars,
                                       build_steps=build_steps)
 
         dockerfile = builder.render()

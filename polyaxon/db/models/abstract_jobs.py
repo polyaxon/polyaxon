@@ -88,10 +88,6 @@ class JobMixin(object):
         pass
 
     @cached_property
-    def image(self) -> str:
-        return self.specification.build.image
-
-    @cached_property
     def secret_refs(self) -> Optional[List[str]]:
         return self.specification.secret_refs
 
@@ -116,11 +112,23 @@ class JobMixin(object):
         return self.specification.tolerations
 
     @cached_property
+    def build_image(self) -> str:
+        return self.specification.build.image
+
+    @cached_property
+    def build_dockerfile(self) -> str:
+        return self.specification.build.dockerfile
+
+    @cached_property
+    def build_context(self) -> str:
+        return self.specification.build.context
+
+    @cached_property
     def build_steps(self) -> List[str]:
         return self.specification.build.build_steps
 
     @cached_property
-    def env_vars(self) -> Optional[List[str]]:
+    def build_env_vars(self) -> Optional[List[str]]:
         return self.specification.build.env_vars
 
 
