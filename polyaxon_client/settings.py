@@ -12,9 +12,14 @@ from rhea import RheaError  # noqa
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
 CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
 CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonconfig')
+AUTH_PATH = os.path.join(polyaxon_user_path(), '.polyaxonauth')
 
 global_config = rhea.Rhea.read_configs([
     rhea.ConfigSpec(CONFIG_PATH, config_type='.json', check_if_exists=False),
+    {'dummy': 'dummy'}
+])
+auth_config = rhea.Rhea.read_configs([
+    rhea.ConfigSpec(AUTH_PATH, config_type='.json', check_if_exists=False),
     {'dummy': 'dummy'}
 ])
 config = rhea.Rhea.read_configs([
@@ -67,10 +72,10 @@ SECRET_USER_TOKEN_KEY = 'POLYAXON_SECRET_USER_TOKEN'  # noqa
 SECRET_USER_TOKEN = config.get_string(SECRET_USER_TOKEN_KEY,
                                       is_optional=True)
 if not SECRET_USER_TOKEN:  # Check global config
-    SECRET_USER_TOKEN = global_config.get_string('token',
-                                                 is_optional=True,
-                                                 is_secret=True,
-                                                 is_local=True)
+    SECRET_USER_TOKEN = auth_config.get_string('token',
+                                               is_optional=True,
+                                               is_secret=True,
+                                               is_local=True)
 SECRET_EPHEMERAL_TOKEN_KEY = 'POLYAXON_SECRET_EPHEMERAL_TOKEN'  # noqa
 SECRET_EPHEMERAL_TOKEN = config.get_string(SECRET_EPHEMERAL_TOKEN_KEY,
                                            is_optional=True)
