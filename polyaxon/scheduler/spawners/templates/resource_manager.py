@@ -8,6 +8,7 @@ from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resource
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
+from scheduler.spawners.templates.tpu import requests_tpu, get_tpu_annotations
 from schemas.exceptions import PolyaxonConfigurationError
 
 
@@ -271,7 +272,13 @@ class BaseResourceManager(object):
                 tolerations=None,
                 context_mounts=None,
                 restart_policy=None):
-        metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
+        annotations = None
+        if requests_tpu(resources):
+            annotations = get_tpu_annotations()
+        metadata = client.V1ObjectMeta(name=resource_name,
+                                       labels=labels,
+                                       namespace=self.namespace,
+                                       annotations=annotations)
 
         pod_spec = self.get_task_pod_spec(
             resource_name=resource_name,
