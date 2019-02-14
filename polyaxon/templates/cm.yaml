@@ -67,6 +67,12 @@ data:
   {{- else }}
   POLYAXON_K8S_GPU_RESOURCE_KEY: "alpha.kubernetes.io/nvidia-gpu"
   {{- end }}
+  {{- if .Values.tpuTensorflowVersion }}
+  POLYAXON_K8S_TPU_TF_VERSION: {{ .Values.tpuTensorflowVersion }}
+  {{- end }}
+  {{- if .Values.tpuResourceKey }}
+  POLYAXON_K8S_TPU_RESOURCE_KEY: {{ .Values.tpuResourceKey }}
+  {{- end }}
   # Secrets and ConfigMaps
   POLYAXON_REFS_SECRETS: {{ toJson .Values.secretRefs | quote }}
   POLYAXON_REFS_CONFIG_MAPS: {{ toJson .Values.configmapRefs | quote }}
@@ -214,7 +220,9 @@ data:
   POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner }}
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   POLYAXON_BUILD_ALWAYS_PULL_LATEST: {{ default "false" .Values.build_always_pull_latest | quote }}
+  {{- if .Values.tensorboardDockerImage }}
   POLYAXON_TENSORBOARD_DOCKER_IMAGE: {{ .Values.tensorboardDockerImage }}
+  {{- end }}
   # Registry
   {{- if (index .Values "docker-registry").enabled }}
   POLYAXON_REGISTRY_IN_CLUSTER: "true"
