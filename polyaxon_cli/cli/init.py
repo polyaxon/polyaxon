@@ -40,7 +40,8 @@ def create_polyaxonfile():
                 "Possible reasons: you don't have enough rights to create the file.")
             sys.exit(1)
 
-        Printer.print_success("{} was created successfully.".format(constants.INIT_FILE))
+        Printer.print_success("{} was created successfully.".format(constants.INIT_FILE),
+                              add_sign=True)
 
 
 @click.command()
@@ -92,7 +93,6 @@ def init(project, polyaxonfile):
     if init_ignore:
         IgnoreManager.init_config()
         Printer.print_success('New .polyaxonignore file was created.', add_sign=True)
-        sys.exit(1)
     else:
         Printer.print_header('.polyaxonignore file was not changed.')
 
