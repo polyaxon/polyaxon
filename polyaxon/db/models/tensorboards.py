@@ -151,7 +151,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
             persistence_outputs=self.project.persistence_outputs)
         outputs_path = stores.get_project_outputs_path(
             persistence=persistence,
-            experiment_group_name=self.project.unique_name)
+            project_name=self.project.unique_name)
         return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], outputs_path
 
     @cached_property
