@@ -129,18 +129,23 @@ class TensorboardJob(PluginJobBase, JobMixin):
         return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], outputs_path
 
     def _get_selection_outputs_paths(self) -> Tuple[List, str]:
+        import stores
+
         persistence = self.experiment_group.project.persistence_outputs
         experiments = self.experiment_group.group_experiments.all()
 
-        outputs_specs = []
+        outputs_path = stores.get_project_outputs_path(
+            persistence=persistence,
+            project_name=self.project.unique_name)
+
+        outputs_specs = [OutputsRefsSpec(path=outputs_path, persistence=persistence)]
         tensorboard_paths = []
         for experiment in experiments:
-            outputs_spec, tensorboard_path = self._get_named_experiment_outputs_path(
+            _, tensorboard_path = self._get_named_experiment_outputs_path(
                 experiment=experiment, persistence=persistence)
-            outputs_specs += outputs_spec
             tensorboard_paths.append(tensorboard_path)
 
-            return outputs_specs, ','.join(tensorboard_paths)
+        return outputs_specs, ','.join(tensorboard_paths)
 
     def _get_project_outputs_paths(self) -> Tuple[List, str]:
         import stores
