@@ -83,66 +83,73 @@ class TensorboardJob(PluginJobBase, JobMixin):
                                 traceback=traceback,
                                 details=details)
 
-    def get_absolute_outputs_paths(self) -> str:
+    @staticmethod
+    def _get_named_experiment_outputs_path(experiment, persistence) -> Tuple[List, str]:
         import stores
 
-        if self.experiment:
-            return stores.get_experiment_outputs_path(
-                persistence=self.experiment.persistence_outputs,
-                experiment_name=self.experiment.unique_name,
-                original_name=self.experiment.original_unique_name,
-                cloning_strategy=self.experiment.cloning_strategy)
+        outputs_path = stores.get_experiment_outputs_path(
+            persistence=persistence,
+            experiment_name=experiment.unique_name,
+            original_name=experiment.original_unique_name,
+            cloning_strategy=experiment.cloning_strategy)
+        tensorboard_path = '{}:{}'.format(
+            experiment.unique_name,
+            outputs_path)
+        return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], tensorboard_path
 
-        if self.experiment_group:
-            return stores.get_experiment_group_outputs_path(
-                persistence=self.experiment_group.persistence_outputs,
-                experiment_group_name=self.experiment_group.unique_name)
-
-        return stores.get_project_outputs_path(
-            persistence_outputs=None,
-            project_name=self.project.unique_name)
-
-    def get_named_outputs_paths(self) -> Tuple[List, str]:
+    def _get_experiment_outputs_path(self) -> Tuple[List, str]:
         import stores
 
-        def get_named_experiment_outputs_path(experiment):
-            persistence = experiment.persistence_outputs
-            outputs_path = stores.get_experiment_outputs_path(
+        persistence = self.experiment.persistence_outputs
+
+        outputs_path = stores.get_experiment_outputs_path(
+            persistence=persistence,
+            experiment_name=self.experiment.unique_name,
+            original_name=self.experiment.original_unique_name,
+            cloning_strategy=self.experiment.cloning_strategy)
+        return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], outputs_path
+
+    def _get_study_outputs_paths(self) -> Tuple[List, str]:
+        import stores
+
+        persistence = self.experiment_group.persistence_outputs
+        outputs_path = stores.get_experiment_group_outputs_path(
                 persistence=persistence,
-                experiment_name=experiment.unique_name,
-                original_name=experiment.original_unique_name,
-                cloning_strategy=experiment.cloning_strategy)
-            tensorboard_path = '{}:{}'.format(
-                experiment.unique_name,
-                outputs_path)
-            return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], tensorboard_path
+                experiment_group_name=self.experiment_group.unique_name)
+        return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], outputs_path
 
-        if self.experiment:
-            return get_named_experiment_outputs_path(self.experiment)
-
-        if self.experiment_group:
-            experiments = self.experiment_group.group_experiments.all()
-        else:
-            experiments = self.project.experiments.all()
+    def _get_selection_outputs_paths(self) -> Tuple[List, str]:
+        persistence = self.experiment_group.project.persistence_outputs
+        experiments = self.experiment_group.group_experiments.all()
 
         outputs_specs = []
         tensorboard_paths = []
         for experiment in experiments:
-            outputs_spec, tensorboard_path = get_named_experiment_outputs_path(experiment)
+            outputs_spec, tensorboard_path = self._get_named_experiment_outputs_path(
+                experiment=experiment, persistence=persistence)
             outputs_specs += outputs_spec
             tensorboard_paths.append(tensorboard_path)
 
-        return outputs_specs, ','.join(tensorboard_paths)
+            return outputs_specs, ','.join(tensorboard_paths)
+
+    def _get_project_outputs_paths(self) -> Tuple[List, str]:
+        import stores
+
+        persistence = self.project.persistence_outputs
+        outputs_path = stores.get_project_outputs_path(
+                persistence=persistence,
+                experiment_group_name=self.project.unique_name)
+        return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], outputs_path
 
     @cached_property
     def outputs_path(self) -> Tuple[List, str]:
-        from stores.validators import validate_persistence_outputs
-
-        outputs_path = self.get_absolute_outputs_paths()
-        return (
-            [OutputsRefsSpec(path=outputs_path, persistence=validate_persistence_outputs(None))],
-            outputs_path
-        )
+        if self.experiment:
+            return self._get_experiment_outputs_path()
+        if self.experiment_group and self.experiment_group.is_study:
+            return self._get_study_outputs_paths()
+        if self.experiment_group and self.experiment_group.is_selection:
+            return self._get_selection_outputs_paths()
+        return self._get_project_outputs_paths()
 
 
 class TensorboardJobStatus(AbstractJobStatus):
