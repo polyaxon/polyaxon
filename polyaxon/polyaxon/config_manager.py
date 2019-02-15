@@ -278,6 +278,16 @@ class ConfigManager(rhea.Rhea):
         return self._decode(value) if value else None
 
     @cached_property
+    def ignore_exceptions(self):
+        return self.get_string(
+            '_POLYAXON_IGNORE_EXCEPTIONS',
+            is_list=True,
+            is_secret=True,
+            is_local=True,
+            is_optional=True,
+            default=[])
+
+    @cached_property
     def platform_dsn(self):
         value = self.get_string(
             '_POLYAXON_PLATFORM_DSN',
