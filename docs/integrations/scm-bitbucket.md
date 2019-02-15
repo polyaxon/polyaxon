@@ -13,7 +13,7 @@ author:
 tags: 
   - scm
   - repos
-featured: true
+featured: false
 visibility: public
 status: coming-soon
 ---

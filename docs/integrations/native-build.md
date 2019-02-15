@@ -12,7 +12,7 @@ author:
 tags: 
   - containers
   - scheduling
-featured: true
+featured: false
 visibility: public
 status: published
 ---

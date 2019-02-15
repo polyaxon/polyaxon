@@ -11,7 +11,7 @@ author:
   github: "polyaxon"
 tags: 
   - sso
-featured: true
+featured: false
 visibility: public
 status: published
 ---

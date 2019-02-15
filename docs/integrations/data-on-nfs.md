@@ -12,7 +12,7 @@ author:
 tags: 
   - data-store
   - storage
-featured: true
+featured: false
 visibility: public
 status: coming-soon
 ---

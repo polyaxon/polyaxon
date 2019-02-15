@@ -11,7 +11,7 @@ author:
   github: "polyaxon"
 tags: 
   - security
-featured: true
+featured: false
 visibility: public
 status: published
 ---

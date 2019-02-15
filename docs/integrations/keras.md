@@ -12,7 +12,7 @@ author:
 tags: 
   - tracking
   - scheduling
-featured: true
+featured: false
 visibility: public
 status: coming-soon
 ---

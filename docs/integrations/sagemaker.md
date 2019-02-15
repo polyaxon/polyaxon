@@ -13,7 +13,7 @@ tags:
   - serving
   - model
   - tracking
-featured: true
+featured: false
 visibility: public
 status: coming-soon
 ---

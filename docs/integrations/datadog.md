@@ -11,7 +11,7 @@ author:
   github: "polyaxon"
 tags: 
   - monitoring
-featured: true
+featured: false
 visibility: public
 status: coming-soon
 ---

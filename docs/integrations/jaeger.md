@@ -11,7 +11,7 @@ author:
   github: "polyaxon"
 tags: 
   - tracing
-featured: true
+featured: false
 visibility: public
 status: coming-soon
 ---

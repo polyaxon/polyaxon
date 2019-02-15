@@ -12,7 +12,7 @@ author:
 tags: 
   - serving
   - model
-featured: true
+featured: false
 visibility: public
 status: coming-soon
 ---

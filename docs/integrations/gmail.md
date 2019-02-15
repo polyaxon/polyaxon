@@ -12,7 +12,7 @@ author:
 tags: 
   - notification
   - email
-featured: true
+featured: false
 visibility: public
 status: published
 ---
