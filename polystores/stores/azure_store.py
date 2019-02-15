@@ -244,7 +244,7 @@ class AzureStore(BaseStore):
         try:
             check_dirname_exists(local_path, is_dir=True)
         except PolyaxonStoresException:
-            os.mkdir(local_path)
+            os.makedirs(local_path)
 
         results = self.list(container_name=container_name, key=blob, delimiter='/')
 
