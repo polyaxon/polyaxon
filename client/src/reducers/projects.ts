@@ -104,6 +104,15 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
               ...state.byUniqueNames[action.projectName], has_tensorboard: false}
           },
         };
+      case actionTypes.STOP_PROJECT_NOTEBOOK:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.projectName]: {
+              ...state.byUniqueNames[action.projectName], has_notebook: false}
+          },
+        };
       case actionTypes.UPDATE_PROJECT:
         return {
           ...state,

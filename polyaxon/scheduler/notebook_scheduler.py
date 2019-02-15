@@ -40,7 +40,7 @@ def start_notebook(notebook):
 
     error = {}
     try:
-        mount_code_in_notebooks = conf.get('POLYAXON_MOUNT_CODE_IN_NOTEBOOKS')
+        mount_code_in_notebooks = conf.get('MOUNT_CODE_IN_NOTEBOOKS')
         results = spawner.start_notebook(persistence_outputs=notebook.persistence_outputs,
                                          persistence_data=notebook.persistence_data,
                                          outputs_refs_jobs=notebook.outputs_refs_jobs,
