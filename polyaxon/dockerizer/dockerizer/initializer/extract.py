@@ -1,6 +1,8 @@
 import os
 import shutil
 
+from .dockerfile import POLYAXON_DOCKERFILE_NAME
+
 
 def extract_code(extract_path: str, build_path: str, context_path: str) -> bool:
     try:
@@ -19,7 +21,7 @@ def extract_dockerfile(job: 'DockerJob',
     try:
         # We move all files under the context to the build path
         context_dockerfile_path = os.path.join(extract_path, dockerfile_path)
-        build_dockerfile_path = os.path.join(build_context, dockerfile_path)
+        build_dockerfile_path = os.path.join(build_context, POLYAXON_DOCKERFILE_NAME)
         shutil.copy(context_dockerfile_path, build_dockerfile_path)
 
         # Log dockerfile

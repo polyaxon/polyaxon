@@ -8,7 +8,7 @@ from typing import List, Optional, Tuple
 from hestia.list_utils import to_list
 from hestia.paths import delete_path
 
-from .dockerfile import POLYAXON_DOCKER_TEMPLATE
+from .dockerfile import POLYAXON_DOCKER_TEMPLATE, POLYAXON_DOCKERFILE_NAME
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -24,7 +24,7 @@ class DockerFileGenerator(object):
                  build_steps: Optional[List[str]] = None,
                  env_vars: Optional[List[Tuple[str, str]]] = None,
                  nvidia_bin: str = None,
-                 dockerfile_name: str = 'Dockerfile') -> None:
+                 dockerfile_name: str = POLYAXON_DOCKERFILE_NAME) -> None:
         self.from_image = from_image
         self.folder_name = repo_path.split('/')[-1]
         self.repo_path = repo_path

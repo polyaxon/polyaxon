@@ -38,3 +38,5 @@ RUN {{ step }}
 COPY {{ folder_name }} {{ workdir }}
 {% endif -%}
 """
+
+POLYAXON_DOCKERFILE_NAME = 'Dockerfile'
