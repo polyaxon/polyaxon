@@ -89,16 +89,11 @@ class Project(DiffModel,
     @cached_property
     def has_notebook(self) -> bool:
         notebook = self.notebook
-        return notebook and notebook.is_running
+        return notebook and notebook.is_stoppable
 
     @cached_property
     def tensorboard(self):
         return self.tensorboard_jobs.filter(experiment=None, experiment_group=None).last()
-
-    @cached_property
-    def has_tensorboard(self) -> bool:
-        tensorboard = self.tensorboard
-        return tensorboard and tensorboard.is_running
 
     @property
     def all_experiments(self):

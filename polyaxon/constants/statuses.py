@@ -1,3 +1,6 @@
+from hestia.unknown import UNKNOWN
+
+
 class StatusOptions:
     CREATED = 'created'
     SCHEDULED = 'scheduled'
@@ -53,10 +56,15 @@ class BaseStatuses(object):
         return status in cls.RUNNING_STATUS
 
     @classmethod
+    def is_unknown(cls, status: str) -> bool:
+        return status == UNKNOWN
+
+    @classmethod
     def is_stoppable(cls, status: str) -> bool:
         return (cls.is_running(status=status) or
                 cls.is_unschedulable(status=status) or
-                cls.is_warning(status=status))
+                cls.is_warning(status=status) or
+                cls.is_unknown(status=status))
 
     @classmethod
     def is_done(cls, status: str) -> bool:
