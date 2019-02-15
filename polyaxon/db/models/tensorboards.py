@@ -114,8 +114,8 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
         persistence = self.experiment_group.persistence_outputs
         outputs_path = stores.get_experiment_group_outputs_path(
-                persistence=persistence,
-                experiment_group_name=self.experiment_group.unique_name)
+            persistence=persistence,
+            experiment_group_name=self.experiment_group.unique_name)
         return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], outputs_path
 
     def _get_selection_outputs_paths(self) -> Tuple[List, str]:
@@ -137,8 +137,8 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
         persistence = self.project.persistence_outputs
         outputs_path = stores.get_project_outputs_path(
-                persistence=persistence,
-                experiment_group_name=self.project.unique_name)
+            persistence=persistence,
+            experiment_group_name=self.project.unique_name)
         return [OutputsRefsSpec(path=outputs_path, persistence=persistence)], outputs_path
 
     @cached_property
