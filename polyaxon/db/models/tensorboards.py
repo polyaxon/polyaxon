@@ -131,9 +131,11 @@ class TensorboardJob(PluginJobBase, JobMixin):
     def _get_selection_outputs_paths(self) -> Tuple[List, str]:
         import stores
 
-        persistence = self.experiment_group.project.persistence_outputs
-        experiments = self.experiment_group.group_experiments.all()
+        from stores.validators import validate_persistence_outputs
 
+        persistence = self.experiment_group.project.persistence_outputs
+        persistence = validate_persistence_outputs(persistence_outputs=persistence)
+        experiments = self.experiment_group.group_experiments.all()
         outputs_path = stores.get_project_outputs_path(
             persistence=persistence,
             project_name=self.project.unique_name)

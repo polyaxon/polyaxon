@@ -13,6 +13,7 @@ tags:
   - pipelines
   - scheduling
   - dags
+  - automation
 featured: false
 visibility: public
 status: coming-soon
