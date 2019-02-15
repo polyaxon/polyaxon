@@ -87,6 +87,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
     def _get_named_experiment_outputs_path(experiment, persistence) -> Tuple[List, str]:
         import stores
 
+        from stores.validators import validate_persistence_outputs
+
+        persistence = validate_persistence_outputs(persistence_outputs=persistence)
+
         outputs_path = stores.get_experiment_outputs_path(
             persistence=persistence,
             experiment_name=experiment.unique_name,
@@ -100,7 +104,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
     def _get_experiment_outputs_path(self) -> Tuple[List, str]:
         import stores
 
-        persistence = self.experiment.persistence_outputs
+        from stores.validators import validate_persistence_outputs
+
+        persistence = validate_persistence_outputs(
+            persistence_outputs=self.experiment.persistence_outputs)
 
         outputs_path = stores.get_experiment_outputs_path(
             persistence=persistence,
@@ -112,7 +119,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
     def _get_study_outputs_paths(self) -> Tuple[List, str]:
         import stores
 
-        persistence = self.experiment_group.persistence_outputs
+        from stores.validators import validate_persistence_outputs
+
+        persistence = validate_persistence_outputs(
+            persistence_outputs=self.experiment_group.persistence_outputs)
         outputs_path = stores.get_experiment_group_outputs_path(
             persistence=persistence,
             experiment_group_name=self.experiment_group.unique_name)
@@ -135,7 +145,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
     def _get_project_outputs_paths(self) -> Tuple[List, str]:
         import stores
 
-        persistence = self.project.persistence_outputs
+        from stores.validators import validate_persistence_outputs
+
+        persistence = validate_persistence_outputs(
+            persistence_outputs=self.project.persistence_outputs)
         outputs_path = stores.get_project_outputs_path(
             persistence=persistence,
             experiment_group_name=self.project.unique_name)
