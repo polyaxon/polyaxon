@@ -40,9 +40,7 @@ def start_notebook(notebook):
 
     error = {}
     try:
-        allow_commits = False
-        if conf.get('REPOS_CLAIM_NAME') or notebook.node_selector:
-            allow_commits = True
+        mount_code_in_notebooks = conf.get('POLYAXON_MOUNT_CODE_IN_NOTEBOOKS')
         results = spawner.start_notebook(persistence_outputs=notebook.persistence_outputs,
                                          persistence_data=notebook.persistence_data,
                                          outputs_refs_jobs=notebook.outputs_refs_jobs,
@@ -53,7 +51,7 @@ def start_notebook(notebook):
                                          node_selector=notebook.node_selector,
                                          affinity=notebook.affinity,
                                          tolerations=notebook.tolerations,
-                                         allow_commits=allow_commits)
+                                         mount_code_in_notebooks=mount_code_in_notebooks)
         notebook.definition = get_job_definition(results)
         notebook.save(update_fields=['definition'])
         return

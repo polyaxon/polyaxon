@@ -96,7 +96,7 @@ class NotebookSpawner(ProjectJobSpawner):
             port = random.randint(*conf.get('NOTEBOOK_PORT_RANGE'))
         return port
 
-    def get_notebook_args(self, deployment_name, ports, allow_commits=False):
+    def get_notebook_args(self, deployment_name, ports, mount_code_in_notebooks=False):
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
@@ -104,7 +104,7 @@ class NotebookSpawner(ProjectJobSpawner):
             deployment_name=deployment_name,
             port=ports[0])
 
-        if allow_commits:
+        if mount_code_in_notebooks:
             notebook_dir = get_project_repos_path(self.project_name)
             notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
         else:
@@ -136,7 +136,7 @@ class NotebookSpawner(ProjectJobSpawner):
                        node_selector=None,
                        affinity=None,
                        tolerations=None,
-                       allow_commits=False):
+                       mount_code_in_notebooks=False):
         ports = [self.request_notebook_port()]
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
@@ -154,9 +154,11 @@ class NotebookSpawner(ProjectJobSpawner):
         shm_volumes, shm_volume_mounts = get_shm_volumes()
         volumes += shm_volumes
         volume_mounts += shm_volume_mounts
-        code_volume, code_volume_mount = self.get_notebook_code_volume()
-        volumes.append(code_volume)
-        volume_mounts.append(code_volume_mount)
+
+        if mount_code_in_notebooks:
+            code_volume, code_volume_mount = self.get_notebook_code_volume()
+            volumes.append(code_volume)
+            volume_mounts.append(code_volume_mount)
 
         secret_refs = validate_secret_refs(secret_refs)
         configmap_refs = validate_configmap_refs(configmap_refs)
@@ -164,7 +166,7 @@ class NotebookSpawner(ProjectJobSpawner):
         resource_name = self.resource_manager.get_resource_name()
         args = self.get_notebook_args(deployment_name=resource_name,
                                       ports=ports,
-                                      allow_commits=allow_commits)
+                                      mount_code_in_notebooks=mount_code_in_notebooks)
         command = ["/bin/sh", "-c"]
         deployment = self.resource_manager.get_deployment(
             resource_name=resource_name,
