@@ -20,6 +20,7 @@ class KanikoSpawner(DockerizerSpawner):
                  build_steps=None,
                  env_vars=None,
                  nocache=None,
+                 in_cluster_registry=False,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -46,6 +47,7 @@ class KanikoSpawner(DockerizerSpawner):
                          build_steps=build_steps,
                          env_vars=env_vars,
                          nocache=nocache,
+                         in_cluster_registry=in_cluster_registry,
                          k8s_config=k8s_config,
                          namespace=namespace,
                          in_cluster=in_cluster,
@@ -65,6 +67,8 @@ class KanikoSpawner(DockerizerSpawner):
         return None
 
     def get_pod_command_args(self):
-        return None, ["-c", constants.BUILD_CONTEXT,
-                      "-d", "{}:{}".format(self.image_name, self.image_tag),
-                      "--insecure"]
+        args = ["-c", constants.BUILD_CONTEXT,
+                "-d", "{}:{}".format(self.image_name, self.image_tag)]
+        if self.in_cluster_registry:
+            args.append(["--insecure"])
+        return None, args

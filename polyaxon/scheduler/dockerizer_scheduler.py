@@ -101,6 +101,7 @@ def start_dockerizer(build_job):
         build_steps=build_job.build_steps,
         env_vars=build_job.build_env_vars,
         nocache=build_job.specification.build.nocache,
+        in_cluster_registry=conf.get('REGISTRY_IN_CLUSTER'),
         spec=build_job.specification,
         k8s_config=conf.get('K8S_CONFIG'),
         namespace=conf.get('K8S_NAMESPACE'),

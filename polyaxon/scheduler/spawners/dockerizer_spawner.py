@@ -36,6 +36,7 @@ class DockerizerSpawner(K8SManager):
                  build_steps=None,
                  env_vars=None,
                  nocache=None,
+                 in_cluster_registry=False,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -62,6 +63,7 @@ class DockerizerSpawner(K8SManager):
         self.build_steps = build_steps
         self.env_vars = env_vars
         self.nocache = bool(nocache)
+        self.in_cluster_registry = in_cluster_registry
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=DOCKERIZER_JOB_NAME,
@@ -122,10 +124,10 @@ class DockerizerSpawner(K8SManager):
                 "--image_tag={}".format(self.image_tag)]
         if self.nocache:
             args.append("--nocache")
-        return ["python3", "dockerizer/build_cmd.py"], args
+        return ["python3", "-u", "dockerizer/build_cmd.py"], args
 
     def get_init_command_args(self):
-        return (["python3", "dockerizer/init_cmd.py"],
+        return (["python3", "-u", "dockerizer/init_cmd.py"],
                 ["--build_context={}".format(constants.BUILD_CONTEXT),
                  "--from_image={}".format(self.from_image or ''),
                  "--dockerfile_path={}".format(self.dockerfile_path or ''),
