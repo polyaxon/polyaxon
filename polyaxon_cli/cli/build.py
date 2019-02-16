@@ -59,7 +59,7 @@ def build(ctx, project, build):  # pylint:disable=redefined-outer-name
 def get(ctx):
     """Get build job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -91,7 +91,7 @@ def get(ctx):
 def delete(ctx):
     """Delete build job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -134,7 +134,7 @@ def delete(ctx):
 def update(ctx, name, description, tags):
     """Update build.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -181,7 +181,7 @@ def update(ctx, name, description, tags):
 def stop(ctx, yes):
     """Stop build job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -217,7 +217,7 @@ def stop(ctx, yes):
 def bookmark(ctx):
     """Bookmark build job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -248,7 +248,7 @@ def bookmark(ctx):
 def unbookmark(ctx):
     """Unbookmark build job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -280,7 +280,7 @@ def unbookmark(ctx):
 def statuses(ctx, page):
     """Get build job statuses.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -322,7 +322,7 @@ def statuses(ctx, page):
 def resources(ctx, gpu):
     """Get build job resources.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -362,7 +362,7 @@ def resources(ctx, gpu):
 def logs(ctx, past, follow, hide_time):
     """Get build logs.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 

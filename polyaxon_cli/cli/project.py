@@ -63,7 +63,7 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
 def create(ctx, name, description, tags, private, init):
     """Create a new project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -100,7 +100,7 @@ def create(ctx, name, description, tags, private, init):
 def list(page):  # pylint:disable=redefined-builtin
     """List projects.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user = AuthConfigManager.get_value('username')
     if not user:
@@ -140,7 +140,7 @@ def list(page):  # pylint:disable=redefined-builtin
 def get(ctx):
     """Get info for current project, by project_name, or user/project_name.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -176,7 +176,7 @@ def get(ctx):
 def delete(ctx):
     """Delete project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user, project_name = get_project_or_local(ctx.obj.get('project'))
 
@@ -210,7 +210,7 @@ def delete(ctx):
 def update(ctx, name, description, tags, private):
     """Update project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -270,7 +270,7 @@ def update(ctx, name, description, tags, private):
 def groups(ctx, query, sort, page):
     """List experiment groups for this project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -343,7 +343,7 @@ def groups(ctx, query, sort, page):
 def jobs(ctx, query, sort, page):
     """List jobs for this project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -422,7 +422,7 @@ def jobs(ctx, query, sort, page):
 def experiments(ctx, metrics, declarations, independent, group, query, sort, page):
     """List experiments for this project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -501,7 +501,7 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
 def builds(ctx, query, sort, page):
     """List build jobs for this project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -574,7 +574,7 @@ def builds(ctx, query, sort, page):
 def tensorboards(ctx, query, sort, page):
     """List tensorboard jobs for this project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user, project_name = get_project_or_local(ctx.obj.get('project'))
 
@@ -609,6 +609,42 @@ def tensorboards(ctx, query, sort, page):
 
 
 @project.command()
+@click.option('--url', required=True, type=str,
+              help='The url of the git repo..')
+@click.option('--private', is_flag=True, help='Set the visibility of the project to private.')
+@click.pass_context
+@clean_outputs
+def git(ctx, url, private):  # pylint:disable=assign-to-new-keyword
+    """Set git repo on this project.
+
+    Uses [Caching](/references/polyaxon-cli/#caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon project git --url=https://github.com/polyaxon/polyaxon-quick-start
+    ```
+
+    \b
+    ```bash
+    $ polyaxon project git --url=https://github.com/polyaxon/polyaxon-quick-start --private
+    ```
+    """
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
+
+    try:
+        PolyaxonClient().project.set_repo(user, project_name, url, not private)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        Printer.print_error('Could not set git repo on project `{}`.'.format(project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success('Project was successfully initialized with `{}`.'.format(url),
+                          add_sign=True)
+
+
+@project.command()
 @click.pass_context
 @clean_outputs
 def download(ctx):
@@ -629,7 +665,7 @@ def download(ctx):
 def bookmark(ctx):
     """Bookmark project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user, project_name = get_project_or_local(ctx.obj.get('project'))
 
@@ -649,7 +685,7 @@ def bookmark(ctx):
 def unbookmark(ctx):
     """Unbookmark project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user, project_name = get_project_or_local(ctx.obj.get('project'))
 

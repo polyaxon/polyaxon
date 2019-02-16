@@ -52,7 +52,7 @@ def tensorboard(ctx, project, group, experiment):
 def url(ctx):
     """Prints the tensorboard url for project/experiment/experiment group.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples for project tensorboards:
 
@@ -140,7 +140,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
 
     Experiment tensorboard will show all metrics for an experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example: using the default tensorflow image 1.4.1.
 
@@ -247,7 +247,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
 def stop(ctx, yes):
     """Stops the tensorboard deployment for project/experiment/experiment group if it exists.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples: stopping project tensorboard
 

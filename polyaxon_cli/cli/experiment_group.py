@@ -54,7 +54,7 @@ def group(ctx, project, group):  # pylint:disable=redefined-outer-name
 def get(ctx):
     """Get experiment group by uuid.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -83,7 +83,7 @@ def get(ctx):
 def delete(ctx):
     """Delete experiment group.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
                                                             ctx.obj.get('group'))
@@ -116,7 +116,7 @@ def delete(ctx):
 def update(ctx, name, description, tags):
     """Update experiment group.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -173,7 +173,7 @@ def update(ctx, name, description, tags):
 def experiments(ctx, metrics, declarations, query, sort, page):
     """List experiments for this experiment group
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user, project_name, _group = get_project_group_or_local(ctx.obj.get('project'),
                                                             ctx.obj.get('group'))
@@ -227,7 +227,7 @@ def experiments(ctx, metrics, declarations, query, sort, page):
 def stop(ctx, yes, pending):
     """Stop experiments in the group.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples: stop only pending experiments
 
@@ -273,7 +273,7 @@ def stop(ctx, yes, pending):
 def statuses(ctx, page):
     """Get experiment group statuses.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -318,7 +318,7 @@ def statuses(ctx, page):
 def bookmark(ctx):
     """Bookmark group.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -351,7 +351,7 @@ def bookmark(ctx):
 def unbookmark(ctx):
     """Unbookmark group.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 

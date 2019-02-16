@@ -35,7 +35,7 @@ def notebook(ctx, project):
 def url(ctx):
     """Prints the notebook url for this project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -70,7 +70,7 @@ def url(ctx):
 def start(ctx, file, u):  # pylint:disable=redefined-builtin
     """Start a notebook deployment for this project.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -134,7 +134,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
 def stop(ctx, commit, yes):
     """Stops the notebook deployment for this project if it exists.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
     """
     user, project_name = get_project_or_local(ctx.obj.get('project'))
 

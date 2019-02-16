@@ -8,6 +8,7 @@ import click
 from polyaxon_cli.cli.build import logs as build_logs
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.experiment import logs as experiment_logs
+from polyaxon_cli.cli.getters.project import get_project_or_local
 from polyaxon_cli.cli.job import logs as job_logs
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
@@ -28,6 +29,7 @@ from polyaxon_client.exceptions import PolyaxonClientException
 
 
 @click.command()
+@click.option('--project', '-p', type=str)
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to run.')
 @click.option('--name', type=str,
@@ -43,7 +45,7 @@ from polyaxon_client.exceptions import PolyaxonClientException
               help='To start logging after scheduling the run.')
 @click.pass_context
 @clean_outputs
-def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefined-builtin
+def run(ctx, project, file, name, tags, description, ttl, u, l):  # pylint:disable=redefined-builtin
     """Run polyaxonfile specification.
 
     Examples:
@@ -72,6 +74,13 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
     ```bash
     polyaxon run --name=foo
     ```
+
+    Run for a specific project
+
+    \b
+    ```bash
+    $ polyaxon run -p project1 -f file.yaml
+    ```
     """
     file = file or 'polyaxonfile.yml'
     specification = check_polyaxonfile(file, log=False).specification
@@ -94,7 +103,7 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
     if u:
         ctx.invoke(upload)
 
-    project = ProjectManager.get_config_or_raise()
+    user, project_name = get_project_or_local(project)
     project_client = PolyaxonClient().project
 
     tags = validate_tags(tags)
@@ -108,8 +117,8 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
             config=specification.parsed_data,
             ttl=ttl)
         try:
-            response = PolyaxonClient().project.create_experiment(project.user,
-                                                                  project.name,
+            response = PolyaxonClient().project.create_experiment(user,
+                                                                  project_name,
                                                                   experiment)
             cache.cache(config_manager=ExperimentManager, response=response)
             Printer.print_success('Experiment `{}` was created'.format(response.id))
@@ -128,8 +137,8 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
             tags=tags,
             content=specification._data)  # pylint:disable=protected-access
         try:
-            response = project_client.create_experiment_group(project.user,
-                                                              project.name,
+            response = project_client.create_experiment_group(user,
+                                                              project_name,
                                                               experiment_group)
             cache.cache(config_manager=GroupManager, response=response)
             Printer.print_success('Experiment group {} was created'.format(response.id))
@@ -147,8 +156,8 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
             config=specification.parsed_data,
             ttl=ttl)
         try:
-            response = project_client.create_job(project.user,
-                                                 project.name,
+            response = project_client.create_job(user,
+                                                 project_name,
                                                  job)
             cache.cache(config_manager=JobManager, response=response)
             Printer.print_success('Job {} was created'.format(response.id))
@@ -166,8 +175,8 @@ def run(ctx, file, name, tags, description, ttl, u, l):  # pylint:disable=redefi
             config=specification.parsed_data,
             ttl=ttl)
         try:
-            response = project_client.create_build(project.user,
-                                                   project.name,
+            response = project_client.create_build(user,
+                                                   project_name,
                                                    job)
             cache.cache(config_manager=BuildJobManager, response=response)
             Printer.print_success('Build {} was created'.format(response.id))

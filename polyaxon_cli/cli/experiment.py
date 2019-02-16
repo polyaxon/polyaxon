@@ -75,7 +75,7 @@ def experiment(ctx, project, experiment):  # pylint:disable=redefined-outer-name
 def get(ctx, job):
     """Get experiment or experiment job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples for getting an experiment:
 
@@ -171,7 +171,7 @@ def get(ctx, job):
 def delete(ctx):
     """Delete experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -210,7 +210,7 @@ def delete(ctx):
 def update(ctx, name, description, tags):
     """Update experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -263,7 +263,7 @@ def update(ctx, name, description, tags):
 def stop(ctx, yes):
     """Stop experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -306,7 +306,7 @@ def stop(ctx, yes):
 def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     """Restart experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -352,7 +352,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
 def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     """Resume experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -390,7 +390,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 def jobs(ctx, page):
     """List jobs for experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -435,7 +435,7 @@ def jobs(ctx, page):
 def statuses(ctx, job, page):
     """Get experiment or experiment job statuses.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples getting experiment statuses:
 
@@ -535,7 +535,7 @@ def statuses(ctx, job, page):
 def resources(ctx, job, gpu):
     """Get experiment or experiment job resources.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples for getting experiment resources:
 
@@ -611,7 +611,7 @@ def resources(ctx, job, gpu):
 def logs(ctx, job, past, follow, hide_time):
     """Get experiment or experiment job logs.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples for getting experiment logs:
 
@@ -695,7 +695,7 @@ def logs(ctx, job, past, follow, hide_time):
 def outputs(ctx):
     """Download outputs for experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -721,7 +721,7 @@ def outputs(ctx):
 def bookmark(ctx):
     """Bookmark experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -753,7 +753,7 @@ def bookmark(ctx):
 def unbookmark(ctx):
     """Unbookmark experiment.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 

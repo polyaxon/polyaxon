@@ -61,7 +61,7 @@ def job(ctx, project, job):  # pylint:disable=redefined-outer-name
 def get(ctx):
     """Get job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -93,7 +93,7 @@ def get(ctx):
 def delete(ctx):
     """Delete job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -131,7 +131,7 @@ def delete(ctx):
 def update(ctx, name, description, tags):
     """Update job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Example:
 
@@ -178,7 +178,7 @@ def update(ctx, name, description, tags):
 def stop(ctx, yes):
     """Stop job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -220,7 +220,7 @@ def stop(ctx, yes):
 def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     """Restart job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -265,7 +265,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
 def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     """Resume job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -304,7 +304,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 def statuses(ctx, page):
     """Get job statuses.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -346,7 +346,7 @@ def statuses(ctx, page):
 def resources(ctx, gpu):
     """Get job resources.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -386,7 +386,7 @@ def resources(ctx, gpu):
 def logs(ctx, past, follow, hide_time):
     """Get job logs.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -437,7 +437,7 @@ def logs(ctx, past, follow, hide_time):
 def outputs(ctx):
     """Download outputs for job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -462,7 +462,7 @@ def outputs(ctx):
 def bookmark(ctx):
     """Bookmark job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -493,7 +493,7 @@ def bookmark(ctx):
 def unbookmark(ctx):
     """Unbookmark job.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 

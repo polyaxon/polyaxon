@@ -35,7 +35,7 @@ def bookmark(ctx, username):  # pylint:disable=redefined-outer-name
 def projects(ctx, page):
     """List bookmarked projects for user.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -83,7 +83,7 @@ def projects(ctx, page):
 def groups(ctx, page):
     """List bookmarked experiment groups for user.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -131,7 +131,7 @@ def groups(ctx, page):
 def experiments(ctx, page):
     """List bookmarked experiments for user.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -179,7 +179,7 @@ def experiments(ctx, page):
 def jobs(ctx, page):
     """List bookmarked jobs for user.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
@@ -227,7 +227,7 @@ def jobs(ctx, page):
 def builds(ctx, page):
     """List bookmarked builds for user.
 
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
