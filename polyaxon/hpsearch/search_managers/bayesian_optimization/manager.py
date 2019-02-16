@@ -25,8 +25,12 @@ class BOSearchManager(BaseSearchAlgorithmManager):
         configs = []
         metrics = []
         for key in experiments_metrics.keys():
-            configs.append(experiments_configs[key])
-            metrics.append(experiments_metrics[key])
+            if key in experiments_configs:
+                configs.append(experiments_configs[key])
+                metrics.append(experiments_metrics[key])
+
+        if not configs or not metrics:
+            return None
         optimizer = BOOptimizer(hptuning_config=self.hptuning_config)
         optimizer.add_observations(configs=configs, metrics=metrics)
         suggestion = optimizer.get_suggestion()
