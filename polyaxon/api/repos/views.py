@@ -1,6 +1,7 @@
 import logging
 import os
 
+from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -99,6 +100,17 @@ class SetExternalRepoView(ProjectResourceListEndpoint, CreateEndpoint):
     serializer_class = ExternalRepoSerializer
 
     def perform_create(self, serializer):
+        try:
+            repo = serializer.save(project=self.project)
+            auditor.record(event_type=REPO_CREATED,
+                           instance=repo,
+                           actor_id=self.request.user.id,
+                           actor_name=self.request.user.username,
+                           external=True)
+        except GitCloneException as e:
+            raise ValidationError(e)
+
+    def create(self, request, *args, **kwargs):
         if self.project.has_repo:
             self.permission_denied(
                 self.request,
@@ -108,18 +120,19 @@ class SetExternalRepoView(ProjectResourceListEndpoint, CreateEndpoint):
 
         try:
             repo = ExternalRepo.objects.get(project=self.project)
-            auditor.record(event_type=REPO_CREATED,
-                           instance=repo,
-                           actor_id=self.request.user.id,
-                           actor_name=self.request.user.username,
-                           external=True)
         except ExternalRepo.DoesNotExist:
-            try:
-                repo = serializer.save(project=self.project)
-            except GitCloneException as e:
-                raise ValidationError(e)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer=serializer)
+            return Response(status=status.HTTP_201_CREATED)
         if not os.path.isdir(repo.project_path):
             git.external.set_git_repo(repo)
+        elif repo.git_url != request.data.get('git_url'):
+            raise ValidationError(
+                'Project was already initialized with a different git url: {}'.format(
+                    request.data.get('git_url')
+                ))
+        return Response(status=status.HTTP_200_OK)
 
 
 class UploadFilesView(ProjectResourceListEndpoint, UploadView):

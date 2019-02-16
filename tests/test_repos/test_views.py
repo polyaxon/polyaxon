@@ -67,10 +67,6 @@ class TestRepoDetailViewV1(BaseViewTest):
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
 
-class ExternalRepoRepoSerializer(object):
-    pass
-
-
 @pytest.mark.repos_mark
 class TestExternalRepoDetailViewV1(BaseViewTest):
     serializer_class = ExternalRepoSerializer
@@ -491,6 +487,18 @@ class TestSetExternalRepoView(BaseViewTest):
         response = self.auth_client.post(self.url,
                                          data={'git_url': 'https://github.com/polyaxon/empty.git'})
         assert response.status_code == status.HTTP_201_CREATED
+        self.assertTrue(os.path.exists(repo_path))
+
+        # Trying to reset same repo
+        response = self.auth_client.post(self.url,
+                                         data={'git_url': 'https://github.com/polyaxon/empty.git'})
+        assert response.status_code == status.HTTP_200_OK
+        self.assertTrue(os.path.exists(repo_path))
+
+        # Trying to reset different repo
+        response = self.auth_client.post(self.url,
+                                         data={'git_url': 'https://github.com/polyaxon/foo.git'})
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
         self.assertTrue(os.path.exists(repo_path))
 
     def test_set_wrong_external_repo(self):
