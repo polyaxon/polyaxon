@@ -41,7 +41,7 @@ setup(name='polyaxon-sidecar',
       install_requires=[
           'polyaxon-k8s==0.3.7',
           'polyaxon-client==0.3.8',
-          'ocular==0.0.7',
+          'ocular==0.0.9',
           'Unipath==1.1'
       ],
       classifiers=[
