@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import mock
 import pytest
+from django.test import override_settings
 
 from rest_framework import status
 
@@ -802,7 +803,21 @@ class TestStopNotebookViewV1(BaseViewTest):
             self.object.name)
         self.queryset = self.model_class.objects.all()
 
-    def test_stop(self):
+    def test_stop_serverless(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('scheduler.tasks.notebooks.projects_notebook_stop.apply_async') as mock_fct:
+            with patch('libs.repos.git.commit') as mock_git_commit:
+                with patch('libs.repos.git.undo') as mock_git_undo:
+                    resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert mock_git_commit.call_count == 0
+        assert mock_git_undo.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+    @override_settings(MOUNT_CODE_IN_NOTEBOOKS=True)
+    def test_stop_code_mount(self):
         data = {}
         assert self.queryset.count() == 1
         with patch('scheduler.tasks.notebooks.projects_notebook_stop.apply_async') as mock_fct:
@@ -815,7 +830,21 @@ class TestStopNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
 
-    def test_stop_without_committing(self):
+    def test_stop_without_committing_serverless(self):
+        data = {'commit': False}
+        assert self.queryset.count() == 1
+        with patch('scheduler.tasks.notebooks.projects_notebook_stop.apply_async') as mock_fct:
+            with patch('libs.repos.git.commit') as mock_git_commit:
+                with patch('libs.repos.git.undo') as mock_git_undo:
+                    resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert mock_git_commit.call_count == 0
+        assert mock_git_undo.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+    @override_settings(MOUNT_CODE_IN_NOTEBOOKS=True)
+    def test_stop_without_committing_code_mount(self):
         data = {'commit': False}
         assert self.queryset.count() == 1
         with patch('scheduler.tasks.notebooks.projects_notebook_stop.apply_async') as mock_fct:
