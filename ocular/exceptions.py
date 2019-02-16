@@ -1,0 +1,2 @@
+class OcularException(Exception):
+    pass

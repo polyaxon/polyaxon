@@ -1,4 +1,5 @@
 from ocular.constants import container_statuses, pod_conditions, pod_lifecycle, pod_statuses
+from ocular.exceptions import OcularException
 
 
 def get_container_statuses_by_name(statuses):
@@ -128,7 +129,10 @@ def get_job_status(pod_details, job_container_names):  # pylint:disable=too-many
 
 
 def get_pod_state(event_type, event, job_container_names, created_at):
-    pod_details = get_pod_details(event_type=event_type, event=event)
+    try:
+        pod_details = get_pod_details(event_type=event_type, event=event)
+    except KeyError as e:
+        raise OcularException(e)
     status, message = get_job_status(pod_details, job_container_names)
     pod_state = {
         'status': status,
