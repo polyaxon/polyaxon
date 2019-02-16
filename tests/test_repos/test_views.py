@@ -4,6 +4,7 @@ import os
 from unittest.mock import patch
 
 import pytest
+from django.test import override_settings
 
 from rest_framework import status
 
@@ -321,7 +322,35 @@ class TestUploadFilesView(BaseViewTest):
         # Log old user, otherwise other tests will crash
         self.auth_client.login_user(user)
 
-    def test_cannot_upload_if_project_has_a_running_notebook(self):
+    def test_cannot_upload_if_project_has_a_running_notebook_serverless(self):
+        user = self.auth_client.user
+        repo_name = self.project.name
+
+        # Update project with has_notebook True
+        notebook = NotebookJobFactory(project=self.project)
+        notebook.set_status(status=JobLifeCycle.RUNNING)
+
+        assert self.model_class.objects.count() == 0
+
+        uploaded_file = self.get_upload_file()
+
+        with patch('api.repos.views.handle_new_files') as mock_task:
+            response = self.auth_client.put(self.url,
+                                            data={'repo': uploaded_file},
+                                            content_type=MULTIPART_CONTENT)
+        assert response.status_code == status.HTTP_200_OK
+        file_path = '{}/{}/{}.tar.gz'.format(
+            conf.get('UPLOAD_MOUNT_PATH'), user.username, repo_name)
+        self.assertTrue(os.path.exists(file_path))
+        assert mock_task.call_count == 1
+        # No new repo was not created and still exists
+        assert self.model_class.objects.count() == 1
+        repo_path = '{}/{}/{}/{}'.format(
+            conf.get('REPOS_MOUNT_PATH'), user.username, repo_name, repo_name)
+        self.assertTrue(os.path.exists(repo_path))
+
+    @override_settings(MOUNT_CODE_IN_NOTEBOOKS=True)
+    def test_cannot_upload_if_project_has_a_running_notebook_with_code_mount(self):
         user = self.auth_client.user
         repo_name = self.project.name
 
