@@ -50,10 +50,10 @@ def get_code_reference(instance, commit: str = None) -> Optional['CodeReference'
     if not project.has_code:
         return None
 
-    if project.has_repo:
+    if project.has_external_repo:
         repo = project.external_repo
         return _get_external_repo_code_reference(repo=repo, commit=commit)
-    else:
+    else:  # pylint:disable=no-else-return
         repo = project.repo
         return _get_repo_code_reference(repo=repo, commit=commit)
 
