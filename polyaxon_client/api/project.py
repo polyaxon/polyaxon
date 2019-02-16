@@ -74,6 +74,27 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while deleting project.')
             return None
 
+    def set_repo(self, username, project_name, git_url, is_public=True, background=False):
+        """Set a git url on the project to use as a code repo."""
+        request_url = self.build_url(
+            self._get_http_url(), username, project_name, 'repo', 'external')
+
+        json_data = {
+            'git_url': git_url,
+            'is_public': is_public
+        }
+        if background:
+            self.transport.async_post(request_url, json_data=json_data)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=json_data)
+            return response
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while steting external repo on project.')
+            return None
+
     def upload_repo(self, username, project_name, files, files_size=None, background=False):
         """Uploads code data related for this project from the current dir."""
         request_url = self.build_url(

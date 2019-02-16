@@ -155,6 +155,30 @@ class TestProjectApi(TestBaseApi):
             method='delete')
 
     @httpretty.activate
+    def test_set_git_repo(self):
+        obj = {'git': 'https://github.com/foo/bar'}
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'repo',
+                'external'),
+            body=json.dumps(obj),
+            content_type='application/json',
+            status=201)
+        result = self.api_handler.set_repo('username', 'project_name', obj)
+        assert result.status_code == 201
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.set_repo(
+                'user', 'project', obj, background=True),
+            method='post')
+
+    @httpretty.activate
     def test_upload_repo(self):
         httpretty.register_uri(
             httpretty.PUT,
