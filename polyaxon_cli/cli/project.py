@@ -633,6 +633,13 @@ def git(ctx, url, private):  # pylint:disable=assign-to-new-keyword
     """
     user, project_name = get_project_or_local(ctx.obj.get('project'))
 
+    if private:
+        click.echo('\nSetting a private git repo "{}" on project: {} ...\n'.format(
+            url, project_name))
+    else:
+        click.echo('\nSetting a public git repo "{}" on project: {} ...\n'.format(
+            url, project_name))
+
     try:
         PolyaxonClient().project.set_repo(user, project_name, url, not private)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
