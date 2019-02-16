@@ -4,6 +4,8 @@ import time
 from hestia.tz_utils import now
 from kubernetes import watch
 from kubernetes.client.rest import ApiException
+
+from ocular.exceptions import OcularException
 from ocular.processor import get_pod_state
 
 logger = logging.getLogger('ocular')
@@ -29,18 +31,21 @@ def _monitor(k8s_api, namespace, container_names, label_selector, watch_ttl):
         logger.debug("Event object: %s", event_object)
         LAST_SEEN['resource_version'] = event_object['metadata'].get('resource_version')
         created_at = event_object['metadata'].get('creation_timestamp', now())
-        pod_state = get_pod_state(
-            event_type=event['type'],
-            event=event_object,
-            job_container_names=container_names,
-            created_at=created_at)
-        logger.debug("Pod state: %s", pod_state)
-        yield (event_object, pod_state)
+        try:
+            pod_state = get_pod_state(
+                event_type=event['type'],
+                event=event_object,
+                job_container_names=container_names,
+                created_at=created_at)
+            logger.debug("Pod state: %s", pod_state)
+            yield (event_object, pod_state)
 
-        if watch_ttl and time.time() - start > watch_ttl:
-            logger.debug("Restarting watch process ...")
-            w.stop()
-            break
+            if watch_ttl and time.time() - start > watch_ttl:
+                logger.debug("Restarting watch process ...")
+                w.stop()
+                break
+        except OcularException:
+            pass
 
 
 def monitor(k8s_api,
