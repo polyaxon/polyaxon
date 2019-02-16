@@ -23,8 +23,8 @@ def set_git_repo(repo: 'ExternalRepo') -> str:
     # Create a new repo
     try:
         clone_git_repo(repo_path=repo.path, git_url=repo.git_clone_url)
-    except Exception as e:
-        raise GitCloneException(e)
+    except Exception:
+        raise GitCloneException('Could not clone git repo, make sure you have access to this repo.')
     return repo.path
 
 
