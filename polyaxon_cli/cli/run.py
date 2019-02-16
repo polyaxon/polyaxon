@@ -204,5 +204,5 @@ def run(ctx, project, file, name, tags, description, ttl, u, l):  # pylint:disab
 
     # Check if we need to invoke logs
     if l and logs:
-        ctx.obj = {'project': '{}/{}'.format(user, project)}
+        ctx.obj = {'project': '{}/{}'.format(user, project_name)}
         ctx.invoke(logs)
