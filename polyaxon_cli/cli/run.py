@@ -100,6 +100,11 @@ def run(ctx, project, file, name, tags, description, ttl, u, l):  # pylint:disab
 
     # Check if we need to upload
     if u:
+        if project:
+            Printer.print_error('Uploading is not supported when switching project context!',
+                                add_sign=True)
+            click.echo('Please, either omit the `-u` option or `-p` / `--project=` option.')
+            sys.exit(1)
         ctx.invoke(upload)
 
     user, project_name = get_project_or_local(project)
@@ -199,5 +204,5 @@ def run(ctx, project, file, name, tags, description, ttl, u, l):  # pylint:disab
 
     # Check if we need to invoke logs
     if l and logs:
-        ctx.obj = {}
+        ctx.obj = {'project': '{}/{}'.format(user, project)}
         ctx.invoke(logs)
