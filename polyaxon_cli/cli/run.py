@@ -18,7 +18,6 @@ from polyaxon_cli.managers.build_job import BuildJobManager
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.managers.job import JobManager
-from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.schemas.experiment import ExperimentConfig
 from polyaxon_cli.schemas.group import ExperimentGroupConfig
 from polyaxon_cli.schemas.job import JobConfig
