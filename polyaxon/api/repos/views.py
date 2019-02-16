@@ -76,6 +76,8 @@ class DownloadFilesView(ProjectResourceListEndpoint, ProtectedView):
             self._object = get_object_or_404(Repo, project=self.project)
         elif self.project.has_external_repo:
             self._object = get_object_or_404(ExternalRepo, project=self.project)
+            # Always fetch before downloading
+            git.fetch(git_url=self._object.git_clone_url, repo_path=self._object.path)
         else:
             raise Http404('Repo was not found')
         if not is_authenticated_internal_user(self.request.user):

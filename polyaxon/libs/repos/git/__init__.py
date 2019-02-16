@@ -87,14 +87,18 @@ def get_committed_files(repo_path: str,
     return [f for f in files_committed if f]
 
 
-def fetch(git_url: str, repo_path: str, overwrite: bool = False) -> Optional[Any]:
+def fetch(git_url: str, repo_path: str, overwrite: bool = False, branch='master') -> Optional[Any]:
     if os.path.isdir(repo_path):
         _logger.info('Current checkout path has content.')
         if overwrite:
             _logger.info('Overwriting current checkout path.')
             delete_path(repo_path)
         else:
-            run_command(cmd='git fetch origin master', data=None, location=repo_path, chw=True)
+            checkout_commit(repo_path=repo_path, commit=branch)
+            run_command(cmd='git fetch origin {}'.format(branch),
+                        data=None,
+                        location=repo_path,
+                        chw=True)
             run_command(cmd='git reset --hard FETCH_HEAD', data=None, location=repo_path, chw=True)
             run_command(cmd='git clean -df', data=None, location=repo_path, chw=True)
             return None
