@@ -131,7 +131,7 @@ def get_job_status(pod_details, job_container_names):  # pylint:disable=too-many
 def get_pod_state(event_type, event, job_container_names, created_at):
     try:
         pod_details = get_pod_details(event_type=event_type, event=event)
-    except KeyError as e:
+    except (KeyError, TypeError) as e:
         raise OcularException(e)
     status, message = get_job_status(pod_details, job_container_names)
     pod_state = {
