@@ -139,18 +139,20 @@ class UploadFilesView(ProjectResourceListEndpoint, UploadView):
     """Upload code to a repo."""
 
     def get_object(self):
-        if self.project.has_notebook:
-            self.permission_denied(
-                self.request,
-                'The Project `{}` is currently running a Notebook. '
-                'You must stop it before uploading a new version of the code.'.format(
-                    self.project.name))
         if self.project.has_external_repo:
             self.permission_denied(
                 self.request,
                 'The Project `{}` is currently using an external_repo '
                 'as main code tracker.'.format(
                     self.project.name))
+
+        if conf.get('MOUNT_CODE_IN_NOTEBOOKS') and self.project.has_notebook:
+            self.permission_denied(
+                self.request,
+                'The Project `{}` is currently running a Notebook. '
+                'You must stop it before uploading a new version of the code.'.format(
+                    self.project.name))
+
         repo, created = Repo.objects.get_or_create(project=self.project)
         if not created and not os.path.isdir(repo.project_path):
             git.internal.set_git_repo(repo)
