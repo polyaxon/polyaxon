@@ -176,17 +176,22 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
 
 class StopNotebookView(ProjectEndpoint, PostEndpoint):
     """Stop a tensorboard."""
+
+    def handle_code(self, request):
+        commit = request.data.get('commit')
+        commit = to_bool(commit) if commit is not None else True
+        if commit and conf.get('MOUNT_CODE_IN_NOTEBOOKS') and self.project.has_repo:
+            # Commit changes
+            git.commit(self.project.repo.path, request.user.email, request.user.username)
+        else:
+            # Reset changes
+            git.undo(self.project.repo.path)
+
     def post(self, request, *args, **kwargs):
         if self.project.has_notebook:
-            commit = request.data.get('commit')
-            commit = to_bool(commit) if commit is not None else True
             try:
-                if commit:
-                    # Commit changes
-                    git.commit(self.project.repo.path, request.user.email, request.user.username)
-                else:
-                    # Reset changes
-                    git.undo(self.project.repo.path)
+                if conf.get('MOUNT_CODE_IN_NOTEBOOKS') and self.project.has_repo:
+                    self.handle_code(request)
             except FileNotFoundError:
                 # Git probably was not found
                 pass
