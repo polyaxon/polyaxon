@@ -5,6 +5,7 @@ import sys
 
 from polyaxon_cli.managers.base import BaseConfigManager
 from polyaxon_cli.schemas.project import ProjectConfig
+from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer
 
 
@@ -21,7 +22,7 @@ class ProjectManager(BaseConfigManager):
         project = cls.get_config()
         if not project:
             Printer.print_error('Please initialize your project before uploading any code.'
-                                '`polyaxon init PROJECT_NAME [--run|--model]`')
+                                ' {}'.format(constants.INIT_COMMAND))
             sys.exit(1)
 
         return project
