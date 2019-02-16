@@ -32,6 +32,7 @@ def _get_external_repo_code_reference(repo: 'ExternalRepo',
     if commit:
         try:
             return CodeReference.objects.get(external_repo=repo,
+                                             git_url=repo.git_url,
                                              commit=commit)
         except ObjectDoesNotExist:
             return None
@@ -43,6 +44,7 @@ def _get_external_repo_code_reference(repo: 'ExternalRepo',
         return None
 
     code_reference, _ = CodeReference.objects.get_or_create(external_repo=repo,
+                                                            git_url=repo.git_url,
                                                             commit=last_commit[0])
     return code_reference
 
