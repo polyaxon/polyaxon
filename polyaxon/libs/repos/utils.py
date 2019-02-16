@@ -27,15 +27,21 @@ def _get_repo_code_reference(repo: 'Repo', commit: str = None) -> Optional['Code
 
 def _get_external_repo_code_reference(repo: 'ExternalRepo',
                                       commit: str = None) -> Optional['CodeReference']:
+
+    def get_or_create(ref):
+        code_references = CodeReference.objects.filter(external_repo=repo,
+                                                       git_url=repo.git_url,
+                                                       commit=ref)
+        if code_references.exists():
+            return code_references.last()
+        return CodeReference.objects.create(external_repo=repo,
+                                            git_url=repo.git_url,
+                                            commit=ref)
+
     # Fetch latest
     git.fetch(git_url=repo.git_clone_url, repo_path=repo.path)
     if commit:
-        try:
-            return CodeReference.objects.get(external_repo=repo,
-                                             git_url=repo.git_url,
-                                             commit=commit)
-        except ObjectDoesNotExist:
-            return None
+        return get_or_create(ref=commit)
 
     # If no commit is provided we get the last commit, and save new ref if not found
     try:
@@ -43,10 +49,7 @@ def _get_external_repo_code_reference(repo: 'ExternalRepo',
     except ValueError:
         return None
 
-    code_reference, _ = CodeReference.objects.get_or_create(external_repo=repo,
-                                                            git_url=repo.git_url,
-                                                            commit=last_commit[0])
-    return code_reference
+    return get_or_create(ref=last_commit[0])
 
 
 def get_code_reference(instance, commit: str = None) -> Optional['CodeReference']:
