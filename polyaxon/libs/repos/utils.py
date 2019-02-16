@@ -5,17 +5,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from db.models.repos import CodeReference
 
 
-def get_code_reference(instance, commit: str = None) -> Optional['CodeReference']:
-    project = instance.project
-
-    if not project.has_code:
-        return None
-
-    repo = project.repo or project.external_repo
-
+def _get_repo_code_reference(repo: 'Repo', commit: str = None) -> Optional['CodeReference']:
     if commit:
         try:
-            return CodeReference.objects.get(repo=repo, commit=commit)
+            return CodeReference.objects.get(repo=repo,
+                                             commit=commit)
         except ObjectDoesNotExist:
             return None
 
@@ -25,8 +19,43 @@ def get_code_reference(instance, commit: str = None) -> Optional['CodeReference'
     except ValueError:
         return None
 
-    code_reference, _ = CodeReference.objects.get_or_create(repo=repo, commit=last_commit[0])
+    code_reference, _ = CodeReference.objects.get_or_create(repo=repo,
+                                                            commit=last_commit[0])
     return code_reference
+
+
+def _get_external_repo_code_reference(repo: 'ExternalRepo',
+                                      commit: str = None) -> Optional['CodeReference']:
+    if commit:
+        try:
+            return CodeReference.objects.get(external_repo=repo,
+                                             commit=commit)
+        except ObjectDoesNotExist:
+            return None
+
+    # If no commit is provided we get the last commit, and save new ref if not found
+    try:
+        last_commit = repo.last_commit
+    except ValueError:
+        return None
+
+    code_reference, _ = CodeReference.objects.get_or_create(external_repo=repo,
+                                                            commit=last_commit[0])
+    return code_reference
+
+
+def get_code_reference(instance, commit: str = None) -> Optional['CodeReference']:
+    project = instance.project
+
+    if not project.has_code:
+        return None
+
+    if project.has_repo:
+        repo = project.external_repo
+        return _get_external_repo_code_reference(repo=repo, commit=commit)
+    else:
+        repo = project.repo
+        return _get_repo_code_reference(repo=repo, commit=commit)
 
 
 RefModel = Union['Experiment',
