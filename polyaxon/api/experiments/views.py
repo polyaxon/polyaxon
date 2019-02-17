@@ -102,7 +102,7 @@ from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
-from scopes.permissions.internal import IsAuthenticatedOrInternal
+from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInternal
 from scopes.permissions.projects import get_permissible_project
 from stores.exceptions import VolumeNotFoundError  # noqa
 
@@ -829,7 +829,7 @@ class ExperimentDownloadOutputsView(ExperimentEndpoint, ProtectedView):
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 
-class ExperimentScopeTokenView(ExperimentEndpoint, PostEndpoint):
+class ExperimentEphemeralTokenView(ExperimentEndpoint, PostEndpoint):
     """Validate scope token and return user's token."""
     authentication_classes = [EphemeralAuthentication, ]
     permission_classes = (IsEphemeral,)

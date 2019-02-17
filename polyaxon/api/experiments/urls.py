@@ -80,9 +80,9 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/unbookmark/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         bookmark_views.ExperimentBookmarkDeleteView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/token/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/ephemeraltoken/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
-        views.ExperimentScopeTokenView.as_view()),
+        views.ExperimentEphemeralTokenView.as_view()),
     re_path(r'^{}/{}/experiments/{}/_heartbeat/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentHeartBeatView.as_view()),

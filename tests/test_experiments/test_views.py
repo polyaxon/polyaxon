@@ -2174,7 +2174,7 @@ class TestExperimentOutputsTreeViewV1(BaseFilesViewTest):
         self.assert_same_content(resp.data['dirs'], self.second_level['dirs'])
 
 
-@pytest.mark.jobs_mark
+@pytest.mark.experiments_mark
 class TestExperimentOutputsFilesViewV1(BaseFilesViewTest):
     num_log_lines = 10
     HAS_AUTH = True
@@ -2253,8 +2253,8 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
                                                self.experiment.unique_name.replace('.', '_')))
 
 
-@pytest.mark.users_mark
-class TestExperimentTokenViewV1(BaseViewTest):
+@pytest.mark.experiments_mark
+class TestExperimentEphemeralTokenViewV1(BaseViewTest):
     HAS_AUTH = False
     factory_class = ExperimentFactory
 
@@ -2264,12 +2264,12 @@ class TestExperimentTokenViewV1(BaseViewTest):
         self.project = ProjectFactory(user=self.auth_client.user)
         self.experiment = self.factory_class(project=self.project)
         self.other_experiment = self.factory_class(project=self.project)
-        self.url = '/{}/{}/{}/experiments/{}/token'.format(
+        self.url = '/{}/{}/{}/experiments/{}/ephemeraltoken'.format(
             API_V1,
             self.project.user.username,
             self.project.name,
             self.experiment.id)
-        self.other_url = '/{}/{}/{}/experiments/{}/token'.format(
+        self.other_url = '/{}/{}/{}/experiments/{}/ephemeraltoken'.format(
             API_V1,
             self.project.user.username,
             self.project.name,
