@@ -489,7 +489,10 @@ class S3Store(BaseStore):
 
         check_dirname_exists(local_path)
 
-        self.client.download_file(bucket_name, key, local_path)
+        try:
+            self.client.download_file(bucket_name, key, local_path)
+        except ClientError as e:
+            raise PolyaxonStoresException(e)
 
     def upload_dir(self,
                    dirname,
@@ -602,5 +605,8 @@ class S3Store(BaseStore):
     def delete_file(self, key, bucket_name=None):
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
-        obj = self.resource.Object(bucket_name, key)
-        obj.delete()
+        try:
+            obj = self.resource.Object(bucket_name, key)
+            obj.delete()
+        except ClientError as e:
+            raise PolyaxonStoresException(e)

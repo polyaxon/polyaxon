@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import json
 import os
+from google.api_core.exceptions import NotFound, GoogleAPIError
 
 from six.moves import urllib
 
@@ -249,8 +250,11 @@ class GCSStore(BaseStore):
 
         check_dirname_exists(local_path)
 
-        blob = self.get_blob(blob=blob, bucket_name=bucket_name)
-        blob.download_to_filename(local_path)
+        try:
+            blob = self.get_blob(blob=blob, bucket_name=bucket_name)
+            blob.download_to_filename(local_path)
+        except (NotFound, GoogleAPIError) as e:
+            raise PolyaxonStoresException(e)
 
     def upload_dir(self, dirname, blob, bucket_name=None, use_basename=True):
         """
@@ -347,4 +351,7 @@ class GCSStore(BaseStore):
         if not bucket_name:
             bucket_name, key = self.parse_gcs_url(key)
         bucket = self.get_bucket(bucket_name)
-        return bucket.delete_blob(key)
+        try:
+            return bucket.delete_blob(key)
+        except (NotFound, GoogleAPIError) as e:
+            raise PolyaxonStoresException(e)

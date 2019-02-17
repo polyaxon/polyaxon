@@ -6,7 +6,7 @@ import re
 
 from six.moves import urllib
 
-from azure.common import AzureMissingResourceHttpError
+from azure.common import AzureHttpError
 from azure.storage.blob.models import BlobPrefix
 
 from polystores.clients.azure_client import get_blob_service_connection
@@ -103,7 +103,7 @@ class AzureStore(BaseStore):
                 container_name,
                 blob
             )
-        except AzureMissingResourceHttpError:
+        except AzureHttpError:
             return None
 
     def ls(self, path):
@@ -221,7 +221,10 @@ class AzureStore(BaseStore):
 
         check_dirname_exists(local_path)
 
-        self.connection.get_blob_to_path(container_name, blob, local_path)
+        try:
+            self.connection.get_blob_to_path(container_name, blob, local_path)
+        except AzureHttpError as e:
+            raise PolyaxonStoresException(e)
 
     def download_dir(self, blob, local_path, container_name=None, use_basename=True):
         """
@@ -302,5 +305,5 @@ class AzureStore(BaseStore):
 
         try:
             self.connection.delete_blob(container_name, blob)
-        except AzureMissingResourceHttpError:
+        except AzureHttpError:
             pass
