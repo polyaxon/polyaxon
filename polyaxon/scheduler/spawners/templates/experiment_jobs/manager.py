@@ -11,7 +11,8 @@ from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.cloning_strategies import CloningStrategy
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
-from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
+from scheduler.spawners.templates.init_containers import InitCommands, get_output_args, \
+    get_auth_context_args
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -168,6 +169,7 @@ class ResourceManager(BaseResourceManager):
                            persistence_outputs,
                            persistence_data):
         """Pod init container for setting outputs path."""
+        env_vars = to_list(env_vars, check_none=True)
         if self.original_name is not None and self.cloning_strategy == CloningStrategy.RESUME:
             return []
         if self.original_name is not None and self.cloning_strategy == CloningStrategy.COPY:
@@ -188,6 +190,8 @@ class ResourceManager(BaseResourceManager):
             get_output_args(command=command,
                             outputs_path=outputs_path,
                             original_outputs_path=original_outputs_path))
+        init_args += to_list(get_auth_context_args(entity='experiment',
+                                                   entity_name=self.experiment_name))
         return [
             client.V1Container(
                 name=self.init_container_name,
@@ -195,6 +199,7 @@ class ResourceManager(BaseResourceManager):
                 image_pull_policy=self.init_docker_image_pull_policy,
                 command=init_command,
                 args=init_args,
+                env=env_vars,
                 volume_mounts=outputs_volume_mount)
         ]
 
@@ -226,6 +231,7 @@ class ResourceManager(BaseResourceManager):
                      volumes,
                      labels,
                      env_vars=None,
+                     init_env_vars=None,
                      command=None,
                      args=None,
                      ports=None,
@@ -240,6 +246,8 @@ class ResourceManager(BaseResourceManager):
                      node_selector=None,
                      affinity=None,
                      tolerations=None,
+                     sidecar_context_mounts=None,
+                     init_context_mounts=None,
                      restart_policy=None):
         resource_name = self.get_resource_name(task_type=task_type, task_idx=task_idx)
         env_vars = to_list(env_vars, check_none=True)
@@ -257,6 +265,7 @@ class ResourceManager(BaseResourceManager):
                             env_vars=env_vars,
                             command=command,
                             args=args,
+                            init_env_vars=init_env_vars,
                             ports=ports,
                             persistence_outputs=persistence_outputs,
                             persistence_data=persistence_data,
@@ -269,6 +278,8 @@ class ResourceManager(BaseResourceManager):
                             node_selector=node_selector,
                             affinity=affinity,
                             tolerations=tolerations,
+                            sidecar_context_mounts=sidecar_context_mounts,
+                            init_context_mounts=init_context_mounts,
                             restart_policy=restart_policy)
 
     def _get_from_experiment_config_map(self, key_name):

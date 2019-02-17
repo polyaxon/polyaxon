@@ -31,3 +31,7 @@ def get_output_args(command, outputs_path, original_outputs_path=None):
             get_or_create, delete_dir, copy_dir_if_exist, copy_file_if_exist)
     if InitCommands.is_delete(command=command):
         return '{}'.format(delete_dir)
+
+
+def get_auth_context_args(entity: str, entity_name: str):
+    return "python3 -u init/auth.py --entity={} --entity_name={}".format(entity, entity_name)

@@ -9,7 +9,6 @@ import conf
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
-from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from docker_images.image_info import get_image_info
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
@@ -420,9 +419,9 @@ def start_experiment(experiment):
         _logger.info('Start experiment with default image.')
 
     spawner_class = get_spawner_class(experiment.specification.framework)
-    token_scope = RedisEphemeralTokens.get_scope(experiment.user.id,
-                                                 'experiment',
-                                                 experiment.id)
+    # token_scope = RedisEphemeralTokens.get_scope(experiment.user.id,
+    #                                              'experiment',
+    #                                              experiment.id)
 
     error = {}
     try:
@@ -443,8 +442,7 @@ def start_experiment(experiment):
                                 namespace=conf.get('K8S_NAMESPACE'),
                                 in_cluster=True,
                                 job_docker_image=job_docker_image,
-                                use_sidecar=True,
-                                token_scope=token_scope)
+                                use_sidecar=True)
         response = spawner.start_experiment()
         handle_experiment(experiment=experiment, spawner=spawner, response=response)
     except ApiException as e:

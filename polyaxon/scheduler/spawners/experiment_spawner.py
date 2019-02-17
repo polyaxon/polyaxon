@@ -1,16 +1,20 @@
+from hestia.auth import AuthenticationTypes
+from hestia.internal_services import InternalServices
+
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from libs.unique_urls import get_experiment_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
-from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
+from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs, \
+    get_internal_env_vars
 from scheduler.spawners.templates.experiment_jobs import config_maps, manager
 from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
-    get_shm_volumes
-)
+    get_shm_volumes,
+    get_auth_context_volumes)
 from schemas.tasks import TaskType
 
 
@@ -105,6 +109,12 @@ class ExperimentSpawner(K8SManager):
     def get_n_pods(self, task_type):
         return 0
 
+    def get_init_env_vars(self):
+        env_vars = get_internal_env_vars(service_internal_header=InternalServices.INITIALIZER,
+                                         namespace=self.namespace,
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
+        return env_vars
+
     def _create_job(self,
                     task_type,
                     task_idx,
@@ -117,7 +127,9 @@ class ExperimentSpawner(K8SManager):
                     affinity=None,
                     tolerations=None,
                     restart_policy='Never'):
-        ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
+        ephemeral_token = None
+        if self.token_scope:
+            ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
         resource_name = self.resource_manager.get_resource_name(task_type=task_type,
                                                                 task_idx=task_idx)
         labels = self.resource_manager.get_labels(task_type=task_type, task_idx=task_idx)
@@ -140,6 +152,10 @@ class ExperimentSpawner(K8SManager):
         volumes += shm_volumes
         volume_mounts += shm_volume_mounts
 
+        context_volumes, context_mounts = get_auth_context_volumes()
+        volumes += context_volumes
+        volume_mounts += context_mounts
+
         # Validate secret and configmap refs
         secret_refs = validate_secret_refs(self.spec.secret_refs)
         configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
@@ -154,6 +170,7 @@ class ExperimentSpawner(K8SManager):
             command=command,
             args=args,
             ports=self.ports,
+            init_env_vars=self.get_init_env_vars(),
             persistence_outputs=self.persistence_config.outputs,
             persistence_data=self.persistence_config.data,
             outputs_refs_jobs=self.outputs_refs_jobs,
@@ -165,6 +182,7 @@ class ExperimentSpawner(K8SManager):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
+            init_context_mounts=context_mounts,
             restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
         results = {'pod': pod_resp.to_dict()}

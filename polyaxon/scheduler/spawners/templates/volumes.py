@@ -118,6 +118,13 @@ def get_build_context_volumes():
     return volumes, volume_mounts
 
 
+def get_auth_context_volumes():
+    volumes = [get_volume(volume=constants.AUTH_CONTEXT_VOLUME)]
+    volume_mounts = [get_volume_mount(volume=constants.AUTH_CONTEXT_VOLUME,
+                                      volume_mount=constants.AUTH_CONTEXT)]
+    return volumes, volume_mounts
+
+
 def get_shm_volumes():
     """
     Mount an tmpfs volume to /dev/shm.
