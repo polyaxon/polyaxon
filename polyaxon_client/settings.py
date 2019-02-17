@@ -10,6 +10,7 @@ from hestia.user_path import polyaxon_user_path
 from rhea import RheaError  # noqa
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
+CONTEXT_AUTH_TOKEN_PATH = '/plx-context/.authtoken'
 CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
 CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonconfig')
 AUTH_PATH = os.path.join(polyaxon_user_path(), '.polyaxonauth')
@@ -25,7 +26,8 @@ auth_config = rhea.Rhea.read_configs([
 config = rhea.Rhea.read_configs([
     rhea.ConfigSpec(CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False),
     os.environ,
-    rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False)
+    rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(CONTEXT_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False)
 ])
 
 IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',

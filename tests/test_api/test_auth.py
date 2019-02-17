@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import tempfile
+
 import httpretty
 import json
 import os
@@ -18,6 +20,8 @@ class TestAuthApi(TestBaseApi):
 
     def setUp(self):
         super(TestAuthApi, self).setUp()
+        settings.CONTEXT_AUTH_TOKEN_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.authtoken')
+        settings.TMP_AUTH_TOKEN_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.authtoken')
         self.api_handler = AuthApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
@@ -136,3 +140,93 @@ class TestAuthApi(TestBaseApi):
             ephemeral_token='foo',
             set_token=True,
             persist_token=True)
+
+    @httpretty.activate
+    def test_login_experiment_impersonate_token(self):
+        token = uuid.uuid4().hex
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'user',
+                'project',
+                'experiments',
+                '1',
+                'imporsonatetoken'
+            ),
+            body=json.dumps({'token': token}),
+            content_type='application/json', status=200)
+
+        # Login without updating the token and without persistence
+        if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
+            os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_experiment_impersonate_token(
+            username='user',
+            project_name='project',
+            experiment_id=1,
+            internal_token='foo',
+            set_token=False,
+            persist_token=False)
+        assert self.api_config.token == 'token'
+        assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is False
+
+        # Login and update the token and persistence
+        if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
+            os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_experiment_impersonate_token(
+            username='user',
+            project_name='project',
+            experiment_id=1,
+            internal_token='foo',
+            set_token=True,
+            persist_token=True)
+        assert self.api_config.token == token
+        assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True
+
+    @httpretty.activate
+    def test_login_job_impersonate_token(self):
+        token = uuid.uuid4().hex
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'user',
+                'project',
+                'jobs',
+                '1',
+                'imporsonatetoken'
+            ),
+            body=json.dumps({'token': token}),
+            content_type='application/json', status=200)
+
+        # Login without updating the token and without persistence
+        if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
+            os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_job_impersonate_token(
+            username='user',
+            project_name='project',
+            job_id=1,
+            internal_token='foo',
+            set_token=False,
+            persist_token=False)
+        assert self.api_config.token == 'token'
+        assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is False
+
+        # Login and update the token and persistence
+        if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
+            os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_job_impersonate_token(
+            username='user',
+            project_name='project',
+            job_id=1,
+            internal_token='foo',
+            set_token=True,
+            persist_token=True)
+        assert self.api_config.token == token
+        assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True

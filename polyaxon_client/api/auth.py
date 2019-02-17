@@ -47,12 +47,17 @@ class AuthApi(BaseApiHandler):
 
         return self.prepare_results(response_json=user_dict, config=UserConfig)
 
-    def _persist_token(self, token):
+    def _persist_token(self, token, token_path):
         create_polyaxon_tmp()
-        with open(settings.TMP_AUTH_TOKEN_PATH, "w") as config_file:
+        with open(token_path, "w") as config_file:
             config_file.write(json.dumps({settings.SECRET_USER_TOKEN_KEY: token}))
 
-    def _process_token(self, request_url, response, set_token=True, persist_token=False):
+    def _process_token(self,
+                       request_url,
+                       response,
+                       set_token=True,
+                       persist_token=False,
+                       token_path=None):
         try:
             token_dict = response.json()
             response.raise_for_status()
@@ -73,7 +78,7 @@ class AuthApi(BaseApiHandler):
         if set_token:
             self.config.token = token
         if persist_token:
-            self._persist_token(token)
+            self._persist_token(token, token_path)
         return token
 
     def login(self, credentials, set_token=False):
@@ -118,10 +123,72 @@ class AuthApi(BaseApiHandler):
         token = self._process_token(request_url=request_url,
                                     response=response,
                                     set_token=set_token,
-                                    persist_token=persist_token)
+                                    persist_token=persist_token,
+                                    token_path=settings.TMP_AUTH_TOKEN_PATH)
         # Destroy ephemeral token
         if os.environ.get(settings.SECRET_EPHEMERAL_TOKEN_KEY):
             del os.environ[settings.SECRET_EPHEMERAL_TOKEN_KEY]
         if hasattr(settings, 'SECRET_EPHEMERAL_TOKEN') and settings.SECRET_EPHEMERAL_TOKEN:
             del settings.SECRET_EPHEMERAL_TOKEN
         return token
+
+    def _login_impersonate_token(self,
+                                 request_url,
+                                 internal_token,
+                                 set_token=True,
+                                 persist_token=True):
+        try:
+            response = self.transport.post(
+                request_url,
+                headers={
+                    'Authorization': '{} {}'.format(
+                        AuthenticationTypes.INTERNAL_TOKEN, internal_token)
+                })
+        except requests.ConnectionError:
+            raise PolyaxonHTTPError(
+                request_url,
+                None,
+                "Connection error.",
+                None)
+        token = self._process_token(request_url=request_url,
+                                    response=response,
+                                    set_token=set_token,
+                                    persist_token=persist_token,
+                                    token_path=settings.CONTEXT_AUTH_TOKEN_PATH)
+        return token
+
+    def login_experiment_impersonate_token(self,
+                                           username,
+                                           project_name,
+                                           experiment_id,
+                                           internal_token,
+                                           set_token=True,
+                                           persist_token=True):
+        request_url = self.build_url(self._get_http_url('/'),
+                                     username,
+                                     project_name,
+                                     'experiments',
+                                     experiment_id,
+                                     'imporsonatetoken')
+        return self._login_impersonate_token(request_url=request_url,
+                                             internal_token=internal_token,
+                                             set_token=set_token,
+                                             persist_token=persist_token)
+
+    def login_job_impersonate_token(self,
+                                    username,
+                                    project_name,
+                                    job_id,
+                                    internal_token,
+                                    set_token=True,
+                                    persist_token=True):
+        request_url = self.build_url(self._get_http_url('/'),
+                                     username,
+                                     project_name,
+                                     'jobs',
+                                     job_id,
+                                     'imporsonatetoken')
+        return self._login_impersonate_token(request_url=request_url,
+                                             internal_token=internal_token,
+                                             set_token=set_token,
+                                             persist_token=persist_token)
