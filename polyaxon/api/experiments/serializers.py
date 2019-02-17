@@ -208,6 +208,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
         return obj.jobs__count
 
     def get_last_metric(self, obj):
+        # TODO: Add type handling for experiments
         return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
 
     def validated_declarations(self, validated_data, declarations):
