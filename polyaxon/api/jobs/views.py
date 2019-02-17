@@ -38,7 +38,9 @@ from api.jobs.serializers import (
 )
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
+from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
+from db.models.tokens import Token
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
 from event_manager.events.job import (
@@ -60,7 +62,7 @@ from logs_handlers.log_queries.job import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
-from scopes.permissions.internal import IsAuthenticatedOrInternal
+from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
 from stores.exceptions import VolumeNotFoundError  # noqa
 
@@ -416,3 +418,21 @@ class JobHeartBeatView(JobEndpoint, PostEndpoint):
     def post(self, request, *args, **kwargs):
         RedisHeartBeat.job_ping(job_id=self.job.id)
         return Response(status=status.HTTP_200_OK)
+
+
+class JobImpersonateTokenView(JobEndpoint, PostEndpoint):
+    """Impersonate a user and return user's token."""
+    authentication_classes = [InternalAuthentication, ]
+    permission_classes = (IsInitializer,)
+    throttle_scope = 'impersonate'
+    lookup_url_kwarg = 'job_id'
+
+    def post(self, request, *args, **kwargs):
+        experiment = self.get_object()
+
+        if experiment.last_status not in [JobLifeCycle.SCHEDULED,
+                                          JobLifeCycle.RUNNING]:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        token, _ = Token.objects.get_or_create(user=experiment.user)
+        return Response({'token': token.key}, status=status.HTTP_200_OK)

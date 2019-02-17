@@ -49,6 +49,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/unbookmark/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         bookmark_views.JobBookmarkDeleteView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/imporsonatetoken/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
+        views.JobImpersonateTokenView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(jobs_urlpatterns)

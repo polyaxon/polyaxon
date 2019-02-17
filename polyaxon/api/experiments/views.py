@@ -102,7 +102,7 @@ from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
-from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInternal
+from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
 from stores.exceptions import VolumeNotFoundError  # noqa
 
@@ -853,6 +853,25 @@ class ExperimentEphemeralTokenView(ExperimentEndpoint, PostEndpoint):
                                                model='experiment',
                                                object_id=experiment.id)
         if sorted(user.scope) != sorted(scope):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        token, _ = Token.objects.get_or_create(user=experiment.user)
+        return Response({'token': token.key}, status=status.HTTP_200_OK)
+
+
+class ExperimentImpersonateTokenView(ExperimentEndpoint, PostEndpoint):
+    """Impersonate a user and return user's token."""
+    authentication_classes = [InternalAuthentication, ]
+    permission_classes = (IsInitializer,)
+    throttle_scope = 'impersonate'
+    lookup_url_kwarg = 'experiment_id'
+
+    def post(self, request, *args, **kwargs):
+        experiment = self.get_object()
+
+        if experiment.last_status not in [ExperimentLifeCycle.SCHEDULED,
+                                          ExperimentLifeCycle.STARTING,
+                                          ExperimentLifeCycle.RUNNING]:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         token, _ = Token.objects.get_or_create(user=experiment.user)

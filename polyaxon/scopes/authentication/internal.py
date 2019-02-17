@@ -14,7 +14,9 @@ from scopes.authentication.base import PolyaxonAuthentication
 
 
 class InternalUser(object):
-    def __init__(self):
+    def __init__(self, service):
+        if service not in InternalServices.VALUES:
+            raise ValueError('Received a non recognized internal service.')
         self.username = 'internal_user'
         self.pk = -1
         self.id = -1
@@ -23,6 +25,7 @@ class InternalUser(object):
         self.is_authenticated = True
         self.is_staff = False
         self.is_superuser = False
+        self.service = service
 
     @property
     def access_token(self) -> str:
@@ -96,11 +99,12 @@ class InternalAuthentication(PolyaxonAuthentication):
             msg = 'Invalid token header. Token string should not contain invalid characters.'
             raise exceptions.AuthenticationFailed(msg)
 
-        return self.authenticate_credentials(token)
+        return self.authenticate_credentials(internal_service, token)
 
     def authenticate_credentials(self,  # pylint:disable=arguments-differ
+                                 service: str,
                                  key: str) -> Optional[Tuple['InternalUser', None]]:
-        internal_user = InternalUser()
+        internal_user = InternalUser(service=service)
         if internal_user.access_token != key:
             raise exceptions.AuthenticationFailed('Invalid token.')
 
