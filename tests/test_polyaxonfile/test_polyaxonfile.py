@@ -282,6 +282,10 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.eval.data_pipeline, TFRecordImagePipelineConfig)
         assert spec.eval.data_pipeline.feature_processors is None
 
+    def test_wrong_grid_matrix_file_passes(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/wrong_grid_matrix_file.yml'))
+
     def test_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
         spec = plxfile.specification

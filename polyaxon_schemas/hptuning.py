@@ -340,7 +340,13 @@ class HPTuningSchema(BaseSchema):
     @validates_schema
     def validate_matrix(self, data):
         """Validates matrix data and creates the config objects"""
-        is_grid_search = data.get('grid_search') is not None
+        is_grid_search = (
+            data.get('grid_search') is not None or
+            (data.get('grid_search') is None and
+             data.get('random_search') is None and
+             data.get('hyperband') is None and
+             data.get('bo') is None)
+        )
         is_bo = data.get('bo') is not None
         validate_matrix(data.get('matrix'), is_grid_search=is_grid_search, is_bo=is_bo)
 
