@@ -3,8 +3,8 @@ import argparse
 from polyaxon_client.client import PolyaxonClient
 
 
-def create_experiment_auth_context(entity_name: str):
-    parts = entity_name.split('.')
+def create_experiment_auth_context(experiment_name: str):
+    parts = experiment_name.split('.')
     client = PolyaxonClient()
     client.auth.login_experiment_impersonate_token(username=parts[0],
                                                    project_name=parts[1],
@@ -12,8 +12,8 @@ def create_experiment_auth_context(entity_name: str):
                                                    internal_token=client.api_config.token)
 
 
-def create_job_auth_context(entity_name: str):
-    parts = entity_name.split('.')
+def create_job_auth_context(job_name: str):
+    parts = job_name.split('.')
     client = PolyaxonClient()
     client.auth.login_job_impersonate_token(username=parts[0],
                                             project_name=parts[1],
@@ -40,9 +40,9 @@ if __name__ == '__main__':
     entity_name = arguments.pop('entity_name')
 
     if entity == 'experiment':
-        create_experiment_auth_context(entity_name=entity_name)
+        create_experiment_auth_context(experiment_name=entity_name)
     elif entity == 'job':
-        create_job_auth_context(entity_name=entity_name)
+        create_job_auth_context(job_name=entity_name)
     # elif entity == 'notebook':
     #     create_notebook_auth_context(username=username,
     #                                  project_name=project_name,
