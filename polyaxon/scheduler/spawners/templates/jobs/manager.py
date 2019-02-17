@@ -9,7 +9,8 @@ import stores
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
-from scheduler.spawners.templates.init_containers import InitCommands, get_output_args
+from scheduler.spawners.templates.init_containers import InitCommands, get_output_args, \
+    get_auth_context_args
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -131,21 +132,26 @@ class ResourceManager(BaseResourceManager):
                            persistence_outputs,
                            persistence_data):
         """Pod init container for setting outputs path."""
+        env_vars = to_list(env_vars, check_none=True)
         outputs_path = stores.get_job_outputs_path(
             persistence=persistence_outputs,
             job_name=self.job_name)
         _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
+        volume_mounts = outputs_volume_mount + to_list(context_mounts, check_none=True)
         init_command = init_command or ["/bin/sh", "-c"]
         init_args = init_args or to_list(
             get_output_args(command=InitCommands.CREATE,
                             outputs_path=outputs_path))
+        init_args += to_list(get_auth_context_args(entity='job',
+                                                   entity_name=self.job_name))
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,
             image_pull_policy=self.init_docker_image_pull_policy,
             command=init_command,
-            args=init_args,
-            volume_mounts=outputs_volume_mount)
+            args=';'.join(init_args),
+            env=env_vars,
+            volume_mounts=volume_mounts)
 
     def _get_node_selector(self, node_selector):
         return get_node_selector(

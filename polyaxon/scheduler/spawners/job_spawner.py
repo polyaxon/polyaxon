@@ -1,15 +1,19 @@
+from hestia.auth import AuthenticationTypes
+from hestia.internal_services import InternalServices
+
 from constants.k8s_jobs import JOB_NAME
 from libs.unique_urls import get_job_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
-from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
+from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs, \
+    get_internal_env_vars
 from scheduler.spawners.templates.jobs import manager
 from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
-    get_shm_volumes
-)
+    get_shm_volumes,
+    get_auth_context_volumes)
 
 
 class JobSpawner(K8SManager):
@@ -60,6 +64,13 @@ class JobSpawner(K8SManager):
     def get_pod_command_args(self):
         return get_pod_command_args(run_config=self.spec.run)
 
+    def get_init_env_vars(self):
+        env_vars = get_internal_env_vars(service_internal_header=InternalServices.INITIALIZER,
+                                         namespace=self.namespace,
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
+                                         include_internal_token=True)
+        return env_vars
+
     def start_job(self,
                   persistence_outputs=None,
                   persistence_data=None,
@@ -86,6 +97,10 @@ class JobSpawner(K8SManager):
         volumes += shm_volumes
         volume_mounts += shm_volume_mounts
 
+        context_volumes, context_mounts = get_auth_context_volumes()
+        volumes += context_volumes
+        volume_mounts += context_mounts
+
         # Validate secret and configmap refs
         secret_refs = validate_secret_refs(self.spec.secret_refs)
         configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
@@ -100,6 +115,7 @@ class JobSpawner(K8SManager):
             env_vars=None,
             command=command,
             args=args,
+            init_env_vars=self.get_init_env_vars(),
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
@@ -111,6 +127,7 @@ class JobSpawner(K8SManager):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
+            init_context_mounts=context_mounts,
             restart_policy='Never')
         pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
 

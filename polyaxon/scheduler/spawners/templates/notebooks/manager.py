@@ -1,11 +1,15 @@
 import json
 
+from hestia.list_utils import to_list
+from kubernetes import client
+
 import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
+from scheduler.spawners.templates.init_containers import get_auth_context_args
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -126,7 +130,18 @@ class ResourceManager(BaseResourceManager):
                            persistence_outputs,
                            persistence_data):
         """Pod init container for setting outputs path."""
-        return None
+        env_vars = to_list(env_vars, check_none=True)
+        volume_mounts = to_list(context_mounts, check_none=True)
+        init_command = init_command or ["/bin/sh", "-c"]
+        init_args = get_auth_context_args(entity='notebook', entity_name=self.job_name)
+        return client.V1Container(
+            name=self.init_container_name,
+            image=self.init_docker_image,
+            image_pull_policy=self.init_docker_image_pull_policy,
+            command=init_command,
+            args=init_args,
+            env=env_vars,
+            volume_mounts=volume_mounts)
 
     def _get_node_selector(self, node_selector):
         return get_node_selector(
