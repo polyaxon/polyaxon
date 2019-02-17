@@ -169,7 +169,7 @@ class DockerizerSpawner(K8SManager):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
-            context_mounts=context_mounts,
+            init_context_mounts=context_mounts,
             restart_policy='Never')
 
         pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
