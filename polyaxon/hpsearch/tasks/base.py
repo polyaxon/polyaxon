@@ -1,9 +1,14 @@
+import traceback
+
 from hestia.np_utils import sanitize_np_types
+from rest_framework.exceptions import ValidationError
 
 import conf
+from constants.experiment_groups import ExperimentGroupLifeCycle
 
 from db.models.experiments import Experiment
 from db.redis.group_check import GroupChecks
+from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.tasks.logger import logger
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -31,12 +36,20 @@ def create_group_experiments(experiment_group, suggestions):
     experiments = []
     for suggestion in suggestions:
         # We need to check if we should create or restart
-        experiment = Experiment.objects.create(
-            project_id=experiment_group.project_id,
-            user_id=experiment_group.user_id,
-            experiment_group=experiment_group,
-            config=specification.get_experiment_spec(matrix_declaration=suggestion).parsed_data,
-            code_reference_id=experiment_group.code_reference_id)
+        try:
+            experiment = Experiment.objects.create(
+                project_id=experiment_group.project_id,
+                user_id=experiment_group.user_id,
+                experiment_group=experiment_group,
+                config=specification.get_experiment_spec(matrix_declaration=suggestion).parsed_data,
+                code_reference_id=experiment_group.code_reference_id)
+        except ValidationError:
+            experiment_group.set_status(
+                ExperimentGroupLifeCycle.FAILED,
+                message='Experiment group could not create experiments, '
+                        'encountered a validation error.',
+                traceback=traceback.format_exc())
+            raise ExperimentGroupException()
         experiments.append(experiment)
 
     return experiments

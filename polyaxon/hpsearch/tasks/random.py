@@ -2,6 +2,7 @@ import conf
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group
+from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.tasks import base
 from hpsearch.tasks.logger import logger
 from polyaxon.celery_api import celery_app
@@ -48,8 +49,12 @@ def hp_random_search_create_experiments(experiment_group_id, suggestions):
     if not experiment_group:
         return
 
-    experiments = base.create_group_experiments(experiment_group=experiment_group,
-                                                suggestions=suggestions)
+    try:
+        experiments = base.create_group_experiments(experiment_group=experiment_group,
+                                                    suggestions=suggestions)
+    except ExperimentGroupException:  # The experiments will be stopped
+        return
+
     experiment_group.iteration_manager.add_iteration_experiments(
         experiment_ids=[xp.id for xp in experiments])
 
