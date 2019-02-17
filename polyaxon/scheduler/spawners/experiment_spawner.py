@@ -112,7 +112,8 @@ class ExperimentSpawner(K8SManager):
     def get_init_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.INITIALIZER,
                                          namespace=self.namespace,
-                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
+                                         include_internal_token=True)
         return env_vars
 
     def _create_job(self,

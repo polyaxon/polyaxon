@@ -91,7 +91,8 @@ class DockerizerSpawner(K8SManager):
     def get_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
                                          namespace=self.namespace,
-                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
+                                         include_internal_token=True)
         if conf.get('REGISTRY_PASSWORD') and conf.get('REGISTRY_USER'):
             env_vars += [
                 get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get('REGISTRY_USER')),
@@ -109,7 +110,8 @@ class DockerizerSpawner(K8SManager):
     def get_init_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
                                          namespace=self.namespace,
-                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
+                                         include_internal_token=True)
         # Add containers env vars
         env_vars += [
             get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),

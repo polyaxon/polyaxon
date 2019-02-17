@@ -11,7 +11,8 @@ from scheduler.spawners.templates.env_vars import get_env_var, get_internal_env_
 def get_sidecar_env_vars(namespace, resource_name, job_container_name, internal_health_check_url):
     env_vars = get_internal_env_vars(namespace=namespace,
                                      service_internal_header=InternalServices.SIDECAR,
-                                     authentication_type=AuthenticationTypes.INTERNAL_TOKEN)
+                                     authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
+                                     include_internal_token=True)
     return env_vars + [
         get_env_var(name='POLYAXON_POD_ID', value=resource_name),
         get_env_var(name='POLYAXON_CONTAINER_ID', value=job_container_name),
