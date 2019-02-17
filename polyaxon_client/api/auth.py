@@ -101,7 +101,7 @@ class AuthApi(BaseApiHandler):
                                      project_name,
                                      'experiments',
                                      experiment_id,
-                                     'token')
+                                     'ephemeraltoken')
         try:
             response = self.transport.post(
                 request_url,

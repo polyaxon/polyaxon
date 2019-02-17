@@ -76,7 +76,7 @@ class TestAuthApi(TestBaseApi):
                 'project',
                 'experiments',
                 '1',
-                'token'
+                'ephemeraltoken'
             ),
             body=json.dumps({'token': token}),
             content_type='application/json', status=200)
