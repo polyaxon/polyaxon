@@ -1,3 +1,5 @@
+import json
+
 from hestia.list_utils import to_list
 from kubernetes import client
 
@@ -5,6 +7,8 @@ import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
+from scheduler.spawners.templates import constants
+from scheduler.spawners.templates.env_vars import get_env_var
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -97,7 +101,10 @@ class ResourceManager(BaseResourceManager):
                                     outputs_refs_jobs,
                                     outputs_refs_experiments,
                                     ephemeral_token):
-        return []
+        return [
+            get_env_var(name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME,
+                        value=json.dumps(self.labels)),
+        ]
 
     def get_init_container(self,
                            init_command,
@@ -108,6 +115,10 @@ class ResourceManager(BaseResourceManager):
                            persistence_data):
         """Pod init container for setting outputs path."""
         env_vars = to_list(env_vars, check_none=True)
+        env_vars += [
+            get_env_var(name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME,
+                        value=json.dumps(self.labels)),
+        ]
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,
