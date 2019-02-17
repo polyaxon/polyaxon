@@ -157,7 +157,10 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer, NamesMixin):
 
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data, query=ExperimentGroup.all)
-        return super().create(validated_data)
+        try:
+            return super().create(validated_data)
+        except Exception as e:
+            raise ValidationError(e)
 
 
 class ExperimentGroupChartViewSerializer(serializers.ModelSerializer):

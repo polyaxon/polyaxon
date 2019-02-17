@@ -281,7 +281,10 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
 
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data, query=Experiment.all)
-        return super().create(validated_data)
+        try:
+            return super().create(validated_data)
+        except Exception as e:
+            raise ValidationError(e)
 
     def validate(self, attrs):
         if self.initial_data.get('check_specification') and not attrs.get('config'):

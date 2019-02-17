@@ -1,4 +1,5 @@
 from rest_framework import fields, serializers
+from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
@@ -134,4 +135,7 @@ class JobCreateSerializer(serializers.ModelSerializer,
 
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data, query=Job.all)
-        return super().create(validated_data)
+        try:
+            return super().create(validated_data)
+        except Exception as e:
+            raise ValidationError(e)
