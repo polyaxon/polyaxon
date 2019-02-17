@@ -56,6 +56,9 @@ def get_failed_status(job_container_status):
     job_container_status_terminated = job_container_status['state'][
         container_statuses.TERMINATED]
 
+    if not job_container_status:
+        return pod_statuses.FAILED, None
+
     if job_container_status_terminated['reason'] == 'Error':
         return pod_statuses.FAILED, 'exist-code({})-message({})'.format(
             job_container_status_terminated['exit_code'],
