@@ -9,6 +9,8 @@ logging:
   level: INFO
 
 hptuning:
+  random_search:
+    n_experiments: 5
   matrix:
     learning_rate:
       normal: [0, 0.9]
