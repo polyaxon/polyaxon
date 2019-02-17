@@ -64,6 +64,8 @@ class LastStatusMixin(object):
 
     @property
     def last_status(self) -> Optional[str]:
+        if not hasattr(self, 'status'):
+            return None
         return self.status.status if self.status else None
 
     @property
