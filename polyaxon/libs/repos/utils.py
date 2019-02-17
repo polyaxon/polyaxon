@@ -3,7 +3,6 @@ from typing import Optional, Union
 from django.core.exceptions import ObjectDoesNotExist
 
 from db.models.repos import CodeReference
-from libs.repos import git
 
 
 def _get_repo_code_reference(repo: 'Repo', commit: str = None) -> Optional['CodeReference']:
@@ -27,6 +26,7 @@ def _get_repo_code_reference(repo: 'Repo', commit: str = None) -> Optional['Code
 
 def _get_external_repo_code_reference(repo: 'ExternalRepo',
                                       commit: str = None) -> Optional['CodeReference']:
+    from libs.repos import git
 
     def get_or_create(ref):
         code_references = CodeReference.objects.filter(external_repo=repo,

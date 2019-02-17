@@ -37,7 +37,10 @@ def experiment_pre_save(sender, **kwargs):
     if not instance.specification or not instance.specification.build:
         return
 
-    assign_code_reference(instance)
+    if instance.is_independent:
+        assign_code_reference(instance)
+    else:
+        instance.code_reference = instance.experiment_group.code_reference
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_post_save")
