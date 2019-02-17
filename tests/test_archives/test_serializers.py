@@ -2,10 +2,10 @@ import pytest
 
 from api.archives.serializers import (
     ArchivedBuildJobSerializer,
-    ArchivedExperimentSerializer,
     ArchivedExperimentGroupSerializer,
+    ArchivedExperimentSerializer,
     ArchivedJobSerializer,
-    ArchivedProjectSerializer,
+    ArchivedProjectSerializer
 )
 from api.build_jobs.serializers import BookmarkedBuildJobSerializer
 from api.experiment_groups.serializers import BookmarkedExperimentGroupSerializer

@@ -4,10 +4,10 @@ from rest_framework import status
 
 from api.archives.serializers import (
     ArchivedBuildJobSerializer,
-    ArchivedExperimentSerializer,
     ArchivedExperimentGroupSerializer,
+    ArchivedExperimentSerializer,
     ArchivedJobSerializer,
-    ArchivedProjectSerializer,
+    ArchivedProjectSerializer
 )
 from constants.urls import API_V1
 from db.models.build_jobs import BuildJob

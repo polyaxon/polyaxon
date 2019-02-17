@@ -8,7 +8,7 @@ from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resource
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
-from scheduler.spawners.templates.tpu import requests_tpu, get_tpu_annotations
+from scheduler.spawners.templates.tpu import get_tpu_annotations, requests_tpu
 from schemas.exceptions import PolyaxonConfigurationError
 
 

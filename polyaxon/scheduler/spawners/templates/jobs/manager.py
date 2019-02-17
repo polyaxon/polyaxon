@@ -9,8 +9,11 @@ import stores
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
-from scheduler.spawners.templates.init_containers import InitCommands, get_output_args, \
-    get_auth_context_args
+from scheduler.spawners.templates.init_containers import (
+    InitCommands,
+    get_auth_context_args,
+    get_output_args
+)
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,

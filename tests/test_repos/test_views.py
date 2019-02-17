@@ -4,12 +4,12 @@ import os
 from unittest.mock import patch
 
 import pytest
-from django.test import override_settings
 
 from rest_framework import status
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import override_settings
 from django.test.client import MULTIPART_CONTENT
 
 import conf

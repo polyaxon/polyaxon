@@ -1,7 +1,9 @@
 import json
 import random
 
+from hestia.auth import AuthenticationTypes
 from hestia.crypto import get_hmac
+from hestia.internal_services import InternalServices
 
 import conf
 
@@ -11,15 +13,16 @@ from libs.unique_urls import get_notebook_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
-from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
+from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs, \
+    get_internal_env_vars
 from scheduler.spawners.templates.notebooks import manager
 from scheduler.spawners.templates.volumes import (
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
     get_shm_volumes,
     get_volume,
-    get_volume_mount
-)
+    get_volume_mount,
+    get_auth_context_volumes)
 
 
 class NotebookSpawner(ProjectJobSpawner):
@@ -125,6 +128,13 @@ class NotebookSpawner(ProjectJobSpawner):
                 base_url=notebook_url,
                 notebook_dir=notebook_dir)]
 
+    def get_init_env_vars(self):
+        env_vars = get_internal_env_vars(service_internal_header=InternalServices.INITIALIZER,
+                                         namespace=self.namespace,
+                                         authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
+                                         include_internal_token=True)
+        return env_vars
+
     def start_notebook(self,
                        persistence_outputs=None,
                        persistence_data=None,
@@ -155,6 +165,10 @@ class NotebookSpawner(ProjectJobSpawner):
         volumes += shm_volumes
         volume_mounts += shm_volume_mounts
 
+        context_volumes, context_mounts = get_auth_context_volumes()
+        volumes += context_volumes
+        volume_mounts += context_mounts
+
         if mount_code_in_notebooks:
             code_volume, code_volume_mount = self.get_notebook_code_volume()
             volumes.append(code_volume)
@@ -176,6 +190,7 @@ class NotebookSpawner(ProjectJobSpawner):
             env_vars=None,
             command=command,
             args=args,
+            init_env_vars=self.get_init_env_vars(),
             persistence_outputs=persistence_outputs,
             persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
@@ -188,6 +203,7 @@ class NotebookSpawner(ProjectJobSpawner):
             affinity=affinity,
             tolerations=tolerations,
             ports=target_ports,
+            init_context_mounts=context_mounts,
             restart_policy=None)
         dep_resp, _ = self.create_or_update_deployment(name=resource_name,
                                                        data=deployment)

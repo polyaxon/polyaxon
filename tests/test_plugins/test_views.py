@@ -3,9 +3,10 @@ from unittest.mock import patch
 
 import mock
 import pytest
-from django.test import override_settings
 
 from rest_framework import status
+
+from django.test import override_settings
 
 from api.plugins.serializers import ProjectTensorboardJobSerializer
 from api.utils.views.protected import ProtectedView
