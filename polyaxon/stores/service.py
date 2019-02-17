@@ -111,9 +111,12 @@ class StoresService(Service):
 
     @classmethod
     def delete_outputs_path(cls, subpath, persistence):
-        outputs_path = cls.get_outputs_path(persistence=persistence)
+        from stores.validators import validate_persistence_outputs
+
+        persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence)
+        outputs_path = cls.get_outputs_path(persistence=persistence_outputs)
         path = os.path.join(outputs_path, subpath)
-        store = cls.get_outputs_store(persistence_outputs=persistence)
+        store = cls.get_outputs_store(persistence_outputs=persistence_outputs)
         store.delete(path)
 
     @staticmethod
