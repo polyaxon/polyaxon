@@ -185,6 +185,7 @@ class ResourceManager(BaseResourceManager):
             persistence=persistence_outputs,
             experiment_name=self.experiment_name)
         _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
+        volume_mounts = outputs_volume_mount + to_list(context_mounts, check_none=True)
         init_command = init_command or ["/bin/sh", "-c"]
         init_args = init_args or to_list(
             get_output_args(command=command,
@@ -200,7 +201,7 @@ class ResourceManager(BaseResourceManager):
                 command=init_command,
                 args=init_args,
                 env=env_vars,
-                volume_mounts=outputs_volume_mount)
+                volume_mounts=volume_mounts)
         ]
 
     def _get_node_selector(self, node_selector):
