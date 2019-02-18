@@ -869,9 +869,7 @@ class ExperimentImpersonateTokenView(ExperimentEndpoint, PostEndpoint):
     def post(self, request, *args, **kwargs):
         experiment = self.get_object()
 
-        if experiment.last_status not in [ExperimentLifeCycle.SCHEDULED,
-                                          ExperimentLifeCycle.STARTING,
-                                          ExperimentLifeCycle.RUNNING]:
+        if not ExperimentLifeCycle.is_stoppable(experiment.last_status):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         token, _ = Token.objects.get_or_create(user=experiment.user)

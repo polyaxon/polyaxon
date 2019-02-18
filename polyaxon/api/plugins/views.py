@@ -18,9 +18,11 @@ from api.plugins.serializers import (
 )
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
+from constants.jobs import JobLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.tensorboards import TensorboardJob
+from db.models.tokens import Token
 from event_manager.events.notebook import (
     NOTEBOOK_STARTED_TRIGGERED,
     NOTEBOOK_STOPPED_TRIGGERED,
@@ -36,6 +38,8 @@ from libs.repos import git
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.specifications import TensorboardSpecification
+from scopes.authentication.internal import InternalAuthentication
+from scopes.permissions.internal import IsInitializer
 
 
 class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
@@ -341,3 +345,19 @@ class ProjectTensorboardListView(ProjectResourceListEndpoint,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
         return super().filter_queryset(queryset=queryset)
+
+
+class NotebookImpersonateTokenView(ProjectEndpoint, PostEndpoint):
+    """Impersonate a user and return user's token."""
+    authentication_classes = [InternalAuthentication, ]
+    permission_classes = (IsInitializer,)
+    throttle_scope = 'impersonate'
+
+    def post(self, request, *args, **kwargs):
+        project = self.project
+
+        if not project.has_notebook or not JobLifeCycle.is_stoppable(project.notebook.last_status):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        token, _ = Token.objects.get_or_create(user=project.user)
+        return Response({'token': token.key}, status=status.HTTP_200_OK)

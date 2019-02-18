@@ -31,6 +31,8 @@ projects_urlpatterns = [
             views.StartNotebookView.as_view()),
     re_path(r'^{}/{}/notebook/stop/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.StopNotebookView.as_view()),
+    re_path(r'^{}/{}/notebook/imporsonatetoken/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            views.NotebookImpersonateTokenView.as_view()),
 ]
 
 # Order is important, because the patterns could swallow other urls

@@ -8,6 +8,7 @@ from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
+from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseViewTest, InternalClient
 
@@ -24,7 +25,8 @@ class TestBaseImpersonateTokenViewV1(BaseViewTest):
         super().setUp()
         self.auth_user = self.auth_client.user
         self.project = ProjectFactory(user=self.auth_client.user)
-        self.object = self.factory_class(project=self.project)  # pylint:disable=not-callable
+        self.object = self.factory_class(project=self.project,  # pylint:disable=not-callable
+                                         user=self.auth_client.user)
         self.url = self.get_url()
 
     def get_url(self):
@@ -83,6 +85,19 @@ class TestJobImpersonateTokenViewV1(TestBaseImpersonateTokenViewV1):
 
     def get_url(self):
         return '/{}/{}/{}/jobs/{}/imporsonatetoken'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name,
+            self.object.id)
+
+
+@pytest.mark.impersonatetokens_mark
+class TestNotebookImpersonateTokenViewV1(TestBaseImpersonateTokenViewV1):
+    factory_class = NotebookJobFactory
+    LIFE_CYCLE = JobLifeCycle
+
+    def get_url(self):
+        return '/{}/{}/{}/notebook/imporsonatetoken'.format(
             API_V1,
             self.project.user.username,
             self.project.name,

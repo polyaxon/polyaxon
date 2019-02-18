@@ -428,11 +428,10 @@ class JobImpersonateTokenView(JobEndpoint, PostEndpoint):
     lookup_url_kwarg = 'job_id'
 
     def post(self, request, *args, **kwargs):
-        experiment = self.get_object()
+        job = self.get_object()
 
-        if experiment.last_status not in [JobLifeCycle.SCHEDULED,
-                                          JobLifeCycle.RUNNING]:
+        if not JobLifeCycle.is_stoppable(job.last_status):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        token, _ = Token.objects.get_or_create(user=experiment.user)
+        token, _ = Token.objects.get_or_create(user=job.user)
         return Response({'token': token.key}, status=status.HTTP_200_OK)
