@@ -1,4 +1,4 @@
 -r requirements-base.txt
 
--e git+https://github.com/polyaxon/polyaxon-client.git@2a08bd7d822a7931b2224d452a347634c945cc15#egg=polyaxon-client==0.3.8
--e git+https://github.com/polyaxon/polyaxon-schemas.git@0aa45054581574df3da70836ff33634ef28c72e6#egg=polyaxon-schemas==0.3.8
+-e git+https://github.com/polyaxon/polyaxon-client.git@861f62ef59b747889f61cb0146b99593a8babe31#egg=polyaxon-client==0.3.8
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@13adc75e94fabce283d30e5453729680300055e2#egg=polyaxon-schemas==0.3.8
