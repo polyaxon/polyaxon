@@ -23,7 +23,7 @@ class Job(BaseTracker):
         if settings.NO_OP:
             return
 
-        if project is None and settings.IN_CLUSTER:
+        if project is None and settings.IN_CLUSTER and not self.is_notebook_job:
             job_info = self.get_job_info()
             project = job_info['project_name']
             job_id = job_info['job_name'].split('.')[-1]

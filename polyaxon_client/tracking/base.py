@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import atexit
+import json
+import os
 import sys
 import time
 
@@ -9,6 +11,7 @@ from polystores.stores.manager import StoreManager
 
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_client.tracking.in_cluster import ensure_in_custer
 from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.project import get_project_info
 
@@ -28,6 +31,9 @@ class BaseTracker(object):
 
         if not settings.IN_CLUSTER and project is None:
             raise PolyaxonClientException('Please provide a valid project.')
+        elif self.is_notebook_job:
+            job_info = self.get_notebook_job_info()
+            project = job_info['project_name']
 
         self.last_status = None
         self.client = client or PolyaxonClient()
@@ -51,6 +57,29 @@ class BaseTracker(object):
         # Setup the outputs store
         if outputs_store is None and settings.IN_CLUSTER and self.REQUIRES_OUTPUTS:
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
+
+    def get_notebook_job_info(self):
+        if settings.NO_OP:
+            return None
+
+        ensure_in_custer()
+
+        info = os.getenv('POLYAXON_NOTEBOOK_INFO', None)
+        try:
+            return json.loads(info) if info else None
+        except (ValueError, TypeError):
+            print('Could get experiment info, '
+                  'please make sure this is running inside a polyaxon job.')
+            return None
+
+    @property
+    def is_notebook_job(self):
+        if settings.NO_OP:
+            return None
+
+        ensure_in_custer()
+
+        return 'POLYAXON_NOTEBOOK_INFO' in os.environ
 
     def get_data(self):
         raise NotImplementedError

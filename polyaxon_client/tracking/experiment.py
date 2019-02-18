@@ -32,7 +32,7 @@ class Experiment(BaseTracker):
         if settings.NO_OP:
             return
 
-        if project is None and settings.IN_CLUSTER:
+        if project is None and settings.IN_CLUSTER and not self.is_notebook_job:
             experiment_info = self.get_experiment_info()
             project = experiment_info['project_name']
             experiment_id = experiment_info['experiment_name'].split('.')[-1]
@@ -67,7 +67,7 @@ class Experiment(BaseTracker):
             self._set_health_url()
 
         # Track run env
-        if settings.IN_CLUSTER and self.track_env:
+        if settings.IN_CLUSTER and self.track_env and not self.is_notebook_job:
             self.log_run_env()
 
     def get_data(self):
