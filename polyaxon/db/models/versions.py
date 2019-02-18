@@ -82,13 +82,13 @@ class PlatformVersion(BaseValidationVersion):
     def get_min_version(cls):
         import conf
 
-        return conf.get('PLATFORM_LATEST_VERSION')
+        return conf.get('PLATFORM_MIN_VERSION')
 
     @classmethod
     def get_latest_version(cls):
         import conf
 
-        return conf.get('PLATFORM_MIN_VERSION')
+        return conf.get('PLATFORM_LATEST_VERSION')
 
 
 class LibVersion(BaseValidationVersion):
@@ -104,13 +104,13 @@ class LibVersion(BaseValidationVersion):
     def get_min_version(cls):
         import conf
 
-        return conf.get('LIB_LATEST_VERSION')
+        return conf.get('LIB_MIN_VERSION')
 
     @classmethod
     def get_latest_version(cls):
         import conf
 
-        return conf.get('LIB_MIN_VERSION')
+        return conf.get('LIB_LATEST_VERSION')
 
 
 class ChartVersion(Singleton):
