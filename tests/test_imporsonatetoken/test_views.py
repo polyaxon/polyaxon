@@ -100,8 +100,7 @@ class TestNotebookImpersonateTokenViewV1(TestBaseImpersonateTokenViewV1):
         return '/{}/{}/{}/notebook/imporsonatetoken'.format(
             API_V1,
             self.project.user.username,
-            self.project.name,
-            self.object.id)
+            self.project.name)
 
 
 del TestBaseImpersonateTokenViewV1
