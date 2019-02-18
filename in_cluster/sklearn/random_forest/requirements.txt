@@ -1,4 +1,4 @@
 scipy==1.1.0
 numpy==1.15.4
 scikit-learn==0.20.1
-polyaxon-client==0.3.8
+polyaxon-client==0.3.9
