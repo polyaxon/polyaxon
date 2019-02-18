@@ -118,7 +118,7 @@ class ResourceManager(BaseResourceManager):
             ephemeral_token=ephemeral_token,
         )
         return env_vars + [
-            get_env_var(name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME,
+            get_env_var(name=constants.CONFIG_MAP_NOTEBOOK_INFO_KEY_NAME,
                         value=json.dumps(self.labels)),
         ]
 
