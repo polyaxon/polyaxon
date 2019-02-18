@@ -7,10 +7,10 @@ import auditor
 
 from api.archives.serializers import (
     ArchivedBuildJobSerializer,
-    ArchivedExperimentSerializer,
     ArchivedExperimentGroupSerializer,
+    ArchivedExperimentSerializer,
     ArchivedJobSerializer,
-    ArchivedProjectSerializer,
+    ArchivedProjectSerializer
 )
 from api.endpoint.base import BaseEndpoint, ListEndpoint
 from api.filters import OrderingFilter
@@ -21,11 +21,11 @@ from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.projects import Project
 from event_manager.events.archive import (
-    ARCHIVE_JOBS_VIEWED,
-    ARCHIVE_EXPERIMENTS_VIEWED,
-    ARCHIVE_EXPERIMENT_GROUPS_VIEWED,
-    ARCHIVE_PROJECTS_VIEWED,
     ARCHIVE_BUILD_JOBS_VIEWED,
+    ARCHIVE_EXPERIMENT_GROUPS_VIEWED,
+    ARCHIVE_EXPERIMENTS_VIEWED,
+    ARCHIVE_JOBS_VIEWED,
+    ARCHIVE_PROJECTS_VIEWED
 )
 
 

@@ -8,9 +8,9 @@ from django.dispatch import receiver
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from libs.repos.utils import assign_code_reference
+from schemas.build_backends import BuildBackend
 from signals.names import set_name
 from signals.tags import set_tags
-from schemas.build_backends import BuildBackend
 
 _logger = logging.getLogger('polyaxon.signals.build_jobs')
 

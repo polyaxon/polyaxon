@@ -11,8 +11,11 @@ from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.cloning_strategies import CloningStrategy
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
-from scheduler.spawners.templates.init_containers import InitCommands, get_output_args, \
-    get_auth_context_args
+from scheduler.spawners.templates.init_containers import (
+    InitCommands,
+    get_auth_context_args,
+    get_output_args
+)
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
@@ -199,7 +202,7 @@ class ResourceManager(BaseResourceManager):
                 image=self.init_docker_image,
                 image_pull_policy=self.init_docker_image_pull_policy,
                 command=init_command,
-                args=';'.join(init_args),
+                args=[''.join(init_args)],
                 env=env_vars,
                 volume_mounts=volume_mounts)
         ]

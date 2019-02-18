@@ -4,8 +4,8 @@ from hestia.np_utils import sanitize_np_types
 from rest_framework.exceptions import ValidationError
 
 import conf
-from constants.experiment_groups import ExperimentGroupLifeCycle
 
+from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.models.experiments import Experiment
 from db.redis.group_check import GroupChecks
 from hpsearch.exceptions import ExperimentGroupException

@@ -133,7 +133,7 @@ class ResourceManager(BaseResourceManager):
         env_vars = to_list(env_vars, check_none=True)
         volume_mounts = to_list(context_mounts, check_none=True)
         init_command = init_command or ["/bin/sh", "-c"]
-        init_args = get_auth_context_args(entity='notebook', entity_name=self.job_name)
+        init_args = to_list(get_auth_context_args(entity='notebook', entity_name=self.job_name))
         return client.V1Container(
             name=self.init_container_name,
             image=self.init_docker_image,

@@ -152,7 +152,7 @@ class ResourceManager(BaseResourceManager):
             image=self.init_docker_image,
             image_pull_policy=self.init_docker_image_pull_policy,
             command=init_command,
-            args=';'.join(init_args),
+            args=[''.join(init_args)],
             env=env_vars,
             volume_mounts=volume_mounts)
 

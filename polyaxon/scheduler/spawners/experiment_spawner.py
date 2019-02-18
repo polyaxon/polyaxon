@@ -6,15 +6,19 @@ from libs.unique_urls import get_experiment_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
-from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs, \
-    get_internal_env_vars
+from scheduler.spawners.templates.env_vars import (
+    get_internal_env_vars,
+    validate_configmap_refs,
+    validate_secret_refs
+)
 from scheduler.spawners.templates.experiment_jobs import config_maps, manager
 from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.volumes import (
+    get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
-    get_shm_volumes,
-    get_auth_context_volumes)
+    get_shm_volumes
+)
 from schemas.tasks import TaskType
 
 
