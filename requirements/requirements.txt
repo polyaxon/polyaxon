@@ -1,4 +1,4 @@
 -r requirements-base.txt
 
-polyaxon-client==0.3.8
-polyaxon-deploy==0.0.2
+polyaxon-client==0.3.9
+polyaxon-deploy==0.0.3
