@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 
+# noqa
+
 
 class NodeSelectorsSchema(BaseSchema):
     core = fields.Dict(allow_none=True)
