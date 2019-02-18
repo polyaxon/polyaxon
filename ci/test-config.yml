@@ -34,56 +34,42 @@ rabbitmq:
       cpu: 20m
 
 api:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 streams:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 scheduler:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 hpsearch:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 eventsHandlers:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 beat:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 crons:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
@@ -91,40 +77,22 @@ crons:
 
 eventMonitors:
   namespace:
-    imageTag: latest
-    imagePullPolicy: Always
     resources:
       requests:
         memory: 80Mi
         cpu: 30m
 
   statuses:
-    imageTag: latest
-    imagePullPolicy: Always
     resources:
       requests:
         memory: 80Mi
         cpu: 30m
 
 resourcesDaemon:
-  imageTag: latest
-  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
-
-sidecar:
-  imageTag: latest
-
-dockerizer:
-  imageTag: latest
-
-job:
-  imageTag: latest
-
-hooks:
-  imageTag: latest
 
 persistence:
   logs:
