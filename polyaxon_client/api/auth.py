@@ -192,3 +192,19 @@ class AuthApi(BaseApiHandler):
                                              internal_token=internal_token,
                                              set_token=set_token,
                                              persist_token=persist_token)
+
+    def login_notebook_impersonate_token(self,
+                                         username,
+                                         project_name,
+                                         internal_token,
+                                         set_token=True,
+                                         persist_token=True):
+        request_url = self.build_url(self._get_http_url('/'),
+                                     username,
+                                     project_name,
+                                     'notebook',
+                                     'imporsonatetoken')
+        return self._login_impersonate_token(request_url=request_url,
+                                             internal_token=internal_token,
+                                             set_token=set_token,
+                                             persist_token=persist_token)
