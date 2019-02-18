@@ -22,7 +22,7 @@ export default class Archives extends React.Component<Props, {}> {
       <div className="row">
         <div className="col-md-12">
           <Breadcrumb
-            icon="fa-star"
+            icon="fa-archive"
             links={[
               {name: this.props.user, value: getUserUrl(this.props.user)},
               {name: 'archives'}]}
