@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import ValidationError, fields, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import UUID, FloatOrStr, IntOrStr
+from polyaxon_schemas.utils import UUID, FloatOrStr, IntOrStr, NotebookBackend
 
 
 class TensorflowClusterSchema(BaseSchema):
@@ -751,6 +751,52 @@ class EnvironmentSchema(PodEnvironmentSchema):
     outputs = fields.Nested(OutputsSchema, allow_none=True)
     secret_refs = fields.List(fields.Str(), allow_none=True)
     configmap_refs = fields.List(fields.Str(), allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return EnvironmentConfig
+
+
+class EnvironmentConfig(PodEnvironmentConfig):
+    """
+    Environment config.
+
+    Args:
+        cluster_uuid: `str`. The cluster uuid.
+        persistence: `PersistenceConfig`. The persistence config definition.
+        outputs: `OutputsConfig`. The outputs config definition.
+        resources: `PodResourcesConfig`. The resources config definition.
+        node_selector: `dict`.
+        affinity: `dict`.
+        tolerations: `list(dict)`.
+    """
+    IDENTIFIER = 'environment'
+    SCHEMA = EnvironmentSchema
+
+    def __init__(self,
+                 cluster_uuid=None,
+                 persistence=None,
+                 outputs=None,
+                 resources=None,
+                 secret_refs=None,
+                 configmap_refs=None,
+                 node_selector=None,
+                 affinity=None,
+                 tolerations=None):
+        self.cluster_uuid = cluster_uuid
+        self.persistence = persistence
+        self.outputs = outputs
+        self.secret_refs = secret_refs
+        self.configmap_refs = configmap_refs
+        super(EnvironmentConfig, self).__init__(
+            resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+        )
+
+
+class ExperimentEnvironmentSchema(EnvironmentSchema):
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
     horovod = fields.Nested(HorovodSchema, allow_none=True)
     mxnet = fields.Nested(MXNetSchema, allow_none=True)
@@ -758,17 +804,17 @@ class EnvironmentSchema(PodEnvironmentSchema):
 
     @staticmethod
     def schema_config():
-        return EnvironmentConfig
+        return ExperimentEnvironmentConfig
 
     @validates_schema
-    def validate_quantity(self, data):
+    def validate_frameworks(self, data):
         validate_frameworks([data.get('tensorflow'),
                              data.get('mxnet'),
                              data.get('pytorch'),
                              data.get('horovod')])
 
 
-class EnvironmentConfig(PodEnvironmentConfig):
+class ExperimentEnvironmentConfig(EnvironmentConfig):
     """
     Environment config.
 
@@ -786,7 +832,7 @@ class EnvironmentConfig(PodEnvironmentConfig):
         mxnet: `MXNetConfig`.
     """
     IDENTIFIER = 'environment'
-    SCHEMA = EnvironmentSchema
+    SCHEMA = ExperimentEnvironmentSchema
 
     def __init__(self,
                  cluster_uuid=None,
@@ -802,13 +848,13 @@ class EnvironmentConfig(PodEnvironmentConfig):
                  horovod=None,
                  pytorch=None,
                  mxnet=None):
-        self.cluster_uuid = cluster_uuid
-        self.persistence = persistence
-        self.outputs = outputs
-        self.secret_refs = secret_refs
-        self.configmap_refs = configmap_refs
-        super(EnvironmentConfig, self).__init__(
+        super(ExperimentEnvironmentConfig, self).__init__(
+            cluster_uuid=cluster_uuid,
+            persistence=persistence,
+            outputs=outputs,
             resources=resources,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
@@ -818,3 +864,63 @@ class EnvironmentConfig(PodEnvironmentConfig):
         self.horovod = horovod
         self.pytorch = pytorch
         self.mxnet = mxnet
+
+
+def validate_notebook_backend(backend):
+    if backend and backend not in NotebookBackend.VALUES:
+        raise ValidationError('Notebook backend `{}` not supported'.format(backend))
+
+
+class NotebookEnvironmentSchema(EnvironmentSchema):
+    backend = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return NotebookEnvironmentConfig
+
+    @validates_schema
+    def validate_backend(self, data):
+        validate_notebook_backend(data.get('backend'))
+
+
+class NotebookEnvironmentConfig(EnvironmentConfig):
+    """
+    Environment config.
+
+    Args:
+        cluster_uuid: `str`. The cluster uuid.
+        persistence: `PersistenceConfig`. The persistence config definition.
+        outputs: `OutputsConfig`. The outputs config definition.
+        resources: `PodResourcesConfig`. The resources config definition.
+        node_selector: `dict`.
+        affinity: `dict`.
+        tolerations: `list(dict)`.
+        backend: `str`.
+    """
+    IDENTIFIER = 'environment'
+    SCHEMA = NotebookEnvironmentSchema
+
+    def __init__(self,
+                 cluster_uuid=None,
+                 persistence=None,
+                 outputs=None,
+                 resources=None,
+                 secret_refs=None,
+                 configmap_refs=None,
+                 node_selector=None,
+                 affinity=None,
+                 tolerations=None,
+                 backend=None):
+        super(NotebookEnvironmentConfig, self).__init__(
+            cluster_uuid=cluster_uuid,
+            persistence=persistence,
+            outputs=outputs,
+            resources=resources,
+            secret_refs=secret_refs,
+            configmap_refs=configmap_refs,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+        )
+        validate_notebook_backend(backend)
+        self.backend = backend

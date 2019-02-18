@@ -1401,6 +1401,48 @@ class TestPolyaxonfile(TestCase):
         assert spec.version == 1
         assert spec.is_notebook
         assert spec.is_notebook is True
+        assert spec.backend == 'notebook'
+        assert spec.logging is None
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
+        assert isinstance(spec.build, BuildConfig)
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.persistence.outputs == 'outputs1'
+        assert spec.persistence.data == ['data1', 'data2']
+        assert spec.secret_refs == ['secret1', 'secret2']
+        assert spec.configmap_refs == ['configmap1', 'configmap2']
+
+        node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
+        assert spec.environment.node_selector == node_selector
+        assert spec.node_selector == node_selector
+
+        resources = {
+            'cpu': {'requests': 1, 'limits': 2},
+            'memory': {'requests': 200, 'limits': 200},
+            'gpu': None,
+            'tpu': None
+        }
+        assert spec.environment.resources.to_dict() == resources
+        assert spec.resources.to_dict() == resources
+
+        affinity = {
+            'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}
+        }
+        assert spec.environment.affinity == affinity
+        assert spec.affinity == affinity
+
+        tolerations = [{'key': 'key', 'operator': 'Exists'}]
+
+        assert spec.environment.tolerations == tolerations
+        assert spec.tolerations == tolerations
+
+    def test_jupyter_lab_job_with_node_selectors(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/jupyterlab_with_custom_environment.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.is_notebook
+        assert spec.is_notebook is True
+        assert spec.backend == 'lab'
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)

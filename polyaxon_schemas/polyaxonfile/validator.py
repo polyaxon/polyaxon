@@ -55,7 +55,7 @@ def validate(spec, data):
             validate_keys(section=section, config=config, section_data=section_data)
             validated_data[section] = config.from_dict(section_data)
 
-    add_validated_section(spec.ENVIRONMENT, EnvironmentConfig)
+    add_validated_section(spec.ENVIRONMENT, spec.ENVIRONMENT_CONFIG)
     add_validated_section(spec.BUILD, BuildConfig)
     add_validated_section(spec.RUN, RunConfig)
     add_validated_section(spec.MODEL, ModelConfig)

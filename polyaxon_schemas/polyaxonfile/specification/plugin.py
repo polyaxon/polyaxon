@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.polyaxonfile.utils import cached_property
+
+from polyaxon_schemas.environments import NotebookEnvironmentConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
+from polyaxon_schemas.utils import NotebookBackend
 
 
 class NotebookSpecification(BuildSpecification):
@@ -17,6 +21,7 @@ class NotebookSpecification(BuildSpecification):
         BUILD: defines the build step where the user can set a docker image definition
     """
     _SPEC_KIND = BaseSpecification._NOTEBOOK  # pylint:disable=protected-access
+    ENVIRONMENT_CONFIG = NotebookEnvironmentConfig
 
     def _extra_validation(self):
         try:
@@ -24,6 +29,12 @@ class NotebookSpecification(BuildSpecification):
         except PolyaxonConfigurationError:
             raise PolyaxonConfigurationError(
                 'NotebookSpecification must contain a valid `build` section.')
+
+    @cached_property
+    def backend(self):
+        if not self.environment or not self.environment.backend:
+            return NotebookBackend.NOTEBOOK
+        return self.environment.backend
 
 
 class TensorboardSpecification(BuildSpecification):

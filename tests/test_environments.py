@@ -21,8 +21,8 @@ from polyaxon_schemas.environments import (
     SessionConfig,
     TensorflowClusterConfig,
     TensorflowConfig,
-    TFRunConfig
-)
+    TFRunConfig,
+    ExperimentEnvironmentConfig, NotebookEnvironmentConfig)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -494,13 +494,15 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add tensorflow
-        config_dict['tensorflow'] = {
-            'n_workers': 10,
-            'n_ps': 5,
+    def test_experiment_environment_config(self):
+        config_dict = {
+            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
+            'tensorflow': {
+                'n_workers': 10,
+                'n_ps': 5,
+            }
         }
-
-        config = EnvironmentConfig.from_dict(config_dict)
+        config = ExperimentEnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add mxnet should raise
@@ -510,11 +512,11 @@ class TestEnvironmentsConfigs(TestCase):
         }
 
         with self.assertRaises(ValidationError):
-            EnvironmentConfig.from_dict(config_dict)
+            ExperimentEnvironmentConfig.from_dict(config_dict)
 
         # Removing tensorflow should pass for mxnet
         del config_dict['tensorflow']
-        config = EnvironmentConfig.from_dict(config_dict)
+        config = ExperimentEnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding horovod should raise
@@ -523,11 +525,11 @@ class TestEnvironmentsConfigs(TestCase):
         }
 
         with self.assertRaises(ValidationError):
-            EnvironmentConfig.from_dict(config_dict)
+            ExperimentEnvironmentConfig.from_dict(config_dict)
 
         # Removing mxnet should pass for horovod
         del config_dict['mxnet']
-        config = EnvironmentConfig.from_dict(config_dict)
+        config = ExperimentEnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding pytorch should raise
@@ -536,9 +538,28 @@ class TestEnvironmentsConfigs(TestCase):
         }
 
         with self.assertRaises(ValidationError):
-            EnvironmentConfig.from_dict(config_dict)
+            ExperimentEnvironmentConfig.from_dict(config_dict)
 
         # Removing horovod should pass for pytorch
         del config_dict['horovod']
-        config = EnvironmentConfig.from_dict(config_dict)
+        config = ExperimentEnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
+
+    def test_notebook_environment_config(self):
+        config_dict = {
+            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
+        }
+        config = NotebookEnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        config_dict['backend'] = 'notebook'
+        config = NotebookEnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        config_dict['backend'] = 'lab'
+        config = NotebookEnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        config_dict['backend'] = 'foo'
+        with self.assertRaises(ValidationError):
+            NotebookEnvironmentConfig.from_dict(config_dict)

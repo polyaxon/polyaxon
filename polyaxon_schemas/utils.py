@@ -561,6 +561,13 @@ class BuildBackend(object):
     VALUES = [NATIVE, KANIKO]
 
 
+class NotebookBackend(object):
+    NOTEBOOK = 'notebook'
+    LAB = 'lab'
+
+    VALUES = [NOTEBOOK, LAB]
+
+
 class Frameworks(object):
     TENSORFLOW = 'tensorflow'
     MXNET = 'mxnet'

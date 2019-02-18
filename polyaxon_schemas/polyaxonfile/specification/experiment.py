@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.environments import ExperimentEnvironmentConfig
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,
@@ -34,6 +35,7 @@ class ExperimentSpecification(JobSpecification):
         JobSpecification.EVAL
     )
     REQUIRED_SECTIONS = BaseSpecification.REQUIRED_SECTIONS
+    ENVIRONMENT_CONFIG = ExperimentEnvironmentConfig
 
     @cached_property
     def is_runnable(self):
