@@ -23,6 +23,7 @@ from scheduler.spawners.templates.volumes import (
     get_volume,
     get_volume_mount,
     get_auth_context_volumes)
+from schemas.notebook_backend import NotebookBackend
 
 
 class NotebookSpawner(ProjectJobSpawner):
@@ -99,7 +100,12 @@ class NotebookSpawner(ProjectJobSpawner):
             port = random.randint(*conf.get('NOTEBOOK_PORT_RANGE'))
         return port
 
-    def get_notebook_args(self, deployment_name, ports, mount_code_in_notebooks=False):
+    def get_notebook_args(self,
+                          deployment_name,
+                          ports,
+                          mount_code_in_notebooks=False,
+                          backend=None):
+        backend = backend or NotebookBackend.NOTEBOOK
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
@@ -114,7 +120,7 @@ class NotebookSpawner(ProjectJobSpawner):
             notebook_dir = '.'
 
         return [
-            "jupyter notebook "
+            "jupyter {backend} "
             "--no-browser "
             "--port={port} "
             "--ip=0.0.0.0 "
@@ -123,6 +129,7 @@ class NotebookSpawner(ProjectJobSpawner):
             "--NotebookApp.trust_xheaders=True "
             "--NotebookApp.base_url={base_url} "
             "--NotebookApp.notebook_dir={notebook_dir} ".format(
+                backend=backend,
                 port=self.PORT,
                 token=notebook_token,
                 base_url=notebook_url,
@@ -146,6 +153,7 @@ class NotebookSpawner(ProjectJobSpawner):
                        node_selector=None,
                        affinity=None,
                        tolerations=None,
+                       backend=None,
                        mount_code_in_notebooks=False):
         ports = [self.request_notebook_port()]
         target_ports = [self.PORT]
@@ -180,7 +188,8 @@ class NotebookSpawner(ProjectJobSpawner):
         resource_name = self.resource_manager.get_resource_name()
         args = self.get_notebook_args(deployment_name=resource_name,
                                       ports=ports,
-                                      mount_code_in_notebooks=mount_code_in_notebooks)
+                                      mount_code_in_notebooks=mount_code_in_notebooks,
+                                      backend=backend)
         command = ["/bin/sh", "-c"]
         deployment = self.resource_manager.get_deployment(
             resource_name=resource_name,
