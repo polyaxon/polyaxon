@@ -21,6 +21,14 @@ def create_job_auth_context(job_name: str):
                                             internal_token=client.api_config.token)
 
 
+def create_notebook_auth_context(job_name: str):
+    parts = job_name.split('.')
+    client = PolyaxonClient()
+    client.auth.login_notebook_impersonate_token(username=parts[0],
+                                                 project_name=parts[1],
+                                                 internal_token=client.api_config.token)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
@@ -43,10 +51,7 @@ if __name__ == '__main__':
         create_experiment_auth_context(experiment_name=entity_name)
     elif entity == 'job':
         create_job_auth_context(job_name=entity_name)
-    # elif entity == 'notebook':
-    #     create_notebook_auth_context(username=username,
-    #                                  project_name=project_name,
-    #                                  job_id=entity_id)
-
+    elif entity == 'notebook':
+        create_notebook_auth_context(job_name=entity_name)
     else:
         raise ValueError('Entity `{}` not recognized'.format(entity))
