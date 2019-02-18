@@ -542,11 +542,11 @@ nfsProvisioner:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `nodeSelector.core`                | Node selector for core pod assignment                        | `{}`
-| `nodeSelector.experiments`         | Node selector for experiments pod assignment                 | `{}`
-| `nodeSelector.jobs`                | Node selector for jobs pod assignment                        | `{}`
-| `nodeSelector.builds`              | Node selector for builds pod assignment                      | `{}`
-| `nodeSelector.tensorboards`        | Node selector for tensorboards pod assignment                | `{}`
+| `nodeSelectors.core`               | Node selector for core pod assignment                        | `{}`
+| `nodeSelectors.experiments`        | Node selector for experiments pod assignment                 | `{}`
+| `nodeSelectors.jobs`               | Node selector for jobs pod assignment                        | `{}`
+| `nodeSelectors.builds`             | Node selector for builds pod assignment                      | `{}`
+| `nodeSelectors.tensorboards`       | Node selector for tensorboards pod assignment                | `{}`
 | `tolerations.core`                 | Tolerations for core pod assignment                          | `[]`
 | `tolerations.experiments`          | Tolerations for experiments pod assignment                   | `[]`
 | `tolerations.jobs`                 | Tolerations for jobs pod assignment                          | `[]`
