@@ -8,6 +8,46 @@ tags:
     - reference
 ---
 
+
+## 0.3.9
+
+ * **important** This version supports only one outputs (either a store or a volume), to simplify deployment of the CE version and reduce confusion.
+ * Refactor build process to support plugins and several backends
+ * Make native builder lighter.
+ * Add support for building containers with Kaniko as a backend in Beta.
+ * Add possibility to use own dockerfile to build containers.
+ * Add possibility to use contexts to to only mount sub-folders in a repo for specific tasks (e.g. mount /code/processing module for data extraction in job, and /code/training for training in experiments).
+ * Add support for running Jupyter Labs in addition to Jupyter notebooks.
+ * Allow in-cluster authentication when using notebooks (users can create experiment and track metrics/tags/params in notebooks created by Polyaxon seamlessly).
+ * Improve jobs'/experiments' authentications.
+ * Disable creation of polyaxonfile.yaml by default on `init` commands to allow users to put their polyaxonfiles wherever they want.
+ * Improve usage of external repos (add support for using an access token or user/password).
+ * Enable project to either use in-cluster code tracking or code on github/bitbucket/gitlab.
+ * Update several internal components handling fetching, extracting and archiving external repos.
+ * Improve notebooks build process: Current version only allows serverless notebooks (mounting in-cluster code will be re-enabled later).
+ * Add several checks to Experiment Group Studies to prevent non-ending groups on errors.
+ * Handle missing experiments in suggestion algorithms gracefully.
+ * Enable logs on buckets (GCS/S3/Azure).
+ * Re-enable tensorboards to continuously add experiments in project/groups as they outputs values.
+ * Improve and separate deletion/archiving of projects/groups/experiments/jobs, and extend UI to support it.
+ * Make default tensorboard image configurable. 
+ * Make all components' logging level configurable with `logLevel`.
+ * Extend `polyaxon run` to switch project context and run a config on any project, e.g. `polyaxon run -p projectA -f /polyaxonfiles/config1.yaml`.
+ * Allow users to either upload code `polyaxon upload` or set external repo `polyaxon project git --url=https//... --private`, 
+ so that code tracking can be either in-cluster or on external repos, next version will be introducing github/gitlab hooks to automate pushing to training.
+ * Add `polyaon deploy` and `polyaxon teardown` to check a config deployment file, deploy a cluster, upgrade, or teardown in Beta.
+ * Allow to customize TPU scheduling: default tensorflow version and resource key.
+ * Improve installing cloud stores dependencies with polyaxon-client: `polyaxon-client[gcs]`, `polyaxon-client[s3]`, `polyaxon-client[azure]`.
+ * Improve tracking of experiments logs running outside of Polyaxon.
+ * Fix TPU scheduling.
+ * Fix some issues preventing stopping unschedulable notebooks/tensorboards.
+ * Fix detection of warning pod statuses.
+ * Fix handling of k8s issues with wrong/bad annotation.
+ * Fix issue with platform version returning inverted version values.
+ * Fix issues interacting with cloud storages and handling of exceptions.
+ * Fix some cli encoding issues in python2.x. 
+ * Several internal enhancements.
+
 ## 0.3.8
 
  * Fix an issue with a cron job that handles the deletion of archived projects/jobs/experiments/builds.
