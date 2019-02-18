@@ -37,6 +37,7 @@ from event_manager.events.tensorboard import (
 from libs.repos import git
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+from schemas.notebook_backend import NotebookBackend
 from schemas.specifications import TensorboardSpecification
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsInitializer
@@ -268,6 +269,8 @@ class PluginJobView(ProjectEndpoint, ProtectedView):
 class NotebookView(PluginJobView):
     @staticmethod
     def get_base_path(instance):
+        if instance.has_notebook and instance.notebook.specification.backend == NotebookBackend.LAB:
+            return 'lab'
         return 'tree'
 
     @staticmethod
