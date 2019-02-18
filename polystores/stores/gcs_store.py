@@ -3,9 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import json
 import os
-from google.api_core.exceptions import NotFound, GoogleAPIError
 
 from six.moves import urllib
+
+from google.api_core.exceptions import NotFound, GoogleAPIError
 
 from polystores import settings
 from polystores.clients import gc_client
