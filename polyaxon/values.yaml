@@ -64,11 +64,11 @@ mountPaths:
 persistence:
   logs:
     existingClaim:
-    mountPath: "/polyaxon/logs"
+    mountPath: "/polyaxon-logs"
     hostPath: "/tmp/logs"
   repos:
     existingClaim:
-    mountPath: "/polyaxon/repos"
+    mountPath: "/polyaxon-repos"
     hostPath: "/tmp/repos"
   upload:
     existingClaim:
