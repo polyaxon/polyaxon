@@ -99,6 +99,16 @@ Your Tensorboard will be available on:
     http://192.168.64.6:31122/tensorboard/root/quick-start/groups/13/
 ```
 
+### Change the default tensorboard
+
+You can change the default image used to for deploying tensorboards, this way you won't need polyaxonfiles, 
+to do that you need to update your deployment config file:
+
+```yaml
+tensorboardDockerImage:  image:tag
+``` 
+
+And then upgrade your deployment using the new config file.
 
 ### Stop tensorboard
 
