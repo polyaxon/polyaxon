@@ -254,7 +254,7 @@ build:
 ### Changing the build backend
 
 Polyaxon supports multiple build backends, by default Polyaxon uses a built-in native builder, however you can change the build process either per job/experiment, 
-or change set the default backend to use for all builds. Please check the currently supported [build backend](/integrations/containers/).
+or change set the default backend to use for all builds. Please check the currently supported [build backends](/integrations/containers/).
 
 ### Running multiple commands as a string
 

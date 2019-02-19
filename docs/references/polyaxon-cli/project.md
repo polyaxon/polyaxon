@@ -115,6 +115,43 @@ Examples:
     $ polyaxon project -p user/project get
     ```
 
+## git
+
+
+Usage:
+
+```bash
+$ polyaxon project git [OPTIONS]
+```
+
+Set git repo on this project.
+
+Uses [Caching](/references/polyaxon-cli/#caching)
+
+Example:
+
+ * Public project
+
+  ```bash
+  $ polyaxon project git --url=https://github.com/polyaxon/polyaxon-quick-start
+  ```
+
+ * Private project
+
+
+  ```bash
+  $ polyaxon project git --url=https://github.com/polyaxon/polyaxon-quick-start --private
+  ```
+  
+Options:
+
+
+option | type | description
+-------|------|-----------
+  --url | TEXT | The url of the git repo..  [required]
+  --private | FLAG | Set the visibility of the project to private.
+  --help |      | Show this message and exit.
+
 ## update
 
 Usage:

@@ -20,19 +20,31 @@ status: published
 
 ## Overview
 
-Polyaxon supports repos hosted on GitLab. 
+Polyaxon supports repos hosted on GitLab (cloud and on-premise). 
 You can use code from your GitLab repositories directly in Polyaxon projects without 
 having to check them out on your local machine first. 
 
 N.B. Polyaxon supports public and private GitLab repos, you don't need to have a GitLab account
-to use code from public GitLab repositories. e.g. `https://gitlab.com/polyaxon/polyaxon-quick-start`
+to use code from public GitLab repositories.
 
-```yaml
-build:
-  image: tensorflow/tensorflow:1.4.1-py3
-  build_steps:
-    - pip3 install --no-cache -U polyaxon-client
-  ref: 4b798d5663e336bc6a5e1021bd84174e0303ef4a
+## Setting an external repo for code tracking
+
+You need a project on polyaxon that it's not linked to a code repo yet:
+
+```bash
+polyaxon project create --name=project1
+```
+
+And then you need set the git url:
+
+```bash
+polyaxon project -p project1 git --url="https://gitlab.com/org/repo-name"
+```
+
+If the project is private you need to add `--private` to the command to indicate that the repo is private, i.e.
+
+```bash
+polyaxon project -p project1 git --url="https://gitlab.com/org/repo-name" --private
 ```
 
 ## Open GitLab Developer Settings
@@ -58,7 +70,7 @@ Or If you only want to allow Polyaxon read access please select:
 
 Select the token and copy it.
 
-## Update your deployment config file
+## Update your deployment config file and deploy/upgrade
 
 ```yaml
 reposAccessToken: TokenHashHere
