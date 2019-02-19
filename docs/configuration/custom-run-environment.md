@@ -143,6 +143,118 @@ run:
   cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
+### Using dockerfile instead of the build section details
+
+In many cases, defining all steps needed to create an image might require information that polyaxonfile' specification does not provide, 
+in that case we ask users to define their own Dockerfile(s) and use them to create containers for jobs and experiments:
+
+```yaml
+version: 1
+
+kind: experiment
+
+build:
+  dockerfile: path/to/Dockerfile
+```
+
+The Dockerfile must be part of the project repo.
+
+
+### Defining build context
+
+Assuming your project has the following structure:
+
+```
+/mnist
+    |_ dockerfiles
+        |_ DockerfileJob
+        |_ DockerfileExperiment
+    |_ module1
+        |_ main.py
+        |_ preprocess.py
+        |_ exec.sh
+    |_ modeule2
+        |_ main.py
+        |_ model.py
+```
+
+You might want to mount `mudule1` to a job to do some preprocessing, and `module2` to an experiment to train a model:
+
+Job:
+
+```yaml
+version: 1
+
+kind: job
+
+build:
+  dockerfile: dockerfiles/DockerfileJob
+  context: module1
+
+run:
+  cmd: exec.sh
+```
+
+Experiment1:
+
+```yaml
+version: 1
+
+kind: experiment
+
+build:
+  dockerfile: path/to/DockerfileExperiment
+  context: module2
+
+run:
+  cmd: python3 main.py --arg1=foo --arg2=bar
+```
+
+Experiment2:
+
+```yaml
+version: 1
+
+kind: experiment
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip install -r polyaxon_requirements.txt
+  context: module2
+  backend: kaniko
+
+run:
+  cmd: python3 main.py --arg1=foo --arg2=bar
+```
+
+### Disabling the cache during the build process
+
+Often times users might need to force rebuilding an image or just discard the cache, this is possible by adding `nocache` to the build section:
+
+
+```yaml
+
+---
+version: 1
+
+kind: experiment
+
+declarations:
+  batch_size: 128
+  lr: 0.1
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - ./polyaxon_setup.sh
+  nocache: true
+```
+
+### Changing the build backend
+
+Polyaxon supports multiple build backends, by default Polyaxon uses a built-in native builder, however you can change the build process either per job/experiment, 
+or change set the default backend to use for all builds. Please check the currently supported [build backend](/integrations/containers/).
 
 ### Running multiple commands as a string
 
@@ -218,7 +330,7 @@ run:
   cmd: /bin/bash run.sh
 ```
 
-### Custom configmaps and secrets
+## Custom configmaps and secrets
 
 
 In some cases, users might need to authenticate to a third party service 
@@ -244,4 +356,63 @@ environment:
   ...
   secret_refs: ['secret1', 'secret2']
   configmap_refs: ['configmap1', 'configmap3']
+```
+
+## Custom resources
+
+You can customize your container's resources, by providing a resources subsection to the environment's section: 
+
+```yaml
+environment:
+  resources:
+    cpu:
+      requests: 1
+      limits: 2
+    memory:
+      requests: 256
+      limits: 1024
+```
+
+### Using GPUs
+
+To use GPUs you can use the same subsection to request GPUs
+
+```yaml
+environment:
+  resources:
+    cpu:
+      requests: 1
+      limits: 2
+    memory:
+      requests: 256
+      limits: 1024
+    gpu:
+      request: 1
+      limits: 1
+```
+
+
+### Using TPUs
+
+To use TPUs, you need to deploy Polyaxon on GKE, and have a tensorflow version compatible with TPU:
+
+```yaml
+environment:
+  resources:
+    cpu:
+      requests: 1
+      limits: 2
+    memory:
+      requests: 256
+      limits: 1024
+    tpu:
+      request: 8
+      limits: 8
+```
+
+Polyaxon uses `cloud-tpus.google.com/v2` as a default resource key and `1.12` as default Tensorflow TPU version, but you can change this values in your deployment config file:
+
+```yaml
+tpuTensorflowVersion: "cloud-tpus.google.com/preemptible-v2"  # To use preemptible TPU 
+tpuResourceKey: "1.11"  # To use Tensorflow 1.11 ersion 
 ```

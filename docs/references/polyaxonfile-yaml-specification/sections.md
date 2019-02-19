@@ -336,6 +336,9 @@ environment:
     gpu:
       request: 1
       limits: 1
+    tpu:
+      request: 8
+      limits: 8
 ```
 
 ### outputs
@@ -805,7 +808,9 @@ All your declaration will be exported under the environment variable name `POLYA
 This is where you define how you build an image to run your code.
 This section defines the following values/subsections:
 
- * image [required]: the base image polyaxon will use to build an image for you to run your code.
+ * image [required if dockerfile not provided]: the base image polyaxon will use to build an image for you to run your code.
+ * dockerfile [required if image note provided]: the path to the dockerfile in your code repo.
+ * context[optional]: path to the context to mount and look for any file used for the build process.
  * build_steps [optional]: steps are basically a list of ops that Polyaxon use with docker
  `RUN` to install/run further operations you define in the list.
  * env_vars [optional]: environment variables are also a list of tuples of 2 elements, that polyaxon will use to add env variables in the docker image.
@@ -824,13 +829,47 @@ build:
   ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
-Build based dev branch
+Build based on dev branch
 
 
 ```yaml
 build:
   image: ubuntu
   ref: branch_dev
+```
+
+Build using a Dockerfile
+
+
+```yaml
+build:
+  dockefile: path/to/Dockerfile
+  ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
+```
+
+Build using an image and a context:
+
+
+```yaml
+build:
+  image: my_image
+  context: path/to/context
+  build_steps:
+    - pip install PILLOW
+    - pip install scikit-learn
+  env_vars:
+    - [KEY1, VALUE1]
+    - [KEY2, VALUE2]
+  ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
+```
+
+Build using a Dockerfile and a context:
+
+
+```yaml
+build:
+  dockefile: path/to/Dockerfile
+  context: different/path/to/context
 ```
 
 ## run
