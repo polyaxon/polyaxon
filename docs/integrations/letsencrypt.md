@@ -1,7 +1,7 @@
 ---
 title: "Let's Encrypt"
-meta_description: "Ensure your Polyaxon deployment is secure with a free SSL certificate via a full integration with Let's Encrypt."
-custom_excerpt: "Making the web more secure with free SSL certificates, Let's Encrypt is a great way to make your Polyaxon deployment run on HTTPS"
+meta_description: "Making the web more secure with free SSL certificates, Let's Encrypt is a great way to make your Polyaxon deployment run on HTTPS. Ensure your Polyaxon deployment is secure with a free SSL certificate via a full integration with Let's Encrypt."
+custom_excerpt: "Let's Encrypt is a certificate authority that provides X.509 certificates for Transport Layer Security encryption at no charge. The certificate is valid for 90 days, during which renewal can take place at anytime."
 image: "../../content/images/integrations/letsencrypt.png"
 author:
   name: "Polyaxon"

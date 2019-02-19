@@ -1,7 +1,7 @@
 ---
 title: "KubeFlow"
-meta_description: "How to schedule, track, and mange KubeFlow operator on Polyaxon."
-custom_excerpt: "Polyaxon can schedule and manage KubeFlow operator natively."
+meta_description: "How to schedule, track, and mange KubeFlow operator on Polyaxon. Polyaxon can schedule and manage KubeFlow operator natively."
+custom_excerpt: "The Kubeflow project is dedicated to making deployments of machine learning (ML) workflows on Kubernetes simple, portable and scalable."
 image: "../../content/images/integrations/kubeflow.png"
 author:
   name: "Polyaxon"

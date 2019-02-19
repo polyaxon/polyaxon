@@ -1,7 +1,7 @@
 ---
 title: "Repos on GitLab"
-meta_description: "How to use code from GitLab repositories on Polyaxon."
-custom_excerpt: "You can use code from your GitLab repositories directly in Polyaxon projects without having to check them out on your local machine first."
+meta_description: "How to use code from GitLab repositories on Polyaxon. You can use code from your GitLab repositories directly in Polyaxon projects without having to check them out on your local machine first."
+custom_excerpt: "GitLab is a single application for the entire software development lifecycle. From project planning and source code management to CI/CD, monitoring, and security."
 image: "../../content/images/integrations/gitlab.png"
 author:
   name: "Polyaxon"

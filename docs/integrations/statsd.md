@@ -1,7 +1,7 @@
 ---
 title: "Statsd"
-meta_description: "Statsd is daemon for easy but powerful stats aggregation."
-custom_excerpt: "Polyaxon allows users to integrate statsd for monitoring."
+meta_description: "Polyaxon allows users to integrate statsd for monitoring."
+custom_excerpt: "Statsd is daemon for easy but powerful stats aggregation."
 image: "../../content/images/integrations/statsd.png"
 author:
   name: "Polyaxon"

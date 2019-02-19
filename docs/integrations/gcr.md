@@ -1,7 +1,8 @@
 ---
 title: "Google GCR"
-meta_description: "How to pull images from your private Google GCR registry."
-custom_excerpt: "Use your Google GCR (Google container registry) registry to start your machine learning and deep learning experiments on Kubernetes on Polyaxon."
+meta_title: "Google GCR"
+meta_description: "How to pull images from your private Google GCR registry. Use your Google GCR (Google container registry) registry to start your machine learning and deep learning experiments on Kubernetes on Polyaxon."
+custom_excerpt: "Google Container Registry is is a fully-managed Docker container registry to store, manage, and secure your Docker container images."
 image: "../../content/images/integrations/gcr.png"
 author:
   name: "Polyaxon"

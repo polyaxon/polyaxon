@@ -1,7 +1,8 @@
 ---
 title: "Discord"
-meta_description: "How to get direct notification from the Polyaxon to your Discord channels."
-custom_excerpt: "Notify Discord when an experiment, job, build is finished so everyone that your team stays in sync."
+meta_title: "Discord"
+meta_description: "How to get direct notification from the Polyaxon to your Discord channels. Notify Discord when an experiment, job, build is finished so everyone that your team stays in sync."
+custom_excerpt: "Discord is a free voice and text communication service like skype."
 image: "../../content/images/integrations/discord.png"
 author:
   name: "Polyaxon"

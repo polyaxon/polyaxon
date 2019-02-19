@@ -1,7 +1,8 @@
 ---
 title: "Gmail"
-meta_description: "How to receive notifications from Polyaxon directly to your email using gmail."
-custom_excerpt: "Get email notifications when an experiment, job, build is finished using gmail so everyone that your team stays in sync."
+meta_title: "Gmail"
+meta_description: "How to receive notifications from Polyaxon directly to your email using gmail. Get email notifications when an experiment, job, build is finished using gmail so everyone that your team stays in sync."
+custom_excerpt: "Gmail is email that's intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access."
 image: "../../content/images/integrations/gmail.png"
 author:
   name: "Polyaxon"

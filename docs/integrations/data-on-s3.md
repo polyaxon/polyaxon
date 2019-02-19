@@ -1,7 +1,8 @@
 ---
 title: "Data on S3"
-meta_description: "Using data on AWS S3 in your Polyaxon experiments and jobs."
-custom_excerpt: "Polyaxon allows users to connect to one or multiple buckets on S3 to access data directly on you machine learning experiments."
+meta_title: "AWS S3"
+meta_description: "Using data on AWS S3 in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple buckets on S3 to access data directly on you machine learning experiments."
+custom_excerpt: "Amazon S3 has a simple web services interface that you can use to store and retrieve any amount of data, at any time, from anywhere on the web. It gives any developer access to the same highly scalable, reliable, fast, inexpensive data storage infrastructure that Amazon uses to run its own global network of web sites."
 image: "../../content/images/integrations/s3.png"
 author:
   name: "Polyaxon"

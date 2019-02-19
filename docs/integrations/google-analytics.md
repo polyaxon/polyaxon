@@ -1,7 +1,8 @@
 ---
 title: "Google Analytics"
+meta_title: "Google Analytics"
 meta_description: "Publish Polyaxon events publication directly to Google Analytics for in-depth on-premise usage and metrics in realtime."
-custom_excerpt: "Publish Polyaxon events publication directly to Google Analytics for in-depth on-premise usage and metrics in realtime."
+custom_excerpt: "Google Analytics lets you measure your advertising ROI as well as track your Flash, video, and social networking sites and applications."
 image: "../../content/images/integrations/google-analytics.png"
 author:
   name: "Polyaxon"

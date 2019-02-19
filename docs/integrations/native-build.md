@@ -1,7 +1,7 @@
 ---
 title: "Native builder"
-meta_description: "Alternative image container build process using native builder for Polyaxon."
-custom_excerpt: "Polyaxon allows users to build container images using the native builder project."
+meta_description: "Polyaxon allows users to build container images using the native builder project."
+custom_excerpt: "Polyaxon native builder is a Python library for the Docker Engine API."
 image: "../../content/images/integrations/native-builder.png"
 author:
   name: "Polyaxon"

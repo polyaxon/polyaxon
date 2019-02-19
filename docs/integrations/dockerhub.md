@@ -1,7 +1,8 @@
 ---
 title: "Private Docker Registry"
-meta_description: "How to pull images from your private docker registry."
-custom_excerpt: "Use your secured, private, and internal docker registry to start your machine learning and deep learning experiments on Kubernetes on Polyaxon."
+meta_title: "Docker Registry"
+meta_description: "How to pull images from your private docker registry. Use your secured, private, and internal docker registry to start your machine learning and deep learning experiments on Kubernetes on Polyaxon."
+custom_excerpt: "The Docker Registry for storing and distributing Docker images."
 image: "../../content/images/integrations/docker.png"
 author:
   name: "Polyaxon"

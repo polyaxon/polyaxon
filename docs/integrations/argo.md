@@ -1,7 +1,8 @@
 ---
 title: "Argo"
-meta_description: "Argo is Container-native Workflow Engine."
-custom_excerpt: "Polyaxon works with Argo to streamline Model Management."
+meta_title: "Argo"
+meta_description: "Polyaxon works with Argo to streamline Model Management."
+custom_excerpt: "Argo is Container-native Workflow Engine."
 image: "../../content/images/integrations/argo.png"
 author:
   name: "Polyaxon"

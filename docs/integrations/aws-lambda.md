@@ -1,7 +1,8 @@
 ---
 title: "AWS Lambda"
-meta_description: "AWS Lambda lets you run code without provisioning or managing servers."
-custom_excerpt: "Polyaxon provides an integration for packaging and deploying models on AWS Lambda."
+meta_title: "AWS Lambda"
+meta_description: "Polyaxon provides an integration for packaging and deploying models on AWS Lambda."
+custom_excerpt: "AWS Lambda lets you run code without provisioning or managing servers."
 image: "../../content/images/integrations/aws-lambda.png"
 author:
   name: "Polyaxon"

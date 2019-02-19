@@ -1,7 +1,8 @@
 ---
 title: "Data on Azure storage"
-meta_description: "Using data on Azure storage in your Polyaxon experiments and jobs."
-custom_excerpt: "Polyaxon allows users to connect to one or multiple blobs on Azure storage to access data directly on you machine learning experiments."
+meta_title: "Azure storage"
+meta_description: "Using data on Azure storage in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple blobs on Azure storage to access data directly on you machine learning experiments."
+custom_excerpt: "Azure Storage is Microsoft's cloud storage solution. Azure Storage provides storage for data objects that is highly available, secure, durable, massively scalable cloud storage solution."
 image: "../../content/images/integrations/azure-storage.png"
 author:
   name: "Polyaxon"

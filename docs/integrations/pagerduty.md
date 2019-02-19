@@ -1,7 +1,7 @@
 ---
 title: "PagerDuty"
-meta_description: "How to get direct notification from the Polyaxon to your PagerDuty channels."
-custom_excerpt: "Notify PagerDuty when an experiment, job, build is finished so everyone that your team stays in sync."
+meta_description: "How to get direct notification from the Polyaxon to your PagerDuty channels. Notify PagerDuty when an experiment, job, build is finished so everyone that your team stays in sync."
+custom_excerpt: "PagerDuty empowers developers, DevOps, IT operations and business leaders to prevent and resolve business-impacting incidents for exceptional customer experience."
 image: "../../content/images/integrations/pagerduty.png"
 author:
   name: "Polyaxon"

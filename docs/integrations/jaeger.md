@@ -1,7 +1,7 @@
 ---
 title: "Jaeger"
-meta_description: "Jaeger is an open source, end-to-end distributed tracing."
-custom_excerpt: "Polyaxon allows users to use Jaeger Open Tracing to trace your API calls in Polyaxon."
+meta_description: "Polyaxon allows users to use Jaeger Open Tracing to trace your API calls in Polyaxon."
+custom_excerpt: "Jaeger is an open source, end-to-end distributed tracing."
 image: "../../content/images/integrations/jaeger.png"
 author:
   name: "Polyaxon"

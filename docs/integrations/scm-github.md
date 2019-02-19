@@ -1,8 +1,7 @@
 ---
 title: "Repos on Github"
-meta_description: "How to use code from GitHub repositories on Polyaxon."
-custom_excerpt: "You can use code from your GitHub repositories directly in Polyaxon projects without 
-having to check them out on your local machine first."
+meta_description: "How to use code from GitHub repositories on Polyaxon. You can use code from your GitHub repositories directly in Polyaxon projects without having to check them out on your local machine first."
+custom_excerpt: "GitHub is an online service for software development projects that use the Git revision control system."
 image: "../../content/images/integrations/github.png"
 author:
   name: "Polyaxon"

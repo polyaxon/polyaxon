@@ -1,7 +1,7 @@
 ---
 title: "MXNet"
-meta_description: "Apache MXNet is a modern open-source deep learning software framework, used to train, and deploy deep neural networks."
-custom_excerpt: "Polyaxon allows to schedule MXNEt experiments and MXNet distributed experiments, and supports tracking metrics, outputs, and models natively."
+meta_description: "Polyaxon allows to schedule MXNEt experiments and MXNet distributed experiments, and supports tracking metrics, outputs, and models natively."
+custom_excerpt: "Apache MXNet is a modern open-source deep learning software framework, used to train, and deploy deep neural networks."
 image: "../../content/images/integrations/mxnet.png"
 author:
   name: "Polyaxon"

@@ -1,7 +1,7 @@
 ---
 title: "Papermill"
-meta_description: "Papermill is a tool for parameterizing, executing, and analyzing Jupyter Notebooks."
-custom_excerpt: "Polyaxon integrates with Papermill to run and publish parameterised Jupyter notebooks."
+meta_description: "Polyaxon integrates with Papermill to run and publish parameterised Jupyter notebooks."
+custom_excerpt: "Papermill is a tool for parameterizing, executing, and analyzing Jupyter Notebooks."
 image: "../../content/images/integrations/papermill.png"
 author:
   name: "Polyaxon"

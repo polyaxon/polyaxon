@@ -1,7 +1,8 @@
 ---
 title: "Amazon SES"
-meta_description: "How to receive notifications from Polyaxon directly to your email using Amazon SES."
-custom_excerpt: "Get email notifications when an experiment, job, build is finished using Amazon SES so everyone that your team stays in sync."
+meta_title: "Amazon SES"
+meta_description: "How to receive notifications from Polyaxon directly to your email using Amazon SES. Get email notifications when an experiment, job, build is finished using Amazon SES so everyone that your team stays in sync."
+custom_excerpt: "Amazon Simple Email Service (Amazon SES) is a cloud-based email sending service designed to help digital marketers and application developers send marketing, notification, and transactional emails. It is a reliable, cost-effective service for businesses of all sizes that use email to keep in contact with their customers."
 image: "../../content/images/integrations/amazon-ses.png"
 author:
   name: "Polyaxon"

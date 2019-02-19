@@ -1,7 +1,7 @@
 ---
 title: "mailgun"
-meta_description: "How to receive notifications from Polyaxon directly to your email using mailgun."
-custom_excerpt: "Get email notifications when an experiment, job, build is finished using mailgun so everyone that your team stays in sync."
+meta_description: "How to receive notifications from Polyaxon directly to your email using mailgun. Get email notifications when an experiment, job, build is finished using mailgun so everyone that your team stays in sync."
+custom_excerpt: "Mailgun is powerful transactional email APIs that enable you to send, receive, and track emails, built with developers in mind."
 image: "../../content/images/integrations/mailgun.png"
 author:
   name: "Polyaxon"

@@ -1,7 +1,7 @@
 ---
 title: "Keras"
-meta_description: "Keras is a high-level neural networks API, written in Python and capable of running on top of TensorFlow, CNTK, or Theano."
-custom_excerpt: "Polyaxon allows to schedule Keras experiments, and supports tracking metrics, outputs, and models natively."
+meta_description: "Polyaxon allows to schedule Keras experiments, and supports tracking metrics, outputs, and models natively."
+custom_excerpt: "Keras is a high-level neural networks API, written in Python and capable of running on top of TensorFlow, CNTK, or Theano."
 image: "../../content/images/integrations/keras.png"
 author:
   name: "Polyaxon"

@@ -1,7 +1,7 @@
 ---
 title: "Kafka"
-meta_description: "Apache Kafka is used for building real-time data pipelines and streaming apps."
-custom_excerpt: "Polyaxon provides an extension to forward events to Apache Kafka for logging."
+meta_description: "Polyaxon provides an extension to forward events to Apache Kafka for logging."
+custom_excerpt: "Apache Kafka is used for building real-time data pipelines and streaming apps."
 image: "../../content/images/integrations/kafka.png"
 author:
   name: "Polyaxon"

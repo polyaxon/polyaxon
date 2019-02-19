@@ -1,7 +1,7 @@
 ---
 title: "Segment"
-meta_description: "Send Polyaxon events to Segment with straightforward integration and get in-depth metrics about your platform's usage."
-custom_excerpt: "Want deep analytics for your Polyaxon deployment? Polyaxon can send events to Segment using straightforward integration."
+meta_description: "Want deep analytics for your Polyaxon deployment? Polyaxon can send events to Segment using straightforward integration. Send Polyaxon events to Segment with straightforward integration and get in-depth metrics about your platform's usage."
+custom_excerpt: "Segment is a single platform that collects, stores, and routes your user data to hundreds of tools with the flick of a switch."
 image: "../../content/images/integrations/segment.png"
 author:
   name: "Polyaxon"

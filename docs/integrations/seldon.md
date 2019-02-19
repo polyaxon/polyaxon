@@ -1,7 +1,7 @@
 ---
 title: "Seldon"
-meta_description: "Seldon is Machine Learning Deployment Platform for Enterprise."
-custom_excerpt: "Polyaxon provides integration for packaging and deploying models on SeldonCore."
+meta_description: "Polyaxon provides integration for packaging and deploying models on SeldonCore."
+custom_excerpt: "Seldon is Machine Learning Deployment Platform for Enterprise."
 image: "../../content/images/integrations/seldon.png"
 author:
   name: "Polyaxon"

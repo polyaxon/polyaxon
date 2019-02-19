@@ -16,7 +16,7 @@ sidebar: "concepts"
 
 ![notebooks](../../content/images/concepts/dashboard/notebooks.png)
 
-Polyaxon allows users to run notebook jobs on project level, these jobs are subject to the same permissions of the project they belong to.
+Polyaxon allows users to run Jupyter Notebook and Jupyter Lab jobs on project level, these jobs are subject to the same permissions of the project they belong to.
 
 [Notebooks](https://jupyter.org/) allow users to create and share documents that contain live code,
 visualizations and explanatory texts.
