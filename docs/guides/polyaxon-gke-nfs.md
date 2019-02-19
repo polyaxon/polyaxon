@@ -58,7 +58,7 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
     ```bash
     $ gcloud --project "polyaxon-test" compute ssh --ssh-flag=-L3000:localhost:3000 --zone=us-central1-b polyaxon-nfs-vm
     ```
-    -
+
     ```bash
     $ cd /data
     $ mkdir -m 777 data
@@ -106,19 +106,15 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
 
 7. Use kubectl to create the PVCs based on the nfs server
 
-
     ```bash
     $ kubectl create -f gke/data-pvc.yml -n polyaxon
     ```
-    -
     ```bash
     $ kubectl create -f gke/outputs-pvc.yml -n polyaxon
     ```
-    -
     ```bash
     $ kubectl create -f gke/logs-pvc.yml -n polyaxon
     ```
-    -
     ```bash
     $ kubectl create -f gke/repos-pvc.yml -n polyaxon
     ```
