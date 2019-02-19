@@ -41,5 +41,6 @@ class ExperimentGroupLifeCycle(BaseStatuses):
         RUNNING: {CREATED, STOPPED},
         DONE: {RUNNING, },
         FAILED: {CREATED, RUNNING},
+        STOPPING: set(VALUES) - {STOPPING, STOPPED, },
         STOPPED: set(VALUES) - {STOPPED, },
     }
