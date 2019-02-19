@@ -231,7 +231,7 @@ class TestProjectDetailViewV1(BaseViewTest):
     @patch('scheduler.tasks.build_jobs.build_jobs_stop.apply_async')
     @patch('scheduler.tasks.jobs.jobs_stop.apply_async')
     @patch('scheduler.tasks.experiments.experiments_stop.apply_async')
-    @patch('scheduler.tasks.experiment_groups.experiments_group.apply_async')
+    @patch('scheduler.tasks.experiment_groups.experiments_group_stop.apply_async')
     def test_delete_archives_and_schedules_deletion(self,
                                                     xp_group_scheduler_mock,
                                                     xp_scheduler_mock,
