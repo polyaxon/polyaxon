@@ -12,6 +12,7 @@ export interface Props {
   onRestore?: () => any;
   isRunning: boolean;
   pullRight: boolean;
+  isSelection?: boolean;
 }
 
 interface State {
@@ -38,11 +39,17 @@ export default class JobActions extends React.Component<Props, State> {
   public handleShow = (action: 'delete' | 'stop' | 'archive') => {
     let confirmText = '';
     if (action === 'delete') {
-      confirmText = 'Are you sure you want to delete this job';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to delete the selected job(s)' :
+        'Are you sure you want to delete this job';
     } else if (action === 'archive') {
-      confirmText = 'Are you sure you want to archive this job';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to archive the selected job(s)' :
+        'Are you sure you want to archive this job';
     } else if (action === 'stop') {
-      confirmText = 'Are you sure you want to stop this job';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to stop the selected job(s)' :
+        'Are you sure you want to stop this job';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}

@@ -14,6 +14,7 @@ export interface Props {
   hasNotebook?: boolean;
   hasTensorboard?: boolean;
   pullRight: boolean;
+  isSelection?: boolean;
 }
 
 interface State {
@@ -40,13 +41,21 @@ export default class ProjectActions extends React.Component<Props, State> {
   public handleShow = (action: 'delete' | 'stopNotebook' | 'stopTensorboard' | 'archive') => {
     let confirmText = '';
     if (action === 'delete') {
-      confirmText = 'Are you sure you want to delete this project';
+      confirmText = this.props.isSelection ?
+         'Are you sure you want to delete the selected project(s)' :
+         'Are you sure you want to delete this project';
     } else if (action === 'archive') {
-      confirmText = 'Are you sure you want to archive this project';
+      confirmText = this.props.isSelection ?
+         'Are you sure you want to archive the selected project(s)' :
+         'Are you sure you want to archive this project';
     } else if (action === 'stopNotebook') {
-      confirmText = 'Are you sure you want to stop notebook for this project';
+      confirmText = this.props.isSelection ?
+         'Are you sure you want to stop notebook for the selected project(s)' :
+         'Are you sure you want to stop notebook for this project';
     } else if (action === 'stopTensorboard') {
-      confirmText = 'Are you sure you want to stop tensorboard for this project';
+      confirmText = this.props.isSelection ?
+         'Are you sure you want to stop tensorboard for the selected project(s)' :
+         'Are you sure you want to stop tensorboard for this project';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}

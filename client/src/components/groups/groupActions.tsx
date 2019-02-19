@@ -14,6 +14,7 @@ export interface Props {
   hasTensorboard?: boolean;
   isRunning: boolean;
   pullRight: boolean;
+  isSelection?: boolean;
 }
 
 interface State {
@@ -40,13 +41,21 @@ export default class GroupActions extends React.Component<Props, State> {
   public handleShow = (action: 'delete' | 'stop' | 'stopTensorboard' | 'archive') => {
     let confirmText = '';
     if (action === 'delete') {
-      confirmText = 'Are you sure you want to delete this group';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to delete the selected group(s)' :
+        'Are you sure you want to delete this group';
     } else if (action === 'archive') {
-      confirmText = 'Are you sure you want to archive this group';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to archive the selected group(s)' :
+        'Are you sure you want to archive this group';
     } else if (action === 'stop') {
-      confirmText = 'Are you sure you want to stop this group';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to stop the selected group(s)' :
+        'Are you sure you want to stop this group';
     } else if (action === 'stopTensorboard') {
-      confirmText = 'Are you sure you want to stop tensorboard for this group';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to stop tensorboard for the selected group(s)' :
+        'Are you sure you want to stop tensorboard for this group';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}

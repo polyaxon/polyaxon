@@ -436,6 +436,7 @@ export default class Experiments extends React.Component<Props, State> {
                     ).length > 0
                     }
                     pullRight={false}
+                    isSelection={true}
                     actions={experimentActions}
                   />
                   : 'actions'

@@ -15,6 +15,7 @@ export interface Props {
   hasTensorboard?: boolean;
   isRunning: boolean;
   pullRight: boolean;
+  isSelection?: boolean;
   actions?: ActionInterface[];
 }
 
@@ -42,13 +43,21 @@ export default class ExperimentActions extends React.Component<Props, State> {
   public handleShow = (action: 'delete' | 'stop' | 'stopTensorboard' | 'archive') => {
     let confirmText = '';
     if (action === 'delete') {
-      confirmText = 'Are you sure you want to delete this experiment';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to delete the selected experiment(s)' :
+        'Are you sure you want to delete this experiment';
     } else if (action === 'archive') {
-      confirmText = 'Are you sure you want to archive this experiment';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to archive the selected experiment(s)' :
+        'Are you sure you want to archive this experiment';
     } else if (action === 'stop') {
-      confirmText = 'Are you sure you want to stop this experiment';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to stop the selected experiment(s)' :
+        'Are you sure you want to stop this experiment';
     } else if (action === 'stopTensorboard') {
-      confirmText = 'Are you sure you want to stop tensorboard for this experiment';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to stop tensorboard for the selected experiment(s)' :
+        'Are you sure you want to stop tensorboard for this experiment';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}

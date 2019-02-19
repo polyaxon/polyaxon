@@ -12,6 +12,7 @@ export interface Props {
   onRestore?: () => any;
   isRunning: boolean;
   pullRight: boolean;
+  isSelection?: boolean;
 }
 
 interface State {
@@ -38,11 +39,17 @@ export default class BuildActions extends React.Component<Props, State> {
   public handleShow = (action: 'delete' | 'stop' | 'archive') => {
     let confirmText = '';
     if (action === 'delete') {
-      confirmText = 'Are you sure you want to delete this build';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to delete the selected build(s)' :
+        'Are you sure you want to delete this build';
     } else if (action === 'archive') {
-      confirmText = 'Are you sure you want to archive this build';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to archive the selected build(s)' :
+        'Are you sure you want to archive this build';
     } else if (action === 'stop' && this.props.onStop) {
-      confirmText = 'Are you sure you want to stop this build';
+      confirmText = this.props.isSelection ?
+        'Are you sure you want to stop the selected build(s)' :
+        'Are you sure you want to stop this build';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
