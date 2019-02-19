@@ -1,5 +1,6 @@
 ---
 title: "TensorRT"
+meta_title: "TensorRT"
 meta_description: "Polyaxon provides integration for packaging and deploying models using TensorRT."
 custom_excerpt: "NVIDIA TensorRT is a platform for high-performance deep learning inference."
 image: "../../content/images/integrations/tensorrt.png"

@@ -1,7 +1,8 @@
 ---
-title: "sendgrid"
+title: "SendGrid"
+meta_title: "SendGrid"
 meta_description: "How to receive notifications from Polyaxon directly to your email using sendgrid. Get email notifications when an experiment, job, build is finished using sendgrid so everyone that your team stays in sync."
-custom_excerpt: "endGrid is a cloud-based SMTP provider that acts as an email delivery engine, allowing you to send email without the cost and complexity of maintaining your own email servers."
+custom_excerpt: "SendGrid is a cloud-based SMTP provider that acts as an email delivery engine, allowing you to send email without the cost and complexity of maintaining your own email servers."
 image: "../../content/images/integrations/sendgrid.jpg"
 author:
   name: "Polyaxon"

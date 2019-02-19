@@ -1,5 +1,6 @@
 ---
-title: "Notebook"
+title: "Jupyter Notebook"
+meta_title: "Jupyter Notebook"
 meta_description: "Polyaxon makes it easy to start Jupyter Notebooks on your projects for you and your team members."
 custom_excerpt: "The Jupyter Notebook is an incredibly powerful tool for interactively developing and presenting data science projects. A notebook integrates code and its output into a single document that combines visualisations, narrative text, mathematical equations, and other rich media."
 image: "../../content/images/integrations/jupyter-notebook.png"

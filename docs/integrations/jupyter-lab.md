@@ -1,5 +1,6 @@
 ---
 title: "JupyterLab"
+meta_title: "JupyterLab"
 meta_description: "Polyaxon makes it easy to start JupyterLab on your projects for you and your team members."
 custom_excerpt: "JupyterLab is an extensible environment for interactive and reproducible computing, based on the Jupyter Notebook and Architecture."
 image: "../../content/images/integrations/jupyter-lab.png"

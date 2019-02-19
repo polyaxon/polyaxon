@@ -1,5 +1,6 @@
 ---
 title: "SSO with Bitbucket"
+meta_title: "Bitbucket"
 meta_description: "How to use github to manage users authentication on Polyaxon. You can easily integrate github to manage users authentication on Polyaxon."
 custom_excerpt: "Bitbucket is Git repository management solution designed for professional teams. It gives you a central place to manage git repositories, collaborate on your source code and guide you through the development flow."
 image: "../../content/images/integrations/bitbucket.png"

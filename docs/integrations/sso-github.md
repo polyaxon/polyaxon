@@ -1,5 +1,6 @@
 ---
 title: "SSO with Github"
+meta_title: "Github"
 meta_description: "How to use github to manage users authentication on Polyaxon. You can easily integrate github to manage users authentication on Polyaxon."
 custom_excerpt: "GitHub is an online service for software development projects that use the Git revision control system."
 image: "../../content/images/integrations/github.png"

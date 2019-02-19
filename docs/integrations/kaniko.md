@@ -1,5 +1,6 @@
 ---
 title: "Kaniko"
+meta_title: "Kaniko"
 meta_description: "Polyaxon allows users to build container images using the Kaniko project."
 custom_excerpt: "kaniko is a tool to build container images from a Dockerfile, inside a container or Kubernetes cluster."
 image: "../../content/images/integrations/kaniko.png"

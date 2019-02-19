@@ -1,5 +1,6 @@
 ---
 title: "Outputs on GCS"
+meta_title: "Google GCS"
 meta_description: "Using Google Cloud Storage GCS buckets to organize your jobs outputs and experiment artifacts. Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage GCS to store job outputs and experiment artifacts."
 custom_excerpt: "Google Cloud Storage is a RESTful online file storage web service for storing and accessing data on Google Cloud Platform infrastructure. The service combines the performance and scalability of Google's cloud with advanced security and sharing capabilities."
 image: "../../content/images/integrations/gcs.png"
