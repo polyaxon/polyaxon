@@ -80,7 +80,7 @@ class ExperimentHandler(BaseHandler):
             return
 
         # Check if it's part of an experiment group, and start following tasks
-        if not instance.is_independent:
+        if not instance.is_independent and not instance.experiment_group.is_stopping:
             celery_app.send_task(
                 HPCeleryTasks.HP_START,
                 kwargs={'experiment_group_id': instance.experiment_group.id},

@@ -13,6 +13,7 @@ class StatusOptions:
     SUCCEEDED = 'succeeded'
     FAILED = 'failed'
     UPSTREAM_FAILED = 'upstream_failed'
+    STOPPING = 'stopping'
     STOPPED = 'stopped'
     FINISHED = 'finished'
     SKIPPED = 'skipped'

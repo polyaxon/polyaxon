@@ -249,6 +249,7 @@ class SchedulerCeleryTasks(object):
     EXPERIMENTS_SCHEDULE_DELETION = 'experiments_schedule_deletion'
 
     EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
+    EXPERIMENTS_GROUP_STOP = 'experiments_group_stop'
     EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
     EXPERIMENTS_GROUP_CHECK_FINISHED = 'experiments_group_check_finished'
     EXPERIMENTS_GROUP_SCHEDULE_DELETION = 'experiments_group_schedule_deletion'
@@ -446,6 +447,8 @@ CELERY_TASK_ROUTES = {
 
     # Scheduler groups
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
+    SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
     SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS:
         {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},

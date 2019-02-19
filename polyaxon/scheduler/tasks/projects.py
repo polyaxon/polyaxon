@@ -24,7 +24,7 @@ def projects_schedule_deletion(project_id, immediate=False):
         status__status__in=ExperimentGroupLifeCycle.DONE_STATUS).distinct()
     for group in groups.values_list('id', flat=True):
         celery_app.send_task(
-            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
             kwargs={
                 'experiment_group_id': group,
                 'pending': False,

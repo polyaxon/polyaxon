@@ -59,7 +59,7 @@ def start_group_experiments(experiment_group):
     # Check for early stopping before starting new experiments from this group
     if experiment_group.should_stop_early():
         celery_app.send_task(
-            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
             kwargs={'experiment_group_id': experiment_group.id,
                     'pending': True,
                     'message': 'Early stopping'})

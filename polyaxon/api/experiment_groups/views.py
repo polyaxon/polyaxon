@@ -200,7 +200,7 @@ class ExperimentGroupStopView(CreateAPIView):
                        actor_name=request.user.username,
                        pending=pending)
         celery_app.send_task(
-            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
             kwargs={'experiment_group_id': obj.id,
                     'pending': pending,
                     'message': 'User stopped experiment group'})

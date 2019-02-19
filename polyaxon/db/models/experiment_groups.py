@@ -136,6 +136,10 @@ class ExperimentGroup(DiffModel,
     def is_selection(self) -> bool:
         return self.group_type == GroupTypes.SELECTION
 
+    @property
+    def is_stopping(self) -> bool:
+        return self.last_status == self.STATUSES.STOPPING
+
     def can_transition(self, status_from, status_to) -> bool:
         """Update the status of the current instance.
 

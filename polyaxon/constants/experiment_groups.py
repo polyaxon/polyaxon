@@ -15,6 +15,7 @@ class ExperimentGroupLifeCycle(BaseStatuses):
     RUNNING = StatusOptions.RUNNING
     DONE = StatusOptions.DONE
     FAILED = StatusOptions.FAILED
+    STOPPING = StatusOptions.STOPPING
     STOPPED = StatusOptions.STOPPED
 
     CHOICES = (
@@ -22,11 +23,12 @@ class ExperimentGroupLifeCycle(BaseStatuses):
         (RUNNING, RUNNING),
         (DONE, DONE),
         (FAILED, FAILED),
+        (STOPPING, STOPPING),
         (STOPPED, STOPPED),
     )
 
     VALUES = {
-        CREATED, RUNNING, DONE, FAILED, STOPPED
+        CREATED, RUNNING, DONE, FAILED, STOPPING, STOPPED
     }
 
     PENDING_STATUS = {CREATED, }

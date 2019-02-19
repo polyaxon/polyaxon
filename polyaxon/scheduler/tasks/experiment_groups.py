@@ -85,7 +85,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
 
     if experiment_group.is_stoppable:
         celery_app.send_task(
-            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
             kwargs={
                 'experiment_group_id': experiment_group_id,
                 'pending': False,
@@ -99,6 +99,27 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
             kwargs={
                 'group_id': experiment_group_id,
             })
+
+
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP, ignore_result=True)
+def experiments_group_stop(experiment_group_id,
+                           pending,
+                           collect_logs=True,
+                           message=None):
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id,
+                                                    include_deleted=True)
+    if not experiment_group:
+        return
+
+    experiment_group.set_status(ExperimentGroupLifeCycle.STOPPING)
+    celery_app.send_task(
+        SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+        kwargs={
+            'experiment_group_id': experiment_group_id,
+            'pending': pending,
+            'collect_logs': collect_logs,
+            'message': message
+        })
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS, ignore_result=True)
