@@ -364,7 +364,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Experiment.objects.last()
-        assert RedisTTL.get_for_experiment(xp.id) == 2
+        assert RedisTTL.get_for_experiment(xp.id) == conf.get('GLOBAL_COUNTDOWN')
 
         data = {'ttl': 10}
         resp = self.auth_client.post(self.url, data)

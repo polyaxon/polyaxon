@@ -1,5 +1,7 @@
 import pytest
 
+import conf
+
 from db.redis.tll import RedisTTL
 from tests.utils import BaseTest
 
@@ -36,7 +38,7 @@ class TestRedisTTL(BaseTest):
     def test_set_for_experiment(self):
         RedisTTL.set_for_experiment(experiment_id=1, value=10)
         assert RedisTTL.get_for_experiment(experiment_id=1) == 10
-        assert RedisTTL.get_for_experiment(experiment_id=2) == 2
+        assert RedisTTL.get_for_experiment(experiment_id=2) == conf.get('GLOBAL_COUNTDOWN')
         assert RedisTTL(experiment=10).get_value() is None
 
     def test_redis_ttl_job(self):
@@ -56,7 +58,7 @@ class TestRedisTTL(BaseTest):
     def test_set_for_job(self):
         RedisTTL.set_for_job(job_id=1, value=10)
         assert RedisTTL.get_for_job(job_id=1) == 10
-        assert RedisTTL.get_for_job(job_id=2) == 2
+        assert RedisTTL.get_for_job(job_id=2) == conf.get('GLOBAL_COUNTDOWN')
         assert RedisTTL(job=10).get_value() is None
 
     def test_redis_ttl_build(self):
@@ -76,7 +78,7 @@ class TestRedisTTL(BaseTest):
     def test_set_for_build(self):
         RedisTTL.set_for_build(build_id=1, value=10)
         assert RedisTTL.get_for_build(build_id=1) == 10
-        assert RedisTTL.get_for_build(build_id=2) == 2
+        assert RedisTTL.get_for_build(build_id=2) == conf.get('GLOBAL_COUNTDOWN')
         assert RedisTTL(build=10).get_value() is None
 
     def test_validate_ttl(self):
