@@ -413,6 +413,6 @@ environment:
 Polyaxon uses `cloud-tpus.google.com/v2` as a default resource key and `1.12` as default Tensorflow TPU version, but you can change this values in your deployment config file:
 
 ```yaml
-tpuTensorflowVersion: "cloud-tpus.google.com/preemptible-v2"  # To use preemptible TPU 
-tpuResourceKey: "1.11"  # To use Tensorflow 1.11 ersion 
+tpuResourceKey: "cloud-tpus.google.com/preemptible-v2"  # To use preemptible TPU
+tpuTensorflowVersion: "1.11"  # To use Tensorflow 1.11 ersion
 ```
