@@ -31,7 +31,7 @@ pip3 install -U polyaxon-cli
 ## Configure
 
 In order for polyaxon CLI to work correctly,
-you must execute the steps in the `NOTES` from [polyaxon helm deployments](deploy_polyaxon).
+you must execute the steps in the `NOTES` from [polyaxon helm deployments](/setup/kubernetes/).
 
 Those steps ensures that, you configure Polyaxon to connect to the correct host on the correct ports.
 
@@ -42,7 +42,7 @@ After installing the CLI you can view the commands supported using the `--help` 
 $ polyaxon --help
 ```
 
-For more information please have a look [polyaxon cli section](/polyaxon_cli/introduction).
+For more information please have a look [polyaxon cli section](/references/polyaxon-cli/).
 
 
 ## Login
