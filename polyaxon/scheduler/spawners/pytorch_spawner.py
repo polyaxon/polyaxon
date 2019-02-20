@@ -1,3 +1,5 @@
+import uuid
+
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
 from schemas.environments import PytorchClusterConfig
@@ -8,6 +10,12 @@ from schemas.tasks import TaskType
 class PytorchSpawner(ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = False
+
+    def create_job_uuids(self):
+        job_uuids = super().create_job_uuids()
+        job_uuids[TaskType.WORKER] = [
+            uuid.uuid4().hex for _ in self.get_n_pods(task_type=TaskType.WORKER)]
+        return job_uuids
 
     def get_env_vars(self, task_type, task_idx):
         if task_type == TaskType.MASTER:

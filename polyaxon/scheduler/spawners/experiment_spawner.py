@@ -1,3 +1,5 @@
+import uuid
+
 from hestia.auth import AuthenticationTypes
 from hestia.internal_services import InternalServices
 
@@ -94,6 +96,12 @@ class ExperimentSpawner(K8SManager):
         # Set the cluster_def
         cluster_def = self.get_cluster()
         self.resource_manager.set_cluster_def(cluster_def=cluster_def)
+        self.job_uuids = self.create_job_uuids()
+
+    def create_job_uuids(self):
+        return {
+            TaskType.MASTER: uuid.uuid4().hex,
+        }
 
     def get_env_vars(self, task_type, task_idx):
         return None
@@ -109,6 +117,9 @@ class ExperimentSpawner(K8SManager):
 
     def get_tolerations(self, task_type, task_idx):
         return self.spec.master_tolerations
+
+    def get_job_uuids(self, task_type, task_idx):
+        return self.job_uuids[task_type][task_idx]
 
     def get_n_pods(self, task_type):
         return 0
@@ -137,7 +148,10 @@ class ExperimentSpawner(K8SManager):
             ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
         resource_name = self.resource_manager.get_resource_name(task_type=task_type,
                                                                 task_idx=task_idx)
-        labels = self.resource_manager.get_labels(task_type=task_type, task_idx=task_idx)
+        job_uuid = self.get_job_uuids(task_type=task_type, task_idx=task_idx)
+        labels = self.resource_manager.get_labels(task_type=task_type,
+                                                  task_idx=task_idx,
+                                                  job_uuid=job_uuid)
 
         # Set and validate volumes
         volumes, volume_mounts = get_pod_volumes(

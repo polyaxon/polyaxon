@@ -1,5 +1,4 @@
 import json
-import uuid
 
 from hestia.list_utils import to_list
 from kubernetes import client
@@ -109,12 +108,12 @@ class ResourceManager(BaseResourceManager):
 
         return labels
 
-    def get_labels(self, task_type, task_idx):  # pylint:disable=arguments-differ
+    def get_labels(self, task_type, task_idx, job_uuid):  # pylint:disable=arguments-differ
         labels = self.get_experiment_labels()
         labels.update({
             'task_type': task_type,
             'task_idx': '{}'.format(task_idx),
-            'job_uuid': uuid.uuid4().hex,
+            'job_uuid': job_uuid,
             'role': self.role_label,
             'type': self.type_label
         })

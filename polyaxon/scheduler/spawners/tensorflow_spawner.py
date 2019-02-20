@@ -1,3 +1,5 @@
+import uuid
+
 import stores
 
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
@@ -99,6 +101,14 @@ class TensorflowSpawner(ExperimentSpawner):
             TaskType.WORKER: worker_tolerations,
             TaskType.PS: ps_tolerations,
         }
+
+    def create_job_uuids(self):
+        job_uuids = super().create_job_uuids()
+        job_uuids[TaskType.WORKER] = [
+            uuid.uuid4().hex for _ in self.get_n_pods(task_type=TaskType.WORKER)]
+        job_uuids[TaskType.PS] = [
+            uuid.uuid4().hex for _ in self.get_n_pods(task_type=TaskType.PS)]
+        return job_uuids
 
     def get_resources(self, task_type, task_idx):
         return self.resources.get(task_type, {}).get(task_idx)

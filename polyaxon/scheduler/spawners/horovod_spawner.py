@@ -1,3 +1,5 @@
+import uuid
+
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from schemas.environments import HorovodClusterConfig
 from schemas.specifications import HorovodSpecification
@@ -7,6 +9,12 @@ from schemas.tasks import TaskType
 class HorovodSpawner(ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True
+
+    def create_job_uuids(self):
+        job_uuids = super().create_job_uuids()
+        job_uuids[TaskType.WORKER] = [
+            uuid.uuid4().hex for _ in self.get_n_pods(task_type=TaskType.WORKER)]
+        return job_uuids
 
     @property
     def resources(self):
