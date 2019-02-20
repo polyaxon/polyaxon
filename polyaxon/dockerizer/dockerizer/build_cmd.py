@@ -1,7 +1,6 @@
 import argparse
 
-from builders.build import cmd  # noqa
-from polyaxon_client.tracking import BuildJob
+from builders.native import build  # noqa
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -32,9 +31,7 @@ if __name__ == '__main__':
     image_tag = arguments.pop('image_tag')
     nocache = arguments.pop('nocache')
 
-    job = BuildJob()
-    cmd(job=job,
-        build_context=build_context,
-        image_name=image_name,
-        image_tag=image_tag,
-        nocache=nocache)
+    build(build_context=build_context,
+          image_name=image_name,
+          image_tag=image_tag,
+          nocache=nocache)

@@ -137,11 +137,10 @@ class DockerBuilder(object):
         return self._handle_log_stream(stream=stream)
 
 
-def build(job,
-          build_context: str,
+def build(build_context: str,
           image_tag: str,
           image_name: str,
-          nocache: bool) -> bool:
+          nocache: bool) -> None:
     """Build necessary code for a job to run"""
     _logger.info('Starting build ...')
 
@@ -155,14 +154,11 @@ def build(job,
     if docker_builder.check_image():
         # Image already built
         docker_builder.clean()
-        return True
+        return
     if not docker_builder.build(nocache=nocache):
         docker_builder.clean()
-        job.failed(message='The docker image could not be built.')
-        return False
+        raise BuildException('The docker image could not be built.')
     if not docker_builder.push():
         docker_builder.clean()
-        job.failed(message='The docker image could not be pushed.')
-        return False
+        raise BuildException('The docker image could not be pushed.')
     docker_builder.clean()
-    return True
