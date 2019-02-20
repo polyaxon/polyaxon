@@ -414,5 +414,5 @@ Polyaxon uses `cloud-tpus.google.com/v2` as a default resource key and `1.12` as
 
 ```yaml
 tpuResourceKey: "cloud-tpus.google.com/preemptible-v2"  # To use preemptible TPU
-tpuTensorflowVersion: "1.11"  # To use Tensorflow 1.11 ersion
+tpuTensorflowVersion: "1.11"  # To use Tensorflow 1.11 version
 ```
