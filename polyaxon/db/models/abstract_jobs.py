@@ -52,10 +52,11 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
                     traceback: Dict = None,
                     details: Dict = None) -> bool:
         current_status = self.last_status_before(status_model=status_model, status_date=created_at)
-        if not current_status and self.last_status == JobLifeCycle.CREATED:
-            current_status = JobLifeCycle.CREATED
-            if created_at:
-                created_at = self.status.created_at
+        # TODO
+        # if not current_status and self.last_status == JobLifeCycle.CREATED:
+        #     current_status = JobLifeCycle.CREATED
+        #     if created_at:
+        #         created_at = self.status.created_at
         if self.is_done:
             # We should not update statuses anymore
             _logger.debug(
