@@ -127,8 +127,8 @@ def experiments_group_stop_experiments(experiment_group_id,
                                        pending,
                                        collect_logs=True,
                                        message=None):
-    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id,
-                                                    include_deleted=True)
+    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id,
+                                                  include_deleted=True)
     if not experiment_group:
         return
 
