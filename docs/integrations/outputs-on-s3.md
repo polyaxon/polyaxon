@@ -108,7 +108,7 @@ build:
 
 ## Using the outputs store from tracking
 
-In your experiment/job, Polyaxon exposes the outputs [paths](/references/tracking-api/paths/#get-outputs-path) scheduled for the run, 
+In your experiment/job, Polyaxon exposes the secret related to the outputs as well as the outputs [path](/references/tracking-api/paths/#get-outputs-path) scheduled for the run as an an env var,  
 and provides an interface to get an authenticated client for each one of these Paths.
 
 ```python
