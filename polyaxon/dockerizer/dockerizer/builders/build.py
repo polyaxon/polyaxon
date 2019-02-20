@@ -3,22 +3,19 @@ import traceback
 from docker.errors import DockerException
 
 from . import native
+from .exceptions import BuildException
 
 
 def cmd(job: 'Job', build_context: str, image_name: str, image_tag: str, nocache: bool):
     # Building the docker image
     error = {}
+    status = True
     try:
         status = native.build(job=job,
                               build_context=build_context,
                               image_name=image_name,
                               image_tag=image_tag,
                               nocache=nocache)
-        if not status:
-            error = {
-                'raised': True,
-                'message': 'Failed to build job.'
-            }
     except DockerException as e:
         error = {
             'raised': True,
@@ -38,4 +35,6 @@ def cmd(job: 'Job', build_context: str, image_name: str, image_tag: str, nocache
         job.failed(
             message=error.get('message'),
             traceback=error.get('traceback'))
-        return
+        raise BuildException('Failed to build job')
+    if not status:
+        raise BuildException('Failed to build job')

@@ -9,6 +9,7 @@ from docker.errors import APIError, BuildError, DockerException
 from hestia.logging_utils import LogLevels
 
 from . import settings
+from .exceptions import BuildException
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -157,6 +158,7 @@ def build(job,
         return True
     if not docker_builder.build(nocache=nocache):
         docker_builder.clean()
+        job.failed(message='The docker image could not be built.')
         return False
     if not docker_builder.push():
         docker_builder.clean()
