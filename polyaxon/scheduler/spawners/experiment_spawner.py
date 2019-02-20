@@ -100,7 +100,7 @@ class ExperimentSpawner(K8SManager):
 
     def create_job_uuids(self):
         return {
-            TaskType.MASTER: uuid.uuid4().hex,
+            TaskType.MASTER: [uuid.uuid4().hex],
         }
 
     def get_env_vars(self, task_type, task_idx):

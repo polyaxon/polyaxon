@@ -1,5 +1,4 @@
 import os
-import uuid
 
 from unittest.mock import patch
 
@@ -304,7 +303,7 @@ class TestExperimentModel(BaseTest):
 
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
-        mock_instance.job_uuids = {'master': 'fa6203c189a855dd977019854a7ffcc3',
+        mock_instance.job_uuids = {'master': ['fa6203c189a855dd977019854a7ffcc3'],
                                    'worker': ['3a9c9b0bd56b5e9fbdbd1a3d43d57960'],
                                    'ps': ['59e3601232b85a3d8be2511f23a62945']}
         mock_instance.spec = config
@@ -337,7 +336,7 @@ class TestExperimentModel(BaseTest):
         config = ExperimentSpecification.read(exec_experiment_resources_content)
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
-        mock_instance.job_uuids = {'master': 'fa6203c189a855dd977019854a7ffcc3',
+        mock_instance.job_uuids = {'master': ['fa6203c189a855dd977019854a7ffcc3'],
                                    'worker': ['3a9c9b0bd56b5e9fbdbd1a3d43d57960'],
                                    'ps': ['59e3601232b85a3d8be2511f23a62945']}
         mock_instance.spec = config

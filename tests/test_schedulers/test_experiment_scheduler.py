@@ -58,7 +58,7 @@ class TestExperimentScheduler(BaseTest):
 
     def test_set_job_definition(self):
         experiment = ExperimentFactory()
-        job_uuid = uuid.uuid4()
+        job_uuid = uuid.uuid4().hex
         create_job(job_uuid=job_uuid,
                    experiment=experiment)
         job = ExperimentJob.objects.last()

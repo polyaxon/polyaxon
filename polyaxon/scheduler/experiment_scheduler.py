@@ -100,7 +100,7 @@ def get_spawner_class(framework):
 
 
 def create_tensorflow_experiment_jobs(experiment, spawner):
-    master_job_uuid = spawner.job_uuids[TaskType.MASTER]
+    master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                resources=spawner.spec.master_resources,
@@ -180,19 +180,19 @@ def handle_tensorflow_experiment(response):
 
     set_job_definition(job_uuid=job_uuid, definition=get_job_definition(master))
 
-    for i, worker in enumerate(response[TaskType.WORKER]):
+    for worker in response[TaskType.WORKER]:
         job_uuid = worker['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         set_job_definition(job_uuid=job_uuid, definition=get_job_definition(worker))
 
-    for i, ps in enumerate(response[TaskType.PS]):
+    for ps in response[TaskType.PS]:
         job_uuid = ps['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         set_job_definition(job_uuid=job_uuid, definition=get_job_definition(ps))
 
 
 def create_horovod_experiment_jobs(experiment, spawner):
-    master_job_uuid = spawner.job_uuids[TaskType.MASTER]
+    master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                resources=spawner.spec.master_resources,
@@ -240,14 +240,14 @@ def handle_horovod_experiment(response):
 
     set_job_definition(job_uuid=job_uuid, definition=get_job_definition(master))
 
-    for i, worker in enumerate(response[TaskType.WORKER]):
+    for worker in response[TaskType.WORKER]:
         job_uuid = worker['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         set_job_definition(job_uuid=job_uuid, definition=get_job_definition(worker))
 
 
 def create_pytorch_experiment_jobs(experiment, spawner):
-    master_job_uuid = spawner.job_uuids[TaskType.MASTER]
+    master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                resources=spawner.spec.master_resources,
@@ -295,14 +295,14 @@ def handle_pytorch_experiment(response):
 
     set_job_definition(job_uuid=job_uuid, definition=get_job_definition(master))
 
-    for i, worker in enumerate(response[TaskType.WORKER]):
+    for worker in response[TaskType.WORKER]:
         job_uuid = worker['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         set_job_definition(job_uuid=job_uuid, definition=get_job_definition(worker))
 
 
 def create_mxnet_experiment_jobs(experiment, spawner):
-    master_job_uuid = spawner.job_uuids[TaskType.MASTER]
+    master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                resources=spawner.spec.master_resources,
@@ -380,19 +380,19 @@ def handle_mxnet_experiment(response):
 
     set_job_definition(job_uuid=job_uuid, definition=get_job_definition(master))
 
-    for i, worker in enumerate(response[TaskType.WORKER]):
+    for worker in response[TaskType.WORKER]:
         job_uuid = worker['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         set_job_definition(job_uuid=job_uuid, definition=get_job_definition(worker))
 
-    for i, server in enumerate(response[TaskType.SERVER]):
+    for server in response[TaskType.SERVER]:
         job_uuid = server['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         set_job_definition(job_uuid=job_uuid, definition=get_job_definition(server))
 
 
 def create_base_experiment_job(experiment, spawner):
-    master_job_uuid = spawner.job_uuids[TaskType.MASTER]
+    master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                resources=spawner.spec.master_resources,
