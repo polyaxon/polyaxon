@@ -1,3 +1,4 @@
+from constants.jobs import JobLifeCycle
 from event_manager import event_subjects
 from event_manager.events import experiment_job
 from executor.handlers.base import BaseHandler
@@ -11,7 +12,10 @@ class ExperimentJobHandler(BaseHandler):
     @classmethod
     def _handle_experiment_job_new_status(cls, event: 'Event') -> None:
         instance = event.instance
-        if not instance or instance.experiment.is_done:
+        cond = (not instance or
+                instance.experiment.is_done or
+                instance.last_status == JobLifeCycle.CREATED)
+        if cond:
             return
 
         celery_app.send_task(

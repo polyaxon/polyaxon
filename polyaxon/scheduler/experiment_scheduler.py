@@ -37,7 +37,7 @@ def create_job(job_uuid,
                node_selector=None,
                affinity=None,
                tolerations=None):
-    job = ExperimentJob(uuid=job_uuid, experiment=experiment)
+    job = ExperimentJob(uuid=uuid.UUID(job_uuid), experiment=experiment, definition={})
     if role:
         job.role = role
 
@@ -497,6 +497,7 @@ def start_experiment(experiment):
         response = spawner.start_experiment()
         # handle response
         handle_experiment(experiment=experiment, response=response)
+        experiment.set_status(ExperimentLifeCycle.STARTING)
     except ApiException as e:
         _logger.error('Could not start the experiment, please check your polyaxon spec.',
                       exc_info=True)
