@@ -191,12 +191,12 @@ data:
   POLYAXON_JOB_INIT_DOCKER_IMAGE: "{{ .Values.init.image }}:{{ .Values.init.imageTag }}"
   POLYAXON_JOB_INIT_DOCKER_IMAGE_PULL_POLICY: "{{ .Values.init.imagePullPolicy }}"
   {{- if .Values.buildBackend }}
-  POLYAXON_BUILD_BACKEND: "{{ .Values.buildBackend }}"
+  POLYAXON_BUILD_BACKEND: {{ .Values.buildBackend | quote }}
   {{- end }}
   POLYAXON_JOB_DOCKERIZER_IMAGE: "{{ .Values.dockerizer.image }}:{{ .Values.dockerizer.imageTag }}"
-  POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY: "{{ .Values.dockerizer.imagePullPolicy }}"
+  POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY: {{ .Values.dockerizer.imagePullPolicy | quote }}
   POLYAXON_JOB_KANIKO_IMAGE: "{{ .Values.kaniko.image }}:{{ .Values.kaniko.imageTag }}"
-  POLYAXON_JOB_KANIKO_IMAGE_PULL_POLICY: "{{ .Values.kaniko.imagePullPolicy }}"
+  POLYAXON_JOB_KANIKO_IMAGE_PULL_POLICY: {{ .Values.kaniko.imagePullPolicy | quote }}
   POLYAXON_NODE_SELECTOR_CORE: {{ toJson .Values.nodeSelectors.core | quote }}
   POLYAXON_NODE_SELECTOR_EXPERIMENTS: {{ toJson .Values.nodeSelectors.experiments | quote }}
   POLYAXON_NODE_SELECTOR_JOBS: {{ toJson .Values.nodeSelectors.jobs | quote }}
@@ -212,19 +212,24 @@ data:
   POLYAXON_TOLERATIONS_JOBS: {{ toJson .Values.tolerations.jobs | quote }}
   POLYAXON_TOLERATIONS_BUILDS: {{ toJson .Values.tolerations.builds | quote }}
   POLYAXON_TOLERATIONS_TENSORBOARDS: {{ toJson .Values.tolerations.tensorboards | quote }}
-  POLYAXON_ROLE_LABELS_API: {{ .Values.roles.api }}
-  POLYAXON_ROLE_LABELS_LOG: {{ .Values.roles.log }}
-  POLYAXON_ROLE_LABELS_WORKER: {{ .Values.roles.worker }}
-  POLYAXON_ROLE_LABELS_DASHBOARD: {{ .Values.roles.dashboard }}
-  POLYAXON_TYPE_LABELS_CORE: {{ .Values.types.core }}
-  POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner }}
+  POLYAXON_ROLE_LABELS_API: {{ .Values.roles.api | quote }}
+  POLYAXON_ROLE_LABELS_LOG: {{ .Values.roles.log | quote }}
+  POLYAXON_ROLE_LABELS_WORKER: {{ .Values.roles.worker | quote }}
+  POLYAXON_ROLE_LABELS_DASHBOARD: {{ .Values.roles.dashboard | quote }}
+  POLYAXON_TYPE_LABELS_CORE: {{ .Values.types.core | quote }}
+  POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner | quote }}
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   POLYAXON_BUILD_ALWAYS_PULL_LATEST: {{ default "false" .Values.build_always_pull_latest | quote }}
+  # Default images for tensorboards
   {{- if .Values.tensorboardDockerImage }}
-  POLYAXON_TENSORBOARD_DOCKER_IMAGE: {{ .Values.tensorboardDockerImage }}
+  POLYAXON_TENSORBOARD_DOCKER_IMAGE: {{ .Values.tensorboardDockerImage | quote }}
+  {{- end }}
+  # Default images for notebooks
+  {{- if .Values.notebookDockerImage }}
+  POLYAXON_NOTEBOOKDOCKER_IMAGE: {{ .Values.notebookDockerImage | quote }}
   {{- end }}
   {{- if .Values.mountCodeInNotebooks }}
-  POLYAXON_MOUNT_CODE_IN_NOTEBOOKS: {{ .Values.mountCodeInNotebooks }}
+  POLYAXON_MOUNT_CODE_IN_NOTEBOOKS: {{ .Values.mountCodeInNotebooks | quote }}
   {{- end }}
   # Registry
   {{- if (index .Values "docker-registry").enabled }}
