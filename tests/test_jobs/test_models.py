@@ -42,6 +42,19 @@ class TestJobModel(BaseTest):
         assert JobStatus.objects.filter(job=job).count() == 1
         assert job.last_status == JobLifeCycle.CREATED
 
+    def test_status_update_results_in_new_updated_at_datetime(self):
+        job = JobFactory()
+        updated_at = job.updated_at
+        # Create new status
+        JobStatus.objects.create(job=job, status=JobLifeCycle.BUILDING)
+        job.refresh_from_db()
+        assert updated_at < job.updated_at
+        updated_at = job.updated_at
+        # Create status Using set_status
+        job.set_status(JobLifeCycle.RUNNING)
+        job.refresh_from_db()
+        assert updated_at < job.updated_at
+
     def test_job_created_status_triggers_scheduling(self):
         with patch('scheduler.tasks.jobs.jobs_build.apply_async') as mock_fct:
             job = JobFactory()

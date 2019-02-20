@@ -69,6 +69,20 @@ class TestExperimentGroupModel(BaseTest):
     #     assert delete_outputs_path.call_count == 1
     #     assert delete_logs_path.call_count == 1
 
+    def test_status_update_results_in_new_updated_at_datetime(self):
+        experiment_group = ExperimentGroupFactory()
+        updated_at = experiment_group.updated_at
+        # Create new status
+        ExperimentGroupStatusFactory(experiment_group=experiment_group,
+                                     status=ExperimentGroupLifeCycle.RUNNING)
+        experiment_group.refresh_from_db()
+        assert updated_at < experiment_group.updated_at
+        updated_at = experiment_group.updated_at
+        # Create status Using set_status
+        experiment_group.set_status(ExperimentLifeCycle.FAILED)
+        experiment_group.refresh_from_db()
+        assert updated_at < experiment_group.updated_at
+
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
     @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')

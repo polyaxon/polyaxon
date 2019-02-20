@@ -19,7 +19,7 @@ from crons.tasks.experiments_statuses import experiments_sync_jobs_statuses
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.build_jobs import BuildJobStatus
 from db.models.cloning_strategies import CloningStrategy
-from db.models.experiment_jobs import ExperimentJob
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentStatus
 from db.models.job_resources import JobResources
 from factories.factory_build_jobs import BuildJobFactory
@@ -70,6 +70,32 @@ class TestExperimentModel(BaseTest):
         with patch.object(Experiment, 'set_status') as mock_fct2:
             ExperimentFactory()
         assert mock_fct2.call_count == 1
+
+    def test_status_update_results_in_new_updated_at_datetime_experiment(self):
+        experiment = ExperimentFactory()
+        updated_at = experiment.updated_at
+        # Create new status
+        ExperimentStatus.objects.create(experiment=experiment, status=ExperimentLifeCycle.STARTING)
+        experiment.refresh_from_db()
+        assert updated_at < experiment.updated_at
+        updated_at = experiment.updated_at
+        # Create status Using set_status
+        experiment.set_status(ExperimentLifeCycle.FAILED)
+        experiment.refresh_from_db()
+        assert updated_at < experiment.updated_at
+
+    def test_status_update_results_in_new_updated_at_datetime_experiment_job(self):
+        experiment_job = ExperimentJobFactory()
+        updated_at = experiment_job.updated_at
+        # Create new status
+        ExperimentJobStatus.objects.create(job=experiment_job, status=ExperimentLifeCycle.BUILDING)
+        experiment_job.refresh_from_db()
+        assert updated_at < experiment_job.updated_at
+        updated_at = experiment_job.updated_at
+        # Create status Using set_status
+        experiment_job.set_status(ExperimentLifeCycle.FAILED)
+        experiment_job.refresh_from_db()
+        assert updated_at < experiment_job.updated_at
 
     def test_restart(self):
         experiment = ExperimentFactory()

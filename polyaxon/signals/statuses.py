@@ -83,7 +83,7 @@ def build_job_status_post_save(sender, **kwargs):
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
-    job.save(update_fields=['status', 'started_at', 'finished_at'])
+    job.save(update_fields=['status', 'started_at', 'updated_at', 'finished_at'])
     auditor.record(event_type=BUILD_JOB_NEW_STATUS,
                    instance=job,
                    previous_status=previous_status)
@@ -120,7 +120,7 @@ def job_status_post_save(sender, **kwargs):
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
-    job.save(update_fields=['status'])
+    job.save(update_fields=['status', 'started_at', 'updated_at', 'finished_at'])
     auditor.record(event_type=JOB_NEW_STATUS,
                    instance=job,
                    previous_status=previous_status)
@@ -156,7 +156,7 @@ def notebook_job_status_post_save(sender, **kwargs):
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
-    job.save(update_fields=['status', 'started_at', 'finished_at'])
+    job.save(update_fields=['status', 'started_at', 'updated_at', 'finished_at'])
     auditor.record(event_type=NOTEBOOK_NEW_STATUS,
                    instance=job,
                    previous_status=previous_status,
@@ -189,7 +189,7 @@ def tensorboard_job_status_post_save(sender, **kwargs):
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
-    job.save(update_fields=['status', 'started_at', 'finished_at'])
+    job.save(update_fields=['status', 'started_at', 'updated_at', 'finished_at'])
     auditor.record(event_type=TENSORBOARD_NEW_STATUS,
                    instance=job,
                    previous_status=previous_status,
@@ -230,7 +230,7 @@ def experiment_group_status_post_save(sender, **kwargs):
     set_finished_at(instance=experiment_group,
                     status=instance.status,
                     is_done=ExperimentGroupLifeCycle.is_done)
-    experiment_group.save(update_fields=['status', 'started_at', 'finished_at'])
+    experiment_group.save(update_fields=['status', 'started_at', 'updated_at', 'finished_at'])
     auditor.record(event_type=EXPERIMENT_GROUP_NEW_STATUS,
                    instance=experiment_group,
                    previous_status=previous_status)
@@ -258,7 +258,7 @@ def experiment_job_status_post_save(sender, **kwargs):
     job.status = instance
     set_job_started_at(instance=job, status=instance.status)
     set_job_finished_at(instance=job, status=instance.status)
-    job.save(update_fields=['status', 'started_at', 'finished_at'])
+    job.save(update_fields=['status', 'started_at', 'updated_at', 'finished_at'])
 
     # check if the new status is done to remove the containers from the monitors
     if job.is_done:
@@ -287,7 +287,7 @@ def experiment_status_post_save(sender, **kwargs):
     set_finished_at(instance=experiment,
                     status=instance.status,
                     is_done=ExperimentLifeCycle.is_done)
-    experiment.save(update_fields=['status', 'started_at', 'finished_at'])
+    experiment.save(update_fields=['status', 'started_at', 'updated_at', 'finished_at'])
     auditor.record(event_type=EXPERIMENT_NEW_STATUS,
                    instance=experiment,
                    previous_status=previous_status)

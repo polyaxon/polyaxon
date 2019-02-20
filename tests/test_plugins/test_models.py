@@ -48,6 +48,20 @@ class TestPluginsModel(BaseTest):
         assert TensorboardJobStatus.objects.count() == 1
         assert project.tensorboard.last_status == JobLifeCycle.CREATED
 
+    def test_status_update_results_in_new_updated_at_datetime_tensorboard(self):
+        project = ProjectFactory()
+        job = TensorboardJobFactory(project=project)
+        updated_at = job.updated_at
+        # Create new status
+        TensorboardJobStatus.objects.create(job=job, status=JobLifeCycle.BUILDING)
+        job.refresh_from_db()
+        assert updated_at < job.updated_at
+        updated_at = job.updated_at
+        # Create status Using set_status
+        job.set_status(JobLifeCycle.RUNNING)
+        job.refresh_from_db()
+        assert updated_at < job.updated_at
+
     def test_notebook_creation_triggers_status_creation(self):
         assert NotebookJobStatus.objects.count() == 0
         project = ProjectFactory()
@@ -55,6 +69,20 @@ class TestPluginsModel(BaseTest):
 
         assert NotebookJobStatus.objects.count() == 1
         assert project.notebook.last_status == JobLifeCycle.CREATED
+
+    def test_status_update_results_in_new_updated_at_datetime_notebook(self):
+        project = ProjectFactory()
+        job = NotebookJobFactory(project=project)
+        updated_at = job.updated_at
+        # Create new status
+        NotebookJobStatus.objects.create(job=job, status=JobLifeCycle.BUILDING)
+        job.refresh_from_db()
+        assert updated_at < job.updated_at
+        updated_at = job.updated_at
+        # Create status Using set_status
+        job.set_status(JobLifeCycle.RUNNING)
+        job.refresh_from_db()
+        assert updated_at < job.updated_at
 
     def test_managers(self):
         assert isinstance(NotebookJob.objects, LiveManager)

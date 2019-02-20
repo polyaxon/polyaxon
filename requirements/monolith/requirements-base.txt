@@ -11,7 +11,7 @@ kubernetes-asyncio==8.0.3
 ocular==0.1.1
 polyaxon-k8s==0.3.7
 polyaxon-gpustat==0.3.4
-polystores==0.1.5
+polystores==0.1.6
 scikit-learn==0.20.0
 scipy==1.1.0
 uWSGI==2.0.17.1
