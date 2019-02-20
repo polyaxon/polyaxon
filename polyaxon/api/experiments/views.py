@@ -16,6 +16,7 @@ from rest_framework.settings import api_settings
 from django.http import StreamingHttpResponse
 
 import auditor
+import conf
 import stores
 
 from api.code_reference.serializers import CodeReferenceSerializer
@@ -247,7 +248,8 @@ class ExperimentDetailView(ExperimentEndpoint,
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
-            kwargs={'experiment_id': instance.id, 'immediate': True})
+            kwargs={'experiment_id': instance.id, 'immediate': True},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 class ExperimentArchiveView(ExperimentEndpoint, CreateEndpoint):
@@ -262,7 +264,8 @@ class ExperimentArchiveView(ExperimentEndpoint, CreateEndpoint):
                        actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
-            kwargs={'experiment_id': obj.id, 'immediate': False})
+            kwargs={'experiment_id': obj.id, 'immediate': False},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -536,7 +539,8 @@ class ExperimentMetricListView(ExperimentResourceEndpoint,
                 kwargs={
                     'experiment_id': self.experiment.id,
                     'data': request.data
-                })
+                },
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
             return Response(status=status.HTTP_201_CREATED)
 
         serializer = self.get_serializer(data=request.data)
@@ -760,7 +764,8 @@ class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
                 'specification': obj.config,
                 'update_status': True,
                 'collect_logs': True,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -789,7 +794,8 @@ class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
                     'specification': experiment.config,
                     'update_status': True,
                     'collect_logs': True,
-                })
+                },
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 

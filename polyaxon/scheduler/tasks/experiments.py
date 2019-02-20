@@ -3,6 +3,7 @@ import logging
 from polystores.exceptions import PolyaxonStoresException
 from rest_framework.exceptions import ValidationError
 
+import conf
 import publisher
 import stores
 
@@ -61,7 +62,8 @@ def experiments_build(experiment_id):
     if not (experiment.specification.build and experiment.specification.run):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
-            kwargs={'experiment_id': experiment_id})
+            kwargs={'experiment_id': experiment_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return
 
     last_status = experiment.last_status
@@ -85,7 +87,8 @@ def experiments_build(experiment_id):
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
-            kwargs={'experiment_id': experiment_id})
+            kwargs={'experiment_id': experiment_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return
 
     if not build_status:
@@ -178,14 +181,16 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Experiment is scheduled for deletion.'
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     if immediate:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
             kwargs={
                 'experiment_id': experiment_id,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,

@@ -2,6 +2,8 @@ import logging
 
 from polystores.exceptions import PolyaxonStoresException
 
+import conf
+
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.getters.build_jobs import get_valid_build_job
@@ -52,14 +54,16 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Build is scheduled for deletion.'
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     if immediate:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_BUILD_JOB,
             kwargs={
                 'job_id': build_job_id,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP,
@@ -151,28 +155,32 @@ def notify_build_job_succeeded(build_job):
     for job_id in job_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_START,
-            kwargs={'job_id': job_id})
+            kwargs={'job_id': job_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     tensorboard_job_ids = TensorboardJob.objects.filter(
         build_job=build_job).values_list('id', flat=True)
     for tensorboard_job_id in tensorboard_job_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_START,
-            kwargs={'tensorboard_job_id': tensorboard_job_id})
+            kwargs={'tensorboard_job_id': tensorboard_job_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     notebook_job_ids = NotebookJob.objects.filter(
         build_job=build_job).values_list('id', flat=True)
     for notebook_job_id in notebook_job_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
-            kwargs={'notebook_job_id': notebook_job_id})
+            kwargs={'notebook_job_id': notebook_job_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     experiment_ids = Experiment.objects.filter(
         build_job=build_job).values_list('id', flat=True)
     for experiment_id in experiment_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
-            kwargs={'experiment_id': experiment_id})
+            kwargs={'experiment_id': experiment_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE, ignore_result=True)

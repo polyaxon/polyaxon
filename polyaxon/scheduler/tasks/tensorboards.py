@@ -1,5 +1,6 @@
 import logging
 
+import conf
 from constants.jobs import JobLifeCycle
 from db.getters.tensorboards import get_valid_tensorboard
 from polyaxon.celery_api import celery_app
@@ -44,7 +45,8 @@ def tensorboards_schedule_deletion(tensorboard_job_id):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Tensorboard is scheduled for deletion.'
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_STOP,

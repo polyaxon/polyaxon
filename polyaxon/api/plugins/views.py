@@ -109,7 +109,7 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
             celery_app.send_task(
                 SchedulerCeleryTasks.TENSORBOARDS_START,
                 kwargs={'tensorboard_job_id': tensorboard.id},
-                countdown=1)
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -142,7 +142,8 @@ class StopTensorboardView(ProjectEndpoint, PostEndpoint):
                     'tensorboard_job_name': tensorboard.unique_name,
                     'tensorboard_job_uuid': tensorboard.uuid.hex,
                     'update_status': True
-                })
+                },
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=tensorboard,
                            target='project',
@@ -175,7 +176,7 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
                 kwargs={'notebook_job_id': notebook.id},
-                countdown=1)
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -208,7 +209,8 @@ class StopNotebookView(ProjectEndpoint, PostEndpoint):
                     'notebook_job_name': self.project.notebook.unique_name,
                     'notebook_job_uuid': self.project.notebook.uuid.hex,
                     'update_status': True
-                })
+                },
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
                            instance=self.project.notebook,
                            target='project',

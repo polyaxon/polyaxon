@@ -20,6 +20,10 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
                                         is_optional=True,
                                         default=False)
+# Global Async Countdown
+GLOBAL_COUNTDOWN = config.get_int('POLYAXON_GLOBAL_COUNTDOWN',
+                                  is_optional=True,
+                                  default=1)
 # Heartbeat timeout (status -> failed as zombie)
 TTL_HEARTBEAT = config.get_int('POLYAXON_TTL_HEARTBEAT',
                                is_optional=True,

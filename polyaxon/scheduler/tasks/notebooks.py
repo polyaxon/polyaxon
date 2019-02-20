@@ -1,5 +1,6 @@
 import logging
 
+import conf
 from constants.jobs import JobLifeCycle
 from db.getters.notebooks import get_valid_notebook
 from polyaxon.celery_api import celery_app
@@ -35,7 +36,8 @@ def projects_notebook_build(notebook_job_id):
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
-            kwargs={'notebook_job_id': notebook_job_id})
+            kwargs={'notebook_job_id': notebook_job_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return
 
     if not build_status:
@@ -80,7 +82,8 @@ def projects_notebook_schedule_deletion(notebook_job_id):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Notebook is scheduled for deletion.'
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,

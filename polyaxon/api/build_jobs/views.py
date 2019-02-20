@@ -13,6 +13,7 @@ from rest_framework.settings import api_settings
 from django.http import StreamingHttpResponse
 
 import auditor
+import conf
 import stores
 
 from api.build_jobs import queries
@@ -102,7 +103,7 @@ class ProjectBuildListView(BookmarkedListMixinView,
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_START,
             kwargs={'build_job_id': instance.id},
-            countdown=1)
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
@@ -129,7 +130,8 @@ class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEn
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
-            kwargs={'build_job_id': instance.id, 'immediate': True})
+            kwargs={'build_job_id': instance.id, 'immediate': True},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 class BuildArchiveView(BuildEndpoint, CreateEndpoint):
@@ -144,7 +146,8 @@ class BuildArchiveView(BuildEndpoint, CreateEndpoint):
                        actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
-            kwargs={'build_job_id': obj.id, 'immediate': False})
+            kwargs={'build_job_id': obj.id, 'immediate': False},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -263,7 +266,8 @@ class BuildStopView(BuildEndpoint, CreateEndpoint):
                 'build_job_uuid': self.build.uuid.hex,
                 'update_status': True,
                 'collect_logs': True,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 

@@ -1,3 +1,5 @@
+import conf
+
 from crons.tasks.utils import get_date_check
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
@@ -17,7 +19,8 @@ def delete_archived_projects() -> None:
     for _id in ids:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_PROJECT,
-            kwargs={'project_id': _id})
+            kwargs={'project_id': _id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUPS, ignore_result=True)
@@ -30,7 +33,8 @@ def delete_archived_experiment_groups() -> None:
     for group in groups:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP,
-            kwargs={'group_id': group})
+            kwargs={'group_id': group},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENTS, ignore_result=True)
@@ -46,7 +50,8 @@ def delete_archived_experiments() -> None:
     for _id in ids:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
-            kwargs={'experiment_id': _id})
+            kwargs={'experiment_id': _id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_JOBS, ignore_result=True)
@@ -59,7 +64,8 @@ def delete_archived_jobs() -> None:
     for _id in ids:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_JOB,
-            kwargs={'job_id': _id})
+            kwargs={'job_id': _id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOBS, ignore_result=True)
@@ -72,7 +78,8 @@ def delete_archived_build_jobs() -> None:
     for _id in ids:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_BUILD_JOB,
-            kwargs={'job_id': _id})
+            kwargs={'job_id': _id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOBS, ignore_result=True)
@@ -85,7 +92,8 @@ def delete_archived_notebook_jobs() -> None:
     for _id in ids:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB,
-            kwargs={'job_id': _id})
+            kwargs={'job_id': _id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOBS, ignore_result=True)
@@ -98,4 +106,5 @@ def delete_archived_tensorboard_jobs() -> None:
     for _id in ids:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB,
-            kwargs={'job_id': _id})
+            kwargs={'job_id': _id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))

@@ -1,3 +1,4 @@
+import conf
 from event_manager import event_subjects
 from event_manager.events import notebook
 from executor.handlers.base import BaseHandler
@@ -23,7 +24,8 @@ class NotebookHandler(BaseHandler):
                 'notebook_job_uuid': instance.uuid.hex,
                 'update_status': False,
                 'collect_logs': False,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def _handle_notebook_post_run(cls, event: 'Event') -> None:
@@ -40,7 +42,8 @@ class NotebookHandler(BaseHandler):
                 'notebook_job_uuid': instance.uuid.hex,
                 'update_status': False,
                 'collect_logs': True,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

@@ -1,5 +1,7 @@
 from typing import Any, Optional, Union
 
+import conf
+
 from db.redis.base import BaseRedisDb
 from polyaxon.settings import RedisPools
 
@@ -106,7 +108,7 @@ class RedisTTL(BaseRedisDb):
         if ttl_value:
             ttl.clear()
             return ttl_value
-        return 2  # Default value to collect logs
+        return conf.get('GLOBAL_COUNTDOWN')
 
     @classmethod
     def get_for_job(cls, job_id: int) -> int:
@@ -115,7 +117,7 @@ class RedisTTL(BaseRedisDb):
         if ttl_value:
             ttl.clear()
             return ttl_value
-        return 2  # Default value to collect logs@classmethod
+        return conf.get('GLOBAL_COUNTDOWN')
 
     @classmethod
     def get_for_build(cls, build_id: int) -> int:
@@ -124,4 +126,4 @@ class RedisTTL(BaseRedisDb):
         if ttl_value:
             ttl.clear()
             return ttl_value
-        return 2  # Default value to collect logs
+        return conf.get('GLOBAL_COUNTDOWN')

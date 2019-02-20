@@ -1,3 +1,5 @@
+import conf
+
 from constants.jobs import JobLifeCycle
 from event_manager import event_subjects
 from event_manager.events import experiment_job
@@ -21,7 +23,7 @@ class ExperimentJobHandler(BaseHandler):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
             kwargs={'experiment_id': instance.experiment.id},
-            countdown=1)
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

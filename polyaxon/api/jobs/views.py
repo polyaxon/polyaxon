@@ -15,6 +15,7 @@ from rest_framework.settings import api_settings
 from django.http import StreamingHttpResponse
 
 import auditor
+import conf
 import stores
 
 from api.endpoint.base import (
@@ -130,7 +131,8 @@ class JobDetailView(JobEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoi
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
-            kwargs={'job_id': instance.id, 'immediate': True})
+            kwargs={'job_id': instance.id, 'immediate': True},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 class JobArchiveView(JobEndpoint, CreateEndpoint):
@@ -145,7 +147,8 @@ class JobArchiveView(JobEndpoint, CreateEndpoint):
                        actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
-            kwargs={'job_id': obj.id, 'immediate': False})
+            kwargs={'job_id': obj.id, 'immediate': False},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -318,7 +321,8 @@ class JobStopView(JobEndpoint, PostEndpoint):
                 'job_uuid': self.job.uuid.hex,
                 'update_status': True,
                 'collect_logs': True,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 

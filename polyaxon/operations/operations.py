@@ -1,3 +1,5 @@
+import conf
+
 from db.getters.experiments import get_valid_experiment
 from pipelines.celery_task import ClassBasedTask, OperationRunError
 from polyaxon.celery_api import celery_app
@@ -15,7 +17,8 @@ class ScheduleExperimentTask(ClassBasedTask):
 
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_BUILD,
-            kwargs={'experiment_id': experiment_id})
+            kwargs={'experiment_id': experiment_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=CeleryOperationTasks.EXPERIMENTS_SCHEDULE, bind=True, ignore_result=True)

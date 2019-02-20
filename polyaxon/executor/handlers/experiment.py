@@ -1,3 +1,4 @@
+import conf
 from db.redis.tll import RedisTTL
 from event_manager import event_subjects
 from event_manager.events import experiment
@@ -17,7 +18,7 @@ class ExperimentHandler(BaseHandler):
             celery_app.send_task(
                 SchedulerCeleryTasks.EXPERIMENTS_BUILD,
                 kwargs={'experiment_id': event.data['id']},
-                countdown=1)
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def _handle_experiment_cleaned_triggered(cls, event: 'Event') -> None:
@@ -45,7 +46,7 @@ class ExperimentHandler(BaseHandler):
                     'update_status': False,
                     'collect_logs': False,
                 },
-                countdown=1)
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
         except ExperimentGroup.DoesNotExist:
             # The experiment was already stopped when the group was deleted
             pass

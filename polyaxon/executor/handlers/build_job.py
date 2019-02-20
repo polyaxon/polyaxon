@@ -1,3 +1,5 @@
+import conf
+
 from db.redis.tll import RedisTTL
 from event_manager import event_subjects
 from event_manager.events import build_job
@@ -25,7 +27,8 @@ class BuildJobHandler(BaseHandler):
                 'build_job_uuid': instance.uuid.hex,
                 'update_status': False,
                 'collect_logs': False,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def _handle_build_job_post_run(cls, event: 'Event') -> None:
@@ -53,7 +56,8 @@ class BuildJobHandler(BaseHandler):
 
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE,
-            kwargs={'build_job_id': instance.id})
+            kwargs={'build_job_id': instance.id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

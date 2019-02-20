@@ -2,6 +2,7 @@ import logging
 
 from polystores.exceptions import PolyaxonStoresException
 
+import conf
 from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from db.redis.heartbeat import RedisHeartBeat
@@ -40,7 +41,8 @@ def jobs_build(job_id):
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_START,
-            kwargs={'job_id': job_id})
+            kwargs={'job_id': job_id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return
 
     if not build_status:
@@ -90,14 +92,16 @@ def jobs_schedule_deletion(job_id, immediate=False):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Job is scheduled for deletion.'
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     if immediate:
         celery_app.send_task(
             SchedulerCeleryTasks.DELETE_ARCHIVED_JOB,
             kwargs={
                 'job_id': job_id,
-            })
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)

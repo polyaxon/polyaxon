@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 import auditor
+import conf
 
 from api.endpoint.base import (
     BaseEndpoint,
@@ -119,7 +120,8 @@ class ExperimentGroupDetailView(ExperimentGroupEndpoint,
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION,
-            kwargs={'experiment_group_id': instance.id, 'immediate': True})
+            kwargs={'experiment_group_id': instance.id, 'immediate': True},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 class ExperimentGroupArchiveView(ExperimentGroupEndpoint, CreateEndpoint):
@@ -134,7 +136,8 @@ class ExperimentGroupArchiveView(ExperimentGroupEndpoint, CreateEndpoint):
                        actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION,
-            kwargs={'experiment_group_id': obj.id, 'immediate': False})
+            kwargs={'experiment_group_id': obj.id, 'immediate': False},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -204,12 +207,14 @@ class ExperimentGroupStopView(CreateAPIView):
                 SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
                 kwargs={'experiment_group_id': obj.id,
                         'pending': pending,
-                        'message': 'User stopped pending experiments'})
+                        'message': 'User stopped pending experiments'},
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
         else:
             celery_app.send_task(
                 SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
                 kwargs={'experiment_group_id': obj.id,
-                        'message': 'User stopped experiment group'})
+                        'message': 'User stopped experiment group'},
+                countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 

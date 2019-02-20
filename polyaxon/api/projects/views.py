@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 import auditor
+import conf
 
 from api.endpoint.admin import AdminProjectListPermission, AdminResourceEndpoint
 from api.endpoint.base import (
@@ -83,7 +84,8 @@ class ProjectDetailView(ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, Destr
         instance.archive()
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION,
-            kwargs={'project_id': instance.id, 'immediate': True})
+            kwargs={'project_id': instance.id, 'immediate': True},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
 
 class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
@@ -98,7 +100,8 @@ class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
                        actor_name=request.user.username)
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION,
-            kwargs={'project_id': obj.id, 'immediate': False})
+            kwargs={'project_id': obj.id, 'immediate': False},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
 
 

@@ -1,3 +1,4 @@
+import conf
 from constants.experiments import ExperimentLifeCycle
 from event_manager import event_subjects
 from event_manager.events import experiment_group
@@ -16,7 +17,7 @@ class ExperimentGroupHandler(BaseHandler):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE,
             kwargs={'experiment_group_id': event.data['id']},
-            countdown=1)
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def _handle_experiment_group_done(cls, event: 'Event') -> None:
@@ -40,7 +41,8 @@ class ExperimentGroupHandler(BaseHandler):
                         'specification': experiment.config,
                         'update_status': True,
                         'collect_logs': True
-                    })
+                    },
+                    countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

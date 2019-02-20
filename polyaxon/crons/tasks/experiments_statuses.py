@@ -1,5 +1,7 @@
 from django.db.models import Count
 
+import conf
+
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import Experiment
 from polyaxon.celery_api import celery_app
@@ -14,4 +16,5 @@ def experiments_sync_jobs_statuses() -> None:
     for experiment in experiments:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
-            kwargs={'experiment_id': experiment.id})
+            kwargs={'experiment_id': experiment.id},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
