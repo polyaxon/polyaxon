@@ -132,7 +132,7 @@ environment:
 
 ## Using the store manager to access data
 
-In your experiment/job, Polyaxon exposes all data [paths](/references/tracking-api/paths/#get-data-paths) scheduled for the run, 
+In your experiment/job, Polyaxon exposes all secrets related to the data as well as the data [paths](/references/tracking-api/paths/#get-data-paths) scheduled for the run as an an env var,
 and provides an interface to get an authenticated client for each one of these Paths.
 
 For every path in the data paths dictionary, you can create an authenticated store using the `StoreManager` 
