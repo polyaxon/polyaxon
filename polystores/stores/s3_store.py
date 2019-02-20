@@ -264,9 +264,9 @@ class S3Store(BaseStore):
         }
         for page in response:
             if prefixes:
-                results['prefixes'] = get_prefixes(page.get('CommonPrefixes', []))
+                results['prefixes'] += get_prefixes(page.get('CommonPrefixes', []))
             if keys:
-                results['keys'] = get_keys(page.get('Contents', []))
+                results['keys'] += get_keys(page.get('Contents', []))
 
         return results
 
