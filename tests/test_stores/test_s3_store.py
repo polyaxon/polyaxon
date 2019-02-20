@@ -60,6 +60,17 @@ class TestAwsStore(TestCase):
         assert bucket is not None
 
     @mock_s3
+    def test_list_size(self):
+        store = S3Store()
+        b = store.get_bucket('bucket')
+        b.create()
+        num_objects = 1001
+        for k in range(num_objects):
+            b.put_object(Key='a' + str(k), Body=b'a')
+
+        assert len(store.list(bucket_name='bucket', delimiter='/')['keys']) == num_objects
+
+    @mock_s3
     def test_list_prefixes(self):
         store = S3Store()
         b = store.get_bucket('bucket')
