@@ -208,7 +208,7 @@ class GCSStore(BaseStore):
         if prefixes:
             iterator = get_iterator()
             for page in iterator.pages:
-                results['prefixes'] = get_prefixes(page.prefixes)
+                results['prefixes'] += get_prefixes(page.prefixes)
 
         return results
 
