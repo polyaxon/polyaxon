@@ -27,7 +27,6 @@ def projects_schedule_deletion(project_id, immediate=False):
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
             kwargs={
                 'experiment_group_id': group,
-                'pending': False,
                 'collect_logs': False,
                 'message': message,
             })
