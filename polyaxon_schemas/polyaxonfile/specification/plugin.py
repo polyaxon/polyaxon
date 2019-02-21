@@ -7,7 +7,6 @@ from polyaxon_schemas.environments import NotebookEnvironmentConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
-from polyaxon_schemas.utils import NotebookBackend
 
 
 class NotebookSpecification(BuildSpecification):
@@ -32,9 +31,9 @@ class NotebookSpecification(BuildSpecification):
 
     @cached_property
     def backend(self):
-        if not self.environment or not self.environment.backend:
-            return NotebookBackend.NOTEBOOK
-        return self.environment.backend
+        if self.environment:
+            return self.environment.backend
+        return None
 
 
 class TensorboardSpecification(BuildSpecification):

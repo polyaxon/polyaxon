@@ -1401,7 +1401,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.version == 1
         assert spec.is_notebook
         assert spec.is_notebook is True
-        assert spec.backend == 'notebook'
+        assert spec.backend is None
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)

@@ -163,6 +163,7 @@ class TestBuildConfigs(TestCase):
         assert config.image_tag is None
         assert config.dockerfile == 'Dockerfile'
         assert config.nocache is True
+        assert config.backend is None
 
     def test_build_context(self):
         config_dict = {
@@ -182,6 +183,7 @@ class TestBuildConfigs(TestCase):
         assert config.to_dict() == config_dict
         assert config.dockerfile == 'path/to/Dockerfile'
         assert config.context == 'path/to/module'
+        assert config.backend is None
 
     def test_build_repo_with_install_step_config(self):
         config_dict = {
@@ -192,6 +194,19 @@ class TestBuildConfigs(TestCase):
         config = BuildConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.image_tag == '1.3.0'
+        assert config.backend is None
+
+    def test_build_with_native(self):
+        config_dict = {
+            'image': 'tensorflow:1.3.0',
+            'build_steps': ['pip install tensor2tensor'],
+            'env_vars': [['LC_ALL', 'en_US.UTF-8']],
+            'backend': BuildBackend.NATIVE
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag == '1.3.0'
+        assert config.backend == BuildBackend.NATIVE
 
     def test_build_with_kaniko(self):
         config_dict = {
