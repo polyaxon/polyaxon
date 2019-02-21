@@ -116,7 +116,9 @@ class PublisherService(Service):
                              log_lines=log_lines,
                              routing_key=RoutingKeys.STREAM_LOGS_SIDECARS_JOBS)
 
-    def setup(self):
+    def setup(self) -> None:
+        super().setup()
+
         import logging
 
         self._logger = logging.getLogger('polyaxon.monitors.publisher')

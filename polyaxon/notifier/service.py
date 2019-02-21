@@ -76,7 +76,7 @@ class NotifierService(EventService):
             except Exception as e:
                 action.logger.warning('Action execution failed %s', e, exc_info=True)
 
-    def setup(self):
+    def setup(self) -> None:
         super().setup()
         # Load default event types and actions
         import notifier.actions  # noqa

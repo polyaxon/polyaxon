@@ -1,5 +1,6 @@
 from polyaxon.config_settings.assets import *
 from polyaxon.config_settings.auth import *
+from polyaxon.config_settings.ci import *
 from polyaxon.config_settings.cors import *
 from polyaxon.config_settings.dirs import *
 from polyaxon.config_settings.k8s import *

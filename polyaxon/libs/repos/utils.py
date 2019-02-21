@@ -52,8 +52,7 @@ def _get_external_repo_code_reference(repo: 'ExternalRepo',
     return get_or_create(ref=last_commit[0])
 
 
-def get_code_reference(instance, commit: str = None) -> Optional['CodeReference']:
-    project = instance.project
+def get_code_reference(project: 'Project', commit: str = None) -> Optional['CodeReference']:
 
     if not project.has_code:
         return None
@@ -80,7 +79,7 @@ def assign_code_reference(instance: RefModel, commit: str = None) -> RefModel:
     build = instance.specification.build if instance.specification else None
     if not commit and build:
         commit = build.ref
-    code_reference = get_code_reference(instance=instance, commit=commit)
+    code_reference = get_code_reference(project=instance.project, commit=commit)
     if code_reference:
         instance.code_reference = code_reference
 

@@ -16,6 +16,7 @@ PROJECT_APPS = AUDITOR_APPS + (
     'k8s_events_handlers.apps.K8SEventsHandlersConfig',
     'logs_handlers.apps.LogsHandlersConfig',
     'commands.apps.CommandsConfig',
+    'ci.apps.CIConfig',
 )
 
 INSTALLED_APPS += PROJECT_APPS

@@ -25,6 +25,7 @@ class ConfService(Service):
         delattr(self._settings, name)
 
     def setup(self) -> None:
+        super().setup()
         from django.conf import settings
 
         self._settings = settings

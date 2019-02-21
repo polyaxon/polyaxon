@@ -9,6 +9,7 @@ PROJECT_APPS = AUDITOR_APPS + (
     'api.apps.APIsConfig',
     'publisher.apps.PublisherConfig',
     'query.apps.QueryConfig',
+    'ci.apps.CIConfig',
 )
 
 INSTALLED_APPS += PROJECT_APPS

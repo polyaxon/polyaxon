@@ -226,6 +226,12 @@ class ConfigManager(rhea.Rhea):
         conf.validate()
         conf.setup()
 
+    def setup_ci_service(self):
+        import ci
+
+        ci.validate()
+        ci.setup()
+
     def setup_publisher_service(self):
         import publisher
 
