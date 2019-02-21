@@ -23,7 +23,7 @@ def check_no_op(f):
 
     def wrapper(*args, **kwargs):
         if settings.NO_OP:
-            return
+            return None
         return f(*args, **kwargs)
 
     return wrapper
