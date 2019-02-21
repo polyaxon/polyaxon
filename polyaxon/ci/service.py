@@ -42,8 +42,8 @@ class CIService(Service):
         try:
             plx_file = PolyaxonFile(polyaxonfile_path)
         except Exception as e:
-            _logger.warning("Polyaxonfile is not valid.", add_sign=True)
-            _logger.warning('Error message `{}`.'.format(e))
+            _logger.warning("Polyaxonfile is not valid.")
+            _logger.warning('Error message: %s', e)
             return
 
         return plx_file.specification
@@ -120,7 +120,7 @@ class CIService(Service):
         if not spec_cond:
             _logger.warning(
                 'The CI expects an experiment, a group, a job, or a build specification,'
-                'received instead a `{}` specification'.format(specification.kind))
+                'received instead a `%s` specification', specification.kind)
             return False
 
         if specification.is_experiment:

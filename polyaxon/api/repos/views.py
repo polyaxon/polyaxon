@@ -159,9 +159,8 @@ class ExternalRepoSyncView(ProjectResourceListEndpoint, PostEndpoint):
 
         if ci.trigger(project=self.project):
             return Response(status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST,
-                            data='Could not trigger the project CI.')
+        return Response(status=status.HTTP_400_BAD_REQUEST,
+                        data='Could not trigger the project CI.')
 
 
 class RepoUploadView(ProjectResourceListEndpoint, UploadView):
@@ -223,9 +222,8 @@ class RepoUploadView(ProjectResourceListEndpoint, UploadView):
         if sync:
             if ci.trigger(project=self.project):
                 return Response(status=status.HTTP_200_OK)
-            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST,
-                                data='Could not trigger the project CI.')
+            return Response(status=status.HTTP_400_BAD_REQUEST,
+                            data='Could not trigger the project CI.')
 
         # do some stuff with uploaded file
         return Response(status=status.HTTP_200_OK)
