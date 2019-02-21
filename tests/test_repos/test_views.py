@@ -112,7 +112,7 @@ class TestExternalRepoDetailViewV1(BaseViewTest):
 
 
 @pytest.mark.repos_mark
-class TestUploadFilesView(BaseViewTest):
+class TestRepoUploadView(BaseViewTest):
     model_class = Repo
     factory_class = RepoFactory
     HAS_AUTH = True
@@ -146,7 +146,7 @@ class TestUploadFilesView(BaseViewTest):
 
         with patch('api.repos.views.handle_new_files') as mock_task:
             self.auth_client.put(self.url,
-                                 data={'repo': uploaded_file, 'json': json.dumps({'async': False})},
+                                 data={'repo': uploaded_file, 'json': json.dumps({'delay': False})},
                                  content_type=MULTIPART_CONTENT)
 
         file_path = '{}/{}/{}.tar.gz'.format(conf.get('UPLOAD_MOUNT_PATH'),
@@ -404,7 +404,7 @@ class TestUploadFilesView(BaseViewTest):
 
 
 @pytest.mark.repos_mark
-class DownloadRepoViewTest(BaseViewTest):
+class RepoDownloadViewTest(BaseViewTest):
     model_class = Repo
     factory_class = RepoFactory
     HAS_AUTH = True
@@ -491,7 +491,7 @@ class DownloadRepoViewTest(BaseViewTest):
 
 
 @pytest.mark.repos_mark
-class TestSetExternalRepoView(BaseViewTest):
+class TestExternalRepoSetView(BaseViewTest):
     model_class = ExternalRepo
     factory_class = ExternalRepoFactory
     HAS_AUTH = True

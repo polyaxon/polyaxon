@@ -12,7 +12,13 @@ from django.http import Http404, HttpResponseServerError
 import auditor
 import conf
 
-from api.endpoint.base import CreateEndpoint, DestroyEndpoint, RetrieveEndpoint, UpdateEndpoint
+from api.endpoint.base import (
+    CreateEndpoint,
+    DestroyEndpoint,
+    RetrieveEndpoint,
+    UpdateEndpoint,
+    PostEndpoint
+)
 from api.endpoint.project import ProjectResourceListEndpoint
 from api.repos.serializers import ExternalRepoSerializer, RepoSerializer
 from api.repos.tasks import handle_new_files
@@ -61,7 +67,7 @@ class RepoDetailView(ProjectResourceListEndpoint,
         return self._object
 
 
-class DownloadFilesView(ProjectResourceListEndpoint, ProtectedView):
+class RepoDownloadView(ProjectResourceListEndpoint, ProtectedView):
     """Download repo code as tar.gz."""
     HANDLE_UNAUTHENTICATED = False
     authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
@@ -95,7 +101,7 @@ class DownloadFilesView(ProjectResourceListEndpoint, ProtectedView):
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 
-class SetExternalRepoView(ProjectResourceListEndpoint, CreateEndpoint):
+class ExternalRepoSetView(ProjectResourceListEndpoint, CreateEndpoint):
     queryset = ExternalRepo.objects
     serializer_class = ExternalRepoSerializer
 
@@ -135,7 +141,27 @@ class SetExternalRepoView(ProjectResourceListEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_200_OK)
 
 
-class UploadFilesView(ProjectResourceListEndpoint, UploadView):
+class ExternalRepoSyncView(ProjectResourceListEndpoint, PostEndpoint):
+    queryset = ExternalRepo.objects
+    serializer_class = ExternalRepoSerializer
+
+    def get_object(self):
+        if self._object:
+            return self._object
+        self._object = get_object_or_404(ExternalRepo, project=self.project)
+        return self._object
+
+    def post(self, request, *args, **kwargs):
+        repo = self.get_object()
+        if not os.path.isdir(repo.project_path):
+            git.external.set_git_repo(repo)
+
+        # TODO: sync and trigger ci
+        pass
+        return Response(status=status.HTTP_200_OK)
+
+
+class RepoUploadView(ProjectResourceListEndpoint, UploadView):
     """Upload code to a repo."""
 
     def get_object(self):
@@ -181,14 +207,19 @@ class UploadFilesView(ProjectResourceListEndpoint, UploadView):
             return HttpResponseServerError()
 
         json_data = self._handle_json_data(request)
-        is_async = json_data.get('async', False)
+        delay = json_data.get('delay', False)
+        sync = json_data.get('sync', False)
 
-        if is_async is False:
+        if delay is False:
             file_handler = handle_new_files
         else:
             file_handler = handle_new_files.delay
 
         file_handler(user_id=user.id, repo_id=repo.id, tar_file_name=tar_file_name)
+
+        if sync:
+            # TODO: trigger ci
+            pass
 
         # do some stuff with uploaded file
         return Response(status=200)
