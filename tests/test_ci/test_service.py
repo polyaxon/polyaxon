@@ -4,13 +4,14 @@ import shutil
 import pytest
 
 import ci
+
 from db.models.build_jobs import BuildJob
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from factories.ci_factory import CIFactory
 from factories.factory_projects import ProjectFactory
-from factories.factory_repos import RepoFactory, ExternalRepoFactory
+from factories.factory_repos import ExternalRepoFactory, RepoFactory
 from libs.repos import git
 from tests.utils import BaseTest
 

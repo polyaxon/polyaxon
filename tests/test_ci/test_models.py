@@ -3,7 +3,7 @@ import pytest
 from factories.ci_factory import CIFactory
 from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_projects import ProjectFactory
-from factories.factory_repos import RepoFactory, ExternalRepoFactory
+from factories.factory_repos import ExternalRepoFactory, RepoFactory
 from tests.utils import BaseTest
 
 

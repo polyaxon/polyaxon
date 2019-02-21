@@ -1,9 +1,10 @@
 import logging
+
 from typing import Optional
 
 from hestia.service_interface import Service
 
-from schemas.polyaxonfile import get_default_polyaxonfile, PolyaxonFile
+from schemas.polyaxonfile import PolyaxonFile, get_default_polyaxonfile
 
 _logger = logging.getLogger('polyaxon.ci')
 

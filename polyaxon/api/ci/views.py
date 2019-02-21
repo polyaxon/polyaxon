@@ -3,13 +3,7 @@ import logging
 from rest_framework.generics import get_object_or_404
 
 from api.ci.serializers import CISerializer
-
-from api.endpoint.base import (
-    CreateEndpoint,
-    DestroyEndpoint,
-    RetrieveEndpoint,
-    UpdateEndpoint
-)
+from api.endpoint.base import CreateEndpoint, DestroyEndpoint, RetrieveEndpoint, UpdateEndpoint
 from api.endpoint.project import ProjectResourceListEndpoint
 from db.models.ci import CI
 

@@ -16,9 +16,9 @@ import conf
 from api.endpoint.base import (
     CreateEndpoint,
     DestroyEndpoint,
+    PostEndpoint,
     RetrieveEndpoint,
-    UpdateEndpoint,
-    PostEndpoint
+    UpdateEndpoint
 )
 from api.endpoint.project import ProjectResourceListEndpoint
 from api.repos.serializers import ExternalRepoSerializer, RepoSerializer

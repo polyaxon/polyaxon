@@ -13,16 +13,20 @@ from libs.unique_urls import get_notebook_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
-from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs, \
-    get_internal_env_vars
+from scheduler.spawners.templates.env_vars import (
+    get_internal_env_vars,
+    validate_configmap_refs,
+    validate_secret_refs
+)
 from scheduler.spawners.templates.notebooks import manager
 from scheduler.spawners.templates.volumes import (
+    get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
     get_pod_volumes,
     get_shm_volumes,
     get_volume,
-    get_volume_mount,
-    get_auth_context_volumes)
+    get_volume_mount
+)
 from schemas.notebook_backend import NotebookBackend
 
 

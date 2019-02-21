@@ -3,7 +3,6 @@ import pytest
 from rest_framework import status
 
 from api.ci.serializers import CISerializer
-
 from constants.urls import API_V1
 from db.models.ci import CI
 from factories.ci_factory import CIFactory
