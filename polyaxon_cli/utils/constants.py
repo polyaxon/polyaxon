@@ -18,7 +18,7 @@ var
 ./.polyaxon
 """
 
-INIT_FILE = 'polyaxonfile.yml'
+INIT_FILE = 'polyaxonfile.yaml'
 
 INIT_FILE_MODEL_TEMPLATE = """---
 version: 1

@@ -68,7 +68,7 @@ def check(file,  # pylint:disable=redefined-builtin
           version,
           definition):
     """Check a polyaxonfile."""
-    file = file or 'polyaxonfile.yml'
+    file = file or 'polyaxonfile.yaml'
     specification = check_polyaxonfile(file).specification
 
     if version:

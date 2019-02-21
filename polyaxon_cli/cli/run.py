@@ -21,6 +21,7 @@ from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.schemas.experiment import ExperimentConfig
 from polyaxon_cli.schemas.group import ExperimentGroupConfig
 from polyaxon_cli.schemas.job import JobConfig
+from polyaxon_cli.schemas.polyaxonfile import get_default_polyaxonfile
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_cli.utils.validation import validate_tags
@@ -81,7 +82,10 @@ def run(ctx, project, file, name, tags, description, ttl, u, l):  # pylint:disab
     $ polyaxon run -p project1 -f file.yaml
     ```
     """
-    file = file or 'polyaxonfile.yml'
+    if not file:
+        file = get_default_polyaxonfile(path='.')
+    if not file:
+        file = ''
     specification = check_polyaxonfile(file, log=False).specification
 
     spec_cond = (specification.is_experiment or
