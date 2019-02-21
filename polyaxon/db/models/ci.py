@@ -14,3 +14,10 @@ class CI(DiffModel):
         blank=True,
         null=True,
         help_text='The ci config schema.')
+    code_reference = models.ForeignKey(
+        'db.CodeReference',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='+',
+        help_text="The ci's last code ref used.")
