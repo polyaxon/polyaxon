@@ -27,7 +27,6 @@ from scheduler.spawners.templates.volumes import (
     get_volume,
     get_volume_mount
 )
-from schemas.notebook_backend import NotebookBackend
 
 
 class NotebookSpawner(ProjectJobSpawner):
