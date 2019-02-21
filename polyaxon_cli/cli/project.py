@@ -609,13 +609,14 @@ def tensorboards(ctx, query, sort, page):
 
 
 @project.command()
-@click.option('--url', required=True, type=str,
-              help='The url of the git repo..')
+@click.option('--url', type=str,
+              help='The url of the git repo.')
 @click.option('--private', is_flag=True, help='Set the visibility of the project to private.')
+@click.option('--sync', is_flag=True, help='Sync and fetch latest repo changes on Polyaxon.')
 @click.pass_context
 @clean_outputs
-def git(ctx, url, private):  # pylint:disable=assign-to-new-keyword
-    """Set git repo on this project.
+def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
+    """Set/Sync git repo on this project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
 
@@ -633,22 +634,94 @@ def git(ctx, url, private):  # pylint:disable=assign-to-new-keyword
     """
     user, project_name = get_project_or_local(ctx.obj.get('project'))
 
-    if private:
-        click.echo('\nSetting a private git repo "{}" on project: {} ...\n'.format(
-            url, project_name))
-    else:
-        click.echo('\nSetting a public git repo "{}" on project: {} ...\n'.format(
-            url, project_name))
+    def git_set_url():
+        if private:
+            click.echo('\nSetting a private git repo "{}" on project: {} ...\n'.format(
+                url, project_name))
+        else:
+            click.echo('\nSetting a public git repo "{}" on project: {} ...\n'.format(
+                url, project_name))
 
-    try:
-        PolyaxonClient().project.set_repo(user, project_name, url, not private)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error('Could not set git repo on project `{}`.'.format(project_name))
-        Printer.print_error('Error message `{}`.'.format(e))
-        sys.exit(1)
+        try:
+            PolyaxonClient().project.set_repo(user, project_name, url, not private)
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+            Printer.print_error('Could not set git repo on project `{}`.'.format(project_name))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
 
-    Printer.print_success('Project was successfully initialized with `{}`.'.format(url),
-                          add_sign=True)
+        Printer.print_success('Project was successfully initialized with `{}`.'.format(url),
+                              add_sign=True)
+
+    def git_sync_repo():
+        try:
+            response = PolyaxonClient().project.sync_repo(user, project_name)
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+            Printer.print_error('Could not sync git repo on project `{}`.'.format(project_name))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
+
+        click.echo(response.status_code)
+        Printer.print_success('Project was successfully synced with latest changes.',
+                              add_sign=True)
+
+    if url:
+        git_set_url()
+    if sync:
+        git_sync_repo()
+
+
+@project.command()
+@click.option('--enable', is_flag=True, help='Enable CI on this project.')
+@click.option('--disable', is_flag=True, help='Disable CI on this project.')
+@click.pass_context
+@clean_outputs
+def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
+    """Enable/Disable CI on this project.
+
+    Uses [Caching](/references/polyaxon-cli/#caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon project ci --enable
+    ```
+
+    \b
+    ```bash
+    $ polyaxon project ci --disable
+    ```
+    """
+    user, project_name = get_project_or_local(ctx.obj.get('project'))
+
+    def enable_ci():
+        try:
+            PolyaxonClient().project.enable_ci(user, project_name)
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+            Printer.print_error('Could not enable CI on project `{}`.'.format(project_name))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
+
+        Printer.print_success(
+            'Polyaxon CI was successfully enabled on project: `{}`.'.format(project_name),
+            add_sign=True)
+
+    def disable_ci():
+        try:
+            PolyaxonClient().project.disable_ci(user, project_name)
+        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+            Printer.print_error('Could not disable CI on project `{}`.'.format(project_name))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
+
+        Printer.print_success(
+            'Polyaxon CI was successfully disabled on project: `{}`.'.format(project_name),
+            add_sign=True)
+
+    if enable:
+        enable_ci()
+    if disable:
+        disable_ci()
 
 
 @project.command()
