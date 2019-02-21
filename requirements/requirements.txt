@@ -2,5 +2,5 @@ hestia==0.2.8
 Jinja2==2.10
 marshmallow==2.16.3
 numpy>=1.15.2
-pytz==2018.7
+pytz>=2018.9
 rhea==0.4.4

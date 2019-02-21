@@ -53,7 +53,7 @@ setup(name='polyaxon-schemas',
           'marshmallow==2.16.3',
           'numpy>=1.15.2',
           'python-dateutil>=2.7.3',
-          'pytz==2018.7',
+          'pytz>=2018.9',
           'rhea==0.4.4'
       ],
       classifiers=[
