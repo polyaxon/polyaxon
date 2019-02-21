@@ -1,6 +1,6 @@
 import pytest
 
-from db.models.ci import CI
+from factories.ci_factory import CIFactory
 from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory, ExternalRepoFactory
@@ -13,7 +13,7 @@ class TestCIModel(BaseTest):
         project = ProjectFactory()
         self.assertEqual(project.has_ci, False)
 
-        ci = CI.objects.create(project=project)
+        ci = CIFactory(project=project)
         self.assertEqual(project.has_ci, True)
 
         ci.delete()
@@ -24,13 +24,13 @@ class TestCIModel(BaseTest):
         project = ProjectFactory()
         repo = RepoFactory(project=project)
         code_ref = CodeReferenceFactory(repo=repo)
-        ci = CI.objects.create(project=project, code_reference=code_ref)
+        ci = CIFactory(project=project, code_reference=code_ref)
         assert ci.code_reference == code_ref
 
     def test_project_ci_code_ref(self):
         project = ProjectFactory()
         repo = ExternalRepoFactory(project=project, git_url='https://github.com/polyaxon/empty.git')
-        ci = CI.objects.create(project=project)
+        ci = CIFactory(project=project)
         assert ci.code_reference is None
 
         code_ref = CodeReferenceFactory(external_repo=repo)

@@ -42,4 +42,3 @@ class CIView(ProjectResourceListEndpoint,
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, project=self.project)
-
