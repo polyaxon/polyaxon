@@ -322,7 +322,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
 
     # Check if we need to upload
     if u:
-        ctx.invoke(upload)
+        ctx.invoke(upload, sync=False)
         update_code = True
 
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
@@ -368,7 +368,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 
     # Check if we need to upload
     if u:
-        ctx.invoke(upload)
+        ctx.invoke(upload, sync=False)
         update_code = True
 
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),

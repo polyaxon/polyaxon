@@ -109,7 +109,7 @@ def run(ctx, project, file, name, tags, description, ttl, u, l):  # pylint:disab
                                 add_sign=True)
             click.echo('Please, either omit the `-u` option or `-p` / `--project=` option.')
             sys.exit(1)
-        ctx.invoke(upload)
+        ctx.invoke(upload, sync=False)
 
     user, project_name = get_project_or_local(project)
     project_client = PolyaxonClient().project
