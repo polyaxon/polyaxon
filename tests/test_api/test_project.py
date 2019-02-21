@@ -155,6 +155,48 @@ class TestProjectApi(TestBaseApi):
             method='delete')
 
     @httpretty.activate
+    def test_enable_ci(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'ci'),
+            content_type='application/json',
+            status=201)
+        result = self.api_handler.enable_ci('username', 'project_name')
+        assert result.status_code == 201
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.enable_ci(
+                'user', 'project', background=True),
+            method='post')
+
+    @httpretty.activate
+    def test_disable_ci(self):
+        httpretty.register_uri(
+            httpretty.DELETE,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'ci'),
+            content_type='application/json',
+            status=204)
+        result = self.api_handler.disable_ci('username', 'project_name')
+        assert result.status_code == 204
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.disable_ci(
+                'user', 'project', background=True),
+            method='delete')
+
+    @httpretty.activate
     def test_set_git_repo(self):
         obj = {'git': 'https://github.com/foo/bar'}
         httpretty.register_uri(
@@ -190,17 +232,46 @@ class TestProjectApi(TestBaseApi):
                 'repo',
                 'upload'),
             content_type='application/json',
-            status=204)
+            status=200)
         files = [('code', ('repo',
                            open('./tests/fixtures_static/repo.tar.gz', 'rb'),
                            'text/plain'))]
         result = self.api_handler.upload_repo('user', 'project', files=files, files_size=10)
-        assert result.status_code == 204
+        assert result.status_code == 200
 
         # Async
         self.assert_async_call(
             api_handler_call=lambda: self.api_handler.upload_repo(
                 'user', 'project', files=files, files_size=10, background=True),
+            method='upload')
+
+    @httpretty.activate
+    def test_upload_and_sync_repo(self):
+        httpretty.register_uri(
+            httpretty.PUT,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'user',
+                'project',
+                'repo',
+                'upload'),
+            content_type='application/json',
+            status=200)
+        files = [('code', ('repo',
+                           open('./tests/fixtures_static/repo.tar.gz', 'rb'),
+                           'text/plain'))]
+        result = self.api_handler.upload_repo('user',
+                                              'project',
+                                              files=files,
+                                              files_size=10,
+                                              sync=True)
+        assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.upload_repo(
+                'user', 'project', files=files, files_size=10, sync=True, background=True),
             method='upload')
 
     @httpretty.activate

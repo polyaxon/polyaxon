@@ -74,6 +74,43 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while deleting project.')
             return None
 
+    def enable_ci(self, username, project_name, config=None, background=False):
+        """Enable ci on the project"""
+        request_url = self.build_url(
+            self._get_http_url(), username, project_name, 'ci')
+        json_data = {}
+        if config:
+            json_data['config'] = config
+
+        if background:
+            self.transport.async_post(request_url, json_data=json_data)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=json_data)
+            return response
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while enabling ci on project.')
+            return None
+
+    def disable_ci(self, username, project_name, background=False):
+        """Disable ci on the project"""
+        request_url = self.build_url(
+            self._get_http_url(), username, project_name, 'ci')
+
+        if background:
+            self.transport.async_delete(request_url)
+            return None
+
+        try:
+            response = self.transport.delete(request_url)
+            return response
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while disabling ci on project.')
+            return None
+
     def set_repo(self, username, project_name, git_url, is_public=True, background=False):
         """Set a git url on the project to use as a code repo."""
         request_url = self.build_url(
@@ -92,20 +129,36 @@ class ProjectApi(BaseApiHandler):
             return response
         except PolyaxonClientException as e:
             self.transport.handle_exception(
-                e=e, log_message='Error while steting external repo on project.')
+                e=e, log_message='Error while setting external repo on project.')
             return None
 
-    def upload_repo(self, username, project_name, files, files_size=None, background=False):
+    def upload_repo(self,
+                    username,
+                    project_name,
+                    files,
+                    files_size=None,
+                    sync=False,
+                    background=False):
         """Uploads code data related for this project from the current dir."""
         request_url = self.build_url(
             self._get_http_url(), username, project_name, 'repo', 'upload')
 
+        json_data = {}
+        if sync:
+            json_data['sync'] = sync
+
         if background:
-            self.transport.async_upload(request_url, files=files, files_size=files_size)
+            self.transport.async_upload(request_url,
+                                        files=files,
+                                        files_size=files_size,
+                                        json_data=json_data)
             return None
 
         try:
-            response = self.transport.upload(request_url, files=files, files_size=files_size)
+            response = self.transport.upload(request_url,
+                                             files=files,
+                                             files_size=files_size,
+                                             json_data=json_data)
             return response
         except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while updating project repo.')
