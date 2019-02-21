@@ -5,6 +5,7 @@ from hestia.paths import check_or_create_path, create_path, delete_path
 from hestia.service_interface import InvalidService, Service
 from marshmallow import ValidationError
 from polystores import StoreManager
+from polystores.exceptions import PolyaxonStoresException
 from rhea import RheaError
 
 from libs.paths.experiment_jobs import create_experiment_job_path
@@ -117,7 +118,10 @@ class StoresService(Service):
         outputs_path = cls.get_outputs_path(persistence=persistence_outputs)
         path = os.path.join(outputs_path, subpath)
         store = cls.get_outputs_store(persistence_outputs=persistence_outputs)
-        store.delete(path)
+        try:
+            store.delete(path)
+        except (PolyaxonStoresException, VolumeNotFoundError):
+            pass
 
     @staticmethod
     def get_logs_path(persistence='default'):
@@ -138,7 +142,10 @@ class StoresService(Service):
         logs_path = cls.get_logs_path(persistence=persistence)
         path = os.path.join(logs_path, subpath)
         store = cls.get_logs_store(persistence_logs=persistence)
-        store.delete(path)
+        try:
+            store.delete(path)
+        except (PolyaxonStoresException, VolumeNotFoundError):
+            pass
 
     @staticmethod
     def _get_store(store, secret_key):
