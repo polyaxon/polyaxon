@@ -1,5 +1,6 @@
 from hestia.bool_utils import to_bool
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
@@ -38,7 +39,7 @@ from libs.repos import git
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas.notebook_backend import NotebookBackend
-from schemas.specifications import TensorboardSpecification
+from schemas.specifications import NotebookSpecification, TensorboardSpecification
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsInitializer
 
@@ -156,8 +157,17 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
     """Start a notebook."""
     serializer_class = NotebookJobSerializer
 
+    @staticmethod
+    def _get_default_notebook_config():
+        if not conf.get('NOTEBOOK_DOCKER_IMAGE'):
+            raise ValidationError('Please provide a polyaxonfile, or set a default notebook image.')
+        specification = NotebookSpecification.create_specification(
+            {'image': conf.get('NOTEBOOK_DOCKER_IMAGE')})
+        return {'config': specification}
+
     def _create_notebook(self, project):
-        serializer = self.get_serializer(data=self.request.data)
+        config = self.request.data or self._get_default_notebook_config()
+        serializer = self.get_serializer(data=config)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save(user=self.request.user, project=project)
         auditor.record(event_type=NOTEBOOK_STARTED_TRIGGERED,
@@ -271,7 +281,11 @@ class PluginJobView(ProjectEndpoint, ProtectedView):
 class NotebookView(PluginJobView):
     @staticmethod
     def get_base_path(instance):
-        if instance.has_notebook and instance.notebook.specification.backend == NotebookBackend.LAB:
+        if instance.has_notebook:
+            backend = instance.notebook.specification.backend or conf.get('NOTEBOOK_BACKEND')
+        else:
+            backend = conf.get('NOTEBOOK_BACKEND')
+        if backend == NotebookBackend.LAB:
             return 'lab'
         return 'tree'
 

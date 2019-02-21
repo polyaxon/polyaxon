@@ -105,7 +105,7 @@ class NotebookSpawner(ProjectJobSpawner):
                           ports,
                           mount_code_in_notebooks=False,
                           backend=None):
-        backend = backend or NotebookBackend.NOTEBOOK
+        backend = backend or conf.get('NOTEBOOK_BACKEND')
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
