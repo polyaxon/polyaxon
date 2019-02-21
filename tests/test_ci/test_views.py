@@ -58,4 +58,3 @@ class TestCIViewV1(BaseViewTest):
         # unauthorised object delete not working
         resp = self.auth_client.delete(self.unauthorised_url)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
-

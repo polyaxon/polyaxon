@@ -33,4 +33,3 @@ class TestCISerializer(BaseTest):
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
-
