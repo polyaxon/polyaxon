@@ -132,6 +132,23 @@ class ProjectApi(BaseApiHandler):
                 e=e, log_message='Error while setting external repo on project.')
             return None
 
+    def sync_repo(self, username, project_name, background=False):
+        """Sync the external git repo of the project."""
+        request_url = self.build_url(
+            self._get_http_url(), username, project_name, 'repo', 'sync')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
+        try:
+            response = self.transport.post(request_url)
+            return response
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while syncing external repo on project.')
+            return None
+
     def upload_repo(self,
                     username,
                     project_name,
