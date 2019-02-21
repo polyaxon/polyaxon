@@ -10,6 +10,7 @@ from rest_framework.settings import api_settings
 from django.http import Http404, HttpResponseServerError
 
 import auditor
+import ci
 import conf
 
 from api.endpoint.base import (
@@ -156,9 +157,11 @@ class ExternalRepoSyncView(ProjectResourceListEndpoint, PostEndpoint):
         if not os.path.isdir(repo.project_path):
             git.external.set_git_repo(repo)
 
-        # TODO: sync and trigger ci
-        pass
-        return Response(status=status.HTTP_200_OK)
+        if ci.trigger(project=self.project):
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST,
+                            data='Could not trigger the project CI.')
 
 
 class RepoUploadView(ProjectResourceListEndpoint, UploadView):
@@ -218,8 +221,11 @@ class RepoUploadView(ProjectResourceListEndpoint, UploadView):
         file_handler(user_id=user.id, repo_id=repo.id, tar_file_name=tar_file_name)
 
         if sync:
-            # TODO: trigger ci
-            pass
+            if ci.trigger(project=self.project):
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST,
+                                data='Could not trigger the project CI.')
 
         # do some stuff with uploaded file
-        return Response(status=200)
+        return Response(status=status.HTTP_200_OK)
