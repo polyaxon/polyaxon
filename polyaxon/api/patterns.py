@@ -48,6 +48,8 @@ api_patterns += [
     re_path(r'', include(
         ('api.repos.urls', 'repos'), namespace='repos')),
     re_path(r'', include(
+        ('api.ci.urls', 'ci'), namespace='ci')),
+    re_path(r'', include(
         ('api.projects.urls', 'projects'), namespace='projects')),
 ]
 

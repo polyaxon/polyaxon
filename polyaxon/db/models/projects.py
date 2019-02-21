@@ -82,6 +82,10 @@ class Project(DiffModel,
     def has_external_repo(self):
         return hasattr(self, 'external_repo')
 
+    @property
+    def has_ci(self):
+        return hasattr(self, 'ci')
+
     @cached_property
     def notebook(self):
         return self.notebook_jobs.last()
