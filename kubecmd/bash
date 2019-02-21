@@ -1,0 +1,1 @@
+kubectl exec -it -n polyaxon --container=polyaxon-api $(kubectl get pods -n polyaxon | grep api | awk '{print $1}') -- bash

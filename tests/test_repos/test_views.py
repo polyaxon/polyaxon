@@ -553,8 +553,8 @@ class TestExternalRepoSyncView(BaseViewTest):
                                                         self.project.user.username,
                                                         self.project.name)
         self.enable_url = '/{}/{}/{}/ci'.format(API_V1,
-                                             self.project.user.username,
-                                             self.project.name)
+                                                self.project.user.username,
+                                                self.project.name)
 
     def test_sync_non_existing_repo(self):
         # Trying to sync a non existing repo
@@ -581,6 +581,6 @@ class TestExternalRepoSyncView(BaseViewTest):
 
         # Sync must remove that commit
         response = self.auth_client.post(self.url)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.status_code == status.HTTP_200_OK
         assert git.get_last_commit(repo_path=repo.path) == commit
 

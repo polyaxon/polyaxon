@@ -158,8 +158,8 @@ class ExternalRepoSyncView(ProjectResourceListEndpoint, PostEndpoint):
             git.external.set_git_repo(repo)
 
         if ci.trigger(project=self.project):
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST,
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_200_OK,
                         data='Could not trigger the project CI.')
 
 
@@ -221,8 +221,8 @@ class RepoUploadView(ProjectResourceListEndpoint, UploadView):
 
         if sync:
             if ci.trigger(project=self.project):
-                return Response(status=status.HTTP_200_OK)
-            return Response(status=status.HTTP_400_BAD_REQUEST,
+                return Response(status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_200_OK,
                             data='Could not trigger the project CI.')
 
         # do some stuff with uploaded file
