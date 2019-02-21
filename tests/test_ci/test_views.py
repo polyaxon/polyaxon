@@ -32,7 +32,6 @@ class TestCIViewV1(BaseViewTest):
             self.unauthorised_object.project.name)
 
     def test_get(self):
-        import pdb; pdb.set_trace()
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data

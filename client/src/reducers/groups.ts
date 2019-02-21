@@ -4,7 +4,7 @@ import { Reducer } from 'redux';
 
 import { actionTypes, GroupAction } from '../actions/group';
 import { GroupSchema } from '../constants/schemas';
-import { STOPPED } from '../constants/statuses';
+import { STOPPING } from '../constants/statuses';
 import { GroupModel, GroupsEmptyState, GroupStateSchema } from '../models/group';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
@@ -77,7 +77,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.groupName]: {
-              ...state.byUniqueNames[action.groupName], last_status: STOPPED
+              ...state.byUniqueNames[action.groupName], last_status: STOPPING
             }
           },
         };
