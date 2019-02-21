@@ -226,7 +226,11 @@ data:
   {{- end }}
   # Default images for notebooks
   {{- if .Values.notebookDockerImage }}
-  POLYAXON_NOTEBOOKDOCKER_IMAGE: {{ .Values.notebookDockerImage | quote }}
+  POLYAXON_NOTEBOOK_DOCKER_IMAGE: {{ .Values.notebookDockerImage | quote }}
+  {{- end }}
+  # Default notebook for notebooks
+  {{- if .Values.notebookBackend }}
+  POLYAXON_NOTEBOOK_BACKEND: {{ .Values.notebookBackend | quote }}
   {{- end }}
   {{- if .Values.mountCodeInNotebooks }}
   POLYAXON_MOUNT_CODE_IN_NOTEBOOKS: {{ .Values.mountCodeInNotebooks | quote }}
