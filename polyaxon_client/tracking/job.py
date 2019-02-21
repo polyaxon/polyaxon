@@ -8,9 +8,11 @@ from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
+from polyaxon_client.tracking.no_op import check_no_op
 
 
 class Job(BaseTracker):
+    @check_no_op
     def __init__(self,
                  project=None,
                  job_id=None,
@@ -20,9 +22,6 @@ class Job(BaseTracker):
                  track_code=True,
                  track_env=True,
                  outputs_store=None):
-        if settings.NO_OP:
-            return
-
         if project is None and settings.IN_CLUSTER and not self.is_notebook_job:
             job_info = self.get_job_info()
             project = job_info['project_name']
@@ -40,10 +39,8 @@ class Job(BaseTracker):
         self.job = None
         self.last_status = None
 
+    @check_no_op
     def get_data(self):
-        if settings.NO_OP:
-            return
-
         if self.job_type == 'jobs':
             self._data = self.client_backend.get_job(
                 username=self.username,
@@ -69,10 +66,8 @@ class Job(BaseTracker):
             return self.client.build_job
         raise PolyaxonClientException('Job type {} not supported'.format(self.job_type))
 
+    @check_no_op
     def _set_health_url(self):
-        if settings.NO_OP:
-            return
-
         health_url = self.client_backend.get_heartbeat_url(
             username=self.username,
             project_name=self.project_name,
@@ -103,10 +98,8 @@ class Job(BaseTracker):
                   'please make sure this is running inside a polyaxon job.')
             return None
 
+    @check_no_op
     def log_status(self, status, message=None, traceback=None):
-        if settings.NO_OP:
-            return
-
         self.client_backend.create_status(username=self.username,
                                           project_name=self.project_name,
                                           job_id=self.job_id,

@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client import settings
 from polyaxon_client.tracking.job import Job
+from polyaxon_client.tracking.no_op import check_no_op
 
 
 class BuildJob(Job):
     REQUIRES_OUTPUTS = False
 
+    @check_no_op
     def __init__(self,
                  project=None,
                  job_id=None,
@@ -27,10 +28,8 @@ class BuildJob(Job):
             track_env=track_env,
             outputs_store=outputs_store)
 
+    @check_no_op
     def log_dockerfile(self, dockerfile):
-        if settings.NO_OP:
-            return
-
         patch_dict = {'dockerfile': dockerfile}
         self.client_backend.update_build(username=self.username,
                                          project_name=self.project_name,

@@ -12,6 +12,7 @@ from polyaxon_client.handlers.conf import setup_logging
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
+from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.paths import get_base_outputs_path, get_outputs_path
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
@@ -19,6 +20,7 @@ from polyaxon_client.tracking.utils.tags import validate_tags
 
 
 class Experiment(BaseTracker):
+    @check_no_op
     def __init__(self,
                  project=None,
                  experiment_id=None,
@@ -70,19 +72,15 @@ class Experiment(BaseTracker):
         if settings.IN_CLUSTER and self.track_env and not self.is_notebook_job:
             self.log_run_env()
 
+    @check_no_op
     def get_data(self):
-        if settings.NO_OP:
-            return
-
         self._data = self.client.experiment.get_experiment(
             username=self.username,
             project_name=self.project_name,
             experiment_id=self.experiment_id)
 
+    @check_no_op
     def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
-        if settings.NO_OP:
-            return None
-
         experiment_config = {'run_env': get_run_env()} if self.track_env else {}
         if name:
             experiment_config['name'] = name
@@ -135,30 +133,24 @@ class Experiment(BaseTracker):
 
         return self
 
+    @check_no_op
     def _set_health_url(self):
-        if settings.NO_OP:
-            return
-
         health_url = self.client.experiment.get_heartbeat_url(
             username=self.username,
             project_name=self.project_name,
             experiment_id=self.experiment_id)
         self.client.set_health_check(url=health_url)
 
+    @check_no_op
     def _send_logs(self, log_line):
-        if settings.NO_OP:
-            return
-
         self.client.experiment.send_logs(username=self.username,
                                          project_name=self.project_name,
                                          experiment_id=self.experiment_id,
                                          log_lines=log_line,
                                          periodic=True)
 
+    @check_no_op
     def log_run_env(self):
-        if settings.NO_OP:
-            return
-
         patch_dict = {'run_env': get_run_env()}
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
@@ -166,20 +158,16 @@ class Experiment(BaseTracker):
                                                  patch_dict=patch_dict,
                                                  background=True)
 
+    @check_no_op
     def log_code_ref(self):
-        if settings.NO_OP:
-            return
-
         self.client.experiment.create_code_reference(username=self.username,
                                                      project_name=self.project_name,
                                                      experiment_id=self.experiment_id,
                                                      coderef=get_code_reference(),
                                                      background=True)
 
+    @check_no_op
     def log_status(self, status, message=None, traceback=None):
-        if settings.NO_OP:
-            return
-
         self.client.experiment.create_status(username=self.username,
                                              project_name=self.project_name,
                                              experiment_id=self.experiment_id,
@@ -188,10 +176,8 @@ class Experiment(BaseTracker):
                                              traceback=traceback,
                                              background=True)
 
+    @check_no_op
     def log_metrics(self, **metrics):
-        if settings.NO_OP:
-            return
-
         self.client.experiment.create_metric(username=self.username,
                                              project_name=self.project_name,
                                              experiment_id=self.experiment_id,
@@ -199,10 +185,8 @@ class Experiment(BaseTracker):
                                              created_at=datetime.utcnow(),
                                              periodic=True)
 
+    @check_no_op
     def log_tags(self, tags, reset=False):
-        if settings.NO_OP:
-            return
-
         patch_dict = {'tags': validate_tags(tags)}
         if reset is False:
             patch_dict['merge'] = True
@@ -212,10 +196,8 @@ class Experiment(BaseTracker):
                                                  patch_dict=patch_dict,
                                                  background=True)
 
+    @check_no_op
     def log_params(self, reset=False, **params):
-        if settings.NO_OP:
-            return
-
         patch_dict = {'declarations': params}
         if reset is False:
             patch_dict['merge'] = True
@@ -225,30 +207,24 @@ class Experiment(BaseTracker):
                                                  patch_dict=patch_dict,
                                                  background=True)
 
+    @check_no_op
     def set_description(self, description):
-        if settings.NO_OP:
-            return
-
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
                                                  patch_dict={'description': description},
                                                  background=True)
 
+    @check_no_op
     def set_name(self, name):
-        if settings.NO_OP:
-            return
-
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
                                                  patch_dict={'name': name},
                                                  background=True)
 
+    @check_no_op
     def log_data_ref(self, data, data_name='data', reset=False):
-        if settings.NO_OP:
-            return
-
         try:
             import hashlib
 

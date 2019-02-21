@@ -12,6 +12,7 @@ from polystores.stores.manager import StoreManager
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
+from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.project import get_project_info
 
@@ -19,6 +20,7 @@ from polyaxon_client.tracking.utils.project import get_project_info
 class BaseTracker(object):
     REQUIRES_OUTPUTS = True
 
+    @check_no_op
     def __init__(self,
                  project=None,
                  client=None,
@@ -26,9 +28,6 @@ class BaseTracker(object):
                  track_code=True,
                  track_env=True,
                  outputs_store=None):
-        if settings.NO_OP:
-            return
-
         if not settings.IN_CLUSTER and project is None:
             raise PolyaxonClientException('Please provide a valid project.')
         elif self.is_notebook_job:
@@ -58,10 +57,8 @@ class BaseTracker(object):
         if outputs_store is None and settings.IN_CLUSTER and self.REQUIRES_OUTPUTS:
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
 
+    @check_no_op
     def get_notebook_job_info(self):
-        if settings.NO_OP:
-            return None
-
         ensure_in_custer()
 
         info = os.getenv('POLYAXON_NOTEBOOK_INFO', None)
@@ -90,10 +87,8 @@ class BaseTracker(object):
     def log_status(self, status, message=None, traceback=None):
         raise NotImplementedError
 
+    @check_no_op
     def _start(self):
-        if settings.NO_OP:
-            return
-
         atexit.register(self._end)
         self.start()
 
@@ -104,51 +99,37 @@ class BaseTracker(object):
 
         sys.excepthook = excepthook
 
+    @check_no_op
     def _end(self):
-        if settings.NO_OP:
-            return
-
         self.succeeded()
 
+    @check_no_op
     def start(self):
-        if settings.NO_OP:
-            return
-
         self.log_status('running')
         self.last_status = 'running'
 
+    @check_no_op
     def end(self, status, message=None, traceback=None):
-        if settings.NO_OP:
-            return
-
         if self.last_status in ['succeeded', 'failed', 'stopped']:
             return
         self.log_status(status=status, message=message, traceback=traceback)
         self.last_status = status
         time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
 
+    @check_no_op
     def succeeded(self):
-        if settings.NO_OP:
-            return
-
         self.end('succeeded')
 
+    @check_no_op
     def stop(self):
-        if settings.NO_OP:
-            return
-
         self.end('stopped')
 
+    @check_no_op
     def failed(self, message=None, traceback=None):
-        if settings.NO_OP:
-            return
-
         self.end(status='failed', message=message, traceback=traceback)
 
+    @check_no_op
     def set_outputs_store(self, outputs_store=None, outputs_path=None, set_env_vars=False):
-        if settings.NO_OP:
-            return
-
         if not any([outputs_store, outputs_path]):
             raise PolyaxonClientException(
                 'An Store instance or and outputs path is required.')
@@ -156,14 +137,10 @@ class BaseTracker(object):
         if self.outputs_store and set_env_vars:
             self.outputs_store.set_env_vars()
 
+    @check_no_op
     def log_output(self, filename, **kwargs):
-        if settings.NO_OP:
-            return
-
         self.outputs_store.upload_file(filename=filename)
 
+    @check_no_op
     def log_outputs(self, dirname, **kwargs):
-        if settings.NO_OP:
-            return
-
         self.outputs_store.upload_dir(dirname=dirname)
