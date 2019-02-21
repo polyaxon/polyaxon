@@ -14,6 +14,8 @@ urlpatterns = [
             views.RepoDownloadView.as_view()),
     re_path(r'^{}/{}/repo/external/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.ExternalRepoSetView.as_view()),
+    re_path(r'^{}/{}/repo/sync/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            views.ExternalRepoSyncView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
