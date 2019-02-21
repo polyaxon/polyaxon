@@ -21,11 +21,15 @@ class TestCIViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
-        self.object = self.factory_class(project=self.project)
+        self.project2 = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=self.project, user=self.auth_client.user)
         self.unauthorised_object = self.factory_class()
         self.url = '/{}/{}/{}/ci'.format(API_V1,
                                          self.project.user.username,
                                          self.project.name)
+        self.url2 = '/{}/{}/{}/ci'.format(API_V1,
+                                          self.project2.user.username,
+                                          self.project2.name)
         self.unauthorised_url = '/{}/{}/{}/ci'.format(
             API_V1,
             self.unauthorised_object.project.user.username,
@@ -58,3 +62,10 @@ class TestCIViewV1(BaseViewTest):
         # unauthorised object delete not working
         resp = self.auth_client.delete(self.unauthorised_url)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_post(self):
+        assert self.model_class.objects.count() == 2
+        resp = self.auth_client.post(self.url2)
+        assert resp.status_code == 201
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == 3

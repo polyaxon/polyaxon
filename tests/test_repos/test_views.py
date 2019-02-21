@@ -535,3 +535,52 @@ class TestExternalRepoSetView(BaseViewTest):
                                          data={'git_url': 'https://github.com/foo/bar.git',
                                                'is_public': False})
         assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.repos_mark
+class TestExternalRepoSyncView(BaseViewTest):
+    model_class = ExternalRepo
+    factory_class = ExternalRepoFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.url = '/{}/{}/{}/repo/sync'.format(API_V1,
+                                                self.project.user.username,
+                                                self.project.name)
+        self.set_url = '/{}/{}/{}/repo/external'.format(API_V1,
+                                                        self.project.user.username,
+                                                        self.project.name)
+        self.enable_url = '/{}/{}/{}/ci'.format(API_V1,
+                                             self.project.user.username,
+                                             self.project.name)
+
+    def test_sync_non_existing_repo(self):
+        # Trying to sync a non existing repo
+        response = self.auth_client.post(self.url)
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_sync_works(self):
+        assert self.model_class.objects.count() == 0
+        response = self.auth_client.post(self.set_url,
+                                         data={'git_url': 'https://github.com/polyaxon/empty.git'})
+        assert response.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == 1
+        repo = self.model_class.objects.last()
+        commit = git.get_last_commit(repo_path=repo.path)
+
+        # Enable CI
+        response = self.auth_client.post(self.enable_url)
+        assert response.status_code == status.HTTP_201_CREATED
+
+        # Adding a new commit
+        open('{}/foo'.format(repo.path), 'w')
+        git.commit(repo.path, 'user@domain.com', 'username')
+        assert git.get_last_commit(repo_path=repo.path) != commit
+
+        # Sync must remove that commit
+        response = self.auth_client.post(self.url)
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert git.get_last_commit(repo_path=repo.path) == commit
+

@@ -53,7 +53,7 @@ class CIService(Service):
         from db.models.experiments import Experiment
 
         Experiment.objects.create(
-            user_id=project.user_id,  # We create the experiment with the project owner
+            user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
             config=specification.parsed_data,
@@ -65,7 +65,7 @@ class CIService(Service):
         from db.models.experiment_groups import ExperimentGroup
 
         ExperimentGroup.objects.create(
-            user_id=project.user_id,  # We create the experiment with the project owner
+            user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
             content=specification._data,  # pylint:disable=protected-access
@@ -77,7 +77,7 @@ class CIService(Service):
         from db.models.jobs import Job
 
         Job.objects.create(
-            user_id=project.user_id,  # We create the experiment with the project owner
+            user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
             config=specification.parsed_data,
@@ -89,7 +89,7 @@ class CIService(Service):
         from db.models.build_jobs import BuildJob
 
         BuildJob.objects.create(
-            user_id=project.user_id,  # We create the experiment with the project owner
+            user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
             config=specification.parsed_data,
