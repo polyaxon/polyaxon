@@ -583,4 +583,3 @@ class TestExternalRepoSyncView(BaseViewTest):
         response = self.auth_client.post(self.url)
         assert response.status_code == status.HTTP_200_OK
         assert git.get_last_commit(repo_path=repo.path) == commit
-
