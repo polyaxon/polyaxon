@@ -36,6 +36,7 @@ class DockerFileGenerator(object):
         self.nvidia_bin = nvidia_bin
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
+        self.polyaxon_conda_env_path = self._get_conda_env_path()
         self.polyaxon_setup_path = self._get_setup_path()
         self.is_pushing = False
 
@@ -56,6 +57,29 @@ class DockerFileGenerator(object):
         requirements = get_requirements('requirements.txt')
         if requirements:
             return requirements
+        return None
+
+    def _get_conda_env_path(self) -> Optional[str]:
+        def get_conda_env(conda_file):
+            conda_path = os.path.join(self.repo_path, conda_file)
+            if os.path.isfile(conda_path):
+                return os.path.join(self.folder_name, conda_file)
+
+        conda_env = get_conda_env('polyaxon_conda_env.yaml')
+        if conda_env:
+            return conda_env
+
+        conda_env = get_conda_env('polyaxon_conda_env.yml')
+        if conda_env:
+            return conda_env
+
+        conda_env = get_conda_env('conda_env.yaml')
+        if conda_env:
+            return conda_env
+
+        conda_env = get_conda_env('conda_env.yml')
+        if conda_env:
+            return conda_env
         return None
 
     def _get_setup_path(self) -> Optional[str]:
@@ -81,6 +105,7 @@ class DockerFileGenerator(object):
         return docker_template.render(
             from_image=self.from_image,
             polyaxon_requirements_path=self.polyaxon_requirements_path,
+            polyaxon_conda_env_path=self.polyaxon_conda_env_path,
             polyaxon_setup_path=self.polyaxon_setup_path,
             build_steps=self.build_steps,
             env_vars=self.env_vars,

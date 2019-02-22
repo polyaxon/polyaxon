@@ -24,6 +24,10 @@ WORKDIR {{ workdir }}
 COPY {{ polyaxon_requirements_path }} {{ workdir }}
 {% endif -%}
 
+{% if polyaxon_conda_env_path -%}
+COPY {{ polyaxon_conda_env_path }} {{ workdir }}
+{% endif -%}
+
 {% if polyaxon_setup_path -%}
 COPY {{ polyaxon_setup_path }} {{ workdir }}
 {% endif -%}

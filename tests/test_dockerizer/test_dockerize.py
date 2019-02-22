@@ -55,6 +55,18 @@ class TestDockerize(BaseTest):
         assert builder.polyaxon_setup_path == 'repo/setup.sh'
         builder.clean()
 
+        # Add a conda_env.yaml
+        Path(os.path.join(repo_path, 'conda_env.yaml')).touch()
+        Path(os.path.join(repo_path, 'polyaxon_setup.sh')).touch()
+
+        builder = DockerFileGenerator(repo_path=repo_path,
+                                      from_image='busybox',
+                                      build_steps=build_job.build_steps,
+                                      env_vars=build_job.build_env_vars)
+        assert builder.polyaxon_conda_env_path == 'repo/conda_env.yaml'
+        assert builder.polyaxon_setup_path == 'repo/polyaxon_setup.sh'
+        builder.clean()
+
     def test_render_works_as_expected(self):
         build_job = BuildJobFactory()
 
@@ -104,6 +116,26 @@ class TestDockerize(BaseTest):
             builder.polyaxon_requirements_path, builder.WORKDIR) in dockerfile
         assert 'COPY {} {}'.format(
             builder.polyaxon_setup_path, builder.WORKDIR) in dockerfile
+
+        assert 'RUN {}'.format(build_steps[0]) in dockerfile
+        assert 'RUN {}'.format(build_steps[1]) in dockerfile
+        builder.clean()
+
+        # Add conda env
+        Path(os.path.join(repo_path, 'conda_env.yml')).touch()
+        build_steps.append('conda env update -n base -f environment.yml')
+        builder = DockerFileGenerator(repo_path=repo_path,
+                                      from_image='busybox',
+                                      env_vars=build_job.build_env_vars,
+                                      build_steps=build_steps)
+
+        dockerfile = builder.render()
+        assert 'COPY {} {}'.format(
+            builder.polyaxon_requirements_path, builder.WORKDIR) in dockerfile
+        assert 'COPY {} {}'.format(
+            builder.polyaxon_setup_path, builder.WORKDIR) in dockerfile
+        assert 'COPY {} {}'.format(
+            builder.polyaxon_conda_env_path, builder.WORKDIR) in dockerfile
 
         assert 'RUN {}'.format(build_steps[0]) in dockerfile
         assert 'RUN {}'.format(build_steps[1]) in dockerfile
