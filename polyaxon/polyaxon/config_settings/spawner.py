@@ -137,11 +137,11 @@ TENSORBOARD_DOCKER_IMAGE = config.get_string('POLYAXON_TENSORBOARD_DOCKER_IMAGE'
 MOUNT_CODE_IN_NOTEBOOKS = config.get_boolean('POLYAXON_MOUNT_CODE_IN_NOTEBOOKS',
                                              is_optional=True,
                                              default=False)
-NOTEBOOK_DOCKER_IMAGE = config.get_string('NOTEBOOK_DOCKER_IMAGE',
+NOTEBOOK_DOCKER_IMAGE = config.get_string('POLYAXON_NOTEBOOK_DOCKER_IMAGE',
                                           is_optional=True)
-NOTEBOOK_BACKEND = BUILD_BACKEND = config.get_string('POLYAXON_BUILD_BACKEND',
-                                                     is_optional=True,
-                                                     default='notebook')
+NOTEBOOK_BACKEND = config.get_string('POLYAXON_NOTEBOOK_BACKEND',
+                                     is_optional=True,
+                                     default='notebook')
 # Sidecar config
 JOB_SIDECAR_LOG_SLEEP_INTERVAL = config.get_int('POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL',
                                                 is_optional=True)
