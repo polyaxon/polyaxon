@@ -179,7 +179,7 @@ declarations:
 build:
   image: tensorflow/tensorflow:1.4.1-py3sd
   build_steps:
-    - pip3 install --no-cache-dir -U polyaxon-client==0.3.9
+    - pip3 install --no-cache-dir -U polyaxon-client==0.4.0
   nocache: true
 
 run:
