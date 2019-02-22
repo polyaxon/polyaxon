@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polystores',
-      version='0.1.6',
+      version='0.1.7',
       description='Polystores is an abstraction and a collection of clients '
                   'to interact with cloud storages.',
       long_description=read_readme(),
