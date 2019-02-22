@@ -71,7 +71,8 @@ spec:
             - rabbitmqctl
             - status
           initialDelaySeconds: 120
-          timeoutSeconds: 5
+          timeoutSeconds: 60
+          periodSeconds: 60
           failureThreshold: 6
         readinessProbe:
           exec:
@@ -79,8 +80,8 @@ spec:
             - rabbitmqctl
             - status
           initialDelaySeconds: 10
-          timeoutSeconds: 3
-          periodSeconds: 5
+          timeoutSeconds: 60
+          periodSeconds: 60
         volumeMounts:
         - name: data
           mountPath: /rabbitmq
