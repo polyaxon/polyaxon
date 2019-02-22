@@ -55,6 +55,18 @@ setup(name='polystores',
       install_requires=[
           "rhea>=0.4.2",
       ],
+      extras_require={
+          "s3": [
+              "boto3",
+              "botocore",
+          ],
+          "gcs": [
+              "google-cloud-storage",
+          ],
+          "azure": [
+              "azure-storage",
+          ],
+      },
       classifiers=[
           'Programming Language :: Python',
           'Operating System :: OS Independent',
