@@ -22,21 +22,21 @@ to keep the library lightweight, the user needs to install the appropriate modul
 ### Install S3
 
 ```bash
-pip install boto3 botocore
+pip install -U polystores[s3]
 ```
 
 ### Install GCS
 
 
 ```bash
-pip install google-cloud-storage
+pip install -U polystores[gcs]
 ```
 
 ### Install Azure Storage
 
 
 ```bash
-pip install azure-storage
+pip install -U polystores[azure]
 ```
 
 ## Stores
