@@ -74,9 +74,7 @@ class BaseTracker(object):
         if settings.NO_OP:
             return None
 
-        ensure_in_custer()
-
-        return 'POLYAXON_NOTEBOOK_INFO' in os.environ
+        return settings.IN_CLUSTER and 'POLYAXON_NOTEBOOK_INFO' in os.environ
 
     def get_data(self):
         raise NotImplementedError
