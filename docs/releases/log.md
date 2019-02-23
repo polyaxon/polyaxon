@@ -8,16 +8,17 @@ tags:
     - reference
 ---
 
-### 0.4.0
+## 0.4.0
 
  * Add configuration to set a default notebook image.
  * Add configuration to set the default notebook backend.
  * Add support for conda environments.
  * Add a first version Polyaxon CI.
- * Add a new status `sopping` for experiment groups to indicate that the scheduler is stopping experiments in the group and prevent others from starting.
+ * Add a new status `stopping` for experiment groups to indicate that the scheduler is stopping experiments in the group and prevent others from starting.
  * Attempt solving an issue of high idle cpu usage caused by rabbitmq container.
  * Fix issues due to concurrency for handling and setting correct statuses for experiment jobs.
  * Fix regression in native build failed status.
+ * Fix some issues related to concurrency.
  * Fix some issues when handling files are not found on buckets.
  * Fix several UI typos.
 
