@@ -13,6 +13,7 @@ author:
 tags: 
   - tracking
   - scheduling
+  - distributed-training
 featured: false
 visibility: public
 status: coming-soon
