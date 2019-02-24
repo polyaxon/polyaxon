@@ -80,7 +80,7 @@ Polyaxon will by default mount all these volumes when it schedules the experimen
 These data volumes will be accessible to you as a dictionary `{volume_name: path_to_data}`,
 exported as an env variable `POLYAXON_RUN_DATA_PATHS`.
 
-You can use as well our `tracking` api in `polyaxon-client` to get access to this [env variable automatically](/references/tracking-api/paths/#get-data-paths).
+You can use as well our `tracking` api in `polyaxon-client` to get access to this [env variable automatically](/references/polyaxon-tracking-api/paths/#get-data-paths).
 
 If on the other hand, you wish to only mount one volume or a subset of the volumes,
 you then need to provide this information in the polyaxonfile, e.g.
