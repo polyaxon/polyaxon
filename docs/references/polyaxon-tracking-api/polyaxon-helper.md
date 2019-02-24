@@ -1,6 +1,6 @@
 ---
 title: "Polyaxon Helper"
-sub_link: "tracking-api/polyaxon-helper"
+sub_link: "polyaxon-tracking-api/polyaxon-helper"
 meta_title: "Polyaxon helper - Polyaxon References"
 meta_description: "Paths tracking is a high-level API allowing data scientists running an experiment/job inside Polyaxon, to get some paths and other information exposed by Polyaxon."
 visibility: public
@@ -12,7 +12,7 @@ tags:
     - client
     - sdk
     - helper
-sidebar: "tracking-api"
+sidebar: "polyaxon-tracking-api"
 ---
 
 <blockquote class="warning">attention "polyaxon-helper is deprecated" polyaxon-helper is deprecated in favor of the new tracking api. We are keeping this helper only for backward compatibility.</blockquote> 

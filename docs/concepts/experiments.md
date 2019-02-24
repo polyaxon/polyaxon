@@ -332,7 +332,7 @@ It also exposes some framework specific environment variables to the pods, in th
 You can also use our `tracking` api in `polyaxon-client` to extract these environment variables programmatically.
 
 > Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER` 
-Check how you can [get the cluster definition](/references/tracking-api/experiments/#tracking-experiments-running-inside-polyaxon/) to use it with your distributed deep learning model.
+Check how you can [get the cluster definition](/references/polyaxon-tracking-api/experiments/#tracking-experiments-running-inside-polyaxon/) to use it with your distributed deep learning model.
 
 To run this distributed experiment, run
 

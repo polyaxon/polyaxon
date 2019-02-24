@@ -61,6 +61,9 @@ Project `mnist` was initialized and Polyaxonfile was created successfully `polya
 When a project is initialized, polyaxon creates a default `.polyaxonignore`,
 you can customize it to ignore the files that you don't want to upload.
 
+Initializing a project is a not mandatory, unless you need are using the platform's in-cluster git server. 
+Most of the CLI commands allow [switching project context](/references/polyaxon-cli/#switching-context).
+
 Now you can add some code to your project.
 
 Before doing anything you must update the default polyaxonfile to tell polyaxon how to run your code
@@ -70,6 +73,8 @@ $ vi polyaxonfile.yml
 ```
 
 ## Upload code for this project
+
+This step is only necessary if you are using the in-cluster git server.
 
 Create the code you wish to run on Polyaxon, e.g.
 
@@ -87,6 +92,16 @@ $ polyaxon upload
 Files uploaded.
 ```
 
+## Set a git url for the project
+
+In case you choose to use an external git project, you init set the project git information:
+
+```bash
+polyaxon project -p quick-start git --url="https://github.com/org/repo" --private
+``` 
+
+The `--private` is only necessary if the project is a private repo on the external platform, 
+this tells flag Polyaxon to use the [access token or user/password to clone the project](/integrations/scm/).
 
 You are ready now to run experiments, please go to [experiment groups](/concepts/experiment-groups/)
 if you want to run multiple experiments concurrently and perform hyperparameters search.

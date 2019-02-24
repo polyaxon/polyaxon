@@ -1,6 +1,6 @@
 ---
 title: "Tracking API Jobs"
-sub_link: "tracking-api/jobs"
+sub_link: "polyaxon-tracking-api/jobs"
 meta_title: "Tracking API Jobs - Polyaxon References"
 meta_description: "Jobs tracking is a high-level API allowing data scientists to track information related to their jobs."
 visibility: public
@@ -12,7 +12,7 @@ tags:
     - client
     - sdk
     - job
-sidebar: "tracking-api"
+sidebar: "polyaxon-tracking-api"
 ---
 
 Jobs tracking is a high-level API allowing data scientists to track information related to their jobs.

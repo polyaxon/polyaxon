@@ -77,7 +77,7 @@ The first question most people have is, of course, how is Polyaxon different fro
  * Fast ✅
  * Reliably secure ✅
  * Made with passion and is here for long ✅
- * Has a sustainable business model [EE & PaaS versions](https://polyaxon.org/pricing/) ✅
+ * Has a sustainable business model with [EE & PaaS versions](https://polyaxon.org/pricing/) ✅
 
 ## Ecosystem
 

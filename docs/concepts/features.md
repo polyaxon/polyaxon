@@ -29,6 +29,7 @@ Polyaxon provides a powerful and interactive workspace including:
 - Advanced Query & search interface
 - Notebooks integration
 - Tensorboards integration
+- CI system for automating training of your experiment based on different types of triggers.
 
 ## Reproducible results
 
@@ -37,7 +38,7 @@ It has a tracking api for source code, parameters, data, metrics, tags, and logs
 
 
 - You can see the full experiment history at a glance, including when, who and where.
-- Autodocuments all experiments with statuses, metrics, hyperparams, source code, data, visualizations, artifacts and resources used in each experiment.
+- Auto-document all experiments with statuses, metrics, hyperparams, source code, data, visualizations, artifacts and resources used in each experiment.
 - Advanced insights and comparison of experiments based on results, hyperparams, versions of training data and source code.
 
 
@@ -90,6 +91,11 @@ Deploy Polyaxon with sensible user roles and permissions from the start.
 ## Quotas (EE only)
 
 Manage who can access what resources in your cluster, set parallelism quotas per users and projects.
+
+## Dynamic configuration (EE only)
+
+ * Update your Polyaxon deployment from UI interface, i.e. no need redeploy/upgrade to change the platform's configuration.
+ * Override default cluster configuration per projects and teams
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Tracking API Experiments"
-sub_link: "tracking-api/experiments"
+sub_link: "polyaxon-tracking-api/experiments"
 meta_title: "Tracking API Experiments - Polyaxon References"
 meta_description: "Experiments tracking is a high-level API allowing data scientists to track information related to their experiments."
 visibility: public
@@ -12,12 +12,12 @@ tags:
     - client
     - sdk
     - experiment
-sidebar: "tracking-api"
+sidebar: "polyaxon-tracking-api"
 ---
 
 Experiments tracking is a high-level API allowing data scientists to track information related to their experiments.
 
-For tracking experiment running inside a Polyaxon context you can go straight to this [section](/references/tracking-api/experiments/#tracking-experiments-running-inside-polyaxon).
+For tracking experiment running inside a Polyaxon context you can go straight to this [section](/references/polyaxon-tracking-api/experiments/#tracking-experiments-running-inside-polyaxon).
 
 ## Tracking
 

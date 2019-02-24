@@ -1,6 +1,6 @@
 ---
 title: "Tracking API Experiment Groups"
-sub_link: "tracking-api/experiment-groups"
+sub_link: "polyaxon-tracking-api/experiment-groups"
 meta_title: "Tracking API Experiment Groups - Polyaxon References"
 meta_description: "Experiment groups tracking is high level API that allow users to create experiments under one group level. This is very useful for running hyperparameters tuning, and this is how Polyaxon organizes experiments when running hyperparameters tuning."
 visibility: public
@@ -13,7 +13,7 @@ tags:
     - sdk
     - experiment
     - group
-sidebar: "tracking-api"
+sidebar: "polyaxon-tracking-api"
 ---
 
 Experiment groups tracking is high level API that allow users to create 

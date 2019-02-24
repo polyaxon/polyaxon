@@ -1,6 +1,6 @@
 ---
 title: "Tracking API Paths"
-sub_link: "tracking-api/paths"
+sub_link: "polyaxon-tracking-api/paths"
 meta_title: "Tracking API Paths - Polyaxon References"
 meta_description: "Paths tracking is a high-level API allowing data scientists running an experiment/job inside Polyaxon, to get some paths and other information exposed by Polyaxon."
 visibility: public
@@ -12,7 +12,7 @@ tags:
     - client
     - sdk
     - job
-sidebar: "tracking-api"
+sidebar: "polyaxon-tracking-api"
 ---
 
 Paths tracking is a high-level API allowing data scientists running an experiment/job inside Polyaxon, to get some paths and other information exposed by Polyaxon.

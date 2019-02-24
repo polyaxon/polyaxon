@@ -14,7 +14,7 @@ tags:
 sidebar: "concepts"
 ---
 
-![notebooks](../../content/images/concepts/dashboard/notebooks.png)
+![notebooks](../../content/images/concepts/dashboard/tensorboards.png)
 
 Polyaxon allows users to run tensorboard jobs on project, experiment, and experiment group level, these jobs are subject to the same permissions of the project they belong to.
 
