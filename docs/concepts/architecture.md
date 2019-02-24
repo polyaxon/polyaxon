@@ -20,7 +20,8 @@ Polyaxon is structured as a modern, decoupled, micro-service oriented architectu
 3. **An extensive tracking API**
 4. **An event/action oriented interface**
 5. **A pipeline engine capable of authoring workflows as directed acyclic graphs (DAGs)**
-4. **An optimization engine to search automatically and concurrently for the best hyperparameters in a search spaces based on state of the art algorithms**
+6. **An optimization engine to search automatically and concurrently for the best hyperparameters in a search spaces based on state of the art algorithms**
+7. **A CI system to trigger experiments/hyperparams tuning/pipelines automatically based on some event and track there execution and report results to users**
 
 These components work together to make every Polyaxon deployment function smoothly, 
 but because they're decoupled there's plenty of room for customisation.
@@ -39,7 +40,7 @@ Polyaxon relies on several components to function smoothly:
  * redis
  * rabbitmq
  * docker registries
- * Storage for data/outputs/logs
+ * Storage for [data](/configuration/custom-data-storage/)/[outputs](/configuration/custom-outputs-storage/)/[logs](/configuration/custom-logs-storage/)
 
 Depending on the version you are deployment, you may need as well:
 
@@ -59,6 +60,7 @@ Polyaxon runs both in the cloud and on premise, and provides access via:
  * Polyaxon command line interface
  * Polyaxon dashboard
  * Polyaxon SDKs targeting the Polyaxon api
+ * Polyaxon Webhooks
 
 
 These interfaces hides the powerful abstraction provided by the Polyaxon architecture.
@@ -95,7 +97,7 @@ with more details in pages dedicated to each concept.
 
 ### User
 
-A `User` is the entity that creates projects, starts experiments, creates josb and pipelines, manages teams and clusters.
+A `User` is the entity that creates projects, starts experiments, creates jobs and pipelines, manages teams and clusters.
 A `User` has a set of permissions, and can be normal user or superuser.
 
 > Please refer to the [users management section](/configuration/users-management/) for more details.
@@ -106,6 +108,12 @@ A `Team` provides a way to manage group of users, their access roles, and resour
 
 <blockquote class="warning"> This entity exists only on Polyaxon EE version</blockquote>
 
+### Resources quotas
+
+When a `quota` is attached to a user/team/project, the entity created, i.e. builds/jobs/experiments/notebooks, cannot exceed the parallelism and may not consume more 
+resources than the quota specification allows.
+
+<blockquote class="warning"> This entity exists only on Polyaxon EE version</blockquote>
 
 ### Project
 
@@ -115,29 +123,25 @@ A project consist of a name and a description, the code to execute, the data, an
 
 > Please refer to the [projects section](/concepts/projects/) for more details.
 
-
-### Experiment Group
-
-An `Experiment Group` is an automatic and practical way to run a version of your model and data with different hyper parameters.
-
-> Please refer to the [experiment groups section](/concepts/experiment-groups/) for more details.
-
-
 ### Experiment
 
 An `Experiment` is the execution of your model with data and the provided parameters on the cluster.
 
 A `Experiment Job` is the Kubernetes pod running on the cluster for a specific experiment,
-if an experiment run in a distributed way it will create multiple instances of `Experiment Job`.
+if an experiment runs in a distributed way it will create multiple instances of `Experiment Job`.
 
 > Please refer to the [experiments section](/concepts/experiments/) for more details.
 
 
-### Distributed Experiments
+### Experiment Group
 
-A `Distributed Experiment` is the execution of a model or a computation graph across a cluster.
+An `Experiment Group` provide 2 interfaces:
+  * An automatic and practical way to run a version of your model and data with different hyper parameters based on a hyperparameters search algorithm.
+  * A selection of experiments to compare.
 
-> Please refer to the [distributed experiments](/concepts/distributed-experiments/) for more details.
+> Please refer to the [experiment groups - selection](/concepts/experiment-groups-selections/) for more details on how to create group selections
+ 
+> Please refer to the [experiment groups - hyperparameters optimization](/concepts/experiment-groups-hyperparameters-optimization/) for more details on how to run hyperparametres search.
 
 
 ### Job
@@ -146,14 +150,27 @@ A `Job` is the execution of your code to do some data processing or any generic 
 
 > Please refer to the [jobs section](/concepts/jobs/) for more details.
 
+### Build Job
 
-### Hyperparameters search
+A `BuildJob` is the process of creating containers, Polyaxon provides different backends for creating containers.
 
-Finding good hyperparameters involves can be very challenging,
-and requires to efficiently search the space of possible hyperparameters as well as
-how to manage a large set of experiments for hyperparameter tuning.
+> Please refer to the [build jobs section](/concepts/builds/) for more details.
 
-> Please refer to the [hyperparameters search](/concepts/hyperparameters-optimization/) for more details.
+
+### Tensorboard
+
+A `Tensorboard` is a job running to visualize the metrics of an experiment,
+the metrics of all experiments created during a hyperparameters-optimization group, 
+the metrics of all experiment in a selection group, or the experiments of a project.
+
+> Please refer to the [tensorboards](/concepts/tensorboards/) for more details.
+
+### Notebooks
+
+A `Notebooks` is a job running project wide to provide an fast and easy way to explore data, start experiments. 
+Polyaxon provides different backend to start notebooks, or Jupyter Labs.
+
+> Please refer to the [project notebooks§§](/concepts/notebooks/) for more details.
 
 
 ### Checkpointing, resuming and restarting experiments
@@ -165,17 +182,3 @@ Polyaxon provides some structure and organization regarding checkpointing and ou
 
 
 > Please refer to the [save, resume & restart](/concepts/save-resume-restart/) for more details.
-
-
-### Tensorboard
-
-A `Tensorboard` is a job running to visualize the metrics of an experiment,
-the experiments of a group, or of a project.
-
-> Please refer to the [tensorboard](/concepts/tensorboards/) for more details.
-
-### Notebooks
-
-A `Project plugin` is a job running project wide.
-
-> Please refer to the [project plugins section](/concepts/notebooks/) for more details.
