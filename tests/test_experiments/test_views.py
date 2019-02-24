@@ -1136,6 +1136,14 @@ class TestExperimentDetailViewV1(BaseViewTest):
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.declarations == {'foo_new': 'bar_new', 'foo': 'bar'}
 
+        # Update name
+        data = {'name': 'new_name'}
+        assert new_object.name is None
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.name == data['name']
+
     def test_delete_from_created_status_archives_and_schedules_stop(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2

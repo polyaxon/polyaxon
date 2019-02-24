@@ -401,6 +401,14 @@ class TestJobDetailViewV1(BaseViewTest):
         assert new_object.is_clone is True
         assert new_object.original_job == new_job
 
+        # Update name
+        data = {'name': 'new_name'}
+        assert new_object.name is None
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.name == data['name']
+
     def test_delete_archives_deletes_immediately_and_schedules_stop(self):
         self.object.set_status(JobLifeCycle.SCHEDULED)
         assert self.model_class.objects.count() == 1

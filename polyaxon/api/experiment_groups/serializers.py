@@ -129,7 +129,9 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
     def update(self, instance: ExperimentGroup, validated_data) -> ExperimentGroup:
         validated_data = self.validated_tags(validated_data=validated_data,
                                              tags=instance.tags)
-        validated_data = self.validated_name(validated_data, query=ExperimentGroup.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=instance.project,
+                                             query=ExperimentGroup.all)
 
         return super().update(instance=instance, validated_data=validated_data)
 
@@ -156,7 +158,9 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer, NamesMixin):
         return attrs
 
     def create(self, validated_data):
-        validated_data = self.validated_name(validated_data, query=ExperimentGroup.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=validated_data['project'],
+                                             query=ExperimentGroup.all)
         try:
             return super().create(validated_data)
         except Exception as e:

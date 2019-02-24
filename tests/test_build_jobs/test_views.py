@@ -401,6 +401,14 @@ class TestBuildDetailViewV1(BaseViewTest):
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.dockerfile == dockerfile
 
+        # Update name
+        data = {'name': 'new_name'}
+        assert new_object.name is None
+        resp = self.internal_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.name == data['name']
+
     def test_delete_archives_deletes_immediately_and_schedules_stop(self):
         self.object.set_status(JobLifeCycle.SCHEDULED)
         assert self.model_class.objects.count() == 1

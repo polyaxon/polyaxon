@@ -99,7 +99,9 @@ class JobDetailSerializer(BookmarkedJobSerializer,
                                              tags=instance.tags)
         validated_data = self.validated_data_refs(validated_data=validated_data,
                                                   data_refs=instance.data_refs)
-        validated_data = self.validated_name(validated_data, query=Job.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=instance.project,
+                                             query=Job.all)
 
         return super().update(instance=instance, validated_data=validated_data)
 
@@ -134,7 +136,9 @@ class JobCreateSerializer(serializers.ModelSerializer,
         return config
 
     def create(self, validated_data):
-        validated_data = self.validated_name(validated_data, query=Job.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=validated_data['project'],
+                                             query=Job.all)
         try:
             return super().create(validated_data)
         except Exception as e:

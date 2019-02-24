@@ -103,7 +103,9 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer,
     def update(self, instance: 'BuildJob', validated_data: Dict) -> 'BuildJob':
         validated_data = self.validated_tags(validated_data=validated_data,
                                              tags=instance.tags)
-        validated_data = self.validated_name(validated_data, query=BuildJob.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=instance.project,
+                                             query=BuildJob.all)
         return super().update(instance=instance, validated_data=validated_data)
 
 
@@ -129,7 +131,9 @@ class BuildJobCreateSerializer(serializers.ModelSerializer,
         return config
 
     def create(self, validated_data):
-        validated_data = self.validated_name(validated_data, query=BuildJob.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=validated_data['project'],
+                                             query=BuildJob.all)
         try:
             return super().create(validated_data)
         except Exception as e:

@@ -441,7 +441,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert resp.data['num_pending_experiments'] == 2
 
     def test_patch(self):
-        new_description = 'updated_xp_name'
+        new_description = 'updated_description'
         data = {'description': new_description}
         assert self.object.description != data['description']
         resp = self.auth_client.patch(self.url, data=data)
@@ -451,6 +451,13 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert new_object.description != self.object.description
         assert new_object.description == new_description
         assert new_object.experiments.count() == 2
+
+        data = {'name': 'new_name'}
+        assert self.object.name is None
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.name == data['name']
 
     def test_delete_archives_deletes_immediately_and_schedules_stop(self):
         assert self.model_class.objects.count() == 1

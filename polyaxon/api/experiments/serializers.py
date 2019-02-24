@@ -228,7 +228,9 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
                                                   data_refs=instance.data_refs)
         validated_data = self.validated_declarations(validated_data=validated_data,
                                                      declarations=instance.declarations)
-        validated_data = self.validated_name(validated_data, query=Experiment.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=instance.project,
+                                             query=Experiment.all)
 
         return super().update(instance=instance, validated_data=validated_data)
 
@@ -281,7 +283,9 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
                               'to a `{}`.\n'.format(spec.kind))
 
     def create(self, validated_data):
-        validated_data = self.validated_name(validated_data, query=Experiment.all)
+        validated_data = self.validated_name(validated_data,
+                                             project=validated_data['project'],
+                                             query=Experiment.all)
         try:
             return super().create(validated_data)
         except Exception as e:
