@@ -20,6 +20,7 @@ tags:
  * Fix regression in native build failed status.
  * Fix some issues related to concurrency.
  * Fix some issues when handling files are not found on buckets.
+ * Fix updating unique names.
  * Fix several UI typos.
 
 ## 0.3.9

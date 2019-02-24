@@ -225,7 +225,7 @@ It will create a new experiment based on experiment 2 last saved checked point.
 <blockquote class="warning">
     This section is oriented for users who want to run experiments with multiple jobs, the example uses Tensorflow. 
     Polyaxon supports also MXNet, Pytorch, and Horovod,
-    you can find more details in the <a href="/intergrations/distributed-training">distributed experiments</a>'s section.
+    you can find more details in the <a href=" /integrations/distributed-training/">distributed experiments</a>'s section.
 </blockquote>
 
 After modifying our `train.py` we want to run the experiment with 1 master 4 workers and 1 parameter server.
