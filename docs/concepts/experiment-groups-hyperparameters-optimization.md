@@ -1,16 +1,19 @@
 ---
-title: "Experiment Groups"
-sub_link: "experiment_groups"
-meta_title: "Experiment Groups in Polyaxon - Core Concepts"
+title: "Experiment Groups - Hyperparameters Optimization"
+sub_link: "experiment-group-hyperparameters-optimization"
+meta_title: "Experiment Groups - Hyperparameters Optimization in Polyaxon - Core Concepts"
 meta_description: "An Experiment Group is an automatic and practical way to run a version of your model and data with different hyper parameters."
 tags:
     - concepts
     - polyaxon
     - experimentation
-    - experiment_groups
+    - experiment-groups
     - architecture
+    - experimentation
+    - hyperparams-optimization
 sidebar: "concepts"
 ---
+
 Assuming that you have already a [project](/concepts/projects/) created and initialized,
 and you uploaded your code consisting of a single file `train.py` that accepts 2 parameters
 
@@ -28,6 +31,7 @@ You need set the required information, for example if the code requires `tensorf
 the polyaxonfile.yml `run` section could look something like this
 
 ```yaml
+
 ---
 ...
 
@@ -52,6 +56,7 @@ Now you need to declare this values, and for that you will add 2 more sections t
 The new `polyaxonfile.yml` after the update
 
 ```yaml
+
 ---
 version: 1
 
@@ -122,7 +127,7 @@ This command validate the polyaxon file, and the option `-def` returns the group
 or check the [command reference](/references/polyaxon-cli/check/)
 
 > Polyaxon merges the combination values from matrix for a single experiment with the values from declarations and export under the environment variable name `POLYAXON_DECLARATIONS`. 
-Check how you can [get the experiment declarations](/references/tracking-api/experiments/#tracking-experiments-running-inside-polyaxon) to use them with your models.
+Check how you can [get the experiment declarations](/references/polyaxon-tracking-api/experiments/#tracking-experiments-running-inside-polyaxon) to use them with your models.
 
 ## Running a group of experiments
 
@@ -141,13 +146,13 @@ or check the [command reference](/references/polyaxon-cli/run/)
 
 Now one thing we did not discuss is how many experiments we want to run in parallel,
 and how we want to perform the hyperparameters search. Be default, Polyaxon
-will schedule your experiments sequentially and explore the space in grid search algorithm.
+will schedule your experiments sequentially and explore the space with the [grid search](/references/optimization-engine/grid-search/) algorithm.
 
 
 ## Running concurrent experiments
 
 Now imagine we have enough resources on our cluster to run experiments in parallel.
-And we want to run 2 experiments concurrently, and explore the space randomly instead of sequentially.
+And we want to run 2 experiments concurrently, and explore the space [randomly](/references/optimization-engine/random-search/) instead of sequentially.
 
 Although we can modify the `polyaxonfile.yml` to include this new section,
 we will do something different this time and override this value with a new file, same way you would do with `docker/docker-compose`.
@@ -219,12 +224,12 @@ hptuning:
     n_experiments: 4
 ```
 
-This will start a maximum of 4 experiments in this group independently of how big is the total number of experiments in matrix space.
+This will create a maximum of 4 experiments in this group independently of how big is the total number of experiments in matrix space.
 
 ## Early stopping
 
 Another way to stop the search algorithm is to provide a condition for early stopping.
-Obviously in this case early stopping is only responsible for the number of experiments to run.
+Obviously in this case, early stopping is only responsible for the number of experiments to run.
 For an early stopping related to the number of steps or epochs, you should be able to provide such logic in your code.
 
 In order to activate this option, you must update your polyaxonfile's `hptuning` section with `early_stopping`
@@ -312,12 +317,13 @@ Experiments:
 ## Experiment group search algorithms
 
 In this introductory sections we demonstrated how to conduct hyperparameters tuning with 2 algorithms;
-grid search and random search.
+[grid search](/references/optimization-engine/grid-search/) and [random search](/references/optimization-engine/random-search/).
 
 Sometimes you might have a large search space where you want to use advanced search algorithms.
-Polyaxon supports, in addition to grid and random search, Hyperband and Bayesian Optimization.
+Polyaxon supports, in addition to [grid search](/references/optimization-engine/grid-search/) and [random search](/references/optimization-engine/random-search/), 
+[Hyperband](/references/optimization-engine/hyperband/) and [Bayesian Optimization](/references/optimization-engine/bayesian-optimization/).
 
-For more information on hyperparameters tuning and optimization please go to [hyperparameters search](/concepts/hyperparameters-optimization/).
+For more information on hyperparameters tuning and optimization please go to [Optimization Engine Reference](/references/optimization-engine/).
 
 
 > For more details about this command please run `polyaxon group --help`, 
