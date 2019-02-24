@@ -146,13 +146,13 @@ or check the [command reference](/references/polyaxon-cli/run/)
 
 Now one thing we did not discuss is how many experiments we want to run in parallel,
 and how we want to perform the hyperparameters search. Be default, Polyaxon
-will schedule your experiments sequentially and explore the space with the [grid search](/references/optimization-engine/grid-search/) algorithm.
+will schedule your experiments sequentially and explore the space with the [grid search](/references/references/polyaxon-optimization-engine/grid-search/) algorithm.
 
 
 ## Running concurrent experiments
 
 Now imagine we have enough resources on our cluster to run experiments in parallel.
-And we want to run 2 experiments concurrently, and explore the space [randomly](/references/optimization-engine/random-search/) instead of sequentially.
+And we want to run 2 experiments concurrently, and explore the space [randomly](/references/references/polyaxon-optimization-engine/random-search/) instead of sequentially.
 
 Although we can modify the `polyaxonfile.yml` to include this new section,
 we will do something different this time and override this value with a new file, same way you would do with `docker/docker-compose`.
@@ -317,13 +317,13 @@ Experiments:
 ## Experiment group search algorithms
 
 In this introductory sections we demonstrated how to conduct hyperparameters tuning with 2 algorithms;
-[grid search](/references/optimization-engine/grid-search/) and [random search](/references/optimization-engine/random-search/).
+[grid search](/references/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/references/polyaxon-optimization-engine/random-search/).
 
 Sometimes you might have a large search space where you want to use advanced search algorithms.
-Polyaxon supports, in addition to [grid search](/references/optimization-engine/grid-search/) and [random search](/references/optimization-engine/random-search/), 
-[Hyperband](/references/optimization-engine/hyperband/) and [Bayesian Optimization](/references/optimization-engine/bayesian-optimization/).
+Polyaxon supports, in addition to [grid search](/references/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/references/polyaxon-optimization-engine/random-search/), 
+[Hyperband](/references/references/polyaxon-optimization-engine/hyperband/) and [Bayesian Optimization](/references/references/polyaxon-optimization-engine/bayesian-optimization/).
 
-For more information on hyperparameters tuning and optimization please go to [Optimization Engine Reference](/references/optimization-engine/).
+For more information on hyperparameters tuning and optimization please go to [Optimization Engine Reference](/references/references/polyaxon-optimization-engine/).
 
 
 > For more details about this command please run `polyaxon group --help`, 

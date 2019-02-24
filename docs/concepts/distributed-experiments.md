@@ -1,6 +1,6 @@
 ---
 title: "Distributed Experiments"
-sub_link: "distributed_experiments"
+sub_link: "distributed-experiments"
 meta_title: "Distributed Experiments in Polyaxon - Core Concepts"
 meta_description: "A Distributed Experiment is the execution of a model or a computation graph across a cluster."
 tags:

@@ -94,7 +94,7 @@ Files uploaded.
 
 ## Set a git url for the project
 
-In case you choose to use an external git project, you init set the project git information:
+In case you choose to use an external git project, you can set the project git information instead of uploading code to the internal code tracker:
 
 ```bash
 polyaxon project -p quick-start git --url="https://github.com/org/repo" --private
