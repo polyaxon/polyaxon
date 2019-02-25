@@ -23,7 +23,6 @@ Running a job is very similar to running an experiment, in the sense that you ne
 The polyaxonfile will define the environment requirements needed to run your job.
 
 ```yaml
----
 ...
 
 build

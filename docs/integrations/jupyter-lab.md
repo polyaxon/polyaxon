@@ -34,8 +34,6 @@ Jupyter Lab is an alternative backend when creating notebooks on Polyaxon.
 To create a Jupyter Lab, you need a polyaxonfile to customize the container running your notebook:
 
 ```yaml
-
----
 version: 1
 
 kind: notebook

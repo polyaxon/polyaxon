@@ -26,7 +26,6 @@ We will start first by adding the `run` section. For example if the code require
 the polyaxonfile.yml `run` section could look something like this
 
 ```yaml
----
 ...
 
 build
@@ -174,7 +173,6 @@ $ vi polyaxonfile_override.yml
 And past the new declarations section.
 
 ```yaml
----
 version: 1
 
 declarations:
@@ -245,8 +243,6 @@ In order to customize the resources of our jobs we need to introduce a new secti
 Let's create a new `polyaxonfile_resources.yml` override file that will allow us to achieve that
 
 ```yaml
-
----
 version: 1
 
 environment:

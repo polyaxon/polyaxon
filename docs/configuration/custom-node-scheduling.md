@@ -76,7 +76,6 @@ $ kubectl label nodes node3 polyaxon: specific-gpu
 And use that label to override the default scheduling behavior:
 
 ```yaml
----
 version: 1
 
 kind: experiment
@@ -121,7 +120,6 @@ for example we can imagine that if the user runs a distributed experiment with a
 and the user wishes to schedule the worker on that node:
 
 ```yaml
----
 version: 1
 
 kind: experiment

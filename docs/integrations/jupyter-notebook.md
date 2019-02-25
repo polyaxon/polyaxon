@@ -32,8 +32,6 @@ these jobs are subject to the same permissions of the project they belong to.
 To create a notebook, you need a polyaxonfile to customize the container running your notebook:
 
 ```yaml
-
----
 version: 1
 
 kind: notebook

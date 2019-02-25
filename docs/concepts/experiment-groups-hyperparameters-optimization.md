@@ -31,8 +31,6 @@ You need set the required information, for example if the code requires `tensorf
 the polyaxonfile.yml `run` section could look something like this
 
 ```yaml
-
----
 ...
 
 build:
@@ -170,8 +168,6 @@ $ vi polyaxonfile_override.yml
 And past the following hptuning section.
 
 ```yaml
-
----
 version: 1
 
 hptuning:
@@ -235,8 +231,6 @@ For an early stopping related to the number of steps or epochs, you should be ab
 In order to activate this option, you must update your polyaxonfile's `hptuning` section with `early_stopping`
 
 ```yaml
-
----
 version: 1
 
 hptuning:

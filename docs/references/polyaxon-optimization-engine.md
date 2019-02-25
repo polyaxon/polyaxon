@@ -17,6 +17,8 @@ sidebar: "polyaxon-optimization-engine"
 
 This reference guide assumes that you have already familiarized yourself with the concept of [experiment_groups](/concepts/experiment-groups/).
 
+## Overview 
+
 Hyperparameters selection is crucial for creating robust models,
 since they heavily influence the behavior of the learned model.
 Finding good hyperparameters involves can be very challenging,
@@ -30,6 +32,8 @@ advanced approaches, such as `Hyperband` and `Bayesian Optimization`.
 All these search algorithms run in an asynchronous way, and support concurrency to leverage your cluster's resources to the maximum.
 
 Some of these approaches are also iterative and improve based on previous experiments.
+
+## Algorithms 
 
 In order to search a hyperparameter space, all search algorithms require a `hptuning` section,
 they also share some subsections such as: `matrix` definition of hyperparameters, `early_stopping`, and `concurrency`.

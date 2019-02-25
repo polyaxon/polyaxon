@@ -53,7 +53,6 @@ For example to start tensorboard with Tensorflow 1.6, you need to define a new p
 
 
 ```yaml
----
 version: 1
 
 kind: tensorboard

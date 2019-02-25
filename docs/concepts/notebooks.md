@@ -37,7 +37,6 @@ Starting notebook is similar to running any other Polyaxon job, i.e. you need to
 Let's create a simple polyaxonfile_notebook.yml
 
 ```yaml
----
 version: 1
 
 kind: notebook

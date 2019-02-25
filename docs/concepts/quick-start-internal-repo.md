@@ -50,8 +50,6 @@ Let's open the created `polyaxonfile.yaml`
 since we cloned the project, this file is already populated with the minimum configuration needed to start an experiment:
 
 ```yaml
-
----
 version: 1
 
 kind: experiment

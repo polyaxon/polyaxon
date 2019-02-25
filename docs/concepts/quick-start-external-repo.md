@@ -45,8 +45,6 @@ $ polyaxon init quick-start --polyaxonfile
 Let's create a `polyaxonfile.yaml` if you don't have one yet 
 
 ```yaml
-
----
 version: 1
 
 kind: experiment

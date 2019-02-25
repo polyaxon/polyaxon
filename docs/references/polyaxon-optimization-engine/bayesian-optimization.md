@@ -16,12 +16,16 @@ sidebar: "polyaxon-optimization-engine"
 
 ![bayesian-optimization](../../../content/images/references/optimization-engine/bayesian-optimization.png)
 
+## Overview 
+
 Bayesian optimization is an extremely powerful technique.
 The main idea behind it is to compute a posterior distribution over the objective function based on the data,
 and then select good points to try with respect to this distribution.
 
 The way Polyaxon performs bayesian optimization is by measuring the expected increase in the maximum objective value
 seen over all experiments in the group, given the next point we pick.
+
+## Configuration
 
 Since the bayesian optimization leverages previous experiments, the algorithm requires a metric to optimize (`maximize` or `minimize`).
 
@@ -52,14 +56,41 @@ Polyaxon allows to tune the gaussian process.
  * `n_restarts_optimizer`: int
 
 
-Example :
+### Number of Initial Trials
+
+In order for the algorithm to function correctly, an initial iteration of random experiments is required to create a seed of observations.
+
+This initial random results are used by the algorithm to update the regression model for generating the next suggestions.
+
+```yaml
+n_initial_trials: 40
+```
+
+This configuration will create 40 random experiments, before start suggestion new experiments.
+
+### Number of iterations 
+
+After creating the first set of random observations, the algorithm will use these results to update the regression model and suggest a new experiment to run.
+
+Every time an experiment is done, the results are used as an observation and are appended to the historical values so that the algorithm can use all the observations again to suggest more experiments to run.
+
+The algorithm will keep suggesting more experiments and adding their results as an observation, every time we make a new observation, 
+i.e. an experiment finishes and reports results to the platform, the results are append to the historical values, and then used to make a better suggestion.
+
+```yaml
+n_iterations: 15
+```
+
+This configuration will make 15 suggestions based on the historical values, every time an observation is made is appended to the historical values to make better subsequent suggestions. 
+
+## Example
 
 
 ```yaml
 ...
 
 hptuning:
-  concurrency: 2
+  concurrency: 5
   bo:
     n_iterations: 15
     n_initial_trials: 30
@@ -84,13 +115,20 @@ hptuning:
       pvalues: [[relu, 0.1], [sigmoid, 0.8]]
 ```
 
-Example with early stopping:
+## Concurrency
+
+Bayesian Optimization algorithm uses concurrency to run all the initial number of experiments in parallel, if not provided they will run sequentially. 
+And after that, every iteration will result in one new suggestion.
+
+## Early stopping
+
+Bayesian Optimization algorithm can be used with early stopping, to prevent the algorithm from starting all experiments in the initial step but also at every subsequent iteration: 
 
 ```yaml
 ...
 
 hptuning:
-  concurrency: 2
+  concurrency: 5
   bo:
     n_iterations: 15
     n_initial_trials: 30
@@ -122,3 +160,6 @@ hptuning:
       value: 0.05
       optimization: minimize
 ```
+
+With this updated example, if one of the experiments reaches an accuracy of 0.9 or higher, or a loss of 0.05 or lower, the search algorithm will stop other running experiments, 
+and any other experiments that is scheduled to be running.

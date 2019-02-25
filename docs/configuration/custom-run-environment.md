@@ -35,8 +35,6 @@ and Polyaxon will take care of building the image before running your code.
 For example
 
 ```yaml
-
----
 version: 1
 
 kind: experiment
@@ -124,8 +122,6 @@ If you have multiple commands that you wish to execute,
 You can create an executable file, the filename must be `polyaxon_setup.sh` or `setup.sh`, and a command to execute that file `./polyaxon_setup.sh`.
 
 ```yaml
-
----
 version: 1
 
 kind: experiment
@@ -264,16 +260,12 @@ This is all valid commands that Polyaxon will execute:
 
 
 ```yaml
-
----
 ...
 
 run:
   cmd: cmd1 && cmd2 && cmd3
 ```
 ```yaml
-
----
 ...
 
 run:
@@ -297,8 +289,6 @@ This is all valid commands that Polyaxon will execute:
 
 
 ```yaml
-
----
 ...
 
 run:
