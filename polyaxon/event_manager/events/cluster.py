@@ -98,7 +98,7 @@ class ClusterNodeGPU(Event):
     event_type = CLUSTER_NODE_GPU
     attributes = (
         Attribute('created_at', is_datetime=True),
-        Attribute('serial'),
-        Attribute('name'),
+        Attribute('serial', is_required=False),
+        Attribute('name', is_required=False),
         Attribute('memory', attr_type=int),
     )
