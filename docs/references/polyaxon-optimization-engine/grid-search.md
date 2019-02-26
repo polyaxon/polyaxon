@@ -22,7 +22,7 @@ and it accepts one optional parameter `n_experiments` in case the user does not 
 
 Grid search is essentially an exhaustive search through a manually specified set of hyperparameters. The user can possibly limit the number of experiments created by providing n_experiments.
 
-Grid search does not allow the use of distributions, and requires that all values of the matrix definition to be [discrete values](/references/polyaxonfile-yaml-specification/sections/#discrete-values).
+Grid search does not allow the use of distributions, and requires that all values of the matrix definition to be [discrete values](/references/polyaxonfile-yaml-specification/hptuning/#discrete-values).
 
 ## Example
 
@@ -52,7 +52,7 @@ run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }} --dropout={{ dropout }}
 ```
 
-Other possible matrix options that can be found [here](/references/polyaxonfile-yaml-specification/sections/#discrete-values).
+Other possible matrix options that can be found [here](/references/polyaxonfile-yaml-specification/hptuning/#discrete-values).
 
 This example will define 10 experiments based on the cartesian product of `lr` and `dropout` possible values.
 

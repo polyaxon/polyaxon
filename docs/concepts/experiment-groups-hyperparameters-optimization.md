@@ -21,7 +21,7 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
   * batch size `batch_size`
 
 If you want to run this code with different learning rate  `lr` values,
-you can use the [matrix section](/references/polyaxonfile-yaml-specification/sections/#matrix) to declare the values you want to run.
+you can use the [matrix section](/references/polyaxonfile-yaml-specification/hptuning/#matrix) to declare the values you want to run.
 
 ## Updating the polyaxonfile.yml with a matrix
 
@@ -44,12 +44,12 @@ run:
 
 This declares a section to run our `train.py` file by passing two values, the `learning rate` and the `batch_size`.
 
-> For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/sections/#run)
+> For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/run/)
 
 Now you need to declare this values, and for that you will add 2 more sections to the polyaxonfile.yml
 
- * A [declarations section](/references/polyaxonfile-yaml-specification/sections/#declarations), to declare a constant value for `batch_size`
- * A [hptuning section](/references/polyaxonfile-yaml-specification/sections/#hptuning) with [matrix subsection](/references/polyaxonfile-yaml-specification/sections/#matrix), to declare the values for `lr`
+ * A [declarations section](/references/polyaxonfile-yaml-specification/declarations/), to declare a constant value for `batch_size`
+ * A [hptuning section](/references/polyaxonfile-yaml-specification/hptuning/) with [matrix subsection](/references/polyaxonfile-yaml-specification/hptuning/#matrix), to declare the values for `lr`
 
 The new `polyaxonfile.yml` after the update
 
@@ -102,7 +102,7 @@ And distributions, when using random search, hyperband, or bayesian optimization
  * **lognormal**: [loc, scale]
  * **qlognormal**: [loc, scale]
 
-You can check all the options available on the [matrix section reference](/references/polyaxonfile-yaml-specification/sections/#matrix).
+You can check all the options available on the [matrix section reference](/references/polyaxonfile-yaml-specification/hptuning/#matrix).
 
 To make sure that the polyaxon file is valid, and creates multiple values for `lr`, we can run the following
 

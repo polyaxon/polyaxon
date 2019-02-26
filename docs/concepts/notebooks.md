@@ -29,10 +29,10 @@ We assume that you have already a [project](/concepts/projects/) created and ini
 
 Starting notebook is similar to running any other Polyaxon job, i.e. you need to define polyaxonfile containing:
 
- * [version](/references/polyaxonfile-yaml-specification/sections/#version)
- * [kind](/references/polyaxonfile-yaml-specification/sections/#kind): in this case this value should be `plugin`.
- * [project](/references/polyaxonfile-yaml-specification/sections/#project)
- * [run](/references/polyaxonfile-yaml-specification/sections/#version)
+ * [version](/references/polyaxonfile-yaml-specification/version/)
+ * [kind](/references/polyaxonfile-yaml-specification/kind/): in this case this value should be `plugin`.
+ * [project](/references/polyaxonfile-yaml-specification/project/)
+ * [run](/references/polyaxonfile-yaml-specification/version/)
 
 Let's create a simple polyaxonfile_notebook.yml
 

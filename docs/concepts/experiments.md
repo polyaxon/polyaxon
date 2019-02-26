@@ -74,10 +74,10 @@ run:
 
 > The declarations section was not completely necessary, 
 we could have also just passed the value directly `--batch-size=128 --lr=0.01`
-For more information please visit the [declarations section](/references/polyaxonfile-yaml-specification/sections/#declarations) reference.
+For more information please visit the [declarations section](/references/polyaxonfile-yaml-specification/declarations/) reference.
 
 
-> For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/sections/#run)
+> For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/run/)
 
 
 To make sure that the polyaxon file is valid, you can run the following command,
@@ -238,7 +238,7 @@ $ polyaxon upload
 
 > You can also execute `run` with `-u` option, to upload before resuming the run the command, In that case polyaxon upload is not necessary: `$ polyaxon run -f polyaxonfile.yml -u`
 
-In order to customize the resources of our jobs we need to introduce a new section [environment](/references/polyaxonfile-yaml-specification/sections/#environment).
+In order to customize the resources of our jobs we need to introduce a new section [environment](/references/polyaxonfile-yaml-specification/environment/).
 
 Let's create a new `polyaxonfile_resources.yml` override file that will allow us to achieve that
 

@@ -45,9 +45,9 @@ This will start tensorboard with the default options,
 if you which to start tensorboard with a different Tensorflow image, or custom resources,
 you need to create a polyaxonfile containing:
 
- * [version](/references/polyaxonfile-yaml-specification/sections/#version)
- * [project](/references/polyaxonfile-yaml-specification/sections/#project)
- * [run](/references/polyaxonfile-yaml-specification/sections/#run)
+ * [version](/references/polyaxonfile-yaml-specification/version/)
+ * [project](/references/polyaxonfile-yaml-specification/project/)
+ * [run](/references/polyaxonfile-yaml-specification/run/)
 
 For example to start tensorboard with Tensorflow 1.6, you need to define a new polyaxonfile_tensorboard.yml with the following options:
 
