@@ -44,7 +44,8 @@ class BuildSchema(BaseSchema):
     build_steps = fields.List(fields.Str(), allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
-    ref = fields.Str(allow_none=True)
+    commit = fields.Str(allow_none=True)
+    branch = fields.Str(allow_none=True)
     nocache = fields.Boolean(allow_none=True)
 
     @staticmethod
@@ -82,7 +83,15 @@ class BuildConfig(BaseConfig):
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
     REDUCED_ATTRIBUTES = [
-        'build_steps', 'env_vars', 'nocache', 'ref', 'backend', 'context', 'dockerfile', 'image'
+        'build_steps',
+        'env_vars',
+        'nocache',
+        'branch',
+        'commit',
+        'backend',
+        'context',
+        'dockerfile',
+        'image'
     ]
 
     def __init__(self,
@@ -93,7 +102,8 @@ class BuildConfig(BaseConfig):
                  build_steps=None,
                  env_vars=None,
                  nocache=None,
-                 ref=None):
+                 commit=None,
+                 branch=None):
         validate_image(image)
         validate_backend(backend)
         validate_build(image=image, dockerfile=dockerfile)
@@ -104,7 +114,8 @@ class BuildConfig(BaseConfig):
         self.build_steps = build_steps
         self.env_vars = env_vars
         self.nocache = nocache
-        self.ref = ref
+        self.commit = commit
+        self.branch = branch
 
     @property
     def image_tag(self):
