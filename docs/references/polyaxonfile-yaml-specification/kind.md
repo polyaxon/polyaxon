@@ -12,9 +12,11 @@ tags:
 sidebar: "polyaxon-yaml-specification"
 ---
 
+## Overview
+ 
 Represents the polyaxon file specification kind, i.e. one of the values `experiment`, `group`, `job`, `notebook`, `tensorboard`, `pipeline`.
 
-Example:
+## Example
 
 ```yaml
 kind: experiment

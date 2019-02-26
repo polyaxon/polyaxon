@@ -12,17 +12,19 @@ tags:
 sidebar: "polyaxon-yaml-specification"
 ---
 
+## Overview 
+
 This section is the appropriate place to declare constants and variables
 that will be used by the rest of our specification file.
 
-To declare a simple constant value:
+## Example using a simple constant value:
 
 ```yaml
 declarations:
   batch_size: 128
 ```
 
-List of values or nested values:
+## Example using a list of values or nested values
 
 ```yaml
 declarations:
@@ -41,6 +43,8 @@ declarations:
        size: [2, 2]
        strides: [1, 1]
 ```
+
+## Explanation
 
 This declaration can be used to pass values to our program:
 

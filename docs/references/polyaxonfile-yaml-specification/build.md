@@ -12,6 +12,8 @@ tags:
 sidebar: "polyaxon-yaml-specification"
 ---
 
+## Overview
+
 This is where you define how you build an image to run your code.
 This section defines the following values/subsections:
 
@@ -23,6 +25,21 @@ This section defines the following values/subsections:
  * env_vars [optional]: environment variables are also a list of tuples of 2 elements, that polyaxon will use to add env variables in the docker image.
  * ref [optional]: the commit/branch/treeish to use for creating the build.
  * nocache [optional]: to force rebuild the image. 
+
+## Example using commit
+
+```yaml
+build:
+  image: my_image
+  build_steps:
+    - pip install PILLOW
+    - pip install scikit-learn
+  env_vars:
+    - [KEY1, VALUE1]
+    - [KEY2, VALUE2]
+```
+
+## Example using commit
 
 ```yaml
 build:
@@ -36,8 +53,7 @@ build:
   ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
-Build based on dev branch
-
+## Example using branch name
 
 ```yaml
 build:
@@ -45,7 +61,7 @@ build:
   ref: branch_dev
 ```
 
-Build using a Dockerfile
+## Example using a Dockerfile
 
 
 ```yaml
@@ -54,7 +70,7 @@ build:
   ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
-Build using an image and a context:
+## Example using an image and a context
 
 
 ```yaml
@@ -70,7 +86,7 @@ build:
   ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
-Build using a Dockerfile and a context:
+## Example using a Dockerfile and a context
 
 
 ```yaml

@@ -12,11 +12,14 @@ tags:
 sidebar: "polyaxon-yaml-specification"
 ---
 
-Settings defines `seed`, `concurrency`, `search algorithm`, `early_stopping`, `matrix`.
+## Overview
+
+The hptuning defines `seed`, `concurrency`, `search algorithm`, `early_stopping`, `matrix`.
+
 In general the hptuning defines some values that must be unique for
 all experiments created based on the polyaxonfile.
 
-### seed
+## seed
 
 A seed to use when generating random values during the hyperparameters search.
 
@@ -26,7 +29,7 @@ Example:
 seed: 3234
 ```
 
-### concurrency
+## concurrency
 
 Defines how many experiments to run concurrently when the polyaxon file use a `matrix` section.
 This option will be ignored if the polyaxon file only have one independent experiment.
@@ -37,7 +40,7 @@ Example:
 concurrency: 3
 ```
 
-### matrix
+## matrix
 
 The matrix section works the same way as travisCI matrix section,
 and it basically creates multiple specifications.
@@ -57,7 +60,7 @@ The matrix is defined as `{key: value}` object where the key is the name of the 
 you are defining and the value is one of these options:
 
 
-#### Discrete values
+### Discrete values
 
  * **values**: a list of values, e.g.
 
@@ -87,7 +90,7 @@ you are defining and the value is one of these options:
     * `{start: 1, stop: 10, num: 20}`
     * `'1:2:20'`
 
-#### Distributions
+### Distributions
 
  * **pvalues**: Draws a value_i from values with probability  prob_i, e.g.
 
@@ -178,7 +181,7 @@ to your declarations, and will export them under the environment variable name `
 Check how you can [get the cluster definition](/references/polyaxon-tracking-api/experiments/#tracking-experiments-running-inside-polyaxon) to use it with your models.
 
 
-### search algorithm: grid_search
+## search algorithm: grid_search
 
 Hyperparameters search using grid search. This the default value when no algorithm is provided.
 By default, the grid search will travers all possible combinations based on the cartesian product,
@@ -191,7 +194,7 @@ grid_search:
   n_experiments: 10
 ```
 
-### search algorithm: random_search
+## search algorithm: random_search
 
 Hyperparameters search using random search.
 
@@ -202,7 +205,7 @@ random_search:
   n_experiments: 10
 ```
 
-### search algorithm: hyperband
+## search algorithm: hyperband
 
 Hyperparameters search using hyperband.
 
@@ -221,7 +224,7 @@ hyperband:
   resume: False
 ```
 
-### search algorithm: bo
+## search algorithm: bo
 
 Hyperparameters search using bayesian optimization.
 
@@ -244,7 +247,7 @@ bo:
       n_restarts_optimizer: 0
 ```
 
-### early_stopping
+## early_stopping
 
 Defines a list of metrics and the values for these metrics to stop the search algorithm.
 

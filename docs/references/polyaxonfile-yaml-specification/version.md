@@ -12,9 +12,12 @@ tags:
 sidebar: "polyaxon-yaml-specification"
 ---
 
+## Overview
+
 Represents the polyaxon file specification version.
 
-Example:
+
+## Example
 
 ```yaml
 version: 1

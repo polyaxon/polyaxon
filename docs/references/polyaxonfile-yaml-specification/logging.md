@@ -12,13 +12,15 @@ tags:
 sidebar: "polyaxon-yaml-specification"
 ---
 
+## Overview
+
 Defines the logging behavior for your execution, this subsection accepts:
 
  * `level`: The log level.
  * `formatter`: The log formatter regex.
 
 
-Example:
+## Example
 
 ```yaml
 logging:

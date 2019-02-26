@@ -12,6 +12,8 @@ tags:
 sidebar: "polyaxon-yaml-specification"
 ---
 
+## Overview
+
 The environment section allows to alter the
 resources and configuration of the runtime of your experiments.
 
@@ -20,7 +22,7 @@ the resources, the node selectors, and the configs of each job.
 
 The values of this section are:
 
-### resources
+## resources
 
 The resources to use for the job. In the case of distributed run, it's the resources to use for the master job.
 A resources definition, is optional and made of three optional fields:
@@ -48,7 +50,7 @@ environment:
       limits: 8
 ```
 
-### outputs
+## outputs
 
 Sometime you experiment or your job might depend on previous jobs or experiments,
 and you need to use their outputs to either do fine tuning or post processing of those outputs.
@@ -69,7 +71,7 @@ environment:
     experiments: [12, 'experiment_name', 'my_other_project/experiment_name2']
 ```
 
-### persistence
+## persistence
 
 The volumes to mount for data and outputs, this is only needed when Polyaxon was deployed
 with multiple data volumes or multiple outputs volumes or both.
@@ -81,7 +83,7 @@ environment:
     outputs: 'outputs_volume_name2'
 ```
 
-### node selectors
+## node selectors
 
 The labels to use as node selectors for scheduling the job on a specific node.
 You can also set default [node selectors](/reference_polyaxon_helm/#node-and-deployment-manipulation)
@@ -93,7 +95,7 @@ environment:
     node_label: node_value
 ```
 
-### tolerations
+## tolerations
 
 The tolerations to use for the scheduling the job.
 You can also set default [tolerations](/reference_polyaxon_helm/#node-and-deployment-manipulation)
@@ -107,7 +109,7 @@ environment:
       effect: "NoSchedule"
 ```
 
-### affinity
+## affinity
 
 The affinity to use for the scheduling the job.
 You can also set default [affinity](/reference_polyaxon_helm/#node-and-deployment-manipulation)
@@ -131,7 +133,7 @@ environment:
 
 To enable a distributed run, the user can define one of the following framework:
 
-### configmap_refs
+## configmap_refs
 
 A list of config map references to mount during the scheduling of a job/build/experiment
 
@@ -140,7 +142,7 @@ environment:
   configmap_refs: ['configmap1', 'configmap3']
 ```
 
-### secret_refs
+## secret_refs
 
 ```yaml
 environment:
@@ -149,17 +151,17 @@ environment:
 
 A list of secret references to mount during the scheduling of a job/build/experiment
 
-### tensorflow
+## tensorflow
 
-#### n_workers
+### n_workers
 
 The number of workers to use for an experiment.
 
-#### n_ps
+### n_ps
 
 The number of parameter server to use for an experiment.
 
-#### default_worker
+### default_worker
 
 Default environment specification to use for all workers.
 
@@ -172,7 +174,7 @@ environment:
     tolerations:
 ```
 
-#### default_ps
+### default_ps
 
 Default environment specification to use for all ps.
 
@@ -185,7 +187,7 @@ environment:
     tolerations:
 ```
 
-#### worker
+### worker
 
 Defines a specific worker(s)' environment section defining, indicated by index:
 
@@ -199,7 +201,7 @@ environment:
       tolerations:
 ```
 
-#### ps
+### ps
 
 Defines a specific ps(s)' environment section defining, indicated by index:
 
@@ -292,17 +294,17 @@ environment:
             limits: 1024
 ```
 
-### mxnet
+## mxnet
 
-#### n_workers
+### n_workers
 
 The number of workers to use for an experiment.
 
-#### n_ps
+### n_ps
 
 The number of parameter server to use for an experiment.
 
-#### default_worker
+### default_worker
 
 Default environment specification to use for all workers.
 
@@ -315,7 +317,7 @@ environment:
     tolerations:
 ```
 
-#### default_ps
+### default_ps
 
 Default environment specification to use for all ps.
 
@@ -328,7 +330,7 @@ environment:
     tolerations:
 ```
 
-#### worker
+### worker
 
 Defines a specific worker(s)' environment section defining, indicated by index:
 
@@ -342,7 +344,7 @@ environment:
       tolerations:
 ```
 
-#### ps
+### ps
 
 Defines a specific ps(s)' environment section defining, indicated by index:
 
@@ -370,13 +372,13 @@ environment:
         polyaxon: nodes_for_param_servers
 ```
 
-### pytorch
+## pytorch
 
-#### n_workers
+### n_workers
 
 The number of workers to use for an experiment.
 
-#### default_worker
+### default_worker
 
 Default environment specification to use for all workers.
 
@@ -389,7 +391,7 @@ environment:
     tolerations:
 ```
 
-#### worker
+### worker
 
 Defines a specific worker(s)' environment section defining, indicated by index:
 
@@ -412,14 +414,14 @@ environment:
     n_workers: 4
 ```
 
-### horovod
+## horovod
 
-#### n_workers
+### n_workers
 
 The number of workers to use for an experiment.
 
 
-#### default_worker
+### default_worker
 
 Default environment specification to use for all workers.
 
@@ -432,7 +434,7 @@ environment:
     tolerations:
 ```
 
-#### worker
+### worker
 
 Defines a specific worker(s)' environment section defining, indicated by index:
 
