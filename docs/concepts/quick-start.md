@@ -22,11 +22,11 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](/refer
 The first step is to check that you are logged in and that you are running a version of CLI compatible with the platform.
 
 ```bash
-polyaxon verion --cli
+polyaxon version --cli
 ```
 
 ```bash
-polyaxon verion --platform
+polyaxon version --platform
 ```
 
 ```bash
