@@ -23,7 +23,7 @@ It also packages some required dependencies for Polyaxon:
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
  * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq)
- * [Docker-Registry](https://github.com/kubernetes/charts/tree/master/incubator/docker-registry)
+ * [Docker-Registry](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
 
 > **Note**: It's possible to provide your own database host.
@@ -107,12 +107,7 @@ You can delete the chart and skip the cleaning the hooks
 helm del --purge  <RELEASE_NAME>  --no-hooks
 ```
 
-This can be particularly if your deployment is not working, because the hooks will most probably fail.
-
-
-## Configuration
-
-The following tables lists the configurable parameters of the Polyaxon chart and their default values.
+This can be particularly useful if your deployment is not working, because the hooks will most probably fail.
 
 ### Namespace
 
@@ -137,9 +132,9 @@ You can also provide different annotations for the ingress and it will not use `
 
 
 Note: using TLS requires either:
-a preconifgured secret with the TLS secrets in it or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
+a preconfigured secret with the TLS secrets in it or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
 
-It's alaso possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
+It's also possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
 
 ### Securing api server with TLS
 
@@ -229,7 +224,7 @@ If you don't provide an outputs claim to use, Polyaxon will use the host.
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
 | `persistence.logs.existingClaim`  | Name of an existing PVC                           | ``
-| `persistence.logs.mountPath`      | Path where to mount the volume                    | `/logs`
+| `persistence.logs.mountPath`      | Path where to mount the volume                    | `/polyaxon-logs`
 | `persistence.logs.hostPath`       | The directory from the host node's                | `/tmp/logs`
 
 
@@ -239,9 +234,9 @@ If you don't provide an outputs claim to use, Polyaxon will use the host.
 
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `persistence.repos.existingClaim` | Name of an existing PVC                           | ``
-| `persistence.repos.mountPath`     | Path where to mount the volume                    | `/repos`
-| `persistence.repos.hostPath`      | The directory from the host node's                | `/tmp/repos`
+| `persistence.repos.existingClaim`  | Name of an existing PVC                           | ``
+| `persistence.repos.mountPath`      | Path where to mount the volume                    | `/polyaxon-repos`
+| `persistence.repos.hostPath`       | The directory from the host node's                | `/tmp/repos`
 
 
 **upload**: temporary volume where Polyaxon uploads data, code, files, ...
@@ -251,9 +246,9 @@ It is not very important to have a volume claim for this, if your host node has 
 
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `persistence.upload.existingClaim`| Name of an existing PVC                           | ``
-| `persistence.upload.mountPath`    | Path where to mount the volume                    | `/repos`
-| `persistence.upload.hostPath`     | The directory from the host node's                | `/tmp/repos`
+| `persistence.upload.existingClaim`  | Name of an existing PVC                           | ``
+| `persistence.upload.mountPath`      | Path where to mount the volume                    | `/polyaxon-upload`
+| `persistence.upload.hostPath`       | The directory from the host node's                | `/tmp/upload`
 
 
 **data**: data used for training experiments.
@@ -349,7 +344,9 @@ persistence:
       hostPath: "/outputs"
 ```
 
-Example of different outputs persistence definition:
+> N.B. Multi-outputs is not supported in CE version 
+
+Example of multi-outputs persistence definition with:
 
 ```yaml
 persistence:
@@ -542,11 +539,11 @@ nfsProvisioner:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `nodeSelector.core`                | Node selector for core pod assignment                        | `{}`
-| `nodeSelector.experiments`         | Node selector for experiments pod assignment                 | `{}`
-| `nodeSelector.jobs`                | Node selector for jobs pod assignment                        | `{}`
-| `nodeSelector.builds`              | Node selector for builds pod assignment                      | `{}`
-| `nodeSelector.tensorboards`        | Node selector for tensorboards pod assignment                | `{}`
+| `nodeSelectors.core`               | Node selector for core pod assignment                        | `{}`
+| `nodeSelectors.experiments`        | Node selector for experiments pod assignment                 | `{}`
+| `nodeSelectors.jobs`               | Node selector for jobs pod assignment                        | `{}`
+| `nodeSelectors.builds`             | Node selector for builds pod assignment                      | `{}`
+| `nodeSelectors.tensorboards`       | Node selector for tensorboards pod assignment                | `{}`
 | `tolerations.core`                 | Tolerations for core pod assignment                          | `[]`
 | `tolerations.experiments`          | Tolerations for experiments pod assignment                   | `[]`
 | `tolerations.jobs`                 | Tolerations for jobs pod assignment                          | `[]`
@@ -558,7 +555,6 @@ nfsProvisioner:
 | `affinity.jobs`                    | Affinity for jobs                                            | `{}`
 | `affinity.builds`                  | Affinity for builds                                          | `{}`
 | `affinity.tensorboards`            | Affinity for tensorboards                                    | `{}`
-
 
 
 Dependent charts can also have values overwritten. Preface values with
@@ -634,7 +630,6 @@ You ca yse port forwarding to access the api and dashboard on you localhost:
 ```bash
 kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
 ``` 
-
 
 ## Upgrade Polyaxon
 
