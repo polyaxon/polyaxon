@@ -108,7 +108,7 @@ You can delete the chart and skip the cleaning hooks
 $ helm del --purge  <RELEASE_NAME>  --no-hooks
 ```
 
-This can be particularly if your deployment is not working, because the hooks will most probably fail.
+This can be particularly useful if your deployment is not working, because the hooks will most probably fail.
 
 ## Configuration
 
@@ -229,7 +229,7 @@ If you don't provide an outputs claim to use, Polyaxon will use the host.
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
 | `persistence.logs.existingClaim`  | Name of an existing PVC                           | ``
-| `persistence.logs.mountPath`      | Path where to mount the volume                    | `/logs`
+| `persistence.logs.mountPath`      | Path where to mount the volume                    | `/polyaxon-logs`
 | `persistence.logs.hostPath`       | The directory from the host node's                | `/tmp/logs`
 
 
@@ -240,7 +240,7 @@ If you don't provide an outputs claim to use, Polyaxon will use the host.
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
 | `persistence.repos.existingClaim`  | Name of an existing PVC                           | ``
-| `persistence.repos.mountPath`      | Path where to mount the volume                    | `/repos`
+| `persistence.repos.mountPath`      | Path where to mount the volume                    | `/polyaxon-repos`
 | `persistence.repos.hostPath`       | The directory from the host node's                | `/tmp/repos`
 
 
@@ -252,7 +252,7 @@ It is not very important to have a volume claim for this, if your host node has 
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
 | `persistence.upload.existingClaim`  | Name of an existing PVC                           | ``
-| `persistence.upload.mountPath`      | Path where to mount the volume                    | `/upload`
+| `persistence.upload.mountPath`      | Path where to mount the volume                    | `/polyaxon-upload`
 | `persistence.upload.hostPath`       | The directory from the host node's                | `/tmp/upload`
 
 
@@ -349,7 +349,10 @@ persistence:
       hostPath: "/outputs"
 ```
 
-Example of different outputs persistence definition:
+> N.B. Multi-outputs is not supported in CE version 
+
+Example of multi-outputs persistence definition with:
+
 
 ```yaml
 persistence:

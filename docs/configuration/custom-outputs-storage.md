@@ -22,7 +22,7 @@ Polyaxon allows to mount a volume or a cloud storage to store outputs.
 ## Default behaviour
 
 When the user does not provide any outputs configuration, the default behaviour is to use a local path on the host node for storing outputs, 
-this decision allows Polyaxon deployment to work in all cases without raising any errors.
+this behaviour allows Polyaxon deployment to finish successfully cases without raising any errors.
 
 Often times this default value is sufficient for users who are just trying the platform, and don't want to deal with configuration steps.
 
@@ -79,7 +79,7 @@ We do not recommend this option for a multi-nodes deployment,
 because different jobs/experiments might be scheduled on a different node and store their artifacts on different nodes. 
 Several Polyaxon components might not be able to access the outputs to display or give option to download artifacts for a certain job/experiment.
 
-There are some options that support multi-nodes access, e.g. a PVC backed with an NFS/Glusterfs server, 
+There are some options that support multi-nodes access, e.g. a PVC backed with an [NFS](/integrations/outputs-on-nfs/)/Glusterfs server, 
 where you can use multiple nodes and schedule experiments on all the nodes to access the outputs. Please refer to [this section](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to learn more about access modes.
 
 ## Cloud storages

@@ -22,7 +22,7 @@ Polyaxon allows to mount a volume or a cloud storage to store logs.
 ## Default behaviour
 
 When the user does not provide any logs configuration, the default behaviour is to use a local path on the host node for storing logs, 
-this decision allows Polyaxon deployment to work in all cases without raising any errors.
+this behaviour allows Polyaxon deployment to finish successfully cases without raising any errors.
 
 Often times this default value is sufficient for users who are just trying the platform, and don't want to deal with configuration steps.
 
@@ -54,7 +54,7 @@ persistence:
 ```
 
 Users must know when to use host paths, we do not recommend this option for a multi-nodes deployment, 
-because different Several Polyaxon components might not be able to access the logs to function correctly if they are scheduled on different nodes.
+because several Polyaxon components might not be able to access the logs to function correctly if they are scheduled on different nodes.
 
 Users should be aware as well, that by losing the node where the host path is defined, all logs will be lost as well.
 
@@ -69,12 +69,12 @@ persistence:
     existingClaim: "logs-pvc"
 ```
 
-If you are using a persistent volume with one node access you need to be aware that some Polyaxon component must be scheduled on the same node.
+If you are using a persistent volume with one node access you need to be aware that some Polyaxon components must be scheduled on the same node.
 
-Users must know when to use host paths, we do not recommend this option for a multi-nodes deployment, 
-because different Several Polyaxon components might not be able to access the logs to function correctly if they are scheduled on different nodes.
+Users must know when to use a single access volume, we do not recommend this option for a multi-nodes deployment where the API, scheduler, are replicated over multiple nodes, 
+because several Polyaxon components might not be able to access the logs to function correctly if they are scheduled on different nodes.
 
-There are some options that support multi-nodes access, e.g. a PVC backed with an NFS/Glusterfs server, 
+There are some options that support multi-nodes access, e.g. a PVC backed with an [NFS](/integrations/logs-on-nfs/)/Glusterfs server, 
 where you can use multiple nodes, this allows you to easily scale your API, scheduler and have access to read and write logs. 
 Please refer to [this section](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to learn more about access modes.
 
