@@ -91,6 +91,8 @@ def assign_code_reference(instance: RefModel, branch: str = None, commit: str = 
         commit = build.commit
     if not branch and build:
         branch = build.branch
+    if not branch:
+        branch = 'master'
     code_reference = get_code_reference(project=instance.project, branch=branch, commit=commit)
     if code_reference:
         instance.code_reference = code_reference
