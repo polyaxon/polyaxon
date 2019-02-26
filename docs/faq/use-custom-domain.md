@@ -1,6 +1,6 @@
 ---
-title: "Can use Polyaxon on a custom domain?"
-meta_title: "Can use Polyaxon on a custom domain? - FAQ"
+title: "Can I use Polyaxon on a custom domain?"
+meta_title: "Can use I Polyaxon on a custom domain? - FAQ"
 meta_description: "Polyaxon ships with an ingress allowing to customize your host."
 featured: false
 custom_excerpt: "Polyaxon ships with an ingress allowing to customize your host."
