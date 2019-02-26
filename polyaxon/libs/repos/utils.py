@@ -5,10 +5,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from db.models.repos import CodeReference
 
 
-def _get_repo_code_reference(repo: 'Repo', commit: str = None) -> Optional['CodeReference']:
+def _get_repo_code_reference(repo: 'Repo',
+                             branch: str = None,
+                             commit: str = None) -> Optional['CodeReference']:
+
     if commit:
         try:
             return CodeReference.objects.get(repo=repo,
+                                             branch=branch,
                                              commit=commit)
         except ObjectDoesNotExist:
             return None
@@ -20,26 +24,30 @@ def _get_repo_code_reference(repo: 'Repo', commit: str = None) -> Optional['Code
         return None
 
     code_reference, _ = CodeReference.objects.get_or_create(repo=repo,
+                                                            branch=branch,
                                                             commit=last_commit[0])
     return code_reference
 
 
 def _get_external_repo_code_reference(repo: 'ExternalRepo',
+                                      branch: str = None,
                                       commit: str = None) -> Optional['CodeReference']:
     from libs.repos import git
 
     def get_or_create(ref):
         code_references = CodeReference.objects.filter(external_repo=repo,
                                                        git_url=repo.git_url,
+                                                       branch=branch,
                                                        commit=ref)
         if code_references.exists():
             return code_references.last()
         return CodeReference.objects.create(external_repo=repo,
                                             git_url=repo.git_url,
+                                            branch=branch,
                                             commit=ref)
 
     # Fetch latest
-    git.fetch(git_url=repo.git_clone_url, repo_path=repo.path)
+    git.fetch(git_url=repo.git_clone_url, repo_path=repo.path, branch=branch)
     if commit:
         return get_or_create(ref=commit)
 
@@ -52,17 +60,19 @@ def _get_external_repo_code_reference(repo: 'ExternalRepo',
     return get_or_create(ref=last_commit[0])
 
 
-def get_code_reference(project: 'Project', commit: str = None) -> Optional['CodeReference']:
+def get_code_reference(project: 'Project',
+                       branch: str = None,
+                       commit: str = None) -> Optional['CodeReference']:
 
     if not project.has_code:
         return None
 
     if project.has_external_repo:  # pylint:disable=no-else-return
         repo = project.external_repo
-        return _get_external_repo_code_reference(repo=repo, commit=commit)
+        return _get_external_repo_code_reference(repo=repo, branch=branch, commit=commit)
     else:
         repo = project.repo
-        return _get_repo_code_reference(repo=repo, commit=commit)
+        return _get_repo_code_reference(repo=repo, branch=branch, commit=commit)
 
 
 RefModel = Union['Experiment',
@@ -73,13 +83,15 @@ RefModel = Union['Experiment',
                  'NotebookJob']
 
 
-def assign_code_reference(instance: RefModel, commit: str = None) -> RefModel:
+def assign_code_reference(instance: RefModel, branch: str = None, commit: str = None) -> RefModel:
     if instance.code_reference is not None or instance.specification is None:
         return instance
     build = instance.specification.build if instance.specification else None
     if not commit and build:
-        commit = build.ref
-    code_reference = get_code_reference(project=instance.project, commit=commit)
+        commit = build.commit
+    if not branch and build:
+        branch = build.branch
+    code_reference = get_code_reference(project=instance.project, branch=branch, commit=commit)
     if code_reference:
         instance.code_reference = code_reference
 
