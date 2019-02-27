@@ -65,7 +65,7 @@
     "history": "4.7.2",
     "js-cookie": "2.2.0",
     "js-yaml": "^3.12.0",
-    "lodash": "4.17.10",
+    "lodash": "4.17.11",
     "moment": "2.24.0",
     "normalizr": "3.2.4",
     "plotly.js": "1.45.0",
