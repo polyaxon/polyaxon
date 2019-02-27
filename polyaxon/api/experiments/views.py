@@ -743,8 +743,8 @@ class ExperimentJobStatusDetailView(ExperimentJobResourceEndpoint,
 
 
 class ExperimentJobLogsView(ExperimentJobResourceEndpoint,
-                                    RetrieveEndpoint,
-                                    UpdateEndpoint):
+                            RetrieveEndpoint,
+                            UpdateEndpoint):
     """
     get:
         Get experiment job status details.
