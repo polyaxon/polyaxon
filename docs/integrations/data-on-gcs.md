@@ -117,6 +117,25 @@ and provides an interface to get an authenticated client for each one of these P
 For every path in the data paths dictionary, you can create an authenticated store using the `StoreManager` 
 
 ```python
+from polyaxon_client.tracking import Experiment, get_data_paths
+from polystores.stores.manager import StoreManager
+
+experiment = Experiment()
+print(experiment.get_experiment_info())
+# This is a dict: dataset name -> dataset info
+print("Data paths: {}".format(get_data_paths()))
+
+# e.g. one of datapaths is cifar-10
+# We will create an azure client for that path
+store = StoreManager(path=get_data_paths()['cifar-10'])
+
+# Downloading train data under this blob
+store.download_dir('/train')
+```
+
+All possible function to use:
+
+```python
 from polystores.stores.manager import StoreManager
 
 store = StoreManager(path=data_path)
