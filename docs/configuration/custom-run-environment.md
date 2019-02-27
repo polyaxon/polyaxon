@@ -328,7 +328,8 @@ that the platform does not have an integration for yet,
 Polyaxon provides a way to mount custom config maps and secrets for your runs.
 
 To be able to mount a config map or secret in your jobs/builds/experiments, 
-you need to create the config map/secret, and add it to you deployment config:
+you need to create the config map/secret in the namespace of your Polyaxon 
+deployment and add it to you deployment config:
 
 For example:
 
@@ -347,6 +348,17 @@ environment:
   secret_refs: ['secret1', 'secret2']
   configmap_refs: ['configmap1', 'configmap3']
 ```
+
+Within your build/job/experiment the individual items of your secrets are then exposed
+as environment variables. As an example, requiring a secret with the following data section
+
+```yaml
+data:
+  test_user: <base64>
+  test_password: <base64>
+```
+
+would expose `test_user` and `test_password` environment values containing the decoded values.
 
 ## Custom resources
 
