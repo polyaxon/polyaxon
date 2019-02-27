@@ -1761,6 +1761,80 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
+class TestExperimentJobLogsViewV1(BaseViewTest):
+    num_log_lines = 10
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
+        self.experiment_job = ExperimentJobFactory(experiment=self.experiment)
+        self.logs = []
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/logs'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.experiment.id,
+            self.experiment_job.id)
+
+    def create_logs(self, temp):
+        log_path = stores.get_experiment_job_logs_path(
+            experiment_job_name=self.experiment_job.unique_name,
+            temp=temp)
+        stores.create_experiment_job_logs_path(experiment_job_name=self.experiment_job.unique_name,
+                                               temp=temp)
+        fake = Faker()
+        self.logs = []
+        for _ in range(self.num_log_lines):
+            self.logs.append(fake.sentence())
+        with open(log_path, 'w') as file:
+            for line in self.logs:
+                file.write(line)
+                file.write('\n')
+
+    def test_get_done_experiment(self):
+        self.experiment.set_status(ExperimentLifeCycle.SUCCEEDED)
+        self.assertTrue(self.experiment.is_done)
+        # No logs
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check the it does not return temp file
+        self.create_logs(temp=True)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check returns the correct file
+        self.create_logs(temp=False)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        data = [i for i in resp._iterator]  # pylint:disable=protected-access
+        data = [d for d in data[0].decode('utf-8').split('\n') if d]
+        assert len(data) == len(self.logs)
+        assert data == self.logs
+
+    @patch('api.experiments.views.process_experiment_job_logs')
+    def test_get_non_done_experiment(self, _):
+        self.assertFalse(self.experiment.is_done)
+        # No logs
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check the it does not return non temp file
+        self.create_logs(temp=False)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+        # Check returns the correct file
+        self.create_logs(temp=True)
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        data = [i for i in resp._iterator]  # pylint:disable=protected-access
+        data = [d for d in data[0].decode('utf-8').split('\n') if d]
+        assert len(data) == len(self.logs)
+        assert data == self.logs
+
+
+@pytest.mark.experiments_mark
 class TestRestartExperimentViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment

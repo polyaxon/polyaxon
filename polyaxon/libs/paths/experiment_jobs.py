@@ -22,7 +22,7 @@ def create_experiment_job_path(experiment_job_name: str, path: str) -> str:
     else:
         values.insert(2, 'groups')
 
-    for value in values[:-2]:
+    for value in values[:-1]:
         path = os.path.join(path, value)
         if not os.path.isdir(path):
             create_path(path)

@@ -98,6 +98,7 @@ from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
 from libs.spec_validation import validate_experiment_spec_config
 from logs_handlers.log_queries.experiment import process_logs
+from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
@@ -739,6 +740,53 @@ class ExperimentJobStatusDetailView(ExperimentJobResourceEndpoint,
     serializer_class = ExperimentJobStatusSerializer
     lookup_field = 'uuid'
     lookup_url_kwarg = 'uuid'
+
+
+class ExperimentJobLogsView(ExperimentJobResourceEndpoint,
+                                    RetrieveEndpoint,
+                                    UpdateEndpoint):
+    """
+    get:
+        Get experiment job status details.
+    patch:
+        Update an experiment job status details.
+    """
+    queryset = ExperimentJobStatus.objects
+    serializer_class = ExperimentJobStatusSerializer
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
+
+    def get(self, request, *args, **kwargs):
+        auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
+                       instance=self.experiment,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        job_name = self.job.unique_name
+        if self.experiment.is_done:
+            log_path = stores.get_experiment_job_logs_path(experiment_job_name=job_name, temp=False)
+            log_path = archive_logs_file(
+                log_path=log_path,
+                namepath=job_name)
+        elif self.experiment.in_cluster:
+            process_experiment_job_logs(experiment_job=self.job, temp=True)
+            log_path = stores.get_experiment_job_logs_path(experiment_job_name=job_name, temp=True)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data='Experiment is still running, no logs.')
+
+        filename = os.path.basename(log_path)
+        chunk_size = 8192
+        try:
+            wrapped_file = FileWrapper(open(log_path, 'rb'), chunk_size)
+            response = StreamingHttpResponse(wrapped_file,
+                                             content_type=mimetypes.guess_type(log_path)[0])
+            response['Content-Length'] = os.path.getsize(log_path)
+            response['Content-Disposition'] = "attachment; filename={}".format(filename)
+            return response
+        except FileNotFoundError:
+            _logger.warning('Log file not found: log_path=%s', log_path)
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data='Log file not found: log_path={}'.format(log_path))
 
 
 class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):

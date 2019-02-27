@@ -101,6 +101,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN),
         views.ExperimentJobStatusListView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/jobs/{}/logs/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN),
+        views.ExperimentJobLogsView.as_view()),
     re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/{}/?$'.format(
         OWNER_NAME_PATTERN,
         PROJECT_NAME_PATTERN,
