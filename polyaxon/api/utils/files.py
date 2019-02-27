@@ -1,7 +1,7 @@
 import mimetypes
 import os
 
-from typing import Any, Optional
+from typing import Any, Union
 from wsgiref.util import FileWrapper
 
 from rest_framework import status
@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from django.http import StreamingHttpResponse
 
 
-def stream_file(file_path: str, logger: Any) -> Optional[Response, StreamingHttpResponse]:
+def stream_file(file_path: str, logger: Any) -> Union[Response, StreamingHttpResponse]:
     filename = os.path.basename(file_path)
     chunk_size = 8192
     try:
