@@ -435,7 +435,8 @@ class ExperimentApi(BaseApiHandler):
             try:
                 return self.transport.get(request_url)
             except PolyaxonClientException as e:
-                self.transport.handle_exception(e=e, log_message='Error while retrieving jobs.')
+                self.transport.handle_exception(
+                    e=e, log_message='Error while retrieving experiment logs.')
                 return []
 
         request_url = self.build_url(self._get_ws_url(),

@@ -61,12 +61,35 @@ class ExperimentJobApi(BaseApiHandler):
                                      'resources')
         self.transport.stream(request_url, message_handler=message_handler)
 
-    def logs(self, username, project_name, experiment_id, job_id, message_handler=None):
+    def logs(self,
+             username,
+             project_name,
+             experiment_id,
+             job_id,
+             stream=True,
+             message_handler=None):
         """Streams job logs using websockets.
 
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
+        if not stream:
+            request_url = self.build_url(self._get_http_url(),
+                                         username,
+                                         project_name,
+                                         'experiments',
+                                         experiment_id,
+                                         'jobs',
+                                         job_id,
+                                         'logs')
+
+            try:
+                return self.transport.get(request_url)
+            except PolyaxonClientException as e:
+                self.transport.handle_exception(
+                    e=e, log_message='Error while retrieving experiment job logs.')
+                return []
+
         request_url = self.build_url(self._get_ws_url(),
                                      username,
                                      project_name,

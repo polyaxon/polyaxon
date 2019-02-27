@@ -85,3 +85,26 @@ class TestExperimentJobClient(TestBaseApi):
         response = self.api_handler.get_statuses('username', 'project_name', 1, 1)
         assert len(response['results']) == 1
         assert isinstance(response['results'][0], Mapping)
+
+    @httpretty.activate
+    def test_experiment_job_logs(self):
+        httpretty.register_uri(
+            httpretty.GET,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'jobs',
+                1,
+                'logs'
+            ),
+            body='some text',
+            content_type='text/plain',
+            status=200)
+
+        response = self.api_handler.logs('username', 'project_name', 1, 1, stream=False)
+        assert response.content.decode() == 'some text'
+
