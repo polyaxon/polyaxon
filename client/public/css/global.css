@@ -240,10 +240,11 @@ a.brand {
 /* Item */
 .header-item {
   padding: 3px 1px;
+  font-size: 13px;
 }
 
 .header-item-link {
-  padding: 10px 13px !important;
+  padding: 11px 13px !important;
   height: 39px !important;
   margin: 0 !important;
   background-color: transparent !important;
@@ -305,13 +306,7 @@ a.brand {
 }
 
 /* Tooltip */
-.header-item .header-tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.header-item .header-tooltip .tooltiptext {
+.header-item .header-tooltip .tooltip-text {
   visibility: hidden;
   width: 120px;
   background-color: black;
@@ -326,7 +321,7 @@ a.brand {
   margin-left: -60px;
 }
 
-.header-item .header-tooltip .tooltiptext::after {
+.header-item .header-tooltip .tooltip-text::after {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -337,6 +332,6 @@ a.brand {
   border-color: transparent transparent black transparent;
 }
 
-.header-item .header-tooltip:hover .tooltiptext {
+.header-item .header-tooltip:hover .tooltip-text {
   visibility: visible;
 }

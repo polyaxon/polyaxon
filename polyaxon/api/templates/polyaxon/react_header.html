@@ -9,41 +9,33 @@
         <li class="header-item">
             <a class="header-item-link header-tooltip"
                href="{% url 'react-index' %}/activitylogs"
-               data-toggle="tooltip"
-               data-placement="bottom"
                title="Activity logs">
                 <i class="fa fa-align-justify" aria-hidden="true"></i>
-                <span class="tooltiptext">Activity logs</span>
+                <span class="tooltip-text">Activity logs</span>
             </a>
         </li>
         <li class="header-item">
             <a class="header-item-link header-tooltip"
                href="{% url 'react-index' %}/historylogs"
-               data-toggle="tooltip"
-               data-placement="bottom"
                title="Recently viewed">
                 <i class="fa fa-history" aria-hidden="true"></i>
-                <span class="tooltiptext">History</span>
+                <span class="tooltip-text">History</span>
             </a>
         </li>
         <li class="header-item">
             <a class="header-item-link header-tooltip"
                href="{% url 'react-index' %}/archives/{{ user.username }}"
-               data-toggle="tooltip"
-               data-placement="bottom"
                title="Archives">
                 <i class="fa fa-archive" aria-hidden="true"></i>
-                <span class="tooltiptext">Archives</span>
+                <span class="tooltip-text">Archives</span>
             </a>
         </li>
         <li class="header-item">
             <a class="header-item-link header-tooltip"
                href="{% url 'react-index' %}/bookmarks/{{ user.username }}"
-               data-toggle="tooltip"
-               data-placement="bottom"
                title="Bookmarks">
                 <i class="fa fa-star" aria-hidden="true"></i>
-                <span class="tooltiptext">Bookmarks</span>
+                <span class="tooltip-text">Bookmarks</span>
             </a>
         </li>
         <li class="header-user dropdown">
