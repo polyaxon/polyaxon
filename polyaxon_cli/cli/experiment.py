@@ -673,7 +673,7 @@ def logs(ctx, job, past, follow, hide_time):
                     project_name,
                     _experiment,
                     _job,
-                    streams=False)
+                    stream=False)
                 get_logs_handler(handle_job_info=True,
                                  show_timestamp=not hide_time,
                                  stream=False)(response.content.decode().split('\n'))
