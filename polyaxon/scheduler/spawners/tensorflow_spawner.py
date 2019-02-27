@@ -105,9 +105,9 @@ class TensorflowSpawner(ExperimentSpawner):
     def create_job_uuids(self):
         job_uuids = super().create_job_uuids()
         job_uuids[TaskType.WORKER] = [
-            uuid.uuid4().hex for _ in self.get_n_pods(task_type=TaskType.WORKER)]
+            uuid.uuid4().hex for _ in range(self.get_n_pods(task_type=TaskType.WORKER))]
         job_uuids[TaskType.PS] = [
-            uuid.uuid4().hex for _ in self.get_n_pods(task_type=TaskType.PS)]
+            uuid.uuid4().hex for _ in range(self.get_n_pods(task_type=TaskType.PS))]
         return job_uuids
 
     def get_resources(self, task_type, task_idx):
