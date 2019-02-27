@@ -611,7 +611,7 @@ def tensorboards(ctx, query, sort, page):
 @project.command()
 @click.option('--url', type=str,
               help='The url of the git repo.')
-@click.option('--private', is_flag=True, help='Set the visibility of the project to private.')
+@click.option('--private', is_flag=True, help='Set the visibility of the repo to private.')
 @click.option('--sync', is_flag=True, help='Sync and fetch latest repo changes on Polyaxon.')
 @click.pass_context
 @clean_outputs
