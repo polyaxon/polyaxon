@@ -666,6 +666,29 @@ def logs(ctx, job, past, follow, hide_time):
             sys.exit(1)
 
     def get_experiment_job_logs():
+        if past:
+            try:
+                response = PolyaxonClient().experiment_job.logs(
+                    user,
+                    project_name,
+                    _experiment,
+                    _job,
+                    streams=False)
+                get_logs_handler(handle_job_info=True,
+                                 show_timestamp=not hide_time,
+                                 stream=False)(response.content.decode().split('\n'))
+                print()
+
+                if not follow:
+                    return
+            except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+                if not follow:
+                    Printer.print_error(
+                        'Could not get logs for experiment `{}`.'.format(_experiment))
+                    Printer.print_error(
+                        'Error message `{}`.'.format(e))
+                    sys.exit(1)
+
         try:
             PolyaxonClient().experiment_job.logs(
                 user,
