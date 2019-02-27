@@ -12,6 +12,22 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ProjectAction) => {
     let newState = {...state};
 
+    const setProjectRelated = (project: ProjectModel) => {
+      if (project.experiments == null) {
+        project.experiments = [];
+      }
+      if (project.groups == null) {
+        project.groups = [];
+      }
+      if (project.jobs == null) {
+        project.jobs = [];
+      }
+      if (project.builds == null) {
+        project.builds = [];
+      }
+      return project;
+    };
+
     const processProject = (project: ProjectModel) => {
       const uniqueName = project.unique_name;
       if (!_.includes(newState.lastFetched.names, uniqueName)) {
@@ -27,18 +43,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedProjects[uniqueName]
       };
-      if (newState.byUniqueNames[uniqueName].experiments == null) {
-        newState.byUniqueNames[uniqueName].experiments = [];
-      }
-      if (newState.byUniqueNames[uniqueName].groups == null) {
-        newState.byUniqueNames[uniqueName].groups = [];
-      }
-      if (newState.byUniqueNames[uniqueName].jobs == null) {
-        newState.byUniqueNames[uniqueName].jobs = [];
-      }
-      if (newState.byUniqueNames[uniqueName].builds == null) {
-        newState.byUniqueNames[uniqueName].builds = [];
-      }
+      setProjectRelated(newState.byUniqueNames[uniqueName]);
       return newState;
     };
 
@@ -116,7 +121,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
       case actionTypes.UPDATE_PROJECT:
         return {
           ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: action.project}
+          byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: setProjectRelated(action.project)}
         };
       case actionTypes.REQUEST_PROJECTS:
         newState.lastFetched = new LastFetchedNames();

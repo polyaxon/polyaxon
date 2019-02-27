@@ -13,6 +13,13 @@ export const groupsReducer: Reducer<GroupStateSchema> =
   (state: GroupStateSchema = GroupsEmptyState, action: GroupAction) => {
     let newState = {...state};
 
+    const setGroupRelated = (group: GroupModel) => {
+      if (group.experiments == null) {
+        group.experiments = [];
+      }
+      return group;
+    };
+
     const processGroup = (group: GroupModel) => {
       const uniqueName = group.unique_name;
       if (!_.includes(newState.lastFetched.names, uniqueName)) {
@@ -28,9 +35,8 @@ export const groupsReducer: Reducer<GroupStateSchema> =
       newState.byUniqueNames[uniqueName] = {
         ...newState.byUniqueNames[uniqueName], ...normalizedGroups[uniqueName]
       };
-      if (newState.byUniqueNames[uniqueName].experiments == null) {
-        newState.byUniqueNames[uniqueName].experiments = [];
-      }
+      setGroupRelated(newState.byUniqueNames[uniqueName]);
+
       return newState;
     };
 
@@ -114,7 +120,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
       case actionTypes.UPDATE_GROUP:
         return {
           ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: action.group}
+          byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: setGroupRelated(action.group)}
         };
       case actionTypes.REQUEST_GROUPS:
         newState.lastFetched = new LastFetchedNames();
