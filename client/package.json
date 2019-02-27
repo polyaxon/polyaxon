@@ -17,7 +17,6 @@
   "author": "mourad mourafiq",
   "license": "MPL-2.0",
   "devDependencies": {
-    "@types/draft-js": "^0.10.25",
     "@types/history": "4.6.2",
     "@types/js-cookie": "2.1.0",
     "@types/js-yaml": "^3.11.2",
@@ -61,7 +60,6 @@
   },
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
-    "draft-js": "^0.10.5",
     "history": "4.7.2",
     "js-cookie": "2.2.0",
     "js-yaml": "^3.12.0",
@@ -74,7 +72,7 @@
     "react": "16.4.01",
     "react-bootstrap": "0.32.1",
     "react-dom": "16.4.2",
-    "react-mde": "^6.0.0-alpha.1",
+    "react-mde": "^7.0.3",
     "react-redux": "5.0.7",
     "react-router": "4.3.1",
     "react-router-bootstrap": "0.24.4",

@@ -17,6 +17,7 @@ interface Props {
 
 export interface State {
   content: string;
+  tab: 'write' | 'preview';
 }
 
 export default class MDEdit extends React.Component<Props, State> {
@@ -25,13 +26,18 @@ export default class MDEdit extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      content: this.props.content || ''
+      content: this.props.content || '',
+      tab: 'write'
     };
     this.converter = getConverter();
   }
 
   public handleValueChange = (content: string): void => {
     this.setState({content});
+  };
+
+  public handleTabChange = (tab: 'write' | 'preview') => {
+    this.setState({tab});
   };
 
   public onSave = () => {
@@ -47,16 +53,15 @@ export default class MDEdit extends React.Component<Props, State> {
             <div className="col-md-12">
               <ReactMde
                 onChange={this.handleValueChange}
+                onTabChange={this.handleTabChange}
                 value={this.state.content}
                 generateMarkdownPreview={(markdown) =>
                   Promise.resolve(sanitizeHtml(this.converter.makeHtml(markdown)))
                 }
-                buttonContentOptions={{
-                  iconProvider: (name: string) => <i className={`fa fa-${name}`}/>,
-                }}
-                minEditorHeight={300}
+                selectedTab={this.state.tab}
+                minEditorHeight={200}
                 maxEditorHeight={500}
-                minPreviewHeight={500}
+                minPreviewHeight={200}
               />
             </div>
           </div>
