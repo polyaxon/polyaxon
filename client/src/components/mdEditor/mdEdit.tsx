@@ -55,7 +55,7 @@ export default class MDEdit extends React.Component<Props, State> {
                 onChange={this.handleValueChange}
                 onTabChange={this.handleTabChange}
                 value={this.state.content}
-                generateMarkdownPreview={(markdown) =>
+                generateMarkdownPreview={(markdown: any) =>
                   Promise.resolve(sanitizeHtml(this.converter.makeHtml(markdown)))
                 }
                 selectedTab={this.state.tab}
