@@ -157,6 +157,12 @@ class Experiment(DiffModel,
         return self.config is not None
 
     @cached_property
+    def is_distributed(self) -> bool:
+        if self.has_specification and self.specification.cluster_def is not None:
+            return self.specification.cluster_def[1]
+        return False
+
+    @cached_property
     def secret_refs(self) -> Optional[List[str]]:
         return self.specification.secret_refs
 

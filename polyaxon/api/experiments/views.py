@@ -1,8 +1,5 @@
 import logging
-import mimetypes
 import os
-
-from wsgiref.util import FileWrapper
 
 from hestia.bool_utils import to_bool
 from polystores.exceptions import PolyaxonStoresException
@@ -12,8 +9,6 @@ from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
-
-from django.http import StreamingHttpResponse
 
 import auditor
 import conf
@@ -56,6 +51,7 @@ from api.experiments.serializers import (
 )
 from api.filters import OrderingFilter, QueryFilter
 from api.paginator import LargeLimitOffsetPagination
+from api.utils.files import stream_file
 from api.utils.gzip import gzip
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
@@ -465,19 +461,7 @@ class ExperimentOutputsFilesView(ExperimentEndpoint, RetrieveEndpoint):
             return Response(status=status.HTTP_404_NOT_FOUND,
                             data='Log file not found: log_path={}'.format(download_filepath))
 
-        filename = os.path.basename(download_filepath)
-        chunk_size = 8192
-        try:
-            wrapped_file = FileWrapper(open(download_filepath, 'rb'), chunk_size)
-            response = StreamingHttpResponse(
-                wrapped_file, content_type=mimetypes.guess_type(download_filepath)[0])
-            response['Content-Length'] = os.path.getsize(download_filepath)
-            response['Content-Disposition'] = "attachment; filename={}".format(filename)
-            return response
-        except FileNotFoundError:
-            _logger.warning('Outputs file not found: log_path=%s', download_filepath)
-            return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Outputs file not found: log_path={}'.format(download_filepath))
+        return stream_file(file_path=download_filepath, logger=_logger)
 
 
 class ExperimentStatusListView(ExperimentResourceListEndpoint,
@@ -622,11 +606,15 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         experiment_name = self.experiment.unique_name
-        if self.experiment.is_done:
+        if self.experiment.is_done and not self.experiment.is_distributed:
             log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=False)
             log_path = archive_logs_file(
                 log_path=log_path,
                 namepath=experiment_name)
+        elif self.experiment.is_done and self.experiment.is_distributed:
+            return Response(status=status.HTTP_400_BAD_REQUEST,
+                            data='This experiment is distributed, '
+                                 'please check log archives of each job.')
         elif self.experiment.in_cluster:
             process_logs(experiment=self.experiment, temp=True)
             log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
@@ -634,19 +622,7 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
             return Response(status=status.HTTP_404_NOT_FOUND,
                             data='Experiment is still running, no logs.')
 
-        filename = os.path.basename(log_path)
-        chunk_size = 8192
-        try:
-            wrapped_file = FileWrapper(open(log_path, 'rb'), chunk_size)
-            response = StreamingHttpResponse(wrapped_file,
-                                             content_type=mimetypes.guess_type(log_path)[0])
-            response['Content-Length'] = os.path.getsize(log_path)
-            response['Content-Disposition'] = "attachment; filename={}".format(filename)
-            return response
-        except FileNotFoundError:
-            _logger.warning('Log file not found: log_path=%s', log_path)
-            return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Log file not found: log_path={}'.format(log_path))
+        return stream_file(file_path=log_path, logger=_logger)
 
     def post(self, request, *args, **kwargs):
         log_lines = request.data
@@ -774,19 +750,7 @@ class ExperimentJobLogsView(ExperimentJobResourceEndpoint,
             return Response(status=status.HTTP_404_NOT_FOUND,
                             data='Experiment is still running, no logs.')
 
-        filename = os.path.basename(log_path)
-        chunk_size = 8192
-        try:
-            wrapped_file = FileWrapper(open(log_path, 'rb'), chunk_size)
-            response = StreamingHttpResponse(wrapped_file,
-                                             content_type=mimetypes.guess_type(log_path)[0])
-            response['Content-Length'] = os.path.getsize(log_path)
-            response['Content-Disposition'] = "attachment; filename={}".format(filename)
-            return response
-        except FileNotFoundError:
-            _logger.warning('Log file not found: log_path=%s', log_path)
-            return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Log file not found: log_path={}'.format(log_path))
+        return stream_file(file_path=log_path, logger=_logger)
 
 
 class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):

@@ -1,8 +1,5 @@
 import logging
-import mimetypes
 import os
-
-from wsgiref.util import FileWrapper
 
 from hestia.bool_utils import to_bool
 from polystores.exceptions import PolyaxonStoresException
@@ -11,8 +8,6 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
-
-from django.http import StreamingHttpResponse
 
 import auditor
 import conf
@@ -37,6 +32,7 @@ from api.jobs.serializers import (
     JobSerializer,
     JobStatusSerializer
 )
+from api.utils.files import stream_file
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
@@ -289,19 +285,7 @@ class JobLogsView(JobEndpoint, RetrieveEndpoint):
             process_logs(job=self.job, temp=True)
             log_path = stores.get_job_logs_path(job_name=job_name, temp=True)
 
-        filename = os.path.basename(log_path)
-        chunk_size = 8192
-        try:
-            wrapped_file = FileWrapper(open(log_path, 'rb'), chunk_size)
-            response = StreamingHttpResponse(wrapped_file,
-                                             content_type=mimetypes.guess_type(log_path)[0])
-            response['Content-Length'] = os.path.getsize(log_path)
-            response['Content-Disposition'] = "attachment; filename={}".format(filename)
-            return response
-        except FileNotFoundError:
-            _logger.warning('Log file not found: log_path=%s', log_path)
-            return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Log file not found: log_path={}'.format(log_path))
+        return stream_file(file_path=log_path, logger=_logger)
 
 
 class JobStopView(JobEndpoint, PostEndpoint):
@@ -394,19 +378,7 @@ class JobOutputsFilesView(JobEndpoint, RetrieveEndpoint):
             return Response(status=status.HTTP_404_NOT_FOUND,
                             data='Log file not found: log_path={}'.format(download_filepath))
 
-        filename = os.path.basename(download_filepath)
-        chunk_size = 8192
-        try:
-            wrapped_file = FileWrapper(open(download_filepath, 'rb'), chunk_size)
-            response = StreamingHttpResponse(
-                wrapped_file, content_type=mimetypes.guess_type(download_filepath)[0])
-            response['Content-Length'] = os.path.getsize(download_filepath)
-            response['Content-Disposition'] = "attachment; filename={}".format(filename)
-            return response
-        except FileNotFoundError:
-            _logger.warning('Log file not found: log_path=%s', download_filepath)
-            return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Log file not found: log_path={}'.format(download_filepath))
+        return stream_file(file_path=download_filepath, logger=_logger)
 
 
 class JobHeartBeatView(JobEndpoint, PostEndpoint):
