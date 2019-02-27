@@ -47,7 +47,7 @@ def _get_external_repo_code_reference(repo: 'ExternalRepo',
                                             commit=ref)
 
     # Fetch latest
-    git.fetch(git_url=repo.git_clone_url, repo_path=repo.path, branch=branch)
+    git.fetch(git_url=repo.git_clone_url, repo_path=repo.path, branch=branch, reset_remote=True)
     if commit:
         return get_or_create(ref=commit)
 

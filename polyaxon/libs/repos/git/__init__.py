@@ -90,7 +90,11 @@ def get_committed_files(repo_path: str,
 def fetch(git_url: str,
           repo_path: str,
           overwrite: bool = False,
-          branch='master') -> Optional[Any]:
+          branch='master',
+          reset_remote=False) -> Optional[Any]:
+    if reset_remote:
+        set_remote(repo_path=repo_path, git_url=git_url)
+
     branch = branch or 'master'
     if os.path.isdir(repo_path):
         _logger.info('Current checkout path has content.')
@@ -139,3 +143,19 @@ def run_command(cmd: str, data: Optional[str], location: str, chw: bool) -> str:
         output = r.communicate(input=data)[0]
 
     return output
+
+
+def get_remote(repo_path: str) -> str:
+    current_remote = run_command(cmd='git config --get remote.origin.url {}'.format(repo_path),
+                                 data=None,
+                                 location=repo_path,
+                                 chw=True)
+    return current_remote.strip('\n')
+
+
+def set_remote(repo_path: str, git_url: str) -> None:
+    run_command(cmd='git remote set-url origin {}'.format(git_url),
+                data=None,
+                location=repo_path,
+                chw=True)
+
