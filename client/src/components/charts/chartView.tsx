@@ -470,7 +470,7 @@ export default class ChartView extends React.Component<Props, {}> {
     };
 
     return (
-      <div className="row">
+      <div>
         {(this.props.metrics.length > 0 && this.props.view.charts.length > 0)
           ? this.props.view.charts.map((chart, idx) => getChart(chart, idx))
           : Empty(
