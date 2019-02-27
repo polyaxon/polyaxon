@@ -107,4 +107,3 @@ class TestExperimentJobClient(TestBaseApi):
 
         response = self.api_handler.logs('username', 'project_name', 1, 1, stream=False)
         assert response.content.decode() == 'some text'
-

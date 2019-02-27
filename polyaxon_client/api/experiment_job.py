@@ -61,6 +61,7 @@ class ExperimentJobApi(BaseApiHandler):
                                      'resources')
         self.transport.stream(request_url, message_handler=message_handler)
 
+    # pylint:disable=inconsistent-return-statements
     def logs(self,
              username,
              project_name,
