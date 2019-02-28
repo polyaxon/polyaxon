@@ -111,19 +111,27 @@ def build_jobs_stop(self,
 def notify_build_job_failed(build_job):
     message = 'build_job: id<{}>, failure time <{}>'.format(build_job.id, build_job.finished_at)
 
-    jobs = Job.objects.filter(build_job=build_job)
+    jobs = Job.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).iterator()
     for job in jobs:
         job.set_status(JobLifeCycle.FAILED, message=message)
 
-    tensorboard_jobs = TensorboardJob.objects.filter(build_job=build_job)
+    tensorboard_jobs = TensorboardJob.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).iterator()
     for tensorboard_job in tensorboard_jobs:
         tensorboard_job.set_status(JobLifeCycle.FAILED, message=message)
 
-    notebook_jobs = NotebookJob.objects.filter(build_job=build_job)
+    notebook_jobs = NotebookJob.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).iterator()
     for notebook_job in notebook_jobs:
         notebook_job.set_status(JobLifeCycle.FAILED, message=message)
 
-    experiments = Experiment.objects.filter(build_job=build_job)
+    experiments = Experiment.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=ExperimentLifeCycle.DONE_STATUS).iterator()
     for experiment in experiments:
         experiment.set_status(ExperimentLifeCycle.FAILED, message=message)
 
@@ -133,25 +141,35 @@ def notify_build_job_stopped(build_job):
     details = 'build_job: id<{}>, uuid<{}>, failure time <{}>'.format(build_job.id,
                                                                       build_job.uuid.hex,
                                                                       build_job.finished_at)
-    jobs = Job.objects.filter(build_job=build_job)
+    jobs = Job.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).iterator()
     for job in jobs:
         job.set_status(JobLifeCycle.STOPPED, message=message, details=details)
 
-    tensorboard_jobs = TensorboardJob.objects.filter(build_job=build_job)
+    tensorboard_jobs = TensorboardJob.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).iterator()
     for tensorboard_job in tensorboard_jobs:
         tensorboard_job.set_status(JobLifeCycle.STOPPED, message=message, details=details)
 
-    notebook_jobs = NotebookJob.objects.filter(build_job=build_job)
+    notebook_jobs = NotebookJob.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).iterator()
     for notebook_job in notebook_jobs:
         notebook_job.set_status(JobLifeCycle.STOPPED, message=message, details=details)
 
-    experiments = Experiment.objects.filter(build_job=build_job)
+    experiments = Experiment.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=ExperimentLifeCycle.DONE_STATUS).iterator()
     for experiment in experiments:
         experiment.set_status(ExperimentLifeCycle.STOPPED, message=message, details=details)
 
 
 def notify_build_job_succeeded(build_job):
-    job_ids = Job.objects.filter(build_job=build_job).values_list('id', flat=True)
+    job_ids = Job.objects.filter(
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for job_id in job_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_START,
@@ -159,7 +177,8 @@ def notify_build_job_succeeded(build_job):
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     tensorboard_job_ids = TensorboardJob.objects.filter(
-        build_job=build_job).values_list('id', flat=True)
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for tensorboard_job_id in tensorboard_job_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_START,
@@ -167,7 +186,8 @@ def notify_build_job_succeeded(build_job):
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     notebook_job_ids = NotebookJob.objects.filter(
-        build_job=build_job).values_list('id', flat=True)
+        build_job=build_job).exclude(
+        status__status__in=JobLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for notebook_job_id in notebook_job_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
@@ -175,7 +195,8 @@ def notify_build_job_succeeded(build_job):
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     experiment_ids = Experiment.objects.filter(
-        build_job=build_job).values_list('id', flat=True)
+        build_job=build_job).exclude(
+        status__status__in=ExperimentLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for experiment_id in experiment_ids:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,

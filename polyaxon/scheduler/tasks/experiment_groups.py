@@ -137,12 +137,12 @@ def experiments_group_stop_experiments(experiment_group_id,
 
     if pending:
         # this won't work for archived groups anyways!
-        for experiment in experiment_group.pending_experiments:
+        for experiment in experiment_group.pending_experiments.iterator():
             # Update experiment status to show that its stopped
             experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
     else:
         experiments = experiment_group.all_experiments.exclude(
-            status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
+            status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct().iterator()
         for experiment in experiments:
             if experiment.is_stoppable:
                 celery_app.send_task(

@@ -71,13 +71,14 @@ def start_group_experiments(experiment_group):
         # This could happen due to concurrency or not created yet experiments
         return (experiment_group.pending_experiments.exists() or
                 not experiment_group.scheduled_all_suggestions())
-    pending_experiments = experiment_group.pending_experiments[:experiment_to_start]
+    pending_experiments = experiment_group.pending_experiments.values_list(
+        'id', flat=True)[:experiment_to_start]
     n_pending_experiment = experiment_group.pending_experiments.count()
 
     for experiment in pending_experiments:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_BUILD,
-            kwargs={'experiment_id': experiment.id},
+            kwargs={'experiment_id': experiment},
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 
     return (n_pending_experiment - experiment_to_start > 0 or
