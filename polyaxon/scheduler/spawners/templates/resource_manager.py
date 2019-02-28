@@ -340,7 +340,13 @@ class BaseResourceManager(object):
                             init_context_mounts=None,
                             sidecar_context_mounts=None,
                             replicas=1):
-        metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
+        annotations = None
+        if requests_tpu(resources):
+            annotations = get_tpu_annotations()
+        metadata = client.V1ObjectMeta(name=resource_name,
+                                       labels=labels,
+                                       namespace=self.namespace,
+                                       annotations=annotations)
 
         pod_spec = self.get_task_pod_spec(
             resource_name=resource_name,
