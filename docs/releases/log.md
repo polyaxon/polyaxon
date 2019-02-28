@@ -8,6 +8,26 @@ tags:
     - reference
 ---
 
+## 0.4.1
+
+ * Add UI for experiment jobs (overview, logs, statuses).
+ * Improve logging and logs archiving of distributed experiments.
+ * Improve the header's tooltip behaviour.
+ * Improve experiment UI by reducing number of tabs.
+ * Improve a couple of queries resulting in large memory consumption.
+ * Improve CI sync function to handle: 
+   * Updating access tokens.
+   * Sync mechanism.
+ * Fix build branch and commit handling, remove `ref` and add a more explicit fields: `commit` and `branch`. 
+ * Fix regression in distributed experiments.
+ * Fix an issue with experiment job's statuses creation dates.
+ * Fix readme editor styles.
+ * Fix charts UI adjustment.
+ * Fix issue scheduling notebook on TPU.
+ * Fix some issues related to corrupted UI state resulting in UI crashing. 
+ * Update dependencies exposing security vulnerabilities.
+ * Update several libraries to newer version.
+
 ## 0.4.0
 
  * Add configuration to set a default notebook image.
