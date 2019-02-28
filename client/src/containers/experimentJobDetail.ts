@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 
 import * as actions from '../actions/experimentJob';
-import ExperimentJobDetail from '../components/experiments/experimentJobDetail';
+import ExperimentJobDetail from '../components/experimentJobs/experimentJobDetail';
 import { getExperimentJobUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
@@ -15,8 +15,8 @@ export function mapStateToProps(state: AppState, params: any) {
     params.match.params.projectName,
     params.match.params.experimentId,
     params.match.params.jobId);
-  return _.includes(state.jobs.uniqueNames, jobUniqueName) ?
-    {job: state.jobs.byUniqueNames[jobUniqueName]} :
+  return _.includes(state.experimentJobs.uniqueNames, jobUniqueName) ?
+    {job: state.experimentJobs.byUniqueNames[jobUniqueName]} :
     {job: null};
 }
 

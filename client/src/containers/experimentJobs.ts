@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import ExperimentJobs from '../components/experiments/experimentJobs';
+import ExperimentJobs from '../components/experimentJobs/experimentJobs';
 import { AppState } from '../constants/types';
 import { getExperimentIndexName } from '../constants/utils';
 import { ExperimentJobModel } from '../models/experimentJob';

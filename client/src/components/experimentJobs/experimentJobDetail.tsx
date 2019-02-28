@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import { JobModel } from '../../models/job';
+import { ExperimentJobModel } from '../../models/experimentJob';
 import { EmptyList } from '../empty/emptyList';
 
 export interface Props {
-  job: JobModel;
+  job: ExperimentJobModel;
   onDelete: () => any;
   fetchData: () => any;
 }
