@@ -20,7 +20,8 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.LogsAction>, params: any): DispatchProps {
   return {
-    fetchData: () => dispatch(actions.fetchLogs(params.project, params.resource, params.id))
+    fetchData: () => dispatch(actions.fetchLogs(
+      params.project, params.resource, params.id, params.subResource, params.sid))
   };
 }
 

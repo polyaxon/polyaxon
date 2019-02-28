@@ -86,7 +86,6 @@ export default class BuildDetail extends React.Component<Props, {}> {
                   component: <Logs
                     fetchData={() => null}
                     logs={''}
-                    user={build.user}
                     project={build.project}
                     resource="builds"
                     id={build.id}

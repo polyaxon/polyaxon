@@ -117,7 +117,6 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                   component: <Logs
                     fetchData={() => null}
                     logs={''}
-                    user={experiment.user}
                     project={experiment.project}
                     resource="experiments"
                     id={experiment.id}

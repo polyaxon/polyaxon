@@ -92,7 +92,6 @@ export default class JobDetail extends React.Component<Props, {}> {
                   component: <Logs
                     fetchData={() => null}
                     logs={''}
-                    user={job.user}
                     project={job.project}
                     resource="jobs"
                     id={job.id}

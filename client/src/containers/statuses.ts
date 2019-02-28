@@ -32,9 +32,8 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.StatusesAction>, params: any): DispatchProps {
   return {
-    fetchData: () => {
-      return dispatch(actions.fetchStatuses(params.project, params.resource, params.id));
-    }
+    fetchData: () => dispatch(actions.fetchStatuses(
+        params.project, params.resource, params.id, params.subResource, params.sid))
   };
 }
 

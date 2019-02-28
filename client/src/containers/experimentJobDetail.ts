@@ -21,7 +21,6 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  onDelete?: () => any;
   fetchData?: () => any;
 }
 

@@ -51,12 +51,22 @@ export type LogsAction =
   | ReceiveLogsAction
   | ReceiveErrorAction;
 
-export function fetchLogs(projectUniqueName: string, resources: string, id: number): any {
+export function fetchLogs(projectUniqueName: string,
+                          resources: string,
+                          id: number,
+                          subResource?: string,
+                          sid?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestLogsActionCreator());
 
-    const logsUrl =
-      `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/logs`;
+    let logsUrl = '';
+    if (subResource && sid) {
+      logsUrl =
+        `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/${subResource}/${sid}/logs`;
+    } else {
+      logsUrl =
+        `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/logs`;
+    }
 
     function handleError(response: Response, dispatch: any): any {
       if (!response.ok) {

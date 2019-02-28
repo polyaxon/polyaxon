@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 
+import { getExperimentJobUrl, splitUniqueName } from '../../constants/utils';
 import { ExperimentJobModel } from '../../models/experimentJob';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
@@ -14,16 +16,19 @@ export interface Props {
 }
 
 function ExperimentJob({experimentJob, onDelete}: Props) {
+  const values = splitUniqueName(experimentJob.unique_name);
   return (
     <div className="row">
       <div className="col-md-1 block">
         <Status status={experimentJob.last_status}/>
       </div>
       <div className="col-md-7 block">
-        <span className="title">
-          <i className="fa fa-tasks icon" aria-hidden="true"/>
-          {experimentJob.name || experimentJob.unique_name}
-        </span>
+        <LinkContainer to={getExperimentJobUrl(values[0], values[1], parseInt(values[2], 10), experimentJob.id)}>
+          <a className="title">
+            <i className="fa fa-tasks icon" aria-hidden="true"/>
+            {experimentJob.name || experimentJob.unique_name}
+          </a>
+        </LinkContainer>
         <div className="meta">
           <PodIdMetaInfo value={experimentJob.pod_id} inline={true}/>
         </div>

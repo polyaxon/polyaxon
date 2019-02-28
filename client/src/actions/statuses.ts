@@ -54,12 +54,22 @@ export type StatusesAction =
   | ReceiveStatusesAction
   | ReceiveErrorAction;
 
-export function fetchStatuses(projectUniqueName: string, resources: string, id: number): any {
+export function fetchStatuses(projectUniqueName: string,
+                              resources: string,
+                              id: number,
+                              subResource?: string,
+                              sid?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestStatusesActionCreator());
 
-    const statusesUrl =
-      `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/statuses`;
+    let statusesUrl = '';
+    if (subResource && sid) {
+      statusesUrl =
+        `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/${subResource}/${sid}/statuses`;
+    } else {
+      statusesUrl =
+        `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/statuses`;
+    }
 
     function handleError(response: Response, dispatch: any): any {
       if (!response.ok) {
