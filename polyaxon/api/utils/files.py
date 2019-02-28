@@ -28,5 +28,3 @@ def stream_file(file_path: str, logger: Any) -> Union[Response, StreamingHttpRes
         return Response(
             status=status.HTTP_400_BAD_REQUEST,
             data='Could not get the file, an error was encountered.')
-
-
