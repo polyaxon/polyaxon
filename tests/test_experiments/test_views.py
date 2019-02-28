@@ -60,8 +60,8 @@ from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
     exec_experiment_outputs_refs_parsed_content,
-    exec_experiment_spec_parsed_content
-)
+    exec_experiment_spec_parsed_content,
+    exec_experiment_resources_parsed_content)
 from schemas.specifications import ExperimentSpecification
 from tests.utils import BaseFilesViewTest, BaseViewTest, EphemeralClient
 
@@ -1768,7 +1768,9 @@ class TestExperimentJobLogsViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        self.experiment = ExperimentFactory(project=project)
+        self.experiment = ExperimentFactory(
+            project=project,
+            config=exec_experiment_resources_parsed_content.parsed_data)
         self.experiment_job = ExperimentJobFactory(experiment=self.experiment)
         self.logs = []
         self.url = '/{}/{}/{}/experiments/{}/jobs/{}/logs'.format(
