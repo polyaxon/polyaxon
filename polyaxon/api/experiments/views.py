@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Optional
 
 from hestia.bool_utils import to_bool
 from polystores.exceptions import PolyaxonStoresException
@@ -97,6 +98,7 @@ from logs_handlers.log_queries.experiment import process_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
+from schemas.tasks import TaskType
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
@@ -592,6 +594,40 @@ class ExperimentJobDetailView(ExperimentJobEndpoint,
     AUDITOR_EVENT_TYPES = {'GET': EXPERIMENT_JOB_VIEWED}
 
 
+def get_experiment_logs_path(experiment: Experiment) -> Optional[str]:
+    experiment_name = experiment.unique_name
+    if experiment.is_done:
+        log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=False)
+        logs_path = archive_logs_file(
+            log_path=log_path,
+            namepath=experiment_name)
+    elif experiment.in_cluster:
+        process_logs(experiment=experiment, temp=True)
+        logs_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
+    else:
+        return None
+
+    return logs_path
+
+
+def get_experiment_job_logs_path(experiment: Experiment, job: ExperimentJob) -> Optional[str]:
+    if not job:
+        return None
+    job_name = job.unique_name
+    if experiment.is_done:
+        log_path = stores.get_experiment_job_logs_path(experiment_job_name=job_name, temp=False)
+        logs_path = archive_logs_file(
+            log_path=log_path,
+            namepath=job_name)
+    elif experiment.in_cluster:
+        process_experiment_job_logs(experiment_job=job, temp=True)
+        logs_path = stores.get_experiment_job_logs_path(experiment_job_name=job_name, temp=True)
+    else:
+        logs_path = None
+
+    return logs_path
+
+
 class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
     """
     get:
@@ -605,24 +641,16 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
                        instance=self.experiment,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        experiment_name = self.experiment.unique_name
-        if self.experiment.is_done and not self.experiment.is_distributed:
-            log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=False)
-            log_path = archive_logs_file(
-                log_path=log_path,
-                namepath=experiment_name)
-        elif self.experiment.is_done and self.experiment.is_distributed:
-            return Response(status=status.HTTP_400_BAD_REQUEST,
-                            data='This experiment is distributed, '
-                                 'please check log archives of each job.')
-        elif self.experiment.in_cluster:
-            process_logs(experiment=self.experiment, temp=True)
-            log_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
+        if self.experiment.is_distributed:
+            job = self.experiment.jobs.filter(role=TaskType.MASTER).first()
+            logs_path = get_experiment_job_logs_path(experiment=self.experiment, job=job)
         else:
+            logs_path = get_experiment_logs_path(experiment=self.experiment)
+        if not logs_path:
             return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Experiment is still running, no logs.')
+                            data='Experiment has no logs.')
 
-        return stream_file(file_path=log_path, logger=_logger)
+        return stream_file(file_path=logs_path, logger=_logger)
 
     def post(self, request, *args, **kwargs):
         log_lines = request.data
@@ -737,20 +765,15 @@ class ExperimentJobLogsView(ExperimentJobResourceEndpoint,
                        instance=self.experiment,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        job_name = self.job.unique_name
-        if self.experiment.is_done:
-            log_path = stores.get_experiment_job_logs_path(experiment_job_name=job_name, temp=False)
-            log_path = archive_logs_file(
-                log_path=log_path,
-                namepath=job_name)
-        elif self.experiment.in_cluster:
-            process_experiment_job_logs(experiment_job=self.job, temp=True)
-            log_path = stores.get_experiment_job_logs_path(experiment_job_name=job_name, temp=True)
+        if self.experiment.is_distributed:
+            logs_path = get_experiment_job_logs_path(experiment=self.experiment, job=self.job)
         else:
+            logs_path = get_experiment_logs_path(experiment=self.experiment)
+        if not logs_path:
             return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Experiment is still running, no logs.')
+                            data='Experiment has no logs.')
 
-        return stream_file(file_path=log_path, logger=_logger)
+        return stream_file(file_path=logs_path, logger=_logger)
 
 
 class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
