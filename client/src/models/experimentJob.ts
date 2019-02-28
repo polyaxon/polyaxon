@@ -8,7 +8,7 @@ export class ExperimentJobModel {
   public id: number;
   public role: string;
   public last_status: string;
-  public experiment: string;
+  public experiment: number;
   public definition: string;
   public deleted?: boolean;
   public project?: string;

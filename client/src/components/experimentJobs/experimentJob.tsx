@@ -23,7 +23,7 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
         <Status status={experimentJob.last_status}/>
       </div>
       <div className="col-md-7 block">
-        <LinkContainer to={getExperimentJobUrl(values[0], values[1], parseInt(values[2], 10), experimentJob.id)}>
+        <LinkContainer to={getExperimentJobUrl(values[0], values[1], experimentJob.experiment, experimentJob.id)}>
           <a className="title">
             <i className="fa fa-tasks icon" aria-hidden="true"/>
             {experimentJob.name || experimentJob.unique_name}

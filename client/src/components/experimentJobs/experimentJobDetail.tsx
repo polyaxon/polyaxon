@@ -36,14 +36,13 @@ export default class JobDetail extends React.Component<Props, {}> {
     const user = values[0];
     const project = values[1];
     const projectUniqueName = `${user}.${project}`;
-    const experimentId = parseInt(values[2], 10);
     const projectUrl = getProjectUrl(user, project);
-    const experimentUrl = getExperimentUrl(user, project, experimentId);
-    const jobUrl = getExperimentJobUrl(user, project, experimentId, this.props.job.id);
+    const experimentUrl = getExperimentUrl(user, project, job.experiment);
+    const jobUrl = getExperimentJobUrl(user, project, job.experiment, job.id);
     const breadcrumbLinks = [
       {name: user, value: getUserUrl(user)},
       {name: project, value: projectUrl},
-      {name: `Experiment ${experimentId}`, value: experimentUrl},
+      {name: `Experiment ${job.experiment}`, value: experimentUrl},
       {name: `Jobs`, value: `${experimentUrl}#jobs`},
       {name: `Job ${job.id}`}];
     return (
@@ -71,7 +70,7 @@ export default class JobDetail extends React.Component<Props, {}> {
                     logs={''}
                     project={projectUniqueName}
                     resource="experiments"
-                    id={experimentId}
+                    id={job.experiment}
                     subResource="jobs"
                     sid={job.id}
                   />,
@@ -81,7 +80,7 @@ export default class JobDetail extends React.Component<Props, {}> {
                   component: <Statuses
                     project={projectUniqueName}
                     resource="experiments"
-                    id={experimentId}
+                    id={job.experiment}
                     subResource="jobs"
                     sid={job.id}
                   />,
