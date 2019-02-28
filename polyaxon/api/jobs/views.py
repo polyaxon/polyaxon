@@ -376,7 +376,7 @@ class JobOutputsFilesView(JobEndpoint, RetrieveEndpoint):
                                                  filepath=filepath)
         if not download_filepath:
             return Response(status=status.HTTP_404_NOT_FOUND,
-                            data='Log file not found: log_path={}'.format(download_filepath))
+                            data='Outputs file not found: log_path={}'.format(download_filepath))
 
         return stream_file(file_path=download_filepath, logger=_logger)
 
