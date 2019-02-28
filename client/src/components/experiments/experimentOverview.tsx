@@ -1,8 +1,11 @@
 import * as _ from 'lodash';
 import * as React from 'react';
+import { Collapse } from 'react-bootstrap';
 
+import * as codeRefActions from '../../actions/codeReference';
 import * as actions from '../../actions/experiment';
 import { getExperimentTensorboardUrl } from '../../constants/utils';
+import CodeReference from '../../containers/codeReference';
 import { ExperimentModel } from '../../models/experiment';
 import { getExperimentCloning } from '../../utils/cloning';
 import Description from '../description';
@@ -15,7 +18,9 @@ import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Name from '../name';
+import Packages from '../packages';
 import Refresh from '../refresh';
+import RunEnv from '../runEnv';
 import Status from '../status';
 import VerticalTable from '../tables/verticalTable';
 import Tags from '../tags';
@@ -24,9 +29,31 @@ export interface Props {
   experiment: ExperimentModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
   onFetch: () => actions.ExperimentAction;
+  onFetchCodeReference: () => codeRefActions.CodeReferenceAction;
 }
 
-export default class ExperimentOverview extends React.Component<Props, {}> {
+export interface State {
+  openMetrics: boolean;
+  openDeclarations: boolean;
+  openRunEnv: boolean;
+  openPackages: boolean;
+  openDataRefs: boolean;
+  openCodeRef: boolean;
+}
+
+export default class ExperimentOverview extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      openMetrics: false,
+      openDeclarations: false,
+      openRunEnv: false,
+      openPackages: false,
+      openDataRefs: false,
+      openCodeRef: false,
+    };
+  }
+
   public refresh = () => {
     this.props.onFetch();
   };
@@ -99,45 +126,132 @@ export default class ExperimentOverview extends React.Component<Props, {}> {
               tags={experiment.tags}
               onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}
             />
-            {experiment.declarations &&
             <div className="row">
-              <div className="col-md-8">
-                <div className="meta meta-declarations">
-                  <span className="meta-info">
+              <div className="col-md-12">
+                <div className="meta meta-header meta-declarations">
+                  <span
+                    className="meta-info"
+                    onClick={() => this.setState({ openDeclarations: !this.state.openDeclarations })}
+                  >
                     <i className="fa fa-gear icon" aria-hidden="true"/>
                     <span className="title">Declarations:</span>
                   </span>
-                  <VerticalTable values={experiment.declarations}/>
                 </div>
               </div>
             </div>
-            }
-            {experiment.last_metric &&
+            <Collapse in={this.state.openDeclarations}>
+              <div className="row">
+                <div className="col-md-12">
+                  <VerticalTable values={experiment.declarations || {}}/>
+                </div>
+              </div>
+            </Collapse>
+
             <div className="row">
-              <div className="col-md-8">
-                <div className="meta meta-metrics">
-                <span className="meta-info">
-                  <i className="fa fa-area-chart icon" aria-hidden="true"/>
-                  <span className="title">Metrics:</span>
-                </span>
-                  <VerticalTable values={experiment.last_metric}/>
+              <div className="col-md-12">
+                <div className="meta meta-header meta-metrics">
+                  <span
+                    className="meta-info"
+                    onClick={() => this.setState({ openMetrics: !this.state.openMetrics })}
+                  >
+                    <i className="fa fa-area-chart icon" aria-hidden="true"/>
+                    <span className="title">Metrics:</span>
+                  </span>
                 </div>
               </div>
             </div>
-            }
-            {experiment.data_refs &&
+            <Collapse in={this.state.openMetrics}>
+              <div className="row">
+                <div className="col-md-12">
+                  <VerticalTable values={experiment.last_metric || {}}/>
+                </div>
+              </div>
+            </Collapse>
+
             <div className="row">
-              <div className="col-md-8">
-                <div className="meta meta-data-refs">
-              <span className="meta-info">
-                <i className="fa fa-database icon" aria-hidden="true"/>
-                <span className="title">Data refs:</span>
-              </span>
-                  <VerticalTable values={experiment.data_refs}/>
+              <div className="col-md-12">
+                <div className="meta meta-header meta-data-refs">
+                  <span
+                    className="meta-info"
+                    onClick={() => this.setState({ openDataRefs: !this.state.openDataRefs })}
+                  >
+                    <i className="fa fa-database icon" aria-hidden="true"/>
+                    <span className="title">Data refs:</span>
+                  </span>
                 </div>
               </div>
             </div>
-            }
+            <Collapse in={this.state.openDataRefs}>
+              <div className="row">
+                <div className="col-md-12">
+                  <VerticalTable values={experiment.data_refs || {}}/>
+                </div>
+              </div>
+            </Collapse>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="meta meta-header meta-run-env">
+                  <span
+                    className="meta-info"
+                    onClick={() => this.setState({ openRunEnv: !this.state.openRunEnv })}
+                  >
+                    <i className="fa fa-code icon" aria-hidden="true"/>
+                    <span className="title">Run environment:</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <Collapse in={this.state.openRunEnv}>
+            <div className="row">
+              <div className="col-md-12">
+                <RunEnv runEnv={experiment.run_env || {}}/>
+              </div>
+            </div>
+            </Collapse>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="meta meta-header meta-code-ref">
+                  <span
+                    className="meta-info"
+                    onClick={() => this.setState({ openCodeRef: !this.state.openCodeRef })}
+                  >
+                    <i className="fa fa-code-fork icon" aria-hidden="true"/>
+                    <span className="title">Code reference:</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <Collapse in={this.state.openCodeRef}>
+            <div className="row">
+              <div className="col-md-12">
+                <CodeReference fetchData={this.props.onFetchCodeReference} codeReferenceId={experiment.code_reference}/>
+              </div>
+            </div>
+            </Collapse>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="meta meta-header meta-packages">
+                  <span
+                    className="meta-info"
+                    onClick={() => this.setState({ openPackages: !this.state.openPackages })}
+                  >
+                    <i className="fa fa-file-archive-o icon" aria-hidden="true"/>
+                    <span className="title">Packages:</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <Collapse in={this.state.openPackages}>
+            <div className="row">
+              <div className="col-md-12">
+                <Packages runEnv={experiment.run_env || {}}/>
+              </div>
+            </div>
+            </Collapse>
+
             <MDEditor
               content={experiment.readme}
               onSave={(readme: string) => { this.props.onUpdate({readme}); }}

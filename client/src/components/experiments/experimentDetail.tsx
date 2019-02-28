@@ -25,7 +25,6 @@ import Breadcrumb from '../breadcrumb';
 import { EmptyList } from '../empty/emptyList';
 import ExperimentInstructions from '../instructions/experimentInstructions';
 import LinkedTab from '../linkedTab';
-import RunEnv from '../runEnv';
 import YamlText from '../yamlText';
 import ExperimentActions from './experimentActions';
 import ExperimentOverview from './experimentOverview';
@@ -110,6 +109,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                     experiment={experiment}
                     onUpdate={this.props.onUpdate}
                     onFetch={this.props.fetchData}
+                    onFetchCodeReference={this.props.fetchCodeReference}
                   />,
                   relUrl: ''
                 }, {
@@ -130,19 +130,6 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                     experiment={experiment}
                   />,
                   relUrl: 'jobs'
-                }, {
-                  title: 'CodeRef',
-                  component: <CodeReference
-                    fetchData={this.props.fetchCodeReference}
-                    codeReferenceId={experiment.code_reference}
-                  />,
-                  relUrl: 'codeRef'
-                }, {
-                  title: 'RunEnv',
-                  component: <RunEnv
-                    runEnv={experiment.run_env}
-                  />,
-                  relUrl: 'build'
                 }, {
                   title: 'Build',
                   component: <EntityBuild buildName={experiment.build_job}/>,

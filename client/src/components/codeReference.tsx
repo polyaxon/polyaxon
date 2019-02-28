@@ -21,10 +21,7 @@ export default class CodeReference extends React.Component<Props, {}> {
         const values = {
           'commit': this.props.codeReference.commit,
           'branch': this.props.codeReference.branch,
-          'head': this.props.codeReference.head,
-          'is dirty': this.props.codeReference.is_dirty,
           'git url': this.props.codeReference.git_url,
-          'repo': this.props.codeReference.repo
         };
         return (
           <div className="row">
