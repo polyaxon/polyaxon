@@ -30,7 +30,7 @@ def _monitor(k8s_api, namespace, container_names, label_selector, watch_ttl):
         event_object = event['object'].to_dict()
         logger.debug("Event object: %s", event_object)
         LAST_SEEN['resource_version'] = event_object['metadata'].get('resource_version')
-        created_at = event_object['metadata'].get('creation_timestamp', now())
+        created_at = now()
         try:
             pod_state = get_pod_state(
                 event_type=event['type'],
