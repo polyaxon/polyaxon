@@ -1,1 +1,1 @@
-polyaxon-schemas==0.4.0
+polyaxon-schemas==0.4.1

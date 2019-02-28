@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-deploy',
-      version='0.4.0',
+      version='0.4.1',
       description='Tools to validate and deploy Polyaxon to one of the supported platforms.',
       long_description=read_readme(),
       maintainer='Mourad Mourafiq',
@@ -53,7 +53,7 @@ setup(name='polyaxon-deploy',
           'kubernetes',
       ],
       install_requires=[
-          "polyaxon-schemas==0.4.0",
+          "polyaxon-schemas==0.4.1",
       ],
       classifiers=[
           'Programming Language :: Python',
