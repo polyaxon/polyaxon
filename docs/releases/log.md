@@ -17,7 +17,8 @@ tags:
  * Improve a couple of queries resulting in large memory consumption.
  * Improve CI sync function to handle: 
    * Updating access tokens.
-   * Sync mechanism.
+   * Force push mechanism.
+   * Fetching of new branches
  * Fix build branch and commit handling, remove `ref` and add a more explicit fields: `commit` and `branch`. 
  * Fix regression in distributed experiments.
  * Fix an issue with experiment job's statuses creation dates.
