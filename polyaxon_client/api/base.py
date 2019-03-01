@@ -5,6 +5,7 @@ import six
 
 from collections import Mapping
 
+from polyaxon_client import settings
 from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonClientException
 
 
@@ -56,19 +57,21 @@ class BaseApiHandler(object):
         }
         if self.config.schema_response:
             list_results['results'] = [
-                config.from_dict(obj) for obj in response_json.get('results', [])]
+                config.from_dict(obj, unknown=settings.RECEPTION_UNKNOWN_BEHAVIOUR)
+                for obj in response_json.get('results', [])]
         else:
             list_results['results'] = response_json.get('results', [])
 
         return list_results
 
     def prepare_results(self, response_json, config):
-        return config.from_dict(response_json) if self.config.schema_response else response_json
+        return (config.from_dict(response_json, unknown=settings.RECEPTION_UNKNOWN_BEHAVIOUR)
+                if self.config.schema_response else response_json)
 
     @staticmethod
     def validate_config(config, config_schema):
         if isinstance(config, Mapping):
-            return config_schema.from_dict(config)
+            return config_schema.from_dict(config, unknown=settings.VALIDATION_UNKNOWN_BEHAVIOUR)
         elif not isinstance(config, config_schema):
             raise PolyaxonClientException(
                 'Received an invalid config. '

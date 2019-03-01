@@ -85,7 +85,9 @@ class AuthApi(BaseApiHandler):
         credentials = self.validate_config(config=credentials, config_schema=CredentialsConfig)
         request_url = self.build_url(self._get_http_url(), 'token')
         try:
-            response = self.transport.session.post(request_url, data=credentials.to_dict())
+            response = self.transport.session.post(
+                request_url,
+                data=credentials.to_dict(unknown=settings.VALIDATION_UNKNOWN_BEHAVIOUR))
         except requests.ConnectionError:
             raise PolyaxonHTTPError(
                 request_url,

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_client import settings
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
@@ -25,7 +26,9 @@ class BookmarkApi(BaseApiHandler):
         }
         results = [obj.get('content_object') for obj in response_json.get("results", [])]
         if self.config.schema_response:
-            list_results['results'] = [config.from_dict(obj) for obj in results]
+            list_results['results'] = [
+                config.from_dict(obj, unknown=settings.RECEPTION_UNKNOWN_BEHAVIOUR)
+                for obj in results]
         else:
             list_results['results'] = results
 

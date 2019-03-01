@@ -7,6 +7,7 @@ import rhea
 
 from hestia.auth import AuthenticationTypes
 from hestia.user_path import polyaxon_user_path
+from marshmallow import EXCLUDE, RAISE
 from rhea import RheaError  # noqa
 
 TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
@@ -128,3 +129,9 @@ QUEUE_CALL = config.get_int('POLYAXON_INTERVAL',
                             default=200)
 LOGS_LEVEL = config.get_int('POLYAXON_LOGS_LEVEL',
                             is_optional=True)
+RECEPTION_UNKNOWN_BEHAVIOUR = config.get_string('POLYAXON_RECEPTION_UNKNOWN_BEHAVIOUR',
+                                                is_optional=True,
+                                                default=EXCLUDE)
+VALIDATION_UNKNOWN_BEHAVIOUR = config.get_string('POLYAXON_VALIDATION_UNKNOWN_BEHAVIOUR',
+                                                 is_optional=True,
+                                                 default=RAISE)
