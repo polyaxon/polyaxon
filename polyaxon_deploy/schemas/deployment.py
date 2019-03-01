@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+
+from polyaxon_deploy.schemas.auth import AuthSchema
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.email import EmailSchema
@@ -63,6 +65,7 @@ class DeploymentSchema(BaseSchema):
                                    attribute="docker-registry",
                                    allow_none=True)
     email = fields.Nested(EmailSchema, allow_none=True)
+    auth = fields.Nested(AuthSchema, allow_none=True)
     integrations = fields.Nested(IntegrationsSchema, allow_none=True)
     apiHost = fields.Str(allow_none=True)
     allowedHosts = fields.List(fields.Str(), allow_none=True)
@@ -115,6 +118,7 @@ class DeploymentConfig(BaseConfig):
                  rabbitmq=None,
                  dockerRegistry=None,
                  email=None,
+                 auth=None,
                  integrations=None,
                  apiHost=None,
                  allowedHosts=None,
@@ -157,6 +161,7 @@ class DeploymentConfig(BaseConfig):
         self.rabbitmq = rabbitmq
         self.dockerRegistry = dockerRegistry
         self.email = email
+        self.auth = auth
         self.integrations = integrations
         self.apiHost = apiHost
         self.allowedHosts = allowedHosts

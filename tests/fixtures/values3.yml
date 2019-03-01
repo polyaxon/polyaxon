@@ -23,20 +23,6 @@ nodeSelectors:
   builds:
     polyaxon: core
 
-
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-    size: 150Gi
-
-  pvc:
-    repos: 50
-    outputs:
-      size: 80Gi
-    logs:
-      size: 15Gi
-
 api:
   replicas: 3
 
