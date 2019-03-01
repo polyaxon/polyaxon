@@ -23,7 +23,8 @@ This section defines the following values/subsections:
  * build_steps [optional]: steps are basically a list of ops that Polyaxon use with docker
  `RUN` to install/run further operations you define in the list.
  * env_vars [optional]: environment variables are also a list of tuples of 2 elements, that polyaxon will use to add env variables in the docker image.
- * ref [optional]: the commit/branch/treeish to use for creating the build.
+ * commit [optional]: the commit to use for creating the build.
+ * branch [optional]: the branch to use for creating the build.
  * nocache [optional]: to force rebuild the image. 
 
 ## Example using commit
@@ -50,7 +51,7 @@ build:
   env_vars:
     - [KEY1, VALUE1]
     - [KEY2, VALUE2]
-  ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
+  commit: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
 ## Example using branch name
@@ -58,7 +59,7 @@ build:
 ```yaml
 build:
   image: ubuntu
-  ref: branch_dev
+  branch: branch_dev
 ```
 
 ## Example using a Dockerfile
@@ -67,7 +68,7 @@ build:
 ```yaml
 build:
   dockefile: path/to/Dockerfile
-  ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
+  commit: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
 ## Example using an image and a context
@@ -83,7 +84,7 @@ build:
   env_vars:
     - [KEY1, VALUE1]
     - [KEY2, VALUE2]
-  ref: 14e9d652151eb058afa0b51ba110671f2ca10cbf
+  commit: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
 ## Example using a Dockerfile and a context

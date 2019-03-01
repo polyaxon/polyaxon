@@ -70,7 +70,7 @@ kind: expiriment
 
 build:
   image: tensorflow/tensorflow:1.4.1-py3
-  ref: 62b264813aaf5cba3a81919c623ea55c3f79698f
+  commit: 62b264813aaf5cba3a81919c623ea55c3f79698f
 
 run:
   cmd: python3 model.py
