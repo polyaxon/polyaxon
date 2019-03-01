@@ -151,6 +151,7 @@ class ProjectSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
+    owner = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     unique_name = fields.Str(allow_none=True)
     uuid = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
@@ -179,7 +180,7 @@ class ProjectConfig(BaseConfig):
     IDENTIFIER = 'project'
     DEFAULT_EXCLUDE_ATTRIBUTES = [
         'id', 'uuid', 'description', 'updated_at',
-        'experiment_groups', 'experiments', 'has_code', 'user'
+        'experiment_groups', 'experiments', 'has_code', 'owner', 'user'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
@@ -187,6 +188,7 @@ class ProjectConfig(BaseConfig):
                  name,
                  id=None,  # pylint:disable=redefined-builtin
                  user=None,
+                 owner=None,
                  unique_name=None,
                  uuid=None,
                  description=None,
@@ -207,6 +209,7 @@ class ProjectConfig(BaseConfig):
         self.name = name
         self.id = id
         self.user = user
+        self.owner = owner
         self.unique_name = unique_name
         self.uuid = uuid
         self.description = description

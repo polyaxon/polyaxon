@@ -43,6 +43,7 @@ class TestProjectConfigs(TestCase):
         config_to_dict.pop('has_notebook', None)
         config_to_dict.pop('unique_name', None)
         config_to_dict.pop('user', None)
+        config_to_dict.pop('owner', None)
         config_to_dict.pop('uuid', None)
         assert config_to_dict == config_dict
         config_dict.pop('description')
