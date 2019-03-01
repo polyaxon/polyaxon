@@ -283,6 +283,13 @@ class ExperimentGroup(DiffModel,
             status__status__in=ExperimentLifeCycle.RUNNING_STATUS).distinct()
 
     @property
+    def k8s_experiments(self):
+        scheduled_statuses = (ExperimentLifeCycle.RUNNING_STATUS |
+                              {ExperimentLifeCycle.UNKNOWN, ExperimentLifeCycle.WARNING})
+        return self.group_experiments.filter(
+            status__status__in=scheduled_statuses).distinct()
+
+    @property
     def done_experiments(self):
         return self.group_experiments.filter(
             status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
@@ -297,7 +304,7 @@ class ExperimentGroup(DiffModel,
         """We need to check if we are allowed to start the experiment
         If the polyaxonfile has concurrency we need to check how many experiments are running.
         """
-        return self.concurrency - self.running_experiments.count()
+        return self.concurrency - self.k8s_experiments.count()
 
     @property
     def iteration(self):
