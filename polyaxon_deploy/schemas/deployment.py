@@ -32,6 +32,7 @@ from polyaxon_schemas.utils import DictOrStr
 
 class DeploymentSchema(BaseSchema):
     deploymentType = fields.Str(allow_none=True, validate=validate.OneOf(DeploymentTypes.VALUES))
+    deploymentVersion = fields.Str(allow_none=True)
     namespace = fields.Str(allow_none=True)
     rbac = fields.Nested(RBACSchema, allow_none=True)
     serviceType = fields.Str(allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES))
@@ -87,6 +88,7 @@ class DeploymentConfig(BaseConfig):
 
     def __init__(self,  # noqa
                  deploymentType=None,
+                 deploymentVersion=None,
                  namespace=None,
                  rbac=None,
                  serviceType=None,
@@ -130,6 +132,7 @@ class DeploymentConfig(BaseConfig):
                  privateRegistries=None,
                  persistence=None):
         self.deploymentType = deploymentType
+        self.deploymentVersion = deploymentVersion
         self.namespace = namespace
         self.rbac = rbac
         self.serviceType = serviceType
