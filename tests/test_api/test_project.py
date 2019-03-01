@@ -6,7 +6,6 @@ import json
 import uuid
 
 from collections import Mapping
-from faker import Faker
 
 from tests.test_api.utils import TestBaseApi
 
@@ -20,8 +19,6 @@ from polyaxon_client.schemas import (
     TensorboardJobConfig
 )
 
-faker = Faker()
-
 
 class TestProjectApi(TestBaseApi):
     # pylint:disable=too-many-lines
@@ -32,7 +29,7 @@ class TestProjectApi(TestBaseApi):
 
     @httpretty.activate
     def test_list_projects(self):
-        projects = [ProjectConfig(faker.word).to_dict() for _ in range(10)]
+        projects = [ProjectConfig('proj_{}'.format(i)).to_dict() for i in range(10)]
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -63,7 +60,7 @@ class TestProjectApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_project(self):
-        obj = ProjectConfig(faker.word()).to_dict()
+        obj = ProjectConfig('proj').to_dict()
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -86,7 +83,7 @@ class TestProjectApi(TestBaseApi):
 
     @httpretty.activate
     def test_create_project(self):
-        obj = ProjectConfig(faker.word()).to_dict()
+        obj = ProjectConfig('proj').to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -107,7 +104,7 @@ class TestProjectApi(TestBaseApi):
 
     @httpretty.activate
     def test_update_project(self):
-        obj = ProjectConfig(faker.word()).to_dict()
+        obj = ProjectConfig('proj').to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler.build_url(
@@ -300,7 +297,7 @@ class TestProjectApi(TestBaseApi):
     def test_list_experiment_groups(self):
         project_uuid = uuid.uuid4().hex
         experiment_groups = [
-            ExperimentGroupConfig(content=faker.word, project=project_uuid).to_dict()
+            ExperimentGroupConfig(content='text', project=project_uuid).to_dict()
             for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -328,7 +325,7 @@ class TestProjectApi(TestBaseApi):
     @httpretty.activate
     def test_create_experiment_group(self):
         project_uuid = uuid.uuid4().hex
-        obj = ExperimentGroupConfig(content=faker.word(), project=project_uuid)
+        obj = ExperimentGroupConfig(content='text', project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -441,7 +438,7 @@ class TestProjectApi(TestBaseApi):
 
         # Metrics & Declarations
         for xp in xps:
-            xp['metrics'] = {'loss': 0.1}
+            xp['last_metric'] = {'loss': 0.1}
             xp['declarations'] = {'foo': 'bar'}
 
         httpretty.register_uri(

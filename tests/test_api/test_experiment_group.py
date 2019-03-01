@@ -7,15 +7,12 @@ import json
 import uuid
 
 from collections import Mapping
-from faker import Faker
 
 from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment_group import ExperimentGroupApi
 from polyaxon_client.schemas import ExperimentConfig, ExperimentGroupConfig, GroupStatusConfig
-
-faker = Faker()
 
 
 class TestExperimentGroupApi(TestBaseApi):
@@ -26,7 +23,7 @@ class TestExperimentGroupApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_experiment_group(self):
-        obj = ExperimentGroupConfig(content=faker.word(),
+        obj = ExperimentGroupConfig(content='text',
                                     uuid=uuid.uuid4().hex,
                                     project=uuid.uuid4().hex).to_dict()
         httpretty.register_uri(
@@ -150,7 +147,7 @@ class TestExperimentGroupApi(TestBaseApi):
 
     @httpretty.activate
     def test_update_experiment_group(self):
-        obj = ExperimentGroupConfig(content=faker.word(),
+        obj = ExperimentGroupConfig(content='text',
                                     uuid=uuid.uuid4().hex,
                                     project=uuid.uuid4().hex).to_dict()
         httpretty.register_uri(

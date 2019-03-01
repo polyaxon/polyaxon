@@ -6,7 +6,6 @@ import json
 import uuid
 
 from collections import Mapping
-from faker import Faker
 
 from tests.test_api.utils import TestBaseApi
 
@@ -18,8 +17,6 @@ from polyaxon_client.schemas import (
     JobConfig,
     ProjectConfig
 )
-
-faker = Faker()
 
 
 class TestBookmarkApi(TestBaseApi):
@@ -122,7 +119,7 @@ class TestBookmarkApi(TestBaseApi):
     def test_get_bookmarked_groups(self):
         project_uuid = uuid.uuid4().hex
         experiment_groups = [
-            {'content_object': ExperimentGroupConfig(content=faker.word,
+            {'content_object': ExperimentGroupConfig(content='text',
                                                      project=project_uuid).to_dict()}
             for _ in range(10)]
         httpretty.register_uri(
@@ -149,7 +146,7 @@ class TestBookmarkApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_bookmarked_projects(self):
-        projects = [{'content_object': ProjectConfig(faker.word).to_dict()} for _ in range(10)]
+        projects = [{'content_object': ProjectConfig('proj').to_dict()} for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
