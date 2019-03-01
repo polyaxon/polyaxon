@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 
 
-class MaxNormSchema(Schema):
+class MaxNormSchema(BaseSchema):
     max_value = fields.Int(default=2, missing=2)
     axis = fields.Int(default=0, missing=0)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MaxNormConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MaxNormConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MaxNormConfig
 
 
 class MaxNormConfig(BaseConfig):
@@ -91,19 +84,12 @@ class MaxNormConfig(BaseConfig):
         self.axis = axis
 
 
-class NonNegSchema(Schema):
+class NonNegSchema(BaseSchema):
     w = fields.Float()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return NonNegConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return NonNegConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return NonNegConfig
 
 
 class NonNegConfig(BaseConfig):
@@ -134,19 +120,12 @@ class NonNegConfig(BaseConfig):
         self.w = w
 
 
-class UnitNormSchema(Schema):
+class UnitNormSchema(BaseSchema):
     axis = fields.Int(default=0, missing=0)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return UnitNormConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return UnitNormConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return UnitNormConfig
 
 
 class UnitNormConfig(BaseConfig):
@@ -207,22 +186,15 @@ class UnitNormConfig(BaseConfig):
         self.axis = axis
 
 
-class MinMaxNormSchema(Schema):
+class MinMaxNormSchema(BaseSchema):
     min_value = fields.Float(default=0., missing=0.)
     max_value = fields.Float(default=1., missing=1.)
     rate = fields.Float(default=1., missing=1.)
     axis = fields.Int(default=0, missing=0)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MinMaxNormConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MinMaxNormConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MinMaxNormConfig
 
 
 class MinMaxNormConfig(BaseConfig):

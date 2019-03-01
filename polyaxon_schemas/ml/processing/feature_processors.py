@@ -5,13 +5,15 @@ import six
 
 from collections import Mapping
 
-from marshmallow import Schema, ValidationError, post_dump, post_load
+from marshmallow import EXCLUDE, Schema, ValidationError, post_dump, post_load
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.ml.graph import GraphConfig
 
 
 class FeatureProcessorsSchema(Schema):
+    class Meta:
+        unknown = EXCLUDE
 
     @post_dump(pass_original=True)
     def make(self, data, original):
@@ -37,6 +39,7 @@ class FeatureProcessorsSchema(Schema):
 class FeatureProcessorsConfig(BaseConfig):
     SCHEMA = FeatureProcessorsSchema
     IDENTIFIER = 'FeatureProcessors'
+    UNKNOWN_BEHAVIOUR = EXCLUDE
 
     def __init__(self, feature_processors):
         self.feature_processors = feature_processors

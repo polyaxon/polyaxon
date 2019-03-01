@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 
 
-class BaseRegularizerSchema(Schema):
+class BaseRegularizerSchema(BaseSchema):
     name = fields.Str(allow_none=True)
     collect = fields.Bool(default=True, missing=True)
+
+    @staticmethod
+    def schema_config():
+        return BaseRegularizerConfig
 
 
 class BaseRegularizerConfig(BaseConfig):
@@ -22,16 +26,9 @@ class BaseRegularizerConfig(BaseConfig):
 class L1RegularizerSchema(BaseRegularizerSchema):
     l = fields.Float(default=0.01, missing=0.01)  # noqa
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return L1RegularizerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return L1RegularizerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return L1RegularizerConfig
 
 
 class L1RegularizerConfig(BaseRegularizerConfig):
@@ -78,16 +75,9 @@ class L1RegularizerConfig(BaseRegularizerConfig):
 class L2RegularizerSchema(BaseRegularizerSchema):
     l = fields.Float(default=0.01, missing=0.01)  # noqa
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return L2RegularizerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return L2RegularizerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return L2RegularizerConfig
 
 
 class L2RegularizerConfig(BaseRegularizerConfig):
@@ -135,16 +125,9 @@ class L1L2RegularizerSchema(BaseRegularizerSchema):
     l1 = fields.Float(default=0.01, missing=0.01)
     l2 = fields.Float(default=0.01, missing=0.01)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return L1L2RegularizerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return L1L2RegularizerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return L1L2RegularizerConfig
 
 
 class L1L2RegularizerConfig(BaseRegularizerConfig):

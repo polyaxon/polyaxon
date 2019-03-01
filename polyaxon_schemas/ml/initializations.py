@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 from polyaxon_schemas.utils import DType
 
 # pylint:disable=too-many-lines
 
 
-class ZerosInitializerSchema(Schema):
+class ZerosInitializerSchema(BaseSchema):
     dtype = DType(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ZerosInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ZerosInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ZerosInitializerConfig
 
 
 class ZerosInitializerConfig(BaseConfig):
@@ -64,19 +57,12 @@ class ZerosInitializerConfig(BaseConfig):
         self.dtype = dtype
 
 
-class OnesInitializerSchema(Schema):
+class OnesInitializerSchema(BaseSchema):
     dtype = DType(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return OnesInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return OnesInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return OnesInitializerConfig
 
 
 class OnesInitializerConfig(BaseConfig):
@@ -119,20 +105,13 @@ class OnesInitializerConfig(BaseConfig):
         self.dtype = dtype
 
 
-class ConstantInitializerSchema(Schema):
+class ConstantInitializerSchema(BaseSchema):
     value = fields.Int(allow_none=True)
     dtype = DType(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ConstantInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ConstantInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ConstantInitializerConfig
 
 
 class ConstantInitializerConfig(BaseConfig):
@@ -187,22 +166,15 @@ class ConstantInitializerConfig(BaseConfig):
         self.value = value
 
 
-class UniformInitializerSchema(Schema):
+class UniformInitializerSchema(BaseSchema):
     minval = fields.Number(allow_none=True)
     maxval = fields.Number(allow_none=True)
     dtype = DType(allow_none=True)
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return UniformInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return UniformInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return UniformInitializerConfig
 
 
 class UniformInitializerConfig(BaseConfig):
@@ -258,22 +230,15 @@ class UniformInitializerConfig(BaseConfig):
         self.maxval = maxval
 
 
-class NormalInitializerSchema(Schema):
+class NormalInitializerSchema(BaseSchema):
     mean = fields.Number(allow_none=True)
     stddev = fields.Number(allow_none=True)
     dtype = DType(allow_none=True)
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return NormalInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return NormalInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return NormalInitializerConfig
 
 
 class NormalInitializerConfig(BaseConfig):
@@ -328,20 +293,13 @@ class NormalInitializerConfig(BaseConfig):
         self.stddev = stddev
 
 
-class TruncatedNormalInitializerSchema(Schema):
+class TruncatedNormalInitializerSchema(BaseSchema):
     mean = fields.Number(allow_none=True)
     stddev = fields.Number(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TruncatedNormalInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TruncatedNormalInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TruncatedNormalInitializerConfig
 
 
 class TruncatedNormalInitializerConfig(BaseConfig):
@@ -401,22 +359,15 @@ class TruncatedNormalInitializerConfig(BaseConfig):
         self.stddev = stddev
 
 
-class VarianceScalingInitializerSchema(Schema):
+class VarianceScalingInitializerSchema(BaseSchema):
     scale = fields.Float(allow_none=True)
     mode = fields.Str(allow_none=True, validate=validate.OneOf(['fan_in', 'fan_out', 'fan_avg']))
     distribution = fields.Str(allow_none=True)
     dtype = DType(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return VarianceScalingInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return VarianceScalingInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return VarianceScalingInitializerConfig
 
 
 class VarianceScalingInitializerConfig(BaseConfig):
@@ -484,19 +435,12 @@ class VarianceScalingInitializerConfig(BaseConfig):
         self.dtype = dtype
 
 
-class IdentityInitializerSchema(Schema):
+class IdentityInitializerSchema(BaseSchema):
     gain = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return IdentityInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return IdentityInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return IdentityInitializerConfig
 
 
 class IdentityInitializerConfig(BaseConfig):
@@ -545,21 +489,14 @@ class IdentityInitializerConfig(BaseConfig):
         self.gain = gain
 
 
-class OrthogonalInitializerSchema(Schema):
+class OrthogonalInitializerSchema(BaseSchema):
     mean = fields.Number(allow_none=True)
     stddev = fields.Number(allow_none=True)
     gain = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return OrthogonalInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return OrthogonalInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return OrthogonalInitializerConfig
 
 
 class OrthogonalInitializerConfig(BaseConfig):
@@ -621,19 +558,12 @@ class OrthogonalInitializerConfig(BaseConfig):
         self.gain = gain
 
 
-class GlorotUniformInitializerSchema(Schema):
+class GlorotUniformInitializerSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlorotUniformInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlorotUniformInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlorotUniformInitializerConfig
 
 
 class GlorotUniformInitializerConfig(BaseConfig):
@@ -685,19 +615,12 @@ class GlorotUniformInitializerConfig(BaseConfig):
         self.seed = seed
 
 
-class GlorotNormalInitializerSchema(Schema):
+class GlorotNormalInitializerSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlorotNormalInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlorotNormalInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlorotNormalInitializerConfig
 
 
 class GlorotNormalInitializerConfig(BaseConfig):
@@ -749,19 +672,12 @@ class GlorotNormalInitializerConfig(BaseConfig):
         self.seed = seed
 
 
-class HeUniformInitializerSchema(Schema):
+class HeUniformInitializerSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HeUniformInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HeUniformInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HeUniformInitializerConfig
 
 
 class HeUniformInitializerConfig(BaseConfig):
@@ -811,19 +727,12 @@ class HeUniformInitializerConfig(BaseConfig):
         self.seed = seed
 
 
-class HeNormalInitializerSchema(Schema):
+class HeNormalInitializerSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HeNormalInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HeNormalInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HeNormalInitializerConfig
 
 
 class HeNormalInitializerConfig(BaseConfig):
@@ -873,19 +782,12 @@ class HeNormalInitializerConfig(BaseConfig):
         self.seed = seed
 
 
-class LecunUniformInitializerSchema(Schema):
+class LecunUniformInitializerSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LecunUniformInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LecunUniformInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LecunUniformInitializerConfig
 
 
 class LecunUniformInitializerConfig(BaseConfig):
@@ -936,19 +838,12 @@ class LecunUniformInitializerConfig(BaseConfig):
         self.seed = seed
 
 
-class LecunNormalInitializerSchema(Schema):
+class LecunNormalInitializerSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LecunNormalInitializerConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LecunNormalInitializerConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LecunNormalInitializerConfig
 
 
 class LecunNormalInitializerConfig(BaseConfig):

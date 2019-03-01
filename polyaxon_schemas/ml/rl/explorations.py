@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 
 
-class BaseExplorationSchema(Schema):
+class BaseExplorationSchema(BaseSchema):
     is_continuous = fields.Bool(default=False, missing=False)
+
+    @staticmethod
+    def schema_config():
+        return BaseExplorationConfig
 
 
 class BaseExplorationConfig(BaseConfig):
@@ -18,16 +22,9 @@ class BaseExplorationConfig(BaseConfig):
 class ConstantExplorationSchema(BaseExplorationSchema):
     value = fields.Float(default=0.5, missing=0.5)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ConstantExplorationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ConstantExplorationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ConstantExplorationConfig
 
 
 class ConstantExplorationConfig(BaseExplorationConfig):
@@ -40,16 +37,10 @@ class ConstantExplorationConfig(BaseExplorationConfig):
 
 
 class GreedyExplorationSchema(BaseExplorationSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return GreedyExplorationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GreedyExplorationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GreedyExplorationConfig
 
 
 class GreedyExplorationConfig(BaseExplorationConfig):
@@ -58,16 +49,10 @@ class GreedyExplorationConfig(BaseExplorationConfig):
 
 
 class RandomExplorationSchema(BaseExplorationSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return RandomExplorationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RandomExplorationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RandomExplorationConfig
 
 
 class RandomExplorationConfig(BaseExplorationConfig):
@@ -87,16 +72,9 @@ class DecayExplorationSchema(BaseExplorationSchema):
     decay_steps = fields.Int(allow_none=True)
     min_exploration_rate = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return DecayExplorationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DecayExplorationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DecayExplorationConfig
 
 
 class DecayExplorationConfig(BaseExplorationConfig):
@@ -136,16 +114,9 @@ class RandomDecayExplorationSchema(BaseExplorationSchema):
     decay_steps = fields.Int(allow_none=True)
     min_exploration_rate = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return RandomDecayExplorationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RandomDecayExplorationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RandomDecayExplorationConfig
 
 
 class RandomDecayExplorationConfig(BaseExplorationConfig):
@@ -179,16 +150,9 @@ class OrnsteinUhlenbeckExplorationSchema(BaseExplorationSchema):
     mu = fields.Float(allow_none=True)
     theta = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return OrnsteinUhlenbeckExplorationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return OrnsteinUhlenbeckExplorationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return OrnsteinUhlenbeckExplorationConfig
 
 
 class OrnsteinUhlenbeckExplorationConfig(BaseExplorationConfig):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load
+from marshmallow import fields
 
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 
@@ -9,16 +9,9 @@ from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 class WrapperSchema(BaseLayerSchema):
     layer = fields.Nested('LayerSchema')
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return WrapperConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return WrapperConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return WrapperConfig
 
 
 class WrapperConfig(BaseLayerConfig):
@@ -40,16 +33,9 @@ class WrapperConfig(BaseLayerConfig):
 
 
 class TimeDistributedSchema(WrapperSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TimeDistributedConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TimeDistributedConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TimeDistributedConfig
 
 
 class TimeDistributedConfig(WrapperConfig):
@@ -107,16 +93,10 @@ class TimeDistributedConfig(WrapperConfig):
 
 
 class BidirectionalSchema(WrapperSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return BidirectionalConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BidirectionalConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BidirectionalConfig
 
 
 class BidirectionalConfig(WrapperConfig):

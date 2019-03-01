@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 
 
-class BaseEnvironmentSchema(Schema):
+class BaseEnvironmentSchema(BaseSchema):
     env_id = fields.Str()
+
+    @staticmethod
+    def schema_config():
+        return BaseEnvironmentConfig
 
 
 class BaseEnvironmentConfig(BaseConfig):
@@ -16,16 +20,10 @@ class BaseEnvironmentConfig(BaseConfig):
 
 
 class GymEnvironmentSchema(BaseEnvironmentSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return GymEnvironmentConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GymEnvironmentConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GymEnvironmentConfig
 
 
 class GymEnvironmentConfig(BaseEnvironmentConfig):

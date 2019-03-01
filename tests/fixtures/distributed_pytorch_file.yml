@@ -5,7 +5,6 @@ kind: experiment
 
 logging:
   level: INFO
-  path: /mypath/project1
 
 environment:
   resources:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import (
@@ -33,16 +33,9 @@ class Conv1DSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Conv1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Conv1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Conv1DConfig
 
 
 class Conv1DConfig(BaseLayerConfig):
@@ -166,16 +159,9 @@ class Conv2DSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Conv2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Conv2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Conv2DConfig
 
 
 class Conv2DConfig(BaseLayerConfig):
@@ -345,16 +331,9 @@ class Conv3DSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Conv3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Conv3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Conv3DConfig
 
 
 class Conv3DConfig(BaseLayerConfig):
@@ -503,16 +482,9 @@ class Conv2DTransposeSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Conv2DTransposeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Conv2DTransposeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Conv2DTransposeConfig
 
 
 class Conv2DTransposeConfig(BaseLayerConfig):
@@ -658,16 +630,9 @@ class Conv3DTransposeSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Conv3DTransposeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Conv3DTransposeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Conv3DTransposeConfig
 
 
 class Conv3DTransposeConfig(BaseLayerConfig):
@@ -818,16 +783,9 @@ class SeparableConv2DSchema(BaseLayerSchema):
     pointwise_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SeparableConv2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SeparableConv2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SeparableConv2DConfig
 
 
 class SeparableConv2DConfig(BaseLayerConfig):
@@ -958,16 +916,9 @@ class SeparableConv2DConfig(BaseLayerConfig):
 class UpSampling1DSchema(BaseLayerSchema):
     size = ObjectOrListObject(fields.Int, min=2, max=2, default=2, missing=2)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return UpSampling1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return UpSampling1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return UpSampling1DConfig
 
 
 class UpSampling1DConfig(BaseLayerConfig):
@@ -1016,16 +967,9 @@ class UpSampling2DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return UpSampling2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return UpSampling2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return UpSampling2DConfig
 
 
 class UpSampling2DConfig(BaseLayerConfig):
@@ -1087,16 +1031,9 @@ class UpSampling3DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return UpSampling3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return UpSampling3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return UpSampling3DConfig
 
 
 class UpSampling3DConfig(BaseLayerConfig):
@@ -1156,16 +1093,9 @@ class UpSampling3DConfig(BaseLayerConfig):
 class ZeroPadding1DSchema(BaseLayerSchema):
     padding = ObjectOrListObject(fields.Int, min=1, max=1, default=1, missing=1)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ZeroPadding1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ZeroPadding1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ZeroPadding1DConfig
 
 
 class ZeroPadding1DConfig(BaseLayerConfig):
@@ -1212,16 +1142,9 @@ class ZeroPadding2DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ZeroPadding2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ZeroPadding2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ZeroPadding2DConfig
 
 
 class ZeroPadding2DConfig(BaseLayerConfig):
@@ -1291,16 +1214,9 @@ class ZeroPadding3DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ZeroPadding3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ZeroPadding3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ZeroPadding3DConfig
 
 
 class ZeroPadding3DConfig(BaseLayerConfig):
@@ -1370,16 +1286,9 @@ class ZeroPadding3DConfig(BaseLayerConfig):
 class Cropping1DSchema(BaseLayerSchema):
     cropping = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Cropping1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Cropping1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Cropping1DConfig
 
 
 class Cropping1DConfig(BaseLayerConfig):
@@ -1427,16 +1336,9 @@ class Cropping2DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Cropping2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Cropping2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Cropping2DConfig
 
 
 class Cropping2DConfig(BaseLayerConfig):
@@ -1512,16 +1414,9 @@ class Cropping3DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Cropping3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Cropping3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Cropping3DConfig
 
 
 class Cropping3DConfig(BaseLayerConfig):

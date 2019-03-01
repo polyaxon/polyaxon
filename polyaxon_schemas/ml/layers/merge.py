@@ -10,16 +10,9 @@ from polyaxon_schemas.utils import ObjectOrListObject
 
 class AddSchema(BaseLayerSchema):
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AddConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AddConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AddConfig
 
 
 class AddConfig(BaseLayerConfig):
@@ -53,16 +46,9 @@ class AddConfig(BaseLayerConfig):
 
 class SubtractSchema(BaseLayerSchema):
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SubtractConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SubtractConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SubtractConfig
 
 
 class SubtractConfig(BaseLayerConfig):
@@ -106,16 +92,9 @@ class SubtractConfig(BaseLayerConfig):
 
 class MultiplySchema(BaseLayerSchema):
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MultiplyConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MultiplyConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MultiplyConfig
 
 
 class MultiplyConfig(BaseLayerConfig):
@@ -149,16 +128,9 @@ class MultiplyConfig(BaseLayerConfig):
 
 class AverageSchema(BaseLayerSchema):
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AverageConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AverageConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AverageConfig
 
 
 class AverageConfig(BaseLayerConfig):
@@ -192,16 +164,9 @@ class AverageConfig(BaseLayerConfig):
 
 class MaximumSchema(BaseLayerSchema):
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MaximumConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MaximumConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MaximumConfig
 
 
 class MaximumConfig(BaseLayerConfig):
@@ -236,16 +201,9 @@ class MaximumConfig(BaseLayerConfig):
 class ConcatenateSchema(BaseLayerSchema):
     axis = fields.Int(default=-1, missing=-1)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ConcatenateConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ConcatenateConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ConcatenateConfig
 
 
 class ConcatenateConfig(BaseLayerConfig):
@@ -290,16 +248,9 @@ class DotSchema(BaseLayerSchema):
     axes = ObjectOrListObject(fields.Int)
     normalize = fields.Bool(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return DotConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DotConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DotConfig
 
 
 class DotConfig(BaseLayerConfig):

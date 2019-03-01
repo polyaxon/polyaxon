@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.utils import ObjectOrListObject
@@ -13,16 +13,9 @@ class MaxPooling1DSchema(BaseLayerSchema):
     padding = fields.Str(default='valid', missing='valid',
                          validate=validate.OneOf(['same', 'valid']))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MaxPooling1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MaxPooling1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MaxPooling1DConfig
 
 
 class MaxPooling1DConfig(BaseLayerConfig):
@@ -64,16 +57,9 @@ class AveragePooling1DSchema(BaseLayerSchema):
     padding = fields.Str(default='valid', missing='valid',
                          validate=validate.OneOf(['same', 'valid']))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AveragePooling1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AveragePooling1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AveragePooling1DConfig
 
 
 class AveragePooling1DConfig(BaseLayerConfig):
@@ -117,16 +103,9 @@ class MaxPooling2DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MaxPooling2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MaxPooling2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MaxPooling2DConfig
 
 
 class MaxPooling2DConfig(BaseLayerConfig):
@@ -193,16 +172,9 @@ class AveragePooling2DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AveragePooling2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AveragePooling2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AveragePooling2DConfig
 
 
 class AveragePooling2DConfig(BaseLayerConfig):
@@ -269,16 +241,9 @@ class MaxPooling3DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MaxPooling3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MaxPooling3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MaxPooling3DConfig
 
 
 class MaxPooling3DConfig(BaseLayerConfig):
@@ -342,16 +307,9 @@ class AveragePooling3DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AveragePooling3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AveragePooling3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AveragePooling3DConfig
 
 
 class AveragePooling3DConfig(BaseLayerConfig):
@@ -408,16 +366,9 @@ class AveragePooling3DConfig(BaseLayerConfig):
 
 
 class GlobalAveragePooling1DSchema(BaseLayerSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlobalAveragePooling1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlobalAveragePooling1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlobalAveragePooling1DConfig
 
 
 class GlobalAveragePooling1DConfig(BaseLayerConfig):
@@ -441,16 +392,9 @@ class GlobalAveragePooling1DConfig(BaseLayerConfig):
 
 
 class GlobalMaxPooling1DSchema(BaseLayerSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlobalMaxPooling1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlobalMaxPooling1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlobalMaxPooling1DConfig
 
 
 class GlobalMaxPooling1DConfig(BaseLayerConfig):
@@ -477,16 +421,9 @@ class GlobalAveragePooling2DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlobalAveragePooling2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlobalAveragePooling2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlobalAveragePooling2DConfig
 
 
 class GlobalAveragePooling2DConfig(BaseLayerConfig):
@@ -532,16 +469,9 @@ class GlobalMaxPooling2DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlobalMaxPooling2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlobalMaxPooling2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlobalMaxPooling2DConfig
 
 
 class GlobalMaxPooling2DConfig(BaseLayerConfig):
@@ -587,16 +517,9 @@ class GlobalAveragePooling3DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlobalAveragePooling3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlobalAveragePooling3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlobalAveragePooling3DConfig
 
 
 class GlobalAveragePooling3DConfig(BaseLayerConfig):
@@ -642,16 +565,9 @@ class GlobalMaxPooling3DSchema(BaseLayerSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GlobalMaxPooling3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GlobalMaxPooling3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GlobalMaxPooling3DConfig
 
 
 class GlobalMaxPooling3DConfig(BaseLayerConfig):

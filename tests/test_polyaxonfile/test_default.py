@@ -2,12 +2,13 @@
 from __future__ import absolute_import, division, print_function
 
 import tempfile
+
 from unittest import TestCase
 
 from polyaxon_schemas.polyaxonfile.default import (
-    get_default_polyaxonfile,
+    DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
-    DEFAULT_POLYAXON_FILE_EXTENSION
+    get_default_polyaxonfile
 )
 
 

@@ -11,8 +11,9 @@ model:
       Adam:
         learning_rate: 0.9
     metrics:
-      - Accuracy
-    bridge: NoOpBridge
+      - Accuracy: {}
+    bridge:
+      NoOpBridge: {}
     encoder:
       input_layers: image
       layers:

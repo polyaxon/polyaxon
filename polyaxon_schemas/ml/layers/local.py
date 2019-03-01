@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.initializations import (
     GlorotUniformInitializerConfig,
@@ -31,16 +31,9 @@ class LocallyConnected1DSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(RegularizerSchema, default=None, missing=None)
     bias_constraint = fields.Nested(RegularizerSchema, default=None, missing=None)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LocallyConnected1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LocallyConnected1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LocallyConnected1DConfig
 
 
 class LocallyConnected1DConfig(BaseLayerConfig):
@@ -157,16 +150,9 @@ class LocallyConnected2DSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(RegularizerSchema, default=None, missing=None)
     bias_constraint = fields.Nested(RegularizerSchema, default=None, missing=None)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LocallyConnected2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LocallyConnected2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LocallyConnected2DConfig
 
 
 class LocallyConnected2DConfig(BaseLayerConfig):

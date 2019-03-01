@@ -8,8 +8,8 @@ from collections import Mapping, OrderedDict
 from hestia.humanize import humanize_timesince
 from hestia.tz_utils import get_time_zone
 from hestia.units import to_percentage, to_unit_memory
-from marshmallow import Schema, ValidationError, post_dump, post_load
-from marshmallow.utils import utc
+from marshmallow import RAISE, Schema, ValidationError, post_dump, post_load
+from marshmallow.utils import EXCLUDE, utc
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.utils import to_camel_case
@@ -19,6 +19,7 @@ class BaseSchema(Schema):
     """Base schema."""
 
     class Meta:
+        unknown = RAISE
         ordered = True
 
     @post_load
@@ -46,9 +47,15 @@ class BaseConfig(object):
     MEM_SIZE_ATTRIBUTES = []
     PERCENT_ATTRIBUTES = []
     ROUNDING = 2
+    UNKNOWN_BEHAVIOUR = RAISE
 
-    def to_light_dict(self, humanize_values=False, include_attrs=None, exclude_attrs=None):
-        obj_dict = self.to_dict(humanize_values=humanize_values)
+    def to_light_dict(self,
+                      humanize_values=False,
+                      include_attrs=None,
+                      exclude_attrs=None,
+                      unknown=None):
+        unknown = unknown or self.UNKNOWN_BEHAVIOUR
+        obj_dict = self.to_dict(humanize_values=humanize_values, unknown=unknown)
         if all([include_attrs, exclude_attrs]):
             raise PolyaxonSchemaError(
                 'Only one value `include_attrs` or `exclude_attrs` is allowed.')
@@ -63,8 +70,9 @@ class BaseConfig(object):
 
         return obj_dict
 
-    def to_dict(self, humanize_values=False):
-        return self.obj_to_dict(self, humanize_values=humanize_values)
+    def to_dict(self, humanize_values=False, unknown=None):
+        unknown = unknown or self.UNKNOWN_BEHAVIOUR
+        return self.obj_to_dict(self, humanize_values=humanize_values, unknown=unknown)
 
     def to_schema(self):
         return self.obj_to_schema(self)
@@ -81,9 +89,10 @@ class BaseConfig(object):
         return humanized_attrs
 
     @classmethod
-    def obj_to_dict(cls, obj, humanize_values=False):
+    def obj_to_dict(cls, obj, humanize_values=False, unknown=None):
+        unknown = unknown or cls.UNKNOWN_BEHAVIOUR
         humanized_attrs = cls.humanize_attrs(obj) if humanize_values else {}
-        data_dict = cls.SCHEMA(strict=True).dump(obj).data  # pylint: disable=not-callable
+        data_dict = cls.SCHEMA(unknown=unknown).dump(obj)  # pylint: disable=not-callable
 
         for k, v in six.iteritems(humanized_attrs):
             data_dict[k] = v
@@ -103,8 +112,9 @@ class BaseConfig(object):
         return {cls.IDENTIFIER: cls.obj_to_dict(obj)}
 
     @classmethod
-    def from_dict(cls, value):
-        return cls.SCHEMA(strict=True).load(value).data  # pylint: disable=not-callable
+    def from_dict(cls, value, unknown=None):
+        unknown = unknown or cls.UNKNOWN_BEHAVIOUR
+        return cls.SCHEMA(unknown=unknown).load(value)  # pylint: disable=not-callable
 
     @staticmethod
     def localize_date(dt):
@@ -118,7 +128,7 @@ class BaseConfig(object):
     def to_jsonschema(cls):
         from marshmallow_jsonschema import JSONSchema  # pylint:disable=import-error
 
-        return JSONSchema().dump(cls.SCHEMA()).data  # pylint:disable=not-callable
+        return JSONSchema().dump(cls.SCHEMA())  # pylint:disable=not-callable
 
 
 class BaseMultiSchema(Schema):
@@ -126,6 +136,9 @@ class BaseMultiSchema(Schema):
     __configs__ = None
     # to support snake case identifier, e.g. glorot_uniform and GlorotUniform
     __support_snake_case__ = False
+
+    class Meta:
+        unknown = EXCLUDE
 
     @post_dump(pass_original=True, pass_many=True)
     def handle_multi_schema_dump(self, data, pass_many, original):
@@ -144,7 +157,9 @@ class BaseMultiSchema(Schema):
         def make(key, val=None):
             key = to_camel_case(key) if self.__support_snake_case__ else key
             try:
-                return self.__configs__[key].from_dict(val) if val else self.__configs__[key]()
+                print(self.__configs__[key])
+                return (self.__configs__[key].from_dict(val, unknown=EXCLUDE) if val else
+                        self.__configs__[key]())
             except KeyError:
                 raise ValidationError("`{}` is not a valid value for schema `{}`".format(
                     key, self.__multi_schema_name__))

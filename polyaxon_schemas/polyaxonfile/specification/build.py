@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from marshmallow import EXCLUDE
+
 from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
@@ -81,7 +83,9 @@ class BuildSpecification(BaseSpecification):
         if isinstance(build_config, BuildConfig):
             config = build_config.to_light_dict()
         elif isinstance(build_config, Mapping):
-            config = BuildConfig.from_dict(build_config)
+            # Since the objective is to create the build spec from other specs
+            # we drop any extra attrs
+            config = BuildConfig.from_dict(build_config, unknown=EXCLUDE)
             config = config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(

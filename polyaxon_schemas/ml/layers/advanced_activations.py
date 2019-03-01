@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load
+from marshmallow import fields
 
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import InitializerSchema, ZerosInitializerConfig
@@ -13,16 +13,9 @@ from polyaxon_schemas.utils import ObjectOrListObject
 class LeakyReLUSchema(BaseLayerSchema):
     alpha = fields.Float(default=0.3, missing=0.3)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LeakyReLUConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LeakyReLUConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LeakyReLUConfig
 
 
 class LeakyReLUConfig(BaseLayerConfig):
@@ -64,16 +57,9 @@ class PReLUSchema(BaseLayerSchema):
     alpha_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
     shared_axes = ObjectOrListObject(fields.Int, default=None, missing=None)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PReLUConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PReLUConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PReLUConfig
 
 
 class PReLUConfig(BaseLayerConfig):
@@ -136,16 +122,9 @@ class PReLUConfig(BaseLayerConfig):
 class ELUSchema(BaseLayerSchema):
     alpha = fields.Float(default=1.0, missing=1.0)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ELUConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ELUConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ELUConfig
 
 
 class ELUConfig(BaseLayerConfig):
@@ -184,16 +163,9 @@ class ELUConfig(BaseLayerConfig):
 class ThresholdedReLUSchema(BaseLayerSchema):
     theta = fields.Float(default=1.0, missing=1.0)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ThresholdedReLUConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ThresholdedReLUConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ThresholdedReLUConfig
 
 
 class ThresholdedReLUConfig(BaseLayerConfig):

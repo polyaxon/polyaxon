@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import EXCLUDE, fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 from polyaxon_schemas.ml.bridges import BridgeSchema
 from polyaxon_schemas.ml.graph import GraphSchema
 from polyaxon_schemas.ml.losses import LossSchema
@@ -12,7 +12,7 @@ from polyaxon_schemas.ml.optimizers import OptimizerSchema
 from polyaxon_schemas.utils import ObjectOrListObject
 
 
-class BaseModelSchema(Schema):
+class BaseModelSchema(BaseSchema):
     graph = fields.Nested(GraphSchema)
     loss = fields.Nested(LossSchema, allow_none=True)
     optimizer = fields.Nested(OptimizerSchema, allow_none=True)
@@ -22,16 +22,9 @@ class BaseModelSchema(Schema):
     clip_embed_gradients = fields.Float(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return BaseModelConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BaseModelConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BaseModelConfig
 
 
 class BaseModelConfig(BaseConfig):
@@ -62,16 +55,9 @@ class ClassifierSchema(BaseModelSchema):
     one_hot_encode = fields.Bool(allow_none=True)
     n_classes = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ClassifierConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ClassifierConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ClassifierConfig
 
 
 class ClassifierConfig(BaseModelConfig):
@@ -232,16 +218,10 @@ class ClassifierConfig(BaseModelConfig):
 
 
 class RegressorSchema(BaseModelSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return RegressorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RegressorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RegressorConfig
 
 
 class RegressorConfig(BaseModelConfig):
@@ -345,13 +325,9 @@ class GeneratorSchema(BaseModelSchema):
         ordered = True
         exclude = ('graph',)
 
-    @post_load
-    def make(self, data):
-        return GeneratorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GeneratorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GeneratorConfig
 
 
 class GeneratorConfig(BaseModelConfig):
@@ -524,3 +500,4 @@ class ModelSchema(BaseMultiSchema):
 class ModelConfig(BaseConfig):
     SCHEMA = ModelSchema
     IDENTIFIER = 'model'
+    UNKNOWN_BEHAVIOUR = EXCLUDE

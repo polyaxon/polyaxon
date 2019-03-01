@@ -8,6 +8,7 @@ from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.environments import (
     EnvironmentConfig,
+    ExperimentEnvironmentConfig,
     GPUOptionsConfig,
     HorovodClusterConfig,
     HorovodConfig,
@@ -15,14 +16,15 @@ from polyaxon_schemas.environments import (
     K8SResourcesConfig,
     MXNetClusterConfig,
     MXNetConfig,
+    NotebookEnvironmentConfig,
     PodResourcesConfig,
     PytorchClusterConfig,
     PytorchConfig,
     SessionConfig,
     TensorflowClusterConfig,
     TensorflowConfig,
-    TFRunConfig,
-    ExperimentEnvironmentConfig, NotebookEnvironmentConfig)
+    TFRunConfig
+)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -169,7 +171,6 @@ class TestEnvironmentsConfigs(TestCase):
 
     def test_indexed_session(self):
         config_dict = {
-            'index': 10,
             'log_device_placement': False,
             'allow_soft_placement': False,
             'intra_op_parallelism_threads': 2,

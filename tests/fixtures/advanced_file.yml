@@ -5,7 +5,6 @@ kind: experiment
 
 logging:
   level: INFO
-  path: /mypath/project1
 
 environment:
   tensorflow:
@@ -30,7 +29,8 @@ declarations:
 
 model:
   model_type: classifier
-  loss: MeanSquaredError
+  loss:
+    MeanSquaredError:
   optimizer:
     Adam:
       learning_rate: 0.21

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import (
@@ -17,16 +17,9 @@ from polyaxon_schemas.utils import ACTIVATION_VALUES, DType, StrOrFct
 class MaskingSchema(BaseLayerSchema):
     mask_value = fields.Int()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MaskingConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MaskingConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MaskingConfig
 
 
 class MaskingConfig(BaseLayerConfig):
@@ -75,16 +68,9 @@ class DropoutSchema(BaseLayerSchema):
     noise_shape = fields.List(fields.Int(), default=None, missing=None)
     seed = fields.Int(default=None, missing=None)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return DropoutConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DropoutConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DropoutConfig
 
 
 class DropoutConfig(BaseLayerConfig):
@@ -122,16 +108,10 @@ class DropoutConfig(BaseLayerConfig):
 
 
 class SpatialDropout1DSchema(DropoutSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return SpatialDropout1DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SpatialDropout1DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SpatialDropout1DConfig
 
 
 class SpatialDropout1DConfig(DropoutConfig):
@@ -174,16 +154,9 @@ class SpatialDropout2DSchema(DropoutSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SpatialDropout2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SpatialDropout2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SpatialDropout2DConfig
 
 
 class SpatialDropout2DConfig(DropoutConfig):
@@ -237,16 +210,9 @@ class SpatialDropout3DSchema(DropoutSchema):
     data_format = fields.Str(default=None, missing=None,
                              validate=validate.OneOf('channels_first', 'channels_last'))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SpatialDropout3DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SpatialDropout3DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SpatialDropout3DConfig
 
 
 class SpatialDropout3DConfig(DropoutConfig):
@@ -298,16 +264,9 @@ class SpatialDropout3DConfig(DropoutConfig):
 class ActivationSchema(BaseLayerSchema):
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ActivationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ActivationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ActivationConfig
 
 
 class ActivationConfig(BaseLayerConfig):
@@ -342,16 +301,9 @@ class ActivationConfig(BaseLayerConfig):
 class ReshapeSchema(BaseLayerSchema):
     target_shape = fields.List(fields.Int())
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ReshapeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ReshapeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ReshapeConfig
 
 
 class ReshapeConfig(BaseLayerConfig):
@@ -401,16 +353,9 @@ class ReshapeConfig(BaseLayerConfig):
 class PermuteSchema(BaseLayerSchema):
     dims = fields.List(fields.Int())
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PermuteConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PermuteConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PermuteConfig
 
 
 class PermuteConfig(BaseLayerConfig):
@@ -457,16 +402,9 @@ class PermuteConfig(BaseLayerConfig):
 
 
 class FlattenSchema(BaseLayerSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return FlattenConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return FlattenConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return FlattenConfig
 
 
 class FlattenConfig(BaseLayerConfig):
@@ -497,16 +435,9 @@ class FlattenConfig(BaseLayerConfig):
 class RepeatVectorSchema(BaseLayerSchema):
     n = fields.Int()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return RepeatVectorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RepeatVectorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RepeatVectorConfig
 
 
 class RepeatVectorConfig(BaseLayerConfig):
@@ -562,16 +493,9 @@ class DenseSchema(BaseLayerSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return DenseConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DenseConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DenseConfig
 
 
 class DenseConfig(BaseLayerConfig):
@@ -663,16 +587,9 @@ class ActivityRegularizationSchema(BaseLayerSchema):
     l1 = fields.Float(allow_none=True)
     l2 = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ActivityRegularizationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ActivityRegularizationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ActivityRegularizationConfig
 
 
 class ActivityRegularizationConfig(BaseLayerConfig):
@@ -710,16 +627,9 @@ class ActivityRegularizationConfig(BaseLayerConfig):
 class CastSchema(BaseLayerSchema):
     dtype = DType()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return CastConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return CastConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return CastConfig
 
 
 class CastConfig(BaseLayerConfig):

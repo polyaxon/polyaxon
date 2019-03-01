@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 from polyaxon_schemas.utils import Tensor
 
 # pylint:disable=too-many-lines
 
 
-class BaseMetricSchema(Schema):
+class BaseMetricSchema(BaseSchema):
     input_layer = Tensor(allow_none=True)
     output_layer = Tensor(allow_none=True)
     weights = fields.Float(allow_none=True)
     metrics_collections = fields.List(fields.Str(), allow_none=True)
     updates_collections = fields.List(fields.Str(), allow_none=True)
     name = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return BaseMetricConfig
 
 
 class BaseMetricConfig(BaseConfig):
@@ -37,12 +41,16 @@ class BaseMetricConfig(BaseConfig):
         self.name = name
 
 
-class BaseTensorMetricSchema(Schema):
+class BaseTensorMetricSchema(BaseSchema):
     values = Tensor()
     weights = fields.Float(allow_none=True)
     metrics_collections = fields.List(fields.Str(), allow_none=True)
     updates_collections = fields.List(fields.Str(), allow_none=True)
     name = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return BaseTensorMetricConfig
 
 
 class BaseTensorMetricConfig(BaseConfig):
@@ -62,16 +70,10 @@ class BaseTensorMetricConfig(BaseConfig):
 
 
 class TruePositivesSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return TruePositivesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TruePositivesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TruePositivesConfig
 
 
 class TruePositivesConfig(BaseMetricConfig):
@@ -118,16 +120,10 @@ class TruePositivesConfig(BaseMetricConfig):
 
 
 class TrueNegativesSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return TrueNegativesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TrueNegativesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TrueNegativesConfig
 
 
 class TrueNegativesConfig(BaseMetricConfig):
@@ -177,16 +173,10 @@ class TrueNegativesConfig(BaseMetricConfig):
 
 
 class FalsePositivesSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return FalsePositivesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return FalsePositivesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return FalsePositivesConfig
 
 
 class FalsePositivesConfig(BaseMetricConfig):
@@ -232,16 +222,10 @@ class FalsePositivesConfig(BaseMetricConfig):
 
 
 class FalseNegativesSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return FalseNegativesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return FalseNegativesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return FalseNegativesConfig
 
 
 class FalseNegativesConfig(BaseMetricConfig):
@@ -291,16 +275,10 @@ class FalseNegativesConfig(BaseMetricConfig):
 
 
 class MeanSchema(BaseTensorMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return MeanConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanConfig
 
 
 class MeanConfig(BaseTensorMetricConfig):
@@ -355,16 +333,10 @@ class MeanConfig(BaseTensorMetricConfig):
 
 
 class MeanTensorSchema(BaseTensorMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return MeanTensorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanTensorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanTensorConfig
 
 
 class MeanTensorConfig(BaseTensorMetricConfig):
@@ -423,16 +395,10 @@ class MeanTensorConfig(BaseTensorMetricConfig):
 
 
 class AccuracySchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return AccuracyConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AccuracyConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AccuracyConfig
 
 
 class AccuracyConfig(BaseMetricConfig):
@@ -496,16 +462,10 @@ class AccuracyConfig(BaseMetricConfig):
 
 
 class PrecisionSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return PrecisionConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PrecisionConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PrecisionConfig
 
 
 class PrecisionConfig(BaseMetricConfig):
@@ -566,16 +526,10 @@ class PrecisionConfig(BaseMetricConfig):
 
 
 class RecallSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return RecallConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RecallConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RecallConfig
 
 
 class RecallConfig(BaseMetricConfig):
@@ -638,16 +592,9 @@ class AUCSchema(BaseMetricSchema):
     num_thresholds = fields.Int(allow_none=True)
     curve = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AUCConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AUCConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AUCConfig
 
 
 class AUCConfig(BaseMetricConfig):
@@ -729,16 +676,9 @@ class SpecificityAtSensitivitySchema(BaseMetricSchema):
     sensitivity = fields.Float(validate=validate.Range(min=0., max=1.))
     num_thresholds = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SpecificityAtSensitivityConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SpecificityAtSensitivityConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SpecificityAtSensitivityConfig
 
 
 class SpecificityAtSensitivityConfig(BaseMetricConfig):
@@ -814,16 +754,9 @@ class SensitivityAtSpecificitySchema(BaseMetricSchema):
     specificity = fields.Float(validate=validate.Range(min=0., max=1.))
     num_thresholds = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SensitivityAtSpecificityConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SensitivityAtSpecificityConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SensitivityAtSpecificityConfig
 
 
 class SensitivityAtSpecificityConfig(BaseMetricConfig):
@@ -898,16 +831,9 @@ class SensitivityAtSpecificityConfig(BaseMetricConfig):
 class PrecisionAtThresholdsSchema(BaseMetricSchema):
     thresholds = fields.List(fields.Float(validate=validate.Range(min=0., max=1.)))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PrecisionAtThresholdsConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PrecisionAtThresholdsConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PrecisionAtThresholdsConfig
 
 
 class PrecisionAtThresholdsConfig(BaseMetricConfig):
@@ -975,16 +901,9 @@ class PrecisionAtThresholdsConfig(BaseMetricConfig):
 class RecallAtThresholdsSchema(BaseMetricSchema):
     thresholds = fields.List(fields.Float(validate=validate.Range(min=0., max=1.)))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return RecallAtThresholdsConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RecallAtThresholdsConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RecallAtThresholdsConfig
 
 
 class RecallAtThresholdsConfig(BaseMetricConfig):
@@ -1051,16 +970,9 @@ class SparseRecallAtKSchema(BaseMetricSchema):
     k = fields.Int()
     class_id = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SparseRecallAtKConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SparseRecallAtKConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SparseRecallAtKConfig
 
 
 class SparseRecallAtKConfig(BaseMetricConfig):
@@ -1149,16 +1061,9 @@ class SparsePrecisionAtKSchema(BaseMetricSchema):
     k = fields.Int()
     class_id = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SparsePrecisionAtKConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SparsePrecisionAtKConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SparsePrecisionAtKConfig
 
 
 class SparsePrecisionAtKConfig(BaseMetricConfig):
@@ -1247,16 +1152,10 @@ class SparsePrecisionAtKConfig(BaseMetricConfig):
 
 
 class MeanAbsoluteErrorSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return MeanAbsoluteErrorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanAbsoluteErrorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanAbsoluteErrorConfig
 
 
 class MeanAbsoluteErrorConfig(BaseMetricConfig):
@@ -1318,16 +1217,9 @@ class MeanAbsoluteErrorConfig(BaseMetricConfig):
 class MeanRelativeErrorSchema(BaseMetricSchema):
     normalizer = fields.Str()  # name of the normalizer tensor
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MeanRelativeErrorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanRelativeErrorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanRelativeErrorConfig
 
 
 class MeanRelativeErrorConfig(BaseMetricConfig):
@@ -1392,16 +1284,10 @@ class MeanRelativeErrorConfig(BaseMetricConfig):
 
 
 class MeanSquaredErrorSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return MeanSquaredErrorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanSquaredErrorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanSquaredErrorConfig
 
 
 class MeanSquaredErrorConfig(BaseMetricConfig):
@@ -1462,16 +1348,10 @@ class MeanSquaredErrorConfig(BaseMetricConfig):
 
 
 class RootMeanSquaredErrorSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return RootMeanSquaredErrorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RootMeanSquaredErrorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RootMeanSquaredErrorConfig
 
 
 class RootMeanSquaredErrorConfig(BaseMetricConfig):
@@ -1531,16 +1411,10 @@ class RootMeanSquaredErrorConfig(BaseMetricConfig):
 
 
 class CovarianceSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return CovarianceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return CovarianceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return CovarianceConfig
 
 
 class CovarianceConfig(BaseMetricConfig):
@@ -1605,16 +1479,10 @@ class CovarianceConfig(BaseMetricConfig):
 
 
 class PearsonCorrelationSchema(BaseMetricSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return PearsonCorrelationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PearsonCorrelationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PearsonCorrelationConfig
 
 
 class PearsonCorrelationConfig(BaseMetricConfig):
@@ -1678,16 +1546,9 @@ class PearsonCorrelationConfig(BaseMetricConfig):
 class MeanCosineDistanceSchema(BaseMetricSchema):
     dim = fields.Int()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MeanCosineDistanceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanCosineDistanceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanCosineDistanceConfig
 
 
 class MeanCosineDistanceConfig(BaseMetricConfig):
@@ -1748,16 +1609,9 @@ class MeanCosineDistanceConfig(BaseMetricConfig):
 class PercentageLessSchema(BaseTensorMetricSchema):
     threshold = fields.Float()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PercentageLessConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PercentageLessConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PercentageLessConfig
 
 
 class PercentageLessConfig(BaseTensorMetricConfig):
@@ -1817,16 +1671,9 @@ class PercentageLessConfig(BaseTensorMetricConfig):
 class MeanIOUSchema(BaseMetricSchema):
     num_classes = fields.Int()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MeanIOUConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanIOUConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanIOUConfig
 
 
 class MeanIOUConfig(BaseMetricConfig):

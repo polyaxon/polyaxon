@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load
+from marshmallow import fields
 
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import (
@@ -28,16 +28,9 @@ class BatchNormalizationSchema(BaseLayerSchema):
     beta_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     gamma_constraint = fields.Nested(ConstraintSchema, allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return BatchNormalizationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BatchNormalizationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BatchNormalizationConfig
 
 
 class BatchNormalizationConfig(BaseLayerConfig):

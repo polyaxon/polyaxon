@@ -8,8 +8,8 @@ import rhea
 
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
-from polyaxon_schemas.environments import EnvironmentConfig
 
+from polyaxon_schemas.environments import EnvironmentConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.operators import ForConfig, IfConfig
 from polyaxon_schemas.polyaxonfile import validator

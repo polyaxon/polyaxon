@@ -72,7 +72,6 @@ class TestMetricConfigs(TestCase):
         config_dict = {
             'input_layer': 'images',
             'output_layer': 'relu_1',
-            'specificity': 0.1,
             'num_thresholds': 300,
             'weights': None,
             'curve': 'ROC',

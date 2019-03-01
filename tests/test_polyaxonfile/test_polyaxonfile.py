@@ -318,6 +318,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is not None
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
+        assert spec.outputs.jobs == [111]
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         model = spec.model
@@ -368,7 +369,7 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(model.graph, GraphConfig)
         assert len(model.graph.layers) == 4
         assert model.graph.input_layers == [['images', 0, 0]]
-        assert model.graph.layers[1].pool_size in ([1, 1], [2, 2])
+        assert model.graph.layers[1].pool_size in ((1, 1), (2, 2))
 
     def test_matrix_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))

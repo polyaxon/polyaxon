@@ -13,7 +13,6 @@ class TestLoggingConfigs(TestCase):
         config_dict = {
             'level': 'INFO',
             'formatter': None,
-            'path': 'some/path/logging',
         }
         config = LoggingConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

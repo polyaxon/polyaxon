@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from marshmallow import EXCLUDE
+
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
@@ -50,7 +52,7 @@ class JobSpecification(BuildSpecification):
         if isinstance(run_config, RunConfig):
             config = run_config.to_light_dict()
         elif isinstance(run_config, Mapping):
-            config = RunConfig.from_dict(run_config)
+            config = RunConfig.from_dict(run_config, unknown=EXCLUDE)
             config = config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(

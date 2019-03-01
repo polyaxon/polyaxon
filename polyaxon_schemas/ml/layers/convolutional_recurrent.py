@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import InitializerSchema
@@ -23,16 +23,9 @@ class ConvRecurrent2DSchema(RecurrentSchema):
     go_backwards = fields.Bool(default=False, missing=False)
     stateful = fields.Bool(default=False, missing=False)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ConvRecurrent2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ConvRecurrent2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ConvRecurrent2DConfig
 
 
 class ConvRecurrent2DConfig(RecurrentConfig):
@@ -147,16 +140,9 @@ class ConvLSTM2DSchema(ConvRecurrent2DSchema):
     dropout = fields.Float(default=0., missing=0., validate=validate.Range(0., 1.))
     recurrent_dropout = fields.Float(default=0., missing=0., validate=validate.Range(0., 1.))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ConvLSTM2DConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ConvLSTM2DConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ConvLSTM2DConfig
 
 
 class ConvLSTM2DConfig(ConvRecurrent2DConfig):

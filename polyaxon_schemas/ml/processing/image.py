@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.utils import DType
@@ -16,16 +16,9 @@ class ResizeSchema(BaseLayerSchema):
     align_corners = fields.Bool(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ResizeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ResizeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ResizeConfig
 
 
 class ResizeConfig(BaseLayerConfig):
@@ -94,16 +87,9 @@ class CentralCropSchema(BaseLayerSchema):
     central_fraction = fields.Float(validate=validate.Range(0., 1.))
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return CentralCropConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return CentralCropConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return CentralCropConfig
 
 
 class CentralCropConfig(BaseLayerConfig):
@@ -155,16 +141,9 @@ class RandomCropSchema(BaseLayerSchema):
     width = fields.Int()
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return RandomCropConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RandomCropConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RandomCropConfig
 
 
 class RandomCropConfig(BaseLayerConfig):
@@ -205,16 +184,9 @@ class ExtractGlimpseSchema(BaseLayerSchema):
     uniform_noise = fields.Bool(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ExtractGlimpseConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ExtractGlimpseConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ExtractGlimpseConfig
 
 
 class ExtractGlimpseConfig(BaseLayerConfig):
@@ -288,16 +260,9 @@ class ToBoundingBoxSchema(BaseLayerSchema):
     method = fields.Str(allow_none=True, validate=validate.OneOf(['crop', 'pad']))
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ToBoundingBoxConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ToBoundingBoxConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ToBoundingBoxConfig
 
 
 class ToBoundingBoxConfig(BaseLayerConfig):
@@ -374,16 +339,9 @@ class FlipSchema(BaseLayerSchema):
     seed = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return FlipConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return FlipConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return FlipConfig
 
 
 class FlipConfig(BaseLayerConfig):
@@ -432,16 +390,9 @@ class FlipConfig(BaseLayerConfig):
 class TransposeSchema(BaseLayerSchema):
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TransposeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TransposeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TransposeConfig
 
 
 class TransposeConfig(BaseLayerConfig):
@@ -473,16 +424,9 @@ class Rotate90Schema(BaseLayerSchema):
     seed = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return Rotate90Config(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return Rotate90Config.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return Rotate90Config
 
 
 class Rotate90Config(BaseLayerConfig):
@@ -526,16 +470,9 @@ class ConvertColorSpaceSchema(BaseLayerSchema):
     to_space = fields.Str(validate=validate.OneOf(['rgb', 'grayscale', 'hsv']))
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ConvertColorSpaceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ConvertColorSpaceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ConvertColorSpaceConfig
 
 
 class ConvertColorSpaceConfig(BaseLayerConfig):
@@ -588,16 +525,9 @@ class ConvertImagesDtypeSchema(BaseLayerSchema):
     saturate = fields.Bool(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ConvertImagesDtypeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ConvertImagesDtypeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ConvertImagesDtypeConfig
 
 
 class ConvertImagesDtypeConfig(BaseLayerConfig):
@@ -650,16 +580,9 @@ class AdjustBrightnessSchema(BaseLayerSchema):
     seed = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdjustBrightnessConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdjustBrightnessConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdjustBrightnessConfig
 
 
 class AdjustBrightnessConfig(BaseLayerConfig):
@@ -714,16 +637,9 @@ class AdjustContrastSchema(BaseLayerSchema):
     seed = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdjustContrastConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdjustContrastConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdjustContrastConfig
 
 
 class AdjustContrastConfig(BaseLayerConfig):
@@ -793,16 +709,9 @@ class AdjustHueSchema(BaseLayerSchema):
     seed = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdjustHueConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdjustHueConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdjustHueConfig
 
 
 class AdjustHueConfig(BaseLayerConfig):
@@ -857,16 +766,9 @@ class AdjustSaturationSchema(BaseLayerSchema):
     seed = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdjustSaturationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdjustSaturationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdjustSaturationConfig
 
 
 class AdjustSaturationConfig(BaseLayerConfig):
@@ -930,16 +832,9 @@ class AdjustGammaSchema(BaseLayerSchema):
     gain = fields.Float(allow_none=True)
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdjustGammaConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdjustGammaConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdjustGammaConfig
 
 
 class AdjustGammaConfig(BaseLayerConfig):
@@ -984,16 +879,9 @@ class AdjustGammaConfig(BaseLayerConfig):
 class StandardizationSchema(BaseLayerSchema):
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return StandardizationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return StandardizationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return StandardizationConfig
 
 
 class StandardizationConfig(BaseLayerConfig):
@@ -1027,16 +915,9 @@ class DrawBoundingBoxesSchema(BaseLayerSchema):
     boxes = fields.List(fields.Float(), validate=validate.Length(equal=3))
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return DrawBoundingBoxesConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return DrawBoundingBoxesConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return DrawBoundingBoxesConfig
 
 
 class DrawBoundingBoxesConfig(BaseLayerConfig):
@@ -1083,16 +964,9 @@ class DrawBoundingBoxesConfig(BaseLayerConfig):
 class TotalVariationSchema(BaseLayerSchema):
     name = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TotalVariationConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TotalVariationConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TotalVariationConfig
 
 
 class TotalVariationConfig(BaseLayerConfig):

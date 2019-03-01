@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import EXCLUDE, fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 from polyaxon_schemas.ml.processing.feature_processors import FeatureProcessorsSchema
 
 
-class BasePipelineSchema(Schema):
+class BasePipelineSchema(BaseSchema):
     name = fields.Str(allow_none=True)
     feature_processors = fields.Nested(FeatureProcessorsSchema, allow_none=True)
     shuffle = fields.Bool(allow_none=True)
@@ -20,16 +20,9 @@ class BasePipelineSchema(Schema):
     num_threads = fields.Int(allow_none=True)
     capacity = fields.Int(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return BasePipelineConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BasePipelineConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BasePipelineConfig
 
 
 class BasePipelineConfig(BaseConfig):
@@ -91,16 +84,9 @@ class TFRecordImagePipelineSchema(BasePipelineSchema):
     data_files = fields.List(fields.Str(), allow_none=True)
     meta_data_file = fields.Str()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TFRecordImagePipelineConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TFRecordImagePipelineConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TFRecordImagePipelineConfig
 
 
 class TFRecordImagePipelineConfig(BasePipelineConfig):
@@ -163,13 +149,9 @@ class TFRecordSequencePipelineSchema(BasePipelineSchema):
     class Meta:
         ordered = True
 
-    @post_load
-    def make(self, data):
-        return TFRecordSequencePipelineConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TFRecordSequencePipelineConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TFRecordSequencePipelineConfig
 
 
 class TFRecordSequencePipelineConfig(BasePipelineConfig):
@@ -233,16 +215,9 @@ class ParallelTextPipelineSchema(BasePipelineSchema):
     source_delimiter = fields.Str(allow_none=True)
     target_delimiter = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ParallelTextPipelineConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ParallelTextPipelineConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ParallelTextPipelineConfig
 
 
 class ParallelTextPipelineConfig(BasePipelineConfig):
@@ -300,16 +275,9 @@ class TFRecordSourceSequencePipelineSchema(BasePipelineSchema):
     source_delimiter = fields.Str(allow_none=True)
     target_delimiter = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return TFRecordSourceSequencePipelineConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return TFRecordSourceSequencePipelineConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return TFRecordSourceSequencePipelineConfig
 
 
 class TFRecordSourceSequencePipelineConfig(BasePipelineConfig):
@@ -368,16 +336,9 @@ class ImageCaptioningPipelineSchema(BasePipelineSchema):
     caption_ids_field = fields.Str(allow_none=True)
     caption_tokens_field = fields.Str(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ImageCaptioningPipelineConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ImageCaptioningPipelineConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ImageCaptioningPipelineConfig
 
 
 class ImageCaptioningPipelineConfig(BasePipelineConfig):
@@ -442,3 +403,4 @@ class PipelineSchema(BaseMultiSchema):
 class PipelineConfig(BaseConfig):
     SCHEMA = PipelineSchema
     IDENTIFIER = 'pipeline'
+    UNKNOWN_BEHAVIOUR = EXCLUDE

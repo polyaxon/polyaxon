@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.polyaxonfile.utils import cached_property
-
 from polyaxon_schemas.environments import NotebookEnvironmentConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
+from polyaxon_schemas.polyaxonfile.utils import cached_property
 
 
 class NotebookSpecification(BuildSpecification):

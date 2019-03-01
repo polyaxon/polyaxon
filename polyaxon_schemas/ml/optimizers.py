@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 
 
-class BaseOptimizerSchema(Schema):
+class BaseOptimizerSchema(BaseSchema):
     learning_rate = fields.Float(allow_none=True)
     decay_type = fields.Str(allow_none=True)
     decay_rate = fields.Float(allow_none=True)
@@ -18,6 +18,10 @@ class BaseOptimizerSchema(Schema):
     global_step = fields.Str(allow_none=True)
     use_locking = fields.Bool(allow_none=True)
     name = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return BaseOptimizerConfig
 
 
 class BaseOptimizerConfig(BaseConfig):
@@ -49,16 +53,9 @@ class BaseOptimizerConfig(BaseConfig):
 
 
 class SGDSchema(BaseOptimizerSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SGDConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SGDConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SGDConfig
 
 
 class SGDConfig(BaseOptimizerConfig):
@@ -130,16 +127,9 @@ class SGDConfig(BaseOptimizerConfig):
 class MomentumSchema(BaseOptimizerSchema):
     momentum = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return MomentumConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MomentumConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MomentumConfig
 
 
 class MomentumConfig(BaseOptimizerConfig):
@@ -223,16 +213,9 @@ class MomentumConfig(BaseOptimizerConfig):
 class NestrovSchema(BaseOptimizerSchema):
     momentum = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return NestrovConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return NestrovConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return NestrovConfig
 
 
 class NestrovConfig(BaseOptimizerConfig):
@@ -315,16 +298,9 @@ class RMSPropSchema(BaseOptimizerSchema):
     momentum = fields.Float(allow_none=True)
     epsilon = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return RMSPropConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RMSPropConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RMSPropConfig
 
 
 class RMSPropConfig(BaseOptimizerConfig):
@@ -410,16 +386,9 @@ class AdamSchema(BaseOptimizerSchema):
     beta2 = fields.Float(allow_none=True)
     epsilon = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdamConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdamConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdamConfig
 
 
 class AdamConfig(BaseOptimizerConfig):
@@ -505,16 +474,9 @@ class AdamConfig(BaseOptimizerConfig):
 class AdagradSchema(BaseOptimizerSchema):
     initial_accumulator_value = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdagradConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdagradConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdagradConfig
 
 
 class AdagradConfig(BaseOptimizerConfig):
@@ -591,16 +553,9 @@ class AdadeltaSchema(BaseOptimizerSchema):
     rho = fields.Float(allow_none=True)
     epsilon = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AdadeltaConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AdadeltaConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AdadeltaConfig
 
 
 class AdadeltaConfig(BaseOptimizerConfig):
@@ -693,16 +648,9 @@ class FtrlSchema(BaseOptimizerSchema):
     l1_regularization_strength = fields.Float(allow_none=True)
     l2_regularization_strength = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return FtrlConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return FtrlConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return FtrlConfig
 
 
 class FtrlConfig(BaseOptimizerConfig):

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 from polyaxon_schemas.utils import ObjectOrListObject
 
 
-class BaseBridgeSchema(Schema):
+class BaseBridgeSchema(BaseSchema):
     state_size = ObjectOrListObject(fields.Int, allow_none=True)
     name = fields.Str(allow_none=True)
 
@@ -25,16 +25,9 @@ class LatentBridgeSchema(BaseBridgeSchema):
     mean = fields.Float(allow_none=True)
     stddev = fields.Float(allow_none=True)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LatentBridgeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LatentBridgeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LatentBridgeConfig
 
 
 class LatentBridgeConfig(BaseBridgeConfig):
@@ -98,16 +91,10 @@ class LatentBridgeConfig(BaseBridgeConfig):
 
 
 class NoOpBridgeSchema(BaseBridgeSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return NoOpBridgeConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return NoOpBridgeConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return NoOpBridgeConfig
 
 
 class NoOpBridgeConfig(BaseBridgeConfig):

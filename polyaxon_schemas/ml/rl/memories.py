@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 
 
-class BaseMemorySchema(Schema):
+class BaseMemorySchema(BaseSchema):
     size = fields.Int(allow_none=True)
     batch_size = fields.Int(allow_none=True)
 
-    @post_load
-    def make(self, data):
-        return BaseMemoryConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BaseMemoryConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BaseMemoryConfig
 
 
 class BaseMemoryConfig(BaseConfig):
@@ -29,16 +25,10 @@ class BaseMemoryConfig(BaseConfig):
 
 
 class BatchMemorySchema(BaseMemorySchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return BatchMemoryConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return BatchMemoryConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return BatchMemoryConfig
 
 
 class BatchMemoryConfig(BaseMemoryConfig):

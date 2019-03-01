@@ -8,7 +8,7 @@ environment:
     data: ['data1', 'data2']
     outputs: 'outputs1'
   outputs:
-    foo: [111]  # should raise
+    jobs: [111]  # should raise
 
 hptuning:
   concurrency: 2

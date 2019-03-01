@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 
@@ -9,16 +9,9 @@ from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 class GaussianNoiseSchema(BaseLayerSchema):
     stddev = fields.Float()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GaussianNoiseConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GaussianNoiseConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GaussianNoiseConfig
 
 
 class GaussianNoiseConfig(BaseLayerConfig):
@@ -60,16 +53,9 @@ class GaussianNoiseConfig(BaseLayerConfig):
 class GaussianDropoutSchema(BaseLayerSchema):
     rate = fields.Float(validate=validate.Range(0, 1))
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GaussianDropoutConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GaussianDropoutConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GaussianDropoutConfig
 
 
 class GaussianDropoutConfig(BaseLayerConfig):
@@ -115,16 +101,9 @@ class AlphaDropoutSchema(BaseLayerSchema):
     noise_shape = fields.List(fields.Int(), default=None, missing=None)
     seed = fields.Int(default=None, missing=None)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return AlphaDropoutConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AlphaDropoutConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AlphaDropoutConfig
 
 
 class AlphaDropoutConfig(BaseLayerConfig):

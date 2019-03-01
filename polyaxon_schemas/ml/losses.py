@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import EXCLUDE, fields
 
-from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
+from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
 from polyaxon_schemas.utils import Tensor
 
 
-class BaseLossSchema(Schema):
+class BaseLossSchema(BaseSchema):
     input_layer = Tensor(allow_none=True)
     output_layer = Tensor(allow_none=True)
     weights = fields.Float(default=1.0, missing=1.0)
     name = fields.Str(allow_none=True)
     collect = fields.Bool(default=True, missing=True)
+
+    class Meta:
+        unknown = EXCLUDE
+        ordered = True
 
 
 class BaseLossConfig(BaseConfig):
@@ -27,16 +31,10 @@ class BaseLossConfig(BaseConfig):
 
 
 class AbsoluteDifferenceSchema(BaseLossSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return AbsoluteDifferenceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return AbsoluteDifferenceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return AbsoluteDifferenceConfig
 
 
 class AbsoluteDifferenceConfig(BaseLossConfig):
@@ -90,16 +88,10 @@ class AbsoluteDifferenceConfig(BaseLossConfig):
 
 
 class MeanSquaredErrorSchema(BaseLossSchema):
-    class Meta:
-        ordered = True
 
-    @post_load
-    def make(self, data):
-        return MeanSquaredErrorConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return MeanSquaredErrorConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return MeanSquaredErrorConfig
 
 
 class MeanSquaredErrorConfig(BaseLossConfig):
@@ -150,16 +142,9 @@ class MeanSquaredErrorConfig(BaseLossConfig):
 class LogLossSchema(BaseLossSchema):
     epsilon = fields.Float(default=1e-7, missing=1e-7)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LogLossConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LogLossConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LogLossConfig
 
 
 class LogLossConfig(BaseLossConfig):
@@ -221,16 +206,9 @@ class LogLossConfig(BaseLossConfig):
 class HuberLossSchema(BaseLossSchema):
     clip = fields.Float(default=0., missing=0.)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HuberLossConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HuberLossConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HuberLossConfig
 
 
 class HuberLossConfig(BaseLossConfig):
@@ -294,16 +272,9 @@ class ClippedDeltaLossSchema(BaseLossSchema):
     clip_value_min = fields.Float(default=-1., missing=-1.)
     clip_value_max = fields.Float(default=-1., missing=-1.)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return ClippedDeltaLossConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return ClippedDeltaLossConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return ClippedDeltaLossConfig
 
 
 class ClippedDeltaLossConfig(BaseLossConfig):
@@ -371,16 +342,9 @@ class ClippedDeltaLossConfig(BaseLossConfig):
 class SoftmaxCrossEntropySchema(BaseLossSchema):
     label_smoothing = fields.Float(default=0., missing=0.)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SoftmaxCrossEntropyConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SoftmaxCrossEntropyConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SoftmaxCrossEntropyConfig
 
 
 class SoftmaxCrossEntropyConfig(BaseLossConfig):
@@ -459,16 +423,9 @@ class SoftmaxCrossEntropyConfig(BaseLossConfig):
 class SigmoidCrossEntropySchema(BaseLossSchema):
     label_smoothing = fields.Float(default=0., missing=0.)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SigmoidCrossEntropyConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SigmoidCrossEntropyConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SigmoidCrossEntropyConfig
 
 
 class SigmoidCrossEntropyConfig(BaseLossConfig):
@@ -546,16 +503,9 @@ class SigmoidCrossEntropyConfig(BaseLossConfig):
 
 
 class HingeLossSchema(BaseLossSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return HingeLossConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return HingeLossConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return HingeLossConfig
 
 
 class HingeLossConfig(BaseLossConfig):
@@ -594,16 +544,9 @@ class HingeLossConfig(BaseLossConfig):
 class CosineDistanceSchema(BaseLossSchema):
     dim = fields.Int()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return CosineDistanceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return CosineDistanceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return CosineDistanceConfig
 
 
 class CosineDistanceConfig(BaseLossConfig):
@@ -659,16 +602,9 @@ class CosineDistanceConfig(BaseLossConfig):
 
 
 class PoissonLossSchema(BaseLossSchema):
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return PoissonLossConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return PoissonLossConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return PoissonLossConfig
 
 
 class PoissonLossConfig(BaseLossConfig):
@@ -707,16 +643,9 @@ class PoissonLossConfig(BaseLossConfig):
 class KullbackLeiberDivergenceSchema(BaseLossSchema):
     dim = fields.Int()
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return KullbackLeiberDivergenceConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return KullbackLeiberDivergenceConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return KullbackLeiberDivergenceConfig
 
 
 class KullbackLeiberDivergenceConfig(BaseLossConfig):

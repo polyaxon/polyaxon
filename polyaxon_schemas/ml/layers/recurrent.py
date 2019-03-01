@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load, validate
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import (
@@ -23,16 +23,9 @@ class RecurrentSchema(BaseLayerSchema):
     unroll = fields.Bool(default=False, missing=False)
     implementation = fields.Int(default=0, missing=0)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return RecurrentConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return RecurrentConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return RecurrentConfig
 
 
 class RecurrentConfig(BaseLayerConfig):
@@ -199,16 +192,9 @@ class SimpleRNNSchema(RecurrentSchema):
     dropout = fields.Float(default=0., missing=0.)
     recurrent_dropout = fields.Float(default=0., missing=0.)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return SimpleRNNConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return SimpleRNNConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return SimpleRNNConfig
 
 
 class SimpleRNNConfig(RecurrentConfig):
@@ -314,16 +300,9 @@ class GRUSchema(RecurrentSchema):
     dropout = fields.Float(default=0., missing=0.)
     recurrent_dropout = fields.Float(default=0., missing=0.)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return GRUConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return GRUConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return GRUConfig
 
 
 class GRUConfig(RecurrentConfig):
@@ -439,16 +418,9 @@ class LSTMSchema(RecurrentSchema):
     dropout = fields.Float(default=0., missing=0.)
     recurrent_dropout = fields.Float(default=0., missing=0.)
 
-    class Meta:
-        ordered = True
-
-    @post_load
-    def make(self, data):
-        return LSTMConfig(**data)
-
-    @post_dump
-    def unmake(self, data):
-        return LSTMConfig.remove_reduced_attrs(data)
+    @staticmethod
+    def schema_config():
+        return LSTMConfig
 
 
 class LSTMConfig(RecurrentConfig):
