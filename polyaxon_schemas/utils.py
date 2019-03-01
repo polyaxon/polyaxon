@@ -31,7 +31,7 @@ def get_obj_or_list_obj(container, value, min_length=None, max_length=None):
 class UUID(fields.UUID):
     """A UUID field."""
 
-    def _serialize(self, value, attr, obj):
+    def _serialize(self, value, attr, obj, **kwargs):
         validated = str(self._validated(value).hex) if value is not None else None
         return super(fields.String, self)._serialize(validated, attr, obj)  # noqa
 
@@ -62,12 +62,12 @@ class ObjectOrListObject(fields.Field):
                                  'marshmallow.base.FieldABC')
             self.container = cls_or_instance
 
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         return get_obj_or_list_obj(self.container, value, self.min, self.max)
 
 
 class Tensor(fields.Field):
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         if isinstance(value, six.string_types):
             return [value, 0, 0]
         if isinstance(value, list) and len(value) == 3:
@@ -80,7 +80,7 @@ class Tensor(fields.Field):
 
 
 class PValue(fields.Field):
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         if isinstance(value, (list, tuple)) and len(value) == 2:
             if isinstance(value[1], float) and 0 <= value[1] < 1:
                 return value
@@ -93,13 +93,13 @@ class IntOrStr(fields.Str):
         'invalid_utf8': 'Not a valid utf-8 string.'
     }
 
-    def _serialize(self, value, attr, obj):
+    def _serialize(self, value, attr, obj, **kwargs):
         if isinstance(value, int):
             return int(value)
 
         return super(IntOrStr, self)._serialize(value=value, attr=attr, obj=obj)
 
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         if isinstance(value, int):
             return int(value)
 
@@ -112,13 +112,13 @@ class FloatOrStr(fields.Str):
         'invalid_utf8': 'Not a valid utf-8 string.'
     }
 
-    def _serialize(self, value, attr, obj):
+    def _serialize(self, value, attr, obj, **kwargs):
         if isinstance(value, (float, int)):
             return float(value)
 
         return super(FloatOrStr, self)._serialize(value=value, attr=attr, obj=obj)
 
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         if isinstance(value, (float, int)):
             return float(value)
 
@@ -131,13 +131,13 @@ class DictOrStr(fields.Str):
         'invalid_utf8': 'Not a valid utf-8 string.'
     }
 
-    def _serialize(self, value, attr, obj):
+    def _serialize(self, value, attr, obj, **kwargs):
         if isinstance(value, Mapping):
             return value
 
         return super(DictOrStr, self)._serialize(value=value, attr=attr, obj=obj)
 
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         if isinstance(value, Mapping):
             return value
 
@@ -149,7 +149,7 @@ class Range(fields.Field):
     OPTIONAL_KEY = None
     KEYS = REQUIRED_KEYS
 
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         if isinstance(value, six.string_types):
             value = value.split(':')
         elif isinstance(value, Mapping):
@@ -328,7 +328,7 @@ class QLogNormal(Range):
 
 
 class StrOrFct(fields.Str):
-    def serialize(self, attr, obj, accessor=None):
+    def serialize(self, attr, obj, accessor=None, **kwargs):
         value = getattr(obj, attr)
         if hasattr(value, '__call__') and hasattr(value, '__name__'):
             return value.__name__
@@ -337,7 +337,7 @@ class StrOrFct(fields.Str):
 
 
 class DType(fields.Str):
-    def serialize(self, attr, obj, accessor=None):
+    def serialize(self, attr, obj, accessor=None, **kwargs):
         value = getattr(obj, attr)
         if hasattr(value, 'name'):
             return value.name

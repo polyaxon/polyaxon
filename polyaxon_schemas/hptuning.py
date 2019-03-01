@@ -380,8 +380,10 @@ class HPTuningConfig(BaseConfig):
         self.bo = bo
         self.early_stopping = early_stopping
 
-    def to_dict(self, humanize_values=False):
-        results = super(HPTuningConfig, self).to_dict(humanize_values=humanize_values)
+    def to_dict(self, humanize_values=False, unknown=None):
+        unknown = unknown or self.UNKNOWN_BEHAVIOUR
+        results = super(HPTuningConfig, self).to_dict(humanize_values=humanize_values,
+                                                      unknown=unknown)
         if not results.get('matrix'):
             return results
         results['matrix'] = {k: v.to_dict() for k, v in six.iteritems(results['matrix'])}

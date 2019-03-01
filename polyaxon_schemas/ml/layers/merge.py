@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_dump, post_load
+from marshmallow import fields
 
 from polyaxon_schemas.base import BaseMultiSchema
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
