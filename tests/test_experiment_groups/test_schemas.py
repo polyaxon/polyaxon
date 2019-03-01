@@ -56,7 +56,7 @@ class TestSearchManagers(BaseTest):
             'iteration': 1,
             'num_suggestions': 12,
             'experiment_ids': [1, 2, 3],
-            'experiment_configs': [[1, {1: 1}], [2, {2: 2}], [3, {3: 3}]],
+            'experiments_configs': [[1, {1: 1}], [2, {2: 2}], [3, {3: 3}]],
             'experiments_metrics': None
         }
         assert isinstance(get_iteration_config(experiment_group.search_algorithm,
