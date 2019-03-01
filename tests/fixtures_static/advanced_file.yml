@@ -3,7 +3,6 @@ version: 1
 
 logging:
   level: INFO
-  path: /mypath/project1
 
 environment:
   n_workers: 5

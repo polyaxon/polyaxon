@@ -305,8 +305,7 @@ model:
           filters: 64
           kernel_size: [3, 3]
           strides: [1, 1]
-          activation: relu
-          kernel_initializer: Ones"""
+          activation: relu"""
 
         data = {'content': content, 'description': 'new-deep'}
         resp = self.auth_client.post(self.url, data)
@@ -338,8 +337,7 @@ model:
           filters: 64
           kernel_size: [3, 3]
           strides: [1, 1]
-          activation: relu
-          kernel_initializer: Ones"""
+          activation: relu"""
 
         data = {'content': content, 'description': 'new-deep'}
         resp = self.auth_client.post(self.url, data)

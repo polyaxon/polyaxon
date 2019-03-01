@@ -844,7 +844,6 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
               kernel_size: [3, 3]
               strides: [1, 1]
               activation: relu
-              kernel_initializer: Ones
           - MaxPooling2D:
               kernels: 2
           - Flatten:

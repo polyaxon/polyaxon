@@ -35,7 +35,6 @@ experiment_group_spec_content = """---
               kernel_size: [3, 3]
               strides: [1, 1]
               activation: relu
-              kernel_initializer: Ones
           - MaxPooling2D:
               kernels: 2
           - Flatten:
@@ -242,7 +241,6 @@ experiment_spec_content = """---
               kernel_size: [3, 3]
               strides: [1, 1]
               activation: relu
-              kernel_initializer: Ones
           - MaxPooling2D:
               kernels: 2
           - Flatten:
@@ -372,7 +370,6 @@ exec_experiment_resources_content = """---
               kernel_size: [3, 3]
               strides: [1, 1]
               activation: relu
-              kernel_initializer: Ones
           - MaxPooling2D:
               kernels: 2
           - Flatten:
