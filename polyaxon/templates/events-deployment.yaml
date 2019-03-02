@@ -16,7 +16,7 @@ metadata:
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-events
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "0.4.1"
-    app.kubernetes.io/part-of: polyaxon-{{ .Values.types.core }}
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
     app.kubernetes.io/component: {{ .Values.roles.worker }}
     app.kubernetes.io/managed-by: "helm"
 spec:
