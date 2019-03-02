@@ -9,6 +9,12 @@ metadata:
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.api }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-api
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "0.4.1"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.api }}
+    app.kubernetes.io/managed-by: "helm"
   {{- with .Values.api.service.annotations }}
   annotations:
   {{ toYaml . | indent 4 }}

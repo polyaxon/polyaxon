@@ -8,7 +8,13 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
-    role: {{ .Values.roles.api }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-beat
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "0.4.1"
+    app.kubernetes.io/part-of: polyaxon-{{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.types.config }}
+    app.kubernetes.io/managed-by: "helm"
 data:
   # Cluster
   POLYAXON_CLUSTER_ID: {{ default "" .Values.clusterId | quote }}
@@ -214,6 +220,8 @@ data:
   POLYAXON_TOLERATIONS_TENSORBOARDS: {{ toJson .Values.tolerations.tensorboards | quote }}
   POLYAXON_ROLE_LABELS_API: {{ .Values.roles.api | quote }}
   POLYAXON_ROLE_LABELS_LOG: {{ .Values.roles.log | quote }}
+  POLYAXON_ROLE_LABELS_CONFIG: {{ .Values.roles.config | quote }}
+  POLYAXON_ROLE_LABELS_HOOKS: {{ .Values.roles.hooks | quote }}
   POLYAXON_ROLE_LABELS_WORKER: {{ .Values.roles.worker | quote }}
   POLYAXON_ROLE_LABELS_DASHBOARD: {{ .Values.roles.dashboard | quote }}
   POLYAXON_TYPE_LABELS_CORE: {{ .Values.types.core | quote }}

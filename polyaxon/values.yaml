@@ -582,13 +582,14 @@ nfsProvisioner:
             topologyKey: "kubernetes.io/hostname"
 
 types:
-  hooks: "polyaxon-hooks"
   core: "polyaxon-core"
   runner: "polyaxon-runner"
 
 roles:
   api: "polyaxon-api"
   log: "polyaxon-logs"
+  config: "polyaxon-config"
+  hooks: "polyaxon-hooks"
   worker: "polyaxon-workers"
   dashboard: "polyaxon-dashboard"
 
