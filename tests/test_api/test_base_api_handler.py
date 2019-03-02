@@ -9,7 +9,7 @@ from polyaxon_client.exceptions import ERRORS_MAPPING
 
 class DummyConfig(object):
     @staticmethod
-    def from_dict(value):
+    def from_dict(value, unknown=None):  # noqa
         return 'from_dict', value
 
 
