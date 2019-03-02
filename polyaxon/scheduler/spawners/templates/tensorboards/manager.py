@@ -72,7 +72,8 @@ class ResourceManager(BaseResourceManager):
         return JOB_NAME_FORMAT.format(name=self.name, job_uuid=self.job_uuid)
 
     def get_labels(self):
-        labels = {
+        labels = self.get_recommended_labels(job_uuid=self.job_uuid)
+        labels.update({
             'project_name': self.project_name,
             'project_uuid': self.project_uuid,
             'job_name': self.job_name,
@@ -80,7 +81,7 @@ class ResourceManager(BaseResourceManager):
             'role': self.role_label,
             'type': self.type_label,
             'app': self.app_label
-        }
+        })
         return labels
 
     def _get_logs_path(self, persistence_logs='default'):

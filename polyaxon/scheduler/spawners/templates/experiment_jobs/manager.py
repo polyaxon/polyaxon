@@ -97,25 +97,28 @@ class ResourceManager(BaseResourceManager):
                                                  experiment_uuid=self.experiment_uuid)
 
     def get_experiment_labels(self):
-        labels = {'app': self.app_label,
-                  'project_name': self.project_name,
-                  'experiment_group_name': self.experiment_group_name,
-                  'experiment_name': self.experiment_name,
-                  'project_uuid': self.project_uuid,
-                  'experiment_uuid': self.experiment_uuid}
+        labels = {
+            'role': self.role_label,
+            'type': self.type_label,
+            'app': self.app_label,
+            'project_name': self.project_name,
+            'experiment_group_name': self.experiment_group_name,
+            'experiment_name': self.experiment_name,
+            'project_uuid': self.project_uuid,
+            'experiment_uuid': self.experiment_uuid
+        }
         if self.experiment_group_uuid:
             labels['experiment_group_uuid'] = self.experiment_group_uuid
 
         return labels
 
     def get_labels(self, task_type, task_idx, job_uuid):  # pylint:disable=arguments-differ
-        labels = self.get_experiment_labels()
+        labels = self.get_recommended_labels(job_uuid=job_uuid)
+        labels.update(self.get_experiment_labels())
         labels.update({
             'task_type': task_type,
             'task_idx': '{}'.format(task_idx),
-            'job_uuid': job_uuid,
-            'role': self.role_label,
-            'type': self.type_label
+            'job_uuid': job_uuid
         })
         return labels
 
