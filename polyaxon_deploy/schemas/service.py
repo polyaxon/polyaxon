@@ -66,6 +66,36 @@ class EventMonitorsConfig(BaseConfig):
         self.statuses = statuses
 
 
+class HooksSchema(ServiceSchema):
+    loadFixtures = fields.Bool(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return EventMonitorsConfig
+
+
+class HooksConfig(ServiceConfig):
+    SCHEMA = HooksSchema
+    REDUCED_ATTRIBUTES = ServiceConfig.REDUCED_ATTRIBUTES + ['loadFixtures']
+
+    def __init__(self,  # noqa
+                 image=None,
+                 imageTag=None,
+                 imagePullPolicy=None,
+                 replicas=None,
+                 concurrency=None,
+                 resources=None,
+                 loadFixtures=None):
+        super(HooksConfig, self).__init__(
+            image=image,
+            imageTag=imageTag,
+            imagePullPolicy=imagePullPolicy,
+            replicas=replicas,
+            concurrency=concurrency,
+            resources=resources)
+        self.loadFixtures = loadFixtures
+
+
 class ThirdPartyServiceSchema(ServiceSchema):
     install = fields.Bool(allow_none=True)
     persistence = fields.Dict(allow_none=True)

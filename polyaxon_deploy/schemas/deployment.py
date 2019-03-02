@@ -23,7 +23,8 @@ from polyaxon_deploy.schemas.service import (
     EventMonitorsSchema,
     PostgresqlSchema,
     RabbitmqSchema,
-    ServiceSchema
+    ServiceSchema,
+    HooksSchema,
 )
 from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
 
@@ -33,6 +34,7 @@ from polyaxon_schemas.utils import DictOrStr
 class DeploymentSchema(BaseSchema):
     deploymentType = fields.Str(allow_none=True, validate=validate.OneOf(DeploymentTypes.VALUES))
     deploymentVersion = fields.Str(allow_none=True)
+    clusterId = fields.Str(allow_none=True)
     namespace = fields.Str(allow_none=True)
     rbac = fields.Nested(RBACSchema, allow_none=True)
     serviceType = fields.Str(allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES))
@@ -56,10 +58,12 @@ class DeploymentSchema(BaseSchema):
     beat = fields.Nested(ServiceSchema, allow_none=True)
     crons = fields.Nested(ServiceSchema, allow_none=True)
     eventMonitors = fields.Nested(EventMonitorsSchema, allow_none=True)
-    reourcesDaemon = fields.Nested(ServiceSchema, allow_none=True)
+    resourcesDaemon = fields.Nested(ServiceSchema, allow_none=True)
     sidecar = fields.Nested(ServiceSchema, allow_none=True)
+    init = fields.Nested(HooksSchema, allow_none=True)
     dockerizer = fields.Nested(ServiceSchema, allow_none=True)
-    hooks = fields.Nested(ServiceSchema, allow_none=True)
+    tablesHook = fields.Nested(ServiceSchema, allow_none=True)
+    hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
     rabbitmq = fields.Nested(RabbitmqSchema, allow_none=True)
     dockerRegistry = fields.Nested(DockerRegistrySchema,
@@ -77,6 +81,14 @@ class DeploymentSchema(BaseSchema):
     ttl = fields.Nested(TTLSchema, allow_none=True)
     privateRegistries = fields.List(DictOrStr(allow_none=True), allow_none=True)
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
+    notebookBackend = fields.Str(allow_none=True)
+    notebookDockerImage = fields.Str(allow_none=True)
+    tensorboardDockerImage = fields.Str(allow_none=True)
+    adminModels = fields.List(fields.Str(allow_none=True), allow_none=True)
+    reposAccessToken = fields.Str(allow_none=True)
+    tpuTensorflowVersion = fields.Str(allow_none=True)
+    tpuResourceKey = fields.Str(allow_none=True)
+    logLevel = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -89,6 +101,7 @@ class DeploymentConfig(BaseConfig):
     def __init__(self,  # noqa
                  deploymentType=None,
                  deploymentVersion=None,
+                 clusterId=None,
                  namespace=None,
                  rbac=None,
                  serviceType=None,
@@ -112,9 +125,11 @@ class DeploymentConfig(BaseConfig):
                  beat=None,
                  crons=None,
                  eventMonitors=None,
-                 reourcesDaemon=None,
+                 resourcesDaemon=None,
                  sidecar=None,
+                 init=None,
                  dockerizer=None,
+                 tablesHook=None,
                  hooks=None,
                  postgresql=None,
                  rabbitmq=None,
@@ -130,9 +145,18 @@ class DeploymentConfig(BaseConfig):
                  cleaningIntervals=None,
                  ttl=None,
                  privateRegistries=None,
-                 persistence=None):
+                 persistence=None,
+                 notebookBackend=None,
+                 notebookDockerImage=None,
+                 tensorboardDockerImage=None,
+                 adminModels=None,
+                 reposAccessToken=None,
+                 tpuTensorflowVersion=None,
+                 tpuResourceKey=None,
+                 logLevel=None):
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
+        self.clusterId = clusterId
         self.namespace = namespace
         self.rbac = rbac
         self.serviceType = serviceType
@@ -156,9 +180,11 @@ class DeploymentConfig(BaseConfig):
         self.beat = beat
         self.crons = crons
         self.eventMonitors = eventMonitors
-        self.reourcesDaemon = reourcesDaemon
+        self.resourcesDaemon = resourcesDaemon
         self.sidecar = sidecar
+        self.init = init
         self.dockerizer = dockerizer
+        self.tablesHook = tablesHook
         self.hooks = hooks
         self.postgresql = postgresql
         self.rabbitmq = rabbitmq
@@ -175,3 +201,11 @@ class DeploymentConfig(BaseConfig):
         self.ttl = ttl
         self.privateRegistries = privateRegistries
         self.persistence = persistence
+        self.notebookBackend = notebookBackend
+        self.notebookDockerImage = notebookDockerImage
+        self.tensorboardDockerImage = tensorboardDockerImage
+        self.adminModels = adminModels
+        self.reposAccessToken = reposAccessToken
+        self.tpuTensorflowVersion = tpuTensorflowVersion
+        self.tpuResourceKey = tpuResourceKey
+        self.logLevel = logLevel

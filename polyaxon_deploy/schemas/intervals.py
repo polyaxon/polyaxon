@@ -68,6 +68,7 @@ class TTLSchema(BaseSchema):
     token = fields.Int(allow_none=True)
     ephemeralToken = fields.Int(allow_none=True)
     heartbeat = fields.Int(allow_none=True)
+    watchStatuses = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -76,9 +77,14 @@ class TTLSchema(BaseSchema):
 
 class TTLConfig(BaseConfig):
     SCHEMA = TTLSchema
-    REDUCED_ATTRIBUTES = ['token', 'ephemeralToken', 'heartbeat']
+    REDUCED_ATTRIBUTES = ['token', 'ephemeralToken', 'heartbeat', 'watchStatuses']
 
-    def __init__(self, token=None, ephemeralToken=None, heartbeat=None):  # noqa
+    def __init__(self,  # noqa
+                 token=None,
+                 ephemeralToken=None,
+                 heartbeat=None,
+                 watchStatuses=None):
         self.token = token
         self.ephemeralToken = ephemeralToken
         self.heartbeat = heartbeat
+        self.watchStatuses = watchStatuses

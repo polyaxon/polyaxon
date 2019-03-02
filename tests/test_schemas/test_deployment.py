@@ -37,7 +37,7 @@ class TestDeploymentConfig(TestCase):
         assert config.beat is None
         assert config.crons is None
         assert config.eventMonitors is None
-        assert config.reourcesDaemon is None
+        assert config.resourcesDaemon is None
         assert config.sidecar is None
         assert config.dockerizer is None
         assert config.hooks is None
@@ -86,7 +86,7 @@ class TestDeploymentConfig(TestCase):
         assert config.beat is None
         assert config.crons is None
         assert config.eventMonitors.replicas == 3
-        assert config.reourcesDaemon is None
+        assert config.resourcesDaemon is None
         assert config.sidecar is None
         assert config.dockerizer is None
         assert config.hooks is None
@@ -142,7 +142,7 @@ class TestDeploymentConfig(TestCase):
         assert config.beat is None
         assert config.crons is None
         assert config.eventMonitors.replicas == 3
-        assert config.reourcesDaemon is None
+        assert config.resourcesDaemon is None
         assert config.sidecar is None
         assert config.dockerizer is None
         assert config.hooks is None
