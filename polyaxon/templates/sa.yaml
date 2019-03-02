@@ -4,12 +4,38 @@ kind: ServiceAccount
 metadata:
   name: {{ template "polyaxon.fullname" . }}-serviceaccount
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-serviceaccount
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-serviceaccount
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 
 {{- if .Values.rbac.enabled }}
 ---
@@ -17,6 +43,19 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   name: {{ template "polyaxon.fullname" . }}-clusterrole
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-clusterrole
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-clusterrole
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 rules:
   - apiGroups: [""]
     resources: ["nodes"]
@@ -33,6 +72,19 @@ kind: Role
 metadata:
   name: {{ template "polyaxon.fullname" . }}-role
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-role
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-role
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 rules:
   - apiGroups: [""]
     resources: ["pods"]
@@ -55,6 +107,19 @@ kind: RoleBinding
 metadata:
   name: {{ template "polyaxon.fullname" . }}-role-binding
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-role-binding
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-role-binding
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -68,6 +133,19 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: {{ template "polyaxon.fullname" . }}-clusterrole-binding
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-clusterrole-binding
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-clusterrole-binding
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -82,6 +160,19 @@ kind: Role
 metadata:
   name: {{ template "polyaxon.fullname" . }}-workers-role
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-workers-role
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-workers-role
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 rules:
   - apiGroups: [""]
     resources: ["pods"]
@@ -98,6 +189,19 @@ kind: RoleBinding
 metadata:
   name: {{ template "polyaxon.fullname" . }}-workers-role-binding
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-workers-role-binding
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-workers-role-binding
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
