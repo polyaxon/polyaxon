@@ -71,7 +71,7 @@ class HooksSchema(ServiceSchema):
 
     @staticmethod
     def schema_config():
-        return EventMonitorsConfig
+        return HooksConfig
 
 
 class HooksConfig(ServiceConfig):

@@ -1,0 +1,170 @@
+rbac:
+  enabled: true
+
+environment: staging
+
+ingress:
+  enabled: true
+
+serviceType: ClusterIP
+
+user:
+  password: test
+
+persistence:
+  data:
+    data1:
+      mountPath: "/data/1"
+      existingClaim: polyaxon-pvc-data
+    data2:
+      mountPath: "/data/2"
+      existingClaim: "data-2-pvc"
+  repos:
+    existingClaim: polyaxon-pvc-repos
+  upload:
+    existingClaim: polyaxon-pvc-upload
+  logs:
+    store: gcs
+    bucket: gs://test-logs
+    secret: gcs-secret
+    secretKey: gcs-secret.json
+    mountPath:
+    mountPath:
+    store: azure
+    bucket: wasbs://logs@test.blob.core.windows.net/
+    secret: az-secret
+    secretKey: az-secret.json
+  outputs:
+    gcs-outputs:
+      store: gcs
+      bucket: gs://test-outputs
+      secret: gcs-secret
+      secretKey: gcs-secret.json
+    azure-outputs:
+      store: azure
+      bucket: wasbs://outputs@test.blob.core.windows.net/
+      secret: az-secret
+      secretKey: az-secret.json
+
+nodeSelectors:
+  core:
+    polyaxon: core
+  experiments:
+    polyaxon: experiments
+  jobs:
+    polyaxon: experiments
+  builds:
+    polyaxon: experiments
+  tensorboards:
+    polyaxon: experiments
+
+
+api:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+streams:
+  imageTag: latest
+  imagePullPolicy: Always
+
+scheduler:
+  concurrency: 10
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+hpsearch:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+eventsHandlers:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+k8sEventsHandlers:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+beat:
+  imageTag: latest
+  imagePullPolicy: Always
+
+crons:
+  imageTag: latest
+  imagePullPolicy: Always
+
+eventMonitors:
+  replicas: 1
+  namespace:
+    imageTag: latest
+    imagePullPolicy: Always
+
+  statuses:
+    imageTag: latest
+    imagePullPolicy: Always
+
+resourcesDaemon:
+  imageTag: latest
+  imagePullPolicy: Always
+
+sidecar:
+  imageTag: latest
+
+init:
+  imageTag: latest
+
+dockerizer:
+  imageTag: latest
+
+hooks:
+  loadFixtures: true
+  imageTag: latest
+  imagePullPolicy: Always
+
+tablesHook:
+  imageTag: latest
+
+secretRefs: ['pubsub-key']
+
+timeZone: 'Europe/Berlin'
+
+
+integrations:
+  slack:
+    - url: https://hooks.slack.com/services/SDFDSFSDRSDFDS/SDFDSFSDRSDFDS/SDFDSFSDRSDFDS
+
+auth:
+  gitlab:
+    enabled: true
+    clientId: "asdjfsjdlkfldsjflsd"
+    clientSecret: "sdlfjlkdsjflkdsjklfsd"
+
+privateRegistries:
+  - fofofof:dsfdsf@cloud.canister.io:5000
+  - host: "my.registry.com"
+    user: "_json_key"
+    password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "skdjfas", "private_key": "-----BEGIN PRIVATE KEY-----\kjsdhfds/sfbdj1223"}'
+  - host: "another.registry.com"
+    user: "myname"
+    password: "mypassword"
+
+
+reposAccessToken: sdfdsfdsfsdfsdfsdfsdf
+apiHost: 19.3.50.12
+allowedHosts:
+  - 127.0.0.1
+  - 123.123.12.3
+logLevel: INFO
+adminModels: ['build_jobs', 'experiments']
+
+
+tpuResourceKey: 'cloud-tpus.google.com/preemptible-v2'
+ttl:
+  watchStatuses: 10
+
+notebookBackend: lab
+notebookDockerImage: "jupyter/datascience-notebook"

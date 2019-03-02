@@ -166,6 +166,65 @@ class TestDeploymentConfig(TestCase):
         assert len(config.persistence.data) == 3
         assert len(config.persistence.outputs) == 3
 
+    def test_read_deploy_config_values4(self):
+        config = reader.read('tests/fixtures/values4.yml')
+        assert isinstance(config, DeploymentConfig)
+        assert config.deploymentType is None
+        assert config.namespace is None
+        assert config.rbac.enabled is True
+        assert config.adminViewEnabled is None
+        assert config.timeZone == 'Europe/Berlin'
+        assert config.environment == 'staging'
+        assert config.ingress.enabled is True
+        assert config.serviceType == 'ClusterIP'
+        assert config.user.to_dict() == {'password': 'test'}
+        assert config.nodeSelectors.to_dict() == {
+            'core': {'polyaxon': 'core'},
+            'experiments': {'polyaxon': 'experiments'},
+            'builds': {'polyaxon': 'experiments'},
+            'jobs': {'polyaxon': 'experiments'},
+            'tensorboards': {'polyaxon': 'experiments'},
+        }
+        assert config.tolerations is None
+        assert config.affinity is None
+        assert config.limitResources is None
+        assert config.globalReplicas is None
+        assert config.globalConcurrency is None
+        assert config.api.replicas == 1
+        assert config.streams.imageTag == 'latest'
+        assert config.scheduler.replicas == 1
+        assert config.hpsearch.replicas == 1
+        assert config.eventsHandlers.replicas == 1
+        assert config.k8sEventsHandlers.replicas == 1
+        assert config.beat.imageTag == 'latest'
+        assert config.crons.imageTag == 'latest'
+        assert config.eventMonitors.replicas == 1
+        assert config.resourcesDaemon.imageTag == 'latest'
+        assert config.sidecar.imageTag == 'latest'
+        assert config.dockerizer.imageTag == 'latest'
+        assert config.hooks.imageTag == 'latest'
+        assert config.postgresql is None
+        assert config.rabbitmq is None
+        assert config.dockerRegistry is None
+        assert config.email is None
+        assert len(config.integrations.slack) == 1
+        assert len(config.integrations.to_dict()) == 1
+        assert config.apiHost == '19.3.50.12'
+        assert config.allowedHosts == ['127.0.0.1', '123.123.12.3']
+        assert config.secretRefs == ['pubsub-key']
+        assert config.configmapRefs is None
+        assert config.intervals is None
+        assert config.cleaningIntervals is None
+        assert config.ttl.watchStatuses == 10
+        assert len(config.privateRegistries) == 3
+        assert config.persistence.logs is not None
+        assert config.persistence.repos is not None
+        assert config.persistence.upload is not None
+        assert len(config.persistence.data) == 2
+        assert len(config.persistence.outputs) == 2
+        assert config.notebookBackend == 'lab'
+        assert config.notebookDockerImage == "jupyter/datascience-notebook"
+
     def test_read_deploy_config_wrong_values1(self):
         with self.assertRaises(ValidationError):
             reader.read('tests/fixtures/wrong_values2.yml')
