@@ -37,15 +37,17 @@ def read_deployment_config(filepaths):
 @click.command()
 @click.option('--file', '-f', type=click.Path(exists=True),
               help='The polyaxon deployment config file(s) to check.')
+@click.option('--manager_path', type=click.Path(exists=True),
+              help='The path of the deployment manager, e.g. local chart.')
 @click.option('--check', is_flag=True, default=False,
               help='Check if deployment file and other requirements are met.')
 @click.option('--upgrade', is_flag=True, default=False,
               help='Upgrade a Polyaxon deployment.')
 @clean_outputs
-def deploy(file, check, upgrade):   # pylint:disable=redefined-builtin
+def deploy(file, manager_path, check, upgrade):   # pylint:disable=redefined-builtin
     """Deploy polyaxon."""
     config = read_deployment_config(file)
-    manager = DeployManager(config=config, filepath=file)
+    manager = DeployManager(config=config, filepath=file, manager_path=manager_path)
     exception = None
     if check:
         manager.check()

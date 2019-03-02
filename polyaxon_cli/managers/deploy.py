@@ -13,9 +13,10 @@ from polyaxon_cli.utils.formatting import Printer
 
 class DeployManager(object):
 
-    def __init__(self, config=None, filepath=None):
+    def __init__(self, config=None, filepath=None, manager_path=None):
         self.config = config
         self.filepath = filepath
+        self.manager_path = manager_path
         self.kubectl = KubectlOperator()
         self.helm = HelmOperator()
 
@@ -24,6 +25,12 @@ class DeployManager(object):
         if self.config and self.config.deploymentType:
             return self.config.deploymentType
         return DeploymentTypes.KUBERNETES
+
+    @property
+    def deployment_version(self):
+        if self.config and self.config.deploymentVersion:
+            return self.config.deploymentVersion
+        return None
 
     @property
     def is_kubernetes(self):
@@ -103,9 +110,17 @@ class DeployManager(object):
                 'Deployment `{}` is not valid'.format(self.deployment_type))
 
     def install_on_kubernetes(self):
-        args = ['install', 'polyaxon/polyaxon', '--name=polyaxon', '--namespace=polyaxon']
+        args = ['install']
+        if self.manager_path:
+            args += [self.manager_path]
+        else:
+            args += ['polyaxon/polyaxon']
+
+        args += ['--name=polyaxon', '--namespace=polyaxon']
         if self.filepath:
             args += ['-f', self.filepath]
+        if self.deployment_version:
+            args += ['--version', self.deployment_version]
 
         click.echo('Running install command ...')
         stdout = self.helm.execute(args=args)
@@ -137,9 +152,15 @@ class DeployManager(object):
             self.install_on_heroku()
 
     def upgrade_on_kubernetes(self):
-        args = ['upgrade', 'polyaxon', 'polyaxon/polyaxon']
+        args = ['upgrade', 'polyaxon']
+        if self.manager_path:
+            args += [self.manager_path]
+        else:
+            args += ['polyaxon/polyaxon']
         if self.filepath:
             args += ['-f', self.filepath]
+        if self.deployment_version:
+            args += ['--version', self.deployment_version]
         click.echo('Running upgrade command ...')
         stdout = self.helm.execute(args=args)
         click.echo(stdout)
