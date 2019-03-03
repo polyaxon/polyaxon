@@ -325,33 +325,32 @@ class BaseResourceManager(object):
                             metadata=metadata,
                             spec=pod_spec)
 
-    def get_deployment_spec(self,
-                            resource_name,
-                            volume_mounts,
-                            volumes,
-                            labels,
-                            env_vars=None,
-                            command=None,
-                            args=None,
-                            init_command=None,
-                            init_args=None,
-                            init_env_vars=None,
-                            ports=None,
-                            persistence_outputs=None,
-                            persistence_data=None,
-                            outputs_refs_jobs=None,
-                            outputs_refs_experiments=None,
-                            secret_refs=None,
-                            configmap_refs=None,
-                            resources=None,
-                            ephemeral_token=None,
-                            node_selector=None,
-                            affinity=None,
-                            tolerations=None,
-                            restart_policy=None,
-                            init_context_mounts=None,
-                            sidecar_context_mounts=None,
-                            replicas=1):
+    def get_pod_template_spec(self,
+                              resource_name,
+                              volume_mounts,
+                              volumes,
+                              labels,
+                              env_vars=None,
+                              command=None,
+                              args=None,
+                              init_command=None,
+                              init_args=None,
+                              init_env_vars=None,
+                              ports=None,
+                              persistence_outputs=None,
+                              persistence_data=None,
+                              outputs_refs_jobs=None,
+                              outputs_refs_experiments=None,
+                              secret_refs=None,
+                              configmap_refs=None,
+                              resources=None,
+                              ephemeral_token=None,
+                              node_selector=None,
+                              affinity=None,
+                              tolerations=None,
+                              restart_policy=None,
+                              init_context_mounts=None,
+                              sidecar_context_mounts=None):
         annotations = None
         if requests_tpu(resources):
             annotations = get_tpu_annotations()
@@ -385,8 +384,7 @@ class BaseResourceManager(object):
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
             restart_policy=restart_policy)
-        template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
-        return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
+        return client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
 
     def get_deployment(self,
                        resource_name,
@@ -415,7 +413,7 @@ class BaseResourceManager(object):
                        init_context_mounts=None,
                        sidecar_context_mounts=None,
                        replicas=1):
-        deployment_spec = self.get_deployment_spec(
+        template_spec = self.get_pod_template_spec(
             resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
@@ -441,8 +439,9 @@ class BaseResourceManager(object):
             restart_policy=restart_policy,
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
-            replicas=replicas,
         )
+        deployment_spec = client.AppsV1beta1DeploymentSpec(replicas=replicas,
+                                                           template=template_spec)
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
         return client.AppsV1beta1Deployment(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
                                             kind=k8s_constants.K8S_DEPLOYMENT_KIND,
