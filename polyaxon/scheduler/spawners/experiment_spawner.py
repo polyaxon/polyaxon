@@ -26,6 +26,7 @@ from schemas.tasks import TaskType
 
 class ExperimentSpawner(K8SManager):
     MASTER_SERVICE = False
+    RESOURCE_MANAGER = manager.ResourceManager
 
     def __init__(self,
                  project_name,
@@ -66,7 +67,7 @@ class ExperimentSpawner(K8SManager):
         self.persistence_config = persistence_config
         self.outputs_refs_experiments = outputs_refs_experiments
         self.outputs_refs_jobs = outputs_refs_jobs
-        self.resource_manager = manager.ResourceManager(
+        self.resource_manager = self.RESOURCE_MANAGER(
             namespace=namespace,
             project_name=self.project_name,
             experiment_group_name=self.experiment_group_name,
