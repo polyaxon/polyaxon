@@ -1,4 +1,4 @@
 hestia>=0.2.4
-kubernetes>=7.0.1
+kubernetes>=8.0.1
 pytz>=2018.7
 six==1.12.0

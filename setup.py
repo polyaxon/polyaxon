@@ -23,7 +23,7 @@ class PyTest(TestCommand):
 
 
 setup(name='ocular',
-      version='0.1.2',
+      version='0.1.3',
       description="A tool for observing Kubernetes pods' statuses in real time.",
       long_description=read_readme(),
       maintainer='Mourad Mourafiq',
@@ -45,7 +45,7 @@ setup(name='ocular',
       ],
       install_requires=[
           "hestia>=0.2.4",
-          "kubernetes>=7.0.1",
+          "kubernetes>=8.0.1",
           "six==1.12.0"
       ],
       classifiers=[
