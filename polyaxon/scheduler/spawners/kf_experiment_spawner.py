@@ -150,11 +150,11 @@ class KFExperimentSpawner(ExperimentSpawner):
             TaskType.PS: self.create_multi_jobs(task_type=TaskType.PS)
         }
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(self.resource_manager.experiment_uuid)
-        pod_resp, _ = self.create_or_update_custom_object(name=resource_name,
-                                                          group=self.GROUP,
-                                                          version=self.VERSION,
-                                                          plural=self.PLURAL,
-                                                          data=custom_object)
+        self.create_or_update_custom_object(name=resource_name,
+                                            group=self.GROUP,
+                                            version=self.VERSION,
+                                            plural=self.PLURAL,
+                                            data=custom_object)
         return custom_object
 
     def stop_experiment(self):
