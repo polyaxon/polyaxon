@@ -13,7 +13,8 @@ class HorovodSpawner(ExperimentSpawner):
     def create_job_uuids(self):
         job_uuids = super().create_job_uuids()
         job_uuids[TaskType.WORKER] = [
-            uuid.uuid4().hex for _ in range(self.get_n_pods(task_type=TaskType.WORKER))]
+            uuid.uuid5(self.experiment_uuid_instance, '{}.{}'.format(TaskType.WORKER, i)).hex
+            for i in range(self.get_n_pods(task_type=TaskType.WORKER))]
         return job_uuids
 
     @property
