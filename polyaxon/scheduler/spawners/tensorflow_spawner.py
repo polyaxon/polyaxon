@@ -107,7 +107,7 @@ class TensorflowSpawner(ExperimentSpawner):
         job_uuids[TaskType.WORKER] = [
             uuid.uuid5(self.experiment_uuid_instance, '{}.{}'.format(TaskType.WORKER, i)).hex
             for i in range(self.get_n_pods(task_type=TaskType.WORKER))]
-        job_uuids[TaskType.SERVER] = [
+        job_uuids[TaskType.PS] = [
             uuid.uuid5(self.experiment_uuid_instance, '{}.{}'.format(TaskType.PS, i)).hex
             for i in range(self.get_n_pods(task_type=TaskType.PS))]
         return job_uuids
