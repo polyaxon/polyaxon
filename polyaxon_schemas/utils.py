@@ -546,6 +546,7 @@ class EarlyStoppingPolicy(object):
 
 class TaskType(object):
     MASTER = 'master'
+    CHIEF = 'chief'
     PS = 'ps'
     WORKER = 'worker'
     SERVER = 'server'
