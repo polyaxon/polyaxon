@@ -45,7 +45,7 @@ body > #container {
   background: #29323c;
   border-radius: 0.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  height: 45px;
+  height: 37px
 }
 
 #top #top-brand {
@@ -239,17 +239,18 @@ a.brand {
 /* Header */
 /* Item */
 .header-item {
-  padding: 3px 1px;
+  margin: 0 6px;
   font-size: 13px;
 }
 
 .header-item-link {
-  padding: 11px 13px !important;
-  height: 39px !important;
-  margin: 0 !important;
+  padding: 4px 8px !important;
   background-color: transparent !important;
   border-radius: 5px !important;
   color: #ebf5ff !important;
+  margin: 4px 0 0;
+  align-items: center;
+  line-height: 0;
 }
 
 .header-item-link:hover {
@@ -272,9 +273,9 @@ a.brand {
 }
 
 .header-user-dropdown-toggle {
-  padding: 4px 8px !important;
-  height: 38px !important;
-  margin: 3px 0 !important;
+  padding: 5px 8px !important;
+  height: 37px !important;
+  margin: 0 !important;
   background-color: transparent !important;
   border-radius: 5px !important;
 }
