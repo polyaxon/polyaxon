@@ -88,10 +88,10 @@ log_level = get_log_level()
  * `get_cluster_def`: Returns cluster definition created by polyaxon.
     ```json
     {
-        "master": ["plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-        "worker": ["plxjob-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000",
-                   "plxjob-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-        "ps": ["plxjob-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
+        "master": ["plx-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
+        "worker": ["plx-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000",
+                   "plx-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
+        "ps": ["plx-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
     }
     ```
  * `get_declarations`: Returns all the experiment declarations based on both,

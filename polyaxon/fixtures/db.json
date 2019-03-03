@@ -395,7 +395,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de",
+                    "name": "plx-master0-8eefb7a1146f476ca66e3bee9b88c1de",
                     "labels": {
                         "job_uuid": "5c88c60c4fe152668113a70528d64e79",
                         "task_type": "master",
@@ -408,7 +408,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-8eefb7a1146f476ca66e3bee9b88c1de",
                     "owner_references": null,
                     "uid": "d5b151dd-e8ce-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -653,7 +653,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de",
+                                "plx-master0-8eefb7a1146f476ca66e3bee9b88c1de",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -666,7 +666,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de"
+                                    "value": "plx-master0-8eefb7a1146f476ca66e3bee9b88c1de"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -1013,7 +1013,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de",
+                    "name": "plx-master0-8eefb7a1146f476ca66e3bee9b88c1de",
                     "labels": {
                         "job_uuid": "5c88c60c4fe152668113a70528d64e79",
                         "task_type": "master",
@@ -1026,7 +1026,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-master0-8eefb7a1146f476ca66e3bee9b88c1de",
                     "owner_references": null,
                     "uid": "d5bb4022-e8ce-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -1111,7 +1111,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-0bfb74cca2c54190b3f16fd5aba11321",
+                    "name": "plx-master0-0bfb74cca2c54190b3f16fd5aba11321",
                     "labels": {
                         "job_uuid": "b4a18d579cca59e7858a11c6cc9fcf41",
                         "task_type": "master",
@@ -1124,7 +1124,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-0bfb74cca2c54190b3f16fd5aba11321",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-0bfb74cca2c54190b3f16fd5aba11321",
                     "owner_references": null,
                     "uid": "d975c26e-e8d2-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -1369,7 +1369,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-master0-0bfb74cca2c54190b3f16fd5aba11321",
+                                "plx-master0-0bfb74cca2c54190b3f16fd5aba11321",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -1382,7 +1382,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-0bfb74cca2c54190b3f16fd5aba11321"
+                                    "value": "plx-master0-0bfb74cca2c54190b3f16fd5aba11321"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -1729,7 +1729,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-0bfb74cca2c54190b3f16fd5aba11321",
+                    "name": "plx-master0-0bfb74cca2c54190b3f16fd5aba11321",
                     "labels": {
                         "job_uuid": "b4a18d579cca59e7858a11c6cc9fcf41",
                         "task_type": "master",
@@ -1742,7 +1742,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-master0-0bfb74cca2c54190b3f16fd5aba11321",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-master0-0bfb74cca2c54190b3f16fd5aba11321",
                     "owner_references": null,
                     "uid": "d97dae90-e8d2-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -1827,7 +1827,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-88897dab8ba64bc7af8243b0afdfaeec",
+                    "name": "plx-master0-88897dab8ba64bc7af8243b0afdfaeec",
                     "labels": {
                         "job_uuid": "d866e3e3c968570a86f48735bcf43bea",
                         "task_type": "master",
@@ -1840,7 +1840,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-88897dab8ba64bc7af8243b0afdfaeec",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-88897dab8ba64bc7af8243b0afdfaeec",
                     "owner_references": null,
                     "uid": "0a999957-e8d6-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -2085,7 +2085,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-master0-88897dab8ba64bc7af8243b0afdfaeec",
+                                "plx-master0-88897dab8ba64bc7af8243b0afdfaeec",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -2098,7 +2098,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-88897dab8ba64bc7af8243b0afdfaeec"
+                                    "value": "plx-master0-88897dab8ba64bc7af8243b0afdfaeec"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -2445,7 +2445,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-88897dab8ba64bc7af8243b0afdfaeec",
+                    "name": "plx-master0-88897dab8ba64bc7af8243b0afdfaeec",
                     "labels": {
                         "job_uuid": "d866e3e3c968570a86f48735bcf43bea",
                         "task_type": "master",
@@ -2458,7 +2458,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-master0-88897dab8ba64bc7af8243b0afdfaeec",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-master0-88897dab8ba64bc7af8243b0afdfaeec",
                     "owner_references": null,
                     "uid": "0aa35dc3-e8d6-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -2543,7 +2543,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-f53c7bb190fd481d90e328bd05ac21eb",
+                    "name": "plx-master0-f53c7bb190fd481d90e328bd05ac21eb",
                     "labels": {
                         "job_uuid": "024d2b1a51b750a7838132213e89f08b",
                         "task_type": "master",
@@ -2556,7 +2556,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-f53c7bb190fd481d90e328bd05ac21eb",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-f53c7bb190fd481d90e328bd05ac21eb",
                     "owner_references": null,
                     "uid": "805990f8-e8d6-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -2801,7 +2801,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-master0-f53c7bb190fd481d90e328bd05ac21eb",
+                                "plx-master0-f53c7bb190fd481d90e328bd05ac21eb",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -2814,7 +2814,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-f53c7bb190fd481d90e328bd05ac21eb"
+                                    "value": "plx-master0-f53c7bb190fd481d90e328bd05ac21eb"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -3161,7 +3161,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-f53c7bb190fd481d90e328bd05ac21eb",
+                    "name": "plx-master0-f53c7bb190fd481d90e328bd05ac21eb",
                     "labels": {
                         "job_uuid": "024d2b1a51b750a7838132213e89f08b",
                         "task_type": "master",
@@ -3174,7 +3174,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-master0-f53c7bb190fd481d90e328bd05ac21eb",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-master0-f53c7bb190fd481d90e328bd05ac21eb",
                     "owner_references": null,
                     "uid": "805d0716-e8d6-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -3259,7 +3259,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-78013845efa544d68efd37e96bd8ab0b",
+                    "name": "plx-master0-78013845efa544d68efd37e96bd8ab0b",
                     "labels": {
                         "job_uuid": "ecade1b49f4d5893a35f73ec79eba718",
                         "task_type": "master",
@@ -3273,7 +3273,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-78013845efa544d68efd37e96bd8ab0b",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-78013845efa544d68efd37e96bd8ab0b",
                     "owner_references": null,
                     "uid": "c9b6c223-e8db-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -3520,7 +3520,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-master0-78013845efa544d68efd37e96bd8ab0b",
+                                "plx-master0-78013845efa544d68efd37e96bd8ab0b",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -3533,7 +3533,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-78013845efa544d68efd37e96bd8ab0b"
+                                    "value": "plx-master0-78013845efa544d68efd37e96bd8ab0b"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -3880,7 +3880,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-78013845efa544d68efd37e96bd8ab0b",
+                    "name": "plx-master0-78013845efa544d68efd37e96bd8ab0b",
                     "labels": {
                         "job_uuid": "ecade1b49f4d5893a35f73ec79eba718",
                         "task_type": "master",
@@ -3894,7 +3894,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-master0-78013845efa544d68efd37e96bd8ab0b",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-master0-78013845efa544d68efd37e96bd8ab0b",
                     "owner_references": null,
                     "uid": "c9cab3c4-e8db-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -3980,7 +3980,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-worker0-78013845efa544d68efd37e96bd8ab0b",
+                    "name": "plx-worker0-78013845efa544d68efd37e96bd8ab0b",
                     "labels": {
                         "job_uuid": "5cfe560376415ca3aed8c61fe647df69",
                         "task_type": "worker",
@@ -3994,7 +3994,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-worker0-78013845efa544d68efd37e96bd8ab0b",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-worker0-78013845efa544d68efd37e96bd8ab0b",
                     "owner_references": null,
                     "uid": "c9d737fd-e8db-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -4241,7 +4241,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-worker0-78013845efa544d68efd37e96bd8ab0b",
+                                "plx-worker0-78013845efa544d68efd37e96bd8ab0b",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -4254,7 +4254,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-worker0-78013845efa544d68efd37e96bd8ab0b"
+                                    "value": "plx-worker0-78013845efa544d68efd37e96bd8ab0b"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -4601,7 +4601,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-worker0-78013845efa544d68efd37e96bd8ab0b",
+                    "name": "plx-worker0-78013845efa544d68efd37e96bd8ab0b",
                     "labels": {
                         "job_uuid": "5cfe560376415ca3aed8c61fe647df69",
                         "task_type": "worker",
@@ -4615,7 +4615,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-worker0-78013845efa544d68efd37e96bd8ab0b",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-worker0-78013845efa544d68efd37e96bd8ab0b",
                     "owner_references": null,
                     "uid": "c9e9c9eb-e8db-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -4701,7 +4701,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-ps0-78013845efa544d68efd37e96bd8ab0b",
+                    "name": "plx-ps0-78013845efa544d68efd37e96bd8ab0b",
                     "labels": {
                         "job_uuid": "b1b816f06c6552fc8f6d03ee2fc976c9",
                         "task_type": "ps",
@@ -4715,7 +4715,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-ps0-78013845efa544d68efd37e96bd8ab0b",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-ps0-78013845efa544d68efd37e96bd8ab0b",
                     "owner_references": null,
                     "uid": "c9ff8775-e8db-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -4962,7 +4962,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-ps0-78013845efa544d68efd37e96bd8ab0b",
+                                "plx-ps0-78013845efa544d68efd37e96bd8ab0b",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -4975,7 +4975,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-ps0-78013845efa544d68efd37e96bd8ab0b"
+                                    "value": "plx-ps0-78013845efa544d68efd37e96bd8ab0b"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -5322,7 +5322,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-ps0-78013845efa544d68efd37e96bd8ab0b",
+                    "name": "plx-ps0-78013845efa544d68efd37e96bd8ab0b",
                     "labels": {
                         "job_uuid": "b1b816f06c6552fc8f6d03ee2fc976c9",
                         "task_type": "ps",
@@ -5336,7 +5336,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-ps0-78013845efa544d68efd37e96bd8ab0b",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-ps0-78013845efa544d68efd37e96bd8ab0b",
                     "owner_references": null,
                     "uid": "ca3ca228-e8db-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -5422,7 +5422,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-d3cee86847484488b13ff82b5b803584",
+                    "name": "plx-master0-d3cee86847484488b13ff82b5b803584",
                     "labels": {
                         "job_uuid": "40465c7cca4f55bca1f98abc2bf8c770",
                         "task_type": "master",
@@ -5436,7 +5436,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-d3cee86847484488b13ff82b5b803584",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-d3cee86847484488b13ff82b5b803584",
                     "owner_references": null,
                     "uid": "f1411d6a-e8dc-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -5683,7 +5683,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-master0-d3cee86847484488b13ff82b5b803584",
+                                "plx-master0-d3cee86847484488b13ff82b5b803584",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -5696,7 +5696,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-d3cee86847484488b13ff82b5b803584"
+                                    "value": "plx-master0-d3cee86847484488b13ff82b5b803584"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -6043,7 +6043,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-d3cee86847484488b13ff82b5b803584",
+                    "name": "plx-master0-d3cee86847484488b13ff82b5b803584",
                     "labels": {
                         "job_uuid": "40465c7cca4f55bca1f98abc2bf8c770",
                         "task_type": "master",
@@ -6057,7 +6057,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-master0-d3cee86847484488b13ff82b5b803584",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-master0-d3cee86847484488b13ff82b5b803584",
                     "owner_references": null,
                     "uid": "f14aaf35-e8dc-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -6143,7 +6143,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-worker0-d3cee86847484488b13ff82b5b803584",
+                    "name": "plx-worker0-d3cee86847484488b13ff82b5b803584",
                     "labels": {
                         "job_uuid": "de32c613b1c752948cbb92ce7a33f0b6",
                         "task_type": "worker",
@@ -6157,7 +6157,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-worker0-d3cee86847484488b13ff82b5b803584",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-worker0-d3cee86847484488b13ff82b5b803584",
                     "owner_references": null,
                     "uid": "f158840b-e8dc-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -6404,7 +6404,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-worker0-d3cee86847484488b13ff82b5b803584",
+                                "plx-worker0-d3cee86847484488b13ff82b5b803584",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -6417,7 +6417,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-worker0-d3cee86847484488b13ff82b5b803584"
+                                    "value": "plx-worker0-d3cee86847484488b13ff82b5b803584"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -6764,7 +6764,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-worker0-d3cee86847484488b13ff82b5b803584",
+                    "name": "plx-worker0-d3cee86847484488b13ff82b5b803584",
                     "labels": {
                         "job_uuid": "de32c613b1c752948cbb92ce7a33f0b6",
                         "task_type": "worker",
@@ -6778,7 +6778,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-worker0-d3cee86847484488b13ff82b5b803584",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-worker0-d3cee86847484488b13ff82b5b803584",
                     "owner_references": null,
                     "uid": "f15dc184-e8dc-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -6864,7 +6864,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-ps0-d3cee86847484488b13ff82b5b803584",
+                    "name": "plx-ps0-d3cee86847484488b13ff82b5b803584",
                     "labels": {
                         "job_uuid": "027ac27d7f5754ffbaf6081e6b657e93",
                         "task_type": "ps",
@@ -6878,7 +6878,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-ps0-d3cee86847484488b13ff82b5b803584",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-ps0-d3cee86847484488b13ff82b5b803584",
                     "owner_references": null,
                     "uid": "f162604f-e8dc-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -7125,7 +7125,7 @@
                                 "python3",
                                 "api/manage.py",
                                 "start_sidecar",
-                                "plxjob-ps0-d3cee86847484488b13ff82b5b803584",
+                                "plx-ps0-d3cee86847484488b13ff82b5b803584",
                                 "--log_sleep_interval=1",
                                 "--persist=False"
                             ],
@@ -7138,7 +7138,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-ps0-d3cee86847484488b13ff82b5b803584"
+                                    "value": "plx-ps0-d3cee86847484488b13ff82b5b803584"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -7485,7 +7485,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-ps0-d3cee86847484488b13ff82b5b803584",
+                    "name": "plx-ps0-d3cee86847484488b13ff82b5b803584",
                     "labels": {
                         "job_uuid": "027ac27d7f5754ffbaf6081e6b657e93",
                         "task_type": "ps",
@@ -7499,7 +7499,7 @@
                         "experiment_group_name": "admin.cats-vs-dogs.1",
                         "project_uuid": "ac6a3340b926422aa4496e8b8e9dc77f"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/services/plxjob-ps0-d3cee86847484488b13ff82b5b803584",
+                    "self_link": "/api/v1/namespaces/polyaxon/services/plx-ps0-d3cee86847484488b13ff82b5b803584",
                     "owner_references": null,
                     "uid": "f1df0856-e8dc-11e7-9792-1273d6911587",
                     "finalizers": null,
@@ -7586,7 +7586,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-66012ff9eb58415291738452120dca95",
+                    "name": "plx-master0-66012ff9eb58415291738452120dca95",
                     "labels": {
                         "job_uuid": "fc8e1053a224402ab5f0fb5e7c087013",
                         "task_type": "master",
@@ -7599,7 +7599,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-66012ff9eb58415291738452120dca95",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-66012ff9eb58415291738452120dca95",
                     "owner_references": null,
                     "uid": "cad37c7c-a3eb-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -7889,7 +7889,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-66012ff9eb58415291738452120dca95:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-66012ff9eb58415291738452120dca95:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -7965,7 +7965,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-66012ff9eb58415291738452120dca95",
+                                "plx-master0-66012ff9eb58415291738452120dca95",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -7973,7 +7973,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-66012ff9eb58415291738452120dca95"
+                                    "value": "plx-master0-66012ff9eb58415291738452120dca95"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -8647,7 +8647,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-6bbfe9528e4b4f75bc875cae2ff0e776",
+                    "name": "plx-master0-6bbfe9528e4b4f75bc875cae2ff0e776",
                     "labels": {
                         "job_uuid": "cd1316cd4cd74b33a3bd39f084ee6a5a",
                         "task_type": "master",
@@ -8660,7 +8660,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-6bbfe9528e4b4f75bc875cae2ff0e776",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-6bbfe9528e4b4f75bc875cae2ff0e776",
                     "owner_references": null,
                     "uid": "861765cb-a3ec-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -8950,7 +8950,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-6bbfe9528e4b4f75bc875cae2ff0e776:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-6bbfe9528e4b4f75bc875cae2ff0e776:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -9026,7 +9026,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-6bbfe9528e4b4f75bc875cae2ff0e776",
+                                "plx-master0-6bbfe9528e4b4f75bc875cae2ff0e776",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -9034,7 +9034,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-6bbfe9528e4b4f75bc875cae2ff0e776"
+                                    "value": "plx-master0-6bbfe9528e4b4f75bc875cae2ff0e776"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -9708,7 +9708,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-19b8373bd8bb4fd59eae423f36581edd",
+                    "name": "plx-master0-19b8373bd8bb4fd59eae423f36581edd",
                     "labels": {
                         "job_uuid": "09e1fefe485747bd9cfe7e045967fe51",
                         "task_type": "master",
@@ -9721,7 +9721,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-19b8373bd8bb4fd59eae423f36581edd",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-19b8373bd8bb4fd59eae423f36581edd",
                     "owner_references": null,
                     "uid": "864df9e0-a3ec-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -10018,7 +10018,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-19b8373bd8bb4fd59eae423f36581edd:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-19b8373bd8bb4fd59eae423f36581edd:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -10094,7 +10094,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-19b8373bd8bb4fd59eae423f36581edd",
+                                "plx-master0-19b8373bd8bb4fd59eae423f36581edd",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -10102,7 +10102,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-19b8373bd8bb4fd59eae423f36581edd"
+                                    "value": "plx-master0-19b8373bd8bb4fd59eae423f36581edd"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -10776,7 +10776,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-0979594596e4461e880fb970db13000b",
+                    "name": "plx-master0-0979594596e4461e880fb970db13000b",
                     "labels": {
                         "job_uuid": "0967c3d814c94e5e8cd51e82053df7e1",
                         "task_type": "master",
@@ -10790,7 +10790,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-0979594596e4461e880fb970db13000b",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-0979594596e4461e880fb970db13000b",
                     "owner_references": null,
                     "uid": "c1425b5b-a3ef-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -11086,7 +11086,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-0979594596e4461e880fb970db13000b:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-0979594596e4461e880fb970db13000b:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -11162,7 +11162,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-0979594596e4461e880fb970db13000b",
+                                "plx-master0-0979594596e4461e880fb970db13000b",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -11170,7 +11170,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-0979594596e4461e880fb970db13000b"
+                                    "value": "plx-master0-0979594596e4461e880fb970db13000b"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -11844,7 +11844,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-d15edb8b732c4bf88e2d8aab74f0a10b",
+                    "name": "plx-master0-d15edb8b732c4bf88e2d8aab74f0a10b",
                     "labels": {
                         "job_uuid": "0a163fe6542a4077926fdc841b4f81ce",
                         "task_type": "master",
@@ -11858,7 +11858,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-d15edb8b732c4bf88e2d8aab74f0a10b",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-d15edb8b732c4bf88e2d8aab74f0a10b",
                     "owner_references": null,
                     "uid": "c1449b56-a3ef-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -12154,7 +12154,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-d15edb8b732c4bf88e2d8aab74f0a10b:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-d15edb8b732c4bf88e2d8aab74f0a10b:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -12230,7 +12230,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-d15edb8b732c4bf88e2d8aab74f0a10b",
+                                "plx-master0-d15edb8b732c4bf88e2d8aab74f0a10b",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -12238,7 +12238,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-d15edb8b732c4bf88e2d8aab74f0a10b"
+                                    "value": "plx-master0-d15edb8b732c4bf88e2d8aab74f0a10b"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -12912,7 +12912,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-7bd84b34e56543a7834cabe64710f2f6",
+                    "name": "plx-master0-7bd84b34e56543a7834cabe64710f2f6",
                     "labels": {
                         "job_uuid": "c1ba17fbccaa4f16859494acaf963a25",
                         "task_type": "master",
@@ -12926,7 +12926,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-7bd84b34e56543a7834cabe64710f2f6",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-7bd84b34e56543a7834cabe64710f2f6",
                     "owner_references": null,
                     "uid": "c168416f-a3ef-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -13222,7 +13222,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-7bd84b34e56543a7834cabe64710f2f6:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-7bd84b34e56543a7834cabe64710f2f6:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -13298,7 +13298,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-7bd84b34e56543a7834cabe64710f2f6",
+                                "plx-master0-7bd84b34e56543a7834cabe64710f2f6",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -13306,7 +13306,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-7bd84b34e56543a7834cabe64710f2f6"
+                                    "value": "plx-master0-7bd84b34e56543a7834cabe64710f2f6"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -13980,7 +13980,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-642741c7cb3549eab81f20939720ebec",
+                    "name": "plx-master0-642741c7cb3549eab81f20939720ebec",
                     "labels": {
                         "job_uuid": "7930dfc83d5f4901bc54f7b27ed3ce36",
                         "task_type": "master",
@@ -13994,7 +13994,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-642741c7cb3549eab81f20939720ebec",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-642741c7cb3549eab81f20939720ebec",
                     "owner_references": null,
                     "uid": "c179ef5a-a3ef-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -14290,7 +14290,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-642741c7cb3549eab81f20939720ebec:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-642741c7cb3549eab81f20939720ebec:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -14366,7 +14366,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-642741c7cb3549eab81f20939720ebec",
+                                "plx-master0-642741c7cb3549eab81f20939720ebec",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -14374,7 +14374,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-642741c7cb3549eab81f20939720ebec"
+                                    "value": "plx-master0-642741c7cb3549eab81f20939720ebec"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -15048,7 +15048,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a",
+                    "name": "plx-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a",
                     "labels": {
                         "job_uuid": "2b5c9d76d16f4098aa2766ad8e5b9707",
                         "task_type": "master",
@@ -15062,7 +15062,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a",
                     "owner_references": null,
                     "uid": "c19eb0f6-a3ef-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -15358,7 +15358,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -15434,7 +15434,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a",
+                                "plx-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -15442,7 +15442,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a"
+                                    "value": "plx-master0-5f38f2d1346a4c0a9c11e7b3f80bbc9a"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -16116,7 +16116,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-a1e59fed5e044d7e93c2557554b0cef8",
+                    "name": "plx-master0-a1e59fed5e044d7e93c2557554b0cef8",
                     "labels": {
                         "job_uuid": "64312257211e4beca18cf5bb9003b2cb",
                         "task_type": "master",
@@ -16130,7 +16130,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-a1e59fed5e044d7e93c2557554b0cef8",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-a1e59fed5e044d7e93c2557554b0cef8",
                     "owner_references": null,
                     "uid": "02bfc6a3-a3f0-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -16426,7 +16426,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-a1e59fed5e044d7e93c2557554b0cef8:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-a1e59fed5e044d7e93c2557554b0cef8:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -16502,7 +16502,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-a1e59fed5e044d7e93c2557554b0cef8",
+                                "plx-master0-a1e59fed5e044d7e93c2557554b0cef8",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -16510,7 +16510,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-a1e59fed5e044d7e93c2557554b0cef8"
+                                    "value": "plx-master0-a1e59fed5e044d7e93c2557554b0cef8"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -17184,7 +17184,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-dd5d7c5a5e9141969daad201f89b32a3",
+                    "name": "plx-master0-dd5d7c5a5e9141969daad201f89b32a3",
                     "labels": {
                         "job_uuid": "591d23a3ee424dc1a2f3d53a57dd1837",
                         "task_type": "master",
@@ -17198,7 +17198,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-dd5d7c5a5e9141969daad201f89b32a3",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-dd5d7c5a5e9141969daad201f89b32a3",
                     "owner_references": null,
                     "uid": "b8312804-a3f0-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -17494,7 +17494,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-dd5d7c5a5e9141969daad201f89b32a3:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-dd5d7c5a5e9141969daad201f89b32a3:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -17570,7 +17570,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-dd5d7c5a5e9141969daad201f89b32a3",
+                                "plx-master0-dd5d7c5a5e9141969daad201f89b32a3",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -17578,7 +17578,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-dd5d7c5a5e9141969daad201f89b32a3"
+                                    "value": "plx-master0-dd5d7c5a5e9141969daad201f89b32a3"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -18252,7 +18252,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-6aed5a4b15014545a854d615b63dcf6d",
+                    "name": "plx-master0-6aed5a4b15014545a854d615b63dcf6d",
                     "labels": {
                         "job_uuid": "13dafb9adc3644139a07982e0e22dece",
                         "task_type": "master",
@@ -18266,7 +18266,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-6aed5a4b15014545a854d615b63dcf6d",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-6aed5a4b15014545a854d615b63dcf6d",
                     "owner_references": null,
                     "uid": "d4d48af8-a3f0-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -18562,7 +18562,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-6aed5a4b15014545a854d615b63dcf6d:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-6aed5a4b15014545a854d615b63dcf6d:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -18638,7 +18638,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-6aed5a4b15014545a854d615b63dcf6d",
+                                "plx-master0-6aed5a4b15014545a854d615b63dcf6d",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -18646,7 +18646,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-6aed5a4b15014545a854d615b63dcf6d"
+                                    "value": "plx-master0-6aed5a4b15014545a854d615b63dcf6d"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -19320,7 +19320,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-32f27f001df9444d9f81a4443cf54239",
+                    "name": "plx-master0-32f27f001df9444d9f81a4443cf54239",
                     "labels": {
                         "job_uuid": "e0dafaaacca84aa6a1eca119e32bd13f",
                         "task_type": "master",
@@ -19334,7 +19334,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-32f27f001df9444d9f81a4443cf54239",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-32f27f001df9444d9f81a4443cf54239",
                     "owner_references": null,
                     "uid": "5107ed8b-a3f1-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -19630,7 +19630,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-32f27f001df9444d9f81a4443cf54239:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-32f27f001df9444d9f81a4443cf54239:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -19706,7 +19706,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-32f27f001df9444d9f81a4443cf54239",
+                                "plx-master0-32f27f001df9444d9f81a4443cf54239",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -19714,7 +19714,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-32f27f001df9444d9f81a4443cf54239"
+                                    "value": "plx-master0-32f27f001df9444d9f81a4443cf54239"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -20388,7 +20388,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-ea79790b70ae4df2971caa8225716a8a",
+                    "name": "plx-master0-ea79790b70ae4df2971caa8225716a8a",
                     "labels": {
                         "job_uuid": "5f15afbb06404a32995fa5e9c7ffb01b",
                         "task_type": "master",
@@ -20402,7 +20402,7 @@
                         "experiment_group_name": "admin.quick-start.2",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-ea79790b70ae4df2971caa8225716a8a",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-ea79790b70ae4df2971caa8225716a8a",
                     "owner_references": null,
                     "uid": "64251d04-a3f1-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -20698,7 +20698,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-ea79790b70ae4df2971caa8225716a8a:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-ea79790b70ae4df2971caa8225716a8a:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -20774,7 +20774,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-ea79790b70ae4df2971caa8225716a8a",
+                                "plx-master0-ea79790b70ae4df2971caa8225716a8a",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -20782,7 +20782,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-ea79790b70ae4df2971caa8225716a8a"
+                                    "value": "plx-master0-ea79790b70ae4df2971caa8225716a8a"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
@@ -21456,7 +21456,7 @@
                     "initializers": null,
                     "cluster_name": null,
                     "namespace": "polyaxon",
-                    "name": "plxjob-master0-76446631463048b99a54832aff771d27",
+                    "name": "plx-master0-76446631463048b99a54832aff771d27",
                     "labels": {
                         "job_uuid": "e01d9a278fbc4672935e777d52e0f065",
                         "task_type": "master",
@@ -21469,7 +21469,7 @@
                         "experiment_group_name": "",
                         "project_uuid": "77596423f3174d898daa21774d0df144"
                     },
-                    "self_link": "/api/v1/namespaces/polyaxon/pods/plxjob-master0-76446631463048b99a54832aff771d27",
+                    "self_link": "/api/v1/namespaces/polyaxon/pods/plx-master0-76446631463048b99a54832aff771d27",
                     "owner_references": null,
                     "uid": "a81cb23f-a3f3-11e8-bfe5-42010a800023",
                     "finalizers": null,
@@ -21766,7 +21766,7 @@
                                 {
                                     "name": "POLYAXON_CLUSTER",
                                     "value_from": null,
-                                    "value": "{\"master\": [\"plxjob-master0-76446631463048b99a54832aff771d27:2222\"]}"
+                                    "value": "{\"master\": [\"plx-master0-76446631463048b99a54832aff771d27:2222\"]}"
                                 },
                                 {
                                     "name": "POLYAXON_DECLARATIONS",
@@ -21842,7 +21842,7 @@
                                 "start_experiment_sidecar"
                             ],
                             "args": [
-                                "plxjob-master0-76446631463048b99a54832aff771d27",
+                                "plx-master0-76446631463048b99a54832aff771d27",
                                 "--log_sleep_interval=1",
                                 "--persist=true"
                             ],
@@ -21850,7 +21850,7 @@
                                 {
                                     "name": "POLYAXON_POD_ID",
                                     "value_from": null,
-                                    "value": "plxjob-master0-76446631463048b99a54832aff771d27"
+                                    "value": "plx-master0-76446631463048b99a54832aff771d27"
                                 },
                                 {
                                     "name": "POLYAXON_JOB_ID",
