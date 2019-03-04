@@ -239,12 +239,12 @@ a.brand {
 /* Header */
 /* Item */
 .header-item {
-  margin: 0 6px;
+  margin: 0 3px;
   font-size: 13px;
 }
 
 .header-item-link {
-  padding: 4px 8px !important;
+  padding: 5px 10px 2px !important;
   background-color: transparent !important;
   border-radius: 5px !important;
   color: #ebf5ff !important;

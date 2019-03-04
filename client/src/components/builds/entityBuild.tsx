@@ -53,7 +53,7 @@ export default class EntityBuild extends React.Component<Props, {}> {
         componentList={listBuilds()}
         componentEmpty={EmptyList(false, 'build', 'build')}
         filters={false}
-        fetchData={(offset: number, query?: string, sort?: string, extraFilters?: {}) => null}
+        fetchData={(offset: number, query?: string, sort?: string, extraFilters?: {}) => this.props.fetchData()}
       />
     );
   }
