@@ -7,7 +7,7 @@ export function EmptyArchives(isCurrentUser: boolean, objectType: string, image:
     <div className="row">
       <div className="col-md-offset-2 col-md-8">
         <div className="jumbotron jumbotron-action text-center empty-jumbotron">
-          <h3>No bookmarked {objectType}</h3>
+          <h3>No archived {objectType}</h3>
           {image && isCurrentUser &&
           <img src={`/static/images/${image}.svg`} alt={image} className="empty-icon"/>
           }
