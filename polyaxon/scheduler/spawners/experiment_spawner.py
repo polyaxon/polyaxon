@@ -3,6 +3,7 @@ import uuid
 from hestia.auth import AuthenticationTypes
 from hestia.internal_services import InternalServices
 
+import conf
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from libs.unique_urls import get_experiment_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -75,7 +76,7 @@ class ExperimentSpawner(K8SManager):
             project_uuid=self.project_uuid,
             experiment_group_uuid=self.experiment_group_uuid,
             experiment_uuid=experiment_uuid,
-            job_container_name=job_container_name,
+            job_container_name=self.get_job_container_name(job_container_name),
             job_docker_image=job_docker_image,
             sidecar_container_name=sidecar_container_name,
             sidecar_docker_image=sidecar_docker_image,
@@ -99,6 +100,10 @@ class ExperimentSpawner(K8SManager):
         cluster_def = self.get_cluster()
         self.resource_manager.set_cluster_def(cluster_def=cluster_def)
         self.job_uuids = self.create_job_uuids()
+
+    @staticmethod
+    def get_job_container_name(job_container_name):
+        return job_container_name or conf.get('CONTAINER_NAME_EXPERIMENT_JOB')
 
     def create_job_uuids(self):
         return {

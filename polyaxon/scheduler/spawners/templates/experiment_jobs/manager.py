@@ -56,7 +56,7 @@ class ResourceManager(BaseResourceManager):
             namespace=namespace,
             project_name=project_name,
             project_uuid=project_uuid,
-            job_container_name=job_container_name or conf.get('CONTAINER_NAME_EXPERIMENT_JOB'),
+            job_container_name=job_container_name,
             job_docker_image=job_docker_image or conf.get('JOB_DOCKER_NAME'),
             job_docker_image_pull_policy=job_docker_image_pull_policy,
             sidecar_container_name=sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR'),

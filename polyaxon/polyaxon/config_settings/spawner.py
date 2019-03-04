@@ -83,6 +83,13 @@ TOLERATIONS_CORE = config.get_string(
     'POLYAXON_TOLERATIONS_CORE', is_optional=True)
 
 # Container names
+CONTAINER_NAME_TF_JOB = config.get_string('POLYAXON_CONTAINER_NAME_TF_JOB',
+                                          is_optional=True,
+                                          default='tensorflow')
+
+CONTAINER_NAME_PYTORCH_JOB = config.get_string('POLYAXON_CONTAINER_NAME_PYTORCH_JOB',
+                                               is_optional=True,
+                                               default='pytorch')
 CONTAINER_NAME_EXPERIMENT_JOB = config.get_string('POLYAXON_CONTAINER_NAME_EXPERIMENT_JOB',
                                                   is_optional=True,
                                                   default='polyaxon-experiment-job')
