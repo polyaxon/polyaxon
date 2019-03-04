@@ -71,9 +71,9 @@ class DockerizerSpawner(K8SManager):
             project_uuid=self.project_uuid,
             job_name=job_name,
             job_uuid=job_uuid,
-            job_docker_image=job_docker_image or conf.get('JOB_DOCKERIZER_IMAGE'),
-            job_docker_image_pull_policy=(job_docker_image_pull_policy or
-                                          conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY')),
+            job_docker_image=self.get_job_docker_image(job_docker_image),
+            job_docker_image_pull_policy=self.get_job_docker_image_pull_policy(
+                job_docker_image_pull_policy),
             job_container_name=job_container_name,
             sidecar_container_name=sidecar_container_name,
             sidecar_docker_image=sidecar_docker_image,
@@ -87,6 +87,14 @@ class DockerizerSpawner(K8SManager):
         super().__init__(k8s_config=k8s_config,
                          namespace=namespace,
                          in_cluster=in_cluster)
+
+    @staticmethod
+    def get_job_docker_image(job_docker_image):
+        return job_docker_image or conf.get('JOB_DOCKERIZER_IMAGE')
+
+    @staticmethod
+    def get_job_docker_image_pull_policy(job_docker_image_pull_policy):
+        return job_docker_image_pull_policy or conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY')
 
     def get_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
