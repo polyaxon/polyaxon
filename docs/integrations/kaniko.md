@@ -22,11 +22,11 @@ status: beta
 
 Polyaxon supports multiple backend options to build container images used for running jobs or training experiments.
 
-You can configure Kaniko as build backend per job/experiment or by as the default build backend.  
+You can configure Kaniko as a build backend per job/experiment or as the default build backend.  
 
 ## Using Kaniko per job/experiment
 
-In the case the default build backend is not Kaniko, 
+In case the default build backend is not Kaniko, 
 users who want to use Kaniko to build container images must define explicitly the backend option in their Polyaxon files:
 
 ```yaml
@@ -37,7 +37,8 @@ build:
 ```
 
 ## Using Kaniko as the default build backend
-In order to deploy Polyaxon with Kaniko as the default backend build option, user need to set `buildBackend` in their Polyaxon deployment config file.
+
+In order to deploy Polyaxon with Kaniko as the default backend build option, users need to set `buildBackend` in their Polyaxon deployment config file.
 
 ```yaml
 ...

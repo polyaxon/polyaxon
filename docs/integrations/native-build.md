@@ -28,7 +28,7 @@ If you have changed the default build backend, and you need to use the native bu
 
 ## Using the native builder per job/experiment
 
-In the case the default build backend is the not the native builder, 
+In case the default build backend is the not the native builder, 
 users who want to use this native builder to build container images must define explicitly the backend option in their Polyaxon files:
 
 ```yaml
@@ -39,7 +39,8 @@ build:
 ```
 
 ## Using the native builder as the default build backend
-In order to deploy Polyaxon with the native build backend as the default builder option, user need to either remove or set `buildBackend` in their Polyaxon deployment config file.
+
+In order to deploy Polyaxon with the native build backend as the default builder option, users need to either remove or set `buildBackend` in their Polyaxon deployment config file.
 
 ```yaml
 ...
