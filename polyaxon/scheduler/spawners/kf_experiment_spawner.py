@@ -24,6 +24,7 @@ class KFExperimentSpawner(ExperimentSpawner):
     GROUP = None
     VERSION = None
     PLURAL = None
+    SPEC = None
 
     @property
     def api_version(self):
@@ -147,9 +148,11 @@ class KFExperimentSpawner(ExperimentSpawner):
     def start_experiment(self):
         labels = self.resource_manager.experiment_labels
         template_spec = {
-            TaskType.CHIEF: self.create_master(),
-            TaskType.WORKER: self.create_multi_jobs(task_type=TaskType.WORKER),
-            TaskType.PS: self.create_multi_jobs(task_type=TaskType.PS)
+            self.SPEC: {
+                TaskType.CHIEF: self.create_master(),
+                TaskType.WORKER: self.create_multi_jobs(task_type=TaskType.WORKER),
+                TaskType.PS: self.create_multi_jobs(task_type=TaskType.PS)
+            }
         }
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
             experiment_uuid=self.resource_manager.experiment_uuid)
