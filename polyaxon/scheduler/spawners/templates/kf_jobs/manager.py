@@ -6,7 +6,7 @@ from scheduler.spawners.templates.experiment_jobs.manager import (
 
 class ResourceManager(ExperimentResourceManager):
 
-    def get_resource_name(self, task_type):  # pylint:disable=arguments-differ
+    def get_kf_resource_name(self, task_type):
         return EXPERIMENT_KF_TASK_NAME_FORMAT.format(task_type=task_type,
                                                      experiment_uuid=self.experiment_uuid)
 

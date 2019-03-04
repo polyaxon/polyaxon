@@ -38,7 +38,7 @@ class KFExperimentSpawner(ExperimentSpawner):
         ephemeral_token = None
         if self.token_scope:
             ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
-        resource_name = self.resource_manager.get_resource_name(task_type=task_type)
+        resource_name = self.resource_manager.get_kf_resource_name(task_type=task_type)
         labels = self.resource_manager.get_labels(task_type=task_type)
 
         # Set and validate volumes
@@ -69,7 +69,6 @@ class KFExperimentSpawner(ExperimentSpawner):
 
         pod_template_spec = self.resource_manager.get_pod_template_spec(
             resource_name=resource_name,
-            task_type=task_type,
             volume_mounts=volume_mounts,
             volumes=volumes,
             labels=labels,
@@ -90,7 +89,6 @@ class KFExperimentSpawner(ExperimentSpawner):
             affinity=affinity,
             tolerations=tolerations,
             init_context_mounts=context_mounts,
-            replicas=replicas,
             restart_policy=restart_policy)
         return {
             'replicas': replicas,
@@ -149,7 +147,8 @@ class KFExperimentSpawner(ExperimentSpawner):
             TaskType.WORKER: self.create_multi_jobs(task_type=TaskType.WORKER),
             TaskType.PS: self.create_multi_jobs(task_type=TaskType.PS)
         }
-        resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(self.resource_manager.experiment_uuid)
+        resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
+            experiment_uuid=self.resource_manager.experiment_uuid)
         self.create_or_update_custom_object(name=resource_name,
                                             group=self.GROUP,
                                             version=self.VERSION,
@@ -158,7 +157,8 @@ class KFExperimentSpawner(ExperimentSpawner):
         return custom_object
 
     def stop_experiment(self):
-        resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(self.resource_manager.experiment_uuid)
+        resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
+            experiment_uuid=self.resource_manager.experiment_uuid)
         return self.delete_custom_object(name=resource_name,
                                          group=self.GROUP,
                                          version=self.VERSION,
