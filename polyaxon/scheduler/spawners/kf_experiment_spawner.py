@@ -8,6 +8,7 @@ from scheduler.spawners.templates.env_vars import (
     validate_secret_refs
 )
 from scheduler.spawners.templates.kf_jobs import manager
+from scheduler.spawners.templates.kubeflow import KUBEFLOW_JOB_GROUP
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -23,6 +24,10 @@ class KFExperimentSpawner(ExperimentSpawner):
     GROUP = None
     VERSION = None
     PLURAL = None
+
+    @property
+    def api_version(self):
+        return '{}/{}'.format(KUBEFLOW_JOB_GROUP, self.VERSION)
 
     def _create_job(self,  # pylint:disable=arguments-differ
                     task_type,
@@ -99,7 +104,6 @@ class KFExperimentSpawner(ExperimentSpawner):
         return self.spec.cluster_def[0].get(task_type, 0)
 
     def create_multi_jobs(self, task_type):  # pylint:disable=arguments-differ
-        resp = []
         n_pods = self.get_n_pods(task_type=task_type)
         command, args = self.get_pod_command_args(task_type=task_type, task_idx=0)
         env_vars = self.get_env_vars(task_type=task_type, task_idx=0)
@@ -107,16 +111,15 @@ class KFExperimentSpawner(ExperimentSpawner):
         node_selector = self.get_node_selector(task_type=task_type, task_idx=0)
         affinity = self.get_affinity(task_type=task_type, task_idx=0)
         tolerations = self.get_tolerations(task_type=task_type, task_idx=0)
-        self._create_job(task_type=task_type,
-                         command=command,
-                         args=args,
-                         env_vars=env_vars,
-                         resources=resources,
-                         node_selector=node_selector,
-                         affinity=affinity,
-                         tolerations=tolerations,
-                         replicas=n_pods)
-        return resp
+        return self._create_job(task_type=task_type,
+                                command=command,
+                                args=args,
+                                env_vars=env_vars,
+                                resources=resources,
+                                node_selector=node_selector,
+                                affinity=affinity,
+                                tolerations=tolerations,
+                                replicas=n_pods)
 
     def create_master(self):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER, task_idx=0)
@@ -142,13 +145,19 @@ class KFExperimentSpawner(ExperimentSpawner):
             return False
 
     def start_experiment(self):
-        custom_object = {
+        labels = self.resource_manager.experiment_labels
+        template_spec = {
             TaskType.CHIEF: self.create_master(),
             TaskType.WORKER: self.create_multi_jobs(task_type=TaskType.WORKER),
             TaskType.PS: self.create_multi_jobs(task_type=TaskType.PS)
         }
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
             experiment_uuid=self.resource_manager.experiment_uuid)
+        custom_object = self.resource_manager.get_custom_object(resource_name=resource_name,
+                                                                group=self.GROUP,
+                                                                api_version=self.api_version,
+                                                                labels=labels,
+                                                                template_spec=template_spec)
         self.create_or_update_custom_object(name=resource_name,
                                             group=self.GROUP,
                                             version=self.VERSION,

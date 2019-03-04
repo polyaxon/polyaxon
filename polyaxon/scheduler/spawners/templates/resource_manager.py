@@ -447,3 +447,14 @@ class BaseResourceManager(object):
                                             kind=k8s_constants.K8S_DEPLOYMENT_KIND,
                                             metadata=metadata,
                                             spec=deployment_spec)
+
+    def get_custom_object(self, resource_name, group, api_version, labels, template_spec):
+        metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
+        custom_object = {
+            'kind': group,
+            'apiVersion': api_version,
+            'metadata': metadata,
+            'spec': template_spec
+        }
+
+        return custom_object
