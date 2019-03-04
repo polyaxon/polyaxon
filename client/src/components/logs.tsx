@@ -53,7 +53,7 @@ export default class Logs extends React.Component<Props, State> {
     };
     const logs = this.props.logs;
     const logsElements = logs.length > 0 ?
-      (logs.split('\n').map((line, i) => <p key={i}>{formatLogs(line)}</p>)) :
+      (logs.split(/\r|\n/).map((line, i) => <p key={i}>{formatLogs(line)}</p>)) :
       (<p>No logs</p>);
 
     return (
