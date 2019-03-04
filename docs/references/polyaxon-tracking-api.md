@@ -75,7 +75,7 @@ Since using the Polyaxon client and the tracking api requires code change, e.g.
 
 ```python
 # Polyaxon experiment
-experimet = Experiment()
+experiment = Experiment()
 # training code ...
 # Metrics reporting
 experiment.log_metrics(step=1000, loss=0.01, accuracy=0.97)
