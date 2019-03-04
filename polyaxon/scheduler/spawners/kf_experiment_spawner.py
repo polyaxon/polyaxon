@@ -21,7 +21,7 @@ from schemas.tasks import TaskType
 class KFExperimentSpawner(ExperimentSpawner):
     MASTER_SERVICE = False
     RESOURCE_MANAGER = manager.ResourceManager
-    GROUP = None
+    KIND = None
     VERSION = None
     PLURAL = None
     SPEC = None
@@ -157,12 +157,12 @@ class KFExperimentSpawner(ExperimentSpawner):
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
             experiment_uuid=self.resource_manager.experiment_uuid)
         custom_object = self.resource_manager.get_custom_object(resource_name=resource_name,
-                                                                group=self.GROUP,
+                                                                kind=self.KIND,
                                                                 api_version=self.api_version,
                                                                 labels=labels,
                                                                 template_spec=template_spec)
         self.create_or_update_custom_object(name=resource_name,
-                                            group=self.GROUP,
+                                            group=KUBEFLOW_JOB_GROUP,
                                             version=self.VERSION,
                                             plural=self.PLURAL,
                                             data=custom_object)
@@ -172,6 +172,6 @@ class KFExperimentSpawner(ExperimentSpawner):
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
             experiment_uuid=self.resource_manager.experiment_uuid)
         return self.delete_custom_object(name=resource_name,
-                                         group=self.GROUP,
+                                         group=KUBEFLOW_JOB_GROUP,
                                          version=self.VERSION,
                                          plural=self.PLURAL)

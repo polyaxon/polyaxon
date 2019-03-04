@@ -448,10 +448,10 @@ class BaseResourceManager(object):
                                             metadata=metadata,
                                             spec=deployment_spec)
 
-    def get_custom_object(self, resource_name, group, api_version, labels, template_spec):
+    def get_custom_object(self, resource_name, kind, api_version, labels, template_spec):
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
         custom_object = {
-            'kind': group,
+            'kind': kind,
             'apiVersion': api_version,
             'metadata': metadata,
             'spec': template_spec

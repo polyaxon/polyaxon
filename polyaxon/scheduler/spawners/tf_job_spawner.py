@@ -3,7 +3,7 @@ from scheduler.spawners.templates import kubeflow
 
 
 class TFJobSpawner(KFExperimentSpawner):
-    GROUP = kubeflow.TF_JOB_KIND
+    KIND = kubeflow.TF_JOB_KIND
     VERSION = kubeflow.TF_JOB_VERSION
     PLURAL = kubeflow.TF_JOB_PLURAL
     SPEC = kubeflow.TF_SPEC
