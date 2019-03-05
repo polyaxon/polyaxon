@@ -12,12 +12,11 @@ from polyaxon_schemas.ml.losses import AbsoluteDifferenceConfig, MeanSquaredErro
 from polyaxon_schemas.ml.models import ClassifierConfig, GeneratorConfig, RegressorConfig
 from polyaxon_schemas.ml.optimizers import AdamConfig
 from polyaxon_schemas.ml.processing.pipelines import TFRecordImagePipelineConfig
-from polyaxon_schemas.utils import ExperimentFramework, SearchAlgorithms, TaskType
 from polyaxon_schemas.ops.build import BuildConfig
 from polyaxon_schemas.ops.environments import (
     EnvironmentConfig,
     K8SResourcesConfig,
-    PodResourcesConfig,
+    PodResourcesConfig
 )
 from polyaxon_schemas.ops.hptuning import EarlyStoppingMetricConfig, HPTuningConfig
 from polyaxon_schemas.ops.logging import LoggingConfig
@@ -30,6 +29,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     PytorchSpecification,
     TensorflowSpecification
 )
+from polyaxon_schemas.utils import ExperimentFramework, SearchAlgorithms, TaskType
 
 
 class TestPolyaxonfile(TestCase):

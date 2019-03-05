@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError, fields, validates_schema, validate
+from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import UUID, FloatOrStr, IntOrStr, NotebookBackend, ExperimentBackend, \
-    ExperimentFramework
+from polyaxon_schemas.utils import (
+    UUID,
+    ExperimentBackend,
+    ExperimentFramework,
+    FloatOrStr,
+    IntOrStr,
+    NotebookBackend
+)
+
+# pylint:disable=too-many-lines
 
 
 class TensorflowClusterSchema(BaseSchema):
