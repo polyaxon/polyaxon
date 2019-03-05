@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.run_exec import RunConfig
+from polyaxon_schemas.ops.run_exec import RunConfig
 
 
 class TestRunConfigs(TestCase):

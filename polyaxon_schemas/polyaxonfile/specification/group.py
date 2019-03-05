@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 import copy
 import six
 
-from polyaxon_schemas.environments import PersistenceConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.ops.environments import PersistenceConfig
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification

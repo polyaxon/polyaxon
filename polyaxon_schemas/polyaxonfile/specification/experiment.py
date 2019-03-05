@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.environments import ExperimentEnvironmentConfig
+from polyaxon_schemas.ops.environments import ExperimentEnvironmentConfig
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,

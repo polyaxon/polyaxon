@@ -7,7 +7,7 @@ from unittest import TestCase
 
 from marshmallow.exceptions import ValidationError
 
-from polyaxon_schemas.matrix import MatrixConfig
+from polyaxon_schemas.ops.matrix import MatrixConfig
 
 
 class TestMatrixConfigs(TestCase):

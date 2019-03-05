@@ -7,7 +7,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.matrix import MatrixConfig
+from polyaxon_schemas.ops.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import (
     AcquisitionFunctions,

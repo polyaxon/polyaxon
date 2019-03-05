@@ -3,14 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
-from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.hptuning import HPTuningConfig
-from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.ml.eval import EvalConfig
 from polyaxon_schemas.ml.models import ModelConfig
 from polyaxon_schemas.ml.train import TrainConfig
-from polyaxon_schemas.run_exec import RunConfig
+from polyaxon_schemas.ops.build import BuildConfig
+from polyaxon_schemas.ops.hptuning import HPTuningConfig
+from polyaxon_schemas.ops.logging import LoggingConfig
+from polyaxon_schemas.ops.run_exec import RunConfig
 
 
 def validate_headers(spec, data):

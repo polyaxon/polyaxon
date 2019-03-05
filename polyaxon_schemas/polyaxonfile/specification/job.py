@@ -6,10 +6,10 @@ from collections import Mapping
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.ops.run_exec import RunConfig
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.run_exec import RunConfig
 
 
 class JobSpecification(BuildSpecification):

@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.logging import LoggingConfig
+from polyaxon_schemas.ops.logging import LoggingConfig
 
 
 class TestLoggingConfigs(TestCase):

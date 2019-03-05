@@ -6,7 +6,7 @@ from unittest import TestCase
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.environments import (
+from polyaxon_schemas.ops.environments import (
     EnvironmentConfig,
     ExperimentEnvironmentConfig,
     GPUOptionsConfig,

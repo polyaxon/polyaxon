@@ -6,7 +6,7 @@ from unittest import TestCase
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.hptuning import (
+from polyaxon_schemas.ops.hptuning import (
     BOConfig,
     EarlyStoppingMetricConfig,
     GaussianProcessConfig,

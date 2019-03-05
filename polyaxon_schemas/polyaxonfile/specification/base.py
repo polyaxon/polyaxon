@@ -9,9 +9,9 @@ import rhea
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
-from polyaxon_schemas.environments import EnvironmentConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.operators import ForConfig, IfConfig
+from polyaxon_schemas.ops.environments import EnvironmentConfig
+from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.utils import cached_property
