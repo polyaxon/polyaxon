@@ -3,12 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
+from hestia.cached_property import cached_property
+
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.matrix import MatrixConfig
-from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import (
     AcquisitionFunctions,
     EarlyStoppingPolicy,

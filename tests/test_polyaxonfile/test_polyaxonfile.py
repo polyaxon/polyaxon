@@ -22,8 +22,8 @@ from polyaxon_schemas.ops.hptuning import EarlyStoppingMetricConfig, HPTuningCon
 from polyaxon_schemas.ops.logging import LoggingConfig
 from polyaxon_schemas.ops.matrix import MatrixConfig
 from polyaxon_schemas.ops.run_exec import RunConfig
-from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
-from polyaxon_schemas.polyaxonfile.specification.frameworks import (
+from polyaxon_schemas.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,

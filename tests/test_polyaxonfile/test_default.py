@@ -5,17 +5,17 @@ import tempfile
 
 from unittest import TestCase
 
-from polyaxon_schemas.polyaxonfile.default import (
+from polyaxon_schemas.polyaxonfile import (
     DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
-    get_default_polyaxonfile
+    PolyaxonFile
 )
 
 
 class TestDefaultFile(TestCase):
     def test_default_not_found(self):
         path = tempfile.mkdtemp()
-        assert get_default_polyaxonfile(path=path) is None
+        assert PolyaxonFile.check_default_path(path=path) is None
 
     def test_polyaxon_found(self):
         def create_file(path, filename, ext):
@@ -26,4 +26,4 @@ class TestDefaultFile(TestCase):
             for ext in DEFAULT_POLYAXON_FILE_EXTENSION:
                 path = tempfile.mkdtemp()
                 create_file(path, filename, ext)
-                assert get_default_polyaxonfile(path=path)
+                assert PolyaxonFile.check_default_path(path=path)

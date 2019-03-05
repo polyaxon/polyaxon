@@ -6,7 +6,7 @@ import os
 from unittest import TestCase
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.polyaxonfile.specification import (
+from polyaxon_schemas.specs import (
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,

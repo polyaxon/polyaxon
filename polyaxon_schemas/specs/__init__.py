@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
-from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
-from polyaxon_schemas.polyaxonfile.specification.group import GroupSpecification
-from polyaxon_schemas.polyaxonfile.specification.job import JobSpecification
-from polyaxon_schemas.polyaxonfile.specification.plugin import (
+from polyaxon_schemas.specs.build import BuildSpecification
+from polyaxon_schemas.specs.experiment import ExperimentSpecification
+from polyaxon_schemas.specs.group import GroupSpecification
+from polyaxon_schemas.specs.job import JobSpecification
+from polyaxon_schemas.specs.plugin import (
     NotebookSpecification,
     TensorboardSpecification
 )

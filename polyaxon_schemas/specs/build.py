@@ -3,12 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from hestia.cached_property import cached_property
+
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.build import BuildConfig
-from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.specs.base import BaseSpecification
+
 
 
 class BuildSpecification(BaseSpecification):
@@ -22,6 +24,8 @@ class BuildSpecification(BaseSpecification):
         BUILD: defines the build step where the user can set a docker image definition
     """
     _SPEC_KIND = BaseSpecification._BUILD
+
+    HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND, )
 
     REQUIRED_SECTIONS = BaseSpecification.REQUIRED_SECTIONS + (
         BaseSpecification.BUILD,

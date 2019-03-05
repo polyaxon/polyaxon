@@ -3,13 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from hestia.cached_property import cached_property
+
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.run_exec import RunConfig
-from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
-from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.specs.base import BaseSpecification
+from polyaxon_schemas.specs.build import BuildSpecification
 
 
 class JobSpecification(BuildSpecification):

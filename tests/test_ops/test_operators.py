@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
-from polyaxon_schemas.polyaxonfile.parser import Parser
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
+from polyaxon_schemas.specs.libs.parser import Parser
+from polyaxon_schemas.specs import ExperimentSpecification
 
 
 class TestOperatorConfigs(TestCase):

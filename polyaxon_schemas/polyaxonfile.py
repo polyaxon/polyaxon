@@ -8,8 +8,22 @@ import rhea
 from hestia.list_utils import to_list
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.polyaxonfile.specification import SPECIFICATION_BY_KIND
-from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
+from polyaxon_schemas.specs import SPECIFICATION_BY_KIND
+from polyaxon_schemas.specs.base import BaseSpecification
+
+DEFAULT_POLYAXON_FILE_NAME = [
+    'polyaxon',
+    'polyaxonci',
+    'polyaxon-ci',
+    'polyaxon.ci',
+    'polyaxonfile',
+]
+
+DEFAULT_POLYAXON_FILE_EXTENSION = [
+    'yaml',
+    'yml',
+    'json'
+]
 
 
 class PolyaxonFile(object):
@@ -31,3 +45,12 @@ class PolyaxonFile(object):
     @property
     def filenames(self):
         return self._filenames
+
+    @staticmethod
+    def check_default_path(path):
+        path = os.path.abspath(path)
+        for filename in DEFAULT_POLYAXON_FILE_NAME:
+            for ext in DEFAULT_POLYAXON_FILE_EXTENSION:
+                filepath = os.path.join(path, '{}.{}'.format(filename, ext))
+                if os.path.isfile(filepath):
+                    return filepath

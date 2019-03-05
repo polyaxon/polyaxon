@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from hestia.cached_property import cached_property
+
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.environments import NotebookEnvironmentConfig
-from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
-from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.specs.base import BaseSpecification
+from polyaxon_schemas.specs.build import BuildSpecification
 
 
 class NotebookSpecification(BuildSpecification):

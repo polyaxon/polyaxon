@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from hestia.cached_property import cached_property
+
 from polyaxon_schemas.ops.environments import ExperimentEnvironmentConfig
-from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
-from polyaxon_schemas.polyaxonfile.specification.frameworks import (
+from polyaxon_schemas.specs.base import BaseSpecification
+from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,
     TensorflowSpecification
 )
-from polyaxon_schemas.polyaxonfile.specification.job import JobSpecification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.specs.job import JobSpecification
 from polyaxon_schemas.utils import ExperimentFramework, TaskType
 
 
