@@ -7,12 +7,12 @@ import six
 from hestia.cached_property import cached_property
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.ops.environments import PersistenceConfig
-from polyaxon_schemas.specs.libs import validator
-from polyaxon_schemas.specs.libs.parser import Parser
+from polyaxon_schemas.ops.environments.persistence import PersistenceConfig
 from polyaxon_schemas.specs.base import BaseSpecification
 from polyaxon_schemas.specs.build import BuildSpecification
 from polyaxon_schemas.specs.experiment import ExperimentSpecification
+from polyaxon_schemas.specs.libs import validator
+from polyaxon_schemas.specs.libs.parser import Parser
 from polyaxon_schemas.utils import SearchAlgorithms
 
 

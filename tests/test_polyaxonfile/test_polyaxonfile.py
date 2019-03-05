@@ -13,11 +13,8 @@ from polyaxon_schemas.ml.models import ClassifierConfig, GeneratorConfig, Regres
 from polyaxon_schemas.ml.optimizers import AdamConfig
 from polyaxon_schemas.ml.processing.pipelines import TFRecordImagePipelineConfig
 from polyaxon_schemas.ops.build import BuildConfig
-from polyaxon_schemas.ops.environments import (
-    EnvironmentConfig,
-    K8SResourcesConfig,
-    PodResourcesConfig
-)
+from polyaxon_schemas.ops.environments.base import EnvironmentConfig
+from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.hptuning import EarlyStoppingMetricConfig, HPTuningConfig
 from polyaxon_schemas.ops.logging import LoggingConfig
 from polyaxon_schemas.ops.matrix import MatrixConfig
@@ -104,23 +101,11 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.tensorflow.n_ps == 10
 
         # check properties for returning worker configs and resources
-        assert spec.environment.tensorflow.worker_configs == {}
-        assert spec.environment.tensorflow.ps_configs == {}
         assert spec.environment.tensorflow.worker_resources == {}
         assert spec.environment.tensorflow.ps_resources == {}
 
         cluster, is_distributed = spec.cluster_def
 
-        assert TensorflowSpecification.get_worker_configs(
-            environment=spec.environment,
-            cluster=cluster,
-            is_distributed=is_distributed
-        ) == {}
-        assert TensorflowSpecification.get_ps_configs(
-            environment=spec.environment,
-            cluster=cluster,
-            is_distributed=is_distributed
-        ) == {}
         assert TensorflowSpecification.get_worker_resources(
             environment=spec.environment,
             cluster=cluster,
@@ -194,7 +179,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.tensorflow.default_ps_resources.cpu.requests == 2
         assert spec.environment.tensorflow.default_ps_resources.cpu.limits == 4
 
-        assert spec.environment.tensorflow.ps_configs == {}
         assert spec.environment.tensorflow.ps_node_selectors == {}
         assert isinstance(spec.environment.tensorflow.ps_tolerations[7], list)
         assert spec.environment.tensorflow.ps_tolerations[7] == [{
@@ -217,11 +201,6 @@ class TestPolyaxonfile(TestCase):
         assert set([i['foo'] for i in worker_node_selectors.values()]) == {
             spec.environment.tensorflow.default_worker_node_selector['foo'],
             spec.environment.tensorflow.worker_node_selectors[3]['foo']}
-        assert TensorflowSpecification.get_ps_configs(
-            environment=spec.environment,
-            cluster=cluster,
-            is_distributed=is_distributed
-        ) == {}
 
         assert TensorflowSpecification.get_worker_resources(
             environment=spec.environment,

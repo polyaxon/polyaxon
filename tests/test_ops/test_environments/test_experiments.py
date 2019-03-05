@@ -6,179 +6,22 @@ from unittest import TestCase
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.environments import (
-    EnvironmentConfig,
+from polyaxon_schemas.ops.environments.experiments import (
     ExperimentEnvironmentConfig,
-    GPUOptionsConfig,
     HorovodClusterConfig,
     HorovodConfig,
-    K8SContainerResourcesConfig,
-    K8SResourcesConfig,
     MXNetClusterConfig,
     MXNetConfig,
-    NotebookEnvironmentConfig,
-    PodResourcesConfig,
     PytorchClusterConfig,
     PytorchConfig,
-    SessionConfig,
     TensorflowClusterConfig,
-    TensorflowConfig,
-    TFRunConfig
+    TensorflowConfig
 )
-from polyaxon_schemas.utils import TaskType
+from polyaxon_schemas.ops.environments.legacy import GPUOptionsConfig, SessionConfig, TFRunConfig
+from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 
 
-class TestEnvironmentsConfigs(TestCase):
-    def test_k8s_resources_config(self):
-        config_dict = {
-            'requests': 0.8,
-            'limits': 1,
-        }
-        config = K8SResourcesConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-    def test_container_resources_config(self):
-        config_dict = {
-                'requests': {
-                    'cpu': 0.8,
-                    'gpu': 2,
-                    'tpu': 2,
-                    'memory': 265
-                },
-                'limits': {
-                    'cpu': 1,
-                    'gpu': 4,
-                    'tpu': 4,
-                    'memory': 512
-                }
-            }
-        config = K8SContainerResourcesConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        config_dict = {
-            'requests': {
-                'cpu': '800m',
-                'gpu': 2,
-                'tpu': 2,
-                'memory': '100Ki'
-            },
-            'limits': {
-                'cpu': 1,
-                'tpu': 4,
-                'memory': '100Mi'
-            }
-        }
-        config = K8SContainerResourcesConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        config_dict = {
-            'requests': {
-                'cpu': '800m',
-                'tpu': 2,
-                'memory': '100Ki'
-            },
-            'limits': {
-                'cpu': 1,
-            }
-        }
-        config = K8SContainerResourcesConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        config_dict = {'limits': {'cpu': 0.1}}
-        config = K8SContainerResourcesConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-    def test_pod_resources_config(self):
-        config_dict = {
-            'cpu': {
-                'requests': 0.8,
-                'limits': 1
-            },
-            'gpu': {
-                'requests': 2,
-                'limits': 4
-            },
-            'tpu': {
-                'requests': 2,
-                'limits': 4
-            },
-            'memory': {
-                'requests': 265,
-                'limits': 512
-            },
-        }
-        config = PodResourcesConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-    def test_pod_resources_add(self):
-        config_dict1 = {
-            'cpu': {
-                'requests': 0.8,
-            },
-            'gpu': {
-                'requests': 2,
-            },
-            'tpu': {
-                'requests': 2,
-                'limits': 4
-            },
-            'memory': {
-                'requests': 200,
-                'limits': 300
-            },
-        }
-
-        config_dict2 = {
-            'gpu': {
-                'limits': 4
-            },
-            'tpu': {
-                'requests': 2,
-            },
-            'memory': {
-                'requests': 300,
-                'limits': 200
-            },
-        }
-        config1 = PodResourcesConfig.from_dict(config_dict1)
-        config2 = PodResourcesConfig.from_dict(config_dict2)
-
-        config = config1 + config2
-        assert config.cpu.to_dict() == {'requests': 0.8, 'limits': None}
-        assert config.memory.to_dict() == {'requests': 500, 'limits': 500}
-        assert config.gpu.to_dict() == {'requests': 2, 'limits': 4}
-        assert config.tpu.to_dict() == {'requests': 4, 'limits': 4}
-
-    def test_gpu_options_config(self):
-        config_dict = {
-            'gpu_memory_fraction': 0.8,
-            'allow_growth': False,
-            'per_process_gpu_memory_fraction': 0.4,
-        }
-        config = GPUOptionsConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-    def test_session_config(self):
-        config_dict = {
-            'log_device_placement': False,
-            'allow_soft_placement': False,
-            'intra_op_parallelism_threads': 2,
-            'inter_op_parallelism_threads': 3,
-            'gpu_options': GPUOptionsConfig().to_dict(),
-        }
-        config = SessionConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-
-    def test_indexed_session(self):
-        config_dict = {
-            'log_device_placement': False,
-            'allow_soft_placement': False,
-            'intra_op_parallelism_threads': 2,
-            'inter_op_parallelism_threads': 3,
-            'gpu_options': GPUOptionsConfig().to_dict(),
-        }
-        config = SessionConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+class TestExperimentEnvironmentsConfigs(TestCase):
 
     def test_tensorflow_cluster_config(self):
         config_dict = {
@@ -232,52 +75,19 @@ class TestEnvironmentsConfigs(TestCase):
         config = MXNetClusterConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-    def test_run_config(self):
-        config_dict = {
-            'tf_random_seed': 100,
-            'save_summary_steps': 100,
-            'save_checkpoints_secs': 600,
-            'save_checkpoints_steps': None,
-            'keep_checkpoint_max': 5,
-            'keep_checkpoint_every_n_hours': 10000,
-        }
-        config = TFRunConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-
-        # Add session config
-        config_dict['session'] = SessionConfig().to_dict()
-        config = TFRunConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-
-        # Add cluster config
-        config_dict['cluster'] = TensorflowClusterConfig(
-            worker=[TaskType.WORKER], ps=[TaskType.PS]
-        ).to_dict()
-        config = TFRunConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-
     def test_tensorflow_config(self):
         config_dict = {
             'n_workers': 10,
             'n_ps': 5,
-            'delay_workers_by_global_step': False
         }
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add run config
         config_dict['run_config'] = TFRunConfig().to_dict()
-        config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        # Add default worker session config
-        config_dict['default_worker'] = {
-            'config': SessionConfig(
-                intra_op_parallelism_threads=1,
-                inter_op_parallelism_threads=3).to_dict()
-        }
-        config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        with self.assertRaises(ValidationError):
+            TensorflowConfig.from_dict(config_dict)
+        del config_dict['run_config']
 
         # Add default worker resources
         config_dict['default_worker'] = {
@@ -286,16 +96,6 @@ class TestEnvironmentsConfigs(TestCase):
                 gpu=K8SResourcesConfig(2, 4),
                 tpu=K8SResourcesConfig(2, 8)
             ).to_dict(),
-        }
-        config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_light_dict())
-
-        # Add default ps session config
-        config_dict['default_ps'] = {
-            'config': SessionConfig(
-                intra_op_parallelism_threads=0,
-                inter_op_parallelism_threads=2
-            ).to_dict()
         }
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
@@ -309,36 +109,12 @@ class TestEnvironmentsConfigs(TestCase):
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
 
-        # Adding custom config for worker 3
-        config_dict['worker'] = [{
-            'index': 3,
-            'config': SessionConfig(
-                gpu_options=GPUOptionsConfig(gpu_memory_fraction=0.4),
-                intra_op_parallelism_threads=8,
-                inter_op_parallelism_threads=8
-            ).to_dict()
-        }]
-        config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_light_dict())
-
         # Adding custom resources for worker 4
         config_dict['worker'] = [{
             'index': 4,
             'resources': PodResourcesConfig(
                 cpu=K8SResourcesConfig(0.5, 1),
                 memory=K8SResourcesConfig(256, 400),
-            ).to_dict()
-        }]
-        config = TensorflowConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_light_dict())
-
-        # Adding custom config for ps 2
-        config_dict['ps'] = [{
-            'index': 2,
-            'config': SessionConfig(
-                gpu_options=GPUOptionsConfig(allow_growth=False),
-                intra_op_parallelism_threads=1,
-                inter_op_parallelism_threads=1
             ).to_dict()
         }]
         config = TensorflowConfig.from_dict(config_dict)
@@ -454,47 +230,6 @@ class TestEnvironmentsConfigs(TestCase):
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-    def test_environment_config(self):
-        config_dict = {
-            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict()
-        }
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        # Add node selectors
-        config_dict['node_selector'] = {
-            'polyaxon.com': 'master',
-        }
-
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        # Add persistence
-        config_dict['persistence'] = {
-            'data': ['data1', 'data2'],
-            'outputs': 'outputs1',
-        }
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        # Add outputs
-        config_dict['outputs'] = {
-            'jobs': ['data1.dfs', 34, 'data2'],
-            'experiments': [1, 'outputs1', 2, 3],
-        }
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        # Add secrets
-        config_dict['secret_refs'] = ['secret1', 'secret2']
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        # Add configmaps
-        config_dict['configmap_refs'] = ['configmap1', 'configmap2']
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
     def test_experiment_environment_config(self):
         config_dict = {
             'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
@@ -558,22 +293,3 @@ class TestEnvironmentsConfigs(TestCase):
 
         with self.assertRaises(ValidationError):
             ExperimentEnvironmentConfig.from_dict(config_dict)
-
-    def test_notebook_environment_config(self):
-        config_dict = {
-            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
-        }
-        config = NotebookEnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        config_dict['backend'] = 'notebook'
-        config = NotebookEnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        config_dict['backend'] = 'lab'
-        config = NotebookEnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        config_dict['backend'] = 'foo'
-        with self.assertRaises(ValidationError):
-            NotebookEnvironmentConfig.from_dict(config_dict)

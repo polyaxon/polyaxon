@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import six
 
 from hestia.cached_property import cached_property
-
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema

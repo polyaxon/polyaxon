@@ -11,7 +11,7 @@ from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.ops.environments import EnvironmentConfig
+from polyaxon_schemas.ops.environments.base import EnvironmentConfig
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
@@ -76,6 +76,7 @@ class BaseSpecification(object):
     }
 
     ENVIRONMENT_CONFIG = EnvironmentConfig
+    CONFIG = None
 
     def __init__(self, values):
         self._values = to_list(values)
@@ -100,6 +101,8 @@ class BaseSpecification(object):
 
     def _set_parsed_data(self):
         parsed_data = Parser.parse(self, self._data, None)
+        if self.CONFIG:
+            print(self.CONFIG.from_dict(parsed_data))
         self._validated_data = validator.validate(spec=self, data=parsed_data)
         self._parsed_data = parsed_data
 

@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.ops.environments.base import EnvironmentSchema
 from polyaxon_schemas.utils import BuildBackend
 
 
@@ -37,6 +38,7 @@ def validate_build(image, dockerfile):
 
 
 class BuildSchema(BaseSchema):
+    tags = fields.List(fields.Str(), allow_none=None)
     backend = fields.Str(allow_none=True)
     dockerfile = fields.Str(allow_none=True)
     context = fields.Str(allow_none=True)
@@ -47,6 +49,7 @@ class BuildSchema(BaseSchema):
     commit = fields.Str(allow_none=True)
     branch = fields.Str(allow_none=True)
     nocache = fields.Boolean(allow_none=True)
+    environment = fields.Nested(EnvironmentSchema, allow_none=True)
 
     @staticmethod
     def schema_config():

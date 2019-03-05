@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
-from polyaxon_schemas.ops.environments import PodResourcesConfig
+from polyaxon_schemas.ops.environments.resources import PodResourcesConfig
 from polyaxon_schemas.specs.utils import (
     get_task_configs,
     get_task_job_affinities,
