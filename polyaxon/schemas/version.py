@@ -1,4 +1,4 @@
-from polyaxon_schemas.version import (  # noqa
+from polyaxon_schemas.api.version import (  # noqa
     ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,

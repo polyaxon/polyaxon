@@ -1,1 +1,1 @@
-from polyaxon_schemas.user import UserConfig  # noqa
+from polyaxon_schemas.api.user import UserConfig  # noqa

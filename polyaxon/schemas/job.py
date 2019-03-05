@@ -1,1 +1,1 @@
-from polyaxon_schemas.job import JobLabelConfig, JobLabelSchema  # noqa
+from polyaxon_schemas.ops.job import JobLabelConfig, JobLabelSchema  # noqa

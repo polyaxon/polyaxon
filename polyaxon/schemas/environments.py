@@ -1,4 +1,4 @@
-from polyaxon_schemas.environments import (  # noqa
+from polyaxon_schemas.ops.environments import (  # noqa
     HorovodClusterConfig,
     MXNetClusterConfig,
     OutputsConfig,

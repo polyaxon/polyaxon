@@ -1,4 +1,4 @@
-from polyaxon_schemas.hptuning import (  # noqa
+from polyaxon_schemas.ops.hptuning import (  # noqa
     BOConfig,
     EarlyStoppingMetricConfig,
     GaussianProcessConfig,
@@ -10,7 +10,7 @@ from polyaxon_schemas.hptuning import (  # noqa
     SearchMetricConfig,
     UtilityFunctionConfig
 )
-from polyaxon_schemas.matrix import MatrixConfig  # noqa
+from polyaxon_schemas.ops.matrix import MatrixConfig  # noqa
 from polyaxon_schemas.utils import (  # noqa
     AcquisitionFunctions,
     GaussianProcessesKernels,

@@ -1,1 +1,1 @@
-from polyaxon_schemas.environments import PodResourcesConfig  # noqa
+from polyaxon_schemas.ops.environments import PodResourcesConfig  # noqa

@@ -1,1 +1,1 @@
-from polyaxon_schemas.log_handler import LogHandlerConfig  # noqa
+from polyaxon_schemas.api.log_handler import LogHandlerConfig  # noqa

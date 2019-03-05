@@ -1,1 +1,1 @@
-from polyaxon_schemas.experiment import ContainerResourcesConfig  # noqa
+from polyaxon_schemas.api.experiment import ContainerResourcesConfig  # noqa

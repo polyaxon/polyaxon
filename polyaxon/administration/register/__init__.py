@@ -29,10 +29,11 @@ from administration.register import (
 def register(models=None):
     admin_register = site.register
     groups.register(admin_register)
+    tokens.register(admin_register)
+    users.register(admin_register)
+    projects.register(admin_register)
+
     if not models:
-        tokens.register(admin_register)
-        users.register(admin_register)
-        projects.register(admin_register)
         return
 
     if 'activitylogs' in models:
