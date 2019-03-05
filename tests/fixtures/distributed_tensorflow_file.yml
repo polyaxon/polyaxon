@@ -31,7 +31,8 @@ environment:
             values:
             - another-node-label-value
 
-  tensorflow:
+  framework: tensorflow
+  distribution:
     n_workers: 5
     n_ps: 10
 

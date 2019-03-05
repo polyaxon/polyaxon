@@ -498,7 +498,8 @@ class TestEnvironmentsConfigs(TestCase):
     def test_experiment_environment_config(self):
         config_dict = {
             'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
-            'tensorflow': {
+            'framework': 'tensorflow',
+            'distribution': {
                 'n_workers': 10,
                 'n_ps': 5,
             }
@@ -506,8 +507,8 @@ class TestEnvironmentsConfigs(TestCase):
         config = ExperimentEnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add mxnet should raise
-        config_dict['mxnet'] = {
+        # Add some field should raise
+        config_dict['foo'] = {
             'n_workers': 10,
             'n_ps': 5,
         }
@@ -515,36 +516,48 @@ class TestEnvironmentsConfigs(TestCase):
         with self.assertRaises(ValidationError):
             ExperimentEnvironmentConfig.from_dict(config_dict)
 
-        # Removing tensorflow should pass for mxnet
-        del config_dict['tensorflow']
+        del config_dict['foo']
+
+        # Removing framework tensorflow should raise
+        del config_dict['framework']
+        with self.assertRaises(ValidationError):
+            ExperimentEnvironmentConfig.from_dict(config_dict)
+
+        # Using unknown framework should raise
+        config_dict['framework'] = 'foo'
+        with self.assertRaises(ValidationError):
+            ExperimentEnvironmentConfig.from_dict(config_dict)
+
+        # Using known framework
+        config_dict['framework'] = 'mxnet'
         config = ExperimentEnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding horovod should raise
-        config_dict['horovod'] = {
+        config_dict['framework'] = 'horovod'
+        with self.assertRaises(ValidationError):
+            ExperimentEnvironmentConfig.from_dict(config_dict)
+
+        # Setting correct horovod distribution should pass
+        config_dict['distribution'] = {
             'n_workers': 5
+        }
+        config = ExperimentEnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Adding pytorch should pass
+        config_dict['framework'] = 'pytorch'
+        config = ExperimentEnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Setting wrong pytorch distribution should raise
+        config_dict['distribution'] = {
+            'n_workers': 5,
+            'n_ps': 1
         }
 
         with self.assertRaises(ValidationError):
             ExperimentEnvironmentConfig.from_dict(config_dict)
-
-        # Removing mxnet should pass for horovod
-        del config_dict['mxnet']
-        config = ExperimentEnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        # Adding pytorch should raise
-        config_dict['pytorch'] = {
-            'n_workers': 5
-        }
-
-        with self.assertRaises(ValidationError):
-            ExperimentEnvironmentConfig.from_dict(config_dict)
-
-        # Removing horovod should pass for pytorch
-        del config_dict['horovod']
-        config = ExperimentEnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
 
     def test_notebook_environment_config(self):
         config_dict = {

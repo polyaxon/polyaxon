@@ -31,7 +31,8 @@ environment:
             values:
             - another-node-label-value
 
-  horovod:
+  framework: horovod
+  distribution:
     n_workers: 5
 
     default_worker:

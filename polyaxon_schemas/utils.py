@@ -562,6 +562,13 @@ class BuildBackend(object):
     VALUES = [NATIVE, KANIKO]
 
 
+class ExperimentBackend(object):
+    NATIVE = 'native'
+    KUBEFLOW = 'kubeflow'
+
+    VALUES = [NATIVE, KUBEFLOW]
+
+
 class NotebookBackend(object):
     NOTEBOOK = 'notebook'
     LAB = 'lab'
@@ -569,7 +576,7 @@ class NotebookBackend(object):
     VALUES = [NOTEBOOK, LAB]
 
 
-class Frameworks(object):
+class ExperimentFramework(object):
     TENSORFLOW = 'tensorflow'
     MXNET = 'mxnet'
     HOROVOD = 'horovod'

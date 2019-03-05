@@ -11,7 +11,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
 )
 from polyaxon_schemas.polyaxonfile.specification.job import JobSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.utils import Frameworks, TaskType
+from polyaxon_schemas.utils import ExperimentFramework, TaskType
 
 
 class ExperimentSpecification(JobSpecification):
@@ -70,16 +70,16 @@ class ExperimentSpecification(JobSpecification):
             return None
 
         if self.environment.tensorflow:
-            return Frameworks.TENSORFLOW
+            return ExperimentFramework.TENSORFLOW
 
         if self.environment.horovod:
-            return Frameworks.HOROVOD
+            return ExperimentFramework.HOROVOD
 
         if self.environment.mxnet:
-            return Frameworks.MXNET
+            return ExperimentFramework.MXNET
 
         if self.environment.pytorch:
-            return Frameworks.PYTORCH
+            return ExperimentFramework.PYTORCH
 
     @cached_property
     def cluster_def(self):

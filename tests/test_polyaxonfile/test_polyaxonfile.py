@@ -31,7 +31,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification
 )
 from polyaxon_schemas.run_exec import RunConfig
-from polyaxon_schemas.utils import Frameworks, SearchAlgorithms, TaskType
+from polyaxon_schemas.utils import ExperimentFramework, SearchAlgorithms, TaskType
 
 
 class TestPolyaxonfile(TestCase):
@@ -96,18 +96,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_runnable
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.framework == Frameworks.TENSORFLOW
+        assert spec.framework == ExperimentFramework.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
-        assert spec.environment.tensorflow.delay_workers_by_global_step is True
-        assert isinstance(spec.environment.tensorflow.run_config, TFRunConfig)
-        assert spec.environment.tensorflow.run_config.tf_random_seed == 100
-        assert spec.environment.tensorflow.run_config.save_summary_steps == 100
-        assert spec.environment.tensorflow.run_config.save_checkpoints_secs == 60
-        assert isinstance(spec.environment.tensorflow.run_config.session, SessionConfig)
-        assert spec.environment.tensorflow.run_config.session.allow_soft_placement is True
-        assert spec.environment.tensorflow.run_config.session.intra_op_parallelism_threads == 2
-        assert spec.environment.tensorflow.run_config.session.inter_op_parallelism_threads == 2
 
         # check properties for returning worker configs and resources
         assert spec.environment.tensorflow.worker_configs == {}
@@ -165,47 +156,35 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.framework == Frameworks.TENSORFLOW
+        assert spec.framework == ExperimentFramework.TENSORFLOW
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
         assert spec.secret_refs == ['secret1', 'secret2']
         assert spec.configmap_refs == ['configmap1', 'configmap2']
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
-        assert spec.environment.tensorflow.delay_workers_by_global_step is True
-        assert isinstance(spec.environment.tensorflow.run_config, TFRunConfig)
-        assert spec.environment.tensorflow.run_config.tf_random_seed == 100
-        assert spec.environment.tensorflow.run_config.save_summary_steps == 100
-        assert spec.environment.tensorflow.run_config.save_checkpoints_secs == 60
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(spec.environment.tensorflow.run_config.session, SessionConfig)
-        assert spec.environment.tensorflow.run_config.session.allow_soft_placement is True
-        assert spec.environment.tensorflow.run_config.session.intra_op_parallelism_threads == 2
-        assert spec.environment.tensorflow.run_config.session.inter_op_parallelism_threads == 2
-
-        assert isinstance(spec.environment.tensorflow.default_worker_config, SessionConfig)
-        assert spec.environment.tensorflow.default_worker_config.allow_soft_placement is True
-        assert spec.environment.tensorflow.default_worker_config.intra_op_parallelism_threads == 1
-        assert spec.environment.tensorflow.default_worker_config.inter_op_parallelism_threads == 1
+        assert spec.environment.tensorflow.default_worker_node_selector == {
+            'foo': True
+        }
 
         assert spec.environment.tensorflow.worker_resources == {}
-        assert spec.environment.tensorflow.worker_node_selectors == {}
         assert spec.environment.tensorflow.worker_affinities == {}
+        assert isinstance(spec.environment.tensorflow.worker_node_selectors[3], dict)
+        assert spec.environment.tensorflow.worker_node_selectors[3] == {
+            'foo': False
+        }
         assert isinstance(spec.environment.tensorflow.worker_tolerations[4], list)
         assert spec.environment.tensorflow.worker_tolerations[4] == [{
             'key': 'key',
             'operator': 'Exists',
             'effect': 'NoSchedule',
         }]
-        assert isinstance(spec.environment.tensorflow.worker_configs[3], SessionConfig)
-        assert spec.environment.tensorflow.worker_configs[3].allow_soft_placement is False
-        assert spec.environment.tensorflow.worker_configs[3].intra_op_parallelism_threads == 5
-        assert spec.environment.tensorflow.worker_configs[3].inter_op_parallelism_threads == 5
 
         assert isinstance(spec.environment.tensorflow.default_ps_resources, PodResourcesConfig)
         assert isinstance(spec.environment.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
@@ -226,15 +205,15 @@ class TestPolyaxonfile(TestCase):
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
-        worker_configs = TensorflowSpecification.get_worker_configs(
+        worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
             environment=spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_configs) == spec.environment.tensorflow.n_workers
-        assert set(worker_configs.values()) == {
-            spec.environment.tensorflow.default_worker_config,
-            spec.environment.tensorflow.worker_configs[3]}
+        assert len(worker_node_selectors) == spec.environment.tensorflow.n_workers
+        assert set([i['foo'] for i in worker_node_selectors.values()]) == {
+            spec.environment.tensorflow.default_worker_node_selector['foo'],
+            spec.environment.tensorflow.worker_node_selectors[3]['foo']}
         assert TensorflowSpecification.get_ps_configs(
             environment=spec.environment,
             cluster=cluster,
@@ -609,7 +588,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_runnable
         assert spec.environment.node_selector is None
         assert spec.master_node_selector is None
-        assert spec.framework == Frameworks.TENSORFLOW
+        assert spec.framework == ExperimentFramework.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
 
@@ -736,7 +715,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.framework == Frameworks.TENSORFLOW
+        assert spec.framework == ExperimentFramework.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
 
@@ -844,7 +823,7 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.framework == Frameworks.HOROVOD
+        assert spec.framework == ExperimentFramework.HOROVOD
         assert spec.environment.horovod.n_workers == 5
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
@@ -930,7 +909,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.framework == Frameworks.HOROVOD
+        assert spec.framework == ExperimentFramework.HOROVOD
         assert spec.environment.horovod.n_workers == 5
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
@@ -1002,7 +981,7 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.framework == Frameworks.PYTORCH
+        assert spec.framework == ExperimentFramework.PYTORCH
         assert spec.environment.pytorch.n_workers == 5
 
         assert spec.environment.node_selector is None
@@ -1087,7 +1066,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.framework == Frameworks.PYTORCH
+        assert spec.framework == ExperimentFramework.PYTORCH
         assert spec.environment.pytorch.n_workers == 5
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
@@ -1159,7 +1138,7 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.framework == Frameworks.MXNET
+        assert spec.framework == ExperimentFramework.MXNET
         assert spec.environment.mxnet.n_workers == 5
         assert spec.environment.mxnet.n_ps == 10
 
@@ -1291,7 +1270,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
-        assert spec.framework == Frameworks.MXNET
+        assert spec.framework == ExperimentFramework.MXNET
         assert spec.environment.mxnet.n_workers == 5
         assert spec.environment.mxnet.n_ps == 10
 

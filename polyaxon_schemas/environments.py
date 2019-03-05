@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError, fields, validates_schema
+from marshmallow import ValidationError, fields, validates_schema, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import UUID, FloatOrStr, IntOrStr, NotebookBackend
+from polyaxon_schemas.utils import UUID, FloatOrStr, IntOrStr, NotebookBackend, ExperimentBackend, \
+    ExperimentFramework
 
 
 class TensorflowClusterSchema(BaseSchema):
@@ -684,9 +685,71 @@ class MXNetConfig(BaseConfig, FrameworkEnvironmentMixin):
         self.ps = ps
 
 
-def validate_frameworks(frameworks):
-    if sum([1 for f in frameworks if f is not None]) > 1:
-        raise ValidationError('Only one framework can be used.')
+class DistributionSchema(BaseSchema):
+    n_workers = fields.Int(allow_none=True)
+    n_ps = fields.Int(allow_none=True)
+    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
+    default_ps = fields.Nested(PodEnvironmentSchema, allow_none=True)
+    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+    ps = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return DistributionConfig
+
+
+class DistributionConfig(BaseConfig):
+    """
+    Distribution environment config.
+
+    Args:
+        n_workers: `int`. The number of workers requested for training the model.
+        n_ps: `int`. The number of ps requested for training the model.
+        default_worker: `PodEnvironment`. The default pod environment to use for all workers.
+        default_ps: `PodEnvironment`. The default pod environment to use for all ps.
+        worker: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific worker.
+        ps: `list(PodEnvironment)`. The pod environment with index specified to use
+            for the specific ps.
+    """
+    IDENTIFIER = 'distribution'
+    SCHEMA = DistributionSchema
+    REDUCED_ATTRIBUTES = ['n_workers', 'n_ps', 'default_worker', 'default_ps', 'worker', 'ps']
+
+    def __init__(self,
+                 n_workers=None,
+                 n_ps=None,
+                 default_worker=None,
+                 default_ps=None,
+                 worker=None,
+                 ps=None,
+                 ):
+        self.n_workers = n_workers
+        self.n_ps = n_ps
+        self.default_worker = default_worker
+        self.default_ps = default_ps
+        self.worker = worker
+        self.ps = ps
+
+
+def validate_distribution(framework, distribution):
+    if framework and framework not in ExperimentFramework.VALUES:
+        raise ValidationError('Experiment framework `{}` not supported'.format(framework))
+
+    if distribution and not framework:
+        raise ValidationError(
+            'You must specify which framework to use for distributed experiments.')
+
+    config = distribution.to_light_dict() if isinstance(distribution, BaseConfig) else distribution
+
+    if framework == 'tensorflow':
+        TensorflowConfig.from_dict(config)
+    if framework == 'horovod':
+        HorovodConfig.from_dict(config)
+    if framework == 'mxnet':
+        MXNetConfig.from_dict(config)
+    if framework == 'pytorch':
+        PytorchConfig.from_dict(config)
 
 
 class PersistenceSchema(BaseSchema):
@@ -796,22 +859,23 @@ class EnvironmentConfig(PodEnvironmentConfig):
         )
 
 
+def validate_experiment_backend(backend):
+    if backend and backend not in ExperimentBackend.VALUES:
+        raise ValidationError('Experiment backend `{}` not supported'.format(backend))
+
+
 class ExperimentEnvironmentSchema(EnvironmentSchema):
-    tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
-    horovod = fields.Nested(HorovodSchema, allow_none=True)
-    mxnet = fields.Nested(MXNetSchema, allow_none=True)
-    pytorch = fields.Nested(PytorchSchema, allow_none=True)
+    framework = fields.Str(allow_none=True, validate=validate.OneOf(ExperimentFramework.VALUES))
+    backend = fields.Str(allow_none=True, validate=validate.OneOf(ExperimentBackend.VALUES))
+    distribution = fields.Nested(DistributionSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
         return ExperimentEnvironmentConfig
 
     @validates_schema
-    def validate_frameworks(self, data):
-        validate_frameworks([data.get('tensorflow'),
-                             data.get('mxnet'),
-                             data.get('pytorch'),
-                             data.get('horovod')])
+    def validate_distribution(self, data):
+        validate_distribution(data.get('framework'), data.get('distribution'))
 
 
 class ExperimentEnvironmentConfig(EnvironmentConfig):
@@ -826,10 +890,9 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
         node_selector: `dict`.
         affinity: `dict`.
         tolerations: `list(dict)`.
-        tensorflow: `TensorflowConfig`.
-        horovod: `HorovodConfig`.
-        pytorch: `PytorchConfig`.
-        mxnet: `MXNetConfig`.
+        backend: `str`.
+        framework: `str`.
+        distribution: `DistributionConfig`.
     """
     IDENTIFIER = 'environment'
     SCHEMA = ExperimentEnvironmentSchema
@@ -844,10 +907,9 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
                  node_selector=None,
                  affinity=None,
                  tolerations=None,
-                 tensorflow=None,
-                 horovod=None,
-                 pytorch=None,
-                 mxnet=None):
+                 framework=None,
+                 backend=None,
+                 distribution=None):
         super(ExperimentEnvironmentConfig, self).__init__(
             cluster_uuid=cluster_uuid,
             persistence=persistence,
@@ -859,11 +921,31 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
             affinity=affinity,
             tolerations=tolerations,
         )
-        validate_frameworks([tensorflow, horovod, pytorch, mxnet])
-        self.tensorflow = tensorflow
-        self.horovod = horovod
-        self.pytorch = pytorch
-        self.mxnet = mxnet
+        validate_experiment_backend(backend=backend)
+        self.framework = framework
+        self.backend = backend
+        validate_distribution(framework=framework, distribution=distribution)
+        self.distribution = distribution
+        self.tensorflow = self.get_tensorflow()
+        self.horovod = self.get_horovod()
+        self.mxnet = self.get_mxnet()
+        self.pytorch = self.get_pytorch()
+
+    def get_tensorflow(self):
+        if self.framework == ExperimentFramework.TENSORFLOW and self.distribution:
+            return TensorflowConfig.from_dict(self.distribution.to_light_dict())
+
+    def get_horovod(self):
+        if self.framework == ExperimentFramework.HOROVOD and self.distribution:
+            return HorovodConfig.from_dict(self.distribution.to_light_dict())
+
+    def get_mxnet(self):
+        if self.framework == ExperimentFramework.MXNET and self.distribution:
+            return MXNetConfig.from_dict(self.distribution.to_light_dict())
+
+    def get_pytorch(self):
+        if self.framework == ExperimentFramework.PYTORCH and self.distribution:
+            return PytorchConfig.from_dict(self.distribution.to_light_dict())
 
 
 def validate_notebook_backend(backend):
