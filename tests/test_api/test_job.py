@@ -7,7 +7,7 @@ from unittest import TestCase
 
 from hestia.tz_utils import local_now
 
-from polyaxon_schemas.job import BuildJobConfig, JobConfig, JobStatusConfig, TensorboardJobConfig
+from polyaxon_schemas.api.job import BuildJobConfig, JobConfig, JobStatusConfig, TensorboardJobConfig
 
 
 class TestJobConfigs(TestCase):

@@ -6,7 +6,7 @@ import uuid
 
 from unittest import TestCase
 
-from polyaxon_schemas.clusters import ClusterNodeConfig, NodeGPUConfig, PolyaxonClusterConfig
+from polyaxon_schemas.api.clusters import ClusterNodeConfig, NodeGPUConfig, PolyaxonClusterConfig
 
 
 class TestClusterConfigs(TestCase):

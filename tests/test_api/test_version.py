@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.version import (
+from polyaxon_schemas.api.version import (
     ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,

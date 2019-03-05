@@ -7,7 +7,7 @@ from unittest import TestCase
 
 from hestia.tz_utils import local_now
 
-from polyaxon_schemas.data import DataConfig, DataDetailsConfig, DatasetConfig
+from polyaxon_schemas.api.data import DataConfig, DataDetailsConfig, DatasetConfig
 
 
 class TestDataConfigs(TestCase):

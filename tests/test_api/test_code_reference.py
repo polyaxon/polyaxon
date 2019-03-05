@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.code_reference import CodeReferenceConfig
+from polyaxon_schemas.api.code_reference import CodeReferenceConfig
 
 
 class TestCodeReferenceConfigs(TestCase):

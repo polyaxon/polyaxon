@@ -7,7 +7,7 @@ from unittest import TestCase
 
 from hestia.tz_utils import local_now
 
-from polyaxon_schemas.experiment import (
+from polyaxon_schemas.api.experiment import (
     ContainerGPUResourcesConfig,
     ContainerResourcesConfig,
     ExperimentConfig,

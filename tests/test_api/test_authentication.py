@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
+from polyaxon_schemas.api.authentication import AccessTokenConfig, CredentialsConfig
 
 
 class TestAccessConfigs(TestCase):

@@ -9,8 +9,8 @@ from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ExperimentGroupConfig, GroupStatusConfig, ProjectConfig
+from polyaxon_schemas.api.experiment import ExperimentConfig
+from polyaxon_schemas.api.project import ExperimentGroupConfig, GroupStatusConfig, ProjectConfig
 
 
 class TestProjectConfigs(TestCase):

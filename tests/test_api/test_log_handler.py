@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.log_handler import LogHandlerConfig
+from polyaxon_schemas.api.log_handler import LogHandlerConfig
 
 
 class TestLogHandlerConfig(TestCase):
