@@ -27,6 +27,17 @@ having to check them out on your local machine first.
 N.B. Polyaxon supports public and private Bitbucket repos, you don't need to have a Bitbucket account
 to use code from public Bitbucket repositories.
 
+## Access token
+
+Bitbucket allows to create [app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html), 
+you can also create a user `polyaxon` with read only access to your organization repos, and use the username/password. 
+
+## Update your deployment config file and deploy/upgrade
+
+```yaml
+reposAccessToken: "username:password"
+```
+
 ## Setting an external repo for code tracking
 
 You need a project on polyaxon that it's not linked to a code repo yet:
@@ -45,15 +56,4 @@ If the project is private you need to add `--private` to the command to indicate
 
 ```bash
 polyaxon project -p project1 git --url="https://bitbucket.com/org/repo-name" --private
-```
-
-## Access token
-
-Bitbucket allows to create [app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html), 
-you can also create a user `polyaxon` with read only access to your organization repos, and use the username/password. 
-
-## Update your deployment config file and deploy/upgrade
-
-```yaml
-reposAccessToken: "username:password"
 ```

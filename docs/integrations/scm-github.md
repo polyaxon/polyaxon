@@ -27,26 +27,6 @@ having to check them out on your local machine first.
 N.B. Polyaxon supports public and private GitHub repos, you don't need to have a GitHub account
 to use code from public GitHub repositories. e.g. `https://github.com/polyaxon/polyaxon-quick-start`
 
-## Setting an external repo for code tracking
-
-You need a project on polyaxon that it's not linked to a code repo yet:
-
-```bash
-polyaxon project create --name=quick-start
-```
-
-And then you need set the git url:
-
-```bash
-polyaxon project -p project1 git --url="https://github.com/polyaxon/polyaxon-quick-start"
-```
-
-If the project is private you need to add `--private` to the command to indicate that the repo is private, i.e.
-
-```bash
-polyaxon project -p project1 git --url="https://github.com/polyaxon/polyaxon-quick-start" --private
-```
-
 ## Open GitHub Developer Settings
 At the bottom of the settings menu on the left, click Developer Settings.
 
@@ -78,4 +58,24 @@ you can click the blue icon next to the token to automatically copy it to the cl
 
 ```yaml
 reposAccessToken: TokenHashHere
+```
+
+## Setting an external repo for code tracking
+
+You need a project on polyaxon that it's not linked to a code repo yet:
+
+```bash
+polyaxon project create --name=quick-start
+```
+
+And then you need set the git url:
+
+```bash
+polyaxon project -p project1 git --url="https://github.com/polyaxon/polyaxon-quick-start"
+```
+
+If the project is private you need to add `--private` to the command to indicate that the repo is private, i.e.
+
+```bash
+polyaxon project -p project1 git --url="https://github.com/polyaxon/polyaxon-quick-start" --private
 ```
