@@ -331,7 +331,8 @@ exec_experiment_resources_content = """---
           requests: 100
           limits: 200
     
-      tensorflow:  
+      framework: tensorflow
+      distribution:  
         n_workers: 1
         n_ps: 1  
         

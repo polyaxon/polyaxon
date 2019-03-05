@@ -10,7 +10,7 @@ from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
-from schemas.frameworks import Frameworks
+from schemas.experiments import ExperimentFramework
 from schemas.tasks import TaskType
 from tests.utils import BaseTest
 
@@ -74,8 +74,8 @@ class TestExperimentScheduler(BaseTest):
         assert job.definition == definition
 
     def test_get_spawner_class(self):
-        assert get_spawner_class(Frameworks.TENSORFLOW) == TensorflowSpawner
-        assert get_spawner_class(Frameworks.HOROVOD) == HorovodSpawner
-        assert get_spawner_class(Frameworks.MXNET) == MXNetSpawner
-        assert get_spawner_class(Frameworks.PYTORCH) == PytorchSpawner
+        assert get_spawner_class(ExperimentFramework.TENSORFLOW) == TensorflowSpawner
+        assert get_spawner_class(ExperimentFramework.HOROVOD) == HorovodSpawner
+        assert get_spawner_class(ExperimentFramework.MXNET) == MXNetSpawner
+        assert get_spawner_class(ExperimentFramework.PYTORCH) == PytorchSpawner
         assert get_spawner_class(None) == ExperimentSpawner

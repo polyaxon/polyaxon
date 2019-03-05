@@ -16,7 +16,7 @@ from scheduler.spawners.mxnet_spawner import MXNetSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
 from scheduler.spawners.utils import get_job_definition
-from schemas.frameworks import Frameworks
+from schemas.experiments import ExperimentFramework
 from schemas.specifications import (
     HorovodSpecification,
     MXNetSpecification,
@@ -87,13 +87,13 @@ def set_job_definition(job_uuid, definition):
 
 
 def get_spawner_class(framework):
-    if framework == Frameworks.TENSORFLOW:
+    if framework == ExperimentFramework.TENSORFLOW:
         return TensorflowSpawner
-    if framework == Frameworks.HOROVOD:
+    if framework == ExperimentFramework.HOROVOD:
         return HorovodSpawner
-    if framework == Frameworks.MXNET:
+    if framework == ExperimentFramework.MXNET:
         return MXNetSpawner
-    if framework == Frameworks.PYTORCH:
+    if framework == ExperimentFramework.PYTORCH:
         return PytorchSpawner
 
     return ExperimentSpawner
@@ -411,16 +411,16 @@ def handle_base_experiment(response):
 
 def handle_experiment(experiment, response):
     framework = experiment.specification.framework
-    if framework == Frameworks.TENSORFLOW:
+    if framework == ExperimentFramework.TENSORFLOW:
         handle_tensorflow_experiment(response=response)
         return
-    if framework == Frameworks.HOROVOD:
+    if framework == ExperimentFramework.HOROVOD:
         handle_horovod_experiment(response=response)
         return
-    if framework == Frameworks.MXNET:
+    if framework == ExperimentFramework.MXNET:
         handle_mxnet_experiment(response=response)
         return
-    if framework == Frameworks.PYTORCH:
+    if framework == ExperimentFramework.PYTORCH:
         handle_pytorch_experiment(response=response)
         return
 
@@ -429,16 +429,16 @@ def handle_experiment(experiment, response):
 
 def create_experiment_jobs(experiment, spawner):
     framework = experiment.specification.framework
-    if framework == Frameworks.TENSORFLOW:
+    if framework == ExperimentFramework.TENSORFLOW:
         create_tensorflow_experiment_jobs(experiment=experiment, spawner=spawner)
         return
-    if framework == Frameworks.HOROVOD:
+    if framework == ExperimentFramework.HOROVOD:
         create_horovod_experiment_jobs(experiment=experiment, spawner=spawner)
         return
-    if framework == Frameworks.MXNET:
+    if framework == ExperimentFramework.MXNET:
         create_mxnet_experiment_jobs(experiment=experiment, spawner=spawner)
         return
-    if framework == Frameworks.PYTORCH:
+    if framework == ExperimentFramework.PYTORCH:
         create_pytorch_experiment_jobs(experiment=experiment, spawner=spawner)
         return
 
