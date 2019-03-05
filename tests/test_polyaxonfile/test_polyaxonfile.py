@@ -37,6 +37,11 @@ class TestPolyaxonfile(TestCase):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_version.yml'))
 
+    def test_non_supported_version_raises(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath(
+                'tests/fixtures/non_supported_file.yml.yml'))
+
     def test_missing_kind_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_kind.yml'))

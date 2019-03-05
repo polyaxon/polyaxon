@@ -31,8 +31,8 @@ class BaseSpecification(object):
 
     _SPEC_KIND = None
 
-    MAX_VERSION = 1.0  # Min Polyaxonfile specification version this CLI supports
-    MIN_VERSION = 1.0  # Max Polyaxonfile specification version this CLI supports
+    MAX_VERSION = 1  # Max Polyaxonfile specification version this CLI supports
+    MIN_VERSION = 1  # Min Polyaxonfile specification version this CLI supports
 
     VERSION = 'version'
     KIND = 'kind'
@@ -108,7 +108,7 @@ class BaseSpecification(object):
         if not cls.MIN_VERSION <= data[cls.VERSION] <= cls.MAX_VERSION:
             raise PolyaxonfileError(
                 "The Polyaxonfile's version specified is not supported by your current CLI."
-                "Your CLI support Polyaxonfile versions between: {} {}."
+                "Your CLI support Polyaxonfile versions between: {} <= v <= {}."
                 "You can run `polyaxon upgrade` and "
                 "check documentation for the specification.".format(
                     cls.MIN_VERSION, cls.MAX_VERSION))
