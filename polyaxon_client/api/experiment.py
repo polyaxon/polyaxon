@@ -11,9 +11,9 @@ from polyaxon_client.schemas import (
     ExperimentConfig,
     ExperimentJobConfig,
     ExperimentMetricConfig,
-    ExperimentStatusConfig
+    ExperimentStatusConfig,
+    CodeReferenceConfig
 )
-from polyaxon_schemas.code_reference import CodeReferenceConfig
 
 
 class ExperimentApi(BaseApiHandler):
