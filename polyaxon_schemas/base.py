@@ -157,7 +157,6 @@ class BaseMultiSchema(Schema):
         def make(key, val=None):
             key = to_camel_case(key) if self.__support_snake_case__ else key
             try:
-                print(self.__configs__[key])
                 return (self.__configs__[key].from_dict(val, unknown=EXCLUDE) if val else
                         self.__configs__[key]())
             except KeyError:

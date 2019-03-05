@@ -46,8 +46,6 @@ def assert_equal_graphs(result_graph, expected_graph):
         layer_name, layer_data = list(six.iteritems(layer))[0]
         assert layer_name in expected_graph['layers'][layer_i]
         for k, v in six.iteritems(layer_data):
-            print(k)
-            print('v == {}, new_v: {}'.format(v, expected_graph['layers'][layer_i][layer_name][k]))
             assert v == expected_graph['layers'][layer_i][layer_name][k]
 
 
