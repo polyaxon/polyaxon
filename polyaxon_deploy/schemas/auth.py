@@ -53,7 +53,6 @@ class AuthSchema(BaseSchema):
     bitbucket = fields.Nested(BaseAuthSchema, allow_none=True)
     azure = fields.Nested(BaseAuthSchema, allow_none=True)
 
-
     @staticmethod
     def schema_config():
         return AuthConfig
