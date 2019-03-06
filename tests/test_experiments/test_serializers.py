@@ -342,6 +342,8 @@ class TestExperimentDetailSerializer(BaseTest):
             version: 1
 
             kind: experiment
+            
+            framework: pytorch
 
             environment:
               resources:
@@ -351,7 +353,7 @@ class TestExperimentDetailSerializer(BaseTest):
                 memory:
                   requests: 4096
                   limits: 10240
-              framework: pytorch
+              
               distribution:
                 n_workers: 2
                 default_worker:

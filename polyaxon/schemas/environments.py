@@ -1,8 +1,8 @@
-from polyaxon_schemas.ops.environments import (  # noqa
+from polyaxon_schemas.ops.environments.experiments import (  # noqa
     HorovodClusterConfig,
     MXNetClusterConfig,
-    OutputsConfig,
-    PersistenceConfig,
     PytorchClusterConfig,
     TensorflowClusterConfig
 )
+from polyaxon_schemas.ops.environments.outputs import OutputsConfig  # noqa
+from polyaxon_schemas.ops.environments.persistence import PersistenceConfig  # noqa

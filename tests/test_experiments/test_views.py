@@ -884,7 +884,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
         self.queryset = self.queryset.order_by('-updated_at')
 
-    def test_get(self):
+    def test_get_Sdfdsf(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 

@@ -358,8 +358,7 @@ class TestBuildDetailViewV1(BaseViewTest):
                   requests: 1
                   limits: 1
 
-            build:
-              image: my_image
+            image: my_image
         """
         spec_parsed_content = BuildSpecification.read(spec_content)
 

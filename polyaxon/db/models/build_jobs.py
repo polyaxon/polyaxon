@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List, Optional
 
 from hestia.datetime_typing import AwareDT
 
@@ -96,6 +96,26 @@ class BuildJob(AbstractJob,
         return get_job_subpath(job_name=self.unique_name)
 
     @cached_property
+    def build_image(self) -> str:
+        return self.specification.config.image
+
+    @cached_property
+    def build_dockerfile(self) -> str:
+        return self.specification.config.dockerfile
+
+    @cached_property
+    def build_context(self) -> str:
+        return self.specification.config.context
+
+    @cached_property
+    def build_steps(self) -> List[str]:
+        return self.specification.config.build_steps
+
+    @cached_property
+    def build_env_vars(self) -> Optional[List[str]]:
+        return self.specification.config.env_vars
+
+    @cached_property
     def pod_id(self) -> str:
         return JOB_NAME_FORMAT.format(name=DOCKERIZER_JOB_NAME, job_uuid=self.uuid.hex)
 
@@ -132,29 +152,29 @@ class BuildJob(AbstractJob,
                configmap_refs=None,
                secret_refs=None,
                nocache=False) -> Tuple['BuildJob', bool]:
-        build_config = BuildSpecification.create_specification(config,
-                                                               configmap_refs=configmap_refs,
-                                                               secret_refs=secret_refs,
-                                                               to_dict=False)
-        if not nocache and build_config.build.nocache is not None:
+        build_spec = BuildSpecification.create_specification(config,
+                                                             configmap_refs=configmap_refs,
+                                                             secret_refs=secret_refs,
+                                                             to_dict=False)
+        if not nocache and build_spec.config.nocache is not None:
             # Set the config's nocache rebuild
-            nocache = build_config.build.nocache
+            nocache = build_spec.nocache
         # Check if image is not using latest tag, then we can reuse a previous build
         rebuild_cond = (
             nocache or
             (conf.get('BUILD_ALWAYS_PULL_LATEST') and
-             build_config.build.image_tag == LATEST_IMAGE_TAG)
+             build_spec.config.image_tag == LATEST_IMAGE_TAG)
         )
         if not rebuild_cond:
             job = BuildJob.objects.filter(project=project,
-                                          config=build_config.parsed_data,
+                                          config=build_spec.parsed_data,
                                           code_reference=code_reference).last()
             if job:
                 return job, False
 
         return BuildJob.objects.create(user=user,
                                        project=project,
-                                       config=build_config.parsed_data,
+                                       config=build_spec.parsed_data,
                                        code_reference=code_reference), True
 
 

@@ -109,24 +109,25 @@ def create_tensorflow_experiment_jobs(experiment, spawner):
                tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed = spawner.spec.cluster_def
+    environment = spawner.spec.config.tensorflow
 
     worker_resources = TensorflowSpecification.get_worker_resources(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_affinities = TensorflowSpecification.get_worker_affinities(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_tolerations = TensorflowSpecification.get_worker_tolerations(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
@@ -142,22 +143,22 @@ def create_tensorflow_experiment_jobs(experiment, spawner):
                    tolerations=worker_tolerations.get(i))
 
     ps_resources = TensorflowSpecification.get_ps_resources(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     ps_affinities = TensorflowSpecification.get_ps_affinities(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     ps_tolerations = TensorflowSpecification.get_ps_tolerations(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
@@ -201,23 +202,24 @@ def create_horovod_experiment_jobs(experiment, spawner):
                tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed = spawner.spec.cluster_def
+    environment = spawner.spec.config.horovod
     worker_resources = HorovodSpecification.get_worker_resources(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_node_selectors = HorovodSpecification.get_worker_node_selectors(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_affinities = HorovodSpecification.get_worker_affinities(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_tolerations = HorovodSpecification.get_worker_tolerations(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
@@ -256,23 +258,25 @@ def create_pytorch_experiment_jobs(experiment, spawner):
                tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed = spawner.spec.cluster_def
+    environment = spawner.spec.config.tensorflow
+
     worker_resources = PytorchSpecification.get_worker_resources(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_node_selectors = PytorchSpecification.get_worker_node_selectors(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_affinities = PytorchSpecification.get_worker_affinities(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_tolerations = PytorchSpecification.get_worker_tolerations(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
@@ -311,23 +315,25 @@ def create_mxnet_experiment_jobs(experiment, spawner):
                tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed = spawner.spec.cluster_def
+    environment = spawner.spec.config.mxnet
+
     worker_resources = MXNetSpecification.get_worker_resources(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_node_selectors = MXNetSpecification.get_worker_node_selectors(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_affinities = MXNetSpecification.get_worker_affinities(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     worker_tolerations = MXNetSpecification.get_worker_tolerations(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
@@ -343,22 +349,22 @@ def create_mxnet_experiment_jobs(experiment, spawner):
                    tolerations=worker_tolerations.get(i))
 
     server_resources = MXNetSpecification.get_ps_resources(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     server_node_selectors = MXNetSpecification.get_ps_node_selectors(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     server_affinities = MXNetSpecification.get_ps_affinities(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
     server_tolerations = MXNetSpecification.get_ps_tolerations(
-        environment=spawner.spec.environment,
+        environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )

@@ -1,4 +1,4 @@
-from polyaxon_schemas.polyaxonfile.specification import (  # noqa
+from polyaxon_schemas.specs import (  # noqa
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,
@@ -6,7 +6,7 @@ from polyaxon_schemas.polyaxonfile.specification import (  # noqa
     NotebookSpecification,
     TensorboardSpecification
 )
-from polyaxon_schemas.polyaxonfile.specification.frameworks import (  # noqa
+from polyaxon_schemas.specs.frameworks import (  # noqa
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,

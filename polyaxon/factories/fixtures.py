@@ -317,6 +317,8 @@ exec_experiment_resources_content = """---
     kind: experiment
     
     tags: [fixtures]
+    
+    framework: tensorflow
 
     declarations:
       lr: 0.1
@@ -331,7 +333,6 @@ exec_experiment_resources_content = """---
           requests: 100
           limits: 200
     
-      framework: tensorflow
       distribution:  
         n_workers: 1
         n_ps: 1  
@@ -465,9 +466,8 @@ build_spec_content = """---
     
     tags: [fixtures]
 
-    build:
-      image: my_image
-      build_steps: ['step1', 'step2']
+    image: my_image
+    build_steps: ['step1', 'step2']
 """
 
 build_spec_parsed_content = BuildSpecification.read(build_spec_content)

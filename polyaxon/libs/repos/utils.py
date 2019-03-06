@@ -83,10 +83,11 @@ RefModel = Union['Experiment',
                  'NotebookJob']
 
 
-def assign_code_reference(instance: RefModel, branch: str = None, commit: str = None) -> RefModel:
-    if instance.code_reference is not None or instance.specification is None:
-        return instance
-    build = instance.specification.build if instance.specification else None
+def _assign_code_reference(instance: RefModel,
+                           build: 'BuildConfig' = None,
+                           branch: str = None,
+                           commit: str = None) -> RefModel:
+
     if not commit and build:
         commit = build.commit
     if not branch and build:
@@ -98,3 +99,19 @@ def assign_code_reference(instance: RefModel, branch: str = None, commit: str = 
         instance.code_reference = code_reference
 
     return instance
+
+
+def assign_code_reference(instance: RefModel, branch: str = None, commit: str = None) -> RefModel:
+    if instance.code_reference is not None or instance.specification is None:
+        return instance
+    build = instance.specification.build if instance.specification else None
+    return _assign_code_reference(instance=instance, build=build, branch=branch, commit=commit)
+
+
+def assign_build_code_reference(instance: RefModel,
+                                branch: str = None,
+                                commit: str = None) -> RefModel:
+    if instance.code_reference is not None or instance.specification is None:
+        return instance
+    build = instance.specification.config if instance.specification else None
+    return _assign_code_reference(instance=instance, build=build, branch=branch, commit=commit)

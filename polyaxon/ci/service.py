@@ -4,7 +4,7 @@ from typing import Optional
 
 from hestia.service_interface import Service
 
-from schemas.polyaxonfile import PolyaxonFile, get_default_polyaxonfile
+from schemas.polyaxonfile import PolyaxonFile
 
 _logger = logging.getLogger('polyaxon.ci')
 
@@ -107,7 +107,7 @@ class CIService(Service):
             repo_path = project.external_repo.path
         else:
             repo_path = project.repo.path
-        polyaxonfile_path = get_default_polyaxonfile(path=repo_path)
+        polyaxonfile_path = PolyaxonFile.check_default_path(path=repo_path)
 
         # Get specification
         specification = self.get_specification(polyaxonfile_path)

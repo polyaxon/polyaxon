@@ -44,12 +44,12 @@ class MXNetSpawner(ExperimentSpawner):
     def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_resources = MXNetSpecification.get_worker_resources(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_resources = MXNetSpecification.get_ps_resources(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -63,12 +63,12 @@ class MXNetSpawner(ExperimentSpawner):
     def node_selectors(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_node_selectors = MXNetSpecification.get_worker_node_selectors(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_node_selectors = MXNetSpecification.get_ps_node_selectors(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -82,12 +82,12 @@ class MXNetSpawner(ExperimentSpawner):
     def affinities(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_affinities = MXNetSpecification.get_worker_affinities(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_affinities = MXNetSpecification.get_ps_affinities(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -101,12 +101,12 @@ class MXNetSpawner(ExperimentSpawner):
     def tolerations(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_tolerations = MXNetSpecification.get_worker_tolerations(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_tolerations = MXNetSpecification.get_ps_tolerations(
-            environment=self.spec.environment,
+            environment=self.sepc.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )

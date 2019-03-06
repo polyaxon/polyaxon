@@ -1,6 +1,6 @@
 import ocular
 
-from polyaxon_schemas.pod import PodLifeCycle
+from schemas.pod import PodLifeCycle
 
 
 def is_container_terminated(event, container_id):
