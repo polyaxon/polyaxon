@@ -168,7 +168,7 @@ class TestSpecifications(TestCase):
     def test_experiment_environment_config(self):
         config_dict = {
             'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
-            'distribution': {
+            'replicas': {
                 'n_workers': 10,
                 'n_ps': 5,
             }
@@ -214,8 +214,8 @@ class TestSpecifications(TestCase):
         with self.assertRaises(ValidationError):
             ExperimentConfig.from_dict(experiment_config)
 
-        # Setting correct horovod distribution should pass
-        experiment_config['environment']['distribution'] = {
+        # Setting correct horovod replicas should pass
+        experiment_config['environment']['replicas'] = {
             'n_workers': 5
         }
         config = ExperimentConfig.from_dict(experiment_config)
@@ -226,8 +226,8 @@ class TestSpecifications(TestCase):
         config = ExperimentConfig.from_dict(experiment_config)
         assert_equal_dict(experiment_config, config.to_dict())
 
-        # Setting wrong pytorch distribution should raise
-        experiment_config['environment']['distribution'] = {
+        # Setting wrong pytorch replicas should raise
+        experiment_config['environment']['replicas'] = {
             'n_workers': 5,
             'n_ps': 1
         }

@@ -9,7 +9,7 @@ logging:
 framework: tensorflow
 
 environment:
-  distribution:
+  replicas:
     n_workers: 5
     n_ps: 10
 

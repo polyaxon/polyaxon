@@ -21,7 +21,7 @@ environment:
       requests: 1
       limits: 2
 
-  distribution:
+  replicas:
     n_workers: 5
     n_ps: 10
 

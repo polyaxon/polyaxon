@@ -24,16 +24,16 @@ def validate_backend(backend):
         raise ValidationError('Experiment backend `{}` not supported'.format(backend))
 
 
-def validate_distribution(framework, distribution):
-    if distribution and framework and framework not in ExperimentFramework.VALUES:
+def validate_replicas(framework, replicas):
+    if replicas and framework and framework not in ExperimentFramework.VALUES:
         raise ValidationError(
             'Distributed Experiment framework `{}` not supported'.format(framework))
 
-    if distribution and not framework:
+    if replicas and not framework:
         raise ValidationError(
             'You must specify which framework to use for distributed experiments.')
 
-    config = distribution.to_light_dict() if isinstance(distribution, BaseConfig) else distribution
+    config = replicas.to_light_dict() if isinstance(replicas, BaseConfig) else replicas
 
     if framework == 'tensorflow':
         TensorflowConfig.from_dict(config)
@@ -66,11 +66,11 @@ class ExperimentSchema(BaseRunSchema):
         validate_backend(data.get('backend'))
 
     @validates_schema
-    def validate_distribution(self, data):
+    def validate_replicas(self, data):
         """Validate distributed experiment"""
         environment = data.get('environment')
         if environment:
-            validate_distribution(data.get('framework'), environment.distribution)
+            validate_replicas(data.get('framework'), environment.replicas)
 
 
 class ExperimentConfig(BaseRunConfig):
@@ -94,10 +94,10 @@ class ExperimentConfig(BaseRunConfig):
                  eval=None,  # pylint:disable=redefined-builtin
                  ):
         validate_backend(backend)
-        self.distribution = None
-        if framework and environment and environment.distribution:
-            validate_distribution(framework, environment.distribution)
-            self.distribution = environment.distribution
+        self.replicas = None
+        if framework and environment and environment.replicas:
+            validate_replicas(framework, environment.replicas)
+            self.replicas = environment.replicas
 
         super(ExperimentConfig, self).__init__(kind=kind,
                                                version=version,
@@ -118,17 +118,17 @@ class ExperimentConfig(BaseRunConfig):
         self.pytorch = self.get_pytorch()
 
     def get_tensorflow(self):
-        if self.framework == ExperimentFramework.TENSORFLOW and self.distribution:
-            return TensorflowConfig.from_dict(self.distribution.to_light_dict())
+        if self.framework == ExperimentFramework.TENSORFLOW and self.replicas:
+            return TensorflowConfig.from_dict(self.replicas.to_light_dict())
 
     def get_horovod(self):
-        if self.framework == ExperimentFramework.HOROVOD and self.distribution:
-            return HorovodConfig.from_dict(self.distribution.to_light_dict())
+        if self.framework == ExperimentFramework.HOROVOD and self.replicas:
+            return HorovodConfig.from_dict(self.replicas.to_light_dict())
 
     def get_mxnet(self):
-        if self.framework == ExperimentFramework.MXNET and self.distribution:
-            return MXNetConfig.from_dict(self.distribution.to_light_dict())
+        if self.framework == ExperimentFramework.MXNET and self.replicas:
+            return MXNetConfig.from_dict(self.replicas.to_light_dict())
 
     def get_pytorch(self):
-        if self.framework == ExperimentFramework.PYTORCH and self.distribution:
-            return PytorchConfig.from_dict(self.distribution.to_light_dict())
+        if self.framework == ExperimentFramework.PYTORCH and self.replicas:
+            return PytorchConfig.from_dict(self.replicas.to_light_dict())

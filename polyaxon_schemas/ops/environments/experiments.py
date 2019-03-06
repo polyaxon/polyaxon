@@ -365,7 +365,7 @@ class MXNetConfig(BaseConfig, FrameworkEnvironmentMixin):
         self.ps = ps
 
 
-class DistributionSchema(BaseSchema):
+class ReplicasSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
@@ -375,12 +375,12 @@ class DistributionSchema(BaseSchema):
 
     @staticmethod
     def schema_config():
-        return DistributionConfig
+        return ReplicasConfig
 
 
-class DistributionConfig(BaseConfig):
+class ReplicasConfig(BaseConfig):
     """
-    Distribution environment config.
+    Replicas environment config.
 
     Args:
         n_workers: `int`. The number of workers requested for training the model.
@@ -392,8 +392,8 @@ class DistributionConfig(BaseConfig):
         ps: `list(PodEnvironment)`. The pod environment with index specified to use
             for the specific ps.
     """
-    IDENTIFIER = 'distribution'
-    SCHEMA = DistributionSchema
+    IDENTIFIER = 'replicas'
+    SCHEMA = ReplicasSchema
     REDUCED_ATTRIBUTES = ['n_workers', 'n_ps', 'default_worker', 'default_ps', 'worker', 'ps']
 
     def __init__(self,
@@ -413,7 +413,7 @@ class DistributionConfig(BaseConfig):
 
 
 class ExperimentEnvironmentSchema(EnvironmentSchema):
-    distribution = fields.Nested(DistributionSchema, allow_none=True)
+    replicas = fields.Nested(ReplicasSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -434,7 +434,7 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
         tolerations: `list(dict)`.
         backend: `str`.
         framework: `str`.
-        distribution: `DistributionConfig`.
+        replicas: `ReplicasConfig`.
     """
     IDENTIFIER = 'environment'
     SCHEMA = ExperimentEnvironmentSchema
@@ -449,7 +449,7 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
                  node_selector=None,
                  affinity=None,
                  tolerations=None,
-                 distribution=None):
+                 replicas=None):
         super(ExperimentEnvironmentConfig, self).__init__(
             cluster_uuid=cluster_uuid,
             persistence=persistence,
@@ -461,4 +461,4 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
             affinity=affinity,
             tolerations=tolerations,
         )
-        self.distribution = distribution
+        self.replicas = replicas

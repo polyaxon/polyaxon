@@ -33,7 +33,7 @@ environment:
             values:
             - another-node-label-value
 
-  distribution:
+  replicas:
     n_workers: 5
     n_ps: 10
 
