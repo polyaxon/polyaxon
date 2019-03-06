@@ -354,7 +354,7 @@ class TestExperimentDetailSerializer(BaseTest):
                   requests: 4096
                   limits: 10240
 
-              distribution:
+              replicas:
                 n_workers: 2
                 default_worker:
                   resources:

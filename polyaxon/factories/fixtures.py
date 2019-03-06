@@ -333,7 +333,7 @@ exec_experiment_resources_content = """---
           requests: 100
           limits: 200
     
-      distribution:  
+      replicas:  
         n_workers: 1
         n_ps: 1  
         
