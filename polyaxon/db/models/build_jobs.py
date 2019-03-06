@@ -162,7 +162,7 @@ class BuildJob(AbstractJob,
                                                              to_dict=False)
         if not nocache and build_spec.config.nocache is not None:
             # Set the config's nocache rebuild
-            nocache = build_spec.nocache
+            nocache = build_spec.config.nocache
         # Check if image is not using latest tag, then we can reuse a previous build
         rebuild_cond = (
             nocache or
