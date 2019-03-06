@@ -124,6 +124,10 @@ class JobMixin(object):
         return self.specification.build.build_steps
 
     @cached_property
+    def build_nocache(self) -> List[str]:
+        return self.specification.build.nocache
+
+    @cached_property
     def build_env_vars(self) -> Optional[List[str]]:
         return self.specification.build.env_vars
 

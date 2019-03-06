@@ -116,6 +116,10 @@ class BuildJob(AbstractJob,
         return self.specification.config.env_vars
 
     @cached_property
+    def build_nocache(self) -> List[str]:
+        return self.specification.config.nocache
+
+    @cached_property
     def pod_id(self) -> str:
         return JOB_NAME_FORMAT.format(name=DOCKERIZER_JOB_NAME, job_uuid=self.uuid.hex)
 
