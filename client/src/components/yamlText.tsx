@@ -28,6 +28,12 @@ function YamlText({config, configText, title}: Props) {
     if (!_.isNil(config.logging)) {
       orderedConfig.logging = config.logging;
     }
+    if (!_.isNil(config.backend)) {
+      orderedConfig.backend = config.backend;
+    }
+    if (!_.isNil(config.framework)) {
+      orderedConfig.framework = config.framework;
+    }
     if (!_.isNil(config.hptuning)) {
       orderedConfig.hptuning = config.hptuning;
     }
@@ -39,6 +45,30 @@ function YamlText({config, configText, title}: Props) {
     }
     if (!_.isNil(config.build)) {
       orderedConfig.build = config.build;
+    }
+    if (!_.isNil(config.image)) {
+      orderedConfig.image = config.image;
+    }
+    if (!_.isNil(config.dockerfile)) {
+      orderedConfig.dockerfile = config.dockerfile;
+    }
+    if (!_.isNil(config.context)) {
+      orderedConfig.context = config.context;
+    }
+    if (!_.isNil(config.build_steps)) {
+      orderedConfig.build_steps = config.build_steps;
+    }
+    if (!_.isNil(config.env_vars)) {
+      orderedConfig.env_vars = config.env_vars;
+    }
+    if (!_.isNil(config.branch)) {
+      orderedConfig.branch = config.branch;
+    }
+    if (!_.isNil(config.commit)) {
+      orderedConfig.commit = config.commit;
+    }
+    if (!_.isNil(config.nocache)) {
+      orderedConfig.nocache = config.nocache;
     }
     if (!_.isNil(config.run)) {
       orderedConfig.run = config.run;
