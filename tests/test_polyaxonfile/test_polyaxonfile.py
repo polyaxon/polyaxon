@@ -360,7 +360,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-        import pdb; pdb.set_trace()
         model = spec.model
         assert isinstance(model, RegressorConfig)
         assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
