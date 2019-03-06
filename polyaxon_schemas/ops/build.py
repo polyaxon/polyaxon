@@ -5,6 +5,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.environments.base import EnvironmentSchema
+from polyaxon_schemas.ops.logging import LoggingSchema
 from polyaxon_schemas.utils import BuildBackend
 
 
@@ -38,8 +39,12 @@ def validate_build(image, dockerfile):
 
 
 class BuildSchema(BaseSchema):
+    version = fields.Int(allow_none=None)
+    kind = fields.Str(allow_none=None, validate=validate.Equal('build'))
+    logging = fields.Nested(LoggingSchema, allow_none=None)
     tags = fields.List(fields.Str(), allow_none=None)
-    backend = fields.Str(allow_none=True)
+    environment = fields.Nested(EnvironmentSchema, allow_none=True)
+    backend = fields.Str(allow_none=True, validate=validate.OneOf(BuildBackend.VALUES))
     dockerfile = fields.Str(allow_none=True)
     context = fields.Str(allow_none=True)
     image = fields.Str(allow_none=True)
@@ -49,7 +54,6 @@ class BuildSchema(BaseSchema):
     commit = fields.Str(allow_none=True)
     branch = fields.Str(allow_none=True)
     nocache = fields.Boolean(allow_none=True)
-    environment = fields.Nested(EnvironmentSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -71,21 +75,14 @@ class BuildSchema(BaseSchema):
 
 
 class BuildConfig(BaseConfig):
-    """
-    Build config.
-
-    Args:
-        image: str. The name of the image to use during the build step.
-        build_steps: list(str). The build steps to apply to your docker image.
-            (translate to multiple RUN ...)
-        env_vars: list((str, str)) The environment variable to set on you docker image.
-        nocache: `bool`. To not use cache when building the image.
-        ref: `str`. The commit/branch/treeish to use.
-
-    """
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
     REDUCED_ATTRIBUTES = [
+        'kind',
+        'version',
+        'logging',
+        'tags',
+        'environment',
         'build_steps',
         'env_vars',
         'nocache',
@@ -98,6 +95,11 @@ class BuildConfig(BaseConfig):
     ]
 
     def __init__(self,
+                 kind=None,
+                 version=None,
+                 logging=None,
+                 tags=None,
+                 environment=None,
                  dockerfile=None,
                  image=None,
                  context=None,
@@ -110,6 +112,11 @@ class BuildConfig(BaseConfig):
         validate_image(image)
         validate_backend(backend)
         validate_build(image=image, dockerfile=dockerfile)
+        self.kind = kind
+        self.version = version
+        self.logging = logging
+        self.tags = tags
+        self.environment = environment
         self.dockerfile = dockerfile
         self.context = context
         self.backend = backend

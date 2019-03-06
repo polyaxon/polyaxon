@@ -6,8 +6,9 @@ kind: experiment
 logging:
   level: INFO
 
+framework: tensorflow
+
 environment:
-  framework: tensorflow
   distribution:
     n_workers: 5
     n_ps: 10

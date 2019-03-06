@@ -7,12 +7,12 @@ from hestia.cached_property import cached_property
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.ops.job import JobConfig
 from polyaxon_schemas.ops.run_exec import RunConfig
-from polyaxon_schemas.specs.base import BaseSpecification
-from polyaxon_schemas.specs.build import BuildSpecification
+from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 
 
-class JobSpecification(BuildSpecification):
+class JobSpecification(BaseRunSpecification):
     """The polyaxonfile specification for run jobs.
 
     SECTIONS:
@@ -25,17 +25,20 @@ class JobSpecification(BuildSpecification):
     """
     _SPEC_KIND = BaseSpecification._JOB  # pylint:disable=protected-access
 
-    REQUIRED_SECTIONS = BuildSpecification.REQUIRED_SECTIONS + (
-        BaseSpecification.RUN,
+    REQUIRED_SECTIONS = BaseRunSpecification.REQUIRED_SECTIONS + (
+        BaseSpecification.BUILD, BaseSpecification.RUN,
     )
 
-    POSSIBLE_SECTIONS = BuildSpecification.POSSIBLE_SECTIONS + (
-        BaseSpecification.RUN,
+    POSSIBLE_SECTIONS = BaseRunSpecification.POSSIBLE_SECTIONS + (
+        BaseRunSpecification.DECLARATIONS,
+        BaseRunSpecification.RUN,
     )
+
+    CONFIG = JobConfig
 
     @cached_property
     def run(self):
-        return self.validated_data.get(self.RUN, None)
+        return self.config.run
 
     @classmethod
     def create_specification(cls,  # pylint:disable=arguments-differ
@@ -43,23 +46,23 @@ class JobSpecification(BuildSpecification):
                              run_config,
                              to_dict=True):
         try:
-            specification = BuildSpecification.create_specification(
+            specification = BaseRunSpecification.create_specification(
                 build_config=build_config, to_dict=True)
         except PolyaxonConfigurationError:
             raise PolyaxonConfigurationError(
                 'Create specification expects a dict or an instance of BuildConfig.')
 
         if isinstance(run_config, RunConfig):
-            config = run_config.to_light_dict()
+            r_config = run_config.to_light_dict()
         elif isinstance(run_config, Mapping):
-            config = RunConfig.from_dict(run_config, unknown=EXCLUDE)
-            config = config.to_light_dict()
+            r_config = RunConfig.from_dict(run_config, unknown=EXCLUDE)
+            r_config = r_config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(
                 'Create specification expects a dict or an instance of RunConfig.')
 
         specification[cls.KIND] = cls._SPEC_KIND
-        specification[cls.RUN] = config
+        specification[cls.RUN] = r_config
 
         if to_dict:
             return specification

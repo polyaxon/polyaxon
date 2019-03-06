@@ -3,6 +3,8 @@ version: 1
 
 kind: experiment
 
+framework: tensorflow
+
 logging:
   level: INFO
 
@@ -31,7 +33,6 @@ environment:
             values:
             - another-node-label-value
 
-  framework: tensorflow
   distribution:
     n_workers: 5
     n_ps: 10

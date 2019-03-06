@@ -3,6 +3,8 @@ version: 1
 
 kind: experiment
 
+framework: tensorflow
+
 logging:
   level: INFO
 
@@ -15,7 +17,6 @@ environment:
       requests: 1
       limits: 2
 
-  framework: tensorflow
   distribution:
     n_workers: 5
     n_ps: 10

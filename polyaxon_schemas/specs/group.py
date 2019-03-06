@@ -7,7 +7,9 @@ import six
 from hestia.cached_property import cached_property
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.ops.build import BuildConfig
 from polyaxon_schemas.ops.environments.persistence import PersistenceConfig
+from polyaxon_schemas.ops.experiment_group import ExperimentGroupConfig
 from polyaxon_schemas.specs.base import BaseSpecification
 from polyaxon_schemas.specs.build import BuildSpecification
 from polyaxon_schemas.specs.experiment import ExperimentSpecification
@@ -34,12 +36,24 @@ class GroupSpecification(BaseSpecification):
 
     _SPEC_KIND = BaseSpecification._GROUP
 
+    MODEL = 'model'
+    TRAIN = 'train'
+    EVAL = 'eval'
+
+    SECTIONS = ExperimentSpecification.SECTIONS + (
+        BaseSpecification.HP_TUNING,
+    )
+
     HEADER_SECTIONS = ExperimentSpecification.HEADER_SECTIONS + (
         BaseSpecification.HP_TUNING,
     )
+
+    GRAPH_SECTIONS = ExperimentSpecification.GRAPH_SECTIONS
+
     REQUIRED_SECTIONS = ExperimentSpecification.REQUIRED_SECTIONS + (
         BaseSpecification.HP_TUNING,
     )
+
     POSSIBLE_SECTIONS = ExperimentSpecification.POSSIBLE_SECTIONS + (
         BaseSpecification.HP_TUNING,
     )
@@ -64,18 +78,14 @@ class GroupSpecification(BaseSpecification):
 
     def get_build_spec(self):
         """Returns a build spec for this group spec."""
-        data = {}
         if BaseSpecification.BUILD not in self._data:
             return None
-        for key in self._data:
-            if key in BuildSpecification.POSSIBLE_SECTIONS:
-                data[key] = copy.deepcopy(self._data[key])
-        return BuildSpecification(values=[data, {'kind': self._BUILD}])
+        return BuildConfig.from_dict(self._data[BaseSpecification.BUILD])
 
     @cached_property
     def build(self):
         build_spec = self.get_build_spec()
-        return self.get_build_spec().build if build_spec else None
+        return self.get_build_spec() if build_spec else None
 
     @cached_property
     def environment(self):

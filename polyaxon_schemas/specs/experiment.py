@@ -1,21 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from hestia.cached_property import cached_property
+from collections import Mapping
 
+from hestia.cached_property import cached_property
+from marshmallow import EXCLUDE
+
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.environments.experiments import ExperimentEnvironmentConfig
-from polyaxon_schemas.specs.base import BaseSpecification
+from polyaxon_schemas.ops.experiment import ExperimentConfig
+from polyaxon_schemas.ops.run_exec import RunConfig
+from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,
     TensorflowSpecification
 )
-from polyaxon_schemas.specs.job import JobSpecification
-from polyaxon_schemas.utils import ExperimentFramework, TaskType
+from polyaxon_schemas.utils import TaskType
 
 
-class ExperimentSpecification(JobSpecification):
+class ExperimentSpecification(BaseRunSpecification):
     """The Base polyaxonfile specification (parsing and validation of Polyaxonfiles/Configurations).
 
     SECTIONS:
@@ -29,58 +34,61 @@ class ExperimentSpecification(JobSpecification):
     """
     _SPEC_KIND = BaseSpecification._EXPERIMENT  # pylint:disable=protected-access
 
-    POSSIBLE_SECTIONS = JobSpecification.POSSIBLE_SECTIONS + (
-        JobSpecification.DECLARATIONS,
-        JobSpecification.MODEL,
-        JobSpecification.TRAIN,
-        JobSpecification.EVAL
-    )
-    REQUIRED_SECTIONS = BaseSpecification.REQUIRED_SECTIONS
-    ENVIRONMENT_CONFIG = ExperimentEnvironmentConfig
+    MODEL = 'model'
+    TRAIN = 'train'
+    EVAL = 'eval'
 
-    @cached_property
-    def is_runnable(self):
-        """Checks of the sections required to run experiment exist."""
-        sections = set(self.validated_data.keys())
-        condition = (self.RUN in sections or
-                     {self.MODEL, self.TRAIN} <= sections or
-                     {self.MODEL, self.EVAL} <= sections)
-        if condition:
-            return True
-        return False
+    SECTIONS = BaseRunSpecification.SECTIONS + (
+        MODEL, TRAIN, EVAL
+    )
+
+    HEADER_SECTIONS = BaseRunSpecification.HEADER_SECTIONS + (
+        BaseRunSpecification.FRAMEWORK,
+    )
+
+    GRAPH_SECTIONS = (
+        MODEL, TRAIN, EVAL
+    )
+
+    POSSIBLE_SECTIONS = BaseRunSpecification.POSSIBLE_SECTIONS + (
+        BaseRunSpecification.FRAMEWORK,
+        BaseRunSpecification.DECLARATIONS,
+        BaseRunSpecification.RUN,
+        MODEL,
+        TRAIN,
+        EVAL
+    )
+
+    ENVIRONMENT_CONFIG = ExperimentEnvironmentConfig
+    CONFIG = ExperimentConfig
 
     @cached_property
     def model(self):
-        return self.validated_data.get(self.MODEL, None)
+        return self.config.model
 
     @cached_property
     def train(self):
-        return self.validated_data.get(self.TRAIN, None)
+        return self.config.train
 
     @cached_property
     def eval(self):
-        return self.validated_data.get(self.EVAL, None)
+        return self.config.eval
 
     @cached_property
     def declarations(self):
         return self.parsed_data.get(self.DECLARATIONS, None)
 
     @cached_property
+    def backend(self):
+        return self.config.backend
+
+    @cached_property
     def framework(self):
-        if not self.environment:
-            return None
+        return self.config.framework
 
-        if self.environment.tensorflow:
-            return ExperimentFramework.TENSORFLOW
-
-        if self.environment.horovod:
-            return ExperimentFramework.HOROVOD
-
-        if self.environment.mxnet:
-            return ExperimentFramework.MXNET
-
-        if self.environment.pytorch:
-            return ExperimentFramework.PYTORCH
+    @cached_property
+    def run(self):
+        return self.config.run
 
     @cached_property
     def cluster_def(self):
@@ -93,22 +101,22 @@ class ExperimentSpecification(JobSpecification):
         if not environment:
             return cluster, is_distributed
 
-        if environment.tensorflow:
+        if self.config.tensorflow:
             return TensorflowSpecification.get_cluster_def(
                 cluster=cluster,
-                framework_config=environment.tensorflow)
-        if environment.horovod:
+                framework_config=self.config.tensorflow)
+        if self.config.horovod:
             return HorovodSpecification.get_cluster_def(
                 cluster=cluster,
-                framework_config=environment.horovod)
-        if environment.mxnet:
+                framework_config=self.config.horovod)
+        if self.config.mxnet:
             return MXNetSpecification.get_cluster_def(
                 cluster=cluster,
-                framework_config=environment.mxnet)
-        if environment.pytorch:
+                framework_config=self.config.mxnet)
+        if self.config.pytorch:
             return PytorchSpecification.get_cluster_def(
                 cluster=cluster,
-                framework_config=environment.pytorch)
+                framework_config=self.config.pytorch)
 
         # No specified framework, It should return default standalone mode cluster definition
         return cluster, is_distributed
@@ -123,34 +131,34 @@ class ExperimentSpecification(JobSpecification):
         cluster, is_distributed = self.cluster_def
 
         # Check if any framework is defined
-        if environment.tensorflow:
+        if self.config.tensorflow:
             return TensorflowSpecification.get_total_resources(
                 master_resources=self.master_resources,
-                environment=environment,
+                environment=self.config.tensorflow,
                 cluster=cluster,
                 is_distributed=is_distributed
             )
 
-        if environment.horovod:
+        if self.config.horovod:
             return HorovodSpecification.get_total_resources(
                 master_resources=self.master_resources,
-                environment=environment,
+                environment=self.config.horovod,
                 cluster=cluster,
                 is_distributed=is_distributed
             )
 
-        if environment.mxnet:
+        if self.config.mxnet:
             return MXNetSpecification.get_total_resources(
                 master_resources=self.master_resources,
-                environment=environment,
+                environment=self.config.mxnet,
                 cluster=cluster,
                 is_distributed=is_distributed
             )
 
-        if environment.pytorch:
+        if self.config.pytorch:
             return PytorchSpecification.get_total_resources(
                 master_resources=self.master_resources,
-                environment=environment,
+                environment=self.config.pytorch,
                 cluster=cluster,
                 is_distributed=is_distributed
             )
@@ -173,3 +181,31 @@ class ExperimentSpecification(JobSpecification):
     @cached_property
     def master_tolerations(self):
         return self.environment.tolerations if self.environment else None
+
+    @classmethod
+    def create_specification(cls,  # pylint:disable=arguments-differ
+                             build_config,
+                             run_config,
+                             to_dict=True):
+        try:
+            specification = BaseRunSpecification.create_specification(
+                build_config=build_config, to_dict=True)
+        except PolyaxonConfigurationError:
+            raise PolyaxonConfigurationError(
+                'Create specification expects a dict or an instance of BuildConfig.')
+
+        if isinstance(run_config, RunConfig):
+            r_config = run_config.to_light_dict()
+        elif isinstance(run_config, Mapping):
+            r_config = RunConfig.from_dict(run_config, unknown=EXCLUDE)
+            r_config = r_config.to_light_dict()
+        else:
+            raise PolyaxonConfigurationError(
+                'Create specification expects a dict or an instance of RunConfig.')
+
+        specification[cls.KIND] = cls._SPEC_KIND
+        specification[cls.RUN] = r_config
+
+        if to_dict:
+            return specification
+        return cls.read(specification)

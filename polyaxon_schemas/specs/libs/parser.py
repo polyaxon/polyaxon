@@ -44,25 +44,14 @@ class Parser(object):
             declarations = cls.parse_expression(spec, declarations, declarations)
             parsed_data[spec.DECLARATIONS] = declarations
 
-        if spec.ENVIRONMENT in data:
-            parsed_data[spec.ENVIRONMENT] = cls.parse_expression(
-                spec, data[spec.ENVIRONMENT], declarations)
+        for section in spec.STD_PARSING_SECTIONS:
+            if section in data:
+                parsed_data[section] = cls.parse_expression(spec, data[section], declarations)
 
-        if spec.LOGGING in data:
-            parsed_data[spec.LOGGING] = cls.parse_expression(
-                spec, data[spec.LOGGING], declarations)
-
-        if spec.TAGS in data:
-            parsed_data[spec.TAGS] = cls.parse_expression(
-                spec, data[spec.TAGS], declarations)
-
-        if spec.HP_TUNING in data:
-            parsed_data[spec.HP_TUNING] = cls.parse_expression(
-                spec, data[spec.HP_TUNING], declarations)
-
-        if spec.BUILD in data:
-            parsed_data[spec.BUILD] = cls.parse_expression(
-                spec, data[spec.BUILD], declarations, True, False)
+        for section in spec.OP_PARSING_SECTIONS:
+            if section in data:
+                parsed_data[section] = cls.parse_expression(
+                    spec, data[section], declarations, True, False)
 
         if spec.RUN in data:
             parsed_data[spec.RUN] = cls.parse_expression(

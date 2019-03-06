@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.specs.base import BaseSpecification
-from polyaxon_schemas.specs.build import BuildSpecification
+from polyaxon_schemas.ops.tensorboard import TensorboardConfig
+from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 
 
-class TensorboardSpecification(BuildSpecification):
+class TensorboardSpecification(BaseRunSpecification):
     """The polyaxonfile specification for tensorboard.
 
     SECTIONS:
@@ -18,9 +17,8 @@ class TensorboardSpecification(BuildSpecification):
     """
     _SPEC_KIND = BaseSpecification._TENSORBOARD  # pylint:disable=protected-access
 
-    def _extra_validation(self):
-        try:
-            super(TensorboardSpecification, self)._extra_validation()
-        except PolyaxonConfigurationError:
-            raise PolyaxonConfigurationError(
-                'TensorboardSpecification must contain a valid `build` section.')
+    REQUIRED_SECTIONS = BaseRunSpecification.REQUIRED_SECTIONS + (
+        BaseSpecification.BUILD,
+    )
+
+    CONFIG = TensorboardConfig

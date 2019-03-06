@@ -5,8 +5,9 @@ kind: notebook
 
 tags: ['foo', 'bar']
 
+backend: lab
+
 environment:
-  backend: lab
   persistence:
     data: ['data1', 'data2']
     outputs: 'outputs1'

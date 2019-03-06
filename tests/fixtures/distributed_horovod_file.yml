@@ -6,6 +6,8 @@ kind: experiment
 logging:
   level: INFO
 
+framework: horovod
+
 environment:
   resources:
     cpu:
@@ -31,7 +33,6 @@ environment:
             values:
             - another-node-label-value
 
-  framework: horovod
   distribution:
     n_workers: 5
 

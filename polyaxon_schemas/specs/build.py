@@ -8,10 +8,10 @@ from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.build import BuildConfig
-from polyaxon_schemas.specs.base import BaseSpecification
+from polyaxon_schemas.specs.base import BaseSpecification, EnvironmentSpecificationMixin
 
 
-class BuildSpecification(BaseSpecification):
+class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
     """The polyaxonfile specification for build jobs.
 
     SECTIONS:
@@ -23,58 +23,33 @@ class BuildSpecification(BaseSpecification):
     """
     _SPEC_KIND = BaseSpecification._BUILD
 
+    BUILD_STEPS = 'build_steps'
+    ENV_VARS = 'env_vars'
+    NOCACHE = 'nocache'
+    BRANCH = 'branch'
+    COMMIT = 'commit'
+    CONTEXT = 'context'
+    DOCKERFILE = 'dockerfile'
+    IMAGE = 'image'
+
+    SECTIONS = BaseSpecification.SECTIONS + (
+        BUILD_STEPS, ENV_VARS, NOCACHE, BRANCH, COMMIT, CONTEXT, DOCKERFILE, IMAGE)
+
+    OP_PARSING_SECTIONS = BaseSpecification.OP_PARSING_SECTIONS + (
+        BUILD_STEPS, ENV_VARS, NOCACHE, BRANCH, COMMIT, CONTEXT, DOCKERFILE, IMAGE)
+
     HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND, )
 
-    REQUIRED_SECTIONS = BaseSpecification.REQUIRED_SECTIONS + (
-        BaseSpecification.BUILD,
-    )
     POSSIBLE_SECTIONS = BaseSpecification.POSSIBLE_SECTIONS + (
-        BaseSpecification.ENVIRONMENT, BaseSpecification.BUILD,
+        BaseSpecification.BACKEND, BaseSpecification.ENVIRONMENT,
+        BUILD_STEPS, ENV_VARS, NOCACHE, BRANCH, COMMIT, CONTEXT, DOCKERFILE, IMAGE
     )
 
-    @cached_property
-    def validated_data(self):
-        return self._validated_data
+    CONFIG = BuildConfig
 
     @cached_property
-    def build(self):
-        return self.validated_data.get(self.BUILD, None)
-
-    @cached_property
-    def environment(self):
-        return self.validated_data.get(self.ENVIRONMENT, None)
-
-    @cached_property
-    def resources(self):
-        return self.environment.resources if self.environment else None
-
-    @cached_property
-    def persistence(self):
-        return self.environment.persistence if self.environment else None
-
-    @cached_property
-    def outputs(self):
-        return self.environment.outputs if self.environment else None
-
-    @cached_property
-    def secret_refs(self):
-        return self.environment.secret_refs if self.environment else None
-
-    @cached_property
-    def configmap_refs(self):
-        return self.environment.configmap_refs if self.environment else None
-
-    @cached_property
-    def node_selector(self):
-        return self.environment.node_selector if self.environment else None
-
-    @cached_property
-    def affinity(self):
-        return self.environment.affinity if self.environment else None
-
-    @cached_property
-    def tolerations(self):
-        return self.environment.tolerations if self.environment else None
+    def backend(self):
+        return self.config.backend
 
     @classmethod
     def create_specification(cls,
@@ -96,8 +71,8 @@ class BuildSpecification(BaseSpecification):
         specification = {
             cls.VERSION: 1,
             cls.KIND: cls._SPEC_KIND,
-            cls.BUILD: config
         }
+        specification.update(config)
 
         env = {}
         if secret_refs:

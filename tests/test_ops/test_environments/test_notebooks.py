@@ -14,7 +14,9 @@ class TestNotebookEnvironmentsConfigs(TestCase):
 
     def test_notebook_environment_config(self):
         config_dict = {
-            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
+            'environment': {
+                'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
+            }
         }
         config = NotebookConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

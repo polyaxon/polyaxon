@@ -3,6 +3,8 @@ version: 1
 
 kind: experiment
 
+framework: pytorch
+
 logging:
   level: INFO
 
@@ -31,7 +33,6 @@ environment:
             values:
             - another-node-label-value
 
-  framework: pytorch
   distribution:
     n_workers: 5
 

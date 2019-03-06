@@ -53,7 +53,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.run is None
         assert spec.environment is None
         assert spec.framework is None
-        assert spec.is_runnable
         assert spec.is_experiment
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert isinstance(spec.model, RegressorConfig)
@@ -76,7 +75,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.run is None
         assert spec.environment is None
         assert spec.framework is None
-        assert spec.is_runnable
         assert spec.is_experiment
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert isinstance(spec.model, GeneratorConfig)
@@ -93,26 +91,25 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.specification
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
-        assert spec.is_runnable
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.environment.tensorflow.n_workers == 5
-        assert spec.environment.tensorflow.n_ps == 10
+        assert spec.config.tensorflow.n_workers == 5
+        assert spec.config.tensorflow.n_ps == 10
 
         # check properties for returning worker configs and resources
-        assert spec.environment.tensorflow.worker_resources == {}
-        assert spec.environment.tensorflow.ps_resources == {}
+        assert spec.config.tensorflow.worker_resources == {}
+        assert spec.config.tensorflow.ps_resources == {}
 
         cluster, is_distributed = spec.cluster_def
 
         assert TensorflowSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         ) == {}
         assert TensorflowSpecification.get_ps_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         ) == {}
@@ -143,79 +140,78 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.framework == ExperimentFramework.TENSORFLOW
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
         assert spec.secret_refs == ['secret1', 'secret2']
         assert spec.configmap_refs == ['configmap1', 'configmap2']
-        assert spec.environment.tensorflow.n_workers == 5
-        assert spec.environment.tensorflow.n_ps == 10
+        assert spec.config.tensorflow.n_workers == 5
+        assert spec.config.tensorflow.n_ps == 10
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert spec.environment.tensorflow.default_worker_node_selector == {
+        assert spec.config.tensorflow.default_worker_node_selector == {
             'foo': True
         }
 
-        assert spec.environment.tensorflow.worker_resources == {}
-        assert spec.environment.tensorflow.worker_affinities == {}
-        assert isinstance(spec.environment.tensorflow.worker_node_selectors[3], dict)
-        assert spec.environment.tensorflow.worker_node_selectors[3] == {
+        assert spec.config.tensorflow.worker_resources == {}
+        assert spec.config.tensorflow.worker_affinities == {}
+        assert isinstance(spec.config.tensorflow.worker_node_selectors[3], dict)
+        assert spec.config.tensorflow.worker_node_selectors[3] == {
             'foo': False
         }
-        assert isinstance(spec.environment.tensorflow.worker_tolerations[4], list)
-        assert spec.environment.tensorflow.worker_tolerations[4] == [{
+        assert isinstance(spec.config.tensorflow.worker_tolerations[4], list)
+        assert spec.config.tensorflow.worker_tolerations[4] == [{
             'key': 'key',
             'operator': 'Exists',
             'effect': 'NoSchedule',
         }]
 
-        assert isinstance(spec.environment.tensorflow.default_ps_resources, PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
-        assert spec.environment.tensorflow.default_ps_resources.cpu.requests == 2
-        assert spec.environment.tensorflow.default_ps_resources.cpu.limits == 4
+        assert isinstance(spec.config.tensorflow.default_ps_resources, PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
+        assert spec.config.tensorflow.default_ps_resources.cpu.requests == 2
+        assert spec.config.tensorflow.default_ps_resources.cpu.limits == 4
 
-        assert spec.environment.tensorflow.ps_node_selectors == {}
-        assert isinstance(spec.environment.tensorflow.ps_tolerations[7], list)
-        assert spec.environment.tensorflow.ps_tolerations[7] == [{
+        assert spec.config.tensorflow.ps_node_selectors == {}
+        assert isinstance(spec.config.tensorflow.ps_tolerations[7], list)
+        assert spec.config.tensorflow.ps_tolerations[7] == [{
             'operator': 'Exists'
         }]
-        assert isinstance(spec.environment.tensorflow.ps_affinities[7], dict)
-        assert isinstance(spec.environment.tensorflow.ps_resources[9], PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.ps_resources[9].memory, K8SResourcesConfig)
-        assert spec.environment.tensorflow.ps_resources[9].memory.requests == 512
-        assert spec.environment.tensorflow.ps_resources[9].memory.limits == 1024
+        assert isinstance(spec.config.tensorflow.ps_affinities[7], dict)
+        assert isinstance(spec.config.tensorflow.ps_resources[9], PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.ps_resources[9].memory, K8SResourcesConfig)
+        assert spec.config.tensorflow.ps_resources[9].memory.requests == 512
+        assert spec.config.tensorflow.ps_resources[9].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_node_selectors) == spec.environment.tensorflow.n_workers
+        assert len(worker_node_selectors) == spec.config.tensorflow.n_workers
         assert set([i['foo'] for i in worker_node_selectors.values()]) == {
-            spec.environment.tensorflow.default_worker_node_selector['foo'],
-            spec.environment.tensorflow.worker_node_selectors[3]['foo']}
+            spec.config.tensorflow.default_worker_node_selector['foo'],
+            spec.config.tensorflow.worker_node_selectors[3]['foo']}
 
         assert TensorflowSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         ) == {}
         ps_resources = TensorflowSpecification.get_ps_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(ps_resources) == spec.environment.tensorflow.n_ps
+        assert len(ps_resources) == spec.config.tensorflow.n_ps
         assert set(ps_resources.values()) == {
-            spec.environment.tensorflow.default_ps_resources,
-            spec.environment.tensorflow.ps_resources[9]}
+            spec.config.tensorflow.default_ps_resources,
+            spec.config.tensorflow.ps_resources[9]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -275,7 +271,6 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        assert spec.is_runnable
         assert spec.environment is not None
         assert spec.persistence.outputs == 'outputs1'
         assert spec.persistence.data == ['data1', 'data2']
@@ -320,7 +315,6 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        assert spec.is_runnable
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -362,7 +356,6 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        assert spec.is_runnable
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -408,7 +401,6 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        assert spec.is_runnable
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -439,7 +431,6 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        assert spec.is_runnable
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -463,7 +454,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
-        assert spec.is_runnable
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -472,7 +462,7 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(run, RunConfig)
         assert run.cmd == "video_prediction_train --model=DNA --num_masks=1"
 
-    def test_run_simple_file_passes(self):
+    def test_run_simple_file_with_cmds_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file_list_cmds.yml'))
         spec = plxfile.specification
         assert spec.version == 1
@@ -481,7 +471,28 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
-        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.model is None
+        run = spec.run
+        assert isinstance(run, RunConfig)
+        assert run.cmd == ['video_prediction_train --model=DNA --num_masks=1',
+                           'video_prediction_train --model=DNA --num_masks=10']
+
+    def test_run_simple_file_with_build_env_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_with_build_env.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.logging is None
+        assert sorted(spec.tags) == sorted(['foo', 'bar'])
+        assert spec.is_experiment
+        assert isinstance(spec.build, BuildConfig)
+        assert spec.build.environment is not None
+        assert spec.build.environment.node_selector == {'polyaxon.com': 'node_for_build_jobs'}
+        assert isinstance(spec.build.environment.resources, PodResourcesConfig)
+        assert isinstance(spec.build.environment.affinity, dict)
+        assert isinstance(spec.run, RunConfig)
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -507,7 +518,6 @@ class TestPolyaxonfile(TestCase):
         assert build.image == 'my_image'
 
         spec = spec.get_experiment_spec(declarations)
-        assert spec.is_runnable
         assert spec.environment is None
         assert spec.logging is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -539,13 +549,11 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.hptuning, HPTuningConfig)
         declarations = spec.matrix_declaration_test
 
-
         build = spec.build
         assert isinstance(build, BuildConfig)
         assert build.image == 'my_image'
 
         spec = spec.get_experiment_spec(declarations)
-        assert spec.is_runnable
         assert spec.environment is None
         assert spec.logging is not None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -567,12 +575,11 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.environment.node_selector is None
         assert spec.master_node_selector is None
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.environment.tensorflow.n_workers == 5
-        assert spec.environment.tensorflow.n_ps == 10
+        assert spec.config.tensorflow.n_workers == 5
+        assert spec.config.tensorflow.n_ps == 10
 
         assert spec.environment.tolerations is None
         assert spec.environment.node_selector is None
@@ -582,97 +589,97 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert spec.environment.tensorflow.default_worker_node_selector is None
-        assert spec.environment.tensorflow.default_worker_affinity is None
-        assert isinstance(spec.environment.tensorflow.default_worker_tolerations, list)
-        assert isinstance(spec.environment.tensorflow.default_worker_resources,
+        assert spec.config.tensorflow.default_worker_node_selector is None
+        assert spec.config.tensorflow.default_worker_affinity is None
+        assert isinstance(spec.config.tensorflow.default_worker_tolerations, list)
+        assert isinstance(spec.config.tensorflow.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.default_worker_resources.cpu,
+        assert isinstance(spec.config.tensorflow.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.tensorflow.default_worker_resources.cpu.requests == 3
-        assert spec.environment.tensorflow.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.tensorflow.default_worker_resources.memory,
+        assert spec.config.tensorflow.default_worker_resources.cpu.requests == 3
+        assert spec.config.tensorflow.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.tensorflow.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.tensorflow.default_worker_resources.memory.requests == 256
-        assert spec.environment.tensorflow.default_worker_resources.memory.limits == 256
+        assert spec.config.tensorflow.default_worker_resources.memory.requests == 256
+        assert spec.config.tensorflow.default_worker_resources.memory.limits == 256
 
-        assert spec.environment.tensorflow.worker_tolerations[2] == [{'operator': 'Exists'}]
-        assert isinstance(spec.environment.tensorflow.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.worker_resources[3].memory,
+        assert spec.config.tensorflow.worker_tolerations[2] == [{'operator': 'Exists'}]
+        assert isinstance(spec.config.tensorflow.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.tensorflow.worker_resources[3].memory.requests == 300
-        assert spec.environment.tensorflow.worker_resources[3].memory.limits == 300
+        assert spec.config.tensorflow.worker_resources[3].memory.requests == 300
+        assert spec.config.tensorflow.worker_resources[3].memory.limits == 300
 
-        assert spec.environment.tensorflow.default_ps_node_selector is None
-        assert spec.environment.tensorflow.default_ps_affinity is None
-        assert isinstance(spec.environment.tensorflow.default_ps_tolerations, list)
-        assert isinstance(spec.environment.tensorflow.default_ps_resources, PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
-        assert spec.environment.tensorflow.default_ps_resources.cpu.requests == 2
-        assert spec.environment.tensorflow.default_ps_resources.cpu.limits == 4
+        assert spec.config.tensorflow.default_ps_node_selector is None
+        assert spec.config.tensorflow.default_ps_affinity is None
+        assert isinstance(spec.config.tensorflow.default_ps_tolerations, list)
+        assert isinstance(spec.config.tensorflow.default_ps_resources, PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
+        assert spec.config.tensorflow.default_ps_resources.cpu.requests == 2
+        assert spec.config.tensorflow.default_ps_resources.cpu.limits == 4
 
-        assert isinstance(spec.environment.tensorflow.ps_resources[9], PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.ps_resources[9].memory, K8SResourcesConfig)
-        assert spec.environment.tensorflow.ps_resources[9].memory.requests == 512
-        assert spec.environment.tensorflow.ps_resources[9].memory.limits == 1024
+        assert isinstance(spec.config.tensorflow.ps_resources[9], PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.ps_resources[9].memory, K8SResourcesConfig)
+        assert spec.config.tensorflow.ps_resources[9].memory.requests == 512
+        assert spec.config.tensorflow.ps_resources[9].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_affinities = TensorflowSpecification.get_worker_affinities(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_tolerations = TensorflowSpecification.get_worker_tolerations(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_resources = TensorflowSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         assert worker_affinities == {}
         assert worker_node_selectors == {}
-        assert len(worker_tolerations) == spec.environment.tensorflow.n_workers
-        assert len(worker_resources) == spec.environment.tensorflow.n_workers
+        assert len(worker_tolerations) == spec.config.tensorflow.n_workers
+        assert len(worker_resources) == spec.config.tensorflow.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.tensorflow.default_worker_resources,
-            spec.environment.tensorflow.worker_resources[3]}
+            spec.config.tensorflow.default_worker_resources,
+            spec.config.tensorflow.worker_resources[3]}
 
         ps_tolerations = TensorflowSpecification.get_ps_tolerations(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_affinities = TensorflowSpecification.get_ps_affinities(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_resources = TensorflowSpecification.get_ps_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         assert ps_affinities == {}
         assert ps_node_selectors == {}
-        assert len(ps_tolerations) == spec.environment.tensorflow.n_ps
-        assert len(ps_resources) == spec.environment.tensorflow.n_ps
+        assert len(ps_tolerations) == spec.config.tensorflow.n_ps
+        assert len(ps_resources) == spec.config.tensorflow.n_ps
         assert set(ps_resources.values()) == {
-            spec.environment.tensorflow.default_ps_resources,
-            spec.environment.tensorflow.ps_resources[9]}
+            spec.config.tensorflow.default_ps_resources,
+            spec.config.tensorflow.ps_resources[9]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -694,66 +701,65 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.environment.tensorflow.n_workers == 5
-        assert spec.environment.tensorflow.n_ps == 10
+        assert spec.config.tensorflow.n_workers == 5
+        assert spec.config.tensorflow.n_ps == 10
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(spec.environment.tensorflow.default_worker_resources,
+        assert isinstance(spec.config.tensorflow.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.default_worker_resources.cpu,
+        assert isinstance(spec.config.tensorflow.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.tensorflow.default_worker_resources.cpu.requests == 3
-        assert spec.environment.tensorflow.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.tensorflow.default_worker_resources.memory,
+        assert spec.config.tensorflow.default_worker_resources.cpu.requests == 3
+        assert spec.config.tensorflow.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.tensorflow.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.tensorflow.default_worker_resources.memory.requests == 256
-        assert spec.environment.tensorflow.default_worker_resources.memory.limits == 256
+        assert spec.config.tensorflow.default_worker_resources.memory.requests == 256
+        assert spec.config.tensorflow.default_worker_resources.memory.limits == 256
 
-        assert isinstance(spec.environment.tensorflow.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.worker_resources[3].memory,
+        assert isinstance(spec.config.tensorflow.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.tensorflow.worker_resources[3].memory.requests == 300
-        assert spec.environment.tensorflow.worker_resources[3].memory.limits == 300
+        assert spec.config.tensorflow.worker_resources[3].memory.requests == 300
+        assert spec.config.tensorflow.worker_resources[3].memory.limits == 300
 
-        assert isinstance(spec.environment.tensorflow.default_ps_resources, PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
-        assert spec.environment.tensorflow.default_ps_resources.cpu.requests == 2
-        assert spec.environment.tensorflow.default_ps_resources.cpu.limits == 4
+        assert isinstance(spec.config.tensorflow.default_ps_resources, PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
+        assert spec.config.tensorflow.default_ps_resources.cpu.requests == 2
+        assert spec.config.tensorflow.default_ps_resources.cpu.limits == 4
 
-        assert isinstance(spec.environment.tensorflow.ps_resources[9], PodResourcesConfig)
-        assert isinstance(spec.environment.tensorflow.ps_resources[9].memory, K8SResourcesConfig)
-        assert spec.environment.tensorflow.ps_resources[9].memory.requests == 512
-        assert spec.environment.tensorflow.ps_resources[9].memory.limits == 1024
+        assert isinstance(spec.config.tensorflow.ps_resources[9], PodResourcesConfig)
+        assert isinstance(spec.config.tensorflow.ps_resources[9].memory, K8SResourcesConfig)
+        assert spec.config.tensorflow.ps_resources[9].memory.requests == 512
+        assert spec.config.tensorflow.ps_resources[9].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_resources = TensorflowSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_resources) == spec.environment.tensorflow.n_workers
+        assert len(worker_resources) == spec.config.tensorflow.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.tensorflow.default_worker_resources,
-            spec.environment.tensorflow.worker_resources[3]}
+            spec.config.tensorflow.default_worker_resources,
+            spec.config.tensorflow.worker_resources[3]}
 
         ps_resources = TensorflowSpecification.get_ps_resources(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(ps_resources) == spec.environment.tensorflow.n_ps
+        assert len(ps_resources) == spec.config.tensorflow.n_ps
         assert set(ps_resources.values()) == {
-            spec.environment.tensorflow.default_ps_resources,
-            spec.environment.tensorflow.ps_resources[9]}
+            spec.config.tensorflow.default_ps_resources,
+            spec.config.tensorflow.ps_resources[9]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -767,35 +773,35 @@ class TestPolyaxonfile(TestCase):
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)
 
-        assert (spec.environment.tensorflow.default_worker.node_selector ==
+        assert (spec.config.tensorflow.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
-        assert (spec.environment.tensorflow.worker_node_selectors[2] ==
+        assert (spec.config.tensorflow.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
 
-        assert (spec.environment.tensorflow.default_ps.node_selector ==
+        assert (spec.config.tensorflow.default_ps.node_selector ==
                 {'polyaxon.com': 'node_for_ps_tasks'})
-        assert (spec.environment.tensorflow.ps_node_selectors[2] ==
+        assert (spec.config.tensorflow.ps_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_ps_task_2'})
 
         worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_node_selectors) == spec.environment.tensorflow.n_workers
+        assert len(worker_node_selectors) == spec.config.tensorflow.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.tensorflow.default_worker.node_selector.items()),
-            tuple(spec.environment.tensorflow.worker_node_selectors[2].items())}
+            tuple(spec.config.tensorflow.default_worker.node_selector.items()),
+            tuple(spec.config.tensorflow.worker_node_selectors[2].items())}
 
         ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(ps_node_selectors) == spec.environment.tensorflow.n_ps
+        assert len(ps_node_selectors) == spec.config.tensorflow.n_ps
         assert set(tuple(i.items()) for i in ps_node_selectors.values()) == {
-            tuple(spec.environment.tensorflow.default_ps.node_selector.items()),
-            tuple(spec.environment.tensorflow.ps_node_selectors[2].items())}
+            tuple(spec.config.tensorflow.default_ps.node_selector.items()),
+            tuple(spec.config.tensorflow.ps_node_selectors[2].items())}
 
     def test_distributed_horovod_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/distributed_horovod_file.yml'))
@@ -804,70 +810,69 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.framework == ExperimentFramework.HOROVOD
-        assert spec.environment.horovod.n_workers == 5
+        assert spec.config.horovod.n_workers == 5
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(spec.environment.horovod.default_worker_resources,
+        assert isinstance(spec.config.horovod.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.horovod.default_worker_resources.cpu,
+        assert isinstance(spec.config.horovod.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.horovod.default_worker_resources.cpu.requests == 3
-        assert spec.environment.horovod.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.horovod.default_worker_resources.memory,
+        assert spec.config.horovod.default_worker_resources.cpu.requests == 3
+        assert spec.config.horovod.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.horovod.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.horovod.default_worker_resources.memory.requests == 256
-        assert spec.environment.horovod.default_worker_resources.memory.limits == 256
+        assert spec.config.horovod.default_worker_resources.memory.requests == 256
+        assert spec.config.horovod.default_worker_resources.memory.limits == 256
 
-        assert isinstance(spec.environment.horovod.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.horovod.worker_resources[3].memory,
+        assert isinstance(spec.config.horovod.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.horovod.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.horovod.worker_resources[3].memory.requests == 300
-        assert spec.environment.horovod.worker_resources[3].memory.limits == 300
+        assert spec.config.horovod.worker_resources[3].memory.requests == 300
+        assert spec.config.horovod.worker_resources[3].memory.limits == 300
 
         assert isinstance(spec.environment.affinity, dict)
-        assert spec.environment.horovod.worker_affinities == {}
+        assert spec.config.horovod.worker_affinities == {}
 
         assert spec.environment.tolerations is None
-        assert isinstance(spec.environment.horovod.default_worker_tolerations, list)
-        assert isinstance(spec.environment.horovod.worker_tolerations[2], list)
-        assert spec.environment.horovod.worker_tolerations[2] == [{'operator': 'Exists'}]
+        assert isinstance(spec.config.horovod.default_worker_tolerations, list)
+        assert isinstance(spec.config.horovod.worker_tolerations[2], list)
+        assert spec.config.horovod.worker_tolerations[2] == [{'operator': 'Exists'}]
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_resources = HorovodSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_node_selectors = HorovodSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_affinities = HorovodSpecification.get_worker_affinities(
-            environment=spec.environment,
+            environment=spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_tolerations = HorovodSpecification.get_worker_tolerations(
-            environment=spec.environment,
+            environment=spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
 
         assert worker_node_selectors == {}
         assert worker_affinities == {}
-        assert len(worker_tolerations) == spec.environment.horovod.n_workers
-        assert len(worker_resources) == spec.environment.horovod.n_workers
+        assert len(worker_tolerations) == spec.config.horovod.n_workers
+        assert len(worker_resources) == spec.config.horovod.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.horovod.default_worker_resources,
-            spec.environment.horovod.worker_resources[3]}
+            spec.config.horovod.default_worker_resources,
+            spec.config.horovod.worker_resources[3]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -888,45 +893,44 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == ExperimentFramework.HOROVOD
-        assert spec.environment.horovod.n_workers == 5
+        assert spec.config.horovod.n_workers == 5
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(spec.environment.horovod.default_worker_resources,
+        assert isinstance(spec.config.horovod.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.horovod.default_worker_resources.cpu,
+        assert isinstance(spec.config.horovod.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.horovod.default_worker_resources.cpu.requests == 3
-        assert spec.environment.horovod.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.horovod.default_worker_resources.memory,
+        assert spec.config.horovod.default_worker_resources.cpu.requests == 3
+        assert spec.config.horovod.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.horovod.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.horovod.default_worker_resources.memory.requests == 256
-        assert spec.environment.horovod.default_worker_resources.memory.limits == 256
+        assert spec.config.horovod.default_worker_resources.memory.requests == 256
+        assert spec.config.horovod.default_worker_resources.memory.limits == 256
 
-        assert isinstance(spec.environment.horovod.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.horovod.worker_resources[3].memory,
+        assert isinstance(spec.config.horovod.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.horovod.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.horovod.worker_resources[3].memory.requests == 300
-        assert spec.environment.horovod.worker_resources[3].memory.limits == 300
+        assert spec.config.horovod.worker_resources[3].memory.requests == 300
+        assert spec.config.horovod.worker_resources[3].memory.limits == 300
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_resources = HorovodSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_resources) == spec.environment.horovod.n_workers
+        assert len(worker_resources) == spec.config.horovod.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.horovod.default_worker_resources,
-            spec.environment.horovod.worker_resources[3]}
+            spec.config.horovod.default_worker_resources,
+            spec.config.horovod.worker_resources[3]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -939,20 +943,20 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5}, True)
 
-        assert (spec.environment.horovod.default_worker.node_selector ==
+        assert (spec.config.horovod.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
-        assert (spec.environment.horovod.worker_node_selectors[2] ==
+        assert (spec.config.horovod.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
 
         worker_node_selectors = HorovodSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_node_selectors) == spec.environment.horovod.n_workers
+        assert len(worker_node_selectors) == spec.config.horovod.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.horovod.default_worker.node_selector.items()),
-            tuple(spec.environment.horovod.worker_node_selectors[2].items())}
+            tuple(spec.config.horovod.default_worker.node_selector.items()),
+            tuple(spec.config.horovod.worker_node_selectors[2].items())}
 
     def test_distributed_pytorch_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
@@ -962,9 +966,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.framework == ExperimentFramework.PYTORCH
-        assert spec.environment.pytorch.n_workers == 5
+        assert spec.config.pytorch.n_workers == 5
 
         assert spec.environment.node_selector is None
         assert spec.environment.tolerations is None
@@ -974,57 +977,57 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert spec.environment.pytorch.default_worker_node_selector is None
-        assert spec.environment.pytorch.default_worker_affinity is None
-        assert isinstance(spec.environment.pytorch.default_worker_tolerations, list)
-        assert isinstance(spec.environment.pytorch.default_worker_tolerations[0], dict)
-        assert isinstance(spec.environment.pytorch.default_worker_resources,
+        assert spec.config.pytorch.default_worker_node_selector is None
+        assert spec.config.pytorch.default_worker_affinity is None
+        assert isinstance(spec.config.pytorch.default_worker_tolerations, list)
+        assert isinstance(spec.config.pytorch.default_worker_tolerations[0], dict)
+        assert isinstance(spec.config.pytorch.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.pytorch.default_worker_resources.cpu,
+        assert isinstance(spec.config.pytorch.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.pytorch.default_worker_resources.cpu.requests == 3
-        assert spec.environment.pytorch.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.pytorch.default_worker_resources.memory,
+        assert spec.config.pytorch.default_worker_resources.cpu.requests == 3
+        assert spec.config.pytorch.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.pytorch.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.pytorch.default_worker_resources.memory.requests == 256
-        assert spec.environment.pytorch.default_worker_resources.memory.limits == 256
+        assert spec.config.pytorch.default_worker_resources.memory.requests == 256
+        assert spec.config.pytorch.default_worker_resources.memory.limits == 256
 
-        assert spec.environment.pytorch.worker_tolerations[2] == [{'operator': 'Exists'}]
-        assert isinstance(spec.environment.pytorch.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.pytorch.worker_resources[3].memory,
+        assert spec.config.pytorch.worker_tolerations[2] == [{'operator': 'Exists'}]
+        assert isinstance(spec.config.pytorch.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.pytorch.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.pytorch.worker_resources[3].memory.requests == 300
-        assert spec.environment.pytorch.worker_resources[3].memory.limits == 300
+        assert spec.config.pytorch.worker_resources[3].memory.requests == 300
+        assert spec.config.pytorch.worker_resources[3].memory.limits == 300
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_resources = PytorchSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_tolerations = PytorchSpecification.get_worker_tolerations(
-            environment=spec.environment,
+            environment=spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_node_selectors = PytorchSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_affinities = PytorchSpecification.get_worker_affinities(
-            environment=spec.environment,
+            environment=spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
         assert worker_node_selectors == {}
         assert worker_affinities == {}
-        assert len(worker_tolerations) == spec.environment.pytorch.n_workers
-        assert len(worker_resources) == spec.environment.pytorch.n_workers
+        assert len(worker_tolerations) == spec.config.pytorch.n_workers
+        assert len(worker_resources) == spec.config.pytorch.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.pytorch.default_worker_resources,
-            spec.environment.pytorch.worker_resources[3]}
+            spec.config.pytorch.default_worker_resources,
+            spec.config.pytorch.worker_resources[3]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -1045,45 +1048,44 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == ExperimentFramework.PYTORCH
-        assert spec.environment.pytorch.n_workers == 5
+        assert spec.config.pytorch.n_workers == 5
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(spec.environment.pytorch.default_worker_resources,
+        assert isinstance(spec.config.pytorch.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.pytorch.default_worker_resources.cpu,
+        assert isinstance(spec.config.pytorch.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.pytorch.default_worker_resources.cpu.requests == 3
-        assert spec.environment.pytorch.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.pytorch.default_worker_resources.memory,
+        assert spec.config.pytorch.default_worker_resources.cpu.requests == 3
+        assert spec.config.pytorch.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.pytorch.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.pytorch.default_worker_resources.memory.requests == 256
-        assert spec.environment.pytorch.default_worker_resources.memory.limits == 256
+        assert spec.config.pytorch.default_worker_resources.memory.requests == 256
+        assert spec.config.pytorch.default_worker_resources.memory.limits == 256
 
-        assert isinstance(spec.environment.pytorch.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.pytorch.worker_resources[3].memory,
+        assert isinstance(spec.config.pytorch.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.pytorch.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.pytorch.worker_resources[3].memory.requests == 300
-        assert spec.environment.pytorch.worker_resources[3].memory.limits == 300
+        assert spec.config.pytorch.worker_resources[3].memory.requests == 300
+        assert spec.config.pytorch.worker_resources[3].memory.limits == 300
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_resources = PytorchSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_resources) == spec.environment.pytorch.n_workers
+        assert len(worker_resources) == spec.config.pytorch.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.pytorch.default_worker_resources,
-            spec.environment.pytorch.worker_resources[3]}
+            spec.config.pytorch.default_worker_resources,
+            spec.config.pytorch.worker_resources[3]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -1096,20 +1098,20 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5}, True)
 
-        assert (spec.environment.pytorch.default_worker.node_selector ==
+        assert (spec.config.pytorch.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
-        assert (spec.environment.pytorch.worker_node_selectors[2] ==
+        assert (spec.config.pytorch.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
 
         worker_node_selectors = PytorchSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_node_selectors) == spec.environment.pytorch.n_workers
+        assert len(worker_node_selectors) == spec.config.pytorch.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.pytorch.default_worker.node_selector.items()),
-            tuple(spec.environment.pytorch.worker_node_selectors[2].items())}
+            tuple(spec.config.pytorch.default_worker.node_selector.items()),
+            tuple(spec.config.pytorch.worker_node_selectors[2].items())}
 
     def test_distributed_mxnet_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
@@ -1119,10 +1121,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.framework == ExperimentFramework.MXNET
-        assert spec.environment.mxnet.n_workers == 5
-        assert spec.environment.mxnet.n_ps == 10
+        assert spec.config.mxnet.n_workers == 5
+        assert spec.config.mxnet.n_ps == 10
 
         assert spec.environment.node_selector is None
         assert spec.environment.tolerations is None
@@ -1132,102 +1133,102 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert spec.environment.mxnet.default_worker_node_selector is None
-        assert spec.environment.mxnet.default_worker_affinity is None
-        assert isinstance(spec.environment.mxnet.default_worker_tolerations, list)
-        assert isinstance(spec.environment.mxnet.default_worker_resources,
+        assert spec.config.mxnet.default_worker_node_selector is None
+        assert spec.config.mxnet.default_worker_affinity is None
+        assert isinstance(spec.config.mxnet.default_worker_tolerations, list)
+        assert isinstance(spec.config.mxnet.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.default_worker_resources.cpu,
+        assert isinstance(spec.config.mxnet.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.default_worker_resources.cpu.requests == 3
-        assert spec.environment.mxnet.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.mxnet.default_worker_resources.memory,
+        assert spec.config.mxnet.default_worker_resources.cpu.requests == 3
+        assert spec.config.mxnet.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.mxnet.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.default_worker_resources.memory.requests == 256
-        assert spec.environment.mxnet.default_worker_resources.memory.limits == 256
+        assert spec.config.mxnet.default_worker_resources.memory.requests == 256
+        assert spec.config.mxnet.default_worker_resources.memory.limits == 256
 
-        assert isinstance(spec.environment.mxnet.worker_tolerations[2], list)
-        assert spec.environment.mxnet.worker_tolerations[2] == [{'operator': 'Exists'}]
-        assert isinstance(spec.environment.mxnet.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.worker_resources[3].memory,
+        assert isinstance(spec.config.mxnet.worker_tolerations[2], list)
+        assert spec.config.mxnet.worker_tolerations[2] == [{'operator': 'Exists'}]
+        assert isinstance(spec.config.mxnet.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.mxnet.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.worker_resources[3].memory.requests == 300
-        assert spec.environment.mxnet.worker_resources[3].memory.limits == 300
+        assert spec.config.mxnet.worker_resources[3].memory.requests == 300
+        assert spec.config.mxnet.worker_resources[3].memory.limits == 300
 
-        assert spec.environment.mxnet.default_ps_node_selector is None
-        assert spec.environment.mxnet.default_ps_affinity is None
-        assert isinstance(spec.environment.mxnet.default_ps_tolerations, list)
-        assert isinstance(spec.environment.mxnet.default_ps_resources,
+        assert spec.config.mxnet.default_ps_node_selector is None
+        assert spec.config.mxnet.default_ps_affinity is None
+        assert isinstance(spec.config.mxnet.default_ps_tolerations, list)
+        assert isinstance(spec.config.mxnet.default_ps_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.default_ps_resources.cpu,
+        assert isinstance(spec.config.mxnet.default_ps_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.default_ps_resources.cpu.requests == 2
-        assert spec.environment.mxnet.default_ps_resources.cpu.limits == 4
+        assert spec.config.mxnet.default_ps_resources.cpu.requests == 2
+        assert spec.config.mxnet.default_ps_resources.cpu.limits == 4
 
-        assert isinstance(spec.environment.mxnet.ps_resources[9],
+        assert isinstance(spec.config.mxnet.ps_resources[9],
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.ps_resources[9].memory,
+        assert isinstance(spec.config.mxnet.ps_resources[9].memory,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.ps_resources[9].memory.requests == 512
-        assert spec.environment.mxnet.ps_resources[9].memory.limits == 1024
+        assert spec.config.mxnet.ps_resources[9].memory.requests == 512
+        assert spec.config.mxnet.ps_resources[9].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_resources = MXNetSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_node_selectors = MXNetSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_affinities = MXNetSpecification.get_worker_affinities(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         worker_tolerations = MXNetSpecification.get_worker_tolerations(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         assert worker_node_selectors == {}
         assert worker_affinities == {}
-        assert len(worker_tolerations) == spec.environment.mxnet.n_workers
-        assert len(worker_resources) == spec.environment.mxnet.n_workers
+        assert len(worker_tolerations) == spec.config.mxnet.n_workers
+        assert len(worker_resources) == spec.config.mxnet.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.mxnet.default_worker_resources,
-            spec.environment.mxnet.worker_resources[3]}
+            spec.config.mxnet.default_worker_resources,
+            spec.config.mxnet.worker_resources[3]}
 
         ps_resources = MXNetSpecification.get_ps_resources(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_node_selectors = MXNetSpecification.get_ps_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_affinities = MXNetSpecification.get_ps_affinities(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_tolerations = MXNetSpecification.get_ps_tolerations(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
         assert ps_node_selectors == {}
         assert ps_affinities == {}
-        assert len(ps_tolerations) == spec.environment.mxnet.n_ps
-        assert len(ps_resources) == spec.environment.mxnet.n_ps
+        assert len(ps_tolerations) == spec.config.mxnet.n_ps
+        assert len(ps_resources) == spec.config.mxnet.n_ps
         assert set(ps_resources.values()) == {
-            spec.environment.mxnet.default_ps_resources,
-            spec.environment.mxnet.ps_resources[9]}
+            spec.config.mxnet.default_ps_resources,
+            spec.config.mxnet.ps_resources[9]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -1249,70 +1250,69 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.is_runnable
         assert spec.environment.node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.master_node_selector == {'polyaxon.com': 'node_for_master_task'}
         assert spec.framework == ExperimentFramework.MXNET
-        assert spec.environment.mxnet.n_workers == 5
-        assert spec.environment.mxnet.n_ps == 10
+        assert spec.config.mxnet.n_workers == 5
+        assert spec.config.mxnet.n_ps == 10
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(spec.environment.mxnet.default_worker_resources,
+        assert isinstance(spec.config.mxnet.default_worker_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.default_worker_resources.cpu,
+        assert isinstance(spec.config.mxnet.default_worker_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.default_worker_resources.cpu.requests == 3
-        assert spec.environment.mxnet.default_worker_resources.cpu.limits == 3
-        assert isinstance(spec.environment.mxnet.default_worker_resources.memory,
+        assert spec.config.mxnet.default_worker_resources.cpu.requests == 3
+        assert spec.config.mxnet.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.mxnet.default_worker_resources.memory,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.default_worker_resources.memory.requests == 256
-        assert spec.environment.mxnet.default_worker_resources.memory.limits == 256
+        assert spec.config.mxnet.default_worker_resources.memory.requests == 256
+        assert spec.config.mxnet.default_worker_resources.memory.limits == 256
 
-        assert isinstance(spec.environment.mxnet.worker_resources[3], PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.worker_resources[3].memory,
+        assert isinstance(spec.config.mxnet.worker_resources[3], PodResourcesConfig)
+        assert isinstance(spec.config.mxnet.worker_resources[3].memory,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.worker_resources[3].memory.requests == 300
-        assert spec.environment.mxnet.worker_resources[3].memory.limits == 300
+        assert spec.config.mxnet.worker_resources[3].memory.requests == 300
+        assert spec.config.mxnet.worker_resources[3].memory.limits == 300
 
-        assert isinstance(spec.environment.mxnet.default_ps_resources,
+        assert isinstance(spec.config.mxnet.default_ps_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.default_ps_resources.cpu,
+        assert isinstance(spec.config.mxnet.default_ps_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.default_ps_resources.cpu.requests == 2
-        assert spec.environment.mxnet.default_ps_resources.cpu.limits == 4
+        assert spec.config.mxnet.default_ps_resources.cpu.requests == 2
+        assert spec.config.mxnet.default_ps_resources.cpu.limits == 4
 
-        assert isinstance(spec.environment.mxnet.ps_resources[9],
+        assert isinstance(spec.config.mxnet.ps_resources[9],
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.ps_resources[9].memory,
+        assert isinstance(spec.config.mxnet.ps_resources[9].memory,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.ps_resources[9].memory.requests == 512
-        assert spec.environment.mxnet.ps_resources[9].memory.limits == 1024
+        assert spec.config.mxnet.ps_resources[9].memory.requests == 512
+        assert spec.config.mxnet.ps_resources[9].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
         worker_resources = MXNetSpecification.get_worker_resources(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_resources) == spec.environment.mxnet.n_workers
+        assert len(worker_resources) == spec.config.mxnet.n_workers
         assert set(worker_resources.values()) == {
-            spec.environment.mxnet.default_worker_resources,
-            spec.environment.mxnet.worker_resources[3]}
+            spec.config.mxnet.default_worker_resources,
+            spec.config.mxnet.worker_resources[3]}
 
         ps_resources = MXNetSpecification.get_ps_resources(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(ps_resources) == spec.environment.mxnet.n_ps
+        assert len(ps_resources) == spec.config.mxnet.n_ps
         assert set(ps_resources.values()) == {
-            spec.environment.mxnet.default_ps_resources,
-            spec.environment.mxnet.ps_resources[9]}
+            spec.config.mxnet.default_ps_resources,
+            spec.config.mxnet.ps_resources[9]}
 
         # Check total resources
         assert spec.total_resources == {
@@ -1326,35 +1326,35 @@ class TestPolyaxonfile(TestCase):
                                      TaskType.WORKER: 5,
                                      TaskType.SERVER: 10}, True)
 
-        assert (spec.environment.mxnet.default_worker.node_selector ==
+        assert (spec.config.mxnet.default_worker.node_selector ==
                 {'polyaxon.com': 'node_for_worker_tasks'})
-        assert (spec.environment.mxnet.worker_node_selectors[2] ==
+        assert (spec.config.mxnet.worker_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_worker_task_2'})
 
-        assert (spec.environment.mxnet.default_ps.node_selector ==
+        assert (spec.config.mxnet.default_ps.node_selector ==
                 {'polyaxon.com': 'node_for_ps_tasks'})
-        assert (spec.environment.mxnet.ps_node_selectors[2] ==
+        assert (spec.config.mxnet.ps_node_selectors[2] ==
                 {'polyaxon.com': 'node_for_ps_task_2'})
 
         worker_node_selectors = MXNetSpecification.get_worker_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(worker_node_selectors) == spec.environment.mxnet.n_workers
+        assert len(worker_node_selectors) == spec.config.mxnet.n_workers
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-            tuple(spec.environment.mxnet.default_worker.node_selector.items()),
-            tuple(spec.environment.mxnet.worker_node_selectors[2].items())}
+            tuple(spec.config.mxnet.default_worker.node_selector.items()),
+            tuple(spec.config.mxnet.worker_node_selectors[2].items())}
 
         ps_node_selectors = MXNetSpecification.get_ps_node_selectors(
-            environment=spec.environment,
+            environment=spec.config.mxnet,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(ps_node_selectors) == spec.environment.mxnet.n_ps
+        assert len(ps_node_selectors) == spec.config.mxnet.n_ps
         assert set(tuple(i.items()) for i in ps_node_selectors.values()) == {
-            tuple(spec.environment.mxnet.default_ps.node_selector.items()),
-            tuple(spec.environment.mxnet.ps_node_selectors[2].items())}
+            tuple(spec.config.mxnet.default_ps.node_selector.items()),
+            tuple(spec.config.mxnet.ps_node_selectors[2].items())}
 
     def test_notebook_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
@@ -1522,7 +1522,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_build is True
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
-        assert isinstance(spec.build, BuildConfig)
+        assert isinstance(spec.config, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
 
         node_selector = {'polyaxon.com': 'node_for_build_jobs'}
@@ -1556,10 +1556,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.version == 1
         assert spec.is_build is True
         assert spec.logging is None
-        assert spec.build.dockerfile == 'dockerfiles/Dockerfile'
-        assert spec.build.context == 'module1'
+        assert spec.config.dockerfile == 'dockerfiles/Dockerfile'
+        assert spec.config.context == 'module1'
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
-        assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
 
         node_selector = {'polyaxon.com': 'node_for_build_jobs'}

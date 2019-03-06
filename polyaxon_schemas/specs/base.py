@@ -4,11 +4,13 @@ from __future__ import absolute_import, division, print_function
 import abc
 import six
 
+from collections import Mapping
+
 import rhea
 
 from hestia.cached_property import cached_property
 from hestia.list_utils import to_list
-from marshmallow import ValidationError
+from marshmallow import EXCLUDE, ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.ops.environments.base import EnvironmentConfig
@@ -45,22 +47,20 @@ class BaseSpecification(object):
     ENVIRONMENT = 'environment'
     RUN = 'run'
     BUILD = 'build'
-    MODEL = 'model'
-    TRAIN = 'train'
-    EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, KIND, TAGS, ENVIRONMENT, DECLARATIONS, LOGGING, HP_TUNING,
-        BUILD, RUN, MODEL, TRAIN, EVAL
+        VERSION, KIND, TAGS, BACKEND, FRAMEWORK, ENVIRONMENT, DECLARATIONS, LOGGING, HP_TUNING,
+        BUILD, RUN
     )
+
+    STD_PARSING_SECTIONS = (BACKEND, FRAMEWORK, ENVIRONMENT, LOGGING, TAGS, HP_TUNING)
+    OP_PARSING_SECTIONS = (BUILD, RUN, )
 
     HEADER_SECTIONS = (
         VERSION, KIND, LOGGING, TAGS
     )
 
-    GRAPH_SECTIONS = (
-        MODEL, TRAIN, EVAL
-    )
+    GRAPH_SECTIONS = []
 
     REQUIRED_SECTIONS = (
         VERSION, KIND
@@ -93,17 +93,23 @@ class BaseSpecification(object):
             raise PolyaxonConfigurationError(e)
         self._parsed_data = None
         self._validated_data = None
+        self._config = None
         self._set_parsed_data()
         self._extra_validation()
 
     def _extra_validation(self):
         pass
 
+    @cached_property
+    def config(self):
+        return self._config
+
     def _set_parsed_data(self):
         parsed_data = Parser.parse(self, self._data, None)
         if self.CONFIG:
-            print(self.CONFIG.from_dict(parsed_data))
-        self._validated_data = validator.validate(spec=self, data=parsed_data)
+            self._config = self.CONFIG.from_dict(parsed_data)
+        else:
+            self._validated_data = validator.validate(spec=self, data=parsed_data)
         self._parsed_data = parsed_data
 
     @classmethod
@@ -229,3 +235,92 @@ class BaseSpecification(object):
     def tags(self):
         tags = self.headers.get(self.TAGS, None)
         return list(set(tags)) if tags else None
+
+
+class EnvironmentSpecificationMixin(object):
+
+    @cached_property
+    def environment(self):
+        return self._config.environment
+
+    @cached_property
+    def resources(self):
+        return self.environment.resources if self.environment else None
+
+    @cached_property
+    def persistence(self):
+        return self.environment.persistence if self.environment else None
+
+    @cached_property
+    def outputs(self):
+        return self.environment.outputs if self.environment else None
+
+    @cached_property
+    def secret_refs(self):
+        return self.environment.secret_refs if self.environment else None
+
+    @cached_property
+    def configmap_refs(self):
+        return self.environment.configmap_refs if self.environment else None
+
+    @cached_property
+    def node_selector(self):
+        return self.environment.node_selector if self.environment else None
+
+    @cached_property
+    def affinity(self):
+        return self.environment.affinity if self.environment else None
+
+    @cached_property
+    def tolerations(self):
+        return self.environment.tolerations if self.environment else None
+
+
+class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
+    """The polyaxonfile specification for build jobs.
+
+    SECTIONS:
+        VERSION: defines the version of the file to be parsed and validated.
+        LOGGING: defines the logging
+        TAGS: defines the tags
+        ENVIRONMENT: defines the run environment for experiment.
+        BUILD: defines the build step where the user can set a docker image definition
+    """
+    _SPEC_KIND = BaseSpecification._BUILD
+
+    HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND, )
+
+    POSSIBLE_SECTIONS = BaseSpecification.POSSIBLE_SECTIONS + (
+        BaseSpecification.ENVIRONMENT, BaseSpecification.BUILD, BaseSpecification.BACKEND,
+    )
+
+    @cached_property
+    def build(self):
+        return self.config.build
+
+    @classmethod
+    def create_specification(cls,  # pylint:disable=arguments-differ
+                             build_config,
+                             to_dict=True):
+        from polyaxon_schemas.ops.build import BuildConfig
+
+        if isinstance(build_config, BuildConfig):
+            b_config = build_config.to_light_dict()
+        elif isinstance(build_config, Mapping):
+            # Since the objective is to create the build spec from other specs
+            # we drop any extra attrs
+            b_config = BuildConfig.from_dict(build_config, unknown=EXCLUDE)
+            b_config = b_config.to_light_dict()
+        else:
+            raise PolyaxonConfigurationError(
+                'Create specification expects a dict or an instance of BuildConfig.')
+
+        specification = {
+            cls.VERSION: 1,
+            cls.KIND: cls._SPEC_KIND,
+            cls.BUILD: b_config,
+        }
+
+        if to_dict:
+            return specification
+        return cls.read(specification)

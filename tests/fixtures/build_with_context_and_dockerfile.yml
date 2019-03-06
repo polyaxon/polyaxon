@@ -25,7 +25,6 @@ environment:
     - key: "key"
       operator: "Exists"
 
-build:
-  dockerfile: dockerfiles/Dockerfile
-  context: module1
+dockerfile: dockerfiles/Dockerfile
+context: module1
 ...

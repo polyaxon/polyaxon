@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError, fields, validate, validates_schema
+from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.environments.base import EnvironmentConfig, EnvironmentSchema
 from polyaxon_schemas.ops.environments.pods import PodEnvironmentSchema
-from polyaxon_schemas.utils import ExperimentBackend, ExperimentFramework
 
 
 class TensorflowClusterSchema(BaseSchema):
@@ -413,43 +412,12 @@ class DistributionConfig(BaseConfig):
         self.ps = ps
 
 
-def validate_distribution(framework, distribution):
-    if framework and framework not in ExperimentFramework.VALUES:
-        raise ValidationError('Experiment framework `{}` not supported'.format(framework))
-
-    if distribution and not framework:
-        raise ValidationError(
-            'You must specify which framework to use for distributed experiments.')
-
-    config = distribution.to_light_dict() if isinstance(distribution, BaseConfig) else distribution
-
-    if framework == 'tensorflow':
-        TensorflowConfig.from_dict(config)
-    if framework == 'horovod':
-        HorovodConfig.from_dict(config)
-    if framework == 'mxnet':
-        MXNetConfig.from_dict(config)
-    if framework == 'pytorch':
-        PytorchConfig.from_dict(config)
-
-
-def validate_experiment_backend(backend):
-    if backend and backend not in ExperimentBackend.VALUES:
-        raise ValidationError('Experiment backend `{}` not supported'.format(backend))
-
-
 class ExperimentEnvironmentSchema(EnvironmentSchema):
-    framework = fields.Str(allow_none=True, validate=validate.OneOf(ExperimentFramework.VALUES))
-    backend = fields.Str(allow_none=True, validate=validate.OneOf(ExperimentBackend.VALUES))
     distribution = fields.Nested(DistributionSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
         return ExperimentEnvironmentConfig
-
-    @validates_schema
-    def validate_distribution(self, data):
-        validate_distribution(data.get('framework'), data.get('distribution'))
 
 
 class ExperimentEnvironmentConfig(EnvironmentConfig):
@@ -481,8 +449,6 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
                  node_selector=None,
                  affinity=None,
                  tolerations=None,
-                 framework=None,
-                 backend=None,
                  distribution=None):
         super(ExperimentEnvironmentConfig, self).__init__(
             cluster_uuid=cluster_uuid,
@@ -495,28 +461,4 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
             affinity=affinity,
             tolerations=tolerations,
         )
-        validate_experiment_backend(backend=backend)
-        self.framework = framework
-        self.backend = backend
-        validate_distribution(framework=framework, distribution=distribution)
         self.distribution = distribution
-        self.tensorflow = self.get_tensorflow()
-        self.horovod = self.get_horovod()
-        self.mxnet = self.get_mxnet()
-        self.pytorch = self.get_pytorch()
-
-    def get_tensorflow(self):
-        if self.framework == ExperimentFramework.TENSORFLOW and self.distribution:
-            return TensorflowConfig.from_dict(self.distribution.to_light_dict())
-
-    def get_horovod(self):
-        if self.framework == ExperimentFramework.HOROVOD and self.distribution:
-            return HorovodConfig.from_dict(self.distribution.to_light_dict())
-
-    def get_mxnet(self):
-        if self.framework == ExperimentFramework.MXNET and self.distribution:
-            return MXNetConfig.from_dict(self.distribution.to_light_dict())
-
-    def get_pytorch(self):
-        if self.framework == ExperimentFramework.PYTORCH and self.distribution:
-            return PytorchConfig.from_dict(self.distribution.to_light_dict())

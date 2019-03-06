@@ -5,7 +5,13 @@ import os
 
 from unittest import TestCase
 
+from marshmallow import ValidationError
+from tests.utils import assert_equal_dict
+
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon_schemas.ops.environments.experiments import ExperimentEnvironmentConfig
+from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
+from polyaxon_schemas.ops.experiment import ExperimentConfig
 from polyaxon_schemas.specs import (
     BuildSpecification,
     ExperimentSpecification,
@@ -65,9 +71,9 @@ class TestSpecifications(TestCase):
         build_config = {'image': 'blabla'}
         config = BuildSpecification.create_specification(build_config)
         assert BuildSpecification.read(config).parsed_data == config
-        assert config['build'] == build_config
+        assert config['image'] == build_config['image']
         spec = BuildSpecification.create_specification(build_config, to_dict=False)
-        assert spec.build.image == build_config['image']
+        assert spec.config.image == build_config['image']
 
         # Run config
         run_config = {'image': 'blabla', 'cmd': 'some command'}
@@ -87,16 +93,16 @@ class TestSpecifications(TestCase):
         assert BuildSpecification.read(config).parsed_data == config
         assert config['environment']['secret_refs'] == ['foo']
 
-        assert config['build'] == {'image': 'blabla'}
+        assert config['image'] == 'blabla'
         spec = BuildSpecification.create_specification(run_config, to_dict=False)
-        assert spec.build.image == run_config['image']
+        assert spec.config.image == run_config['image']
 
-        assert config['build'] == {'image': 'blabla'}
+        assert config['image'] == 'blabla'
         spec = BuildSpecification.create_specification(run_config,
                                                        configmap_refs=['foo'],
                                                        secret_refs=['foo'],
                                                        to_dict=False)
-        assert spec.build.image == run_config['image']
+        assert spec.config.image == run_config['image']
         assert spec.environment.secret_refs == ['foo']
         assert spec.environment.configmap_refs == ['foo']
 
@@ -119,7 +125,7 @@ class TestSpecifications(TestCase):
             'tests/fixtures/env_without_framework.yml'))
         self.assertEqual(spec.cluster_def, ({TaskType.MASTER: 1}, False))
 
-    def test_patch(self):
+    def test_patch_experiment(self):
         content = {
             'version': 1,
             'kind': 'experiment',
@@ -158,6 +164,76 @@ class TestSpecifications(TestCase):
         wrong_config = {'lr': {'values': [0.1, 0.2]}}
         with self.assertRaises(PolyaxonfileError):
             spec.patch(values=wrong_config)
+
+    def test_experiment_environment_config(self):
+        config_dict = {
+            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
+            'distribution': {
+                'n_workers': 10,
+                'n_ps': 5,
+            }
+        }
+        config = ExperimentEnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add some field should raise
+        config_dict['foo'] = {
+            'n_workers': 10,
+            'n_ps': 5,
+        }
+
+        with self.assertRaises(ValidationError):
+            ExperimentEnvironmentConfig.from_dict(config_dict)
+
+        del config_dict['foo']
+
+        experiment_config = {
+            'environment': config_dict,
+            'framework': 'tensorflow'
+        }
+        config = ExperimentConfig.from_dict(experiment_config)
+        assert_equal_dict(experiment_config, config.to_dict())
+
+        # Removing framework tensorflow should raise
+        del experiment_config['framework']
+        with self.assertRaises(ValidationError):
+            ExperimentConfig.from_dict(experiment_config)
+
+        # Using unknown framework should raise
+        experiment_config['framework'] = 'foo'
+        with self.assertRaises(ValidationError):
+            ExperimentConfig.from_dict(experiment_config)
+
+        # Using known framework
+        experiment_config['framework'] = 'mxnet'
+        config = ExperimentConfig.from_dict(experiment_config)
+        assert_equal_dict(experiment_config, config.to_dict())
+
+        # Adding horovod should raise
+        experiment_config['framework'] = 'horovod'
+        with self.assertRaises(ValidationError):
+            ExperimentConfig.from_dict(experiment_config)
+
+        # Setting correct horovod distribution should pass
+        experiment_config['environment']['distribution'] = {
+            'n_workers': 5
+        }
+        config = ExperimentConfig.from_dict(experiment_config)
+        assert_equal_dict(experiment_config, config.to_dict())
+
+        # Adding pytorch should pass
+        experiment_config['framework'] = 'pytorch'
+        config = ExperimentConfig.from_dict(experiment_config)
+        assert_equal_dict(experiment_config, config.to_dict())
+
+        # Setting wrong pytorch distribution should raise
+        experiment_config['environment']['distribution'] = {
+            'n_workers': 5,
+            'n_ps': 1
+        }
+
+        with self.assertRaises(ValidationError):
+            ExperimentConfig.from_dict(experiment_config)
 
     def test_group_environment(self):
         content = {

@@ -32,51 +32,47 @@ class DistributedSpecificationInterface(object):
 
     @classmethod
     def get_worker_configs(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_configs(cluster=cluster,
                                 is_distributed=is_distributed,
-                                configs=framework_environment.worker_configs,
-                                default_config=framework_environment.default_worker_config,
+                                configs=environment.worker_configs,
+                                default_config=environment.default_worker_config,
                                 task_type=cls.TASK_WORKER)
 
     @classmethod
     def get_ps_configs(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_configs(cluster=cluster,
                                 is_distributed=is_distributed,
-                                configs=framework_environment.ps_configs,
-                                default_config=framework_environment.default_ps_config,
+                                configs=environment.ps_configs,
+                                default_config=environment.default_ps_config,
                                 task_type=cls.TASK_PS)
 
     @classmethod
     def get_worker_resources(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return None
 
         return get_task_job_resources(
             cluster=cluster,
             is_distributed=is_distributed,
-            resources=framework_environment.worker_resources,
-            default_resources=framework_environment.default_worker_resources,
+            resources=environment.worker_resources,
+            default_resources=environment.default_worker_resources,
             task_type=cls.TASK_WORKER)
 
     @classmethod
     def get_ps_resources(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return None
         return get_task_job_resources(
             cluster=cluster,
             is_distributed=is_distributed,
-            resources=framework_environment.ps_resources,
-            default_resources=framework_environment.default_ps_resources,
+            resources=environment.ps_resources,
+            default_resources=environment.default_ps_resources,
             task_type=cls.TASK_PS)
 
     @classmethod
@@ -85,80 +81,74 @@ class DistributedSpecificationInterface(object):
 
     @classmethod
     def get_worker_node_selectors(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_job_node_selectors(
             cluster=cluster,
             is_distributed=is_distributed,
-            node_selectors=framework_environment.worker_node_selectors,
-            default_node_selector=framework_environment.default_worker_node_selector,
+            node_selectors=environment.worker_node_selectors,
+            default_node_selector=environment.default_worker_node_selector,
             task_type=cls.TASK_WORKER)
 
     @classmethod
     def get_ps_node_selectors(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_job_node_selectors(
             cluster=cluster,
             is_distributed=is_distributed,
-            node_selectors=framework_environment.ps_node_selectors,
-            default_node_selector=framework_environment.default_ps_node_selector,
+            node_selectors=environment.ps_node_selectors,
+            default_node_selector=environment.default_ps_node_selector,
             task_type=cls.TASK_PS)
 
     @classmethod
     def get_worker_tolerations(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_job_tolerations(
             cluster=cluster,
             is_distributed=is_distributed,
-            tolerations=framework_environment.worker_tolerations,
-            default_tolerations=framework_environment.default_worker_tolerations,
+            tolerations=environment.worker_tolerations,
+            default_tolerations=environment.default_worker_tolerations,
             task_type=cls.TASK_WORKER)
 
     @classmethod
     def get_ps_tolerations(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_job_tolerations(
             cluster=cluster,
             is_distributed=is_distributed,
-            tolerations=framework_environment.ps_tolerations,
-            default_tolerations=framework_environment.default_ps_tolerations,
+            tolerations=environment.ps_tolerations,
+            default_tolerations=environment.default_ps_tolerations,
             task_type=cls.TASK_PS)
 
     @classmethod
     def get_worker_affinities(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_job_affinities(
             cluster=cluster,
             is_distributed=is_distributed,
-            affinities=framework_environment.worker_affinities,
-            default_affinity=framework_environment.default_worker_affinity,
+            affinities=environment.worker_affinities,
+            default_affinity=environment.default_worker_affinity,
             task_type=cls.TASK_WORKER)
 
     @classmethod
     def get_ps_affinities(cls, environment, cluster, is_distributed):
-        framework_environment = cls.get_framework_environment(environment=environment)
-        if not framework_environment:
+        if not environment:
             return {}
 
         return get_task_job_affinities(
             cluster=cluster,
             is_distributed=is_distributed,
-            affinities=framework_environment.ps_affinities,
-            default_affinity=framework_environment.default_ps_affinity,
+            affinities=environment.ps_affinities,
+            default_affinity=environment.default_ps_affinity,
             task_type=cls.TASK_PS)
 
 

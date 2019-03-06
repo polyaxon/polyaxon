@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError, fields, validates_schema
+from marshmallow import ValidationError, fields, validate, validates_schema
 
-from polyaxon_schemas.ops.environments.base import EnvironmentConfig, EnvironmentSchema
+from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema
 from polyaxon_schemas.utils import NotebookBackend
 
 
@@ -12,8 +12,9 @@ def validate_notebook_backend(backend):
         raise ValidationError('Notebook backend `{}` not supported'.format(backend))
 
 
-class NotebookSchema(EnvironmentSchema):
-    backend = fields.Str(allow_none=True)
+class NotebookSchema(BaseRunSchema):
+    kind = fields.Str(allow_none=None, validate=validate.Equal('notebook'))
+    backend = fields.Str(allow_none=True, validate=validate.OneOf(NotebookBackend.VALUES))
 
     @staticmethod
     def schema_config():
@@ -24,44 +25,24 @@ class NotebookSchema(EnvironmentSchema):
         validate_notebook_backend(data.get('backend'))
 
 
-class NotebookConfig(EnvironmentConfig):
-    """
-    Environment config.
-
-    Args:
-        cluster_uuid: `str`. The cluster uuid.
-        persistence: `PersistenceConfig`. The persistence config definition.
-        outputs: `OutputsConfig`. The outputs config definition.
-        resources: `PodResourcesConfig`. The resources config definition.
-        node_selector: `dict`.
-        affinity: `dict`.
-        tolerations: `list(dict)`.
-        backend: `str`.
-    """
+class NotebookConfig(BaseRunConfig):
     IDENTIFIER = 'notebook'
     SCHEMA = NotebookSchema
 
     def __init__(self,
-                 cluster_uuid=None,
-                 persistence=None,
-                 outputs=None,
-                 resources=None,
-                 secret_refs=None,
-                 configmap_refs=None,
-                 node_selector=None,
-                 affinity=None,
-                 tolerations=None,
-                 backend=None):
-        super(NotebookConfig, self).__init__(
-            cluster_uuid=cluster_uuid,
-            persistence=persistence,
-            outputs=outputs,
-            resources=resources,
-            secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
-            node_selector=node_selector,
-            affinity=affinity,
-            tolerations=tolerations,
-        )
+                 kind=None,
+                 version=None,
+                 logging=None,
+                 tags=None,
+                 environment=None,
+                 build=None,
+                 backend=None,
+                 ):
+        super(NotebookConfig, self).__init__(kind=kind,
+                                             version=version,
+                                             logging=logging,
+                                             tags=tags,
+                                             environment=environment,
+                                             build=build)
         validate_notebook_backend(backend)
         self.backend = backend
