@@ -20,5 +20,5 @@ class KanikoSpawner(DockerizerSpawner):
         args = ["-c", constants.BUILD_CONTEXT,
                 "-d", "{}:{}".format(self.image_name, self.image_tag)]
         if self.in_cluster_registry:
-            args.append(["--insecure"])
+            args.append("--insecure")
         return None, args
