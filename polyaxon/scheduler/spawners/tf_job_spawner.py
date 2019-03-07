@@ -5,7 +5,7 @@ from scheduler.spawners.templates import kubeflow
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawnerMixin
 
 
-class TFJobSpawner(KFExperimentSpawner, TensorflowSpawnerMixin):
+class TFJobSpawner(TensorflowSpawnerMixin, KFExperimentSpawner):
     KIND = kubeflow.TF_JOB_KIND
     VERSION = kubeflow.TF_JOB_VERSION
     PLURAL = kubeflow.TF_JOB_PLURAL

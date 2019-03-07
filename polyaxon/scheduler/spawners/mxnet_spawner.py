@@ -155,7 +155,7 @@ class MXNetSpawnerMixin(object):
         return MXNetClusterConfig.from_dict(cluster_config).to_dict()
 
 
-class MXNetSpawner(ExperimentSpawner, MXNetSpawnerMixin):
+class MXNetSpawner(MXNetSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = False
     SERVER_SERVICE = False

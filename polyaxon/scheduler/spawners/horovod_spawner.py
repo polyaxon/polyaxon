@@ -101,7 +101,7 @@ class HorovodSpawnerMixin(object):
         return HorovodClusterConfig.from_dict(cluster_config).to_dict()
 
 
-class HorovodSpawner(ExperimentSpawner, HorovodSpawnerMixin):
+class HorovodSpawner(HorovodSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True
 

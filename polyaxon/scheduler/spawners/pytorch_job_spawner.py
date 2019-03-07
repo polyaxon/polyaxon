@@ -5,7 +5,7 @@ from scheduler.spawners.pytorch_spawner import PytorchSpawnerMixin
 from scheduler.spawners.templates import kubeflow
 
 
-class PytorchJobSpawner(KFExperimentSpawner, PytorchSpawnerMixin):
+class PytorchJobSpawner(PytorchSpawnerMixin, KFExperimentSpawner):
     KIND = kubeflow.PYTORCH_JOB_KIND
     VERSION = kubeflow.PYTORCH_JOB_VERSION
     PLURAL = kubeflow.PYTORCH_JOB_PLURAL

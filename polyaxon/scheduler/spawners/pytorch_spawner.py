@@ -118,7 +118,7 @@ class PytorchSpawnerMixin(object):
         return PytorchClusterConfig.from_dict(cluster_config).to_dict()
 
 
-class PytorchSpawner(ExperimentSpawner, PytorchSpawnerMixin):
+class PytorchSpawner(PytorchSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = False
 

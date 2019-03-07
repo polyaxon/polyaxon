@@ -151,7 +151,7 @@ class TensorflowSpawnerMixin(object):
         return TensorflowClusterConfig.from_dict(cluster_config).to_dict()
 
 
-class TensorflowSpawner(ExperimentSpawner, TensorflowSpawnerMixin):
+class TensorflowSpawner(TensorflowSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True
     PS_SERVICE = True
