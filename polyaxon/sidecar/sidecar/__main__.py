@@ -39,7 +39,7 @@ if __name__ == '__main__':
     while is_running and retry < 3:
         time.sleep(log_sleep_interval)
         try:
-            is_running = is_pod_running(k8s_manager, settings.POLYAXON_POD_ID, container_id)
+            is_running = is_pod_running(k8s_manager, settings.POD_ID, container_id)
         except ApiException:
             retry += 1
             time.sleep(log_sleep_interval)  # We wait a bit more before try

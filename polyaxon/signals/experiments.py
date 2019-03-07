@@ -15,6 +15,7 @@ from event_manager.events.experiment import EXPERIMENT_NEW_METRIC
 from libs.repos.utils import assign_code_reference
 from schemas.experiments import ExperimentBackend
 from signals.backend import set_backend
+from signals.framework import set_framework
 from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.persistence import set_persistence
@@ -37,6 +38,7 @@ def experiment_pre_save(sender, **kwargs):
     set_outputs_refs(instance=instance)
     set_name(instance=instance, query=Experiment.all)
     set_backend(instance=instance, default_backend=ExperimentBackend.NATIVE)
+    set_framework(instance=instance)
     if not instance.specification or not instance.specification.build:
         return
 
