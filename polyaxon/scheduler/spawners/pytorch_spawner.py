@@ -1,5 +1,4 @@
-import uuid
-
+from constants.experiment_jobs_uuids import get_experiment_job_uuid
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
 from schemas.environments import PytorchClusterConfig
@@ -11,7 +10,7 @@ class PytorchSpawnerMixin(object):
     def create_job_uuids(self):
         job_uuids = super().create_job_uuids()
         job_uuids[TaskType.WORKER] = [
-            uuid.uuid5(self.experiment_uuid_instance, '{}-{}'.format(TaskType.WORKER, i)).hex
+            get_experiment_job_uuid(self.experiment_uuid_instance, TaskType.WORKER, i)
             for i in range(self.get_n_pods(task_type=TaskType.WORKER))]
         return job_uuids
 

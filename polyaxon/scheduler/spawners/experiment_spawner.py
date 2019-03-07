@@ -5,6 +5,7 @@ from hestia.internal_services import InternalServices
 
 import conf
 
+from constants.experiment_jobs_uuids import get_experiment_job_uuid
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from libs.unique_urls import get_experiment_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -108,7 +109,9 @@ class ExperimentSpawner(K8SManager):
 
     def create_job_uuids(self):
         return {
-            TaskType.MASTER: [uuid.uuid5(self.experiment_uuid_instance, 'master-0').hex],
+            TaskType.MASTER: [
+                get_experiment_job_uuid(self.experiment_uuid_instance, 'master', '0')
+            ],
         }
 
     def get_env_vars(self, task_type, task_idx):
