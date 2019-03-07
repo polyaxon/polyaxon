@@ -45,7 +45,7 @@ class Command(BaseMonitorCommand):
             try:
                 monitor.run(k8s_manager, cluster)
             except (ApiException, ValueError) as e:
-                monitor.logger.error(
+                monitor.logger.warning(
                     "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n", e)
                 time.sleep(log_sleep_interval)
             except Exception as e:
