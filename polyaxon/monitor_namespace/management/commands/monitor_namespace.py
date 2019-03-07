@@ -44,12 +44,10 @@ class Command(BaseMonitorCommand):
         while True:
             try:
                 monitor.run(k8s_manager, cluster)
-            except ApiException as e:
+            except (ApiException, ValueError) as e:
                 monitor.logger.error(
                     "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n", e)
                 time.sleep(log_sleep_interval)
-            except ValueError as e:
-                monitor.logger.error(
-                    "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n", e)
             except Exception as e:
                 monitor.logger.exception("Unhandled exception occurred: %s\n", e)
+                time.sleep(log_sleep_interval)
