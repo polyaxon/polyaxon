@@ -1,4 +1,4 @@
-from typing import Dict, Tuple, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from hestia.datetime_typing import AwareDT
 

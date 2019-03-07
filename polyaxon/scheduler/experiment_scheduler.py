@@ -13,10 +13,12 @@ from docker_images.image_info import get_image_info
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner
+from scheduler.spawners.pytorch_job_spawner import PytorchJobSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
+from scheduler.spawners.tf_job_spawner import TFJobSpawner
 from scheduler.spawners.utils import get_job_definition
-from schemas.experiments import ExperimentFramework
+from schemas.experiments import ExperimentBackend, ExperimentFramework
 from schemas.specifications import (
     HorovodSpecification,
     MXNetSpecification,
@@ -86,7 +88,7 @@ def set_job_definition(job_uuid, definition):
     job.save(update_fields=['definition'])
 
 
-def get_spawner_class(framework):
+def get_native_spawner_backend(framework):
     if framework == ExperimentFramework.TENSORFLOW:
         return TensorflowSpawner
     if framework == ExperimentFramework.HOROVOD:
@@ -97,6 +99,26 @@ def get_spawner_class(framework):
         return PytorchSpawner
 
     return ExperimentSpawner
+
+
+def get_kf_spawner_backend(framework):
+    if framework == ExperimentFramework.TENSORFLOW:
+        return TFJobSpawner
+    if framework == ExperimentFramework.HOROVOD:
+        return HorovodSpawner
+    if framework == ExperimentFramework.MXNET:
+        return MXNetSpawner
+    if framework == ExperimentFramework.PYTORCH:
+        return PytorchJobSpawner
+
+    return ExperimentSpawner
+
+
+def get_spawner_class(backend, framework):
+    if backend == ExperimentBackend.KUBEFLOW:
+        return get_kf_spawner_backend(framework=framework)
+
+    return get_native_spawner_backend(framework=framework)
 
 
 def create_tensorflow_experiment_jobs(experiment, spawner):
@@ -416,6 +438,10 @@ def handle_base_experiment(response):
 
 
 def handle_experiment(experiment, response):
+    # TODO: May be save the template generate to create each one of the replicas?
+    if experiment.specification.backend == ExperimentBackend.KUBEFLOW:
+        return
+
     framework = experiment.specification.framework
     if framework == ExperimentFramework.TENSORFLOW:
         handle_tensorflow_experiment(response=response)
@@ -472,7 +498,8 @@ def start_experiment(experiment):
     else:
         _logger.info('Start experiment with default image.')
 
-    spawner_class = get_spawner_class(experiment.specification.framework)
+    spawner_class = get_spawner_class(backend=experiment.specification.backend,
+                                      framework=experiment.specification.framework)
     # token_scope = RedisEphemeralTokens.get_scope(experiment.user.id,
     #                                              'experiment',
     #                                              experiment.id)

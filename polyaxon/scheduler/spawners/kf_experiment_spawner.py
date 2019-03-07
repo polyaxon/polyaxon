@@ -1,12 +1,8 @@
 from constants.k8s_jobs import EXPERIMENT_KF_JOB_NAME_FORMAT
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from polyaxon_k8s.exceptions import PolyaxonK8SError
-
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
-from scheduler.spawners.templates.env_vars import (
-    validate_configmap_refs,
-    validate_secret_refs
-)
+from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
 from scheduler.spawners.templates.kf_jobs import manager
 from scheduler.spawners.templates.kubeflow import KUBEFLOW_JOB_GROUP
 from scheduler.spawners.templates.volumes import (
