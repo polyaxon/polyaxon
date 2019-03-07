@@ -164,7 +164,11 @@ class KFExperimentSpawner(ExperimentSpawner):
     def stop_experiment(self):
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
             experiment_uuid=self.resource_manager.experiment_uuid)
-        return self.delete_custom_object(name=resource_name,
-                                         group=KUBEFLOW_JOB_GROUP,
-                                         version=self.VERSION,
-                                         plural=self.PLURAL)
+        try:
+            self.delete_custom_object(name=resource_name,
+                                      group=KUBEFLOW_JOB_GROUP,
+                                      version=self.VERSION,
+                                      plural=self.PLURAL)
+            return True
+        except PolyaxonK8SError:
+            return False
