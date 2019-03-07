@@ -30,12 +30,12 @@ class TensorflowSpawner(ExperimentSpawner):
     def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_resources = TensorflowSpecification.get_worker_resources(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_resources = TensorflowSpecification.get_ps_resources(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -49,12 +49,12 @@ class TensorflowSpawner(ExperimentSpawner):
     def node_selectors(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -68,12 +68,12 @@ class TensorflowSpawner(ExperimentSpawner):
     def affinities(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_affinities = TensorflowSpecification.get_worker_affinities(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_affinities = TensorflowSpecification.get_ps_affinities(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -87,12 +87,12 @@ class TensorflowSpawner(ExperimentSpawner):
     def tolerations(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_tolerations = TensorflowSpecification.get_worker_tolerations(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )
         ps_tolerations = TensorflowSpecification.get_ps_tolerations(
-            environment=self.sepc.config.tensorflow,
+            environment=self.spec.config.tensorflow,
             cluster=cluster,
             is_distributed=is_distributed
         )

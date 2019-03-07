@@ -34,7 +34,7 @@ class HorovodSpawner(ExperimentSpawner):
     def node_selectors(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_node_selectors = HorovodSpecification.get_worker_node_selectors(
-            environment=self.sepc.config.horovod,
+            environment=self.spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -47,7 +47,7 @@ class HorovodSpawner(ExperimentSpawner):
     def affinities(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_affinities = HorovodSpecification.get_worker_affinities(
-            environment=self.sepc.config.horovod,
+            environment=self.spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -60,7 +60,7 @@ class HorovodSpawner(ExperimentSpawner):
     def tolerations(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_tolerations = HorovodSpecification.get_worker_tolerations(
-            environment=self.sepc.config.horovod,
+            environment=self.spec.config.horovod,
             cluster=cluster,
             is_distributed=is_distributed
         )

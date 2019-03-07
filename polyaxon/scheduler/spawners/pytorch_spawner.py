@@ -38,7 +38,7 @@ class PytorchSpawner(ExperimentSpawner):
     def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_resources = PytorchSpecification.get_worker_resources(
-            environment=self.sepc.config.pytorch,
+            environment=self.spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -51,7 +51,7 @@ class PytorchSpawner(ExperimentSpawner):
     def node_selectors(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_node_selectors = PytorchSpecification.get_worker_node_selectors(
-            environment=self.sepc.config.pytorch,
+            environment=self.spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -64,7 +64,7 @@ class PytorchSpawner(ExperimentSpawner):
     def affinities(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_affinities = PytorchSpecification.get_worker_affinities(
-            environment=self.sepc.config.pytorch,
+            environment=self.spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -77,7 +77,7 @@ class PytorchSpawner(ExperimentSpawner):
     def tolerations(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_tolerations = PytorchSpecification.get_worker_tolerations(
-            environment=self.sepc.config.pytorch,
+            environment=self.spec.config.pytorch,
             cluster=cluster,
             is_distributed=is_distributed
         )
