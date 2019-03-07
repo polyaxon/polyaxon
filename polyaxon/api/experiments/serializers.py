@@ -255,7 +255,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             'config',
             'declarations',
             'backend',
-            'framework'
+            'framework',
             'in_cluster',
             'run_env',
             'data_refs',
