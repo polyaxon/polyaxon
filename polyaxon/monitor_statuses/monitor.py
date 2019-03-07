@@ -78,19 +78,22 @@ def run(k8s_manager: 'K8SManager') -> None:
         if pod_state['details'] and pod_state['details']['labels']:
             labels = pod_state['details']['labels']
         logger.info("Updating job container %s, %s", status, labels)
+
+        experiment_condition = status and labels['app'] == conf.get('APP_LABELS_EXPERIMENT')
+
         experiment_job_condition = (
             conf.get('CONTAINER_NAME_EXPERIMENT_JOB') in pod_state['details']['container_statuses']
-            or (status and labels['app'] == conf.get('APP_LABELS_EXPERIMENT'))
+            or 'job_uuid' in labels
         )
 
         tf_job_condition = (
             conf.get('CONTAINER_NAME_TF_JOB') in pod_state['details']['container_statuses']
-            or (status and labels['app'] == conf.get('APP_LABELS_EXPERIMENT'))
+            or 'tf-replica-index' in labels
         )
 
         pytorch_job_condition = (
             conf.get('CONTAINER_NAME_PYTORCH_JOB') in pod_state['details']['container_statuses']
-            or (status and labels['app'] == conf.get('APP_LABELS_EXPERIMENT'))
+            or 'pytroch-replica-index' in labels
         )
 
         job_condition = (
@@ -109,42 +112,44 @@ def run(k8s_manager: 'K8SManager') -> None:
             or (status and labels['app'] == conf.get('APP_LABELS_DOCKERIZER'))
         )
 
-        if experiment_job_condition:
-            update_job_containers(event_object, status, conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
-            logger.debug("Sending state to handler %s, %s", status, labels)
-            # Handle experiment job statuses
-            celery_app.send_task(
-                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                kwargs={'payload': pod_state})
+        if experiment_condition:
+            if tf_job_condition:
+                update_job_containers(event_object, status, conf.get('CONTAINER_NAME_TF_JOB'))
+                logger.debug("Sending state to handler %s, %s", status, labels)
 
-        if tf_job_condition:
-            update_job_containers(event_object, status, conf.get('CONTAINER_NAME_TF_JOB'))
-            logger.debug("Sending state to handler %s, %s", status, labels)
+                pod_state['details']['labels']['job_uuid'] = get_experiment_job_uuid(
+                    experiment_uuid=labels['experiment_uuid'],
+                    task_type=labels['task_type'],
+                    task_index=labels['tf-replica-index']
+                )
+                # We augment the payload with standard Polyaxon requirement
+                # Handle experiment job statuses
+                celery_app.send_task(
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+                    kwargs={'payload': pod_state})
 
-            pod_state['details']['labels']['job_uuid'] = get_experiment_job_uuid(
-                experiment_uuid=labels['experiment_uuid'],
-                task_type=labels['task_type'],
-                task_index=labels['tf-replica-index']
-            )
-            # We augment the payload with standard Polyaxon requirement
-            # Handle experiment job statuses
-            celery_app.send_task(
-                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                kwargs={'payload': pod_state})
+            elif pytorch_job_condition:
+                update_job_containers(event_object, status, conf.get('CONTAINER_NAME_PYTORCH_JOB'))
+                logger.debug("Sending state to handler %s, %s", status, labels)
+                # We augment the payload with standard Polyaxon requirement
+                pod_state['details']['labels']['job_uuid'] = get_experiment_job_uuid(
+                    experiment_uuid=labels['experiment_uuid'],
+                    task_type=labels['task_type'],
+                    task_index=labels['pytorch-replica-index']
+                )
+                # Handle experiment job statuses
+                celery_app.send_task(
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+                    kwargs={'payload': pod_state})
 
-        if pytorch_job_condition:
-            update_job_containers(event_object, status, conf.get('CONTAINER_NAME_PYTORCH_JOB'))
-            logger.debug("Sending state to handler %s, %s", status, labels)
-            # We augment the payload with standard Polyaxon requirement
-            pod_state['details']['labels']['job_uuid'] = get_experiment_job_uuid(
-                experiment_uuid=labels['experiment_uuid'],
-                task_type=labels['task_type'],
-                task_index=labels['pytorch-replica-index']
-            )
-            # Handle experiment job statuses
-            celery_app.send_task(
-                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                kwargs={'payload': pod_state})
+            if experiment_job_condition:
+                update_job_containers(event_object, status,
+                                      conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
+                logger.debug("Sending state to handler %s, %s", status, labels)
+                # Handle experiment job statuses
+                celery_app.send_task(
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+                    kwargs={'payload': pod_state})
 
         elif job_condition:
             update_job_containers(event_object, status, conf.get('CONTAINER_NAME_JOB'))
