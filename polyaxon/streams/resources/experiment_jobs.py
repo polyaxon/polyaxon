@@ -5,6 +5,7 @@ from websockets import ConnectionClosed
 import auditor
 import conf
 
+from constants.experiment_jobs import get_experiment_job_container_name
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_LOGS_VIEWED,
@@ -88,16 +89,19 @@ async def experiment_job_resources(request, ws, username, project_name, experime
 
 @authorized()
 async def experiment_job_logs_v2(request, ws, username, project_name, experiment_id, job_id):
-    job, _, message = validate_experiment_job(request=request,
-                                              username=username,
-                                              project_name=project_name,
-                                              experiment_id=experiment_id,
-                                              job_id=job_id)
+    job, experiment, message = validate_experiment_job(request=request,
+                                                       username=username,
+                                                       project_name=project_name,
+                                                       experiment_id=experiment_id,
+                                                       job_id=job_id)
     if job is None:
         await ws.send(get_error_message(message))
         return
 
     pod_id = job.pod_id
+
+    container_job_name = get_experiment_job_container_name(backend=experiment.backend,
+                                                           framework=experiment.framework)
 
     auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
                    instance=job,
@@ -109,5 +113,5 @@ async def experiment_job_logs_v2(request, ws, username, project_name, experiment
                   ws=ws,
                   job=job,
                   pod_id=pod_id,
-                  container=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'),
+                  container=container_job_name,
                   namespace=conf.get('K8S_NAMESPACE'))

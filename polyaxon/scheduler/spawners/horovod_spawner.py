@@ -1,4 +1,4 @@
-from constants.experiment_jobs_uuids import get_experiment_job_uuid
+from constants.experiment_jobs import get_experiment_job_uuid
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from schemas.environments import HorovodClusterConfig
 from schemas.specifications import HorovodSpecification

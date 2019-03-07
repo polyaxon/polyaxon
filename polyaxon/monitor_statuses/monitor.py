@@ -5,7 +5,7 @@ from typing import Mapping
 import conf
 import ocular
 
-from constants.experiment_jobs_uuids import get_experiment_job_uuid
+from constants.experiment_jobs import get_experiment_job_uuid
 from constants.jobs import JobLifeCycle
 from db.redis.containers import RedisJobContainers
 from polyaxon.celery_api import celery_app

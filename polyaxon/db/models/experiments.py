@@ -41,9 +41,9 @@ from event_manager.events.experiment import (
 )
 from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
+from schemas.experiments import ExperimentBackend
 from schemas.pod_resources import PodResourcesConfig
 from schemas.specifications import ExperimentSpecification
-from schemas.experiments import ExperimentBackend
 from schemas.tasks import TaskType
 
 

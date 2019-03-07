@@ -30,6 +30,11 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='experiment',
+            name='framework',
+            field=models.CharField(blank=True, max_length=16, null=True),
+        ),
+        migrations.AddField(
+            model_name='experiment',
             name='backend',
             field=models.CharField(blank=True, default='native', max_length=16, null=True),
         ),

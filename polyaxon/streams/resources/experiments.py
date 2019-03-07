@@ -5,6 +5,7 @@ from websockets import ConnectionClosed
 import auditor
 import conf
 
+from constants.experiment_jobs import get_experiment_job_container_name
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
 from streams.authentication import authorized
@@ -103,9 +104,12 @@ async def experiment_logs_v2(request, ws, username, project_name, experiment_id)
                    actor_id=request.app.user.id,
                    actor_name=request.app.user.username)
 
+    container_job_name = get_experiment_job_container_name(backend=experiment.backend,
+                                                           framework=experiment.framework)
+
     # Stream logs
     await log_experiment(request=request,
                          ws=ws,
                          experiment=experiment,
-                         container=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'),
+                         container=container_job_name,
                          namespace=conf.get('K8S_NAMESPACE'))

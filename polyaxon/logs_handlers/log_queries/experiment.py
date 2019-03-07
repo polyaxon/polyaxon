@@ -2,6 +2,7 @@ from typing import Iterable
 
 import conf
 
+from constants.experiment_jobs import get_experiment_job_container_name
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from logs_handlers.log_queries import base
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
@@ -16,9 +17,11 @@ def stream_logs(experiment: 'Experiment') -> Iterable[str]:
         task_idx=0,
         experiment_uuid=experiment.uuid.hex)
     k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
+    container_job_name = get_experiment_job_container_name(backend=experiment.backend,
+                                                           framework=experiment.framework)
     return base.stream_logs(k8s_manager=k8s_manager,
                             pod_id=pod_id,
-                            container_job_name=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
+                            container_job_name=container_job_name)
 
 
 def process_logs(experiment: 'Experiment', temp: bool = True) -> None:
@@ -27,9 +30,11 @@ def process_logs(experiment: 'Experiment', temp: bool = True) -> None:
         task_idx=0,
         experiment_uuid=experiment.uuid.hex)
     k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
+    container_job_name = get_experiment_job_container_name(backend=experiment.backend,
+                                                           framework=experiment.framework)
     log_lines = base.process_logs(k8s_manager=k8s_manager,
                                   pod_id=pod_id,
-                                  container_job_name=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
+                                  container_job_name=container_job_name)
 
     safe_log_experiment(experiment_name=experiment.unique_name,
                         log_lines=log_lines,
