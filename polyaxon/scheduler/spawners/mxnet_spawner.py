@@ -7,11 +7,7 @@ from schemas.specifications import MXNetSpecification
 from schemas.tasks import TaskType
 
 
-class MXNetSpawner(ExperimentSpawner):
-    MASTER_SERVICE = True
-    WORKER_SERVICE = False
-    SERVER_SERVICE = False
-
+class MXNetSpawnerMixin(object):
     def create_job_uuids(self):
         job_uuids = super().create_job_uuids()
         job_uuids[TaskType.WORKER] = [
@@ -131,22 +127,6 @@ class MXNetSpawner(ExperimentSpawner):
     def get_n_pods(self, task_type):
         return self.spec.cluster_def[0].get(task_type, 0)
 
-    def start_experiment(self):
-        experiment = super().start_experiment()
-        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
-                                                             add_service=self.WORKER_SERVICE)
-        experiment[TaskType.SERVER] = self.create_multi_jobs(task_type=TaskType.SERVER,
-                                                             add_service=self.SERVER_SERVICE)
-        return experiment
-
-    def stop_experiment(self):
-        deleted = super().stop_experiment()
-        if not self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE):
-            deleted = False
-        if not self.delete_multi_jobs(task_type=TaskType.SERVER, has_service=self.SERVER_SERVICE):
-            deleted = False
-        return deleted
-
     def get_cluster(self):
         cluster_def, _ = self.spec.cluster_def
 
@@ -173,3 +153,25 @@ class MXNetSpawner(ExperimentSpawner):
         cluster_config[TaskType.SERVER] = servers
 
         return MXNetClusterConfig.from_dict(cluster_config).to_dict()
+
+
+class MXNetSpawner(ExperimentSpawner, MXNetSpawnerMixin):
+    MASTER_SERVICE = True
+    WORKER_SERVICE = False
+    SERVER_SERVICE = False
+
+    def start_experiment(self):
+        experiment = super().start_experiment()
+        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
+                                                             add_service=self.WORKER_SERVICE)
+        experiment[TaskType.SERVER] = self.create_multi_jobs(task_type=TaskType.SERVER,
+                                                             add_service=self.SERVER_SERVICE)
+        return experiment
+
+    def stop_experiment(self):
+        deleted = super().stop_experiment()
+        if not self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE):
+            deleted = False
+        if not self.delete_multi_jobs(task_type=TaskType.SERVER, has_service=self.SERVER_SERVICE):
+            deleted = False
+        return deleted

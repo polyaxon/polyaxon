@@ -97,9 +97,6 @@ class KFExperimentSpawner(ExperimentSpawner):
             'template': pod_template_spec
         }
 
-    def get_n_pods(self, task_type):
-        return self.spec.cluster_def[0].get(task_type, 0)
-
     def create_multi_jobs(self, task_type):  # pylint:disable=arguments-differ
         n_pods = self.get_n_pods(task_type=task_type)
         command, args = self.get_pod_command_args(task_type=task_type, task_idx=0)

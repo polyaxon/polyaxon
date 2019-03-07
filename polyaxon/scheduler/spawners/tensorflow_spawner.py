@@ -9,11 +9,7 @@ from schemas.specifications import TensorflowSpecification
 from schemas.tasks import TaskType
 
 
-class TensorflowSpawner(ExperimentSpawner):
-    MASTER_SERVICE = True
-    WORKER_SERVICE = True
-    PS_SERVICE = True
-
+class TensorflowSpawnerMixin(object):
     def get_env_vars(self, task_type, task_idx):
         tf_config = {
             'cluster': self.get_cluster(),
@@ -127,22 +123,6 @@ class TensorflowSpawner(ExperimentSpawner):
     def get_n_pods(self, task_type):
         return self.spec.cluster_def[0].get(task_type, 0)
 
-    def start_experiment(self):
-        experiment = super().start_experiment()
-        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
-                                                             add_service=self.WORKER_SERVICE)
-        experiment[TaskType.PS] = self.create_multi_jobs(task_type=TaskType.PS,
-                                                         add_service=self.PS_SERVICE)
-        return experiment
-
-    def stop_experiment(self):
-        deleted = super().stop_experiment()
-        if not self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE):
-            deleted = False
-        if not self.delete_multi_jobs(task_type=TaskType.PS, has_service=self.PS_SERVICE):
-            deleted = False
-        return deleted
-
     def get_cluster(self):
         cluster_def, _ = self.spec.cluster_def
 
@@ -169,3 +149,25 @@ class TensorflowSpawner(ExperimentSpawner):
         cluster_config[TaskType.PS] = servers
 
         return TensorflowClusterConfig.from_dict(cluster_config).to_dict()
+
+
+class TensorflowSpawner(ExperimentSpawner, TensorflowSpawnerMixin):
+    MASTER_SERVICE = True
+    WORKER_SERVICE = True
+    PS_SERVICE = True
+
+    def start_experiment(self):
+        experiment = super().start_experiment()
+        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
+                                                             add_service=self.WORKER_SERVICE)
+        experiment[TaskType.PS] = self.create_multi_jobs(task_type=TaskType.PS,
+                                                         add_service=self.PS_SERVICE)
+        return experiment
+
+    def stop_experiment(self):
+        deleted = super().stop_experiment()
+        if not self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE):
+            deleted = False
+        if not self.delete_multi_jobs(task_type=TaskType.PS, has_service=self.PS_SERVICE):
+            deleted = False
+        return deleted

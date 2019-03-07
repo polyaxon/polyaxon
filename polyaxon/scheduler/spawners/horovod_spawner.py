@@ -6,10 +6,7 @@ from schemas.specifications import HorovodSpecification
 from schemas.tasks import TaskType
 
 
-class HorovodSpawner(ExperimentSpawner):
-    MASTER_SERVICE = True
-    WORKER_SERVICE = True
-
+class HorovodSpawnerMixin(object):
     def create_job_uuids(self):
         job_uuids = super().create_job_uuids()
         job_uuids[TaskType.WORKER] = [
@@ -84,18 +81,6 @@ class HorovodSpawner(ExperimentSpawner):
     def get_n_pods(self, task_type):
         return self.spec.cluster_def[0].get(task_type, 0)
 
-    def start_experiment(self):
-        experiment = super().start_experiment()
-        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
-                                                             add_service=self.WORKER_SERVICE)
-        return experiment
-
-    def stop_experiment(self):
-        deleted = super().stop_experiment()
-        if not self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE):
-            deleted = False
-        return deleted
-
     def get_cluster(self):
         cluster_def, _ = self.spec.cluster_def
 
@@ -114,3 +99,20 @@ class HorovodSpawner(ExperimentSpawner):
         cluster_config[TaskType.WORKER] = workers
 
         return HorovodClusterConfig.from_dict(cluster_config).to_dict()
+
+
+class HorovodSpawner(ExperimentSpawner, HorovodSpawnerMixin):
+    MASTER_SERVICE = True
+    WORKER_SERVICE = True
+
+    def start_experiment(self):
+        experiment = super().start_experiment()
+        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
+                                                             add_service=self.WORKER_SERVICE)
+        return experiment
+
+    def stop_experiment(self):
+        deleted = super().stop_experiment()
+        if not self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE):
+            deleted = False
+        return deleted
