@@ -82,6 +82,8 @@ def get_job_status(pod_details, job_container_names):  # pylint:disable=too-many
         return pod_statuses.STOPPED, 'Deletion time: {}'.format(pod_details['deletion_timestamp'])
 
     if not pod_details['pod_conditions']:
+        if pod_details['phase'] == pod_lifecycle.PENDING:
+            return pod_statuses.SCHEDULED, 'Pod is pending'
         return pod_statuses.UNKNOWN, 'Unknown pod conditions'
 
     if pod_conditions.UNSCHEDULABLE in pod_details['pod_conditions']:
