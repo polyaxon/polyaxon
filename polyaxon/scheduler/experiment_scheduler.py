@@ -297,7 +297,7 @@ def create_pytorch_experiment_jobs(experiment, spawner):
                tolerations=spawner.spec.master_tolerations)
 
     cluster, is_distributed = spawner.spec.cluster_def
-    environment = spawner.spec.config.tensorflow
+    environment = spawner.spec.config.pytorch
 
     worker_resources = PytorchSpecification.get_worker_resources(
         environment=environment,
