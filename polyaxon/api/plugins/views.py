@@ -282,7 +282,7 @@ class NotebookView(PluginJobView):
     @staticmethod
     def get_base_path(instance):
         if instance.has_notebook:
-            backend = instance.notebook.specification.backend or conf.get('NOTEBOOK_BACKEND')
+            backend = instance.notebook.backend
         else:
             backend = conf.get('NOTEBOOK_BACKEND')
         if backend == NotebookBackend.LAB:

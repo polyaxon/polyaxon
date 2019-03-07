@@ -439,10 +439,10 @@ def handle_base_experiment(response):
 
 def handle_experiment(experiment, response):
     # TODO: May be save the template generate to create each one of the replicas?
-    if experiment.specification.backend == ExperimentBackend.KUBEFLOW:
+    if experiment.backend == ExperimentBackend.KUBEFLOW:
         return
 
-    framework = experiment.specification.framework
+    framework = experiment.framework
     if framework == ExperimentFramework.TENSORFLOW:
         handle_tensorflow_experiment(response=response)
         return
@@ -498,7 +498,7 @@ def start_experiment(experiment):
     else:
         _logger.info('Start experiment with default image.')
 
-    spawner_class = get_spawner_class(backend=experiment.specification.backend,
+    spawner_class = get_spawner_class(backend=experiment.backend,
                                       framework=experiment.specification.framework)
     # token_scope = RedisEphemeralTokens.get_scope(experiment.user.id,
     #                                              'experiment',

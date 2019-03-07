@@ -13,6 +13,7 @@ from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from db.models.utils import DataReference
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_notebook_spec_config
+from schemas.notebook_backend import NotebookBackend
 from schemas.specifications import NotebookSpecification
 
 
@@ -27,6 +28,11 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
     config = JSONField(
         help_text='The compiled polyaxonfile for the notebook job.',
         validators=[validate_notebook_spec_config])
+    backend = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=NotebookBackend.NOTEBOOK)
     status = models.OneToOneField(
         'db.NotebookJobStatus',
         related_name='+',

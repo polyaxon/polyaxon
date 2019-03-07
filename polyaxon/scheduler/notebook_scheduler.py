@@ -51,7 +51,7 @@ def start_notebook(notebook):
                                          node_selector=notebook.node_selector,
                                          affinity=notebook.affinity,
                                          tolerations=notebook.tolerations,
-                                         backend=notebook.specification.backend,
+                                         backend=notebook.backend,
                                          mount_code_in_notebooks=mount_code_in_notebooks)
         notebook.definition = get_job_definition(results)
         notebook.save(update_fields=['definition'])

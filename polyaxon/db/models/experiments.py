@@ -43,6 +43,7 @@ from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
 from schemas.pod_resources import PodResourcesConfig
 from schemas.specifications import ExperimentSpecification
+from schemas.experiments import ExperimentBackend
 from schemas.tasks import TaskType
 
 
@@ -82,6 +83,15 @@ class Experiment(DiffModel,
         blank=True,
         null=True,
         related_name='experiments')
+    backend = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=ExperimentBackend.NATIVE)
+    framework = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True)
     experiment_group = models.ForeignKey(
         'db.ExperimentGroup',
         on_delete=models.CASCADE,

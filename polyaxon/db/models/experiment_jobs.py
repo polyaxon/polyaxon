@@ -20,6 +20,7 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
         on_delete=models.CASCADE,
         related_name='jobs')
     role = models.CharField(max_length=64, default=TaskType.MASTER)
+    k8s_replica = models.CharField(max_length=64, default=TaskType.MASTER)
     sequence = models.IntegerField(null=True, blank=True, default=0)
     resources = models.OneToOneField(
         'db.JobResources',
@@ -59,7 +60,7 @@ class ExperimentJob(AbstractJob, NodeSchedulingModel):
     @cached_property
     def pod_id(self) -> str:
         return EXPERIMENT_JOB_NAME_FORMAT.format(
-            task_type=self.role,
+            task_type=self.k8s_replica,
             task_idx=self.sequence,
             experiment_uuid=self.experiment.uuid.hex
         )
