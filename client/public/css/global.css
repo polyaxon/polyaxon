@@ -41,7 +41,7 @@ body > #container {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  padding: 0 36px;
+  padding: 0 36px 0 18px;
   background: #29323c;
   border-radius: 0.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
