@@ -186,10 +186,6 @@ class Experiment(DiffModel,
             return None
         return self.specification.total_resources
 
-    @cached_property
-    def framework(self) -> Optional[str]:
-        return self.specification.framework
-
     @property
     def last_job_statuses(self) -> List[str]:
         """The last constants of the job in this experiment."""
