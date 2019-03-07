@@ -30,6 +30,12 @@ def get_env_var(name, value, reraise=True):
     return client.V1EnvVar(name=name, value=value)
 
 
+def get_from_field_ref(name, field_path):
+    field_ref = client.V1ObjectFieldSelector(field_path=field_path)
+    value_from = client.V1EnvVarSource(field_ref=field_ref)
+    return client.V1EnvVar(name=name, value_from=value_from)
+
+
 def get_from_secret(key_name, secret_key_name, secret_ref_name=None):
     secret_ref_name = secret_ref_name or settings.POLYAXON_K8S_APP_SECRET_NAME
     secret_key_ref = client.V1SecretKeySelector(name=secret_ref_name, key=secret_key_name)

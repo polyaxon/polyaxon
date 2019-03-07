@@ -142,18 +142,16 @@ class BaseResourceManager(object):
     def get_sidecar_volume_mounts(self, context_mounts, persistence_outputs, persistence_data):
         return context_mounts
 
-    def get_sidecar_container(self, resource_name, volume_mounts):
+    def get_sidecar_container(self, volume_mounts):
         """Pod sidecar container for task logs."""
         return get_sidecar_container(
-            resource_name=resource_name,
             job_container_name=self.job_container_name,
             sidecar_container_name=self.sidecar_container_name,
             sidecar_docker_image=self.sidecar_docker_image,
             sidecar_docker_image_pull_policy=self.sidecar_docker_image_pull_policy,
             namespace=self.namespace,
             sidecar_config=self.sidecar_config,
-            sidecar_args=get_sidecar_args(pod_id=resource_name,
-                                          container_id=self.job_container_name,
+            sidecar_args=get_sidecar_args(container_id=self.job_container_name,
                                           app_label=self.app_label),
             internal_health_check_url=self.health_check_url,
             volume_mounts=volume_mounts)
@@ -223,8 +221,7 @@ class BaseResourceManager(object):
                 persistence_outputs=persistence_outputs,
                 persistence_data=persistence_data,
                 context_mounts=sidecar_context_mounts)
-            sidecar_container = self.get_sidecar_container(resource_name=resource_name,
-                                                           volume_mounts=sidecar_volume_mounts)
+            sidecar_container = self.get_sidecar_container(volume_mounts=sidecar_volume_mounts)
             containers.append(sidecar_container)
 
         init_container = self.get_init_container(init_command=init_command,

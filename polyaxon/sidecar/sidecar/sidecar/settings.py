@@ -23,3 +23,4 @@ if os.path.isfile('{}/local.json'.format(ENV_VARS_DIR)):
 config = rhea.Rhea.read_configs(config_values)
 
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
+POD_ID = config.get_string('POLYAXON_POD_ID')
