@@ -22,8 +22,8 @@ class PytorchJobSpawner(PytorchSpawnerMixin, KFExperimentSpawner):
         labels = self.resource_manager.experiment_labels
         template_spec = {
             self.SPEC: {
-                TaskType.MASTER: self.create_master(),
-                TaskType.WORKER: self.create_multi_jobs(task_type=TaskType.WORKER),
+                TaskType.MASTER.capitalize(): self.create_master(),
+                TaskType.WORKER.capitalize(): self.create_multi_jobs(task_type=TaskType.WORKER),
             }
         }
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(

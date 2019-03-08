@@ -22,9 +22,9 @@ class TFJobSpawner(TensorflowSpawnerMixin, KFExperimentSpawner):
         labels = self.resource_manager.experiment_labels
         template_spec = {
             self.SPEC: {
-                TaskType.CHIEF: self.create_master(),
-                TaskType.WORKER: self.create_multi_jobs(task_type=TaskType.WORKER),
-                TaskType.PS: self.create_multi_jobs(task_type=TaskType.PS)
+                TaskType.CHIEF.capitalize(): self.create_master(),
+                TaskType.WORKER.capitalize(): self.create_multi_jobs(task_type=TaskType.WORKER),
+                TaskType.PS.capitalize(): self.create_multi_jobs(task_type=TaskType.PS)
             }
         }
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
