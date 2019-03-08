@@ -199,7 +199,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             affinity=affinity,
             tolerations=tolerations,
             ports=target_ports,
-            restart_policy=None)
+            restart_policy='Never')
 
         dep_resp, _ = self.create_or_update_deployment(name=resource_name, data=deployment)
         service = services.get_service(

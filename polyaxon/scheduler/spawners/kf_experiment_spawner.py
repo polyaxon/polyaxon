@@ -94,6 +94,7 @@ class KFExperimentSpawner(ExperimentSpawner):
             restart_policy=restart_policy)
         return {
             'replicas': replicas,
+            'restartPolicy': restart_policy,
             'template': pod_template_spec
         }
 

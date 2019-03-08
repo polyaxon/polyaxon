@@ -190,7 +190,7 @@ class BaseResourceManager(object):
                           tolerations=None,
                           sidecar_context_mounts=None,
                           init_context_mounts=None,
-                          restart_policy='OnFailure'):
+                          restart_policy=None):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
         sidecar_context_mounts = to_list(sidecar_context_mounts, check_none=True)
         init_context_mounts = to_list(init_context_mounts, check_none=True)

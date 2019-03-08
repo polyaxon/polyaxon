@@ -216,7 +216,7 @@ class NotebookSpawner(ProjectJobSpawner):
             tolerations=tolerations,
             ports=target_ports,
             init_context_mounts=context_mounts,
-            restart_policy=None)
+            restart_policy='Never')
         dep_resp, _ = self.create_or_update_deployment(name=resource_name,
                                                        data=deployment)
         service = services.get_service(
