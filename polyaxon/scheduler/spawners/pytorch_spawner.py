@@ -14,22 +14,6 @@ class PytorchSpawnerMixin(object):
             for i in range(self.get_n_pods(task_type=TaskType.WORKER))]
         return job_uuids
 
-    def get_env_vars(self, task_type, task_idx):
-        if task_type == TaskType.MASTER:
-            rank = 0
-            master_addr = 'localhost'
-        else:
-            rank = task_idx + 1
-            master_addr = self.resource_manager.get_resource_name(task_type=TaskType.MASTER,
-                                                                  task_idx=0)
-        env_vars = [
-            get_env_var(name='MASTER_ADDR', value=master_addr),
-            get_env_var(name='MASTER_PORT', value=self.ports[0]),
-            get_env_var(name='WORLD_SIZE', value=self.get_n_pods(TaskType.WORKER) + 1),
-            get_env_var(name='RANK', value=rank)
-        ]
-        return env_vars
-
     @property
     def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
@@ -120,6 +104,22 @@ class PytorchSpawnerMixin(object):
 class PytorchSpawner(PytorchSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = False
+
+    def get_env_vars(self, task_type, task_idx):
+        if task_type == TaskType.MASTER:
+            rank = 0
+            master_addr = 'localhost'
+        else:
+            rank = task_idx + 1
+            master_addr = self.resource_manager.get_resource_name(task_type=TaskType.MASTER,
+                                                                  task_idx=0)
+        env_vars = [
+            get_env_var(name='MASTER_ADDR', value=master_addr),
+            get_env_var(name='MASTER_PORT', value=self.ports[0]),
+            get_env_var(name='WORLD_SIZE', value=self.get_n_pods(TaskType.WORKER) + 1),
+            get_env_var(name='RANK', value=rank)
+        ]
+        return env_vars
 
     def start_experiment(self):
         experiment = super().start_experiment()

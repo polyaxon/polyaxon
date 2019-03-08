@@ -9,18 +9,6 @@ from schemas.tasks import TaskType
 
 
 class TensorflowSpawnerMixin(object):
-    def get_env_vars(self, task_type, task_idx):
-        tf_config = {
-            'cluster': self.get_cluster(),
-            'task': {'type': task_type, 'index': task_idx},
-            'model_dir': stores.get_experiment_outputs_path(
-                persistence=self.persistence_config.outputs,
-                experiment_name=self.experiment_name,
-                cloning_strategy=self.cloning_strategy),
-            'environment': 'cloud'
-        }
-        return get_env_var(name='TF_CONFIG', value=tf_config)
-
     @property
     def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
@@ -154,6 +142,18 @@ class TensorflowSpawner(TensorflowSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True
     PS_SERVICE = True
+
+    def get_env_vars(self, task_type, task_idx):
+        tf_config = {
+            'cluster': self.get_cluster(),
+            'task': {'type': task_type, 'index': task_idx},
+            'model_dir': stores.get_experiment_outputs_path(
+                persistence=self.persistence_config.outputs,
+                experiment_name=self.experiment_name,
+                cloning_strategy=self.cloning_strategy),
+            'environment': 'cloud'
+        }
+        return get_env_var(name='TF_CONFIG', value=tf_config)
 
     def start_experiment(self):
         experiment = super().start_experiment()

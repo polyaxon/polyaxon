@@ -92,7 +92,7 @@ class ExperimentSpawner(K8SManager):
             declarations=self.spec.declarations if self.spec else None,
             health_check_url=get_experiment_health_url(self.experiment_name))
         self.token_scope = token_scope
-        self.ports = ports or [constants.DEFAULT_PORT]
+        self.ports = self.get_ports(ports=ports)
 
         super().__init__(k8s_config=k8s_config,
                          namespace=namespace,
@@ -102,6 +102,9 @@ class ExperimentSpawner(K8SManager):
         cluster_def = self.get_cluster()
         self.resource_manager.set_cluster_def(cluster_def=cluster_def)
         self.job_uuids = self.create_job_uuids()
+
+    def get_ports(self, ports):
+        return ports or [constants.DEFAULT_PORT]
 
     @staticmethod
     def get_job_container_name(job_container_name):
