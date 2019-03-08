@@ -28,7 +28,7 @@ def query_logs(k8s_manager: 'K8SManager',
 def process_log_line(log_line: str, task_type: str = None, task_idx: int = None):
     name = ''
     if task_type is not None and task_idx is not None:
-        name = '{}.{}'.format(task_type, int(task_idx) + 1)
+        name = '{}.{}'.format(task_type, task_idx)
 
     if not isinstance(log_line, str):
         log_line = log_line.decode('utf-8')
