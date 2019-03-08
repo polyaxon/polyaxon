@@ -226,8 +226,6 @@ def handle_tensorflow_experiment(response):
 def create_horovod_experiment_jobs(experiment, spawner):
     master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     k8s_replica = None
-    if experiment.backend == ExperimentBackend.KUBEFLOW:
-        k8s_replica = TaskType.CHIEF
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                k8s_replica=k8s_replica,
@@ -286,8 +284,6 @@ def handle_horovod_experiment(response):
 def create_pytorch_experiment_jobs(experiment, spawner):
     master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     k8s_replica = None
-    if experiment.backend == ExperimentBackend.KUBEFLOW:
-        k8s_replica = TaskType.CHIEF
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                k8s_replica=k8s_replica,
@@ -347,8 +343,6 @@ def handle_pytorch_experiment(response):
 def create_mxnet_experiment_jobs(experiment, spawner):
     master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
     k8s_replica = None
-    if experiment.backend == ExperimentBackend.KUBEFLOW:
-        k8s_replica = TaskType.CHIEF
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
                k8s_replica=k8s_replica,
